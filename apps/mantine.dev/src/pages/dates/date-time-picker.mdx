@@ -1,0 +1,59 @@
+import { DateTimePickerDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DateTimePicker);
+
+## DatePicker props
+
+`DateTimePicker` supports most of the [DatePicker](/dates/date-picker/) props,
+read through [DatePicker](/dates/date-picker/) documentation to learn about all component features that are not listed on this page.
+
+## Usage
+
+<Demo data={DateTimePickerDemos.usage} />
+
+## With seconds
+
+<Demo data={DateTimePickerDemos.withSeconds} />
+
+## Value format
+
+Use `valueFormat` prop to change [dayjs format](https://day.js.org/docs/en/display/format) of value label:
+
+<Demo data={DateTimePickerDemos.format} />
+
+## Disabled state
+
+<Demo data={DateTimePickerDemos.disabled} />
+
+## Input props
+
+<InputFeatures component="DateTimePicker" element="button" />
+
+<Demo data={DateTimePickerDemos.configurator} />
+
+## Clearable
+
+Set `clearable` prop to display clear button in the right section. Note that if you set `rightSection`
+prop, clear button will not be displayed.
+
+<Demo data={DateTimePickerDemos.clearable} />
+
+## Open picker in modal
+
+By default, picker is rendered inside [Popover](/core/popover/).
+You can change that to [Modal](/core/modal/) by setting `dropdownType="modal"`:
+
+<Demo data={DateTimePickerDemos.modal} />
+
+<GetElementRef
+  component="DateTimePicker"
+  refType="button"
+  package="@mantine/dates"
+/>
+
+<InputAccessibility
+  component="DateTimePicker"
+  packageName="@mantine/dates"
+/>

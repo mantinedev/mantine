@@ -1,4 +1,3 @@
-import React from 'react';
 import { __InputStylesNames } from '@mantine/core';
 import { inputDefaultProps, inputStylesApiSelectors, render, tests } from '@mantine-tests/core';
 import { clickControl, clickInput, datesTests, expectValue } from '@mantine-tests/dates';

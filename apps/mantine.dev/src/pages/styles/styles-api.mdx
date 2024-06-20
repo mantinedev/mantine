@@ -1,0 +1,223 @@
+import { Button } from '@mantine/core';
+import { StylesDemos } from '@docs/demos';
+import { ButtonStylesApi } from '@docs/styles-api';
+import {
+  SelectorsTable,
+  VariablesTable,
+} from '@/components/StylesApiTable';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.StylesApi);
+
+# Styles API
+
+## What is Styles API
+
+The styles API is a set of props and techniques that allows you to customize the style of any element
+inside a Mantine component – inline or using the [theme object](/theming/theme-object). All Mantine components that
+have styles support Styles API.
+
+## Styles API selectors
+
+Every Mantine component that supports the styles API has a set of element names that can be used to
+apply styles to inner elements inside the component. For simplicity, these elements names are called
+selectors in Mantine documentation. You can find selectors information under the `Styles API` tab
+in a component's documentation.
+
+Example of [Button](/core/button) component selectors:
+
+<SelectorsTable
+  data={ButtonStylesApi}
+  component="Button"
+  withTableBorder={false}
+  fixedLayout={false}
+/>
+
+You can use these selectors in `classNames` and `styles` in, both, component props and `theme.components`:
+
+```tsx
+import { Button, createTheme, MantineProvider } from '@mantine/core';
+
+function ClassNamesDemo() {
+  return (
+    <Button
+      classNames={{
+        root: 'my-root-class',
+        label: 'my-label-class',
+        inner: 'my-inner-class',
+      }}
+    >
+      Button
+    </Button>
+  );
+}
+
+function StylesDemo() {
+  return (
+    <Button
+      styles={{
+        root: { backgroundColor: 'red' },
+        label: { color: 'blue' },
+        inner: { fontSize: 20 },
+      }}
+    >
+      Button
+    </Button>
+  );
+}
+
+const theme = createTheme({
+  components: {
+    Button: Button.extend({
+      classNames: {
+        root: 'my-root-class',
+        label: 'my-label-class',
+        inner: 'my-inner-class',
+      },
+      styles: {
+        root: { backgroundColor: 'red' },
+        label: { color: 'blue' },
+        inner: { fontSize: 20 },
+      },
+    }),
+  },
+});
+
+function ProviderDemo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Button>Button</Button>
+    </MantineProvider>
+  );
+}
+```
+
+## classNames prop
+
+With the `classNames` prop you can add classes to inner elements of Mantine components. It accepts
+an object with element names as keys and classes as values:
+
+<Demo data={StylesDemos.classNames} />
+
+## classNames in theme.components
+
+You can also define `classNames` in [`theme.components`](/theming/theme-object) to apply them to all
+components of a specific type:
+
+```tsx
+import { useState } from 'react';
+import {
+  createTheme,
+  MantineProvider,
+  TextInput,
+} from '@mantine/core';
+// Styles are the same as in previous example
+import classes from './Demo.module.css';
+
+const theme = createTheme({
+  components: {
+    TextInput: TextInput.extend({
+      classNames: {
+        root: classes.root,
+        input: classes.input,
+        label: classes.label,
+      },
+    }),
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+## Components CSS variables
+
+Most of Mantine components use CSS variables to define colors, sizes, paddings and other
+properties. You can override these values using a custom CSS variables resolver function
+in [theme.components](/theming/theme-object) or by passing it to the `vars` prop.
+
+You can find CSS variables information under the `Styles API` tab in a component's documentation.
+Example of [Button](/core/button) component CSS variables:
+
+<VariablesTable
+  data={ButtonStylesApi}
+  withTableBorder={false}
+  fixedLayout={false}
+/>
+
+Example of a custom CSS variables resolver function used to add more sizes to the [Button](/core/button) component:
+
+<Demo data={StylesDemos.vars} />
+
+## styles prop
+
+The `styles` prop works the same way as `classNames`, but applies inline styles. Note that inline
+styles have higher specificity than classes, so you will not be able to override them with classes
+without using `!important`. You cannot use pseudo-classes (for example, `:hover`, `:first-of-type`)
+and media queries inside the `styles` prop.
+
+<Demo data={StylesDemos.styles} />
+
+> **styles prop usage**
+>
+> Some examples and demos in the documentation use the `styles` prop for convenience, but it is not
+> recommended to use the `styles` prop as the primary means of styling components, as the `classNames`
+> prop is more flexible and has [better performance](/styles/styles-performance).
+
+## Styles API based on component props
+
+You can also pass a callback function to `classNames` and `styles`. This function will receive
+[theme](/theming/theme-object) as first argument and component props as second. It should return
+an object of classes (for `classNames`) or styles (for `styles`).
+
+You can use this feature to conditionally apply styles based on component props. For example,
+you can change the [TextInput](/core/text-input) label color if the input is required or change the input
+background color if the input is wrong:
+
+<Demo data={StylesDemos.classNamesProps} />
+
+## Static classes
+
+Every component that supports Styles API also includes static classes that can be used to style
+component without using `classNames` or `styles` props. By default, static classes have
+`.mantine-{ComponentName}-{selector}` format. For example, `root` selector of [Button](/core/button)
+component will have `.mantine-Button-root` class.
+
+You can use static classes to style a component with CSS or [any other styling solution](/styles/css-modules#styling-mantine-components-without-css-modules):
+
+```css
+.mantine-Button-root {
+  background-color: red;
+}
+```
+
+The prefix of static classes can be changed with `classNamesPrefix` of [MantineProvider](/theming/mantine-provider#classnamesprefix).
+
+## Components classes
+
+Classes of each component are available in the `Component.classes` object. For example, you can
+find the classes of [Button](/core/button) in `Button.classes`:
+
+<DataTable
+  head={['Key', 'Class']}
+  data={Object.keys(Button.classes).map((key) => [
+    key,
+    Button.classes[key],
+  ])}
+/>
+
+You can use these classes to create components with the same styles as Mantine components:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return <button type="button" className={Button.classes.root} />;
+}
+```

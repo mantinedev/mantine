@@ -1,4 +1,3 @@
-import React from 'react';
 import { convertCssVariables } from '../convert-css-variables/convert-css-variables';
 import { useMantineCssVariablesResolver, useMantineStyleNonce } from '../Mantine.context';
 import { useMantineTheme } from '../MantineThemeProvider';
@@ -7,6 +6,7 @@ import { removeDefaultVariables } from './remove-default-variables';
 
 interface MantineCssVariablesProps {
   cssVariablesSelector: string;
+  deduplicateCssVariables: boolean;
 }
 
 function getColorSchemeCssVariables(selector: string) {
@@ -16,12 +16,15 @@ function getColorSchemeCssVariables(selector: string) {
 `;
 }
 
-export function MantineCssVariables({ cssVariablesSelector }: MantineCssVariablesProps) {
+export function MantineCssVariables({
+  cssVariablesSelector,
+  deduplicateCssVariables,
+}: MantineCssVariablesProps) {
   const theme = useMantineTheme();
   const nonce = useMantineStyleNonce();
   const generator = useMantineCssVariablesResolver();
   const mergedVariables = getMergedVariables({ theme, generator });
-  const shouldCleanVariables = cssVariablesSelector === ':root';
+  const shouldCleanVariables = cssVariablesSelector === ':root' && deduplicateCssVariables;
   const cleanedVariables = shouldCleanVariables
     ? removeDefaultVariables(mergedVariables)
     : mergedVariables;

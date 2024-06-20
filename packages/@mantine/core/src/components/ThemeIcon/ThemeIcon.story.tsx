@@ -1,4 +1,3 @@
-import React from 'react';
 import { DEFAULT_THEME } from '../../core';
 import { ThemeIcon, ThemeIconProps } from './ThemeIcon';
 

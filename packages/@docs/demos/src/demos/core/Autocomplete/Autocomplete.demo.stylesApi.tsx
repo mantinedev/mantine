@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconAt } from '@tabler/icons-react';
 import { Autocomplete, rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
@@ -41,9 +40,12 @@ function Demo(props: any) {
   );
 }
 
+const data = { ...AutocompleteStylesApi };
+delete (data as any).selectors.empty;
+
 export const stylesApi: MantineDemo = {
   type: 'styles-api',
-  data: AutocompleteStylesApi,
+  data,
   component: Demo,
   code,
   centered: true,

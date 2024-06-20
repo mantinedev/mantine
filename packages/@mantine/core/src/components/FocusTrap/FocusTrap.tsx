@@ -1,6 +1,7 @@
-import React, { cloneElement } from 'react';
+import { cloneElement } from 'react';
 import { useFocusTrap, useMergedRef } from '@mantine/hooks';
 import { isElement } from '../../core';
+import { VisuallyHidden } from '../VisuallyHidden';
 
 export interface FocusTrapProps {
   /** Element at which focus should be trapped, should support ref prop */
@@ -28,4 +29,10 @@ export function FocusTrap({
   return cloneElement(children, { [refProp]: ref });
 }
 
+export function FocusTrapInitialFocus(props: React.ComponentPropsWithoutRef<'span'>) {
+  return <VisuallyHidden tabIndex={-1} data-autofocus {...props} />;
+}
+
 FocusTrap.displayName = '@mantine/core/FocusTrap';
+FocusTrapInitialFocus.displayName = '@mantine/core/FocusTrapInitialFocus';
+FocusTrap.InitialFocus = FocusTrapInitialFocus;

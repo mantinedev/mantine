@@ -1,0 +1,16 @@
+.content {
+  min-height: calc(100vh - 350px);
+  position: relative;
+  z-index: 1;
+  padding-bottom: 80px;
+
+  @mixin light {
+    background-color: var(--mantine-color-white);
+    box-shadow: var(--mantine-shadow-sm);
+  }
+
+  @mixin dark {
+    background-color: var(--mantine-color-dark-7);
+    box-shadow: none;
+  }
+}

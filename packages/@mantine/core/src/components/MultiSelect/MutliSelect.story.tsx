@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { TextInput } from '../TextInput';
@@ -13,12 +13,33 @@ export function Usage() {
         placeholder="MultiSelect something"
         required
         label="Some label"
+        defaultValue={['1', '2']}
         data={[
           { value: '1', label: 'React' },
           { value: '2', label: 'Angular' },
           { value: '3', label: 'Svelte' },
         ]}
       />
+    </div>
+  );
+}
+
+export function Disabled() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MultiSelect
+        disabled
+        label="disabled"
+        defaultValue={['React', 'Angular']}
+        placeholder="Enter tags"
+      />
+      <fieldset disabled>
+        <MultiSelect
+          label="disabled fieldset"
+          defaultValue={['React', 'Angular']}
+          placeholder="Enter tags"
+        />
+      </fieldset>
     </div>
   );
 }
@@ -100,6 +121,15 @@ export function Clearable() {
         data={['React', 'Angular', 'Svelte']}
         defaultValue={['React']}
         clearable
+      />
+
+      <MultiSelect
+        placeholder="Searchable"
+        data={['React', 'Angular', 'Svelte']}
+        defaultValue={['React']}
+        clearable
+        searchable
+        mt="md"
       />
 
       <MultiSelect

@@ -1,6 +1,5 @@
 // Generates separate css files for each @mantine/core component
 import path from 'node:path';
-import cssnano from 'cssnano';
 import glob from 'fast-glob';
 import fs from 'fs-extra';
 import { generateScopedName } from 'hash-css-selector';
@@ -21,7 +20,6 @@ async function processFile(
   const result = await postcss([
     postcssPresetMantine,
     postcssModules({ generateScopedName, getJSON: () => {}, scopeBehaviour }),
-    cssnano({ preset: 'default' }),
   ]).process(fs.readFileSync(filePath, 'utf-8'), { from: path.basename(filePath) });
 
   const fileName = transformFileName(filePath);
@@ -34,7 +32,8 @@ async function processFile(
 
 // Generates styles.layers.css files for each @mantine/* component
 async function generateCSSLayers() {
-  const files = await glob(getPath('packages/*/*/styles.css'));
+  const packagesPath = glob.convertPathToPattern(getPath('packages'));
+  const files = await glob(`${packagesPath}/*/*/styles.css`);
 
   files.forEach((filePath) => {
     const directory = path.normalize(path.join(filePath, '..'));
@@ -46,12 +45,13 @@ async function generateCSSLayers() {
 
 // Generates individual css files for each @mantine/core component
 export async function generateCoreCSS() {
-  const files = await glob(getPath('packages/@mantine/core/src/**/*.css'));
+  const packagesPath = glob.convertPathToPattern(getPath('packages'));
+  const files = await glob(`${packagesPath}/@mantine/core/src/**/*.css`);
   const modules = files.filter((file) => file.endsWith('.module.css'));
   const global = files.find((file) => file.endsWith('global.css'))!;
 
   fs.writeJsonSync(
-    getPath('docs/src/.docgen/css-exports.json'),
+    getPath('apps/mantine.dev/src/.docgen/css-exports.json'),
     { modules: modules.map(transformFileName), global: transformFileName(global) },
     { spaces: 2 }
   );

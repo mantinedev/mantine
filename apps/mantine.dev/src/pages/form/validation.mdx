@@ -1,0 +1,183 @@
+import { FormDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.formValidation);
+
+## Validation with rules object
+
+To validate form with rules object, provide an object of functions which take field value as an argument
+and return error message (any React node) or null if field is valid:
+
+<Demo data={FormDemos.rulesValidation} />
+
+## Rule function arguments
+
+Each form rule receives the following arguments:
+
+- `value` – value of field
+- `values` – all form values
+- `path` – field path, for example `user.email` or `cart.0.price`
+
+`path` argument can be used to get information about field location relative to other fields,
+for example you can get index of array element:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { a: [{ b: 1 }, { b: 2 }] },
+  validate: {
+    a: {
+      b: (value, values, path) => (path === 'a.0.b' ? 'error' : null),
+    },
+  },
+});
+```
+
+## Validation based on other form values
+
+You can get all form values as a second rule function argument to perform field validation based on other
+form values. For example, you can validate that password confirmation is the same as password:
+
+<Demo data={FormDemos.password} />
+
+## Function based validation
+
+Another approach to handle validation is to provide a function to `validate`.
+Function takes form values as single argument and should return object that contains
+errors of corresponding fields. If field is valid or field validation is not required, you can either return null or simply omit it
+from the validation results.
+
+<Demo data={FormDemos.validateFunction} />
+
+## Validate fields on change
+
+To validate all fields on change set `validateInputOnChange` option to `true`:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  validateInputOnChange: true,
+});
+```
+
+<Demo data={FormDemos.liveValidation} demoProps={{ toggle: true }} />
+
+You can also provide an array of fields paths to validate only those values:
+
+```tsx
+import { FORM_INDEX, useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  validateInputOnChange: [
+    'name',
+    'email',
+    `jobs.${FORM_INDEX}.title`,
+  ],
+});
+```
+
+<Demo
+  data={FormDemos.liveFieldValidation}
+  demoProps={{ toggle: true }}
+/>
+
+## Validate fields on blur
+
+To validate all fields on blur set `validateInputOnBlur` option to `true`:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  validateInputOnBlur: true,
+});
+```
+
+<Demo data={FormDemos.blurValidation} demoProps={{ toggle: true }} />
+
+You can also provide an array of fields paths to validate only those values:
+
+```tsx
+import { FORM_INDEX, useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  validateInputOnBlur: ['name', 'email', `jobs.${FORM_INDEX}.title`],
+});
+```
+
+<Demo
+  data={FormDemos.blurFieldValidation}
+  demoProps={{ toggle: true }}
+/>
+
+## Clear field error on change
+
+By default, field error is cleared when value changes. To change this, set `clearInputErrorOnChange` to `false`:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  clearInputErrorOnChange: false,
+});
+```
+
+<Demo
+  data={FormDemos.clearErrorOnChange}
+  demoProps={{ toggle: true }}
+/>
+
+## Validation in onSubmit handler
+
+`form.onSubmit` accepts two arguments: first argument is `handleSubmit` function that will be called with form values, when validation
+was completed without errors, second argument is `handleErrors` function, it is called with errors object when validation was completed with errors.
+
+You can use `handleErrors` function to perform certain actions when user tries to submit form without values,
+for example, you can show a notification:
+
+<Demo data={FormDemos.onSubmitErrors} />
+
+## isValid handler
+
+`form.isValid` performs form validation with given validation functions, rules object or schema, but unlike
+`form.validate` it does not set `form.errors` and just returns boolean value that indicates whether form is valid.
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { name: '', age: 0 },
+  validate: {
+    name: (value) => (value.trim().length < 2 ? 'Too short' : null),
+    age: (value) => (value < 18 ? 'Too young' : null),
+  },
+});
+
+// get validation status of all values
+form.isValid(); // -> false
+
+// get validation status of field
+form.isValid('name'); // -> false
+```
+
+## Focus first invalid field
+
+The second argument of the `form.onSubmit` function is a callback function that is called
+with the [errors object](/form/errors) when form validation fails.
+You can use this callback to focus the first invalid field or perform any other action.
+
+To get the DOM node of any input, use `form.getInputNode('path-to-field')`. Note that
+in order for this feature to work, you need to spread `form.getInputProps('path-to-field')` to
+the input element.
+
+<Demo data={FormDemos.focusError} />

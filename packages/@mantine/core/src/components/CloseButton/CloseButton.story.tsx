@@ -1,4 +1,3 @@
-import React from 'react';
 import { CloseButton } from './CloseButton';
 
 export default { title: 'CloseButton' };
@@ -7,6 +6,14 @@ export function SingleButton() {
   return (
     <div style={{ padding: 40 }}>
       <CloseButton />
+    </div>
+  );
+}
+
+export function Disabled() {
+  return (
+    <div style={{ padding: 40 }}>
+      <CloseButton disabled />
     </div>
   );
 }

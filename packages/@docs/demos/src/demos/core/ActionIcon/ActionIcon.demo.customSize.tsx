@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconHeart } from '@tabler/icons-react';
 import { ActionIcon, createTheme, Group, MantineThemeProvider, rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
@@ -36,8 +35,8 @@ function Demo() {
 
 const cssCode = `
 .root {
-  --ai-size-xxs: rem(16px);
-  --ai-size-xxl: rem(50px);
+  --ai-size-xxs: 16px;
+  --ai-size-xxl: 50px;
 }
 `;
 

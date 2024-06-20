@@ -1,4 +1,3 @@
-import React from 'react';
 import { DEFAULT_THEME, rgba } from '../MantineProvider';
 import { Box } from './Box';
 
@@ -7,15 +6,17 @@ export default { title: 'Box' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Box bg="pink" hiddenFrom="md">
-        Hidden from md
-      </Box>
-      <Box bg="indigo">Indigo</Box>
-      <Box bg="orange" visibleFrom="sm" ff="mono">
+      <Box bg="orange.4" ms="xl" fz="h2" lh="h1">
         Visible from sm
       </Box>
-      <Box bg="blue" hiddenFrom="sm">
-        Hidden from sm
+    </div>
+  );
+}
+export function VirtualColor() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Box bg="virtual.4" p="xl">
+        Virtual bg
       </Box>
     </div>
   );

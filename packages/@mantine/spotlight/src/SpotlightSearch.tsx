@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import {
   BoxProps,
   CompoundStylesApiProps,
@@ -41,7 +41,7 @@ export const SpotlightSearch = factory<SpotlightSearchFactory>((props, ref) => {
   );
   const ctx = useSpotlightContext();
   const inputStyles = ctx.getStyles('search');
-  const [isComposing, setIsComposing] = React.useState(false); // IME
+  const [isComposing, setIsComposing] = useState(false); // IME
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);

@@ -1,0 +1,88 @@
+import {
+  CheckboxDemos,
+  FormDemos,
+  RadioDemos,
+  SimpleGridDemos,
+  TreeDemos,
+} from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog7100);
+
+## Tree component
+
+New [Tree](/core/tree) component:
+
+<Demo data={TreeDemos.files} />
+
+## form.getInputNode
+
+New `form.getInputNode(path)` handler returns input DOM node for the given field path.
+Form example, it can be used to focus input on form submit if there is an error:
+
+<Demo data={FormDemos.focusError} />
+
+## Container queries in SimpleGrid
+
+You can now use [container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries)
+in [SimpleGrid](/core/simple-grid) component. With container queries, grid columns and spacing
+will be adjusted based on the container width, not the viewport width.
+
+Example of using container queries. To see how the grid changes, resize the root element
+of the demo with the resize handle located at the bottom right corner of the demo:
+
+<Demo data={SimpleGridDemos.container} />
+
+## Checkbox and Radio indicators
+
+New [Checkbox.Indicator](/core/checkbox/#checkboxindicator) and [Radio.Indicator](/core/radio/#radioindicator)
+components look exactly the same as `Checkbox` and `Radio` components, but they do not
+have any semantic meaning, they are just visual representations of checkbox and radio states.
+
+`Checkbox.Indicator` component:
+
+<Demo data={CheckboxDemos.indicator} />
+
+`Radio.Indicator` component:
+
+<Demo data={RadioDemos.indicator} />
+
+## Checkbox and Radio cards
+
+New [Checkbox.Card](/core/checkbox/#checkboxcard-component) and [Radio.Card](/core/radio/#radiocard-component)
+components can be used as replacements for `Checkbox` and `Radio` to build custom cards/buttons/etc.
+that work as checkboxes and radios. Components are accessible by default and support the same
+keyboard interactions as `input[type="checkbox"]` and `input[type="radio"]`.
+
+`Checkbox.Card` component:
+
+<Demo data={CheckboxDemos.card} />
+
+`Checkbox.Card` component with `Checkbox.Group`:
+
+<Demo data={CheckboxDemos.cardGroup} />
+
+`Radio.Card` component:
+
+<Demo data={RadioDemos.card} />
+
+`Radio.Card` component with `Radio.Group`:
+
+<Demo data={RadioDemos.cardGroup} />
+
+## bd style prop
+
+New [bd style prop](/styles/style-props/) can be used to set `border` CSS property.
+It is available in all components that support style props.
+
+Border width value is automatically converted to rem. For border color you can reference
+theme colors similar to other style props:
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return <Box bd="1px solid red.5" />;
+}
+```

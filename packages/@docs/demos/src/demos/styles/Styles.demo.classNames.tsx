@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Styles.demo.classNames.module.css';
@@ -34,14 +34,14 @@ function Demo() {
 const cssCode = `
 .root {
   position: relative;
-  margin-top: rem(5px);
+  margin-top: 5px;
 }
 
 .input {
   border-top: none;
   border-left: none;
   border-right: none;
-  border-bottom-width: rem(2px);
+  border-bottom-width: 2px;
   border-radius: 0;
   padding-left: 0;
   background-color: var(--mantine-color-body);
@@ -51,14 +51,14 @@ const cssCode = `
   position: absolute;
   z-index: 1;
   pointer-events: none;
-  top: rem(7px);
+  top: 7px;
   color: var(--mantine-color-placeholder);
   font-weight: 400;
   font-size: var(--mantine-font-size-sm);
   transition: color 100ms ease, transform 100ms ease, font-size 100ms ease;
 
   &[data-floating] {
-    transform: translateY(rem(-20px));
+    transform: translateY(-20px);
     font-size: var(--mantine-font-size-xs);
     color: var(--mantine-color-text);
   }

@@ -7,8 +7,8 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding-left: rem(22px);
-  padding-right: var(--mantine-spacing-xs);
+  padding-inline-start: 22px;
+  padding-inline-end: var(--mantine-spacing-xs);
   padding-top: var(--mantine-spacing-xs);
   padding-bottom: var(--mantine-spacing-xs);
   border-radius: var(--notification-radius);
@@ -18,17 +18,12 @@
     content: '';
     display: block;
     position: absolute;
-    width: rem(6px);
+    width: 6px;
     top: var(--notification-radius);
     bottom: var(--notification-radius);
-    left: rem(4px);
+    inset-inline-start: 4px;
     border-radius: var(--notification-radius);
     background-color: var(--notification-color);
-
-    @mixin where-rtl {
-      right: rem(4px);
-      left: auto;
-    }
   }
 
   @mixin where-light {
@@ -40,11 +35,7 @@
   }
 
   &:where([data-with-icon]) {
-    padding-left: var(--mantine-spacing-xs);
-
-    @mixin where-rtl {
-      padding-right: var(--mantine-spacing-xs);
-    }
+    padding-inline-start: var(--mantine-spacing-xs);
 
     &::before {
       display: none;
@@ -53,60 +44,40 @@
 
   &:where([data-with-border]) {
     @mixin where-light {
-      border: rem(1px) solid var(--mantine-color-gray-3);
+      border: 1px solid var(--mantine-color-gray-3);
     }
 
     @mixin where-dark {
-      border: rem(1px) solid var(--mantine-color-dark-4);
+      border: 1px solid var(--mantine-color-dark-4);
     }
-  }
-
-  @mixin where-rtl {
-    padding-right: rem(22px);
-    padding-left: var(--mantine-spacing-xs);
   }
 }
 
 .icon {
   box-sizing: border-box;
-  margin-right: var(--mantine-spacing-md);
-  width: rem(28px);
-  height: rem(28px);
-  border-radius: rem(28px);
+  margin-inline-end: var(--mantine-spacing-md);
+  width: 28px;
+  height: 28px;
+  border-radius: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: var(--notification-color);
   color: var(--mantine-color-white);
-
-  @mixin where-rtl {
-    margin-right: 0;
-    margin-left: var(--mantine-spacing-md);
-  }
 }
 
 .loader {
-  margin-right: var(--mantine-spacing-md);
-
-  @mixin where-rtl {
-    margin-right: 0;
-    margin-left: var(--mantine-spacing-md);
-  }
+  margin-inline-end: var(--mantine-spacing-md);
 }
 
 .body {
   flex: 1;
   overflow: hidden;
-  margin-right: var(--mantine-spacing-xs);
-
-  @mixin where-rtl {
-    margin-right: 0;
-    margin-left: var(--mantine-spacing-xs);
-  }
+  margin-inline-end: var(--mantine-spacing-xs);
 }
 
 .title {
-  margin-bottom: rem(2px);
+  margin-bottom: 2px;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: var(--mantine-font-size-sm);
@@ -123,26 +94,25 @@
 }
 
 .description {
-  color: var(--_description-color);
   font-size: var(--mantine-font-size-sm);
   line-height: var(--mantine-line-height-sm);
   overflow: hidden;
   text-overflow: ellipsis;
 
-  @mixin light {
+  @mixin where-light {
     color: var(--mantine-color-black);
   }
 
-  @mixin dark {
+  @mixin where-dark {
     color: var(--mantine-color-dark-0);
   }
 
   &:where([data-with-title]) {
-    @mixin light {
+    @mixin where-light {
       color: var(--mantine-color-gray-6);
     }
 
-    @mixin dark {
+    @mixin where-dark {
       color: var(--mantine-color-dark-2);
     }
   }
@@ -150,11 +120,11 @@
 
 .closeButton {
   @mixin hover {
-    @mixin light {
+    @mixin where-light {
       background-color: var(--mantine-color-gray-0);
     }
 
-    @mixin dark {
+    @mixin where-dark {
       background-color: var(--mantine-color-dark-8);
     }
   }

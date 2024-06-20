@@ -1,5 +1,5 @@
-import React, { forwardRef, useEffect, useState } from 'react';
-import { useDebounceCallback } from '@mantine/hooks';
+import { forwardRef, useEffect, useState } from 'react';
+import { useDebouncedCallback } from '@mantine/hooks';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { composeEventHandlers } from '../utils';
 import {
@@ -17,7 +17,7 @@ export const ScrollAreaScrollbarScroll = forwardRef<HTMLDivElement, ScrollAreaSc
     const context = useScrollAreaContext();
     const isHorizontal = props.orientation === 'horizontal';
     const [state, setState] = useState<'hidden' | 'idle' | 'interacting' | 'scrolling'>('hidden');
-    const debounceScrollEnd = useDebounceCallback(() => setState('idle'), 100);
+    const debounceScrollEnd = useDebouncedCallback(() => setState('idle'), 100);
 
     useEffect(() => {
       if (state === 'idle') {

@@ -17,8 +17,8 @@
 .legendItem {
   display: flex;
   align-items: center;
-  gap: rem(7px);
-  padding: rem(7px) var(--mantine-spacing-xs);
+  gap: 7px;
+  padding: 7px var(--mantine-spacing-xs);
   border-radius: var(--mantine-radius-default);
   line-height: 1;
 
@@ -30,6 +30,10 @@
     @mixin where-dark {
       background-color: var(--mantine-color-dark-5);
     }
+  }
+
+  &[data-without-color] .legendItemColor {
+    display: none;
   }
 }
 

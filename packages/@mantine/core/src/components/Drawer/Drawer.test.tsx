@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, render, tests } from '@mantine-tests/core';
 import { Drawer, DrawerProps, DrawerStylesNames } from './Drawer';
 import { DrawerBody, DrawerBodyProps } from './DrawerBody';

@@ -1,0 +1,114 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.formActions);
+
+## Usage
+
+Form actions allow changing state of the form from anywhere in your application.
+The mechanism of form actions is similar to [notifications system](/x/notifications/),
+[modals manager](/x/modals/) and other similar packages.
+
+To use form actions, set `name` property in [use-form](/form/use-form/) settings:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+export interface DemoFormValues {
+  name: string;
+  age: number;
+}
+
+function Demo() {
+  const form = useForm<DemoFormValues>({
+    mode: 'uncontrolled',
+    name: 'demo-form',
+    initialValues: {
+      name: '',
+      age: 0,
+    },
+  });
+}
+```
+
+Then call `createFormActions` function with the same form name as specified in `useForm` settings:
+
+```tsx
+// Import type of form values from the file where you defined useForm
+import { createFormActions } from '@mantine/form';
+import type { DemoFormValues } from './DemoForm';
+
+export const demoFormActions =
+  createFormActions<DemoFormValues>('demo-form');
+```
+
+After that, you can use `demoFormActions` to change form state from anywhere in your application.
+For example, after a fetch request or after a user interaction with a component that does not have access
+to the form state:
+
+```tsx
+import { useEffect } from 'react';
+import { Button } from '@mantine/core';
+import { demoFormActions } from './demoFormActions';
+
+function ExternalComponent() {
+  useEffect(() => {
+    fetch('/api/user')
+      .then((res) => res.json())
+      .then((res) =>
+        demoFormActions.setValues({
+          name: res.name,
+          age: res.age,
+        })
+      );
+  }, []);
+
+  return (
+    <Button onClick={() => demoFormActions.reset()}>
+      Reset demo form
+    </Button>
+  );
+}
+```
+
+## Form name
+
+Form name must be a string that contains only letters, numbers and dashes:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+// ✅ Valid form name
+const valid = useForm({ name: 'valid-FORM-name-10' mode: 'uncontrolled' });
+
+// ❌ Invalid form name: must not contain spaces and special characters
+const invalid = useForm({ name: 'invalid_form name', mode: 'uncontrolled' });
+```
+
+Note that form names must be unique, if you have multiple forms with the same name, form actions will
+update the state of all forms with the same name.
+
+## Form actions
+
+`createFormActions` function returns an object with the following methods:
+
+- `setFieldValue`
+- `setValues`
+- `setInitialValues`
+- `setErrors`
+- `setFieldError`
+- `clearFieldError`
+- `clearErrors`
+- `reset`
+- `validate`
+- `validateField`
+- `reorderListItem`
+- `removeListItem`
+- `insertListItem`
+- `setDirty`
+- `setTouched`
+- `resetDirty`
+- `resetTouched`
+
+All methods work similar to [use-form](/form/use-form/) hooks methods –
+functions accept the same arguments but do not return anything.

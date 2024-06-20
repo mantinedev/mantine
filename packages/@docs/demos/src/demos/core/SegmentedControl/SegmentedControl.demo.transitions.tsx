@@ -1,9 +1,8 @@
-import React from 'react';
 import { SegmentedControl, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { SegmentedControl } from '@mantine/core';
+import { SegmentedControl, Text } from '@mantine/core';
 
 function Demo() {
   return (

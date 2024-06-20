@@ -1,15 +1,12 @@
-import React from 'react';
 import { PieChart } from '@mantine/charts';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = (props: any) => `
 import { PieChart } from '@mantine/charts';
-import { data } from './data';
 
 function Demo() {
   return (
     <PieChart
-      {...props}
       data={[
         { name: 'USA', value: 400, color: '${props.color}' },
         { name: 'Other', value: 200, color: 'gray.6' },

@@ -1,0 +1,119 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How to update Mantine dependencies?',
+  description:
+    'Learn how to update @mantine/*, @mantinex/* and postcss-preset-mantine dependencies manually or with ncu script',
+  slug: 'how-to-update-dependencies',
+  category: 'tooling',
+  tags: ['npm', 'yarn', 'package.json'],
+  created_at: 'November 14, 2023',
+  last_updated_at: 'November 30, 2023',
+};
+
+export default Layout(meta);
+
+## Update dependencies with npm-check-updates
+
+Run the following script to update `package.json` file:
+
+```sh
+npx npm-check-updates @mantine/* @mantinex/* postcss-preset-mantine -u
+```
+
+Then install new dependencies with your package manager. For example, if
+you use [yarn](https://yarnpkg.com/), run
+
+```sh
+yarn
+```
+
+All done! Your dependencies are up to date.
+
+## ncu script
+
+You can install [npm-check-updates](https://www.npmjs.com/package/npm-check-updates)
+globally and run it without `npx`:
+
+```sh
+npm install -g npm-check-updates
+```
+
+After the package is installed, run the following command to update `@mantine/*`
+dependencies:
+
+```sh
+ncu @mantine/* @mantinex/* postcss-preset-mantine -u
+```
+
+## Update dependencies manually
+
+If the method above does not work for you or you want to update `@mantine/*` dependencies
+to a specific version, you can do it manually. Open `package.json` file, it may look
+something like this:
+
+```json
+{
+  "name": "your-project",
+  "version": "1.0.0",
+  "scripts": {},
+  "dependencies": {
+    "@mantine/core": "^7.2.2",
+    "@mantine/hooks": "^7.2.2",
+    "next": "14.0.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "postcss": "^8.4.31",
+    "postcss-preset-mantine": "^1.10.0",
+    "prettier": "^3.1.0",
+    "typescript": "5.2.2"
+  }
+}
+```
+
+Update dependencies version in `package.json` file to the desired version.
+Note that all `@mantine/*` packages must have the same version.
+For example, if you want to update `@mantine/*` dependencies to `7.3.0` and
+`postcss-preset-mantine` to `1.11.0`, you `package.json` file should be
+updated like this:
+
+```json
+{
+  "name": "your-project",
+  "version": "1.0.0",
+  "scripts": {},
+  "dependencies": {
+    "@mantine/core": "^7.3.0",
+    "@mantine/hooks": "^7.3.0",
+    "next": "14.0.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "postcss": "^8.4.31",
+    "postcss-preset-mantine": "^1.11.0",
+    "prettier": "^3.1.0",
+    "typescript": "5.2.2"
+  }
+}
+```
+
+Then install new dependencies with your package manager. For example, if
+you use [yarn](https://yarnpkg.com/), run
+
+```sh
+yarn
+```
+
+All done! Your dependencies are up to date.
+
+## How do I know which version is the latest?
+
+All `@mantine/*` packages have the same version, so you can check the latest
+version of [@mantine/hooks package on npm](https://www.npmjs.com/package/@mantine/hooks). It
+is also displayed near the Mantine logo on the [documentation home page](https://mantine.dev).
+
+To check the latest version of `postcss-preset-mantine` package, visit
+[postcss-preset-mantine package on npm](https://www.npmjs.com/package/postcss-preset-mantine).

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Fieldset, Group, TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

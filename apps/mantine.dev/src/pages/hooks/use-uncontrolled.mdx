@@ -1,0 +1,81 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useUncontrolled);
+
+## Usage
+
+`use-uncontrolled` manages state for both controlled and uncontrolled components:
+
+```tsx
+import { useUncontrolled } from '@mantine/hooks';
+
+interface CustomInputProps {
+  value?: string;
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+}
+
+function CustomInput({
+  value,
+  defaultValue,
+  onChange,
+}: CustomInputProps) {
+  const [_value, handleChange] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: 'Final',
+    onChange,
+  });
+
+  return (
+    <input
+      type="text"
+      value={_value}
+      onChange={(event) => handleChange(event.currentTarget.value)}
+    />
+  );
+}
+```
+
+## Set value type
+
+By default, the hook will set type automatically, but you can provide your own type:
+
+```tsx
+import { useUncontrolled } from '@mantine/hooks';
+
+function Demo() {
+  const [_value, handleChange] = useUncontrolled<number>({
+    value: 10,
+    defaultValue: 5,
+    finalValue: 20,
+    onChange: (val) => console.log(val > 10),
+  });
+}
+```
+
+## Definition
+
+```tsx
+interface UseUncontrolledInput<T> {
+  /** Value for controlled state */
+  value?: T;
+
+  /** Initial value for uncontrolled state */
+  defaultValue?: T;
+
+  /** Final value for uncontrolled state when value and defaultValue are not provided */
+  finalValue?: T;
+
+  /** Controlled state onChange handler */
+  onChange?: (value: T) => void;
+}
+
+function useUncontrolled<T>(input: UseUncontrolledInput<T>): [
+  T, // current value
+  (value: T) => void, // onChange function
+  boolean, // value that indicates if input is controlled or not
+];
+```

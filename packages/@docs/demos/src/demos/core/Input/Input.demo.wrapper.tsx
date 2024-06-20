@@ -1,4 +1,3 @@
-import React from 'react';
 import { Input } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { inputWrapperOnlyControls } from '../../../shared';

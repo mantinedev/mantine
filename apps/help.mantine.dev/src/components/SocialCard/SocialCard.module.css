@@ -1,0 +1,76 @@
+.root {
+  position: relative;
+  height: 280px;
+  padding: var(--mantine-spacing-lg);
+  border-radius: var(--mantine-radius-md);
+  color: var(--mantine-color-white);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+
+  &[data-type='discord'] {
+    background-color: #5865f2;
+
+    & .appIcon {
+      background-color: #7581ff;
+    }
+  }
+
+  &[data-type='github'] {
+    @mixin light {
+      background-color: var(--mantine-color-black);
+
+      & .appIcon {
+        background-color: var(--mantine-color-dark-5);
+      }
+    }
+
+    @mixin dark {
+      background-color: var(--mantine-color-gray-0);
+      color: var(--mantine-color-black);
+
+      & .appIcon {
+        background-color: var(--mantine-color-gray-3);
+      }
+    }
+  }
+
+  @mixin hover {
+    box-shadow: var(--mantine-shadow-md);
+    transform: scale(1.03);
+  }
+}
+
+.appIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: var(--mantine-radius-md);
+}
+
+.arrowIcon {
+  position: absolute;
+  bottom: var(--mantine-spacing-md);
+  right: var(--mantine-spacing-md);
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.description {
+  margin: 0;
+  padding: 0;
+  font-size: var(--mantine-font-size-sm);
+  opacity: 0.8;
+  max-width: 360px;
+  margin-top: 7px;
+}

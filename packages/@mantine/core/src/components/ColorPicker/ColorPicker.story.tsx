@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { AlphaSlider } from './AlphaSlider/AlphaSlider';
 import { ColorPicker } from './ColorPicker';
 import { HueSlider } from './HueSlider/HueSlider';
@@ -81,37 +81,35 @@ export function Unstyled() {
 }
 
 export function Controlled() {
-  const [value, setValue] = React.useState('#FFFFFF');
+  const [value, setValue] = useState('#FFFFFF');
 
   return (
     <div style={{ padding: 40 }}>
-      <React.StrictMode>
-        <ColorPicker
-          swatches={[
-            '#25262b',
-            '#868e96',
-            '#fa5252',
-            '#e64980',
-            '#be4bdb',
-            '#7950f2',
-            '#4c6ef5',
-            '#228be6',
-            '#15aabf',
-            '#12b886',
-            '#40c057',
-            '#82c91e',
-            '#fab005',
-            '#fd7e14',
-          ]}
-          size="xl"
-          value={value}
-          onChange={setValue}
-        />
+      <ColorPicker
+        swatches={[
+          '#25262b',
+          '#868e96',
+          '#fa5252',
+          '#e64980',
+          '#be4bdb',
+          '#7950f2',
+          '#4c6ef5',
+          '#228be6',
+          '#15aabf',
+          '#12b886',
+          '#40c057',
+          '#82c91e',
+          '#fab005',
+          '#fd7e14',
+        ]}
+        size="xl"
+        value={value}
+        onChange={setValue}
+      />
 
-        <button type="button" onClick={() => setValue('#FEFEFE')}>
-          Set value
-        </button>
-      </React.StrictMode>
+      <button type="button" onClick={() => setValue('#FEFEFE')}>
+        Set value
+      </button>
     </div>
   );
 }

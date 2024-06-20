@@ -6,7 +6,7 @@ const TestContainer = createContextContainer(CarouselSlide, Carousel, {});
 
 const defaultProps: CarouselSlideProps = {};
 
-describe('@mantine/core/CarouselSlide', () => {
+describe('@mantine/carousel/CarouselSlide', () => {
   tests.itSupportsSystemProps<CarouselSlideProps, CarouselSlideStylesNames>({
     component: TestContainer,
     props: defaultProps,
@@ -19,7 +19,7 @@ describe('@mantine/core/CarouselSlide', () => {
     classes: true,
     id: true,
     refType: HTMLDivElement,
-    displayName: '@mantine/core/CarouselSlide',
+    displayName: '@mantine/carousel/CarouselSlide',
     stylesApiSelectors: ['slide'],
     providerStylesApi: false,
     selector: '.mantine-Carousel-slide',

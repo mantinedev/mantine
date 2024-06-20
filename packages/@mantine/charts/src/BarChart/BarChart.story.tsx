@@ -1,4 +1,3 @@
-import React from 'react';
 import { BarChart } from './BarChart';
 
 export default { title: 'BarChart' };
@@ -19,6 +18,17 @@ const data = [
   { month: 'April', Smartphones: 30, Laptops: 40, Tablets: 50 },
   { month: 'May', Smartphones: 20, Laptops: 25, Tablets: 30 },
   { month: 'June', Smartphones: 40, Laptops: 45, Tablets: 50 },
+];
+
+const waterfallData = [
+  { item: 'TaxRate', 'Effective tax rate in %': 21, color: 'blue.3' },
+  { item: 'Foreign inc.', 'Effective tax rate in %': -15.5, color: 'green' },
+  { item: 'Perm. diff.', 'Effective tax rate in %': -3, color: 'green' },
+  { item: 'Credits', 'Effective tax rate in %': -3, color: 'green' },
+  { item: 'Loss carryf. ', 'Effective tax rate in %': -2, color: 'green' },
+  { item: 'Law changes', 'Effective tax rate in %': 2, color: 'red' },
+  { item: 'Reven. adj.', 'Effective tax rate in %': 4, color: 'red' },
+  { item: 'ETR', 'Effective tax rate in %': 3.5, color: 'blue.3', standalone: true },
 ];
 
 export function Usage() {
@@ -69,6 +79,22 @@ export function Stacked() {
           { name: 'Tablets', color: 'teal.6' },
         ]}
         withLegend
+      />
+    </div>
+  );
+}
+
+export function Waterfall() {
+  return (
+    <div style={{ padding: 40 }}>
+      <BarChart
+        h={300}
+        data={waterfallData}
+        dataKey="item"
+        type="waterfall"
+        fillOpacity={0.6}
+        withLegend
+        series={[{ name: 'Effective tax rate in %', color: 'blue' }]}
       />
     </div>
   );

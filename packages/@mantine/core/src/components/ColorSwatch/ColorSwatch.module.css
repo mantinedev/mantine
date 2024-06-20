@@ -1,6 +1,6 @@
 .root {
-  --cs-size: rem(28px);
-  --cs-radius: rem(1000px);
+  --cs-size: 28px;
+  --cs-radius: 1000px;
 
   -webkit-tap-highlight-color: transparent;
   border: none;
@@ -47,12 +47,12 @@
   position: absolute;
   inset: 0;
   border-radius: var(--cs-radius);
-  background-size: rem(8px) rem(8px);
+  background-size: 8px 8px;
   background-position:
     0 0,
-    0 rem(4px),
-    rem(4px) rem(-4px),
-    rem(-4px) 0;
+    0 4px,
+    4px -4px,
+    -4px 0;
   background-image: linear-gradient(45deg, var(--alpha-overlay-color) 25%, transparent 25%),
     linear-gradient(-45deg, var(--alpha-overlay-color) 25%, transparent 25%),
     linear-gradient(45deg, transparent 75%, var(--alpha-overlay-color) 75%),

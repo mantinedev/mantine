@@ -1,27 +1,27 @@
 .root {
-  --button-height-xs: rem(30px);
-  --button-height-sm: rem(36px);
-  --button-height-md: rem(42px);
-  --button-height-lg: rem(50px);
-  --button-height-xl: rem(60px);
+  --button-height-xs: 30px;
+  --button-height-sm: 36px;
+  --button-height-md: 42px;
+  --button-height-lg: 50px;
+  --button-height-xl: 60px;
 
-  --button-height-compact-xs: rem(22px);
-  --button-height-compact-sm: rem(26px);
-  --button-height-compact-md: rem(30px);
-  --button-height-compact-lg: rem(34px);
-  --button-height-compact-xl: rem(40px);
+  --button-height-compact-xs: 22px;
+  --button-height-compact-sm: 26px;
+  --button-height-compact-md: 30px;
+  --button-height-compact-lg: 34px;
+  --button-height-compact-xl: 40px;
 
-  --button-padding-x-xs: rem(14px);
-  --button-padding-x-sm: rem(18px);
-  --button-padding-x-md: rem(22px);
-  --button-padding-x-lg: rem(26px);
-  --button-padding-x-xl: rem(32px);
+  --button-padding-x-xs: 14px;
+  --button-padding-x-sm: 18px;
+  --button-padding-x-md: 22px;
+  --button-padding-x-lg: 26px;
+  --button-padding-x-xl: 32px;
 
-  --button-padding-x-compact-xs: rem(7px);
-  --button-padding-x-compact-sm: rem(8px);
-  --button-padding-x-compact-md: rem(10px);
-  --button-padding-x-compact-lg: rem(12px);
-  --button-padding-x-compact-xl: rem(14px);
+  --button-padding-x-compact-xs: 7px;
+  --button-padding-x-compact-sm: 8px;
+  --button-padding-x-compact-md: 10px;
+  --button-padding-x-compact-lg: 12px;
+  --button-padding-x-compact-xl: 14px;
 
   --button-height: var(--button-height-sm);
   --button-padding-x: var(--button-padding-x-sm);
@@ -34,68 +34,71 @@
   text-align: center;
   overflow: hidden;
 
-  width: var(--_button-width, auto);
-  cursor: var(--_button-cursor, pointer);
-  display: var(--_button-display, inline-block);
+  width: auto;
+  cursor: pointer;
+  display: inline-block;
   border-radius: var(--button-radius, var(--mantine-radius-default));
   font-size: var(--button-fz, var(--mantine-font-size-sm));
-  background: var(--_button-bg, var(--button-bg, var(--mantine-primary-color-filled)));
-  border: var(--_button-bd, var(--button-bd, rem(1px) solid transparent));
-  color: var(--_button-color, var(--button-color, var(--mantine-color-white)));
+  background: var(--button-bg, var(--mantine-primary-color-filled));
+  border: var(--button-bd, rem(1px) solid transparent);
+  color: var(--button-color, var(--mantine-color-white));
   height: var(--button-height, var(--button-height-sm));
-  padding-left: var(--_button-padding-left, var(--button-padding-x, var(--button-padding-x-sm)));
-  padding-right: var(--_button-padding-right, var(--button-padding-x, var(--button-padding-x-sm)));
+  padding-inline: var(--button-padding-x, var(--button-padding-x-sm));
   vertical-align: middle;
 
-  &[data-block] {
-    --_button-display: block;
-    --_button-width: 100%;
+  &:where([data-block]) {
+    display: block;
+    width: 100%;
   }
 
-  &[data-with-left-section] {
-    --_button-padding-left: calc(var(--button-padding-x) / 1.5);
-
-    @mixin rtl {
-      --_button-padding-left: var(--button-padding-x);
-      --_button-padding-right: calc(var(--button-padding-x) / 1.5);
-    }
+  &:where([data-with-left-section]) {
+    padding-inline-start: calc(var(--button-padding-x) / 1.5);
   }
 
-  &[data-with-right-section] {
-    --_button-padding-right: calc(var(--button-padding-x) / 1.5);
-
-    @mixin rtl {
-      --_button-padding-right: var(--button-padding-x);
-      --_button-padding-left: calc(var(--button-padding-x) / 1.5);
-    }
+  &:where([data-with-right-section]) {
+    padding-inline-end: calc(var(--button-padding-x) / 1.5);
   }
 
-  &:disabled:not([data-loading]),
-  &[data-disabled]:not([data-loading]) {
-    --_button-cursor: not-allowed;
-    --_button-bg: var(--_disabled-bg);
-    --_button-color: var(--_disabled-color);
-    --_button-bd: rem(1px) solid transparent;
+  &:where(:disabled:not([data-loading]), [data-disabled]:not([data-loading])) {
+    cursor: not-allowed;
+    border: 1px solid transparent;
     transform: none;
+
+    @mixin where-light {
+      color: var(--mantine-color-gray-5);
+      background: var(--mantine-color-gray-1);
+    }
+
+    @mixin where-dark {
+      color: var(--mantine-color-dark-3);
+      background: var(--mantine-color-dark-6);
+    }
   }
 
   &::before {
     content: '';
     pointer-events: none;
     position: absolute;
-    inset: rem(-1px);
+    inset: -1px;
     border-radius: var(--button-radius, var(--mantine-radius-default));
     transform: translateY(-100%);
-    background-color: var(--_button-loading-overlay-bg);
     opacity: 0;
     filter: blur(12px);
     transition:
       transform 150ms ease,
       opacity 100ms ease;
+
+    @mixin where-light {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    @mixin where-dark {
+      background-color: rgba(0, 0, 0, 0.15);
+    }
   }
 
-  &[data-loading] {
-    --_button-cursor: not-allowed;
+  &:where([data-loading]) {
+    cursor: not-allowed;
     transform: none;
 
     &::before {
@@ -107,30 +110,13 @@
       opacity: 0;
       transform: translateY(100%);
     }
-
-    & .loader {
-      opacity: 1;
-      transform: translate(-50%, calc(-50% + rem(1px)));
-    }
   }
 
   @mixin hover {
-    &:not([data-loading]):not(:disabled):not([data-disabled]) {
-      --_button-bg: var(--button-hover, var(--mantine-primary-color-filled-hover));
-      --_button-color: var(--button-hover-color);
+    &:where(:not([data-loading], :disabled, [data-disabled])) {
+      background-color: var(--button-hover, var(--mantine-primary-color-filled-hover));
+      color: var(--button-hover-color, var(--button-color));
     }
-  }
-
-  @mixin light {
-    --_disabled-color: var(--mantine-color-gray-5);
-    --_disabled-bg: var(--mantine-color-gray-1);
-    --_button-loading-overlay-bg: rgba(255, 255, 255, 0.15);
-  }
-
-  @mixin dark {
-    --_disabled-color: var(--mantine-color-dark-3);
-    --_disabled-bg: var(--mantine-color-dark-6);
-    --_button-loading-overlay-bg: rgba(0, 0, 0, 0.15);
   }
 }
 
@@ -151,35 +137,23 @@
   overflow: hidden;
   display: flex;
   align-items: center;
-  opacity: var(--_button-label-opacity, 1);
+  opacity: 1;
 
-  &[data-loading] {
-    --_button-label-opacity: 0.2;
+  &:where([data-loading]) {
+    opacity: 0.2;
   }
 }
 
 .section {
   display: flex;
   align-items: center;
-  margin-right: var(--_button-section-margin-right);
-  margin-left: var(--_button-section-margin-left);
 
-  &[data-position='left'] {
-    --_button-section-margin-right: var(--mantine-spacing-xs);
-
-    @mixin rtl {
-      --_button-section-margin-right: 0;
-      --_button-section-margin-left: var(--mantine-spacing-xs);
-    }
+  &:where([data-position='left']) {
+    margin-inline-end: var(--mantine-spacing-xs);
   }
 
-  &[data-position='right'] {
-    --_button-section-margin-left: var(--mantine-spacing-xs);
-
-    @mixin rtl {
-      --_button-section-margin-left: 0;
-      --_button-section-margin-right: var(--mantine-spacing-xs);
-    }
+  &:where([data-position='right']) {
+    margin-inline-start: var(--mantine-spacing-xs);
   }
 }
 
@@ -187,55 +161,38 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transition:
-    transform 150ms ease,
-    opacity 100ms ease;
-  opacity: 0;
-  transform: translate(-50%, -200%);
 }
 
 .group {
+  --button-border-width: 1px;
   display: flex;
-  --button-border-width: rem(1px);
+
+  & :where(*) {
+    &:focus {
+      position: relative;
+      z-index: 1;
+    }
+  }
 
   &[data-orientation='horizontal'] {
     flex-direction: row;
 
     & .root {
       &:not(:only-child):first-child {
-        border-bottom-right-radius: 0;
-        border-top-right-radius: 0;
-        border-right-width: calc(var(--button-border-width) / 2);
+        border-end-end-radius: 0;
+        border-start-end-radius: 0;
+        border-inline-end-width: calc(var(--button-border-width) / 2);
       }
 
       &:not(:only-child):last-child {
-        border-bottom-left-radius: 0;
-        border-top-left-radius: 0;
-        border-left-width: calc(var(--button-border-width) / 2);
+        border-end-start-radius: 0;
+        border-start-start-radius: 0;
+        border-inline-start-width: calc(var(--button-border-width) / 2);
       }
 
       &:not(:only-child):not(:first-child):not(:last-child) {
         border-radius: 0;
-        border-right-width: calc(var(--button-border-width) / 2);
-        border-left-width: calc(var(--button-border-width) / 2);
-      }
-
-      @mixin rtl {
-        &:not(:only-child):first-child {
-          border: var(--_button-bd, var(--button-bd, rem(1px) solid transparent));
-          border-radius: var(--button-radius, var(--mantine-radius-default));
-          border-bottom-left-radius: 0;
-          border-top-left-radius: 0;
-          border-left-width: calc(var(--button-border-width) / 2);
-        }
-
-        &:not(:only-child):last-child {
-          border: var(--_button-bd, var(--button-bd, rem(1px) solid transparent));
-          border-radius: var(--button-radius, var(--mantine-radius-default));
-          border-bottom-right-radius: 0;
-          border-top-right-radius: 0;
-          border-right-width: calc(var(--button-border-width) / 2);
-        }
+        border-inline-width: calc(var(--button-border-width) / 2);
       }
     }
   }
@@ -245,14 +202,14 @@
 
     & .root {
       &:not(:only-child):first-child {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
+        border-end-start-radius: 0;
+        border-end-end-radius: 0;
         border-bottom-width: calc(var(--button-border-width) / 2);
       }
 
       &:not(:only-child):last-child {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
+        border-start-start-radius: 0;
+        border-start-end-radius: 0;
         border-top-width: calc(var(--button-border-width) / 2);
       }
 

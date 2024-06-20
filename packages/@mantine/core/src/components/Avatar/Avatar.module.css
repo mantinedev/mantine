@@ -4,26 +4,21 @@
   --ag-offset: calc(var(--ag-spacing) * -1);
 
   display: flex;
-  padding-left: var(--ag-spacing);
-
-  @mixin where-rtl {
-    padding-left: 0;
-    padding-right: var(--ag-spacing);
-  }
+  padding-inline-start: var(--ag-spacing);
 }
 
 /* Avatar root element */
 .root {
-  --avatar-size-xs: rem(16px);
-  --avatar-size-sm: rem(26px);
-  --avatar-size-md: rem(38px);
-  --avatar-size-lg: rem(56px);
-  --avatar-size-xl: rem(84px);
+  --avatar-size-xs: 16px;
+  --avatar-size-sm: 26px;
+  --avatar-size-md: 38px;
+  --avatar-size-lg: 56px;
+  --avatar-size-xl: 84px;
 
   --avatar-size: var(--avatar-size-md);
-  --avatar-radius: rem(1000px);
+  --avatar-radius: 1000px;
   --avatar-bg: var(--mantine-color-gray-light);
-  --avatar-bd: rem(1px) solid transparent;
+  --avatar-bd: 1px solid transparent;
   --avatar-color: var(--mantine-color-gray-light-color);
   --avatar-placeholder-fz: calc(var(--avatar-size) / 2.5);
 
@@ -40,14 +35,9 @@
   min-width: var(--avatar-size);
 
   &:where([data-within-group]) {
-    margin-left: var(--ag-offset);
-    border: rem(2px) solid var(--mantine-color-body);
+    margin-inline-start: var(--ag-offset);
+    border: 2px solid var(--mantine-color-body);
     background: var(--mantine-color-body);
-
-    @mixin where-rtl {
-      margin-right: var(--ag-offset);
-      margin-left: unset;
-    }
   }
 }
 

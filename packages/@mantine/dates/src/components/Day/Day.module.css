@@ -1,99 +1,94 @@
 .day {
-  --day-size-xs: rem(30px);
-  --day-size-sm: rem(36px);
-  --day-size-md: rem(42px);
-  --day-size-lg: rem(48px);
-  --day-size-xl: rem(54px);
+  --day-size-xs: 30px;
+  --day-size-sm: 36px;
+  --day-size-md: 42px;
+  --day-size-lg: 48px;
+  --day-size-xl: 54px;
   --day-size: var(--day-size-sm);
 
-  width: var(--day-size, rem(36px));
-  height: var(--day-size, rem(36px));
+  width: var(--day-size, var(--day-size-sm));
+  height: var(--day-size, var(--day-size-sm));
   font-size: calc(var(--day-size) / 2.8);
-  display: var(--_day-display, inline-flex);
+  display: inline-flex;
   justify-content: center;
   align-items: center;
-  user-select: var(--_day-user-select, none);
-  cursor: var(--_day-cursor, pointer);
-  background-color: var(--_day-bg, transparent);
-  border-radius: var(--_day-radius, var(--mantine-radius-default));
-  color: var(--_day-color, var(--mantine-color-text));
-  opacity: var(--_day-opacity, 1);
+  user-select: none;
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: var(--mantine-radius-default);
+  color: var(--mantine-color-text);
+  opacity: 1;
 
   @mixin hover {
-    &:not([data-static], [data-disabled]) {
+    &:where(:not([data-static], [data-disabled], [data-selected], [data-in-range])) {
       @mixin light {
-        --_day-bg: var(--mantine-color-gray-0);
+        background-color: var(--mantine-color-gray-0);
       }
 
       @mixin dark {
-        --_day-bg: var(--mantine-color-dark-5);
+        background-color: var(--mantine-color-dark-5);
       }
     }
   }
 
-  &[data-static] {
-    --_day-user-select: auto;
-    --_day-cursor: default;
+  &:where([data-static]) {
+    user-select: auto;
+    cursor: default;
   }
 
-  &[data-weekend] {
-    --_day-color: var(--mantine-color-red-6);
+  &:where([data-weekend]) {
+    color: var(--mantine-color-red-6);
   }
 
-  &[data-outside] {
-    --_day-color: var(--mantine-color-dimmed);
-    --_day-opacity: 0.5;
+  &:where([data-outside]) {
+    color: var(--mantine-color-dimmed);
+    opacity: 0.5;
   }
 
-  &:disabled,
-  &[data-disabled] {
-    --_day-color: var(--mantine-color-dimmed);
-    --_day-cursor: not-allowed;
-    --_day-opacity: 0.5;
+  &:where(:disabled, [data-disabled]) {
+    color: var(--mantine-color-dimmed);
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 
-  &[data-hidden] {
-    --_day-display: none;
+  &:where([data-hidden]) {
+    display: none;
   }
 
-  &[data-in-range] {
-    --_day-bg: var(--mantine-primary-color-light-hover);
-    --_day-radius: 0;
+  &:where([data-in-range]) {
+    background-color: var(--mantine-primary-color-light-hover);
+    border-radius: 0;
 
     @mixin hover {
-      [data-mantine-color-scheme] &:not([data-disabled], [data-static]) {
-        --_day-bg: var(--mantine-primary-color-light);
+      &:where(:not([data-disabled], [data-static])) {
+        background-color: var(--mantine-primary-color-light);
       }
     }
   }
 
-  &[data-first-in-range] {
-    --_day-radius: var(--mantine-radius-default) 0 0 var(--mantine-radius-default);
-
-    @mixin rtl {
-      --_day-radius: 0 var(--mantine-radius-default) var(--mantine-radius-default) 0;
-    }
+  &:where([data-first-in-range]) {
+    border-radius: 0;
+    border-start-start-radius: var(--mantine-radius-default);
+    border-end-start-radius: var(--mantine-radius-default);
   }
 
-  &[data-last-in-range] {
-    --_day-radius: 0 var(--mantine-radius-default) var(--mantine-radius-default) 0;
-
-    @mixin rtl {
-      --_day-radius: var(--mantine-radius-default) 0 0 var(--mantine-radius-default);
-    }
+  &:where([data-last-in-range]) {
+    border-radius: 0;
+    border-end-end-radius: var(--mantine-radius-default);
+    border-start-end-radius: var(--mantine-radius-default);
   }
 
-  &[data-last-in-range][data-first-in-range] {
-    --_day-radius: var(--mantine-radius-default);
+  &:where([data-last-in-range][data-first-in-range]) {
+    border-radius: var(--mantine-radius-default);
   }
 
-  &[data-selected] {
-    --_day-bg: var(--mantine-primary-color-filled);
-    --_day-color: var(--mantine-primary-color-contrast);
+  &:where([data-selected]) {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
 
     @mixin hover {
-      [data-mantine-color-scheme] &:not([data-disabled], [data-static]) {
-        --_day-bg: var(--mantine-primary-color-filled-hover);
+      &:where(:not([data-disabled], [data-static])) {
+        background-color: var(--mantine-primary-color-filled-hover);
       }
     }
   }

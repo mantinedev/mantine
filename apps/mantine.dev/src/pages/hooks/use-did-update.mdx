@@ -1,0 +1,26 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useDidUpdate);
+
+## Usage
+
+`use-did-update` hook works the same way as `useEffect` but it is not called when component is mounted:
+
+```tsx
+import { useDidUpdate } from '@mantine/hooks';
+
+function Demo() {
+  useDidUpdate(
+    () => console.log("Won't be called when mounted"),
+    [dependency1, dependency2]
+  );
+}
+```
+
+## Definition
+
+```tsx
+function useDidUpdate(fn: EffectCallback, dependencies?: any[]): void;
+```

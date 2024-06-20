@@ -1,0 +1,162 @@
+import { ActionIconDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ActionIcon);
+
+## Usage
+
+<Demo data={ActionIconDemos.usage} />
+
+<Gradient component="ActionIcon" />
+
+<Demo data={ActionIconDemos.gradient} />
+
+## Size
+
+You can use any valid CSS value in `size` prop, it is used to set `width`, `min-width`, `min-height` and `height`
+properties. Note that `size` prop does not control child [icon](/guides/icons) size, you need to
+set it manually on icon component. When `size` is a number, the value is treated as `px` units and
+converted to [rem](/styles/rem) units.
+
+<Demo data={ActionIconDemos.size} />
+
+If you want `ActionIcon` to have the same size as Mantine inputs, use `size="input-sm"` prop:
+
+<Demo data={ActionIconDemos.inputSize} />
+
+## Disabled state
+
+To make `ActionIcon` disabled set `disabled` prop, this will prevent any interactions with the button
+and add disabled styles. If you want the button to just look disabled but still be interactive,
+set `data-disabled` prop instead. Note that disabled styles are the same for all variants.
+
+<Demo data={ActionIconDemos.disabled} />
+
+## Disabled state when ActionIcon is link
+
+`<a />` element does not support `disabled` attribute. To make `ActionIcon` disabled when it is
+rendered as a link, set `data-disabled` attribute instead and prevent default behavior in
+`onClick` event handler.
+
+<Demo data={ActionIconDemos.disabledLink} />
+
+## Customize disabled styles
+
+To customize disabled styles, it is recommended to use both `&:disabled` and `&[data-disabled]`
+selectors:
+
+- `&:disabled` is used to style the button when `disabled` prop is set and
+  also when the button is disabled by the parent component (for example, when `disabled` prop is set on a
+  `<fieldset />` element which contains `ActionIcon`).
+- `&[data-disabled]` is used to style the button when it is not actually disabled but should look like
+  it is (for example, `data-disabled` should be used if you need to use [Tooltip](/core/tooltip) with disabled `ActionIcon`
+  or when `ActionIcon` is used as a link)
+
+<Demo data={ActionIconDemos.disabledStyles} />
+
+## Disabled button with Tooltip
+
+`onMouseLeave` event [is not triggered](https://github.com/facebook/react/issues/18753) when `ActionIcon` is disabled, so if you need to use
+[Tooltip](/core/tooltip) with disabled `ActionIcon` you need to set `data-disabled` prop on `ActionIcon`
+instead of `disabled`. Note that it is also required to change `onClick` event handler to
+`(event) => event.preventDefault()` as `ActionIcon` is not actually disabled and will still trigger
+`onClick` event.
+
+<Demo data={ActionIconDemos.disabledTooltip} />
+
+## Loading state
+
+When `loading` prop is set, `ActionIcon` will be disabled and [Loader](/core/loader) with overlay will be rendered
+in the center of the button. [Loader](/core/loader) color depends on `ActionIcon` variant.
+
+<Demo data={ActionIconDemos.loading} />
+
+## Loader props
+
+You can customize [Loader](/core/loader) with `loaderProps` prop, it accepts all props that
+[Loader](/core/loader) component has:
+
+<Demo data={ActionIconDemos.loaderProps} />
+
+## Add custom variants
+
+To add new `ActionIcon` variants, use [data-variant](/styles/variants-sizes) attribute.
+Usually new variants are added on [theme](/theming/theme-object), this way they are
+available in all `ActionIcon` components in your application.
+
+<Demo data={ActionIconDemos.customVariant} />
+
+## Customize variants colors
+
+You can customize colors for `ActionIcon` and other components variants by adding
+[variantColorResolver](/theming/colors#colors-variant-resolver) to your theme.
+
+<Demo data={ActionIconDemos.variantColorsResolver} />
+
+<AutoContrast component="ActionIcon" />
+
+<Demo data={ActionIconDemos.autoContrast} />
+
+## Add custom sizes
+
+`ActionIcon` sizes are defined by `--ai-size-{x}` CSS variables. The easiest way to add new sizes is to
+define additional `--ai-size-{x}` variables on the `root` element:
+
+<Demo data={ActionIconDemos.customSize} />
+
+## ActionIcon.Group
+
+<Demo data={ActionIconDemos.group} />
+
+Note that you must not wrap child `ActionIcon` components with any additional elements:
+
+```tsx
+import { ActionIcon } from '@mantine/core';
+
+// Will not work correctly
+function Demo() {
+  return (
+    <ActionIcon.Group>
+      <div>
+        <ActionIcon>This will not work</ActionIcon>
+      </div>
+      <ActionIcon>ActionIcons will have incorrect borders</ActionIcon>
+    </ActionIcon.Group>
+  );
+}
+```
+
+<Polymorphic
+  defaultElement="button"
+  changeToElement="a"
+  component="ActionIcon"
+  withNext
+/>
+
+<GetElementRef component="ActionIcon" refType="button" />
+
+## Accessibility
+
+To make `ActionIcon` accessible for screen readers, you need to either set `aria-label` or
+use [VisuallyHidden](/core/visually-hidden) component:
+
+```tsx
+import { IconHeart } from '@tabler/icons-react';
+import { ActionIcon, VisuallyHidden } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <ActionIcon aria-label="Like post">
+        <IconHeart />
+      </ActionIcon>
+
+      <ActionIcon>
+        <VisuallyHidden>Like post</VisuallyHidden>
+        <IconHeart />
+      </ActionIcon>
+    </>
+  );
+}
+```

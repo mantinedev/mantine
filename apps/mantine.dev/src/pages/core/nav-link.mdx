@@ -1,0 +1,40 @@
+import { NavLinkDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.NavLink);
+
+## Usage
+
+<Demo data={NavLinkDemos.usage} />
+
+## Active
+
+Set `active` prop to add active styles to `NavLink`.
+
+Note that if you're using a React Router or Remix `NavLink` inside `renderRoot`, the active styles will be based on the
+[`aria-current` attribute that's set by React Router](https://reactrouter.com/en/main/components/nav-link#aria-current)
+so you won't need to explicitly set the `active` prop.
+
+You can customize active styles with `color` and `variant` props:
+
+<Demo data={NavLinkDemos.active} />
+
+<AutoContrast component="NavLink" />
+
+<Demo data={NavLinkDemos.autoContrast} />
+
+## Nested NavLinks
+
+To create nested links put `NavLink` as children of another `NavLink`:
+
+<Demo data={NavLinkDemos.nested} />
+
+<Polymorphic
+  defaultElement="a"
+  changeToElement="button"
+  component="NavLink"
+  withNext
+/>
+
+<GetElementRef component="NavLink" refType="a" />

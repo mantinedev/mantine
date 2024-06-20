@@ -1,0 +1,19 @@
+.wrapper {
+  padding-top: 120px;
+  padding-bottom: 60px;
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+
+  &[data-alt] {
+    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
+  }
+}
+
+.description {
+  line-height: 1.6;
+  opacity: 0.85;
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+
+  @media (max-width: em(960px)) {
+    font-size: var(--mantine-font-size-md);
+  }
+}

@@ -1,0 +1,82 @@
+import { MonthPickerInputDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.MonthPickerInput);
+
+## MonthPicker props
+
+`MonthPickerInput` supports most of the [MonthPicker](/dates/month-picker/) props,
+read through [MonthPicker](/dates/month-picker/) documentation to learn about all component features that are not listed on this page.
+
+## Usage
+
+<Demo data={MonthPickerInputDemos.usage} />
+
+## Multiple dates
+
+Set `type="multiple"` to allow user to pick multiple dates:
+
+<Demo data={MonthPickerInputDemos.multiple} />
+
+## Dates range
+
+Set `type="range"` to allow user to pick dates range:
+
+<Demo data={MonthPickerInputDemos.range} />
+
+## Open picker in modal
+
+By default, [MonthPicker](/dates/month-picker/) is rendered inside [Popover](/core/popover/).
+You can change that to [Modal](/core/modal/) by setting `dropdownType="modal"`:
+
+<Demo data={MonthPickerInputDemos.modal} />
+
+## Value format
+
+Use `valueFormat` prop to change [dayjs format](https://day.js.org/docs/en/display/format) of value label:
+
+<Demo data={MonthPickerInputDemos.valueFormat} />
+
+## Value formatter
+
+`valueFormatter` is a more powerful alternative to `valueFormat` prop.
+It allows formatting value label with a custom function.
+The function is the same for all component types (`default`, `multiple` and `range`)
+– you need to perform additional checks inside the function to handle different types.
+
+Example of using a custom formatter function with `type="multiple"`:
+
+<Demo data={MonthPickerInputDemos.valueFormatter} />
+
+## Clearable
+
+Set `clearable` prop to display clear button in the right section. Note that if you set `rightSection`
+prop, clear button will not be displayed.
+
+<Demo data={MonthPickerInputDemos.clearable} />
+
+## Disabled state
+
+<Demo data={MonthPickerInputDemos.disabled} />
+
+## Input props
+
+<InputFeatures component="MonthPickerInput" element="button" />
+
+<Demo data={MonthPickerInputDemos.configurator} />
+
+## With icon
+
+<Demo data={MonthPickerInputDemos.icon} />
+
+<GetElementRef
+  component="MonthPickerInput"
+  refType="button"
+  package="@mantine/dates"
+/>
+
+<InputAccessibility
+  component="MonthPickerInput"
+  packageName="@mantine/dates"
+/>

@@ -1,0 +1,187 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ColorFunctions);
+
+# Color functions
+
+`@mantine/core` package exports several functions that can be used to manipulate colors
+or extract information before using them as CSS value.
+
+## darken and lighten
+
+`darken` and `lighten` functions can be used to manipulate color brightness,
+they accept color in any format as first argument and the amount of lightness to add/remove as second argument.
+
+```tsx
+import { darken, lighten } from '@mantine/core';
+
+lighten('#228BE6', 0.1); // lighten by 10%
+// -> rgba(56, 151, 233, 1)
+
+darken('rgb(245, 159, 0)', 0.5); // darken by 50%
+// -> rgba(123, 80, 0, 1)
+
+darken('rgba(245, 159, 0, .3)', 0.5); // darken by 50%
+// -> rgba(123, 80, 0, 1, .3)
+
+lighten('var(--mantine-color-gray-4)', 0.74);
+// -> color-mix(in srgb, var(--mantine-color-gray-4), white 74%)
+```
+
+## alpha
+
+`alpha` function converts color to rgba format with a given alpha channel,
+it is usually used to make colors more transparent. If it is not possible to convert color to rgba
+format (for example if color is a CSS variable), the function will use [color-mix](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/color-mix).
+Note that `color-mix` is not supported in some older browsers, you can check [caniuse](https://caniuse.com/mdn-css_types_color_color-mix)
+for more information.
+
+```tsx
+import { alpha } from '@mantine/core';
+
+alpha('#4578FC', 0.45); // -> rgba(69, 120, 252, 0.45)
+alpha('var(--mantine-color-gray-4)', 0.74);
+// -> color-mix(in srgb, var(--mantine-color-gray-4), transparent 26%)
+```
+
+## parseThemeColor
+
+`parseThemeColor` function returns information about a given color in the following format:
+
+```tsx
+interface ParseThemeColorResult {
+  /**
+   * True if given color is theme color, for example
+   * `blue`, `orange.9`, `pink.3` are theme colors
+   * `#fff`, `rgba(0, 0, 0, .5)` are not
+   */
+  isThemeColor: boolean;
+
+  /**
+   * Key of `theme.colors` if given color is theme color, for example
+   * if given color is `blue` it will be `blue`,
+   * if given color is `orange.9` it will be `orange`
+   */
+  color: string;
+
+  /**
+   * Resolved color value, for example
+   * if given color is `blue.7` it will be value of `theme.colors.blue[7]`,
+   * if given color is `#fff` it will be `#fff`
+   */
+  value: string;
+
+  /**
+   * If given color is theme color, this will be shade of that color
+   * for example if given color is `blue.7` it will be `7`,
+   * if given color does not have index or is not theme color then it will be `undefined`
+   */
+  shade: MantineColorShade | undefined;
+
+  /**
+   * Color CSS variable, for example
+   * `blue.7` – `--mantine-color-blue-7`,
+   * `red` – `--mantine-color-red-filled`,
+   * `white` – `--mantine-color-white`
+   * `#fff` – `undefined`
+   */
+  variable: CssVariable | undefined;
+}
+```
+
+`parseThemeColor` function can be used everywhere `theme` object is available,
+for example in [CSS variables resolver](/styles/css-variables), [variant color resolver](/theming/colors#colors-variant-resolver)
+or component body:
+
+```tsx
+import {
+  MantineColor,
+  parseThemeColor,
+  useMantineTheme,
+} from '@mantine/core';
+
+interface DemoProps {
+  color: MantineColor;
+}
+
+function Demo({ color }: DemoProps) {
+  const theme = useMantineTheme();
+  const parsedColor = parseThemeColor({ color, theme });
+
+  return (
+    <div
+      style={{
+        backgroundColor: parsedColor.isThemeColor
+          ? `var(${parsedColor.variable})`
+          : parsedColor.value,
+      }}
+    />
+  );
+}
+```
+
+## getThemeColor
+
+`getThemeColor` is a simpler version of `parseThemeColor` function, it accepts a color string
+as first argument and theme object as second argument. It returns parsed color value or CSS variable:
+
+```tsx
+import { getThemeColor, useMantineTheme } from '@mantine/core';
+
+function Demo() {
+  const theme = useMantineTheme();
+
+  getThemeColor('blue', theme); // -> var(--mantine-color-blue-filled)
+  getThemeColor('blue.7', theme); // -> var(--mantine-color-blue-7)
+  getThemeColor('white', theme); // -> var(--mantine-color-white)
+  getThemeColor('#DF78E4', theme); // -> #DF78E4
+}
+```
+
+## getGradient
+
+`getGradient` function transforms given `MantineGradient` object to CSS gradient string:
+
+```tsx
+import { getGradient, useMantineTheme } from '@mantine/core';
+
+function Demo() {
+  const theme = useMantineTheme();
+
+  getGradient({ deg: 180, from: 'blue', to: 'cyan.7' }, theme);
+  // -> `linear-gradient(180deg, var(--mantine-color-blue-filled) 0%, var(--mantine-color-cyan-7) 100%)`
+}
+```
+
+## isLightColor
+
+`isLightColor` function can be used to achieve better contrast between text and background:
+
+```tsx
+import { Box, isLightColor } from '@mantine/core';
+
+interface DemoProps {
+  color: string;
+}
+
+export function Demo({ color }: DemoProps) {
+  return (
+    <Box bg={color} c={isLightColor(color) ? 'black' : 'white'}>
+      Box with contrast text
+    </Box>
+  );
+}
+```
+
+## luminance
+
+`luminance` function returns color luminance, it can be used to check colors contrast:
+
+```tsx
+import { luminance } from '@mantine/core';
+
+luminance('#fff'); // -> 1
+luminance('#000'); // -> 0
+luminance('#4578FC'); // -> 0.21726425554966
+```

@@ -1,0 +1,114 @@
+import { PaginationDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.usePagination);
+
+## Usage
+
+`use-pagination` is a state management hook for [Pagination](/core/pagination/) component,
+it manages pagination with controlled and uncontrolled state:
+
+<Demo data={PaginationDemos.usage} />
+
+```tsx
+import { usePagination } from '@mantine/hooks';
+
+const pagination = usePagination({ total: 10, initialPage: 1 });
+
+pagination.range; // -> [1, 2, 3, 4, 5, 'dots', 10];
+
+pagination.setPage(5);
+pagination.range; // -> [1, 'dots', 4, 5, 6, 'dots', 10];
+
+pagination.next();
+pagination.range; // -> [1, 'dots', 5, 6, 7, 'dots', 10];
+
+pagination.previous();
+pagination.range; // -> [1, 'dots', 4, 5, 6, 'dots', 10];
+
+pagination.last();
+pagination.range; // -> [1, 'dots', 6, 7, 8, 9, 10];
+
+pagination.first();
+pagination.range; // -> [1, 2, 3, 4, 5, 'dots', 10];
+```
+
+## Controlled
+
+The hook supports controlled mode, provide `page` and `onChange` props to manage state from outside:
+
+```tsx
+import { useState } from 'react';
+import { usePagination } from '@mantine/hooks';
+
+const [page, onChange] = useState(1);
+const pagination = usePagination({ total: 10, page, onChange });
+
+// Will call onChange with 5
+pagination.setPage(5);
+pagination.range; // -> [1, 'dots', 4, 5, 6, 'dots', 10];
+
+// ... All other examples work the same
+```
+
+## Siblings
+
+Control number of active item siblings with `siblings`:
+
+```tsx
+import { usePagination } from '@mantine/hooks';
+
+const pagination = usePagination({ total: 20, siblings: 3 });
+```
+
+<Demo data={PaginationDemos.siblings} demoProps={{ toggle: true }} />
+
+## Boundaries
+
+Control number of items on each boundary with `boundaries`:
+
+```tsx
+import { usePagination } from '@mantine/hooks';
+
+const pagination = usePagination({ total: 20, boundaries: 3 });
+```
+
+<Demo
+  data={PaginationDemos.boundaries}
+  demoProps={{ toggle: true }}
+/>
+
+## Definition
+
+```tsx
+interface PaginationParams {
+  /** Page selected on initial render, defaults to 1 */
+  initialPage?: number;
+
+  /** Controlled active page number */
+  page?: number;
+
+  /** Total amount of pages */
+  total: number;
+
+  /** Siblings amount on left/right side of selected page, defaults to 1 */
+  siblings?: number;
+
+  /** Amount of elements visible on left/right edges, defaults to 1  */
+  boundaries?: number;
+
+  /** Callback fired after change of each page */
+  onChange?: (page: number) => void;
+}
+
+function usePagination(settings: PaginationParams): {
+  range: (number | 'dots')[];
+  active: number;
+  setPage: (pageNumber: number) => void;
+  next: () => void;
+  previous: () => void;
+  first: () => void;
+  last: () => void;
+};
+```

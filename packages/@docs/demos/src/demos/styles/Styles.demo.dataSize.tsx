@@ -1,4 +1,3 @@
-import React from 'react';
 import { createTheme, Input, MantineThemeProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Styles.demo.dataSize.module.css';
@@ -27,19 +26,19 @@ const cssCode = `
 .wrapper {
   &[data-size='xxl'] {
     & .input {
-      padding-left: rem(28px);
-      padding-right: rem(28px);
-      height: rem(68px);
-      font-size: rem(28px);
+      padding-left: 28px;
+      padding-right: 28px;
+      height: 68px;
+      font-size: 28px;
     }
   }
 
   &[data-size='xxs'] {
     & .input {
-      padding-left: rem(10px);
-      padding-right: rem(10px);
-      height: rem(28px);
-      font-size: rem(10px);
+      padding-left: 10px;
+      padding-right: 10px;
+      height: 28px;
+      font-size: 10px;
     }
   }
 }

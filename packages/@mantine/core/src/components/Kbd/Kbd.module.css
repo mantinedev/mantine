@@ -1,16 +1,16 @@
 .root {
-  --kbd-fz-xs: rem(10px);
-  --kbd-fz-sm: rem(12px);
-  --kbd-fz-md: rem(14px);
-  --kbd-fz-lg: rem(16px);
-  --kbd-fz-xl: rem(20px);
+  --kbd-fz-xs: 10px;
+  --kbd-fz-sm: 12px;
+  --kbd-fz-md: 14px;
+  --kbd-fz-lg: 16px;
+  --kbd-fz-xl: 20px;
   --kbd-fz: var(--kbd-fz-sm);
 
-  --kbd-padding-xs: rem(2px) rem(4px);
-  --kbd-padding-sm: rem(3px) rem(5px);
-  --kbd-padding-md: rem(4px) rem(7px);
-  --kbd-padding-lg: rem(5px) rem(9px);
-  --kbd-padding-xl: rem(8px) rem(14px);
+  --kbd-padding-xs: 2px 4px;
+  --kbd-padding-sm: 3px 5px;
+  --kbd-padding-md: 4px 7px;
+  --kbd-padding-lg: 5px 9px;
+  --kbd-padding-xl: 8px 14px;
   --kbd-padding: var(--kbd-padding-sm);
 
   font-family: var(--mantine-font-family-monospace);
@@ -19,8 +19,8 @@
   padding: var(--kbd-padding);
   font-size: var(--kbd-fz);
   border-radius: var(--mantine-radius-sm);
-  border: rem(1px) solid;
-  border-bottom-width: rem(3px);
+  border: 1px solid;
+  border-bottom-width: 3px;
   unicode-bidi: embed;
 
   @mixin where-light {
@@ -29,7 +29,7 @@
     background-color: var(--mantine-color-gray-0);
   }
 
-  @mixin dark {
+  @mixin where-dark {
     border-color: var(--mantine-color-dark-4);
     color: var(--mantine-color-dark-0);
     background-color: var(--mantine-color-dark-6);

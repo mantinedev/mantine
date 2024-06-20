@@ -1,0 +1,59 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useToggle);
+
+## Usage
+
+`use-toggle` implements a common state pattern – it switches state between given values:
+
+<Demo data={HooksDemos.useToggleDemo} />
+
+## API
+
+The hook accepts an array as single argument, the first option will be used as the default value.
+
+The hook returns an array with state value and toggle function:
+
+```tsx
+import { useToggle } from '@mantine/hooks';
+
+const [value, toggle] = useToggle(['light', 'dark'] as const);
+
+toggle(); // -> value == 'light'
+toggle(); // -> value == 'dark'
+
+// You can force specific value, in this case state will be set to given value
+toggle('dark'); // -> value == 'dark'
+```
+
+If you do not provide an array with options, then `use-toggle` will use boolean values with `false` as default:
+
+```tsx
+import { useToggle } from '@mantine/hooks';
+
+const [value, toggle] = useToggle();
+// -> value === false
+toggle(); // -> value === true
+```
+
+## Set type
+
+By default, TypeScript will guess your type, but in most cases it's better to use const assertion to prevent type widening:
+
+```tsx
+import { useToggle } from '@mantine/hooks';
+
+useToggle(['light', 'dark']); // value is string
+useToggle(['light', 'dark'] as const); // value is 'dark' | 'light'
+useToggle<'dark' | 'light'>(['light', 'dark']); // same as above
+```
+
+## Definition
+
+```tsx
+function useToggle<T = boolean>(
+  options?: readonly T[]
+): readonly [T, (value?: React.SetStateAction<T>) => void];
+```

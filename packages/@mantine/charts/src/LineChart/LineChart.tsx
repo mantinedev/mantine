@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   CartesianGrid,
   DotProps,
+  Label,
   Legend,
   Line,
+  LineProps,
   LineChart as ReChartsLineChart,
   ReferenceLine,
   ResponsiveContainer,
@@ -87,6 +89,14 @@ export interface LineChartProps
 
   /** Determines whether points with `null` values should be connected, `true` by default */
   connectNulls?: boolean;
+
+  /** Additional components that are rendered inside recharts `AreaChart` component */
+  children?: React.ReactNode;
+
+  /** Props passed down to recharts `Area` component */
+  lineProps?:
+    | ((series: LineChartSeries) => Partial<Omit<LineProps, 'ref'>>)
+    | Partial<Omit<LineProps, 'ref'>>;
 }
 
 export type LineChartFactory = Factory<{
@@ -157,6 +167,10 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     orientation,
     dir,
     valueFormatter,
+    children,
+    lineProps,
+    xAxisLabel,
+    yAxisLabel,
     ...others
   } = props;
 
@@ -213,6 +227,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         connectNulls={connectNulls}
         type={curveType}
         strokeDasharray={item.strokeDasharray}
+        {...(typeof lineProps === 'function' ? lineProps(item) : lineProps)}
       />
     );
   });
@@ -245,7 +260,16 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
       {...others}
     >
       <ResponsiveContainer {...getStyles('container')}>
-        <ReChartsLineChart data={data} layout={orientation} {...lineChartProps}>
+        <ReChartsLineChart
+          data={data}
+          layout={orientation}
+          margin={{
+            bottom: xAxisLabel ? 30 : undefined,
+            left: yAxisLabel ? 10 : undefined,
+            right: yAxisLabel ? 5 : undefined,
+          }}
+          {...lineChartProps}
+        >
           {withLegend && (
             <Legend
               verticalAlign="top"
@@ -259,7 +283,6 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
                   series={series}
                 />
               )}
-              height={44}
               {...legendProps}
             />
           )}
@@ -274,7 +297,14 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
             minTickGap={5}
             {...getStyles('axis')}
             {...xAxisProps}
-          />
+          >
+            {xAxisLabel && (
+              <Label position="insideBottom" offset={-20} fontSize={12} {...getStyles('axisLabel')}>
+                {xAxisLabel}
+              </Label>
+            )}
+            {xAxisProps?.children}
+          </XAxis>
 
           <YAxis
             hide={!withYAxis}
@@ -287,7 +317,21 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
             tickFormatter={valueFormatter}
             {...getStyles('axis')}
             {...yAxisProps}
-          />
+          >
+            {yAxisLabel && (
+              <Label
+                position="insideLeft"
+                angle={-90}
+                textAnchor="middle"
+                fontSize={12}
+                offset={-5}
+                {...getStyles('axisLabel')}
+              >
+                {yAxisLabel}
+              </Label>
+            )}
+            {yAxisProps?.children}
+          </YAxis>
 
           <CartesianGrid
             strokeDasharray={strokeDasharray}
@@ -301,7 +345,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
             <Tooltip
               animationDuration={tooltipAnimationDuration}
               isAnimationActive={tooltipAnimationDuration !== 0}
-              position={{ y: 0 }}
+              position={orientation === 'vertical' ? {} : { y: 0 }}
               cursor={{
                 stroke: 'var(--chart-grid-color)',
                 strokeWidth: 1,
@@ -324,6 +368,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
 
           {lines}
           {referenceLinesItems}
+          {children}
         </ReChartsLineChart>
       </ResponsiveContainer>
     </Box>

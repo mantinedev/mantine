@@ -1,17 +1,16 @@
 .root {
   position: fixed;
   top: 0;
-  right: 0;
-  left: 0;
+  inset-inline: 0;
   z-index: var(--nprogress-z-index);
   background-color: transparent;
   transition: opacity 150ms ease;
   transition-delay: 50ms;
-  opacity: var(--_nprogress-opacity, 0);
+  opacity: 0;
   overflow: visible;
 
-  &[data-mounted] {
-    --_nprogress-opacity: 1;
+  &:where([data-mounted]) {
+    opacity: 1;
   }
 }
 
@@ -23,10 +22,10 @@
   &::before {
     content: '';
     position: absolute;
-    width: rem(100px);
+    width: 100px;
     height: var(--progress-size);
     top: 0;
-    right: 1px;
+    inset-inline-end: 1px;
     transform: rotate(4deg) translateY(-4px);
     box-shadow:
       0 0 10px var(--progress-section-color),

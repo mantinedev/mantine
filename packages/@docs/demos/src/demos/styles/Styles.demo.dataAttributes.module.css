@@ -1,11 +1,11 @@
 .root {
   border-top-left-radius: var(--mantine-radius-xl);
   border-bottom-left-radius: var(--mantine-radius-xl);
-  padding-left: rem(4px);
+  padding-left: 4px;
 
   @mixin rtl {
     padding-left: calc(var(--button-padding-x) / 1.5);
-    padding-right: rem(4px);
+    padding-right: 4px;
     border-top-left-radius: var(--mantine-radius-md);
     border-top-right-radius: var(--mantine-radius-xl);
     border-bottom-left-radius: var(--mantine-radius-md);
@@ -16,11 +16,11 @@
   &[data-disabled] {
     /* You can use Mantine PostCSS mixins inside data attributes */
     @mixin light {
-      border: rem(1px) solid var(--mantine-color-gray-2);
+      border: 1px solid var(--mantine-color-gray-2);
     }
 
     @mixin dark {
-      border: rem(1px) solid var(--mantine-color-dark-4);
+      border: 1px solid var(--mantine-color-dark-4);
     }
 
     /* You can target child elements that are inside .root[data-disabled] */
@@ -33,7 +33,7 @@
 .section {
   /* Apply styles only to left section */
   &[data-position='left'] {
-    --section-size: calc(var(--button-height) - rem(8px));
+    --section-size: calc(var(--button-height) - 8px);
 
     background-color: var(--mantine-color-body);
     color: var(--mantine-color-text);

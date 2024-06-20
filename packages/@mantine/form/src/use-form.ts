@@ -1,30 +1,23 @@
-import { useCallback, useRef, useState } from 'react';
-import isEqual from 'fast-deep-equal';
+import { useCallback, useState } from 'react';
 import { useFormActions } from './actions';
-import { filterErrors } from './filter-errors';
 import { getInputOnChange } from './get-input-on-change';
-import { getStatus } from './get-status';
-import { changeErrorIndices, clearListState, reorderErrors } from './lists';
-import { getPath, insertPath, removePath, reorderPath, setPath } from './paths';
+import { useFormErrors } from './hooks/use-form-errors/use-form-errors';
+import { useFormList } from './hooks/use-form-list/use-form-list';
+import { useFormStatus } from './hooks/use-form-status/use-form-status';
+import { useFormValues } from './hooks/use-form-values/use-form-values';
+import { useFormWatch } from './hooks/use-form-watch/use-form-watch';
+import { getDataPath, getPath } from './paths';
 import {
   _TransformValues,
-  ClearErrors,
-  ClearFieldDirty,
-  ClearFieldError,
-  GetFieldStatus,
+  GetInputNode,
   GetInputProps,
   GetTransformedValues,
   Initialize,
-  InsertListItem,
   IsValid,
+  Key,
   OnReset,
   OnSubmit,
-  RemoveListItem,
-  ReorderListItem,
   Reset,
-  ResetDirty,
-  SetErrors,
-  SetFieldError,
   SetFieldValue,
   SetValues,
   UseFormInput,
@@ -35,10 +28,11 @@ import {
 import { shouldValidateOnChange, validateFieldValue, validateValues } from './validate';
 
 export function useForm<
-  Values = Record<string, unknown>,
+  Values extends Record<string, any> = Record<string, any>,
   TransformValues extends _TransformValues<Values> = (values: Values) => Values,
 >({
   name,
+  mode = 'controlled',
   initialValues,
   initialErrors = {},
   initialDirty = {},
@@ -51,185 +45,132 @@ export function useForm<
   enhanceGetInputProps,
   validate: rules,
 }: UseFormInput<Values, TransformValues> = {}): UseFormReturnType<Values, TransformValues> {
-  const [touched, setTouched] = useState(initialTouched);
-  const [dirty, setDirty] = useState(initialDirty);
-  const [values, _setValues] = useState((initialValues || {}) as Values);
-  const [errors, _setErrors] = useState(filterErrors(initialErrors));
-  const [initialized, setInitialized] = useState(false);
+  const $errors = useFormErrors<Values>(initialErrors);
+  const $values = useFormValues<Values>({ initialValues, onValuesChange, mode });
+  const $status = useFormStatus<Values>({ initialDirty, initialTouched, $values, mode });
+  const $list = useFormList<Values>({ $values, $errors, $status });
+  const $watch = useFormWatch<Values>({ $status });
+  const [formKey, setFormKey] = useState(0);
+  const [fieldKeys, setFieldKeys] = useState<Record<string, number>>({});
 
-  const valuesSnapshot = useRef<Values>((initialValues || {}) as Values);
-  const setValuesSnapshot = (_values: Values) => {
-    valuesSnapshot.current = _values;
-  };
-
-  const initialize: Initialize<Values> = useCallback(
-    (_values) => {
-      if (!initialized) {
-        setInitialized(true);
-        _setValues(_values);
-        setValuesSnapshot(_values);
-      }
-    },
-    [initialized]
-  );
-
-  const resetTouched = useCallback(() => setTouched({}), []);
-  const resetDirty: ResetDirty<Values> = (_values) => {
-    const newSnapshot = _values ? { ...values, ..._values } : values;
-    setValuesSnapshot(newSnapshot as Values);
-    setDirty({});
-  };
-
-  const setErrors: SetErrors = useCallback(
-    (errs) =>
-      _setErrors((current) => filterErrors(typeof errs === 'function' ? errs(current) : errs)),
-    []
-  );
-
-  const clearErrors: ClearErrors = useCallback(() => _setErrors({}), []);
   const reset: Reset = useCallback(() => {
-    _setValues(valuesSnapshot.current);
-    clearErrors();
-    setDirty({});
-    resetTouched();
+    $values.resetValues();
+    $errors.clearErrors();
+    $status.resetDirty();
+    $status.resetTouched();
+    mode === 'uncontrolled' && setFormKey((key) => key + 1);
   }, []);
 
-  const setFieldError: SetFieldError<Values> = useCallback(
-    (path, error) => setErrors((current) => ({ ...current, [path]: error })),
-    []
+  const initialize: Initialize<Values> = useCallback((values) => {
+    $values.initialize(values, () => mode === 'uncontrolled' && setFormKey((key) => key + 1));
+  }, []);
+
+  const setFieldValue: SetFieldValue<Values> = useCallback(
+    (path, value, options) => {
+      const shouldValidate = shouldValidateOnChange(path, validateInputOnChange);
+
+      $status.clearFieldDirty(path);
+      $status.setFieldTouched(path, true);
+      !shouldValidate && clearInputErrorOnChange && $errors.clearFieldError(path);
+
+      $values.setFieldValue({
+        path,
+        value,
+        updateState: mode === 'controlled',
+        subscribers: [
+          ...$watch.getFieldSubscribers(path),
+          shouldValidate
+            ? (payload) => {
+                const validationResults = validateFieldValue(path, rules, payload.updatedValues);
+                validationResults.hasError
+                  ? $errors.setFieldError(path, validationResults.error)
+                  : $errors.clearFieldError(path);
+              }
+            : null,
+          options?.forceUpdate !== false && mode !== 'controlled'
+            ? () =>
+                setFieldKeys((keys) => ({
+                  ...keys,
+                  [path as string]: (keys[path as string] || 0) + 1,
+                }))
+            : null,
+        ],
+      });
+    },
+    [onValuesChange, rules]
   );
 
-  const clearFieldError: ClearFieldError = useCallback(
-    (path) =>
-      setErrors((current) => {
-        if (typeof path !== 'string') {
-          return current;
+  const setValues: SetValues<Values> = useCallback(
+    (values) => {
+      const previousValues = $values.refValues.current;
+      $values.setValues({ values, updateState: mode === 'controlled' });
+      clearInputErrorOnChange && $errors.clearErrors();
+      mode === 'uncontrolled' && setFormKey((key) => key + 1);
+
+      Object.keys($watch.subscribers.current).forEach((path) => {
+        const value = getPath(path, $values.refValues.current);
+        const previousValue = getPath(path, previousValues);
+
+        if (value !== previousValue) {
+          $watch
+            .getFieldSubscribers(path)
+            .forEach((cb) => cb({ previousValues, updatedValues: $values.refValues.current }));
         }
-
-        const clone = { ...current };
-        delete clone[path];
-        return clone;
-      }),
-    []
+      });
+    },
+    [onValuesChange, clearInputErrorOnChange]
   );
-
-  const clearFieldDirty: ClearFieldDirty = useCallback(
-    (path) =>
-      setDirty((current) => {
-        if (typeof path !== 'string') {
-          return current;
-        }
-
-        const result = clearListState(path, current);
-        delete result[path];
-        return result;
-      }),
-    []
-  );
-
-  const setFieldValue: SetFieldValue<Values> = useCallback((path, value) => {
-    const shouldValidate = shouldValidateOnChange(path, validateInputOnChange);
-    clearFieldDirty(path);
-    setTouched((currentTouched) => ({ ...currentTouched, [path]: true }));
-    _setValues((current) => {
-      const result = setPath(path, value, current);
-
-      if (shouldValidate) {
-        const validationResults = validateFieldValue(path, rules, result);
-        validationResults.hasError
-          ? setFieldError(path, validationResults.error)
-          : clearFieldError(path);
-      }
-
-      onValuesChange?.(result, current);
-
-      return result;
-    });
-
-    !shouldValidate && clearInputErrorOnChange && setFieldError(path, null);
-  }, []);
-
-  const setValues: SetValues<Values> = useCallback((payload) => {
-    _setValues((currentValues) => {
-      const valuesPartial = typeof payload === 'function' ? payload(currentValues) : payload;
-      const result = { ...currentValues, ...valuesPartial };
-      onValuesChange?.(result, currentValues);
-      return result;
-    });
-    clearInputErrorOnChange && clearErrors();
-  }, []);
-
-  const reorderListItem: ReorderListItem<Values> = useCallback((path, payload) => {
-    clearFieldDirty(path);
-    _setValues((current) => {
-      const result = reorderPath(path, payload, current);
-      onValuesChange?.(result, current);
-      return result;
-    });
-    _setErrors((errs) => reorderErrors(path, payload, errs));
-  }, []);
-
-  const removeListItem: RemoveListItem<Values> = useCallback((path, index) => {
-    clearFieldDirty(path);
-    _setValues((current) => {
-      const result = removePath(path, index, current);
-      onValuesChange?.(result, current);
-      return result;
-    });
-    _setErrors((errs) => changeErrorIndices(path, index, errs, -1));
-  }, []);
-
-  const insertListItem: InsertListItem<Values> = useCallback((path, item, index) => {
-    clearFieldDirty(path);
-    _setValues((current) => {
-      const result = insertPath(path, item, index, current);
-      onValuesChange?.(result, current);
-      return result;
-    });
-    _setErrors((errs) => changeErrorIndices(path, index, errs, 1));
-  }, []);
 
   const validate: Validate = useCallback(() => {
-    const results = validateValues(rules, values);
-    _setErrors(results.errors);
+    const results = validateValues(rules, $values.refValues.current);
+    $errors.setErrors(results.errors);
     return results;
-  }, [values, rules]);
+  }, [rules]);
 
   const validateField: ValidateField<Values> = useCallback(
     (path) => {
-      const results = validateFieldValue(path, rules, values);
-      results.hasError ? setFieldError(path, results.error) : clearFieldError(path);
+      const results = validateFieldValue(path, rules, $values.refValues.current);
+      results.hasError ? $errors.setFieldError(path, results.error) : $errors.clearFieldError(path);
       return results;
     },
-    [values, rules]
+    [rules]
   );
 
   const getInputProps: GetInputProps<Values> = (
     path,
     { type = 'input', withError = true, withFocus = true, ...otherOptions } = {}
   ) => {
-    const onChange = getInputOnChange((value) => setFieldValue(path, value as any));
-    const payload: any = { onChange };
+    const onChange = getInputOnChange((value) =>
+      setFieldValue(path, value as any, { forceUpdate: false })
+    );
+
+    const payload: any = { onChange, 'data-path': getDataPath(name, path) };
 
     if (withError) {
-      payload.error = errors[path];
+      payload.error = $errors.errorsState[path];
     }
 
     if (type === 'checkbox') {
-      payload.checked = getPath(path, values);
+      payload[mode === 'controlled' ? 'checked' : 'defaultChecked'] = getPath(
+        path,
+        $values.refValues.current
+      );
     } else {
-      payload.value = getPath(path, values);
+      payload[mode === 'controlled' ? 'value' : 'defaultValue'] = getPath(
+        path,
+        $values.refValues.current
+      );
     }
 
     if (withFocus) {
-      payload.onFocus = () => setTouched((current) => ({ ...current, [path]: true }));
+      payload.onFocus = () => $status.setFieldTouched(path, true);
       payload.onBlur = () => {
         if (shouldValidateOnChange(path, validateInputOnBlur)) {
-          const validationResults = validateFieldValue(path, rules, values);
+          const validationResults = validateFieldValue(path, rules, $values.refValues.current);
 
           validationResults.hasError
-            ? setFieldError(path, validationResults.error)
-            : clearFieldError(path);
+            ? $errors.setFieldError(path, validationResults.error)
+            : $errors.clearFieldError(path);
         }
       };
     }
@@ -251,82 +192,77 @@ export function useForm<
       const results = validate();
 
       if (results.hasErrors) {
-        handleValidationFailure?.(results.errors, values, event);
+        handleValidationFailure?.(results.errors, $values.refValues.current, event);
       } else {
-        handleSubmit?.(transformValues(values) as any, event);
+        handleSubmit?.(transformValues($values.refValues.current) as any, event);
       }
     };
 
   const getTransformedValues: GetTransformedValues<Values, TransformValues> = (input) =>
-    (transformValues as any)(input || values);
+    (transformValues as any)(input || $values.refValues.current);
 
   const onReset: OnReset = useCallback((event) => {
     event.preventDefault();
     reset();
   }, []);
 
-  const isDirty: GetFieldStatus<Values> = (path) => {
-    if (path) {
-      const overriddenValue = getPath(path, dirty);
-      if (typeof overriddenValue === 'boolean') {
-        return overriddenValue;
-      }
-
-      const sliceOfValues = getPath(path, values);
-      const sliceOfInitialValues = getPath(path, valuesSnapshot.current);
-      return !isEqual(sliceOfValues, sliceOfInitialValues);
-    }
-
-    const isOverridden = Object.keys(dirty).length > 0;
-    if (isOverridden) {
-      return getStatus(dirty);
-    }
-
-    return !isEqual(values, valuesSnapshot.current);
-  };
-
-  const isTouched: GetFieldStatus<Values> = useCallback(
-    (path) => getStatus(touched, path),
-    [touched]
-  );
-
   const isValid: IsValid<Values> = useCallback(
     (path) =>
       path
-        ? !validateFieldValue(path, rules, values).hasError
-        : !validateValues(rules, values).hasErrors,
-    [values, rules]
+        ? !validateFieldValue(path, rules, $values.refValues.current).hasError
+        : !validateValues(rules, $values.refValues.current).hasErrors,
+    [rules]
+  );
+
+  const key: Key<Values> = (path) =>
+    `${formKey}-${path as string}-${fieldKeys[path as string] || 0}`;
+
+  const getInputNode: GetInputNode<Values> = useCallback(
+    (path) => document.querySelector(`[data-path="${getDataPath(name, path)}"]`),
+    []
   );
 
   const form: UseFormReturnType<Values, TransformValues> = {
-    initialized,
-    values,
-    errors,
+    watch: $watch.watch,
+
+    initialized: $values.initialized.current,
+    values: $values.stateValues,
+    getValues: $values.getValues,
+    setInitialValues: $values.setValuesSnapshot,
     initialize,
     setValues,
-    setInitialValues: setValuesSnapshot,
-    setErrors,
     setFieldValue,
-    setFieldError,
-    clearFieldError,
-    clearErrors,
+
+    errors: $errors.errorsState,
+    setErrors: $errors.setErrors,
+    setFieldError: $errors.setFieldError,
+    clearFieldError: $errors.clearFieldError,
+    clearErrors: $errors.clearErrors,
+
+    resetDirty: $status.resetDirty,
+    setTouched: $status.setTouched,
+    setDirty: $status.setDirty,
+    isTouched: $status.isTouched,
+    resetTouched: $status.resetTouched,
+    isDirty: $status.isDirty,
+    getTouched: $status.getTouched,
+    getDirty: $status.getDirty,
+
+    reorderListItem: $list.reorderListItem,
+    insertListItem: $list.insertListItem,
+    removeListItem: $list.removeListItem,
+
     reset,
     validate,
     validateField,
-    reorderListItem,
-    removeListItem,
-    insertListItem,
     getInputProps,
     onSubmit,
     onReset,
-    isDirty,
-    isTouched,
-    setTouched,
-    setDirty,
-    resetTouched,
-    resetDirty,
     isValid,
     getTransformedValues,
+    key,
+
+    getInputNode,
   };
 
   useFormActions(name, form);

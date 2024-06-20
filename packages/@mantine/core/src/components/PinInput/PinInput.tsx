@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { assignRef, useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -116,6 +116,9 @@ export interface PinInputProps
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+
+  /** Assigns ref of the root element */
+  rootRef?: React.ForwardedRef<HTMLDivElement>;
 }
 
 export type PinInputFactory = Factory<{
@@ -174,6 +177,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     vars,
     id,
     hiddenInputProps,
+    rootRef,
     ...others
   } = useProps('PinInput', defaultProps, props);
 
@@ -200,39 +204,60 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
 
   const [focusedIndex, setFocusedIndex] = useState(-1);
 
-  const [_value, setValues] = useUncontrolled({
-    value,
-    defaultValue,
-    finalValue: '',
-    onChange,
+  const [_value, setValues] = useUncontrolled<string[]>({
+    value: value ? createPinArray(length ?? 0, value) : undefined,
+    defaultValue: defaultValue?.split('').slice(0, length ?? 0),
+    finalValue: createPinArray(length ?? 0, ''),
+    onChange:
+      typeof onChange === 'function'
+        ? (val) => {
+            onChange(val.join('').trim());
+          }
+        : undefined,
   });
+  const _valueToString = _value.join('').trim();
 
   const inputsRef = useRef<Array<HTMLInputElement>>([]);
 
   const validate = (code: string) => {
     const re = type instanceof RegExp ? type : type && type in regex ? regex[type] : null;
+
     return re?.test(code);
   };
 
-  const focusInputField = (dir: 'next' | 'prev', index: number) => {
-    if (!manageFocus) return;
+  const focusInputField = (
+    dir: 'next' | 'prev',
+    index: number,
+    event?: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (!manageFocus) {
+      event?.preventDefault();
+      return;
+    }
 
     if (dir === 'next') {
       const nextIndex = index + 1;
-      inputsRef.current[nextIndex < (length ?? 0) ? nextIndex : index].focus();
+      const canFocusNext = nextIndex < (length ?? 0);
+      if (canFocusNext) {
+        event?.preventDefault();
+        inputsRef.current[nextIndex].focus();
+      }
     }
 
     if (dir === 'prev') {
       const nextIndex = index - 1;
-
-      inputsRef.current[nextIndex > -1 ? nextIndex : index].focus();
+      const canFocusNext = nextIndex > -1;
+      if (canFocusNext) {
+        event?.preventDefault();
+        inputsRef.current[nextIndex].focus();
+      }
     }
   };
 
   const setFieldValue = (val: string, index: number) => {
-    const values = [...createPinArray(length ?? 0, _value)];
+    const values = [..._value];
     values[index] = val;
-    setValues(values.join(''));
+    setValues(values);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -250,30 +275,47 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
         setFieldValue('', index);
       }
     } else if (isValid) {
-      setValues(inputValue);
+      setValues(createPinArray(length ?? 0, inputValue));
     }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-    if (event.key === 'ArrowLeft') {
-      event.preventDefault();
-      focusInputField('prev', index);
-    } else if (event.key === 'ArrowRight') {
-      event.preventDefault();
-      focusInputField('next', index);
-    } else if (event.key === 'Delete') {
-      event.preventDefault();
+    const { ctrlKey, metaKey, key, shiftKey, target } = event;
+    const inputValue = (target as HTMLInputElement).value;
+
+    if (inputMode === 'numeric') {
+      const canTypeSign =
+        key === 'Backspace' ||
+        key === 'Tab' ||
+        key === 'Control' ||
+        key === 'Delete' ||
+        (ctrlKey && key === 'v') ||
+        (metaKey && key === 'v')
+          ? true
+          : !Number.isNaN(Number(key));
+
+      if (!canTypeSign) {
+        event.preventDefault();
+      }
+    }
+
+    if (key === 'ArrowLeft' || (shiftKey && key === 'Tab')) {
+      focusInputField('prev', index, event);
+    } else if (key === 'ArrowRight' || key === 'Tab' || key === ' ') {
+      focusInputField('next', index, event);
+    } else if (key === 'Delete') {
       setFieldValue('', index);
-    } else if (event.key === 'Backspace') {
-      event.preventDefault();
+    } else if (key === 'Backspace') {
       setFieldValue('', index);
       if (length === index + 1) {
         if ((event.target as HTMLInputElement).value === '') {
-          focusInputField('prev', index);
+          focusInputField('prev', index, event);
         }
       } else {
-        focusInputField('prev', index);
+        focusInputField('prev', index, event);
       }
+    } else if (inputValue.length > 0 && key === _value[index]) {
+      focusInputField('next', index, event);
     }
   };
 
@@ -288,25 +330,45 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
 
   const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
     event.preventDefault();
-    const copyValue = event.clipboardData.getData('Text');
+    const copyValue = event.clipboardData.getData('text/plain').replace(/[\n\r\s]+/g, '');
     const isValid = validate(copyValue.trim());
 
     if (isValid) {
-      setValues(copyValue);
+      const copyValueToPinArray = createPinArray(length ?? 0, copyValue);
+      setValues(copyValueToPinArray);
+      focusInputField('next', copyValueToPinArray.length - 2);
     }
   };
 
   useEffect(() => {
-    if (_value.length !== length) return;
+    if (_valueToString.length !== length) return;
+    onComplete?.(_valueToString);
+  }, [length, _valueToString]);
 
-    onComplete?.(_value);
-  }, [_value]);
+  useEffect(() => {
+    if (length !== _value.length) {
+      setValues(createPinArray(length ?? 0, _value.join('')));
+    }
+  }, [length, _value]);
+
+  useEffect(() => {
+    if (value === '') {
+      setValues(createPinArray(length ?? 0, value));
+    }
+  }, [value]);
+
+  useEffect(() => {
+    if (disabled) {
+      setFocusedIndex(-1);
+    }
+  }, [disabled]);
 
   return (
     <>
       <Group
         {...others}
         {...getStyles('root')}
+        ref={rootRef}
         role="group"
         id={uuid}
         gap={gap}
@@ -315,13 +377,13 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
         variant={variant}
         __size={size}
       >
-        {createPinArray(length ?? 0, _value).map((char, index) => (
+        {_value.map((char: string, index: number) => (
           <Input
             component="input"
             {...getStyles('pinInput', {
               style: {
-                '--_input-padding': '0',
-                '--_input-text-align': 'center',
+                '--input-padding': '0',
+                '--input-text-align': 'center',
               } as React.CSSProperties,
             })}
             classNames={resolvedClassNames}
@@ -356,7 +418,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
         ))}
       </Group>
 
-      <input type="hidden" name={name} form={form} value={_value} {...hiddenInputProps} />
+      <input type="hidden" name={name} form={form} value={_valueToString} {...hiddenInputProps} />
     </>
   );
 });

@@ -1,0 +1,97 @@
+.navbar {
+  --border-color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8));
+
+  position: fixed;
+  top: var(--docs-header-height);
+  bottom: 0;
+  width: var(--combobox-shell-navbar-width);
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
+  border-right: 1px solid var(--border-color);
+
+  @mixin rtl {
+    border-right: none;
+    border-left: 1px solid var(--border-color);
+  }
+
+  @media (max-width: $docs-navbar-breakpoint) {
+    width: unset;
+    left: 0;
+    right: 0;
+    z-index: 3;
+  }
+
+  &[data-hidden] {
+    @media (max-width: $docs-navbar-breakpoint) {
+      display: none;
+    }
+  }
+}
+
+.scroll {
+  height: calc(100vh - 134px);
+}
+
+.search {
+  margin-left: var(--mantine-spacing-xs);
+  margin-right: var(--mantine-spacing-xs);
+  width: auto;
+  margin-bottom: var(--mantine-spacing-md);
+  margin-top: var(--mantine-spacing-md);
+}
+
+.searchInput {
+  font-size: var(--mantine-font-size-sm);
+}
+
+.searchIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.item {
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+
+  & + & {
+    border-top: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8));
+  }
+
+  &[data-active] {
+    &,
+    &:hover {
+      background-color: var(--mantine-color-blue-light);
+      border-top-color: transparent !important;
+    }
+
+    & .itemName {
+      color: light-dark(var(--mantine-color-blue-7), var(--mantine-color-blue-2));
+    }
+
+    & .itemDescription {
+      color: light-dark(var(--mantine-color-blue-7), var(--mantine-color-blue-4));
+      opacity: 0.7;
+    }
+  }
+}
+
+.itemName {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  font-weight: 500;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.itemDescription {
+  color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-xs);
+  margin-top: 2px;
+}
+
+.empty {
+  padding: var(--mantine-spacing-md);
+  text-align: center;
+  color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-sm);
+
+  &:not(:only-child) {
+    display: none;
+  }
+}

@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { Overlay, OverlayProps, OverlayStylesNames } from './Overlay';
 

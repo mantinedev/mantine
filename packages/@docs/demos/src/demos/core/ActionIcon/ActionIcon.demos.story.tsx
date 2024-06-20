@@ -72,3 +72,8 @@ export const Demo_autoContrast = {
   name: '⭐ Demo: autoContrast',
   render: renderDemo(demos.autoContrast),
 };
+
+export const Demo_inputSize = {
+  name: '⭐ Demo: inputSize',
+  render: renderDemo(demos.inputSize),
+};

@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconExclamationCircle } from '@tabler/icons-react';
 import { rem, TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

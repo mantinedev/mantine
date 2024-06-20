@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import { createContext } from 'react';
 import { DayOfWeek } from '../../types';
 
 export interface DatesProviderValue {
@@ -25,7 +25,7 @@ export const DatesProviderContext = createContext(DATES_PROVIDER_DEFAULT_SETTING
 
 export interface DatesProviderProps {
   settings: DatesProviderSettings;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export function DatesProvider({ settings, children }: DatesProviderProps) {

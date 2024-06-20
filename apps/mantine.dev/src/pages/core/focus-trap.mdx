@@ -1,0 +1,36 @@
+import { FocusTrapDemos, ModalDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.FocusTrap);
+
+## Usage
+
+FocusTrap is a component implementation of [use-focus-trap](/hooks/use-focus-trap/) hook,
+it is used in all Mantine components that require focus trap ([Modal](/core/modal/), [DatePicker](/dates/date-picker/), [Popover](/core/popover/), etc.).
+
+<Demo data={FocusTrapDemos.usage} />
+
+## Initial focus
+
+To define the element that will receive initial focus set `data-autofocus` attribute:
+
+<Demo data={FocusTrapDemos.initial} />
+
+## FocusTrap.InitialFocus
+
+`FocusTrap.InitialFocus` is a special component that adds a visually hidden
+element which will receive the focus when the focus trap is activated.
+Once `FocusTrap.InitialFocus` loses focus, it is removed from the tab order.
+
+For example, it is useful if you do not want to focus any elements inside the [Modal](/core/modal) when it is opened:
+
+<Demo data={ModalDemos.initialFocusTrap} />
+
+## Focus trapping logic
+
+- Focus is trapped within child node if `active` prop is `true`
+- When FocusTrap component is mounted or when `active` prop changes from `false` to `true` first element with `data-autofocus` attribute is focused
+- If there are no elements with `data-autofocus` attribute, then the first element that supports keyboard interaction is focused
+- If the target element does not have focusable elements or does not support `ref`, then the focus trap will not work
+- Trap stops working when element outside of the `FocusTrap` child is focused

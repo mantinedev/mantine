@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, Code, Group, rem } from '@mantine/core';
+import { useState } from 'react';
+import { Box, Button, Code, Group, rem } from '@mantine/core';
 
 export function FormBase({ children, form }: any) {
   const [values, setValues] = useState({});
@@ -21,6 +21,11 @@ export function FormBase({ children, form }: any) {
       <div>Submitted values:</div>
       <Code block mt={5}>
         {JSON.stringify(values, null, 2)}
+      </Code>
+
+      <Box mt="md">Form values:</Box>
+      <Code block mt={5}>
+        {JSON.stringify(form.values, null, 2)}
       </Code>
     </form>
   );

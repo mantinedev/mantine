@@ -1,8 +1,8 @@
 .control {
-  width: rem(34px);
-  height: rem(34px);
+  width: 34px;
+  height: 34px;
   border-radius: var(--mantine-radius-md);
-  border: rem(1px) solid;
+  border: 1px solid;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -14,6 +14,8 @@ export interface MantineStyleProps {
   mx?: StyleProp<MantineSpacing>;
   mt?: StyleProp<MantineSpacing>;
   mb?: StyleProp<MantineSpacing>;
+  ms?: StyleProp<MantineSpacing>;
+  me?: StyleProp<MantineSpacing>;
   ml?: StyleProp<MantineSpacing>;
   mr?: StyleProp<MantineSpacing>;
 
@@ -22,19 +24,22 @@ export interface MantineStyleProps {
   px?: StyleProp<MantineSpacing>;
   pt?: StyleProp<MantineSpacing>;
   pb?: StyleProp<MantineSpacing>;
+  ps?: StyleProp<MantineSpacing>;
+  pe?: StyleProp<MantineSpacing>;
   pl?: StyleProp<MantineSpacing>;
   pr?: StyleProp<MantineSpacing>;
 
+  bd?: StyleProp<React.CSSProperties['border']>;
   bg?: StyleProp<MantineColor>;
   c?: StyleProp<MantineColor>;
   opacity?: StyleProp<React.CSSProperties['opacity']>;
 
-  ff?: StyleProp<'mono' | 'text' | 'heading' | (string & {})>;
-  fz?: StyleProp<MantineFontSize | number | (string & {})>;
+  ff?: StyleProp<'monospace' | 'text' | 'heading' | (string & {})>;
+  fz?: StyleProp<MantineFontSize | `h${1 | 2 | 3 | 4 | 5 | 6}` | number | (string & {})>;
   fw?: StyleProp<React.CSSProperties['fontWeight']>;
   lts?: StyleProp<React.CSSProperties['letterSpacing']>;
   ta?: StyleProp<React.CSSProperties['textAlign']>;
-  lh?: StyleProp<MantineLineHeight | number | (string & {})>;
+  lh?: StyleProp<MantineLineHeight | `h${1 | 2 | 3 | 4 | 5 | 6}` | number | (string & {})>;
   fs?: StyleProp<React.CSSProperties['fontStyle']>;
   tt?: StyleProp<React.CSSProperties['textTransform']>;
   td?: StyleProp<React.CSSProperties['textDecoration']>;

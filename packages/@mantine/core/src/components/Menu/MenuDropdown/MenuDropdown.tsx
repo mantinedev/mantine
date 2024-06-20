@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
@@ -84,7 +84,7 @@ export const MenuDropdown = factory<MenuDropdownFactory>((props, ref) => {
       data-menu-dropdown
       onKeyDown={handleKeyDown}
     >
-      <div tabIndex={-1} data-autofocus />
+      <div tabIndex={-1} data-autofocus aria-hidden style={{ outline: 0 }} />
       {children}
     </Popover.Dropdown>
   );

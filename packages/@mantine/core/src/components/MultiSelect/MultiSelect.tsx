@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -14,7 +14,9 @@ import {
 import { __CloseButtonProps } from '../CloseButton';
 import {
   Combobox,
+  ComboboxItem,
   ComboboxLikeProps,
+  ComboboxLikeRenderOptionInput,
   ComboboxLikeStylesNames,
   getOptionsLockup,
   getParsedComboboxData,
@@ -25,6 +27,7 @@ import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
 import { Pill } from '../Pill';
 import { PillsInput } from '../PillsInput';
+import { ScrollAreaProps } from '../ScrollArea';
 import { filterPickedValues } from './filter-picked-values';
 
 export type MultiSelectStylesNames =
@@ -48,6 +51,12 @@ export interface MultiSelectProps
 
   /** Called whe value changes */
   onChange?: (value: string[]) => void;
+
+  /** Called with `value` of the removed item */
+  onRemove?: (value: string) => void;
+
+  /** Called when the clear button is clicked */
+  onClear?: () => void;
 
   /** Controlled search value */
   searchValue?: string;
@@ -83,10 +92,16 @@ export interface MultiSelectProps
   clearButtonProps?: __CloseButtonProps & ElementProps<'button'>;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+  hiddenInputProps?: Omit<React.ComponentPropsWithoutRef<'input'>, 'value'>;
 
   /** Divider used to separate values in the hidden input `value` attribute, `','` by default */
   hiddenInputValuesDivider?: string;
+
+  /** A function to render content of the option, replaces the default content of the option */
+  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
+
+  /** Props passed down to the underlying `ScrollArea` component in the dropdown */
+  scrollAreaProps?: ScrollAreaProps;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -173,6 +188,10 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     hiddenInputValuesDivider,
     required,
     mod,
+    renderOption,
+    onRemove,
+    onClear,
+    scrollAreaProps,
     ...others
   } = props;
 
@@ -192,7 +211,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
 
   const {
     styleProps,
-    rest: { type, ...rest },
+    rest: { type, autoComplete, ...rest },
   } = extractStyleProps(others);
 
   const [_value, setValue] = useUncontrolled({
@@ -233,6 +252,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     }
 
     if (event.key === 'Backspace' && _searchValue.length === 0 && _value.length > 0) {
+      onRemove?.(_value[_value.length - 1]);
       setValue(_value.slice(0, _value.length - 1));
     }
   };
@@ -241,8 +261,12 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     <Pill
       key={`${item}-${index}`}
       withRemoveButton={!readOnly && !optionsLockup[item]?.disabled}
-      onRemove={() => setValue(_value.filter((i) => item !== i))}
+      onRemove={() => {
+        setValue(_value.filter((i) => item !== i));
+        onRemove?.(item);
+      }}
       unstyled={unstyled}
+      disabled={disabled}
       {...getStyles('pill')}
     >
       {optionsLockup[item]?.label || item}
@@ -260,6 +284,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
       size={size as string}
       {...clearButtonProps}
       onClear={() => {
+        onClear?.();
         setValue([]);
         setSearchValue('');
       }}
@@ -285,6 +310,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
 
           if (_value.includes(optionsLockup[val].value)) {
             setValue(_value.filter((v) => v !== optionsLockup[val].value));
+            onRemove?.(optionsLockup[val].value);
           } else if (_value.length < maxValues!) {
             setValue([..._value, optionsLockup[val].value]);
           }
@@ -342,7 +368,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
           >
             <Pill.Group disabled={disabled} unstyled={unstyled} {...getStyles('pillsList')}>
               {values}
-              <Combobox.EventsTarget>
+              <Combobox.EventsTarget autoComplete={autoComplete}>
                 <PillsInput.Field
                   {...rest}
                   ref={ref}
@@ -395,13 +421,16 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
           withCheckIcon={withCheckIcon}
           nothingFoundMessage={nothingFoundMessage}
           unstyled={unstyled}
-          labelId={`${_id}-label`}
+          labelId={label ? `${_id}-label` : undefined}
+          aria-label={label ? undefined : others['aria-label']}
+          renderOption={renderOption}
+          scrollAreaProps={scrollAreaProps}
         />
       </Combobox>
-      <input
-        type="hidden"
+      <Combobox.HiddenInput
         name={name}
-        value={_value.join(hiddenInputValuesDivider)}
+        valuesDivider={hiddenInputValuesDivider}
+        value={_value}
         form={form}
         disabled={disabled}
         {...hiddenInputProps}

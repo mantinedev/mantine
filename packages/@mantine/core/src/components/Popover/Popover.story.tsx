@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, MantineThemeProvider } from '../../core';
 import { Group } from '../Group';
 import { Tooltip } from '../Tooltip';
@@ -32,18 +32,16 @@ export function Uncontrolled() {
   );
 }
 
-export function withFloatingAutoUpdate() {
+export function AtTheEdge() {
   return (
-    <div style={{ padding: 40, height: 400, overflow: 'scroll' }}>
-      <div style={{ height: 150 }} />
-      <Popover>
+    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <Popover position="bottom-end" middlewares={{ shift: { padding: 20 } }}>
         <Popover.Target>
           <button type="button">Toggle popover</button>
         </Popover.Target>
 
         <Popover.Dropdown>Dropdown</Popover.Dropdown>
       </Popover>
-      <div style={{ height: 300 }} />
     </div>
   );
 }

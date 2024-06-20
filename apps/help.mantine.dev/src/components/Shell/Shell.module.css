@@ -1,0 +1,38 @@
+.root {
+  --footer-height: 120px;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.main {
+  padding-bottom: var(--footer-height);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  background-color: var(--mantine-color-body);
+  padding-bottom: 120px;
+  box-shadow: var(--mantine-shadow-md);
+  min-height: calc(100vh - var(--app-shell-header-height));
+}
+
+.logo {
+  & > svg {
+    display: block;
+  }
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--footer-height);
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+}

@@ -1,0 +1,69 @@
+.title {
+  margin-top: calc(var(--mantine-spacing-xl) * 1.2);
+  margin-bottom: var(--mantine-spacing-md);
+  word-break: break-word;
+  font-family: var(--docs-font-primary);
+  font-weight: 700;
+  position: relative;
+
+  @mixin light {
+    color: var(--mantine-color-black);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-white);
+  }
+
+  @mixin hover {
+    .copyButton {
+      opacity: 1;
+    }
+  }
+
+  &[data-h1] {
+    font-weight: 900;
+    font-size: 40px;
+    margin-top: 0;
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.offset {
+  position: relative;
+  top: -62px;
+}
+
+.copyButton {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-width: 18px;
+  color: var(--mantine-color-dimmed);
+  border-radius: var(--mantine-radius-sm);
+  opacity: 0.2;
+  transition: opacity 100ms ease;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -28px;
+  padding-right: 10px;
+  padding-top: 8px;
+  padding-bottom: 4px;
+
+  @mixin hover {
+    color: var(--mantine-color-blue-5);
+  }
+
+  @mixin smaller-than $mantine-breakpoint-lg {
+    display: none;
+  }
+}
+
+.copyIcon {
+  width: 18px;
+  height: 18px;
+}

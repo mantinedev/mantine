@@ -1,0 +1,218 @@
+import { BarChartDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.BarChart);
+
+## Usage
+
+Use `BarChart` component without `type` prop to render a regular bar chart.
+In a regular bar chart, each data series is plotted on its own and does
+not interact with other series.
+
+<Demo data={BarChartDemos.usage} />
+
+## Stacked bar chart
+
+Set `type="stacked"` to render a stacked bar chart. In this type of bar chart
+stacking is applied along the vertical axis, allowing you to see the overall trend
+as well as the contribution of each individual series to the total.
+
+<Demo data={BarChartDemos.stacked} />
+
+## Percent bar chart
+
+Set `type="percent"` to render a percent bar chart. In this type of bar chart
+the y-axis scale is always normalized to 100%, making it easier to compare the
+contribution of each series in terms of percentages.
+
+<Demo data={BarChartDemos.percent} />
+
+## Waterfall bar chart
+
+Set `type="waterfall"` to render a waterfall bar chart. This chart type illustrates how an
+initial value is influenced by subsequent positive or negative values,
+with each bar starting where the previous one ended.
+Use the `color` prop inside data to color each bar individually. Note that the series color gets overwritten for this specific bar.
+Use the `standalone` prop inside data to decouple the bar from the flow.
+
+<Demo data={BarChartDemos.waterfall} />
+
+## Legend
+
+To display chart legend, set `withLegend` prop. When one of the items in the legend
+is hovered, the corresponding data series is highlighted in the chart.
+
+<Demo data={BarChartDemos.legend} />
+
+## Legend position
+
+You can pass props down to recharts [Legend](https://recharts.org/en-US/api/Legend)
+component with `legendProps` prop. For example, setting `legendProps={{ verticalAlign: 'bottom', height: 50 }}`
+will render the legend at the bottom of the chart and set its height to 50px.
+
+<Demo data={BarChartDemos.legendPosition} />
+
+## Series labels
+
+By default, series `name` is used as a label. To change it, set `label`
+property in `series` object:
+
+<Demo data={BarChartDemos.seriesLabels} />
+
+## X and Y axis props
+
+Use `xAxisProps` and `yAxisProps` to pass props down to recharts [XAxis](https://recharts.org/en-US/api/XAxis)
+and [YAxis](https://recharts.org/en-US/api/YAxis) components. For example, these props
+can be used to change orientation of axis:
+
+<Demo data={BarChartDemos.axisProps} />
+
+## Axis labels
+
+Use `xAxisLabel` and `yAxisLabel` props to display axis labels:
+
+<Demo data={BarChartDemos.axisLabels} />
+
+## X axis offset
+
+Use `xAxisProps` to set padding between the charts ends and the x-axis:
+
+<Demo data={BarChartDemos.xAxisOffset} />
+
+## Y axis scale
+
+Use `yAxisProps` to change domain of the Y axis. For example, if you know that
+your data will always be in the range of 0 to 150, you can set domain to `[0, 150]`:
+
+<Demo data={BarChartDemos.yScale} />
+
+## Value formatter
+
+To format values in the tooltip and axis ticks, use `valueFormat` prop. It accepts
+a function that takes number value as an argument and returns formatted value:
+
+<Demo data={BarChartDemos.valueFormatter} />
+
+## Area color
+
+You can reference colors from [theme](/theming/theme-object) the same way as in
+other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
+color value is also accepted.
+
+<Demo data={BarChartDemos.color} />
+
+## Bar props
+
+You can pass props down to recharts [Bar](https://recharts.org/en-US/api/Bar)
+component with `barProps` prop. `barProps` accepts either an object with props
+or a function that receives series data as an argument and returns an object with
+props.
+
+<Demo data={BarChartDemos.barProps} />
+
+## Change bar color depending on color scheme
+
+You can use CSS variables in `color` property. To define a CSS variable that
+changes depending on the color scheme, use [light/dark mixins](/styles/postcss-preset/#dark-and-light-mixins)
+or [light-dark function](/styles/postcss-preset/#light-dark-function). Example
+of bar that is dark orange in light mode and lime in dark mode:
+
+<Demo data={BarChartDemos.colorSchemeColor} />
+
+## Stroke dash array
+
+Set `strokeDasharray` prop to control the stroke dash array of the grid and cursor
+lines. The value represent the lengths of alternating dashes and gaps. For example,
+`strokeDasharray="10 5"` will render a dashed line with 10px dashes and 5px gaps.
+
+<Demo data={BarChartDemos.strokeDasharray} />
+
+## Grid and text colors
+
+Use `--chart-grid-color` and `--chart-text-color` to change colors of
+grid lines and text within the chart. With [CSS modules](/styles/css-modules/), you can change colors
+depending on color scheme:
+
+<Demo data={BarChartDemos.gridColor} />
+
+If your application has only one color scheme, you can use `gridColor` and `textColor`
+props instead of CSS variables:
+
+```tsx
+import { BarChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <BarChart
+      h={300}
+      data={data}
+      dataKey="date"
+      type="stacked"
+      gridColor="gray.5"
+      textColor="gray.9"
+      series={[
+        { name: 'Smartphones', color: 'violet.6' },
+        { name: 'Laptops', color: 'blue.6' },
+        { name: 'Tablets', color: 'teal.6' },
+      ]}
+    />
+  );
+}
+```
+
+## Tooltip animation
+
+By default, tooltip animation is disabled. To enable it, set `tooltipAnimationDuration`
+prop to a number of milliseconds to animate the tooltip position change.
+
+<Demo data={BarChartDemos.tooltipAnimation} />
+
+## Units
+
+Set `unit` prop to render a unit label next to the y-axis ticks and tooltip values:
+
+<Demo data={BarChartDemos.unit} />
+
+## Custom tooltip
+
+Use `tooltipProps.content` to pass custom tooltip renderer to recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)
+component. Note that it is required to filter recharts payload with `getFilteredChartTooltipPayload`
+function to remove empty values that are used for styling purposes only.
+
+<Demo data={BarChartDemos.customTooltip} />
+
+## Remove tooltip
+
+To remove tooltip, set `withTooltip={false}`. It also removes the cursor line
+and disables interactions with the chart.
+
+<Demo data={BarChartDemos.noTooltip} />
+
+## Sync multiple BarCharts
+
+You can pass props down to recharts [BarChart](https://recharts.org/en-US/api/BarChart)
+component with `barChartProps` prop. For example, setting `barChartProps={{ syncId: 'any-id' }}`
+will sync tooltip of multiple `BarChart` components with the same `syncId` prop.
+
+<Demo data={BarChartDemos.sync} />
+
+## Vertical orientation
+
+Set `orientation="vertical"` to render a vertical bar chart:
+
+<Demo data={BarChartDemos.vertical} />
+
+## Reference lines
+
+Use `referenceLines` prop to render reference lines. Reference lines are always
+rendered behind the chart.
+
+<Demo data={BarChartDemos.referenceLines} />
+
+## Bar value label
+
+To display value above each bar, set `withBarValueLabel`:
+
+<Demo data={BarChartDemos.barValueLabel} />

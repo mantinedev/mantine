@@ -1,4 +1,3 @@
-import React from 'react';
 import { Portal, PortalProps } from './Portal';
 
 export interface OptionalPortalProps extends PortalProps {

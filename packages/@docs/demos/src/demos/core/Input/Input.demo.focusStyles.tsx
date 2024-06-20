@@ -1,4 +1,3 @@
-import React from 'react';
 import { Input, TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Input.demo.focusStyles.module.css';
@@ -27,7 +26,7 @@ const cssCode = `
   transition: none;
 
   &:focus-within {
-    outline: rem(2px) solid var(--mantine-color-blue-filled);
+    outline: 2px solid var(--mantine-color-blue-filled);
     border-color: transparent;
   }
 }

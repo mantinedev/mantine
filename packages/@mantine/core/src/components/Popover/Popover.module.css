@@ -1,6 +1,6 @@
 .dropdown {
   position: absolute;
-  border: rem(1px) solid var(--popover-border-color);
+  border: 1px solid var(--popover-border-color);
   padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   box-shadow: var(--popover-shadow, none);
   border-radius: var(--popover-radius, var(--mantine-radius-default));
@@ -9,12 +9,12 @@
     outline: none;
   }
 
-  @mixin light {
+  @mixin where-light {
     --popover-border-color: var(--mantine-color-gray-2);
     background-color: var(--mantine-color-white);
   }
 
-  @mixin dark {
+  @mixin where-dark {
     --popover-border-color: var(--mantine-color-dark-4);
     background-color: var(--mantine-color-dark-6);
   }
@@ -22,6 +22,6 @@
 
 .arrow {
   background-color: inherit;
-  border: rem(1px) solid var(--popover-border-color);
+  border: 1px solid var(--popover-border-color);
   z-index: 1;
 }

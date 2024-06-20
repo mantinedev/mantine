@@ -1,0 +1,86 @@
+import { GuidesDemos } from '@docs/demos';
+import { LogoAssets } from '@/components/LogoAssets';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.About);
+
+# About Mantine
+
+Mantine is a React components library focused on providing great user and developer experience.
+Mantine development was started in January 2021 and the 1.0 version was released on [May 3rd, 2021](https://github.com/mantinedev/mantine/releases/tag/1.0.0),
+and since then, [more than 200 releases have been published](https://github.com/mantinedev/mantine/releases).
+
+## Browser support
+
+Mantine is tested on real devices in the following browsers before each minor and major release: Chrome, Safari, Firefox,
+Edge, Safari for iOS, Chrome for Android. Testing in other browsers is not performed.
+
+All Mantine components and hooks were tested to work in the following browsers:
+
+- Chromium browsers 108+ – Chrome, Edge, Chrome for Android, etc.
+- Firefox 101+
+- Safari 15.4+
+- IE (any version) is not supported
+
+Browsers version that support [:where selector](https://caniuse.com/mdn-css_selectors_where) and [@layer directive](https://caniuse.com/mdn-css_at-rules_layer)
+features that are required for Mantine styles (any versions below may have major issues with styles):
+
+- Chromium browsers 99+ – Chrome, Edge, Chrome for Android, etc.
+- Firefox 97+
+- Safari 15.4+
+
+Mantine components use the following CSS features:
+
+- [:where selector](https://caniuse.com/mdn-css_selectors_where) in all components
+- [@layer directive](https://caniuse.com/mdn-css_at-rules_layer) in all styles
+- [:has pseudo-class](https://caniuse.com/css-has) in several components for non-critical styles
+- [flexbox gap](https://caniuse.com/flexbox-gap) in most components
+- [dvh units](https://caniuse.com/mdn-css_types_length_viewport_percentage_units_dynamic) in several components
+- [color-mix](https://caniuse.com/mdn-css_types_color_color-mix) function is not used in any components by default, but can be used on your side with [alpha](styles/postcss-preset/#alpha-function) PostCSS function.
+- [aspect-ratio](https://caniuse.com/mdn-css_properties_aspect-ratio) CSS property is used in several components
+- [container queries](https://caniuse.com/css-container-queries) are used in several components if the option is explicitly enabled via prop
+
+All CSS features listed above are supported in all modern browsers (90% or more of global usage as of January 2024).
+
+If you need to support older browsers, you should:
+
+- check the component `Browser support` section before usage and decide whether this component will work for your case
+- install corresponding polyfills that are required for hook/component to work in older browsers
+- check that component works in those browsers on your side (we do not test Mantine in browsers that are older than those that are listed above)
+
+## Releases cycle
+
+All `@mantine/*` packages follow [semver](https://semver.org/):
+
+- Patches (1.0.X) are usually released every one or two weeks
+- Minor versions (1.X.0) are usually released on the first Tuesday of each month or once every two months
+- Major versions (X.0.0) are released when breaking changes are required, usually a new major version is released once every 6 months/1 year
+
+## Previous versions documentation
+
+- v1 (1.3.1) – [v1.mantine.dev](https://v1.mantine.dev/)
+- v2 (2.5.1) – [v2.mantine.dev](https://v2.mantine.dev/)
+- v3 (3.6.14) – [v3.mantine.dev](https://v3.mantine.dev/)
+- v4 (4.2.12) – [v4.mantine.dev](https://v4.mantine.dev/)
+- v5 (5.10.5) – [v5.mantine.dev](https://v5.mantine.dev/)
+- v6 (6.0.21) – [v6.mantine.dev](https://v6.mantine.dev/)
+
+## Project maintenance
+
+Mantine is built and maintained by [Vitaly Rtishchev](https://github.com/rtivital) and [more than 300 other contributors](https://github.com/mantinedev/mantine/graphs/contributors).
+Most of new features and components/hooks are added to the library based on feedback from the community –
+you can participate in new features discussions on [GitHub](https://github.com/mantinedev/mantine/discussions) or [Discord](https://discord.gg/wbH82zuWMN).
+
+## Mantine logo
+
+Download Mantine logos in `.svg` format:
+
+<LogoAssets />
+
+You can also install `@mantinex/mantine-logo` package and import `MantineLogo` component.
+Note that the package depends on `@mantine/core` and `@mantine/hooks` packages.
+
+<InstallScript packages="@mantinex/mantine-logo" />
+
+<Demo data={GuidesDemos.logo} />

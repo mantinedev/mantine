@@ -1,4 +1,3 @@
-import React from 'react';
 import { MantineDemo } from '@mantinex/demo';
 import { Wrapper } from './_wrapper';
 

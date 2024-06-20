@@ -1,0 +1,34 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useStateHistory);
+
+## Usage
+
+`useStateHistory` hook is used to create a state with history, it returns current value, handlers to
+go back/forward and a history object with all previous values and current index.
+
+<Demo data={HooksDemos.useStateHistoryUsage} />
+
+## Definition
+
+`UseStateHistoryHandlers` and `StateHistory` interfaces are exported from `@mantine/hooks`
+package.
+
+```tsx
+interface UseStateHistoryHandlers<T> {
+  set: (value: T) => void;
+  back: (steps?: number) => void;
+  forward: (steps?: number) => void;
+}
+
+interface StateHistory<T> {
+  history: T[];
+  current: number;
+}
+
+function useStateHistory<T>(
+  initialValue: T
+): [T, UseStateHistoryHandlers<T>, StateHistory<T>];
+```

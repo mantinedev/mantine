@@ -2,7 +2,7 @@ import { NotificationProps } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
 import { createStore, MantineStore, useStore } from '@mantine/store';
 
-export interface NotificationData extends Omit<NotificationProps, 'onClose'> {
+export interface NotificationData extends Omit<NotificationProps, 'onClose'>, Record<string, any> {
   /** Notification id, can be used to close or update notification */
   id?: string;
 

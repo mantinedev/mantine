@@ -1,4 +1,4 @@
-import React, { Children, useCallback, useEffect, useState } from 'react';
+import { Children, useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel, { EmblaCarouselType, EmblaPluginType } from 'embla-carousel-react';
 import {
   AccordionChevron,
@@ -331,6 +331,7 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
         aria-hidden
         tabIndex={-1}
         onClick={() => handleScroll(index)}
+        data-orientation={orientation}
       />
     ));
 
@@ -350,10 +351,14 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
           </div>
         </div>
 
-        {withIndicators && <div {...getStyles('indicators')}>{indicators}</div>}
+        {withIndicators && (
+          <div {...getStyles('indicators')} data-orientation={orientation}>
+            {indicators}
+          </div>
+        )}
 
         {withControls && (
-          <div {...getStyles('controls')}>
+          <div {...getStyles('controls')} data-orientation={orientation}>
             <UnstyledButton
               {...previousControlProps}
               {...getStyles('control', {
@@ -417,5 +422,5 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
 });
 
 Carousel.classes = classes;
-Carousel.displayName = '@mantine/core/Carousel';
+Carousel.displayName = '@mantine/carousel/Carousel';
 Carousel.Slide = CarouselSlide;

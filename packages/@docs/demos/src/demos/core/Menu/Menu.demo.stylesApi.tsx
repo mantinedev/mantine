@@ -1,4 +1,3 @@
-import React from 'react';
 import { Menu } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { MenuStylesApi } from '@docs/styles-api';

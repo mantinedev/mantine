@@ -1,0 +1,122 @@
+$jumbotron-breakpoint: em(960px);
+
+.jumbotron {
+  position: relative;
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
+}
+
+.inner {
+  position: relative;
+  padding-top: 220px;
+  padding-bottom: 180px;
+
+  @media (max-width: $jumbotron-breakpoint) {
+    padding-top: 60px;
+    padding-bottom: 90px;
+  }
+}
+
+.description {
+  margin-top: calc(var(--mantine-spacing-xl) * 1.5);
+  font-size: 24px;
+  max-width: 800px;
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-1));
+
+  @media (max-width: $jumbotron-breakpoint) {
+    margin-top: var(--mantine-spacing-lg);
+    font-size: 18px;
+  }
+}
+
+.controls {
+  margin-top: calc(var(--mantine-spacing-xl) * 1.5);
+
+  @media (max-width: $jumbotron-breakpoint) {
+    margin-top: var(--mantine-spacing-xl);
+  }
+}
+
+.control {
+  height: 64px;
+  padding-left: 46px;
+  padding-right: 46px;
+  font-size: 20px;
+  font-weight: 700;
+  border: 0;
+
+  @media (max-width: $jumbotron-breakpoint) {
+    height: 54px;
+    padding-left: 18px;
+    padding-right: 18px;
+    flex: 1;
+  }
+
+  &[data-primary] {
+    background-image: var(--docs-home-page-gradient);
+  }
+
+  &[data-github] {
+    background-color: var(--mantine-color-black);
+    color: var(--mantine-color-white);
+
+    & :global(.mantine-Button-section) {
+      margin-right: 16px;
+
+      @mixin rtl {
+        margin-right: 0;
+        margin-left: 16px;
+      }
+    }
+
+    @mixin hover {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  @media (max-width: $mantine-breakpoint-md) {
+    flex-direction: row;
+  }
+}
+
+.featureBody {
+  margin-top: var(--mantine-spacing-xs);
+
+  @media (max-width: $mantine-breakpoint-md) {
+    margin-top: 0;
+    margin-left: var(--mantine-spacing-lg);
+
+    @mixin rtl {
+      margin-left: 0;
+      margin-right: var(--mantine-spacing-lg);
+    }
+  }
+}
+
+.featureTitle {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+}
+
+.featureIcon {
+  color: var(--mantine-color-white);
+  border-radius: var(--mantine-radius-md);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 50px;
+  height: 50px;
+  background-image: var(--docs-home-page-gradient);
+
+  & svg {
+    display: block;
+  }
+}
+
+.heroSvg {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+}

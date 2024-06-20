@@ -1,62 +1,61 @@
 .root {
   position: relative;
-  background-color: var(--_dropzone-bg);
-  border: rem(1px) dashed var(--_dropzone-border-color);
-  color: var(--_dropzone-color, var(--mantine-color-text));
+  border: 1px dashed;
+  color: var(--mantine-color-text);
   padding: var(--mantine-spacing-md);
   border-radius: var(--dropzone-radius);
-  cursor: var(--_dropzone-cursor, pointer);
+  cursor: pointer;
   user-select: none;
   transition:
     background-color 100ms ease,
     border-color 100ms ease;
 
-  &[data-loading],
-  &:not([data-activate-on-click]) {
-    --_dropzone-cursor: default;
+  &:where([data-loading]),
+  &:where(:not([data-activate-on-click])) {
+    cursor: default;
   }
 
-  @mixin light {
-    --_dropzone-bg: var(--mantine-color-white);
-    --_dropzone-border-color: var(--mantine-color-gray-4);
+  @mixin where-light {
+    background-color: var(--mantine-color-white);
+    border-color: var(--mantine-color-gray-4);
   }
 
-  @mixin dark {
-    --_dropzone-bg: var(--mantine-color-dark-6);
-    --_dropzone-border-color: var(--mantine-color-dark-4);
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-6);
+    border-color: var(--mantine-color-dark-4);
   }
 
   @mixin hover {
-    &[data-activate-on-click]:not([data-loading]) {
-      @mixin light {
-        --_dropzone-bg: var(--mantine-color-gray-0);
+    &:where([data-activate-on-click]:not([data-loading])) {
+      @mixin where-light {
+        background-color: var(--mantine-color-gray-0);
       }
 
-      @mixin dark {
-        --_dropzone-bg: var(--mantine-color-dark-5);
+      @mixin where-dark {
+        background-color: var(--mantine-color-dark-5);
       }
     }
   }
 
-  &[data-accept] {
-    --_dropzone-bg: var(--dropzone-accept-bg);
-    --_dropzone-border-color: var(--dropzone-accept-bg);
-    --_dropzone-color: var(--dropzone-accept-color);
+  &:where([data-accept]) {
+    background-color: var(--dropzone-accept-bg);
+    border-color: var(--dropzone-accept-bg);
+    color: var(--dropzone-accept-color);
   }
 
-  &[data-reject] {
-    --_dropzone-bg: var(--dropzone-reject-bg);
-    --_dropzone-border-color: var(--dropzone-reject-bg);
-    --_dropzone-color: var(--dropzone-reject-color);
+  &:where([data-reject]) {
+    background-color: var(--dropzone-reject-bg);
+    border-color: var(--dropzone-reject-bg);
+    color: var(--dropzone-reject-color);
   }
 }
 
 .inner {
-  pointer-events: var(--_dropzone-inner-pointer-events, none);
+  pointer-events: none;
   user-select: none;
 
-  &[data-enable-pointer-events] {
-    --_dropzone-inner-pointer-events: all;
+  &:where([data-enable-pointer-events]) {
+    pointer-events: all;
   }
 }
 

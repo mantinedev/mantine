@@ -19,27 +19,25 @@
 
 .section {
   display: block;
-  margin-left: calc(var(--card-padding) * -1);
-  margin-right: calc(var(--card-padding) * -1);
+  margin-inline: calc(var(--card-padding) * -1);
 
-  &:where([data-first-section]) {
+  &:where(:first-child) {
     margin-top: calc(var(--card-padding) * -1);
     border-top: none !important;
   }
 
-  &:where([data-last-section]) {
+  &:where(:last-child) {
     margin-bottom: calc(var(--card-padding) * -1);
     border-bottom: none !important;
   }
 
   &:where([data-inherit-padding]) {
-    padding-left: var(--card-padding);
-    padding-right: var(--card-padding);
+    padding-inline: var(--card-padding);
   }
 
   &:where([data-with-border]) {
-    border-top: rem(1px) solid;
-    border-bottom: rem(1px) solid;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
   }
 
   @mixin where-light {

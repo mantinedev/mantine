@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconArrowRight } from '@tabler/icons-react';
 import { Button, ButtonProps, Group, rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
@@ -38,17 +37,17 @@ const cssCode = `
 .root {
   border-top-left-radius: var(--mantine-radius-xl);
   border-bottom-left-radius: var(--mantine-radius-xl);
-  padding-left: rem(4px);
+  padding-left: 4px;
 
   /* The following styles will be applied only when button is disabled */
   &[data-disabled] {
     /* You can use Mantine PostCSS mixins inside data attributes */
     @mixin light {
-      border: rem(1px) solid var(--mantine-color-gray-2);
+      border: 1px solid var(--mantine-color-gray-2);
     }
 
     @mixin dark {
-      border: rem(1px) solid var(--mantine-color-dark-4);
+      border: 1px solid var(--mantine-color-dark-4);
     }
 
     /* You can target child elements that are inside .root[data-disabled] */
@@ -61,7 +60,7 @@ const cssCode = `
 .section {
   /* Apply styles only to left section */
   &[data-position='left'] {
-    --section-size: calc(var(--button-height) - rem(8px));
+    --section-size: calc(var(--button-height) - 8px);
 
     background-color: var(--mantine-color-body);
     color: var(--mantine-color-text);

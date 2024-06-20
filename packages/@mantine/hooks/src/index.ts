@@ -1,7 +1,7 @@
-export * from './utils';
+export * from './utils/index.js';
 
 export { useCallbackRef } from './use-callback-ref/use-callback-ref';
-export { useDebounceCallback } from './use-debounced-callback/use-debounced-callback';
+export { useDebouncedCallback } from './use-debounced-callback/use-debounced-callback';
 export { useClickOutside } from './use-click-outside/use-click-outside';
 export { useClipboard } from './use-clipboard/use-clipboard';
 export { useColorScheme } from './use-color-scheme/use-color-scheme';
@@ -61,6 +61,17 @@ export { useFavicon } from './use-favicon/use-favicon';
 export { useHeadroom } from './use-headroom/use-headroom';
 export { useEyeDropper } from './use-eye-dropper/use-eye-dropper';
 export { useInViewport } from './use-in-viewport/use-in-viewport';
+export { useMutationObserver } from './use-mutation-observer/use-mutation-observer';
+export { useMounted } from './use-mounted/use-mounted';
+export { useStateHistory } from './use-state-history/use-state-history';
+export { useMap } from './use-map/use-map';
+export { useSet } from './use-set/use-set';
+export { useThrottledCallback } from './use-throttled-callback/use-throttled-callback';
+export { useThrottledState } from './use-throttled-state/use-throttled-state';
+export { useThrottledValue } from './use-throttled-value/use-throttled-value';
+export { useIsFirstRender } from './use-is-first-render/use-is-first-render';
+export { useOrientation } from './use-orientation/use-orientation';
+export { useFetch } from './use-fetch/use-fetch';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
@@ -68,3 +79,5 @@ export type { HotkeyItem, HotkeyItemOptions } from './use-hotkeys/use-hotkeys';
 export type { UseListStateHandlers } from './use-list-state/use-list-state';
 export type { EyeDropperOpenReturnType } from './use-eye-dropper/use-eye-dropper';
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
+export type { UseStateHistoryHandlers, StateHistory } from './use-state-history/use-state-history';
+export type { UseFetchOptions } from './use-fetch/use-fetch';

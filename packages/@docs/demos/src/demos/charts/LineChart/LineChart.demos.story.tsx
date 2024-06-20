@@ -117,3 +117,8 @@ export const Demo_valueFormatter = {
   name: '⭐ Demo: valueFormatter',
   render: renderDemo(demos.valueFormatter),
 };
+
+export const Demo_axisLabels = {
+  name: '⭐ Demo: axisLabels',
+  render: renderDemo(demos.axisLabels),
+};

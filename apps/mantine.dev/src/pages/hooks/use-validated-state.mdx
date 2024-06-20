@@ -1,0 +1,48 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useValidatedState);
+
+## Usage
+
+`use-validated-state` validates state with a given rule each time state is set.
+It returns an object with current validation state, last valid value and current value:
+
+```tsx
+import { useValidatedState } from '@mantine/hooks';
+
+const [{ lastValidValue, value, valid }, setValue] =
+  useValidatedState('valid', (state) => state === 'valid');
+
+lastValidValue; // -> valid
+value; // -> valid
+valid; // -> true
+
+setValue('invalid');
+
+lastValidValue; // -> valid
+value; // -> invalid
+valid; // -> false
+```
+
+## Example
+
+<Demo data={HooksDemos.useValidatedStateDemo} />
+
+## Definition
+
+```tsx
+function useValidatedState<T>(
+  initialValue: T,
+  validation: (value: T) => boolean,
+  initialValidationState?: boolean
+): [
+  {
+    value: T;
+    lastValidValue: T;
+    valid: boolean;
+  },
+  (val: T) => void,
+];
+```

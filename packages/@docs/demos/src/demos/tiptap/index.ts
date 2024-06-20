@@ -6,3 +6,5 @@ export { floatingMenu } from './TipTap.demo.floatingMenu';
 export { customControl } from './TipTap.demo.customControl';
 export { icons } from './TipTap.demo.icons';
 export { placeholder } from './TipTap.demo.placeholder';
+export { tasks } from './TipTap.demo.tasks';
+export { typographyStyles } from './TipTap.demo.typographyStyles';

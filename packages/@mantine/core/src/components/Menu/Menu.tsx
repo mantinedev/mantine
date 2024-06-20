@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
 import {
   ExtendComponent,
@@ -122,6 +122,7 @@ export function Menu(_props: MenuProps) {
     variant,
     vars,
     menuItemTabIndex,
+    keepMounted,
     ...others
   } = props;
 
@@ -199,13 +200,14 @@ export function Menu(_props: MenuProps) {
         opened={_opened}
         onChange={toggleDropdown}
         defaultOpened={defaultOpened}
-        trapFocus={trapFocus}
+        trapFocus={keepMounted ? false : trapFocus}
         closeOnEscape={closeOnEscape}
         __staticSelector="Menu"
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}
         variant={variant}
+        keepMounted={keepMounted}
       >
         {children}
       </Popover>

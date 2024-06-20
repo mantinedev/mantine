@@ -1,0 +1,21 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useDebouncedCallback);
+
+## Usage
+
+useDebouncedCallback hook creates a debounced version of a callback function,
+delaying its execution until a specified time has elapsed since the last invocation.
+
+<Demo data={HooksDemos.useDebouncedCallbackUsage} />
+
+## Definition
+
+```tsx
+function useDebouncedCallback<T extends (...args: any[]) => any>(
+  callback: T,
+  delay: number
+): (...args: Parameters<T>) => void;
+```

@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '../render';
 
 interface Options<Props = any> {

@@ -1,0 +1,24 @@
+import { FloatingIndicatorDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.FloatingIndicator);
+
+## Usage
+
+`FloatingIndicator` is designed to highlight active element in a group.
+It can be used to create custom segmented controls, tabs and other similar components.
+
+`FloatingIndicator` renders an element over the `target` element. To calculate the position it is
+required to pass `parent` element which has a relative position.
+
+By default, `FloatingIndicator` does not have any visible styles. You can use `className` prop
+or [Styles API](/styles/styles-api) to apply styles.
+
+<Demo data={FloatingIndicatorDemos.segmented} />
+
+## Multiple rows
+
+`FloatingIndicator` can be used to highlight active element in a group with multiple rows:
+
+<Demo data={FloatingIndicatorDemos.direction} />

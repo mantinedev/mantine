@@ -1,4 +1,3 @@
-import React from 'react';
 import { Pill } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { PillStylesApi } from '@docs/styles-api';

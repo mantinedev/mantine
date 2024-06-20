@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconDots } from '@tabler/icons-react';
 import { Accordion, AccordionControlProps, ActionIcon, Center } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

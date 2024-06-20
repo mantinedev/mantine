@@ -1,0 +1,44 @@
+.root {
+  display: flex;
+  align-items: center;
+  font-size: var(--mantine-font-size-sm);
+  gap: var(--mantine-spacing-md);
+
+  & + & {
+    margin-top: var(--mantine-spacing-xs);
+  }
+}
+
+.label {
+  color: var(--mantine-color-dimmed);
+  flex: 0 0 80px;
+
+  @mixin smaller-than $sm {
+    display: none;
+  }
+}
+
+.body {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  text-decoration: none;
+  color: var(--mantine-color-text);
+  gap: var(--mantine-spacing-xs);
+
+  @mixin hover {
+    text-decoration: underline;
+  }
+
+  @mixin smaller-than $sm {
+    min-height: 24px;
+  }
+}
+
+.icon {
+  width: 18px;
+
+  & svg {
+    display: block;
+  }
+}

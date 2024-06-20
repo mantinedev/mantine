@@ -1,0 +1,5 @@
+.description {
+  max-width: 600px;
+  font-size: var(--mantine-font-size-xl);
+  margin-top: var(--mantine-spacing-md);
+}

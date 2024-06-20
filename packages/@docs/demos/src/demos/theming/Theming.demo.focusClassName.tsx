@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, MantineThemeProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Theming.demo.focusClassName.module.css';
@@ -20,8 +19,8 @@ const cssCode = `
 /* Use \`&:focus\` when you want focus ring to be visible when control is clicked */
 .focus {
   &:focus {
-    outline: rem(2px) solid var(--mantine-color-red-filled);
-    outline-offset: rem(3px);
+    outline: 2px solid var(--mantine-color-red-filled);
+    outline-offset: 3px;
   }
 }
 
@@ -29,8 +28,8 @@ const cssCode = `
    only when user navigates with keyboard, for example by pressing Tab key */
 .focus-auto {
   &:focus-visible {
-    outline: rem(2px) solid var(--mantine-color-red-filled);
-    outline-offset: rem(2px);
+    outline: 2px solid var(--mantine-color-red-filled);
+    outline-offset: 2px;
   }
 }
 `;

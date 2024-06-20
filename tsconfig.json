@@ -5,14 +5,15 @@
     "./packages/@mantine-tests/*/src",
     "./packages/@docs/*/src",
     "./packages/@mantine/*/src",
-    "./packages/@mantinex/*/src"
+    "./packages/@mantinex/*/src",
+    "./apps/*"
   ],
   "exclude": [
     "node_modules",
     "./packages/@mantine-tests/*/esm/**/*",
     "./packages/@mantine-tests/*/cjs/**/*",
     "./packages/@mantine-tests/*/lib/**/*",
-    "./packages/@docs/*/ems/**/*",
+    "./packages/@docs/*/esm/**/*",
     "./packages/@docs/*/cjs/**/*",
     "./packages/@docs/*/lib/**/*",
     "./packages/@mantine/*/lib/**/*",
@@ -28,7 +29,7 @@
     "lib": ["DOM", "ESNext"],
     "module": "ESNext",
     "moduleResolution": "Node",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,

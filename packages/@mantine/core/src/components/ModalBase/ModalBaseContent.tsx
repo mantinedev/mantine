@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import cx from 'clsx';
 import { BoxProps, ElementProps, MantineRadius, MantineShadow } from '../../core';
 import { FocusTrap } from '../FocusTrap';
@@ -26,12 +26,13 @@ export const ModalBaseContent = forwardRef<HTMLDivElement, _ModalBaseContentProp
   ({ transitionProps, className, innerProps, onKeyDown, style, ...others }, ref) => {
     const ctx = useModalBaseContext();
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-      const shouldTrigger =
-        (event.target as HTMLElement)?.getAttribute('data-mantine-stop-propagation') !== 'true';
-      shouldTrigger && event.key === 'Escape' && ctx.closeOnEscape && ctx.onClose();
-      onKeyDown?.(event);
-    };
+    // const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    //   const shouldTrigger =
+    //     (event.target as HTMLElement)?.getAttribute('data-mantine-stop-propagation') !== 'true';
+    //   console.log((event.target as HTMLElement)?.getAttribute('data-mantine-stop-propagation'));
+    //   shouldTrigger && event.key === 'Escape' && ctx.closeOnEscape && ctx.onClose();
+    //   onKeyDown?.(event);
+    // };
 
     return (
       <Transition
@@ -54,7 +55,7 @@ export const ModalBaseContent = forwardRef<HTMLDivElement, _ModalBaseContentProp
                 aria-modal
                 aria-describedby={ctx.bodyMounted ? ctx.getBodyId() : undefined}
                 aria-labelledby={ctx.titleMounted ? ctx.getTitleId() : undefined}
-                onKeyDown={handleKeyDown}
+                // onKeyDown={handleKeyDown}
                 ref={ref}
                 style={[style, transitionStyles]}
                 className={cx({ [classes.content]: !ctx.unstyled }, className)}

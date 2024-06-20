@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconPlus } from '@tabler/icons-react';
 import { Accordion } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
@@ -41,8 +40,8 @@ const cssCode = `
 }
 
 .icon {
-  width: rem(16px);
-  height: rem(16px);
+  width: 16px;
+  height: 16px;
 }
 `;
 

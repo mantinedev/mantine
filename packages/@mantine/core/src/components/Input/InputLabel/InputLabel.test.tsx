@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { InputLabel, InputLabelProps, InputLabelStylesNames } from './InputLabel';
 

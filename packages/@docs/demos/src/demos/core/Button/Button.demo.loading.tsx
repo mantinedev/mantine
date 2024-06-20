@@ -1,10 +1,10 @@
-import React from 'react';
 import { Button, Group, Switch } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Button, Group } from '@mantine/core';
+import { Button, Group, Switch } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 function Demo() {
   const [loading, { toggle }] = useDisclosure();

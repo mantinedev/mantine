@@ -1,0 +1,21 @@
+import { ColorSchemeColor } from '@/demos/ColorSchemeColor.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title:
+    'How can I change component color prop value depending on the color scheme?',
+  description:
+    'Learn how to use CSS variables resolver to change color value depending on the color scheme',
+  slug: 'color-scheme-color',
+  category: 'styles',
+  tags: ['styles', 'color-scheme', 'css-variables'],
+  created_at: 'February 15, 2024',
+  last_updated_at: 'March 24, 2024',
+};
+
+export default Layout(meta);
+
+`color` prop in all components uses Mantine [CSS variables](https://mantine.dev/styles/css-variables)
+to resolve color value depending on the color scheme. You can define these variables with `virtualColor` function:
+
+<Demo data={ColorSchemeColor} />

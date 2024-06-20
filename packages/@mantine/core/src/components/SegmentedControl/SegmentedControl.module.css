@@ -1,9 +1,9 @@
 .root {
-  --sc-padding-xs: rem(3px) rem(6px);
-  --sc-padding-sm: rem(5px) rem(10px);
-  --sc-padding-md: rem(7px) rem(14px);
-  --sc-padding-lg: rem(9px) rem(16px);
-  --sc-padding-xl: rem(12px) rem(20px);
+  --sc-padding-xs: 3px 6px;
+  --sc-padding-sm: 5px 10px;
+  --sc-padding-md: 7px 14px;
+  --sc-padding-lg: 9px 16px;
+  --sc-padding-xl: 12px 20px;
 
   --sc-transition-duration: 200ms;
   --sc-padding: var(--sc-padding-sm);
@@ -11,38 +11,33 @@
   --sc-font-size: var(--mantine-font-size-sm);
 
   position: relative;
-  display: var(--_display, inline-flex);
-  flex-direction: var(--_flex-direction, row);
-  width: var(--_width, auto);
-  background-color: var(--_bg);
+  display: inline-flex;
+  flex-direction: row;
+  width: auto;
   border-radius: var(--sc-radius, var(--mantine-radius-default));
   overflow: hidden;
-  padding: 4px; /* px required for correct indicator calculations */
+  padding: 4px;
 
-  &[data-initialization] {
-    --sc-transition-duration: 0ms !important;
+  &:where([data-full-width]) {
+    display: flex;
   }
 
-  &[data-full-width] {
-    --_display: flex;
-  }
+  &:where([data-orientation='vertical']) {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
 
-  &[data-orientation='vertical'] {
-    --_display: flex;
-    --_flex-direction: column;
-    --_width: max-content;
-
-    &[data-full-width] {
-      --_width: auto;
+    &:where([data-full-width]) {
+      width: auto;
     }
   }
 
-  @mixin light {
-    --_bg: var(--mantine-color-gray-1);
+  @mixin where-light {
+    background-color: var(--mantine-color-gray-1);
   }
 
-  @mixin dark {
-    --_bg: var(--mantine-color-dark-8);
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-8);
   }
 }
 
@@ -51,23 +46,15 @@
   display: block;
   z-index: 1;
   border-radius: var(--sc-radius, var(--mantine-radius-default));
-  box-shadow: var(--_box-shadow);
-  width: var(--sc-indicator-width);
-  height: var(--sc-indicator-height);
-  transform: var(--sc-indicator-transform);
-  transition:
-    transform var(--sc-transition-duration) var(--sc-transition-timing-function),
-    width var(--sc-transition-duration) var(--sc-transition-timing-function);
-  background-color: var(--_bg);
 
-  @mixin light {
-    --_box-shadow: var(--sc-shadow, none);
-    --_bg: var(--sc-color, var(--mantine-color-white));
+  @mixin where-light {
+    box-shadow: var(--sc-shadow, none);
+    background-color: var(--sc-color, var(--mantine-color-white));
   }
 
-  @mixin dark {
-    --_box-shadow: none;
-    --_bg: var(--sc-color, var(--mantine-color-dark-5));
+  @mixin where-dark {
+    box-shadow: none;
+    background-color: var(--sc-color, var(--mantine-color-dark-5));
   }
 }
 
@@ -84,69 +71,89 @@
   font-size: var(--sc-font-size);
   padding: var(--sc-padding);
   transition: color var(--sc-transition-duration) var(--sc-transition-timing-function);
-  cursor: var(--_cursor, pointer);
-  color: var(--_color);
+  cursor: pointer;
 
   /* outline is controlled by .input */
-  outline: var(--_outline, none);
+  outline: var(--segmented-control-outline, none);
 
-  &[data-read-only] {
-    --_cursor: default;
+  @mixin where-light {
+    color: var(--mantine-color-gray-7);
+  }
+
+  @mixin where-dark {
+    color: var(--mantine-color-dark-1);
+  }
+
+  &:where([data-read-only]) {
+    cursor: default;
   }
 
   fieldset:disabled &,
-  &[data-disabled] {
-    --_cursor: not-allowed;
+  &:where([data-disabled]) {
+    cursor: not-allowed;
 
-    @mixin light {
-      --_color: var(--mantine-color-gray-5);
+    @mixin where-light {
+      color: var(--mantine-color-gray-5);
     }
 
-    @mixin dark {
-      --_color: var(--mantine-color-dark-3);
-    }
-  }
-
-  &[data-active] {
-    @mixin light {
-      --_color: var(--sc-label-color, var(--mantine-color-black));
-    }
-
-    @mixin dark {
-      --_color: var(--sc-label-color, var(--mantine-color-white));
+    @mixin where-dark {
+      color: var(--mantine-color-dark-3);
     }
   }
 
-  &:not([data-disabled], [data-active], [data-read-only]) {
-    @mixin hover {
-      @mixin light {
-        --_color: var(--mantine-color-black);
+  &:where([data-active]) {
+    @mixin where-light {
+      color: var(--sc-label-color, var(--mantine-color-black));
+    }
+
+    @mixin where-dark {
+      color: var(--sc-label-color, var(--mantine-color-white));
+    }
+
+    &::before {
+      .root:where([data-initialized]) & {
+        display: none;
+      }
+      content: '';
+      inset: 0;
+      z-index: 0;
+      position: absolute;
+      border-radius: var(--sc-radius, var(--mantine-radius-default));
+
+      @mixin where-light {
+        box-shadow: var(--sc-shadow, none);
+        background-color: var(--sc-color, var(--mantine-color-white));
       }
 
-      @mixin dark {
-        --_color: var(--mantine-color-white);
+      @mixin where-dark {
+        box-shadow: none;
+        background-color: var(--sc-color, var(--mantine-color-dark-5));
+      }
+    }
+  }
+
+  &:where(:not([data-disabled], [data-active], [data-read-only])) {
+    @mixin hover {
+      @mixin where-light {
+        color: var(--mantine-color-black);
+      }
+
+      @mixin where-dark {
+        color: var(--mantine-color-white);
       }
     }
   }
 
   fieldset:disabled & {
     @mixin hover {
-      @mixin light {
-        --_color: var(--mantine-color-gray-5) !important;
+      @mixin where-light {
+        color: var(--mantine-color-gray-5) !important;
       }
 
-      @mixin dark {
-        --_color: var(--mantine-color-dark-3) !important;
+      @mixin where-dark {
+        color: var(--mantine-color-dark-3) !important;
       }
     }
-  }
-
-  @mixin light {
-    --_color: var(--mantine-color-gray-7);
-  }
-
-  @mixin dark {
-    --_color: var(--mantine-color-dark-1);
   }
 }
 
@@ -161,7 +168,7 @@
   &[data-focus-ring='auto'] {
     &:focus:focus-visible {
       & + .label {
-        --_outline: rem(2px) solid var(--mantine-color-blue-filled);
+        --segmented-control-outline: 2px solid var(--mantine-primary-color-filled);
       }
     }
   }
@@ -169,7 +176,7 @@
   &[data-focus-ring='always'] {
     &:focus {
       & + .label {
-        --_outline: rem(2px) solid var(--mantine-color-blue-filled);
+        --segmented-control-outline: 2px solid var(--mantine-primary-color-filled);
       }
     }
   }
@@ -186,39 +193,33 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 0;
-    background-color: var(--_separator-color);
-    width: rem(1px);
+    inset-inline-start: 0;
+    background-color: var(--separator-color);
+    width: 1px;
     transition: background-color var(--sc-transition-duration) var(--sc-transition-timing-function);
-
-    @mixin rtl {
-      right: 0;
-      left: auto;
-    }
   }
 
   &[data-orientation='vertical'] {
     &::before {
       top: 0;
-      left: 0;
-      right: 0;
+      inset-inline: 0;
       bottom: auto;
-      height: rem(1px);
+      height: 1px;
       width: auto;
     }
   }
 
-  @mixin light {
-    --_separator-color: var(--mantine-color-gray-3);
+  @mixin where-light {
+    --separator-color: var(--mantine-color-gray-3);
   }
 
-  @mixin dark {
-    --_separator-color: var(--mantine-color-dark-4);
+  @mixin where-dark {
+    --separator-color: var(--mantine-color-dark-4);
   }
 
   &:first-of-type {
     &::before {
-      --_separator-color: transparent;
+      --separator-color: transparent;
     }
   }
 
@@ -227,9 +228,14 @@
       &,
       & + .control {
         &::before {
-          --_separator-color: transparent;
+          --separator-color: transparent;
         }
       }
     }
   }
+}
+
+.innerLabel {
+  position: relative;
+  z-index: 2;
 }

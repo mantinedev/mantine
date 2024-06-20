@@ -1,4 +1,3 @@
-import React from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
@@ -67,7 +66,7 @@ export interface TabsProps
   allowTabDeactivation?: boolean;
 
   /** Tabs content */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /** Changes colors of `Tabs.Tab` components when variant is `pills` or `default`, does nothing for other variants */
   color?: MantineColor;
@@ -118,7 +117,7 @@ const varsResolver = createVarsResolver<TabsFactory>((theme, { radius, color, au
     '--tabs-radius': getRadius(radius),
     '--tabs-color': getThemeColor(color, theme),
     '--tabs-text-color': getAutoContrastValue(autoContrast, theme)
-      ? getContrastColor({ color, theme })
+      ? getContrastColor({ color, theme, autoContrast })
       : undefined,
   },
 }));

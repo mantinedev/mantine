@@ -1,4 +1,3 @@
-import React from 'react';
 import { matches } from '../matches/matches';
 
 export function isEmail(error?: React.ReactNode) {

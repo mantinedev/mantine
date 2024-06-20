@@ -9,9 +9,10 @@ import {
   useDirection,
   useMantineColorScheme,
 } from '@mantine/core';
+import { MantineEmotionProvider } from '@mantine/emotion';
 import { ModalsProvider } from '@mantine/modals';
 import { ShikiProvider } from '@mantinex/shiki';
-import { theme } from '../docs/theme';
+import { theme } from '../apps/mantine.dev/theme';
 
 export const parameters = { layout: 'fullscreen' };
 
@@ -52,9 +53,10 @@ function DirectionWrapper({ children }: { children: React.ReactNode }) {
 }
 
 async function loadShiki() {
-  const { getHighlighter } = await import('shikiji');
+  const { getHighlighter } = await import('shiki');
   const shiki = await getHighlighter({
     langs: ['tsx', 'scss', 'html', 'bash', 'json'],
+    themes: [],
   });
 
   return shiki;
@@ -72,5 +74,9 @@ export const decorators = [
       {renderStory()}
     </ModalsProvider>
   ),
-  (renderStory: any) => <MantineProvider theme={theme}>{renderStory()}</MantineProvider>,
+  (renderStory: any) => (
+    <MantineProvider theme={theme}>
+      <MantineEmotionProvider>{renderStory()}</MantineEmotionProvider>
+    </MantineProvider>
+  ),
 ];

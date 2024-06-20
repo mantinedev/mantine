@@ -1,8 +1,9 @@
-import React from 'react';
 import { Anchor } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
+import { Anchor } from '@mantine/core';
+
 function Demo() {
   return (
     <Anchor

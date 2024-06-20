@@ -1,17 +1,18 @@
 /* eslint-disable no-console */
-import React from 'react';
-import { Box, Button, TextInput } from '@mantine/core';
+
+import { Button, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useForm } from '@mantine/form';
-import { TextInput, Button, Box } from '@mantine/core';
+import { TextInput, Button } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: { name: '', email: '' },
     validate: {
       name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
@@ -28,21 +29,31 @@ function Demo() {
   };
 
   return (
-    <Box maw={340} mx="auto">
-      <form onSubmit={form.onSubmit(console.log, handleError)}>
-        <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-        <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
-        <Button type="submit" mt="sm">
-          Submit
-        </Button>
-      </form>
-    </Box>
+    <form onSubmit={form.onSubmit(console.log, handleError)}>
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="sm"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+      <Button type="submit" mt="sm">
+        Submit
+      </Button>
+    </form>
   );
 }
 `;
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: { name: '', email: '' },
     validate: {
       name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
@@ -59,15 +70,24 @@ function Demo() {
   };
 
   return (
-    <Box maw={340} mx="auto">
-      <form onSubmit={form.onSubmit(console.log, handleError)}>
-        <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-        <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
-        <Button type="submit" mt="sm">
-          Submit
-        </Button>
-      </form>
-    </Box>
+    <form onSubmit={form.onSubmit(console.log, handleError)}>
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="sm"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+      <Button type="submit" mt="sm">
+        Submit
+      </Button>
+    </form>
   );
 }
 
@@ -75,4 +95,6 @@ export const onSubmitErrors: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  centered: true,
+  maxWidth: 340,
 };

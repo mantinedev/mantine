@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../Button';
 import { TagsInput } from './TagsInput';
 
@@ -8,6 +8,26 @@ export function Usage() {
   return (
     <div style={{ padding: 40 }}>
       <TagsInput defaultValue={['React', 'Angular']} placeholder="Enter tags" />
+    </div>
+  );
+}
+
+export function Disabled() {
+  return (
+    <div style={{ padding: 40 }}>
+      <TagsInput
+        disabled
+        label="disabled"
+        defaultValue={['React', 'Angular']}
+        placeholder="Enter tags"
+      />
+      <fieldset disabled>
+        <TagsInput
+          label="disabled fieldset"
+          defaultValue={['React', 'Angular']}
+          placeholder="Enter tags"
+        />
+      </fieldset>
     </div>
   );
 }

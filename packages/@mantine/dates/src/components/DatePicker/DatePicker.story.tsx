@@ -1,6 +1,7 @@
 import 'dayjs/locale/ru';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Button, Stack } from '@mantine/core';
 import { DatesRangeValue } from '../../types';
 import { DatePicker } from './DatePicker';
 
@@ -19,6 +20,25 @@ export function HideOutsideDates() {
     <div style={{ padding: 40 }}>
       <DatePicker hideOutsideDates />
     </div>
+  );
+}
+
+export function RangeCancelled() {
+  const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
+
+  const handleChange = (val: [Date | null, Date | null]) => {
+    setValue(val);
+  };
+
+  const clearRange = () => {
+    setValue([null, null]);
+  };
+
+  return (
+    <Stack>
+      <DatePicker type="range" value={value} onChange={handleChange} allowSingleDateInRange />
+      <Button onClick={clearRange}>CLEAR</Button>
+    </Stack>
   );
 }
 

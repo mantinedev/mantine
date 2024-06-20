@@ -1,0 +1,69 @@
+import { SimpleGridDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.SimpleGrid);
+
+## Usage
+
+`SimpleGrid` is a responsive grid system with equal-width columns.
+It uses CSS grid layout. If you need to set different widths for columns, use
+[Grid](/core/grid) component instead.
+
+<Demo data={SimpleGridDemos.usage} />
+
+## spacing and verticalSpacing props
+
+`spacing` prop is used both for horizontal and vertical spacing if `verticalSpacing` is not set:
+
+```tsx
+import { SimpleGrid } from '@mantine/core';
+
+// `spacing` is used for both horizontal and vertical spacing
+const Spacing = () => <SimpleGrid spacing="xl" />;
+
+// `spacing` is used for horizontal spacing, `verticalSpacing` for vertical
+const VerticalSpacing = () => (
+  <SimpleGrid spacing="xl" verticalSpacing="lg" />
+);
+```
+
+## Responsive props
+
+`cols`, `spacing` and `verticalSpacing` props support object notation for responsive values,
+it works the same way as [style props](/styles/style-props): the object may have `base`, `xs`,
+`sm`, `md`, `lg` and `xl` key, and values from those keys will be applied according to current
+viewport width.
+
+In the following example, `cols={{ base: 1, sm: 2, lg: 5 }}` means:
+
+- 1 column if viewport width is less than `sm` breakpoint
+- 2 columns if viewport width is between `sm` and `lg` breakpoints
+- 5 columns if viewport width is greater than `lg` breakpoint
+
+Same logic applies to `spacing` and `verticalSpacing` props.
+
+<Demo data={SimpleGridDemos.responsive} />
+
+## Container queries
+
+To use [container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries)
+instead of media queries, set `type="container"`. With container queries, grid columns and spacing
+will be adjusted based on the container width, not the viewport width.
+
+Note that, when using container queries, `cols`, `spacing` and `verticalSpacing` props cannot
+reference `theme.breakpoints` values in keys. In is required to use exact px or em values.
+
+To see how the grid changes, resize the root element of the demo
+with the resize handle located at the bottom right corner of the demo:
+
+<Demo data={SimpleGridDemos.container} />
+
+## Browser support
+
+`SimpleGrid` uses [CSS Grid Layout](https://caniuse.com/css-grid), it is supported in all modern browsers.
+If you need to support older browsers, use [Grid](/core/grid) (flexbox based) component instead.
+
+When `type="container"` is set, `SimpleGrid` uses [container queries](https://caniuse.com/css-container-queries).
+Since February 2023, container queries are supported in all modern browsers. If you need to support older browsers,
+do not use container queries option.

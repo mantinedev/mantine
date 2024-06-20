@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Group } from '@mantine/core';
 import { DatesProvider } from '../DatesProvider';
 import { DatePickerInput } from './DatePickerInput';
@@ -9,7 +9,11 @@ export default { title: 'DatePickerInput' };
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DatePickerInput placeholder="Date picker input" />
+      <DatePickerInput
+        placeholder="Date picker input"
+        // eslint-disable-next-line no-console
+        popoverProps={{ onClose: () => console.log('close') }}
+      />
     </div>
   );
 }

@@ -1,0 +1,99 @@
+.indicator {
+  --checkbox-size-xs: 16px;
+  --checkbox-size-sm: 20px;
+  --checkbox-size-md: 24px;
+  --checkbox-size-lg: 30px;
+  --checkbox-size-xl: 36px;
+
+  --checkbox-size: var(--checkbox-size-sm);
+  --checkbox-color: var(--mantine-primary-color-filled);
+  --checkbox-icon-color: var(--mantine-color-white);
+
+  position: relative;
+  border: 1px solid transparent;
+  width: var(--checkbox-size);
+  min-width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  min-height: var(--checkbox-size);
+  border-radius: var(--checkbox-radius, var(--mantine-radius-default));
+  transition:
+    border-color 100ms ease,
+    background-color 100ms ease;
+  cursor: var(--mantine-cursor-type);
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @mixin where-light {
+    background-color: var(--mantine-color-white);
+    border-color: var(--mantine-color-gray-4);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-6);
+    border-color: var(--mantine-color-dark-4);
+  }
+
+  &[data-indeterminate],
+  &[data-checked] {
+    background-color: var(--checkbox-color);
+    border-color: var(--checkbox-color);
+
+    & > .icon {
+      opacity: 1;
+      transform: none;
+      color: var(--checkbox-icon-color);
+    }
+  }
+
+  &[data-disabled] {
+    cursor: not-allowed;
+
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-2);
+      border-color: var(--mantine-color-gray-3);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+      border-color: var(--mantine-color-dark-6);
+    }
+
+    &[data-checked] > .icon {
+      @mixin light {
+        color: var(--mantine-color-gray-5);
+      }
+
+      @mixin dark {
+        color: var(--mantine-color-dark-3);
+      }
+    }
+  }
+}
+
+.indicator--outline {
+  &[data-indeterminate]:not([data-disabled]),
+  &[data-checked]:not([data-disabled]) {
+    background-color: transparent;
+    border-color: var(--checkbox-color);
+
+    & > .icon {
+      color: var(--checkbox-color);
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+.icon {
+  display: block;
+  width: 60%;
+  color: transparent;
+  pointer-events: none;
+  transform: translateY(rem(5px)) scale(0.5);
+  opacity: 1;
+  transition:
+    transform 100ms ease,
+    opacity 100ms ease;
+}

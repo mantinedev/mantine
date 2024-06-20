@@ -1,0 +1,247 @@
+import { AreaChartDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.AreaChart);
+
+## Usage
+
+Use `AreaChart` component without `type` prop to render a regular area chart.
+In a regular area chart, each data series is plotted on its own and does
+not interact with other series.
+
+<Demo data={AreaChartDemos.usage} />
+
+## Stacked area chart
+
+Set `type="stacked"` to render a stacked area chart. In this type of area chart
+stacking is applied along the vertical axis, allowing you to see the overall trend
+as well as the contribution of each individual series to the total.
+
+<Demo data={AreaChartDemos.stacked} />
+
+## Percent area chart
+
+Set `type="percent"` to render a percent area chart. In this type of area chart
+the y-axis scale is always normalized to 100%, making it easier to compare the
+contribution of each series in terms of percentages.
+
+<Demo data={AreaChartDemos.percent} />
+
+## Split area chart
+
+Set `type="split"` to render a split area chart. In this type of area chart
+fill color is split into two colors, one for positive values and one for negative
+values. Split area chart supports only one data series.
+
+<Demo data={AreaChartDemos.split} />
+
+## Split colors
+
+Set `splitColors` prop to an array of two colors to customize the fill color of
+split area chart. The first color is used for positive values and the second color
+for negative values. `splitColors` prop is ignored in other types of area charts.
+
+<Demo data={AreaChartDemos.splitColors} />
+
+## Legend
+
+To display chart legend, set `withLegend` prop. When one of the items in the legend
+is hovered, the corresponding data series is highlighted in the chart.
+
+<Demo data={AreaChartDemos.legend} />
+
+## Legend position
+
+You can pass props down to recharts [Legend](https://recharts.org/en-US/api/Legend)
+component with `legendProps` prop. For example, setting `legendProps={{ verticalAlign: 'bottom', height: 50 }}`
+will render the legend at the bottom of the chart and set its height to 50px.
+
+<Demo data={AreaChartDemos.legendPosition} />
+
+## Series labels
+
+By default, series `name` is used as a label. To change it, set `label`
+property in `series` object:
+
+<Demo data={AreaChartDemos.seriesLabels} />
+
+## Connect nulls
+
+Use `connectNulls` prop to specify whether to connect a data point across null
+points. By default, `connectNulls` is `true`.
+
+<Demo data={AreaChartDemos.connectNulls} />
+
+## X and Y axis props
+
+Use `xAxisProps` and `yAxisProps` to pass props down to recharts [XAxis](https://recharts.org/en-US/api/XAxis)
+and [YAxis](https://recharts.org/en-US/api/YAxis) components. For example, these props
+can be used to change orientation of axis:
+
+<Demo data={AreaChartDemos.axisProps} />
+
+## Axis labels
+
+Use `xAxisLabel` and `yAxisLabel` props to display axis labels:
+
+<Demo data={AreaChartDemos.axisLabels} />
+
+## X axis offset
+
+Use `xAxisProps` to set padding between the charts ends and the x-axis:
+
+<Demo data={AreaChartDemos.xAxisOffset} />
+
+## Y axis scale
+
+Use `yAxisProps` to change domain of the Y axis. For example, if you know that
+your data will always be in the range of 0 to 100, you can set domain to `[0, 100]`:
+
+<Demo data={AreaChartDemos.yScale} />
+
+## Rotate x-axis labels
+
+To rotate x-axis labels, set `xAxisProps.angle` to a number of degrees to rotate:
+
+<Demo data={AreaChartDemos.rotateLabels} />
+
+## Value formatter
+
+To format values in the tooltip and axis ticks, use `valueFormat` prop. It accepts
+a function that takes number value as an argument and returns formatted value:
+
+<Demo data={AreaChartDemos.valueFormatter} />
+
+## Area color
+
+You can reference colors from [theme](/theming/theme-object) the same way as in
+other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
+color value is also accepted.
+
+<Demo data={AreaChartDemos.color} />
+
+## Change area color depending on color scheme
+
+You can use CSS variables in `color` property. To define a CSS variable that
+changes depending on the color scheme, use [light/dark mixins](/styles/postcss-preset/#dark-and-light-mixins)
+or [light-dark function](/styles/postcss-preset/#light-dark-function). Example
+of area that is dark orange in light mode and lime in dark mode:
+
+<Demo data={AreaChartDemos.colorSchemeColor} />
+
+## Stroke dash array
+
+Set `strokeDasharray` prop to control the stroke dash array of the grid and cursor
+lines. The value represent the lengths of alternating dashes and gaps. For example,
+`strokeDasharray="10 5"` will render a dashed line with 10px dashes and 5px gaps.
+
+<Demo data={AreaChartDemos.strokeDasharray} />
+
+## Grid and text colors
+
+Use `--chart-grid-color` and `--chart-text-color` to change colors of
+grid lines and text within the chart. With [CSS modules](/styles/css-modules/), you can change colors
+depending on color scheme:
+
+<Demo data={AreaChartDemos.gridColor} />
+
+If your application has only one color scheme, you can use `gridColor` and `textColor`
+props instead of CSS variables:
+
+```tsx
+import { AreaChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <AreaChart
+      h={300}
+      data={data}
+      dataKey="date"
+      type="stacked"
+      gridColor="gray.5"
+      textColor="gray.9"
+      series={[
+        { name: 'Apples', color: 'indigo.6' },
+        { name: 'Oranges', color: 'blue.6' },
+        { name: 'Tomatoes', color: 'teal.6' },
+      ]}
+    />
+  );
+}
+```
+
+## Tooltip animation
+
+By default, tooltip animation is disabled. To enable it, set `tooltipAnimationDuration`
+prop to a number of milliseconds to animate the tooltip position change.
+
+<Demo data={AreaChartDemos.tooltipAnimation} />
+
+## Units
+
+Set `unit` prop to render a unit label next to the y-axis ticks and tooltip values:
+
+<Demo data={AreaChartDemos.unit} />
+
+## Custom tooltip
+
+Use `tooltipProps.content` to pass custom tooltip renderer to recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)
+component. Note that it is required to filter recharts payload with `getFilteredChartTooltipPayload`
+function to remove empty values that are used for styling purposes only.
+
+<Demo data={AreaChartDemos.customTooltip} />
+
+## Remove tooltip
+
+To remove tooltip, set `withTooltip={false}`. It also removes the cursor line
+and disables interactions with the chart.
+
+<Demo data={AreaChartDemos.noTooltip} />
+
+## Customize dots
+
+Use `dotProps` to pass props down to recharts dot in regular state and `activeDotProps`
+to pass props down to recharts dot in active state (when cursor is over the current series).
+
+<Demo data={AreaChartDemos.dotProps} />
+
+## Stroke width
+
+Use `strokeWidth` prop to control the stroke width of all areas:
+
+<Demo data={AreaChartDemos.strokeWidth} />
+
+## Fill opacity
+
+Use `fillOpacity` prop to control the fill opacity of all areas:
+
+<Demo data={AreaChartDemos.fillOpacity} />
+
+## Sync multiple AreaCharts
+
+You can pass props down to recharts [AreaChart](https://recharts.org/en-US/api/AreaChart)
+component with `areaChartProps` prop. For example, setting `areaChartProps={{ syncId: 'any-id' }}`
+will sync tooltip of multiple `AreaChart` components with the same `syncId` prop.
+
+<Demo data={AreaChartDemos.sync} />
+
+## Vertical orientation
+
+Set `orientation="vertical"` to render a vertical area chart:
+
+<Demo data={AreaChartDemos.vertical} />
+
+## Dashed area line
+
+Set `strokeDasharray` property in `series` to change line style to dashed:
+
+<Demo data={AreaChartDemos.lineDasharray} />
+
+## Reference lines
+
+Use `referenceLines` prop to render reference lines. Reference lines are always
+rendered behind the chart.
+
+<Demo data={AreaChartDemos.referenceLines} />

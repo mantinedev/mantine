@@ -1,4 +1,4 @@
-import React, { cloneElement } from 'react';
+import { cloneElement } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import { factory, Factory, isElement, useProps } from '../../../core';
 import { useComboboxContext } from '../Combobox.context';
@@ -25,6 +25,9 @@ export interface ComboboxEventsTargetProps {
    * `input` by default.
    * */
   targetType?: 'button' | 'input';
+
+  /** Input autocomplete attribute */
+  autoComplete?: string;
 }
 
 const defaultProps: Partial<ComboboxEventsTargetProps> = {
@@ -33,6 +36,7 @@ const defaultProps: Partial<ComboboxEventsTargetProps> = {
   withKeyboardNavigation: true,
   withAriaAttributes: true,
   withExpandedAttribute: false,
+  autoComplete: 'off',
 };
 
 export type ComboboxEventsTargetFactory = Factory<{
@@ -49,6 +53,7 @@ export const ComboboxEventsTarget = factory<ComboboxEventsTargetFactory>((props,
     withAriaAttributes,
     withExpandedAttribute,
     targetType,
+    autoComplete,
     ...others
   } = useProps('ComboboxEventsTarget', defaultProps, props);
 
@@ -65,6 +70,7 @@ export const ComboboxEventsTarget = factory<ComboboxEventsTargetFactory>((props,
     withKeyboardNavigation,
     withExpandedAttribute,
     onKeyDown: children.props.onKeyDown,
+    autoComplete,
   });
 
   return cloneElement(children, {

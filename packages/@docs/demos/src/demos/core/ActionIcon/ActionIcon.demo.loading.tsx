@@ -1,11 +1,11 @@
-import React from 'react';
 import { IconHeart } from '@tabler/icons-react';
 import { ActionIcon, Group, Switch } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { ActionIcon, Group } from '@mantine/core';
+import { ActionIcon, Group, Switch } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { IconHeart } from '@tabler/icons-react';
 
 function Demo() {
@@ -27,6 +27,7 @@ function Demo() {
       <Switch checked={loading} onChange={toggle} label="Loading state" mt="md" />
     </>
   );
+}
 `;
 
 function Demo() {

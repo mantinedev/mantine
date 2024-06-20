@@ -1,0 +1,20 @@
+.wrapper {
+  background-color: var(--mantine-color-red-light);
+  color: var(--mantine-color-bright);
+  font-size: var(--mantine-font-size-sm);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-lg);
+  border-radius: var(--mantine-radius-md);
+}
+
+.error {
+  font-size: inherit;
+  font-family: var(--mantine-font-family-monospace);
+  word-break: break-word;
+}
+
+.label {
+  font-size: inherit;
+  color: var(--mantine-color-red-6);
+  font-weight: 500;
+  margin-bottom: var(--mantine-spacing-xs);
+}

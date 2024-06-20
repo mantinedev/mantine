@@ -1,4 +1,3 @@
-import React from 'react';
 import { CompoundStylesApiProps, factory, Factory, useProps } from '../../core';
 import { ModalBaseContent, ModalBaseContentProps, NativeScrollArea } from '../ModalBase';
 import { useDrawerContext } from './Drawer.context';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { inputWrapperQueries, render, tests } from '@mantine-tests/core';
 import { Input } from '../Input';
 import { InputWrapper, InputWrapperProps, InputWrapperStylesNames } from './InputWrapper';

@@ -1,9 +1,9 @@
 .pickerControl {
-  --dpc-size-xs: rem(30px);
-  --dpc-size-sm: rem(36px);
-  --dpc-size-md: rem(42px);
-  --dpc-size-lg: rem(48px);
-  --dpc-size-xl: rem(54px);
+  --dpc-size-xs: 30px;
+  --dpc-size-sm: 36px;
+  --dpc-size-md: 42px;
+  --dpc-size-lg: 48px;
+  --dpc-size-xl: 54px;
   --dpc-size: var(--dpc-size-sm);
 
   font-size: var(--dpc-fz, var(--mantine-font-size-sm));
@@ -13,70 +13,61 @@
   justify-content: center;
   align-items: center;
   user-select: none;
-  cursor: var(--_control-cursor, pointer);
-  background-color: var(--_control-bg, transparent);
-  color: var(--_control-color, var(--mantine-color-text));
-  opacity: var(--_control-opacity, 1);
-  border-radius: var(--_control-radius, var(--mantine-radius-default));
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--mantine-color-text);
+  opacity: 1;
+  border-radius: var(--mantine-radius-default);
 
   @mixin hover {
-    &:not([data-disabled]) {
-      @mixin light {
-        --_control-bg: var(--mantine-color-gray-0);
+    &:where(:not([data-disabled], :disabled)) {
+      @mixin where-light {
+        background-color: var(--mantine-color-gray-0);
       }
 
-      @mixin dark {
-        --_control-bg: var(--mantine-color-dark-5);
+      @mixin where-dark {
+        background-color: var(--mantine-color-dark-5);
       }
     }
   }
 
-  &:disabled,
-  &[data-disabled] {
-    --_control-color: var(--mantine-color-dimmed);
-    --_control-cursor: not-allowed;
-    --_control-opacity: 0.5;
+  &:where(:disabled, [data-disabled]) {
+    color: var(--mantine-color-dimmed);
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 
-  &[data-selected] {
-    --_control-bg: var(--mantine-primary-color-filled);
-    --_control-color: var(--mantine-primary-color-contrast, var(--mantine-color-white));
+  &:where([data-selected]) {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast, var(--mantine-color-white));
 
     @mixin hover {
-      [data-mantine-color-scheme] & {
-        --_control-bg: var(--mantine-primary-color-filled-hover);
-      }
+      background-color: var(--mantine-primary-color-filled-hover);
     }
   }
 
-  &[data-in-range] {
-    --_control-bg: var(--mantine-primary-color-light-hover);
-    --_control-radius: 0;
+  &:where([data-in-range]) {
+    background-color: var(--mantine-primary-color-light-hover);
+    border-radius: 0;
 
     @mixin hover {
-      [data-mantine-color-scheme] & {
-        --_control-bg: var(--mantine-primary-color-light);
-      }
+      background-color: var(--mantine-primary-color-light);
     }
   }
 
-  &[data-first-in-range] {
-    --_control-radius: var(--mantine-radius-default) 0 0 var(--mantine-radius-default);
-
-    @mixin rtl {
-      --_control-radius: 0 var(--mantine-radius-default) var(--mantine-radius-default) 0;
-    }
+  &:where([data-first-in-range]) {
+    border-radius: 0;
+    border-start-start-radius: var(--mantine-radius-default);
+    border-end-start-radius: var(--mantine-radius-default);
   }
 
-  &[data-last-in-range] {
-    --_control-radius: 0 var(--mantine-radius-default) var(--mantine-radius-default) 0;
-
-    @mixin rtl {
-      --_control-radius: var(--mantine-radius-default) 0 0 var(--mantine-radius-default);
-    }
+  &:where([data-last-in-range]) {
+    border-radius: 0;
+    border-end-end-radius: var(--mantine-radius-default);
+    border-start-end-radius: var(--mantine-radius-default);
   }
 
-  &[data-first-in-range][data-last-in-range] {
-    --_control-radius: var(--mantine-radius-default);
+  &:where([data-first-in-range][data-last-in-range]) {
+    border-radius: var(--mantine-radius-default);
   }
 }

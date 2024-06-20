@@ -1,0 +1,29 @@
+import { Image } from '@mantine/core';
+import image from '@/images/dates-broken-styles.png';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'I do not have styles in my dates components...',
+  description: 'Because you did not import styles',
+  slug: 'dates-missing-styles',
+  category: 'styles',
+  tags: ['dates', 'broken'],
+  created_at: 'January 17, 2024',
+  last_updated_at: 'January 17, 2024',
+};
+
+export default Layout(meta);
+
+If your dates components look like this:
+
+<Image src={image.src} maw={400} />
+
+It means that you did not import styles for `@mantine/dates` package like
+it is described in [installation](https://mantine.dev/dates/getting-started/#installation)
+instructions.
+
+Add styles import to your application:
+
+```bash
+import '@mantine/dates/styles.css';
+```

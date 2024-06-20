@@ -1,4 +1,3 @@
-import React from 'react';
 import { Grid, GridColProps } from '@mantine/core';
 import classes from './_col-wrapper.module.css';
 

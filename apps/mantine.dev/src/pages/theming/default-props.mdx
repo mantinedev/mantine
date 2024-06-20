@@ -1,0 +1,90 @@
+import { ThemingDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DefaultProps);
+
+# Default props
+
+You can define default props for every Mantine component by setting `theme.components`.
+These props will be used by default by all components of your application unless they are overridden by component props:
+
+<Demo data={ThemingDemos.defaultProps} />
+
+## Default props with MantineThemeProvider
+
+You can also use `MantineThemeProvider` to define default props
+for a part of your application:
+
+```tsx
+import {
+  Button,
+  createTheme,
+  MantineThemeProvider,
+} from '@mantine/core';
+
+const theme = createTheme({
+  components: {
+    Button: Button.extend({
+      defaultProps: {
+        color: 'cyan',
+        variant: 'outline',
+      },
+    }),
+  },
+});
+
+function Demo() {
+  return (
+    <>
+      <MantineThemeProvider theme={theme}>
+        {/* Part of the app with theme */}
+      </MantineThemeProvider>
+
+      {/* Another part without theme */}
+    </>
+  );
+}
+```
+
+## Default props for compound components
+
+Some components like [Menu](/core/menu/) and [Tabs](/core/tabs/) have associated compound components:
+`Menu.Item`, `Tabs.List`, etc.. You can add default props to these components by omitting the dot from component name:
+
+```tsx
+import { MantineProvider, Menu, Tabs } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        components: {
+          MenuItem: Menu.Item.extend({
+            defaultProps: { color: 'red' },
+          }),
+
+          TabsList: Tabs.List.extend({
+            defaultProps: {
+              justify: 'center',
+            },
+          }),
+        },
+      }}
+    >
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+## useProps hook
+
+You can use `useProps` hook to add default props support to any custom component.
+`useProps` accepts three arguments:
+
+- component name (string) – it is used to connect component with theme
+- `defaultProps` – default props on component level – these props are used when default props are not defined on theme
+- `props` – props passed to component
+
+<Demo data={ThemingDemos.usePropsHook} />

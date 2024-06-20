@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Button.demo.disabledStyles.module.css';

@@ -1,9 +1,9 @@
 .root {
-  --divider-size-xs: rem(1px);
-  --divider-size-sm: rem(2px);
-  --divider-size-md: rem(3px);
-  --divider-size-lg: rem(4px);
-  --divider-size-xl: rem(5px);
+  --divider-size-xs: 1px;
+  --divider-size-sm: 2px;
+  --divider-size-md: 3px;
+  --divider-size-lg: 4px;
+  --divider-size-xl: 5px;
   --divider-size: var(--divider-size-xs);
 
   @mixin where-light {
@@ -19,7 +19,7 @@
   }
 
   &:where([data-orientation='vertical']) {
-    border-left: var(--divider-size) var(--divider-border-style, solid) var(--divider-color);
+    border-inline-start: var(--divider-size) var(--divider-border-style, solid) var(--divider-color);
     height: auto;
     align-self: stretch;
   }
@@ -33,7 +33,7 @@
   display: flex;
   align-items: center;
   font-size: var(--mantine-font-size-xs);
-  color: var(--divider-color, var(--mantine-color-dimmed));
+  color: var(--mantine-color-dimmed);
   white-space: nowrap;
 
   &:where([data-position='left'])::before {
@@ -47,28 +47,16 @@
   &::before {
     content: '';
     flex: 1;
-    height: rem(1px);
-    border-top: var(--divider-size) var(--divider-border-style, solid)
-      var(--divider-color, var(--_divider-color));
-    margin-right: var(--mantine-spacing-xs);
-
-    @mixin rtl {
-      margin-right: 0;
-      margin-left: var(--mantine-spacing-xs);
-    }
+    height: 1px;
+    border-top: var(--divider-size) var(--divider-border-style, solid) var(--divider-color);
+    margin-inline-end: var(--mantine-spacing-xs);
   }
 
   &::after {
     content: '';
     flex: 1;
-    height: rem(1px);
-    border-top: var(--divider-size) var(--divider-border-style, solid)
-      var(--divider-color, var(--_divider-color));
-    margin-left: var(--mantine-spacing-xs);
-
-    @mixin where-rtl {
-      margin-left: 0;
-      margin-right: var(--mantine-spacing-xs);
-    }
+    height: 1px;
+    border-top: var(--divider-size) var(--divider-border-style, solid) var(--divider-color);
+    margin-inline-start: var(--mantine-spacing-xs);
   }
 }

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from '@mantine/form';
 import { Button } from '../Button';
 import { Group } from '../Group';
@@ -17,6 +17,7 @@ export function Usage() {
         label="Number input"
         placeholder="Number input"
         onChange={setValue}
+        onValueChange={console.log}
       />
       {typeof value === 'number' ? `${value} number` : `${value === '' ? 'empty' : value} string`}
       <Button onClick={() => setValue(245.32)}>Set value to float</Button>
@@ -234,7 +235,7 @@ export function FormValidateOnBlur() {
 }
 
 export function ExternalOnChange() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   return (
     <div>
       <NumberInput

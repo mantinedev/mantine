@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function EyeDropperIcon({ style, ...others }: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg

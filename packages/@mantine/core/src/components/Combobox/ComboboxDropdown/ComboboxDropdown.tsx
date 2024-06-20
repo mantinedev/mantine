@@ -1,4 +1,3 @@
-import React from 'react';
 import { factory, Factory, useProps } from '../../../core';
 import { Popover, PopoverDropdownProps } from '../../Popover';
 import { useComboboxContext } from '../Combobox.context';

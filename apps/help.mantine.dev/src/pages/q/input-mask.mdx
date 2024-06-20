@@ -1,0 +1,25 @@
+import { InputMask } from '@/demos/InputMask.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'Is there a way to add mask to Mantine input?',
+  description:
+    'Learn how to integrate mask libraries with Mantine inputs',
+  slug: 'input-mask',
+  category: 'forms',
+  tags: ['inputs', 'textarea', 'mask', 'react-imask'],
+  created_at: 'February 15, 2024',
+  last_updated_at: 'February 15, 2024',
+};
+
+export default Layout(meta);
+
+Mantine does not provide built-in mask functionality, but you can easily integrate any mask library with Mantine inputs.
+The recommended library is [react-imask](https://www.npmjs.com/package/react-imask):
+
+<InstallScript packages="react-imask" />
+
+You can use it with [InputBase](https://mantine.dev/core/input/#inputbase-component) component
+to create custom input with mask:
+
+<Demo data={InputMask} />

@@ -29,7 +29,7 @@ body {
   -webkit-font-smoothing: var(--mantine-webkit-font-smoothing);
   -moz-osx-font-smoothing: var(--mantine-moz-font-smoothing);
 
-  @media screen and (max-device-width: 500px) {
+  @media screen and (max-device-width: em(500px)) {
     -webkit-text-size-adjust: 100%;
   }
 }
@@ -57,15 +57,15 @@ body {
 
 .mantine-focus-auto {
   &:focus-visible {
-    outline: rem(2px) solid var(--mantine-primary-color-filled);
-    outline-offset: rem(2px);
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: 2px;
   }
 }
 
 .mantine-focus-always {
   &:focus {
-    outline: rem(2px) solid var(--mantine-primary-color-filled);
-    outline-offset: rem(2px);
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: 2px;
   }
 }
 
@@ -82,7 +82,7 @@ body {
 }
 
 .mantine-rotate-rtl {
-  @mixin rtl {
+  @mixin where-rtl {
     transform: rotate(180deg);
   }
 }

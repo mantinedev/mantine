@@ -1,0 +1,33 @@
+.root {
+  background-color: light-dark(var(--mantine-color-blue-6), var(--mantine-color-dark-8));
+  padding-top: 120px;
+  padding-bottom: 40px;
+}
+
+.title {
+  color: var(--mantine-color-white);
+  font-size: 52px;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+
+  @mixin smaller-than $sm {
+    font-size: 32px;
+  }
+}
+
+.description {
+  color: var(--mantine-color-white);
+  font-size: 20px;
+  margin-top: var(--mantine-spacing-xs);
+  margin-bottom: var(--mantine-spacing-xl);
+  opacity: 0.8;
+
+  @mixin smaller-than $sm {
+    font-size: var(--mantine-font-size-md);
+  }
+}
+
+.searchInput {
+  box-shadow: var(--mantine-shadow-md);
+}

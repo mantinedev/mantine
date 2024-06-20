@@ -1,19 +1,19 @@
 .root {
   &[data-scrollable] {
-    --_spotlight-content-height: 100%;
+    --spotlight-content-height: 100%;
   }
 }
 
 .content {
   overflow: hidden;
-  height: var(--_spotlight-content-height, auto);
+  height: var(--spotlight-content-height, auto);
   max-height: var(--spotlight-max-height);
 }
 
 .body {
   display: flex;
   flex-direction: column;
-  height: var(--_spotlight-content-height, auto);
+  height: var(--spotlight-content-height, auto);
 }
 
 .search {
@@ -23,26 +23,20 @@
 
 .actionsList {
   /* Used in child ScrollArea */
-  --spotlight-actions-list-padding: rem(4px);
+  --spotlight-actions-list-padding: 4px;
 
-  border-top: rem(1px) solid var(--_actions-list-border);
+  border-top: 1px solid;
   flex: 1;
   padding: var(--spotlight-actions-list-padding);
-  max-height: calc(100% - rem(3.125rem));
-  margin-right: var(--_actions-list-mr, calc(var(--spotlight-actions-list-padding) * -1));
-  margin-left: var(--_actions-list-ml, 0);
+  max-height: calc(100% - 3.125rem);
+  margin-inline-end: calc(var(--spotlight-actions-list-padding) * -1);
 
-  @mixin rtl {
-    --_actions-list-mr: 0;
-    --_actions-list-ml: calc(var(--spotlight-actions-list-padding) * -1);
+  @mixin where-light {
+    border-color: var(--mantine-color-gray-2);
   }
 
-  @mixin light {
-    --_actions-list-border: var(--mantine-color-gray-2);
-  }
-
-  @mixin dark {
-    --_actions-list-border: var(--mantine-color-dark-4);
+  @mixin where-dark {
+    border-color: var(--mantine-color-dark-4);
   }
 }
 
@@ -50,33 +44,33 @@
   display: flex;
   align-items: center;
   width: 100%;
-  padding: rem(7px) var(--mantine-spacing-md);
+  padding: 7px var(--mantine-spacing-md);
   border-radius: var(--mantine-radius-default);
-  background-color: var(--_action-bg, transparent);
-  color: var(--_action-color, inherit);
-  text-align: var(--_action-text-align, left);
+  background-color: transparent;
+  color: inherit;
+  text-align: left;
 
-  @mixin rtl {
-    --_action-text-align: right;
+  @mixin where-rtl {
+    text-align: right;
   }
 
-  &:not([data-selected]) {
+  &:where(:not([data-selected])) {
     @mixin hover {
-      @mixin light {
-        --_action-bg: var(--mantine-color-gray-0);
+      @mixin where-light {
+        background-color: var(--mantine-color-gray-0);
       }
 
-      @mixin dark {
-        --_action-bg: var(--mantine-color-dark-6);
+      @mixin where-dark {
+        background-color: var(--mantine-color-dark-6);
       }
     }
   }
 
-  &[data-selected] {
-    --_action-bg: var(--mantine-primary-color-filled);
-    --_action-color: var(--mantine-primary-color-contrast, var(--mantine-color-white));
-    --_action-description-color: var(--mantine-primary-color-contrast, var(--mantine-color-white));
-    --_action-description-opacity: 0.7;
+  &:where([data-selected]) {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast, var(--mantine-color-white));
+    --action-description-color: var(--mantine-primary-color-contrast, var(--mantine-color-white));
+    --action-description-opacity: 0.7;
   }
 }
 
@@ -85,34 +79,20 @@
 }
 
 .actionSection {
-  margin-left: var(--_action-section-ml);
-  margin-right: var(--_action-section-mr);
-  opacity: var(--_action-section-opacity, 1);
-  color: var(--_action-section-color, inherit);
+  opacity: 1;
+  color: inherit;
 
-  &[data-dimmed] {
-    --_action-section-opacity: var(--_action-description-opacity, 1);
-    --_action-section-color: var(--_action-description-color, var(--mantine-color-dimmed));
+  &:where([data-dimmed]) {
+    opacity: var(--action-description-opacity, 1);
+    color: var(--action-description-color, var(--mantine-color-dimmed));
   }
 
-  &[data-position='left'] {
-    --_action-section-mr: var(--mantine-spacing-md);
+  &:where([data-position='left']) {
+    margin-inline-end: var(--mantine-spacing-md);
   }
 
-  &[data-position='right'] {
-    --_action-section-ml: var(--mantine-spacing-md);
-  }
-
-  @mixin rtl {
-    &[data-position='left'] {
-      --_action-section-mr: unset;
-      --_action-section-ml: var(--mantine-spacing-md);
-    }
-
-    &[data-position='right'] {
-      --_action-section-ml: unset;
-      --_action-section-mr: var(--mantine-spacing-md);
-    }
+  &:where([data-position='right']) {
+    margin-inline-start: var(--mantine-spacing-md);
   }
 
   & > svg {
@@ -127,8 +107,8 @@
 .actionDescription {
   display: block;
   font-size: var(--mantine-font-size-xs);
-  opacity: var(--_action-description-opacity, 1);
-  color: var(--_action-description-color, var(--mantine-color-dimmed));
+  opacity: var(--action-description-opacity, 1);
+  color: var(--action-description-color, var(--mantine-color-dimmed));
 }
 
 .empty {
@@ -139,19 +119,19 @@
 
 .footer {
   padding: var(--mantine-spacing-xs) calc(var(--mantine-spacing-md) + rem(4px));
-  border-top: rem(1px) solid var(--_footer-border);
+  border-top: 1px solid;
 
-  @mixin light {
-    --_footer-border: var(--mantine-color-gray-2);
+  @mixin where-light {
+    border-color: var(--mantine-color-gray-2);
   }
 
-  @mixin dark {
-    --_footer-border: var(--mantine-color-dark-4);
+  @mixin where-dark {
+    border-color: var(--mantine-color-dark-4);
   }
 }
 
 .actionsGroup {
-  display: var(--_display, flex);
+  display: flex;
   flex-direction: column;
   margin-top: var(--mantine-spacing-md);
 
@@ -161,16 +141,10 @@
     font-size: var(--mantine-font-size-xs);
     font-weight: 700;
     color: var(--mantine-color-dimmed);
-    padding-left: var(--_actions-group-pl, var(--mantine-spacing-md));
-    padding-right: var(--_actions-group-pr, 0);
-  }
-
-  @mixin rtl {
-    --_actions-group-pl: 0;
-    --_actions-group-pr: var(--mantine-spacing-md);
+    padding-inline-start: var(--mantine-spacing-md);
   }
 
   &:empty {
-    --_display: none;
+    display: none;
   }
 }

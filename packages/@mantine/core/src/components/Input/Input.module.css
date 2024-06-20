@@ -3,162 +3,137 @@
   margin-top: var(--input-margin-top, 0rem);
   margin-bottom: var(--input-margin-bottom, 0rem);
 
-  --input-height-xs: rem(30px);
-  --input-height-sm: rem(36px);
-  --input-height-md: rem(42px);
-  --input-height-lg: rem(50px);
-  --input-height-xl: rem(60px);
+  --input-height-xs: 30px;
+  --input-height-sm: 36px;
+  --input-height-md: 42px;
+  --input-height-lg: 50px;
+  --input-height-xl: 60px;
 
-  --input-padding-y-xs: rem(5px);
-  --input-padding-y-sm: rem(6px);
-  --input-padding-y-md: rem(8px);
-  --input-padding-y-lg: rem(10px);
-  --input-padding-y-xl: rem(13px);
+  --input-padding-y-xs: 5px;
+  --input-padding-y-sm: 6px;
+  --input-padding-y-md: 8px;
+  --input-padding-y-lg: 10px;
+  --input-padding-y-xl: 13px;
 
-  --_input-height: var(--input-height, var(--input-height-sm));
-  --_input-radius: var(--input-radius, var(--mantine-radius-default));
+  --input-height: var(--input-height-sm);
+  --input-radius: var(--mantine-radius-default);
 
-  --_input-cursor: text;
-  --_input-text-align: left;
-  --_input-line-height: calc(var(--_input-height) - rem(2px));
-  --_input-padding: calc(var(--_input-height) / 3);
-  --_input-padding-left: var(--_input-padding);
-  --_input-padding-right: var(--_input-padding);
-  --_input-placeholder-color: var(--mantine-color-placeholder);
-  --_input-color: var(--mantine-color-text);
+  --input-cursor: text;
+  --input-text-align: left;
+  --input-line-height: calc(var(--input-height) - rem(2px));
+  --input-padding: calc(var(--input-height) / 3);
+  --input-padding-inline-start: var(--input-padding);
+  --input-padding-inline-end: var(--input-padding);
+  --input-placeholder-color: var(--mantine-color-placeholder);
+  --input-color: var(--mantine-color-text);
 
-  --_input-left-section-size: var(
-    --input-left-section-width,
-    calc(var(--_input-height) - rem(2px))
-  );
+  --input-left-section-size: var(--input-left-section-width, calc(var(--input-height) - rem(2px)));
 
-  --_input-right-section-size: var(
+  --input-right-section-size: var(
     --input-right-section-width,
-    calc(var(--_input-height) - rem(2px))
+    calc(var(--input-height) - rem(2px))
   );
 
-  --_input-size: var(--_input-height);
+  --input-size: var(--input-height);
 
-  --_section-y: rem(1px);
-  --_left-section-left: rem(1px);
-  --_left-section-right: unset;
-  --_left-section-border-radius: var(--_input-radius) 0 0 var(--_input-radius);
+  --section-y: 1px;
+  --left-section-start: 1px;
+  --left-section-border-radius: var(--input-radius) 0 0 var(--input-radius);
 
-  --_right-section-left: unset;
-  --_right-section-right: rem(1px);
-  --_right-section-border-radius: 0 var(--_input-radius) var(--_input-radius) 0;
+  --right-section-end: 1px;
+  --right-section-border-radius: 0 var(--input-radius) var(--input-radius) 0;
 
   &[data-variant='unstyled'] {
     --input-padding: 0;
     --input-padding-y: 0;
-    --_input-padding-left: 0;
-    --_input-padding-right: 0;
+    --input-padding-inline-start: 0;
+    --input-padding-inline-end: 0;
   }
 
   &[data-pointer] {
-    --_input-cursor: pointer;
+    --input-cursor: pointer;
   }
 
   &[data-multiline] {
-    --input-padding-y-xs: rem(4.5px);
-    --input-padding-y-sm: rem(5.5px);
-    --input-padding-y-md: rem(7px);
-    --input-padding-y-lg: rem(9.5px);
-    --input-padding-y-xl: rem(13px);
+    --input-padding-y-xs: 4.5px;
+    --input-padding-y-sm: 5.5px;
+    --input-padding-y-md: 7px;
+    --input-padding-y-lg: 9.5px;
+    --input-padding-y-xl: 13px;
 
-    --_input-size: auto;
-    --_input-line-height: var(--mantine-line-height);
+    --input-size: auto;
+    --input-line-height: var(--mantine-line-height);
     --input-padding-y: var(--input-padding-y-sm);
   }
 
   &[data-with-left-section] {
-    --_input-padding-left: var(--_input-left-section-size);
-
-    @mixin rtl {
-      --_input-padding-right: var(--_input-left-section-size);
-
-      &:not([data-with-right-section]) {
-        --_input-padding-left: var(--_input-padding);
-      }
-    }
+    --input-padding-inline-start: var(--input-left-section-size);
   }
 
   &[data-with-right-section] {
-    --_input-padding-right: var(--_input-right-section-size);
-
-    @mixin rtl {
-      --_input-padding-left: var(--_input-right-section-size);
-
-      &:not([data-with-left-section]) {
-        --_input-padding-right: var(--_input-padding);
-      }
-    }
+    --input-padding-inline-end: var(--input-right-section-size);
   }
 
   @mixin light {
-    --_input-disabled-bg: var(--mantine-color-gray-1);
-    --_input-disabled-color: var(--mantine-color-gray-6);
+    --input-disabled-bg: var(--mantine-color-gray-1);
+    --input-disabled-color: var(--mantine-color-gray-6);
 
     &[data-variant='default'] {
-      --_input-bd: var(--mantine-color-gray-4);
-      --_input-bg: var(--mantine-color-white);
-      --_input-bd-focus: var(--mantine-primary-color-filled);
+      --input-bd: var(--mantine-color-gray-4);
+      --input-bg: var(--mantine-color-white);
+      --input-bd-focus: var(--mantine-primary-color-filled);
     }
 
     &[data-variant='filled'] {
-      --_input-bd: transparent;
-      --_input-bg: var(--mantine-color-gray-1);
-      --_input-bd-focus: var(--mantine-primary-color-filled);
+      --input-bd: transparent;
+      --input-bg: var(--mantine-color-gray-1);
+      --input-bd-focus: var(--mantine-primary-color-filled);
     }
 
     &[data-variant='unstyled'] {
-      --_input-bd: transparent;
-      --_input-bg: transparent;
-      --_input-bd-focus: transparent;
+      --input-bd: transparent;
+      --input-bg: transparent;
+      --input-bd-focus: transparent;
     }
   }
 
   @mixin dark {
-    --_input-disabled-bg: var(--mantine-color-dark-6);
-    --_input-disabled-color: var(--mantine-color-dark-2);
+    --input-disabled-bg: var(--mantine-color-dark-6);
+    --input-disabled-color: var(--mantine-color-dark-2);
 
     &[data-variant='default'] {
-      --_input-bd: var(--mantine-color-dark-4);
-      --_input-bg: var(--mantine-color-dark-6);
-      --_input-bd-focus: var(--mantine-primary-color-filled);
+      --input-bd: var(--mantine-color-dark-4);
+      --input-bg: var(--mantine-color-dark-6);
+      --input-bd-focus: var(--mantine-primary-color-filled);
     }
 
     &[data-variant='filled'] {
-      --_input-bd: transparent;
-      --_input-bg: var(--mantine-color-dark-5);
-      --_input-bd-focus: var(--mantine-primary-color-filled);
+      --input-bd: transparent;
+      --input-bg: var(--mantine-color-dark-5);
+      --input-bd-focus: var(--mantine-primary-color-filled);
     }
 
     &[data-variant='unstyled'] {
-      --_input-bd: transparent;
-      --_input-bg: transparent;
-      --_input-bd-focus: transparent;
+      --input-bd: transparent;
+      --input-bg: transparent;
+      --input-bd-focus: transparent;
     }
   }
 
   [data-mantine-color-scheme] &[data-error] {
     &:not([data-variant='unstyled']) {
-      --_input-bd: var(--mantine-color-error);
+      --input-bd: var(--mantine-color-error);
     }
 
-    --_input-color: var(--mantine-color-error);
-    --_input-placeholder-color: var(--mantine-color-error);
-    --_input-section-color: var(--mantine-color-error);
+    --input-color: var(--mantine-color-error);
+    --input-placeholder-color: var(--mantine-color-error);
+    --input-section-color: var(--mantine-color-error);
   }
 
-  @mixin rtl {
-    --_input-text-align: right;
-    --_left-section-left: unset;
-    --_left-section-right: rem(1px);
-    --_left-section-border-radius: 0 var(--_input-radius) var(--_input-radius) 0;
-    --_right-section-left: rem(1px);
-    --_right-section-right: unset;
-    --_right-section-border-radius: var(--_input-radius) 0 0 var(--_input-radius);
+  @mixin where-rtl {
+    --input-text-align: right;
+    --left-section-border-radius: 0 var(--input-radius) var(--input-radius) 0;
+    --right-section-border-radius: var(--input-radius) 0 0 var(--input-radius);
   }
 }
 
@@ -170,46 +145,46 @@
   width: 100%;
   transition: border-color 100ms ease;
 
-  text-align: var(--_input-text-align);
-  color: var(--_input-color);
-  border: rem(1px) solid var(--_input-bd);
-  background-color: var(--_input-bg);
-  font-family: var(--_input-font-family, var(--mantine-font-family));
-  height: var(--_input-size);
-  min-height: var(--_input-height);
-  line-height: var(--_input-line-height);
-  font-size: var(--_input-fz, var(--input-fz, var(--mantine-font-size-sm)));
-  border-radius: var(--_input-radius);
-  padding-left: var(--_input-padding-left);
-  padding-right: var(--_input-padding-right);
+  text-align: var(--input-text-align);
+  color: var(--input-color);
+  border: rem(1px) solid var(--input-bd);
+  background-color: var(--input-bg);
+  font-family: var(--input-font-family, var(--mantine-font-family));
+  height: var(--input-size);
+  min-height: var(--input-height);
+  line-height: var(--input-line-height);
+  font-size: var(--input-fz, var(--input-fz, var(--mantine-font-size-sm)));
+  border-radius: var(--input-radius);
+  padding-inline-start: var(--input-padding-inline-start);
+  padding-inline-end: var(--input-padding-inline-end);
   padding-top: var(--input-padding-y, 0rem);
   padding-bottom: var(--input-padding-y, 0rem);
-  cursor: var(--_input-cursor);
-  overflow: var(--_input-overflow);
+  cursor: var(--input-cursor);
+  overflow: var(--input-overflow);
 
   /* Used as data attribute in Textarea component, does not have associated prop on the Input component */
   &[data-no-overflow] {
-    --_input-overflow: hidden;
+    --input-overflow: hidden;
   }
 
   /* Used as data attribute in JsonInput component, does not have associated prop on the Input component */
   &[data-monospace] {
-    --_input-font-family: var(--mantine-font-family-monospace);
-    --_input-fz: calc(var(--input-fz, var(--mantine-font-size-sm)) - rem(2px));
+    --input-font-family: var(--mantine-font-family-monospace);
+    --input-fz: calc(var(--input-fz, var(--mantine-font-size-sm)) - rem(2px));
   }
 
   &:focus,
   &:focus-within {
     outline: none;
-    --_input-bd: var(--_input-bd-focus);
+    --input-bd: var(--input-bd-focus);
 
     [data-error] & {
-      --_input-bd: var(--mantine-color-error);
+      --input-bd: var(--mantine-color-error);
     }
   }
 
   &::placeholder {
-    color: var(--_input-placeholder-color);
+    color: var(--input-placeholder-color);
     opacity: 1;
   }
 
@@ -230,57 +205,55 @@
   &[data-disabled] {
     cursor: not-allowed;
     opacity: 0.6;
-    background-color: var(--_input-disabled-bg);
-    color: var(--_input-disabled-color);
+    background-color: var(--input-disabled-bg);
+    color: var(--input-disabled-color);
   }
 
   /* Required to be a separate selector to work in Firefox, can be merged with &:disabled once :has is supported */
   &:has(input:disabled) {
     cursor: not-allowed;
     opacity: 0.6;
-    background-color: var(--_input-disabled-bg);
-    color: var(--_input-disabled-color);
+    background-color: var(--input-disabled-bg);
+    color: var(--input-disabled-color);
   }
 }
 
 .section {
-  pointer-events: var(--_section-pointer-events);
+  pointer-events: var(--section-pointer-events);
   position: absolute;
   z-index: 1;
-  left: var(--_section-left);
-  right: var(--_section-right);
-  bottom: var(--_section-y);
-  top: var(--_section-y);
+  inset-inline-start: var(--section-start);
+  inset-inline-end: var(--section-end);
+  bottom: var(--section-y);
+  top: var(--section-y);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--_section-size);
-  border-radius: var(--_section-border-radius);
-  color: var(--_input-section-color, var(--mantine-color-dimmed));
+  width: var(--section-size);
+  border-radius: var(--section-border-radius);
+  color: var(--input-section-color, var(--mantine-color-dimmed));
 
   &[data-position='right'] {
-    --_section-pointer-events: var(--input-right-section-pointer-events);
-    --_section-left: var(--_right-section-left);
-    --_section-right: var(--_right-section-right);
-    --_section-size: var(--_input-right-section-size);
-    --_section-border-radius: var(--_right-section-border-radius);
+    --section-pointer-events: var(--input-right-section-pointer-events);
+    --section-end: var(--right-section-end);
+    --section-size: var(--input-right-section-size);
+    --section-border-radius: var(--right-section-border-radius);
   }
 
   &[data-position='left'] {
-    --_section-pointer-events: var(--input-left-section-pointer-events);
-    --_section-left: var(--_left-section-left);
-    --_section-right: var(--_left-section-right);
-    --_section-size: var(--_input-left-section-size);
-    --_section-border-radius: var(--_left-section-border-radius);
+    --section-pointer-events: var(--input-left-section-pointer-events);
+    --section-start: var(--left-section-start);
+    --section-size: var(--input-left-section-size);
+    --section-border-radius: var(--left-section-border-radius);
   }
 }
 
 /* ----- Input.Placeholder ----- */
 .placeholder {
-  color: var(--_input-placeholder-color, var(--mantine-color-placeholder));
+  color: var(--input-placeholder-color, var(--mantine-color-placeholder));
 
   [data-error] & {
-    --_input-placeholder-color: var(--_input-color, var(--mantine-color-placeholder));
+    --input-placeholder-color: var(--input-color, var(--mantine-color-placeholder));
   }
 }
 

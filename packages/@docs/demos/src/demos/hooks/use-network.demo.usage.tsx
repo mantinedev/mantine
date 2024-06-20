@@ -1,4 +1,3 @@
-import React from 'react';
 import { Table, Text } from '@mantine/core';
 import { useNetwork } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { AspectRatio } from './AspectRatio';
 
 export default { title: 'AspectRatio' };

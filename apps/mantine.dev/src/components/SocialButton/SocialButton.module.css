@@ -1,0 +1,49 @@
+.socialButton {
+  border: 0;
+  height: 42px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.socialButtonSection {
+  &[data-position='left'] {
+    margin-right: var(--mantine-spacing-md);
+
+    @mixin rtl {
+      margin-left: var(--mantine-spacing-md);
+      margin-right: 0;
+    }
+  }
+}
+
+.discordButton {
+  --discord-color: #5865f2;
+  --discord-color-hover: #4f5bd5;
+
+  [data-mantine-color-scheme] & {
+    background-color: var(--discord-color);
+    border-color: var(--discord-color);
+    color: var(--mantine-color-white);
+
+    @mixin hover {
+      background-color: var(--discord-color-hover);
+      border-color: var(--discord-color-hover);
+    }
+  }
+}
+
+.twitterButton {
+  --twitter-color: #1da1f2;
+  --twitter-color-hover: #1a94da;
+
+  [data-mantine-color-scheme] & {
+    background-color: var(--twitter-color);
+    border-color: var(--twitter-color);
+    color: var(--mantine-color-white);
+
+    @mixin hover {
+      background-color: var(--twitter-color-hover);
+      border-color: var(--twitter-color-hover);
+    }
+  }
+}

@@ -58,7 +58,10 @@ export interface ComboboxStore {
    *  The function is required to be used with searchable components to update selected option index
    *  when options list changes based on search query.
    */
-  updateSelectedOptionIndex: (target?: 'active' | 'selected') => void;
+  updateSelectedOptionIndex: (
+    target?: 'active' | 'selected',
+    options?: { scrollIntoView?: boolean }
+  ) => void;
 
   /** List id, used for `aria-*` attributes */
   listId: string | null;
@@ -238,17 +241,25 @@ export function useCombobox({
     [selectOption]
   );
 
-  const updateSelectedOptionIndex = useCallback((target: 'active' | 'selected' = 'selected') => {
-    selectedIndexUpdateTimeout.current = window.setTimeout(() => {
-      const items = document.querySelectorAll<HTMLDivElement>(
-        `#${listId.current} [data-combobox-option]`
-      );
-      const index = Array.from(items).findIndex((option) =>
-        option.hasAttribute(`data-combobox-${target}`)
-      );
-      selectedOptionIndex.current = index;
-    }, 0);
-  }, []);
+  const updateSelectedOptionIndex = useCallback(
+    (target: 'active' | 'selected' = 'selected', options?: { scrollIntoView?: boolean }) => {
+      selectedIndexUpdateTimeout.current = window.setTimeout(() => {
+        const items = document.querySelectorAll<HTMLDivElement>(
+          `#${listId.current} [data-combobox-option]`
+        );
+        const index = Array.from(items).findIndex((option) =>
+          option.hasAttribute(`data-combobox-${target}`)
+        );
+
+        selectedOptionIndex.current = index;
+
+        if (options?.scrollIntoView) {
+          items[index]?.scrollIntoView({ block: 'nearest', behavior: scrollBehavior });
+        }
+      }, 0);
+    },
+    []
+  );
 
   const resetSelectedOption = useCallback(() => {
     selectedOptionIndex.current = -1;

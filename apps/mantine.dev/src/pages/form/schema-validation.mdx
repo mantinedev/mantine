@@ -1,0 +1,574 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.formSchemaValidation);
+
+## Schema based validation
+
+`@mantine/form` supports schema validation with:
+
+- [zod](https://www.npmjs.com/package/zod)
+- [joi](https://www.npmjs.com/package/joi)
+- [yup](https://www.npmjs.com/package/yup)
+- [superstruct](https://www.npmjs.com/package/superstruct)
+- [valibot](https://www.npmjs.com/package/valibot)
+
+You need to install one of the libraries yourself, `@mantine/form` package does not depend on any of them.
+If you do not know what schema validation library to choose, use [zod](https://www.npmjs.com/package/zod),
+it is the most modern and developer-friendly library.
+
+## zod
+
+Installation:
+
+<InstallScript packages="zod mantine-form-zod-resolver" />
+
+Basic fields validation:
+
+```tsx
+import { zodResolver } from 'mantine-form-zod-resolver';
+import { z } from 'zod';
+import { useForm } from '@mantine/form';
+
+const schema = z.object({
+  name: z
+    .string()
+    .min(2, { message: 'Name should have at least 2 letters' }),
+  email: z.string().email({ message: 'Invalid email' }),
+  age: z.number().min(18, {
+    message: 'You must be at least 18 to create an account',
+  }),
+});
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    name: '',
+    email: '',
+    age: 16,
+  },
+  validate: zodResolver(schema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  name: 'Name should have at least 2 letters',
+//  email: 'Invalid email',
+//  age: 'You must be at least 18 to create an account'
+// }
+```
+
+Nested fields validation
+
+```tsx
+import { zodResolver } from 'mantine-form-zod-resolver';
+import { z } from 'zod';
+import { useForm } from '@mantine/form';
+
+const nestedSchema = z.object({
+  nested: z.object({
+    field: z
+      .string()
+      .min(2, { message: 'Field should have at least 2 letters' }),
+  }),
+});
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    nested: {
+      field: '',
+    },
+  },
+  validate: zodResolver(nestedSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'nested.field': 'Field should have at least 2 letters',
+// }
+```
+
+List fields validation:
+
+```tsx
+import { zodResolver } from 'mantine-form-zod-resolver';
+import { z } from 'zod';
+import { useForm } from '@mantine/form';
+
+const listSchema = z.object({
+  list: z.array(
+    z.object({
+      name: z
+        .string()
+        .min(2, { message: 'Name should have at least 2 letters' }),
+    })
+  ),
+});
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    list: [{ name: '' }],
+  },
+  validate: zodResolver(listSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'list.0.name': 'Name should have at least 2 letters',
+// }
+```
+
+## yup
+
+Installation:
+
+<InstallScript packages="yup mantine-form-yup-resolver" />
+
+Basic fields validation:
+
+```tsx
+import { yupResolver } from 'mantine-form-yup-resolver';
+import * as yup from 'yup';
+import { useForm } from '@mantine/form';
+
+const schema = yup.object().shape({
+  name: yup.string().min(2, 'Name should have at least 2 letters'),
+  email: yup
+    .string()
+    .required('Invalid email')
+    .email('Invalid email'),
+  age: yup
+    .number()
+    .min(18, 'You must be at least 18 to create an account'),
+});
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    name: '',
+    email: '',
+    age: 16,
+  },
+  validate: yupResolver(schema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  name: 'Name should have at least 2 letters',
+//  email: 'Invalid email',
+//  age: 'You must be at least 18 to create an account'
+// }
+```
+
+Nested fields validation:
+
+```tsx
+import { yupResolver } from 'mantine-form-yup-resolver';
+import * as yup from 'yup';
+import { useForm } from '@mantine/form';
+
+const nestedSchema = yup.object().shape({
+  nested: yup.object().shape({
+    field: yup
+      .string()
+      .min(2, 'Field should have at least 2 letters'),
+  }),
+});
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    nested: {
+      field: '',
+    },
+  },
+  validate: yupResolver(nestedSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'nested.field': 'Field should have at least 2 letters',
+// }
+```
+
+List fields validation:
+
+```tsx
+import { yupResolver } from 'mantine-form-yup-resolver';
+import * as yup from 'yup';
+import { useForm } from '@mantine/form';
+
+const listSchema = yup.object().shape({
+  list: yup.array().of(
+    yup.object().shape({
+      name: yup
+        .string()
+        .min(2, 'Name should have at least 2 letters'),
+    })
+  ),
+});
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    list: [{ name: '' }],
+  },
+  validate: yupResolver(listSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'list.0.name': 'Name should have at least 2 letters',
+// }
+```
+
+## joi
+
+Installation:
+
+<InstallScript packages="joi mantine-form-joi-resolver" />
+
+Basic fields validation:
+
+```tsx
+import Joi from 'joi';
+import { joiResolver } from 'mantine-form-joi-resolver';
+import { useForm } from '@mantine/form';
+
+const schema = Joi.object({
+  name: Joi.string().min(2).messages({
+    'string.min': 'Name should have at least 2 letters',
+    'string.empty': 'Name should have at least 2 letters',
+  }),
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .messages({
+      'string.email': 'Invalid email',
+      'string.empty': 'Invalid email',
+    }),
+  age: Joi.number()
+    .min(18)
+    .message('You must be at least 18 to create an account'),
+});
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    name: '',
+    email: '',
+    age: 16,
+  },
+  validate: joiResolver(schema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  name: 'Name should have at least 2 letters',
+//  email: 'Invalid email',
+//  age: 'You must be at least 18 to create an account'
+// }
+```
+
+Nested fields validation:
+
+```tsx
+import Joi from 'joi';
+import { joiResolver } from 'mantine-form-joi-resolver';
+import { useForm } from '@mantine/form';
+
+const nestedSchema = Joi.object({
+  nested: Joi.object({
+    field: Joi.string().min(2).messages({
+      'string.min': 'Field should have at least 2 letters',
+      'string.empty': 'Field should have at least 2 letters',
+    }),
+  }),
+});
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    nested: {
+      field: '',
+    },
+  },
+  validate: joiResolver(nestedSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'nested.field': 'Field should have at least 2 letters',
+// }
+```
+
+List fields validation:
+
+```tsx
+import Joi from 'joi';
+import { joiResolver } from 'mantine-form-joi-resolver';
+import { useForm } from '@mantine/form';
+
+const listSchema = Joi.object({
+  list: Joi.array().items(
+    Joi.object({
+      name: Joi.string().min(2).messages({
+        'string.min': 'Name should have at least 2 letters',
+        'string.empty': 'Name should have at least 2 letters',
+      }),
+    })
+  ),
+});
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    list: [{ name: '' }],
+  },
+  validate: joiResolver(listSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'list.0.name': 'Name should have at least 2 letters',
+// }
+```
+
+## superstruct
+
+Installation:
+
+<InstallScript packages="superstruct mantine-form-superstruct-resolver" />
+
+Basic fields validation:
+
+```tsx
+import isEmail from 'is-email';
+import { superstructResolver } from 'mantine-form-superstruct-resolver';
+import * as s from 'superstruct';
+
+const emailString = s.define('email', isEmail);
+
+const schema = s.object({
+  name: s.size(s.string(), 2, 30),
+  email: emailString,
+  age: s.min(s.number(), 18),
+});
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    name: '',
+    email: '',
+    age: 16,
+  },
+  validate: superstructResolver(schema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//   name: 'name: Expected a string with a length between `2` and `30` but received one with a length of `0`',
+//   email: 'email: Expected a value of type `email`, but received: `""`',
+//   age: 'age: Expected a number greater than or equal to 18 but received `16`',
+// }
+```
+
+Nested fields validation:
+
+```tsx
+import { superstructResolver } from 'mantine-form-superstruct-resolver';
+import * as s from 'superstruct';
+import { useForm } from '@mantine/form';
+
+const nestedSchema = s.object({
+  nested: s.object({
+    field: s.size(s.string(), 2, 30),
+  }),
+});
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    nested: {
+      field: '',
+    },
+  },
+  validate: superstructResolver(nestedSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'nested.field': 'nested field: Expected a string with a length between `2` and `30` but received one with a length of `0`',
+// }
+```
+
+List fields validation:
+
+```tsx
+import { superstructResolver } from 'mantine-form-superstruct-resolver';
+import * as s from 'superstruct';
+import { useForm } from '@mantine/form';
+
+const listSchema = s.object({
+  list: s.array(
+    s.object({
+      name: s.size(s.string(), 2, 30),
+    })
+  ),
+});
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    list: [{ name: '' }],
+  },
+  validate: superstructResolver(listSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'list 0 name: Expected a string with a length between `2` and `30` but received one with a length of `0`',
+// }
+```
+
+## valibot
+
+Installation:
+
+<InstallScript packages="valibot mantine-form-valibot-resolver" />
+
+Basic fields validation:
+
+```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import * as v from 'valibot';
+import { useForm } from '@mantine/form';
+
+const schema = v.object({
+  name: v.pipe(
+    v.string(),
+    v.minLength(2, 'Name should have at least 2 letters')
+  ),
+  email: v.pipe(v.string(), v.email('Invalid email')),
+  age: v.pipe(
+    v.number(),
+    v.minValue(18, 'You must be at least 18 to create an account')
+  ),
+});
+
+const form = useForm({
+  initialValues: {
+    name: '',
+    email: '',
+    age: 16,
+  },
+  validate: valibotResolver(schema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  name: 'Name should have at least 2 letters',
+//  email: 'Invalid email',
+//  age: 'You must be at least 18 to create an account'
+// }
+```
+
+Nested fields validation:
+
+```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import * as v from 'valibot';
+import { useForm } from '@mantine/form';
+
+const nestedSchema = v.object({
+  nested: v.object({
+    field: v.pipe(
+      v.string(),
+      v.minLength(2, 'Field should have at least 2 letters')
+    ),
+  }),
+});
+
+const form = useForm({
+  initialValues: {
+    nested: {
+      field: '',
+    },
+  },
+  validate: valibotResolver(nestedSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'nested.field': 'Field should have at least 2 letters',
+// }
+```
+
+List fields validation:
+
+```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import * as v from 'valibot';
+import { useForm } from '@mantine/form';
+
+const listSchema = v.object({
+  list: v.array(
+    v.object({
+      name: v.pipe(
+        v.string(),
+        v.minLength(2, 'Name should have at least 2 letters')
+      ),
+    })
+  ),
+});
+
+const form = useForm({
+  initialValues: {
+    list: [{ name: '' }],
+  },
+  validate: valibotResolver(listSchema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  'list.0.name': 'Name should have at least 2 letters',
+// }
+```
+
+With TypeScript:
+
+You can use the `InferInput` type from the `valibot` library to get the type of the form data.
+
+```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import * as v from 'valibot';
+import { useForm } from '@mantine/form';
+
+export const userSchema = v.object({
+  email: v.pipe(v.string(), v.email()),
+});
+
+type FormData = v.InferInput<typeof userSchema>;
+
+const form = useForm<FormData>({
+  initialValues: {
+    email: '',
+  },
+  validate: valibotResolver(userSchema),
+});
+```

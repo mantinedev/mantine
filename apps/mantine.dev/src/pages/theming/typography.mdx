@@ -1,0 +1,152 @@
+import { DEFAULT_THEME, px } from '@mantine/core';
+import { ThemingDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Typography);
+
+# Typography
+
+## Change fonts
+
+You can change fonts and other text styles for headings, code and all other components with the following theme properties:
+
+- `theme.fontFamily` – controls font-family in all components except [Title](/core/title/), [Code](/core/code/) and [Kbd](/core/kbd/)
+- `theme.fontFamilyMonospace` – controls font-family of components that require monospace font: [Code](/core/code/), [Kbd](/core/kbd/) and [CodeHighlight](/x/code-highlight/)
+- `theme.headings.fontFamily` – controls font-family of h1-h6 tags in [Title](/core/title/) and [TypographyStylesProvider](/core/typography-styles-provider/) components, fallbacks to `theme.fontFamily` if not defined
+
+<Demo data={ThemingDemos.fonts} />
+
+## System fonts
+
+By default, Mantine uses system fonts. It means that different devices will display components based on available font,
+for example, macOS and iOS users will see [San Francisco font](https://developer.apple.com/fonts/),
+Windows users will see [Segoe UI font](https://docs.microsoft.com/en-us/typography/font-list/segoe-ui),
+Android users will see [Roboto font](https://fonts.google.com/specimen/Roboto) and so on.
+This approach provides a familiar experience to the users and allows avoiding common problems
+related to custom fonts loading (layout shift, invisible text, etc.), if you do not have strict
+requirements, it is recommended to use system fonts for better performance.
+
+Default values for theme properties:
+
+- Default value for `theme.fontFamily` and `theme.headings.fontFamily` is `-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji`
+- Default value for `theme.fontFamilyMonospace` is `ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace`
+
+## Font sizes
+
+<Demo data={ThemingDemos.fontSizeConfigurator} />
+
+`theme.fontSizes` property defines font-size values for all Mantine components:
+
+```tsx
+import { MantineProvider, rem } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        fontSizes: {
+          xs: rem(10),
+          sm: rem(11),
+          md: rem(14),
+          lg: rem(16),
+          xl: rem(20),
+        },
+      }}
+    >
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+Default `theme.fontSizes` values:
+
+<DataTable
+  head={['Key', 'Value', 'Value in px']}
+  data={Object.keys(DEFAULT_THEME.fontSizes).map((size) => [
+    size,
+    `${DEFAULT_THEME.fontSizes[size]}`,
+    `${px(DEFAULT_THEME.fontSizes[size])}px`,
+  ])}
+/>
+
+## Line heights
+
+`theme.lineHeights` property defines line-height values for [Text](/core/text) component,
+most other components use `theme.lineHeights.md` by default:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        lineHeights: {
+          xs: '1.4',
+          sm: '1.45',
+          md: '1.55',
+          lg: '1.6',
+          xl: '1.65',
+        },
+      }}
+    >
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+Default `theme.lineHeights` values:
+
+<DataTable
+  head={['Key', 'Value']}
+  data={Object.keys(DEFAULT_THEME.lineHeights).map((size) => [
+    size,
+    `${DEFAULT_THEME.lineHeights[size]}`,
+  ])}
+/>
+
+## h1-h6 styles
+
+To customize headings styles in [Title](/core/title/) and [TypographyStylesProvider](/core/typography-styles-provider/) components
+set `theme.headings`:
+
+```tsx
+import { MantineProvider, rem } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        headings: {
+          // properties for all headings
+          fontWeight: '400',
+          fontFamily: 'Roboto',
+
+          // properties for individual headings, all of them are optional
+          sizes: {
+            h1: {
+              fontWeight: '100',
+              fontSize: rem(36),
+              lineHeight: '1.4',
+            },
+            h2: { fontSize: rem(30), lineHeight: '1.5' },
+            // ...up to h6
+            h6: { fontWeight: '900' },
+          },
+        },
+      }}
+    >
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+With `theme.headings` you can customize font-size, font-weight and line-height per heading level.
+If you need more control over styles, use [:is selector](https://developer.mozilla.org/en-US/docs/Web/CSS/:is)
+with [Styles API](/styles/styles-api) to target specific heading level:
+
+<Demo data={ThemingDemos.headingsStyles} />

@@ -1,0 +1,141 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How can I load fonts in Vite?',
+  description: 'A guide to load custom fonts in Vite',
+  slug: 'vite-load-fonts',
+  category: 'tooling',
+  tags: ['fonts', 'Google fonts', 'Vite'],
+  created_at: 'January 17, 2024',
+  last_updated_at: 'January 17, 2024',
+};
+
+export default Layout(meta);
+
+## Loading local fonts
+
+Create the following folder structure (the example with GreycliffCF custom font):
+
+```plaintext
+GreycliffCF/
+├─ GreycliffCF-Bold.woff2
+├─ GreycliffCF-Heavy.woff2
+├─ GreycliffCF.css
+```
+
+In `GreycliffCF.css` file, add the following code:
+
+```css
+@font-face {
+  font-family: 'Greycliff CF';
+  src: url('./GreycliffCF-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Greycliff CF';
+  src: url('./GreycliffCF-Heavy.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+```
+
+Then import `GreycliffCF.css` file at the root of your application and
+add the font to your [theme](https://mantine.dev/theming/theme-object/):
+
+```tsx
+import { DEFAULT_THEME, MantineProvider } from '@mantine/core';
+
+import '@mantine/core/styles.css';
+import './GreycliffCF/GreycliffCF.css';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        fontFamily: 'Greycliff CF, sans-serif',
+        fontFamilyMonospace: 'Monaco, Courier, monospace',
+        headings: {
+          // Use default theme if you want to provide default Mantine fonts as a fallback
+          fontFamily: `Greycliff CF, ${DEFAULT_THEME.fontFamily}`,
+        },
+      }}
+    >
+      Your app here
+    </MantineProvider>
+  );
+}
+```
+
+## Load fonts from Google Fonts
+
+Selects fonts you want to use at [Google Fonts](https://fonts.google.com/) and copy
+HTML code snippet. For example, to load [Roboto](https://fonts.google.com/specimen/Roboto)
+font, the code you receive from Google Fonts will look something like this:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+  rel="stylesheet"
+/>
+```
+
+Add the code to the `<head />` of your application `index.html` file
+of your application. The code will look something like this:
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+    <meta
+      name="viewport"
+      content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Vite + Mantine App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+```
+
+Then add the font to your [theme](https://mantine.dev/theming/theme-object/):
+
+```tsx
+import { DEFAULT_THEME, MantineProvider } from '@mantine/core';
+
+import '@mantine/core/styles.css';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        fontFamily: 'Roboto, sans-serif',
+        fontFamilyMonospace: 'Monaco, Courier, monospace',
+        headings: {
+          // Use default theme if you want to provide default Mantine fonts as a fallback
+          fontFamily: `Roboto, ${DEFAULT_THEME.fontFamily}`,
+        },
+      }}
+    >
+      Your app here
+    </MantineProvider>
+  );
+}
+```

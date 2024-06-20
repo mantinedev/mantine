@@ -1,0 +1,395 @@
+import { ThemingDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.SixToSeven);
+
+# 6.x → 7.x migration guide
+
+This guide is intended to help you migrate your project styles from 6.x to 7.x.
+It is not intended to be a comprehensive guide to all the changes in 7.x.
+For that, please see the [7.0.0 changelog](/changelog/7-0-0).
+
+## Migration to @mantine/emotion
+
+`@mantine/emotion` package is available starting from version 7.9. If you do not want
+to use CSS modules, have a lot of styles created with `createStyles`, `sx` and `styles`
+props, or just prefer CSS-in-JS syntax, you can migrate to `@mantine/emotion`. To view
+the full documentation for `@mantine/emotion` package, visit [this page](/styles/emotion).
+
+### createStyles and Global component
+
+`createStyles` function and `Global` component are no longer available in `@mantine/core` package. Change imports
+to `@mantine/emotion`:
+
+```tsx
+// 6.x
+import { createStyles, Global } from '@mantine/core';
+
+// 7.x
+import { createStyles, Global } from '@mantine/emotion';
+```
+
+### sx and styles props
+
+`sx` and styles props available in 7.x the same way as in 6.x after [setup](/styles/emotion):
+
+```tsx
+// 6.x and 7.x, no changes
+import { Box, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Box
+        sx={(theme) => ({ backgroundColor: theme.colors.red[5] })}
+      />
+      <Button styles={{ root: { height: 50 } }} />
+    </>
+  );
+}
+```
+
+### theme.colorScheme
+
+In v7 color scheme value is managed by [MantineProvider](/theming/mantine-provider),
+[theme object](/theming/theme-object) no longer includes `colorScheme` property.
+Although it is still possible to access color scheme value in components with
+[useMantineColorScheme](/theming/color-schemes#use-mantine-color-scheme-hook) hook,
+it is not recommended to base your styles on its value. Instead, use `light`/`dark`
+[utilities](/styles/emotion#utilities).
+
+Example of 6.x `createStyles` with `theme.colorScheme` migration to 7.0:
+
+```tsx
+// 6.x
+import { createStyles } from '@mantine/core';
+
+const useStyles = createStyles((theme) => ({
+  root: {
+    backgroundColor:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[6]
+        : theme.colors.gray[0],
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+  },
+}));
+```
+
+```tsx
+// 7.x
+import { createStyles } from '@mantine/emotion';
+
+const useStyles = createStyles((theme, _, u) => ({
+  root: {
+    [u.dark] {
+      backgroundColor: theme.colors.dark[6];
+      color: theme.white;
+    },
+
+    [u.light]: {
+      backgroundColor: theme.colors.gray[0];
+      color: theme.black;
+    },
+  },
+}));
+```
+
+## Migration to CSS modules
+
+Before getting started, it is recommended to go through [styles](/styles/css-modules) documentation.
+Most notable parts:
+
+- [CSS Modules](/styles/css-modules)
+- [Mantine PostCSS preset](/styles/postcss-preset)
+- [CSS variables](/styles/css-variables)
+- [data-\* attributes](/styles/data-attributes)
+- [Styles API](/styles/styles-api)
+- [Responsive styles](/styles/responsive)
+
+Note that this guide assumes that you have [postcss-preset-mantine](/styles/postcss-preset) installed and configured
+in your project.
+
+### createStyles
+
+`createStyles` function is no longer available in 7.0. Use [CSS Modules](/styles/css-modules) instead.
+
+```tsx
+// 6.x
+import { createStyles } from '@mantine/core';
+
+const useStyles = createStyles((theme) => ({
+  root: {
+    backgroundColor: theme.colors.red[5],
+  },
+}));
+```
+
+```scss
+/* 7.0 */
+.root {
+  background-color: var(--mantine-color-red-5);
+}
+```
+
+### sx prop
+
+`sx` and prop is no longer available in 7.0. Use `className` or [style prop](/styles/style) instead.
+
+```tsx
+// 6.x
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Box sx={(theme) => ({ backgroundColor: theme.colors.red[5] })} />
+  );
+}
+```
+
+```tsx
+// 7.0
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Box style={{ backgroundColor: 'var(--mantine-color-red-5)' }} />
+  );
+}
+```
+
+Nested selectors are not supported in [style prop](/styles/style), use `className` instead:
+
+```tsx
+// 6.x
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return <Box sx={{ '&:hover': { background: 'red' } }} />;
+}
+```
+
+```scss
+.box {
+  &:hover {
+    background: red;
+  }
+}
+```
+
+### styles prop
+
+`styles` prop no longer supports nested selectors. Use
+`classNames` instead to apply styles to nested elements.
+
+```tsx
+// 6.x – nested selectors
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <TextInput
+      styles={{
+        input: {
+          '&:focus': {
+            color: 'red',
+          },
+        },
+      }}
+    />
+  );
+}
+```
+
+```scss
+/* 7.0 */
+.input {
+  &:focus {
+    color: red;
+  }
+}
+```
+
+Regular selectors are still supported:
+
+```tsx
+// Works both in 6.x and 7.x
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <TextInput
+      styles={{
+        input: {
+          color: 'red',
+        },
+      }}
+    />
+  );
+}
+```
+
+### Global styles
+
+`Global` component and global styles on theme are not available in 7.0. Instead,
+create a global stylesheet (`.css` file) and import it in your application entry point.
+
+```tsx
+// 6.x
+import { Global } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Global
+      styles={(theme) => ({
+        '*, *::before, *::after': {
+          boxSizing: 'border-box',
+        },
+
+        body: {
+          backgroundColor:
+            theme.colorScheme === 'dark'
+              ? theme.colors.dark[7]
+              : theme.white,
+          color:
+            theme.colorScheme === 'dark'
+              ? theme.colors.dark[0]
+              : theme.black,
+          lineHeight: theme.lineHeight,
+        },
+
+        '.your-class': {
+          backgroundColor: 'red',
+        },
+
+        '#your-id > [data-active]': {
+          backgroundColor: 'pink',
+        },
+      })}
+    />
+  );
+}
+```
+
+```scss
+/* 7.0 */
+/* src/index.css */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: light-dark(
+    var(--mantine-color-white),
+    var(--mantine-color-dark-7)
+  );
+  color: light-dark(
+    var(--mantine-color-black),
+    var(--mantine-color-white)
+  );
+  line-height: var(--mantine-line-height);
+}
+
+.your-class {
+  background-color: red;
+}
+
+#your-id > [data-active] {
+  background-color: pink;
+}
+```
+
+### theme referencing
+
+All [theme](/theming/theme-object) properties are now available as [CSS variables](/styles/css-variables). It is recommended to use
+[CSS variables](/styles/css-variables) instead of referencing theme object in styles.
+
+```tsx
+// 6.x
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Box
+      sx={(theme) => ({
+        backgroundColor: theme.colors.red[6],
+        color: theme.white,
+        padding: `calc(${theme.spacing.xl} * 2)`,
+      })}
+    />
+  );
+}
+```
+
+```scss
+/* 7.0 */
+.box {
+  background-color: var(--mantine-color-red-6);
+  color: var(--mantine-color-white);
+  padding: calc(var(--mantine-spacing-xl) * 2);
+}
+```
+
+### theme.colorScheme
+
+Color scheme value is managed by [MantineProvider](/theming/mantine-provider),
+[theme object](/theming/theme-object) no longer includes `colorScheme` property.
+Although it is still possible to access color scheme value in components with
+[useMantineColorScheme](/theming/color-schemes#use-mantine-color-scheme-hook) hook,
+it is not recommended to base your styles on its value. Instead, use `light`/`dark`
+[mixins](/styles/postcss-preset) or `light-dark` CSS [function](/styles/postcss-preset#light-dark-function).
+
+Example of 6.x `createStyles` with `theme.colorScheme` migration to 7.0:
+
+```tsx
+// 6.x
+import { createStyles } from '@mantine/core';
+
+const useStyles = createStyles((theme) => ({
+  root: {
+    backgroundColor:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[6]
+        : theme.colors.gray[0],
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+  },
+}));
+```
+
+```scss
+/* 7.0 */
+
+/* With light-dark function */
+.root {
+  background-color: light-dark(
+    var(--mantine-color-gray-0),
+    var(--mantine-color-dark-6)
+  );
+  color: light-dark(
+    var(--mantine-color-black),
+    var(--mantine-color-white)
+  );
+}
+
+/* With light/dark mixins */
+.root {
+  background-color: var(--mantine-color-gray-0);
+  color: var(--mantine-color-black);
+
+  @mixin dark {
+    background-color: var(--mantine-color-dark-6);
+    color: var(--mantine-color-white);
+  }
+}
+```
+
+Note that if your application has server-side rendering, you should not render any
+elements based on its value ([more info](/theming/color-schemes#color-scheme-value-caveats)).
+Instead, use `light`/`dark` mixins or `light-dark` function to hide/display elements based
+on color scheme value.
+
+Color scheme toggle example:
+
+<Demo data={ThemingDemos.colorSchemeControl} />

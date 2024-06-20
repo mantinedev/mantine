@@ -1,0 +1,242 @@
+import { MultiSelectDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.MultiSelect);
+
+<ComboboxDisclaimer component="MultiSelect" />
+
+## Usage
+
+`MultiSelect` provides a way to enter multiple values.
+`MultiSelect` is similar to [TagsInput](/core/tags-input), but it does not allow entering custom values.
+
+<Demo data={MultiSelectDemos.usage} />
+
+## Controlled
+
+`MultiSelect` value must be an array of strings, other types are not supported.
+`onChange` function is called with an array of strings as a single argument.
+
+```tsx
+import { useState } from 'react';
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<string[]>([]);
+  return <MultiSelect data={[]} value={value} onChange={setValue} />;
+}
+```
+
+## Clearable
+
+Set `clearable` prop to display the clear button in the right section. The button is not displayed
+when:
+
+- The component does not have a value
+- The component is disabled
+- The component is read only
+
+<Demo data={MultiSelectDemos.clearable} />
+
+## Searchable
+
+Set `searchable` prop to allow filtering options by user input:
+
+<Demo data={MultiSelectDemos.searchable} />
+
+## Controlled search value
+
+You can control search value with `searchValue` and `onSearchChange` props:
+
+```tsx
+import { useState } from 'react';
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  const [searchValue, setSearchValue] = useState('');
+  return (
+    <MultiSelect
+      searchable
+      searchValue={searchValue}
+      onSearchChange={setSearchValue}
+      data={[]}
+    />
+  );
+}
+```
+
+## Nothing found
+
+Set `nothingFoundMessage` prop to display given message when no options match search query.
+If `nothingFoundMessage` is not set, `MultiSelect` dropdown will be hidden when no options match search query.
+The message is not displayed when trimmed search query is empty.
+
+<Demo data={MultiSelectDemos.nothingFound} />
+
+## Checked option icon
+
+Set `checkIconPosition` prop to `left` or `right` to control position of check icon in active option.
+To remove the check icon, set `withCheckIcon={false}`.
+
+<Demo data={MultiSelectDemos.checkIcon} />
+
+## Max selected values
+
+You can limit the number of selected values with `maxValues` prop. This will not allow adding more values
+once the limit is reached.
+
+<Demo data={MultiSelectDemos.maxValues} />
+
+## Hide selected options
+
+To remove selected options from the list of available options, set `hidePickedOptions` prop:
+
+<Demo data={MultiSelectDemos.hidePickedOptions} />
+
+<ComboboxData component="MultiSelect" />
+
+<ComboboxFiltering component="MultiSelect" />
+
+<Demo data={MultiSelectDemos.search} />
+
+## Sort options
+
+By default, options are sorted by their position in the data array. You can change this behavior
+with `filter` function:
+
+<Demo data={MultiSelectDemos.sort} />
+
+<ComboboxLargeData component="MultiSelect" />
+
+<Demo data={MultiSelectDemos.limit} />
+
+## renderOption
+
+`renderOption` callback allows you to customize option rendering. It is called with option object and
+checked state. The function must return a React node.
+
+<Demo data={MultiSelectDemos.renderOption} />
+
+## Scrollable dropdown
+
+By default, the options list is wrapped with [ScrollArea.Autosize](/core/scroll-area).
+You can control dropdown max-height with `maxDropdownHeight` prop if you do not change the default settings.
+
+If you want to use native scrollbars, set `withScrollArea={false}`. Note that in this case,
+you will need to change dropdown styles with [Styles API](/styles/styles-api).
+
+<Demo data={MultiSelectDemos.scrollArea} />
+
+## Group options
+
+<Demo data={MultiSelectDemos.groups} />
+
+## Disabled options
+
+When option is disabled, it cannot be selected and is ignored in keyboard navigation.
+Note that user can still enter disabled option as a value. If you want to prohibit certain values,
+use controlled component and filter them out in `onChange` function.
+
+<Demo data={MultiSelectDemos.disabledOptions} />
+
+<ComboboxProps component="MultiSelect" />
+
+## Inside Popover
+
+To use `MultiSelect` inside popover, you need to set `withinPortal: false`:
+
+<Demo data={MultiSelectDemos.withinPopover} />
+
+## Control dropdown opened state
+
+You can control dropdown opened state with `dropdownOpened` prop. Additionally,
+you can use `onDropdownClose` and `onDropdownOpen` to listen to dropdown opened state changes.
+
+<Demo data={MultiSelectDemos.dropdownOpened} />
+
+## Dropdown position
+
+By default, the dropdown is displayed below the input if there is enough space; otherwise it is displayed above the input.
+You can change this behavior by setting `position` and `middlewares` props, which are passed down to the
+underlying [Popover](/core/popover) component.
+
+Example of dropdown that is always displayed above the input:
+
+<Demo data={MultiSelectDemos.dropdownPosition} />
+
+## Dropdown offset
+
+To change dropdown offset, set `offset` prop in `comboboxProps`:
+
+<Demo data={MultiSelectDemos.dropdownOffset} />
+
+## Dropdown animation
+
+By default, dropdown animations are disabled. To enable them, you can set `transitionProps`,
+which will be passed down to the underlying [Transition](/core/transition) component.
+
+<Demo data={MultiSelectDemos.dropdownAnimation} />
+
+## Dropdown padding
+
+<Demo data={MultiSelectDemos.dropdownPadding} />
+
+## Dropdown shadow
+
+<Demo data={MultiSelectDemos.dropdownShadow} />
+
+<InputSections component="MultiSelect" />
+
+<Demo data={MultiSelectDemos.sections} />
+
+## Input props
+
+<InputFeatures component="MultiSelect" element="input" />
+
+<Demo data={MultiSelectDemos.configurator} />
+
+## Read only
+
+Set `readOnly` to make the input read only. When `readOnly` is set,
+`MultiSelect` will not show suggestions and will not call `onChange` function.
+
+<Demo data={MultiSelectDemos.readOnly} />
+
+## Disabled
+
+Set `disabled` to disable the input. When `disabled` is set,
+user cannot interact with the input and `MultiSelect` will not show suggestions.
+
+<Demo data={MultiSelectDemos.disabled} />
+
+## Error state
+
+<Demo data={MultiSelectDemos.error} />
+
+<StylesApiSelectors component="MultiSelect" />
+
+<Demo data={MultiSelectDemos.stylesApi} />
+
+<GetElementRef component="MultiSelect" refType="input" />
+
+<InputAccessibility component="MultiSelect" />
+
+To set `aria-label` on the clear button, use `clearButtonProps`. Note that it is required
+only when `clearable` is set.
+
+```tsx
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MultiSelect
+      data={[]}
+      clearable
+      clearButtonProps={{
+        'aria-label': 'Clear input',
+      }}
+    />
+  );
+}
+```

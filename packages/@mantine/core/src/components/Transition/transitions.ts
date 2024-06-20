@@ -1,4 +1,3 @@
-import React from 'react';
 import { rem } from '../../core';
 
 export interface MantineTransitionStyles {
@@ -10,6 +9,10 @@ export interface MantineTransitionStyles {
 
 export type MantineTransitionName =
   | 'fade'
+  | 'fade-down'
+  | 'fade-up'
+  | 'fade-left'
+  | 'fade-right'
   | 'skew-up'
   | 'skew-down'
   | 'rotate-right'
@@ -42,6 +45,30 @@ export const transitions: Record<MantineTransitionName, MantineTransitionStyles>
     transitionProperty: 'opacity',
   },
 
+  'fade-up': {
+    in: { opacity: 1, transform: 'translateY(0)' },
+    out: { opacity: 0, transform: `translateY(${rem(30)}` },
+    transitionProperty: 'opacity, transform',
+  },
+
+  'fade-down': {
+    in: { opacity: 1, transform: 'translateY(0)' },
+    out: { opacity: 0, transform: `translateY(${rem(-30)}` },
+    transitionProperty: 'opacity, transform',
+  },
+
+  'fade-left': {
+    in: { opacity: 1, transform: 'translateX(0)' },
+    out: { opacity: 0, transform: `translateX(${rem(30)}` },
+    transitionProperty: 'opacity, transform',
+  },
+
+  'fade-right': {
+    in: { opacity: 1, transform: 'translateX(0)' },
+    out: { opacity: 0, transform: `translateX(${rem(-30)}` },
+    transitionProperty: 'opacity, transform',
+  },
+
   scale: {
     in: { opacity: 1, transform: 'scale(1)' },
     out: { opacity: 0, transform: 'scale(0)' },
@@ -65,7 +92,7 @@ export const transitions: Record<MantineTransitionName, MantineTransitionStyles>
 
   'skew-up': {
     in: { opacity: 1, transform: 'translateY(0) skew(0deg, 0deg)' },
-    out: { opacity: 0, transform: `translateY(-${rem(20)}) skew(-10deg, -5deg)` },
+    out: { opacity: 0, transform: `translateY(${rem(-20)}) skew(-10deg, -5deg)` },
     common: { transformOrigin: 'top' },
     transitionProperty: 'transform, opacity',
   },

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Group } from '@mantine/core';
 import { DateTimePicker } from './DateTimePicker';
 
@@ -40,10 +40,26 @@ export function WithSeconds() {
   );
 }
 
-export function MinDate() {
+export function MinMaxDate() {
+  const minDate = new Date();
+  minDate.setHours(0, 30, 0, 0);
+
+  const maxDate = new Date();
+  maxDate.setDate(maxDate.getDate() + 5);
+  maxDate.setHours(22, 30, 0, 0);
+
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DateTimePicker placeholder="Date time picker" withSeconds minDate={new Date()} />
+      <div style={{ marginBottom: 20 }}>
+        <div>Min date: {minDate.toLocaleString()}</div>
+        <div>Max date: {maxDate.toLocaleString()}</div>
+      </div>
+      <DateTimePicker
+        placeholder="Date time picker"
+        withSeconds
+        minDate={minDate}
+        maxDate={maxDate}
+      />
     </div>
   );
 }

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Checkbox } from '@mantine/core';
 import { randomId, useListState } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

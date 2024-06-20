@@ -1,4 +1,3 @@
-import React from 'react';
 import { factory, Factory, getDefaultZIndex, useProps } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { defaultSpotlightFilter } from './default-spotlight-filter';

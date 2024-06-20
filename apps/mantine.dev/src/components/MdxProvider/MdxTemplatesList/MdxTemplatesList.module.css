@@ -1,0 +1,18 @@
+.externalLinkIcon {
+  width: 14px;
+  height: 14px;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  color: var(--mantine-color-dimmed);
+}
+
+.iconCell {
+  @media (max-width: em(500px)) {
+    display: none;
+  }
+}

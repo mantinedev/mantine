@@ -1,4 +1,3 @@
-import React from 'react';
 import { patchConsoleError, render, screen, tests } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
 import { WeekdaysRow, WeekdaysRowProps, WeekdaysRowStylesNames } from './WeekdaysRow';

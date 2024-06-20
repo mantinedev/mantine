@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   BoxProps,
@@ -26,11 +25,17 @@ export function getFilteredChartTooltipPayload(payload: Record<string, any>[], s
   return duplicatesFilter.filter((item) => item.name === segmentId);
 }
 
-function getData(item: Record<string, any>, type: 'area' | 'radial') {
-  if (type === 'radial') {
+function getData(item: Record<string, any>, type: 'area' | 'radial' | 'scatter') {
+  if (type === 'radial' || type === 'scatter') {
+    if (Array.isArray(item.value)) {
+      return item.value[1] - item.value[0];
+    }
     return item.value;
   }
 
+  if (Array.isArray(item.payload[item.dataKey])) {
+    return item.payload[item.dataKey][1] - item.payload[item.dataKey][0];
+  }
   return item.payload[item.dataKey];
 }
 
@@ -58,7 +63,7 @@ export interface ChartTooltipProps
   unit?: string;
 
   /** Tooltip type that determines the content and styles, `area` for LineChart, AreaChart and BarChart, `radial` for DonutChart and PieChart, `'area'` by default */
-  type?: 'area' | 'radial';
+  type?: 'area' | 'radial' | 'scatter';
 
   /** Id of the segment to display data for. Only applicable when `type="radial"`. If not set, all data is rendered. */
   segmentId?: string;
@@ -118,10 +123,12 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
   }
 
   const filteredPayload = getFilteredChartTooltipPayload(payload, segmentId);
+  const scatterLabel = type === 'scatter' ? payload[0]?.payload?.name : null;
   const labels = getSeriesLabels(series);
+  const _label = label || scatterLabel;
 
   const items = filteredPayload.map((item) => (
-    <div key={item.name} {...getStyles('tooltipItem')}>
+    <div key={item.name} data-type={type} {...getStyles('tooltipItem')}>
       <div {...getStyles('tooltipItemBody')}>
         <ColorSwatch
           color={getThemeColor(item.color, theme)}
@@ -135,14 +142,14 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
         {typeof valueFormatter === 'function'
           ? valueFormatter(getData(item, type!))
           : getData(item, type!)}
-        {unit}
+        {unit || item.unit}
       </div>
     </div>
   ));
 
   return (
     <Box {...getStyles('tooltip')} mod={[{ type }, mod]} ref={ref} {...others}>
-      {label && <div {...getStyles('tooltipLabel')}>{label}</div>}
+      {_label && <div {...getStyles('tooltipLabel')}>{_label}</div>}
       <div {...getStyles('tooltipBody')}>{items}</div>
     </Box>
   );

@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import { createContext, useContext } from 'react';
 import { useMemoObject } from '../use-memo-object/use-memo-object';
 
 export function createSafeContext<ContextValue>(errorMessage: string) {

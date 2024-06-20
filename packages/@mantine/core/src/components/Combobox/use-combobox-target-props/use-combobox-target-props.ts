@@ -7,6 +7,7 @@ interface UseComboboxTargetPropsInput {
   withKeyboardNavigation: boolean | undefined;
   withExpandedAttribute: boolean | undefined;
   onKeyDown: React.KeyboardEventHandler<HTMLInputElement> | undefined;
+  autoComplete: string | undefined;
 }
 
 export function useComboboxTargetProps({
@@ -15,6 +16,7 @@ export function useComboboxTargetProps({
   withAriaAttributes,
   withExpandedAttribute,
   targetType,
+  autoComplete,
 }: UseComboboxTargetPropsInput) {
   const ctx = useComboboxContext();
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
@@ -27,6 +29,9 @@ export function useComboboxTargetProps({
     }
 
     if (withKeyboardNavigation) {
+      // Ignore during composition in IME
+      if (event.nativeEvent.isComposing) return;
+
       if (event.nativeEvent.code === 'ArrowDown') {
         event.preventDefault();
 
@@ -50,6 +55,10 @@ export function useComboboxTargetProps({
       }
 
       if (event.nativeEvent.code === 'Enter' || event.nativeEvent.code === 'NumpadEnter') {
+        // This is a workaround for handling differences in behavior of isComposing property in Safari
+        // See: https://dninomiya.github.io/form-guide/stop-enter-submit
+        if (event.nativeEvent.keyCode === 229) return;
+
         const selectedOptionIndex = ctx.store.getSelectedOptionIndex();
 
         if (ctx.store.dropdownOpened && selectedOptionIndex !== -1) {
@@ -83,8 +92,9 @@ export function useComboboxTargetProps({
         'aria-activedescendant': ctx.store.dropdownOpened
           ? selectedOptionId || undefined
           : undefined,
-        autoComplete: 'off',
-        'data-expanded': ctx.store.dropdownOpened ? true : undefined,
+        autoComplete,
+        'data-expanded': ctx.store.dropdownOpened || undefined,
+        'data-mantine-stop-propagation': ctx.store.dropdownOpened || undefined,
       }
     : {};
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IconActivity, IconChevronRight, IconFingerprint, IconGauge } from '@tabler/icons-react';
 import { Box, Group, NavLink } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

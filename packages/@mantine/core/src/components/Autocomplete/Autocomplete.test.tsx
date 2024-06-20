@@ -1,4 +1,3 @@
-import React from 'react';
 import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
 import { Autocomplete, AutocompleteProps, AutocompleteStylesNames } from './Autocomplete';
 

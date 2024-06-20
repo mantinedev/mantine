@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   ActionIcon,
   ActionIconProps,
@@ -99,6 +99,8 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     variant,
     dropdownType,
     vars,
+    minDate,
+    maxDate,
     ...rest
   } = props;
 
@@ -190,6 +192,9 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     }
   }, [dropdownOpened]);
 
+  const minTime = minDate ? dayjs(minDate).format('HH:mm:ss') : null;
+  const maxTime = maxDate ? dayjs(maxDate).format('HH:mm:ss') : null;
+
   const __stopPropagation = dropdownType === 'popover';
 
   return (
@@ -213,6 +218,8 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     >
       <DatePicker
         {...calendarProps}
+        maxDate={maxDate}
+        minDate={minDate}
         size={size}
         variant={variant}
         type="default"
@@ -241,6 +248,20 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
             withSeconds={withSeconds}
             ref={timeInputRefMerged}
             unstyled={unstyled}
+            minTime={
+              _value && minDate && _value.toDateString() === minDate.toDateString()
+                ? minTime != null
+                  ? minTime
+                  : undefined
+                : undefined
+            }
+            maxTime={
+              _value && maxDate && _value.toDateString() === maxDate.toDateString()
+                ? maxTime != null
+                  ? maxTime
+                  : undefined
+                : undefined
+            }
             {...timeInputProps}
             {...getStyles('timeInput', {
               className: timeInputProps?.className,

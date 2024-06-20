@@ -1,0 +1,9 @@
+.textInput {
+  &::placeholder {
+    color: var(--mantine-color-red-5);
+  }
+}
+
+.datePickerInputPlaceholder {
+  color: var(--mantine-color-blue-5);
+}

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
@@ -18,6 +17,7 @@ function Demo() {
       Box with responsive style props
     </Box>
   );
+}
 `;
 
 function Demo() {

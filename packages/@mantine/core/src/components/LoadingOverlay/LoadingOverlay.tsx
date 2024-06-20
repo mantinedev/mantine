@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   BoxProps,
@@ -104,7 +103,7 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props, ref) => {
           <Overlay
             {..._overlayProps}
             {...getStyles('overlay')}
-            data-light
+            darkHidden
             unstyled={unstyled}
             color={overlayProps?.color || theme.white}
           />
@@ -112,7 +111,7 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props, ref) => {
           <Overlay
             {..._overlayProps}
             {...getStyles('overlay')}
-            data-dark
+            lightHidden
             unstyled={unstyled}
             color={overlayProps?.color || theme.colors.dark[5]}
           />

@@ -1,0 +1,57 @@
+import { TitleDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Title);
+
+## Usage
+
+Use Title component to render h1-h6 headings with Mantine [theme](/theming/theme-object) styles.
+By default, `Title` has no margins and paddings.
+You can change `font-size`, `font-weight` and `line-height` per heading with [theme.headings](/theming/typography).
+
+Set `order` prop to render a specific element (h1-h6), default order is `1`:
+
+<Demo data={TitleDemos.usage} />
+
+## Size
+
+You can change Title `size` independent of its `order`:
+
+- If you set size to `h1`-`h6`, then component will add corresponding `font-size` and `line-height` from the [theme](/theming/theme-object/)
+- If you set size to any other value, then `line-height` will be calculated based on `order` – `size` will impact only `font-size`
+
+<Demo data={TitleDemos.size} />
+
+## Text wrap
+
+Use `textWrap` prop to control [text-wrap](https://developer.mozilla.org/en-US/docs/Web/CSS/text-wrap)
+CSS property. It controls how text inside an element is wrapped.
+
+<Demo data={TitleDemos.textWrap} />
+
+You can also set `textWrap` on [theme](/theming/theme-object):
+
+```tsx
+import { createTheme, MantineProvider, Title } from '@mantine/core';
+
+const theme = createTheme({
+  headings: {
+    textWrap: 'wrap',
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Title>Some very long title that should wrap</Title>
+    </MantineProvider>
+  );
+}
+```
+
+## Line clamp
+
+Set `lineClamp` prop to truncate text after specified number of lines:
+
+<Demo data={TitleDemos.lineClamp} />

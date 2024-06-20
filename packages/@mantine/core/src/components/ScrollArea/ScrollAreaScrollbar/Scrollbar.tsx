@@ -1,5 +1,5 @@
-import React, { forwardRef, useEffect } from 'react';
-import { useCallbackRef, useDebounceCallback, useMergedRef } from '@mantine/hooks';
+import { forwardRef, useEffect, useRef, useState } from 'react';
+import { useCallbackRef, useDebouncedCallback, useMergedRef } from '@mantine/hooks';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { Sizes } from '../ScrollArea.types';
 import { useResizeObserver } from '../use-resize-observer';
@@ -36,15 +36,15 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
     ...scrollbarProps
   } = props;
   const context = useScrollAreaContext();
-  const [scrollbar, setScrollbar] = React.useState<HTMLDivElement | null>(null);
+  const [scrollbar, setScrollbar] = useState<HTMLDivElement | null>(null);
   const composeRefs = useMergedRef(forwardedRef, (node) => setScrollbar(node));
-  const rectRef = React.useRef<ClientRect | null>(null);
-  const prevWebkitUserSelectRef = React.useRef<string>('');
+  const rectRef = useRef<ClientRect | null>(null);
+  const prevWebkitUserSelectRef = useRef<string>('');
   const { viewport } = context;
   const maxScrollPos = sizes.content - sizes.viewport;
   const handleWheelScroll = useCallbackRef(onWheelScroll);
   const handleThumbPositionChange = useCallbackRef(onThumbPositionChange);
-  const handleResize = useDebounceCallback(onResize, 10);
+  const handleResize = useDebouncedCallback(onResize, 10);
 
   const handleDragScroll = (event: React.PointerEvent<HTMLElement>) => {
     if (rectRef.current) {
@@ -85,6 +85,8 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
         ref={composeRefs}
         style={{ position: 'absolute', ...scrollbarProps.style }}
         onPointerDown={composeEventHandlers(props.onPointerDown, (event) => {
+          event.preventDefault();
+
           const mainPointer = 0;
           if (event.button === mainPointer) {
             const element = event.target as HTMLElement;
@@ -92,16 +94,20 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
             rectRef.current = scrollbar!.getBoundingClientRect();
             prevWebkitUserSelectRef.current = document.body.style.webkitUserSelect;
             document.body.style.webkitUserSelect = 'none';
+            document.body.style.pointerEvents = 'none';
             handleDragScroll(event);
           }
         })}
         onPointerMove={composeEventHandlers(props.onPointerMove, handleDragScroll)}
         onPointerUp={composeEventHandlers(props.onPointerUp, (event) => {
+          event.preventDefault();
+
           const element = event.target as HTMLElement;
           if (element.hasPointerCapture(event.pointerId)) {
             element.releasePointerCapture(event.pointerId);
           }
           document.body.style.webkitUserSelect = prevWebkitUserSelectRef.current;
+          document.body.style.pointerEvents = 'auto';
           rectRef.current = null;
         })}
       />

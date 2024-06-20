@@ -13,7 +13,7 @@ const defaultState: ObserverRect = {
   right: 0,
 };
 
-export function useResizeObserver<T extends HTMLElement = any>() {
+export function useResizeObserver<T extends HTMLElement = any>(options?: ResizeObserverOptions) {
   const frameID = useRef(0);
   const ref = useRef<T>(null);
 
@@ -41,7 +41,7 @@ export function useResizeObserver<T extends HTMLElement = any>() {
 
   useEffect(() => {
     if (ref.current) {
-      observer?.observe(ref.current);
+      observer?.observe(ref.current, options);
     }
 
     return () => {
@@ -56,7 +56,7 @@ export function useResizeObserver<T extends HTMLElement = any>() {
   return [ref, rect] as const;
 }
 
-export function useElementSize<T extends HTMLElement = any>() {
-  const [ref, { width, height }] = useResizeObserver<T>();
+export function useElementSize<T extends HTMLElement = any>(options?: ResizeObserverOptions) {
+  const [ref, { width, height }] = useResizeObserver<T>(options);
   return { ref, width, height };
 }

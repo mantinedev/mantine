@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
+
 import { Box, Button, Group, PasswordInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
@@ -10,6 +10,7 @@ import { PasswordInput, Group, Button, Box } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       password: 'secret',
       confirmPassword: 'sevret',
@@ -27,6 +28,7 @@ function Demo() {
         <PasswordInput
           label="Password"
           placeholder="Password"
+          key={form.key('password')}
           {...form.getInputProps('password')}
         />
 
@@ -34,6 +36,7 @@ function Demo() {
           mt="sm"
           label="Confirm password"
           placeholder="Confirm password"
+          key={form.key('confirmPassword')}
           {...form.getInputProps('confirmPassword')}
         />
 
@@ -48,6 +51,7 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       password: 'secret',
       confirmPassword: 'sevret',
@@ -65,6 +69,7 @@ function Demo() {
         <PasswordInput
           label="Password"
           placeholder="Password"
+          key={form.key('password')}
           {...form.getInputProps('password')}
         />
 
@@ -72,6 +77,7 @@ function Demo() {
           mt="sm"
           label="Confirm password"
           placeholder="Confirm password"
+          key={form.key('confirmPassword')}
           {...form.getInputProps('confirmPassword')}
         />
 

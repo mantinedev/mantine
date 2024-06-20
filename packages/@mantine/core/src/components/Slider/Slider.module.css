@@ -1,19 +1,18 @@
 .root {
-  --slider-size-xs: rem(4px);
-  --slider-size-sm: rem(6px);
-  --slider-size-md: rem(8px);
-  --slider-size-lg: rem(10px);
-  --slider-size-xl: rem(12px);
+  --slider-size-xs: 4px;
+  --slider-size-sm: 6px;
+  --slider-size-md: 8px;
+  --slider-size-lg: 10px;
+  --slider-size-xl: 12px;
 
   --slider-size: var(--slider-size-md);
-  --slider-radius: rem(1000px);
+  --slider-radius: 1000px;
   --slider-color: var(--mantine-primary-color-filled);
 
   -webkit-tap-highlight-color: transparent;
   outline: none;
   height: calc(var(--slider-size) * 2);
-  padding-left: var(--slider-size);
-  padding-right: var(--slider-size);
+  padding-inline: var(--slider-size);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,8 +32,7 @@
 
 .label {
   position: absolute;
-  top: rem(-36px);
-  background-color: var(--_label-bg);
+  top: -36px;
   font-size: var(--mantine-font-size-xs);
   color: var(--mantine-color-white);
   padding: calc(var(--mantine-spacing-xs) / 2);
@@ -44,24 +42,23 @@
   user-select: none;
   touch-action: none;
 
-  @mixin light {
-    --_label-bg: var(--mantine-color-gray-9);
+  @mixin where-light {
+    background-color: var(--mantine-color-gray-9);
   }
 
-  @mixin dark {
-    --_label-bg: var(--mantine-color-dark-4);
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-4);
   }
 }
 
 .thumb {
   position: absolute;
-  display: var(--_thumb-display, flex);
+  display: flex;
   height: var(--slider-thumb-size);
   width: var(--slider-thumb-size);
-  background-color: var(--_thumb-bg);
-  border: rem(4px) solid var(--_thumb-bd);
-  color: var(--_thumb-bd);
-  transform: var(--_thumb-transform, translate(-50%, -50%));
+  border: 4px solid;
+  transform: translate(-50%, -50%);
+  color: var(--slider-color);
   top: 50%;
   cursor: pointer;
   border-radius: var(--slider-radius);
@@ -73,33 +70,32 @@
   z-index: 3;
   user-select: none;
   touch-action: none;
-  box-shadow: var(--_thumb-box-shadow, none);
-  outline-offset: rem(2px);
+  outline-offset: 2px;
   left: var(--slider-thumb-offset);
 
-  @mixin rtl {
+  @mixin where-rtl {
     left: auto;
     right: calc(var(--slider-thumb-offset) - var(--slider-thumb-size));
   }
 
   fieldset:disabled &,
-  &[data-disabled] {
-    --_thumb-display: none;
+  &:where([data-disabled]) {
+    display: none;
   }
 
-  &[data-dragging] {
-    --_thumb-transform: translate(-50%, -50%) scale(1.05);
-    --_thumb-box-shadow: var(--mantine-shadow-sm);
+  &:where([data-dragging]) {
+    transform: translate(-50%, -50%) scale(1.05);
+    box-shadow: var(--mantine-shadow-sm);
   }
 
-  @mixin light {
-    --_thumb-bd: var(--slider-color);
-    --_thumb-bg: var(--mantine-color-white);
+  @mixin where-light {
+    border-color: var(--slider-color);
+    background-color: var(--mantine-color-white);
   }
 
-  @mixin dark {
-    --_thumb-bd: var(--mantine-color-white);
-    --_thumb-bg: var(--slider-color);
+  @mixin where-dark {
+    border-color: var(--mantine-color-white);
+    background-color: var(--slider-color);
   }
 }
 
@@ -108,11 +104,11 @@
   align-items: center;
   width: 100%;
   height: calc(var(--slider-size) * 2);
-  cursor: var(--_track-cursor, pointer);
+  cursor: pointer;
 
   fieldset:disabled &,
-  &[data-disabled] {
-    --_track-cursor: not-allowed;
+  &:where([data-disabled]) {
+    cursor: not-allowed;
   }
 }
 
@@ -121,13 +117,13 @@
   width: 100%;
   height: var(--slider-size);
 
-  &[data-inverted]:not([data-disabled]) {
-    --_track-bg: var(--slider-color);
+  &:where([data-inverted]:not([data-disabled])) {
+    --track-bg: var(--slider-color);
   }
 
-  fieldset:disabled &[data-inverted],
-  &[data-inverted][data-disabled] {
-    --_track-bg: var(--slider-track-disabled-bg);
+  fieldset:disabled &:where([data-inverted]),
+  &:where([data-inverted][data-disabled]) {
+    --track-bg: var(--slider-track-disabled-bg);
   }
 
   &::before {
@@ -136,9 +132,8 @@
     top: 0;
     bottom: 0;
     border-radius: var(--slider-radius);
-    right: calc(var(--slider-size) * -1);
-    left: calc(var(--slider-size) * -1);
-    background-color: var(--_track-bg, var(--slider-track-bg));
+    inset-inline: calc(var(--slider-size) * -1);
+    background-color: var(--track-bg, var(--slider-track-bg));
     z-index: 0;
   }
 }
@@ -148,95 +143,80 @@
   z-index: 1;
   top: 0;
   bottom: 0;
-  background-color: var(--_bar-bg, var(--slider-color));
+  background-color: var(--slider-color);
   border-radius: var(--slider-radius);
   width: var(--slider-bar-width);
-  left: var(--slider-bar-offset);
+  inset-inline-start: var(--slider-bar-offset);
 
-  @mixin rtl {
-    left: auto;
-    right: var(--slider-bar-offset);
+  &:where([data-inverted]) {
+    background-color: var(--slider-track-bg);
   }
 
-  &[data-inverted] {
-    --_bar-bg: var(--slider-track-bg);
-  }
+  fieldset:disabled &:where(:not([data-inverted])),
+  &:where([data-disabled]:not([data-inverted])) {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-4);
+    }
 
-  fieldset:disabled &:not([data-inverted]),
-  &[data-disabled]:not([data-inverted]) {
-    --_bar-bg: var(--_bar-disabled-bg);
-  }
-
-  @mixin light {
-    --_bar-disabled-bg: var(--mantine-color-gray-4);
-  }
-
-  @mixin dark {
-    --_bar-disabled-bg: var(--mantine-color-dark-3);
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-3);
+    }
   }
 }
 
 .markWrapper {
   position: absolute;
-  left: calc(var(--mark-offset) - var(--slider-size) / 2);
+  inset-inline-start: calc(var(--mark-offset) - var(--slider-size) / 2);
   top: 0;
   z-index: 2;
   height: 0;
   pointer-events: none;
-
-  @mixin rtl {
-    left: unset;
-    right: calc(var(--mark-offset) - var(--slider-size) / 2);
-  }
 }
 
 .mark {
-  border: rem(2px) solid var(--_mark-bd);
+  border: 2px solid;
   height: var(--slider-size);
   width: var(--slider-size);
-  border-radius: rem(1000px);
+  border-radius: 1000px;
   transform: translateX((calc(var(--slider-size) / -2)));
-  background-color: var(--_mark-bg, var(--mantine-color-white));
+  background-color: var(--mantine-color-white);
   pointer-events: none;
 
-  &[data-filled] {
-    [data-mantine-color-scheme] & {
-      --_mark-bd: var(--slider-color);
-    }
-
-    &[data-disabled] {
-      @mixin light {
-        --_mark-bd: var(--mantine-color-gray-4);
-      }
-
-      @mixin dark {
-        --_mark-bd: var(--mantine-color-dark-3);
-      }
-    }
+  @mixin where-light {
+    border-color: var(--mantine-color-gray-2);
   }
 
-  @mixin light {
-    --_mark-bd: var(--mantine-color-gray-2);
+  @mixin where-dark {
+    border-color: var(--mantine-color-dark-4);
   }
 
-  @mixin dark {
-    --_mark-bd: var(--mantine-color-dark-4);
+  &:where([data-filled]) {
+    border-color: var(--slider-color);
+
+    &:where([data-disabled]) {
+      @mixin where-light {
+        border-color: var(--mantine-color-gray-4);
+      }
+
+      @mixin where-dark {
+        border-color: var(--mantine-color-dark-3);
+      }
+    }
   }
 }
 
 .markLabel {
   transform: translate(calc(-50% + var(--slider-size) / 2), calc(var(--mantine-spacing-xs) / 2));
   font-size: var(--mantine-font-size-sm);
-  color: var(--_mark-label-color);
   white-space: nowrap;
   cursor: pointer;
   user-select: none;
 
-  @mixin light {
-    --_mark-label-color: var(--mantine-color-gray-6);
+  @mixin where-light {
+    color: var(--mantine-color-gray-6);
   }
 
-  @mixin dark {
-    --_mark-label-color: var(--mantine-color-dark-2);
+  @mixin where-dark {
+    color: var(--mantine-color-dark-2);
   }
 }

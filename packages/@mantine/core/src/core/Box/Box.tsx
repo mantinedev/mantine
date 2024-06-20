@@ -1,8 +1,8 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import cx from 'clsx';
 import { createPolymorphicComponent } from '../factory';
 import { InlineStyles } from '../InlineStyles';
-import { MantineBreakpoint, useMantineTheme } from '../MantineProvider';
+import { MantineBreakpoint, useMantineSxTransform, useMantineTheme } from '../MantineProvider';
 import { isNumberLike } from '../utils';
 import type { CssVarsProp, MantineStyleProp } from './Box.types';
 import { getBoxMod } from './get-box-mod/get-box-mod';
@@ -27,6 +27,9 @@ export interface BoxProps extends MantineStyleProps {
 
   /** CSS variables defined on root component element */
   __vars?: CssVarsProp;
+
+  /** `size` property passed down the HTML element */
+  __size?: string;
 
   /** Breakpoint above which the component is hidden with `display: none` */
   hiddenFrom?: MantineBreakpoint;
@@ -75,6 +78,7 @@ const _Box = forwardRef<
       lightHidden,
       darkHidden,
       renderRoot,
+      __size,
       ...others
     },
     ref
@@ -82,6 +86,8 @@ const _Box = forwardRef<
     const theme = useMantineTheme();
     const Element = component || 'div';
     const { styleProps, rest } = extractStyleProps(others);
+    const useSxTransform = useMantineSxTransform();
+    const transformedSx = useSxTransform?.()?.(styleProps.sx);
     const responsiveClassName = useRandomClassName();
     const parsedStyleProps = parseStyleProps({
       styleProps,
@@ -97,7 +103,7 @@ const _Box = forwardRef<
         vars: __vars,
         styleProps: parsedStyleProps.inlineStyles,
       }),
-      className: cx(className, {
+      className: cx(className, transformedSx, {
         [responsiveClassName]: parsedStyleProps.hasResponsiveStyles,
         'mantine-light-hidden': lightHidden,
         'mantine-dark-hidden': darkHidden,
@@ -106,6 +112,7 @@ const _Box = forwardRef<
       }),
       'data-variant': variant,
       'data-size': isNumberLike(size) ? undefined : size || undefined,
+      size: __size,
       ...getBoxMod(mod),
       ...rest,
     };

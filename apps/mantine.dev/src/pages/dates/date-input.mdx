@@ -1,0 +1,69 @@
+import { DateInputDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DateInput);
+
+## DatePicker props
+
+`DateInput` supports most of the [DatePicker](/dates/date-picker/) props,
+read through [DatePicker](/dates/date-picker/) documentation to learn about all component features that are not listed on this page.
+
+## Usage
+
+<Demo data={DateInputDemos.usage} />
+
+## Value format
+
+Use `valueFormat` prop to change [dayjs format](https://day.js.org/docs/en/display/format) of value label:
+
+<Demo data={DateInputDemos.format} />
+
+## With time
+
+Include time in `valueFormat` to allow hours, minutes and seconds to be entered:
+
+<Demo data={DateInputDemos.time} />
+
+## Date parser
+
+Use `dateParser` prop to replace default date parser. Parser function accepts user input (string)
+and must return `Date` object:
+
+<Demo data={DateInputDemos.parser} />
+
+## Allow clear
+
+Set `clearable` prop to allow removing value from the input. Input will be cleared if
+user selects the same date in dropdown or clears input value:
+
+<Demo data={DateInputDemos.clearable} />
+
+## Min and max date
+
+Set `minDate` and `maxDate` props to define min and max dates. If date that is after `maxDate`
+or before `minDate` is entered, then it will be considered invalid and input value will be reverted
+to last known valid date value.
+
+<Demo data={DateInputDemos.minMax} />
+
+## Disabled state
+
+<Demo data={DateInputDemos.disabled} />
+
+## Input props
+
+<InputFeatures component="DateInput" element="input" />
+
+<Demo data={DateInputDemos.configurator} />
+
+<GetElementRef
+  component="DateInput"
+  refType="input"
+  package="@mantine/dates"
+/>
+
+<InputAccessibility
+  component="DateInput"
+  packageName="@mantine/dates"
+/>

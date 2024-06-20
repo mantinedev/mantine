@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { MantineLoaderComponent } from '@mantine/core';
 
 export const RingLoader: MantineLoaderComponent = forwardRef(({ style, ...others }, ref) => (

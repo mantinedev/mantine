@@ -1,7 +1,7 @@
 .field {
   background-color: transparent;
   appearance: none;
-  min-width: rem(100px);
+  min-width: 100px;
   flex: 1;
   border: 0;
   font-size: inherit;
@@ -10,13 +10,13 @@
   padding: 0;
 
   &::placeholder {
-    color: var(--_input-placeholder-color);
+    color: var(--input-placeholder-color);
     opacity: 1;
   }
 
   &:where([data-type='hidden'], [data-type='auto']) {
-    height: rem(1px);
-    width: rem(1px);
+    height: 1px;
+    width: 1px;
     top: 0;
     left: 0;
     pointer-events: none;

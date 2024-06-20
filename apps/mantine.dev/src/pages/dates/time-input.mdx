@@ -1,0 +1,42 @@
+import { TimeInputDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.TimeInput);
+
+## Usage
+
+<InputFeatures component="TimeInput" element="input" />
+
+<Demo data={TimeInputDemos.configurator} />
+
+## Show browser picker
+
+You can show browser picker by calling `showPicker` method of input element.
+Note that some browsers (desktop Safari) do not support this feature and the
+method will do nothing.
+
+<Demo data={TimeInputDemos.picker} />
+
+## With seconds
+
+<Demo data={TimeInputDemos.withSeconds} />
+
+## With icon
+
+<Demo data={TimeInputDemos.icon} />
+
+## Disabled state
+
+<Demo data={TimeInputDemos.disabled} />
+
+<GetElementRef
+  component="TimeInput"
+  refType="input"
+  package="@mantine/dates"
+/>
+
+<InputAccessibility
+  component="TimeInput"
+  packageName="@mantine/dates"
+/>

@@ -1,11 +1,10 @@
 .demo {
-  padding: var(--_demo-spacing, 0rem);
   flex: 1;
-  border-top-left-radius: calc(var(--mantine-radius-md) - rem(1px));
-  border-top-right-radius: calc(var(--mantine-radius-md) - rem(1px));
+  border-top-left-radius: calc(var(--mantine-radius-md) - 1px);
+  border-top-right-radius: calc(var(--mantine-radius-md) - 1px);
 
-  &[data-with-padding] {
-    --_demo-spacing: var(--mantine-spacing-md);
+  &:where([data-with-padding]) {
+    padding: var(--mantine-spacing-md);
   }
 
   &[data-dimmed] {
@@ -19,24 +18,24 @@
   }
 
   &[data-striped] {
-    border-top-left-radius: calc(var(--mantine-radius-md) - rem(1px));
+    border-top-left-radius: calc(var(--mantine-radius-md) - 1px);
     background: repeating-linear-gradient(
         45deg,
         transparent 0,
-        transparent rem(10px),
-        var(--stripe-color) rem(10px),
+        transparent 10px,
+        var(--stripe-color) 10px,
         var(--stripe-color) 12px
       ),
       repeating-linear-gradient(
         135deg,
         transparent 0,
-        transparent rem(10px),
-        var(--stripe-color) rem(10px),
-        var(--stripe-color) rem(12px)
+        transparent 10px,
+        var(--stripe-color) 10px,
+        var(--stripe-color) 12px
       );
 
     @mixin rtl {
-      border-top-right-radius: calc(var(--mantine-radius-md) - rem(1px));
+      border-top-right-radius: calc(var(--mantine-radius-md) - 1px);
       border-top-left-radius: 0;
     }
 

@@ -1,9 +1,8 @@
 .root {
   position: relative;
-  margin-bottom: var(--_spoiler-margin-bottom);
 
-  &[data-has-spoiler] {
-    --_spoiler-margin-bottom: rem(24px);
+  &:where([data-has-spoiler]) {
+    margin-bottom: 24px;
   }
 }
 
@@ -16,12 +15,7 @@
 
 .control {
   position: absolute;
-  left: 0;
+  inset-inline-start: 0;
   top: 100%;
-  height: rem(24px);
-
-  @mixin rtl {
-    left: auto;
-    right: 0;
-  }
+  height: 24px;
 }

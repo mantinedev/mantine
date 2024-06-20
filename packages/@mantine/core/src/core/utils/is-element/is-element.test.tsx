@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { isElement } from './is-element';
 
 const TestComponent = () => <div />;

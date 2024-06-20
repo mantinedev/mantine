@@ -1,29 +1,16 @@
 .root {
   --offset: calc(var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2);
-  --tl-bullet-size: rem(20px);
-  --tl-line-width: rem(4px);
-  --tl-radius: rem(1000px);
+  --tl-bullet-size: 20px;
+  --tl-line-width: 4px;
+  --tl-radius: 1000px;
   --tl-color: var(--mantine-primary-color-filled);
 
-  padding-left: var(--_tl-pl, 0);
-  padding-right: var(--_tl-pr, 0);
-
-  &[data-align='left'] {
-    --_tl-pl: var(--offset);
-
-    @mixin rtl {
-      --_tl-pl: 0;
-      --_tl-pr: var(--offset);
-    }
+  &:where([data-align='left']) {
+    padding-inline-start: var(--offset);
   }
 
-  &[data-align='right'] {
-    --_tl-pr: var(--offset);
-
-    @mixin rtl {
-      --_tl-pl: var(--offset);
-      --_tl-pr: 0;
-    }
+  &:where([data-align='right']) {
+    padding-inline-end: var(--offset);
   }
 }
 
@@ -34,93 +21,73 @@
 }
 
 .item {
-  --item-border: var(--tl-line-width) var(--tli-border-style, solid) var(--_item-border-color);
+  --item-border: var(--tl-line-width) var(--tli-border-style, solid) var(--item-border-color);
 
   position: relative;
   color: var(--mantine-color-text);
-  padding-left: var(--_item-pl, 0);
-  padding-right: var(--_item-pr, 0);
-  text-align: var(--_item-ta);
-  margin-top: var(--_item-mt);
 
   &::before {
     content: '';
     pointer-events: none;
     position: absolute;
     top: 0;
-    left: var(--_line-left, 0);
-    right: var(--_line-right, 0);
+    left: var(--timeline-line-left, 0);
+    right: var(--timeline-line-right, 0);
     bottom: calc(var(--mantine-spacing-xl) * -1);
-    border-left: var(--_line-border-left, var(--item-border));
-    border-right: var(--_line-border-right, 0);
-    display: var(--_line-display, none);
-
-    @mixin rtl {
-      --_line-border-left: 0;
-      --_line-border-right: var(--item-border);
-    }
+    border-inline-start: var(--item-border);
+    display: var(--timeline-line-display, none);
 
     .root[data-align='left'] & {
-      --_line-left: calc(var(--tl-line-width) * -1);
-      --_line-right: auto;
+      --timeline-line-left: calc(var(--tl-line-width) * -1);
+      --timeline-line-right: auto;
 
       @mixin rtl {
-        --_line-left: auto;
-        --_line-right: calc(var(--tl-line-width) * -1);
+        --timeline-line-left: auto;
+        --timeline-line-right: calc(var(--tl-line-width) * -1);
       }
     }
 
     .root[data-align='right'] & {
-      --_line-left: auto;
-      --_line-right: calc(var(--tl-line-width) * -1);
+      --timeline-line-left: auto;
+      --timeline-line-right: calc(var(--tl-line-width) * -1);
 
       @mixin rtl {
-        --_line-left: calc(var(--tl-line-width) * -1);
-        --_line-right: auto;
+        --timeline-line-left: calc(var(--tl-line-width) * -1);
+        --timeline-line-right: auto;
       }
     }
   }
 
-  .root[data-align='left'] & {
-    --_item-pl: var(--offset);
-    --_item-ta: left;
-
-    @mixin rtl {
-      --_item-pl: 0;
-      --_item-pr: var(--offset);
-    }
+  .root:where([data-align='left']) & {
+    padding-inline-start: var(--offset);
+    text-align: left;
   }
 
-  .root[data-align='right'] & {
-    --_item-pr: var(--offset);
-    --_item-ta: right;
-
-    @mixin rtl {
-      --_item-pl: var(--offset);
-      --_item-pr: 0;
-    }
+  .root:where([data-align='right']) & {
+    padding-inline-end: var(--offset);
+    text-align: right;
   }
 
-  @mixin light {
-    --_item-border-color: var(--mantine-color-gray-3);
+  @mixin where-light {
+    --item-border-color: var(--mantine-color-gray-3);
   }
 
-  @mixin dark {
-    --_item-border-color: var(--mantine-color-dark-4);
+  @mixin where-dark {
+    --item-border-color: var(--mantine-color-dark-4);
   }
 
-  [data-mantine-color-scheme] &[data-line-active] {
+  &:where([data-line-active]) {
     &::before {
       border-color: var(--tli-color, var(--tl-color));
     }
   }
 
-  &:not(:last-of-type) {
-    --_line-display: block;
+  &:where(:not(:last-of-type)) {
+    --timeline-line-display: block;
   }
 
-  &:not(:first-of-type) {
-    --_item-mt: var(--mantine-spacing-xl);
+  &:where(:not(:first-of-type)) {
+    margin-top: var(--mantine-spacing-xl);
   }
 }
 
@@ -128,93 +95,83 @@
   width: var(--tl-bullet-size);
   height: var(--tl-bullet-size);
   border-radius: var(--tli-radius, var(--tl-radius));
-  border: var(--_bullet-border-width, var(--tl-line-width)) solid var(--_bullet-border-color);
-  background-color: var(--_bullet-bg-color, var(--mantine-color-body));
+  border: var(--tl-line-width) solid;
+  background-color: var(--mantine-color-body);
   position: absolute;
   top: 0;
-  left: var(--_bullet-left, 0);
-  right: var(--_bullet-right, 0);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--_bullet-color, var(--mantine-color-text));
+  color: var(--mantine-color-text);
 
-  @mixin light {
-    --_bullet-border-color: var(--mantine-color-gray-3);
+  @mixin where-light {
+    border-color: var(--mantine-color-gray-3);
   }
 
-  @mixin dark {
-    --_bullet-border-color: var(--mantine-color-dark-4);
+  @mixin where-dark {
+    border-color: var(--mantine-color-dark-4);
   }
 
-  .root[data-align='left'] & {
-    --_bullet-left: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
-    --_bullet-right: auto;
+  .root:where([data-align='left']) & {
+    left: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
+    right: auto;
 
-    @mixin rtl {
-      --_bullet-left: auto;
-      --_bullet-right: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
+    @mixin where-rtl {
+      left: auto;
+      right: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
     }
   }
 
-  .root[data-align='right'] & {
-    --_bullet-left: auto;
-    --_bullet-right: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
+  .root:where([data-align='right']) & {
+    left: auto;
+    right: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
 
-    @mixin rtl {
-      --_bullet-left: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
-      --_bullet-right: auto;
+    @mixin where-rtl {
+      left: calc((var(--tl-bullet-size) / 2 + var(--tl-line-width) / 2) * -1);
+      right: auto;
     }
   }
 
-  &[data-with-child] {
-    --_bullet-border-width: var(--tl-line-width);
+  &:where([data-with-child]) {
+    border-width: var(--tl-line-width);
 
-    @mixin light {
-      --_bullet-bg-color: var(--mantine-color-gray-3);
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-3);
     }
 
-    @mixin dark {
-      --_bullet-bg-color: var(--mantine-color-dark-4);
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-4);
     }
   }
 
-  &[data-active] {
-    --_bullet-border-color: var(--tli-color, var(--tl-color));
-    --_bullet-bg-color: var(--mantine-color-white);
-    --_bullet-color: var(--tl-icon-color, var(--mantine-color-white));
+  &:where([data-active]) {
+    border-color: var(--tli-color, var(--tl-color));
+    background-color: var(--mantine-color-white);
+    color: var(--tl-icon-color, var(--mantine-color-white));
 
-    &[data-with-child] {
-      --_bullet-bg-color: var(--tli-color, var(--tl-color));
-      --_bullet-color: var(--tl-icon-color, var(--mantine-color-white));
+    &:where([data-with-child]) {
+      background-color: var(--tli-color, var(--tl-color));
+      color: var(--tl-icon-color, var(--mantine-color-white));
     }
   }
 }
 
 .itemBody {
-  padding-left: var(--_body-pl, 0);
-  padding-right: var(--_body-pr, 0);
-  text-align: var(--_body-ta);
+  .root:where([data-align='left']) & {
+    padding-inline-start: var(--offset);
+    text-align: left;
 
-  .root[data-align='left'] & {
-    --_body-pl: var(--offset);
-    --_body-ta: left;
-
-    @mixin rtl {
-      --_body-pl: 0;
-      --_body-pr: var(--offset);
-      --_body-ta: right;
+    @mixin where-rtl {
+      text-align: right;
     }
   }
 
-  .root[data-align='right'] & {
-    --_body-pr: var(--offset);
-    --_body-ta: right;
+  .root:where([data-align='right']) & {
+    padding-inline-end: var(--offset);
+    text-align: right;
 
-    @mixin rtl {
-      --_body-pl: var(--offset);
-      --_body-pr: 0;
-      --_body-ta: left;
+    @mixin where-rtl {
+      text-align: left;
     }
   }
 }

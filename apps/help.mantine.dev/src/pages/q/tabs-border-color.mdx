@@ -1,0 +1,20 @@
+import { TabsBorderColor } from '@/demos/TabsBorderColor.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How can I change Tabs border color?',
+  description: 'Learn how to use Styles API with Tabs component',
+  slug: 'tabs-border-color',
+  category: 'styles',
+  tags: ['tabs', 'Styles API'],
+  created_at: 'February 15, 2024',
+  last_updated_at: 'February 15, 2024',
+};
+
+export default Layout(meta);
+
+[Tabs](https://mantine.dev/core/tabs) border is added with `::before` on the `list`
+element. You can use [Styles API](https://mantine.dev/styles/styles-api) to change
+styles of inner elements:
+
+<Demo data={TabsBorderColor} />

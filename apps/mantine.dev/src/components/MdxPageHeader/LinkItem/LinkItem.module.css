@@ -1,0 +1,29 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+
+  @mixin light {
+    color: var(--mantine-colors-gray-9);
+  }
+
+  @mixin dark {
+    color: var(--mantine-colors-dark-0);
+  }
+}
+
+.icon {
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+
+  @mixin rtl {
+    margin-left: 12px;
+    margin-right: 0;
+  }
+}

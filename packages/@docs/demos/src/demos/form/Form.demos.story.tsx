@@ -137,3 +137,28 @@ export const Demo_enhanceGetInputPropsForm = {
   name: '⭐ Demo: enhanceGetInputPropsForm',
   render: renderDemo(demos.enhanceGetInputPropsForm),
 };
+
+export const Demo_controlled = {
+  name: '⭐ Demo: controlled',
+  render: renderDemo(demos.controlled),
+};
+
+export const Demo_uncontrolled = {
+  name: '⭐ Demo: uncontrolled',
+  render: renderDemo(demos.uncontrolled),
+};
+
+export const Demo_onValuesChange = {
+  name: '⭐ Demo: onValuesChange',
+  render: renderDemo(demos.onValuesChange),
+};
+
+export const Demo_watch = {
+  name: '⭐ Demo: watch',
+  render: renderDemo(demos.watch),
+};
+
+export const Demo_focusError = {
+  name: '⭐ Demo: focusError',
+  render: renderDemo(demos.focusError),
+};

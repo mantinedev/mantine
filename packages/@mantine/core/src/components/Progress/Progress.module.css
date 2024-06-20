@@ -4,7 +4,7 @@
   }
 
   100% {
-    background-position: rem(40px) 0;
+    background-position: 40px 0;
   }
 }
 
@@ -12,11 +12,11 @@
   --progress-radius: var(--mantine-radius-default);
   --progress-size: var(--progress-size-md);
 
-  --progress-size-xs: rem(3px);
-  --progress-size-sm: rem(5px);
-  --progress-size-md: rem(8px);
-  --progress-size-lg: rem(12px);
-  --progress-size-xl: rem(16px);
+  --progress-size-xs: 3px;
+  --progress-size-sm: 5px;
+  --progress-size-md: 8px;
+  --progress-size-lg: 12px;
+  --progress-size-xl: 16px;
 
   position: relative;
   height: var(--progress-size);
@@ -41,7 +41,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background-size: rem(20px) rem(20px);
+  background-size: 20px 20px;
   transition: width var(--progress-transition-duration, 100ms) ease;
 
   &:where([data-striped]) {
@@ -62,19 +62,15 @@
   }
 
   &:where(:last-of-type) {
-    border-radius: 0 var(--progress-radius) var(--progress-radius) 0;
-
-    @mixin where-rtl {
-      border-radius: var(--progress-radius) 0 0 var(--progress-radius);
-    }
+    border-radius: 0;
+    border-start-end-radius: var(--progress-radius);
+    border-end-end-radius: var(--progress-radius);
   }
 
   &:where(:first-of-type) {
-    border-radius: var(--progress-radius) 0 0 var(--progress-radius);
-
-    @mixin where-rtl {
-      border-radius: 0 var(--progress-radius) var(--progress-radius) 0;
-    }
+    border-radius: 0;
+    border-start-start-radius: var(--progress-radius);
+    border-end-start-radius: var(--progress-radius);
   }
 }
 
@@ -87,6 +83,5 @@
   text-overflow: ellipsis;
   font-size: min(calc(var(--progress-size) * 0.65), rem(18px));
   line-height: 1;
-  padding-left: rem(4px);
-  padding-right: rem(4px);
+  padding-inline: 4px;
 }

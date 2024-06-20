@@ -1,0 +1,16 @@
+.root {
+  --combobox-shell-navbar-width: 300px;
+
+  @media (max-width: $docs-navbar-breakpoint) {
+    --combobox-shell-navbar-width: 0;
+  }
+}
+
+.main {
+  padding-left: var(--combobox-shell-navbar-width);
+
+  @mixin rtl {
+    padding-left: 0;
+    padding-right: var(--combobox-shell-navbar-width);
+  }
+}

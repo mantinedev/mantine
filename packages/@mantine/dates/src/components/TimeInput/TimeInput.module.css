@@ -15,7 +15,7 @@
   &::-webkit-datetime-edit-minute-field,
   &::-webkit-datetime-edit-second-field {
     padding-top: 0;
-    max-height: rem(30px);
+    max-height: 30px;
     display: inline;
 
     &:focus {

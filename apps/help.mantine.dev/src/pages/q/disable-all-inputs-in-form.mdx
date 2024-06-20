@@ -1,0 +1,21 @@
+import { FieldsetInputs } from '@/demos/FieldsetInputs.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How can I disable all inputs/inputs group inside form?',
+  description:
+    'Learn how to disable all inputs/inputs group inside form with unstyled Fieldset component',
+  slug: 'disable-all-inputs-in-form',
+  category: 'forms',
+  tags: ['form', 'inputs', 'Fieldset'],
+  created_at: 'November 30, 2023',
+  last_updated_at: 'November 30, 2023',
+};
+
+export default Layout(meta);
+
+To disable all inputs/inputs group inside form, you can use the [Fieldset](https://mantine.dev/core/fieldset/) component.
+If `disabled` prop is set, all inputs inside `Fieldset` are disabled. By default, `Fieldset` has border and padding styles.
+If you want to use `Fieldset` only for `disabled` feature, set `variant="unstyled"`:
+
+<Demo data={FieldsetInputs} />

@@ -1,0 +1,38 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useHash);
+
+## Usage
+
+`use-hash` returns hash from URL, subscribes to its changes with [hashchange event](https://developer.mozilla.org/en-US/docs/Web/API/Window/hashchange_event)
+and allows changing it with `setHash` function:
+
+<Demo data={HooksDemos.useHashDemo} />
+
+## Initial state value
+
+By default, `use-hash` will retrieve value in `useEffect`. If you want to get initial value
+as soon as hook is called, set `getInitialValueInEffect` to `false`. Note that this option is
+not compatible with server side rendering – you can only use it if your app is client-side only.
+
+```tsx
+import { Button } from '@mantine/core';
+import { useHash } from '@mantine/hooks';
+
+function Demo() {
+  const [hash, setHash] = useHash({ getInitialValueInEffect: false });
+  return (
+    <Button onClick={() => setHash('new-hash')}>Change hash</Button>
+  );
+}
+```
+
+## Definition
+
+```tsx
+function useHash(options: {
+  getInitialValueInEffect?: boolean;
+}): readonly [string, (value: string) => void];
+```

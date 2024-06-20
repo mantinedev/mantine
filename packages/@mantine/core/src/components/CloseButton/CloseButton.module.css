@@ -1,9 +1,9 @@
 .root {
-  --cb-size-xs: rem(18px);
-  --cb-size-sm: rem(22px);
-  --cb-size-md: rem(28px);
-  --cb-size-lg: rem(34px);
-  --cb-size-xl: rem(44px);
+  --cb-size-xs: 18px;
+  --cb-size-sm: 22px;
+  --cb-size-md: 28px;
+  --cb-size-lg: 34px;
+  --cb-size-xl: 44px;
 
   --cb-size: var(--cb-size-md);
   --cb-icon-size: 70%;
@@ -21,7 +21,6 @@
   min-width: var(--cb-size);
   min-height: var(--cb-size);
   border-radius: var(--cb-radius);
-  color: var(--_cb-color);
 
   @mixin where-light {
     color: var(--mantine-color-gray-7);
@@ -30,9 +29,15 @@
   @mixin where-dark {
     color: var(--mantine-color-dark-1);
   }
+
+  &[data-disabled],
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 }
 
-.root--subtle {
+.root--subtle:where(:not([data-disabled], :disabled)) {
   @mixin hover {
     @mixin where-light {
       background-color: var(--mantine-color-gray-0);

@@ -1,10 +1,10 @@
-import React from 'react';
 import { Button, TagsInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { TagsInput, Button } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 function Demo() {
   const [dropdownOpened, { toggle }] = useDisclosure();

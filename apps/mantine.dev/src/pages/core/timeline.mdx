@@ -1,0 +1,57 @@
+import { TimelineDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Timeline);
+
+## Usage
+
+<Demo data={TimelineDemos.usage} />
+
+## Line and bullet props
+
+Control timeline appearance with the following props:
+
+- `active` – index of current active element, all elements before this index will be highlighted with `color`
+- `color` – color from theme that should be used to highlight active items, defaults to `theme.primaryColor`
+- `lineWidth` – controls line width and bullet border
+- `bulletSize` – bullet width, height and border-radius
+- `align` – defines line and bullets position relative to content, also sets text-align
+
+<Demo data={TimelineDemos.configurator} />
+
+## Bullet as React node
+
+<Demo data={TimelineDemos.bullet} />
+
+## Wrap Timeline.Item
+
+`Timeline` component relies on `Timeline.Item` order. Wrapping `Timeline.Item` is not supported,
+Instead you will need to use different approaches:
+
+```tsx
+import { Timeline } from '@mantine/core';
+
+// This will not work, step children will not render
+function WillNotWork() {
+  return <Timeline.Item title="Nope">It will not work</Timeline.Item>;
+}
+
+// Create a separate component for children
+function WillWork() {
+  return <div>This will work as expected!</div>;
+}
+
+function Demo() {
+  return (
+    <Timeline active={1}>
+      <Timeline.Item title="Regular item">First item</Timeline.Item>
+      <WillNotWork />
+      <Timeline.Item title="Works as expected">
+        <WillWork />
+      </Timeline.Item>
+      <Timeline.Item title="Regular item">Third item</Timeline.Item>
+    </Timeline>
+  );
+}
+```

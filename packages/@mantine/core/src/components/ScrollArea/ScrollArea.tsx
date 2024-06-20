@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -130,19 +130,14 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     >
       <ScrollAreaViewport
         {...viewportProps}
-        {...getStyles('viewport')}
+        {...getStyles('viewport', { style: viewportProps?.style })}
         ref={viewportRef}
         data-offset-scrollbars={offsetScrollbars === true ? 'xy' : offsetScrollbars || undefined}
         data-scrollbars={scrollbars || undefined}
-        onScroll={
-          typeof onScrollPositionChange === 'function'
-            ? ({ currentTarget }) =>
-                onScrollPositionChange({
-                  x: currentTarget.scrollLeft,
-                  y: currentTarget.scrollTop,
-                })
-            : undefined
-        }
+        onScroll={(e) => {
+          viewportProps?.onScroll?.(e);
+          onScrollPositionChange?.({ x: e.currentTarget.scrollLeft, y: e.currentTarget.scrollTop });
+        }}
       >
         {children}
       </ScrollAreaViewport>

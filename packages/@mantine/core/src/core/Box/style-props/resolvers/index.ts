@@ -1,3 +1,4 @@
+import { borderResolver } from './border-resolver/border-resolver';
 import { colorResolver, textColorResolver } from './color-resolver/color-resolver';
 import { fontFamilyResolver } from './font-family-resolver/font-family-resolver';
 import { fontSizeResolver } from './font-size-resolver/font-size-resolver';
@@ -15,6 +16,7 @@ export const resolvers = {
   size: sizeResolver,
   lineHeight: lineHeightResolver,
   fontFamily: fontFamilyResolver,
+  border: borderResolver,
 };
 
 export type StylePropType = keyof typeof resolvers;

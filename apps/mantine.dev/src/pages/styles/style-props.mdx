@@ -1,0 +1,139 @@
+import { StylesDemos } from '@docs/demos';
+import { StylePropsTable } from '@/components/StylePropsTable';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.StyleProps);
+
+# Style props
+
+With style props, you can add inline styles to any Mantine component.
+Style props add styles to the **root** element, if you need to style nested elements,
+use [Styles API](/styles/styles-api/) instead.
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Box mx="auto" maw={400} c="blue.6" bg="#fff">
+      Your component
+    </Box>
+  );
+}
+```
+
+## Supported props
+
+All Mantine components that have root element support the following style props:
+
+<StylePropsTable />
+
+## Theme values
+
+Some style props can reference values from theme, for example `mt` will use `theme.spacing` value
+if you set `xs`, `sm`, `md`, `lg`, `xl`:
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      {/* margin-top: theme.spacing.xs */}
+      <Box mt="xs" />
+
+      {/* margin-top: theme.spacing.md * -1 */}
+      <Box mt="-md" />
+
+      {/* margin-top: auto */}
+      <Box mt="auto" />
+
+      {/* margin-top: 1rem */}
+      <Box mt={16} />
+
+      {/* margin-top: 5rem */}
+      <Box mt="5rem" />
+    </>
+  );
+}
+```
+
+In `c`, `bd` and `bg` props you can reference colors from `theme.colors`:
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      {/* color: theme.colors.blue[theme.primaryShade] */}
+      <Box c="blue" />
+
+      {/* background: theme.colors.orange[1] */}
+      <Box bg="orange.1" />
+
+      {/* border: 1px solid theme.colors.red[6] */}
+      <Box bd="1px solid red.6" />
+
+      {/* color: if colorScheme is dark `var(--mantine-color-dark-2)`,
+      if color scheme is light `var(--mantine-color-gray-6)` */}
+      <Box c="dimmed" />
+
+      {/* color: if colorScheme is dark `var(--mantine-color-white)`,
+      if color scheme is light `var(--mantine-color-black)` */}
+      <Box c="bright" />
+
+      {/* background: #EDFEFF */}
+      <Box bg="#EDFEFF" />
+
+      {/* background: rgba(0, 34, 45, 0.6) */}
+      <Box bg="rgba(0, 34, 45, 0.6)" />
+    </>
+  );
+}
+```
+
+## Responsive styles
+
+You can use object syntax to add responsive styles with style props.
+Note that responsive style props are [less performant](/styles/styles-performance) than regular style props,
+it is not recommended to use them in large lists of elements.
+
+<Demo data={StylesDemos.responsiveStyleProps} />
+
+Responsive values are calculated the following way:
+
+- `base` value is used when none of breakpoint values are applied
+- `xs`, `sm`, `md`, `lg`, `xl` values are used when the viewport width is larger that the value of corresponding breakpoint specified in [theme.breakpoints](/styles/responsive/)
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return <Box w={{ base: 320, sm: 480, lg: 640 }} />;
+}
+```
+
+In this case the element will have the following styles:
+
+```css
+/* Base styles added to element and then get overwritten with responsive values */
+.element {
+  width: 20rem;
+}
+
+/* 48em is theme.breakpoints.sm by default */
+@media (min-width: 48em) {
+  .element {
+    width: 30rem;
+  }
+}
+
+/* 75em is theme.breakpoints.lg by default */
+@media (min-width: 75em) {
+  .element {
+    width: 40rem;
+  }
+}
+```

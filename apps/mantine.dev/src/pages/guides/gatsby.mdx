@@ -1,0 +1,121 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Gatsby);
+
+# Usage with Gatsby
+
+<GetTemplates type="gatsby" />
+
+## Generate new application
+
+Follow [Gatsby quick start](https://www.gatsbyjs.com/docs/quick-start/) guide to
+create new Gatsby application:
+
+<NpmScript
+  yarnScript="yarn create gatsby"
+  npmScript="npm init gatsby"
+/>
+
+When asked "Would you like to install a styling system?", select `PostCSS`.
+
+## Installation
+
+<PackagesInstallation />
+
+## PostCSS setup
+
+Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
+
+<InstallScript
+  packages="postcss postcss-preset-mantine postcss-simple-vars"
+  dev
+/>
+
+Create `postcss.config.cjs` file at the root of your application with the following content:
+
+```js
+module.exports = {
+  plugins: {
+    'postcss-preset-mantine': {},
+    'postcss-simple-vars': {
+      variables: {
+        'mantine-breakpoint-xs': '36em',
+        'mantine-breakpoint-sm': '48em',
+        'mantine-breakpoint-md': '62em',
+        'mantine-breakpoint-lg': '75em',
+        'mantine-breakpoint-xl': '88em',
+      },
+    },
+  },
+};
+```
+
+## Setup
+
+Create `src/theme.ts` file with your theme override:
+
+```tsx
+// src/theme.ts
+import { createTheme } from '@mantine/core';
+
+export const theme = createTheme({
+  fontFamily: 'serif',
+  // ... other theme override properties
+});
+```
+
+Create `gatsby-ssr.tsx` with the following content:
+
+```tsx
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import { theme } from './src/theme';
+
+export const onPreRenderHTML = ({
+  getHeadComponents,
+  replaceHeadComponents,
+}) => {
+  const headComponents = getHeadComponents();
+  replaceHeadComponents([
+    ...headComponents,
+    <ColorSchemeScript key="color-scheme-script" />,
+  ]);
+};
+
+export const wrapPageElement = ({ element }) => {
+  return <MantineProvider theme={theme}>{element}</MantineProvider>;
+};
+```
+
+Create `gatsby-browser.tsx` with the following content:
+
+```tsx
+// Import styles of packages that you've installed.
+// All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
+
+import { MantineProvider } from '@mantine/core';
+import { theme } from './src/theme';
+
+export const wrapPageElement = ({ element }) => {
+  return <MantineProvider theme={theme}>{element}</MantineProvider>;
+};
+```
+
+All set! Start development server:
+
+```bash
+npm run develop
+```
+
+## CSS modules
+
+By default, Gatsby has different syntax for importing CSS modules:
+
+```tsx
+// Default syntax – will not work in Gatsby
+import classes from './Demo.module.css';
+
+// Gatsby syntax
+import * as classes from './Demo.module.css';
+```

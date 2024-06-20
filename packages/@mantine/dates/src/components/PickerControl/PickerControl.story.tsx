@@ -1,4 +1,3 @@
-import React from 'react';
 import { PickerControl } from './PickerControl';
 
 export default { title: 'PickerControl' };

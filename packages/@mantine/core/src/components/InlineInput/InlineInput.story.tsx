@@ -1,4 +1,3 @@
-import React from 'react';
 import { InlineInput, InlineInputProps } from './InlineInput';
 
 export default { title: 'InlineInput' };

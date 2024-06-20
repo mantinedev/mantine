@@ -5,112 +5,96 @@
   font-size: var(--mantine-font-size-sm);
   table-layout: var(--table-layout, auto);
   caption-side: var(--table-caption-side, bottom);
-  border: var(--_table-border, none);
+  border: none;
 
-  @mixin light {
-    --_table-hover-color: var(--table-highlight-on-hover-color, var(--mantine-color-gray-1));
-    --_table-striped-color: var(--table-striped-color, var(--mantine-color-gray-0));
-    --_table-border-color: var(--table-border-color, var(--mantine-color-gray-3));
+  @mixin where-light {
+    --table-hover-color: var(--mantine-color-gray-1);
+    --table-striped-color: var(--mantine-color-gray-0);
+    --table-border-color: var(--mantine-color-gray-3);
   }
 
-  @mixin dark {
-    --_table-hover-color: var(--table-highlight-on-hover-color, var(--mantine-color-dark-5));
-    --_table-striped-color: var(--table-striped-color, var(--mantine-color-dark-6));
-    --_table-border-color: var(--table-border-color, var(--mantine-color-dark-4));
+  @mixin where-dark {
+    --table-hover-color: var(--mantine-color-dark-5);
+    --table-striped-color: var(--mantine-color-dark-6);
+    --table-border-color: var(--mantine-color-dark-4);
   }
 
-  &[data-with-table-border] {
-    --_table-border: rem(1px) solid var(--_table-border-color);
+  &:where([data-with-table-border]) {
+    border: rem(1px) solid var(--table-border-color);
   }
 }
 
 .th {
-  text-align: var(--_th-text-align, left);
+  text-align: left;
 
-  @mixin rtl {
-    --_th-text-align: right;
+  @mixin where-rtl {
+    text-align: right;
   }
 }
 
 .tr {
-  border-bottom: var(--_tr-border-bottom, none);
-  background-color: var(--_tr-bg, transparent);
+  border-bottom: none;
+  background-color: transparent;
 
   @mixin hover {
-    [data-mantine-color-scheme] &[data-hover] {
-      --_tr-bg: var(--_tr-hover-bg) !important;
+    &:where([data-hover]) {
+      background-color: var(--tr-hover-bg);
     }
   }
 
-  &[data-with-row-border] {
-    --_tr-border-bottom: rem(1px) solid var(--_table-border-color);
+  &:where([data-with-row-border]) {
+    border-bottom: rem(1px) solid var(--table-border-color);
   }
 }
 
 .td,
 .th {
   padding: var(--table-vertical-spacing) var(--table-horizontal-spacing, var(--mantine-spacing-xs));
-  border-left: var(--_border-left);
-  border-right: var(--_border-right);
 
-  --_border-right: none;
-  --_border-left: none;
-
-  &[data-with-column-border]:not(:last-child) {
-    --_border-right: rem(1px) solid var(--_table-border-color);
-
-    @mixin rtl {
-      --_border-left: rem(1px) solid var(--_table-border-color);
-      --_border-right: none;
-    }
+  &:where([data-with-column-border]:not(:last-child)) {
+    border-inline-end: rem(1px) solid var(--table-border-color);
   }
 }
 
 .tbody {
-  & > .tr {
-    &:last-of-type {
-      &[data-with-row-border] {
-        --_tr-border-bottom: none;
-      }
+  & :where(tr) {
+    &:where([data-with-row-border]:last-of-type) {
+      border-bottom: none;
     }
 
-    &[data-striped='odd']:nth-of-type(odd) {
-      --_tr-bg: var(--_table-striped-color);
+    &:where([data-striped='odd']:nth-of-type(odd)) {
+      background-color: var(--table-striped-color);
     }
 
-    &[data-striped='even']:nth-of-type(even) {
-      --_tr-bg: var(--_table-striped-color);
+    &:where([data-striped='even']:nth-of-type(even)) {
+      background-color: var(--table-striped-color);
     }
 
     &[data-hover] {
-      --_tr-hover-bg: var(--_table-hover-color);
+      --tr-hover-bg: var(--table-highlight-on-hover-color, var(--table-hover-color));
     }
   }
 }
 
 .thead {
-  position: var(--_thead-position, static);
   top: var(--table-sticky-header-offset, 0);
-  background-color: var(--_thead-bg, transparent);
   z-index: 1;
 
-  &[data-sticky] {
-    --_thead-position: sticky;
-    --_thead-bg: var(--mantine-color-body);
+  &:where([data-sticky]) {
+    position: sticky;
+    background-color: var(--mantine-color-body);
   }
 }
 
 .caption {
   color: var(--mantine-color-dimmed);
-  margin-top: var(--_margin-top, 0);
-  margin-bottom: var(--_margin-bottom, 0);
 
-  &[data-side='top'] {
-    --_margin-bottom: var(--mantine-spacing-xs);
+  &:where([data-side='top']) {
+    margin-bottom: var(--mantine-spacing-xs);
   }
 
-  &[data-side='bottom'] {
-    --_margin-top: var(--mantine-spacing-xs);
+  &:where([data-side='bottom']) {
+    margin-top: var(--mantine-spacing-xs);
   }
 }
 

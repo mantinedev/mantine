@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Tooltip } from './Tooltip';
 
 export default { title: 'Tooltip' };
@@ -53,6 +53,34 @@ export function Multiline() {
       >
         <button type="button">target</button>
       </Tooltip>
+    </div>
+  );
+}
+
+export function MultilineWithJsx() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Tooltip.Floating
+        position="right"
+        label={
+          <>
+            We will attempt to spend the budget according to your allocation for each ad group.{' '}
+            <b>Flexible</b> allocation might cause deviation from your specification, but secure
+            delivery of the overall budget for the campaign.
+            <br />
+            <br />
+            Allocation is disabled if
+            <b> Budget Pacing</b> is turned off for the campaign.
+          </>
+        }
+        w={300}
+        // withArrow
+        // transitionProps={{ duration: 0 }}
+        radius="md"
+        multiline
+      >
+        <button type="button">target</button>
+      </Tooltip.Floating>
     </div>
   );
 }

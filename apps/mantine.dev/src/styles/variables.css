@@ -1,0 +1,6 @@
+body {
+  --docs-header-height: 60px;
+  --docs-navbar-width: 260px;
+  --docs-table-of-contents-width: 260px;
+  --docs-mdx-content-width: 820px;
+}

@@ -1,4 +1,3 @@
-import React from 'react';
 import { BackgroundImage, BackgroundImageProps, Box, Center, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

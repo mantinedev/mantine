@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IconSearch, IconTable } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
+import { Input } from '../Input';
 import { Text } from '../Text';
 import { Tooltip } from '../Tooltip';
 import { Menu } from './Menu';
@@ -10,7 +11,7 @@ export default { title: 'Menu' };
 
 export function DisabledFirstItem() {
   return (
-    <Menu>
+    <Menu trigger="hover">
       <Menu.Target>
         <Button>Toggle menu</Button>
       </Menu.Target>
@@ -190,17 +191,22 @@ export function WithUseDisclosure() {
 
 export function WithKeepMounted() {
   return (
-    <div style={{ padding: 40 }}>
-      <Menu id="new-notification-menu" keepMounted position="bottom-end">
+    <div className="App">
+      <Menu keepMounted>
+        {/* Menu without keepMounted will let you 'TAB' through form-fields */}
+        {/* <Menu> */}
         <Menu.Target>
-          <Button>Open Menu</Button>
+          <Button>Hey</Button>
         </Menu.Target>
         <Menu.Dropdown>
-          <Menu.Item>Menu Item 1</Menu.Item>
-          <Menu.Item>Menu Item 2</Menu.Item>
-          <Menu.Item>Menu Item 3</Menu.Item>
+          <Menu.Item>Baby</Menu.Item>
+          <Menu.Item>Girl</Menu.Item>
         </Menu.Dropdown>
       </Menu>
+      <form>
+        <Input />
+        <Input />
+      </form>
     </div>
   );
 }

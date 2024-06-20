@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { factory, Factory, useProps } from '../../core';
 import { __InputStylesNames } from '../Input';

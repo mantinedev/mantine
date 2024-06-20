@@ -1,0 +1,140 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Vitest);
+
+# Testing with Vitest
+
+This guide will help you setup [Vitest](https://vitest.dev/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) for your project.
+Note that this guide intended for projects that use [Vite](https://vitejs.dev/) as a bundler, if you are using
+other frameworks/bundlers, it is recommended to use [Jest](/guides/jest/) instead.
+
+## Installation
+
+Install vitest and react testing library:
+
+<InstallScript
+  dev
+  packages="vitest jsdom @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event"
+/>
+
+If you want to run tests from your IDE, install one of the [extensions](https://vitest.dev/guide/ide).
+
+## Configuration
+
+Add vitest configuration to your Vite config file:
+
+```tsx
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  // ... rest of your config
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './vitest.setup.mjs',
+  },
+});
+```
+
+Then create `vitest.setup.mjs` file in your project root and add the following code to it:
+
+```tsx
+import '@testing-library/jest-dom/vitest';
+
+import { vi } from 'vitest';
+
+const { getComputedStyle } = window;
+window.getComputedStyle = (elt) => getComputedStyle(elt);
+window.HTMLElement.prototype.scrollIntoView = () => {};
+
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: vi.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  })),
+});
+
+class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+window.ResizeObserver = ResizeObserver;
+```
+
+The code above mocks `window.matchMedia` and `ResizeObserver` APIs that are not available
+in `jsdom` environment but are required by some Mantine components.
+
+Optionally you can add vitest scripts to your `package.json`:
+
+```json
+{
+  "scripts": {
+    "vitest": "vitest run",
+    "vitest:watch": "vitest"
+  }
+}
+```
+
+## Custom render
+
+All Mantine components require [MantineProvider](/theming/mantine-provider/) to be present in the component tree.
+To add [MantineProvider](/theming/mantine-provider/) to the component tree in your tests, create a [custom render](https://testing-library.com/docs/react-testing-library/setup/#custom-render)
+function:
+
+```tsx
+// ./test-utils/render.tsx
+import { render as testingLibraryRender } from '@testing-library/react';
+import { MantineProvider } from '@mantine/core';
+// Import your theme object
+import { theme } from '../src/theme';
+
+export function render(ui: React.ReactNode) {
+  return testingLibraryRender(<>{ui}</>, {
+    wrapper: ({ children }: { children: React.ReactNode }) => (
+      <MantineProvider theme={theme}>{children}</MantineProvider>
+    ),
+  });
+}
+```
+
+It is usually more convenient to export all `@testing-library/*` functions that you are planning to use
+from `./testing-utils/index.ts` file:
+
+```tsx
+import userEvent from '@testing-library/user-event';
+
+export * from '@testing-library/react';
+export { render } from './render';
+export { userEvent };
+```
+
+Then you should import all testing utilities from `./testing-utils` instead of `@testing-library/react`:
+
+```tsx
+import { render, screen } from '../test-utils';
+import { Welcome } from './Welcome';
+
+describe('Welcome component', () => {
+  it('has correct Next.js theming section link', () => {
+    render(<Welcome />);
+    expect(screen.getByText('this guide')).toHaveAttribute(
+      'href',
+      'https://mantine.dev/guides/next/'
+    );
+  });
+});
+```
+
+## Example of a full setup
+
+You can find an example with a full Vitest setup in [mantine-vite-template](https://github.com/mantinedev/vite-template).

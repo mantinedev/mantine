@@ -1,9 +1,8 @@
-import React from 'react';
 import { Fieldset, TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Fieldset } from '@mantine/core';
+import { Fieldset, TextInput } from '@mantine/core';
 
 function Demo() {
   return (

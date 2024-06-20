@@ -15,16 +15,4 @@
 
 .overlay {
   z-index: var(--lo-z-index);
-
-  &[data-dark] {
-    @mixin light {
-      display: none;
-    }
-  }
-
-  &[data-light] {
-    @mixin dark {
-      display: none;
-    }
-  }
 }

@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconXboxX } from '@tabler/icons-react';
 import { CloseButton } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

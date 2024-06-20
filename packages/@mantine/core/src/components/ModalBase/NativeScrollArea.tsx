@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface NativeScrollAreaProps {
   children: React.ReactNode;
 }

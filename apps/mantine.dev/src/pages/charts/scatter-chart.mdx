@@ -1,0 +1,127 @@
+import { ScatterChartDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ScatterChart);
+
+## Usage
+
+<Demo data={ScatterChartDemos.usage} />
+
+## Multiple series
+
+<Demo data={ScatterChartDemos.multipleSeries} />
+
+## Legend
+
+To display chart legend, set `withLegend` prop. When one of the items in the legend
+is hovered, the corresponding data series is highlighted in the chart.
+
+<Demo data={ScatterChartDemos.legend} />
+
+## Legend position
+
+You can pass props down to recharts [Legend](https://recharts.org/en-US/api/Legend)
+component with `legendProps` prop. For example, setting `legendProps={{ verticalAlign: 'bottom', height: 50 }}`
+will render the legend at the bottom of the chart and set its height to 50px.
+
+<Demo data={ScatterChartDemos.legendPosition} />
+
+## X and Y axis props
+
+Use `xAxisProps` and `yAxisProps` to pass props down to recharts [XAxis](https://recharts.org/en-US/api/XAxis)
+and [YAxis](https://recharts.org/en-US/api/YAxis) components. For example, these props
+can be used to change orientation of axis:
+
+<Demo data={ScatterChartDemos.axisProps} />
+
+## Value formatter
+
+To format values in the tooltip and axis ticks, use `valueFormat` prop. It accepts
+a function that takes number value as an argument and returns formatted value or an
+object with `x` and `y` keys to format x and y values separately:
+
+<Demo data={ScatterChartDemos.valueFormatter} />
+
+## Grid and text colors
+
+Use `--chart-grid-color` and `--chart-text-color` to change colors of
+grid lines and text within the chart. With [CSS modules](/styles/css-modules/), you can change colors
+depending on color scheme:
+
+<Demo data={ScatterChartDemos.gridColor} />
+
+If your application has only one color scheme, you can use `gridColor` and `textColor`
+props instead of CSS variables:
+
+```tsx
+import { ScatterChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <ScatterChart
+      h={350}
+      data={data}
+      dataKey={{ x: 'age', y: 'BMI' }}
+      gridColor="gray.5"
+      textColor="gray.9"
+    />
+  );
+}
+```
+
+## Stroke dash array
+
+Set `strokeDasharray` prop to control the stroke dash array of the grid and cursor
+lines. The value represent the lengths of alternating dashes and gaps. For example,
+`strokeDasharray="10 5"` will render a dashed line with 10px dashes and 5px gaps.
+
+<Demo data={ScatterChartDemos.strokeDasharray} />
+
+## Units
+
+Set `unit` prop to render a unit label next to the axis ticks and tooltip values:
+
+<Demo data={ScatterChartDemos.units} />
+
+## Tooltip labels
+
+To customize labels displayed in the tooltip, use `labels` prop:
+
+<Demo data={ScatterChartDemos.labels} />
+
+## Custom tooltip
+
+Use `tooltipProps.content` to pass custom tooltip renderer to recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)
+component:
+
+<Demo data={ScatterChartDemos.customTooltip} />
+
+## Remove tooltip
+
+To remove tooltip, set `withTooltip={false}`. It also removes the cursor line
+and disables interactions with the chart.
+
+<Demo data={ScatterChartDemos.noTooltip} />
+
+## Tooltip animation
+
+By default, tooltip animation is disabled. To enable it, set `tooltipAnimationDuration`
+prop to a number of milliseconds to animate the tooltip position change.
+
+<Demo data={ScatterChartDemos.tooltipAnimation} />
+
+## Customize dots
+
+You can use any shape as a dot by passing props to recharts [Scatter](https://recharts.org/en-US/api/Scatter)
+component:
+
+<Demo data={ScatterChartDemos.dotSize} />
+
+## Reference lines
+
+Use `referenceLines` prop to render reference lines. Reference lines are always
+rendered behind the chart.
+
+<Demo data={ScatterChartDemos.referenceLines} />

@@ -11,6 +11,8 @@ describe('@mantine/core/PinInput/create-pin-array', () => {
     expect(createPinArray(2, 'abcd')).toStrictEqual(['a', 'b']);
     expect(createPinArray(2, 'a')).toStrictEqual(['a', '']);
     expect(createPinArray(4, 'abcd')).toStrictEqual(['a', 'b', 'c', 'd']);
+    expect(createPinArray(5, 'ab de')).toStrictEqual(['a', 'b', '', 'd', 'e']);
+    expect(createPinArray(5, 'abc')).toStrictEqual(['a', 'b', 'c', '', '']);
   });
 
   it('returns empty array if length is less than 1', () => {

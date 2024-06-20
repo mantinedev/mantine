@@ -1,0 +1,40 @@
+import { SpoilerDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Spoiler);
+
+## Usage
+
+Use `Spoiler` to hide long section of content.
+Set `maxHeight` prop to control point at which content will be hidden under spoiler and show/hide control appears.
+If the content height is less than `maxHeight`, the spoiler will just render children.
+
+`hideLabel` and `showLabel` props are required – they are used as spoiler toggle button label in corresponding state.
+
+<Demo data={SpoilerDemos.usage} />
+
+## Transition duration
+
+Control transition duration by setting `transitionDuration` prop (transition-duration CSS property in ms).
+To disable animations, set `transitionDuration={0}`:
+
+<Demo data={SpoilerDemos.transitions} />
+
+## Get control ref
+
+```tsx
+import { useRef } from 'react';
+import { Spoiler } from '@mantine/core';
+
+function Demo() {
+  const spoilerControlRef = useRef<HTMLButtonElement>(null);
+  return (
+    <Spoiler
+      controlRef={spoilerControlRef}
+      hideLabel="Hide"
+      showLabel="Show"
+    />
+  );
+}
+```

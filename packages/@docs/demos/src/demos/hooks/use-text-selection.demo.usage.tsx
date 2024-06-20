@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTextSelection } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 

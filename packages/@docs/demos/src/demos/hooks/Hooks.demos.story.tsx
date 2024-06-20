@@ -267,3 +267,63 @@ export const Demo_useInViewportUsage = {
   name: '⭐ Demo: useInViewportUsage',
   render: renderDemo(demos.useInViewportDemo),
 };
+
+export const Demo_useMutationObserverUsage = {
+  name: '⭐ Demo: useMutationObserverUsage',
+  render: renderDemo(demos.useMutationObserverUsage),
+};
+
+export const Demo_useMutationObserverTarget = {
+  name: '⭐ Demo: useMutationObserverTarget',
+  render: renderDemo(demos.useMutationObserverTarget),
+};
+
+export const Demo_useStateHistoryUsage = {
+  name: '⭐ Demo: useStateHistoryUsage',
+  render: renderDemo(demos.useStateHistoryUsage),
+};
+
+export const Demo_useFetchUsage = {
+  name: '⭐ Demo: useFetchUsage',
+  render: renderDemo(demos.useFetchUsage),
+};
+
+export const Demo_useMapUsage = {
+  name: '⭐ Demo: useMapUsage',
+  render: renderDemo(demos.useMapUsage),
+};
+
+export const Demo_useSetUsage = {
+  name: '⭐ Demo: useSetUsage',
+  render: renderDemo(demos.useSetUsage),
+};
+
+export const Demo_useDebouncedCallbackUsage = {
+  name: '⭐ Demo: useDebouncedCallbackUsage',
+  render: renderDemo(demos.useDebouncedCallbackUsage),
+};
+
+export const Demo_useThrottledStateUsage = {
+  name: '⭐ Demo: useThrottledStateUsage',
+  render: renderDemo(demos.useThrottledStateUsage),
+};
+
+export const Demo_useThrottledValueUsage = {
+  name: '⭐ Demo: useThrottledValueUsage',
+  render: renderDemo(demos.useThrottledValueUsage),
+};
+
+export const Demo_useThrottledCallbackUsage = {
+  name: '⭐ Demo: useThrottledCallbackUsage',
+  render: renderDemo(demos.useThrottledCallbackUsage),
+};
+
+export const Demo_useOrientationUsage = {
+  name: '⭐ Demo: useOrientationUsage',
+  render: renderDemo(demos.useOrientationUsage),
+};
+
+export const Demo_useIsFirstRenderUsage = {
+  name: '⭐ Demo: useIsFirstRenderUsage',
+  render: renderDemo(demos.useIsFirstRenderUsage),
+};

@@ -1,9 +1,8 @@
-import React from 'react';
 import cx from 'clsx';
 import { CheckIcon } from '../../Checkbox';
-import { ScrollArea } from '../../ScrollArea/ScrollArea';
+import { ScrollArea, ScrollAreaProps } from '../../ScrollArea/ScrollArea';
 import { Combobox } from '../Combobox';
-import { ComboboxItem, ComboboxParsedItem } from '../Combobox.types';
+import { ComboboxItem, ComboboxLikeRenderOptionInput, ComboboxParsedItem } from '../Combobox.types';
 import { defaultOptionsFilter, FilterOptionsInput } from './default-options-filter';
 import { isEmptyComboboxData } from './is-empty-combobox-data';
 import { isOptionsGroup } from './is-options-group';
@@ -25,16 +24,33 @@ interface OptionProps {
   value?: string | string[] | null;
   checkIconPosition?: 'left' | 'right';
   unstyled: boolean | undefined;
+  renderOption?: (input: ComboboxLikeRenderOptionInput<any>) => React.ReactNode;
 }
 
 function isValueChecked(value: string | string[] | undefined | null, optionValue: string) {
   return Array.isArray(value) ? value.includes(optionValue) : value === optionValue;
 }
 
-function Option({ data, withCheckIcon, value, checkIconPosition, unstyled }: OptionProps) {
+function Option({
+  data,
+  withCheckIcon,
+  value,
+  checkIconPosition,
+  unstyled,
+  renderOption,
+}: OptionProps) {
   if (!isOptionsGroup(data)) {
-    const check = withCheckIcon && isValueChecked(value, data.value) && (
+    const checked = isValueChecked(value, data.value);
+    const check = withCheckIcon && checked && (
       <CheckIcon className={classes.optionsDropdownCheckIcon} />
+    );
+
+    const defaultContent = (
+      <>
+        {checkIconPosition === 'left' && check}
+        <span>{data.label}</span>
+        {checkIconPosition === 'right' && check}
+      </>
     );
 
     return (
@@ -43,12 +59,13 @@ function Option({ data, withCheckIcon, value, checkIconPosition, unstyled }: Opt
         disabled={data.disabled}
         className={cx({ [classes.optionsDropdownOption]: !unstyled })}
         data-reverse={checkIconPosition === 'right' || undefined}
-        data-checked={isValueChecked(value, data.value) || undefined}
-        aria-selected={isValueChecked(value, data.value)}
+        data-checked={checked || undefined}
+        aria-selected={checked}
+        active={checked}
       >
-        {checkIconPosition === 'left' && check}
-        <span>{data.label}</span>
-        {checkIconPosition === 'right' && check}
+        {typeof renderOption === 'function'
+          ? renderOption({ option: data, checked })
+          : defaultContent}
       </Combobox.Option>
     );
   }
@@ -61,6 +78,7 @@ function Option({ data, withCheckIcon, value, checkIconPosition, unstyled }: Opt
       unstyled={unstyled}
       withCheckIcon={withCheckIcon}
       checkIconPosition={checkIconPosition}
+      renderOption={renderOption}
     />
   ));
 
@@ -82,7 +100,10 @@ export interface OptionsDropdownProps {
   checkIconPosition?: 'left' | 'right';
   nothingFoundMessage?: React.ReactNode;
   unstyled: boolean | undefined;
-  labelId: string;
+  labelId: string | undefined;
+  'aria-label': string | undefined;
+  renderOption?: (input: ComboboxLikeRenderOptionInput<any>) => React.ReactNode;
+  scrollAreaProps: ScrollAreaProps | undefined;
 }
 
 export function OptionsDropdown({
@@ -101,6 +122,9 @@ export function OptionsDropdown({
   nothingFoundMessage,
   unstyled,
   labelId,
+  renderOption,
+  scrollAreaProps,
+  'aria-label': ariaLabel,
 }: OptionsDropdownProps) {
   validateOptions(data);
 
@@ -122,19 +146,20 @@ export function OptionsDropdown({
       value={value}
       checkIconPosition={checkIconPosition}
       unstyled={unstyled}
+      renderOption={renderOption}
     />
   ));
 
   return (
     <Combobox.Dropdown hidden={hidden || (hiddenWhenEmpty && isEmpty)}>
-      <Combobox.Options labelledBy={labelId}>
+      <Combobox.Options labelledBy={labelId} aria-label={ariaLabel}>
         {withScrollArea ? (
           <ScrollArea.Autosize
             mah={maxDropdownHeight ?? 220}
             type="scroll"
-            scrollbarSize="var(--_combobox-padding)"
+            scrollbarSize="var(--combobox-padding)"
             offsetScrollbars="y"
-            className={classes.optionsDropdownScrollArea}
+            {...scrollAreaProps}
           >
             {options}
           </ScrollArea.Autosize>

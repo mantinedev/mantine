@@ -1,4 +1,5 @@
 export type GetInputPropsType = 'input' | 'checkbox';
+export type FormMode = 'controlled' | 'uncontrolled';
 
 export type FormStatus = Record<string, boolean>;
 
@@ -21,17 +22,18 @@ export interface ReorderPayload {
 
 type Rule<Value, Values> = (value: Value, values: Values, path: string) => React.ReactNode;
 
-export type FormRule<Value, Values> = NonNullable<Value> extends Array<infer ListValue>
-  ?
-      | Partial<{
-          [Key in keyof ListValue]: ListValue[Key] extends Array<infer NestedListItem>
-            ? FormRulesRecord<NestedListItem, Values> | Rule<ListValue[Key], Values>
-            : FormRulesRecord<ListValue[Key], Values> | Rule<ListValue[Key], Values>;
-        }>
-      | Rule<Value, Values>
-  : NonNullable<Value> extends Record<string, any>
-    ? FormRulesRecord<Value, Values> | Rule<Value, Values>
-    : Rule<Value, Values>;
+export type FormRule<Value, Values> =
+  NonNullable<Value> extends Array<infer ListValue>
+    ?
+        | Partial<{
+            [Key in keyof ListValue]: ListValue[Key] extends Array<infer NestedListItem>
+              ? FormRulesRecord<NestedListItem, Values> | Rule<ListValue[Key], Values>
+              : FormRulesRecord<ListValue[Key], Values> | Rule<ListValue[Key], Values>;
+          }>
+        | Rule<Value, Values>
+    : NonNullable<Value> extends Record<string, any>
+      ? FormRulesRecord<Value, Values> | Rule<Value, Values>
+      : Rule<Value, Values>;
 
 export type FormRulesRecord<Values, InitValues = Values> = Partial<{
   [Key in keyof Values]: FormRule<Values[Key], InitValues>;
@@ -74,6 +76,7 @@ export interface GetInputPropsOptions {
 export interface GetInputPropsReturnType {
   onChange: any;
   value?: any;
+  defaultValue?: any;
   checked?: any;
   error?: any;
   onFocus?: any;
@@ -85,9 +88,20 @@ export type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
   options?: GetInputPropsOptions
 ) => GetInputPropsReturnType;
 
+export type PathValue<T, P extends LooseKeys<T>> = P extends `${infer K}.${infer Rest}`
+  ? K extends keyof T
+    ? PathValue<T[K], Rest>
+    : unknown
+  : P extends keyof T
+    ? T[P]
+    : unknown;
+
 export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
-  value: Field extends keyof Values ? Values[Field] : unknown
+  value:
+    | PathValue<Values, Field>
+    | ((prevValue: PathValue<Values, Field>) => PathValue<Values, Field>),
+  options?: { forceUpdate: boolean }
 ) => void;
 
 export type ClearFieldError = (path: unknown) => void;
@@ -102,6 +116,16 @@ export type ValidateField<Values> = <Field extends LooseKeys<Values>>(
 export type SetFieldError<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   error: React.ReactNode
+) => void;
+
+export type SetFieldTouched<Values> = <Field extends LooseKeys<Values>>(
+  path: Field,
+  touched: boolean
+) => void;
+
+export type SetFieldDirty<Values> = <Field extends LooseKeys<Values>>(
+  path: Field,
+  dirty: boolean
 ) => void;
 
 export type ReorderListItem<Values> = <Field extends LooseKeys<Values>>(
@@ -122,6 +146,7 @@ export type RemoveListItem<Values> = <Field extends LooseKeys<Values>>(
 
 export type GetFieldStatus<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
 export type ResetStatus = () => void;
+export type GetStatus = () => FormStatus;
 
 export type ResetDirty<Values> = (values?: Values) => void;
 export type IsValid<Values> = <Field extends LooseKeys<Values>>(path?: Field) => boolean;
@@ -129,11 +154,30 @@ export type Initialize<Values> = (values: Values) => void;
 
 export type _TransformValues<Values> = (values: Values) => unknown;
 
+export type FormFieldSubscriber<Values, Field extends LooseKeys<Values>> = (input: {
+  previousValue: PathValue<Values, Field>;
+  value: PathValue<Values, Field>;
+  touched: boolean;
+  dirty: boolean;
+}) => void;
+
+export type Watch<Values> = <Field extends LooseKeys<Values>>(
+  path: Field,
+  subscriber: FormFieldSubscriber<Values, Field>
+) => void;
+
+export type Key<Values> = <Field extends LooseKeys<Values>>(path: Field) => string;
+
+export type GetInputNode<Values> = <NodeType extends HTMLElement, Field extends LooseKeys<Values>>(
+  path: Field
+) => NodeType | null;
+
 export interface UseFormInput<
   Values,
   TransformValues extends _TransformValues<Values> = (values: Values) => Values,
 > {
   name?: string;
+  mode?: FormMode;
   initialValues?: Values;
   initialErrors?: FormErrors;
   initialTouched?: FormStatus;
@@ -184,6 +228,12 @@ export interface UseFormReturnType<
   resetDirty: ResetDirty<Values>;
   isValid: IsValid<Values>;
   getTransformedValues: GetTransformedValues<Values, TransformValues>;
+  getValues: () => Values;
+  getTouched: GetStatus;
+  getDirty: GetStatus;
+  watch: Watch<Values>;
+  key: Key<Values>;
+  getInputNode: GetInputNode<Values>;
 }
 
 export type UseForm<

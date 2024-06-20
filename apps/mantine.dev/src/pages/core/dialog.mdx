@@ -1,0 +1,46 @@
+import { DialogDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Dialog);
+
+## Usage
+
+`Dialog` is a simplified version of [Modal](/core/modal/) component.
+It does not include most of accessibility and usability [Modal](/core/modal/) features:
+
+- Focus trap is not available
+- Does not close on click outside
+- Does not have overlay
+
+Use `Dialog` to attract attention with not important information or action,
+for example, you can create an email subscription form:
+
+<Demo data={DialogDemos.usage} />
+
+## Change position
+
+`Dialog` is rendered in [Portal](/core/portal/) and has fixed position, set `position` prop to control dialog's position:
+
+```tsx
+import { Dialog } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Dialog position={{ top: 20, left: 20 }} opened>
+        Dialog in top left corner
+      </Dialog>
+      <Dialog position={{ bottom: 20, left: 20 }} opened>
+        Dialog in bottom left corner
+      </Dialog>
+    </>
+  );
+}
+```
+
+## Accessibility
+
+`Dialog` is not accessible and most likely will not be announced by screen reader,
+make sure you do not put any important information. In most cases it would be better
+to select [Modal](/core/modal/), [Drawer](/core/drawer/) or [Notifications](/x/notifications/).

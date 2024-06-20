@@ -25,12 +25,6 @@
   width: var(--col-width);
   max-width: var(--col-max-width);
   flex-grow: var(--col-flex-grow);
-  margin-left: var(--col-offset);
-  margin-right: 0;
+  margin-inline-start: var(--col-offset);
   padding: var(--grid-col-padding);
-
-  @mixin where-rtl {
-    margin-left: 0;
-    margin-right: var(--col-offset);
-  }
 }

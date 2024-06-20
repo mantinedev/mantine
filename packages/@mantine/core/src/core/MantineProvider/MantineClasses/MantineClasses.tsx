@@ -1,4 +1,3 @@
-import React from 'react';
 import { em, keys, px } from '../../utils';
 import { useMantineStyleNonce } from '../Mantine.context';
 import { useMantineTheme } from '../MantineThemeProvider';

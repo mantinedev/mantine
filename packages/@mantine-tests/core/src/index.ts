@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { axe } from './axe';
 import { itConnectsLabelAndInput } from './inputs/it-connects-label-and-input';
-import { itHandlesCheckboxState } from './inputs/it-handles-checkbox-state';
+import { itHandlesSwitchCheckboxState } from './inputs/it-handles-switch-checkbox-state';
 import { itSupportsInputAsterisk } from './inputs/it-supports-input-asterisk';
 import { itSupportsInputContainer } from './inputs/it-supports-input-container';
 import { itSupportsInputProps } from './inputs/it-supports-input-props';
@@ -73,7 +73,7 @@ export const tests = {
   itSupportsInputAsterisk,
   itSupportsInputWrapperOrder,
   itSupportsInputWrapperElements,
-  itHandlesCheckboxState,
+  itHandlesSwitchCheckboxState,
   itConnectsLabelAndInput,
 
   itSupportsSystemProps,

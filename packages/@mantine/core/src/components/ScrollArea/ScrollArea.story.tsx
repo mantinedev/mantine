@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ScrollArea } from './ScrollArea';
 
 export default { title: 'ScrollArea' };
@@ -16,8 +16,18 @@ const content = Array(10)
 export function Usage() {
   return (
     <div style={{ background: 'pink', maxWidth: 300 }}>
-      <ScrollArea h={200} type="always" offsetScrollbars scrollbars="y" bg="red" pb={0}>
+      <ScrollArea h={200} scrollbars="y">
         <div style={{ width: 600 }}>{content}</div>
+      </ScrollArea>
+    </div>
+  );
+}
+
+export function OffsetScrollbars() {
+  return (
+    <div style={{ background: 'pink', maxWidth: 300 }}>
+      <ScrollArea h={200} type="always" offsetScrollbars>
+        <div style={{ background: 'pink' }}>{content}</div>
       </ScrollArea>
     </div>
   );

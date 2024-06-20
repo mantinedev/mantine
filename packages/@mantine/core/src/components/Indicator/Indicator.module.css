@@ -1,17 +1,17 @@
 @keyframes processing {
   0% {
     opacity: 0.6;
-    box-shadow: 0 0 rem(0.5px) 0 var(--indicator-color);
+    transform: scale(0);
   }
 
   100% {
     opacity: 0;
-    box-shadow: 0 0 rem(0.5px) rem(4.4px) var(--indicator-color);
+    transform: scale(2.8);
   }
 }
 
 .root {
-  --indicator-size: rem(10px);
+  --indicator-size: 10px;
   --indicator-color: var(--mantine-primary-color-filled);
 
   position: relative;
@@ -31,7 +31,7 @@
   transform: translate(var(--indicator-translate-x), var(--indicator-translate-y));
   min-width: var(--indicator-size);
   height: var(--indicator-size);
-  border-radius: var(--indicator-radius, rem(1000px));
+  border-radius: var(--indicator-radius, 1000rem);
   z-index: var(--indicator-z-index, 200);
   display: flex;
   align-items: center;
@@ -46,17 +46,16 @@
     position: absolute;
     inset: 0;
     background-color: var(--indicator-color);
-    border-radius: var(--indicator-radius, rem(1000px));
+    border-radius: var(--indicator-radius, 1000rem);
     z-index: -1;
   }
 
   &:where([data-with-label]) {
-    padding-left: calc(var(--mantine-spacing-xs) / 2);
-    padding-right: calc(var(--mantine-spacing-xs) / 2);
+    padding-inline: calc(var(--mantine-spacing-xs) / 2);
   }
 
   &:where([data-with-border]) {
-    border: rem(2px) solid var(--mantine-color-body);
+    border: 2px solid var(--mantine-color-body);
   }
 
   &[data-processing] {

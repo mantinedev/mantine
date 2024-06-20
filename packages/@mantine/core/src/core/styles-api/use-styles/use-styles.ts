@@ -1,12 +1,18 @@
 import { CSSProperties, useCallback, useMemo } from 'react';
 import type { MantineStyleProp } from '../../Box';
 import { FactoryPayload } from '../../factory';
-import { useMantineClassNamesPrefix, useMantineTheme } from '../../MantineProvider';
+import {
+  useMantineClassNamesPrefix,
+  useMantineIsHeadless,
+  useMantineTheme,
+  useMantineWithStaticClasses,
+} from '../../MantineProvider';
 import { useMemoObject } from '../../utils/use-memo-object/use-memo-object';
 import { PartialVarsResolver, VarsResolver } from '../create-vars-resolver/create-vars-resolver';
 import { ClassNames, ClassNamesArray, GetStylesApiOptions, Styles } from '../styles-api.types';
 import { getClassName } from './get-class-name/get-class-name';
 import { getStyle } from './get-style/get-style';
+import { useStylesTransform } from './use-transformed-styles';
 
 export interface UseStylesInput<Payload extends FactoryPayload> {
   name: string | (string | undefined)[];
@@ -59,10 +65,17 @@ export function useStyles<Payload extends FactoryPayload>({
 }: UseStylesInput<Payload>): GetStylesApi<Payload> {
   const theme = useMantineTheme();
   const classNamesPrefix = useMantineClassNamesPrefix();
+  const withStaticClasses = useMantineWithStaticClasses();
+  const headless = useMantineIsHeadless();
   const themeName = useMemo(
     () => (Array.isArray(name) ? name : [name]).filter((n) => n) as string[],
     [String(name)]
   );
+  const { withStylesTransform, getTransformedStyles } = useStylesTransform({
+    props,
+    stylesCtx,
+    themeName,
+  });
   const memoizedProps = useMemoObject(omitObjectProps(props));
 
   return useCallback(
@@ -80,6 +93,9 @@ export function useStyles<Payload extends FactoryPayload>({
         rootSelector,
         props: memoizedProps,
         stylesCtx,
+        withStaticClasses,
+        headless,
+        transformedStyles: getTransformedStyles([options?.styles, styles]),
       }),
 
       style: getStyle({
@@ -94,6 +110,8 @@ export function useStyles<Payload extends FactoryPayload>({
         style,
         vars,
         varsResolver,
+        headless,
+        withStylesTransform,
       }),
     }),
     [
@@ -111,6 +129,8 @@ export function useStyles<Payload extends FactoryPayload>({
       style,
       vars,
       varsResolver,
+      headless,
+      withStylesTransform,
     ]
   );
 }

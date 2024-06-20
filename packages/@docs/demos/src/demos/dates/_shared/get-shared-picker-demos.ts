@@ -1,4 +1,3 @@
-import React from 'react';
 import { getPickerDeselectDemo } from './picker-deselect.demo';
 import { getPickerMultipleDemo } from './picker-multiple.demo';
 import { getPickerNumberOfColumnsDemo } from './picker-numberOfColumns.demo';

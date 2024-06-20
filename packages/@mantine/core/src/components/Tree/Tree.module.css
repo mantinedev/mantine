@@ -1,0 +1,40 @@
+.root {
+  --level-offset: var(--mantine-spacing-lg);
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+.subtree {
+  margin: 0;
+  padding: 0;
+}
+
+.node {
+  cursor: pointer;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+
+  &:focus-visible {
+    > .label {
+      outline: 2px solid var(--mantine-primary-color-filled);
+      outline-offset: 2px;
+    }
+  }
+}
+
+.label {
+  padding-inline-start: var(--label-offset);
+
+  &:where([data-selected]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-1);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+  }
+}

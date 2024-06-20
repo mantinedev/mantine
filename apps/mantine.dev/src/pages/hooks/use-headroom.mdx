@@ -1,0 +1,34 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useHeadroom);
+
+## Usage
+
+Use `use-headroom` hook to create headers that are hidden after user scrolls past the given distance in px.
+The hook returns a boolean value that determines whether the element should be pinned or hidden.
+Hook returns `true` when the current scroll position is less than the specified `fixedAt` value and
+after user scrolled up.
+
+<Demo data={HooksDemos.useHeadroomDemo} />
+
+## Definition
+
+```tsx
+interface UseHeadroomInput {
+  /** Number in px at which element should be fixed */
+  fixedAt?: number;
+
+  /** Called when element is pinned */
+  onPin?: () => void;
+
+  /** Called when element is at fixed position */
+  onFix?: () => void;
+
+  /** Called when element is unpinned */
+  onRelease?: () => void;
+}
+
+function useHeadroom(input?: UseHeadroomInput): boolean;
+```

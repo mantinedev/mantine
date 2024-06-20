@@ -1,66 +1,64 @@
-import React from 'react';
-import { Box, Text, TextInput } from '@mantine/core';
+/* eslint-disable no-console */
+
+import { Button, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useForm } from '@mantine/form';
-import { TextInput, Text, Box } from '@mantine/core';
+import { TextInput, Button } from '@mantine/core';
 
 function Demo() {
-  const form = useForm({ initialValues: { text: 'initial value' } });
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { text: 'initial value' },
+  });
 
   return (
-    <Box maw={400} mx="auto">
+    <div>
       <TextInput
         {...form.getInputProps('text')}
+        key={form.key('text')}
         label="Touched/dirty demo"
         placeholder="Touched/dirty demo"
       />
 
-      <Text size="sm" mt="sm">
-        Touched:{' '}
-        <Text span c={form.isTouched('text') ? 'blue' : 'red'}>
-          {form.isTouched('text') ? 'touched' : 'not touched'}
-        </Text>
-      </Text>
-
-      <Text size="sm">
-        Dirty:{' '}
-        <Text span c={form.isDirty('text') ? 'blue' : 'red'}>
-          {form.isDirty('text') ? 'dirty' : 'not dirty'}
-        </Text>
-      </Text>
-    </Box>
+      <Button
+        onClick={() =>
+          console.log({ touched: form.isTouched('text'), dirty: form.isDirty('text') })
+        }
+      >
+        Log status to console
+      </Button>
+    </div>
   );
 }
 `;
 
 function Demo() {
-  const form = useForm({ initialValues: { text: 'initial value' } });
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { text: 'initial value' },
+  });
 
   return (
-    <Box maw={400} mx="auto">
+    <div>
       <TextInput
         {...form.getInputProps('text')}
+        key={form.key('text')}
         label="Touched/dirty demo"
         placeholder="Touched/dirty demo"
       />
 
-      <Text size="sm" mt="sm">
-        Touched:{' '}
-        <Text span c={form.isTouched('text') ? 'blue' : 'red'}>
-          {form.isTouched('text') ? 'touched' : 'not touched'}
-        </Text>
-      </Text>
-
-      <Text size="sm">
-        Dirty:{' '}
-        <Text span c={form.isDirty('text') ? 'blue' : 'red'}>
-          {form.isDirty('text') ? 'dirty' : 'not dirty'}
-        </Text>
-      </Text>
-    </Box>
+      <Button
+        mt="md"
+        onClick={() =>
+          console.log({ touched: form.isTouched('text'), dirty: form.isDirty('text') })
+        }
+      >
+        Log status to console
+      </Button>
+    </div>
   );
 }
 
@@ -68,4 +66,6 @@ export const status: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  centered: true,
+  maxWidth: 340,
 };

@@ -1,10 +1,8 @@
-import { useEffect, useLayoutEffect } from 'react';
+import { useIsomorphicEffect } from '@mantine/hooks';
 
 function dispatchEvent<T>(type: string, detail?: T) {
   window.dispatchEvent(new CustomEvent(type, { detail }));
 }
-
-const useIsomorphicEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 export function createUseExternalEvents<Handlers extends Record<string, (detail: any) => void>>(
   prefix: string

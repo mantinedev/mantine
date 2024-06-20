@@ -1,7 +1,7 @@
-import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
 import { ScrollArea } from '../ScrollArea';
+import { Select } from '../Select';
 import { Tabs } from '../Tabs';
 import { Modal } from './Modal';
 
@@ -31,6 +31,18 @@ export function Usage() {
       <Button onClick={open}>Open modal</Button>
       <Modal opened={opened} onClose={close} title="Just a Modal" zIndex={73812}>
         <input data-autofocus />
+      </Modal>
+    </div>
+  );
+}
+
+export function WithSelect() {
+  const [opened, { open, close }] = useDisclosure(true);
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={open}>Open modal</Button>
+      <Modal opened={opened} onClose={close} title="Just a Modal">
+        <Select data={['React', 'Angular']} searchable />
       </Modal>
     </div>
   );
@@ -150,6 +162,37 @@ export function WithScroll() {
   return (
     <div style={{ padding: 40 }}>
       <Modal opened onClose={() => {}} title="Just a Modal" size="md">
+        {content}
+      </Modal>
+    </div>
+  );
+}
+
+export function FullscreenWithScroll() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Modal opened onClose={() => {}} title="Just a Modal" size="md" fullScreen>
+        {content}
+        {content}
+        {content}
+      </Modal>
+    </div>
+  );
+}
+
+export function FullscreenWithScrollArea() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Modal
+        opened
+        onClose={() => {}}
+        title="Just a Modal"
+        size="md"
+        fullScreen
+        scrollAreaComponent={ScrollArea.Autosize}
+      >
+        {content}
+        {content}
         {content}
       </Modal>
     </div>

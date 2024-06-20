@@ -1,0 +1,29 @@
+.text {
+  & code {
+    font-family: var(--mantine-font-family-monospace);
+    line-height: var(--mantine-line-height);
+    padding: 2px calc(var(--mantine-spacing-xs) / 2);
+    border-radius: var(--mantine-radius-sm);
+    font-size: var(--mantine-font-size-xs);
+    margin: 0;
+
+    @mixin light {
+      background-color: var(--mantine-color-gray-1);
+      color: var(--mantine-color-black);
+    }
+
+    @mixin dark {
+      background-color: var(--mantine-color-dark-5);
+      color: var(--mantine-color-white);
+    }
+  }
+
+  & a {
+    color: var(--mantine-color-anchor);
+    text-decoration: none;
+
+    @mixin hover {
+      text-decoration: underline;
+    }
+  }
+}

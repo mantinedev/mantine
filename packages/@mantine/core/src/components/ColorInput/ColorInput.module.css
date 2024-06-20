@@ -1,21 +1,21 @@
 .eyeDropperIcon {
-  --ci-eye-dropper-icon-size-xs: rem(14px);
-  --ci-eye-dropper-icon-size-sm: rem(16px);
-  --ci-eye-dropper-icon-size-md: rem(18px);
-  --ci-eye-dropper-icon-size-lg: rem(20px);
-  --ci-eye-dropper-icon-size-xl: rem(22px);
+  --ci-eye-dropper-icon-size-xs: 14px;
+  --ci-eye-dropper-icon-size-sm: 16px;
+  --ci-eye-dropper-icon-size-md: 18px;
+  --ci-eye-dropper-icon-size-lg: 20px;
+  --ci-eye-dropper-icon-size-xl: 22px;
   --ci-eye-dropper-icon-size: var(--ci-eye-dropper-icon-size-sm);
 }
 
 .colorPreview {
-  --ci-preview-size-xs: rem(16px);
-  --ci-preview-size-sm: rem(18px);
-  --ci-preview-size-md: rem(22px);
-  --ci-preview-size-lg: rem(28px);
-  --ci-preview-size-xl: rem(36px);
+  --ci-preview-size-xs: 16px;
+  --ci-preview-size-sm: 18px;
+  --ci-preview-size-md: 22px;
+  --ci-preview-size-lg: 28px;
+  --ci-preview-size-xl: 36px;
   --ci-preview-size: var(--ci-preview-size-sm);
 }
 
 .dropdown {
-  padding: rem(8px);
+  padding: 8px;
 }

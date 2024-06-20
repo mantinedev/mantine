@@ -1,4 +1,3 @@
-import React from 'react';
 import { factory, Factory, MantineSize, useProps } from '../../core';
 import { Group } from '../Group/Group';
 import { PaginationIcon } from './Pagination.icons';

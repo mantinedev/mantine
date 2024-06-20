@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconInfoCircle } from '@tabler/icons-react';
 import { rem } from '../../core';
 import { Blockquote } from './Blockquote';

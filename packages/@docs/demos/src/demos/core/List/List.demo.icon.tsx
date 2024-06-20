@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconCircleCheck, IconCircleDashed } from '@tabler/icons-react';
 import { List, rem, ThemeIcon } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   BoxProps,
@@ -47,4 +46,4 @@ export const CarouselSlide = factory<CarouselSlideFactory>((props, ref) => {
 });
 
 CarouselSlide.classes = classes;
-CarouselSlide.displayName = '@mantine/core/CarouselSlide';
+CarouselSlide.displayName = '@mantine/carousel/CarouselSlide';

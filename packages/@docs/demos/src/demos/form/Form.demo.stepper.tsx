@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Code, Group, PasswordInput, Stepper, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
@@ -12,6 +12,7 @@ function Demo() {
   const [active, setActive] = useState(0);
 
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       username: '',
       password: '',
@@ -58,33 +59,56 @@ function Demo() {
     <>
       <Stepper active={active}>
         <Stepper.Step label="First step" description="Profile settings">
-          <TextInput label="Username" placeholder="Username" {...form.getInputProps('username')} />
+          <TextInput
+            label="Username"
+            placeholder="Username"
+            key={form.key('username')}
+            {...form.getInputProps('username')}
+          />
           <PasswordInput
             mt="md"
             label="Password"
             placeholder="Password"
+            key={form.key('password')}
             {...form.getInputProps('password')}
           />
         </Stepper.Step>
 
         <Stepper.Step label="Second step" description="Personal information">
-          <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-          <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+          <TextInput
+            label="Name"
+            placeholder="Name"
+            key={form.key('name')}
+            {...form.getInputProps('name')}
+          />
+          <TextInput
+            mt="md"
+            label="Email"
+            placeholder="Email"
+            key={form.key('email')}
+            {...form.getInputProps('email')}
+          />
         </Stepper.Step>
 
         <Stepper.Step label="Final step" description="Social media">
-          <TextInput label="Website" placeholder="Website" {...form.getInputProps('website')} />
+          <TextInput
+            label="Website"
+            placeholder="Website"
+            key={form.key('website')}
+            {...form.getInputProps('website')}
+          />
           <TextInput
             mt="md"
             label="GitHub"
             placeholder="GitHub"
+            key={form.key('github')}
             {...form.getInputProps('github')}
           />
         </Stepper.Step>
         <Stepper.Completed>
           Completed! Form values:
           <Code block mt="xl">
-            {JSON.stringify(form.values, null, 2)}
+            {JSON.stringify(form.getValues(), null, 2)}
           </Code>
         </Stepper.Completed>
       </Stepper>
@@ -106,6 +130,7 @@ function Demo() {
   const [active, setActive] = useState(0);
 
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       username: '',
       password: '',
@@ -152,33 +177,56 @@ function Demo() {
     <>
       <Stepper active={active}>
         <Stepper.Step label="First step" description="Profile settings">
-          <TextInput label="Username" placeholder="Username" {...form.getInputProps('username')} />
+          <TextInput
+            label="Username"
+            placeholder="Username"
+            key={form.key('username')}
+            {...form.getInputProps('username')}
+          />
           <PasswordInput
             mt="md"
             label="Password"
             placeholder="Password"
+            key={form.key('password')}
             {...form.getInputProps('password')}
           />
         </Stepper.Step>
 
         <Stepper.Step label="Second step" description="Personal information">
-          <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-          <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+          <TextInput
+            label="Name"
+            placeholder="Name"
+            key={form.key('name')}
+            {...form.getInputProps('name')}
+          />
+          <TextInput
+            mt="md"
+            label="Email"
+            placeholder="Email"
+            key={form.key('email')}
+            {...form.getInputProps('email')}
+          />
         </Stepper.Step>
 
         <Stepper.Step label="Final step" description="Social media">
-          <TextInput label="Website" placeholder="Website" {...form.getInputProps('website')} />
+          <TextInput
+            label="Website"
+            placeholder="Website"
+            key={form.key('website')}
+            {...form.getInputProps('website')}
+          />
           <TextInput
             mt="md"
             label="GitHub"
             placeholder="GitHub"
+            key={form.key('github')}
             {...form.getInputProps('github')}
           />
         </Stepper.Step>
         <Stepper.Completed>
           Completed! Form values:
           <Code block mt="xl">
-            {JSON.stringify(form.values, null, 2)}
+            {JSON.stringify(form.getValues(), null, 2)}
           </Code>
         </Stepper.Completed>
       </Stepper>

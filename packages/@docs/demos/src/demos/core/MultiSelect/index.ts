@@ -24,3 +24,4 @@ export { dropdownPadding } from './MultiSelect.demo.dropdownPadding';
 export { dropdownShadow } from './MultiSelect.demo.dropdownShadow';
 export { withinPopover } from './MultiSelect.demo.withinPopover';
 export { dropdownOffset } from './MultiSelect.demo.dropdownOffset';
+export { renderOption } from './MultiSelect.demo.renderOption';

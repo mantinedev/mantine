@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box } from '../../core';
 import { Center } from '../Center';
 import { Group } from '../Group';

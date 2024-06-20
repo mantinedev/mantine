@@ -1,0 +1,99 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Remix);
+
+# Usage with Remix
+
+<GetTemplates type="remix" />
+
+## Generate new application
+
+Follow [Remix getting started guide](https://remix.run/) guide to create new Remix application:
+
+```bash
+npx create-remix@latest --template remix-run/remix/templates/vite
+```
+
+## Installation
+
+<PackagesInstallation />
+
+## PostCSS setup
+
+Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
+
+<InstallScript
+  packages="postcss postcss-preset-mantine postcss-simple-vars"
+  dev
+/>
+
+Create `postcss.config.cjs` file at the root of your application with the following content:
+
+```js
+module.exports = {
+  plugins: {
+    'postcss-preset-mantine': {},
+    'postcss-simple-vars': {
+      variables: {
+        'mantine-breakpoint-xs': '36em',
+        'mantine-breakpoint-sm': '48em',
+        'mantine-breakpoint-md': '62em',
+        'mantine-breakpoint-lg': '75em',
+        'mantine-breakpoint-xl': '88em',
+      },
+    },
+  },
+};
+```
+
+## Setup
+
+Add styles imports, [MantineProvider](/theming/mantine-provider/) and [ColorSchemeScript](/theming/color-schemes) to `app/root.tsx`:
+
+```tsx
+// Import styles of packages that you've installed.
+// All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
+
+import {
+  Links,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+} from '@remix-run/react';
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+
+export function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        />
+        <Meta />
+        <Links />
+        <ColorSchemeScript />
+      </head>
+      <body>
+        <MantineProvider>{children}</MantineProvider>
+        <ScrollRestoration />
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+
+export default function App() {
+  return <Outlet />;
+}
+```
+
+All set! Start development server:
+
+```bash
+npm run dev
+```

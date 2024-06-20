@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import React from 'react';
 import {
   BoxProps,
   createVarsResolver,
@@ -43,7 +42,7 @@ export interface DayProps extends BoxProps, StylesApiProps<DayFactory>, ElementP
   /** Determines whether the day is selected, `false` by default */
   selected?: boolean;
 
-  /** Determines whether the day should not de displayed, `false` by default */
+  /** Determines whether the day should not be displayed, `false` by default */
   hidden?: boolean;
 
   /** Determines whether the day is selected in range, `false` by default */

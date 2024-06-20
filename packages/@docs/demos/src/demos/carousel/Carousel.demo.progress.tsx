@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Carousel, Embla } from '@mantine/carousel';
 import { Progress } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

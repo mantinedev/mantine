@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import type { EmblaCarouselType } from 'embla-carousel-react';
 import { Button, Modal } from '@mantine/core';
@@ -19,7 +19,7 @@ const slides = (
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 500 }}>
-      <Carousel slideSize={70} slideGap="md" height={200}>
+      <Carousel slideSize={70} slideGap="md" height={200} withIndicators>
         {slides}
       </Carousel>
     </div>

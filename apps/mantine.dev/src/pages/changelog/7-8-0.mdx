@@ -1,0 +1,210 @@
+import { FormDemos, HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog780);
+
+## Auto convert px to rem in .css files
+
+Start from version `1.14.4` [postcss-preset-mantine](/styles/postcss-preset)
+supports `autoRem` option that can be used to automatically convert all `px` values
+to `rem` units in `.css` files.
+
+```js
+module.exports = {
+  plugins: {
+    'postcss-preset-mantine': {
+      autoRem: true,
+    },
+  },
+};
+```
+
+This option works similar to `rem` function. The following code:
+
+```scss
+.demo {
+  font-size: 16px;
+
+  @media (min-width: 320px) {
+    font-size: 32px;
+  }
+}
+```
+
+Will be transformed to:
+
+```scss
+.demo {
+  font-size: calc(1rem * var(--mantine-scale));
+
+  @media (min-width: 320px) {
+    font-size: calc(2rem * var(--mantine-scale));
+  }
+}
+```
+
+Note that `autoRem` converts only CSS properties, values in `@media` queries are
+not converted automatically – you still need to use `em` function to convert them.
+
+`autoRem` option does not convert values in the following cases:
+
+- Values in `calc()`, `var()`, `clamp()` and `url()` functions
+- Values in `content` property
+- Values that contain `rgb()`, `rgba()`, `hsl()`, `hsla()` colors
+
+If you want to convert above values to rem units, use `rem` function manually.
+
+## Uncontrolled form mode
+
+[useForm](/form/use-form) hook now supports [uncontrolled mode](/form/uncontrolled).
+Uncontrolled mode provides a significant performance improvement by reducing
+the number of re-renders and the amount of state updates almost to 0. Uncontrolled
+mode is now the recommended way to use the `useForm` hook for almost all use cases.
+
+Example of uncontrolled form (`form.values` are not updated):
+
+<Demo data={FormDemos.uncontrolled} />
+
+## form.getValues
+
+With uncontrolled mode, you can not access `form.values` as a state variable,
+instead, you can use `form.getValues()` method to get current form values at any time:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { name: 'John Doe' },
+});
+
+form.getValues(); // { name: 'John Doe' }
+
+form.setValues({ name: 'John Smith' });
+form.getValues(); // { name: 'John Smith' }
+```
+
+`form.getValues()` always returns the latest form values, it is safe to use it
+after state updates:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { name: 'John Doe' },
+});
+
+const handleNameChange = () => {
+  form.setFieldValue('name', 'Test Name');
+
+  // ❌ Do not use form.values to get the current form values
+  // form.values has stale name value until next rerender in controlled mode
+  // and is always outdated in uncontrolled mode
+  console.log(form.values); // { name: 'John Doe' }
+
+  // ✅ Use form.getValues to get the current form values
+  // form.getValues always returns the latest form values
+  console.log(form.getValues()); // { name: 'Test Name' }
+};
+```
+
+## form.watch
+
+`form.watch` is an effect function that allows subscribing to changes of a
+specific form field. It accepts field path and a callback function that is
+called with new value, previous value, touched and dirty field states:
+
+<Demo data={FormDemos.watch} />
+
+## Customize Popover middlewares
+
+You can now customize `middlewares` options in [Popover](/core/popover) component and
+in other components ([Menu](/core/menu), [Select](/core/select), [Combobox](/core/combobox), etc.)
+based on Popover.
+
+To customize [Floating UI](https://floating-ui.com/) middlewares options, pass them as
+an object to the `middlewares` prop. For example, to change [shift](https://floating-ui.com/docs/shift)
+middleware padding to `20px` use the following configuration:
+
+```tsx
+import { Popover } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Popover
+      middlewares={{ shift: { padding: 20 } }}
+      position="bottom"
+    >
+      {/* Popover content */}
+    </Popover>
+  );
+}
+```
+
+## use-fetch hook
+
+New [use-fetch](/hooks/use-fetch) hook:
+
+<Demo data={HooksDemos.useFetchUsage} />
+
+## use-map hook
+
+New [use-map](/hooks/use-map) hook:
+
+<Demo data={HooksDemos.useMapUsage} />
+
+## use-set hook
+
+New [use-set](/hooks/use-set) hook:
+
+<Demo data={HooksDemos.useSetUsage} />
+
+## use-debounced-callback hook
+
+New [use-debounced-callback](/hooks/use-debounced-callback) hook:
+
+<Demo data={HooksDemos.useDebouncedCallbackUsage} />
+
+## use-throttled-state hook
+
+New [use-throttled-state](/hooks/use-throttled-state) hook:
+
+<Demo data={HooksDemos.useThrottledStateUsage} />
+
+## use-throttled-value hook
+
+New [use-throttled-value](/hooks/use-throttled-value) hook:
+
+<Demo data={HooksDemos.useThrottledValueUsage} />
+
+## use-throttled-callback hook
+
+New [use-throttled-callback](/hooks/use-throttled-callback) hook:
+
+<Demo data={HooksDemos.useThrottledCallbackUsage} />
+
+## use-orientation hook
+
+New [use-orientation](/hooks/use-orientation) hook:
+
+<Demo data={HooksDemos.useOrientationUsage} />
+
+## use-is-first-render hook
+
+New [use-is-first-render](/hooks/use-is-first-render) hook:
+
+<Demo data={HooksDemos.useIsFirstRenderUsage} />
+
+## Documentation updates
+
+- New [uncontrolled form](/form/uncontrolled) guide
+- [onValuesChange](/form/values/#onvalueschange) documentation has been added
+- A new demo has been added to [tiptap](/x/tiptap/#typography-styles) that shows how to customize typography styles
+- A new guide has been added to customize [Popover](/core/popover/#customize-middleware-options) middlewares
+
+## Other changes
+
+- [NumberInput](/core/number-input) now supports `withKeyboardEvents={false}` to disable up/down arrow keys handling
+- [Popover](/core/popover) [shift](https://floating-ui.com/docs/shift) middleware now has default padding of 5px to offset dropdown near the edge of the viewport

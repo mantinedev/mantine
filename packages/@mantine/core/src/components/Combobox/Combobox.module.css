@@ -1,7 +1,6 @@
 .dropdown {
-  --_combobox-padding: var(--combobox-padding, rem(4px));
-
-  padding: var(--_combobox-padding);
+  --combobox-padding: 4px;
+  padding: var(--combobox-padding);
 
   &[data-hidden] {
     display: none;
@@ -11,112 +10,110 @@
 /* Variables must be both on dropdown and options to support usage of Combobox.Options without Combobox.Dropdown */
 .dropdown,
 .options {
-  --combobox-option-padding-xs: rem(4px) rem(8px);
-  --combobox-option-padding-sm: rem(6px) rem(10px);
-  --combobox-option-padding-md: rem(8px) rem(12px);
-  --combobox-option-padding-lg: rem(10px) rem(16px);
-  --combobox-option-padding-xl: rem(14px) rem(20px);
-
-  --_combobox-option-padding: var(--combobox-option-padding, var(--combobox-option-padding-sm));
+  --combobox-option-padding-xs: 4px 8px;
+  --combobox-option-padding-sm: 6px 10px;
+  --combobox-option-padding-md: 8px 12px;
+  --combobox-option-padding-lg: 10px 16px;
+  --combobox-option-padding-xl: 14px 20px;
+  --combobox-option-padding: var(--combobox-option-padding-sm);
 }
 
 .option {
-  padding: var(--_combobox-option-padding);
+  padding: var(--combobox-option-padding);
   font-size: var(--combobox-option-fz, var(--mantine-font-size-sm));
   border-radius: var(--mantine-radius-default);
-  background-color: var(--_option-bg, transparent);
-  color: var(--_option-color, inherit);
-  opacity: var(--_option-opacity, 1);
-  cursor: var(--_option-cursor, pointer);
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
   word-break: break-word;
 
-  &[data-combobox-selected] {
-    --_option-bg: var(--mantine-primary-color-filled);
-    --_option-color: var(--mantine-color-white);
+  &:where([data-combobox-selected]) {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-color-white);
   }
 
-  &[data-combobox-disabled] {
-    --_option-cursor: not-allowed;
-    --_option-opacity: 0.35;
+  &:where([data-combobox-disabled]) {
+    cursor: not-allowed;
+    opacity: 0.35;
   }
 
   @mixin hover {
-    &:not([data-combobox-selected], [data-combobox-disabled]) {
-      @mixin light {
-        --_option-bg: var(--mantine-color-gray-0);
+    &:where(:not([data-combobox-selected], [data-combobox-disabled])) {
+      @mixin where-light {
+        background-color: var(--mantine-color-gray-0);
       }
 
-      @mixin dark {
-        --_option-bg: var(--mantine-color-dark-7);
+      @mixin where-dark {
+        background-color: var(--mantine-color-dark-7);
       }
     }
   }
 }
 
 .search {
-  margin-left: calc(var(--_combobox-padding) * -1);
-  margin-right: calc(var(--_combobox-padding) * -1);
-  margin-top: calc(var(--_combobox-padding) * -1);
-  width: calc(100% + var(--_combobox-padding) * 2);
+  margin-inline: calc(var(--combobox-padding) * -1);
+  margin-top: calc(var(--combobox-padding) * -1);
+  width: calc(100% + var(--combobox-padding) * 2);
   border-top-width: 0;
-  border-right-width: 0;
-  border-left-width: 0;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  margin-bottom: var(--_combobox-padding);
-  background-color: var(--_search_background);
+  border-inline-width: 0;
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+  margin-bottom: var(--combobox-padding);
   position: relative;
 
   &,
   &:focus {
-    border-color: var(--_search-border-color);
+    @mixin where-light {
+      border-color: var(--mantine-color-gray-2);
+    }
+
+    @mixin where-dark {
+      border-color: var(--mantine-color-dark-4);
+    }
   }
 
-  @mixin light {
-    --_search-border-color: var(--mantine-color-gray-2);
-    --_search_background: var(--mantine-color-white);
+  @mixin where-light {
+    background-color: var(--mantine-color-white);
   }
 
-  @mixin dark {
-    --_search-border-color: var(--mantine-color-dark-4);
-    --_search_background: var(--mantine-color-dark-7);
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-7);
   }
 }
 
 .empty {
   font-size: var(--combobox-option-fz, var(--mantine-font-size-sm));
   text-align: center;
-  padding: var(--_combobox-option-padding);
+  padding: var(--combobox-option-padding);
   color: var(--mantine-color-dimmed);
 }
 
 .header,
 .footer {
   font-size: var(--combobox-option-fz, var(--mantine-font-size-sm));
-  border: 0 solid var(--_footer-border-color);
-  margin-left: calc(var(--_combobox-padding) * -1);
-  margin-right: calc(var(--_combobox-padding) * -1);
-  padding: var(--_combobox-option-padding);
+  border: 0 solid transparent;
+  margin-inline: calc(var(--combobox-padding) * -1);
+  padding: var(--combobox-option-padding);
 
-  @mixin light {
-    --_footer-border-color: var(--mantine-color-gray-2);
+  @mixin where-light {
+    border-color: var(--mantine-color-gray-2);
   }
 
-  @mixin dark {
-    --_footer-border-color: var(--mantine-color-dark-4);
+  @mixin where-dark {
+    border-color: var(--mantine-color-dark-4);
   }
 }
 
 .footer {
-  border-top-width: rem(1px);
-  margin-top: var(--_combobox-padding);
-  margin-bottom: calc(var(--_combobox-padding) * -1);
+  border-top-width: 1px;
+  margin-top: var(--combobox-padding);
+  margin-bottom: calc(var(--combobox-padding) * -1);
 }
 
 .header {
-  border-bottom-width: rem(1px);
-  margin-bottom: var(--_combobox-padding);
-  margin-top: calc(var(--_combobox-padding) * -1);
+  border-bottom-width: 1px;
+  margin-bottom: var(--combobox-padding);
+  margin-top: calc(var(--combobox-padding) * -1);
 }
 
 .group {
@@ -128,7 +125,7 @@
 .groupLabel {
   color: var(--mantine-color-dimmed);
   font-size: calc(var(--combobox-option-fz, var(--mantine-font-size-sm)) * 0.85);
-  padding: var(--_combobox-option-padding);
+  padding: var(--combobox-option-padding);
   font-weight: 500;
   position: relative;
   display: flex;
@@ -137,23 +134,16 @@
   &::after {
     content: '';
     flex: 1;
-    left: 0;
-    right: 0;
-    height: rem(1px);
-    margin-left: var(--mantine-spacing-xs);
-    background-color: var(--_divider-bg);
+    inset-inline: 0;
+    height: 1px;
+    margin-inline-start: var(--mantine-spacing-xs);
 
-    @mixin light {
-      --_divider-bg: var(--mantine-color-gray-2);
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-2);
     }
 
-    @mixin dark {
-      --_divider-bg: var(--mantine-color-dark-4);
-    }
-
-    @mixin rtl {
-      margin-left: unset;
-      margin-right: var(--mantine-spacing-xs);
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-4);
     }
   }
 
@@ -164,47 +154,36 @@
 
 /* ------- Combobox.Chevron ------- */
 .chevron {
-  --combobox-chevron-size-xs: rem(14px);
-  --combobox-chevron-size-sm: rem(18px);
-  --combobox-chevron-size-md: rem(20px);
-  --combobox-chevron-size-lg: rem(24px);
-  --combobox-chevron-size-xl: rem(28px);
+  --combobox-chevron-size-xs: 14px;
+  --combobox-chevron-size-sm: 18px;
+  --combobox-chevron-size-md: 20px;
+  --combobox-chevron-size-lg: 24px;
+  --combobox-chevron-size-xl: 28px;
   --combobox-chevron-size: var(--combobox-chevron-size-sm);
 
   width: var(--combobox-chevron-size);
   height: var(--combobox-chevron-size);
-  color: var(--_color);
 
-  @mixin light {
-    --_color: var(--mantine-color-gray-6);
+  @mixin where-light {
+    color: var(--mantine-color-gray-6);
   }
 
-  @mixin dark {
-    --_color: var(--mantine-color-dark-3);
+  @mixin where-dark {
+    color: var(--mantine-color-dark-3);
   }
 
-  &[data-error] {
-    --_color: var(--mantine-color-error);
+  &:where([data-error]) {
+    color: var(--mantine-color-error);
   }
 }
 
 /* ------- OptionsDropdown ------- */
-.optionsDropdownScrollArea {
-  margin-right: calc(var(--_combobox-padding) * -1);
-
-  @mixin rtl {
-    margin-left: calc(var(--_combobox-padding) * -1);
-    margin-right: 0;
-  }
-}
-
 .optionsDropdownOption {
   display: flex;
   align-items: center;
-  flex-direction: var(--_flex-direction, row);
-  gap: rem(8px);
+  gap: 8px;
 
-  &[data-reverse] {
+  &:where([data-reverse]) {
     justify-content: space-between;
   }
 }
@@ -215,7 +194,7 @@
   min-width: 0.8em;
   height: 0.8em;
 
-  [data-combobox-selected] & {
+  :where([data-combobox-selected]) & {
     opacity: 1;
   }
 }

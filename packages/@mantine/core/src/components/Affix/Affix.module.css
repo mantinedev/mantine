@@ -1,8 +1,8 @@
 .root {
   position: fixed;
   z-index: var(--affix-z-index);
+  inset-inline-start: var(--affix-left);
+  inset-inline-end: var(--affix-right);
   top: var(--affix-top);
-  left: var(--affix-left);
-  right: var(--affix-right);
   bottom: var(--affix-bottom);
 }

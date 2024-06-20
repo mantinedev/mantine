@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Slider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Slider.demo.customize.module.css';
@@ -31,10 +30,10 @@ const cssCode = `
 }
 
 .mark {
-  width: rem(6px);
-  height: rem(6px);
-  border-radius: rem(6px);
-  transform: translateX(rem(-3px)) translateY(rem(-2px));
+  width: 6px;
+  height: 6px;
+  border-radius: 6px;
+  transform: translateX(-3px) translateY(-2px);
   border-color: light-dark(var(--mantine-color-blue-1), var(--mantine-color-dark-3));
 
   &[data-filled] {
@@ -44,15 +43,15 @@ const cssCode = `
 
 .markLabel {
   font-size: var(--mantine-font-size-xs);
-  margin-bottom: rem(5px);
+  margin-bottom: 5px;
   margin-top: 0;
 }
 
 .thumb {
-  height: rem(16px);
-  width: rem(16px);
+  height: 16px;
+  width: 16px;
   background-color: var(--mantine-color-white);
-  border-width: rem(1px);
+  border-width: 1px;
   box-shadow: var(--mantine-shadow-sm);
 }
 `;

@@ -1,4 +1,3 @@
-import React from 'react';
 import { FloatingDelayGroup } from '@floating-ui/react';
 import { useProps } from '../../../core';
 import { TooltipGroupProvider } from './TooltipGroup.context';

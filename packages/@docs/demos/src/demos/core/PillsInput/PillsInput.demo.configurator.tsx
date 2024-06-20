@@ -1,4 +1,3 @@
-import React from 'react';
 import { Pill, PillsInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { inputControls } from '../../../shared';
@@ -10,7 +9,6 @@ import { PillsInput, Pill } from '@mantine/core';
 function Demo() {
   return (
     <PillsInput
-      label="PillsInput"
       {{props}}
     >
       <Pill.Group>
@@ -26,7 +24,7 @@ function Demo() {
 
 function Wrapper(props: any) {
   return (
-    <PillsInput label="PillsInput" {...props}>
+    <PillsInput {...props}>
       <Pill.Group>
         <Pill>React</Pill>
         <Pill>Vue</Pill>

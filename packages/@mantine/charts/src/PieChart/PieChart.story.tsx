@@ -1,4 +1,3 @@
-import React from 'react';
 import { PieChart } from './PieChart';
 
 export default { title: 'PieChart' };
@@ -23,6 +22,7 @@ export function WithLabels() {
     <div style={{ padding: 40 }}>
       <PieChart data={data} withLabels size={200} />
       <PieChart data={data} withLabels size={200} labelsPosition="inside" />
+      <PieChart data={data} withLabels size={200} labelsType="percent" />
     </div>
   );
 }

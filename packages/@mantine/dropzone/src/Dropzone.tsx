@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Accept,
   DropEvent,
@@ -133,6 +132,9 @@ export interface DropzoneProps
 
   /** Props passed down to the Loader component */
   loaderProps?: LoaderProps;
+
+  /** Props passed down to the internal Input component */
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }
 
 export type DropzoneFactory = Factory<{
@@ -228,6 +230,7 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
     acceptColor,
     enablePointerEvents,
     loaderProps,
+    inputProps,
     mod,
     ...others
   } = props;
@@ -277,7 +280,7 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
   return (
     <DropzoneProvider value={{ accept: isDragAccept, reject: isDragReject, idle: isIdle }}>
       <Box
-        {...getRootProps({ ref })}
+        {...getRootProps()}
         {...getStyles('root', { focusable: true })}
         {...others}
         mod={[
@@ -297,8 +300,12 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
           unstyled={unstyled}
           loaderProps={loaderProps}
         />
-        <input {...getInputProps()} name={name} />
-        <div {...getStyles('inner')} data-enable-pointer-events={enablePointerEvents || undefined}>
+        <input {...getInputProps(inputProps)} name={name} />
+        <div
+          {...getStyles('inner')}
+          ref={ref}
+          data-enable-pointer-events={enablePointerEvents || undefined}
+        >
           {children}
         </div>
       </Box>

@@ -1,0 +1,215 @@
+import { NotificationDemos, NotificationsDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Notifications);
+
+## Installation
+
+<InstallScript packages="@mantine/notifications" />
+
+After installation import package styles at the root of your application:
+
+```tsx
+import '@mantine/notifications/styles.css';
+```
+
+Add `Notifications` component anywhere in your application. Note that:
+
+- It is required to render `Notifications` component inside [MantineProvider](/theming/mantine-provider/)
+- You do not need to wrap your application with `Notifications` component – it is not a provider, it is a regular component
+- You should not render multiple `Notifications` components – if you do that, your notifications will be duplicated
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
+
+function Demo() {
+  return (
+    <MantineProvider>
+      <Notifications />
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+All set! You can now use all notifications system features.
+
+<Demo data={NotificationsDemos.base} />
+
+## Functions
+
+`@mantine/notifications` package exports `notifications` object with the following functions:
+
+- `notifications.show` – adds given notification to the notifications list or queue, depending on the current state and `limit`
+- `notifications.hide` – removes notification with given `id` from the notifications state and queue
+- `notifications.update` – updates notification that was previously added to the state or queue
+- `notifications.updateState` – executes given callback with current notifications state and queue as an argument and updates state with returned value
+- `notifications.clean` – removes all notifications from the notifications state and queue
+- `notifications.cleanQueue` – removes all notifications from the queue
+
+All functions can be imported from `@mantine/notifications` package and can be used in any part of your application:
+
+```tsx
+import { notifications } from '@mantine/notifications';
+```
+
+You can also import these functions separately:
+
+```tsx
+// alias functions
+import {
+  cleanNotifications, // notifications.clean
+  cleanNotificationsQueue, // notifications.cleanQueue
+  hideNotification, // notifications.hide
+  showNotification, // notifications.show
+  updateNotification, // notifications.update
+  updateNotificationsState, // notifications.updateState
+} from '@mantine/notifications';
+```
+
+## Notification props
+
+`notifications.show` and `notification.update` functions can be called with an object that has the following properties:
+
+- `id` – notification id, it is used to update and remove notifications, by default `id` is randomly generated
+- `withBorder` – determines whether notification should have a border
+- `withCloseButton` – determines whether the close button should be visible
+- `onClose` – calls when notification is unmounted
+- `onOpen` – calls when notification is mounted
+- `autoClose` – defines timeout in ms on which notification will be automatically closed, use `false` to disable auto close
+- `message` – required notification body
+- `color, icon, title, radius, className, style, loading` – props passed down to the [Notification](/core/notification/) component
+
+All properties except `message` are optional.
+
+```tsx
+import { IconX } from '@tabler/icons-react';
+import { notifications } from '@mantine/notifications';
+
+// Bare minimum – message is required for all notifications
+notifications.show({ message: 'Hello' });
+
+// Most used notification props
+notifications.show({
+  id: 'hello-there',
+  withCloseButton: true,
+  onClose: () => console.log('unmounted'),
+  onOpen: () => console.log('mounted'),
+  autoClose: 5000,
+  title: "You've been compromised",
+  message: 'Leave the building immediately',
+  color: 'red',
+  icon: <IconX />,
+  className: 'my-notification-class',
+  style: { backgroundColor: 'red' },
+  loading: false,
+});
+```
+
+Notifications preview (`message` prop used as `children`):
+
+<Demo
+  data={NotificationDemos.configurator}
+  configuratorProps={{ includeCode: false }}
+/>
+
+## Customize notification styles
+
+You can use `style`, `className` or [Styles API](/styles/styles-api/) `classNames`, `styles` props to customize notification styles.
+Usually, it is better to override [Notification](/core/notification) styles with `classNames` prop in the [theme object](/theming/theme-object/).
+
+<Demo data={NotificationsDemos.customize} />
+
+## Notifications container position
+
+`Notifications` container has fixed position inside, it is rendered inside [Portal](/core/portal/) by default.
+Position cannot be changed per notification. `Notifications` supports the following positions:
+
+- `top-left`
+- `top-right`
+- `top-center`
+- `bottom-left`
+- `bottom-right`
+- `bottom-center`
+
+```tsx
+import { Notifications } from '@mantine/notifications';
+
+function Demo() {
+  return <Notifications position="top-right" zIndex={1000} />;
+}
+```
+
+## Limit and queue
+
+You can limit maximum number of notifications that are displayed at a time by setting
+`limit` prop on `Notifications`:
+
+```tsx
+import { Notifications } from '@mantine/notifications';
+
+function Demo() {
+  return <Notifications limit={5} />;
+}
+```
+
+All notifications added after the `limit` was reached are added to the queue
+and displayed when notification from current state is hidden.
+
+<Demo data={NotificationsDemos.limit} />
+
+## Remove notifications from state and queue
+
+To remove specific notification from state or queue use `notifications.hide` function:
+
+```tsx
+import { notifications } from '@mantine/notifications';
+
+const id = notifications.show({ message: 'Hello!' });
+notifications.hide(id);
+```
+
+Use `notifications.cleanQueue` function to remove all notifications from the queue and
+`notifications.clean` to remove all notifications both from the state and queue:
+
+<Demo data={NotificationsDemos.clean} />
+
+## Update notification
+
+<Demo data={NotificationsDemos.update} />
+
+## Auto close
+
+You can configure auto close timeout with `Notifications`:
+
+```tsx
+import { Notifications } from '@mantine/notifications';
+
+// All notifications will be closed automatically in 4000ms
+function Demo() {
+  return <Notifications autoClose={4000} />;
+}
+```
+
+Or per notification in `notifications.show`/`notifications.update` functions:
+
+```tsx
+import { notifications } from '@mantine/notifications';
+
+notifications.show({
+  message: 'I will close in 500ms seconds',
+  autoClose: 500,
+});
+
+notifications.update({
+  id: 'hello',
+  message: 'I will never close',
+  autoClose: false,
+});
+```
+
+`notifications.show` and `notifications.update` functions `autoClose` prop has higher priority.
+
+<Demo data={NotificationsDemos.autoclose} />

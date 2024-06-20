@@ -1,0 +1,113 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useFocusTrap);
+
+## Usage
+
+`use-focus-trap` traps focus at the given node, for example in modal, drawer or menu.
+Node must include at least one focusable element. When the node unmounts, the focus trap is automatically released.
+
+```tsx
+import { useFocusTrap } from '@mantine/hooks';
+
+function Demo() {
+  const focusTrapRef = useFocusTrap();
+
+  return (
+    <div ref={focusTrapRef}>
+      <input />
+    </div>
+  );
+}
+```
+
+## API
+
+The hook accepts focus trap active state as a single argument:
+
+```tsx
+import { useFocusTrap } from '@mantine/hooks';
+
+useFocusTrap(); // -> focus trap inactive
+useFocusTrap(true); // -> focus trap active
+
+useFocusTrap(false); // -> focus trap disabled
+```
+
+The hook returns `ref` that should be passed to the element:
+
+```tsx
+import { Paper } from '@mantine/core';
+import { useFocusTrap } from '@mantine/hooks';
+
+function Demo() {
+  const focusTrapRef = useFocusTrap();
+
+  return (
+    <>
+      {/* With regular element: */}
+      <div ref={focusTrapRef} />
+
+      {/* With Mantine component: */}
+      <Paper ref={focusTrapRef} />
+    </>
+  );
+}
+```
+
+## Combine with other ref based hooks
+
+To combine `use-focus-trap` with other ref based hooks, use [use-merged-ref](/hooks/use-merged-ref/) hook:
+
+```tsx
+import { useRef } from 'react';
+import {
+  useClickOutside,
+  useFocusTrap,
+  useMergedRef,
+} from '@mantine/hooks';
+
+function Demo() {
+  const myRef = useRef();
+  const useClickOutsideRef = useClickOutside(() => {});
+  const focusTrapRef = useFocusTrap();
+  const mergedRef = useMergedRef(
+    myRef,
+    useClickOutsideRef,
+    focusTrapRef
+  );
+
+  return <div ref={mergedRef} />;
+}
+```
+
+## Initial focus
+
+By default, focus trap will move focus to the first interactive element.
+To specify the element that should receive initial focus, add `data-autofocus` attribute:
+
+```tsx
+import { useFocusTrap } from '@mantine/hooks';
+
+function Demo() {
+  const focusTrapRef = useFocusTrap();
+
+  return (
+    <div ref={focusTrapRef}>
+      <input />
+      {/* Second input in modal will have initial focus */}
+      <input data-autofocus />
+      <input />
+    </div>
+  );
+}
+```
+
+## Definition
+
+```tsx
+function useFocusTrap(
+  active?: boolean
+): (instance: HTMLElement) => void;
+```

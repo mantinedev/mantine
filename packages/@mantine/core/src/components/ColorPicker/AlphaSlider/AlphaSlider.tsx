@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { rem, useProps } from '../../../core';
 import { ColorSlider, ColorSliderProps } from '../ColorSlider/ColorSlider';
 import { round } from '../converters/parsers';
@@ -30,7 +30,7 @@ export const AlphaSlider = forwardRef<HTMLDivElement, AlphaSliderProps>((props, 
       overlays={[
         {
           backgroundImage:
-            'linear-gradient(45deg, var(--_slider-checkers) 25%, transparent 25%), linear-gradient(-45deg, var(--_slider-checkers) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--_slider-checkers) 75%), linear-gradient(-45deg, var(--mantine-color-body) 75%, var(--_slider-checkers) 75%)',
+            'linear-gradient(45deg, var(--slider-checkers) 25%, transparent 25%), linear-gradient(-45deg, var(--slider-checkers) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--slider-checkers) 75%), linear-gradient(-45deg, var(--mantine-color-body) 75%, var(--slider-checkers) 75%)',
           backgroundSize: `${rem(8)} ${rem(8)}`,
           backgroundPosition: `0 0, 0 ${rem(4)}, ${rem(4)} ${rem(-4)}, ${rem(-4)} 0`,
         },

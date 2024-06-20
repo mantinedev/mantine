@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { VisuallyHidden } from '../VisuallyHidden';
 import { Burger, BurgerProps, BurgerStylesNames } from './Burger';

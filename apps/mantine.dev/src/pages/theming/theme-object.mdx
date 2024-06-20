@@ -1,0 +1,439 @@
+import { ThemingDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ThemeObject);
+
+# Theme object
+
+Mantine theme is an object where your application's colors, fonts, spacing, border-radius and other design tokens are stored.
+
+```tsx
+interface MantineTheme {
+  /** Controls focus ring styles. Supports the following options:
+   *  - `auto` – focus ring is displayed only when the user navigates with keyboard (default value)
+   *  - `always` – focus ring is displayed when the user navigates with keyboard and mouse
+   *  - `never` – focus ring is always hidden (not recommended)
+   */
+  focusRing: 'auto' | 'always' | 'never';
+
+  /** rem units scale, change if you customize font-size of `<html />` element
+   *  default value is `1` (for `100%`/`16px` font-size on `<html />`)
+   */
+  scale: number;
+
+  /** Determines whether `font-smoothing` property should be set on the body, `true` by default */
+  fontSmoothing: boolean;
+
+  /** White color */
+  white: string;
+
+  /** Black color */
+  black: string;
+
+  /** Object of colors, key is color name, value is an array of at least 10 strings (colors) */
+  colors: MantineThemeColors;
+
+  /** Index of theme.colors[color].
+   *  Primary shade is used in all components to determine which color from theme.colors[color] should be used.
+   *  Can be either a number (0–9) or an object to specify different color shades for light and dark color schemes.
+   *  Default value `{ light: 6, dark: 8 }`
+   *
+   *  For example,
+   *  { primaryShade: 6 } // shade 6 is used both for dark and light color schemes
+   *  { primaryShade: { light: 6, dark: 7 } } // different shades for dark and light color schemes
+   * */
+  primaryShade: MantineColorShade | MantinePrimaryShade;
+
+  /** Key of `theme.colors`, hex/rgb/hsl values are not supported.
+   *  Determines which color will be used in all components by default.
+   *  Default value – `blue`.
+   * */
+  primaryColor: string;
+
+  /** Function to resolve colors based on variant.
+   *  Can be used to deeply customize how colors are applied to `Button`, `ActionIcon`, `ThemeIcon`
+   *  and other components that use colors from theme.
+   * */
+  variantColorResolver: VariantColorsResolver;
+
+  /** Determines whether text color must be changed based on the given `color` prop in filled variant
+   *  For example, if you pass `color="blue.1"` to Button component, text color will be changed to `var(--mantine-color-black)`
+   *  Default value – `false`
+   * */
+  autoContrast: boolean;
+
+  /** Determines which luminance value is used to determine if text color should be light or dark.
+   *  Used only if `theme.autoContrast` is set to `true`.
+   *  Default value is `0.3`
+   * */
+  luminanceThreshold: number;
+
+  /** font-family used in all components, system fonts by default */
+  fontFamily: string;
+
+  /** Monospace font-family, used in code and other similar components, system fonts by default  */
+  fontFamilyMonospace: string;
+
+  /** Controls various styles of h1-h6 elements, used in TypographyStylesProvider and Title components */
+  headings: {
+    fontFamily: string;
+    fontWeight: string;
+    textWrap: 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable';
+    sizes: {
+      h1: HeadingStyle;
+      h2: HeadingStyle;
+      h3: HeadingStyle;
+      h4: HeadingStyle;
+      h5: HeadingStyle;
+      h6: HeadingStyle;
+    };
+  };
+
+  /** Object of values that are used to set `border-radius` in all components that support it */
+  radius: MantineRadiusValues;
+
+  /** Key of `theme.radius` or any valid CSS value. Default `border-radius` used by most components */
+  defaultRadius: MantineRadius;
+
+  /** Object of values that are used to set various CSS properties that control spacing between elements */
+  spacing: MantineSpacingValues;
+
+  /** Object of values that are used to control `font-size` property in all components */
+  fontSizes: MantineFontSizesValues;
+
+  /** Object of values that are used to control `line-height` property in `Text` component */
+  lineHeights: MantineLineHeightValues;
+
+  /** Object of values that are used to control breakpoints in all components,
+   *  values are expected to be defined in em
+   * */
+  breakpoints: MantineBreakpointsValues;
+
+  /** Object of values that are used to add `box-shadow` styles to components that support `shadow` prop */
+  shadows: MantineShadowsValues;
+
+  /** Determines whether user OS settings to reduce motion should be respected, `false` by default */
+  respectReducedMotion: boolean;
+
+  /** Determines which cursor type will be used for interactive elements
+   * - `default` – cursor that is used by native HTML elements, for example, `input[type="checkbox"]` has `cursor: default` styles
+   * - `pointer` – sets `cursor: pointer` on interactive elements that do not have these styles by default
+   */
+  cursorType: 'default' | 'pointer';
+
+  /** Default gradient configuration for components that support `variant="gradient"` */
+  defaultGradient: MantineGradient;
+
+  /** Class added to the elements that have active styles, for example, `Button` and `ActionIcon` */
+  activeClassName: string;
+
+  /** Class added to the elements that have focus styles, for example, `Button` or `ActionIcon`.
+   *  Overrides `theme.focusRing` property.
+   */
+  focusClassName: string;
+
+  /** Allows adding `classNames`, `styles` and `defaultProps` to any component */
+  components: MantineThemeComponents;
+
+  /** Any other properties that you want to access with the theme objects */
+  other: MantineThemeOther;
+}
+```
+
+## Usage
+
+To customize theme, pass theme override object to [MantineProvider](/theming/mantine-provider/) `theme` prop.
+Theme override will be deeply merged with the default theme.
+
+```tsx
+import { createTheme, MantineProvider, rem } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    // Add your color
+    deepBlue: [
+      '#eef3ff',
+      '#dce4f5',
+      '#b9c7e2',
+      '#94a8d0',
+      '#748dc1',
+      '#5f7cb8',
+      '#5474b4',
+      '#44639f',
+      '#39588f',
+      '#2d4b81',
+    ],
+    // or replace default theme color
+    blue: [
+      '#eef3ff',
+      '#dee2f2',
+      '#bdc2de',
+      '#98a0ca',
+      '#7a84ba',
+      '#6672b0',
+      '#5c68ac',
+      '#4c5897',
+      '#424e88',
+      '#364379',
+    ],
+  },
+
+  shadows: {
+    md: '1px 1px 3px rgba(0, 0, 0, .25)',
+    xl: '5px 5px 3px rgba(0, 0, 0, .25)',
+  },
+
+  headings: {
+    fontFamily: 'Roboto, sans-serif',
+    sizes: {
+      h1: { fontSize: rem(36) },
+    },
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+## Theme properties
+
+### autoContrast
+
+`autoContrast` controls whether text color should be changed based on the given `color` prop
+in the following components:
+
+- [ActionIcon](/core/action-icon) with `variant="filled"` only
+- [Alert](/core/alert) with `variant="filled"` only
+- [Avatar](/core/avatar) with `variant="filled"` only
+- [Badge](/core/badge) with `variant="filled"` only
+- [Button](/core/button) with `variant="filled"` only
+- [Chip](/core/chip) with `variant="filled"` only
+- [NavLink](/core/nav-link) with `variant="filled"` only
+- [ThemeIcon](/core/theme-icon) with `variant="filled"` only
+- [Checkbox](/core/checkbox) with `variant="filled"` only
+- [Radio](/core/radio) with `variant="filled"` only
+- [Tabs](/core/tabs) with `variant="pills"` only
+- [SegmentedControl](/core/segmented-control)
+- [Stepper](/core/stepper)
+- [Pagination](/core/pagination)
+- [Progress](/core/progress)
+- [Indicator](/core/indicator)
+- [Timeline](/core/timeline)
+- [Spotlight](/x/spotlight)
+- All [@mantine/dates](/dates/getting-started) components that are based on [Calendar](/dates/calendar) component
+
+`autoContrast` checks whether the given color luminosity is above or below the `luminanceThreshold` value
+and changes text color to either `theme.white` or `theme.black` accordingly.
+
+`autoContrast` can be set globally on the theme level or individually for each component via `autoContrast` prop,
+except for [Spotlight](/x/spotlight) and [@mantine/dates](/dates/getting-started) components which only support global theme setting.
+
+<Demo data={ThemingDemos.autoContrast} />
+
+### luminanceThreshold
+
+`luminanceThreshold` controls which luminance value is used to determine if text color should be light or dark.
+It is used only if `theme.autoContrast` is set to `true`. Default value is `0.3`.
+
+<Demo data={ThemingDemos.luminanceThreshold} />
+
+### focusRing
+
+`theme.focusRing` controls focus ring styles, it supports the following values:
+
+- `auto` (default and recommended) – focus ring is visible only when the user navigates with keyboard, this is the default browser behavior for native interactive elements
+- `always` – focus ring is visible when user navigates with keyboard and mouse, for example, the focus ring will be visible when user clicks on a button
+- `never` – focus ring is always hidden, it is not recommended – users who navigate with keyboard will not have visual indication of the current focused element
+
+<Demo data={ThemingDemos.focusRing} />
+
+### focusClassName
+
+`theme.focusClassName` is a CSS class that is added to elements that have focus styles, for example, [Button](/core/button) or [ActionIcon](/core/action-icon/).
+It can be used to customize focus ring styles of all interactive components except inputs. Note that when `theme.focusClassName` is set, `theme.focusRing` is ignored.
+
+<Demo data={ThemingDemos.focusClassName} />
+
+> **:focus-visible selector**
+>
+> `:focus-visible` selector is supported by more than [91% of browsers](https://caniuse.com/css-focus-visible) (data from April 2023).
+> Safari browsers added support for it in version 15.4 (released in March 2022). If you need to support Safari 15.3 and older, you can use [focus-visible polyfill](https://github.com/WICG/focus-visible)
+> or provide a [fallback](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible#providing_a_focus_fallback) with `:focus` pseudo-class.
+
+### activeClassName
+
+`theme.activeClassName` is a CSS class that is added to elements that have active styles, for example, [Button](/core/button) or [ActionIcon](/core/action-icon/).
+It can be used to customize active styles of all interactive components.
+
+<Demo data={ThemingDemos.activeClassName} />
+
+To disable active styles for all components, set `theme.activeClassName` to an empty string:
+
+<Demo data={ThemingDemos.activeClassNameEmpty} />
+
+### defaultRadius
+
+`theme.defaultRadius` controls the default `border-radius` property in most components, for example, [Button](/core/button) or [TextInput](/core/text-input).
+You can set to either one of the values from `theme.radius` or a number/string to use exact value. Note that numbers are treated as pixels, but
+converted to rem. For example, `theme.defaultRadius: 4` will be converted to `0.25rem`.
+You can learn more about rem conversion in the [rem units guide](/styles/rem).
+
+<Demo data={ThemingDemos.defaultRadiusConfigurator} />
+
+### cursorType
+
+`theme.cursorType` controls the default cursor type for interactive elements,
+that do not have `cursor: pointer` styles by default. For example, [Checkbox](/core/checkbox) and [NativeSelect](/core/native-select).
+
+<Demo data={ThemingDemos.cursorType} />
+
+### defaultGradient
+
+`theme.defaultGradient` controls the default gradient configuration for components that support `variant="gradient"`
+([Button](/core/button), [ActionIcon](/core/action-icon), [Badge](/core/badge), etc.).
+
+<Demo data={ThemingDemos.defaultGradient} />
+
+### components
+
+`theme.components` allows to override components [default props](/theming/default-props) and styles with `classNames` and `styles` properties.
+You can learn more about these features in [default props](/theming/default-props) and [Styles API](/styles/styles-api) guides.
+
+### other
+
+`theme.other` is an object that can be used to store any other properties that you want to access with the theme objects.
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        other: {
+          charcoal: '#333333',
+          primaryHeadingSize: 45,
+          fontWeights: {
+            bold: 700,
+            extraBold: 900,
+          },
+        },
+      }}
+    >
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+## Store theme override object in a variable
+
+To store theme override object in a variable, use `createTheme` function:
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const myTheme = createTheme({
+  primaryColor: 'orange',
+  defaultRadius: 0,
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={myTheme}>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+## Merge multiple theme overrides
+
+Use `mergeThemeOverrides` function to merge multiple themes into one theme override object:
+
+```tsx
+import {
+  createTheme,
+  MantineProvider,
+  mergeThemeOverrides,
+} from '@mantine/core';
+
+const theme1 = createTheme({
+  primaryColor: 'orange',
+  defaultRadius: 0,
+});
+
+const theme2 = createTheme({
+  cursorType: 'pointer',
+});
+
+// Note: It is better to to store theme override outside of component body
+// to prevent unnecessary re-renders
+const myTheme = mergeThemeOverrides(theme1, theme2);
+
+function Demo() {
+  return (
+    <MantineProvider theme={myTheme}>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+## use-mantine-theme hook
+
+`useMantineTheme` hook returns theme object from [MantineProvider](/theming/mantine-provider) context:
+
+```tsx
+import { useMantineTheme } from '@mantine/core';
+
+function Demo() {
+  const theme = useMantineTheme();
+  return <div style={{ background: theme.colors.blue[5] }} />;
+}
+```
+
+## Default theme
+
+You can import default theme object from `@mantine/core` package. It includes
+all theme properties with default values. When you pass theme override to
+[MantineProvider](/theming/mantine-provider), it will be deeply merged with
+the default theme. You can find contents of `DEFAULT_THEME` object
+on [this page](/theming/default-theme).
+
+```tsx
+import { DEFAULT_THEME } from '@mantine/core';
+```
+
+## Access theme outside of components
+
+To access theme outside of components, you need to create a full theme object
+(your theme override merged with the default theme).
+
+```tsx
+// theme.ts
+import {
+  createTheme,
+  DEFAULT_THEME,
+  mergeMantineTheme,
+} from '@mantine/core';
+
+const themeOverride = createTheme({
+  primaryColor: 'orange',
+  defaultRadius: 0,
+});
+
+export const theme = mergeMantineTheme(DEFAULT_THEME, themeOverride);
+```
+
+Then your will be able to import it anywhere in your application:
+
+```tsx
+import { theme } from './theme';
+```

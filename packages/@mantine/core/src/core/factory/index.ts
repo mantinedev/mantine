@@ -7,4 +7,5 @@ export type {
   MantineComponent,
   MantineComponentStaticProperties,
 } from './factory';
+export type { PolymorphicComponentProps, PolymorphicRef } from './create-polymorphic-component';
 export type { Factory, PolymorphicFactory } from './create-factory';

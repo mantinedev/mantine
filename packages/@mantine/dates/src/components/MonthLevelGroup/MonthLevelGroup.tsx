@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '@mantine/core';
 import { handleControlKeyDown } from '../../utils';
 import { LevelsGroup, LevelsGroupStylesNames } from '../LevelsGroup';

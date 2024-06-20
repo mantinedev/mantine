@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useClickOutside, useId } from '@mantine/hooks';
 import {
   createVarsResolver,
@@ -18,6 +18,7 @@ import {
   ArrowPosition,
   FloatingAxesOffsets,
   FloatingPosition,
+  FloatingStrategy,
   getFloatingPosition,
 } from '../Floating';
 import { PortalProps } from '../Portal';
@@ -53,7 +54,7 @@ export interface __PopoverProps {
   /** Called when dropdown opens */
   onOpen?: () => void;
 
-  /** If set dropdown will not be unmounted from the DOM when it is hidden, `display: none` styles will be added instead, `false` by default */
+  /** If set dropdown will not be unmounted from the DOM when it is hidden, `display: none` styles will be added instead */
   keepMounted?: boolean;
 
   /** Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type, `{ duration: 150, transition: 'fade' }` by default */
@@ -100,6 +101,9 @@ export interface __PopoverProps {
 
   /** Determines whether focus should be automatically returned to control when dropdown closes, `false` by default */
   returnFocus?: boolean;
+
+  /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy), `'absolute'` by default */
+  floatingStrategy?: FloatingStrategy;
 }
 
 export interface PopoverProps extends __PopoverProps, StylesApiProps<PopoverFactory> {
@@ -212,6 +216,7 @@ export function Popover(_props: PopoverProps) {
     variant,
     keepMounted,
     vars,
+    floatingStrategy,
     ...others
   } = props;
 
@@ -247,6 +252,7 @@ export function Popover(_props: PopoverProps) {
     onChange,
     onOpen,
     onClose,
+    strategy: floatingStrategy,
   });
 
   useClickOutside(() => closeOnClickOutside && popover.onClose(), clickOutsideEvents, [

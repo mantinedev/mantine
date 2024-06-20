@@ -1,4 +1,3 @@
-import React from 'react';
 import Highlight from '@tiptap/extension-highlight';
 import SubScript from '@tiptap/extension-subscript';
 import Superscript from '@tiptap/extension-superscript';

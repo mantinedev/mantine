@@ -1,0 +1,1062 @@
+import { TitleDemos } from '@docs/demos';
+import { CssVariablesGroup } from '@/components/CssVariablesGroup';
+import { CssVariablesTable } from '@/components/CssVariablesTable';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.CssVariables);
+
+# Mantine CSS variables
+
+[MantineProvider](/theming/mantine-provider) exposes all Mantine CSS variables based on the given [theme](/theming/theme-object).
+You can use these variables in [CSS](/styles/css-modules) files, [style prop](/styles/style) or any other styles.
+Note that not all values are documented on this page, you can find full list of variables on [this page](/styles/css-variables-list).
+
+## Typography variables
+
+Typography variables control font family, font size, line height, font weight, and other text-related properties
+of all Mantine components.
+
+### Font family
+
+The following CSS variables are used to assign font families to all Mantine components:
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-font-family',
+      description:
+        'Controls font-family property of most Mantine components',
+      defaultValue: 'system sans-serif fonts',
+    },
+    {
+      variable: '--mantine-font-family-monospace',
+      description: 'Controls font-family property of code blocks',
+      defaultValue: 'system monospace fonts',
+    },
+    {
+      variable: '--mantine-font-family-headings',
+      description: 'Controls font-family property of headings',
+      defaultValue: 'system sans-serif fonts',
+    },
+  ]}
+/>
+
+You can control these variables in the [theme](/theming/theme-object). Note that if
+`theme.headings.fontFamily` is not set, `--mantine-font-family-headings` value
+will be the same as `--mantine-font-family`.
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  // Controls --mantine-font-family
+  fontFamily: 'Arial, sans-serif',
+
+  // Controls --mantine-font-family-monospace
+  fontFamilyMonospace: 'Courier New, monospace',
+
+  headings: {
+    // Controls --mantine-font-family-headings
+    fontFamily: 'Georgia, serif',
+  },
+});
+```
+
+If you want to use system fonts as a fallback for custom fonts, you can reference `DEFAULT_THEME`
+value instead of defining it manually:
+
+```tsx
+import { createTheme, DEFAULT_THEME } from '@mantine/core';
+
+const theme = createTheme({
+  fontFamily: `Roboto, ${DEFAULT_THEME.fontFamily}`,
+});
+```
+
+You can reference font family variables in your CSS:
+
+```scss
+.text {
+  font-family: var(--mantine-font-family);
+}
+
+.code {
+  font-family: var(--mantine-font-family-monospace);
+}
+
+.heading {
+  font-family: var(--mantine-font-family-headings);
+}
+```
+
+And in [ff style prop](/styles/style-props):
+
+- `ff="text"` will use `--mantine-font-family` variable
+- `ff="monospace"` will use `--mantine-font-family-monospace` variable
+- `ff="heading"` will use `--mantine-font-family-headings` variable
+
+```tsx
+import { Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Text ff="monospace">
+      This text uses --mantine-font-family-monospace variable
+    </Text>
+  );
+}
+```
+
+### Font size
+
+Font size variables are used in most Mantine components to control text size. The
+variable that is chosen depends on the component and its `size` prop.
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-font-size-xs',
+      defaultValue: '0.75rem (12px)',
+    },
+    {
+      variable: '--mantine-font-size-sm',
+      defaultValue: '0.875rem (14px)',
+    },
+    {
+      variable: '--mantine-font-size-md',
+      defaultValue: '1rem (16px)',
+    },
+    {
+      variable: '--mantine-font-size-lg',
+      defaultValue: '1.125rem (18px)',
+    },
+    {
+      variable: '--mantine-font-size-xl',
+      defaultValue: '1.25rem (20px)',
+    },
+  ]}
+/>
+
+You can reference font size variables in CSS:
+
+```scss
+.demo {
+  font-size: var(--mantine-font-size-md);
+}
+```
+
+And in [fz style prop](/styles/style-props):
+
+```tsx
+import { Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Text fz="xl">
+      This text uses --mantine-font-size-xl variable
+    </Text>
+  );
+}
+```
+
+To define custom font sizes, can use `theme.fontSizes` property:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  fontSizes: {
+    xs: '0.5rem',
+    sm: '0.75rem',
+    md: '1rem',
+    lg: '1.25rem',
+    xl: '1.5rem',
+  },
+});
+```
+
+Note that `theme.fontSizes` object is merged with the `DEFAULT_THEME.fontSizes` –
+it is not required to define all values, only those that you want to change.
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+// Changes only xs font size,
+// other values will be taken from the DEFAULT_THEME
+const theme = createTheme({
+  fontSizes: {
+    xs: '0.5rem',
+  },
+});
+```
+
+You can add any number of additional font sizes to the `theme.fontSizes` object.
+These values will be defined as CSS variables in `--mantine-font-size-{size}` format:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  fontSizes: {
+    xxs: '0.125rem',
+    xxl: '2rem',
+  },
+});
+```
+
+After defining `theme.fontSizes`, you can reference these variables in your CSS:
+
+```scss
+.demo {
+  font-size: var(--mantine-font-size-xxs);
+}
+```
+
+> **Case conversion**
+>
+> Case conversion (camelCase to kebab-case) is not automatically applied to custom font sizes.
+> If you define `theme.fontSizes` with camelCase keys, you need to reference them in camelCase format.
+> For example, if you define `{ customSize: '1rem' }`, you need to reference it as `--mantine-font-size-customSize`.
+
+### Line height
+
+Line height variables are used in [Text](/core/text) component. In other components,
+line-height is either calculated based on font size or set to `--mantine-line-height`,
+which is an alias for `--mantine-line-height-md`.
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-line-height',
+      defaultValue: '1.55',
+    },
+    {
+      variable: '--mantine-line-height-xs',
+      defaultValue: '1.4',
+    },
+    {
+      variable: '--mantine-line-height-sm',
+      defaultValue: '1.45',
+    },
+    {
+      variable: '--mantine-line-height-md',
+      defaultValue: '1.55',
+    },
+    {
+      variable: '--mantine-line-height-lg',
+      defaultValue: '1.6',
+    },
+    {
+      variable: '--mantine-line-height-xl',
+      defaultValue: '1.65',
+    },
+  ]}
+/>
+
+You can reference line height variables in your CSS:
+
+```scss
+.demo {
+  line-height: var(--mantine-line-height-md);
+}
+```
+
+And in [lh style prop](/styles/style-props):
+
+```tsx
+import { Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Text lh="xl">
+      This text uses --mantine-line-height-xl variable
+    </Text>
+  );
+}
+```
+
+To define custom line heights, you can use `theme.lineHeights` property:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  lineHeights: {
+    xs: '1.2',
+    sm: '1.3',
+    md: '1.4',
+    lg: '1.5',
+    xl: '1.6',
+  },
+});
+```
+
+### Headings
+
+`theme.headings` controls font-size, line-height, font-weight and text-wrap CSS properties
+of headings in [Title](/core/title) and [TypographyStylesProvider](/core/typography-styles-provider) components.
+
+<CssVariablesGroup
+  data={[
+    { group: 'General variables' },
+    {
+      variable: '--mantine-heading-font-weight',
+      description:
+        'Controls font-weight property of all headings if not overridden',
+      defaultValue: '700',
+    },
+    {
+      variable: '--mantine-heading-text-wrap',
+      description: 'Controls text-wrap property of all headings',
+      defaultValue: 'wrap',
+    },
+    { group: 'h1 heading' },
+    {
+      variable: '--mantine-h1-font-size',
+      defaultValue: '2.125rem (34px)',
+    },
+    {
+      variable: '--mantine-h1-line-height',
+      defaultValue: '1.3',
+    },
+    {
+      variable: '--mantine-h1-font-weight',
+      defaultValue: '700',
+    },
+    { group: 'h2 heading' },
+    {
+      variable: '--mantine-h2-font-size',
+      defaultValue: '1.625rem (26px)',
+    },
+    {
+      variable: '--mantine-h2-line-height',
+      defaultValue: '1.35',
+    },
+    {
+      variable: '--mantine-h2-font-weight',
+      defaultValue: '700',
+    },
+    { group: 'h3 heading' },
+    {
+      variable: '--mantine-h3-font-size',
+      defaultValue: '1.375rem (22px)',
+    },
+    {
+      variable: '--mantine-h3-line-height',
+      defaultValue: '1.4',
+    },
+    {
+      variable: '--mantine-h3-font-weight',
+      defaultValue: '700',
+    },
+    { group: 'h4 heading' },
+    {
+      variable: '--mantine-h4-font-size',
+      defaultValue: '1.125rem (18px)',
+    },
+    {
+      variable: '--mantine-h4-line-height',
+      defaultValue: '1.45',
+    },
+    {
+      variable: '--mantine-h4-font-weight',
+      defaultValue: '700',
+    },
+    { group: 'h5 heading' },
+    {
+      variable: '--mantine-h5-font-size',
+      defaultValue: '1rem (16px)',
+    },
+    {
+      variable: '--mantine-h5-line-height',
+      defaultValue: '1.5',
+    },
+    {
+      variable: '--mantine-h5-font-weight',
+      defaultValue: '700',
+    },
+    { group: 'h6 heading' },
+    {
+      variable: '--mantine-h6-font-size',
+      defaultValue: '0.875rem (14px)',
+    },
+    {
+      variable: '--mantine-h6-line-height',
+      defaultValue: '1.5',
+    },
+    {
+      variable: '--mantine-h6-font-weight',
+      defaultValue: '700',
+    },
+  ]}
+/>
+
+These variables are used in [Title](/core/title) component, `order` prop
+controls which heading level to use. For example, `order={3}` Title will use:
+
+- `--mantine-h3-font-size`
+- `--mantine-h3-line-height`
+- `--mantine-h3-font-weight`
+
+<Demo data={TitleDemos.usage} />
+
+You can reference heading variables in your CSS:
+
+```scss
+.h1 {
+  font-size: var(--mantine-h1-font-size);
+  line-height: var(--mantine-h1-line-height);
+  font-weight: var(--mantine-h1-font-weight);
+}
+```
+
+And in [fz and lh style props](/styles/style-props):
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Box fz="h1" lh="h1">
+      This text uses --mantine-h1-* variables
+    </Box>
+  );
+}
+```
+
+To change heading styles, can use `theme.headings` property:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  headings: {
+    sizes: {
+      h1: {
+        fontSize: '2rem',
+        lineHeight: '1.5',
+        fontWeight: '500',
+      },
+      h2: {
+        fontSize: '1.5rem',
+        lineHeight: '1.6',
+        fontWeight: '500',
+      },
+    },
+    // ...
+  },
+});
+```
+
+`theme.headings` object is deeply merged with the `DEFAULT_THEME.headings` object –
+it is not required to define all values, only those that you want to change.
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+// Changes only font-size of h1,
+// other values will be taken from the DEFAULT_THEME
+const theme = createTheme({
+  headings: {
+    sizes: {
+      h1: {
+        fontSize: '2rem',
+      },
+    },
+  },
+});
+```
+
+### Font smoothing
+
+Font smoothing variables control [-webkit-font-smoothing and moz-osx-font-smoothing](https://developer.mozilla.org/en-US/docs/Web/CSS/font-smooth)
+CSS properties. These variables are used to make text look better on screens with high pixel density.
+
+Font smoothing variables are controlled by `theme.fontSmoothing` [theme](/theming/theme-object) property, it is `true` by default. If `theme.fontSmoothing` is `false`, both variables will be set to `unset`.
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-webkit-font-smoothing',
+      description: 'Controls -webkit-font-smoothing CSS property',
+      defaultValue: 'antialiased',
+    },
+    {
+      variable: '--mantine-moz-font-smoothing',
+      description: 'Controls -moz-osx-font-smoothing CSS property',
+      defaultValue: 'grayscale',
+    },
+  ]}
+/>
+
+If you need to override font smoothing values, the best way is to disable `theme.fontSmoothing` and set [global styles](/styles/global)
+on the body element:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+// Disable font smoothing in your theme
+const theme = createTheme({
+  fontSmoothing: false,
+});
+```
+
+```scss
+// Add global styles to your project with desired font smoothing values
+body {
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+}
+```
+
+## Colors variables
+
+Colors variables are controlled by `theme.colors` and `theme.primaryColor`. Each color
+defined in `theme.colors` object is required to have 10 shades. Theme color can be
+referenced by its name and shade index, for example, `--mantine-color-red-6`.
+
+You can define new colors on the theme object or override existing colors:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    demo: [
+      '#FF0000',
+      '#FF3333',
+      '#FF6666',
+      '#FF9999',
+      '#FFCCCC',
+      '#FFEEEE',
+      '#FFFAFA',
+      '#FFF5F5',
+      '#FFF0F0',
+      '#FFEBEB',
+    ],
+  },
+});
+```
+
+The code above will define the following CSS variables:
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-color-demo-0',
+      defaultValue: '#FF0000',
+    },
+    {
+      variable: '--mantine-color-demo-1',
+      defaultValue: '#FF3333',
+    },
+    {
+      variable: '--mantine-color-demo-2',
+      defaultValue: '#FF6666',
+    },
+    {
+      variable: '--mantine-color-demo-3',
+      defaultValue: '#FF9999',
+    },
+    {
+      variable: '--mantine-color-demo-4',
+      defaultValue: '#FFCCCC',
+    },
+    {
+      variable: '--mantine-color-demo-5',
+      defaultValue: '#FFEEEE',
+    },
+    {
+      variable: '--mantine-color-demo-6',
+      defaultValue: '#FFFAFA',
+    },
+    {
+      variable: '--mantine-color-demo-7',
+      defaultValue: '#FFF5F5',
+    },
+    {
+      variable: '--mantine-color-demo-8',
+      defaultValue: '#FFF0F0',
+    },
+    {
+      variable: '--mantine-color-demo-9',
+      defaultValue: '#FFEBEB',
+    },
+  ]}
+/>
+
+### Variant colors
+
+Some Mantine components like [Button](/core/button) or [Badge](/core/badge) have `variant` prop
+that in combination with `color` prop controls the component text, background and border colors.
+For each variant and color, Mantine defines a set of CSS variables that control these colors.
+For example, for the default `blue` color the following CSS variables are defined:
+
+<CssVariablesGroup
+  data={[
+    { group: 'Filled variant' },
+    {
+      variable: '--mantine-color-blue-filled',
+      description: 'Background color of filled variant',
+      defaultValue: 'var(--mantine-color-blue-6)',
+    },
+    {
+      variable: '--mantine-color-blue-filled-hover',
+      description: 'Background color of filled variant on hover',
+      defaultValue: 'var(--mantine-color-blue-7)',
+    },
+    { group: 'Light variant' },
+    {
+      variable: '--mantine-color-blue-light',
+      description: 'Background color of light variant',
+      defaultValue: 'rgba(34, 139, 230, 0.1)',
+    },
+    {
+      variable: '--mantine-color-blue-light-hover',
+      description: 'Background color of light variant on hover',
+      defaultValue: 'rgba(34, 139, 230, 0.12)',
+    },
+    {
+      variable: '--mantine-color-blue-light-color',
+      description: 'Text color of light variant',
+      defaultValue: 'var(--mantine-color-blue-6)',
+    },
+    { group: 'Outline variant' },
+    {
+      variable: '--mantine-color-blue-outline',
+      description: 'Border color of outline variant',
+      defaultValue: 'var(--mantine-color-blue-6)',
+    },
+    {
+      variable: '--mantine-color-blue-outline-hover',
+      description: 'Border color of outline variant',
+      defaultValue: 'rgba(34, 139, 230, 0.05)',
+    },
+  ]}
+/>
+
+For example, if you use [Button](/core/button) component the following way:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button color="pink" variant="filled">
+      Filled pink button
+    </Button>
+  );
+}
+```
+
+The component will have the following styles:
+
+- Background color will be `var(--mantine-color-pink-filled)`
+- Background color on hover will be `var(--mantine-color-pink-filled-hover)`
+- Text color will be `var(--mantine-color-white)`
+- Border color will be `transparent`
+
+Note that the variables above are not static, they are generated based on the values of
+`theme.colors` and `theme.primaryShade`. Additionally, their values are different for
+dark and light color schemes.
+
+Variant colors variables are used in all components that support `color` prop, for example,
+[Button](/core/button), [Badge](/core/badge), [Avatar](/core/avatar) and [Pagination](/core/pagination).
+Colors values that are used by these components are determined by `cssVariablesResolver` described below
+and [variantColorResolver](/styles/variants-sizes/#variantcolorresolver).
+
+### Primary color variables
+
+Primary color variables are defined by `theme.primaryColor` (which must be a key of `theme.colors`).
+The following CSS variables are defined for the primary color:
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-primary-color-{shade}',
+      description:
+        'Shade is 0-9 to reference specific primary color shade',
+      defaultValue: 'var(--mantine-color-{primaryColor}-{shade})',
+    },
+    {
+      variable: '--mantine-primary-color-filled',
+      description: 'Background color of filled variant',
+      defaultValue: 'var(--mantine-color-{primaryColor}-filled)',
+    },
+    {
+      variable: '--mantine-primary-color-filled-hover',
+      description: 'Background color of filled variant on hover',
+      defaultValue:
+        'var(--mantine-color-{primaryColor}-filled-hover)',
+    },
+    {
+      variable: '--mantine-primary-color-light',
+      description: 'Background color of light variant',
+      defaultValue: 'var(--mantine-color-{primaryColor}-light)',
+    },
+    {
+      variable: '--mantine-primary-color-light-hover',
+      description: 'Background color of light variant on hover',
+      defaultValue: 'var(--mantine-color-{primaryColor}-light-hover)',
+    },
+    {
+      variable: '--mantine-primary-color-light-color',
+      description: 'Text color of light variant',
+      defaultValue: 'var(--mantine-color-{primaryColor}-light-color)',
+    },
+  ]}
+/>
+
+You can reference primary color variables in CSS:
+
+```scss
+.demo {
+  color: var(--mantine-primary-color-0);
+  background-color: var(--mantine-primary-color-filled);
+}
+```
+
+### Other color variables
+
+The following colors are used in various Mantine components. Note that default values
+are provided for the light color scheme, dark color scheme values are different.
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-color-white',
+      description: 'Value of theme.white',
+      defaultValue: '#fff',
+    },
+    {
+      variable: '--mantine-color-black',
+      description: 'Value of theme.black',
+      defaultValue: '#000',
+    },
+    {
+      variable: '--mantine-color-text',
+      description: 'Color used for text in the body element',
+      defaultValue: 'var(--mantine-color-black)',
+    },
+    {
+      variable: '--mantine-color-body',
+      description: 'Body background color',
+      defaultValue: 'var(--mantine-color-white)',
+    },
+    {
+      variable: '--mantine-color-error',
+      description: 'Color used for error messages and states',
+      defaultValue: 'var(--mantine-color-red-6)',
+    },
+    {
+      variable: '--mantine-color-placeholder',
+      description: 'Color used for input placeholders',
+      defaultValue: 'var(--mantine-color-gray-5)',
+    },
+    {
+      variable: '--mantine-color-dimmed',
+      description: 'Color used for dimmed text',
+      defaultValue: 'var(--mantine-color-gray-6)',
+    },
+    {
+      variable: '--mantine-color-bright',
+      description: 'Color used for bright text',
+      defaultValue: 'var(--mantine-color-black)',
+    },
+    {
+      variable: '--mantine-color-anchor',
+      description: 'Color used for links',
+      defaultValue: 'var(--mantine-primary-color-6)',
+    },
+    {
+      variable: '--mantine-color-default',
+      description: 'Background color of default variant',
+      defaultValue: 'var(--mantine-color-white)',
+    },
+    {
+      variable: '--mantine-color-default-hover',
+      description: 'Background color of default variant on hover',
+      defaultValue: 'var(--mantine-color-gray-0)',
+    },
+    {
+      variable: '--mantine-color-default-color',
+      description: 'Text color of default variant',
+      defaultValue: 'var(--mantine-color-black)',
+    },
+    {
+      variable: '--mantine-color-default-border',
+      description: 'Border color of default variant',
+      defaultValue: 'var(--mantine-color-gray-4)',
+    },
+  ]}
+/>
+
+## Spacing variables
+
+`theme.spacing` values are used in most Mantine components to control paddings, margins, and other
+spacing-related properties. The following CSS variables are defined based on `theme.spacing`:
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-spacing-xs',
+      defaultValue: '0.625rem (10px)',
+    },
+    {
+      variable: '--mantine-spacing-sm',
+      defaultValue: '0.75rem (12px)',
+    },
+    {
+      variable: '--mantine-spacing-md',
+      defaultValue: '1rem (16px)',
+    },
+    {
+      variable: '--mantine-spacing-lg',
+      defaultValue: '1.25rem (20px)',
+    },
+    {
+      variable: '--mantine-spacing-xl',
+      defaultValue: '2rem (32px)',
+    },
+  ]}
+/>
+
+To define custom spacing values, use `theme.spacing` property:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  spacing: {
+    xs: '0.5rem',
+    sm: '0.75rem',
+    md: '1rem',
+    lg: '1.5rem',
+    xl: '2rem',
+  },
+});
+```
+
+## Border radius variables
+
+Mantine components that support `radius` prop use border radius variables to control border radius.
+The following CSS variables are defined based on `theme.radius`:
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-radius-xs',
+      defaultValue: '0.125rem (2px)',
+    },
+    {
+      variable: '--mantine-radius-sm',
+      defaultValue: '0.25rem (4px)',
+    },
+    {
+      variable: '--mantine-radius-md',
+      defaultValue: '0.5rem (8px)',
+    },
+    {
+      variable: '--mantine-radius-lg',
+      defaultValue: '1rem (16px)',
+    },
+    {
+      variable: '--mantine-radius-xl',
+      defaultValue: '2rem (32px)',
+    },
+  ]}
+/>
+
+Additionally, `--mantine-radius-default` variable is defined based on `theme.defaultRadius`
+value. If `radius` prop on components is not set explicitly, `--mantine-radius-default` is used instead.
+
+To define custom border radius values, use `theme.radius` and `theme.defaultRadius` properties:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  defaultRadius: 'sm',
+  radius: {
+    xs: '0.25rem',
+    sm: '0.5rem',
+    md: '1rem',
+    lg: '2rem',
+    xl: '3rem',
+  },
+});
+```
+
+## Shadow variables
+
+Shadow variables are used in all Mantine components that support `shadow` prop. The following CSS
+variables are defined based on `theme.shadows`:
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-shadow-xs',
+      defaultValue:
+        '0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1)',
+    },
+    {
+      variable: '--mantine-shadow-sm',
+      defaultValue:
+        '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 10px 15px -5px, rgba(0, 0, 0, 0.04) 0 7px 7px -5px',
+    },
+    {
+      variable: '--mantine-shadow-md',
+      defaultValue:
+        '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 20px 25px -5px, rgba(0, 0, 0, 0.04) 0 10px 10px -5px',
+    },
+    {
+      variable: '--mantine-shadow-lg',
+      defaultValue:
+        '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 28px 23px -7px, rgba(0, 0, 0, 0.04) 0 12px 12px -7px',
+    },
+    {
+      variable: '--mantine-shadow-xl',
+      defaultValue:
+        '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 36px 28px -7px, rgba(0, 0, 0, 0.04) 0 17px 17px -7px',
+    },
+  ]}
+/>
+
+To define custom shadow values, use `theme.shadows` property:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  shadows: {
+    xs: '0 1px 2px rgba(0, 0, 0, 0.1)',
+    sm: '0 1px 3px rgba(0, 0, 0, 0.1)',
+    md: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    lg: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    xl: '0 8px 16px rgba(0, 0, 0, 0.1)',
+  },
+});
+```
+
+## z-index variables
+
+z-index variables are defined in `@mantine/core/styles.css`. Unlike other variables,
+z-index variables are not controlled by the theme and are not exposed in the theme object.
+
+<CssVariablesGroup
+  data={[
+    {
+      variable: '--mantine-z-index-app',
+      defaultValue: '100',
+    },
+    {
+      variable: '--mantine-z-index-modal',
+      defaultValue: '200',
+    },
+    {
+      variable: '--mantine-z-index-popover',
+      defaultValue: '300',
+    },
+    {
+      variable: '--mantine-z-index-overlay',
+      defaultValue: '400',
+    },
+    {
+      variable: '--mantine-z-index-max',
+      defaultValue: '9999',
+    },
+  ]}
+/>
+
+You can reference z-index variables in CSS:
+
+```css
+/* Display content above the modal */
+.my-content {
+  z-index: calc(var(--mantine-z-index-modal) + 1);
+}
+```
+
+And in components by referencing CSS variable:
+
+```tsx
+import { Modal } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Modal
+      zIndex="var(--mantine-z-index-max)"
+      opened
+      onClose={() => {}}
+    >
+      Modal content
+    </Modal>
+  );
+}
+```
+
+## CSS variables resolver
+
+`cssVariablesResolver` prop on [MantineProvider](/theming/mantine-provider) allows you to
+modify values of Mantine CSS variables or even add your own variables.
+`cssVariablesResolver` is a function that accepts [theme](/theming/theme-object) as a single
+argument and returns an object with CSS variables divided into three groups:
+
+- `variables` – variables that do not depend on color scheme
+- `light` – variables for light color scheme only
+- `dark` – variables for dark color scheme only
+
+Example of adding new CSS variables based on `theme.other`:
+
+```tsx
+import {
+  createTheme,
+  CSSVariablesResolver,
+  MantineProvider,
+  rem,
+} from '@mantine/core';
+
+const themeOverride = createTheme({
+  other: {
+    deepOrangeLight: '#E17900',
+    deepOrangeDark: '#FC8C0C',
+    heroHeight: rem(400),
+  },
+});
+
+const resolver: CSSVariablesResolver = (theme) => ({
+  variables: {
+    '--mantine-hero-height': theme.other.heroHeight,
+  },
+  light: {
+    '--mantine-color-deep-orange': theme.other.deepOrangeLight,
+  },
+  dark: {
+    '--mantine-color-deep-orange': theme.other.deepOrangeDark,
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={themeOverride}
+      cssVariablesResolver={resolver}
+    >
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+Then you will be able to use `--mantine-hero-height` and `--mantine-color-deep-orange` variables
+in any part of your application:
+
+```css
+.hero {
+  height: var(--mantine-hero-height);
+
+  /* background color will automatically change based on color scheme */
+  background-color: var(--mantine-color-deep-orange);
+}
+```

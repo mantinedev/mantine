@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -41,7 +41,7 @@ export interface AvatarProps extends BoxProps, StylesApiProps<AvatarFactory> {
   /** Key of `theme.radius` or any valid CSS value to set border-radius, `'100%'` by default */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color, default value is `theme.primaryColor`  */
+  /** Key of `theme.colors` or any valid CSS color, default value is `'gray'`  */
   color?: MantineColor;
 
   /** Gradient configuration used when `variant="gradient"`, default value is `theme.defaultGradient` */

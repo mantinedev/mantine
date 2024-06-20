@@ -17,11 +17,17 @@ export interface ChartReferenceLineProps extends Omit<ReferenceLineProps, 'ref' 
 
 export interface ChartSeries {
   name: string;
-  color: MantineColor;
+  color?: MantineColor;
   label?: string;
 }
 
-export type BaseChartStylesNames = 'root' | 'container' | 'axis' | 'grid' | 'referenceLine';
+export type BaseChartStylesNames =
+  | 'root'
+  | 'container'
+  | 'axis'
+  | 'grid'
+  | 'referenceLine'
+  | 'axisLabel';
 
 export type ChartData = Record<string, any>[];
 
@@ -35,10 +41,10 @@ export interface GridChartBaseProps {
   /** Reference lines that should be displayed on the chart */
   referenceLines?: ChartReferenceLineProps[];
 
-  /** Determines whether x-axis should be hidden, `true` by default */
+  /** Determines whether x-axis should be displayed, `true` by default */
   withXAxis?: boolean;
 
-  /** Determines whether y-axis should be hidden, `true` by default */
+  /** Determines whether y-axis should be displayed, `true` by default */
   withYAxis?: boolean;
 
   /** Props passed down to the `XAxis` recharts component */
@@ -88,4 +94,10 @@ export interface GridChartBaseProps {
 
   /** A function to format values on Y axis and inside the tooltip */
   valueFormatter?: (value: number) => string;
+
+  /** A label to display below the x-axis */
+  xAxisLabel?: string;
+
+  /** A label to display next to the y-axis */
+  yAxisLabel?: string;
 }

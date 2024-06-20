@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Box, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
@@ -9,7 +9,13 @@ import { useForm } from '@mantine/form';
 import { TextInput, Box } from '@mantine/core';
 
 function Demo() {
-  const form = useForm({ initialValues: { name: '', occupation: '' } });
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '', occupation: '' },
+    onValuesChange: (values) => {
+      window.localStorage.setItem('user-form', JSON.stringify(values));
+    },
+  });
 
   useEffect(() => {
     const storedValue = window.localStorage.getItem('user-form');
@@ -22,17 +28,19 @@ function Demo() {
     }
   }, []);
 
-  useEffect(() => {
-    window.localStorage.setItem('user-form', JSON.stringify(form.values));
-  }, [form.values]);
-
   return (
     <Box maw={340} mx="auto">
-      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
       <TextInput
         mt="md"
         label="Occupation"
         placeholder="Occupation"
+        key={form.key('occupation')}
         {...form.getInputProps('occupation')}
       />
     </Box>
@@ -41,7 +49,13 @@ function Demo() {
 `;
 
 function Demo() {
-  const form = useForm({ initialValues: { name: '', occupation: '' } });
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '', occupation: '' },
+    onValuesChange: (values) => {
+      window.localStorage.setItem('user-form', JSON.stringify(values));
+    },
+  });
 
   useEffect(() => {
     const storedValue = window.localStorage.getItem('user-form');
@@ -55,17 +69,19 @@ function Demo() {
     }
   }, []);
 
-  useEffect(() => {
-    window.localStorage.setItem('user-form', JSON.stringify(form.values));
-  }, [form.values]);
-
   return (
     <Box maw={340} mx="auto">
-      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
       <TextInput
         mt="md"
         label="Occupation"
         placeholder="Occupation"
+        key={form.key('occupation')}
         {...form.getInputProps('occupation')}
       />
     </Box>

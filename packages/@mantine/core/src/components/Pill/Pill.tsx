@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   BoxProps,
@@ -117,7 +116,10 @@ export const Pill = factory<PillFactory>((_props, ref) => {
       variant={_variant}
       size={_size}
       {...getStyles('root', { variant: _variant })}
-      mod={[{ 'with-remove': withRemoveButton, disabled: disabled || ctx?.disabled }, mod]}
+      mod={[
+        { 'with-remove': withRemoveButton && !disabled, disabled: disabled || ctx?.disabled },
+        mod,
+      ]}
       {...others}
     >
       <span {...getStyles('label')}>{children}</span>

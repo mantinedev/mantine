@@ -1,0 +1,198 @@
+import { LineChartDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.LineChart);
+
+## Usage
+
+<Demo data={LineChartDemos.usage} />
+
+## Legend
+
+To display chart legend, set `withLegend` prop. When one of the items in the legend
+is hovered, the corresponding data series is highlighted in the chart.
+
+<Demo data={LineChartDemos.legend} />
+
+## Legend position
+
+You can pass props down to recharts [Legend](https://recharts.org/en-US/api/Legend)
+component with `legendProps` prop. For example, setting `legendProps={{ verticalAlign: 'bottom', height: 50 }}`
+will render the legend at the bottom of the chart and set its height to 50px.
+
+<Demo data={LineChartDemos.legendPosition} />
+
+## Series labels
+
+By default, series `name` is used as a label. To change it, set `label`
+property in `series` object:
+
+<Demo data={LineChartDemos.seriesLabels} />
+
+## Connect nulls
+
+Use `connectNulls` prop to specify whether to connect a data point across null
+points. By default, `connectNulls` is `true`.
+
+<Demo data={LineChartDemos.connectNulls} />
+
+## X and Y axis props
+
+Use `xAxisProps` and `yAxisProps` to pass props down to recharts [XAxis](https://recharts.org/en-US/api/XAxis)
+and [YAxis](https://recharts.org/en-US/api/YAxis) components. For example, these props
+can be used to change orientation of axis:
+
+<Demo data={LineChartDemos.axisProps} />
+
+## Axis labels
+
+Use `xAxisLabel` and `yAxisLabel` props to display axis labels:
+
+<Demo data={LineChartDemos.axisLabels} />
+
+## X axis offset
+
+Use `xAxisProps` to set padding between the charts ends and the x-axis:
+
+<Demo data={LineChartDemos.xAxisOffset} />
+
+## Y axis scale
+
+Use `yAxisProps` to change domain of the Y axis. For example, if you know that
+your data will always be in the range of 0 to 100, you can set domain to `[0, 100]`:
+
+<Demo data={LineChartDemos.yScale} />
+
+## Value formatter
+
+To format values in the tooltip and axis ticks, use `valueFormat` prop. It accepts
+a function that takes number value as an argument and returns formatted value:
+
+<Demo data={LineChartDemos.valueFormatter} />
+
+## Line color
+
+You can reference colors from [theme](/theming/theme-object) the same way as in
+other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
+color value is also accepted.
+
+<Demo data={LineChartDemos.color} />
+
+## Change line color depending on color scheme
+
+You can use CSS variables in `color` property. To define a CSS variable that
+changes depending on the color scheme, use [light/dark mixins](/styles/postcss-preset/#dark-and-light-mixins)
+or [light-dark function](/styles/postcss-preset/#light-dark-function). Example
+of line that is dark orange in light mode and lime in dark mode:
+
+<Demo data={LineChartDemos.colorSchemeColor} />
+
+## Stroke dash array
+
+Set `strokeDasharray` prop to control the stroke dash array of the grid and cursor
+lines. The value represent the lengths of alternating dashes and gaps. For example,
+`strokeDasharray="10 5"` will render a dashed line with 10px dashes and 5px gaps.
+
+<Demo data={LineChartDemos.strokeDasharray} />
+
+## Grid and text colors
+
+Use `--chart-grid-color` and `--chart-text-color` to change colors of
+grid lines and text within the chart. With [CSS modules](/styles/css-modules/), you can change colors
+depending on color scheme:
+
+<Demo data={LineChartDemos.gridColor} />
+
+If your application has only one color scheme, you can use `gridColor` and `textColor`
+props instead of CSS variables:
+
+```tsx
+import { LineChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <LineChart
+      h={300}
+      data={data}
+      dataKey="date"
+      gridColor="gray.5"
+      textColor="gray.9"
+      series={[
+        { name: 'Apples', color: 'indigo.6' },
+        { name: 'Oranges', color: 'blue.6' },
+        { name: 'Tomatoes', color: 'teal.6' },
+      ]}
+    />
+  );
+}
+```
+
+## Tooltip animation
+
+By default, tooltip animation is disabled. To enable it, set `tooltipAnimationDuration`
+prop to a number of milliseconds to animate the tooltip position change.
+
+<Demo data={LineChartDemos.tooltipAnimation} />
+
+## Units
+
+Set `unit` prop to render a unit label next to the y-axis ticks and tooltip values:
+
+<Demo data={LineChartDemos.unit} />
+
+## Custom tooltip
+
+Use `tooltipProps.content` to pass custom tooltip renderer to recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)
+component. Note that it is required to filter recharts payload with `getFilteredChartTooltipPayload`
+function to remove empty values that are used for styling purposes only.
+
+<Demo data={LineChartDemos.customTooltip} />
+
+## Remove tooltip
+
+To remove tooltip, set `withTooltip={false}`. It also removes the cursor line
+and disables interactions with the chart.
+
+<Demo data={LineChartDemos.noTooltip} />
+
+## Customize dots
+
+Use `dotProps` to pass props down to recharts dot in regular state and `activeDotProps`
+to pass props down to recharts dot in active state (when cursor is over the current series).
+
+<Demo data={LineChartDemos.dotProps} />
+
+## Stroke width
+
+Use `strokeWidth` prop to control the stroke width of all lines:
+
+<Demo data={LineChartDemos.strokeWidth} />
+
+## Sync multiple LineCharts
+
+You can pass props down to recharts [LineChart](https://recharts.org/en-US/api/LineChart)
+component with `lineChartProps` prop. For example, setting `lineChartProps={{ syncId: 'any-id' }}`
+will sync tooltip of multiple `LineChart` components with the same `syncId` prop.
+
+<Demo data={LineChartDemos.sync} />
+
+## Vertical orientation
+
+Set `orientation="vertical"` to render a vertical line chart:
+
+<Demo data={LineChartDemos.vertical} />
+
+## Dashed line line
+
+Set `strokeDasharray` property in `series` to change line style to dashed:
+
+<Demo data={LineChartDemos.lineDasharray} />
+
+## Reference lines
+
+Use `referenceLines` prop to render reference lines. Reference lines are always
+rendered behind the chart.
+
+<Demo data={LineChartDemos.referenceLines} />

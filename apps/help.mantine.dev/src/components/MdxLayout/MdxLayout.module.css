@@ -1,0 +1,45 @@
+.header {
+  padding-top: 20px;
+  padding-bottom: 60px;
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+  margin-bottom: var(--mantine-spacing-xl);
+
+  @mixin smaller-than $sm {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+}
+
+.title {
+  margin-top: 30px;
+  font-size: 50px;
+  line-height: 1.1;
+  text-wrap: balance;
+  color: var(--mantine-color-bright);
+
+  @mixin smaller-than $sm {
+    font-size: 32px;
+  }
+}
+
+.links {
+  margin-top: var(--mantine-spacing-lg);
+}
+
+.inner {
+  --table-of-contents-width: 300px;
+
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+
+  @mixin smaller-than $md {
+    --table-of-contents-width: 0;
+  }
+}
+
+.content {
+  flex: 0 0 calc(100% - var(--table-of-contents-width));
+  overflow: hidden;
+  max-width: 100%;
+}

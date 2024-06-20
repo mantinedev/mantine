@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { ScrollAreaScrollbarAxisProps } from '../ScrollArea.types';

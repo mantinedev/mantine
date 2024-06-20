@@ -1,4 +1,3 @@
-import React from 'react';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 import { MantineTransition } from './transitions';
 import { useTransition } from './use-transition';

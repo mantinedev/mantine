@@ -1,0 +1,135 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Storybook);
+
+# Setup Mantine in Storybook
+
+Note that this guide covers only Storybook 7.0+ integration. If you are using older version of Storybook,
+it will not work for you.
+
+## Add Storybook to your application
+
+If you already have Storybook in your application, you can skip this step.
+
+Follow [Storybook getting started](https://storybook.js.org/docs/react/get-started/install/) guide
+to add Storybook to your application:
+
+```bash
+npx storybook@latest init
+```
+
+## Configure addons
+
+Note that `@storybook/addon-styling-webpack` is required only if you are
+not using Vite. **If you are using Vite, do not install `@storybook/addon-styling-webpack` and do not add it to the addons section in `main.ts` file**.
+
+Install Storybook addons:
+
+- [storybook-dark-mode](https://storybook.js.org/addons/storybook-dark-mode/)
+- [@storybook/addon-styling-webpack](https://storybook.js.org/addons/@storybook/addon-styling-webpack)
+
+<InstallScript
+  packages="storybook-dark-mode @storybook/addon-styling-webpack"
+  dev
+/>
+
+Add addons to `.storybook/main.ts`:
+
+```tsx
+import type { StorybookConfig } from '@storybook/react-vite';
+
+const config: StorybookConfig = {
+  // ... other config properties
+  addons: [
+    // ... other addons
+    '@storybook/addon-styling-webpack', // Add this line only if you are not using Vite
+    'storybook-dark-mode',
+  ],
+};
+
+export default config;
+```
+
+## Theme object
+
+To shared [theme object](/theming/theme-object) between your application and Storybook, create
+`src/theme.ts` (or any other path in your application) file with your theme override:
+
+```tsx
+// src/theme.ts
+import { createTheme } from '@mantine/core';
+
+export const theme = createTheme({
+  fontFamily: 'serif',
+  // ... other theme override properties
+});
+```
+
+Then you will be able to use the same theme both in your application and Storybook:
+
+```tsx
+// In your application
+
+import { MantineProvider } from '@mantine/core';
+import { theme } from './theme';
+
+function App() {
+  return <MantineProvider theme={theme}>{/* ... */}</MantineProvider>;
+}
+```
+
+## Storybook preview
+
+If `.storybook/preview.tsx` file does not exist, create it and add
+the following content:
+
+```tsx
+// Import styles of packages that you've installed.
+// All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
+
+import { useEffect } from 'react';
+import { addons } from '@storybook/preview-api';
+import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
+import {
+  MantineProvider,
+  useMantineColorScheme,
+} from '@mantine/core';
+// theme.ts file from previous step
+import { theme } from '../src/theme';
+
+const channel = addons.getChannel();
+
+function ColorSchemeWrapper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { setColorScheme } = useMantineColorScheme();
+  const handleColorScheme = (value: boolean) =>
+    setColorScheme(value ? 'dark' : 'light');
+
+  useEffect(() => {
+    channel.on(DARK_MODE_EVENT_NAME, handleColorScheme);
+    return () => channel.off(DARK_MODE_EVENT_NAME, handleColorScheme);
+  }, [channel]);
+
+  return <>{children}</>;
+}
+
+export const decorators = [
+  (renderStory: any) => (
+    <ColorSchemeWrapper>{renderStory()}</ColorSchemeWrapper>
+  ),
+  (renderStory: any) => (
+    <MantineProvider theme={theme}>{renderStory()}</MantineProvider>
+  ),
+];
+```
+
+All set! Start Storybook:
+
+```bash
+npm run storybook
+```

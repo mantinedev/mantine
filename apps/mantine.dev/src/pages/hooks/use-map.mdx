@@ -1,0 +1,18 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useMap);
+
+## Usage
+
+`useMap` returns [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
+object that can be used as React state – `set`, `clear` and `delete` methods update state and trigger rerender.
+
+<Demo data={HooksDemos.useMapUsage} />
+
+## Definition
+
+```tsx
+function useMap<T, V>(initialState?: [T, V][]): Map<T, V>;
+```

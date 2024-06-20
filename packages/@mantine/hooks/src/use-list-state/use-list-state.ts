@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export interface UseListStateHandlers<T> {
   setState: React.Dispatch<React.SetStateAction<T[]>>;
@@ -14,6 +14,7 @@ export interface UseListStateHandlers<T> {
   ) => void;
   remove: (...indices: number[]) => void;
   reorder: ({ from, to }: { from: number; to: number }) => void;
+  swap: ({ from, to }: { from: number; to: number }) => void;
   setItem: (index: number, item: T) => void;
   setItemProp: <K extends keyof T, U extends T[K]>(index: number, prop: K, value: U) => void;
   filter: (fn: (item: T, i: number) => boolean) => void;
@@ -61,6 +62,18 @@ export function useListState<T>(initialValue: T[] = []): UseListState<T> {
       return cloned;
     });
 
+  const swap = ({ from, to }: { from: number; to: number }) =>
+    setState((current) => {
+      const cloned = [...current];
+      const fromItem = cloned[from];
+      const toItem = cloned[to];
+
+      cloned.splice(to, 1, fromItem);
+      cloned.splice(from, 1, toItem);
+
+      return cloned;
+    });
+
   const setItem = (index: number, item: T) =>
     setState((current) => {
       const cloned = [...current];
@@ -100,6 +113,7 @@ export function useListState<T>(initialValue: T[] = []): UseListState<T> {
       applyWhere,
       remove,
       reorder,
+      swap,
       setItem,
       setItemProp,
       filter,

@@ -62,3 +62,8 @@ export const Demo_closeIcon = {
   name: '⭐ Demo: closeIcon',
   render: renderDemo(demos.closeIcon),
 };
+
+export const Demo_initialFocusTrap = {
+  name: '⭐ Demo: initialFocusTrap',
+  render: renderDemo(demos.initialFocusTrap),
+};

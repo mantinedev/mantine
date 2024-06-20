@@ -1,0 +1,37 @@
+import { NprogressDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Nprogress);
+
+## Installation
+
+<InstallScript packages="@mantine/nprogress" />
+
+After installation import package styles at the root of your application:
+
+```tsx
+import '@mantine/nprogress/styles.css';
+```
+
+## Setup NavigationProgress
+
+Render `NavigationProgress` anywhere in your app within [MantineProvider](/theming/mantine-provider/):
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+import { NavigationProgress } from '@mantine/nprogress';
+
+function Demo() {
+  return (
+    <MantineProvider>
+      <NavigationProgress />
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+## Usage
+
+<Demo data={NprogressDemos.usage} />

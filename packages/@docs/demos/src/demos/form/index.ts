@@ -25,3 +25,8 @@ export { initialize } from './Form.demo.initialize';
 export { enhanceGetInputProps } from './Form.demo.enhanceGetInputProps';
 export { enhanceGetInputPropsOptions } from './Form.demo.enhanceGetInputPropsOptions';
 export { enhanceGetInputPropsForm } from './Form.demo.enhanceGetInputPropsForm';
+export { controlled } from './Form.demo.controlled';
+export { uncontrolled } from './Form.demo.uncontrolled';
+export { onValuesChange } from './Form.demo.onValuesChange';
+export { watch } from './Form.demo.watch';
+export { focusError } from './Form.demo.focusError';

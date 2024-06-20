@@ -1,4 +1,3 @@
-import React from 'react';
 import { useFocusReturn, useMergedRef } from '@mantine/hooks';
 import {
   Box,

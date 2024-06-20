@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Switch } from '../Switch';
 import { SwitchGroup, SwitchGroupProps, SwitchGroupStylesNames } from './SwitchGroup';
@@ -39,18 +38,18 @@ describe('@mantine/core/SwitchGroup', () => {
 
   it('supports uncontrolled state', async () => {
     render(<SwitchGroup {...defaultProps} defaultValue={['test-value-1']} />);
-    expect(screen.getAllByRole('checkbox')[0]).toBeChecked();
-    await userEvent.click(screen.getAllByRole('checkbox')[1]);
-    expect(screen.getAllByRole('checkbox')[1]).toBeChecked();
+    expect(screen.getAllByRole('switch')[0]).toBeChecked();
+    await userEvent.click(screen.getAllByRole('switch')[1]);
+    expect(screen.getAllByRole('switch')[1]).toBeChecked();
   });
 
   it('supports controlled state', async () => {
     const spy = jest.fn();
     render(<SwitchGroup {...defaultProps} value={['test-value-2']} onChange={spy} />);
-    expect(screen.getAllByRole('checkbox')[1]).toBeChecked();
-    await userEvent.click(screen.getAllByRole('checkbox')[0]);
-    expect(screen.getAllByRole('checkbox')[1]).toBeChecked();
-    expect(screen.getAllByRole('checkbox')[0]).not.toBeChecked();
+    expect(screen.getAllByRole('switch')[1]).toBeChecked();
+    await userEvent.click(screen.getAllByRole('switch')[0]);
+    expect(screen.getAllByRole('switch')[1]).toBeChecked();
+    expect(screen.getAllByRole('switch')[0]).not.toBeChecked();
     expect(spy).toHaveBeenCalledWith(['test-value-2', 'test-value-1']);
   });
 });

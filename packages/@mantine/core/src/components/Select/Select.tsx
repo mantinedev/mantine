@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo } from 'react';
-import { useId, useUncontrolled } from '@mantine/hooks';
+import { useEffect, useMemo } from 'react';
+import { useId, usePrevious, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
   ElementProps,
@@ -14,6 +14,7 @@ import {
   Combobox,
   ComboboxItem,
   ComboboxLikeProps,
+  ComboboxLikeRenderOptionInput,
   ComboboxLikeStylesNames,
   getOptionsLockup,
   getParsedComboboxData,
@@ -22,6 +23,7 @@ import {
 } from '../Combobox';
 import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
 import { InputBase } from '../InputBase';
+import { ScrollAreaProps } from '../ScrollArea';
 
 export type SelectStylesNames = __InputStylesNames | ComboboxLikeStylesNames;
 
@@ -39,6 +41,9 @@ export interface SelectProps
 
   /** Called when value changes */
   onChange?: (value: string | null, option: ComboboxItem) => void;
+
+  /** Called when the clear button is clicked */
+  onClear?: () => void;
 
   /** Determines whether the select should be searchable, `false` by default */
   searchable?: boolean;
@@ -71,7 +76,13 @@ export interface SelectProps
   clearButtonProps?: __CloseButtonProps & ElementProps<'button'>;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+  hiddenInputProps?: Omit<React.ComponentPropsWithoutRef<'input'>, 'value'>;
+
+  /** A function to render content of the option, replaces the default content of the option */
+  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
+
+  /** Props passed down to the underlying `ScrollArea` component in the dropdown */
+  scrollAreaProps?: ScrollAreaProps;
 }
 
 export type SelectFactory = Factory<{
@@ -133,6 +144,10 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     clearable,
     clearButtonProps,
     hiddenInputProps,
+    renderOption,
+    onClear,
+    autoComplete,
+    scrollAreaProps,
     ...others
   } = props;
 
@@ -140,7 +155,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
   const optionsLockup = useMemo(() => getOptionsLockup(parsedData), [parsedData]);
   const _id = useId(id);
 
-  const [_value, setValue] = useUncontrolled({
+  const [_value, setValue, controlled] = useUncontrolled({
     value,
     defaultValue,
     finalValue: null,
@@ -148,6 +163,8 @@ export const Select = factory<SelectFactory>((_props, ref) => {
   });
 
   const selectedOption = typeof _value === 'string' ? optionsLockup[_value] : undefined;
+  const previousSelectedOption = usePrevious(selectedOption);
+
   const [search, setSearch] = useUncontrolled({
     value: searchValue,
     defaultValue: defaultSearchValue,
@@ -158,7 +175,10 @@ export const Select = factory<SelectFactory>((_props, ref) => {
   const combobox = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
-    onDropdownOpen,
+    onDropdownOpen: () => {
+      onDropdownOpen?.();
+      combobox.updateSelectedOptionIndex('active', { scrollIntoView: true });
+    },
     onDropdownClose: () => {
       onDropdownClose?.();
       combobox.resetSelectedOption();
@@ -182,7 +202,12 @@ export const Select = factory<SelectFactory>((_props, ref) => {
       setSearch('');
     }
 
-    if (typeof value === 'string' && selectedOption) {
+    if (
+      typeof value === 'string' &&
+      selectedOption &&
+      (previousSelectedOption?.value !== selectedOption.value ||
+        previousSelectedOption?.label !== selectedOption.label)
+    ) {
       setSearch(selectedOption.label);
     }
   }, [value, selectedOption]);
@@ -194,6 +219,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
       onClear={() => {
         setValue(null, null);
         setSearch('');
+        onClear?.();
       }}
     />
   );
@@ -218,13 +244,13 @@ export const Select = factory<SelectFactory>((_props, ref) => {
           const nextValue = optionLockup ? optionLockup.value : null;
 
           setValue(nextValue, optionLockup);
-          setSearch(typeof nextValue === 'string' ? optionLockup?.label || '' : '');
+          !controlled && setSearch(typeof nextValue === 'string' ? optionLockup?.label || '' : '');
           combobox.closeDropdown();
         }}
         size={size}
         {...comboboxProps}
       >
-        <Combobox.Target targetType={searchable ? 'input' : 'button'}>
+        <Combobox.Target targetType={searchable ? 'input' : 'button'} autoComplete={autoComplete}>
           <InputBase
             id={_id}
             ref={ref}
@@ -279,13 +305,15 @@ export const Select = factory<SelectFactory>((_props, ref) => {
           withCheckIcon={withCheckIcon}
           nothingFoundMessage={nothingFoundMessage}
           unstyled={unstyled}
-          labelId={`${_id}-label`}
+          labelId={others.label ? `${_id}-label` : undefined}
+          aria-label={others.label ? undefined : others['aria-label']}
+          renderOption={renderOption}
+          scrollAreaProps={scrollAreaProps}
         />
       </Combobox>
-      <input
-        type="hidden"
+      <Combobox.HiddenInput
+        value={_value}
         name={name}
-        value={_value || ''}
         form={form}
         disabled={disabled}
         {...hiddenInputProps}

@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -36,6 +36,8 @@ export interface InlineInputProps
   error: React.ReactNode;
   size: MantineSize | (string & {}) | undefined;
   labelPosition?: 'left' | 'right';
+  bodyElement?: any;
+  labelElement?: any;
 }
 
 export type InlineInputFactory = Factory<{
@@ -60,6 +62,8 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
       error,
       size,
       labelPosition = 'left',
+      bodyElement = 'div',
+      labelElement = 'label',
       variant,
       style,
       vars,
@@ -92,14 +96,23 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
         size={size}
         {...others}
       >
-        <div {...getStyles('body')}>
+        <Box
+          component={bodyElement}
+          htmlFor={bodyElement === 'label' ? id : undefined}
+          {...getStyles('body')}
+        >
           {children}
 
           <div {...getStyles('labelWrapper')} data-disabled={disabled || undefined}>
             {label && (
-              <label {...getStyles('label')} data-disabled={disabled || undefined} htmlFor={id}>
+              <Box
+                component={labelElement}
+                htmlFor={labelElement === 'label' ? id : undefined}
+                {...getStyles('label')}
+                data-disabled={disabled || undefined}
+              >
                 {label}
-              </label>
+              </Box>
             )}
 
             {description && (
@@ -108,13 +121,13 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
               </Input.Description>
             )}
 
-            {error && error !== 'boolean' && (
+            {error && typeof error !== 'boolean' && (
               <Input.Error size={size} __inheritStyles={false} {...getStyles('error')}>
                 {error}
               </Input.Error>
             )}
           </div>
-        </div>
+        </Box>
       </Box>
     );
   }

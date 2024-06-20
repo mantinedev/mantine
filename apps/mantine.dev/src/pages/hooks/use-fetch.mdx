@@ -1,0 +1,31 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useFetch);
+
+## Usage
+
+`useFetch` hook sends a GET request to the specified URL and returns the response data, loading state, error,
+`refetch` and `abort` functions.
+
+<Demo data={HooksDemos.useFetchUsage} />
+
+## Definition
+
+```tsx
+export interface UseFetchOptions extends RequestInit {
+  autoInvoke?: boolean;
+}
+
+function useFetch<T>(
+  url: string,
+  options?: UseFetchOptions
+): {
+  data: T | null;
+  loading: boolean;
+  error: Error | null;
+  refetch: () => Promise<T> | undefined;
+  abort: () => void;
+};
+```

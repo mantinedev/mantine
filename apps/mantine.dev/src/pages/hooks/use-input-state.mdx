@@ -1,0 +1,70 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useInputState);
+
+## Usage
+
+`use-input-state` handles state of native inputs (with event in `onChange` handler) and custom inputs (with value in `onChange` handler).
+Hook works with all Mantine and native inputs:
+
+```tsx
+import { useState } from 'react';
+import { NumberInput, TextInput } from '@mantine/core';
+import { useInputState } from '@mantine/hooks';
+
+function WithUseInputState() {
+  const [stringValue, setStringValue] = useInputState('');
+  const [numberValue, setNumberValue] = useInputState<
+    string | number
+  >(0);
+
+  return (
+    <>
+      <input
+        type="text"
+        value={stringValue}
+        onChange={setStringValue}
+      />
+      <TextInput value={stringValue} onChange={setStringValue} />
+      <NumberInput value={numberValue} onChange={setNumberValue} />
+    </>
+  );
+}
+
+function WithUseState() {
+  const [stringValue, setStringValue] = useState('');
+  const [numberValue, setNumberValue] = useState<string | number>(0);
+
+  return (
+    <>
+      <input
+        type="text"
+        value={stringValue}
+        onChange={(event) =>
+          setStringValue(event.currentTarget.value)
+        }
+      />
+      <TextInput
+        value={stringValue}
+        onChange={(event) =>
+          setStringValue(event.currentTarget.value)
+        }
+      />
+      <NumberInput value={numberValue} onChange={setNumberValue} />
+    </>
+  );
+}
+```
+
+## Definition
+
+```tsx
+function useInputState<T>(
+  initialState: T
+): [
+  T,
+  (value: null | undefined | T | React.ChangeEvent<any>) => void,
+];
+```

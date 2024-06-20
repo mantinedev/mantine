@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Checkbox, NativeSelect, Textarea, TextInput } from '@mantine/core';
 import { createFormActions } from '../actions';
 import { useForm } from '../use-form';

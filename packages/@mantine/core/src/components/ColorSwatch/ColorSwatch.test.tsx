@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { ColorSwatch, ColorSwatchProps, ColorSwatchStylesNames } from './ColorSwatch';
 

@@ -1,3 +1,7 @@
+.container {
+  container: simple-grid / inline-size;
+}
+
 .root {
   display: grid;
   grid-template-columns: repeat(var(--sg-cols), minmax(0, 1fr));

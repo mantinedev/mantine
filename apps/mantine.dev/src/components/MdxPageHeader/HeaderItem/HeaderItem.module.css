@@ -1,0 +1,29 @@
+.item {
+  display: flex;
+  align-items: center;
+  min-height: 20px;
+  overflow-x: hidden;
+
+  & + & {
+    margin-top: var(--mantine-spacing-xs);
+  }
+}
+
+.label {
+  width: 100px;
+  min-width: 100px;
+  height: 20px;
+  line-height: 20px;
+
+  @media (max-width: 31em) {
+    display: none;
+  }
+
+  @mixin light {
+    color: var(--mantine-color-gray-6);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-dark-2);
+  }
+}

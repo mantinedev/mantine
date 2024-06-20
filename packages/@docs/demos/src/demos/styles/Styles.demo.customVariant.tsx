@@ -1,4 +1,3 @@
-import React from 'react';
 import { Input } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Styles.demo.customVariant.module.css';
@@ -28,7 +27,7 @@ function Demo() {
 const cssCode = `
 .input {
   &[data-variant='underline'] {
-    border-bottom: rem(2px) solid;
+    border-bottom: 2px solid;
     border-radius: 0;
     padding-left: 0;
     padding-right: 0;

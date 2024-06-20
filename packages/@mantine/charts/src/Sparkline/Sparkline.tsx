@@ -1,5 +1,5 @@
-import React, { useId, useMemo } from 'react';
-import { Area, AreaChart as ReChartsAreaChart, ResponsiveContainer } from 'recharts';
+import { useId, useMemo } from 'react';
+import { Area, AreaProps, AreaChart as ReChartsAreaChart, ResponsiveContainer } from 'recharts';
 import {
   Box,
   BoxProps,
@@ -16,6 +16,12 @@ import {
 import { AreaChartCurveType, AreaGradient } from '../AreaChart';
 
 const classes = {};
+
+export interface SparklineTrendColors {
+  positive: MantineColor;
+  negative: MantineColor;
+  neutral?: MantineColor;
+}
 
 export type SparklineStylesNames = 'root';
 export type SparklineCssVariables = {
@@ -43,6 +49,15 @@ export interface SparklineProps
 
   /** Area stroke width, `2` by default */
   strokeWidth?: number;
+
+  /** If set, `color` prop is ignored and chart color is determined by the difference between first and last value. */
+  trendColors?: SparklineTrendColors;
+
+  /** Determines whether null values should be connected with other values, `true` by default */
+  connectNulls?: boolean;
+
+  /** Props passed down to the underlying recharts `Area` component */
+  areaProps?: Omit<AreaProps, 'data' | 'dataKey' | 'ref'>;
 }
 
 export type SparklineFactory = Factory<{
@@ -54,16 +69,38 @@ export type SparklineFactory = Factory<{
 
 const defaultProps: Partial<SparklineProps> = {
   withGradient: true,
+  connectNulls: true,
   fillOpacity: 0.6,
   strokeWidth: 2,
   curveType: 'linear',
 };
 
-const varsResolver = createVarsResolver<SparklineFactory>((theme, { color }) => ({
-  root: {
-    '--chart-color': color ? getThemeColor(color, theme) : undefined,
-  },
-}));
+function getTrendColor(data: number[], trendColors: SparklineTrendColors) {
+  const first = data[0];
+  const last = data[data.length - 1];
+
+  if (first < last) {
+    return trendColors.positive;
+  }
+
+  if (first > last) {
+    return trendColors.negative;
+  }
+
+  return trendColors.neutral || trendColors.positive;
+}
+
+const varsResolver = createVarsResolver<SparklineFactory>(
+  (theme, { color, data, trendColors }) => ({
+    root: {
+      '--chart-color': trendColors
+        ? getThemeColor(getTrendColor(data, trendColors), theme)
+        : color
+          ? getThemeColor(color, theme)
+          : undefined,
+    },
+  })
+);
 
 export const Sparkline = factory<SparklineFactory>((_props, ref) => {
   const props = useProps('Sparkline', defaultProps, _props);
@@ -79,6 +116,9 @@ export const Sparkline = factory<SparklineFactory>((_props, ref) => {
     fillOpacity,
     curveType,
     strokeWidth,
+    trendColors,
+    connectNulls,
+    areaProps,
     ...others
   } = props;
 
@@ -108,9 +148,10 @@ export const Sparkline = factory<SparklineFactory>((_props, ref) => {
             fill={`url(#${id})`}
             stroke="var(--chart-color, var(--mantine-color-blue-filled))"
             isAnimationActive={false}
-            connectNulls
+            connectNulls={connectNulls}
             strokeWidth={strokeWidth}
             fillOpacity={1}
+            {...areaProps}
           />
 
           <defs>

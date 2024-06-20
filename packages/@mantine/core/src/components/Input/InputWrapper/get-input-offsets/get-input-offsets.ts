@@ -3,11 +3,13 @@ export function getInputOffsets(
   { hasDescription, hasError }: { hasDescription: boolean; hasError: boolean }
 ) {
   const inputIndex = inputWrapperOrder.findIndex((part) => part === 'input');
-  const aboveInput = inputWrapperOrder[inputIndex - 1];
-  const belowInput = inputWrapperOrder[inputIndex + 1];
+  const aboveInput = inputWrapperOrder.slice(0, inputIndex);
+  const belowInput = inputWrapperOrder.slice(inputIndex + 1);
   const offsetTop =
-    (hasDescription && aboveInput === 'description') || (hasError && aboveInput === 'error');
+    (hasDescription && aboveInput.includes('description')) ||
+    (hasError && aboveInput.includes('error'));
   const offsetBottom =
-    (hasDescription && belowInput === 'description') || (hasError && belowInput === 'error');
+    (hasDescription && belowInput.includes('description')) ||
+    (hasError && belowInput.includes('error'));
   return { offsetBottom, offsetTop };
 }

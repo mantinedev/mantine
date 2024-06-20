@@ -1,0 +1,93 @@
+import { DonutChartDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DonutChart);
+
+## Usage
+
+`DonutChart` is based on [PieChart recharts component](https://recharts.org/en-US/api/PieChart):
+
+<Demo data={DonutChartDemos.usage} />
+
+## Segments labels
+
+Set `withLabels` prop to display labels next to each segment:
+
+<Demo data={DonutChartDemos.withLabels} />
+
+## Size and thickness
+
+Set `size` prop to control width and height of the chart. Note that if `withLabels` prop is set,
+the chart height is automatically increased by 80px to make room for labels. You can override
+this behavior by setting `h` [style prop](/styles/style-props).
+
+<Demo data={DonutChartDemos.size} />
+
+## Padding angle
+
+Use `paddingAngle` prop to control the space between segments:
+
+<Demo data={DonutChartDemos.paddingAngle} />
+
+## Segment color
+
+You can reference colors from [theme](/theming/theme-object) the same way as in
+other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
+color value is also accepted.
+
+<Demo data={DonutChartDemos.color} />
+
+## Tooltip data source
+
+By default, the tooltip displays data for all segments when hovered over any segment.
+To display data only for the hovered segment, set `tooltipDataSource="segment"`:
+
+<Demo data={DonutChartDemos.tooltipDataSource} />
+
+## Without tooltip
+
+To remove the tooltip, set `withTooltip={false}`:
+
+<Demo data={DonutChartDemos.noTooltip} />
+
+## Chart label
+
+To display a label in the center of the chart, use `chartLabel` prop.
+It accepts a string or a number:
+
+<Demo data={DonutChartDemos.chartLabel} />
+
+## Start and end angle
+
+Use `startAngle` and `endAngle` props to control the start and end angle of the chart.
+For example, to display a half-circle chart, set `startAngle={180}` and `endAngle={0}`:
+
+<Demo data={DonutChartDemos.angle} />
+
+Note that even when `startAngle` and `endAngle` props are set, the chart still takes
+the same amount of space as if it was a full circle.
+
+## Segments stroke
+
+Use `strokeWidth` prop to control the width of the stroke around each segment:
+
+<Demo data={DonutChartDemos.strokeWidth} />
+
+To change color of the stroke, use `strokeColor` prop. You can reference colors from [theme](/theming/theme-object) the same way as in
+other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
+color value is also accepted.
+
+```tsx
+import { DonutChart } from '@mantine/charts';
+
+function Demo() {
+  return <DonutChart data={[]} strokeColor="red.5" />;
+}
+```
+
+By default, segments stroke color is the same as the background color of the body element
+(`--mantine-color-body` CSS variable). If you want to change it depending on the color scheme,
+define CSS variable and pass it to the `strokeColor` prop:
+
+<Demo data={DonutChartDemos.strokeColor} />

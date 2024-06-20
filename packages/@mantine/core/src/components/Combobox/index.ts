@@ -14,6 +14,7 @@ export { ComboboxEventsTarget } from './ComboboxEventsTarget/ComboboxEventsTarge
 export { ComboboxDropdownTarget } from './ComboboxDropdownTarget/ComboboxDropdownTarget';
 export { ComboboxGroup } from './ComboboxGroup/ComboboxGroup';
 export { ComboboxClearButton } from './ComboboxClearButton/ComboboxClearButton';
+export { ComboboxHiddenInput } from './ComboboxHiddenInput/ComboboxHiddenInput';
 export { OptionsDropdown } from './OptionsDropdown/OptionsDropdown';
 export { useCombobox } from './use-combobox/use-combobox';
 export { useVirtualizedCombobox } from './use-combobox/use-virtualized-combobox';
@@ -35,6 +36,8 @@ export type {
   ComboboxLikeProps,
   ComboboxLikeStylesNames,
   ComboboxStringData,
+  ComboboxLikeRenderOptionInput,
+  ComboboxStringItem,
 } from './Combobox.types';
 export type { ComboboxFactory, ComboboxProps, ComboboxStylesNames } from './Combobox';
 export type { ComboboxDropdownProps } from './ComboboxDropdown/ComboboxDropdown';
@@ -49,6 +52,8 @@ export type { ComboboxHeaderProps } from './ComboboxHeader/ComboboxHeader';
 export type { ComboboxDropdownTargetProps } from './ComboboxDropdownTarget/ComboboxDropdownTarget';
 export type { ComboboxEventsTargetProps } from './ComboboxEventsTarget/ComboboxEventsTarget';
 export type { ComboboxGroupProps } from './ComboboxGroup/ComboboxGroup';
+export type { ComboboxClearButtonProps } from './ComboboxClearButton/ComboboxClearButton';
+export type { ComboboxHiddenInputProps } from './ComboboxHiddenInput/ComboboxHiddenInput';
 export type {
   OptionsDropdownProps,
   OptionsData,

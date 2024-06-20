@@ -1,0 +1,149 @@
+import { AutocompleteDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Autocomplete);
+
+<ComboboxDisclaimer component="Autocomplete" />
+
+## Usage
+
+`Autocomplete` provides user a list of suggestions based on the input,
+however user is not limited to suggestions and can type anything.
+
+<Demo data={AutocompleteDemos.usage} />
+
+## Controlled
+
+`Autocomplete` value must be a string, other types are not supported.
+`onChange` function is called with a string value as a single argument.
+
+```tsx
+import { useState } from 'react';
+import { Autocomplete } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  return <Autocomplete data={[]} value={value} onChange={setValue} />;
+}
+```
+
+<ComboboxData component="Autocomplete" />
+
+<ComboboxFiltering component="Autocomplete" />
+
+<Demo data={AutocompleteDemos.search} />
+
+## Sort options
+
+By default, options are sorted by their position in the data array. You can change this behavior
+with `filter` function:
+
+<Demo data={AutocompleteDemos.sort} />
+
+<ComboboxLargeData component="Autocomplete" />
+
+<Demo data={AutocompleteDemos.limit} />
+
+## renderOption
+
+`renderOption` callback allows you to customize option rendering. It is called with option object.
+The function must return a React node.
+
+<Demo data={AutocompleteDemos.renderOption} />
+
+## Scrollable dropdown
+
+By default, the options list is wrapped with [ScrollArea.Autosize](/core/scroll-area).
+You can control dropdown max-height with `maxDropdownHeight` prop if you do not change the default settings.
+
+If you want to use native scrollbars, set `withScrollArea={false}`. Note that in this case,
+you will need to change dropdown styles with [Styles API](/styles/styles-api).
+
+<Demo data={AutocompleteDemos.scrollArea} />
+
+## Group options
+
+<Demo data={AutocompleteDemos.groups} />
+
+## Disabled options
+
+When option is disabled, it cannot be selected and is ignored in keyboard navigation.
+
+<Demo data={AutocompleteDemos.disabledOptions} />
+
+<ComboboxProps component="Autocomplete" />
+
+## Inside Popover
+
+To use `Autocomplete` inside popover, you need to set `withinPortal: false`:
+
+<Demo data={AutocompleteDemos.withinPopover} />
+
+## Control dropdown opened state
+
+You can control dropdown opened state with `dropdownOpened` prop. Additionally,
+you can use `onDropdownClose` and `onDropdownOpen` to listen to dropdown opened state changes.
+
+<Demo data={AutocompleteDemos.dropdownOpened} />
+
+## Dropdown position
+
+By default, the dropdown is displayed below the input if there is enough space; otherwise it is displayed above the input.
+You can change this behavior by setting `position` and `middlewares` props, which are passed down to the
+underlying [Popover](/core/popover) component.
+
+Example of dropdown that is always displayed above the input:
+
+<Demo data={AutocompleteDemos.dropdownPosition} />
+
+## Dropdown animation
+
+By default, dropdown animations are disabled. To enable them, you can set `transitionProps`,
+which will be passed down to the underlying [Transition](/core/transition) component.
+
+<Demo data={AutocompleteDemos.dropdownAnimation} />
+
+## Dropdown padding
+
+<Demo data={AutocompleteDemos.dropdownPadding} />
+
+## Dropdown shadow
+
+<Demo data={AutocompleteDemos.dropdownShadow} />
+
+<InputSections component="Autocomplete" />
+
+<Demo data={AutocompleteDemos.sections} />
+
+## Input props
+
+<InputFeatures component="Autocomplete" element="input" />
+
+<Demo data={AutocompleteDemos.configurator} />
+
+## Read only
+
+Set `readOnly` to make the input read only. When `readOnly` is set,
+`Autocomplete` will not show suggestions and will not call `onChange` function.
+
+<Demo data={AutocompleteDemos.readOnly} />
+
+## Disabled
+
+Set `disabled` to disable the input. When `disabled` is set,
+user cannot interact with the input and `Autocomplete` will not show suggestions.
+
+<Demo data={AutocompleteDemos.disabled} />
+
+## Error state
+
+<Demo data={AutocompleteDemos.error} />
+
+<StylesApiSelectors component="Autocomplete" />
+
+<Demo data={AutocompleteDemos.stylesApi} />
+
+<GetElementRef component="Autocomplete" refType="input" />
+
+<InputAccessibility component="Autocomplete" />

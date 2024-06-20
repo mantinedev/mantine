@@ -31,7 +31,6 @@ export async function createPackageConfig(packagePath: string): Promise<RollupOp
     postcss({
       extract: true,
       modules: { generateScopedName },
-      minimize: true,
     }),
     banner((chunk) => {
       if (!ROLLUP_EXCLUDE_USE_CLIENT.includes(chunk.fileName)) {
@@ -58,6 +57,7 @@ export async function createPackageConfig(packagePath: string): Promise<RollupOp
         dir: path.resolve(packagePath, 'cjs'),
         preserveModules: true,
         sourcemap: true,
+        interop: 'auto',
       },
     ],
     external: ROLLUP_EXTERNALS,

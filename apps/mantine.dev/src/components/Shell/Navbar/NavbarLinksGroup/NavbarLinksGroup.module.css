@@ -1,0 +1,197 @@
+.group {
+  margin-bottom: 0;
+  padding-left: var(--mantine-spacing-md);
+  padding-right: var(--mantine-spacing-md);
+
+  &[data-opened] {
+    margin-bottom: calc(var(--mantine-spacing-xl) * 1.2);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  width: calc(100% + var(--mantine-spacing-md));
+  height: 32px;
+  cursor: pointer;
+
+  @mixin light {
+    color: var(--mantine-color-gray-7);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-white);
+  }
+}
+
+.chevron {
+  width: 15px;
+  height: 15px;
+  margin-right: var(--mantine-spacing-md);
+  transition: transform 150ms ease;
+
+  @mixin rtl {
+    margin-right: 0;
+    margin-left: var(--mantine-spacing-md);
+  }
+
+  &[data-collapsed] {
+    transform: rotate(-90deg);
+  }
+}
+
+.title {
+  user-select: none;
+  font-weight: 700;
+  font-family: var(--docs-font-primary);
+  line-height: 1;
+  padding-top: 4px;
+  letter-spacing: 0.5px;
+  word-spacing: 1px;
+  text-transform: uppercase;
+  font-size: var(--mantine-font-size-xs);
+}
+
+.category {
+  padding-top: 12px;
+}
+
+.categoryTitle {
+  position: relative;
+  padding-left: 23px;
+  margin-left: 7px;
+  margin-bottom: 5px;
+  border-left: 1px solid;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  font-size: var(--mantine-font-size-xs);
+  border-top-right-radius: var(--mantine-radius-sm);
+  border-bottom-right-radius: var(--mantine-radius-sm);
+  text-transform: capitalize;
+
+  @mixin light {
+    background-color: var(--mantine-color-gray-0);
+    border-color: var(--mantine-color-gray-3) !important;
+    color: var(--mantine-color-gray-6);
+  }
+
+  @mixin dark {
+    background-color: var(--mantine-color-dark-7);
+    border-color: var(--mantine-color-dark-6) !important;
+    color: var(--mantine-color-dark-2);
+  }
+
+  @mixin rtl {
+    padding-left: 0;
+    padding-right: 23px;
+    border-left: 0;
+    border-right: 1px solid;
+    margin-left: 0;
+    margin-right: 7px;
+    border-radius: 0;
+    border-top-left-radius: var(--mantine-radius-sm);
+    border-bottom-left-radius: var(--mantine-radius-sm);
+
+    @mixin light {
+      border-color: var(--mantine-color-gray-3) !important;
+    }
+
+    @mixin dark {
+      border-color: var(--mantine-color-dark-6) !important;
+    }
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: -1px;
+    height: 5px;
+    width: 1px;
+
+    @mixin light {
+      background-color: var(--mantine-color-gray-3);
+    }
+
+    @mixin dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+
+    @mixin rtl {
+      left: unset;
+      right: -1px;
+    }
+  }
+}
+
+.categoryIcon {
+  margin-right: var(--mantine-spacing-xs);
+  width: 14px;
+  height: 14px;
+
+  @mixin rtl {
+    margin-right: 0;
+    margin-left: var(--mantine-spacing-xs);
+  }
+}
+
+.link {
+  display: block;
+  border-left: 1px solid;
+  padding-left: 23px;
+  padding-right: var(--mantine-spacing-md);
+  margin-left: 7px;
+  height: 34px;
+  line-height: 34px;
+  border-top-right-radius: var(--mantine-radius-sm);
+  border-bottom-right-radius: var(--mantine-radius-sm);
+  font-size: var(--mantine-font-size-sm);
+  user-select: none;
+
+  @mixin light {
+    border-color: var(--mantine-color-gray-3) !important;
+    color: var(--mantine-color-gray-7);
+  }
+
+  @mixin dark {
+    border-color: var(--mantine-color-dark-6) !important;
+    color: var(--mantine-color-dark-1);
+  }
+
+  @mixin rtl {
+    text-align: right;
+    padding-left: var(--mantine-spacing-md);
+    padding-right: 23px;
+    border-left: 0;
+    border-right: 1px solid;
+    margin-left: 0;
+    margin-right: 7px;
+    border-radius: 0;
+    border-top-left-radius: var(--mantine-radius-sm);
+    border-bottom-left-radius: var(--mantine-radius-sm);
+
+    @mixin light {
+      border-color: var(--mantine-color-gray-3) !important;
+    }
+
+    @mixin dark {
+      border-color: var(--mantine-color-dark-6) !important;
+    }
+  }
+
+  &[data-active] {
+    border-color: var(--mantine-color-blue-5) !important;
+    font-weight: 500;
+
+    @mixin light {
+      color: var(--mantine-color-blue-8);
+      background-color: var(--mantine-color-blue-0);
+    }
+
+    @mixin dark {
+      color: var(--mantine-color-blue-1);
+      background-color: rgba(24, 100, 171, 0.45);
+    }
+  }
+}

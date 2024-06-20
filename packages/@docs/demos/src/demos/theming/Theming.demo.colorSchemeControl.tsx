@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconMoon, IconSun } from '@tabler/icons-react';
 import cx from 'clsx';
 import { ActionIcon, useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
@@ -31,8 +30,8 @@ function Demo() {
 
 const cssCode = `
 .icon {
-  width: rem(22px);
-  height: rem(22px);
+  width: 22px;
+  height: 22px;
 }
 
 .dark {

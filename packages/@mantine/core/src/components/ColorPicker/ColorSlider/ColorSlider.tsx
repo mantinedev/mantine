@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   clampUseMovePosition,
   useDidUpdate,
@@ -154,7 +154,7 @@ export const ColorSlider = factory<ColorSliderFactory>((_props, ref) => {
       onKeyDown={handleKeyDown}
       data-focus-ring={theme.focusRing}
       __vars={{
-        '--_cp-thumb-size': `var(--cp-thumb-size-${size})`,
+        '--cp-thumb-size': `var(--cp-thumb-size-${size})`,
       }}
     >
       {layers}

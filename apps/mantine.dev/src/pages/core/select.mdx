@@ -1,0 +1,259 @@
+import { SelectDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Select);
+
+<ComboboxDisclaimer component="Select" />
+
+## Usage
+
+`Select` allows capturing user input based on suggestions from the list.
+Unlike [Autocomplete](/core/autocomplete/), `Select` does not allow entering custom values.
+
+<Demo data={SelectDemos.usage} />
+
+## Controlled
+
+`Select` value must be a string, other types are not supported.
+`onChange` function is called with a string value as a single argument.
+
+```tsx
+import { useState } from 'react';
+import { Select } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<string | null>('');
+  return <Select data={[]} value={value} onChange={setValue} />;
+}
+```
+
+## onChange handler
+
+`onChange` is called with two arguments:
+
+- `value` - string value of the selected option
+- `option` – selected option object
+
+If you prefer object format in state, use second argument of onChange handler:
+
+```tsx
+import { useState } from 'react';
+import { ComboboxItem, Select } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<ComboboxItem | null>(null);
+  return (
+    <Select
+      data={[{ value: 'react', label: 'React library' }]}
+      value={value ? value.value : null}
+      onChange={(_value, option) => setValue(option)}
+    />
+  );
+}
+```
+
+## Clearable
+
+Set `clearable` prop to display the clear button in the right section. The button is not displayed
+when:
+
+- The component does not have a value
+- The component is disabled
+- The component is read only
+
+<Demo data={SelectDemos.clearable} />
+
+## Allow deselect
+
+`allowDeselect` prop determines whether the value should be deselected when user clicks on the selected option.
+By default, `allowDeselect` is `true`:
+
+<Demo data={SelectDemos.allowDeselect} />
+
+## Searchable
+
+Set `searchable` prop to allow filtering options by user input:
+
+<Demo data={SelectDemos.searchable} />
+
+## Controlled search value
+
+You can control search value with `searchValue` and `onSearchChange` props:
+
+```tsx
+import { useState } from 'react';
+import { Select } from '@mantine/core';
+
+function Demo() {
+  const [searchValue, setSearchValue] = useState('');
+  return (
+    <Select
+      searchable
+      searchValue={searchValue}
+      onSearchChange={setSearchValue}
+      data={[]}
+    />
+  );
+}
+```
+
+## Nothing found
+
+Set `nothingFoundMessage` prop to display given message when no options match search query.
+If `nothingFoundMessage` is not set, `Select` dropdown will be hidden when no options match search query.
+The message is not displayed when trimmed search query is empty.
+
+<Demo data={SelectDemos.nothingFound} />
+
+## Checked option icon
+
+Set `checkIconPosition` prop to `left` or `right` to control position of check icon in active option.
+To remove the check icon, set `withCheckIcon={false}`.
+
+<Demo data={SelectDemos.checkIcon} />
+
+<ComboboxData component="Select" />
+
+<ComboboxFiltering component="Select" />
+
+<Demo data={SelectDemos.search} />
+
+## Sort options
+
+By default, options are sorted by their position in the data array. You can change this behavior
+with `filter` function:
+
+<Demo data={SelectDemos.sort} />
+
+<ComboboxLargeData component="Select" />
+
+<Demo data={SelectDemos.limit} />
+
+## renderOption
+
+`renderOption` callback allows you to customize option rendering. It is called with option object and
+checked state. The function must return a React node.
+
+<Demo data={SelectDemos.renderOption} />
+
+## Scrollable dropdown
+
+By default, the options list is wrapped with [ScrollArea.Autosize](/core/scroll-area).
+You can control dropdown max-height with `maxDropdownHeight` prop if you do not change the default settings.
+
+If you want to use native scrollbars, set `withScrollArea={false}`. Note that in this case,
+you will need to change dropdown styles with [Styles API](/styles/styles-api).
+
+<Demo data={SelectDemos.scrollArea} />
+
+## Group options
+
+<Demo data={SelectDemos.groups} />
+
+## Disabled options
+
+When option is disabled, it cannot be selected and is ignored in keyboard navigation.
+
+<Demo data={SelectDemos.disabledOptions} />
+
+<ComboboxProps component="Select" />
+
+## Inside Popover
+
+To use `Select` inside popover, you need to set `withinPortal: false`:
+
+<Demo data={SelectDemos.withinPopover} />
+
+## Control dropdown opened state
+
+You can control dropdown opened state with `dropdownOpened` prop. Additionally,
+you can use `onDropdownClose` and `onDropdownOpen` to listen to dropdown opened state changes.
+
+<Demo data={SelectDemos.dropdownOpened} />
+
+## Dropdown position
+
+By default, the dropdown is displayed below the input if there is enough space; otherwise it is displayed above the input.
+You can change this behavior by setting `position` and `middlewares` props, which are passed down to the
+underlying [Popover](/core/popover) component.
+
+Example of dropdown that is always displayed above the input:
+
+<Demo data={SelectDemos.dropdownPosition} />
+
+## Dropdown offset
+
+To change dropdown offset, set `offset` prop in `comboboxProps`:
+
+<Demo data={SelectDemos.dropdownOffset} />
+
+## Dropdown animation
+
+By default, dropdown animations are disabled. To enable them, you can set `transitionProps`,
+which will be passed down to the underlying [Transition](/core/transition) component.
+
+<Demo data={SelectDemos.dropdownAnimation} />
+
+## Dropdown padding
+
+<Demo data={SelectDemos.dropdownPadding} />
+
+## Dropdown shadow
+
+<Demo data={SelectDemos.dropdownShadow} />
+
+<InputSections component="Select" />
+
+<Demo data={SelectDemos.sections} />
+
+## Input props
+
+<InputFeatures component="Select" element="input" />
+
+<Demo data={SelectDemos.configurator} />
+
+## Read only
+
+Set `readOnly` to make the input read only. When `readOnly` is set,
+`Select` will not show suggestions and will not call `onChange` function.
+
+<Demo data={SelectDemos.readOnly} />
+
+## Disabled
+
+Set `disabled` to disable the input. When `disabled` is set,
+user cannot interact with the input and `Select` will not show suggestions.
+
+<Demo data={SelectDemos.disabled} />
+
+## Error state
+
+<Demo data={SelectDemos.error} />
+
+<StylesApiSelectors component="Select" />
+
+<Demo data={SelectDemos.stylesApi} />
+
+<GetElementRef component="Select" refType="input" />
+
+<InputAccessibility component="Select" />
+
+To set `aria-label` on the clear button, use `clearButtonProps`. Note that it is required
+only when `clearable` is set.
+
+```tsx
+import { Select } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Select
+      data={[]}
+      clearable
+      clearButtonProps={{
+        'aria-label': 'Clear input',
+      }}
+    />
+  );
+}
+```

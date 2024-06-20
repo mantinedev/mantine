@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 
 export function useDebouncedState<T = any>(
   defaultValue: T,
@@ -13,7 +13,7 @@ export function useDebouncedState<T = any>(
   useEffect(() => clearTimeout, []);
 
   const debouncedSetValue = useCallback(
-    (newValue: T) => {
+    (newValue: SetStateAction<T>) => {
       clearTimeout();
       if (leadingRef.current && options.leading) {
         setValue(newValue);

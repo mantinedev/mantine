@@ -1,0 +1,51 @@
+.group {
+  & + & {
+    margin-top: 50px;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-md);
+  margin-bottom: var(--mantine-spacing-xs);
+}
+
+.divider {
+  flex: 1;
+}
+
+.question {
+  display: block;
+  text-decoration: none;
+  color: var(--mantine-color-text);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
+  border-radius: var(--mantine-radius-md);
+
+  @mixin hover {
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  }
+}
+
+.questionTitle {
+  font-size: var(--mantine-font-size-xl);
+}
+
+.questionDescription {
+  font-size: var(--mantine-font-size-md);
+  color: var(--mantine-color-dimmed);
+  margin-top: 5px;
+  max-width: 600px;
+}
+
+.category {
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  font-size: var(--mantine-font-size-xl);
+  color: var(--mantine-color-bright);
+  font-family: 'Greycliff CF', sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+}

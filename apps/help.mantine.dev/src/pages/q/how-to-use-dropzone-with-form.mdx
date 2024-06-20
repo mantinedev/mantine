@@ -1,0 +1,33 @@
+import { DropzoneForm } from '@/demos/DropzoneForm.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How to use Dropzone with @mantine/form?',
+  description:
+    'Learn how to use Dropzone with @mantine/form to handle file selection state',
+  slug: 'how-to-use-dropzone-with-form',
+  category: 'forms',
+  tags: ['form', '@mantine/form', 'dropzone'],
+  created_at: 'December 1, 2023',
+  last_updated_at: 'April 8, 2024',
+};
+
+export default Layout(meta);
+
+[@mantine/dropzone](https://mantine.dev/others/dropzone/) package provides `Dropzone`
+component which allows to drag and drop files from your computer or select them using
+the file picker. Its purpose is to handle file selection, it does not store files state,
+does not display selected files and does not upload them to the server.
+
+[use-form](https://mantine.dev/form/use-form/) hook handles form state, validation,
+error messages and form submission. You can integrate any input or React component
+with `use-form` hook using the following form object properties:
+
+- `form.getValues().x` – value of the input
+- `form.errors.x` – error message for the input
+- `form.setFieldValue('x', value)` – function to set input value
+- `form.setFieldError('x', 'error-message')` – function to set input error message
+
+Using these properties you can integrate `Dropzone` with `use-form` hook:
+
+<Demo data={DropzoneForm} />

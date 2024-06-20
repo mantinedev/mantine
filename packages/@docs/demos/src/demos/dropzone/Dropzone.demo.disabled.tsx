@@ -1,4 +1,3 @@
-import React from 'react';
 import { MantineDemo } from '@mantinex/demo';
 import { BaseDemo } from './_base';
 import classes from './Dropzone.disabled.module.css';
@@ -20,7 +19,11 @@ import { Dropzone } from '@mantine/dropzone';
 import classes from './Demo.module.css';
 
 function Demo() {
-  return <BaseDemo disabled className={classes.disabled} />;
+  return (
+    <Dropzone disabled className={classes.disabled} onDrop={() => {}}>
+      {/* children... */}
+    </Dropzone>
+  );
 }
 `;
 

@@ -1,0 +1,20 @@
+.root {
+  --transition-duration: 150ms;
+
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: 0;
+  transition-property: transform, width, height;
+  transition-timing-function: ease;
+  transition-duration: 0ms;
+
+  &:where([data-initialized]) {
+    transition-duration: var(--transition-duration);
+  }
+
+  &:where([data-hidden]) {
+    background-color: red;
+    display: none;
+  }
+}

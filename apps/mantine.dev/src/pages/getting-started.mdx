@@ -1,0 +1,221 @@
+import { FrameworksGuides } from '@/components/FrameworksGuides';
+import { SocialCards } from '@/components/SocialCards';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.GettingStarted);
+
+# Getting started
+
+## Get started with a template
+
+The easiest way to get started is to use one of the templates.
+All templates include required dependencies and pre-configured settings.
+Some templates also include additional features like [Jest](https://jestjs.io/),
+[Storybook](https://storybook.js.org/), [ESLint](https://eslint.org/), etc.
+
+All templates include only `@mantine/core` and `@mantine/hooks` packages,
+if you need additional `@mantine/*` packages follow installation instructions
+of the package you want to use.
+
+To get started with a template, open it on GitHub and click on the "Use this template"
+button. Note that you need to be logged in to your GitHub account to use this feature.
+If you are not familiar with GitHub, you can find a detailed instruction on how to
+bootstrap a project from a template [on this page](/templates-usage).
+
+Templates list:
+
+<TemplatesList />
+
+## Community templates
+
+Community templates are created and maintained by the community. These templates
+usually include additional features and third-party integrations. You are welcome
+to share your template with the community by following [this guide](/submit-template/).
+
+<TemplatesList community />
+
+## Framework guide
+
+Follow one of the guides below to get started with Mantine and your preferred framework.
+Note that usually it is better to start a new project with a template. Use guides if you want
+to add Mantine to an existing project or if enjoy doing things manually.
+
+<FrameworksGuides />
+
+## Get started without framework
+
+<PackagesInstallation />
+
+Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
+
+<InstallScript
+  packages="postcss postcss-preset-mantine postcss-simple-vars"
+  dev
+/>
+
+> **PostCSS without framework**
+>
+> Note that if you are using a framework that is not officially supported, you may need
+> to set up PostCSS manually. Refer to the framework documentation to learn how to do that.
+> For example, if you are using Webpack, you will need to install and configure [postcss-loader](https://webpack.js.org/loaders/postcss-loader/).
+
+Create `postcss.config.cjs` file at the root of your application with the following content:
+
+```js
+module.exports = {
+  plugins: {
+    'postcss-preset-mantine': {},
+    'postcss-simple-vars': {
+      variables: {
+        'mantine-breakpoint-xs': '36em',
+        'mantine-breakpoint-sm': '48em',
+        'mantine-breakpoint-md': '62em',
+        'mantine-breakpoint-lg': '75em',
+        'mantine-breakpoint-xl': '88em',
+      },
+    },
+  },
+};
+```
+
+Add styles imports to the root of your application. Usually styles are imported
+once in the root file. For example, if you are using Next.js with pages router,
+you can import styles in `_app.tsx` file:
+
+```tsx
+// core styles are required for all packages
+import '@mantine/core/styles.css';
+
+// other css files are required only if
+// you are using components from the corresponding package
+// import '@mantine/dates/styles.css';
+// import '@mantine/dropzone/styles.css';
+// import '@mantine/code-highlight/styles.css';
+// ...
+```
+
+Wrap your application with [MantineProvider](/theming/mantine-provider/):
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  /** Put your mantine theme override here */
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+If your application has server side rendering, add [ColorSchemeScript](/theming/color-schemes)
+to the `<head />` of your application:
+
+```tsx
+import { ColorSchemeScript } from '@mantine/core';
+
+function Demo() {
+  return (
+    <html lang="en">
+      <head>
+        <meta charSet="UTF-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+        />
+        <title>My awesome app</title>
+
+        <ColorSchemeScript />
+      </head>
+      <body>{/* Your app here */}</body>
+    </html>
+  );
+}
+```
+
+All set! Now you can use Mantine components in your application.
+
+## Set up VS Code
+
+By default, VS Code does not recognize postcss syntax, you need to install
+[PostCSS Intellisense and Highlighting](https://marketplace.visualstudio.com/items?itemName=vunguyentuan.vscode-postcss)
+to enable syntax highlighting and suppress variables (`$variable`) errors.
+
+To get CSS variables autocomplete, install [CSS Variable Autocomplete extension](https://marketplace.visualstudio.com/items?itemName=vunguyentuan.vscode-css-variables).
+Then create `.vscode/settings.json` file in the root folder of your project with the following content:
+
+```json
+{
+  "cssVariables.lookupFiles": [
+    "**/*.css",
+    "**/*.scss",
+    "**/*.sass",
+    "**/*.less",
+    "node_modules/@mantine/core/styles.css"
+  ]
+}
+```
+
+## Learn
+
+Before you jump into the code, it is recommended to learn more about Mantine theming and styling options.
+The most important documentation pages are:
+
+- [API overview](/overview) – overview of the most important Mantine styling and theming features
+- [Theme object](/theming/theme-object) – learn about available theme properties
+- [Colors](/theming/colors) – learn how to add/replace colors in the theme object
+- [CSS modules](/styles/css-modules) – learn how to use CSS modules with Mantine
+- [postcss-preset-mantine](/styles/postcss-preset) – learn about `postcss-preset-mantine` functions and mixins
+- [Responsive styles](/styles/responsive) – learn how to apply responsive styles to components
+- [Styles API](/styles/styles-api) – learn how to style internal elements of any component
+- [Polymorphic components](/guides/polymorphic) – learn how to use polymorphic components to change rendered element
+
+## Get help
+
+<SocialCards twitter={false} />
+
+## Support Mantine
+
+If you enjoy working with Mantine we would appreciate your contribution to the project.
+There are multiple ways to support the project:
+
+- Share your feedback in [GitHub Discussions](https://github.com/mantinedev/mantine/discussions/categories/feedback) –
+  we are always happy to hear your thoughts on how to make Mantine better. Most of the new features and components
+  are based on the feedback we receive from the community.
+- Help others on [Discord](https://discord.gg/wbH82zuWMN) and/or [GitHub Discussions](https://github.com/mantinedev/mantine/discussions). There are usually 10-20 new questions every day,
+  you can help people with their issues and questions. While helping others, you will learn yourself and become
+  more proficient with React and Mantine.
+- Give us a code review. You are welcome to explore `@mantine/*` packages [source code](https://github.com/mantinedev/mantine)
+  and provide your feedback on how we can improve it. We are always open to new ideas and suggestions.
+- Send us some [kind words](https://github.com/mantinedev/mantine/discussions/categories/kind-words). We usually receive only
+  bug reports and feature requests, it is always nice to hear that people enjoy working with Mantine.
+- Star the project on [GitHub](https://github.com/mantinedev/mantine). It is a small thing that helps us grow and get more
+  people interested in the project.
+- [Contribute](/contribute) to the Mantine codebase. We welcome all kinds of contributions: if you do not have much
+  experience with React/TypeScript, you can help us improve the documentation to make it more clear and understandable
+  for new developers. If you are an experienced React developer, you can help us with open [issues](https://github.com/mantinedev/mantine/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22).
+- If you are using Mantine at work and your company wants to support the project, you can allocate some time
+  of your engineers to contribute to Mantine.
+
+## Mantine for Figma
+
+Design files are not used during the development process of the library – there are no official
+Figma or Sketch files. However, there are community-driven projects that provide Figma components
+based on Mantine. Note that these projects are not maintained by Mantine team, and we do not guarantee
+that they are up-to-date with the latest Mantine version.
+
+- [Design files by **Ravn**](https://www.figma.com/community/file/1293978471602433537)
+- [Design files by **In The Zone**](https://www.figma.com/community/file/1067173247578645134)
+- [Design files by **Devias**](https://www.figma.com/community/file/1212329956432440320/Mantine-UI-Design-System---v5.10)
+- [Design files by **AlleyCorp Nord**](https://www.figma.com/community/file/1294398524808646906/mantine-lean-ui-library-alley-corp-nord)
+
+## License
+
+All `@mantine/*` packages are distributed under [MIT](https://github.com/mantinedev/mantine/blob/master/LICENSE) license.
+You can use them in any project, commercial or not, with or without attribution. All `@mantine/*` packages
+dependencies are also distributed under MIT license.

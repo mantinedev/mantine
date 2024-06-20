@@ -1,0 +1,164 @@
+import { FormDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.formErrors);
+
+## Errors object
+
+`form.errors` is an object of React nodes that contains validation errors:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { firstName: '', lastName: '' },
+  validate: {
+    firstName: (value) =>
+      value.length < 2 ? 'First name is too short' : null,
+    lastName: (value) =>
+      value.length < 2 ? 'Last name is too short' : null,
+  },
+});
+
+// Errors object is empty by default
+form.errors; // -> {}
+
+// Errors will be filled when you call form.validate manually
+// or automatically with form.onSubmit handler
+form.validate();
+
+form.errors; // ->
+// {
+//   firstName: 'First name is too short',
+//   lastName: 'Last name is too short'
+// }
+```
+
+## Initial errors
+
+Same as with [initial values](/form/values/) you can set initial form errors:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { firstName: '', lastName: '' },
+  initialErrors: {
+    firstName: 'First name is too short',
+    lastName: 'Last name is too short',
+  },
+});
+```
+
+## setErrors handler
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({ mode: 'uncontrolled' });
+form.setErrors({ firstName: 'Too short', email: 'Invalid email' });
+
+form.errors;
+// -> { firstName: 'Too short', email: 'Invalid email' }
+```
+
+## setFieldError handler
+
+`form.setFieldError` handler sets error of the given field:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { name: '', email: '' },
+});
+
+form.setFieldError('email', 'Invalid email');
+
+form.errors; // -> { email: 'Invalid email' }
+```
+
+## clearErrors handler
+
+`form.clearErrors` handler clear all form errors:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialErrors: { name: 'Too short', email: 'Invalid email' },
+});
+
+form.clearErrors();
+
+form.errors; // -> {}
+```
+
+## clearFieldError handler
+
+`form.clearFieldError` handler clears error of the given field:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialErrors: { name: 'Too short', email: 'Invalid email' },
+});
+form.clearFieldError('name');
+
+form.errors; // -> { email: 'Invalid email' }
+```
+
+## Errors as react node
+
+You can use any React node as an error message:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { name: '', email: '' },
+  initialErrors: {
+    name: <p>Paragraph error</p>, // -> error as a react element
+    email: 42, // -> error as a number
+  },
+});
+```
+
+Note that errors that are `false`, `null` or `undefined` will be automatically removed:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialErrors: { name: 'name-error', email: null },
+});
+
+form.errors; // -> { name: 'name-error' }, email error is not included in errors object
+```
+
+## FormErrors type
+
+`form.errors` type is `Record<string, React.ReactNode>`, you can import a shorthand `FormErrors` type from `@mantine/form`:
+
+```tsx
+import type { FormErrors } from '@mantine/form';
+```
+
+You can also get type directly from the `form` instance:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({ mode: 'uncontrolled' });
+
+const handleErrors = (errors: typeof form.errors) => {};
+```

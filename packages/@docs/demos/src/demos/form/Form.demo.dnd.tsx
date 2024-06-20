@@ -1,39 +1,46 @@
-import React from 'react';
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import { IconGripVertical } from '@tabler/icons-react';
-import { Box, Button, Center, Code, Group, Text, TextInput } from '@mantine/core';
+import { Button, Center, Group, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { randomId } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Group, TextInput, Box, Text, Code, Button, Center } from '@mantine/core';
+import { Group, TextInput, Button, Center } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { randomId } from '@mantine/hooks';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { IconGripVertical } from '@tabler/icons-react';
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       employees: [
-        { name: 'John Doe', email: 'john@mantine.dev' },
-        { name: 'Bill Love', email: 'bill@mantine.dev' },
-        { name: 'Nancy Eagle', email: 'nanacy@mantine.dev' },
-        { name: 'Lim Notch', email: 'lim@mantine.dev' },
-        { name: 'Susan Seven', email: 'susan@mantine.dev' },
+        { name: 'John Doe', email: 'john@mantine.dev', key: randomId() },
+        { name: 'Bill Love', email: 'bill@mantine.dev', key: randomId() },
+        { name: 'Nancy Eagle', email: 'nanacy@mantine.dev', key: randomId() },
+        { name: 'Lim Notch', email: 'lim@mantine.dev', key: randomId() },
+        { name: 'Susan Seven', email: 'susan@mantine.dev', key: randomId() },
       ],
     },
   });
 
-  const fields = form.values.employees.map((_, index) => (
-    <Draggable key={index} index={index} draggableId={index.toString()}>
+  const fields = form.getValues().employees.map((item, index) => (
+    <Draggable key={item.key} index={index} draggableId={item.key}>
       {(provided) => (
         <Group ref={provided.innerRef} mt="xs" {...provided.draggableProps}>
           <Center {...provided.dragHandleProps}>
             <IconGripVertical size="1.2rem" />
           </Center>
-          <TextInput placeholder="John Doe" {...form.getInputProps(\`employees.\${index}.name\`)} />
+          <TextInput
+            placeholder="John Doe"
+            key={form.key(\`employees.\${index}.name\`)}
+            {...form.getInputProps(\`employees.\${index}.name\`)}
+          />
           <TextInput
             placeholder="example@mail.com"
+            key={form.key(\`employees.\${index}.email\`)}
             {...form.getInputProps(\`employees.\${index}.email\`)}
           />
         </Group>
@@ -42,7 +49,7 @@ function Demo() {
   ));
 
   return (
-    <Box maw={500} mx="auto">
+    <div>
       <DragDropContext
         onDragEnd={({ destination, source }) =>
           destination?.index !== undefined && form.reorderListItem('employees', { from: source.index, to: destination.index })
@@ -59,43 +66,44 @@ function Demo() {
       </DragDropContext>
 
       <Group justify="center" mt="md">
-        <Button onClick={() => form.insertListItem('employees', { name: '', email: '' })}>
+        <Button onClick={() => form.insertListItem('employees', { name: '', email: '', key: randomId() })}>
           Add employee
         </Button>
       </Group>
-
-      <Text size="sm" fw={500} mt="md">
-        Form values:
-      </Text>
-      <Code block>{JSON.stringify(form.values, null, 2)}</Code>
-    </Box>
+    </div>
   );
 }
 `;
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       employees: [
-        { name: 'John Doe', email: 'john@mantine.dev' },
-        { name: 'Bill Love', email: 'bill@mantine.dev' },
-        { name: 'Nancy Eagle', email: 'nanacy@mantine.dev' },
-        { name: 'Lim Notch', email: 'lim@mantine.dev' },
-        { name: 'Susan Seven', email: 'susan@mantine.dev' },
+        { name: 'John Doe', email: 'john@mantine.dev', key: randomId() },
+        { name: 'Bill Love', email: 'bill@mantine.dev', key: randomId() },
+        { name: 'Nancy Eagle', email: 'nanacy@mantine.dev', key: randomId() },
+        { name: 'Lim Notch', email: 'lim@mantine.dev', key: randomId() },
+        { name: 'Susan Seven', email: 'susan@mantine.dev', key: randomId() },
       ],
     },
   });
 
-  const fields = form.values.employees.map((_, index) => (
-    <Draggable key={index} index={index} draggableId={index.toString()}>
+  const fields = form.getValues().employees.map((item, index) => (
+    <Draggable key={item.key} index={index} draggableId={item.key}>
       {(provided) => (
         <Group ref={provided.innerRef} mt="xs" {...provided.draggableProps}>
           <Center {...provided.dragHandleProps}>
             <IconGripVertical size="1.2rem" />
           </Center>
-          <TextInput placeholder="John Doe" {...form.getInputProps(`employees.${index}.name`)} />
+          <TextInput
+            placeholder="John Doe"
+            key={form.key(`employees.${index}.name`)}
+            {...form.getInputProps(`employees.${index}.name`)}
+          />
           <TextInput
             placeholder="example@mail.com"
+            key={form.key(`employees.${index}.email`)}
             {...form.getInputProps(`employees.${index}.email`)}
           />
         </Group>
@@ -104,7 +112,7 @@ function Demo() {
   ));
 
   return (
-    <Box maw={500} mx="auto">
+    <div>
       <DragDropContext
         onDragEnd={({ destination, source }) =>
           destination?.index !== undefined &&
@@ -122,16 +130,13 @@ function Demo() {
       </DragDropContext>
 
       <Group justify="center" mt="md">
-        <Button onClick={() => form.insertListItem('employees', { name: '', email: '' })}>
+        <Button
+          onClick={() => form.insertListItem('employees', { name: '', email: '', key: randomId() })}
+        >
           Add employee
         </Button>
       </Group>
-
-      <Text size="sm" fw={500} mt="md">
-        Form values:
-      </Text>
-      <Code block>{JSON.stringify(form.values, null, 2)}</Code>
-    </Box>
+    </div>
   );
 }
 
@@ -139,4 +144,6 @@ export const dnd: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  centered: true,
+  maxWidth: 440,
 };

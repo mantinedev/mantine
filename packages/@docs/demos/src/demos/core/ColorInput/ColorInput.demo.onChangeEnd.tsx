@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ColorInput, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
+import { useState } from 'react';
 import { ColorInput, Text } from '@mantine/core';
 
 function Demo() {

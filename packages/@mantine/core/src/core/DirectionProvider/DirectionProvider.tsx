@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { useIsomorphicEffect } from '@mantine/hooks';
 
 export type Direction = 'ltr' | 'rtl';

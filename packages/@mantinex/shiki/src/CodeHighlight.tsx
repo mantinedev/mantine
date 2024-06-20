@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   ActionIcon,
   Box,
@@ -107,10 +106,15 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
       <ScrollArea type="hover" dir="ltr" offsetScrollbars={false}>
         {!highlighted.highlighted ? (
           <pre {...getStyles('pre')}>
-            <code {...getStyles('code')}>{code.trim()}</code>
+            <code data-mantine-code={language || 'tsx'} {...getStyles('code')}>
+              {code.trim()}
+            </code>
           </pre>
         ) : (
-          <div dangerouslySetInnerHTML={{ __html: highlighted.code }} />
+          <div
+            data-mantine-code={language || 'tsx'}
+            dangerouslySetInnerHTML={{ __html: highlighted.code }}
+          />
         )}
       </ScrollArea>
     </Box>

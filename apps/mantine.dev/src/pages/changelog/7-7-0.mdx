@@ -1,0 +1,103 @@
+import {
+  AreaChartDemos,
+  FloatingIndicatorDemos,
+  HooksDemos,
+  ScatterChartDemos,
+  ThemingDemos,
+} from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog770);
+
+## Virtual colors
+
+Virtual color is a special color which values should be different for light and dark color schemes.
+To define a virtual color, use `virtualColor` function which accepts an object with the following
+properties as a single argument:
+
+- `name` – color name, must be the same as the key in `theme.colors` object
+- `light` – a key of `theme.colors` object for light color scheme
+- `dark` – a key of `theme.colors` object for dark color scheme
+
+To see the demo in action, switch between light and dark color schemes (`Ctrl + J`):
+
+<Demo data={ThemingDemos.virtualColors} />
+
+## FloatingIndicator component
+
+New [FloatingIndicator](/core/floating-indicator) component:
+
+<Demo data={FloatingIndicatorDemos.direction} />
+
+## ScatterChart component
+
+New [ScatterChart](/charts/scatter-chart) component:
+
+<Demo data={ScatterChartDemos.usage} />
+
+## colorsTuple function
+
+New `colorsTuple` function can be used to:
+
+- Use single color as the same color for all shades
+- Transform dynamic string arrays to Mantine color tuple (the array should still have 10 values)
+
+```tsx
+import { colorsTuple, createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    custom: colorsTuple('#FFC0CB'),
+    dynamic: colorsTuple(
+      Array.from({ length: 10 }, (_, index) => '#FFC0CB')
+    ),
+  },
+});
+```
+
+## use-mutation-observer hook
+
+New [useMutationObserver](/hooks/use-mutation-observer) hook:
+
+<Demo data={HooksDemos.useMutationObserverTarget} />
+
+## use-state-history hook
+
+New [useStateHistory](/hooks/use-state-history) hook:
+
+<Demo data={HooksDemos.useStateHistoryUsage} />
+
+## Axis labels
+
+[AreaChart](/charts/area-chart), [BarChart](/charts/bar-chart) and [LineChart](/charts/line-chart)
+components now support `xAxisLabel` and `yAxisLabel` props:
+
+<Demo data={AreaChartDemos.axisLabels} />
+
+## Documentation updates
+
+- New section has been added to the [responsive guide](/styles/responsive#hidden-and-visible-from-as-classes) on how to use `mantine-hidden-from-{x}` and `mantine-visible-from-{x}` classes.
+- [Remix guide](/guides/remix) has been updated to use new Vite bundler
+- [Jest](/guides/jest) and [Vitest](/guides/vitest) guides configuration has been updated to include mocks for `window.HTMLElement.prototype.scrollIntoView`
+- [CSS variables](/styles/css-variables) documentation has been updated to include more information about typography and colors variables
+
+## Help center updates
+
+New articles added to the [help center](https://help.mantine.dev):
+
+- [Can I use SegmentedControl with empty value?](https://help.mantine.dev/q/segmented-control-no-value)
+- [Is there a comparison with other libraries?](https://help.mantine.dev/q/other-libs)
+- [Can I use Mantine with Vue/Svelte/Angular/etc.?](https://help.mantine.dev/q/vue-svelte-angular)
+- [How can I test Select/MultiSelect components?](https://help.mantine.dev/q/combobox-testing)
+
+## Other changes
+
+- [SegmentedControl](/core/segmented-control) indicator positioning logic has been migrated to [FloatingIndicator](/core/floating-indicator). It is now more performant and works better when used inside elements with `transform: scale()`.
+- New [use-mounted](/hooks/use-mounted) hook
+- [Sparkline](/charts/sparkline) now supports `connectNulls` and `areaProps` props
+- [Remix template](https://github.com/mantinedev/remix-template) has been updated to use new Vite bundler
+- [Select](/core/select), [MultiSelect](/core/multi-select), [Autocomplete](/core/autocomplete) and [TagsInput](/core/tags-input) components now support `scrollAreaProps` prop to pass props down to the [ScrollArea](/core/scroll-area) component in the dropdown
+- [Transition](/core/transition) component now supports 4 new transitions: `fade-up`, `fade-down`, `fade-left`, `fade-right`
+- Default [Modal](/core/modal) transition was changed to `fade-down`. This change resolves issues with [SegmentedControl](/core/segmented-control) indicator positioning when used inside modals.
+- You can now reference headings font sizes and line heights in `fz` and `lh` style props with `h1`, `h2`, `h3`, `h4`, `h5`, `h6` values

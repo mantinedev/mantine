@@ -1,5 +1,5 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
-import { useDebounceCallback, useMergedRef } from '@mantine/hooks';
+import { forwardRef, useEffect, useRef } from 'react';
+import { useDebouncedCallback, useMergedRef } from '@mantine/hooks';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { useScrollbarContext } from '../ScrollAreaScrollbar/Scrollbar.context';
 import { addUnlinkedScrollListener, composeEventHandlers } from '../utils';
@@ -13,7 +13,7 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>((props, forwardedRef
   const { onThumbPositionChange } = scrollbarContext;
   const composedRef = useMergedRef(forwardedRef, (node) => scrollbarContext.onThumbChange(node));
   const removeUnlinkedScrollListenerRef = useRef<() => void>();
-  const debounceScrollEnd = useDebounceCallback(() => {
+  const debounceScrollEnd = useDebouncedCallback(() => {
     if (removeUnlinkedScrollListenerRef.current) {
       removeUnlinkedScrollListenerRef.current();
       removeUnlinkedScrollListenerRef.current = undefined;
@@ -65,7 +65,7 @@ interface ScrollAreaThumbProps extends ThumbProps {
   forceMount?: true;
 }
 
-export const ScrollAreaThumb = React.forwardRef<HTMLDivElement, ScrollAreaThumbProps>(
+export const ScrollAreaThumb = forwardRef<HTMLDivElement, ScrollAreaThumbProps>(
   (props, forwardedRef) => {
     const { forceMount, ...thumbProps } = props;
     const scrollbarContext = useScrollbarContext();

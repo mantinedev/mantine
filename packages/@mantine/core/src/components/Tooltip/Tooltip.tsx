@@ -1,4 +1,4 @@
-import React, { cloneElement, useRef } from 'react';
+import { cloneElement, useRef } from 'react';
 import cx from 'clsx';
 import { useMergedRef } from '@mantine/hooks';
 import {
@@ -19,6 +19,7 @@ import {
   FloatingArrow,
   FloatingAxesOffsets,
   FloatingPosition,
+  FloatingStrategy,
   getFloatingPosition,
 } from '../Floating';
 import { OptionalPortal } from '../Portal';
@@ -74,6 +75,9 @@ export interface TooltipProps extends TooltipBaseProps {
 
   /** If set, the tooltip will not be unmounted from the DOM when it is hidden, `display: none` styles will be applied instead */
   keepMounted?: boolean;
+
+  /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy), `'absolute'` by default */
+  floatingStrategy?: FloatingStrategy;
 }
 
 export type TooltipFactory = Factory<{
@@ -151,6 +155,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     vars,
     portalProps,
     mod,
+    floatingStrategy,
     ...others
   } = useProps('Tooltip', defaultProps, props);
 
@@ -168,6 +173,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     offset: typeof offset === 'number' ? offset! + (withArrow ? arrowSize! / 2 : 0) : offset!,
     positionDependencies: [...positionDependencies!, children],
     inline,
+    strategy: floatingStrategy,
   });
 
   const getStyles = useStyles<TooltipFactory>({

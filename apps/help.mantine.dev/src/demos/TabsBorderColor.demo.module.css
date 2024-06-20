@@ -1,0 +1,19 @@
+.root {
+  @mixin light {
+    --border-color: var(--mantine-color-gray-1);
+  }
+
+  @mixin dark {
+    --border-color: var(--mantine-color-dark-5);
+  }
+}
+
+.list::before {
+  border-color: var(--border-color);
+}
+
+.tab:not([data-active]) {
+  @mixin hover {
+    border-color: var(--border-color);
+  }
+}

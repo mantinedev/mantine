@@ -1,31 +1,21 @@
 .root {
-  --label-lh-xs: rem(16px);
-  --label-lh-sm: rem(20px);
-  --label-lh-md: rem(24px);
-  --label-lh-lg: rem(30px);
-  --label-lh-xl: rem(36px);
+  --label-lh-xs: 16px;
+  --label-lh-sm: 20px;
+  --label-lh-md: 24px;
+  --label-lh-lg: 30px;
+  --label-lh-xl: 36px;
   --label-lh: var(--label-lh-sm);
 
   &[data-label-position='left'] {
     --label-order: 1;
-    --label-offset-right: var(--mantine-spacing-sm);
-    --label-offset-left: 0;
-
-    @mixin rtl {
-      --label-offset-right: 0;
-      --label-offset-left: var(--mantine-spacing-sm);
-    }
+    --label-offset-end: var(--mantine-spacing-sm);
+    --label-offset-start: 0;
   }
 
   &[data-label-position='right'] {
     --label-order: 2;
-    --label-offset-right: 0;
-    --label-offset-left: var(--mantine-spacing-sm);
-
-    @mixin rtl {
-      --label-offset-right: var(--mantine-spacing-sm);
-      --label-offset-left: 0;
-    }
+    --label-offset-end: 0;
+    --label-offset-start: var(--mantine-spacing-sm);
   }
 }
 
@@ -53,8 +43,8 @@
 .label {
   cursor: var(--label-cursor);
   color: inherit;
-  padding-left: var(--label-offset-left);
-  padding-right: var(--label-offset-right);
+  padding-inline-start: var(--label-offset-start);
+  padding-inline-end: var(--label-offset-end);
 
   fieldset:disabled &,
   &:where([data-disabled]) {
@@ -70,12 +60,12 @@
 
 .description {
   margin-top: calc(var(--mantine-spacing-xs) / 2);
-  padding-left: var(--label-offset-left);
-  padding-right: var(--label-offset-right);
+  padding-inline-start: var(--label-offset-start);
+  padding-inline-end: var(--label-offset-end);
 }
 
 .error {
   margin-top: calc(var(--mantine-spacing-xs) / 2);
-  padding-left: var(--label-offset-left);
-  padding-right: var(--label-offset-right);
+  padding-inline-start: var(--label-offset-start);
+  padding-inline-end: var(--label-offset-end);
 }

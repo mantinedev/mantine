@@ -1,16 +1,16 @@
 .root {
-  --radio-size-xs: rem(16px);
-  --radio-size-sm: rem(20px);
-  --radio-size-md: rem(24px);
-  --radio-size-lg: rem(30px);
-  --radio-size-xl: rem(36px);
+  --radio-size-xs: 16px;
+  --radio-size-sm: 20px;
+  --radio-size-md: 24px;
+  --radio-size-lg: 30px;
+  --radio-size-xl: 36px;
   --radio-size: var(--radio-size-sm);
 
-  --radio-icon-size-xs: rem(6px);
-  --radio-icon-size-sm: rem(8px);
-  --radio-icon-size-md: rem(10px);
-  --radio-icon-size-lg: rem(14px);
-  --radio-icon-size-xl: rem(16px);
+  --radio-icon-size-xs: 6px;
+  --radio-icon-size-sm: 8px;
+  --radio-icon-size-md: 10px;
+  --radio-icon-size-lg: 14px;
+  --radio-icon-size-xl: 16px;
   --radio-icon-size: var(--radio-icon-size-sm);
   --radio-icon-color: var(--mantine-color-white);
 }
@@ -19,17 +19,17 @@
   position: relative;
   width: var(--radio-size);
   height: var(--radio-size);
-  order: var(--_radio-order, 1);
+  order: 1;
 
-  &[data-label-position='left'] {
-    --_radio-order: 2;
+  &:where([data-label-position='left']) {
+    order: 2;
   }
 }
 
 .icon {
-  color: var(--_radio-icon-color, var(--radio-icon-color));
-  opacity: var(--_radio-icon-opacity, 0);
-  transform: var(--_radio-icon-transform, scale(0.2) translateY(rem(10px)));
+  color: var(--radio-icon-color);
+  opacity: var(--radio-icon-opacity, 0);
+  transform: var(--radio-icon-transform, scale(0.2) translateY(rem(10px)));
   transition:
     opacity 100ms ease,
     transform 200ms ease;
@@ -42,8 +42,7 @@
 }
 
 .radio {
-  background-color: var(--_radio-bg);
-  border: rem(1px) solid var(--_radio-bd-color);
+  border: 1px solid;
   position: relative;
   appearance: none;
   width: var(--radio-size);
@@ -56,71 +55,69 @@
   transition-property: background-color, border-color;
   transition-timing-function: ease;
   transition-duration: 100ms;
-  cursor: var(--_cursor, var(--mantine-cursor-type));
+  cursor: var(--mantine-cursor-type);
   -webkit-tap-highlight-color: transparent;
 
-  @mixin light {
-    --_radio-bg: var(--mantine-color-white);
-    --_radio-bd-color: var(--mantine-color-gray-4);
+  @mixin where-light {
+    background-color: var(--mantine-color-white);
+    border-color: var(--mantine-color-gray-4);
   }
 
-  @mixin dark {
-    --_radio-bg: var(--mantine-color-dark-6);
-    --_radio-bd-color: var(--mantine-color-dark-4);
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-6);
+    border-color: var(--mantine-color-dark-4);
   }
 
   &:checked {
-    --_radio-bg: var(--radio-color, var(--mantine-primary-color-filled));
-    --_radio-bd-color: var(--radio-color, var(--mantine-primary-color-filled));
+    background-color: var(--radio-color, var(--mantine-primary-color-filled));
+    border-color: var(--radio-color, var(--mantine-primary-color-filled));
 
     & + .icon {
-      --_radio-icon-opacity: 1;
-      --_radio-icon-transform: scale(1);
+      --radio-icon-opacity: 1;
+      --radio-icon-transform: scale(1);
     }
   }
 
   &:disabled {
-    --_cursor: not-allowed;
+    cursor: not-allowed;
 
-    @mixin light {
-      --_radio-bg: var(--mantine-color-gray-1);
-      --_radio-bd-color: var(--mantine-color-gray-2);
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-1);
+      border-color: var(--mantine-color-gray-2);
 
       & + .icon {
-        --_radio-icon-color: var(--mantine-color-gray-3);
+        --radio-icon-color: var(--mantine-color-gray-3);
       }
     }
 
-    @mixin dark {
-      --_radio-bg: var(--mantine-color-dark-5);
-      --_radio-bd-color: var(--mantine-color-dark-4);
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+      border-color: var(--mantine-color-dark-4);
 
       & + .icon {
-        --_radio-icon-color: var(--mantine-color-dark-7);
+        --radio-icon-color: var(--mantine-color-dark-7);
       }
     }
   }
 
-  &[data-error] {
-    --_radio-bd-color: var(--mantine-color-error);
+  &:where([data-error]) {
+    border-color: var(--mantine-color-error);
   }
 }
 
 .radio--outline {
   & + .icon {
-    --_radio-icon-color: var(--radio-color);
+    --radio-icon-color: var(--radio-color);
   }
 
   &:checked:not(:disabled) {
-    [data-mantine-color-scheme] & {
-      --_radio-bg: transparent;
-      --_radio-bd-color: var(--radio-color);
+    background-color: transparent;
+    border-color: var(--radio-color);
 
-      & + .icon {
-        --_radio-icon-color: var(--radio-color);
-        --_radio-icon-opacity: 1;
-        --_radio-icon-transform: none;
-      }
+    & + .icon {
+      --radio-icon-color: var(--radio-color);
+      --radio-icon-opacity: 1;
+      --radio-icon-transform: none;
     }
   }
 }

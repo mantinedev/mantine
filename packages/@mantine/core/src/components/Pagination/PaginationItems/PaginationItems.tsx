@@ -1,4 +1,3 @@
-import React from 'react';
 import { usePaginationContext } from '../Pagination.context';
 import { PaginationIcon } from '../Pagination.icons';
 import { PaginationControl } from '../PaginationControl/PaginationControl';

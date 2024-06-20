@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Button, ButtonProps, Group, GroupProps } from '@mantine/core';
 import { ConfirmLabels } from './context';
 import { useModals } from './use-modals/use-modals';
@@ -47,7 +46,7 @@ export function ConfirmModal({
     <>
       {children && <Box mb="md">{children}</Box>}
 
-      <Group justify="flex-end" {...groupProps}>
+      <Group mt={children ? 0 : 'md'} justify="flex-end" {...groupProps}>
         <Button variant="default" {...cancelProps} onClick={handleCancel}>
           {cancelProps?.children || cancelLabel}
         </Button>

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Stepper } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Stepper.demo.stylesApi3.module.css';
 
 const cssCode = `.separator {
-  height: rem(2px);
-  border-top: rem(2px) solid light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-3));
+  height: 2px;
+  border-top: 2px solid light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-3));
   border-radius: var(--mantine-radius-xl);
   background-color: transparent;
 
@@ -53,7 +53,7 @@ function Demo() {
   const [active, setActive] = useState(1);
 
   return (
-    <Stepper classNames={classes} active={active} onStepClick={setActive} breakpoint="sm">
+    <Stepper classNames={classes} active={active} onStepClick={setActive}>
       <Stepper.Step label="Step 1" description="Create an account" />
       <Stepper.Step label="Step 2" description="Verify email" />
       <Stepper.Step label="Step 3" description="Get full access" />

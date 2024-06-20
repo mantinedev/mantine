@@ -4,12 +4,12 @@
   align-items: center;
   justify-content: center;
   color: var(--mantine-color-white);
-  flex: 1 0 calc(15% - rem(4px));
+  flex: 1 0 calc(15% - 4px);
 }
 
 .check {
-  width: rem(12px);
-  height: rem(12px);
+  width: 12px;
+  height: 12px;
 }
 
 .colorControl {
@@ -17,16 +17,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1 0 calc(15% - rem(4px));
-  height: rem(28px);
+  flex: 1 0 calc(15% - 4px);
+  height: 28px;
   border-radius: var(--mantine-radius-sm);
-  border: rem(1px) solid var(--_control-border-color);
+  border: 1px solid;
 
-  @mixin light {
-    --_control-border-color: var(--mantine-color-gray-5);
+  @mixin where-light {
+    border-color: var(--mantine-color-gray-5);
   }
 
-  @mixin dark {
-    --_control-border-color: var(--mantine-color-dark-3);
+  @mixin where-dark {
+    border-color: var(--mantine-color-dark-3);
   }
 }

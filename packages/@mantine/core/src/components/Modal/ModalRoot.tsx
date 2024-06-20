@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   createVarsResolver,
   factory,
@@ -109,7 +108,7 @@ export const ModalRoot = factory<ModalRootFactory>((_props, ref) => {
   });
 
   return (
-    <ModalProvider value={{ yOffset, scrollAreaComponent, getStyles }}>
+    <ModalProvider value={{ yOffset, scrollAreaComponent, getStyles, fullScreen }}>
       <ModalBase
         ref={ref}
         {...getStyles('root')}

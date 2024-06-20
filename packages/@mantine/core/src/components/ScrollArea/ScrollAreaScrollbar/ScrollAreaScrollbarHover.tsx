@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { ScrollAreaScrollbarAuto, ScrollAreaScrollbarAutoProps } from './ScrollAreaScrollbarAuto';
 
@@ -25,6 +25,7 @@ export const ScrollAreaScrollbarHover = forwardRef<HTMLDivElement, ScrollAreaScr
         };
         scrollArea.addEventListener('pointerenter', handlePointerEnter);
         scrollArea.addEventListener('pointerleave', handlePointerLeave);
+
         return () => {
           window.clearTimeout(hideTimer);
           scrollArea.removeEventListener('pointerenter', handlePointerEnter);

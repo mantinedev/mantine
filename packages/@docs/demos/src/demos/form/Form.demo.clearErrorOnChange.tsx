@@ -1,15 +1,16 @@
 /* eslint-disable no-console */
-import React from 'react';
-import { Box, Button, Checkbox, Group, TextInput } from '@mantine/core';
+
+import { Button, Checkbox, Group, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { TextInput, Checkbox, Button, Group, Box } from '@mantine/core';
+import { TextInput, Checkbox, Button, Group } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     clearInputErrorOnChange: false,
     initialValues: {
       email: '',
@@ -22,32 +23,33 @@ function Demo() {
   });
 
   return (
-    <Box maw={340} mx="auto">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
-        <TextInput
-          withAsterisk
-          label="Email"
-          placeholder="your@email.com"
-          {...form.getInputProps('email')}
-        />
+    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <TextInput
+        withAsterisk
+        label="Email"
+        placeholder="your@email.com"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
 
-        <Checkbox
-          mt="md"
-          label="I agree to sell my privacy"
-          {...form.getInputProps('termsOfService', { type: 'checkbox' })}
-        />
+      <Checkbox
+        mt="md"
+        label="I agree to sell my privacy"
+        key={form.key('termsOfService')}
+        {...form.getInputProps('termsOfService', { type: 'checkbox' })}
+      />
 
-        <Group justify="flex-end" mt="md">
-          <Button type="submit">Submit</Button>
-        </Group>
-      </form>
-    </Box>
+      <Group justify="flex-end" mt="md">
+        <Button type="submit">Submit</Button>
+      </Group>
+    </form>
   );
 }
 `;
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     clearInputErrorOnChange: false,
     initialValues: {
       email: '',
@@ -60,26 +62,26 @@ function Demo() {
   });
 
   return (
-    <Box maw={340} mx="auto">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
-        <TextInput
-          withAsterisk
-          label="Email"
-          placeholder="your@email.com"
-          {...form.getInputProps('email')}
-        />
+    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <TextInput
+        withAsterisk
+        label="Email"
+        placeholder="your@email.com"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
 
-        <Checkbox
-          mt="md"
-          label="I agree to sell my privacy"
-          {...form.getInputProps('termsOfService', { type: 'checkbox' })}
-        />
+      <Checkbox
+        mt="md"
+        label="I agree to sell my privacy"
+        key={form.key('termsOfService')}
+        {...form.getInputProps('termsOfService', { type: 'checkbox' })}
+      />
 
-        <Group justify="flex-end" mt="md">
-          <Button type="submit">Submit</Button>
-        </Group>
-      </form>
-    </Box>
+      <Group justify="flex-end" mt="md">
+        <Button type="submit">Submit</Button>
+      </Group>
+    </form>
   );
 }
 
@@ -87,4 +89,6 @@ export const clearErrorOnChange: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  centered: true,
+  maxWidth: 340,
 };

@@ -1,9 +1,9 @@
 .calendarHeader {
-  --dch-control-size-xs: rem(30px);
-  --dch-control-size-sm: rem(36px);
-  --dch-control-size-md: rem(42px);
-  --dch-control-size-lg: rem(48px);
-  --dch-control-size-xl: rem(54px);
+  --dch-control-size-xs: 30px;
+  --dch-control-size-sm: 36px;
+  --dch-control-size-md: 42px;
+  --dch-control-size-lg: 48px;
+  --dch-control-size-xl: 54px;
   --dch-control-size: var(--dch-control-size-sm);
 
   display: flex;
@@ -19,26 +19,24 @@
   justify-content: center;
   align-items: center;
   user-select: none;
-  background-color: var(--_control-bg);
-  opacity: var(--_control-opacity, 1);
-  cursor: var(--_control-cursor, pointer);
+  opacity: 1;
+  cursor: pointer;
 
   @mixin hover {
-    &:not([data-disabled], :disabled) {
+    &:where(:not([data-disabled], :disabled)) {
       @mixin light {
-        --_control-bg: var(--mantine-color-gray-0);
+        background-color: var(--mantine-color-gray-0);
       }
 
       @mixin dark {
-        --_control-bg: var(--mantine-color-dark-5);
+        background-color: var(--mantine-color-dark-5);
       }
     }
   }
 
-  &:disabled,
-  &[data-disabled] {
-    --_control-opacity: 0.2;
-    --_control-cursor: not-allowed;
+  &:where(:disabled, [data-disabled]) {
+    opacity: 0.2;
+    cursor: not-allowed;
   }
 }
 
@@ -56,21 +54,20 @@
 .calendarHeaderControlIcon {
   width: 60%;
   height: 60%;
-  transform: var(--_chevron-transform);
 
-  &[data-direction='next'] {
-    --_chevron-transform: rotate(270deg);
+  &:where([data-direction='next']) {
+    transform: rotate(270deg);
 
-    @mixin rtl {
-      --_chevron-transform: rotate(90deg);
+    @mixin where-rtl {
+      transform: rotate(90deg);
     }
   }
 
-  &[data-direction='previous'] {
-    --_chevron-transform: rotate(90deg);
+  &:where([data-direction='previous']) {
+    transform: rotate(90deg);
 
-    @mixin rtl {
-      --_chevron-transform: rotate(270deg);
+    @mixin where-rtl {
+      transform: rotate(270deg);
     }
   }
 }

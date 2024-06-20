@@ -1,0 +1,21 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useThrottledCallback);
+
+## Usage
+
+`useThrottledCallback` accepts a function and a wait time in milliseconds.
+It returns a throttled version of the function that will only be called at most once every `wait` milliseconds.
+
+<Demo data={HooksDemos.useThrottledCallbackUsage} />
+
+## Definition
+
+```tsx
+function useThrottledCallback<T extends (...args: any[]) => any>(
+  callback: T,
+  wait: number
+): (...args: Parameters<T>) => void;
+```

@@ -1,0 +1,43 @@
+.root {
+  position: relative;
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+  width: fit-content;
+  padding: var(--mantine-spacing-sm);
+  border-radius: var(--mantine-radius-md);
+}
+
+.indicator {
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
+  border-radius: var(--mantine-radius-md);
+  box-shadow: var(--mantine-shadow-md);
+  border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
+}
+
+.controlsGroup {
+  display: flex;
+}
+
+.control {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-2));
+  border-radius: var(--mantine-radius-md);
+
+  &[data-active] {
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  }
+
+  @mixin hover {
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+    background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-7));
+  }
+
+  & svg {
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+}

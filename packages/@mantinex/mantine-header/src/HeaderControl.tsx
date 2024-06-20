@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'clsx';
 import { BoxProps, createPolymorphicComponent, Tooltip, UnstyledButton } from '@mantine/core';
 import classes from './HeaderControl.module.css';

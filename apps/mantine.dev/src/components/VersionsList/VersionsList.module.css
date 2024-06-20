@@ -1,0 +1,65 @@
+.root {
+  padding-top: var(--mantine-spacing-xl);
+}
+
+.minorVersion {
+  & + & {
+    margin-top: var(--mantine-spacing-xl);
+    padding-top: var(--mantine-spacing-xl);
+    border-top: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
+  }
+}
+
+.minorVersionBadgeWrapper {
+  width: 86px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.minorVersionBadge {
+  height: 30px;
+  line-height: 28px;
+  overflow: hidden;
+  font-size: var(--mantine-font-size-md);
+  font-weight: 700;
+  padding-left: var(--mantine-spacing-sm);
+  padding-right: var(--mantine-spacing-sm);
+  border-radius: var(--mantine-radius-md);
+  background-color: var(--mantine-color-blue-light);
+  color: var(--mantine-color-blue-light-color);
+}
+
+.minorVersionDate {
+  font-size: 15px;
+
+  @mixin larger-than $mantine-breakpoint-sm {
+    margin-left: auto;
+  }
+}
+
+.patchLink {
+  font-size: 15px;
+  color: var(--mantine-color-text);
+  text-decoration: none;
+
+  @mixin hover {
+    .patchLinkLabel {
+      text-decoration: underline;
+    }
+  }
+}
+
+.patchBadge {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--mantine-color-text);
+}
+
+.versionHeader {
+  @mixin smaller-than $mantine-breakpoint-sm {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

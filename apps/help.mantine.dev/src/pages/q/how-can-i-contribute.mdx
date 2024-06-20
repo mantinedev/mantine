@@ -1,0 +1,54 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How can I contribute to the library?',
+  description:
+    'There are multiple ways to contribute even without writing code',
+  slug: 'how-can-i-contribute',
+  category: 'about',
+  tags: ['contribute', 'pull request'],
+  created_at: 'January 3, 2024',
+  last_updated_at: 'January 3, 2024',
+};
+
+export default Layout(meta);
+
+## Ways to contribute
+
+- Share your feedback in [GitHub Discussions](https://github.com/mantinedev/mantine/discussions/categories/feedback) –
+  we are always happy to hear your thoughts on how to make Mantine better. Most of the new features and components
+  are based on the feedback we receive from the community.
+- Help others on [Discord](https://discord.gg/wbH82zuWMN) and/or [GitHub Discussions](https://github.com/mantinedev/mantine/discussions). There are usually 10-20 new questions every day,
+  you can help people with their issues and questions. While helping others, you will learn yourself and become
+  more proficient with React and Mantine.
+- Give us a code review. You are welcome to explore `@mantine/*` packages [source code](https://github.com/mantinedev/mantine)
+  and provide your feedback on how we can improve it. We are always open to new ideas and suggestions.
+- Send us some [kind words](https://github.com/mantinedev/mantine/discussions/categories/kind-words). We usually receive only
+  bug reports and feature requests, it is always nice to hear that people enjoy working with Mantine.
+- Star the project on [GitHub](https://github.com/mantinedev/mantine). It is a small thing that helps us grow and get more
+  people interested in the project.
+- [Contribute](/contribute) to the Mantine codebase. We welcome all kinds of contributions: if you do not have much
+  experience with React/TypeScript, you can help us improve the documentation to make it more clear and understandable
+  for new developers. If you are an experienced React developer, you can help us with open [issues](https://github.com/mantinedev/mantine/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22).
+
+## How to contribute to the codebase
+
+- Decide on what you want to contribute.
+- If you would like to implement a new feature, discuss it with the maintainer ([GitHub Discussions](https://github.com/mantinedev/mantine/discussions/new) or [Discord](https://discord.gg/wbH82zuWMN)) before jumping into coding.
+- After finalizing issue details, as you begin working on the code.
+- Run tests with `npm test` and submit a PR once all tests have passed.
+- Get a code review and fix all issues noticed by the maintainer.
+- If you cannot finish your task or if you change your mind – that's totally fine! Just let us know in the GitHub issue that you created during the first step of this process. The Mantine community is friendly – we won't judge or ask any questions if you decide to cancel your submission.
+- Your PR is merged. You are awesome ❤️!
+
+## How to get started with Mantine locally
+
+- Install the [editorconfig](https://editorconfig.org/) extension for your editor.
+- Fork the [repository](https://github.com/mantinedev/mantine), then clone or download your fork.
+- Run `nvm use` to switch to the Node version specified in `.nvmrc` file ([install nvm](https://github.com/nvm-sh/nvm)).
+- Install dependencies with yarn – `yarn`
+- Setup project – `npm run setup`
+- Build local version of all packages – `npm run build all`
+- To start storybook – `npm run storybook`
+- To start docs – `npm run docs`
+- To rebuild props descriptions – `npm run docs:docgen`

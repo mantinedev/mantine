@@ -1,30 +1,30 @@
 .root {
-  --badge-height-xs: rem(16px);
-  --badge-height-sm: rem(18px);
-  --badge-height-md: rem(20px);
-  --badge-height-lg: rem(26px);
-  --badge-height-xl: rem(32px);
+  --badge-height-xs: 16px;
+  --badge-height-sm: 18px;
+  --badge-height-md: 20px;
+  --badge-height-lg: 26px;
+  --badge-height-xl: 32px;
 
-  --badge-fz-xs: rem(9px);
-  --badge-fz-sm: rem(10px);
-  --badge-fz-md: rem(11px);
-  --badge-fz-lg: rem(13px);
-  --badge-fz-xl: rem(16px);
+  --badge-fz-xs: 9px;
+  --badge-fz-sm: 10px;
+  --badge-fz-md: 11px;
+  --badge-fz-lg: 13px;
+  --badge-fz-xl: 16px;
 
-  --badge-padding-x-xs: rem(6px);
-  --badge-padding-x-sm: rem(8px);
-  --badge-padding-x-md: rem(10px);
-  --badge-padding-x-lg: rem(12px);
-  --badge-padding-x-xl: rem(16px);
+  --badge-padding-x-xs: 6px;
+  --badge-padding-x-sm: 8px;
+  --badge-padding-x-md: 10px;
+  --badge-padding-x-lg: 12px;
+  --badge-padding-x-xl: 16px;
 
   --badge-height: var(--badge-height-md);
   --badge-fz: var(--badge-fz-md);
   --badge-padding-x: var(--badge-padding-x-md);
-  --badge-radius: rem(1000px);
+  --badge-radius: 1000px;
   --badge-lh: calc(var(--badge-height) - rem(2px));
   --badge-color: var(--mantine-color-white);
   --badge-bg: var(--mantine-primary-color-filled);
-  --badge-bd: rem(1px) solid transparent;
+  --badge-bd: 1px solid transparent;
 
   -webkit-tap-highlight-color: transparent;
   font-size: var(--badge-fz);
@@ -39,7 +39,7 @@
   width: fit-content;
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: rem(0.25px);
+  letter-spacing: 0.25px;
   cursor: inherit;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -53,8 +53,7 @@
   }
 
   &:where([data-circle]) {
-    padding-left: rem(2px);
-    padding-right: rem(2px);
+    padding-inline: 2px;
     width: var(--badge-height);
   }
 }
@@ -81,12 +80,7 @@
     height: var(--badge-dot-size);
     border-radius: var(--badge-dot-size);
     background-color: var(--badge-dot-color);
-    margin-right: var(--badge-dot-size);
-
-    @mixin where-rtl {
-      margin-right: 0;
-      margin-left: var(--badge-dot-size);
-    }
+    margin-inline-end: var(--badge-dot-size);
   }
 }
 
@@ -104,22 +98,10 @@
   align-items: center;
 
   &:where([data-position='left']) {
-    margin-left: 0;
-    margin-right: var(--badge-section-margin);
-
-    @mixin where-rtl {
-      margin-left: var(--badge-section-margin);
-      margin-right: 0;
-    }
+    margin-inline-end: var(--badge-section-margin);
   }
 
   &:where([data-position='right']) {
-    margin-left: var(--badge-section-margin);
-    margin-right: 0;
-
-    @mixin rtl {
-      margin-right: var(--badge-section-margin);
-      margin-left: 0;
-    }
+    margin-inline-start: var(--badge-section-margin);
   }
 }

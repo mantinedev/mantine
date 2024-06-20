@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   createVarsResolver,
   ExtendComponent,
@@ -23,6 +22,7 @@ import { ComboboxEventsTarget } from './ComboboxEventsTarget/ComboboxEventsTarge
 import { ComboboxFooter } from './ComboboxFooter/ComboboxFooter';
 import { ComboboxGroup } from './ComboboxGroup/ComboboxGroup';
 import { ComboboxHeader } from './ComboboxHeader/ComboboxHeader';
+import { ComboboxHiddenInput } from './ComboboxHiddenInput/ComboboxHiddenInput';
 import { ComboboxOption, ComboboxOptionProps } from './ComboboxOption/ComboboxOption';
 import { ComboboxOptions } from './ComboboxOptions/ComboboxOptions';
 import { ComboboxSearch } from './ComboboxSearch/ComboboxSearch';
@@ -89,6 +89,8 @@ export type ComboboxFactory = Factory<{
     EventsTarget: typeof ComboboxEventsTarget;
     DropdownTarget: typeof ComboboxDropdownTarget;
     Group: typeof ComboboxGroup;
+    ClearButton: typeof ComboboxClearButton;
+    HiddenInput: typeof ComboboxHiddenInput;
   };
 }>;
 
@@ -193,3 +195,4 @@ Combobox.EventsTarget = ComboboxEventsTarget;
 Combobox.DropdownTarget = ComboboxDropdownTarget;
 Combobox.Group = ComboboxGroup;
 Combobox.ClearButton = ComboboxClearButton;
+Combobox.HiddenInput = ComboboxHiddenInput;

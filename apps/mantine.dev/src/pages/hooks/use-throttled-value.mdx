@@ -1,0 +1,18 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useThrottledValue);
+
+## Usage
+
+`useThrottledValue` accepts a value and a wait time in milliseconds.
+It returns a throttled value that cannot change more than once every `wait` milliseconds.
+
+<Demo data={HooksDemos.useThrottledValueUsage} />
+
+## Definition
+
+```tsx
+function useThrottledValue<T>(value: T, wait: number): T;
+```

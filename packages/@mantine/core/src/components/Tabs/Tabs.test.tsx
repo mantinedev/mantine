@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { DirectionProvider } from '../../core';
 import { Tabs, TabsProps, TabsStylesNames } from './Tabs';

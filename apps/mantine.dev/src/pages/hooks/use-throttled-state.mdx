@@ -1,0 +1,21 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useThrottledState);
+
+## Usage
+
+`useThrottledState` works similar to `useState` but throttles the state updates.
+`setThrottledState` handler in the example below will be called at most once every 1000ms.
+
+<Demo data={HooksDemos.useThrottledStateUsage} />
+
+## Definition
+
+```tsx
+function useThrottledState<T = any>(
+  defaultValue: T,
+  wait: number
+): readonly [T, (newValue: React.SetStateAction<T>) => void];
+```

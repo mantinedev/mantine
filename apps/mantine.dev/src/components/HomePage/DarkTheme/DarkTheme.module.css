@@ -1,0 +1,34 @@
+.image {
+  box-shadow: var(--mantine-shadow-md);
+  border-radius: var(--mantine-radius-md);
+  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
+}
+
+.darkIcon,
+.lightIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.darkIcon {
+  color: var(--mantine-color-yellow-4);
+
+  @mixin light {
+    display: none;
+  }
+}
+
+.lightIcon {
+  color: var(--mantine-color-blue-7);
+
+  @mixin dark {
+    display: none;
+  }
+}
+
+.codeHighlight {
+  & pre {
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+    border-radius: var(--mantine-radius-md);
+  }
+}

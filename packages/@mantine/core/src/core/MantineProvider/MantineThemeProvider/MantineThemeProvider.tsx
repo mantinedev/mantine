@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 import { DEFAULT_THEME } from '../default-theme';
 import { mergeMantineTheme } from '../merge-mantine-theme';
 import { MantineTheme, MantineThemeOverride } from '../theme.types';
@@ -26,7 +26,7 @@ export interface MantineThemeProviderProps {
   theme?: MantineThemeOverride;
 
   /** Your application or part of the application that requires different theme */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export function MantineThemeProvider({

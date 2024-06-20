@@ -1,14 +1,14 @@
-import React from 'react';
-import { Box, Checkbox, Code, Text, TextInput } from '@mantine/core';
+import { Box, Checkbox, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useForm } from '@mantine/form';
-import { TextInput, Checkbox, Code, Text, Box } from '@mantine/core';
+import { Box, Checkbox, TextInput } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       terms: false,
       user: {
@@ -23,26 +23,22 @@ function Demo() {
       <TextInput
         label="First name"
         placeholder="First name"
+        key={form.key('user.firstName')}
         {...form.getInputProps('user.firstName')}
       />
       <TextInput
         label="Last name"
         placeholder="Last name"
         mt="md"
+        key={form.key('user.lastName')}
         {...form.getInputProps('user.lastName')}
       />
       <Checkbox
         label="I accepts terms & conditions"
         mt="sm"
+        key={form.key('terms')}
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
-
-      <Text size="sm" fw={500} mt="xl">
-        Form values:
-      </Text>
-      <Code block mt={5}>
-        {JSON.stringify(form.values, null, 2)}
-      </Code>
     </Box>
   );
 }
@@ -50,6 +46,7 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       terms: false,
       user: {
@@ -64,26 +61,22 @@ function Demo() {
       <TextInput
         label="First name"
         placeholder="First name"
+        key={form.key('user.firstName')}
         {...form.getInputProps('user.firstName')}
       />
       <TextInput
         label="Last name"
         placeholder="Last name"
         mt="md"
+        key={form.key('user.lastName')}
         {...form.getInputProps('user.lastName')}
       />
       <Checkbox
         label="I accepts terms & conditions"
         mt="sm"
+        key={form.key('terms')}
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
-
-      <Text size="sm" fw={500} mt="xl">
-        Form values:
-      </Text>
-      <Code block mt={5}>
-        {JSON.stringify(form.values, null, 2)}
-      </Code>
     </Box>
   );
 }

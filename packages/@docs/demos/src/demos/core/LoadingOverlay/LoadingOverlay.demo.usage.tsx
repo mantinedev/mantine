@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Button, Group, LoadingOverlay } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
@@ -19,7 +18,7 @@ function Demo() {
         {/* ...other content */}
       </Box>
 
-      <Group position="center">
+      <Group justify="center">
         <Button onClick={toggle}>Toggle overlay</Button>
       </Group>
     </>

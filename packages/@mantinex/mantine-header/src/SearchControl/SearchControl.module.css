@@ -1,10 +1,10 @@
 .root {
-  height: rem(34px);
+  height: 34px;
   padding-left: var(--mantine-spacing-sm);
-  padding-right: rem(4px);
+  padding-right: 4px;
   border-radius: var(--mantine-radius-md);
   color: var(--mantine-color-placeholder);
-  border: rem(1px) solid;
+  border: 1px solid;
 
   @mixin light {
     border-color: var(--mantine-color-gray-3);
@@ -17,17 +17,17 @@
   }
 
   @mixin rtl {
-    padding-left: rem(4px);
+    padding-left: 4px;
     padding-right: var(--mantine-spacing-sm);
   }
 }
 
 .shortcut {
-  font-size: rem(11px);
+  font-size: 11px;
   line-height: 1;
-  padding: rem(4px) rem(7px);
+  padding: 4px 7px;
   border-radius: var(--mantine-radius-sm);
-  border: rem(1px) solid;
+  border: 1px solid;
   font-weight: bold;
 
   @mixin light {

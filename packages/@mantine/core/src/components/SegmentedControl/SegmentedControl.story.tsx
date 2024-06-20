@@ -1,8 +1,25 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useDisclosure } from '@mantine/hooks';
 import { MantineThemeProvider } from '../../core';
+import { Button } from '../Button';
+import { Modal } from '../Modal';
 import { SegmentedControl } from './SegmentedControl';
 
 export default { title: 'SegmentedControl' };
+
+export function WithinModal() {
+  const [opened, { open, close }] = useDisclosure(false);
+
+  return (
+    <>
+      <Modal opened={opened} onClose={close} title="Within Modal">
+        <SegmentedControl data={['React', 'Angular', 'Vue', 'Svelte']} />
+      </Modal>
+
+      <Button onClick={open}>Open modal</Button>
+    </>
+  );
+}
 
 export function WithinDisabledFieldset() {
   return (
@@ -107,6 +124,22 @@ export function SelectedItemRemoved() {
 
       <button type="button" onClick={() => setBreakingThings(!breakingThings)}>
         Click here to break things
+      </button>
+    </div>
+  );
+}
+
+export function Unselect() {
+  const [value, setValue] = useState('');
+
+  const dataList = ['1', '2', '3'];
+
+  return (
+    <div style={{ padding: 40 }}>
+      <SegmentedControl value={value} onChange={setValue} data={dataList} mr={10} />
+
+      <button type="button" onClick={() => setValue('')}>
+        Unselect
       </button>
     </div>
   );

@@ -1,7 +1,7 @@
 .root {
   --alert-radius: var(--mantine-radius-default);
   --alert-bg: var(--mantine-primary-color-light);
-  --alert-bd: rem(1px) solid transparent;
+  --alert-bd: 1px solid transparent;
   --alert-color: var(--mantine-primary-color-light-color);
 
   padding: var(--mantine-spacing-md) var(--mantine-spacing-md);
@@ -32,12 +32,7 @@
   font-weight: 700;
 
   &:where([data-with-close-button]) {
-    padding-right: var(--mantine-spacing-md);
-
-    @mixin where-rtl {
-      padding-left: var(--mantine-spacing-md);
-      padding-right: 0;
-    }
+    padding-inline-end: var(--mantine-spacing-md);
   }
 }
 
@@ -49,18 +44,13 @@
 
 .icon {
   line-height: 1;
-  width: rem(20px);
-  height: rem(20px);
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-right: var(--mantine-spacing-md);
-  margin-top: rem(1px);
-
-  @mixin where-rtl {
-    margin-right: 0;
-    margin-left: var(--mantine-spacing-md);
-  }
+  margin-inline-end: var(--mantine-spacing-md);
+  margin-top: 1px;
 }
 
 .message {
@@ -86,7 +76,7 @@
 }
 
 .closeButton {
-  width: rem(20px);
-  height: rem(20px);
+  width: 20px;
+  height: 20px;
   color: var(--alert-color);
 }

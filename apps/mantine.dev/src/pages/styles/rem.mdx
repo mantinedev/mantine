@@ -1,0 +1,148 @@
+import { StylesDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Rem);
+
+# rem, em and px units
+
+## rem units
+
+All Mantine components use `rem` units to apply size styles (`margin`, `padding`, `width`, etc.).
+By default, `1rem` is considered to be `16px` as it is a default setting in most browsers.
+All components scale based on the user's browser font-size settings or font-size of `html`/`:root`.
+
+<Demo data={StylesDemos.remSlider} />
+
+## rem units scaling
+
+If you want to change font-size of `:root`/`html` element and preserve Mantine components sizes,
+set `scale` on [theme](/theming/theme-object) to the value of `1 / htmlFontSize`.
+
+For example, if you set `html` font-size to `10px` and want to scale Mantine components accordingly, you need
+to set `scale` to `1 / (10 / 16)` (16 – default font-size) = `1 / 0.625` = `1.6`:
+
+```css
+:root {
+  font-size: 10px;
+}
+```
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  scale: 1.6,
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+## em units
+
+`em` units are used in media queries the same way as `rem` units, but they are not affected by font-size specified on `html`/`:root` element.
+`1em` is considered to be `16px`.
+
+## px conversions
+
+You can use numbers in some Mantine components props. Numbers are treated as `px` and converted to `rem`, for example:
+
+```tsx
+import { ColorSwatch } from '@mantine/core';
+
+function DemoPx() {
+  // Specify ColorSwatch size in px, it will be automatically converted to rem
+  // Width and height of ColorSwatch in this case will be 32px / 16 = 2rem
+  return <ColorSwatch color="#000" size={32} />;
+}
+
+function DemoRem() {
+  // This demo will have the same size as previous one
+  return <ColorSwatch color="#000" size="2rem" />;
+}
+```
+
+The same conversion happens in [style props](/styles/style-props/):
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  // width: calc(2rem * var(--mantine-scale))
+  // height: calc(1rem * var(--mantine-scale))
+  return <Box w={32} h={16} />;
+}
+```
+
+## rem and em function
+
+`@mantine/core` package exports `rem` and `em` function that can be used to convert `px` into `rem`/`em`:
+
+```tsx
+import { em, rem } from '@mantine/core';
+
+// numbers and values in px are converted to rem
+rem(32); // -> calc(2rem * var(--mantine-scale))
+em(32); // -> 2em
+rem('16px'); // -> calc(1rem * var(--mantine-scale))
+em('16px'); // -> 1em
+
+rem('2rem'); // -> calc(2rem * var(--mantine-scale))
+em('2rem'); // -> 2rem
+
+rem('50%'); // -> 50%
+em('50%'); // -> 50%
+
+rem('5vh'); // -> 5vh
+em('5vh'); // -> 5vh
+
+// mixed values are converted to rem
+rem('16px 2rem'); // -> calc(1rem * var(--mantine-scale)) calc(2rem * var(--mantine-scale))
+```
+
+## Convert rem to px
+
+To convert `rem`/`em` to `px` use `px` function exported from `@mantine/core`:
+
+```tsx
+import { px } from '@mantine/core';
+
+px('2rem'); // -> 32
+px('10rem'); // -> 160
+```
+
+## rem/em functions in css files
+
+You can use `rem` and `em` function in [css files](/styles/css-modules) if
+[postcss-preset-mantine](/styles/postcss-preset) is installed:
+
+```css
+.demo {
+  font-size: rem(16px);
+
+  @media (min-width: em(320px)) {
+    font-size: rem(32px);
+  }
+}
+```
+
+## Convert px to rem automatically in css files
+
+To convert `px` to `rem` automatically in css files, enable `autoRem` option in
+[postcss-preset-mantine](/styles/postcss-preset) configuration:
+
+```js
+module.exports = {
+  plugins: {
+    'postcss-preset-mantine': {
+      autoRem: true,
+    },
+  },
+};
+```

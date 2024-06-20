@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, TypographyStylesProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
@@ -28,6 +27,8 @@ const html = `
 
 const code = `
 import { TypographyStylesProvider } from '@mantine/core';
+
+const html = '...html content here...';
 
 function Demo() {
   return (

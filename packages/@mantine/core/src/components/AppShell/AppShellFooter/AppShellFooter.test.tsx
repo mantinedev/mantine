@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, render, tests } from '@mantine-tests/core';
 import { AppShell } from '../AppShell';
 import { AppShellFooter, AppShellFooterProps, AppShellFooterStylesNames } from './AppShellFooter';

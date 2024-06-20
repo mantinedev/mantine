@@ -1,0 +1,91 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.FunctionsReference);
+
+# Functions reference
+
+This guides contains a list of functions exported from Mantine packages that
+are not documented anywhere else.
+
+## clamp
+
+`clamp` function is exported from `@mantine/hooks`.
+It clamps number within the inclusive lower and upper bounds.
+
+```tsx
+import { clamp } from '@mantine/hooks';
+
+// With both min and max boundaries
+clamp(10, 0, 5); // 5
+clamp(100, 0, 5); // 5
+clamp(-100, 0, 5); // 0
+
+// With only min boundary
+clamp(10, 0, undefined); // 10
+clamp(-100, 0, undefined); // 0
+
+// With only max boundary
+clamp(0, undefined, 5); // 0
+clamp(10, undefined, 5); // 5
+```
+
+## lowerFirst
+
+`lowerFirst` function is exported from `@mantine/hooks`.
+It converts first character of a string to lower case.
+
+```tsx
+import { lowerFirst } from '@mantine/hooks';
+
+lowerFirst('Mantine'); // mantine
+lowerFirst('mantine'); // mantine
+```
+
+## upperFirst
+
+`upperFirst` function is exported from `@mantine/hooks`.
+It converts first character of a string to upper case.
+
+```tsx
+import { upperFirst } from '@mantine/hooks';
+
+upperFirst('Mantine'); // Mantine
+upperFirst('mantine'); // Mantine
+```
+
+## randomId
+
+`randomId` function is exported from `@mantine/hooks`.
+It generates random id with `mantine-` prefix.
+
+```tsx
+import { randomId } from '@mantine/hooks';
+
+randomId(); // mantine-d7h137oav
+randomId(); // mantine-1q2j3j4j5
+```
+
+## range
+
+`range` function is exported from `@mantine/hooks`.
+It generates array of numbers from `start` to `end` (inclusive).
+
+```tsx
+import { range } from '@mantine/hooks';
+
+range(0, 5); // [0, 1, 2, 3, 4, 5]
+range(5, 0); // [5, 4, 3, 2, 1, 0]
+```
+
+## shallowEqual
+
+`shallowEqual` function is exported from `@mantine/hooks`.
+It performs shallow equal check of two objects.
+
+```tsx
+import { shallowEqual } from '@mantine/hooks';
+
+shallowEqual({ a: 1 }, { a: 1 }); // true
+shallowEqual({ a: 1 }, { a: 2 }); // false
+```

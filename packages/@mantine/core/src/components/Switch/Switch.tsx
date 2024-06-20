@@ -1,4 +1,3 @@
-import React from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
@@ -187,6 +186,8 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
       description={description}
       error={error}
       disabled={disabled}
+      bodyElement="label"
+      labelElement="span"
       classNames={classNames}
       styles={styles}
       unstyled={unstyled}
@@ -208,12 +209,12 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
         id={uuid}
         ref={ref}
         type="checkbox"
+        role="switch"
         {...getStyles('input')}
       />
 
       <Box
-        component="label"
-        htmlFor={uuid}
+        aria-hidden="true"
         mod={{ error, 'label-position': labelPosition }}
         {...getStyles('track')}
       >

@@ -1,0 +1,31 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useElementSize);
+
+## Usage
+
+<Demo data={HooksDemos.useElementSizeDemo} />
+
+## API
+
+`use-element-size` is a simpler version of [use-resize-observer](https://mantine.dev/hooks/use-resize-observer/) hook.
+Hook returns a `ref` object that should be passed to the observed element, and the element's `height` and `width`.
+On the first render (as well as during SSR), or when no element is being observed, `width` and `height` properties are equal to `0`.
+
+```tsx
+import { useElementSize } from '@mantine/hooks';
+
+const { ref, width, height } = useElementSize();
+```
+
+## Definition
+
+```tsx
+type ObserverRect = Omit<DOMRectReadOnly, 'toJSON'>;
+
+function useResizeObserver<T extends HTMLElement = any>(
+  options?: ResizeObserverOptions
+): readonly [React.RefObject<T>, ObserverRect];
+```

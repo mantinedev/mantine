@@ -1,0 +1,35 @@
+.searchIcon {
+  width: 22px;
+  height: 22px;
+
+  @mixin light {
+    color: var(--mantine-color-gray-4);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-dark-3);
+  }
+}
+
+.title {
+  font-family: var(--docs-font-primary);
+  margin-bottom: var(--mantine-spacing-lg);
+
+  @mixin light {
+    color: var(--mantine-color-black);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-white);
+  }
+}
+
+.section {
+  & + & {
+    margin-top: 50px;
+  }
+}
+
+.search {
+  margin-bottom: var(--mantine-spacing-xl);
+}

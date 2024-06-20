@@ -1,0 +1,110 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useQueue);
+
+## Usage
+
+`use-queue` limits the number of data in current state and places the rest of it in a queue.
+For example, in [@mantine/notifications](/x/notifications/) package number of
+notifications that is currently displayed is limited and other new notifications are added to the queue and displayed once
+available space appears.
+
+```tsx
+import { useQueue } from '@mantine/hooks';
+
+const { state, queue, add, update, cleanQueue } = useQueue({
+  initialValues: [1],
+  limit: 2,
+});
+
+// state -> [1], queue -> []
+
+// When state.length is less that limit, new items are added to state
+add(2);
+// state -> [1,2], queue -> []
+
+// When state.length is equal to limit, new items are added to queue
+add(3, 4, 5, 6);
+// state -> [1,2], queue -> [3,4,5,6]
+
+// Use update function to modify items
+update((values) => values.map((item) => item * 3));
+// state -> [3,6], queue -> [9,12,15,18]
+
+// If you add or remove items in update function,
+// they will be divided between queue and state according to limit
+// order is always preserved
+update((values) => values.filter((item) => item % 2));
+// state -> [3,9], queue -> [15]
+
+// Remove all items from queue
+cleanQueue();
+// state -> [3,9], queue -> []
+
+// Remove all items from queue and state
+update(() => []);
+// state -> [], queue -> []
+```
+
+## API
+
+The hook accepts one argument – a configuration object with keys:
+
+- `initialValues` – optional initial values (divided between state and queue according to limit), defaults to empty array
+- `limit` – maximum number of items that state can include, every next item after the limit is exceeded is put in queue
+
+Return value:
+
+- `state` – current state
+- `queue` – current queue
+- `add` – add any number of items to state or queue
+- `update` – apply given function to all items in state and queue, use it to filter, modify or add items
+- `cleanQueue` – remove all items from the queue
+
+## Set item type
+
+By default, the hook will get types information from `initialValues` automatically:
+
+```tsx
+import { useQueue } from '@mantine/hooks';
+
+const q = useQueue({
+  limit: 2,
+  initialValues: [
+    { name: 'Bob', id: 1 },
+    { name: 'Alice', id: 2 },
+  ],
+});
+
+typeof q.state[number]; // -> { name: string; id: number; }
+```
+
+If you do not provide `initialValues`, pass in type for state item:
+
+```tsx
+import { useQueue } from '@mantine/hooks';
+
+const q = useQueue<{ name: string; id: number }>({
+  limit: 2,
+  initialValues: [],
+});
+
+q.add({ name: 'Bob', id: 1 });
+```
+
+## Definition
+
+```tsx
+function useQueue<T>(configuration: {
+  initialValues?: T[];
+  limit: number;
+}): {
+  state: T[];
+  queue: T[];
+  add: (...items: T[]) => void;
+  update: (fn: (state: T[]) => T[]) => void;
+  cleanQueue: () => void;
+};
+```

@@ -1,0 +1,22 @@
+.root {
+  @mixin where-light {
+    --chart-grid-color: rgba(173, 181, 189, 0.6);
+    --chart-text-color: var(--mantine-color-gray-7);
+  }
+
+  @mixin where-dark {
+    --chart-grid-color: rgba(105, 105, 105, 0.6);
+    --chart-text-color: var(--mantine-color-dark-1);
+  }
+
+  & :where(text) {
+    font-size: var(--mantine-font-size-xs);
+    fill: var(--chart-text-color, var(--mantine-color-dimmed));
+    user-select: none;
+  }
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+}

@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Input, InputProps, InputStylesNames } from './Input';
 import { InputDescription } from './InputDescription/InputDescription';
@@ -156,6 +155,11 @@ describe('@mantine/core/Input', () => {
 
     rerender(<Input disabled={false} />);
     expect(screen.getByRole('textbox')).not.toHaveAttribute('disabled');
+  });
+
+  it('allows setting size attribute on the input element', () => {
+    render(<Input inputSize="5" />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('size', '5');
   });
 
   it('exposes compound components', () => {

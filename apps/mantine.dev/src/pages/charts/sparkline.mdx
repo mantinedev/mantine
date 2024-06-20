@@ -1,0 +1,34 @@
+import { SparklineDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Sparkline);
+
+## Usage
+
+`Sparkline` is a simplified version of [AreaChart](/charts/area-chart). It can be used
+to display a single series of data in a small space.
+
+<Demo data={SparklineDemos.usage} />
+
+## Change area color depending on color scheme
+
+You can use CSS variables in `color` property. To define a CSS variable that
+changes depending on the color scheme, use [light/dark mixins](/styles/postcss-preset/#dark-and-light-mixins)
+or [light-dark function](/styles/postcss-preset/#light-dark-function). Example
+of area that is dark orange in light mode and lime in dark mode:
+
+<Demo data={SparklineDemos.colorSchemeColor} />
+
+## Trend colors
+
+Use `trendColors` prop instead of `color` to change chart color depending on the trend.
+The prop accepts an object with `positive`, `negative` and `neutral` properties:
+
+- `positive` - color for positive trend (first value is less than the last value in `data` array)
+- `negative` - color for negative trend (first value is greater than the last value in `data` array)
+- `neutral` - color for neutral trend (first and last values are equal)
+
+`neutral` is optional, if not provided, the color will be the same as `positive`.
+
+<Demo data={SparklineDemos.trendColors} />

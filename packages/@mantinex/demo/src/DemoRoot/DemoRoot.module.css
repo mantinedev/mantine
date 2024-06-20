@@ -1,12 +1,12 @@
 .root {
-  border: rem(1px) solid var(--_demo-border);
+  border: 1px solid var(--demo-border);
   border-radius: var(--mantine-radius-md);
 
   @mixin light {
-    --_demo-border: var(--mantine-color-gray-2);
+    --demo-border: var(--mantine-color-gray-2);
   }
 
   @mixin dark {
-    --_demo-border: var(--mantine-color-dark-5);
+    --demo-border: var(--mantine-color-dark-5);
   }
 }

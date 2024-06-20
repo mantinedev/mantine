@@ -1,10 +1,14 @@
-import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { AppShell } from './AppShell';
 
 export default { title: 'AppShell' };
+
+const lorem =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget felis eget nunc Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget felis eget nunc Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget felis eget nunc';
+
+const longContent = Array(30).fill(lorem).join('\n\n');
 
 export function Usage() {
   const [navbarOpened, { toggle: toggleNavbar }] = useDisclosure(true);
@@ -28,7 +32,7 @@ export function Usage() {
         collapsed: { desktop: !asideOpened, mobile: !asideMobileOpened },
       }}
       header={{
-        height: 0,
+        height: 60,
         collapsed: !headerOpened,
       }}
       footer={{
@@ -53,7 +57,7 @@ export function Usage() {
           <Button onClick={toggleAside}>Toggle aside</Button>
           <Button onClick={toggleAsideMobile}>Toggle aside mobile</Button>
         </Group>
-        <p>Other content</p>
+        <p>{longContent}</p>
       </AppShell.Main>
 
       <AppShell.Aside>Aside</AppShell.Aside>
@@ -71,8 +75,8 @@ export function AltLayout() {
     <AppShell
       padding="md"
       layout="alt"
-      navbar={{
-        width: { base: 200, md: 300 },
+      aside={{
+        width: { base: 140 },
         breakpoint: 'sm',
         collapsed: { desktop: !opened, mobile: !mobileOpened },
       }}
@@ -85,11 +89,12 @@ export function AltLayout() {
         collapsed: !headerOpened,
       }}
     >
-      <AppShell.Navbar>
-        <Button>Focusable element 1</Button>
-        <Button>Focusable element 2</Button>
-      </AppShell.Navbar>
-      <AppShell.Header>Header</AppShell.Header>
+      <AppShell.Aside>Aside</AppShell.Aside>
+      <AppShell.Header>
+        <Group justify="flex-end">
+          <Button>Button hidden by the aside</Button>
+        </Group>
+      </AppShell.Header>
       <AppShell.Main>
         <Group>
           <Button onClick={toggleHeader}>Toggle header</Button>

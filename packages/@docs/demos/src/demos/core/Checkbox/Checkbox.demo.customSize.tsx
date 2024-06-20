@@ -1,23 +1,22 @@
-import React from 'react';
 import { Checkbox, createTheme, MantineThemeProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Checkbox.demo.customSize.module.css';
 
 const cssCode = `.root {
-  --checkbox-size-xxl: rem(42px);
-  --checkbox-size-xxs: rem(14px);
+  --checkbox-size-xxl: 42px;
+  --checkbox-size-xxs: 14px;
 
   &[data-size='xxl'] {
     .label {
-      font-size: rem(22px);
-      line-height: rem(40px);
+      font-size: 22px;
+      line-height: 40px;
     }
   }
 
   &[data-size='xxs'] {
     .label {
-      font-size: rem(10px);
-      line-height: rem(14px);
+      font-size: 10px;
+      line-height: 14px;
     }
   }
 }

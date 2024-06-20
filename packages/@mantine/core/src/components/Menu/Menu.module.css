@@ -1,5 +1,5 @@
 .dropdown {
-  padding: rem(4px);
+  padding: 4px;
 }
 
 .label {
@@ -11,15 +11,15 @@
 }
 
 .divider {
-  margin-top: rem(4px);
-  margin-bottom: rem(4px);
-  border-top: rem(1px) solid;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border-top: 1px solid;
 
-  @mixin light {
+  @mixin where-light {
     border-color: var(--mantine-color-gray-2);
   }
 
-  @mixin dark {
+  @mixin where-dark {
     border-color: var(--mantine-color-dark-4);
   }
 }
@@ -33,7 +33,6 @@
   display: flex;
   align-items: center;
   user-select: none;
-  background-color: var(--_item-bg, transparent);
 
   &:where([data-disabled], :disabled) {
     color: var(--mantine-color-dimmed);
@@ -54,10 +53,6 @@
 
 .itemLabel {
   flex: 1;
-
-  @mixin rtl {
-    text-align: right;
-  }
 }
 
 .itemSection {
@@ -66,22 +61,10 @@
   align-items: center;
 
   &:where([data-position='left']) {
-    margin-left: 0;
-    margin-right: var(--mantine-spacing-xs);
-
-    @mixin where-rtl {
-      margin-left: var(--mantine-spacing-xs);
-      margin-right: 0;
-    }
+    margin-inline-end: var(--mantine-spacing-xs);
   }
 
   &:where([data-position='right']) {
-    margin-left: var(--mantine-spacing-xs);
-    margin-right: 0;
-
-    @mixin where-rtl {
-      margin-left: 0;
-      margin-right: var(--mantine-spacing-xs);
-    }
+    margin-inline-start: var(--mantine-spacing-xs);
   }
 }

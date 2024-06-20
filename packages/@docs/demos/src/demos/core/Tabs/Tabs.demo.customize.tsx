@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconMessageCircle, IconPhoto, IconSettings } from '@tabler/icons-react';
 import { rem, Tabs } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
@@ -39,22 +38,22 @@ function Demo() {
 const cssCode = `
 .tab {
   position: relative;
-  border: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
+  border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
 
   &:first-of-type {
-    border-radius: rem(4px) 0 0 rem(4px);
+    border-radius: 4px 0 0 4px;
 
     @mixin rtl {
-      border-radius: 0 rem(4px) rem(4px) 0;
+      border-radius: 0 4px 4px 0;
     }
   }
 
   &:last-of-type {
-    border-radius: 0 rem(4px) rem(4px) 0;
+    border-radius: 0 4px 4px 0;
 
     @mixin rtl {
-      border-radius: rem(4px) 0 0 rem(4px);
+      border-radius: 4px 0 0 4px;
     }
   }
 
@@ -63,7 +62,7 @@ const cssCode = `
 
     @mixin rtl {
       border-right-width: 0;
-      border-left-width: rem(1px);
+      border-left-width: 1px;
     }
   }
 

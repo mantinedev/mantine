@@ -1,4 +1,3 @@
-import React from 'react';
 import { YearLevelGroup } from './YearLevelGroup';
 
 export default { title: 'YearLevelGroup' };

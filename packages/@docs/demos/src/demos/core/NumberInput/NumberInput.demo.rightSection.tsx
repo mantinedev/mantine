@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconChartBubble } from '@tabler/icons-react';
 import { NumberInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

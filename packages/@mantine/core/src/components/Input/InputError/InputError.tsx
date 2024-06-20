@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   BoxProps,
@@ -86,7 +85,7 @@ export const InputError = factory<InputErrorFactory>((_props, ref) => {
       ref={ref}
       variant={variant}
       size={size}
-      {...getStyles('error')}
+      {...getStyles('error', ctx?.getStyles ? { className, style } : undefined)}
       {...others}
     />
   );

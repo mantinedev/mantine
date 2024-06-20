@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { Pagination } from './Pagination';
@@ -19,7 +19,7 @@ export function DynamicTotal() {
 }
 
 export function AutoContrast() {
-  return <Pagination total={45} color="lime.3" />;
+  return <Pagination total={45} color="lime.3" autoContrast />;
 }
 
 export function Controlled() {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
 import { __InputStylesNames } from '../Input';
 import { TextInput, TextInputProps } from './TextInput';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { getThemeColor, MantineColor, useMantineTheme } from '@mantine/core';
 
 interface AreaSplitProps {

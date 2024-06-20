@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   BoxProps,
@@ -101,6 +100,9 @@ export interface __InputProps {
 
   /** Determines whether the input should have red border and red text color when the `error` prop is set, `true` by default */
   withErrorStyles?: boolean;
+
+  /** `size` prop added to the input element */
+  inputSize?: string;
 }
 
 export interface InputProps extends BoxProps, __InputProps, StylesApiProps<InputFactory> {
@@ -196,6 +198,7 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
     withAria,
     withErrorStyles,
     mod,
+    inputSize,
     ...others
   } = props;
 
@@ -268,6 +271,7 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
         required={required}
         mod={{ disabled, error: !!error && withErrorStyles }}
         variant={variant}
+        __size={inputSize}
         {...getStyles('input')}
       />
 

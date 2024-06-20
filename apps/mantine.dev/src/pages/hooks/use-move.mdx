@@ -1,0 +1,99 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useMove);
+
+## Usage
+
+`use-move` handles move behavior over any element:
+
+<Demo data={HooksDemos.useMoveUsage} />
+
+## API
+
+The hook accepts a callback that is called when user moves pressed mouse over the given element
+and returns an object with `ref` and active state:
+
+```tsx
+import { useMove } from '@mantine/hooks';
+
+const {
+  ref, // -> pass ref to target element
+  active, // -> is user changing something right now?
+} = useMove(({ x, y }) => console.log({ x, y }));
+```
+
+`x` and `y` values are always between `0` and `1`, you can use them to calculate value in your boundaries.
+
+## Horizontal slider
+
+You can ignore changes for one of the axis:
+
+<Demo
+  data={HooksDemos.useMoveHorizontal}
+  demoProps={{ toggle: true }}
+/>
+
+## Vertical slider
+
+Moving the slider down increases the value, to reverse that set value to `1 - y` in your `setValue` function:
+
+<Demo
+  data={HooksDemos.useMoveVertical}
+  demoProps={{ toggle: true }}
+/>
+
+## Color picker
+
+<Demo data={HooksDemos.useMoveColor} demoProps={{ toggle: true }} />
+
+## clampUseMovePosition
+
+`clampUseMovePosition` function can be used to clamp `x` and `y` values to `0-1` range.
+It is useful when you want to use external events to change the value, for example changing value with keyboard arrows:
+
+```tsx
+import { clampUseMovePosition } from '@mantine/hooks';
+
+clampUseMovePosition({ x: 0.5, y: 0.5 }); // -> { x: 0.5, y: 0.5 }
+clampUseMovePosition({ x: 1.5, y: 0.5 }); // -> { x: 1, y: 0.5 }
+clampUseMovePosition({ x: -0.5, y: 0.5 }); // -> { x: 0, y: 0.5 }
+```
+
+## UseMovePosition
+
+`@mantine/hooks` exports `UseMovePosition` type, it can be used as a type parameter for `useState`:
+
+```tsx
+import { useState } from 'react';
+import { UseMovePosition } from '@mantine/hooks';
+
+const [value, setValue] = useState<UseMovePosition>({
+  x: 0.5,
+  y: 0.5,
+});
+```
+
+## Definition
+
+```tsx
+interface UseMovePosition {
+  x: number;
+  y: number;
+}
+
+interface useMoveHandlers {
+  onScrubStart?: () => void;
+  onScrubEnd?: () => void;
+}
+
+function useMove<T extends HTMLElement = HTMLDivElement>(
+  onChange: (value: UseMovePosition) => void,
+  handlers?: useMoveHandlers,
+  dir?: 'ltr' | 'rtl'
+): {
+  ref: React.RefObject<T>;
+  active: boolean;
+};
+```

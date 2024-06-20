@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Checkbox } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Checkbox.demo.customize.module.css';
 
 const cssCode = `
 .root {
-  border: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-md);
   font-weight: 500;
@@ -29,6 +29,7 @@ const cssCode = `
 `;
 
 const code = `
+import { useState } from 'react';
 import { Checkbox } from '@mantine/core';
 import classes from './Demo.module.css';
 

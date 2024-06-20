@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
 import { rem, useDirection } from '@mantine/core';
 import { HeaderControl } from './HeaderControl';

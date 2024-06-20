@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box } from '../../../core';
 import { Marks } from '../Marks/Marks';
 import { useSliderContext } from '../Slider.context';

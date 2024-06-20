@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { BoxProps, createPolymorphicComponent, useProps } from '../../../core';
 import { usePaginationContext } from '../Pagination.context';
 import {
@@ -40,6 +40,7 @@ export function createEdgeComponent({ icon, name, action, type }: CreateEdgeComp
         {...others}
       >
         <Icon
+          className="mantine-rotate-rtl"
           style={{
             width: 'calc(var(--pagination-control-size) / 1.8)',
             height: 'calc(var(--pagination-control-size) / 1.8)',

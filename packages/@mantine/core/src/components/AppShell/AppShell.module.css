@@ -4,16 +4,16 @@
   }
 
   &[data-disabled] {
-    --app-shell-header-offset: 0px !important;
-    --app-shell-navbar-offset: 0px !important;
+    --app-shell-header-offset: 0rem !important;
+    --app-shell-navbar-offset: 0rem !important;
   }
 
   @mixin light {
-    --_app-shell-border-color: var(--mantine-color-gray-3);
+    --app-shell-border-color: var(--mantine-color-gray-3);
   }
 
   @mixin dark {
-    --_app-shell-border-color: var(--mantine-color-dark-4);
+    --app-shell-border-color: var(--mantine-color-dark-4);
   }
 }
 
@@ -31,106 +31,69 @@
   position: fixed;
   display: flex;
   flex-direction: column;
-  top: var(--_section-top, var(--app-shell-header-offset, 0px));
-  height: var(
-    --_section-height,
-    calc(100dvh - var(--app-shell-header-offset, 0px) - var(--app-shell-footer-offset, 0px))
+  top: var(--app-shell-header-offset, 0rem);
+  height: calc(
+    100dvh - var(--app-shell-header-offset, 0rem) - var(--app-shell-footer-offset, 0rem)
   );
   background-color: var(--mantine-color-body);
   transition-property: transform, top, height;
 
-  [data-layout='alt'] & {
-    --_section-top: 0px;
-    --_section-height: 100dvh;
+  :where([data-layout='alt']) & {
+    top: 0rem;
+    height: 100dvh;
   }
 }
 
 .navbar {
-  left: var(--_navbar-left, 0px);
-  right: var(--_navbar-right);
+  inset-inline-start: 0;
   width: var(--app-shell-navbar-width);
-  border-right: var(--_navbar-border-right);
-  border-left: var(--_navbar-border-left);
   transition-property: transform, top, height;
-  transform: var(--_navbar-transform, var(--app-shell-navbar-transform));
+  transform: var(--app-shell-navbar-transform);
   z-index: var(--app-shell-navbar-z-index);
 
-  &[data-with-border] {
-    --_navbar-border-right: rem(1px) solid var(--_app-shell-border-color);
-
-    @mixin rtl {
-      --_navbar-border-right: none;
-      --_navbar-border-left: rem(1px) solid var(--_app-shell-border-color);
-    }
+  @mixin where-rtl {
+    transform: var(--app-shell-navbar-transform-rtl);
   }
 
-  @mixin rtl {
-    --_navbar-left: auto;
-    --_navbar-right: 0px;
-    --_navbar-transform: var(--app-shell-navbar-transform-rtl);
+  &:where([data-with-border]) {
+    border-inline-end: 1px solid var(--app-shell-border-color);
   }
 }
 
 .aside {
-  left: var(--_aside-left);
-  right: var(--_aside-right, 0px);
+  inset-inline-end: 0;
   width: var(--app-shell-aside-width);
-  border-right: var(--_aside-border-right);
-  border-left: var(--_aside-border-left);
-  transform: var(--_aside-transform, var(--app-shell-aside-transform));
+  transform: var(--app-shell-aside-transform);
   z-index: var(--app-shell-aside-z-index);
 
-  &[data-with-border] {
-    --_aside-border-left: rem(1px) solid var(--_app-shell-border-color);
-
-    @mixin rtl {
-      --_aside-border-left: none;
-      --_aside-border-right: rem(1px) solid var(--_app-shell-border-color);
-    }
+  @mixin where-rtl {
+    transform: var(--app-shell-aside-transform-rtl);
   }
 
-  @mixin rtl {
-    --_aside-left: 0px;
-    --_aside-right: auto;
-    --_aside-transform: var(--app-shell-aside-transform-rtl);
+  &:where([data-with-border]) {
+    border-inline-start: 1px solid var(--app-shell-border-color);
   }
 }
 
 .main {
-  padding-left: var(
-    --_main-padding-left,
-    calc(var(--app-shell-navbar-offset, 0px) + var(--app-shell-padding))
-  );
-  padding-right: var(
-    --_main-padding-right,
-    calc(var(--app-shell-aside-offset, 0px) + var(--app-shell-padding))
-  );
-  padding-top: calc(var(--app-shell-header-offset, 0px) + var(--app-shell-padding));
-  padding-bottom: calc(var(--app-shell-footer-offset, 0px) + var(--app-shell-padding));
+  padding-inline-start: calc(var(--app-shell-navbar-offset, 0rem) + var(--app-shell-padding));
+  padding-inline-end: calc(var(--app-shell-aside-offset, 0rem) + var(--app-shell-padding));
+  padding-top: calc(var(--app-shell-header-offset, 0rem) + var(--app-shell-padding));
+  padding-bottom: calc(var(--app-shell-footer-offset, 0rem) + var(--app-shell-padding));
   min-height: 100dvh;
   transition-property: padding;
-
-  @mixin rtl {
-    --_main-padding-left: calc(var(--app-shell-aside-offset, 0px) + var(--app-shell-padding));
-    --_main-padding-right: calc(var(--app-shell-navbar-offset, 0px) + var(--app-shell-padding));
-  }
 }
 
 .header,
 .footer {
   position: fixed;
-  left: var(--_section-left, 0px);
-  right: var(--_section-right, 0px);
+  inset-inline: 0;
   transition-property: transform, left, right;
   background-color: var(--mantine-color-body);
 
-  [data-layout='alt'] & {
-    --_section-left: var(--app-shell-navbar-offset, 0px);
-
-    @mixin rtl {
-      --_section-right: var(--app-shell-navbar-offset, 0px);
-      --_section-left: 0px;
-    }
+  :where([data-layout='alt']) & {
+    inset-inline-start: var(--app-shell-navbar-offset, 0rem);
+    inset-inline-end: var(--app-shell-aside-offset, 0rem);
   }
 }
 
@@ -138,31 +101,30 @@
   top: 0;
   height: var(--app-shell-header-height);
   background-color: var(--mantine-color-body);
-  border-bottom: var(--_header-border-bottom);
   transform: var(--app-shell-header-transform);
   z-index: var(--app-shell-header-z-index);
 
-  &[data-with-border] {
-    --_header-border-bottom: rem(1px) solid var(--_app-shell-border-color);
+  &:where([data-with-border]) {
+    border-bottom: 1px solid var(--app-shell-border-color);
   }
 }
 
 .footer {
   bottom: 0;
-  height: var(--app-shell-footer-height);
-  border-top: var(--_footer-border-top);
+  height: calc(var(--app-shell-footer-height) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
   transform: var(--app-shell-footer-transform);
   z-index: var(--app-shell-footer-z-index);
 
-  &[data-with-border] {
-    --_footer-border-top: rem(1px) solid var(--_app-shell-border-color);
+  &:where([data-with-border]) {
+    border-top: 1px solid var(--app-shell-border-color);
   }
 }
 
 .section {
-  flex-grow: var(--_section-grow, 0);
+  flex-grow: 0;
 
-  &[data-grow] {
-    --_section-grow: 1;
+  &:where([data-grow]) {
+    flex-grow: 1;
   }
 }

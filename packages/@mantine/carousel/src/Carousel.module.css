@@ -1,37 +1,30 @@
 .root {
+  --carousel-height: auto;
   position: relative;
 }
 
 .viewport {
-  height: var(--carousel-height, auto);
+  height: var(--carousel-height);
   overflow: hidden;
 }
 
 .container {
   display: flex;
-  flex-direction: var(--_container-direction, row);
-  height: var(--carousel-height, auto);
-  margin-right: var(--_container-mr);
-  margin-left: var(--_container-ml);
-  margin-bottom: var(--_container-mb);
+  flex-direction: row;
+  height: var(--carousel-height);
 
-  [data-include-gap-in-size] & {
-    &[data-orientation='vertical'] {
-      --_container-mb: calc(var(--carousel-slide-gap) * -1);
+  :where([data-include-gap-in-size]) & {
+    &:where([data-orientation='vertical']) {
+      margin-bottom: calc(var(--carousel-slide-gap) * -1);
     }
 
-    &[data-orientation='horizontal'] {
-      --_container-mr: calc(var(--carousel-slide-gap) * -1);
-
-      @mixin rtl {
-        --_container-ml: calc(var(--carousel-slide-gap) * -1);
-        --_container-mr: 0;
-      }
+    &:where([data-orientation='horizontal']) {
+      margin-inline-end: calc(var(--carousel-slide-gap) * -1);
     }
   }
 
-  &[data-orientation='vertical'] {
-    --_container-direction: column;
+  &:where([data-orientation='vertical']) {
+    flex-direction: column;
   }
 }
 
@@ -42,27 +35,21 @@
   justify-content: space-between;
   z-index: 1;
   pointer-events: none;
-  flex-direction: var(--_controls-direction);
-  left: var(--_controls-left);
-  right: var(--_controls-right);
-  top: var(--_controls-top);
-  bottom: var(--_controls-bottom);
-  padding: var(--_controls-padding);
 
-  .root[data-orientation='vertical'] & {
-    --_controls-left: calc(50% - var(--carousel-control-size) / 2);
-    --_controls-top: 0;
-    --_controls-bottom: 0;
-    --_controls-direction: column;
-    --_controls-padding: var(--carousel-controls-offset) 0;
+  &:where([data-orientation='vertical']) {
+    inset-inline-start: calc(50% - var(--carousel-control-size) / 2);
+    top: 0;
+    bottom: 0;
+    flex-direction: column;
+    padding: var(--carousel-controls-offset) 0;
   }
 
-  .root[data-orientation='horizontal'] & {
-    --_controls-left: 0;
-    --_controls-right: 0;
-    --_controls-top: calc(50% - var(--carousel-control-size) / 2);
-    --_controls-direction: row;
-    --_controls-padding: 0 var(--carousel-controls-offset);
+  &:where([data-orientation='horizontal']) {
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    top: calc(50% - var(--carousel-control-size) / 2);
+    flex-direction: row;
+    padding: 0 var(--carousel-controls-offset);
   }
 }
 
@@ -77,20 +64,19 @@
   background-color: var(--mantine-color-white);
   color: var(--mantine-color-black);
   box-shadow: var(--mantine-shadow-md);
-  opacity: var(--_control-opacity);
-  border: rem(1px) solid var(--mantine-color-gray-3);
+  border: 1px solid var(--mantine-color-gray-3);
   transition: opacity 100ms ease;
 
-  @mixin light {
-    --_control-opacity: 0.85;
+  @mixin where-light {
+    opacity: 0.85;
   }
 
-  @mixin dark {
-    --_control-opacity: 0.65;
+  @mixin where-dark {
+    opacity: 0.65;
   }
 
   @mixin hover {
-    --_control-opacity: 1;
+    opacity: 1;
   }
 }
 
@@ -98,94 +84,71 @@
   position: absolute;
   display: flex;
   justify-content: center;
-  gap: rem(8px);
+  gap: 8px;
   pointer-events: none;
-  flex-direction: var(--_indicators-direction);
-  bottom: var(--_indicators-bottom);
-  left: var(--_indicators-left);
-  right: var(--_indicators-right);
-  top: var(--_indicators-top);
 
-  .root[data-orientation='vertical'] & {
-    --_indicators-bottom: 0;
-    --_indicators-top: 0;
-    --_indicators-right: var(--mantine-spacing-md);
-    --_indicators-direction: column;
+  &:where([data-orientation='vertical']) {
+    bottom: 0;
+    top: 0;
+    inset-inline-end: var(--mantine-spacing-md);
+    flex-direction: column;
   }
 
-  .root[data-orientation='horizontal'] & {
-    --_indicators-bottom: var(--mantine-spacing-md);
-    --_indicators-left: 0;
-    --_indicators-right: 0;
-    --_indicators-direction: row;
+  &:where([data-orientation='horizontal']) {
+    bottom: var(--mantine-spacing-md);
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    flex-direction: row;
   }
 }
 
 .indicator {
   pointer-events: all;
-  width: var(--_indicator-width);
-  height: var(--_indicator-height);
   border-radius: var(--mantine-radius-xl);
   box-shadow: var(--mantine-shadow-sm);
-  opacity: var(--_indicator-opacity, 0.6);
+  opacity: 0.6;
   background-color: var(--mantine-color-white);
 
   @mixin hover {
-    --_indicator-opacity: 1;
+    opacity: 1;
   }
 
-  &[data-active] {
-    --_indicator-opacity: 1;
+  &:where([data-active]) {
+    opacity: 1;
   }
 
-  .root[data-orientation='vertical'] & {
-    --_indicator-width: rem(5px);
-    --_indicator-height: rem(25px);
+  &:where([data-orientation='vertical']) {
+    width: 5px;
+    height: 25px;
   }
 
-  .root[data-orientation='horizontal'] & {
-    --_indicator-width: rem(25px);
-    --_indicator-height: rem(5px);
+  &:where([data-orientation='horizontal']) {
+    width: 25px;
+    height: 5px;
   }
 }
 
 .slide {
   position: relative;
   flex: 0 0 var(--carousel-slide-size);
-  padding-right: var(--_slide-pr, 0);
-  padding-left: var(--_slide-pl, 0);
-  padding-bottom: var(--_slide-pb, 0);
-  margin-right: var(--_slide-mr, 0);
-  margin-left: var(--_slide-ml, 0);
-  margin-bottom: var(--_slide-mb, 0);
 
-  .root[data-include-gap-in-size] & {
-    &[data-orientation='vertical'] {
-      --_slide-pb: var(--carousel-slide-gap);
+  .root:where([data-include-gap-in-size]) & {
+    &:where([data-orientation='vertical']) {
+      padding-bottom: var(--carousel-slide-gap);
     }
 
-    &[data-orientation='horizontal'] {
-      --_slide-pr: var(--carousel-slide-gap);
-
-      @mixin rtl {
-        --_slide-pl: var(--carousel-slide-gap);
-        --_slide-pr: 0;
-      }
+    &:where([data-orientation='horizontal']) {
+      padding-inline-end: var(--carousel-slide-gap);
     }
   }
 
-  .root:not([data-include-gap-in-size]) & {
-    &[data-orientation='vertical'] {
-      --_slide-mb: var(--carousel-slide-gap);
+  .root:where(:not([data-include-gap-in-size])) & {
+    &:where([data-orientation='vertical']) {
+      margin-bottom: var(--carousel-slide-gap);
     }
 
-    &[data-orientation='horizontal'] {
-      --_slide-mr: var(--carousel-slide-gap);
-
-      @mixin rtl {
-        --_slide-ml: var(--carousel-slide-gap);
-        --_slide-mr: 0;
-      }
+    &:where([data-orientation='horizontal']) {
+      margin-inline-end: var(--carousel-slide-gap);
     }
   }
 }

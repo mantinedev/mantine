@@ -17,3 +17,4 @@ export { dropdownAnimation } from './Autocomplete.demo.dropdownAnimation';
 export { dropdownPadding } from './Autocomplete.demo.dropdownPadding';
 export { dropdownShadow } from './Autocomplete.demo.dropdownShadow';
 export { withinPopover } from './Autocomplete.demo.withinPopover';
+export { renderOption } from './Autocomplete.demo.renderOption';

@@ -1,0 +1,45 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useTimeout);
+
+## Usage
+
+<Demo data={HooksDemos.useTimeoutDemo} />
+
+## API
+
+```tsx
+import { useTimeout } from '@mantine/hooks';
+
+const { start, clear } = useTimeout(callback, delay, {
+  autoInvoke: true,
+});
+```
+
+Arguments:
+
+- `callback` – function that will be called after the timer elapses
+- `delay` – number of milliseconds the timer should wait before the specified function is executed
+- `options: { autoInvoke }` - determines whether the timer should be started on mount, defaults to false
+
+Return object:
+
+- `start` - starts the timer
+- `clear` – cancels the timer
+
+## Definition
+
+```tsx
+function useTimeout(
+  callback: (...callbackParams: any[]) => void,
+  delay: number,
+  options?: {
+    autoInvoke: boolean;
+  }
+): {
+  start: (...callbackParams: any[]) => void;
+  clear: () => void;
+};
+```

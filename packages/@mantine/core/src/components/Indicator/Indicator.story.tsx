@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box } from '../../core';
 import { Avatar } from '../Avatar';
 import { Group } from '../Group';

@@ -1,0 +1,34 @@
+.root {
+  overflow: hidden;
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+
+  &[data-alt] {
+    transform: rotate(180deg);
+    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
+  }
+}
+
+.waves {
+  fill: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
+  width: var(--waves-width);
+  height: var(--waves-height);
+  filter: drop-shadow(10px 5px 5px rgba(0, 0, 0, 0.03));
+  display: block;
+
+  &[data-flip] {
+    transform: scaleY(-1);
+
+    &[data-rotate] {
+      transform: scaleY(1) rotate(180deg);
+    }
+  }
+
+  &[data-alt] {
+    fill: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+    filter: none;
+  }
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    height: 18px;
+  }
+}

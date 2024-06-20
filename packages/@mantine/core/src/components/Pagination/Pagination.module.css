@@ -1,9 +1,9 @@
 .root {
-  --pagination-control-size-xs: rem(22px);
-  --pagination-control-size-sm: rem(26px);
-  --pagination-control-size-md: rem(32px);
-  --pagination-control-size-lg: rem(38px);
-  --pagination-control-size-xl: rem(44px);
+  --pagination-control-size-xs: 22px;
+  --pagination-control-size-sm: 26px;
+  --pagination-control-size-md: 32px;
+  --pagination-control-size-lg: 38px;
+  --pagination-control-size-xl: 44px;
   --pagination-control-size: var(--pagination-control-size-md);
   --pagination-control-fz: var(--mantine-font-size-md);
   --pagination-active-bg: var(--mantine-primary-color-filled);
@@ -13,7 +13,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: rem(1px) solid;
+  border: 1px solid;
   cursor: pointer;
   color: var(--mantine-color-text);
   height: var(--pagination-control-size);
@@ -60,12 +60,6 @@
 
     @mixin hover {
       background-color: var(--pagination-active-bg);
-    }
-  }
-
-  @mixin rtl {
-    & > svg {
-      transform: rotate(180deg);
     }
   }
 }

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Badge, Button, Group, Modal, Text } from '@mantine/core';
 import { useCounter, useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

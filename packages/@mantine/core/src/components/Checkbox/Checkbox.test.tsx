@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import { createRef } from 'react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Checkbox, CheckboxProps, CheckboxStylesNames } from './Checkbox';
 

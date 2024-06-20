@@ -1,0 +1,108 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useMergedRef);
+
+## Usage
+
+`use-merged-ref` accepts any number of refs and returns a function that should be passed to the `ref` prop.
+Use this hook when you need to use more than one ref on a single dom node, for example,
+when you want to use [use-click-outside](/hooks/use-click-outside/) and [use-focus-trap](/hooks/use-focus-trap/) hooks and also get a ref for yourself:
+
+```tsx
+import { useRef } from 'react';
+import {
+  useClickOutside,
+  useFocusTrap,
+  useMergedRef,
+} from '@mantine/hooks';
+
+function Demo() {
+  const myRef = useRef();
+  const useClickOutsideRef = useClickOutside(() => {});
+  const focusTrapRef = useFocusTrap();
+  const mergedRef = useMergedRef(
+    myRef,
+    useClickOutsideRef,
+    focusTrapRef
+  );
+
+  return <div ref={mergedRef} />;
+}
+```
+
+## mergeRefs function
+
+`use-merged-ref` hooks memoizes refs with `useCallback` hook, but in some cases
+memoizing is not a valid strategy, for example, when you are working with a list
+of dynamic components React will complain that different number of hooks was called
+across two renders. To fix that issue, use `mergeRefs` function instead:
+
+```tsx
+import { useRef } from 'react';
+import { mergeRefs, useClickOutside } from '@mantine/hooks';
+
+function Demo() {
+  const myRef = useRef();
+  const useClickOutsideRef = useClickOutside(() => {});
+  const mergedRef = mergeRefs(myRef, useClickOutsideRef);
+  return <div ref={mergedRef} />;
+}
+```
+
+`mergeRefs` works the same way as `use-merged-ref`, but does not use hooks internally.
+Use it only when you cannot use `use-merged-ref`. Note that `mergeRefs` will not work
+correctly with [use-focus-trap](/hooks/use-focus-trap/) hook, you are required to
+use `use-merged-ref` with it.
+
+## assignRef function
+
+`assignRef` function can be used to assign refs that are not memoized with `useCallback`.
+It is usually used to assign refs that do not reference elements:
+
+```tsx
+import { useState } from 'react';
+import { assignRef } from '@mantine/hooks';
+
+interface NumberInputHandlers {
+  increment: () => void;
+  decrement: () => void;
+}
+
+interface DemoProps {
+  handlersRef?: React.ForwardedRef<NumberInputHandlers | undefined>;
+}
+
+function Demo({ handlersRef }: DemoProps) {
+  const [value, setValue] = useState(0);
+
+  const increment = () => setValue((v) => v + 1);
+  const decrement = () => setValue((v) => v - 1);
+
+  assignRef(handlersRef, { increment, decrement });
+
+  return (
+    <>
+      <button onClick={increment}>+</button>
+      <button onClick={decrement}>-</button>
+    </>
+  );
+}
+```
+
+## Set node type
+
+```tsx
+import { useMergedRef } from '@mantine/hooks';
+
+const ref = useMergedRef<HTMLDivElement>();
+```
+
+## Definition
+
+```tsx
+function useMergedRef<T = any>(
+  ...refs: React.ForwardedRef<T>[]
+): (node: T) => void;
+```

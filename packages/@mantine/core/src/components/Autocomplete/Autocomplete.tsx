@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -12,8 +12,10 @@ import {
 import {
   Combobox,
   ComboboxLikeProps,
+  ComboboxLikeRenderOptionInput,
   ComboboxLikeStylesNames,
   ComboboxStringData,
+  ComboboxStringItem,
   getOptionsLockup,
   getParsedComboboxData,
   OptionsDropdown,
@@ -21,6 +23,7 @@ import {
 } from '../Combobox';
 import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
 import { InputBase } from '../InputBase';
+import { ScrollAreaProps } from '../ScrollArea';
 
 export type AutocompleteStylesNames = __InputStylesNames | ComboboxLikeStylesNames;
 
@@ -41,6 +44,12 @@ export interface AutocompleteProps
 
   /** Called when value changes */
   onChange?: (value: string) => void;
+
+  /** A function to render content of the option, replaces the default content of the option */
+  renderOption?: (input: ComboboxLikeRenderOptionInput<ComboboxStringItem>) => React.ReactNode;
+
+  /** Props passed down to the underlying `ScrollArea` component in the dropdown */
+  scrollAreaProps?: ScrollAreaProps;
 }
 
 export type AutocompleteFactory = Factory<{
@@ -81,6 +90,9 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     maxDropdownHeight,
     size,
     id,
+    renderOption,
+    autoComplete,
+    scrollAreaProps,
     ...others
   } = props;
 
@@ -133,7 +145,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
       size={size}
       {...comboboxProps}
     >
-      <Combobox.Target>
+      <Combobox.Target autoComplete={autoComplete}>
         <InputBase
           ref={ref}
           {...others}
@@ -175,7 +187,10 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
         withScrollArea={withScrollArea}
         maxDropdownHeight={maxDropdownHeight}
         unstyled={unstyled}
-        labelId={`${_id}-label`}
+        labelId={others.label ? `${_id}-label` : undefined}
+        aria-label={others.label ? undefined : others['aria-label']}
+        renderOption={renderOption}
+        scrollAreaProps={scrollAreaProps}
       />
     </Combobox>
   );

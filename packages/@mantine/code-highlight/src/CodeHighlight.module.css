@@ -1,17 +1,17 @@
 .code {
   display: inline-block;
-  padding: rem(1px) rem(3px);
-  font-size: rem(13px);
+  padding: 1px 3px;
+  font-size: 13px;
   border-radius: var(--mantine-radius-xs);
-  line-height: var(--_code-line-height, var(--mantine-line-height));
+  line-height: var(--code-line-height, var(--mantine-line-height));
   font-family: var(--mantine-font-family-monospace);
 }
 
 .pre {
+  --code-line-height: 1.7;
   display: block;
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   margin: 0;
-  --_code-line-height: 1.7;
 }
 
 .header {
@@ -22,8 +22,8 @@
 
 .controls {
   display: flex;
-  margin-top: rem(7px);
-  margin-right: rem(7px);
+  margin-top: 7px;
+  margin-inline-end: 7px;
 }
 
 .copy,
@@ -35,6 +35,8 @@
 
   @mixin hover {
     opacity: 1;
+    background-color: transparent;
+    color: var(--mantine-color-dimmed);
   }
 
   @media (max-width: 40em) {
@@ -44,8 +46,8 @@
 
 .copy {
   position: absolute;
-  top: rem(5px);
-  right: rem(5px);
+  top: 5px;
+  inset-inline-end: 5px;
   z-index: 1;
 }
 
@@ -54,55 +56,54 @@
   align-items: center;
   justify-content: center;
   font-size: var(--mantine-font-size-xs);
-  gap: rem(7px);
-  padding: rem(7px) rem(12px);
+  gap: 7px;
+  padding: 7px 12px;
   font-family: var(--mantine-font-family-monospace);
   font-weight: 700;
   line-height: 1;
   user-select: none;
-  cursor: var(--_file-cursor);
-  border: rem(1px) solid var(--_file-bd);
+  cursor: pointer;
+  opacity: 0.8;
+  border: 1px solid;
   border-top: 0;
-  border-left: 0;
-  color: var(--_file-color);
-  opacity: var(--_file-opacity);
-  background-color: var(--_file-bg);
+  border-inline-start: 0;
   white-space: nowrap;
   margin: 0;
 
   @mixin hover {
-    --_file-opacity: 1;
+    opacity: 1;
   }
 
-  &:last-of-type {
-    border-bottom-right-radius: var(--mantine-radius-sm);
+  &:where(:last-of-type) {
+    border-end-end-radius: var(--mantine-radius-sm);
   }
 
-  &:only-child {
-    --_file-cursor: default;
+  &:where(:only-child) {
+    cursor: default;
   }
 
-  &[data-active] {
-    --_file-opacity: 1;
-    --_file-color: var(--_file-active-color) !important;
-    --_file-bg: var(--_file-active-bg);
+  &:where([data-active]) {
+    opacity: 1;
+
+    @mixin where-light {
+      background-color: var(--mantine-color-white);
+      color: var(--mantine-color-black);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+      color: var(--mantine-color-white);
+    }
   }
 
-  --_file-opacity: 0.8;
-  --_file-cursor: pointer;
-
-  @mixin light {
-    --_file-color: var(--mantine-color-gray-8);
-    --_file-bd: var(--mantine-color-gray-2);
-    --_file-active-bg: var(--mantine-color-white);
-    --_file-active-color: var(--mantine-color-black);
+  @mixin where-light {
+    color: var(--mantine-color-gray-8);
+    border-color: var(--mantine-color-gray-2);
   }
 
-  @mixin dark {
-    --_file-color: var(--mantine-color-dark-0);
-    --_file-bd: var(--mantine-color-dark-4);
-    --_file-active-bg: var(--mantine-color-dark-6);
-    --_file-active-color: var(--mantine-color-white);
+  @mixin where-dark {
+    color: var(--mantine-color-dark-0);
+    border-color: var(--mantine-color-dark-4);
   }
 }
 
@@ -121,11 +122,11 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background-image: linear-gradient(0deg, var(--_background) 16%, rgba(0, 0, 0, 0) 100%);
-    border-radius: calc(var(--mantine-radius-md) - rem(1px));
+    background-image: linear-gradient(0deg, var(--code-background) 16%, rgba(0, 0, 0, 0) 100%);
+    border-radius: calc(var(--mantine-radius-md) - 1px);
   }
 
-  &[data-expanded] {
+  &:where([data-expanded]) {
     max-height: none;
 
     &::before {
@@ -137,7 +138,7 @@
 .showCodeButton {
   position: absolute;
   bottom: 0;
-  left: 50%;
+  inset-inline-start: 50%;
   transform: translateX(-50%);
   font-size: var(--mantine-font-size-sm);
   color: var(--mantine-color-anchor);
@@ -156,7 +157,7 @@
   margin-top: 0;
   position: relative;
 
-  &[data-collapsed] :global(.mantine-ScrollArea-viewport > div) {
+  &:where([data-collapsed]) :global(.mantine-ScrollArea-viewport > div) {
     display: block !important;
   }
 }

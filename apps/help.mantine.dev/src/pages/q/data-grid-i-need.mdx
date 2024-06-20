@@ -1,0 +1,32 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'Is there DataGrid component that I can use with Mantine?',
+  description:
+    'A list of community packages that provide DataGrid component that can be used with Mantine.',
+  slug: 'data-grid-i-need',
+  category: 'common',
+  tags: ['data-grid', 'data-table', 'table'],
+  created_at: 'December 26, 2023',
+  last_updated_at: 'December 26, 2023',
+};
+
+export default Layout(meta);
+
+## Community packages
+
+Mantine does not provide DataGrid component, but there are several community packages that you can use:
+
+- [Mantine React Table](https://www.mantine-react-table.com/#)
+- [Mantine Data Grid](https://kuechlin.github.io/mantine-data-grid/#/)
+- [Mantine DataTable](https://icflorescu.github.io/mantine-datatable/)
+
+If none of the packages above fits your needs, you can build a custom
+DataGrid component with [TanStack Table](https://tanstack.com/table/)
+and [Table](https://mantine.dev/code/table/) component from Mantine.
+
+## Is it planned to add DataGrid component to Mantine?
+
+The DataGrid component is complex and requires a lot of maintenance.
+As of now (January 2024), it is not planned to add native DataGrid component
+to Mantine in the nearest future.

@@ -1,4 +1,4 @@
-import React, { cloneElement } from 'react';
+import { cloneElement } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
@@ -127,6 +127,7 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => 
           })}
           variant={variant}
           ref={floating}
+          mod={{ multiline }}
         >
           {label}
         </Box>

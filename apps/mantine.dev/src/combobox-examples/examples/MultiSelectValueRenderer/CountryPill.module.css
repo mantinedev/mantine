@@ -1,0 +1,18 @@
+.pill {
+  display: flex;
+  align-items: center;
+  cursor: default;
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+  border: 1px solid light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-7));
+  padding-left: var(--mantine-spacing-xs);
+  border-radius: var(--mantine-radius-xl);
+}
+
+.label {
+  line-height: 1;
+  font-size: var(--mantine-font-size-xs);
+}
+
+.flag {
+  margin-right: var(--mantine-spacing-xs);
+}

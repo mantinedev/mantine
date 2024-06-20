@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   ActionIcon,
   Box,
@@ -191,9 +190,10 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
         fileIcon={node.icon}
         getFileIcon={getFileIcon}
         fileName={node.fileName}
+        key="file-icon"
         {...getStyles('fileIcon')}
       />
-      <span>{node.fileName}</span>
+      <span key="file-name">{node.fileName}</span>
     </UnstyledButton>
   ));
 
@@ -250,10 +250,15 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
         <Box {...getStyles('codeWrapper')} mod={{ expanded: _expanded }}>
           {!highlighted.highlighted ? (
             <pre {...getStyles('pre')}>
-              <code {...getStyles('code')}>{highlighted.code}</code>
+              <code data-mantine-code={currentCode.language || 'tsx'} {...getStyles('code')}>
+                {highlighted.code}
+              </code>
             </pre>
           ) : (
-            <div dangerouslySetInnerHTML={{ __html: highlighted.code }} />
+            <div
+              data-mantine-code={currentCode.language || 'tsx'}
+              dangerouslySetInnerHTML={{ __html: highlighted.code }}
+            />
           )}
         </Box>
       </ScrollArea>

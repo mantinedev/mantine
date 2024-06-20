@@ -1,5 +1,5 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import type { HighlighterGeneric } from 'shikiji';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import type { HighlighterGeneric } from 'shiki';
 import { useComputedColorScheme } from '@mantine/core';
 import { dark, light } from './themes';
 import { ShikiLanguage } from './types';
@@ -15,8 +15,8 @@ function prepareHtmlCode(code: string) {
     .replaceAll('tabindex="0"', '')
     .replace('<code>', `<code class="${classes.code}">`)
     .replaceAll('class="shiki "', `class="${classes.pre}"`)
-    .replaceAll('style="background-color:#EBEEF5;color:#25262B"', '')
-    .replaceAll('style="background-color:#282c34;color:#9DA5B3"', '');
+    .replaceAll('style="background-color:#ffffff;color:#1f2328"', '')
+    .replaceAll('style="background-color:#0d1117;color:#e6edf3', '');
 }
 
 const ShikiContext = createContext<HighlightCode | null>(null);

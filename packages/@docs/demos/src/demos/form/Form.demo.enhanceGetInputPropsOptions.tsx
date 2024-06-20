@@ -1,4 +1,3 @@
-import React from 'react';
 import { NumberInput, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
@@ -14,6 +13,7 @@ interface FormValues {
 
 function Demo() {
   const form = useForm<FormValues>({
+    mode: 'uncontrolled',
     initialValues: { name: '', age: '' },
     enhanceGetInputProps: (payload) => {
       if (payload.options.fieldType === 'name') {
@@ -31,8 +31,14 @@ function Demo() {
 
   return (
     <>
-      <TextInput {...form.getInputProps('name', { fieldType: 'name' })} />
-      <NumberInput {...form.getInputProps('age')} label="Age" placeholder="Age" mt="md" />
+      <TextInput {...form.getInputProps('name', { fieldType: 'name' })} key={form.key('name')} />
+      <NumberInput
+        {...form.getInputProps('age')}
+        key={form.key('age')}
+        label="Age"
+        placeholder="Age"
+        mt="md"
+      />
     </>
   );
 }
@@ -45,6 +51,7 @@ interface FormValues {
 
 function Demo() {
   const form = useForm<FormValues>({
+    mode: 'uncontrolled',
     initialValues: { name: '', age: '' },
     enhanceGetInputProps: (payload) => {
       if (payload.options.fieldType === 'name') {
@@ -62,8 +69,14 @@ function Demo() {
 
   return (
     <>
-      <TextInput {...form.getInputProps('name', { fieldType: 'name' })} />
-      <NumberInput {...form.getInputProps('age')} label="Age" placeholder="Age" mt="md" />
+      <TextInput {...form.getInputProps('name', { fieldType: 'name' })} key={form.key('name')} />
+      <NumberInput
+        {...form.getInputProps('age')}
+        key={form.key('age')}
+        label="Age"
+        placeholder="Age"
+        mt="md"
+      />
     </>
   );
 }

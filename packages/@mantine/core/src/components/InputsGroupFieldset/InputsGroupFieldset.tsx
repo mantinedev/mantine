@@ -1,4 +1,3 @@
-import React from 'react';
 import { useInputWrapperContext } from '../Input';
 
 interface InputsGroupFieldsetProps {

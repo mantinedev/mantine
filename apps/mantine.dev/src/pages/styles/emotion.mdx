@@ -1,0 +1,605 @@
+import { EmotionDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Emotion);
+
+# Usage with Emotion
+
+Prior to version 7.0 Mantine used [Emotion](https://emotion.sh/) as a styling solution.
+It was replaced with [CSS modules](/styles/css-modules/) in version 7.0, but you can still
+use Emotion with Mantine if you prefer it over CSS modules.
+
+Note that `createStyles` function, `sx` and `styles` prop work different from the same
+features in [version 6.x](https://v6.mantine.dev/styles/create-styles/). If you are planning
+to upgrade from version 6.x to 7.x, follow the [migration guide](/guides/6x-to-7x/).
+
+`@mantine/emotion` package is compatible with `@mantine/core` 7.9.0 and higher. Before
+installing, make sure that you are using the latest version of all `@mantine/*` packages.
+
+## Caveats and support
+
+[Emotion](https://emotion.sh/) is a runtime CSS-in-JS library – styles are generated
+and injected into the DOM at runtime. This approach has some limitations:
+
+- **Limited server-side rendering support** – modern frameworks like Next.js with app router
+  do not fully support emotion or require additional configuration.
+- **Runtime overhead** – styles are generated and injected at runtime, which can lead to
+  performance issues on pages with a lot of components.
+- **Additional bundle size** – your bundle will include `@emotion/react` (21.2kB minified),
+  `@mantine/emotion` (~2kb minified) and all styles that you use in your components.
+
+`@mantine/emotion` package can be used with the following frameworks:
+
+- **Vite** and **CRA** with basic setup
+- **Next.js with pages router** with additional setup for server side rendering provided by the package
+- **Next.js with app router** with additional setup for server side rendering provided by Emotion
+- Any other framework that does not require server-side rendering with basic setup
+
+There is no official support (the package probably can be used but it's not tested and documentation is not provided) for:
+
+- **Remix**
+- **Gatsby**
+- **Redwood**
+- Any other framework that has server-side rendering
+
+Note that Emotion is not recommended for new projects, if you are starting a new project with Mantine,
+consider using [CSS modules](/styles/css-modules/) instead.
+
+## Usage with Vite
+
+[View example repository with full setup](https://github.com/mantinedev/vite-min-template/tree/emotion)
+
+Install dependencies:
+
+<InstallScript packages="@mantine/emotion @emotion/react @emotion/cache @emotion/serialize @emotion/utils" />
+
+Create `emotion.d.ts` file in `src` directory to add types support for `sx` and `styles` props:
+
+```tsx
+import '@mantine/core';
+
+import type { EmotionStyles, EmotionSx } from '@mantine/emotion';
+
+declare module '@mantine/core' {
+  export interface BoxProps {
+    sx?: EmotionSx;
+    styles?: EmotionStyles;
+  }
+}
+```
+
+Wrap your application with `MantineEmotionProvider` and add `emotionTransform` to `MantineProvider`:
+
+```tsx
+import '@mantine/core/styles.css';
+
+import { MantineProvider } from '@mantine/core';
+import {
+  emotionTransform,
+  MantineEmotionProvider,
+} from '@mantine/emotion';
+
+export default function App() {
+  return (
+    <MantineProvider stylesTransform={emotionTransform}>
+      <MantineEmotionProvider>App</MantineEmotionProvider>
+    </MantineProvider>
+  );
+}
+```
+
+Done! You can now use `sx`, `styles` props and `createStyles` in your application:
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Box
+      sx={(theme, u) => ({
+        padding: 40,
+
+        [u.light]: {
+          backgroundColor: theme.colors.blue[0],
+          color: theme.colors.blue[9],
+
+          '&:hover': {
+            backgroundColor: theme.colors.blue[1],
+          },
+        },
+      })}
+    >
+      Box with emotion sx prop
+    </Box>
+  );
+}
+```
+
+## Usage with Next.js pages router
+
+[View example repository with full setup](https://github.com/mantinedev/next-pages-min-template/tree/emotion)
+
+Install dependencies:
+
+<InstallScript packages="@mantine/emotion @emotion/react @emotion/cache @emotion/serialize @emotion/utils @emotion/server" />
+
+Create `emotion` folder with `cache.ts` and `emotion.d.ts` files.
+
+`cache.ts` file:
+
+```tsx
+import createCache from '@emotion/cache';
+
+export const emotionCache = createCache({ key: 'css' });
+```
+
+`emotion.d.ts` file:
+
+```tsx
+import '@mantine/core';
+
+import type { EmotionStyles, EmotionSx } from '@mantine/emotion';
+
+declare module '@mantine/core' {
+  export interface BoxProps {
+    sx?: EmotionSx;
+    styles?: EmotionStyles;
+  }
+}
+```
+
+Add the following content to `pages/_document.tsx` file:
+
+```tsx
+import NextDocument, {
+  Head,
+  Html,
+  Main,
+  NextScript,
+} from 'next/document';
+import createEmotionServer from '@emotion/server/create-instance';
+import { ColorSchemeScript } from '@mantine/core';
+import { createGetInitialProps } from '@mantine/emotion';
+// Import cache created in the previous step
+import { emotionCache } from '../emotion/cache';
+
+export default function Document() {
+  return (
+    <Html lang="en">
+      <Head>
+        <ColorSchemeScript />
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
+}
+
+const stylesServer = createEmotionServer(emotionCache);
+
+Document.getInitialProps = createGetInitialProps(
+  NextDocument,
+  stylesServer
+);
+```
+
+Add `MantineEmotionProvider` and `emotionTransform` to `pages/_app.tsx` file:
+
+```tsx
+import '@mantine/core/styles.css';
+
+import Head from 'next/head';
+import { MantineProvider } from '@mantine/core';
+import {
+  emotionTransform,
+  MantineEmotionProvider,
+} from '@mantine/emotion';
+import { emotionCache } from '../emotion/cache';
+
+export default function App({ Component, pageProps }: any) {
+  return (
+    <MantineEmotionProvider cache={emotionCache}>
+      <MantineProvider stylesTransform={emotionTransform}>
+        <Head>
+          <title>Mantine Template</title>
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+          />
+          <link rel="shortcut icon" href="/favicon.svg" />
+        </Head>
+        <Component {...pageProps} />
+      </MantineProvider>
+    </MantineEmotionProvider>
+  );
+}
+```
+
+Done! You can now use `sx`, `styles` props and `createStyles` in your application:
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Box
+      sx={(theme, u) => ({
+        padding: 40,
+
+        [u.light]: {
+          backgroundColor: theme.colors.blue[0],
+          color: theme.colors.blue[9],
+
+          '&:hover': {
+            backgroundColor: theme.colors.blue[1],
+          },
+        },
+      })}
+    >
+      Box with emotion sx prop
+    </Box>
+  );
+}
+```
+
+## Usage with Next.js app router
+
+[View example repository with full setup](https://github.com/mantinedev/next-app-min-template/tree/emotion)
+
+Install dependencies:
+
+<InstallScript packages="@mantine/emotion @emotion/react @emotion/cache @emotion/serialize @emotion/utils @emotion/server" />
+
+Create `app/emotion.d.ts` file with the following content:
+
+```tsx
+import '@mantine/core';
+
+import type { EmotionStyles, EmotionSx } from '@mantine/emotion';
+
+declare module '@mantine/core' {
+  export interface BoxProps {
+    sx?: EmotionSx;
+    styles?: EmotionStyles;
+  }
+}
+```
+
+Create `app/EmotionRootStyleRegistry.tsx` file with the following content:
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+import { useServerInsertedHTML } from 'next/navigation';
+import createCache from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
+
+export function RootStyleRegistry({
+  children,
+}: {
+  children: JSX.Element;
+}) {
+  const [{ cache, flush }] = useState(() => {
+    const cache = createCache({ key: 'my' });
+    cache.compat = true;
+    const prevInsert = cache.insert;
+    let inserted: string[] = [];
+    cache.insert = (...args) => {
+      const serialized = args[1];
+      if (cache.inserted[serialized.name] === undefined) {
+        inserted.push(serialized.name);
+      }
+      return prevInsert(...args);
+    };
+    const flush = () => {
+      const prevInserted = inserted;
+      inserted = [];
+      return prevInserted;
+    };
+    return { cache, flush };
+  });
+
+  useServerInsertedHTML(() => {
+    const names = flush();
+    if (names.length === 0) return null;
+    let styles = '';
+    for (const name of names) {
+      styles += cache.inserted[name];
+    }
+    return (
+      <style
+        data-emotion={`${cache.key} ${names.join(' ')}`}
+        dangerouslySetInnerHTML={{
+          __html: styles,
+        }}
+      />
+    );
+  });
+
+  return <CacheProvider value={cache}>{children}</CacheProvider>;
+}
+```
+
+Add `RootStyleRegistry`, `MantineEmotionProvider` and `emotionTransform` to `app/layout.tsx`.
+It should look something like this:
+
+```tsx
+import '@mantine/core/styles.css';
+
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import {
+  emotionTransform,
+  MantineEmotionProvider,
+} from '@mantine/emotion';
+import { RootStyleRegistry } from './EmotionRootStyleRegistry';
+
+export const metadata = {
+  title: 'Mantine Next.js template',
+  description: 'I am using Mantine with Next.js!',
+};
+
+export default function RootLayout({ children }: { children: any }) {
+  return (
+    <html lang="en">
+      <head>
+        <ColorSchemeScript />
+        <link rel="shortcut icon" href="/favicon.svg" />
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+        />
+      </head>
+      <body>
+        <RootStyleRegistry>
+          <MantineEmotionProvider>
+            <MantineProvider stylesTransform={emotionTransform}>
+              {children}
+            </MantineProvider>
+          </MantineEmotionProvider>
+        </RootStyleRegistry>
+      </body>
+    </html>
+  );
+}
+```
+
+Done! You can now use `sx`, `styles` props and `createStyles` in your application.
+Note that `'use client'` is required in most components that use `sx`, `styles` or `createStyles`:
+
+```tsx
+'use client';
+
+import { Box } from '@mantine/core';
+
+export default function HomePage() {
+  return (
+    <Box
+      sx={(theme, u) => ({
+        padding: 40,
+
+        [u.light]: {
+          backgroundColor: theme.colors.blue[0],
+          color: theme.colors.blue[9],
+
+          '&:hover': {
+            backgroundColor: theme.colors.blue[1],
+          },
+        },
+      })}
+    >
+      Box with emotion sx prop
+    </Box>
+  );
+}
+```
+
+## sx prop
+
+With the setup above you can use `sx` prop in all Mantine components.
+`sx` prop allows adding styles to the root element of the component.
+It accepts either a styles object or a function that receives theme, utilities and returns styles object:
+
+```tsx
+import { Box, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Box
+        sx={{
+          padding: 40,
+          '&:hover': { padding: 80 },
+        }}
+      >
+        Box with object sx
+      </Box>
+
+      <Button
+        sx={(theme, u) => ({
+          padding: 10,
+
+          [u.light]: {
+            backgroundColor: theme.colors.blue[0],
+            color: theme.colors.blue[9],
+            '&:hover': {
+              backgroundColor: theme.colors.blue[1],
+            },
+          },
+
+          [u.dark]: {
+            backgroundColor: theme.colors.blue[9],
+            color: theme.colors.blue[0],
+            '&:hover': {
+              backgroundColor: theme.colors.blue[8],
+            },
+          },
+        })}
+      >
+        Button with function sx
+      </Button>
+    </>
+  );
+}
+```
+
+## styles prop
+
+`styles` prop works similar to `sx` prop, but it allows adding styles to all
+nested elements of the components that are specified in the Styles API table.
+`styles` prop accepts either an object of styles objects or a function that
+receives theme, component props, utilities and returns styles object:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button
+      color="red"
+      styles={(theme, { color }, u) => ({
+        root: {
+          padding: 10,
+          backgroundColor: theme.colors[color || 'blue'][7],
+          color: theme.white,
+
+          '&:hover': {
+            backgroundColor: theme.colors[color || 'blue'][8],
+          },
+        },
+
+        label: {
+          [u.light]: {
+            border: `1px solid ${theme.black}`,
+          },
+          [u.dark]: {
+            border: `1px solid ${theme.white}`,
+          },
+        },
+      })}
+    >
+      Button with styles prop
+    </Button>
+  );
+}
+```
+
+## styles in theme
+
+You can add styles to Mantine components with [Styles API](/styles/styles-api/) using
+Emotion with `styles` prop. Note that to avoid types collisions, you should not use
+`Component.extend` method and just pass component configuration object directly.
+
+```tsx
+import { createTheme, MantineTheme, TextProps } from '@mantine/core';
+import { EmotionHelpers } from '@mantine/emotion';
+
+export const theme = createTheme({
+  components: {
+    Text: {
+      styles: (
+        theme: MantineTheme,
+        _props: TextProps,
+        u: EmotionHelpers
+      ) => ({
+        root: {
+          [u.light]: {
+            color: theme.colors.blue[7],
+          },
+        },
+      }),
+    },
+  },
+});
+```
+
+## createStyles
+
+`createStyles` function accepts a function to generate styles with [Emotion](https://emotion.sh/).
+The function receives 3 arguments that will be described more detailed in the following demos:
+
+- `theme` – [Mantine theme object](/theming/theme-object)
+- `params` – object with additional parameters that can be passed to the function in `useStyles` hook
+- `u` - object with utilities to generate selectors
+
+`createStyles` function returns `useStyles` hook that should be called in the component
+that uses given styles:
+
+<Demo data={EmotionDemos.usage} />
+
+### Pseudo-classes
+
+You can add pseudo-classes the same way as in any css-preprocessor like Sass:
+
+<Demo data={EmotionDemos.pseudo} />
+
+### Styles parameters
+
+You can receive any amount of parameters as second argument of `createStyles` function,
+latter you will need to pass those parameters as argument to `useStyles` hook:
+
+<Demo data={EmotionDemos.parameters} />
+
+### Composition and nested selectors
+
+Since `createStyles` produces scoped class names you will need to create a reference to selector
+in order to get static selector. Use `u.ref` function to assign static selectors:
+
+<Demo data={EmotionDemos.composition} />
+
+### Classes merging (cx function)
+
+To merge class names use `cx` function, it has the same api as [clsx](https://www.npmjs.com/package/clsx) package.
+
+**!important:** Do not use external libraries like [classnames](https://www.npmjs.com/package/classnames)
+or [clsx](https://www.npmjs.com/package/clsx) with class names created with `createStyles` function
+as it will produce styles collisions.
+
+<Demo data={EmotionDemos.cx} />
+
+### Media queries
+
+You can use nested media queries like in Sass. Within query body you can use `theme.breakpoints`
+defined with [MantineProvider](/theming/mantine-provider) or just static values:
+
+<Demo data={EmotionDemos.media} />
+
+### Keyframes
+
+<Demo data={EmotionDemos.keyframes} />
+
+## Utilities
+
+`sx`, `styles` and `createStyles` callback functions receive `u` object with utilities
+to generate selectors. `u` object contains the following properties:
+
+```tsx
+const u = {
+  light: '[data-mantine-color-scheme="light"] &',
+  dark: '[data-mantine-color-scheme="dark"] &',
+  rtl: '[dir="rtl"] &',
+  ltr: '[dir="ltr"] &',
+  notRtl: '[dir="ltr"] &',
+  notLtr: '[dir="rtl"] &',
+  ref: getStylesRef,
+  smallerThan: (breakpoint: MantineBreakpoint | number) =>
+    `@media (max-width: ${em(getBreakpointValue(theme, breakpoint) - 0.1)})`,
+  largerThan: (breakpoint: MantineBreakpoint | number) =>
+    `@media (min-width: ${em(getBreakpointValue(theme, breakpoint))})`,
+};
+```
+
+All utilities except `ref` can be used as selectors in styles object:
+
+```tsx
+const styles = {
+  root: {
+    [u.dark]: { color: 'white' },
+    [u.rtl]: { padding: 10 },
+    [u.smallerThan('md')]: { lineHeight: 20 },
+  },
+};
+```

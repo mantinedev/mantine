@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
 import { Timeline } from '../Timeline';
 import { TimelineItem, TimelineItemProps, TimelineItemStylesNames } from './TimelineItem';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function AvatarPlaceholderIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg

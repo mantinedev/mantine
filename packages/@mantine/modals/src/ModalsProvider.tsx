@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useRef } from 'react';
+import { useCallback, useReducer, useRef } from 'react';
 import { getDefaultZIndex, Modal } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
 import { ConfirmModal } from './ConfirmModal';
@@ -16,7 +16,7 @@ import { modalsReducer } from './reducer';
 
 export interface ModalsProviderProps {
   /** Your app */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /** Predefined modals */
   modals?: Record<string, React.FC<ContextModalProps<any>>>;

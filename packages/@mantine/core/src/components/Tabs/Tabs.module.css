@@ -1,29 +1,29 @@
 .root {
-  display: var(--_tabs-display);
-  flex-direction: var(--_tabs-flex-direction);
+  display: var(--tabs-display);
+  flex-direction: var(--tabs-flex-direction);
 
-  --_tab-justify: flex-start;
-  --_list-direction: row;
-  --_panel-grow: unset;
-  --_tabs-display: block;
-  --_tabs-flex-direction: row;
-  --_list-border-width: rem(0);
-  --_list-border-size: 0 0 var(--_list-border-width) 0;
-  --_list-gap: unset;
+  --tab-justify: flex-start;
+  --tabs-list-direction: row;
+  --tabs-panel-grow: unset;
+  --tabs-display: block;
+  --tabs-flex-direction: row;
+  --tabs-list-border-width: 0;
+  --tabs-list-border-size: 0 0 var(--tabs-list-border-width) 0;
+  --tabs-list-gap: unset;
 
-  --_list-line-bottom: 0;
-  --_list-line-top: unset;
-  --_list-line-left: 0;
-  --_list-line-right: 0;
+  --tabs-list-line-bottom: 0;
+  --tabs-list-line-top: unset;
+  --tabs-list-line-start: 0;
+  --tabs-list-line-end: 0;
 
-  --_tab-radius: var(--tabs-radius) var(--tabs-radius) 0 0;
-  --_tab-border-width: 0 0 var(--_list-border-width) 0;
+  --tab-radius: var(--tabs-radius) var(--tabs-radius) 0 0;
+  --tab-border-width: 0 0 var(--tabs-list-border-width) 0;
 
   &[data-inverted] {
-    --_list-line-bottom: unset;
-    --_list-line-top: 0;
-    --_tab-radius: 0 0 var(--tabs-radius) var(--tabs-radius);
-    --_tab-border-width: var(--_list-border-width) 0 0 0;
+    --tabs-list-line-bottom: unset;
+    --tabs-list-line-top: 0;
+    --tab-radius: 0 0 var(--tabs-radius) var(--tabs-radius);
+    --tab-border-width: var(--tabs-list-border-width) 0 0 0;
 
     & .list--default::before {
       top: 0;
@@ -32,80 +32,76 @@
   }
 
   &[data-orientation='vertical'] {
-    --_list-line-left: unset;
-    --_list-line-right: 0;
-    --_list-line-top: 0;
-    --_list-line-bottom: 0;
-    --_list-border-size: 0 var(--_list-border-width) 0 0;
-    --_tab-border-width: 0 var(--_list-border-width) 0 0;
-    --_tab-radius: var(--tabs-radius) 0 0 var(--tabs-radius);
-    --_list-direction: column;
-    --_panel-grow: 1;
-    --_tabs-display: flex;
+    --tabs-list-line-start: unset;
+    --tabs-list-line-end: 0;
+    --tabs-list-line-top: 0;
+    --tabs-list-line-bottom: 0;
+    --tabs-list-border-size: 0 var(--tabs-list-border-width) 0 0;
+    --tab-border-width: 0 var(--tabs-list-border-width) 0 0;
+    --tab-radius: var(--tabs-radius) 0 0 var(--tabs-radius);
+    --tabs-list-direction: column;
+    --tabs-panel-grow: 1;
+    --tabs-display: flex;
 
     @mixin rtl {
-      --_list-line-left: 0;
-      --_list-line-right: unset;
-      --_list-border-size: 0 0 0 var(--_list-border-width);
-      --_tab-border-width: 0 0 0 var(--_list-border-width);
-      --_tab-radius: 0 var(--tabs-radius) var(--tabs-radius) 0;
+      --tabs-list-border-size: 0 0 0 var(--tabs-list-border-width);
+      --tab-border-width: 0 0 0 var(--tabs-list-border-width);
+      --tab-radius: 0 var(--tabs-radius) var(--tabs-radius) 0;
     }
 
     &[data-placement='right'] {
-      --_tabs-flex-direction: row-reverse;
-      --_list-line-left: 0;
-      --_list-line-right: unset;
-      --_list-border-size: 0 0 0 var(--_list-border-width);
-      --_tab-border-width: 0 0 0 var(--_list-border-width);
-      --_tab-radius: 0 var(--tabs-radius) var(--tabs-radius) 0;
+      --tabs-flex-direction: row-reverse;
+      --tabs-list-line-start: 0;
+      --tabs-list-line-end: unset;
+      --tabs-list-border-size: 0 0 0 var(--tabs-list-border-width);
+      --tab-border-width: 0 0 0 var(--tabs-list-border-width);
+      --tab-radius: 0 var(--tabs-radius) var(--tabs-radius) 0;
 
       @mixin rtl {
-        --_list-line-left: unset;
-        --_list-line-right: 0;
-        --_list-border-size: 0 var(--_list-border-width) 0 0;
-        --_tab-border-width: 0 var(--_list-border-width) 0 0;
-        --_tab-radius: var(--tabs-radius) 0 0 var(--tabs-radius);
+        --tabs-list-border-size: 0 var(--tabs-list-border-width) 0 0;
+        --tab-border-width: 0 var(--tabs-list-border-width) 0 0;
+        --tab-radius: var(--tabs-radius) 0 0 var(--tabs-radius);
       }
     }
   }
 
   @mixin light {
-    --_tab-border-color: var(--mantine-color-gray-3);
+    --tab-border-color: var(--mantine-color-gray-3);
   }
 
   @mixin dark {
-    --_tab-border-color: var(--mantine-color-dark-4);
+    --tab-border-color: var(--mantine-color-dark-4);
   }
 
   &[data-orientation='horizontal'] {
-    --_tab-justify: center;
+    --tab-justify: center;
   }
 
   &[data-variant='default'] {
-    --_list-border-width: rem(2px);
+    --tabs-list-border-width: 2px;
 
     @mixin light {
-      --_tab-hover-color: var(--mantine-color-gray-0);
+      --tab-hover-color: var(--mantine-color-gray-0);
     }
 
     @mixin dark {
-      --_tab-hover-color: var(--mantine-color-dark-6);
+      --tab-hover-color: var(--mantine-color-dark-6);
     }
   }
 
   &[data-variant='outline'] {
-    --_list-border-width: rem(1px);
+    --tabs-list-border-width: 1px;
   }
 
   &[data-variant='pills'] {
-    --_list-gap: calc(var(--mantine-spacing-sm) / 2);
+    --tabs-list-gap: calc(var(--mantine-spacing-sm) / 2);
 
     @mixin light {
-      --_tab-hover-color: var(--mantine-color-gray-0);
+      --tab-hover-color: var(--mantine-color-gray-0);
     }
 
     @mixin dark {
-      --_tab-hover-color: var(--mantine-color-dark-6);
+      --tab-hover-color: var(--mantine-color-dark-6);
     }
   }
 }
@@ -114,18 +110,18 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: var(--tabs-justify, flex-start);
-  flex-direction: var(--_list-direction);
-  gap: var(--_list-gap);
+  flex-direction: var(--tabs-list-direction);
+  gap: var(--tabs-list-gap);
 
-  --_tab-grow: unset;
+  --tab-grow: unset;
 
   &[data-grow] {
-    --_tab-grow: 1;
+    --tab-grow: 1;
   }
 }
 
 .panel {
-  flex-grow: var(--_panel-grow);
+  flex-grow: var(--tabs-panel-grow);
 }
 
 .tab {
@@ -138,8 +134,8 @@
   align-items: center;
   line-height: 1;
   user-select: none;
-  flex-grow: var(--_tab-grow);
-  justify-content: var(--_tab-justify);
+  flex-grow: var(--tab-grow);
+  justify-content: var(--tab-justify);
 
   &:disabled,
   &[data-disabled] {
@@ -156,27 +152,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: var(--_tab-section-margin-left, 0);
-  margin-right: var(--_tab-section-margin-right, 0);
+  margin-left: var(--tab-section-margin-left, 0);
+  margin-right: var(--tab-section-margin-right, 0);
 
   &[data-position='left'] {
     &:not(:only-child) {
-      --_tab-section-margin-right: var(--mantine-spacing-xs);
+      --tab-section-margin-right: var(--mantine-spacing-xs);
 
       @mixin rtl {
-        --_tab-section-margin-right: 0rem;
-        --_tab-section-margin-left: var(--mantine-spacing-xs);
+        --tab-section-margin-right: 0rem;
+        --tab-section-margin-left: var(--mantine-spacing-xs);
       }
     }
   }
 
   &[data-position='right'] {
     &:not(:only-child) {
-      --_tab-section-margin-left: var(--mantine-spacing-xs);
+      --tab-section-margin-left: var(--mantine-spacing-xs);
 
       @mixin rtl {
-        --_tab-section-margin-left: 0rem;
-        --_tab-section-margin-right: var(--mantine-spacing-xs);
+        --tab-section-margin-left: 0rem;
+        --tab-section-margin-right: var(--mantine-spacing-xs);
       }
     }
   }
@@ -189,42 +185,41 @@
   &::before {
     content: '';
     position: absolute;
-    border-color: var(--_tab-border-color);
-    border-width: var(--_list-border-size);
+    border-color: var(--tab-border-color);
+    border-width: var(--tabs-list-border-size);
     border-style: solid;
-    bottom: var(--_list-line-bottom);
-    left: var(--_list-line-left);
-    right: var(--_list-line-right);
-    top: var(--_list-line-top);
+    bottom: var(--tabs-list-line-bottom);
+    inset-inline-start: var(--tabs-list-line-start);
+    inset-inline-end: var(--tabs-list-line-end);
+    top: var(--tabs-list-line-top);
   }
 }
 
 .tab--default {
-  border-radius: var(--_tab-radius);
-  border-width: var(--_tab-border-width);
+  border-radius: var(--tab-radius);
+  border-width: var(--tab-border-width);
   border-style: solid;
-  border-color: var(--__tab-border-color);
-  background-color: var(--_tab-bg);
+  border-color: transparent;
+  background-color: var(--tab-bg);
 
-  --__tab-border-color: transparent;
-  --_tab-bg: transparent;
+  --tab-bg: transparent;
 
-  &[data-active] {
-    --__tab-border-color: var(--tabs-color);
+  &:where([data-active]) {
+    border-color: var(--tabs-color);
   }
 
   @mixin hover {
-    --_tab-bg: var(--_tab-hover-color);
+    --tab-bg: var(--tab-hover-color);
 
-    &:not([data-active]) {
-      --__tab-border-color: var(--_tab-border-color);
+    &:where(:not([data-active])) {
+      border-color: var(--tab-border-color);
     }
   }
 
   &:disabled,
   &[data-disabled] {
     @mixin hover {
-      --_tab-bg: transparent;
+      --tab-bg: transparent;
     }
   }
 }
@@ -236,114 +231,114 @@
   &::before {
     content: '';
     position: absolute;
-    border-color: var(--_tab-border-color);
-    border-width: var(--_list-border-size);
+    border-color: var(--tab-border-color);
+    border-width: var(--tabs-list-border-size);
     border-style: solid;
-    bottom: var(--_list-line-bottom);
-    left: var(--_list-line-left);
-    right: var(--_list-line-right);
-    top: var(--_list-line-top);
+    bottom: var(--tabs-list-line-bottom);
+    inset-inline-start: var(--tabs-list-line-start);
+    inset-inline-end: var(--tabs-list-line-end);
+    top: var(--tabs-list-line-top);
   }
 }
 
 .tab--outline {
-  border: rem(1px) solid transparent;
-  border-top-color: var(--_tab-border-top-color);
-  border-bottom-color: var(--_tab-border-bottom-color);
-  border-left-color: var(--_tab-border-left-color);
-  border-right-color: var(--_tab-border-right-color);
-  border-radius: var(--_tab-radius);
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  border-right: 1px solid transparent;
+  border-left: 1px solid transparent;
+  border-top-color: var(--tab-border-top-color);
+  border-bottom-color: var(--tab-border-bottom-color);
+  border-radius: var(--tab-radius);
   position: relative;
 
-  --_tab-border-bottom-color: transparent;
-  --_tab-border-top-color: transparent;
-  --_tab-border-right-color: transparent;
-  --_tab-border-left-color: transparent;
+  --tab-border-bottom-color: transparent;
+  --tab-border-top-color: transparent;
+  --tab-border-inline-end-color: transparent;
+  --tab-border-inline-start-color: transparent;
 
-  &[data-active] {
+  &:where([data-active]) {
     &::before {
       content: '';
       position: absolute;
-      background-color: var(--_tab-border-color);
-      bottom: var(--_tab-before-bottom, rem(-1px));
-      left: var(--_tab-before-left, rem(-1px));
-      right: var(--_tab-before-right, auto);
-      top: var(--_tab-before-top, auto);
-      width: rem(1px);
-      height: rem(1px);
+      background-color: var(--tab-border-color);
+      bottom: var(--tab-before-bottom, rem(-1px));
+      left: var(--tab-before-left, rem(-1px));
+      right: var(--tab-before-right, auto);
+      top: var(--tab-before-top, auto);
+      width: 1px;
+      height: 1px;
     }
 
     &::after {
       content: '';
       position: absolute;
-      background-color: var(--_tab-border-color);
-      bottom: var(--_tab-after-bottom, rem(-1px));
-      right: var(--_tab-after-right, rem(-1px));
-      left: var(--_tab-after-left, auto);
-      top: var(--_tab-after-top, auto);
-      width: rem(1px);
-      height: rem(1px);
+      background-color: var(--tab-border-color);
+      bottom: var(--tab-after-bottom, rem(-1px));
+      right: var(--tab-after-right, rem(-1px));
+      left: var(--tab-after-left, auto);
+      top: var(--tab-after-top, auto);
+      width: 1px;
+      height: 1px;
     }
 
-    --_tab-border-top-color: var(--_tab-border-color);
-    --_tab-border-left-color: var(--_tab-border-color);
-    --_tab-border-right-color: var(--_tab-border-color);
-    --_tab-border-bottom-color: var(--mantine-color-body);
+    border-top-color: var(--tab-border-top-color);
+    border-bottom-color: var(--tab-border-bottom-color);
+    border-inline-start-color: var(--tab-border-inline-start-color);
+    border-inline-end-color: var(--tab-border-inline-end-color);
+
+    --tab-border-top-color: var(--tab-border-color);
+    --tab-border-inline-start-color: var(--tab-border-color);
+    --tab-border-inline-end-color: var(--tab-border-color);
+    --tab-border-bottom-color: var(--mantine-color-body);
 
     &[data-inverted] {
-      --_tab-border-bottom-color: var(--_tab-border-color);
-      --_tab-border-top-color: var(--mantine-color-body);
+      --tab-border-bottom-color: var(--tab-border-color);
+      --tab-border-top-color: var(--mantine-color-body);
 
-      --_tab-before-bottom: auto;
-      --_tab-before-top: rem(-1px);
-      --_tab-after-bottom: auto;
-      --_tab-after-top: rem(-1px);
+      --tab-before-bottom: auto;
+      --tab-before-top: -1px;
+      --tab-after-bottom: auto;
+      --tab-after-top: -1px;
     }
 
     &[data-orientation='vertical'] {
       &[data-placement='left'] {
-        --_tab-border-right-color: var(--mantine-color-body);
-        --_tab-border-left-color: var(--_tab-border-color);
-        --_tab-border-bottom-color: var(--_tab-border-color);
+        --tab-border-inline-end-color: var(--mantine-color-body);
+        --tab-border-inline-start-color: var(--tab-border-color);
+        --tab-border-bottom-color: var(--tab-border-color);
 
-        --_tab-before-right: rem(-1px);
-        --_tab-before-left: auto;
-        --_tab-before-bottom: auto;
-        --_tab-before-top: rem(-1px);
-        --_tab-after-left: auto;
-        --_tab-after-right: rem(-1px);
+        --tab-before-right: -1px;
+        --tab-before-left: auto;
+        --tab-before-bottom: auto;
+        --tab-before-top: -1px;
+        --tab-after-left: auto;
+        --tab-after-right: -1px;
 
         @mixin rtl {
-          --_tab-border-right-color: var(--_tab-border-color);
-          --_tab-border-left-color: var(--mantine-color-body);
-
-          --_tab-before-right: auto;
-          --_tab-before-left: rem(-1px);
-          --_tab-after-left: rem(-1px);
-          --_tab-after-right: auto;
+          --tab-before-right: auto;
+          --tab-before-left: -1px;
+          --tab-after-left: -1px;
+          --tab-after-right: auto;
         }
       }
 
       &[data-placement='right'] {
-        --_tab-border-left-color: var(--mantine-color-body);
-        --_tab-border-right-color: var(--_tab-border-color);
-        --_tab-border-bottom-color: var(--_tab-border-color);
+        --tab-border-inline-start-color: var(--mantine-color-body);
+        --tab-border-inline-end-color: var(--tab-border-color);
+        --tab-border-bottom-color: var(--tab-border-color);
 
-        --_tab-before-left: rem(-1px);
-        --_tab-before-right: auto;
-        --_tab-before-bottom: auto;
-        --_tab-before-top: rem(-1px);
-        --_tab-after-right: auto;
-        --_tab-after-left: rem(-1px);
+        --tab-before-left: -1px;
+        --tab-before-right: auto;
+        --tab-before-bottom: auto;
+        --tab-before-top: -1px;
+        --tab-after-right: auto;
+        --tab-after-left: -1px;
 
         @mixin rtl {
-          --_tab-border-left-color: var(--_tab-border-color);
-          --_tab-border-right-color: var(--mantine-color-body);
-
-          --_tab-before-left: auto;
-          --_tab-before-right: rem(-1px);
-          --_tab-after-right: rem(-1px);
-          --_tab-after-left: auto;
+          --tab-before-left: auto;
+          --tab-before-right: -1px;
+          --tab-after-right: -1px;
+          --tab-after-left: auto;
         }
       }
     }
@@ -353,24 +348,24 @@
 /*************************************** pills variant ***************************************/
 .tab--pills {
   border-radius: var(--tabs-radius);
-  background-color: var(--_tab-bg);
-  color: var(--_tab-color);
+  background-color: var(--tab-bg);
+  color: var(--tab-color);
 
-  --_tab-bg: transparent;
-  --_tab-color: inherit;
+  --tab-bg: transparent;
+  --tab-color: inherit;
 
   &:not([data-disabled]) {
     @mixin hover {
-      --_tab-bg: var(--_tab-hover-color);
+      --tab-bg: var(--tab-hover-color);
     }
   }
 
   &[data-active][data-active] {
-    --_tab-bg: var(--tabs-color);
-    --_tab-color: var(--tabs-text-color, var(--mantine-color-white));
+    --tab-bg: var(--tabs-color);
+    --tab-color: var(--tabs-text-color, var(--mantine-color-white));
 
     @mixin hover {
-      --_tab-bg: var(--tabs-color);
+      --tab-bg: var(--tabs-color);
     }
   }
 }

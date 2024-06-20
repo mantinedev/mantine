@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconCode, IconExternalLink, IconEye } from '@tabler/icons-react';
 import { Center, rem, SegmentedControl } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

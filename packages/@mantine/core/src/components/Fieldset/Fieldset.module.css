@@ -6,7 +6,7 @@
 }
 
 .root--default {
-  border: rem(1px) solid;
+  border: 1px solid;
 
   @mixin where-light {
     border-color: var(--mantine-color-gray-3);
@@ -20,7 +20,7 @@
 }
 
 .root--filled {
-  border: rem(1px) solid;
+  border: 1px solid;
 
   @mixin where-light {
     border-color: var(--mantine-color-gray-3);

@@ -6,7 +6,6 @@ const defaultDates = getMonthDays({
   month: new Date(2010, 5, 1),
   firstDayOfWeek: 1,
   consistentWeeks: false,
-  timezone: undefined,
 });
 const defaultMinDate = new Date(2000, 0);
 const defaultMaxDate = new Date(2100, 0);
@@ -40,7 +39,6 @@ describe('@mantine/dates/get-date-in-tab-order', () => {
           month: new Date(),
           firstDayOfWeek: 1,
           consistentWeeks: false,
-          timezone: undefined,
         }),
         defaultMinDate,
         defaultMaxDate,
@@ -61,7 +59,6 @@ describe('@mantine/dates/get-date-in-tab-order', () => {
           month: new Date(2010, 1, 1),
           firstDayOfWeek: 1,
           consistentWeeks: false,
-          timezone: undefined,
         }),
         defaultMinDate,
         defaultMaxDate,
@@ -91,7 +88,6 @@ describe('@mantine/dates/get-date-in-tab-order', () => {
           month: new Date(2010, 1, 1),
           firstDayOfWeek: 1,
           consistentWeeks: false,
-          timezone: undefined,
         }),
         defaultMinDate,
         defaultMaxDate,

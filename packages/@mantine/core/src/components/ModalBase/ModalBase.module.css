@@ -11,18 +11,12 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--mb-padding, var(--mantine-spacing-md));
-  padding-right: var(--_pr, calc(var(--mb-padding, var(--mantine-spacing-md)) - rem(5px)));
-  padding-left: var(--_pl, var(--mb-padding, var(--mantine-spacing-md)));
+  padding-inline-end: calc(var(--mb-padding, var(--mantine-spacing-md)) - rem(5px));
   position: sticky;
   top: 0;
   background-color: var(--mantine-color-body);
   z-index: 1000;
-  min-height: rem(60px);
-
-  @mixin rtl {
-    --_pr: var(--mb-padding, var(--mantine-spacing-md));
-    --_pl: calc(var(--mb-padding, var(--mantine-spacing-md)) - rem(5px));
-  }
+  min-height: 60px;
 }
 
 .inner {
@@ -40,20 +34,14 @@
 }
 
 .close {
-  margin-left: var(--_close-ml, auto);
-  margin-right: var(--_close-mr, 0);
-
-  @mixin rtl {
-    --_close-ml: 0;
-    --_close-mr: auto;
-  }
+  margin-inline-start: auto;
 }
 
 .body {
   padding: var(--mb-padding, var(--mantine-spacing-md));
-  padding-top: var(--_pt, var(--mb-padding, var(--mantine-spacing-md)));
+  padding-top: var(--mb-padding, var(--mantine-spacing-md));
 
-  &:not(:only-child) {
-    --_pt: 0;
+  &:where(:not(:only-child)) {
+    padding-top: 0;
   }
 }

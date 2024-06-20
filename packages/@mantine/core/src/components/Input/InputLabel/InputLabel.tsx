@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   BoxProps,
@@ -94,7 +93,7 @@ export const InputLabel = factory<InputLabelFactory>((_props, ref) => {
 
   return (
     <Box
-      {...getStyles('label')}
+      {...getStyles('label', ctx?.getStyles ? { className, style } : undefined)}
       component={labelElement as 'label'}
       variant={variant}
       size={size}

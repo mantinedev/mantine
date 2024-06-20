@@ -1,4 +1,3 @@
-import React from 'react';
 import { ColorSwatch } from './ColorSwatch';
 
 export default { title: 'ColorSwatch' };

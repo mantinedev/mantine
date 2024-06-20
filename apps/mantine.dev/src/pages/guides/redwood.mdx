@@ -1,0 +1,95 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Redwood);
+
+# Usage with RedwoodJS
+
+<GetTemplates type="redwood" />
+
+## Generate new application
+
+Follow [Redwood getting started guide](https://redwoodjs.com/docs/quick-start) guide to
+create new Redwood application:
+
+```bash
+yarn create redwood-app my-redwood-project --typescript
+```
+
+## Installation
+
+**Note that it is recommended to use `yarn` instead of `npm` to install dependencies.**
+
+Open `web` directory before installing dependencies:
+
+```bash
+cd web
+```
+
+<PackagesInstallation />
+
+## PostCSS setup
+
+Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
+
+<InstallScript
+  packages="postcss postcss-preset-mantine postcss-simple-vars"
+  dev
+/>
+
+Create `postcss.config.js` file in `web` directory with the following content:
+
+```js
+module.exports = {
+  plugins: {
+    'postcss-preset-mantine': {},
+    'postcss-simple-vars': {
+      variables: {
+        'mantine-breakpoint-xs': '36em',
+        'mantine-breakpoint-sm': '48em',
+        'mantine-breakpoint-md': '62em',
+        'mantine-breakpoint-lg': '75em',
+        'mantine-breakpoint-xl': '88em',
+      },
+    },
+  },
+};
+```
+
+## Setup
+
+Add styles imports, [MantineProvider](/theming/mantine-provider) and [ColorSchemeScript](/theming/color-schemes)
+to `web/src/App.tsx` file:
+
+```tsx
+// Import styles of packages that you've installed.
+// All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
+
+import { FatalErrorBoundary, RedwoodProvider } from '@redwoodjs/web';
+import { RedwoodApolloProvider } from '@redwoodjs/web/apollo';
+import FatalErrorPage from 'src/pages/FatalErrorPage';
+import Routes from 'src/Routes';
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+
+const App = () => (
+  <FatalErrorBoundary page={FatalErrorPage}>
+    <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
+      <ColorSchemeScript />
+      <MantineProvider>
+        <RedwoodApolloProvider>
+          <Routes />
+        </RedwoodApolloProvider>
+      </MantineProvider>
+    </RedwoodProvider>
+  </FatalErrorBoundary>
+);
+
+export default App;
+```
+
+All set! Start development server:
+
+```bash
+yarn rw dev
+```

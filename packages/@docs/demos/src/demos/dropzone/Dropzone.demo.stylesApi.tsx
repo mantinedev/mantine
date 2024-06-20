@@ -1,4 +1,3 @@
-import React from 'react';
 import { Text } from '@mantine/core';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { MantineDemo } from '@mantinex/demo';
@@ -6,7 +5,7 @@ import classes from './Dropzone.demo.stylesApi.module.css';
 
 const cssCode = `
 .root {
-  min-height: rem(120px);
+  min-height: 120px;
   display: flex;
   justify-content: center;
   align-items: center;

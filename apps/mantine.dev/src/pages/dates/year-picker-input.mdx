@@ -1,0 +1,82 @@
+import { YearPickerInputDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.YearPickerInput);
+
+## YearPicker props
+
+`YearPickerInput` supports most of the [YearPicker](/dates/year-picker/) props,
+read through [YearPicker](/dates/year-picker/) documentation to learn about all component features that are not listed on this page.
+
+## Usage
+
+<Demo data={YearPickerInputDemos.usage} />
+
+## Multiple dates
+
+Set `type="multiple"` to allow user to pick multiple dates:
+
+<Demo data={YearPickerInputDemos.multiple} />
+
+## Dates range
+
+Set `type="range"` to allow user to pick dates range:
+
+<Demo data={YearPickerInputDemos.range} />
+
+## Open picker in modal
+
+By default, [YearPicker](/dates/year-picker/) is rendered inside [Popover](/core/popover/).
+You can change that to [Modal](/core/modal/) by setting `dropdownType="modal"`:
+
+<Demo data={YearPickerInputDemos.modal} />
+
+## Value format
+
+Use `valueFormat` prop to change [dayjs format](https://day.js.org/docs/en/display/format) of value label:
+
+<Demo data={YearPickerInputDemos.valueFormat} />
+
+## Value formatter
+
+`valueFormatter` is a more powerful alternative to `valueFormat` prop.
+It allows formatting value label with a custom function.
+The function is the same for all component types (`default`, `multiple` and `range`)
+– you need to perform additional checks inside the function to handle different types.
+
+Example of using a custom formatter function with `type="multiple"`:
+
+<Demo data={YearPickerInputDemos.valueFormatter} />
+
+## Clearable
+
+Set `clearable` prop to display clear button in the right section. Note that if you set `rightSection`
+prop, clear button will not be displayed.
+
+<Demo data={YearPickerInputDemos.clearable} />
+
+## Disabled state
+
+<Demo data={YearPickerInputDemos.disabled} />
+
+## Input props
+
+<InputFeatures component="MonthPickerInput" element="button" />
+
+<Demo data={YearPickerInputDemos.configurator} />
+
+## With icon
+
+<Demo data={YearPickerInputDemos.icon} />
+
+<GetElementRef
+  component="YearPickerInput"
+  refType="button"
+  package="@mantine/dates"
+/>
+
+<InputAccessibility
+  component="YearPickerInput"
+  packageName="@mantine/dates"
+/>

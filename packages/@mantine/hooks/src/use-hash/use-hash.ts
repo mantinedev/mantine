@@ -19,7 +19,7 @@ export function useHash({ getInitialValueInEffect = true }: UseHashOptions = {})
   useWindowEvent('hashchange', () => {
     const newHash = window.location.hash;
     if (hash !== newHash) {
-      setHashValue(hash);
+      setHashValue(newHash);
     }
   });
 

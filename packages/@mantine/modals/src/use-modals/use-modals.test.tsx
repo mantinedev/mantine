@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import { render, renderHook, screen } from '@testing-library/react';
 import { MantineProvider } from '@mantine/core';
 import { ContextModalProps } from '../context';
@@ -41,7 +41,10 @@ describe('@mantine/modals/use-modals', () => {
       const modals = useModals();
 
       useEffect(() => {
-        modals.openContextModal('contextTest', { innerProps: { text: testContent } });
+        modals.openContextModal('contextTest', {
+          innerProps: { text: testContent },
+          transitionProps: { duration: 0 },
+        });
       }, []);
 
       return <div>Empty</div>;
@@ -64,7 +67,7 @@ describe('@mantine/modals/use-modals', () => {
       const modals = useModals();
 
       useEffect(() => {
-        modals.openConfirmModal({});
+        modals.openConfirmModal({ transitionProps: { duration: 0 } });
       }, []);
 
       return <div>Empty</div>;
@@ -90,6 +93,7 @@ describe('@mantine/modals/use-modals', () => {
       useEffect(() => {
         modals.openConfirmModal({
           labels: { confirm: 'Confirm', cancel: 'Cancel' },
+          transitionProps: { duration: 0 },
         });
       }, []);
 
@@ -117,6 +121,7 @@ describe('@mantine/modals/use-modals', () => {
             confirm: <span>Confirm</span>,
             cancel: <span>Cancel</span>,
           },
+          transitionProps: { duration: 0 },
         });
       }, []);
 
@@ -143,6 +148,7 @@ describe('@mantine/modals/use-modals', () => {
         modals.openModal({
           title: 'Test title',
           children: <h1>Children</h1>,
+          transitionProps: { duration: 0 },
         });
       }, []);
 

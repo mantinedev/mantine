@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import React from 'react';
 import { MonthPickerInput } from './MonthPickerInput';
 
 export default { title: 'MonthPickerInput' };

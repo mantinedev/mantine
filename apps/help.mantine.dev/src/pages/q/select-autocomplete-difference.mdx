@@ -1,0 +1,48 @@
+import { AutocompleteCity } from '@/demos/AutocompleteCity.demo';
+import { SelectCountry } from '@/demos/SelectCountry.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title:
+    'What is the difference between searchable Select and Autocomplete?',
+  description:
+    'Searchable Select and Autocomplete are similar components, but they serve different purposes.',
+  slug: 'select-autocomplete-difference',
+  category: 'components',
+  tags: ['select', 'autocomplete', 'searchable', 'combobox'],
+  created_at: 'December 26, 2023',
+  last_updated_at: 'December 26, 2023',
+};
+
+export default Layout(meta);
+
+## Searchable select
+
+Use [Select](https://mantine.dev/core/select/) component in the following cases:
+
+- You want to restrict user to a list of predefined options
+- You want to display all available options to the user and allow searching through them
+- You want to discard user input on blur if option was not selected from the dropdown
+- `value` and `label` of the option are not the same, for example, `{ value: 'US', label: 'United States' }`
+
+For example, you can use [Select](https://mantine.dev/core/select/) to select country from the list of all countries:
+
+<Demo data={SelectCountry} />
+
+In the example above, the user can select country from the list of all countries, but cannot enter any other value.
+
+## Autocomplete
+
+Use [Autocomplete](https://mantine.dev/core/autocomplete/) component in the following cases:
+
+- You want to allow user to enter any value
+- You want to display suggestions to the user based on the input value
+- You want to preserve user input on blur if option was not selected from the dropdown
+- `value` and `label` of the option are the same, for example, `'United States'`
+
+For example, you can use [Autocomplete](https://mantine.dev/core/autocomplete/) to ask user to enter city:
+
+<Demo data={AutocompleteCity} />
+
+In the example above, suggestions are based on the input value,
+but the user can enter any value and it will be preserved on blur.

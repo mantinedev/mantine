@@ -14,6 +14,7 @@ export * from './ModalBase';
 export * from './Input';
 export * from './InputBase';
 export * from './Flex';
+export * from './FloatingIndicator';
 
 // regular components
 export * from './Accordion';
@@ -98,4 +99,5 @@ export * from './Timeline';
 export * from './Title';
 export * from './Tooltip';
 export * from './Transition';
+export * from './Tree';
 export * from './TypographyStylesProvider';

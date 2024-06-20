@@ -1,0 +1,82 @@
+import { DatePickerInputDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.DatePickerInput);
+
+## DatePicker props
+
+`DatePickerInput` supports most of the [DatePicker](/dates/date-picker/) props,
+read through [DatePicker](/dates/date-picker/) documentation to learn about all component features that are not listed on this page.
+
+## Usage
+
+<Demo data={DatePickerInputDemos.usage} />
+
+## Multiple dates
+
+Set `type="multiple"` to allow user to pick multiple dates:
+
+<Demo data={DatePickerInputDemos.multiple} />
+
+## Dates range
+
+Set `type="range"` to allow user to pick dates range:
+
+<Demo data={DatePickerInputDemos.range} />
+
+## Open picker in modal
+
+By default, [DatePicker](/dates/date-picker/) is rendered inside [Popover](/core/popover/).
+You can change that to [Modal](/core/modal/) by setting `dropdownType="modal"`:
+
+<Demo data={DatePickerInputDemos.modal} />
+
+## Value format
+
+Use `valueFormat` prop to change [dayjs format](https://day.js.org/docs/en/display/format) of value label:
+
+<Demo data={DatePickerInputDemos.valueFormat} />
+
+## Value formatter
+
+`valueFormatter` is a more powerful alternative to `valueFormat` prop.
+It allows formatting value label with a custom function.
+The function is the same for all component types (`default`, `multiple` and `range`)
+– you need to perform additional checks inside the function to handle different types.
+
+Example of using a custom formatter function with `type="multiple"`:
+
+<Demo data={DatePickerInputDemos.valueFormatter} />
+
+## Clearable
+
+Set `clearable` prop to display clear button in the right section. Note that if you set `rightSection`
+prop, clear button will not be displayed.
+
+<Demo data={DatePickerInputDemos.clearable} />
+
+## Disabled state
+
+<Demo data={DatePickerInputDemos.disabled} />
+
+## Input props
+
+<InputFeatures component="DatePickerInput" element="button" />
+
+<Demo data={DatePickerInputDemos.configurator} />
+
+## With icon
+
+<Demo data={DatePickerInputDemos.icon} />
+
+<GetElementRef
+  component="DatePickerInput"
+  refType="button"
+  package="@mantine/dates"
+/>
+
+<InputAccessibility
+  component="DatePickerInput"
+  packageName="@mantine/dates"
+/>

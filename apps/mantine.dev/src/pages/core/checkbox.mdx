@@ -1,0 +1,162 @@
+import { CheckboxDemos, TableDemos, ThemingDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Checkbox);
+
+## Usage
+
+<Demo data={CheckboxDemos.configurator} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  const [checked, setChecked] = useState(false);
+  return (
+    <Checkbox
+      checked={checked}
+      onChange={(event) => setChecked(event.currentTarget.checked)}
+    />
+  );
+}
+```
+
+## States
+
+<Demo data={CheckboxDemos.states} />
+
+## Change icons
+
+<Demo data={CheckboxDemos.icon} />
+
+## Change icon color
+
+Use `iconColor` prop to change icon color. You can reference colors from `theme.colors` or use any valid CSS color:
+
+<Demo data={CheckboxDemos.iconColor} />
+
+## Indeterminate state
+
+`Checkbox` supports indeterminate state. When `indeterminate` prop is set,
+`checked` prop is ignored (checkbox always has checked styles):
+
+<Demo
+  data={CheckboxDemos.indeterminate}
+  demoProps={{ toggle: true }}
+/>
+
+## Label with link
+
+<Demo data={CheckboxDemos.anchor} />
+
+## Checkbox with tooltip
+
+You can change target element to which tooltip is attached with `refProp`:
+
+- If `refProp` is not set, the tooltip is attached to the checkbox input
+- If `refProp="rootRef"` is set, the tooltip is attached to the root element (contains label, input and other elements)
+
+<Demo data={CheckboxDemos.tooltip} />
+
+## Pointer cursor
+
+By default, checkbox input and label have `cursor: default` (same as native `input[type="checkbox"]`).
+To change cursor to pointer, set `cursorType` on [theme](/theming/theme-object/):
+
+<Demo data={ThemingDemos.cursorType} />
+
+## Add custom sizes
+
+You can add any number of custom sizes with [data-size](/styles/data-attributes/) attribute:
+
+<Demo data={CheckboxDemos.customSize} />
+
+<WrapperProps component="Checkbox" />
+
+## Checkbox.Group
+
+<Demo data={CheckboxDemos.groupConfigurator} />
+
+## Controlled Checkbox.Group
+
+```tsx
+import { useState } from 'react';
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState<string[]>([]);
+
+  return (
+    <Checkbox.Group value={value} onChange={setValue}>
+      <Checkbox value="react" label="React" />
+      <Checkbox value="svelte" label="Svelte" />
+    </Checkbox.Group>
+  );
+}
+```
+
+## Checkbox.Indicator
+
+`Checkbox.Indicator` looks exactly the same as `Checkbox` component, but it does not
+have any semantic meaning, it's just a visual representation of checkbox state. You
+can use it in any place where you need to display checkbox state without any interaction
+related to the indicator. For example, it is useful in cards based on buttons, trees, etc.
+
+Note that `Checkbox.Indicator` cannot be focused or selected with keyboard. It is not
+accessible and should not be used as a replacement for `Checkbox` component.
+
+<Demo data={CheckboxDemos.indicator} />
+
+## Checkbox.Card component
+
+`Checkbox.Card` component can be used as a replacement for `Checkbox` to build custom
+cards/buttons/other things that work as checkboxes. The root element of the component
+has `role="checkbox"` attribute, it is accessible by default and supports the same
+keyboard interactions as `input[type="checkbox"]`.
+
+<Demo data={CheckboxDemos.card} />
+
+You can use `Checkbox.Card` with `Checkbox.Group` the same way as `Checkbox` component:
+
+<Demo data={CheckboxDemos.cardGroup} />
+
+<GetElementRef component="Checkbox" refType="input" />
+
+<StylesApiSelectors component="Checkbox" />
+
+<Demo data={CheckboxDemos.stylesApi} />
+
+## Example: Table with row selection
+
+<Demo data={TableDemos.rowSelection} />
+
+## Example: Customize with Styles API
+
+<Demo data={CheckboxDemos.customize} />
+
+## Accessibility
+
+Set `aria-label` or `label` prop to make the checkbox accessible:
+
+```tsx
+import { Checkbox } from '@mantine/core';
+
+// Not ok, input is not labeled
+function Bad() {
+  return <Checkbox />;
+}
+
+// Ok, input is labelled by aria-label
+function GoodAriaLabel() {
+  return <Checkbox aria-label="My checkbox" />;
+}
+
+// Ok, input is labelled by label element
+function GoodLabel() {
+  return <Checkbox label="My checkbox" />;
+}
+```

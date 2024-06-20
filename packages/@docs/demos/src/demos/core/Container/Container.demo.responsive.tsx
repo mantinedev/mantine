@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'clsx';
 import { Container, createTheme, MantineThemeProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
@@ -32,14 +31,14 @@ function Demo() {
 
 const cssCode = `
 .responsiveContainer {
-  max-width: rem(300px);
+  max-width: 300px;
 
   @media (min-width: em(400px)) {
-    max-width: rem(400px);
+    max-width: 400px;
   }
 
   @media (min-width: em(600px)) {
-    max-width: rem(600px);
+    max-width: 600px;
   }
 }
 `;

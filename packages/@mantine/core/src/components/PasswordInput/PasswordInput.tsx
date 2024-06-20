@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'clsx';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
@@ -107,6 +106,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
     rightSectionProps,
     leftSectionProps,
     leftSectionPointerEvents,
+    withErrorStyles,
     mod,
     ...others
   } = props;
@@ -216,6 +216,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
         leftSectionProps={leftSectionProps}
         leftSectionPointerEvents={leftSectionPointerEvents}
         withAria={false}
+        withErrorStyles={withErrorStyles}
       >
         <input
           required={required}

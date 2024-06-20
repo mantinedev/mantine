@@ -1,8 +1,8 @@
 .input {
-  cursor: var(--_cursor, pointer);
+  cursor: pointer;
   line-height: unset;
 
-  &[data-read-only] {
-    --_cursor: default;
+  &:where([data-read-only]) {
+    cursor: default;
   }
 }

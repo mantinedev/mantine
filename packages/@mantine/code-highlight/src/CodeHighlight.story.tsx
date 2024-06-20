@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CodeHighlight } from './CodeHighlight';
 import { CodeHighlightTabs } from './CodeHighlightTabs';
 import { InlineCodeHighlight } from './InlineCodeHighlight';
@@ -89,9 +89,9 @@ const cssCode = `.root {
   --ai-size-lg: rem(34px);
   --ai-size-xl: rem(44px);
 
-  --_bg: var(--ai-bg);
-  --_color: var(--ai-color);
-  --_cursor: pointer;
+  --bg: var(--ai-bg);
+  --color: var(--ai-color);
+  --cursor: pointer;
 
   line-height: 1;
   display: inline-flex;
@@ -105,46 +105,46 @@ const cssCode = `.root {
   min-width: var(--ai-size);
   min-height: var(--ai-size);
   border-radius: var(--ai-radius);
-  background: var(--_bg);
-  color: var(--_color);
+  background: var(--bg);
+  color: var(--color);
   border: var(--ai-bd);
-  cursor: var(--_cursor);
+  cursor: var(--cursor);
 
   @mixin hover {
     &:not([data-loading]):not(:disabled):not([data-disabled]) {
-      --_bg: var(--ai-hover);
+      --bg: var(--ai-hover);
     }
   }
 
   @mixin light {
-    --_loading-overlay-bg: rgba(255, 255, 255, 0.35);
-    --_disabled-bg: var(--mantine-color-gray-1);
-    --_disabled-color: var(--mantine-color-gray-5);
+    --loading-overlay-bg: rgba(255, 255, 255, 0.35);
+    --disabled-bg: var(--mantine-color-gray-1);
+    --disabled-color: var(--mantine-color-gray-5);
   }
 
   @mixin dark {
-    --_loading-overlay-bg: rgba(0, 0, 0, 0.35);
-    --_disabled-bg: var(--mantine-color-dark-6);
-    --_disabled-color: var(--mantine-color-dark-3);
+    --loading-overlay-bg: rgba(0, 0, 0, 0.35);
+    --disabled-bg: var(--mantine-color-dark-6);
+    --disabled-color: var(--mantine-color-dark-3);
   }
 
   &[data-loading] {
-    --_cursor: not-allowed;
+    --cursor: not-allowed;
 
     &::before {
       content: '';
       position: absolute;
       inset: rem(-1px);
       border-radius: var(--ai-radius);
-      background-color: var(--_loading-overlay_bg);
+      background-color: var(--loading-overlay_bg);
     }
   }
 
   &:disabled:not([data-loading]),
   &[data-disabled]:not([data-loading]) {
-    --_cursor: not-allowed;
-    --_bg: var(--_disabled-bg);
-    --_color: var(--_disabled-color);
+    --cursor: not-allowed;
+    --bg: var(--disabled-bg);
+    --color: var(--disabled-color);
   }
 }
 
@@ -245,10 +245,13 @@ export function Inline() {
     <div style={{ padding: 40 }}>
       <p>
         Hello there! this is{' '}
-        <InlineCodeHighlight code="import React from 'react';" language="tsx" /> some code Lorem
-        ipsum dolor sit amet consectetur adipisicing elit. Aliquid reiciendis, facilis repudiandae
-        vero mollitia non dolorum cupiditate assumenda odio unde quaerat beatae explicabo veritatis
-        nam temporibus! Quibusdam quod enim voluptatibus?
+        <InlineCodeHighlight
+          code={'<InlineCodeHighlight code="" language="tsx" />'}
+          language="tsx"
+        />{' '}
+        some code Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid reiciendis,
+        facilis repudiandae vero mollitia non dolorum cupiditate assumenda odio unde quaerat beatae
+        explicabo veritatis nam temporibus! Quibusdam quod enim voluptatibus?
       </p>
     </div>
   );

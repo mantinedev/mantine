@@ -1,0 +1,53 @@
+import { ModalDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useFocusReturn);
+
+## Usage
+
+`use-focus-return` automatically returns focus to the last focused element when a given condition is met.
+For example, it is used in [Modal](/core/modal/) component to restore focus after the modal was closed.
+
+Close the modal with the `Escape` key and see how focus returns to the button after the modal closes:
+
+<Demo data={ModalDemos.usage} demoProps={{ toggle: true }} />
+
+In most cases, you should use this hook with [use-focus-trap](/hooks/use-focus-trap/).
+
+```tsx
+import { useFocusReturn } from '@mantine/hooks';
+
+useFocusReturn({
+  // Is region with focus trap active?
+  // When it activates hook saves document.activeElement to the internal state
+  // and focuses this element once focus trap is deactivated
+  opened: false,
+
+  // Determines whether focus should be returned automatically, true by default
+  shouldReturnFocus: true,
+});
+```
+
+If `shouldReturnFocus` option is set to `false` you can call returned function to focus last active element:
+
+```tsx
+import { useFocusReturn } from '@mantine/hooks';
+
+const returnFocus = useFocusReturn({
+  opened: false,
+  shouldReturnFocus: false,
+});
+
+// ... later
+returnFocus();
+```
+
+## Definition
+
+```tsx
+function useFocusReturn(options: {
+  opened: boolean;
+  shouldReturnFocus?: boolean;
+}): () => void;
+```

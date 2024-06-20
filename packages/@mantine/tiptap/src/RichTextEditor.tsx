@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Editor } from '@tiptap/react';
 import {
   Box,
@@ -92,6 +92,9 @@ export type RichTextEditorFactory = Factory<{
     UnsetColor: typeof controls.UnsetColorControl;
     Undo: typeof controls.UndoControl;
     Redo: typeof controls.RedoControl;
+    TaskList: typeof controls.TaskListControl;
+    TaskListSink: typeof controls.TaskListSinkControl;
+    TaskListLift: typeof controls.TaskListLiftControl;
   };
 }>;
 
@@ -190,3 +193,6 @@ RichTextEditor.Hr = controls.HrControl;
 RichTextEditor.UnsetColor = controls.UnsetColorControl;
 RichTextEditor.Undo = controls.UndoControl;
 RichTextEditor.Redo = controls.RedoControl;
+RichTextEditor.TaskList = controls.TaskListControl;
+RichTextEditor.TaskListSink = controls.TaskListSinkControl;
+RichTextEditor.TaskListLift = controls.TaskListLiftControl;

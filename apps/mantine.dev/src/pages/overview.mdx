@@ -1,0 +1,254 @@
+import { StylesDemos, ThemingDemos } from '@docs/demos';
+import { TextInputStylesApi } from '@docs/styles-api';
+import {
+  SelectorsTable,
+  VariablesTable,
+} from '@/components/StylesApiTable';
+import { ColorsGroup } from '@/components/ThemeColors';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Overview);
+
+# API overview
+
+This guide will help you get familiar with core Mantine concepts.
+Please read this guide, [theming](/theming/theme-object/) and [styles](/styles/css-modules/) sections before starting development
+to learn about all of the available theming and styling features.
+
+## MantineProvider
+
+[MantineProvider](/theming/mantine-provider) is required to be rendered at the root of your application.
+It is responsible for:
+
+- Providing [theme](/theming/theme-object) context
+- Adding [CSS variables](/styles/css-variables) to the document
+- Managing [color scheme](/theming/color-schemes) (light, dark, auto)
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return <MantineProvider>{/* Your app here */}</MantineProvider>;
+}
+```
+
+## Theme object
+
+[Theme object](/theming/theme-object) stores design tokens, components default props, context styles
+and other data that can be accessed by any Mantine component. Most of the `theme` values are exposed as
+[CSS variables](/styles/css-variables) and can be accessed both in JavaScript and CSS.
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+// Your theme configuration is merged with default theme
+const theme = createTheme({
+  fontFamily: 'Montserrat, sans-serif',
+  defaultRadius: 'md',
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+Access theme values in styles:
+
+```css
+.demo {
+  background: var(--mantine-color-red-1);
+  color: var(--mantine-color-red-9);
+  font-family: var(--mantine-font-family);
+  border-radius: var(--mantine-radius-md);
+}
+```
+
+Access theme values in JavaScript:
+
+```tsx
+import { lighten, useMantineTheme } from '@mantine/core';
+
+function Demo() {
+  const theme = useMantineTheme();
+
+  const style = {
+    // You can use CSS variables in inline styles
+    background: 'var(--mantine-color-red-9)',
+
+    // Or use values from theme object if you need to modify them
+    color: lighten(theme.colors.red[9], 0.2),
+  };
+
+  return <div style={style} />;
+}
+```
+
+## Colors
+
+[Colors](/theming/colors) are stored in `theme.colors` object and are exposed as [CSS variables](/styles/css-variables).
+Each color must have at least 10 shades. You can generate new colors based on a single color value
+with the [colors generator](/colors-generator).
+
+Colors are numbered from 0 to 9 where 0 is the lightest and 9 is the darkest color. Example of `blue`
+color from the default theme:
+
+<ColorsGroup group="blue" />
+
+To access colors in styles use [CSS variables](/styles/css-variables):
+
+```css
+.demo {
+  background: var(--mantine-color-blue-9);
+  color: var(--mantine-color-blue-0);
+}
+```
+
+## CSS modules
+
+All Mantine components use [CSS modules](/styles/css-modules) for styling.
+It is recommended to use [CSS modules](/styles/css-modules) in your project as well, but it is not required –
+Mantine components are fully compatible with any third-party styling solution and native CSS.
+
+CSS modules are available in most modern frameworks out of the box. To use them, create a file with `.module.css` extension:
+
+```css
+/* Button.module.css */
+.button {
+  color: red;
+}
+```
+
+And then import it in your component:
+
+```tsx
+import classes from './Button.module.css';
+
+function Demo() {
+  return (
+    <button className={classes.button} type="button">
+      Button
+    </button>
+  );
+}
+```
+
+## PostCSS preset
+
+[postcss-preset-mantine](/styles/postcss-preset) provides several CSS functions and mixins to simplify your styles.
+It is not required to use it, but highly recommended. All demos that feature styles
+assume that you have this preset installed.
+
+[postcss-preset-mantine](/styles/postcss-preset) allows you to use functions and mixins in `.css` files:
+
+```scss
+.demo {
+  padding: rem(20px); /* Convert px to rem */
+
+  /* Convert px to em (for media queries) */
+  @media (max-width: em(500px)) {
+  }
+
+  /* light and dark mixins to apply styles based on Mantine color scheme */
+  @mixin light {
+    background-color: var(--mantine-color-white);
+  }
+
+  @mixin dark {
+    background-color: var(--mantine-color-black);
+  }
+
+  /* light-dark function as an inline shortcut for light and dark mixins */
+  background: light-dark(
+    var(--mantine-color-white),
+    var(--mantine-color-black)
+  );
+
+  /* rtl mixin to apply styles for right-to-left direction */
+  padding-left: 1rem;
+  @mixin rtl {
+    padding-left: 0;
+    padding-right: 1rem;
+  }
+}
+```
+
+## Vanilla extract
+
+[Vanilla extract](/styles/vanilla-extract) is a good alternative to [CSS modules](/styles/css-modules) if you
+prefer to write styles in JavaScript. Mantine provides [Vanilla extract](/styles/vanilla-extract) integration
+with `@mantine/vanilla-extract` package.
+
+## CSS variables
+
+[Theme](/theming/theme-object) values are converted to [CSS variables](/styles/css-variables) and are available to
+use in your styles. All Mantine CSS variables are prefixed with `--mantine-`, for example:
+
+- `theme.fontFamily` → `--mantine-font-family`
+- `theme.colors.blue[9]` → `--mantine-color-blue-9`
+- `theme.spacing.xl` → `--mantine-spacing-xl`
+
+Most of Mantine components have associated [CSS variables](/styles/styles-api) that can be
+customized in [theme](/theming/theme-object) or inline with `vars` prop. Example of customizing
+[Button](/core/button) CSS variables to add new `xxl` and `xxs` sizes:
+
+<Demo data={StylesDemos.vars} />
+
+## Styles API
+
+[Styles API](/styles/styles-api) is a set of props and techniques that allows you to customize styles of any element
+inside Mantine component inline or with [theme object](/theming/theme-object). All Mantine components that
+have styles support [Styles API](/styles/styles-api).
+
+Every Mantine component has a set of elements names that can be used to
+apply styles to inner elements inside the component.
+Example of [TextInput](/core/text-input) component selectors:
+
+<SelectorsTable
+  data={TextInputStylesApi}
+  component="TextInput"
+  withTableBorder={false}
+  fixedLayout={false}
+/>
+
+These selectors can be used to apply styles to inner elements with [classNames or styles](/styles/styles-api) props:
+
+<Demo data={StylesDemos.classNames} />
+
+## Color scheme
+
+All Mantine components support `light`, `dark` and `auto` [color schemes](/theming/color-schemes). By default,
+the color scheme is `light`, it can be changed by the user and will be persisted in `localStorage`.
+
+You can configure the default color scheme on [MantineProvider](/theming/mantine-provider):
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider defaultColorScheme="dark">
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+And use [useMantineColorScheme hook](/theming/color-schemes) to create color scheme toggle control:
+
+<Demo data={ThemingDemos.colorSchemeControl} />
+
+## Unstyled components
+
+You can use Mantine as a [headless UI library](/styles/unstyled). To do that, simply do not import `@mantine/*/styles.css`
+in your application. Then you will be able to apply styles to Mantine components using the [Styles API](/styles/styles-api/)
+with a styling solution of your choice.
+
+All components also support [unstyled prop](/styles/unstyled)
+that removes all library styles from the component:
+
+<Demo data={StylesDemos.unstyled} />

@@ -1,0 +1,20 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useOrientation);
+
+## Usage
+
+`useOrientation` returns an object with the current orientation of the device:
+
+<Demo data={HooksDemos.useOrientationUsage} />
+
+## Definition
+
+```tsx
+function useOrientation(): {
+  angle: number;
+  type: string;
+};
+```

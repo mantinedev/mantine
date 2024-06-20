@@ -33,7 +33,7 @@ export function updateSpotlightStateAction(
 }
 
 export function openSpotlightAction(store: SpotlightStore) {
-  updateSpotlightStateAction(() => ({ opened: true }), store);
+  updateSpotlightStateAction(() => ({ opened: true, selected: -1 }), store);
 }
 
 export function closeSpotlightAction(store: SpotlightStore) {

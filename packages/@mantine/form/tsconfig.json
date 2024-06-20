@@ -3,7 +3,6 @@
   "exclude": ["./lib", "./esm", "./cjs"],
   "compilerOptions": {
     "rootDir": "src",
-    "baseUrl": ".",
     "declaration": true,
     "declarationDir": "lib",
     "types": ["node", "jest", "@testing-library/jest-dom"],
@@ -11,7 +10,7 @@
     "lib": ["DOM", "ESNext"],
     "module": "ESNext",
     "moduleResolution": "Node",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "emitDeclarationOnly": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,

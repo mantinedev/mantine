@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
 import { PickerInputBase, PickerInputBaseProps } from './PickerInputBase';

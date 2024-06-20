@@ -1,21 +1,12 @@
 .root {
-  --blockquote-border: rem(3px) solid var(--bq-bd);
+  --blockquote-border: 3px solid var(--bq-bd);
 
   position: relative;
   margin: 0;
-  border-left: var(--blockquote-border);
-  border-top-right-radius: var(--bq-radius);
-  border-bottom-right-radius: var(--bq-radius);
+  border-inline-start: var(--blockquote-border);
+  border-start-end-radius: var(--bq-radius);
+  border-end-end-radius: var(--bq-radius);
   padding: var(--mantine-spacing-xl) rem(38px);
-
-  @mixin where-rtl {
-    border-top-left-radius: var(--bq-radius);
-    border-bottom-left-radius: var(--bq-radius);
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-left: none;
-    border-right: var(--blockquote-border);
-  }
 
   @mixin where-light {
     background-color: var(--bq-bg-light);
@@ -36,15 +27,10 @@
   align-items: center;
   justify-content: center;
   top: var(--blockquote-icon-offset);
-  left: var(--blockquote-icon-offset);
+  inset-inline-start: var(--blockquote-icon-offset);
   width: var(--bq-icon-size);
   height: var(--bq-icon-size);
   border-radius: var(--bq-icon-size);
-
-  @mixin where-rtl {
-    left: 0;
-    right: var(--blockquote-icon-offset);
-  }
 }
 
 .cite {

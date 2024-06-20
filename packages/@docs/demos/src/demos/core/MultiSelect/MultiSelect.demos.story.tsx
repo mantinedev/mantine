@@ -132,3 +132,8 @@ export const Demo_dropdownOffset = {
   name: '⭐ Demo: dropdownOffset',
   render: renderDemo(demos.dropdownOffset),
 };
+
+export const Demo_renderOption = {
+  name: '⭐ Demo: renderOption',
+  render: renderDemo(demos.renderOption),
+};

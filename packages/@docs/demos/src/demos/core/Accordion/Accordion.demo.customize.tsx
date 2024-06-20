@@ -1,4 +1,3 @@
-import React from 'react';
 import { Accordion } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { groceries } from './_base';
@@ -32,7 +31,7 @@ const cssCode = `.root {
 
 .item {
   background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
-  border: rem(1px) solid transparent;
+  border: 1px solid transparent;
   position: relative;
   z-index: 0;
   transition: transform 150ms ease;

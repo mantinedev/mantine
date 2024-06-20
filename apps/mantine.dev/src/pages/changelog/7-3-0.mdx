@@ -1,0 +1,278 @@
+import {
+  ButtonDemos,
+  Changelog730Demos,
+  ColorPickerDemos,
+  DrawerDemos,
+} from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog730);
+
+## smaller-than and larger-than mixins
+
+`smaller-than` and `larger-than` mixins can be used to create styles that will be applied only when the screen is smaller or larger than specified breakpoint.
+Note that to use these mixins, you need to update [postcss-preset-mantine](/styles/postcss-preset) to version `1.11.0` or higher.
+
+```scss
+.demo {
+  @mixin smaller-than 320px {
+    color: red;
+  }
+
+  @mixin larger-than 320px {
+    color: blue;
+  }
+}
+```
+
+Will be transformed to:
+
+```scss
+// Breakpoint values are converted to em units
+// In smaller-than mixin 0.1px is subtracted from breakpoint value
+// to avoid intersection with larger-than mixin
+@media (max-width: 19.99375em) {
+  .demo {
+    color: red;
+  }
+}
+
+@media (min-width: 20em) {
+  .demo {
+    color: blue;
+  }
+}
+```
+
+You can also use `smaller-than` and `larger-than` mixins with [mantine breakpoints](/styles/responsive/#breakpoints-variables-in-css-modules):
+
+```scss
+.demo {
+  @mixin smaller-than $mantine-breakpoint-sm {
+    color: red;
+  }
+
+  @mixin larger-than $mantine-breakpoint-sm {
+    color: blue;
+  }
+}
+```
+
+## Form schema resolvers packages
+
+`@mantine/form` schema validation resolver packages are now available as [separate packages](/form/schema-validation).
+Moving resolvers to separate packages allows making them type-safe and fully tested.
+Old resolvers are still exported from `@mantine/form` package – you will be able to use them without any changes
+until 8.0.0 release.
+
+The new packages are drop-in replacements for old resolvers, they have the same API and can be used in the same way.
+
+Example of zod resolver:
+
+<InstallScript packages="zod mantine-form-zod-resolver" />
+
+```tsx
+import { zodResolver } from 'mantine-form-zod-resolver';
+import { z } from 'zod';
+import { useForm } from '@mantine/form';
+
+const schema = z.object({
+  name: z
+    .string()
+    .min(2, { message: 'Name should have at least 2 letters' }),
+  email: z.string().email({ message: 'Invalid email' }),
+  age: z.number().min(18, {
+    message: 'You must be at least 18 to create an account',
+  }),
+});
+
+const form = useForm({
+  initialValues: {
+    name: '',
+    email: '',
+    age: 16,
+  },
+  validate: zodResolver(schema),
+});
+
+form.validate();
+form.errors;
+// -> {
+//  name: 'Name should have at least 2 letters',
+//  email: 'Invalid email',
+//  age: 'You must be at least 18 to create an account'
+// }
+```
+
+## rem/em functions improvements
+
+[rem and em](/styles/rem) function now support space-separated values. This feature is available
+both in `rem` function exported from `@mantine/core` package and [postcss-preset-mantine](/styles/postcss-preset).
+Note that you need to update [postcss-preset-mantine](/styles/postcss-preset) to `1.11.0` to use this feature.
+
+```tsx
+import { rem } from '@mantine/core';
+
+rem('16px 32px');
+// -> calc(1rem * var(--mantine-scale)) calc(2rem * var(--mantine-scale))
+```
+
+All components props that are converted to `rem` units now support space-separated values as well.
+For example, space-separated values can be used in `radius` prop of [Modal](/core/modal) component:
+
+```tsx
+import { Modal } from '@mantine/core';
+
+function Demo() {
+  return <Modal radius="10px 10px 0 0" opened onClose={() => {}} />;
+}
+```
+
+## component and renderRoot props for non-polymorphic components
+
+All Mantine components now support `component` and `renderRoot` props event if they are not [polymorphic](/guides/polymorphic).
+The difference between polymorphic and non-polymorphic components is that polymorphic components
+include the full set of props of the component passed to the `component` prop, while non-polymorphic
+components only include props that are specific to the original component. It is done this way to
+improve TypeScript performance.
+
+```tsx
+import { Group } from '@mantine/core';
+
+// Group is not polymorphic component,
+// but it still supports component and renderRoot props
+function Demo() {
+  return (
+    <Group component="nav">
+      <a>Item 1</a>
+      <a>Item 2</a>
+      <a>Item 3</a>
+    </Group>
+  );
+}
+```
+
+## Outline Checkbox and Radio variant
+
+[Checkbox](/core/checkbox) and [Radio](/core/radio) components now support `outline` variant:
+
+<Demo data={Changelog730Demos.checkboxRadioVariant} />
+
+## HueSlider and AlphaSlider components
+
+[HueSlider and AlphaSlider](/core/color-picker) components were added back:
+
+<Demo data={ColorPickerDemos.hueSlider} />
+
+<br />
+
+<Demo data={ColorPickerDemos.alphaSlider} />
+
+## Button loading state animation
+
+[Button](/core/button) component now has loading state animation:
+
+<Demo data={ButtonDemos.loading} />
+
+## Drawer offset
+
+[Drawer](/core/drawer) now supports `offset` prop. It changes drawer offset from the edge of the viewport:
+
+<Demo data={DrawerDemos.offset} />
+
+## z-index CSS variables
+
+You can now use Mantine z-index CSS variables:
+
+- `--mantine-z-index-app` – value `100`
+- `--mantine-z-index-modal` – value `200`
+- `--mantine-z-index-popover` – value `300`
+- `--mantine-z-index-overlay` – value `400`
+- `--mantine-z-index-max` – value `9999`
+
+Example of using `--mantine-z-index-modal` variable:
+
+```css
+/* Display content above the modal */
+.my-content {
+  z-index: calc(var(--mantine-z-index-modal) + 1);
+}
+```
+
+## Improved dark color scheme colors
+
+`theme.colors.dark` colors were slightly changed to improve contrast and make it easier to read text.
+You can preview new colors on [this page](/theming/colors/#default-colors). New colors values are:
+
+```scss
+--mantine-color-dark-0: #c9c9c9;
+--mantine-color-dark-1: #b8b8b8;
+--mantine-color-dark-2: #828282;
+--mantine-color-dark-3: #696969;
+--mantine-color-dark-4: #424242;
+--mantine-color-dark-5: #3b3b3b;
+--mantine-color-dark-6: #2e2e2e;
+--mantine-color-dark-7: #242424;
+--mantine-color-dark-8: #1f1f1f;
+--mantine-color-dark-9: #141414;
+```
+
+If you prefer old colors, change theme settings on `MantineProvider`:
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    dark: [
+      '#C1C2C5',
+      '#A6A7AB',
+      '#909296',
+      '#5c5f66',
+      '#373A40',
+      '#2C2E33',
+      '#25262b',
+      '#1A1B1E',
+      '#141517',
+      '#101113',
+    ],
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+## Documentation updates
+
+- Schema-based validation with `@mantine/form` now has a [dedicated page](/form/schema-validation). It includes more examples for basic, nested and list fields validation for each resolver.
+- [Autocomplete](/core/autocomplete), [Select](/core/select), [MultiSelect](/core/multi-select) and [TagsInput](/core/tags-input) now include new demos that show how to customize dropdown behavior and styles.
+- Example of using Mantine with disabled JavaScript was added to the [color schemes guide](/theming/color-schemes/#with-disabled-javascript).
+- [Pagination](/core/pagination) now includes an additional example with chunked content handling.
+- A new section about dayjs localization with Next.js app router and server components has been added to the [dates getting started page](/dates/getting-started/#localization-and-server-components)
+- [Modals manager](/x/modals/#modal-props) now includes a guide on how to pass props down to the underlying [Modal](/core/modal) component.
+- [Slider](/core/slider) now has sections about decimal values and `minRange` prop.
+- You can now view all 200+ releases with release dates on the [all releases page](/changelog/all-releases/).
+
+## Other changes
+
+- [use-hash](/hooks/use-hash/) hook now supports `getInitialValueInEffect: false` option to get initial value during state initialization.
+- New `useMantineColorScheme({ keepTransitions: true })` option allows keeping transitions when color scheme changes. Note that it is `false` by default.
+- All templates were migrated to [yarn v4](https://yarnpkg.com/blog/release/4.0) – this change significantly improves installation speed.
+- [TypographyStylesProvider](/core/typography-styles-provider) now has styles for `<kbd />` element.
+- [MultiSelect](/core/multi-select) and [TagsInput](/core/tags-input) components now support `hiddenValuesDivider` prop. It allows customizing divider character between values in `value` prop of the hidden input.
+- [Grid](/core/grid) component now supports `overflow` prop, which allows controlling `overflow` CSS property on the root element. It is `hidden` by default.
+- [Modal](/core/modal) and [Drawer](/core/drawer) components now support `removeScrollProps` prop. It allows configuring [react-remove-scroll](https://github.com/theKashey/react-remove-scroll).
+- [AppShell](/core/app-shell) now supports `offsetScrollbars` prop. It determines whether scrollbars should be offset, it is `true` by default. The logic of scrollbars offset is controlled by [react-remove-scroll](https://github.com/theKashey/react-remove-scroll).
+- [Menu](/core/menu) now supports `trigger="click-hover"` prop, to open menu both on click and on hover.
+- It is now possible to set `keepMounted` prop on [Tabs.Panel](/core/tabs) components individually, not only on `Tabs` component.
+- [mantine-flagpack](https://mantinedev.github.io/mantine-flagpack/) has been migrated to support `7.x` versions of `@mantine/core`. To use it, update `mantine-flagpack` to `4.0.0`.
+- [vite-template](https://github.com/mantinedev/vite-template) was migrated from Jest to [Vitest](https://vitest.dev/).
+- The main [Mantine repository](https://github.com/mantinedev/mantine) was migrated to [yarn v4](https://yarnpkg.com/blog/release/4.0). The process of getting started locally [was changed](/contribute/#get-started-with-mantine-locally)
+- `@mantine/ds` package has been deprecated. You can use `@mantinex/mantine-logo` package to use `MantineLogo` component in your project.

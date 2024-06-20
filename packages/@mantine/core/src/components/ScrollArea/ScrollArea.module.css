@@ -1,5 +1,5 @@
 .root {
-  --scrollarea-scrollbar-size: rem(12px);
+  --scrollarea-scrollbar-size: 12px;
 
   position: relative;
   overflow: hidden;
@@ -16,20 +16,15 @@
     display: none;
   }
 
-  &:where([data-scrollbars='xy'] [data-scrollbars='y']) {
+  &:where([data-scrollbars='xy'], [data-scrollbars='y']) {
     &:where([data-offset-scrollbars='xy'], [data-offset-scrollbars='y']) {
-      padding-right: var(--scrollarea-scrollbar-size);
-      padding-left: unset;
-
-      @mixin where-rtl {
-        padding-right: unset;
-        padding-left: var(--scrollarea-scrollbar-size);
-      }
+      padding-inline-end: var(--scrollarea-scrollbar-size);
+      padding-inline-start: unset;
     }
   }
 
   &:where([data-scrollbars='xy'], [data-scrollbars='x']) {
-    &:where([data-offset-scrollbars='xy'] [data-offset-scrollbars='x']) {
+    &:where([data-offset-scrollbars='xy'], [data-offset-scrollbars='x']) {
       padding-bottom: var(--scrollarea-scrollbar-size);
     }
   }
@@ -77,29 +72,17 @@
 
   &:where([data-orientation='vertical']) {
     width: var(--scrollarea-scrollbar-size);
-
     top: 0;
     bottom: var(--sa-corner-width);
-    right: 0;
-
-    @mixin rtl {
-      right: unset;
-      left: 0;
-    }
+    inset-inline-end: 0;
   }
 
   &:where([data-orientation='horizontal']) {
     height: var(--scrollarea-scrollbar-size);
     flex-direction: column;
-
     bottom: 0;
-    left: 0;
-    right: var(--sa-corner-height);
-
-    @mixin rtl {
-      right: 0;
-      left: var(--sa-corner-height);
-    }
+    inset-inline-start: 0;
+    inset-inline-end: var(--sa-corner-width);
   }
 }
 
@@ -118,15 +101,15 @@
     transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
-    min-width: rem(44px);
-    min-height: rem(44px);
+    min-width: 44px;
+    min-height: 44px;
   }
 
-  @mixin light {
+  @mixin where-light {
     background-color: rgba(0, 0, 0, 0.4);
   }
 
-  @mixin dark {
+  @mixin where-dark {
     background-color: rgba(255, 255, 255, 0.4);
   }
 }
@@ -136,14 +119,8 @@
   opacity: 0;
   transition: opacity 150ms ease;
   display: block;
-  right: 0;
+  inset-inline-end: 0;
   bottom: 0;
-
-  @mixin rtl {
-    right: unset;
-    left: 0;
-    bottom: 0;
-  }
 
   @mixin where-light {
     background-color: var(--mantine-color-gray-0);

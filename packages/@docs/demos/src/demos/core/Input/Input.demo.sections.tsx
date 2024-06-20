@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IconAt } from '@tabler/icons-react';
 import { CloseButton, Input } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

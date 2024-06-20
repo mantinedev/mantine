@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconMessageCircle, IconPhoto, IconSettings } from '@tabler/icons-react';
 import { rem, Tabs, TabsProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Badge, em } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

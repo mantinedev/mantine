@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { defaultLoaders, Loader, LoaderProps, LoaderStylesNames } from './Loader';
 import { MantineLoaderComponent } from './Loader.types';

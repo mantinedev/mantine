@@ -1,0 +1,36 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useResizeObserver);
+
+## Usage
+
+<Demo data={HooksDemos.useResizeObserverDemo} />
+
+## API
+
+`use-resize-observer` returns a `ref` object that should be passed to the observed element, and the current element content rect, as returned by `ResizeObserver`'s callback `entry.contentRect`.
+See [Resize Observer API](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver) documentation to learn more.
+On the first render (as well as during SSR), or when no element is being observed, all of the properties are equal to `0`.
+
+```tsx
+import { useResizeObserver } from '@mantine/hooks';
+
+function Demo() {
+  const [ref, rect] = useResizeObserver();
+  return <div ref={ref}>Observed</div>;
+}
+```
+
+See also [use-element-size](https://mantine.dev/hooks/use-element-size/) hook in case you need to subscribe only to `width` and `height`.
+
+## Definition
+
+```tsx
+type ObserverRect = Omit<DOMRectReadOnly, 'toJSON'>;
+
+function useResizeObserver<T extends HTMLElement = any>(
+  options?: ResizeObserverOptions
+): readonly [React.RefObject<T>, ObserverRect];
+```

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { MantineThemeProvider } from '../../core';
 import { Stack } from '../Stack';
 import { Tooltip } from '../Tooltip';
@@ -22,6 +22,33 @@ export function Usage() {
       <Checkbox label="Default" value="hello" />
       <Checkbox label="Disabled" checked disabled mt="xl" />
       <Checkbox label="Indeterminate" indeterminate mt="xl" />
+    </div>
+  );
+}
+
+export function BooleanError() {
+  const [error, setError] = useState(false);
+  return (
+    <div style={{ padding: 40 }}>
+      <Checkbox
+        label="Boolean error"
+        value="hello"
+        error={error}
+        onChange={(event) => setError(event.currentTarget.checked)}
+      />
+      <Checkbox
+        label="Boolean error"
+        value="hello"
+        error={error}
+        onChange={(event) => setError(event.currentTarget.checked)}
+      />
+      <Checkbox
+        label="Boolean error"
+        value="hello"
+        error={error}
+        onChange={(event) => setError(event.currentTarget.checked)}
+      />
+      <p>Under checkboxes</p>
     </div>
   );
 }

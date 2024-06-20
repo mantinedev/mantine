@@ -31,11 +31,17 @@ export function useModal({
 
   const shouldLockScroll = useLockScroll({ opened, transitionDuration });
 
-  useWindowEvent('keydown', (event) => {
-    if (!trapFocus && event.key === 'Escape' && closeOnEscape) {
-      onClose();
-    }
-  });
+  useWindowEvent(
+    'keydown',
+    (event) => {
+      if (event.key === 'Escape' && closeOnEscape && opened) {
+        const shouldTrigger =
+          (event.target as HTMLElement)?.getAttribute('data-mantine-stop-propagation') !== 'true';
+        shouldTrigger && onClose();
+      }
+    },
+    { capture: true }
+  );
 
   useFocusReturn({ opened, shouldReturnFocus: trapFocus && returnFocus });
 

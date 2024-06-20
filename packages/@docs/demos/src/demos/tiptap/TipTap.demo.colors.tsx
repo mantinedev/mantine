@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconColorPicker } from '@tabler/icons-react';
 import { Color } from '@tiptap/extension-color';
 import TextStyle from '@tiptap/extension-text-style';

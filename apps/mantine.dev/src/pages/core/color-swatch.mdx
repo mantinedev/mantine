@@ -1,0 +1,24 @@
+import { ColorSwatchDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ColorSwatch);
+
+## Usage
+
+<Demo data={ColorSwatchDemos.usage} />
+
+## withShadow
+
+By default, `ColorSwatch` has an inner box-shadow to make it more visible on light backgrounds,
+you can disable it by setting `withShadow={false}` prop:
+
+<Demo data={ColorSwatchDemos.shadow} />
+
+<Polymorphic
+  defaultElement="div"
+  changeToElement="button"
+  component="ColorSwatch"
+/>
+
+<Demo data={ColorSwatchDemos.component} />

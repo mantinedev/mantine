@@ -1,7 +1,7 @@
 /** @type {import("syncpack").RcFile} */
 const config = {
   dependencyTypes: ['dev', 'prod'],
-  source: ['package.json', 'packages/**/package.json', 'docs/package.json'],
+  source: ['package.json', 'packages/**/package.json', 'apps/*/package.json'],
   sortFirst: [
     'name',
     'version',
