@@ -71,12 +71,12 @@ export function useStyles<Payload extends FactoryPayload>({
     () => (Array.isArray(name) ? name : [name]).filter((n) => n) as string[],
     [String(name)]
   );
+  const memoizedProps = useMemoObject(omitObjectProps(props));
   const { withStylesTransform, getTransformedStyles } = useStylesTransform({
-    props,
+    props: memoizedProps,
     stylesCtx,
     themeName,
   });
-  const memoizedProps = useMemoObject(omitObjectProps(props));
 
   return useCallback(
     (selector, options) => ({
@@ -129,8 +129,10 @@ export function useStyles<Payload extends FactoryPayload>({
       style,
       vars,
       varsResolver,
+      withStaticClasses,
       headless,
       withStylesTransform,
+      getTransformedStyles,
     ]
   );
 }
