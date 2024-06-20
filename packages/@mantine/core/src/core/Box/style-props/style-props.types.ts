@@ -103,6 +103,7 @@ export interface MantineStyleProps {
   bottom?: StyleProp<React.CSSProperties['bottom']>;
   right?: StyleProp<React.CSSProperties['right']>;
   inset?: StyleProp<React.CSSProperties['inset']>;
+
   display?: StyleProp<React.CSSProperties['display']>;
   flex?: StyleProp<React.CSSProperties['flex']>;
 }
