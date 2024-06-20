@@ -91,7 +91,7 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
           subscriber!({ path: payload.path, updatedValues, previousValues })
         );
     }
-  }, []);
+  }, [setValues]);
 
   const setValuesSnapshot = useCallback((payload: Values) => {
     valuesSnapshot.current = payload;
@@ -104,7 +104,7 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
       setValuesSnapshot(values);
       onInitialize();
     }
-  }, []);
+  }, [setValues]);
 
   const resetValues = useCallback(() => {
     setValues({
@@ -112,7 +112,7 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
       updateState: true,
       mergeWithPreviousValues: false,
     });
-  }, []);
+  }, [setValues]);
 
   const getValues = useCallback(() => refValues.current, []);
 
