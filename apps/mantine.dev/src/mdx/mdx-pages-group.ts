@@ -1,6 +1,21 @@
 import { Frontmatter, MdxPagesCategory, MdxPagesGroup } from '@/types';
 import { MDX_META_DATA } from './data/mdx-meta-data';
 import { MDX_DATA } from './mdx-data';
+import {
+  IconBox,
+  IconBoxMultiple,
+  IconBulb,
+  IconClick,
+  IconComponents,
+  IconForms,
+  IconLayout2,
+  IconLetterCase,
+  IconMenu2,
+  IconNotebook,
+  IconRefresh,
+  IconSelector,
+  IconSpeakerphone,
+} from '@tabler/icons-react';
 
 export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   {
@@ -65,6 +80,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
     pages: [
       {
         category: 'UI and Dom',
+        categoryIcon: IconForms,
         pages: [
           MDX_DATA.useClickOutside,
           MDX_DATA.useColorScheme,
@@ -94,6 +110,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
 
       {
         category: 'State management',
+        categoryIcon: IconBox,
         pages: [
           MDX_DATA.useCounter,
           MDX_DATA.useDebouncedState,
@@ -122,6 +139,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
 
       {
         category: 'Utilities',
+        categoryIcon: IconBulb,
         pages: [
           MDX_DATA.useClipboard,
           MDX_DATA.useDocumentTitle,
@@ -144,6 +162,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
 
       {
         category: 'Lifecycle',
+        categoryIcon: IconRefresh,
         pages: [
           MDX_DATA.useDidUpdate,
           MDX_DATA.useForceUpdate,
@@ -180,6 +199,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
     pages: [
       {
         category: 'layout',
+        categoryIcon: IconLayout2,
         pages: [
           MDX_DATA.Container,
           MDX_DATA.Center,
@@ -195,6 +215,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       },
       {
         category: 'inputs',
+        categoryIcon: IconForms,
         pages: [
           MDX_DATA.Input,
           MDX_DATA.ColorPicker,
@@ -219,6 +240,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       },
       {
         category: 'combobox',
+        categoryIcon: IconSelector,
         pages: [
           MDX_DATA.Combobox,
           MDX_DATA.Pill,
@@ -231,6 +253,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       },
       {
         category: 'buttons',
+        categoryIcon: IconClick,
         pages: [
           MDX_DATA.ActionIcon,
           MDX_DATA.Button,
@@ -242,6 +265,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       },
       {
         category: 'navigation',
+        categoryIcon: IconMenu2,
         pages: [
           MDX_DATA.Anchor,
           MDX_DATA.Tabs,
@@ -255,6 +279,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       },
       {
         category: 'feedback',
+        categoryIcon: IconSpeakerphone,
         pages: [
           MDX_DATA.Loader,
           MDX_DATA.Alert,
@@ -266,6 +291,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       },
       {
         category: 'overlays',
+        categoryIcon: IconBoxMultiple,
         pages: [
           MDX_DATA.Popover,
           MDX_DATA.Tooltip,
@@ -282,6 +308,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       },
       {
         category: 'Data display',
+        categoryIcon: IconNotebook,
         pages: [
           MDX_DATA.BackgroundImage,
           MDX_DATA.ColorSwatch,
@@ -300,6 +327,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       },
       {
         category: 'typography',
+        categoryIcon: IconLetterCase,
         pages: [
           MDX_DATA.Blockquote,
           MDX_DATA.Code,
@@ -314,6 +342,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       },
       {
         category: 'misc',
+        categoryIcon: IconComponents,
         pages: [
           MDX_DATA.Collapse,
           MDX_DATA.FocusTrap,

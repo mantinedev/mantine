@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { IconChevronDown } from '@tabler/icons-react';
 import { Box, Text, UnstyledButton } from '@mantine/core';
 import { Frontmatter, MdxPagesCategory, MdxPagesGroup } from '@/types';
-import { CATEGORY_ICONS } from './category-icons';
 import classes from './NavbarLinksGroup.module.css';
 
 function hasCategory(page: Frontmatter | MdxPagesCategory): page is MdxPagesCategory {
@@ -90,8 +89,7 @@ export function NavbarLinksGroup({ data, onNavbarClose }: NavbarLinksGroupProps)
         />
       ));
 
-      const Icon = CATEGORY_ICONS[page.category];
-
+      const Icon = page.categoryIcon;
       return (
         <div className={classes.category} key={page.category}>
           <Text className={classes.categoryTitle}>

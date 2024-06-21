@@ -71,6 +71,9 @@ export interface MdxContent {
 
 export interface MdxPagesCategory {
   category: string;
+  categoryIcon: React.ComponentType<{
+    className?: string;
+  }>;
   pages: Frontmatter[];
 }
 
