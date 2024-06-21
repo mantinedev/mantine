@@ -53,8 +53,8 @@ export function setListId(id: string, store: SpotlightStore) {
 }
 
 function findElementByQuerySelector<T extends HTMLElement>(
-  root: Document | Element | ShadowRoot,
-  selector: string
+  selector: string,
+  root: Document | Element | ShadowRoot = document
 ): T | null {
   // Directly try to find the element in the current root.
   const element = root.querySelector<T>(selector);
@@ -82,7 +82,7 @@ function findElementByQuerySelector<T extends HTMLElement>(
 
 export function selectAction(index: number, store: SpotlightStore): number {
   const state = store.getState();
-  const actionsList = findElementByQuerySelector(document, `#${state.listId}`);
+  const actionsList = findElementByQuerySelector(`#${state.listId}`);
   const selected = actionsList?.querySelector<HTMLButtonElement>('[data-selected]');
   const actions = actionsList?.querySelectorAll<HTMLButtonElement>('[data-action]') ?? [];
   const nextIndex = index === -1 ? actions.length - 1 : index === actions.length ? 0 : index;
@@ -107,7 +107,6 @@ export function selectPreviousAction(store: SpotlightStore) {
 export function triggerSelectedAction(store: SpotlightStore) {
   const state = store.getState();
   const selected = findElementByQuerySelector<HTMLButtonElement>(
-    document,
     `#${state.listId} [data-selected]`
   );
   selected?.click();
