@@ -1,4 +1,4 @@
-import { SimpleGrid, SimpleGridProps } from '@mantine/core';
+import { SimpleGrid, SimpleGridProps, Space } from '@mantine/core';
 import { GettingStartedCard } from './GettingStartedCard/GettingStartedCard';
 
 interface FrameworksGuidesProps {
@@ -13,7 +13,7 @@ export function FrameworksGuides({
   secondaryBreakpoint = 'md',
 }: FrameworksGuidesProps) {
   return (
-    <div>
+    <>
       <SimpleGrid cols={primaryCols} spacing="lg">
         <GettingStartedCard
           title="Vite"
@@ -60,6 +60,7 @@ export function FrameworksGuides({
           secondaryBreakpoint={secondaryBreakpoint}
         />
       </SimpleGrid>
-    </div>
+      <Space h="xl" />
+    </>
   );
 }

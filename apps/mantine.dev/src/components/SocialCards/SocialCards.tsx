@@ -43,7 +43,7 @@ export function DiscordCard() {
       icon="discord"
       className={classes.discord}
       href={meta.discordLink}
-      title="Join Discord community"
+      title="Chat on Discord"
       description="Join a community of 10,000+ developers to ask questions, share feedback and explore upcoming features"
     />
   );
