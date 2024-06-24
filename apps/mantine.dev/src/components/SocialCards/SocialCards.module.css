@@ -48,30 +48,15 @@
 
 .github,
 .twitter {
-  @mixin light {
-    background-image: linear-gradient(
-      180deg,
-      var(--mantine-color-dark-6),
-      var(--mantine-color-dark-8)
-    );
+  background-image: linear-gradient(
+    180deg,
+    var(--mantine-color-dark-5),
+    var(--mantine-color-dark-6)
+  );
+  color: var(--mantine-color-white);
 
-    & .icon {
-      background-color: var(--mantine-color-dark-9);
-    }
-  }
-
-  @mixin dark {
-    background-image: linear-gradient(
-      180deg,
-      var(--mantine-color-gray-3),
-      var(--mantine-color-gray-5)
-    );
-    color: var(--mantine-color-black);
-
-    & .icon {
-      background-color: var(--mantine-color-white);
-      color: var(--mantine-color-black);
-    }
+  & .icon {
+    background-color: var(--mantine-color-dark-9);
   }
 }
 

@@ -104,8 +104,8 @@ export function SocialCards({
     <SimpleGrid cols={cols}>
       {discord && <DiscordCard />}
       {github && <GitHubCard />}
-      {twitter && <TwitterCard />}
       {helpCenter && <HelpCenterCard />}
+      {twitter && <TwitterCard />}
     </SimpleGrid>
   );
 }
