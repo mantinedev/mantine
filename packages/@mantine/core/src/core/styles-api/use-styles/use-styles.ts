@@ -69,7 +69,7 @@ export function useStyles<Payload extends FactoryPayload>({
   const headless = useMantineIsHeadless();
   const themeName = useMemo(
     () => (Array.isArray(name) ? name : [name]).filter((n) => n) as string[],
-    [String(name)]
+    [JSON.stringify(name)] // "name" can be a new array on every render
   );
   const memoizedProps = useMemoObject(omitObjectProps(props));
   const { withStylesTransform, getTransformedStyles } = useStylesTransform({
