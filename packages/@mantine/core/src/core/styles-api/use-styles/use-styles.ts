@@ -38,15 +38,15 @@ export type GetStylesApi<Payload extends FactoryPayload> = (
 };
 
 // Omit objects from props to avoid unnecessary rerenders
-function omitObjectProps(props: Record<string, any>): Record<string, any> {
-  const result: Record<string, any> = {};
+function omitObjectProps<TProps extends Record<string, unknown>>(props: TProps): Partial<TProps> {
+  const result: Record<string, unknown> = {}; // Couldn't be "Partial<TProps>" because of TS2862 error
   for (const [key, value] of Object.entries(props)) {
     if (!value || (typeof value !== 'object' && typeof value !== 'function')) {
-      result[key] = props[key];
+      result[key] = value;
     }
   }
 
-  return result;
+  return result as Partial<TProps>;
 }
 
 export function useStyles<Payload extends FactoryPayload>({
