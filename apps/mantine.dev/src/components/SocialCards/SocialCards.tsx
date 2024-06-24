@@ -101,7 +101,7 @@ export function SocialCards({
   cols = { md: 2 },
 }: SocialCardsProps) {
   return (
-    <SimpleGrid cols={cols}>
+    <SimpleGrid cols={cols} spacing="lg">
       {discord && <DiscordCard />}
       {github && <GitHubCard />}
       {helpCenter && <HelpCenterCard />}
