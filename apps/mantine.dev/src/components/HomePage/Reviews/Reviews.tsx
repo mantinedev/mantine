@@ -21,6 +21,8 @@ export function Reviews() {
           href="https://github.com/orgs/mantinedev/discussions/categories/kind-words"
           rightSection={<IconExternalLink size={18} />}
           target="_blank"
+          style={{ background: 'var(--docs-home-page-gradient)' }}
+          bd="none"
         >
           View more user feedback
         </Button>
