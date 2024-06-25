@@ -8,6 +8,44 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog7110);
 
+## withProps function
+
+All Mantine components now have `withProps` static function that can be used to
+add default props to the component:
+
+```tsx
+import { IMaskInput } from 'react-imask';
+import { Button, InputBase } from '@mantine/core';
+
+const LinkButton = Button.withProps({
+  component: 'a',
+  target: '_blank',
+  rel: 'noreferrer',
+  variant: 'subtle',
+});
+
+const PhoneInput = InputBase.withProps({
+  mask: '+7 (000) 000-0000',
+  component: IMaskInput,
+  label: 'Your phone number',
+  placeholder: 'Your phone number',
+});
+
+function Demo() {
+  return (
+    <>
+      {/* You can pass additional props to components created with `withProps` */}
+      <LinkButton href="https://mantine.dev">
+        Mantine website
+      </LinkButton>
+
+      {/* Component props override default props defined in `withProps` */}
+      <PhoneInput placeholder="Personal phone" />
+    </>
+  );
+}
+```
+
 ## BubbleChart component
 
 New [BubbleChart](/charts/bubble-chart) component:
