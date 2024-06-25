@@ -18,6 +18,7 @@ describe('@mantine/core/Burger', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     children: true,
     variant: true,
     size: true,

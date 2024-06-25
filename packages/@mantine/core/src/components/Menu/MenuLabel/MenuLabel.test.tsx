@@ -14,6 +14,7 @@ describe('@mantine/core/MenuLabel', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

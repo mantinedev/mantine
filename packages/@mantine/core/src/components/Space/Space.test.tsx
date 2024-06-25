@@ -11,6 +11,7 @@ describe('@mantine/core/Space', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     id: true,

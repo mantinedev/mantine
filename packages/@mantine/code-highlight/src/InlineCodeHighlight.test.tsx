@@ -17,6 +17,7 @@ describe('@mantine/code-highlight/InlineCodeHighlight', () => {
     polymorphic: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     refType: HTMLElement,

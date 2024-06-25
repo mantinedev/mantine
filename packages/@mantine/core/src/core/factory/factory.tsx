@@ -43,7 +43,20 @@ export type ComponentClasses<Payload extends FactoryPayload> = {
 };
 
 export type MantineComponentStaticProperties<Payload extends FactoryPayload> =
-  ThemeExtend<Payload> & ComponentClasses<Payload> & StaticComponents<Payload['staticComponents']>;
+  ThemeExtend<Payload> &
+    ComponentClasses<Payload> &
+    StaticComponents<Payload['staticComponents']> &
+    FactoryComponentWithProps<Payload>;
+
+export type FactoryComponentWithProps<Payload extends FactoryPayload> = {
+  withProps: (props: Payload['props']) => React.ForwardRefExoticComponent<
+    Payload['props'] &
+      React.RefAttributes<Payload['ref']> & {
+        component?: any;
+        renderRoot?: (props: Record<string, any>) => React.ReactNode;
+      }
+  >;
+};
 
 export type MantineComponent<Payload extends FactoryPayload> = React.ForwardRefExoticComponent<
   Payload['props'] &
@@ -61,9 +74,17 @@ export function identity<T>(value: T): T {
 export function factory<Payload extends FactoryPayload>(
   ui: React.ForwardRefRenderFunction<Payload['ref'], Payload['props']>
 ) {
-  const Component = forwardRef(ui) as MantineComponent<Payload>;
+  const Component = forwardRef(ui) as any;
 
   Component.extend = identity as any;
+  Component.withProps = (fixedProps: any) => {
+    const Extended = forwardRef((props, ref) => (
+      <Component {...fixedProps} {...props} ref={ref as any} />
+    )) as any;
+    Extended.extend = Component.extend;
+    Extended.displayName = `WithProps(${Component.displayName})`;
+    return Extended;
+  };
 
   return Component as MantineComponent<Payload>;
 }

@@ -3,6 +3,8 @@ import { BubbleChart, BubbleChartProps, BubbleChartStylesNames } from './BubbleC
 
 const defaultProps: BubbleChartProps = {
   data: [],
+  dataKey: { x: 'x', y: 'y', z: 'z' },
+  range: [0, 100],
 };
 
 describe('@mantine/charts/BubbleChart', () => {
@@ -19,6 +21,7 @@ describe('@mantine/charts/BubbleChart', () => {
     props: defaultProps,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

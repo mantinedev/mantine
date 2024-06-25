@@ -21,6 +21,7 @@ describe('@mantine/core/UnstyledButton', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     classes: true,
     id: true,
     refType: HTMLButtonElement,
