@@ -1,4 +1,5 @@
 import {
+  AvatarDemos,
   BarChartDemos,
   BubbleChartDemos,
   LineChartDemos,
@@ -48,6 +49,15 @@ function Demo() {
   );
 }
 ```
+
+## Avatar initials
+
+[Avatar](/core/avatar) component now supports displaying initials with auto generated color based on the given `name` value.
+To display initials instead of the default placeholder, set `name` prop
+to the name of the person, for example, `name="John Doe"`. If the name
+is set, you can use `color="initials"` to generate color based on the name:
+
+<Demo data={AvatarDemos.initials} />
 
 ## BubbleChart component
 
