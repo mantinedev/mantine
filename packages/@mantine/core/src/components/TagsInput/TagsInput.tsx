@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
