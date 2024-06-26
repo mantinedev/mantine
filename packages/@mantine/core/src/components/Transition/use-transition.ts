@@ -20,6 +20,8 @@ interface UseTransition {
   onExit?: () => void;
   onEntered?: () => void;
   onExited?: () => void;
+  enterDelay?: number;
+  exitDelay?: number;
 }
 
 export function useTransition({
@@ -31,20 +33,23 @@ export function useTransition({
   onExit,
   onEntered,
   onExited,
+  enterDelay,
+  exitDelay,
 }: UseTransition) {
   const theme = useMantineTheme();
   const shouldReduceMotion = useReducedMotion();
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const [transitionDuration, setTransitionDuration] = useState(reduceMotion ? 0 : duration);
   const [transitionStatus, setStatus] = useState<TransitionStatus>(mounted ? 'entered' : 'exited');
-  const timeoutRef = useRef<number>(-1);
+  const transitionTimeoutRef = useRef<number>(-1);
+  const delayTimeoutRef = useRef<number>(-1);
   const rafRef = useRef(-1);
 
   const handleStateChange = (shouldMount: boolean) => {
     const preHandler = shouldMount ? onEnter : onExit;
     const handler = shouldMount ? onEntered : onExited;
 
-    window.clearTimeout(timeoutRef.current);
+    window.clearTimeout(transitionTimeoutRef.current);
 
     const newTransitionDuration = reduceMotion ? 0 : shouldMount ? duration : exitDuration;
     setTransitionDuration(newTransitionDuration);
@@ -64,7 +69,7 @@ export function useTransition({
           typeof preHandler === 'function' && preHandler();
           setStatus(shouldMount ? 'entering' : 'exiting');
 
-          timeoutRef.current = window.setTimeout(() => {
+          transitionTimeoutRef.current = window.setTimeout(() => {
             typeof handler === 'function' && handler();
             setStatus(shouldMount ? 'entered' : 'exited');
           }, newTransitionDuration);
@@ -73,13 +78,30 @@ export function useTransition({
     }
   };
 
+  const handleTransitionWithDelay = (shouldMount: boolean) => {
+    window.clearTimeout(delayTimeoutRef.current);
+    const delay = shouldMount ? enterDelay : exitDelay;
+
+    if (typeof delay !== 'number') {
+      handleStateChange(shouldMount);
+      return;
+    }
+
+    delayTimeoutRef.current = window.setTimeout(
+      () => {
+        handleStateChange(shouldMount);
+      },
+      shouldMount ? enterDelay : exitDelay
+    );
+  };
+
   useDidUpdate(() => {
-    handleStateChange(mounted);
+    handleTransitionWithDelay(mounted);
   }, [mounted]);
 
   useEffect(
     () => () => {
-      window.clearTimeout(timeoutRef.current);
+      window.clearTimeout(transitionTimeoutRef.current);
       cancelAnimationFrame(rafRef.current);
     },
     []

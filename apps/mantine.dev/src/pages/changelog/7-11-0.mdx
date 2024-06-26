@@ -4,6 +4,7 @@ import {
   LineChartDemos,
   RadarChartDemos,
   TagsInputDemos,
+  TransitionDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -89,6 +90,12 @@ You can change this behavior by setting `acceptValueOnBlur` to `false`. In this 
 only when the user presses `Enter` or clicks on a suggestion.
 
 <Demo data={TagsInputDemos.acceptValueOnBlur} />
+
+## Transition delay
+
+[Transition](/core/transition) component now supports `enterDelay` and `exitDelay` props to delay transition start:
+
+<Demo data={TransitionDemos.delay} />
 
 ## Documentation updates
 
