@@ -32,6 +32,7 @@ describe('@mantine/core/PillsInput', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     refType: HTMLDivElement,

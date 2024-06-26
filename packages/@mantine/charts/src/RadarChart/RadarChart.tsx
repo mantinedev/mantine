@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import {
+  Legend,
+  LegendProps,
   PolarAngleAxis,
   PolarAngleAxisProps,
   PolarGrid,
@@ -22,8 +25,10 @@ import {
   StylesApiProps,
   useMantineTheme,
   useProps,
+  useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartLegend } from '../ChartLegend';
 import classes from './RadarChart.module.css';
 
 export interface RadarChartSeries {
@@ -81,6 +86,12 @@ export interface RadarChartProps
   /** Props passed down to recharts PolarRadiusAxis component */
   polarRadiusAxisProps?: Omit<PolarRadiusAxisProps, 'ref'>;
 
+  /** Props passed down to recharts Legend component */
+  legendProps?: Omit<LegendProps, 'ref'>;
+
+  /** Determines whether the legend should be displayed, `false` by default */
+  withLegend?: boolean;
+
   /** Additional components that are rendered inside recharts `RadarChart` component */
   children?: React.ReactNode;
 }
@@ -128,6 +139,8 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
     withPolarAngleAxis,
     withPolarRadiusAxis,
     children,
+    withLegend,
+    legendProps,
     ...others
   } = props;
 
@@ -146,6 +159,14 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
     varsResolver,
   });
 
+  const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
+
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<RadarChartFactory>({
+    classNames,
+    styles,
+    props,
+  });
+
   const radars = series.map((item, index) => (
     <Radar
       key={index}
@@ -153,7 +174,14 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
       dataKey={item.name}
       stroke={getThemeColor(item.strokeColor || item.color, theme)}
       fill={getThemeColor(item.color, theme)}
-      fillOpacity={item.opacity || 0.4}
+      fillOpacity={
+        highlightedArea
+          ? highlightedArea === item.name
+            ? item.opacity || 0.4
+            : 0.05
+          : item.opacity || 0.4
+      }
+      strokeOpacity={highlightedArea ? (highlightedArea === item.name ? 1 : 0.1) : 1}
       isAnimationActive={false}
       {...(typeof radarProps === 'function' ? radarProps(item) : radarProps)}
     />
@@ -169,6 +197,23 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
             <PolarRadiusAxis stroke="var(--chart-grid-color)" {...polarRadiusAxisProps} />
           )}
           {radars}
+          {withLegend && (
+            <Legend
+              verticalAlign="bottom"
+              content={(payload) => (
+                <ChartLegend
+                  payload={payload.payload}
+                  onHighlight={setHighlightedArea}
+                  legendPosition={legendProps?.verticalAlign || 'bottom'}
+                  classNames={resolvedClassNames}
+                  styles={resolvedStyles}
+                  series={series}
+                  centered
+                />
+              )}
+              {...legendProps}
+            />
+          )}
           {children}
         </ReChartsRadarChart>
       </ResponsiveContainer>

@@ -8,6 +8,16 @@ export default Layout(MDX_DATA.LineChart);
 
 <Demo data={LineChartDemos.usage} />
 
+## Gradient type
+
+Set `type="gradient"` to render a line chart with gradient fill. To customize
+gradient colors, use `gradientStops` prop. It accepts an array of objects with
+`offset` and `color` properties. `offset` is a number between 0 and 100 that
+defines the position of the color in the gradient, `color` is a reference to `theme.colors`
+or any valid CSS color.
+
+<Demo data={LineChartDemos.gradient} />
+
 ## Legend
 
 To display chart legend, set `withLegend` prop. When one of the items in the legend
@@ -63,6 +73,16 @@ Use `yAxisProps` to change domain of the Y axis. For example, if you know that
 your data will always be in the range of 0 to 100, you can set domain to `[0, 100]`:
 
 <Demo data={LineChartDemos.yScale} />
+
+## Right Y axis
+
+To display additional Y axis on the right side of the chart, set `withRightYAxis` prop.
+You can pass props down to recharts [YAxis](https://recharts.org/en-US/api/YAxis)
+component with `rightYAxisProps` prop and assign a label to the right Y axis with
+`rightYAxisLabel` prop. Note that you need to bind data series to the right Y axis
+by setting `yAxisId` in the `series` object.
+
+<Demo data={LineChartDemos.rightYAxis} />
 
 ## Value formatter
 

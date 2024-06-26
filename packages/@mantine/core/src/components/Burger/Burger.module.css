@@ -6,6 +6,7 @@
   --burger-size-xl: 42px;
 
   --burger-size: var(--burger-size-md);
+  --burger-line-size: calc(var(--burger-size) / 12);
 
   width: calc(var(--burger-size) + var(--mantine-spacing-xs));
   height: calc(var(--burger-size) + var(--mantine-spacing-xs));
@@ -30,7 +31,7 @@
   &::after {
     display: block;
     width: var(--burger-size);
-    height: calc(var(--burger-size) / 12);
+    height: var(--burger-line-size);
     background-color: var(--burger-color);
     outline: 1px solid transparent;
     transition-property: background-color, transform;

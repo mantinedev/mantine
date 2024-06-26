@@ -1,0 +1,121 @@
+import {
+  AvatarDemos,
+  BarChartDemos,
+  BubbleChartDemos,
+  LineChartDemos,
+  RadarChartDemos,
+  TagsInputDemos,
+  TransitionDemos,
+} from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog7110);
+
+## withProps function
+
+All Mantine components now have `withProps` static function that can be used to
+add default props to the component:
+
+```tsx
+import { IMaskInput } from 'react-imask';
+import { Button, InputBase } from '@mantine/core';
+
+const LinkButton = Button.withProps({
+  component: 'a',
+  target: '_blank',
+  rel: 'noreferrer',
+  variant: 'subtle',
+});
+
+const PhoneInput = InputBase.withProps({
+  mask: '+7 (000) 000-0000',
+  component: IMaskInput,
+  label: 'Your phone number',
+  placeholder: 'Your phone number',
+});
+
+function Demo() {
+  return (
+    <>
+      {/* You can pass additional props to components created with `withProps` */}
+      <LinkButton href="https://mantine.dev">
+        Mantine website
+      </LinkButton>
+
+      {/* Component props override default props defined in `withProps` */}
+      <PhoneInput placeholder="Personal phone" />
+    </>
+  );
+}
+```
+
+## Avatar initials
+
+[Avatar](/core/avatar) component now supports displaying initials with auto generated color based on the given `name` value.
+To display initials instead of the default placeholder, set `name` prop
+to the name of the person, for example, `name="John Doe"`. If the name
+is set, you can use `color="initials"` to generate color based on the name:
+
+<Demo data={AvatarDemos.initials} />
+
+## BubbleChart component
+
+New [BubbleChart](/charts/bubble-chart) component:
+
+<Demo data={BubbleChartDemos.usage} />
+
+## BarChart waterfall type
+
+[BarChart](/charts/bar-chart) component now supports `waterfall` type
+which is useful for visualizing changes in values over time:
+
+<Demo data={BarChartDemos.waterfall} />
+
+## LineChart gradient type
+
+[LineChart](/charts/line-chart) component now supports `gradient` type
+which renders line chart with gradient fill:
+
+<Demo data={LineChartDemos.gradient} />
+
+## Right Y axis
+
+[LineChart](/charts/line-chart), [BarChart](/charts/bar-chart) and [AreaChart](/charts/area-chart) components
+now support `rightYAxis` prop which renders additional Y axis on the right side of the chart:
+
+<Demo data={LineChartDemos.rightYAxis} />
+
+## RadarChart legend
+
+[RadarChart](/charts/radar-chart) component now supports legend:
+
+<Demo data={RadarChartDemos.legend} />
+
+## TagsInput acceptValueOnBlur
+
+[TagsInput](/core/tags-input) component behavior has been changed. Now By default,
+if the user types in a value and blurs the input, the value is added to the list.
+You can change this behavior by setting `acceptValueOnBlur` to `false`. In this case, the value is added
+only when the user presses `Enter` or clicks on a suggestion.
+
+<Demo data={TagsInputDemos.acceptValueOnBlur} />
+
+## Transition delay
+
+[Transition](/core/transition) component now supports `enterDelay` and `exitDelay` props to delay transition start:
+
+<Demo data={TransitionDemos.delay} />
+
+## Documentation updates
+
+- New [segmented progress](/core/progress/#example-progress-with-segments) example has been added to `Progress` component documentation
+- [Select](/core/select), [TagsInput](/core/tags-input) and [MultiSelect](/core/multi-select) components documentation now includes additional demo on how to change the dropdown width
+- New [DatePicker](//dates/date-picker/#exclude-dates) example for `excludeDate` prop
+
+## Other changes
+
+- [Pagination](/core/pagination) component now supports `hideWithOnePage` prop which hides pagination when there is only one page
+- [Spoiler](/core/spoiler) component now supports controlled expanded state with `expanded` and `onExpandedChange` props
+- [Burger](/core/burger) component now supports `lineSize` prop to change lines height
+- [Calendar](/dates/calendar), [DatePicker](/dates/date-picker) and other similar components now support `highlightToday` prop to highlight today's date

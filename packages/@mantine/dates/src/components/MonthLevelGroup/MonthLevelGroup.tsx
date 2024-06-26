@@ -59,6 +59,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
     __onDayClick,
     __onDayMouseEnter,
     withCellSpacing,
+    highlightToday,
 
     // CalendarHeader settings
     __preventFocus,
@@ -160,6 +161,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
           size={size}
           static={isStatic}
           withCellSpacing={withCellSpacing}
+          highlightToday={highlightToday}
         />
       );
     });

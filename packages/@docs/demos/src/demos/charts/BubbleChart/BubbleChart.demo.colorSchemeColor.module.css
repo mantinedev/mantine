@@ -1,0 +1,9 @@
+.root {
+  @mixin light {
+    --scatter-color: var(--mantine-color-orange-8);
+  }
+
+  @mixin dark {
+    --scatter-color: var(--mantine-color-lime-4);
+  }
+}
