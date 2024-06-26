@@ -28,3 +28,4 @@ export { seriesLabels } from './AreaChart.demo.seriesLabels';
 export { valueFormatter } from './AreaChart.demo.valueFormatter';
 export { rotateLabels } from './AreaChart.demo.rotateLabels';
 export { axisLabels } from './AreaChart.demo.axisLabels';
+export { rightYAxis } from './AreaChart.demo.rightYAxis';

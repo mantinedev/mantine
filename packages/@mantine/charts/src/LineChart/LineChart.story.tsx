@@ -1,3 +1,4 @@
+import { YAxis } from 'recharts';
 import { LineChart } from './LineChart';
 
 export default { title: 'LineChart' };
@@ -70,6 +71,28 @@ export function Usage() {
         ]}
         withLegend
       />
+    </div>
+  );
+}
+
+export function MultipleYAxis() {
+  return (
+    <div style={{ padding: 40 }}>
+      <LineChart
+        h={300}
+        data={data}
+        dataKey="date"
+        series={[
+          { name: 'Apples', color: 'indigo.6' },
+          { name: 'Oranges', color: 'blue.6' },
+          { name: 'Tomatoes', color: 'teal.6', yAxisId: 'right' },
+        ]}
+        withLegend
+        withRightYAxis
+        yAxisLabel="Apples and Oranges"
+      >
+        <YAxis yAxisId="right" orientation="right" />
+      </LineChart>
     </div>
   );
 }

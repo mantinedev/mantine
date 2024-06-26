@@ -127,3 +127,8 @@ export const Demo_gradient = {
   name: '⭐ Demo: gradient',
   render: renderDemo(demos.gradient),
 };
+
+export const Demo_rightYAxis = {
+  name: '⭐ Demo: rightYAxis',
+  render: renderDemo(demos.rightYAxis),
+};

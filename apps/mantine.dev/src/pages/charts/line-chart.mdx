@@ -74,6 +74,16 @@ your data will always be in the range of 0 to 100, you can set domain to `[0, 10
 
 <Demo data={LineChartDemos.yScale} />
 
+## Right Y axis
+
+To display additional Y axis on the right side of the chart, set `withRightYAxis` prop.
+You can pass props down to recharts [YAxis](https://recharts.org/en-US/api/YAxis)
+component with `rightYAxisProps` prop and assign a label to the right Y axis with
+`rightYAxisLabel` prop. Note that you need to bind data series to the right Y axis
+by setting `yAxisId` in the `series` object.
+
+<Demo data={LineChartDemos.rightYAxis} />
+
 ## Value formatter
 
 To format values in the tooltip and axis ticks, use `valueFormat` prop. It accepts

@@ -192,8 +192,12 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     yAxisLabel,
     type,
     gradientStops,
+    withRightYAxis,
+    rightYAxisLabel,
+    rightYAxisProps,
     ...others
   } = props;
+
   const theme = useMantineTheme();
   const withXTickLine = gridAxis !== 'none' && (tickLine === 'x' || tickLine === 'xy');
   const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
@@ -272,6 +276,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         connectNulls={connectNulls}
         type={curveType}
         strokeDasharray={item.strokeDasharray}
+        yAxisId={item.yAxisId || 'left'}
         {...(typeof lineProps === 'function' ? lineProps(item) : lineProps)}
       />
     );
@@ -284,6 +289,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         key={index}
         stroke={line.color ? color : 'var(--chart-grid-color)'}
         strokeWidth={1}
+        yAxisId={line.yAxisId || 'left'}
         {...line}
         label={{
           value: line.label,
@@ -295,6 +301,19 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
       />
     );
   });
+
+  const sharedYAxisProps = {
+    hide: !withYAxis,
+    axisLine: false,
+    ...(orientation === 'vertical'
+      ? { dataKey, type: 'category' as const }
+      : { type: 'number' as const }),
+    tickLine: withYTickLine ? { stroke: 'currentColor' } : false,
+    allowDecimals: true,
+    unit,
+    tickFormatter: valueFormatter,
+    ...getStyles('axis'),
+  };
 
   return (
     <Box
@@ -319,12 +338,6 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
             <defs>
               <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
                 {stops}
-                {/* <stop offset="0%" stopColor="var(--mantine-color-red-6)" />
-                  <stop offset="20%" stopColor="var(--mantine-color-orange-6)" />
-                  <stop offset="40%" stopColor="var(--mantine-color-yellow-5)" />
-                  <stop offset="70%" stopColor="var(--mantine-color-lime-5)" />
-                  <stop offset="80%" stopColor="var(--mantine-color-cyan-5)" />
-                  <stop offset="100%" stopColor="var(--mantine-color-blue-5)" /> */}
               </linearGradient>
             </defs>
           )}
@@ -367,21 +380,38 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
           </XAxis>
 
           <YAxis
-            hide={!withYAxis}
-            axisLine={false}
-            {...(orientation === 'vertical' ? { dataKey, type: 'category' } : { type: 'number' })}
-            tickLine={withYTickLine ? { stroke: 'currentColor' } : false}
+            yAxisId="left"
+            orientation="left"
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
-            allowDecimals
-            unit={unit}
-            tickFormatter={valueFormatter}
-            {...getStyles('axis')}
+            {...sharedYAxisProps}
             {...yAxisProps}
           >
-            {yAxisLabel && (
+            {rightYAxisLabel && (
               <Label
                 position="insideLeft"
                 angle={-90}
+                textAnchor="middle"
+                fontSize={12}
+                offset={-5}
+                {...getStyles('axisLabel')}
+              >
+                {rightYAxisLabel}
+              </Label>
+            )}
+            {yAxisProps?.children}
+          </YAxis>
+
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            tick={{ transform: 'translate(10, 0)', fontSize: 12, fill: 'currentColor' }}
+            {...sharedYAxisProps}
+            {...rightYAxisProps}
+          >
+            {yAxisLabel && (
+              <Label
+                position="insideRight"
+                angle={90}
                 textAnchor="middle"
                 fontSize={12}
                 offset={-5}
