@@ -13,10 +13,10 @@ function Demo() {
       data={data}
       dataKey="product"
       withPolarRadiusAxis
-      polarRadiusAxisProps={{ angle: 30, tickFormatter: (value) => \`\${value}$\` }}
+      withLegend
       series={[
-        { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
-        { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
+        { name: 'Sales January', color: 'blue.6', opacity: 0.2 },
+        { name: 'Sales February', color: 'orange.6', opacity: 0.2 },
       ]}
     />
   );
@@ -30,16 +30,16 @@ function Demo() {
       data={multiData}
       dataKey="product"
       withPolarRadiusAxis
-      polarRadiusAxisProps={{ angle: 30, tickFormatter: (value) => `${value}$` }}
+      withLegend
       series={[
-        { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
-        { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
+        { name: 'Sales January', color: 'blue.6', opacity: 0.2 },
+        { name: 'Sales February', color: 'orange.6', opacity: 0.2 },
       ]}
     />
   );
 }
 
-export const rechartsProps: MantineDemo = {
+export const legend: MantineDemo = {
   type: 'code',
   component: Demo,
   code: [
