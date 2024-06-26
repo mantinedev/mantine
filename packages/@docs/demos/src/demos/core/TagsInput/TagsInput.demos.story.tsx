@@ -132,3 +132,8 @@ export const Demo_dropdownWidth = {
   name: '⭐ Demo: dropdownWidth',
   render: renderDemo(demos.dropdownWidth),
 };
+
+export const Demo_acceptValueOnBlur = {
+  name: '⭐ Demo: acceptValueOnBlur',
+  render: renderDemo(demos.acceptValueOnBlur),
+};

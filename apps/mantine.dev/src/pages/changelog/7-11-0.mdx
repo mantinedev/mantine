@@ -3,6 +3,7 @@ import {
   BubbleChartDemos,
   LineChartDemos,
   RadarChartDemos,
+  TagsInputDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -79,6 +80,15 @@ now support `rightYAxis` prop which renders additional Y axis on the right side 
 [RadarChart](/charts/radar-chart) component now supports legend:
 
 <Demo data={RadarChartDemos.legend} />
+
+## TagsInput acceptValueOnBlur
+
+[TagsInput](/core/tags-input) component behavior has been changed. Now By default,
+if the user types in a value and blurs the input, the value is added to the list.
+You can change this behavior by setting `acceptValueOnBlur` to `false`. In this case, the value is added
+only when the user presses `Enter` or clicks on a suggestion.
+
+<Demo data={TagsInputDemos.acceptValueOnBlur} />
 
 ## Documentation updates
 

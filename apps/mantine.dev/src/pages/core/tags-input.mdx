@@ -66,6 +66,14 @@ once the limit is reached.
 
 <Demo data={TagsInputDemos.maxTags} />
 
+## Accept value on blur
+
+By default, if the user types a value and blurs the input, the value is added to the list.
+You can change this behavior by setting `acceptValueOnBlur` to `false`. In this case, the value is added
+only when the user presses `Enter` or clicks on a suggestion.
+
+<Demo data={TagsInputDemos.acceptValueOnBlur} />
+
 ## Allow duplicates
 
 By default `TagsInput` does not allow to add duplicate values, but you can change this behavior by
