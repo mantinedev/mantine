@@ -195,6 +195,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     __onDayClick,
     __onDayMouseEnter,
     withCellSpacing,
+    highlightToday,
 
     // YearLevelGroup props
     monthsListFormat,
@@ -336,6 +337,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           __stopPropagation={__stopPropagation}
           static={isStatic}
           withCellSpacing={withCellSpacing}
+          highlightToday={highlightToday}
           {...stylesApiProps}
         />
       )}

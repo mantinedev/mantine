@@ -8,4 +8,5 @@ export * from './DonutChart/index.js';
 export * from './PieChart/index.js';
 export * from './RadarChart/index.js';
 export * from './ScatterChart/index.js';
+export * from './BubbleChart/index.js';
 export * from './types';

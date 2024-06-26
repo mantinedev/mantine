@@ -191,6 +191,9 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     xAxisLabel,
     yAxisLabel,
     withBarValueLabel,
+    withRightYAxis,
+    rightYAxisLabel,
+    rightYAxisProps,
     ...others
   } = props;
 
@@ -242,6 +245,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         strokeOpacity={dimmed ? 0.2 : 0}
         stackId={stacked ? 'stack' : undefined}
         label={withBarValueLabel ? <BarLabel valueFormatter={valueFormatter} /> : undefined}
+        yAxisId={item.yAxisId || 'left'}
         {...(typeof barProps === 'function' ? barProps(item) : barProps)}
       >
         {inputData.map((entry, index) => (
@@ -261,6 +265,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         key={index}
         stroke={line.color ? color : 'var(--chart-grid-color)'}
         strokeWidth={1}
+        yAxisId={line.yAxisId || 'left'}
         {...line}
         label={{
           value: line.label,
@@ -272,6 +277,19 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
       />
     );
   });
+
+  const sharedYAxisProps = {
+    hide: !withYAxis,
+    axisLine: false,
+    ...(orientation === 'vertical'
+      ? { dataKey, type: 'category' as const }
+      : { type: 'number' as const }),
+    tickLine: withYTickLine ? { stroke: 'currentColor' } : false,
+    allowDecimals: true,
+    unit,
+    tickFormatter: type === 'percent' ? valueToPercent : valueFormatter,
+    ...getStyles('axis'),
+  };
 
   return (
     <Box
@@ -331,21 +349,38 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
           </XAxis>
 
           <YAxis
-            hide={!withYAxis}
-            axisLine={false}
-            {...(orientation === 'vertical' ? { dataKey, type: 'category' } : { type: 'number' })}
-            tickLine={withYTickLine ? { stroke: 'currentColor' } : false}
+            yAxisId="left"
+            orientation="left"
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
-            allowDecimals
-            unit={unit}
-            tickFormatter={type === 'percent' ? valueToPercent : valueFormatter}
-            {...getStyles('axis')}
+            {...sharedYAxisProps}
             {...yAxisProps}
           >
-            {yAxisLabel && (
+            {rightYAxisLabel && (
               <Label
                 position="insideLeft"
                 angle={-90}
+                textAnchor="middle"
+                fontSize={12}
+                offset={-5}
+                {...getStyles('axisLabel')}
+              >
+                {rightYAxisLabel}
+              </Label>
+            )}
+            {yAxisProps?.children}
+          </YAxis>
+
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            tick={{ transform: 'translate(10, 0)', fontSize: 12, fill: 'currentColor' }}
+            {...sharedYAxisProps}
+            {...rightYAxisProps}
+          >
+            {yAxisLabel && (
+              <Label
+                position="insideRight"
+                angle={90}
                 textAnchor="middle"
                 fontSize={12}
                 offset={-5}

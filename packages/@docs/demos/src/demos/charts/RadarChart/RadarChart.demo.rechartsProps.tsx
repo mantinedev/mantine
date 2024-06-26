@@ -15,8 +15,8 @@ function Demo() {
       withPolarRadiusAxis
       polarRadiusAxisProps={{ angle: 30, tickFormatter: (value) => \`\${value}$\` }}
       series={[
-        { name: 'sales_january', color: 'lime.4', opacity: 0.1 },
-        { name: 'sales_february', color: 'cyan.4', opacity: 0.1 },
+        { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
+        { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
       ]}
     />
   );
@@ -32,8 +32,8 @@ function Demo() {
       withPolarRadiusAxis
       polarRadiusAxisProps={{ angle: 30, tickFormatter: (value) => `${value}$` }}
       series={[
-        { name: 'sales_january', color: 'lime.4', opacity: 0.1 },
-        { name: 'sales_february', color: 'cyan.4', opacity: 0.1 },
+        { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
+        { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
       ]}
     />
   );

@@ -6,8 +6,7 @@ export function Usage() {
   return (
     <PageSection
       title="Ready to get started?"
-      description="Mantine works in all modern environments – get started instantly with Next.js, Gatsby.js, Redwood, Vite or Remix by following getting started guide:"
-      alt
+      description="Mantine can be used both for SPA and SSR applications. Follow one of the getting started guides to build an application with Mantine using Vite, Next.js, Remix, RedwoodJS or Gatsby:"
     >
       <Space h="xl" />
       <FrameworksGuides />

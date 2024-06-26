@@ -265,3 +265,57 @@ export const data = [
   },
 ];
 `;
+
+export const temperaturesData = [
+  { date: 'Jan', temperature: -25 },
+  { date: 'Feb', temperature: -10 },
+  { date: 'Mar', temperature: 5 },
+  { date: 'Apr', temperature: 15 },
+  { date: 'May', temperature: 30 },
+  { date: 'Jun', temperature: 15 },
+  { date: 'Jul', temperature: 30 },
+  { date: 'Aug', temperature: 40 },
+  { date: 'Sep', temperature: 15 },
+  { date: 'Oct', temperature: 20 },
+  { date: 'Nov', temperature: 0 },
+  { date: 'Dec', temperature: -10 },
+];
+
+export const temperaturesDataCode = `
+export const data = [
+  { date: 'Jan', temperature: -25 },
+  { date: 'Feb', temperature: -10 },
+  { date: 'Mar', temperature: 5 },
+  { date: 'Apr', temperature: 15 },
+  { date: 'May', temperature: 30 },
+  { date: 'Jun', temperature: 15 },
+  { date: 'Jul', temperature: 30 },
+  { date: 'Aug', temperature: 40 },
+  { date: 'Sep', temperature: 15 },
+  { date: 'Oct', temperature: 20 },
+  { date: 'Nov', temperature: 0 },
+  { date: 'Dec', temperature: -10 },
+];
+`;
+
+export const biaxialData = [
+  { name: 'Page A', uv: 4000, pv: 2400 },
+  { name: 'Page B', uv: 3000, pv: 1398 },
+  { name: 'Page C', uv: 2000, pv: 9800 },
+  { name: 'Page D', uv: 2780, pv: 3908 },
+  { name: 'Page E', uv: 1890, pv: 4800 },
+  { name: 'Page F', uv: 2390, pv: 3800 },
+  { name: 'Page G', uv: 3490, pv: 4300 },
+];
+
+export const biaxialDataCode = `
+export const biaxialData = [
+  { name: 'Page A', uv: 4000, pv: 2400 },
+  { name: 'Page B', uv: 3000, pv: 1398 },
+  { name: 'Page C', uv: 2000, pv: 9800 },
+  { name: 'Page D', uv: 2780, pv: 3908 },
+  { name: 'Page E', uv: 1890, pv: 4800 },
+  { name: 'Page F', uv: 2390, pv: 3800 },
+  { name: 'Page G', uv: 3490, pv: 4300 },
+];
+`;

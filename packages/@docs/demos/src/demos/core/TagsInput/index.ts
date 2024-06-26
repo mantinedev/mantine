@@ -23,3 +23,5 @@ export { dropdownPadding } from './TagsInput.demo.dropdownPadding';
 export { dropdownShadow } from './TagsInput.demo.dropdownShadow';
 export { withinPopover } from './TagsInput.demo.withinPopover';
 export { renderOption } from './TagsInput.demo.renderOption';
+export { dropdownWidth } from './TagsInput.demo.dropdownWidth';
+export { acceptValueOnBlur } from './TagsInput.demo.acceptValueOnBlur';

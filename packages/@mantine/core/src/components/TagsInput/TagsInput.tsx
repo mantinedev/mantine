@@ -101,6 +101,9 @@ export interface TagsInputProps
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
+
+  /** Determines whether the value typed in by the user but not submitted should be accepted when the input is blurred, `true` by default */
+  acceptValueOnBlur?: boolean;
 }
 
 export type TagsInputFactory = Factory<{
@@ -112,6 +115,7 @@ export type TagsInputFactory = Factory<{
 const defaultProps: Partial<TagsInputProps> = {
   maxTags: Infinity,
   allowDuplicates: false,
+  acceptValueOnBlur: true,
   splitChars: [','],
   hiddenInputValuesDivider: ',',
 };
@@ -188,6 +192,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     onRemove,
     onClear,
     scrollAreaProps,
+    acceptValueOnBlur,
     ...others
   } = props;
 
@@ -241,6 +246,23 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     classNames,
   });
 
+  const handleValueSelect = (val: string) => {
+    const isDuplicate = _value.some((tag) => tag.toLowerCase() === val.toLowerCase());
+
+    if (isDuplicate) {
+      onDuplicate?.(val);
+    }
+
+    if ((!isDuplicate || (isDuplicate && allowDuplicates)) && _value.length < maxTags!) {
+      onOptionSubmit?.(val);
+      setSearchValue('');
+
+      if (val.length > 0) {
+        setValue([..._value, val]);
+      }
+    }
+  };
+
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
@@ -272,20 +294,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
         return;
       }
 
-      const isDuplicate = _value.some((tag) => tag.toLowerCase() === inputValue.toLowerCase());
-
-      if (isDuplicate) {
-        onDuplicate?.(inputValue);
-      }
-
-      if ((!isDuplicate || (isDuplicate && allowDuplicates)) && _value.length < maxTags!) {
-        onOptionSubmit?.(inputValue);
-        setSearchValue('');
-
-        if (inputValue.length > 0) {
-          setValue([..._value, inputValue]);
-        }
-      }
+      handleValueSelect(inputValue);
     }
 
     if (
@@ -420,6 +429,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
                   }}
                   onBlur={(event) => {
                     onBlur?.(event);
+                    acceptValueOnBlur && handleValueSelect(_searchValue);
                     combobox.closeDropdown();
                   }}
                   onPaste={handlePaste}

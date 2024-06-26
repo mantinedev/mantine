@@ -37,3 +37,13 @@ export const Demo_gradient = {
   name: '⭐ Demo: gradient',
   render: renderDemo(demos.gradient),
 };
+
+export const Demo_initials = {
+  name: '⭐ Demo: initials',
+  render: renderDemo(demos.initials),
+};
+
+export const Demo_allowedColors = {
+  name: '⭐ Demo: allowedColors',
+  render: renderDemo(demos.allowedColors),
+};

@@ -7,10 +7,14 @@ export default Layout(MDX_DATA.Burger);
 ## Usage
 
 `Burger` component renders open/close menu button.
-Set `opened` and `onClick` props to control Burger state.
+Set `opened` and `onClick` props to control component state.
 If `opened` prop is set, cross will be rendered, otherwise – burger.
 
 <Demo data={BurgerDemos.usage} />
+
+## Change lines size
+
+<Demo data={BurgerDemos.lineWidth} />
 
 <GetElementRef component="Burger" refType="button" />
 

@@ -17,6 +17,7 @@ describe('@mantine/core/TabsPanel', () => {
     displayName: '@mantine/core/TabsPanel',
     mod: true,
     extend: true,
+    withProps: true,
     styleProps: true,
     children: true,
     classes: true,

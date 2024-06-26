@@ -32,18 +32,11 @@
   }
 }
 
-.twitterButton {
-  --twitter-color: #1da1f2;
-  --twitter-color-hover: #1a94da;
+.xButton {
+  background-color: light-dark(var(--mantine-color-dark-7), var(--mantine-color-gray-3));
+  color: light-dark(var(--mantine-color-white), var(--mantine-color-black));
 
-  [data-mantine-color-scheme] & {
-    background-color: var(--twitter-color);
-    border-color: var(--twitter-color);
-    color: var(--mantine-color-white);
-
-    @mixin hover {
-      background-color: var(--twitter-color-hover);
-      border-color: var(--twitter-color-hover);
-    }
+  @mixin hover {
+    background-color: light-dark(var(--mantine-color-dark-6), var(--mantine-color-gray-4));
   }
 }

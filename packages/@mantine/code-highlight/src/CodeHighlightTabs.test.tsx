@@ -20,6 +20,7 @@ describe('@mantine/code-highlight/CodeHighlightTabs', () => {
     polymorphic: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     id: true,

@@ -27,3 +27,8 @@ export const Demo_rechartsProps = {
   name: '⭐ Demo: rechartsProps',
   render: renderDemo(demos.rechartsProps),
 };
+
+export const Demo_legend = {
+  name: '⭐ Demo: legend',
+  render: renderDemo(demos.legend),
+};

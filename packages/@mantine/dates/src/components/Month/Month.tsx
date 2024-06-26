@@ -96,6 +96,9 @@ export interface MonthSettings {
 
   /** Determines whether controls should be separated by spacing, true by default */
   withCellSpacing?: boolean;
+
+  /** Determines whether today should be highlighted with a border, `false` by default */
+  highlightToday?: boolean;
 }
 
 export interface MonthProps
@@ -154,6 +157,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
     __stopPropagation,
     withCellSpacing,
     size,
+    highlightToday,
     ...others
   } = props;
 
@@ -216,6 +220,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
             styles={resolvedStyles}
             unstyled={unstyled}
             data-mantine-stop-propagation={__stopPropagation || undefined}
+            highlightToday={highlightToday}
             renderDay={renderDay}
             date={date}
             size={size}

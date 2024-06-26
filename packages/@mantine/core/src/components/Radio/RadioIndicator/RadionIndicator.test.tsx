@@ -9,6 +9,7 @@ describe('@mantine/core/RadioIndicator', () => {
     props: defaultProps,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

@@ -27,3 +27,8 @@ export const Demo_transition = {
   name: '⭐ Demo: transition',
   render: renderDemo(demos.transition),
 };
+
+export const Demo_segments = {
+  name: '⭐ Demo: segments',
+  render: renderDemo(demos.segments),
+};

@@ -16,6 +16,7 @@ describe('@mantine/core/TabsList', () => {
     displayName: '@mantine/core/TabsList',
     mod: true,
     extend: true,
+    withProps: true,
     styleProps: true,
     children: true,
     classes: true,

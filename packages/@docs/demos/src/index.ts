@@ -129,6 +129,7 @@ export * as DonutChartDemos from './demos/charts/DonutChart';
 export * as PieChartDemos from './demos/charts/PieChart';
 export * as RadarChartDemos from './demos/charts/RadarChart';
 export * as ScatterChartDemos from './demos/charts/ScatterChart';
+export * as BubbleChartDemos from './demos/charts/BubbleChart';
 
 // Extensions demos
 export * as NotificationsDemos from './demos/notifications';

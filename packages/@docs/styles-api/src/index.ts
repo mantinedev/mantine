@@ -15,6 +15,7 @@ export * from './data/Badge.styles-api';
 export * from './data/BarChart.styles-api';
 export * from './data/Blockquote.styles-api';
 export * from './data/Breadcrumbs.styles-api';
+export * from './data/BubbleChart.styles-api';
 export * from './data/Burger.styles-api';
 export * from './data/Button.styles-api';
 export * from './data/Card.styles-api';
