@@ -25,3 +25,4 @@ export { withinPopover } from './TagsInput.demo.withinPopover';
 export { renderOption } from './TagsInput.demo.renderOption';
 export { dropdownWidth } from './TagsInput.demo.dropdownWidth';
 export { acceptValueOnBlur } from './TagsInput.demo.acceptValueOnBlur';
+export { selectFirst } from './TagsInput.demo.selectFirst';

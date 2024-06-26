@@ -9,9 +9,9 @@ function Demo() {
     <TagsInput
       label="Enter tags"
       placeholder="Enter tags"
+      selectFirstOptionOnChange
       data={[
-        { group: 'Frontend', items: ['React', 'Angular'] },
-        { group: 'Backend', items: ['Express', 'Django'] },
+        'Apple', 'Banana', 'Kiwi', 'Mango', 'Watermelon', 'Raspberry', 'Strawberry',
       ]}
     />
   );
@@ -25,14 +25,13 @@ function Demo() {
       placeholder="Enter tags"
       selectFirstOptionOnChange
       data={[
-        { group: 'Frontend', items: ['React', 'Angular'] },
-        { group: 'Backend', items: ['Express', 'Django'] },
+        'Apple', 'Banana', 'Kiwi', 'Mango', 'Watermelon', 'Raspberry', 'Strawberry',
       ]}
     />
   );
 }
 
-export const groups: MantineDemo = {
+export const selectFirst: MantineDemo = {
   type: 'code',
   component: Demo,
   code,

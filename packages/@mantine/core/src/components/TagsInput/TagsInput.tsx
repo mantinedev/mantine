@@ -338,7 +338,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     if (selectFirstOptionOnChange) {
       combobox.selectFirstOption();
     }
-  }, [selectFirstOptionOnChange, _value]);
+  }, [selectFirstOptionOnChange, _value, _searchValue]);
 
   const clearButton = clearable && _value.length > 0 && !disabled && !readOnly && (
     <Combobox.ClearButton
@@ -431,7 +431,6 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
                   value={_searchValue}
                   onChange={(event) => {
                     setSearchValue(event.currentTarget.value);
-                    selectFirstOptionOnChange && combobox.selectFirstOption();
                   }}
                   required={required && _value.length === 0}
                   disabled={disabled}
