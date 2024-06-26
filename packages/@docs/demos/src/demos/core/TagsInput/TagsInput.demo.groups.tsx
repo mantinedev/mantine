@@ -23,7 +23,6 @@ function Demo() {
     <TagsInput
       label="Enter tags"
       placeholder="Enter tags"
-      selectFirstOptionOnChange
       data={[
         { group: 'Frontend', items: ['React', 'Angular'] },
         { group: 'Backend', items: ['Express', 'Django'] },
