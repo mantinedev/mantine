@@ -429,9 +429,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
                   }}
                   onPaste={handlePaste}
                   value={_searchValue}
-                  onChange={(event) => {
-                    setSearchValue(event.currentTarget.value);
-                  }}
+                  onChange={(event) => setSearchValue(event.currentTarget.value)}
                   required={required && _value.length === 0}
                   disabled={disabled}
                   readOnly={readOnly}
