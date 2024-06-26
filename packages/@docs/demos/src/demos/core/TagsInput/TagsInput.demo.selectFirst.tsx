@@ -24,9 +24,7 @@ function Demo() {
       label="Enter tags"
       placeholder="Enter tags"
       selectFirstOptionOnChange
-      data={[
-        'Apple', 'Banana', 'Kiwi', 'Mango', 'Watermelon', 'Raspberry', 'Strawberry',
-      ]}
+      data={['Apple', 'Banana', 'Kiwi', 'Mango', 'Watermelon', 'Raspberry', 'Strawberry']}
     />
   );
 }
