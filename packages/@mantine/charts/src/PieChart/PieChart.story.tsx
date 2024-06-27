@@ -1,12 +1,14 @@
-import { PieChart } from './PieChart';
+import { PieChart, PieChartCell } from './PieChart';
 
 export default { title: 'PieChart' };
 
-const data = [
+const data: PieChartCell[] = [
   { name: 'Group A', value: 400, color: 'indigo.6' },
   { name: 'Group B', value: 300, color: 'yellow.6' },
   { name: 'Group C', value: 300, color: 'teal.6' },
   { name: 'Group D', value: 200, color: 'pink.6' },
+  { key: 'e-1', name: 'Group E', value: 100, color: 'red.6' },
+  { key: 'e-2', name: 'Group E', value: 150, color: 'orange.6' },
 ];
 
 export function Usage() {
@@ -23,6 +25,14 @@ export function WithLabels() {
       <PieChart data={data} withLabels size={200} />
       <PieChart data={data} withLabels size={200} labelsPosition="inside" />
       <PieChart data={data} withLabels size={200} labelsType="percent" />
+    </div>
+  );
+}
+
+export function WithTooltip() {
+  return (
+    <div style={{ padding: 40 }}>
+      <PieChart data={data} withLabels withTooltip size={200} />
     </div>
   );
 }

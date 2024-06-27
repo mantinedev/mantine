@@ -28,6 +28,7 @@ import { ChartTooltip } from '../ChartTooltip/ChartTooltip';
 import classes from './PieChart.module.css';
 
 export interface PieChartCell {
+  key?: string | number;
   name: string;
   value: number;
   color: MantineColor;
