@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import { createContext, useContext } from 'react';
 
 export function createSafeContext<ContextValue>(errorMessage: string) {
   const Context = createContext<ContextValue | null>(null);

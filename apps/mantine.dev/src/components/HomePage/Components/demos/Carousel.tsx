@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Embla, useAnimationOffsetEffect } from '@mantine/carousel';
 import { CarouselCardsDemos } from '@docs/demos';
 

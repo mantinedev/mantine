@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
 import { MonthLevel, MonthLevelProps, MonthLevelStylesNames } from './MonthLevel';
@@ -21,6 +20,7 @@ describe('@mantine/dates/MonthLevel', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

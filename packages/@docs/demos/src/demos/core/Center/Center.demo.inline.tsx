@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { Anchor, Box, Center, rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

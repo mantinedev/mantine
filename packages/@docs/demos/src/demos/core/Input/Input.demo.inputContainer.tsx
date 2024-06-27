@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { TextInput, Tooltip } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import classes from './PageHeaderLink.module.css';
 
 interface PageHeaderLinkProps {

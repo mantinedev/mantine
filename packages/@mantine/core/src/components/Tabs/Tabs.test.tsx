@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { DirectionProvider } from '../../core';
 import { Tabs, TabsProps, TabsStylesNames } from './Tabs';
@@ -55,6 +54,7 @@ describe('@mantine/core/Tabs', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

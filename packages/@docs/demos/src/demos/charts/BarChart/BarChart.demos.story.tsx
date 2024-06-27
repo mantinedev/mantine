@@ -88,6 +88,11 @@ export const Demo_stacked = {
   render: renderDemo(demos.stacked),
 };
 
+export const Demo_waterfall = {
+  name: '⭐ Demo: waterfall',
+  render: renderDemo(demos.waterfall),
+};
+
 export const Demo_percent = {
   name: '⭐ Demo: percent',
   render: renderDemo(demos.percent),
@@ -116,4 +121,9 @@ export const Demo_barProps = {
 export const Demo_axisLabels = {
   name: '⭐ Demo: axisLabels',
   render: renderDemo(demos.axisLabels),
+};
+
+export const Demo_barValueLabel = {
+  name: '⭐ Demo: barValueLabel',
+  render: renderDemo(demos.barValueLabel),
 };

@@ -1,4 +1,4 @@
-import React, { Fragment, useId, useState } from 'react';
+import { Fragment, useId, useState } from 'react';
 import {
   Area,
   AreaProps,
@@ -42,6 +42,7 @@ function valueToPercent(value: number) {
 
 export interface AreaChartSeries extends ChartSeries {
   strokeDasharray?: string | number;
+  color: MantineColor;
 }
 
 export type AreaChartType = 'default' | 'stacked' | 'percent' | 'split';
@@ -197,6 +198,9 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     areaProps,
     xAxisLabel,
     yAxisLabel,
+    withRightYAxis,
+    rightYAxisLabel,
+    rightYAxisProps,
     ...others
   } = props;
 
@@ -252,6 +256,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
         isAnimationActive={false}
         connectNulls={connectNulls}
         stackId={stacked ? 'stack-dots' : undefined}
+        yAxisId={item.yAxisId || 'left'}
         {...(typeof areaProps === 'function' ? areaProps(item) : areaProps)}
       />
     );
@@ -288,6 +293,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           fillOpacity={dimmed ? 0 : 1}
           strokeOpacity={dimmed ? 0.5 : 1}
           strokeDasharray={item.strokeDasharray}
+          yAxisId={item.yAxisId || 'left'}
           {...(typeof areaProps === 'function' ? areaProps(item) : areaProps)}
         />
       </Fragment>
@@ -301,6 +307,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
         key={index}
         stroke={line.color ? color : 'var(--chart-grid-color)'}
         strokeWidth={1}
+        yAxisId={line.yAxisId || 'left'}
         {...line}
         label={{
           value: line.label,
@@ -312,6 +319,19 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
       />
     );
   });
+
+  const sharedYAxisProps = {
+    hide: !withYAxis,
+    axisLine: false,
+    ...(orientation === 'vertical'
+      ? { dataKey, type: 'category' as const }
+      : { type: 'number' as const }),
+    tickLine: withYTickLine ? { stroke: 'currentColor' } : false,
+    allowDecimals: true,
+    unit,
+    tickFormatter: type === 'percent' ? valueToPercent : valueFormatter,
+    ...getStyles('axis'),
+  };
 
   return (
     <Box
@@ -379,21 +399,38 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           </XAxis>
 
           <YAxis
-            hide={!withYAxis}
-            axisLine={false}
-            {...(orientation === 'vertical' ? { dataKey, type: 'category' } : { type: 'number' })}
-            tickLine={withYTickLine ? { stroke: 'currentColor' } : false}
+            yAxisId="left"
+            orientation="left"
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
-            allowDecimals
-            unit={unit}
-            tickFormatter={type === 'percent' ? valueToPercent : valueFormatter}
-            {...getStyles('axis')}
+            {...sharedYAxisProps}
             {...yAxisProps}
           >
-            {yAxisLabel && (
+            {rightYAxisLabel && (
               <Label
                 position="insideLeft"
                 angle={-90}
+                textAnchor="middle"
+                fontSize={12}
+                offset={-5}
+                {...getStyles('axisLabel')}
+              >
+                {rightYAxisLabel}
+              </Label>
+            )}
+            {yAxisProps?.children}
+          </YAxis>
+
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            tick={{ transform: 'translate(10, 0)', fontSize: 12, fill: 'currentColor' }}
+            {...sharedYAxisProps}
+            {...rightYAxisProps}
+          >
+            {yAxisLabel && (
+              <Label
+                position="insideRight"
+                angle={90}
                 textAnchor="middle"
                 fontSize={12}
                 offset={-5}
@@ -409,7 +446,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             <Tooltip
               animationDuration={tooltipAnimationDuration}
               isAnimationActive={isAnimationActive}
-              position={{ y: 0 }}
+              position={orientation === 'vertical' ? {} : { y: 0 }}
               cursor={{
                 stroke: 'var(--chart-grid-color)',
                 strokeWidth: 1,

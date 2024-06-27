@@ -1,4 +1,3 @@
-import React from 'react';
 import { DonutChart } from './DonutChart';
 
 export default { title: 'DonutChart' };

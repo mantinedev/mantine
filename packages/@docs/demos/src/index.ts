@@ -9,6 +9,7 @@ export { CarouselCardsDemos } from './demos/carousel/Carousel.demo.cards';
 export * as ThemingDemos from './demos/theming';
 export * as StylesDemos from './demos/styles';
 export * as GuidesDemos from './demos/guides';
+export * as EmotionDemos from './demos/emotion';
 
 // Core demos
 export * as AccordionDemos from './demos/core/Accordion';
@@ -104,6 +105,7 @@ export * as NotificationDemos from './demos/core/Notification';
 export * as NumberInputDemos from './demos/core/NumberInput';
 export * as NumberFormatterDemos from './demos/core/NumberFormatter';
 export * as FloatingIndicatorDemos from './demos/core/FloatingIndicator';
+export * as TreeDemos from './demos/core/Tree';
 
 // @mantine/dates
 export * as YearPickerDemos from './demos/dates/YearPicker';
@@ -127,6 +129,7 @@ export * as DonutChartDemos from './demos/charts/DonutChart';
 export * as PieChartDemos from './demos/charts/PieChart';
 export * as RadarChartDemos from './demos/charts/RadarChart';
 export * as ScatterChartDemos from './demos/charts/ScatterChart';
+export * as BubbleChartDemos from './demos/charts/BubbleChart';
 
 // Extensions demos
 export * as NotificationsDemos from './demos/notifications';
@@ -134,6 +137,7 @@ export * as CarouselDemos from './demos/carousel';
 export * as SpotlightDemos from './demos/spotlight';
 export * as HooksDemos from './demos/hooks';
 export * as FormDemos from './demos/form';
+export * as FieldDemos from './demos/form-field';
 export * as NprogressDemos from './demos/nprogress';
 export * as CodeHighlightDemos from './demos/code-highlight';
 export * as DropzoneDemos from './demos/dropzone';

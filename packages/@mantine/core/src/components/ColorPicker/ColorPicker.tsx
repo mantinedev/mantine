@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
 import {
   Box,

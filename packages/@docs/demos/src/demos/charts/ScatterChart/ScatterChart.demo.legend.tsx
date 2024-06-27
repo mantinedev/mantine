@@ -1,4 +1,3 @@
-import React from 'react';
 import { ScatterChart } from '@mantine/charts';
 import { MantineDemo } from '@mantinex/demo';
 import { doubleData, doubleDataCode } from './_data';

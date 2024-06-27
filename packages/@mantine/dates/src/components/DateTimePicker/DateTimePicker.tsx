@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   ActionIcon,
   ActionIconProps,
@@ -248,13 +248,6 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
             withSeconds={withSeconds}
             ref={timeInputRefMerged}
             unstyled={unstyled}
-            {...timeInputProps}
-            {...getStyles('timeInput', {
-              className: timeInputProps?.className,
-              style: timeInputProps?.style,
-            })}
-            onChange={handleTimeChange}
-            onKeyDown={handleTimeInputKeyDown}
             minTime={
               _value && minDate && _value.toDateString() === minDate.toDateString()
                 ? minTime != null
@@ -269,6 +262,13 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
                   : undefined
                 : undefined
             }
+            {...timeInputProps}
+            {...getStyles('timeInput', {
+              className: timeInputProps?.className,
+              style: timeInputProps?.style,
+            })}
+            onChange={handleTimeChange}
+            onKeyDown={handleTimeInputKeyDown}
             size={size}
             data-mantine-stop-propagation={__stopPropagation || undefined}
           />

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { mergeRefs, useDidUpdate } from '@mantine/hooks';
 import { CSSProperties } from '../../core';

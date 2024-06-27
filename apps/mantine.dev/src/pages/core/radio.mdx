@@ -104,6 +104,31 @@ function Demo() {
 }
 ```
 
+## Radio.Indicator
+
+`Radio.Indicator` looks exactly the same as `Radio` component, but it does not
+have any semantic meaning, it's just a visual representation of radio state. You
+can use it in any place where you need to display radio state without any interaction
+related to the indicator. For example, it is useful in cards based on buttons, trees, etc.
+
+Note that `Radio.Indicator` cannot be focused or selected with keyboard. It is not
+accessible and should not be used as a replacement for `Radio` component.
+
+<Demo data={RadioDemos.indicator} />
+
+## Radio.Card component
+
+`Radio.Card` component can be used as a replacement for `Radio` to build custom
+cards/buttons/other things that work as radios. The root element of the component
+has `role="radio"` attribute, it is accessible by default and supports the same
+keyboard interactions as `input[type="radio"]`.
+
+<Demo data={RadioDemos.card} />
+
+You can use `Radio.Card` with `Radio.Group` the same way as `Radio` component:
+
+<Demo data={RadioDemos.cardGroup} />
+
 <GetElementRef component="Radio" refType="input" />
 
 <StylesApiSelectors component="Radio" />

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Text } from '@mantine/core';
 import classes from './MdxErrorMessage.module.css';
 

@@ -9,6 +9,7 @@ export const BurgerStylesApi: StylesApiData<BurgerFactory> = {
 
   vars: {
     root: {
+      '--burger-line-size': 'Controls height of lines',
       '--burger-color': 'Controls background-color of lines',
       '--burger-size': 'Controls width and height of the button',
       '--burger-transition-duration': 'Controls transition-duration of lines',

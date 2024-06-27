@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
+
 import { Box, Button, Group, NumberInput, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
@@ -18,16 +18,27 @@ function Demo() {
         values.age === undefined
           ? 'Age is required'
           : values.age < 18
-          ? 'You must be at least 18'
-          : null,
+            ? 'You must be at least 18'
+            : null,
     }),
   });
 
   return (
     <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
-        <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-        <NumberInput mt="sm" label="Age" placeholder="You age" {...form.getInputProps('age')} />
+        <TextInput
+          label="Name"
+          placeholder="Name"
+          key={form.key('name')}
+          {...form.getInputProps('name')}
+        />
+        <NumberInput
+          mt="sm"
+          label="Age"
+          placeholder="You age"
+          key={form.key('age')}
+          {...form.getInputProps('age')}
+        />
 
         <Group justify="flex-end" mt="md">
           <Button type="submit">Submit</Button>
@@ -56,8 +67,19 @@ function Demo() {
   return (
     <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
-        <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-        <NumberInput mt="sm" label="Age" placeholder="You age" {...form.getInputProps('age')} />
+        <TextInput
+          label="Name"
+          placeholder="Name"
+          key={form.key('name')}
+          {...form.getInputProps('name')}
+        />
+        <NumberInput
+          mt="sm"
+          label="Age"
+          placeholder="You age"
+          key={form.key('age')}
+          {...form.getInputProps('age')}
+        />
 
         <Group justify="flex-end" mt="md">
           <Button type="submit">Submit</Button>

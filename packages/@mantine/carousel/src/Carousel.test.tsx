@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Carousel, CarouselProps, CarouselStylesNames } from './Carousel';
 
@@ -22,6 +21,7 @@ describe('@mantine/carousel/Carousel', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

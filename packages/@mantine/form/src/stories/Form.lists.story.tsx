@@ -1,4 +1,3 @@
-import React from 'react';
 import { ActionIcon, Button, Group, Switch, Text, TextInput } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
 import { useForm } from '../use-form';

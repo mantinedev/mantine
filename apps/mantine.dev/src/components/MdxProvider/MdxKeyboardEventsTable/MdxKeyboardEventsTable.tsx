@@ -1,4 +1,3 @@
-import React from 'react';
 import { Code, Kbd, rem, Table } from '@mantine/core';
 
 interface KeyboardEventsTableProps {

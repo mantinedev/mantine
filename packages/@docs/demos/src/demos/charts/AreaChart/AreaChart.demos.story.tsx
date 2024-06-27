@@ -152,3 +152,8 @@ export const Demo_axisLabels = {
   name: '⭐ Demo: axisLabels',
   render: renderDemo(demos.axisLabels),
 };
+
+export const Demo_rightYAxis = {
+  name: '⭐ Demo: rightYAxis',
+  render: renderDemo(demos.rightYAxis),
+};

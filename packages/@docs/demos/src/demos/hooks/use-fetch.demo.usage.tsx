@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Button, Code, Group, LoadingOverlay, Text } from '@mantine/core';
 import { useFetch } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

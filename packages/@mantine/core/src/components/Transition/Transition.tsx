@@ -1,4 +1,3 @@
-import React from 'react';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 import { MantineTransition } from './transitions';
 import { useTransition } from './use-transition';
@@ -36,6 +35,12 @@ export interface TransitionProps {
 
   /** Called when enter transition ends */
   onEntered?: () => void;
+
+  /** Delay in ms before enter transition starts */
+  enterDelay?: number;
+
+  /** Delay in ms before exit transition starts */
+  exitDelay?: number;
 }
 
 export type TransitionOverride = Partial<Omit<TransitionProps, 'mounted'>>;
@@ -52,6 +57,8 @@ export function Transition({
   onEntered,
   onEnter,
   onExited,
+  enterDelay,
+  exitDelay,
 }: TransitionProps) {
   const { transitionDuration, transitionStatus, transitionTimingFunction } = useTransition({
     mounted,
@@ -62,6 +69,8 @@ export function Transition({
     onEntered,
     onEnter,
     onExited,
+    enterDelay,
+    exitDelay,
   });
 
   if (transitionDuration === 0) {

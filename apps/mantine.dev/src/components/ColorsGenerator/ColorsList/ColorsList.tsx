@@ -1,4 +1,3 @@
-import React from 'react';
 import chroma from 'chroma-js';
 import { ColorSwatch, Group, isLightColor } from '@mantine/core';
 import classes from './ColorsList.module.css';

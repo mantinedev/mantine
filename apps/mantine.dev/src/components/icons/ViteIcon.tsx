@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import { useId } from 'react';
 import { Box, rem } from '@mantine/core';
 import { IconProps } from './types';
 import classes from './icons.module.css';

@@ -1,18 +1,7 @@
-import React from 'react';
 import { IconPhone } from '@tabler/icons-react';
 import { TextInput } from './TextInput';
 
 export default { title: 'TextInput' };
-
-export function WithinDisabledFieldset() {
-  return (
-    <fieldset disabled style={{ padding: 40 }}>
-      <legend>Disabled fieldset</legend>
-      <TextInput label="Disabled by fieldset" placeholder="Disabled by fieldset" />
-      <TextInput label="Disabled by prop" placeholder="Disabled by prop" disabled mt="md" />
-    </fieldset>
-  );
-}
 
 export function Usage() {
   return (
@@ -27,6 +16,26 @@ export function Usage() {
         descriptionProps={{ style: { color: 'red' } }}
         errorProps={{ style: { color: 'blue' } }}
       />
+    </div>
+  );
+}
+
+export function InputWrapperOrder() {
+  const props = {
+    label: 'Label',
+    placeholder: 'Placeholder',
+    description: 'Description',
+    error: 'Error',
+    withErrorStyles: false,
+    my: 'xl',
+  };
+
+  return (
+    <div style={{ padding: 40 }}>
+      <TextInput {...props} inputWrapperOrder={['label', 'description', 'input', 'error']} />
+      <TextInput {...props} inputWrapperOrder={['description', 'label', 'error', 'input']} />
+      <TextInput {...props} inputWrapperOrder={['label', 'description', 'error', 'input']} />
+      <TextInput {...props} inputWrapperOrder={['label', 'input', 'description', 'error']} />
     </div>
   );
 }

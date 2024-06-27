@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Group, Text } from '@mantine/core';
 import { randomId, useTimeout } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

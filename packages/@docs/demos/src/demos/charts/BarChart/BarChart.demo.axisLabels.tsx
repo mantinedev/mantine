@@ -1,4 +1,3 @@
-import React from 'react';
 import { BarChart } from '@mantine/charts';
 import { MantineDemo } from '@mantinex/demo';
 import { data, dataCode } from './_data';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Indicator } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';

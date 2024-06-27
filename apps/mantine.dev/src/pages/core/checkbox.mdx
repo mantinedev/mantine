@@ -99,6 +99,31 @@ function Demo() {
 }
 ```
 
+## Checkbox.Indicator
+
+`Checkbox.Indicator` looks exactly the same as `Checkbox` component, but it does not
+have any semantic meaning, it's just a visual representation of checkbox state. You
+can use it in any place where you need to display checkbox state without any interaction
+related to the indicator. For example, it is useful in cards based on buttons, trees, etc.
+
+Note that `Checkbox.Indicator` cannot be focused or selected with keyboard. It is not
+accessible and should not be used as a replacement for `Checkbox` component.
+
+<Demo data={CheckboxDemos.indicator} />
+
+## Checkbox.Card component
+
+`Checkbox.Card` component can be used as a replacement for `Checkbox` to build custom
+cards/buttons/other things that work as checkboxes. The root element of the component
+has `role="checkbox"` attribute, it is accessible by default and supports the same
+keyboard interactions as `input[type="checkbox"]`.
+
+<Demo data={CheckboxDemos.card} />
+
+You can use `Checkbox.Card` with `Checkbox.Group` the same way as `Checkbox` component:
+
+<Demo data={CheckboxDemos.cardGroup} />
+
 <GetElementRef component="Checkbox" refType="input" />
 
 <StylesApiSelectors component="Checkbox" />
@@ -108,10 +133,6 @@ function Demo() {
 ## Example: Table with row selection
 
 <Demo data={TableDemos.rowSelection} />
-
-## Example: Checkbox card
-
-<Demo data={CheckboxDemos.card} />
 
 ## Example: Customize with Styles API
 

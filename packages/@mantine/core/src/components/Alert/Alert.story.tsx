@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconPhoto } from '@tabler/icons-react';
 import { MantineThemeProvider } from '../../core';
 import { Alert } from './Alert';

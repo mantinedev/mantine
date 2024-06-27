@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Code, Group, Text } from '@mantine/core';
 import { randomId, useHash } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

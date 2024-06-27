@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconArrowUpRight } from '@tabler/icons-react';
 import { DiscordIcon, GithubIcon } from '@mantinex/dev-icons';
 import { meta } from '@mantinex/mantine-meta';

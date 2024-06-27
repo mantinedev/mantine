@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, render, tests } from '@mantine-tests/core';
 import { Modal, ModalProps, ModalStylesNames } from './Modal';
 import { ModalBody, ModalBodyProps } from './ModalBody';
@@ -34,6 +33,7 @@ describe('@mantine/core/Modal', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,
@@ -106,6 +106,7 @@ describe('@mantine/core/ModalRoot', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,
@@ -126,6 +127,7 @@ describe('@mantine/core/ModalBody', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,
@@ -144,6 +146,7 @@ describe('@mantine/core/ModalCloseButton', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,
@@ -162,6 +165,7 @@ describe('@mantine/core/ModalContent', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,
@@ -180,6 +184,7 @@ describe('@mantine/core/ModalHeader', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,
@@ -198,6 +203,7 @@ describe('@mantine/core/ModalOverlay', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,
@@ -216,6 +222,7 @@ describe('@mantine/core/ModalTitle', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

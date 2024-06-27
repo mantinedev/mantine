@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
+
 import { RingProgress } from './RingProgress';
 
 export default { title: 'RingProgress' };

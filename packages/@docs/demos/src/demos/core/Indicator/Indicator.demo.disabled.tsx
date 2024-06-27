@@ -1,4 +1,3 @@
-import React from 'react';
 import { Avatar, Button, Indicator, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

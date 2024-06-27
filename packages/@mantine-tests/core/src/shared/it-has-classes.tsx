@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface Options {
   component: React.ComponentType<any>;
 }

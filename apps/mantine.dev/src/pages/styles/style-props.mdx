@@ -59,7 +59,7 @@ function Demo() {
 }
 ```
 
-In `c` and `bg` props you can reference colors from `theme.colors`:
+In `c`, `bd` and `bg` props you can reference colors from `theme.colors`:
 
 ```tsx
 import { Box } from '@mantine/core';
@@ -72,6 +72,9 @@ function Demo() {
 
       {/* background: theme.colors.orange[1] */}
       <Box bg="orange.1" />
+
+      {/* border: 1px solid theme.colors.red[6] */}
+      <Box bd="1px solid red.6" />
 
       {/* color: if colorScheme is dark `var(--mantine-color-dark-2)`,
       if color scheme is light `var(--mantine-color-gray-6)` */}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IconPackage } from '@tabler/icons-react';
 import { Tabs, TabsProps } from './Tabs';
 

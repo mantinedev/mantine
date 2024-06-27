@@ -1,4 +1,3 @@
-import React from 'react';
 import { __InputStylesNames } from '@mantine/core';
 import { inputDefaultProps, inputStylesApiSelectors, render, tests } from '@mantine-tests/core';
 import { clickControl, clickInput, datesTests, expectValue } from '@mantine-tests/dates';
@@ -27,6 +26,7 @@ describe('@mantine/dates/DatePickerInput', () => {
     props: defaultPropsWithInputProps,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

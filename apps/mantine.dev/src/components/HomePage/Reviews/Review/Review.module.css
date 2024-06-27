@@ -1,0 +1,53 @@
+.root {
+  padding: var(--mantine-spacing-lg);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-md);
+  margin-bottom: var(--mantine-spacing-md);
+  padding-bottom: var(--mantine-spacing-sm);
+  border-bottom: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
+}
+
+.authorName {
+  font-weight: 500;
+  font-size: var(--mantine-font-size-md);
+  color: var(--mantine-color-bright);
+
+  @mixin hover {
+    text-decoration: underline;
+  }
+}
+
+.title {
+  font-weight: 700;
+  font-size: var(--mantine-font-size-xl);
+  margin-bottom: var(--mantine-spacing-sm);
+  color: var(--mantine-color-bright);
+  font-family: var(--docs-font-primary);
+}
+
+.body {
+  font-size: var(--mantine-font-size-md);
+  text-wrap: balance;
+
+  & *:last-child {
+    margin-bottom: 0;
+  }
+
+  & p {
+    margin-top: 0;
+    margin-bottom: var(--mantine-spacing-md);
+  }
+
+  & a {
+    color: var(--mantine-color-anchor);
+    text-decoration: none;
+
+    @mixin hover {
+      text-decoration: underline;
+    }
+  }
+}

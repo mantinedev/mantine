@@ -1,4 +1,3 @@
-import React from 'react';
 import { PieChart, PieChartCell } from './PieChart';
 
 export default { title: 'PieChart' };

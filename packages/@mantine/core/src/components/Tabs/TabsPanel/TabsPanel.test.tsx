@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
 import { Tabs } from '../Tabs';
 import { TabsPanel, TabsPanelProps, TabsPanelStylesNames } from './TabsPanel';
@@ -18,6 +17,7 @@ describe('@mantine/core/TabsPanel', () => {
     displayName: '@mantine/core/TabsPanel',
     mod: true,
     extend: true,
+    withProps: true,
     styleProps: true,
     children: true,
     classes: true,

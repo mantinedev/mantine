@@ -1,4 +1,3 @@
-import React from 'react';
 import { Avatar, Indicator, IndicatorProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

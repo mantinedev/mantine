@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconChevronDown, IconExternalLink } from '@tabler/icons-react';
 import cx from 'clsx';
 import { Box, Burger, Code, Group, Menu, RemoveScroll, Text, UnstyledButton } from '@mantine/core';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
 import { __InputStylesNames } from '../Input';
 import { Textarea, TextareaProps } from './Textarea';
@@ -22,6 +21,7 @@ describe('@mantine/core/Textarea', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

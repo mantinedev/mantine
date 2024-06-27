@@ -1,4 +1,3 @@
-import React from 'react';
 import { Switch } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { SwitchStylesApi } from '@docs/styles-api';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useId } from '@mantine/hooks';
 import {
   Box,
@@ -22,9 +21,11 @@ import {
   useStyles,
 } from '../../core';
 import { InlineInput, InlineInputStylesNames } from '../InlineInput';
+import { RadioCard } from './RadioCard/RadioCard';
 import { useRadioGroupContext } from './RadioGroup.context';
 import { RadioGroup } from './RadioGroup/RadioGroup';
 import { RadioIcon, RadioIconProps } from './RadioIcon';
+import { RadioIndicator } from './RadioIndicator/RadioIndicator';
 import classes from './Radio.module.css';
 
 export type RadioVariant = 'filled' | 'outline';
@@ -49,7 +50,7 @@ export interface RadioProps
   color?: MantineColor;
 
   /** Controls size of the component, `'sm'` by default */
-  size?: MantineSize;
+  size?: MantineSize | (string & {});
 
   /** A component that replaces default check icon */
   icon?: React.FC<RadioIconProps>;
@@ -87,6 +88,8 @@ export type RadioFactory = Factory<{
   variant: RadioVariant;
   staticComponents: {
     Group: typeof RadioGroup;
+    Card: typeof RadioCard;
+    Indicator: typeof RadioIndicator;
   };
 }>;
 
@@ -110,7 +113,7 @@ const varsResolver = createVarsResolver<RadioFactory>(
         '--radio-icon-color': iconColor
           ? getThemeColor(iconColor, theme)
           : getAutoContrastValue(autoContrast, theme)
-            ? getContrastColor({ color, theme })
+            ? getContrastColor({ color, theme, autoContrast })
             : undefined,
         '--radio-icon-size': getSize(size, 'radio-icon-size'),
       },
@@ -222,3 +225,5 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
 Radio.classes = classes;
 Radio.displayName = '@mantine/core/Radio';
 Radio.Group = RadioGroup;
+Radio.Card = RadioCard;
+Radio.Indicator = RadioIndicator;

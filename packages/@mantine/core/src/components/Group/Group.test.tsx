@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Group, GroupProps, GroupStylesNames } from './Group';
 
@@ -13,6 +12,7 @@ describe('@mantine/core/Group', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import React from 'react';
 import {
   BoxProps,
   createVarsResolver,
@@ -43,7 +42,7 @@ export interface DayProps extends BoxProps, StylesApiProps<DayFactory>, ElementP
   /** Determines whether the day is selected, `false` by default */
   selected?: boolean;
 
-  /** Determines whether the day should not de displayed, `false` by default */
+  /** Determines whether the day should not be displayed, `false` by default */
   hidden?: boolean;
 
   /** Determines whether the day is selected in range, `false` by default */
@@ -57,6 +56,9 @@ export interface DayProps extends BoxProps, StylesApiProps<DayFactory>, ElementP
 
   /** Controls day value rendering */
   renderDay?: (date: Date) => React.ReactNode;
+
+  /** Determines whether today should be highlighted with a border, `false` by default */
+  highlightToday?: boolean;
 }
 
 export type DayFactory = Factory<{
@@ -95,6 +97,7 @@ export const Day = factory<DayFactory>((_props, ref) => {
     lastInRange,
     hidden,
     static: isStatic,
+    highlightToday,
     ...others
   } = props;
 
@@ -124,6 +127,7 @@ export const Day = factory<DayFactory>((_props, ref) => {
         dayjs(date).isSame(shiftTimezone('add', new Date(), ctx.getTimezone()), 'day') || undefined
       }
       data-hidden={hidden || undefined}
+      data-highlight-today={highlightToday || undefined}
       data-disabled={disabled || undefined}
       data-weekend={(!disabled && !outside && weekend) || undefined}
       data-outside={(!disabled && outside) || undefined}

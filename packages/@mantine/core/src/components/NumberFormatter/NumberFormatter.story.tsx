@@ -1,4 +1,3 @@
-import React from 'react';
 import { NumberFormatter } from './NumberFormatter';
 
 export default { title: 'NumberFormatter' };

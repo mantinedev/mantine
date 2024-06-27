@@ -68,6 +68,11 @@ export const Demo_search = {
   render: renderDemo(demos.search),
 };
 
+export const Demo_selectFirst = {
+  name: '⭐ Demo: selectFirstOptionOnChange',
+  render: renderDemo(demos.selectFirst),
+};
+
 export const Demo_scrollArea = {
   name: '⭐ Demo: scrollArea',
   render: renderDemo(demos.scrollArea),
@@ -126,4 +131,14 @@ export const Demo_withinPopover = {
 export const Demo_renderOption = {
   name: '⭐ Demo: renderOption',
   render: renderDemo(demos.renderOption),
+};
+
+export const Demo_dropdownWidth = {
+  name: '⭐ Demo: dropdownWidth',
+  render: renderDemo(demos.dropdownWidth),
+};
+
+export const Demo_acceptValueOnBlur = {
+  name: '⭐ Demo: acceptValueOnBlur',
+  render: renderDemo(demos.acceptValueOnBlur),
 };

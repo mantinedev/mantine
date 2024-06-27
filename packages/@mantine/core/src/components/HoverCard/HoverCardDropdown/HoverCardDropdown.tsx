@@ -1,4 +1,3 @@
-import React from 'react';
 import { createEventHandler, useProps } from '../../../core';
 import { Popover, PopoverDropdownProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';

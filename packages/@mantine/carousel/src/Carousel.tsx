@@ -1,4 +1,4 @@
-import React, { Children, useCallback, useEffect, useState } from 'react';
+import { Children, useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel, { EmblaCarouselType, EmblaPluginType } from 'embla-carousel-react';
 import {
   AccordionChevron,

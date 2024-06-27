@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Text } from '@mantine/core';
 import { ContextModalProps, ModalsProvider } from '@mantine/modals';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { fireEvent } from '@testing-library/react';
 import { render, tests } from '@mantine-tests/core';
 import { Avatar, AvatarProps, AvatarStylesNames } from './Avatar';
@@ -16,6 +15,7 @@ describe('@mantine/core/Avatar', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

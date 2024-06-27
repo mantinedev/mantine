@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { DEFAULT_THEME, MantineSize } from '../../core';
 import { Button } from '../Button';
 import { PinInput } from './PinInput';

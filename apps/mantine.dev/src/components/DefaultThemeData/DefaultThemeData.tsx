@@ -1,4 +1,3 @@
-import React from 'react';
 import { DEFAULT_THEME } from '@mantine/core';
 import { MdxCodeHighlight } from '../MdxProvider';
 

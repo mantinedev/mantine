@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Accept,
   DropEvent,
@@ -281,7 +280,7 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
   return (
     <DropzoneProvider value={{ accept: isDragAccept, reject: isDragReject, idle: isIdle }}>
       <Box
-        {...getRootProps({ ref })}
+        {...getRootProps()}
         {...getStyles('root', { focusable: true })}
         {...others}
         mod={[
@@ -302,7 +301,11 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
           loaderProps={loaderProps}
         />
         <input {...getInputProps(inputProps)} name={name} />
-        <div {...getStyles('inner')} data-enable-pointer-events={enablePointerEvents || undefined}>
+        <div
+          {...getStyles('inner')}
+          ref={ref}
+          data-enable-pointer-events={enablePointerEvents || undefined}
+        >
           {children}
         </div>
       </Box>

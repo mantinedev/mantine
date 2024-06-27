@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconXboxX } from '@tabler/icons-react';
 import { Button, Drawer } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';

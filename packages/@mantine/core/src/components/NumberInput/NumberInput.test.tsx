@@ -1,4 +1,4 @@
-import React from 'react';
+import { createRef } from 'react';
 import { act, fireEvent } from '@testing-library/react';
 import {
   inputDefaultProps,
@@ -17,6 +17,9 @@ const defaultProps: NumberInputProps = {
 
 const clickIncrement = (container: HTMLElement) =>
   userEvent.click(container.querySelector('.mantine-NumberInput-control[data-direction="up"]')!);
+
+const clickDecrement = (container: HTMLElement) =>
+  userEvent.click(container.querySelector('.mantine-NumberInput-control[data-direction="down"]')!);
 
 const getInput = () => screen.getByRole('textbox');
 const enterText = (text: string) => userEvent.type(getInput(), text);
@@ -38,6 +41,7 @@ describe('@mantine/core/NumberInput', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,
@@ -55,7 +59,7 @@ describe('@mantine/core/NumberInput', () => {
   });
 
   it('exposes increment/decrement handlers with handlersRef prop', () => {
-    const ref = React.createRef<NumberInputHandlers>();
+    const ref = createRef<NumberInputHandlers>();
     const spy = jest.fn();
     render(<NumberInput {...defaultProps} step={2} onChange={spy} handlersRef={ref} />);
 
@@ -174,6 +178,16 @@ describe('@mantine/core/NumberInput', () => {
     await enterText('{backspace}');
     await enterText('{backspace}');
 
+    expect(spy).toHaveBeenLastCalledWith(0);
+  });
+
+  it('does not allow negative numbers if the allowNegative prop is false', async () => {
+    const spy = jest.fn();
+    const { container } = render(<NumberInput onChange={spy} value={0} allowNegative={false} />);
+
+    await clickDecrement(container);
+
+    expectValue('0');
     expect(spy).toHaveBeenLastCalledWith(0);
   });
 });

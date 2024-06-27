@@ -1,4 +1,3 @@
-import React from 'react';
 import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
 import { TagsInput, TagsInputProps, TagsInputStylesNames } from './TagsInput';
 
@@ -22,6 +21,7 @@ describe('@mantine/core/TagsInput', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

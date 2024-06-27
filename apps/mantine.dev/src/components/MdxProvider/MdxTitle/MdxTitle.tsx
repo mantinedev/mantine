@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconCheck } from '@tabler/icons-react';
 import cx from 'clsx';
 import { FOCUS_CLASS_NAMES, Title, UnstyledButton } from '@mantine/core';

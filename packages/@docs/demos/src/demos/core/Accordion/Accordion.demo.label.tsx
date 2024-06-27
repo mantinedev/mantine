@@ -1,4 +1,3 @@
-import React from 'react';
 import { Accordion, AccordionProps, Avatar, Group, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

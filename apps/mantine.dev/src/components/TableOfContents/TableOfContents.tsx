@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { IconList } from '@tabler/icons-react';
 import { Box, rem, ScrollArea, Text } from '@mantine/core';

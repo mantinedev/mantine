@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests } from '@mantine-tests/core';
 import {
   ActionIconGroup,
@@ -16,6 +15,7 @@ describe('@mantine/core/ActionIconGroup', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

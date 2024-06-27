@@ -1,4 +1,3 @@
-import React from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { factory, Factory, MantineSize, useProps } from '../../../core';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';

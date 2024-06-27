@@ -37,13 +37,13 @@ export function useFetch<T>(url: string, { autoInvoke = true, ...options }: UseF
           setError(err);
         }
 
-        throw err;
+        return err;
       });
   }, [url]);
 
   const abort = useCallback(() => {
     if (controller.current) {
-      controller.current?.abort();
+      controller.current?.abort('');
     }
   }, []);
 
@@ -54,7 +54,7 @@ export function useFetch<T>(url: string, { autoInvoke = true, ...options }: UseF
 
     return () => {
       if (controller.current) {
-        controller.current.abort();
+        controller.current.abort('');
       }
     };
   }, [refetch, autoInvoke]);

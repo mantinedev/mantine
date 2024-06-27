@@ -6,3 +6,6 @@ export { iconColor } from './Radio.demo.iconColor';
 export { stylesApi } from './Radio.demo.stylesApi';
 export { tooltip } from './Radio.demo.tooltip';
 export { states } from './Radio.demo.states';
+export { card } from './Radio.demo.card';
+export { cardGroup } from './Radio.demo.cardGroup';
+export { indicator } from './Radio.demo.indicator';

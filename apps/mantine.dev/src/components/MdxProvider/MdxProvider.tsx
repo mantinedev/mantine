@@ -1,4 +1,3 @@
-import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
 import { Demo } from '@mantinex/demo';
 import { MdxDataTable } from './MdxDataTable/MdxDataTable';

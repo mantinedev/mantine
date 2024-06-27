@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
+
 import { Button, NumberInput, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
@@ -24,14 +24,26 @@ function Demo() {
 
   return (
     <form onSubmit={form.onSubmit(console.log)}>
-      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-      <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="sm"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
       <NumberInput
         mt="sm"
         label="Age"
         placeholder="Age"
         min={0}
         max={99}
+        key={form.key('age')}
         {...form.getInputProps('age')}
       />
       <Button type="submit" mt="sm">
@@ -58,14 +70,26 @@ function Demo() {
 
   return (
     <form onSubmit={form.onSubmit(console.log)}>
-      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-      <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="sm"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
       <NumberInput
         mt="sm"
         label="Age"
         placeholder="Age"
         min={0}
         max={99}
+        key={form.key('age')}
         {...form.getInputProps('age')}
       />
       <Button type="submit" mt="sm">

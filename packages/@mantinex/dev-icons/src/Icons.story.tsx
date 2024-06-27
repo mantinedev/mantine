@@ -1,4 +1,3 @@
-import React from 'react';
 import { DiscordIcon } from './DiscordIcon';
 import { GithubIcon } from './GithubIcon';
 import { NpmIcon } from './NpmIcon';

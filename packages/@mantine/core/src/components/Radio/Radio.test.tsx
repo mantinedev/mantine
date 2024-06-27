@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import { createRef } from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { Radio, RadioProps, RadioStylesNames } from './Radio';
 import { RadioGroup } from './RadioGroup/RadioGroup';
@@ -17,6 +17,7 @@ describe('@mantine/core/Radio', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, BoxProps, ElementProps, useDirection } from '../../../core';
 import { useRatingContext } from '../Rating.context';
 import { StarSymbol } from '../StarSymbol/StarSymbol';

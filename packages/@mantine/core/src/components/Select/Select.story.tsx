@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../Button';
 import { Select } from './Select';
 
@@ -12,6 +12,19 @@ export function Usage() {
         placeholder="Select something"
         defaultValue="First"
         name="usage-select"
+      />
+    </div>
+  );
+}
+
+export function WithAreaLabel() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Select
+        data={['React', 'Angular', 'Svelte']}
+        aria-label="Library"
+        placeholder="Select something"
+        dropdownOpened
       />
     </div>
   );
@@ -180,6 +193,24 @@ export function SearchControlledValue() {
         data={['React', 'Angular', 'Svelte']}
         placeholder="Select something"
         searchable
+      />
+    </div>
+  );
+}
+
+export function ControlledSearchAndValue() {
+  const [value, setValue] = useState<string | null>('Angular');
+  const [searchValue, setSearchValue] = useState('');
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Select
+        searchable
+        searchValue={searchValue}
+        onSearchChange={setSearchValue}
+        data={['React', 'Angular', 'Svelte']}
+        value={value}
+        onChange={setValue}
       />
     </div>
   );

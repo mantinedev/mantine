@@ -1,4 +1,3 @@
-import React from 'react';
 import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
 import { __InputStylesNames } from '../Input';
 import { PillsInput, PillsInputProps } from './PillsInput';
@@ -33,6 +32,7 @@ describe('@mantine/core/PillsInput', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     refType: HTMLDivElement,

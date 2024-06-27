@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 import { Button, Container, Group, rem, SimpleGrid, Text } from '@mantine/core';
 import { GithubIcon } from '@mantinex/dev-icons';

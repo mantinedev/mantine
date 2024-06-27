@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -121,7 +121,7 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
               </Input.Description>
             )}
 
-            {error && error !== 'boolean' && (
+            {error && typeof error !== 'boolean' && (
               <Input.Error size={size} __inheritStyles={false} {...getStyles('error')}>
                 {error}
               </Input.Error>

@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function isNotEmpty(error?: React.ReactNode) {
   const _error = error || true;
 

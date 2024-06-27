@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Group } from '@mantine/core';
 import { useFavicon } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

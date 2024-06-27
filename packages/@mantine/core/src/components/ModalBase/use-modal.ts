@@ -34,7 +34,7 @@ export function useModal({
   useWindowEvent(
     'keydown',
     (event) => {
-      if (event.key === 'Escape' && closeOnEscape) {
+      if (event.key === 'Escape' && closeOnEscape && opened) {
         const shouldTrigger =
           (event.target as HTMLElement)?.getAttribute('data-mantine-stop-propagation') !== 'true';
         shouldTrigger && onClose();

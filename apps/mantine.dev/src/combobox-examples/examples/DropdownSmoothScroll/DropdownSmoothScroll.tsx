@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Combobox, ScrollArea, TextInput, useCombobox } from '@mantine/core';
 
 const groceries = [

@@ -63,6 +63,9 @@ export interface GetClassNameOptions {
 
   /** If set, removes all Mantine classes */
   headless?: boolean;
+
+  /** `styles` prop transformed into classes with CSS-in-JS library, for example, emotion */
+  transformedStyles?: Record<string, string>[];
 }
 
 export function getClassName({
@@ -80,12 +83,14 @@ export function getClassName({
   stylesCtx,
   withStaticClasses,
   headless,
+  transformedStyles,
 }: GetClassNameOptions) {
   return cx(
     getGlobalClassNames({ theme, options, unstyled: unstyled || headless }),
     getThemeClassNames({ theme, themeName, selector, props, stylesCtx }),
     getVariantClassName({ options, classes, selector, unstyled }),
     getResolvedClassNames({ selector, stylesCtx, theme, classNames, props }),
+    getResolvedClassNames({ selector, stylesCtx, theme, classNames: transformedStyles, props }),
     getOptionsClassNames({ selector, stylesCtx, options, props, theme }),
     getRootClassName({ rootSelector, selector, className }),
     getSelectorClassName({ selector, classes, unstyled: unstyled || headless }),

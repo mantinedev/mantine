@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
 import { ProgressRoot } from '../ProgressRoot/ProgressRoot';
 import {
@@ -23,6 +22,7 @@ describe('@mantine/core/ProgressSection', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

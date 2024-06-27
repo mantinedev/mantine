@@ -1,4 +1,3 @@
-import React from 'react';
 import { AreaChart } from '@mantine/charts';
 import { MantineDemo } from '@mantinex/demo';
 import { yScaleData, yScaleDataCode } from './_data';

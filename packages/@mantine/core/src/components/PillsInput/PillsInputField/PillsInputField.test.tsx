@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
 import { PillsInputProvider } from '../PillsInput.context';
 import {
@@ -20,6 +19,7 @@ describe('@mantine/core/PillsInputField', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

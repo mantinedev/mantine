@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import { Box, BoxProps, ElementProps } from '../../../core';
 import { useScrollAreaContext } from '../ScrollArea.context';

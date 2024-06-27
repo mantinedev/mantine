@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests, userEvent } from '@mantine-tests/core';
 import { ColorPicker, ColorPickerProps, ColorPickerStylesNames } from './ColorPicker';
 
@@ -24,6 +23,7 @@ describe('@mantine/core/ColorPicker', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

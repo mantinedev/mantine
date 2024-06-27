@@ -1,4 +1,3 @@
-import React from 'react';
 import { MdxPageHeader } from '@/components/MdxPageHeader';
 import { MdxRawContent } from '@/components/MdxRawContent';
 import { MdxTabs } from '@/components/MdxTabs';

@@ -1,4 +1,3 @@
-import React from 'react';
 import lodash from 'lodash';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Day, DayProps, DayStylesNames } from './Day';
@@ -28,6 +27,7 @@ describe('@mantine/dates/Day', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

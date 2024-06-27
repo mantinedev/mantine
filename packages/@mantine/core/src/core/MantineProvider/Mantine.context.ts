@@ -2,6 +2,11 @@ import { createContext, useContext } from 'react';
 import { ConvertCSSVariablesInput } from './convert-css-variables';
 import type { MantineColorScheme, MantineTheme } from './theme.types';
 
+export interface MantineStylesTransform {
+  sx?: () => (sx: any) => string;
+  styles?: () => (styles: any, payload: any) => Record<string, string>;
+}
+
 interface MantineContextValue {
   colorScheme: MantineColorScheme;
   setColorScheme: (colorScheme: MantineColorScheme) => void;
@@ -13,6 +18,7 @@ interface MantineContextValue {
   cssVariablesSelector: string;
   withStaticClasses: boolean;
   headless?: boolean;
+  stylesTransform?: MantineStylesTransform;
 }
 
 export const MantineContext = createContext<MantineContextValue | null>(null);
@@ -45,4 +51,12 @@ export function useMantineWithStaticClasses() {
 
 export function useMantineIsHeadless() {
   return useMantineContext().headless;
+}
+
+export function useMantineSxTransform() {
+  return useMantineContext().stylesTransform?.sx;
+}
+
+export function useMantineStylesTransform() {
+  return useMantineContext().stylesTransform?.styles;
 }

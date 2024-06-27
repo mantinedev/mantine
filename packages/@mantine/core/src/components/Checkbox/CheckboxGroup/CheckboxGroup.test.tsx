@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Checkbox } from '../Checkbox';
 import { CheckboxGroup, CheckboxGroupProps, CheckboxGroupStylesNames } from './CheckboxGroup';
@@ -31,6 +30,7 @@ describe('@mantine/core/CheckboxGroup', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/CheckboxGroup',

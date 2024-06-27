@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IconSearch, IconTable } from '@tabler/icons-react';
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';

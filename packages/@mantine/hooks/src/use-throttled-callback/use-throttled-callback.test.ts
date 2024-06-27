@@ -15,13 +15,15 @@ describe('useThrottledCallback', () => {
     const { result } = renderHook(() => useThrottledCallback(callback, 100));
 
     act(() => {
-      result.current();
+      result.current(1);
+      result.current(2);
       jest.advanceTimersByTime(50);
-      result.current();
-      jest.advanceTimersByTime(50);
+      result.current(3);
+      jest.advanceTimersByTime(100);
     });
 
-    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(2);
+    expect(callback).toHaveBeenLastCalledWith(3);
   });
 
   it('should allow callback after throttle period', () => {

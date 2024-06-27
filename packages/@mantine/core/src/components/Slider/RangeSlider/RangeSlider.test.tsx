@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { SliderStylesNames } from '../Slider.context';
 import { RangeSlider, RangeSliderProps } from './RangeSlider';
@@ -25,6 +24,7 @@ describe('@mantine/core/RangeSlider', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

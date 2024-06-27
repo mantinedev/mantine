@@ -1,4 +1,4 @@
-import React from 'react';
+import { Children, cloneElement } from 'react';
 import {
   Box,
   BoxProps,
@@ -79,33 +79,30 @@ export const Breadcrumbs = factory<BreadcrumbsFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const items = React.Children.toArray(children).reduce<React.ReactNode[]>(
-    (acc, child, index, array) => {
-      const item = isElement(child) ? (
-        React.cloneElement(child, {
-          ...getStyles('breadcrumb', { className: child.props?.className }),
-          key: index,
-        })
-      ) : (
-        <div {...getStyles('breadcrumb')} key={index}>
-          {child}
-        </div>
+  const items = Children.toArray(children).reduce<React.ReactNode[]>((acc, child, index, array) => {
+    const item = isElement(child) ? (
+      cloneElement(child, {
+        ...getStyles('breadcrumb', { className: child.props?.className }),
+        key: index,
+      })
+    ) : (
+      <div {...getStyles('breadcrumb')} key={index}>
+        {child}
+      </div>
+    );
+
+    acc.push(item);
+
+    if (index !== array.length - 1) {
+      acc.push(
+        <Box {...getStyles('separator')} key={`separator-${index}`}>
+          {separator}
+        </Box>
       );
+    }
 
-      acc.push(item);
-
-      if (index !== array.length - 1) {
-        acc.push(
-          <Box {...getStyles('separator')} key={`separator-${index}`}>
-            {separator}
-          </Box>
-        );
-      }
-
-      return acc;
-    },
-    []
-  );
+    return acc;
+  }, []);
 
   return (
     <Box ref={ref} {...getStyles('root')} {...others}>

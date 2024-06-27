@@ -1,4 +1,3 @@
-import React from 'react';
 import { tests } from '@mantine-tests/core';
 import { Collapse, CollapseProps } from './Collapse';
 
@@ -14,6 +13,7 @@ describe('@mantine/core/Collapse', () => {
     children: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/Collapse',
   });

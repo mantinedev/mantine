@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { TextStylesNames } from '../Text';
 import { Highlight, HighlightProps } from './Highlight';
@@ -16,6 +15,7 @@ describe('@mantine/core/Highlight', () => {
     polymorphic: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     id: true,

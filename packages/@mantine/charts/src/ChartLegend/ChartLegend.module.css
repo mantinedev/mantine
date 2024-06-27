@@ -5,6 +5,10 @@
   justify-content: flex-end;
   height: 100%;
 
+  &:where([data-centered]) {
+    justify-content: center;
+  }
+
   &:where([data-position='top']) {
     padding-bottom: var(--mantine-spacing-md);
   }
@@ -30,6 +34,10 @@
     @mixin where-dark {
       background-color: var(--mantine-color-dark-5);
     }
+  }
+
+  &[data-without-color] .legendItemColor {
+    display: none;
   }
 }
 

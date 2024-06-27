@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Group, useMantineColorScheme } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

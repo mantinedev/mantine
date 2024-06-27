@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconPhone } from '@tabler/icons-react';
 import { ActionIcon, Affix, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

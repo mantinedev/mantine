@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Container, Overlay, Text, Title } from '@mantine/core';
 import { GithubIcon } from '@mantinex/dev-icons';
 import banner from './banner.webp';

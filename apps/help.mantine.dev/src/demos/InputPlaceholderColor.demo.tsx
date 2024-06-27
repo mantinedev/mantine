@@ -1,4 +1,3 @@
-import React from 'react';
 import { TextInput } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';

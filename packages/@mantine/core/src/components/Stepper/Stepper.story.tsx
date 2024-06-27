@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { Stepper } from './Stepper';

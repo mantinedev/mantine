@@ -1,4 +1,3 @@
-import React from 'react';
 import { tests } from '@mantine-tests/core';
 import {
   SegmentedControl,
@@ -23,6 +22,7 @@ describe('@mantine/core/SegmentedControl', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

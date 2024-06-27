@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
 import { YearsList, YearsListProps, YearsListStylesNames } from './YearsList';
@@ -14,6 +13,7 @@ describe('@mantine/dates/YearsList', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

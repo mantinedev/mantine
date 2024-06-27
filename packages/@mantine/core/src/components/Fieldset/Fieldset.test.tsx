@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Fieldset, FieldsetProps, FieldsetStylesNames } from './Fieldset';
 
@@ -14,6 +13,7 @@ describe('@mantine/core/Fieldset', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

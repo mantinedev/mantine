@@ -70,7 +70,7 @@ describe('@mantine/units-converters/rem', () => {
 
   it('correctly transforms a list of coma separated values', () => {
     expect(rem('0 0, 0 4px, 4px -4px, -4px 0')).toBe(
-      '0rem 0rem,0rem 0rem calc(0.25rem * var(--mantine-scale)),0rem calc(0.25rem * var(--mantine-scale)) calc(-0.25rem * var(--mantine-scale)),0rem calc(-0.25rem * var(--mantine-scale)) 0rem'
+      '0rem 0rem, 0rem calc(0.25rem * var(--mantine-scale)), calc(0.25rem * var(--mantine-scale)) calc(-0.25rem * var(--mantine-scale)), calc(-0.25rem * var(--mantine-scale)) 0rem'
     );
   });
 });

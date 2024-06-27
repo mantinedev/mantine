@@ -1,5 +1,3 @@
-import React from 'react';
-
 type ExtendedProps<Props = {}, OverrideProps = {}> = OverrideProps &
   Omit<Props, keyof OverrideProps>;
 

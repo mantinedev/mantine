@@ -1,4 +1,3 @@
-import React from 'react';
 import { createOptionalContext, MantineSize } from '../../core';
 import { InputVariant } from '../Input';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Switch } from '../Switch';
 import { SwitchGroup, SwitchGroupProps, SwitchGroupStylesNames } from './SwitchGroup';
@@ -31,6 +30,7 @@ describe('@mantine/core/SwitchGroup', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/SwitchGroup',

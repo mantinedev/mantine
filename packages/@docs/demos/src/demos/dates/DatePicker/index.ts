@@ -18,3 +18,4 @@ export { weekendDays } from './DatePicker.demo.weekendDays';
 export { renderDay } from './DatePicker.demo.renderDay';
 export { hideWeekdays } from './DatePicker.demo.hideWeekdays';
 export { hideOutsideDates } from './DatePicker.demo.hideOutsideDates';
+export { excludeDate } from './DatePicker.demo.excludeDate';

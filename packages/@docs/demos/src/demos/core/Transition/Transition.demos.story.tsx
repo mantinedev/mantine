@@ -7,3 +7,8 @@ export const Demo_custom = {
   name: '⭐ Demo: custom',
   render: renderDemo(demos.custom),
 };
+
+export const Demo_delay = {
+  name: '⭐ Demo: delay',
+  render: renderDemo(demos.delay),
+};

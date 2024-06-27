@@ -168,7 +168,7 @@
   &[data-focus-ring='auto'] {
     &:focus:focus-visible {
       & + .label {
-        --segmented-control-outline: 2px solid var(--mantine-color-blue-filled);
+        --segmented-control-outline: 2px solid var(--mantine-primary-color-filled);
       }
     }
   }
@@ -176,7 +176,7 @@
   &[data-focus-ring='always'] {
     &:focus {
       & + .label {
-        --segmented-control-outline: 2px solid var(--mantine-color-blue-filled);
+        --segmented-control-outline: 2px solid var(--mantine-primary-color-filled);
       }
     }
   }

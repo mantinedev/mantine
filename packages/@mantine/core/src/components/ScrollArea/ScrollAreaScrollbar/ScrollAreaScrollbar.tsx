@@ -1,4 +1,4 @@
-import React from 'react';
+import { forwardRef, useEffect } from 'react';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { ScrollAreaScrollbarAuto } from './ScrollAreaScrollbarAuto';
 import { ScrollAreaScrollbarHover } from './ScrollAreaScrollbarHover';
@@ -12,14 +12,14 @@ interface ScrollAreaScrollbarProps extends ScrollAreaScrollbarVisibleProps {
   forceMount?: true;
 }
 
-export const ScrollAreaScrollbar = React.forwardRef<HTMLDivElement, ScrollAreaScrollbarProps>(
+export const ScrollAreaScrollbar = forwardRef<HTMLDivElement, ScrollAreaScrollbarProps>(
   (props, forwardedRef) => {
     const { forceMount, ...scrollbarProps } = props;
     const context = useScrollAreaContext();
     const { onScrollbarXEnabledChange, onScrollbarYEnabledChange } = context;
     const isHorizontal = props.orientation === 'horizontal';
 
-    React.useEffect(() => {
+    useEffect(() => {
       isHorizontal ? onScrollbarXEnabledChange(true) : onScrollbarYEnabledChange(true);
       return () => {
         isHorizontal ? onScrollbarXEnabledChange(false) : onScrollbarYEnabledChange(false);

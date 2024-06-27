@@ -10,6 +10,93 @@ This guide is intended to help you migrate your project styles from 6.x to 7.x.
 It is not intended to be a comprehensive guide to all the changes in 7.x.
 For that, please see the [7.0.0 changelog](/changelog/7-0-0).
 
+## Migration to @mantine/emotion
+
+`@mantine/emotion` package is available starting from version 7.9. If you do not want
+to use CSS modules, have a lot of styles created with `createStyles`, `sx` and `styles`
+props, or just prefer CSS-in-JS syntax, you can migrate to `@mantine/emotion`. To view
+the full documentation for `@mantine/emotion` package, visit [this page](/styles/emotion).
+
+### createStyles and Global component
+
+`createStyles` function and `Global` component are no longer available in `@mantine/core` package. Change imports
+to `@mantine/emotion`:
+
+```tsx
+// 6.x
+import { createStyles, Global } from '@mantine/core';
+
+// 7.x
+import { createStyles, Global } from '@mantine/emotion';
+```
+
+### sx and styles props
+
+`sx` and styles props available in 7.x the same way as in 6.x after [setup](/styles/emotion):
+
+```tsx
+// 6.x and 7.x, no changes
+import { Box, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Box
+        sx={(theme) => ({ backgroundColor: theme.colors.red[5] })}
+      />
+      <Button styles={{ root: { height: 50 } }} />
+    </>
+  );
+}
+```
+
+### theme.colorScheme
+
+In v7 color scheme value is managed by [MantineProvider](/theming/mantine-provider),
+[theme object](/theming/theme-object) no longer includes `colorScheme` property.
+Although it is still possible to access color scheme value in components with
+[useMantineColorScheme](/theming/color-schemes#use-mantine-color-scheme-hook) hook,
+it is not recommended to base your styles on its value. Instead, use `light`/`dark`
+[utilities](/styles/emotion#utilities).
+
+Example of 6.x `createStyles` with `theme.colorScheme` migration to 7.0:
+
+```tsx
+// 6.x
+import { createStyles } from '@mantine/core';
+
+const useStyles = createStyles((theme) => ({
+  root: {
+    backgroundColor:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[6]
+        : theme.colors.gray[0],
+    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+  },
+}));
+```
+
+```tsx
+// 7.x
+import { createStyles } from '@mantine/emotion';
+
+const useStyles = createStyles((theme, _, u) => ({
+  root: {
+    [u.dark] {
+      backgroundColor: theme.colors.dark[6];
+      color: theme.white;
+    },
+
+    [u.light]: {
+      backgroundColor: theme.colors.gray[0];
+      color: theme.black;
+    },
+  },
+}));
+```
+
+## Migration to CSS modules
+
 Before getting started, it is recommended to go through [styles](/styles/css-modules) documentation.
 Most notable parts:
 
@@ -23,7 +110,7 @@ Most notable parts:
 Note that this guide assumes that you have [postcss-preset-mantine](/styles/postcss-preset) installed and configured
 in your project.
 
-## createStyles
+### createStyles
 
 `createStyles` function is no longer available in 7.0. Use [CSS Modules](/styles/css-modules) instead.
 
@@ -45,9 +132,9 @@ const useStyles = createStyles((theme) => ({
 }
 ```
 
-## sx prop
+### sx prop
 
-`sx` prop is no longer available in 7.0. Use `className` or [style prop](/styles/style) instead.
+`sx` and prop is no longer available in 7.0. Use `className` or [style prop](/styles/style) instead.
 
 ```tsx
 // 6.x
@@ -90,7 +177,7 @@ function Demo() {
 }
 ```
 
-## styles prop
+### styles prop
 
 `styles` prop no longer supports nested selectors. Use
 `classNames` instead to apply styles to nested elements.
@@ -142,7 +229,7 @@ function Demo() {
 }
 ```
 
-## Global styles
+### Global styles
 
 `Global` component and global styles on theme are not available in 7.0. Instead,
 create a global stylesheet (`.css` file) and import it in your application entry point.
@@ -214,7 +301,7 @@ body {
 }
 ```
 
-## theme referencing
+### theme referencing
 
 All [theme](/theming/theme-object) properties are now available as [CSS variables](/styles/css-variables). It is recommended to use
 [CSS variables](/styles/css-variables) instead of referencing theme object in styles.
@@ -245,7 +332,7 @@ function Demo() {
 }
 ```
 
-## theme.colorScheme
+### theme.colorScheme
 
 Color scheme value is managed by [MantineProvider](/theming/mantine-provider),
 [theme object](/theming/theme-object) no longer includes `colorScheme` property.

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { FocusTrap } from './FocusTrap';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { ActionIcon, Group, TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

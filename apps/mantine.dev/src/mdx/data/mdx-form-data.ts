@@ -106,4 +106,12 @@ export const MDX_FORM_DATA: Record<string, Frontmatter> = {
     description: 'use-form uncontrolled mode to improve performance',
     docs: 'form/uncontrolled.mdx',
   },
+
+  useField: {
+    title: 'use-field',
+    package: '@mantine/form',
+    slug: '/form/use-field',
+    description: 'use-field hook – manage single field state',
+    docs: 'form/use-field.mdx',
+  },
 };

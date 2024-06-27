@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
@@ -30,6 +30,7 @@ describe('@mantine/core/Select', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,
@@ -149,5 +150,51 @@ describe('@mantine/core/Select', () => {
 
     await userEvent.click(screen.getByRole('textbox', { name: 'Second' }));
     expect(screen.queryByRole('listbox', { name: 'Second' })).toBeVisible();
+  });
+
+  it('supports dynamically changing data', async () => {
+    const Wrapper: React.FunctionComponent = () => {
+      const [data, setData] = useState([{ value: '1', label: 'initial-label' }]);
+      return (
+        <>
+          <Select label="First" data={data} value="1" />
+          <button type="button" onClick={() => setData([{ value: '1', label: 'new-label' }])}>
+            Set Data
+          </button>
+        </>
+      );
+    };
+
+    render(<Wrapper />);
+
+    expect(screen.getByRole('textbox')).toHaveValue('initial-label');
+    await userEvent.click(screen.getByRole('button'));
+    expect(screen.getByRole('textbox')).toHaveValue('new-label');
+  });
+
+  it('allows to change controlled search value when value is controlled and selected', async () => {
+    const Wrapper: React.FunctionComponent = () => {
+      const [value, setValue] = useState<string | null>('Angular');
+      const [searchValue, setSearchValue] = useState('');
+
+      return (
+        <Select
+          {...defaultProps}
+          value={value}
+          onChange={setValue}
+          searchable
+          searchValue={searchValue}
+          onSearchChange={setSearchValue}
+          data={['React', 'Angular', 'Svelte']}
+        />
+      );
+    };
+
+    render(<Wrapper />);
+
+    await userEvent.click(screen.getByRole('textbox'));
+    // type backspace to remove last character
+    await userEvent.type(screen.getByRole('textbox'), '{backspace}');
+    expect(screen.getByRole('textbox')).toHaveValue('Angula');
   });
 });

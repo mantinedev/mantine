@@ -1,25 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
+import { useThrottledCallbackWithClearTimeout } from '../use-throttled-callback/use-throttled-callback';
 
 export function useThrottledValue<T>(value: T, wait: number) {
   const [throttledValue, setThrottledValue] = useState(value);
   const valueRef = useRef(value);
-  const active = useRef(true);
-  const timeoutRef = useRef<number>(-1);
+
+  const [throttledSetValue, clearTimeout] = useThrottledCallbackWithClearTimeout(
+    setThrottledValue,
+    wait
+  );
 
   useEffect(() => {
-    if (active.current && valueRef.current !== value) {
-      setThrottledValue(value);
+    if (value !== valueRef.current) {
       valueRef.current = value;
-      window.clearTimeout(timeoutRef.current);
-      active.current = false;
-
-      timeoutRef.current = window.setTimeout(() => {
-        active.current = true;
-      }, wait);
+      throttledSetValue(value);
     }
-  }, [value]);
+  }, [throttledSetValue, value]);
 
-  useEffect(() => () => window.clearTimeout(timeoutRef.current), []);
+  useEffect(() => clearTimeout, []);
 
   return throttledValue;
 }

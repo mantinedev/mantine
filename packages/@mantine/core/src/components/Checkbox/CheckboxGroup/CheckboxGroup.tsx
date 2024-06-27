@@ -1,4 +1,3 @@
-import React from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { factory, Factory, MantineSize, useProps } from '../../../core';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
@@ -49,8 +48,8 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((props, ref) => {
     onChange,
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const itemValue = event.currentTarget.value;
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement> | string) => {
+    const itemValue = typeof event === 'string' ? event : event.currentTarget.value;
     !readOnly &&
       setValue(
         _value.includes(itemValue)

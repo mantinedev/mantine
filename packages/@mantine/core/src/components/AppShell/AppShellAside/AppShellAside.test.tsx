@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, render, tests } from '@mantine-tests/core';
 import { AppShell } from '../AppShell';
 import { AppShellAside, AppShellAsideProps, AppShellAsideStylesNames } from './AppShellAside';
@@ -15,6 +14,7 @@ describe('@mantine/core/AppShellAside', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

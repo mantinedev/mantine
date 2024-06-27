@@ -1,4 +1,3 @@
-import React from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import {
   Box,

@@ -1,4 +1,3 @@
-import React from 'react';
 import { MonthLevelGroup } from './MonthLevelGroup';
 
 export default { title: 'MonthLevelGroup' };

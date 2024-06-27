@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '../render';
 
 interface Options<Props = any> {
@@ -9,7 +8,7 @@ interface Options<Props = any> {
 
 export function itSupportsBackgroundProps<Props>(
   options: Options<Props>,
-  name = 'supports bgsz, bgp, bgr and bga props'
+  name = 'supports bd, bgsz, bgp, bgr and bga props'
 ) {
   const selector = options.selector || '*:not(style)';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { DEFAULT_THEME, MantineThemeProvider, rem } from '../../core';
 import { ActionIcon, ActionIconProps } from './ActionIcon';
 

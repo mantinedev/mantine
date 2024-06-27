@@ -43,7 +43,7 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   useDocumentVisibility: hDocs('useDocumentVisibility', 'Detects if the current tab is active'),
 
   useElementSize: {
-    title: 'useElementSize',
+    title: 'use-element-size',
     package: '@mantine/hooks',
     slug: '/hooks/use-element-size',
     description: 'Returns element width and height and observes changes with ResizeObserver',

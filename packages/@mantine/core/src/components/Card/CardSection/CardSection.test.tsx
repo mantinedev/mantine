@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, render, tests } from '@mantine-tests/core';
 import { Card } from '../Card';
 import { CardSection, CardSectionProps, CardSectionStylesNames } from './CardSection';
@@ -16,6 +15,7 @@ describe('@mantine/core/CardSection', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

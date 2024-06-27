@@ -1,4 +1,3 @@
-import React from 'react';
 import { Group, Rating, Stack } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

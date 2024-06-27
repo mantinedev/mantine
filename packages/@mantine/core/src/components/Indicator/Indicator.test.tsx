@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Indicator, IndicatorProps, IndicatorStylesNames } from './Indicator';
 
@@ -12,6 +11,7 @@ describe('@mantine/core/Indicator', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

@@ -14,10 +14,10 @@ import '@mantinex/mantine-header/styles.css';
 import '@mantinex/shiki/styles.css';
 import '@docs/demos/styles.css';
 
-import React from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { DirectionProvider, MantineProvider } from '@mantine/core';
+import { MantineEmotionProvider } from '@mantine/emotion';
 import { useHotkeys, useLocalStorage } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
 import { ShikiProvider } from '@mantinex/shiki';
@@ -29,6 +29,7 @@ import { Search } from '@/components/Search';
 import { Shell } from '@/components/Shell';
 import { FontsStyle } from '@/fonts';
 import { theme } from '../../theme';
+import { emotionCache } from '../emotion';
 
 import '../styles/variables.css';
 
@@ -75,24 +76,26 @@ export default function App({ Component, pageProps, router }: AppProps) {
       <GaScript />
       <FontsStyle />
       <DirectionProvider initialDirection="ltr" detectDirection={false}>
-        <MantineProvider theme={theme} defaultColorScheme="light">
-          <ShikiProvider loadShiki={loadShiki}>
-            <Search />
-            <Notifications />
-            <ModalsProviderDemo>
-              <MdxProvider>
-                <HotKeysHandler />
-                {shouldRenderShell ? (
-                  <Shell withNavbar={navbarOpened}>
+        <MantineEmotionProvider cache={emotionCache}>
+          <MantineProvider theme={theme} defaultColorScheme="light">
+            <ShikiProvider loadShiki={loadShiki}>
+              <Search />
+              <Notifications />
+              <ModalsProviderDemo>
+                <MdxProvider>
+                  <HotKeysHandler />
+                  {shouldRenderShell ? (
+                    <Shell withNavbar={navbarOpened}>
+                      <Component {...pageProps} />
+                    </Shell>
+                  ) : (
                     <Component {...pageProps} />
-                  </Shell>
-                ) : (
-                  <Component {...pageProps} />
-                )}
-              </MdxProvider>
-            </ModalsProviderDemo>
-          </ShikiProvider>
-        </MantineProvider>
+                  )}
+                </MdxProvider>
+              </ModalsProviderDemo>
+            </ShikiProvider>
+          </MantineProvider>
+        </MantineEmotionProvider>
       </DirectionProvider>
     </>
   );

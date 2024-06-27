@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, render, tests } from '@mantine-tests/core';
 import { Drawer, DrawerProps, DrawerStylesNames } from './Drawer';
 import { DrawerBody, DrawerBodyProps } from './DrawerBody';
@@ -34,6 +33,7 @@ describe('@mantine/core/Drawer', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,
@@ -90,6 +90,7 @@ describe('@mantine/core/DrawerRoot', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,
@@ -110,6 +111,7 @@ describe('@mantine/core/DrawerBody', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,
@@ -128,6 +130,7 @@ describe('@mantine/core/DrawerCloseButton', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,
@@ -146,6 +149,7 @@ describe('@mantine/core/DrawerContent', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,
@@ -164,6 +168,7 @@ describe('@mantine/core/DrawerHeader', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,
@@ -182,6 +187,7 @@ describe('@mantine/core/DrawerOverlay', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,
@@ -200,6 +206,7 @@ describe('@mantine/core/DrawerTitle', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

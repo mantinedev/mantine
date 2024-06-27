@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -421,7 +421,8 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
           withCheckIcon={withCheckIcon}
           nothingFoundMessage={nothingFoundMessage}
           unstyled={unstyled}
-          labelId={`${_id}-label`}
+          labelId={label ? `${_id}-label` : undefined}
+          aria-label={label ? undefined : others['aria-label']}
           renderOption={renderOption}
           scrollAreaProps={scrollAreaProps}
         />

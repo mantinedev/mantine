@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconChevronRight, IconHome2 } from '@tabler/icons-react';
 import { useCounter } from '@mantine/hooks';
 import { Button } from '../Button';

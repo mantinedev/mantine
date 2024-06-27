@@ -1,4 +1,3 @@
-import React from 'react';
 import { tests } from '@mantine-tests/core';
 import { Center, CenterProps, CenterStylesNames } from './Center';
 
@@ -15,6 +14,7 @@ describe('@mantine/core/Center', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

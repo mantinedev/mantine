@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface IsInRangePayload {
   min?: number;
   max?: number;

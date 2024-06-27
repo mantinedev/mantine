@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Checkbox, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
@@ -24,17 +23,20 @@ function Demo() {
       <TextInput
         label="First name"
         placeholder="First name"
+        key={form.key('user.firstName')}
         {...form.getInputProps('user.firstName')}
       />
       <TextInput
         label="Last name"
         placeholder="Last name"
         mt="md"
+        key={form.key('user.lastName')}
         {...form.getInputProps('user.lastName')}
       />
       <Checkbox
         label="I accepts terms & conditions"
         mt="sm"
+        key={form.key('terms')}
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
     </Box>
@@ -59,17 +61,20 @@ function Demo() {
       <TextInput
         label="First name"
         placeholder="First name"
+        key={form.key('user.firstName')}
         {...form.getInputProps('user.firstName')}
       />
       <TextInput
         label="Last name"
         placeholder="Last name"
         mt="md"
+        key={form.key('user.lastName')}
         {...form.getInputProps('user.lastName')}
       />
       <Checkbox
         label="I accepts terms & conditions"
         mt="sm"
+        key={form.key('terms')}
         {...form.getInputProps('terms', { type: 'checkbox' })}
       />
     </Box>

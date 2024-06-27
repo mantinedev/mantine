@@ -1,4 +1,3 @@
-import React from 'react';
 import { filterFalsyChildren } from './filter-falsy-children';
 
 describe('@mantine/core/utils/filter-falsy-children', () => {

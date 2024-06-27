@@ -1,4 +1,3 @@
-import React from 'react';
 import { MonthPickerInput } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
 

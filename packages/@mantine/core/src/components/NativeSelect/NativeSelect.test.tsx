@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
@@ -29,6 +28,7 @@ describe('@mantine/core/NativeSelect', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

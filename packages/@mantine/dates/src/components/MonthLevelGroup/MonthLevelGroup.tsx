@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '@mantine/core';
 import { handleControlKeyDown } from '../../utils';
 import { LevelsGroup, LevelsGroupStylesNames } from '../LevelsGroup';
@@ -59,6 +59,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
     __onDayClick,
     __onDayMouseEnter,
     withCellSpacing,
+    highlightToday,
 
     // CalendarHeader settings
     __preventFocus,
@@ -160,6 +161,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
           size={size}
           static={isStatic}
           withCellSpacing={withCellSpacing}
+          highlightToday={highlightToday}
         />
       );
     });

@@ -1,4 +1,3 @@
-import React from 'react';
 import { DecadeLevelGroup } from './DecadeLevelGroup';
 
 export default { title: 'DecadeLevelGroup' };

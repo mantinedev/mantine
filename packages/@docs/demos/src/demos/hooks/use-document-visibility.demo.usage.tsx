@@ -1,4 +1,3 @@
-import React from 'react';
 import { Text } from '@mantine/core';
 import { useDocumentTitle, useDocumentVisibility } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

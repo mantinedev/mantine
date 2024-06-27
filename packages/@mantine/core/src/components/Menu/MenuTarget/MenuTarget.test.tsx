@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, patchConsoleError, render, tests } from '@mantine-tests/core';
 import { Menu } from '../Menu';
 import { MenuTarget, MenuTargetProps } from './MenuTarget';

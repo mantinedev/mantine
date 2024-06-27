@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests, userEvent } from '@mantine-tests/core';
 import { Pill, PillProps, PillStylesNames } from './Pill';
 
@@ -17,6 +16,7 @@ describe('@mantine/core/Pill', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

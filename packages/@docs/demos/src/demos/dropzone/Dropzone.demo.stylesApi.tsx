@@ -1,4 +1,3 @@
-import React from 'react';
 import { Text } from '@mantine/core';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { MantineDemo } from '@mantinex/demo';

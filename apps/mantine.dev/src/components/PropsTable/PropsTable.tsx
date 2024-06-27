@@ -1,4 +1,3 @@
-import React from 'react';
 import { Highlight, Table, Text } from '@mantine/core';
 import docgenData from '@/.docgen/docgen.json';
 import { DocsSection } from '@/components/DocsSection';

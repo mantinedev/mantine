@@ -83,9 +83,12 @@ export function useFloatingIndicator({
 
     if (target) {
       targetResizeObserver.current = new ResizeObserver(updatePositionWithoutAnimation);
-      targetResizeObserver.current.observe(target!);
-      parentResizeObserver.current = new ResizeObserver(updatePositionWithoutAnimation);
-      parentResizeObserver.current.observe(parent!);
+      targetResizeObserver.current.observe(target);
+
+      if (parent) {
+        parentResizeObserver.current = new ResizeObserver(updatePositionWithoutAnimation);
+        parentResizeObserver.current.observe(parent);
+      }
 
       return () => {
         targetResizeObserver.current?.disconnect();

@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests, userEvent } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
 import { DatePicker, DatePickerProps, DatePickerStylesNames } from './DatePicker';
@@ -14,6 +13,7 @@ describe('@mantine/dates/DatePicker', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

@@ -1,4 +1,3 @@
-import React from 'react';
 import { RadarChart } from '@mantine/charts';
 import { MantineDemo } from '@mantinex/demo';
 import { multiData, multiDataCode } from './_data';
@@ -15,8 +14,8 @@ function Demo() {
       dataKey="product"
       withPolarRadiusAxis
       series={[
-        { name: 'sales_january', color: 'lime.4', opacity: 0.1 },
-        { name: 'sales_february', color: 'cyan.4', opacity: 0.1 },
+        { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
+        { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
       ]}
     />
   );
@@ -31,8 +30,8 @@ function Demo() {
       dataKey="product"
       withPolarRadiusAxis
       series={[
-        { name: 'sales_january', color: 'lime.4', opacity: 0.1 },
-        { name: 'sales_february', color: 'cyan.4', opacity: 0.1 },
+        { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
+        { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
       ]}
     />
   );

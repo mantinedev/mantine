@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { UnstyledButton, UnstyledButtonProps, UnstyledButtonStylesNames } from './UnstyledButton';
 
@@ -22,6 +21,7 @@ describe('@mantine/core/UnstyledButton', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     classes: true,
     id: true,
     refType: HTMLButtonElement,

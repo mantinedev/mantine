@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { ElementProps } from '../../core';
 import { Overlay, OverlayProps } from '../Overlay';
 import { Transition, TransitionOverride } from '../Transition';

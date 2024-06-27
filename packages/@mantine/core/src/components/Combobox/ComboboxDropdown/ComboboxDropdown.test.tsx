@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, render, tests } from '@mantine-tests/core';
 import { Combobox } from '../Combobox';
 import {
@@ -19,6 +18,7 @@ describe('@mantine/core/ComboboxDropdown', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

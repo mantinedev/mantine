@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { Card, CardProps, CardStylesNames } from './Card';
 import { CardSection } from './CardSection/CardSection';
@@ -16,6 +15,7 @@ describe('@mantine/core/Card', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

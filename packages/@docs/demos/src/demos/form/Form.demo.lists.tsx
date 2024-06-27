@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconTrash } from '@tabler/icons-react';
 import { ActionIcon, Box, Button, Group, Switch, Text, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
@@ -25,10 +24,12 @@ function Demo() {
         placeholder="John Doe"
         withAsterisk
         style={{ flex: 1 }}
+        key={form.key(\`employees.\${index}.name\`)}
         {...form.getInputProps(\`employees.\${index}.name\`)}
       />
       <Switch
         label="Active"
+        key={form.key(\`employees.\${index}.active\`)}
         {...form.getInputProps(\`employees.\${index}.active\`, { type: 'checkbox' })}
       />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
@@ -84,10 +85,12 @@ function Demo() {
         placeholder="John Doe"
         withAsterisk
         style={{ flex: 1 }}
+        key={form.key(`employees.${index}.name`)}
         {...form.getInputProps(`employees.${index}.name`)}
       />
       <Switch
         label="Active"
+        key={form.key(`employees.${index}.active`)}
         {...form.getInputProps(`employees.${index}.active`, { type: 'checkbox' })}
       />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>

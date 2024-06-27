@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Container } from '@mantine/core';
 import { Frontmatter } from '@/types';
 import { getGroupedQuestions } from './get-grouped-questions';

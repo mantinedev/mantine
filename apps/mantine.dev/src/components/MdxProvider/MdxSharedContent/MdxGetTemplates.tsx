@@ -1,4 +1,3 @@
-import React from 'react';
 import { MdxLink } from '../MdxLink/MdxLink';
 import { Template } from '../MdxTemplatesList/data';
 import { MdxTemplatesList } from '../MdxTemplatesList/MdxTemplatesList';

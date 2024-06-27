@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { Box, ElementProps } from '../../../core';
 import { ColorSwatch } from '../../ColorSwatch';
 import { useColorPickerContext } from '../ColorPicker.context';

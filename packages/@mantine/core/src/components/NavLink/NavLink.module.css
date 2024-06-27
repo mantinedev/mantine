@@ -24,7 +24,7 @@
     pointer-events: none;
   }
 
-  &:where([data-active]) {
+  &:where([data-active], [aria-current='page']) {
     background-color: var(--nl-bg);
     color: var(--nl-color);
 

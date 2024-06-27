@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box } from '../../core';
 import { Center } from '../Center';
 import { Group } from '../Group';
@@ -18,6 +17,21 @@ export function Usage() {
       </Avatar>
     </div>
   );
+}
+
+export function InitialsColor() {
+  const names = [
+    'John Doe',
+    'Jane Mol',
+    'Alex Lump',
+    'Sarah Condor',
+    'Mike Johnson',
+    'Kate Kok',
+    'Tom Smith',
+  ];
+
+  const items = names.map((name) => <Avatar key={name} name={name} color="initials" />);
+  return <div style={{ padding: 40, display: 'flex', gap: 10 }}>{items}</div>;
 }
 
 export function AutoContrast() {

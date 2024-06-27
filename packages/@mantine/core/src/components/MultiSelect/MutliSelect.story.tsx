@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { TextInput } from '../TextInput';
@@ -121,6 +121,15 @@ export function Clearable() {
         data={['React', 'Angular', 'Svelte']}
         defaultValue={['React']}
         clearable
+      />
+
+      <MultiSelect
+        placeholder="Searchable"
+        data={['React', 'Angular', 'Svelte']}
+        defaultValue={['React']}
+        clearable
+        searchable
+        mt="md"
       />
 
       <MultiSelect

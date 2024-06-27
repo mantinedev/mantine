@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconBadge } from '@tabler/icons-react';
 import { Group } from '../Group';
 import { Stack } from '../Stack';

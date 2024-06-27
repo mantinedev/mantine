@@ -1,4 +1,3 @@
-import React from 'react';
 import { inputWrapperQueries, render, tests } from '@mantine-tests/core';
 import { Input } from '../Input';
 import { InputWrapper, InputWrapperProps, InputWrapperStylesNames } from './InputWrapper';
@@ -20,6 +19,7 @@ describe('@mantine/core/InputWrapper', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

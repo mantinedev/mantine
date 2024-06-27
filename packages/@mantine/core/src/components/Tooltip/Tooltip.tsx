@@ -1,4 +1,4 @@
-import React, { cloneElement, useRef } from 'react';
+import { cloneElement, useRef } from 'react';
 import cx from 'clsx';
 import { useMergedRef } from '@mantine/hooks';
 import {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { TypeScriptCircleIcon } from '@mantinex/dev-icons';
 import { MdxInfo } from '../MdxInfo/MdxInfo';
 import { MdxLink } from '../MdxLink/MdxLink';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconFileCv } from '@tabler/icons-react';
 import { FileInput, rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { Skeleton, SkeletonProps, SkeletonStylesNames } from './Skeleton';
 
@@ -12,6 +11,7 @@ describe('@mantine/core/Skeleton', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

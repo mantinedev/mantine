@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Accordion } from '../Accordion/Accordion';
 import { Spoiler } from './Spoiler';
 
@@ -56,6 +56,31 @@ export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 500 }}>
       <Spoiler showLabel="Show more" hideLabel="Hide details" maxHeight={50}>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut quam vitae lorem
+        viverra ultricies. Integer hendrerit, quam mollis tempus iaculis, tellus est pellentesque
+        eros, vel molestie risus eros sit amet sem. Fusce pretium ex quis neque fringilla facilisis.
+        Aenean sed luctus tortor, eget suscipit neque. Pellentesque consequat neque quis porta
+        luctus. Donec vitae est id velit condimentum mollis id vel est. Sed eleifend interdum enim,
+        a facilisis ex faucibus nec. Morbi vel est et mauris congue ullamcorper. Duis eget velit
+        lacinia, consequat neque vel, dignissim massa.
+        <input aria-label="test-input" />
+      </Spoiler>
+      <div>Some content after the spoiler</div>
+    </div>
+  );
+}
+
+export function Controlled() {
+  const [expanded, setExpanded] = useState(false);
+  return (
+    <div style={{ padding: 40, maxWidth: 500 }}>
+      <Spoiler
+        showLabel="Show more"
+        hideLabel="Hide details"
+        maxHeight={50}
+        expanded={expanded}
+        onExpandedChange={setExpanded}
+      >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ut quam vitae lorem
         viverra ultricies. Integer hendrerit, quam mollis tempus iaculis, tellus est pellentesque
         eros, vel molestie risus eros sit amet sem. Fusce pretium ex quis neque fringilla facilisis.

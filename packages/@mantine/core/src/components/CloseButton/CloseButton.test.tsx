@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { CloseButton, CloseButtonProps, CloseButtonStylesNames } from './CloseButton';
 import { CloseIcon } from './CloseIcon';
@@ -21,6 +20,7 @@ describe('@mantine/core/CloseButton', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

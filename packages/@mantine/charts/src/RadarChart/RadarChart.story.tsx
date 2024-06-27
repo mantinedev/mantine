@@ -1,4 +1,3 @@
-import React from 'react';
 import { RadarChart } from './RadarChart';
 
 export default { title: 'RadarChart' };
@@ -47,6 +46,7 @@ export function Usage() {
           { name: 'B', color: 'violet.4', opacity: 0.1 },
         ]}
         dataKey="subject"
+        withLegend
       />
     </div>
   );

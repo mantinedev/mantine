@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   BoxProps,
@@ -41,6 +40,9 @@ export const ComboboxFooter = factory<ComboboxFooterFactory>((props, ref) => {
       ref={ref}
       {...ctx.getStyles('footer', { className, classNames, style, styles })}
       {...others}
+      onMouseDown={(event) => {
+        event.preventDefault();
+      }}
     />
   );
 });

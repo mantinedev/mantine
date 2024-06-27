@@ -1,5 +1,6 @@
 export { DiscordIcon } from './DiscordIcon';
 export { TwitterIcon } from './TwitterIcon';
+export { XIcon } from './XIcon';
 export { GithubIcon } from './GithubIcon';
 export { NpmIcon } from './NpmIcon';
 export { YarnIcon } from './YarnIcon';

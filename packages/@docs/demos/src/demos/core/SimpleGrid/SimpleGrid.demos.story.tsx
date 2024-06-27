@@ -12,3 +12,8 @@ export const Demo_responsive = {
   name: '⭐ Demo: responsive',
   render: renderDemo(demos.responsive),
 };
+
+export const Demo_container = {
+  name: '⭐ Demo: container',
+  render: renderDemo(demos.container),
+};

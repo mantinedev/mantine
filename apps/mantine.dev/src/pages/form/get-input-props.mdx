@@ -33,8 +33,12 @@ function Demo() {
 
   return (
     <>
-      <TextInput {...form.getInputProps('name')} />
+      <TextInput
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
       <Checkbox
+        key={form.key('accepted')}
         {...form.getInputProps('accepted', { type: 'checkbox' })}
       />
     </>
@@ -167,6 +171,11 @@ function Demo() {
     initialValues: { name: '' },
   });
 
-  return <CustomInput {...form.getInputProps('name')} />;
+  return (
+    <CustomInput
+      {...form.getInputProps('name')}
+      key={form.key('name')}
+    />
+  );
 }
 ```

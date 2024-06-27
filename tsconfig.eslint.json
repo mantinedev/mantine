@@ -7,7 +7,11 @@
     "./packages/@mantine-tests/*/src",
     "./packages/@docs/*/src",
     "./packages/@mantine/*/src",
-    "./packages/@mantinex/*/src"
+    "./packages/@mantinex/*/src",
+    "./jest.config.ts",
+    "./jest.react.ts",
+    "./jest.setup.ts",
+    "./jsdom.mocks.ts"
   ],
   "exclude": [
     "public",
@@ -31,7 +35,7 @@
     "lib": ["DOM", "ESNext"],
     "module": "ESNext",
     "moduleResolution": "Node",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,

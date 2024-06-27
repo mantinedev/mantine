@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { NavLink, NavLinkProps, NavLinkStylesNames } from './NavLink';
 
@@ -18,6 +17,7 @@ describe('@mantine/core/NavLink', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 import { IconArrowRight } from '@tabler/icons-react';
 import { Button, rem, SimpleGrid, Slider, Text } from '@mantine/core';

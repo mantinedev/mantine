@@ -1,4 +1,3 @@
-import React from 'react';
 import { tests } from '@mantine-tests/core';
 import { Alert, AlertProps, AlertStylesNames } from './Alert';
 
@@ -26,6 +25,7 @@ describe('@mantine/core/Alert', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

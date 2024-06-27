@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { Flex, FlexProps, FlexStylesNames } from './Flex';
 
@@ -12,6 +11,7 @@ describe('@mantine/core/Flex', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

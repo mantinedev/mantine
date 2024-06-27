@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
+
 import { Button, NumberInput, TextInput } from '@mantine/core';
 import { FORM_INDEX, useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
@@ -32,26 +32,40 @@ function Demo() {
 
   return (
     <form onSubmit={form.onSubmit(console.log)}>
-      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-      <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="sm"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
       <NumberInput
         mt="sm"
         label="Age"
         placeholder="Age"
         min={0}
         max={99}
+        key={form.key('age')}
         {...form.getInputProps('age')}
       />
       <TextInput
         mt="sm"
         label="Job 1"
         placeholder="Job 1"
+        key={form.key('jobs.0.title')}
         {...form.getInputProps('jobs.0.title')}
       />
       <TextInput
         mt="sm"
         label="Job 2"
         placeholder="Job 2"
+        key={form.key('jobs.1.title')}
         {...form.getInputProps('jobs.1.title')}
       />
       <Button type="submit" mt="sm">
@@ -86,26 +100,40 @@ function Demo() {
 
   return (
     <form onSubmit={form.onSubmit(console.log)}>
-      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-      <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="sm"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
       <NumberInput
         mt="sm"
         label="Age"
         placeholder="Age"
         min={0}
         max={99}
+        key={form.key('age')}
         {...form.getInputProps('age')}
       />
       <TextInput
         mt="sm"
         label="Job 1"
         placeholder="Job 1"
+        key={form.key('jobs.0.title')}
         {...form.getInputProps('jobs.0.title')}
       />
       <TextInput
         mt="sm"
         label="Job 2"
         placeholder="Job 2"
+        key={form.key('jobs.1.title')}
         {...form.getInputProps('jobs.1.title')}
       />
       <Button type="submit" mt="sm">

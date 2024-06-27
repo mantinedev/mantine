@@ -1,4 +1,4 @@
-import React, { Children, cloneElement } from 'react';
+import { Children, cloneElement } from 'react';
 import {
   Box,
   BoxProps,
@@ -131,7 +131,7 @@ const varsResolver = createVarsResolver<StepperFactory>(
     root: {
       '--stepper-color': color ? getThemeColor(color, theme) : undefined,
       '--stepper-icon-color': getAutoContrastValue(autoContrast, theme)
-        ? getContrastColor({ color, theme })
+        ? getContrastColor({ color, theme, autoContrast })
         : undefined,
       '--stepper-icon-size':
         iconSize === undefined ? getSize(size, 'stepper-icon-size') : rem(iconSize),
@@ -167,6 +167,7 @@ export const Stepper = factory<StepperFactory>((_props, ref) => {
     radius,
     allowNextStepsSelect,
     wrap,
+    autoContrast,
     ...others
   } = props;
 

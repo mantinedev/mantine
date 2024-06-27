@@ -1,4 +1,3 @@
-import React from 'react';
 import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
 import { __InputStylesNames } from '../Input';
 import { PasswordInput, PasswordInputProps } from './PasswordInput';
@@ -38,6 +37,7 @@ describe('@mantine/core/PasswordInput', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

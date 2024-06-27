@@ -1,4 +1,3 @@
-import React from 'react';
 import Head from 'next/head';
 
 interface PageHeadProps {
@@ -15,11 +14,11 @@ export function PageHead({ title, description }: PageHeadProps) {
   return (
     <Head>
       <title>{_title}</title>
-      <meta name="description" content={_description} />
-      <meta name="og:title" content={_title} />
-      <meta name="og:description" content={_description} />
-      <meta name="twitter:title" content={_title} />
-      <meta name="twitter:description" content={_description} />
+      <meta property="description" name="description" content={_description} />
+      <meta property="og:title" name="og:title" content={_title} />
+      <meta property="og:description" name="og:description" content={_description} />
+      <meta property="twitter:title" name="twitter:title" content={_title} />
+      <meta property="twitter:description" name="twitter:description" content={_description} />
     </Head>
   );
 }

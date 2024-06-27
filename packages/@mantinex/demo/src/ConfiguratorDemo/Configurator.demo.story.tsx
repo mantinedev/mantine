@@ -1,4 +1,3 @@
-import React from 'react';
 import { Highlight, HighlightProps } from '@mantine/core';
 import { ConfiguratorDemo } from './ConfiguratorDemo';
 

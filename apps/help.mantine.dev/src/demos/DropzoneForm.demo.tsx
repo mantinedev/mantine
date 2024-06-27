@@ -1,4 +1,3 @@
-import React from 'react';
 import { Center, CloseButton, Text } from '@mantine/core';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { useForm } from '@mantine/form';

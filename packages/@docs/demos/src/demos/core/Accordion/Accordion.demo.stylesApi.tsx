@@ -1,4 +1,3 @@
-import React from 'react';
 import { Accordion, AccordionProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { AccordionStylesApi } from '@docs/styles-api';

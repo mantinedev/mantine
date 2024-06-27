@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -187,7 +187,8 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
         withScrollArea={withScrollArea}
         maxDropdownHeight={maxDropdownHeight}
         unstyled={unstyled}
-        labelId={`${_id}-label`}
+        labelId={others.label ? `${_id}-label` : undefined}
+        aria-label={others.label ? undefined : others['aria-label']}
         renderOption={renderOption}
         scrollAreaProps={scrollAreaProps}
       />

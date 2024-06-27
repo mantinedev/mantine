@@ -1,7 +1,6 @@
-import React from 'react';
 import cx from 'clsx';
 import { BoxProps, Button, ElementProps } from '@mantine/core';
-import { DiscordIcon, TwitterIcon } from '@mantinex/dev-icons';
+import { DiscordIcon, XIcon } from '@mantinex/dev-icons';
 import { meta } from '@mantinex/mantine-meta';
 import classes from './SocialButton.module.css';
 
@@ -42,12 +41,12 @@ export function DiscordButton({ className, ...others }: SocialButtonProps) {
 export function TwitterButton({ className, ...others }: SocialButtonProps) {
   return (
     <SocialButton
-      className={cx(classes.twitterButton, className)}
-      icon={<TwitterIcon size={16} />}
+      className={cx(classes.xButton, className)}
+      icon={<XIcon size={16} />}
       href={meta.twitterLink}
       {...others}
     >
-      Follow Mantine on Twitter
+      Follow Mantine on X
     </SocialButton>
   );
 }

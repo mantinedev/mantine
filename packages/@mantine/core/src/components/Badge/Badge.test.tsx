@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { Badge, BadgeProps, BadgeStylesNames } from './Badge';
 
@@ -16,6 +15,7 @@ describe('@mantine/core/Badge', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

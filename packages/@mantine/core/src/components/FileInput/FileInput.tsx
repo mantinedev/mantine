@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '../../core';
 import { CloseButton } from '../CloseButton';

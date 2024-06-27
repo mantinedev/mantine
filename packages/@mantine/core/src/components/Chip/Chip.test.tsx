@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import { createRef } from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { Chip, ChipProps, ChipStylesNames } from './Chip';
 
@@ -18,6 +18,7 @@ describe('@mantine/core/Chip', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

@@ -1,4 +1,3 @@
-import React from 'react';
 import { MdxSiblings } from '@/components/MdxSiblings';
 import { PageBase } from '@/components/PageBase';
 import { TableOfContents } from '@/components/TableOfContents';

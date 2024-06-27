@@ -1,4 +1,3 @@
-import React from 'react';
 import { Sparkline } from '@mantine/charts';
 import { MantineDemo } from '@mantinex/demo';
 

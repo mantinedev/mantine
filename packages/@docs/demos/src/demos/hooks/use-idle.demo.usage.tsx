@@ -1,4 +1,3 @@
-import React from 'react';
 import { Badge } from '@mantine/core';
 import { useIdle } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

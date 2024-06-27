@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
 import { PaginationRoot } from '../PaginationRoot/PaginationRoot';
 import {
@@ -18,6 +17,7 @@ describe('@mantine/core/PaginationControl', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

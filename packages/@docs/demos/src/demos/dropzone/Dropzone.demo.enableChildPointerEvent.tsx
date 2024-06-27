@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Button, Group } from '@mantine/core';
 import { Dropzone } from '@mantine/dropzone';
 import { MantineDemo } from '@mantinex/demo';

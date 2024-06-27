@@ -1,4 +1,3 @@
-import React from 'react';
 import TaskItem from '@tiptap/extension-task-item';
 import TipTapTaskList from '@tiptap/extension-task-list';
 import { useEditor } from '@tiptap/react';

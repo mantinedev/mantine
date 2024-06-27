@@ -11,6 +11,7 @@ import { PartialVarsResolver, VarsResolver } from '../create-vars-resolver/creat
 import { ClassNames, ClassNamesArray, GetStylesApiOptions, Styles } from '../styles-api.types';
 import { getClassName } from './get-class-name/get-class-name';
 import { getStyle } from './get-style/get-style';
+import { useStylesTransform } from './use-transformed-styles';
 
 export interface UseStylesInput<Payload extends FactoryPayload> {
   name: string | (string | undefined)[];
@@ -54,6 +55,11 @@ export function useStyles<Payload extends FactoryPayload>({
   const withStaticClasses = useMantineWithStaticClasses();
   const headless = useMantineIsHeadless();
   const themeName = (Array.isArray(name) ? name : [name]).filter((n) => n) as string[];
+  const { withStylesTransform, getTransformedStyles } = useStylesTransform({
+    props,
+    stylesCtx,
+    themeName,
+  });
 
   return (selector, options) => ({
     className: getClassName({
@@ -71,6 +77,7 @@ export function useStyles<Payload extends FactoryPayload>({
       stylesCtx,
       withStaticClasses,
       headless,
+      transformedStyles: getTransformedStyles([options?.styles, styles]),
     }),
 
     style: getStyle({
@@ -86,6 +93,7 @@ export function useStyles<Payload extends FactoryPayload>({
       vars,
       varsResolver,
       headless,
+      withStylesTransform,
     }),
   });
 }

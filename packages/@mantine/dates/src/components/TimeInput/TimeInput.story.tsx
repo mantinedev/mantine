@@ -1,4 +1,3 @@
-import React from 'react';
 import { TimeInput } from './TimeInput';
 
 export default { title: 'TimeInput' };

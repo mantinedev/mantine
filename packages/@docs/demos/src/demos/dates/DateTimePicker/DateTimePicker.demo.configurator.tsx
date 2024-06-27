@@ -1,4 +1,3 @@
-import React from 'react';
 import { DateTimePicker } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
 import { inputControls } from '../../../shared';

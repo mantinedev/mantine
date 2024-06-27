@@ -1,4 +1,3 @@
-import React from 'react';
 import Head from 'next/head';
 import { Footer } from '../Footer';
 import { Shell } from '../Shell';
@@ -10,6 +9,7 @@ import { DarkTheme } from './DarkTheme/DarkTheme';
 import { Hooks } from './Hooks/Hooks';
 import { JoinCommunity } from './JoinCommunity/JoinCommunity';
 import { Jumbotron } from './Jumbotron/Jumbotron';
+import { Reviews } from './Reviews/Reviews';
 import { Theming } from './Theming/Theming';
 import { Usage } from './Usage/Usage';
 import { Waves } from './Waves/Waves';
@@ -36,9 +36,11 @@ export function HomePage() {
           <Theming />
           <Banner />
           <Hooks />
-          <Waves height={42} width={220} rotate flip alt />
+          <Waves height={42} width={280} rotate flip />
+          <Reviews />
+          <Waves height={58} width={160} alt />
           <Usage />
-          <Waves height={48} width={180} />
+          <Waves height={48} width={180} flip />
           <JoinCommunity />
         </div>
         <Footer />

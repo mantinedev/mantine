@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Text, TextInput } from '@mantine/core';
 import { useValidatedState } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

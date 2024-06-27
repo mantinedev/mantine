@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { Divider, DividerProps, DividerStylesNames } from './Divider';
 
@@ -13,6 +12,7 @@ describe('@mantine/core/Divider', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

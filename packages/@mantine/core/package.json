@@ -1,6 +1,6 @@
 {
   "name": "@mantine/core",
-  "version": "7.8.0",
+  "version": "7.11.0",
   "description": "React components library focused on usability, accessibility and developer experience",
   "homepage": "https://mantine.dev/",
   "license": "MIT",
@@ -43,13 +43,13 @@
     "directory": "packages/@mantine/core"
   },
   "peerDependencies": {
-    "@mantine/hooks": "7.8.0",
+    "@mantine/hooks": "7.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "dependencies": {
     "@floating-ui/react": "^0.26.9",
-    "clsx": "2.1.0",
+    "clsx": "^2.1.1",
     "react-number-format": "^5.3.1",
     "react-remove-scroll": "^2.5.7",
     "react-textarea-autosize": "8.5.3",

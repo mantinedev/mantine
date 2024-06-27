@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { clamp, useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
@@ -217,15 +217,15 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
   };
 
   const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
-    event.preventDefault();
-
     const { touches } = event;
     if (touches.length !== 1) {
       return;
     }
 
-    const touch = touches[0];
-    setValue(getRatingFromCoordinates(touch.clientX));
+    if (!readOnly) {
+      const touch = touches[0];
+      setValue(getRatingFromCoordinates(touch.clientX));
+    }
 
     onTouchStart?.(event);
   };

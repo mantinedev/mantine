@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IconMessageCircle, IconPhoto, IconSettings } from '@tabler/icons-react';
 import {
   Box,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Kbd, Text } from '@mantine/core';
 import { useMutationObserver } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

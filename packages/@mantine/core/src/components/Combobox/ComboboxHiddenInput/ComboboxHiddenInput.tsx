@@ -1,5 +1,3 @@
-import React from 'react';
-
 export interface ComboboxHiddenInputProps
   extends Omit<React.ComponentPropsWithoutRef<'input'>, 'value'> {
   /** Input value */

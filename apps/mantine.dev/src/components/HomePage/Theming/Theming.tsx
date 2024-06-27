@@ -1,4 +1,3 @@
-import React from 'react';
 import { Badge, Button, Group } from '@mantine/core';
 import { CodeHighlight } from '@mantinex/shiki';
 import { PageSection } from '../PageSection/PageSection';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Styles.demo.classNames.module.css';

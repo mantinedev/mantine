@@ -102,3 +102,8 @@ export const Demo_containers = {
   name: '⭐ Demo: containers',
   render: renderDemo(demos.containers),
 };
+
+export const Demo_useMatchesHook = {
+  name: '⭐ Demo: useMatchesHook',
+  render: renderDemo(demos.useMatchesHook),
+};

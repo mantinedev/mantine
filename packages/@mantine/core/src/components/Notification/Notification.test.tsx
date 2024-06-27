@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconMoodSmile } from '@tabler/icons-react';
 import { render, tests } from '@mantine-tests/core';
 import { Notification, NotificationProps, NotificationStylesNames } from './Notification';
@@ -20,6 +19,7 @@ describe('@mantine/core/Notification', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

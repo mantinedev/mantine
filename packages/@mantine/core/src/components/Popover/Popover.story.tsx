@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, MantineThemeProvider } from '../../core';
 import { Group } from '../Group';
 import { Tooltip } from '../Tooltip';

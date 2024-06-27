@@ -169,3 +169,15 @@ form.isValid(); // -> false
 // get validation status of field
 form.isValid('name'); // -> false
 ```
+
+## Focus first invalid field
+
+The second argument of the `form.onSubmit` function is a callback function that is called
+with the [errors object](/form/errors) when form validation fails.
+You can use this callback to focus the first invalid field or perform any other action.
+
+To get the DOM node of any input, use `form.getInputNode('path-to-field')`. Note that
+in order for this feature to work, you need to spread `form.getInputProps('path-to-field')` to
+the input element.
+
+<Demo data={FormDemos.focusError} />

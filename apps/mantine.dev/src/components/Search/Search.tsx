@@ -1,4 +1,3 @@
-import React from 'react';
 import { useRouter } from 'next/router';
 import { IconSearch } from '@tabler/icons-react';
 import { rem } from '@mantine/core';

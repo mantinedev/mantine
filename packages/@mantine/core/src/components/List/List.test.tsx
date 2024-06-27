@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { List, ListProps, ListStylesNames } from './List';
 import { ListItem } from './ListItem/ListItem';
@@ -25,6 +24,7 @@ describe('@mantine/core/List', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

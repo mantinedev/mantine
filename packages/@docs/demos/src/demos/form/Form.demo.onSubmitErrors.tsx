@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
+
 import { Button, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
@@ -30,8 +30,19 @@ function Demo() {
 
   return (
     <form onSubmit={form.onSubmit(console.log, handleError)}>
-      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-      <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="sm"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
       <Button type="submit" mt="sm">
         Submit
       </Button>
@@ -60,8 +71,19 @@ function Demo() {
 
   return (
     <form onSubmit={form.onSubmit(console.log, handleError)}>
-      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-      <TextInput mt="sm" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="sm"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
       <Button type="submit" mt="sm">
         Submit
       </Button>

@@ -19,6 +19,7 @@ describe('@mantine/core/FloatingIndicator', () => {
     mod: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

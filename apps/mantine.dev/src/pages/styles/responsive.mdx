@@ -151,6 +151,23 @@ change [Tooltip](/core/tooltip) props as it is not rendered on server side:
 
 <Demo data={StylesDemos.useMediaQueryHook} />
 
+## use-matches hook
+
+`use-matches` hook exported from `@mantine/core` is an alternative to [use-media-query](/hooks/use-media-query/)
+if you need to match multiple media queries and values. It accepts an object with media queries as keys and
+values at given breakpoint as values.
+
+Note that `use-matches` hook uses the same logic as [use-media-query](/hooks/use-media-query/) under the hood,
+it is not recommended to be used as a primary source of responsive styles, especially if you have ssr in your application.
+
+In the following example:
+
+- Starting from `theme.breakpoints.lg`, color will be `red.9`
+- Between `theme.breakpoints.sm` and `theme.breakpoints.lg`, color will be `orange.9`
+- Below `theme.breakpoints.sm`, color will be `blue.9`
+
+<Demo data={StylesDemos.useMatchesHook} />
+
 ## Container queries
 
 [Container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_container_queries)

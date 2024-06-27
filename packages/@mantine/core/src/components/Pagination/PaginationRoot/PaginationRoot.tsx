@@ -1,4 +1,3 @@
-import React from 'react';
 import { usePagination } from '@mantine/hooks';
 import {
   Box,
@@ -107,7 +106,7 @@ const varsResolver = createVarsResolver<PaginationRootFactory>(
       '--pagination-control-fz': getFontSize(size),
       '--pagination-active-bg': color ? getThemeColor(color, theme) : undefined,
       '--pagination-active-color': getAutoContrastValue(autoContrast, theme)
-        ? getContrastColor({ color, theme })
+        ? getContrastColor({ color, theme, autoContrast })
         : undefined,
     },
   })

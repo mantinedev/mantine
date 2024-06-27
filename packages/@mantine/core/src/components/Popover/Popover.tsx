@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useClickOutside, useId } from '@mantine/hooks';
 import {
   createVarsResolver,

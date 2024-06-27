@@ -1,4 +1,3 @@
-import React from 'react';
 import { InlineCodeHighlight } from '@mantine/code-highlight';
 import { em, Tooltip, UnstyledButton } from '@mantine/core';
 import { useClipboard, useMediaQuery } from '@mantine/hooks';

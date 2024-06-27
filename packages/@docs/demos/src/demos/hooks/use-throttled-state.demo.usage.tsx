@@ -1,4 +1,3 @@
-import React from 'react';
 import { Text, TextInput } from '@mantine/core';
 import { useThrottledState } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';

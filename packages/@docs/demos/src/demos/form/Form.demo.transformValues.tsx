@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Code, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
@@ -33,12 +33,14 @@ function Demo() {
         <TextInput
           label="First name"
           placeholder="First name"
+          key={form.key('firstName')}
           {...form.getInputProps('firstName')}
         />
         <TextInput
           label="Last name"
           placeholder="Last name"
           mt="md"
+          key={form.key('lastName')}
           {...form.getInputProps('lastName')}
         />
         <TextInput
@@ -46,6 +48,7 @@ function Demo() {
           label="Age"
           placeholder="Age"
           mt="md"
+          key={form.key('age')}
           {...form.getInputProps('age')}
         />
         <Button type="submit" mt="md">
@@ -88,12 +91,14 @@ function Demo() {
         <TextInput
           label="First name"
           placeholder="First name"
+          key={form.key('firstName')}
           {...form.getInputProps('firstName')}
         />
         <TextInput
           label="Last name"
           placeholder="Last name"
           mt="md"
+          key={form.key('lastName')}
           {...form.getInputProps('lastName')}
         />
         <TextInput
@@ -101,6 +106,7 @@ function Demo() {
           label="Age"
           placeholder="Age"
           mt="md"
+          key={form.key('age')}
           {...form.getInputProps('age')}
         />
         <Button type="submit" mt="md">

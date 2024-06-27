@@ -1,0 +1,201 @@
+import { TreeDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Tree);
+
+## Usage
+
+`Tree` component is used to display hierarchical data. `Tree` component
+has minimal styling by default, you can customize styles with [Styles API](/styles/styles-api).
+
+<Demo data={TreeDemos.usage} />
+
+## Data prop
+
+Data passed to the `data` prop should follow these rules:
+
+- Data must be an array
+- Each item in the array represents a node in the tree
+- Each node must be an object with `value` and `label` keys
+- Each node can have `children` key with an array of child nodes
+- The `value` of each node must be unique
+
+Valid data example:
+
+```tsx
+// ✅ Valid data, all values are unique
+const data = [
+  {
+    value: 'src',
+    label: 'src',
+    children: [
+      { value: 'src/components', label: 'components' },
+      { value: 'src/hooks', label: 'hooks' },
+    ],
+  },
+  { value: 'package.json', label: 'package.json' },
+];
+```
+
+Invalid data example:
+
+```tsx
+// ❌ Invalid data, values are not unique (components is used twice)
+const data = [
+  {
+    value: 'src',
+    label: 'src',
+    children: [{ value: 'components', label: 'components' }],
+  },
+  { value: 'components', label: 'components' },
+];
+```
+
+## Data type
+
+You can import `TreeNodeData` type to define data type for your tree:
+
+```tsx
+import { TreeNodeData } from '@mantine/core';
+
+const data: TreeNodeData[] = [
+  {
+    value: 'src',
+    label: 'src',
+    children: [
+      { value: 'src/components', label: 'components' },
+      { value: 'src/hooks', label: 'hooks' },
+    ],
+  },
+  { value: 'package.json', label: 'package.json' },
+];
+```
+
+## renderNode
+
+Use `renderNode` prop to customize node rendering.
+`renderNode` function receives an object with the following properties as a single argument:
+
+```tsx
+export interface RenderTreeNodePayload {
+  /** Node level in the tree */
+  level: number;
+
+  /** `true` if the node is expanded, applicable only for nodes with `children` */
+  expanded: boolean;
+
+  /** `true` if the node has non-empty `children` array */
+  hasChildren: boolean;
+
+  /** `true` if the node is selected */
+  selected: boolean;
+
+  /** Node data from the `data` prop of `Tree` */
+  node: TreeNodeData;
+
+  /** Props to spread into the root node element */
+  elementProps: {
+    className: string;
+    style: React.CSSProperties;
+    onClick: (event: React.MouseEvent) => void;
+    'data-selected': boolean | undefined;
+    'data-value': string;
+    'data-hovered': boolean | undefined;
+  };
+}
+```
+
+<Demo data={TreeDemos.renderNode} />
+
+## useTree hook
+
+`useTree` hook can be used to control selected and expanded state of the tree.
+
+The hook accepts an object with the following properties:
+
+```tsx
+export interface UseTreeInput {
+  /** Initial expanded state of all nodes */
+  initialExpandedState?: TreeExpandedState;
+
+  /** Initial selected state of nodes */
+  initialSelectedState?: string[];
+
+  /** Determines whether multiple node can be selected at a time */
+  multiple?: boolean;
+}
+```
+
+And returns an object with the following properties:
+
+```tsx
+export interface UseTreeReturnType {
+  /** Determines whether multiple node can be selected at a time */
+  multiple: boolean;
+
+  /** A record of `node.value` and boolean values that represent nodes expanded state */
+  expandedState: TreeExpandedState;
+
+  /** An array of selected nodes values */
+  selectedState: string[];
+
+  /** A value of the node that was last clicked
+   * Anchor node is used to determine range of selected nodes for multiple selection
+   */
+  anchorNode: string | null;
+
+  /** Initializes tree state based on provided data, called automatically by the Tree component */
+  initialize: (data: TreeNodeData[]) => void;
+
+  /** Toggles expanded state of the node with provided value */
+  toggleExpanded: (value: string) => void;
+
+  /** Collapses node with provided value */
+  collapse: (value: string) => void;
+
+  /** Expands node with provided value */
+  expand: (value: string) => void;
+
+  /** Expands all nodes */
+  expandAllNodes: () => void;
+
+  /** Collapses all nodes */
+  collapseAllNodes: () => void;
+
+  /** Sets expanded state */
+  setExpandedState: React.Dispatch<
+    React.SetStateAction<TreeExpandedState>
+  >;
+
+  /** Toggles selected state of the node with provided value */
+  toggleSelected: (value: string) => void;
+
+  /** Selects node with provided value */
+  select: (value: string) => void;
+
+  /** Deselects node with provided value */
+  deselect: (value: string) => void;
+
+  /** Clears selected state */
+  clearSelected: () => void;
+
+  /** Sets selected state */
+  setSelectedState: React.Dispatch<React.SetStateAction<string[]>>;
+
+  /** A value of the node that is currently hovered */
+  hoveredNode: string | null;
+
+  /** Sets hovered node */
+  setHoveredNode: React.Dispatch<React.SetStateAction<string | null>>;
+}
+```
+
+You can pass the value returned by the `useTree` hook to the `tree` prop of the `Tree` component
+to control tree state:
+
+<Demo data={TreeDemos.controller} />
+
+## Example: files tree
+
+<Demo data={TreeDemos.files} />

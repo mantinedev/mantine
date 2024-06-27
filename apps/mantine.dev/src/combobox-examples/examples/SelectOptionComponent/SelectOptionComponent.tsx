@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Combobox, Group, Input, InputBase, Text, useCombobox } from '@mantine/core';
 
 interface Item {

@@ -37,7 +37,7 @@
   }
 }
 
-.root--subtle:not([data-disabled], :disabled) {
+.root--subtle:where(:not([data-disabled], :disabled)) {
   @mixin hover {
     @mixin where-light {
       background-color: var(--mantine-color-gray-0);

@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
 import { Timeline } from '../Timeline';
 import { TimelineItem, TimelineItemProps, TimelineItemStylesNames } from './TimelineItem';
@@ -18,6 +17,7 @@ describe('@mantine/core/TimelineItem', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

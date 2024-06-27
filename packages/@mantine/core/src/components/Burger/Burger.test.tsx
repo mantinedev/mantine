@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { VisuallyHidden } from '../VisuallyHidden';
 import { Burger, BurgerProps, BurgerStylesNames } from './Burger';
@@ -19,6 +18,7 @@ describe('@mantine/core/Burger', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     children: true,
     variant: true,
     size: true,

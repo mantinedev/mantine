@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, rem } from '@mantine/core';
 import { DevIconProps } from './types';
 

@@ -22,6 +22,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       MDX_DATA.CSSFilesList,
       MDX_DATA.CSSModules,
       MDX_DATA.PostCSSPreset,
+      MDX_DATA.Emotion,
       MDX_DATA.UsageWithSass,
       MDX_DATA.VanillaExtract,
       MDX_DATA.GlobalStyles,
@@ -159,6 +160,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
     group: 'mantine-form',
     pages: [
       MDX_DATA.useForm,
+      MDX_DATA.useField,
       MDX_DATA.formUncontrolled,
       MDX_DATA.formValues,
       MDX_DATA.formGetInputProps,
@@ -248,6 +250,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.Pagination,
           MDX_DATA.Stepper,
           MDX_DATA.NavLink,
+          MDX_DATA.Tree,
         ],
       },
       {
@@ -353,6 +356,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       MDX_DATA.PieChart,
       MDX_DATA.RadarChart,
       MDX_DATA.ScatterChart,
+      MDX_DATA.BubbleChart,
       MDX_DATA.Sparkline,
     ],
   },
@@ -372,6 +376,9 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   {
     group: 'changelog',
     pages: [
+      MDX_DATA.Changelog7110,
+      MDX_DATA.Changelog7100,
+      MDX_DATA.Changelog790,
       MDX_DATA.Changelog780,
       MDX_DATA.Changelog770,
       MDX_DATA.Changelog760,

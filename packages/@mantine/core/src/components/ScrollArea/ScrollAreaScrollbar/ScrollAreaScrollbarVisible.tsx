@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState } from 'react';
+import { forwardRef, useRef, useState } from 'react';
 import { useDirection } from '../../../core';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import {
@@ -29,6 +29,7 @@ export const ScrollAreaScrollbarVisible = forwardRef<
     viewport: 0,
     scrollbar: { size: 0, paddingStart: 0, paddingEnd: 0 },
   });
+
   const thumbRatio = getThumbRatio(sizes.viewport, sizes.content);
 
   const commonProps: Omit<
@@ -86,6 +87,11 @@ export const ScrollAreaScrollbarVisible = forwardRef<
           if (context.viewport && thumbRef.current) {
             const scrollPos = context.viewport.scrollTop;
             const offset = getThumbOffsetFromScroll(scrollPos, sizes);
+            if (sizes.scrollbar.size === 0) {
+              thumbRef.current.style.opacity = '0';
+            } else {
+              thumbRef.current.style.opacity = '1';
+            }
             thumbRef.current.style.transform = `translate3d(0, ${offset}px, 0)`;
           }
         }}

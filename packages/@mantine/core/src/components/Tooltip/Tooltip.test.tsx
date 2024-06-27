@@ -1,4 +1,3 @@
-import React from 'react';
 import { patchConsoleError, render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Tooltip, TooltipProps } from './Tooltip';
 import { TooltipStylesNames } from './Tooltip.types';
@@ -20,6 +19,7 @@ describe('@mantine/core/Tooltip', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

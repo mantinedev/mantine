@@ -18,6 +18,11 @@ function createConverter(units: string, { shouldScale = false } = {}) {
     }
 
     if (typeof value === 'string') {
+      // Number("") === 0 so exit early
+      if (value === '') {
+        return value;
+      }
+
       if (value.startsWith('calc(') || value.startsWith('clamp(') || value.includes('rgba(')) {
         return value;
       }

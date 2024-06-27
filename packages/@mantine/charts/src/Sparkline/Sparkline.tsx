@@ -1,4 +1,4 @@
-import React, { useId, useMemo } from 'react';
+import { useId, useMemo } from 'react';
 import { Area, AreaProps, AreaChart as ReChartsAreaChart, ResponsiveContainer } from 'recharts';
 import {
   Box,

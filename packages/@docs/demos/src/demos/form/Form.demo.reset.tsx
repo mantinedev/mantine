@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Group, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
@@ -17,16 +16,25 @@ function Demo() {
   });
 
   return (
-    <Box maw={340} mx="auto">
-      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-      <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+    <div>
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="md"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
 
       <Group justify="center" mt="xl">
-        <Button onClick={() => form.reset()}>
-          Reset to initial values
-        </Button>
+        <Button onClick={() => form.reset()}>Reset to initial values</Button>
       </Group>
-    </Box>
+    </div>
   );
 }
 `;
@@ -42,8 +50,19 @@ function Demo() {
 
   return (
     <div>
-      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
-      <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="md"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
 
       <Group justify="center" mt="xl">
         <Button onClick={() => form.reset()}>Reset to initial values</Button>

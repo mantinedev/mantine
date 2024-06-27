@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import cx from 'clsx';

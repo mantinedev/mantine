@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { clamp, useMergedRef, useMove, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -236,8 +236,8 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
             Math.min(Math.max(_value + step!, min!), max!),
             precision
           );
-          onChangeEnd?.(nextValue);
           setValue(nextValue);
+          onChangeEnd?.(nextValue);
           break;
         }
 
@@ -248,8 +248,8 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
             Math.min(Math.max(dir === 'rtl' ? _value - step! : _value + step!, min!), max!),
             precision
           );
-          onChangeEnd?.(nextValue);
           setValue(nextValue);
+          onChangeEnd?.(nextValue);
           break;
         }
 
@@ -260,8 +260,8 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
             Math.min(Math.max(_value - step!, min!), max!),
             precision
           );
-          onChangeEnd?.(nextValue);
           setValue(nextValue);
+          onChangeEnd?.(nextValue);
           break;
         }
 
@@ -272,24 +272,24 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
             Math.min(Math.max(dir === 'rtl' ? _value + step! : _value - step!, min!), max!),
             precision
           );
-          onChangeEnd?.(nextValue);
           setValue(nextValue);
+          onChangeEnd?.(nextValue);
           break;
         }
 
         case 'Home': {
           event.preventDefault();
           thumb.current?.focus();
-          onChangeEnd?.(min!);
           setValue(min!);
+          onChangeEnd?.(min!);
           break;
         }
 
         case 'End': {
           event.preventDefault();
           thumb.current?.focus();
-          onChangeEnd?.(max!);
           setValue(max!);
+          onChangeEnd?.(max!);
           break;
         }
 

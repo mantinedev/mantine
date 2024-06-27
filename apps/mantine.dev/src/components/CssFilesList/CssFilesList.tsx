@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconCheck, IconCopy } from '@tabler/icons-react';
 import { ActionIcon, Code, CopyButton, Group } from '@mantine/core';
 import CSS_FILES_LIST from '@/.docgen/css-exports.json';

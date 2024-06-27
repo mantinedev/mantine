@@ -1,4 +1,3 @@
-import React from 'react';
 import { DEFAULT_THEME, rgba } from '../MantineProvider';
 import { Box } from './Box';
 

@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import React from 'react';
 import {
   Box,
   BoxProps,
@@ -77,6 +76,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
     __onDayClick,
     __onDayMouseEnter,
     withCellSpacing,
+    highlightToday,
 
     // CalendarHeader settings
     __preventFocus,
@@ -180,6 +180,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
         __stopPropagation={__stopPropagation}
         static={isStatic}
         withCellSpacing={withCellSpacing}
+        highlightToday={highlightToday}
         {...stylesApiProps}
       />
     </Box>

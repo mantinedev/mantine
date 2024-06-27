@@ -1,4 +1,3 @@
-import React from 'react';
 import { tests } from '@mantine-tests/core';
 import { Grid, GridProps, GridStylesNames } from './Grid';
 import { GridCol } from './GridCol/GridCol';
@@ -15,6 +14,7 @@ describe('@mantine/core/Grid', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

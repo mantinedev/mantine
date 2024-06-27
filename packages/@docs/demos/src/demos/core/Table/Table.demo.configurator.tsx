@@ -1,4 +1,3 @@
-import React from 'react';
 import { Table, TableProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { elements } from './_data';

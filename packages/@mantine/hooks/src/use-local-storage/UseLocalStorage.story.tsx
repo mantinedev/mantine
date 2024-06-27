@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { readLocalStorageValue, useLocalStorage } from './use-local-storage';
 
 export default { title: 'use-local-storage' };
@@ -12,7 +12,7 @@ export function Usage() {
     key,
   });
 
-  const [storedValue, setStoredValue] = React.useState(null);
+  const [storedValue, setStoredValue] = useState(null);
 
   useEffect(() => {
     setTimeout(() => {

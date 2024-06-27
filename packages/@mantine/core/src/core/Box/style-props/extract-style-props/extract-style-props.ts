@@ -3,7 +3,7 @@ import type { MantineStyleProps } from '../style-props.types';
 
 export function extractStyleProps<T extends Record<string, any>>(
   others: MantineStyleProps & T
-): { styleProps: MantineStyleProps; rest: T } {
+): { styleProps: MantineStyleProps & { sx?: any }; rest: T } {
   const {
     m,
     mx,
@@ -23,6 +23,7 @@ export function extractStyleProps<T extends Record<string, any>>(
     pr,
     pe,
     ps,
+    bd,
     bg,
     c,
     opacity,
@@ -57,6 +58,7 @@ export function extractStyleProps<T extends Record<string, any>>(
     visibleFrom,
     lightHidden,
     darkHidden,
+    sx,
     ...rest
   } = others;
 
@@ -79,6 +81,7 @@ export function extractStyleProps<T extends Record<string, any>>(
     pr,
     pe,
     ps,
+    bd,
     bg,
     c,
     opacity,
@@ -113,6 +116,7 @@ export function extractStyleProps<T extends Record<string, any>>(
     visibleFrom,
     lightHidden,
     darkHidden,
+    sx,
   });
 
   return { styleProps, rest: rest as unknown as T };

@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconPlus, IconTrash } from '@tabler/icons-react';
 import { ActionIcon, Group, Table } from '@mantine/core';
 import { useMap } from '@mantine/hooks';

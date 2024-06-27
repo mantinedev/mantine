@@ -1,4 +1,3 @@
-import React from 'react';
 import lodash from 'lodash';
 import { render, screen, tests } from '@mantine-tests/core';
 import { PickerControl, PickerControlProps, PickerControlStylesNames } from './PickerControl';
@@ -27,6 +26,7 @@ describe('@mantine/dates/PickerControl', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

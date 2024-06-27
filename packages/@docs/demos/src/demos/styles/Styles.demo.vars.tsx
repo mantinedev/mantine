@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, ButtonFactory, Group, PartialVarsResolver, rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

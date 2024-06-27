@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContextContainer, render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Combobox } from '../Combobox';
 import { ComboboxOption, ComboboxOptionProps, ComboboxOptionStylesNames } from './ComboboxOption';
@@ -17,6 +16,7 @@ describe('@mantine/core/ComboboxOption', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

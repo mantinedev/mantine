@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { Anchor, AnchorProps, AnchorStylesNames } from './Anchor';
 
@@ -13,6 +12,7 @@ describe('@mantine/core/Anchor', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

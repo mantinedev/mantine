@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Bar,
   BarProps,
   CartesianGrid,
+  Cell,
   Label,
   Legend,
   BarChart as ReChartsBarChart,
@@ -38,7 +39,7 @@ function valueToPercent(value: number) {
 
 export interface BarChartSeries extends ChartSeries {}
 
-export type BarChartType = 'default' | 'stacked' | 'percent';
+export type BarChartType = 'default' | 'stacked' | 'percent' | 'waterfall';
 
 export type BarChartStylesNames =
   | 'bar'
@@ -55,7 +56,7 @@ export interface BarChartProps
     GridChartBaseProps,
     StylesApiProps<BarChartFactory>,
     ElementProps<'div'> {
-  /** Data used to display chart */
+  /** Data used to display chart. */
   data: Record<string, any>[];
 
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
@@ -80,6 +81,9 @@ export interface BarChartProps
   barProps?:
     | ((series: BarChartSeries) => Partial<Omit<BarProps, 'ref'>>)
     | Partial<Omit<BarProps, 'ref'>>;
+
+  /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"`, `false` by default */
+  withBarValueLabel?: boolean;
 }
 
 export type BarChartFactory = Factory<{
@@ -110,6 +114,43 @@ const varsResolver = createVarsResolver<BarChartFactory>(
     },
   })
 );
+
+function BarLabel({ value, valueFormatter, ...others }: Record<string, any>) {
+  return (
+    <text
+      {...others}
+      dy={-10}
+      fontSize={12}
+      fill="var(--chart-text-color, var(--mantine-color-dimmed))"
+      textAnchor="center"
+    >
+      {typeof valueFormatter === 'function' ? valueFormatter(value) : value}
+    </text>
+  );
+}
+
+function calculateCumulativeTotal(waterfallData: Record<string, any>[], dataKey: string) {
+  let start: number = 0;
+  let end: number = 0;
+  return waterfallData.map((item) => {
+    if (item.standalone) {
+      for (const prop in item) {
+        if (typeof item[prop] === 'number' && prop !== dataKey) {
+          item[prop] = [0, item[prop]];
+        }
+      }
+    } else {
+      for (const prop in item) {
+        if (typeof item[prop] === 'number' && prop !== dataKey) {
+          end += item[prop];
+          item[prop] = [start, end];
+          start = end;
+        }
+      }
+    }
+    return item;
+  });
+}
 
 export const BarChart = factory<BarChartFactory>((_props, ref) => {
   const props = useProps('BarChart', defaultProps, _props);
@@ -149,6 +190,10 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     barProps,
     xAxisLabel,
     yAxisLabel,
+    withBarValueLabel,
+    withRightYAxis,
+    rightYAxisLabel,
+    rightYAxisProps,
     ...others
   } = props;
 
@@ -167,6 +212,8 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     styles,
     props,
   });
+
+  const inputData = type === 'waterfall' ? calculateCumulativeTotal(data, dataKey) : data;
 
   const getStyles = useStyles<BarChartFactory>({
     name: 'BarChart',
@@ -197,8 +244,17 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         fillOpacity={dimmed ? 0.1 : fillOpacity}
         strokeOpacity={dimmed ? 0.2 : 0}
         stackId={stacked ? 'stack' : undefined}
+        label={withBarValueLabel ? <BarLabel valueFormatter={valueFormatter} /> : undefined}
+        yAxisId={item.yAxisId || 'left'}
         {...(typeof barProps === 'function' ? barProps(item) : barProps)}
-      />
+      >
+        {inputData.map((entry, index) => (
+          <Cell
+            key={`cell-${index}`}
+            fill={entry.color ? getThemeColor(entry.color, theme) : color}
+          />
+        ))}
+      </Bar>
     );
   });
 
@@ -209,6 +265,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         key={index}
         stroke={line.color ? color : 'var(--chart-grid-color)'}
         strokeWidth={1}
+        yAxisId={line.yAxisId || 'left'}
         {...line}
         label={{
           value: line.label,
@@ -221,6 +278,19 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     );
   });
 
+  const sharedYAxisProps = {
+    hide: !withYAxis,
+    axisLine: false,
+    ...(orientation === 'vertical'
+      ? { dataKey, type: 'category' as const }
+      : { type: 'number' as const }),
+    tickLine: withYTickLine ? { stroke: 'currentColor' } : false,
+    allowDecimals: true,
+    unit,
+    tickFormatter: type === 'percent' ? valueToPercent : valueFormatter,
+    ...getStyles('axis'),
+  };
+
   return (
     <Box
       ref={ref}
@@ -231,7 +301,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     >
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsBarChart
-          data={data}
+          data={inputData}
           stackOffset={type === 'percent' ? 'expand' : undefined}
           layout={orientation}
           margin={{
@@ -252,6 +322,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={series}
+                  showColor={type !== 'waterfall'}
                 />
               )}
               {...legendProps}
@@ -278,21 +349,38 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
           </XAxis>
 
           <YAxis
-            hide={!withYAxis}
-            axisLine={false}
-            {...(orientation === 'vertical' ? { dataKey, type: 'category' } : { type: 'number' })}
-            tickLine={withYTickLine ? { stroke: 'currentColor' } : false}
+            yAxisId="left"
+            orientation="left"
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
-            allowDecimals
-            unit={unit}
-            tickFormatter={type === 'percent' ? valueToPercent : valueFormatter}
-            {...getStyles('axis')}
+            {...sharedYAxisProps}
             {...yAxisProps}
           >
-            {yAxisLabel && (
+            {rightYAxisLabel && (
               <Label
                 position="insideLeft"
                 angle={-90}
+                textAnchor="middle"
+                fontSize={12}
+                offset={-5}
+                {...getStyles('axisLabel')}
+              >
+                {rightYAxisLabel}
+              </Label>
+            )}
+            {yAxisProps?.children}
+          </YAxis>
+
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            tick={{ transform: 'translate(10, 0)', fontSize: 12, fill: 'currentColor' }}
+            {...sharedYAxisProps}
+            {...rightYAxisProps}
+          >
+            {yAxisLabel && (
+              <Label
+                position="insideRight"
+                angle={90}
                 textAnchor="middle"
                 fontSize={12}
                 offset={-5}
@@ -316,7 +404,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
             <Tooltip
               animationDuration={tooltipAnimationDuration}
               isAnimationActive={tooltipAnimationDuration !== 0}
-              position={{ y: 0 }}
+              position={orientation === 'vertical' ? {} : { y: 0 }}
               cursor={{
                 stroke: 'var(--chart-grid-color)',
                 strokeWidth: 1,
@@ -327,6 +415,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
                 <ChartTooltip
                   label={label}
                   payload={payload}
+                  type={type === 'waterfall' ? 'scatter' : undefined}
                   unit={unit}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}

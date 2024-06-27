@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import {
   Box,
@@ -105,6 +105,8 @@ export const ModalBase = forwardRef<HTMLDivElement, ModalBaseProps>(
     const { _id, titleMounted, bodyMounted, shouldLockScroll, setTitleMounted, setBodyMounted } =
       useModal({ id, transitionProps, opened, trapFocus, closeOnEscape, onClose, returnFocus });
 
+    const { key: removeScrollKey, ...otherRemoveScrollProps } = removeScrollProps || {};
+
     return (
       <OptionalPortal {...portalProps} withinPortal={withinPortal}>
         <ModalBaseProvider
@@ -125,7 +127,11 @@ export const ModalBase = forwardRef<HTMLDivElement, ModalBaseProps>(
             unstyled,
           }}
         >
-          <RemoveScroll enabled={shouldLockScroll && lockScroll} {...removeScrollProps}>
+          <RemoveScroll
+            enabled={shouldLockScroll && lockScroll}
+            key={removeScrollKey}
+            {...otherRemoveScrollProps}
+          >
             <Box
               ref={ref}
               {...others}

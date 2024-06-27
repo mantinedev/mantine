@@ -410,3 +410,44 @@ Will be transformed to:
   margin-right: 1rem;
 }
 ```
+
+## Custom mixins
+
+You can define custom mixins that are not included in the preset by specifying them
+in the `mixins` option. To learn about mixins syntax, follow [postcss-mixins documentation](https://github.com/postcss/postcss-mixins#readme).
+
+Example of adding `clearfix` and `circle` mixins:
+
+```tsx
+module.exports = {
+  plugins: {
+    'postcss-preset-mantine': {
+      autoRem: true,
+      mixins: {
+        clearfix: {
+          '&::after': {
+            content: '""',
+            display: 'table',
+            clear: 'both',
+          },
+        },
+        circle: (_mixin, size) => ({
+          borderRadius: '50%',
+          width: size,
+          height: size,
+        }),
+      },
+    },
+    // ... Other plugins
+  },
+};
+```
+
+Then you can use these mixins in your styles:
+
+```scss
+.demo {
+  @mixin clearfix;
+  @mixin circle 100px;
+}
+```

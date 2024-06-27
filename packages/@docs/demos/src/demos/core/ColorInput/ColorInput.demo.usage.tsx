@@ -1,4 +1,3 @@
-import React from 'react';
 import { ColorInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { inputControls } from '../../../shared';

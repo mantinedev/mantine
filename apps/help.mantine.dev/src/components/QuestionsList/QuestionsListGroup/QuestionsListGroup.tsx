@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 import { Divider, Highlight } from '@mantine/core';
 import { Frontmatter } from '@/types';

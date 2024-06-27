@@ -1,5 +1,5 @@
-import React from 'react';
-import { useId, useUncontrolled } from '@mantine/hooks';
+import { useEffect, useRef } from 'react';
+import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
   ElementProps,
@@ -54,13 +54,13 @@ export interface TagsInputProps
   /** Default value for uncontrolled component */
   defaultValue?: string[];
 
-  /** Called whe value changes */
+  /** Called when value changes */
   onChange?: (value: string[]) => void;
 
   /** Called when tag is removed */
   onRemove?: (value: string) => void;
 
-  /** Called whe the clear button is clicked */
+  /** Called when the clear button is clicked */
   onClear?: () => void;
 
   /** Controlled search value */
@@ -101,6 +101,9 @@ export interface TagsInputProps
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
+
+  /** Determines whether the value typed in by the user but not submitted should be accepted when the input is blurred, `true` by default */
+  acceptValueOnBlur?: boolean;
 }
 
 export type TagsInputFactory = Factory<{
@@ -112,6 +115,7 @@ export type TagsInputFactory = Factory<{
 const defaultProps: Partial<TagsInputProps> = {
   maxTags: Infinity,
   allowDuplicates: false,
+  acceptValueOnBlur: true,
   splitChars: [','],
   hiddenInputValuesDivider: ',',
 };
@@ -188,12 +192,15 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     onRemove,
     onClear,
     scrollAreaProps,
+    acceptValueOnBlur,
     ...others
   } = props;
 
   const _id = useId(id);
   const parsedData = getParsedComboboxData(data);
   const optionsLockup = getOptionsLockup(parsedData);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const _ref = useMergedRef(inputRef, ref);
 
   const combobox = useCombobox({
     opened: dropdownOpened,
@@ -239,6 +246,23 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     classNames,
   });
 
+  const handleValueSelect = (val: string) => {
+    const isDuplicate = _value.some((tag) => tag.toLowerCase() === val.toLowerCase());
+
+    if (isDuplicate) {
+      onDuplicate?.(val);
+    }
+
+    if ((!isDuplicate || (isDuplicate && allowDuplicates)) && _value.length < maxTags!) {
+      onOptionSubmit?.(val);
+      setSearchValue('');
+
+      if (val.length > 0) {
+        setValue([..._value, val]);
+      }
+    }
+  };
+
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
@@ -261,20 +285,16 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
 
     if (event.key === 'Enter' && length > 0 && !event.nativeEvent.isComposing) {
       event.preventDefault();
-      const isDuplicate = _value.some((tag) => tag.toLowerCase() === inputValue.toLowerCase());
 
-      if (isDuplicate) {
-        onDuplicate?.(inputValue);
+      const hasActiveSelection = !!document.querySelector<HTMLDivElement>(
+        `#${combobox.listId} [data-combobox-option][data-combobox-selected]`
+      );
+
+      if (hasActiveSelection) {
+        return;
       }
 
-      if ((!isDuplicate || (isDuplicate && allowDuplicates)) && _value.length < maxTags!) {
-        onOptionSubmit?.(inputValue);
-        setSearchValue('');
-
-        if (inputValue.length > 0) {
-          setValue([..._value, inputValue]);
-        }
-      }
+      handleValueSelect(inputValue);
     }
 
     if (
@@ -299,7 +319,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
           splitChars,
           allowDuplicates,
           maxTags,
-          value: pastedText,
+          value: `${_searchValue}${pastedText}`,
           currentTags: _value,
         })
       );
@@ -323,6 +343,12 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     </Pill>
   ));
 
+  useEffect(() => {
+    if (selectFirstOptionOnChange) {
+      combobox.selectFirstOption();
+    }
+  }, [selectFirstOptionOnChange, _value, _searchValue]);
+
   const clearButton = clearable && _value.length > 0 && !disabled && !readOnly && (
     <Combobox.ClearButton
       size={size as string}
@@ -330,6 +356,8 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       onClear={() => {
         setValue([]);
         setSearchValue('');
+        inputRef.current?.focus();
+        combobox.openDropdown();
         onClear?.();
       }}
     />
@@ -349,6 +377,8 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
           onOptionSubmit?.(val);
           setSearchValue('');
           _value.length < maxTags! && setValue([..._value, optionsLockup[val].label]);
+
+          combobox.resetSelectedOption();
         }}
         {...comboboxProps}
       >
@@ -395,7 +425,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
               <Combobox.EventsTarget autoComplete={autoComplete}>
                 <PillsInput.Field
                   {...rest}
-                  ref={ref}
+                  ref={_ref}
                   {...getStyles('inputField')}
                   unstyled={unstyled}
                   onKeyDown={handleInputKeydown}
@@ -405,6 +435,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
                   }}
                   onBlur={(event) => {
                     onBlur?.(event);
+                    acceptValueOnBlur && handleValueSelect(_searchValue);
                     combobox.closeDropdown();
                   }}
                   onPaste={handlePaste}
@@ -430,7 +461,8 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
           withScrollArea={withScrollArea}
           maxDropdownHeight={maxDropdownHeight}
           unstyled={unstyled}
-          labelId={`${_id}-label`}
+          labelId={label ? `${_id}-label` : undefined}
+          aria-label={label ? undefined : others['aria-label']}
           renderOption={renderOption}
           scrollAreaProps={scrollAreaProps}
         />

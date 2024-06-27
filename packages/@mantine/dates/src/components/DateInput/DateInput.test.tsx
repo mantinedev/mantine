@@ -1,4 +1,3 @@
-import React from 'react';
 import { __InputStylesNames } from '@mantine/core';
 import {
   inputDefaultProps,
@@ -55,6 +54,7 @@ describe('@mantine/dates/DateInput', () => {
     props: defaultPropsWithInputProps,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

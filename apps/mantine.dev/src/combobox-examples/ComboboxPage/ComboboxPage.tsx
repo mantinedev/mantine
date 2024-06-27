@@ -1,4 +1,3 @@
-import React from 'react';
 import { PageHead } from '@/components/PageHead';
 import { ComboboxDemo } from '../ComboboxDemo/ComboboxDemo';
 import { ComboboxShell } from '../ComboboxShell/ComboboxShell';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Code, Text, TextInput } from '@mantine/core';
 import { hasLength, isEmail, useForm } from '@mantine/form';
 import { MantineDemo } from '@mantinex/demo';
@@ -22,8 +22,19 @@ function Demo() {
 
   return (
     <form onSubmit={form.onSubmit(setSubmittedValues)}>
-      <TextInput {...form.getInputProps('name')} label="Name" placeholder="Name" />
-      <TextInput {...form.getInputProps('email')} mt="md" label="Email" placeholder="Email" />
+      <TextInput
+        {...form.getInputProps('name')}
+        key={form.key('name')}
+        label="Name"
+        placeholder="Name"
+      />
+      <TextInput
+        {...form.getInputProps('email')}
+        key={form.key('email')}
+        mt="md"
+        label="Email"
+        placeholder="Email"
+      />
       <Button type="submit" mt="md">
         Submit
       </Button>
@@ -52,8 +63,19 @@ function Demo() {
 
   return (
     <form onSubmit={form.onSubmit(setSubmittedValues)}>
-      <TextInput {...form.getInputProps('name')} label="Name" placeholder="Name" />
-      <TextInput {...form.getInputProps('email')} mt="md" label="Email" placeholder="Email" />
+      <TextInput
+        {...form.getInputProps('name')}
+        key={form.key('name')}
+        label="Name"
+        placeholder="Name"
+      />
+      <TextInput
+        {...form.getInputProps('email')}
+        key={form.key('email')}
+        mt="md"
+        label="Email"
+        placeholder="Email"
+      />
       <Button type="submit" mt="md">
         Submit
       </Button>

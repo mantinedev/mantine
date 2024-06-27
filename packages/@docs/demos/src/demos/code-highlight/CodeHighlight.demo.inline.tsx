@@ -1,4 +1,3 @@
-import React from 'react';
 import { InlineCodeHighlight } from '@mantine/code-highlight';
 import { Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
@@ -11,7 +10,8 @@ function Demo() {
   return (
     <Text>
       You can highlight code inline:{' '}
-      <InlineCodeHighlight code="import React from 'react';" language="tsx" />. Is not that cool?
+      <InlineCodeHighlight code={'<InlineCodeHighlight code="" language="tsx" />'} language="tsx" />
+      . Is not that cool?
     </Text>
   );
 }
@@ -21,7 +21,8 @@ function Demo() {
   return (
     <Text>
       You can highlight code inline:{' '}
-      <InlineCodeHighlight code="import React from 'react';" language="tsx" />. Is not that cool?
+      <InlineCodeHighlight code={'<InlineCodeHighlight code="" language="tsx" />'} language="tsx" />
+      . Is not that cool?
     </Text>
   );
 }

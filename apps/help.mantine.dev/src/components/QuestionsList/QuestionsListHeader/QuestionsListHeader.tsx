@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { IconSearch } from '@tabler/icons-react';
 import { CloseButton, Container, Text, TextInput, Title } from '@mantine/core';
 import classes from './QuestionsListHeader.module.css';

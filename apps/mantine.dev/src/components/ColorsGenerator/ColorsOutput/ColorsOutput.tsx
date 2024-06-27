@@ -1,4 +1,3 @@
-import React from 'react';
 import { Input } from '@mantine/core';
 import { MdxCodeHighlight } from '@/components/MdxProvider';
 

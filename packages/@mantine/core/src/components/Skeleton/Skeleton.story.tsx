@@ -1,4 +1,3 @@
-import React from 'react';
 import { Skeleton } from './Skeleton';
 
 export default { title: 'Skeleton' };

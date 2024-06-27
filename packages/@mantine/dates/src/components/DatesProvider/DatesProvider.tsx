@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import { createContext } from 'react';
 import { DayOfWeek } from '../../types';
 
 export interface DatesProviderValue {

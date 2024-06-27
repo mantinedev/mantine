@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Radio } from '../Radio';
 import { RadioGroup, RadioGroupProps, RadioGroupStylesNames } from './RadioGroup';
@@ -31,6 +30,7 @@ describe('@mantine/core/RadioGroup', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/RadioGroup',

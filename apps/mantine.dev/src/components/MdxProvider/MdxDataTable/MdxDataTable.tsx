@@ -1,4 +1,3 @@
-import React from 'react';
 import { rem, Table } from '@mantine/core';
 import { DocsSection } from '@/components/DocsSection';
 

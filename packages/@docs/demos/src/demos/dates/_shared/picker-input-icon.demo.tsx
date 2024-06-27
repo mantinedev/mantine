@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IconCalendar } from '@tabler/icons-react';
 import { rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

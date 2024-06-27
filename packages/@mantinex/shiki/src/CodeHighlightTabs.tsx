@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   ActionIcon,
   Box,
@@ -191,9 +190,10 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
         fileIcon={node.icon}
         getFileIcon={getFileIcon}
         fileName={node.fileName}
+        key="file-icon"
         {...getStyles('fileIcon')}
       />
-      <span>{node.fileName}</span>
+      <span key="file-name">{node.fileName}</span>
     </UnstyledButton>
   ));
 

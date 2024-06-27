@@ -1,4 +1,4 @@
-import React, { Children, cloneElement } from 'react';
+import { Children, cloneElement } from 'react';
 import {
   Box,
   BoxProps,
@@ -82,7 +82,7 @@ const varsResolver = createVarsResolver<TimelineFactory>(
       '--tl-radius': radius === undefined ? undefined : getRadius(radius),
       '--tl-color': color ? getThemeColor(color, theme) : undefined,
       '--tl-icon-color': getAutoContrastValue(autoContrast, theme)
-        ? getContrastColor({ color, theme })
+        ? getContrastColor({ color, theme, autoContrast })
         : undefined,
     },
   })

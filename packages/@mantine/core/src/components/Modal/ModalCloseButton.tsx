@@ -1,4 +1,3 @@
-import React from 'react';
 import { CompoundStylesApiProps, factory, Factory, useProps } from '../../core';
 import { ModalBaseCloseButton, ModalBaseCloseButtonProps } from '../ModalBase';
 import { useModalContext } from './Modal.context';

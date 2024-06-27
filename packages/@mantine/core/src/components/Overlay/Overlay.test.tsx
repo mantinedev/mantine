@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { Overlay, OverlayProps, OverlayStylesNames } from './Overlay';
 
@@ -13,6 +12,7 @@ describe('@mantine/core/Overlay', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

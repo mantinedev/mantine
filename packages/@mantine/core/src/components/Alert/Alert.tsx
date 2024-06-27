@@ -1,4 +1,3 @@
-import React from 'react';
 import { useId } from '@mantine/hooks';
 import {
   Box,

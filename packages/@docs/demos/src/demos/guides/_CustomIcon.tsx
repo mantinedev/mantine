@@ -1,4 +1,3 @@
-import React from 'react';
 import { rem } from '@mantine/core';
 
 interface AddressBookIconProps extends React.ComponentPropsWithoutRef<'svg'> {

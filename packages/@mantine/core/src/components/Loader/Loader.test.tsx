@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { defaultLoaders, Loader, LoaderProps, LoaderStylesNames } from './Loader';
 import { MantineLoaderComponent } from './Loader.types';
@@ -17,6 +17,7 @@ describe('@mantine/core/Loader', () => {
     size: true,
     variant: true,
     extend: true,
+    withProps: true,
     classes: true,
     id: true,
     refType: HTMLSpanElement,

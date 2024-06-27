@@ -6,13 +6,15 @@ import { useFormList } from './hooks/use-form-list/use-form-list';
 import { useFormStatus } from './hooks/use-form-status/use-form-status';
 import { useFormValues } from './hooks/use-form-values/use-form-values';
 import { useFormWatch } from './hooks/use-form-watch/use-form-watch';
-import { getPath } from './paths';
+import { getDataPath, getPath } from './paths';
 import {
   _TransformValues,
+  GetInputNode,
   GetInputProps,
   GetTransformedValues,
   Initialize,
   IsValid,
+  Key,
   OnReset,
   OnSubmit,
   Reset,
@@ -142,11 +144,7 @@ export function useForm<
       setFieldValue(path, value as any, { forceUpdate: false })
     );
 
-    const payload: any = { onChange };
-
-    if (mode === 'uncontrolled') {
-      payload.key = `${formKey}-${path as string}-${fieldKeys[path as string] || 0}`;
-    }
+    const payload: any = { onChange, 'data-path': getDataPath(name, path) };
 
     if (withError) {
       payload.error = $errors.errorsState[path];
@@ -216,6 +214,14 @@ export function useForm<
     [rules]
   );
 
+  const key: Key<Values> = (path) =>
+    `${formKey}-${path as string}-${fieldKeys[path as string] || 0}`;
+
+  const getInputNode: GetInputNode<Values> = useCallback(
+    (path) => document.querySelector(`[data-path="${getDataPath(name, path)}"]`),
+    []
+  );
+
   const form: UseFormReturnType<Values, TransformValues> = {
     watch: $watch.watch,
 
@@ -254,6 +260,9 @@ export function useForm<
     onReset,
     isValid,
     getTransformedValues,
+    key,
+
+    getInputNode,
   };
 
   useFormActions(name, form);

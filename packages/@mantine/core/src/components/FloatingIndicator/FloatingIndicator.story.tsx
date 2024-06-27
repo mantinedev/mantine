@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { useDisclosure, useInterval } from '@mantine/hooks';
 import { Button } from '../Button';
 import { Modal } from '../Modal';
@@ -26,9 +26,9 @@ export function WithinModal() {
 }
 
 export function Usage() {
-  const [active, setActive] = React.useState(1);
-  const [refs, setRefs] = React.useState<HTMLElement[]>([]);
-  const [parentRef, setParentRef] = React.useState<HTMLDivElement | null>(null);
+  const [active, setActive] = useState(1);
+  const [refs, setRefs] = useState<HTMLElement[]>([]);
+  const [parentRef, setParentRef] = useState<HTMLDivElement | null>(null);
 
   const setElementRef = (element: HTMLElement, index: number) => {
     refs[index] = element;
@@ -85,8 +85,8 @@ export function Usage() {
 }
 
 export function ResizableTarget() {
-  const [targetRef, setTargetRef] = React.useState<HTMLDivElement | null>(null);
-  const [parentRef, setParentRef] = React.useState<HTMLDivElement | null>(null);
+  const [targetRef, setTargetRef] = useState<HTMLDivElement | null>(null);
+  const [parentRef, setParentRef] = useState<HTMLDivElement | null>(null);
 
   return (
     <div style={{ padding: 40 }}>
@@ -103,12 +103,12 @@ export function ResizableTarget() {
 }
 
 export function ScaledElement() {
-  const [targetRef, setTargetRef] = React.useState<HTMLDivElement | null>(null);
-  const [parentRef, setParentRef] = React.useState<HTMLDivElement | null>(null);
-  const [scale, setScale] = React.useState(1);
+  const [targetRef, setTargetRef] = useState<HTMLDivElement | null>(null);
+  const [parentRef, setParentRef] = useState<HTMLDivElement | null>(null);
+  const [scale, setScale] = useState(1);
   const interval = useInterval(() => setScale(Math.random()), 500);
 
-  React.useEffect(() => {
+  useEffect(() => {
     interval.start();
   }, []);
 

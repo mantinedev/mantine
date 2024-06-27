@@ -1,4 +1,3 @@
-import React from 'react';
 import { ColorsGenerator } from '@/components/ColorsGenerator';
 import { ContentPageBase } from '@/components/ContentPageBase';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { act, RenderResult, render as testingLibraryRender } from '@testing-library/react';
 import { MantineProvider, MantineProviderProps, MantineThemeOverride } from '@mantine/core';
 

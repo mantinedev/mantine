@@ -1,4 +1,3 @@
-import React from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import { ElementProps, factory, Factory, useProps } from '../../../core';
 import { Input, InputProps, InputStylesNames } from '../../Input/Input';

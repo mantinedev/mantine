@@ -13,6 +13,7 @@ export const ROLLUP_EXCLUDE_USE_CLIENT = [
   'core/MantineProvider/default-colors',
   'core/MantineProvider/default-theme',
   'core/MantineProvider/merge-mantine-theme/merge-mantine-theme',
+  'core/MantineProvider/MantineCssVariables/virtual-color/virtual-color',
   'theme-to-vars',
 ].reduce<string[]>((acc, name) => {
   acc.push(`${name}.js`, `${name}.mjs`, `${name}.cjs`);

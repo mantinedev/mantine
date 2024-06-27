@@ -1,4 +1,3 @@
-import React from 'react';
 import { useRouter } from 'next/router';
 import { useComputedColorScheme, useDirection, useMantineColorScheme } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';

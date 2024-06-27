@@ -1,4 +1,3 @@
-import React from 'react';
 import { Sparkline } from './Sparkline';
 
 export default { title: 'Sparkline' };

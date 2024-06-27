@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { Pagination, PaginationProps, PaginationStylesNames } from './Pagination';
 
@@ -16,6 +15,7 @@ describe('@mantine/core/Pagination', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,
@@ -32,6 +32,11 @@ describe('@mantine/core/Pagination', () => {
 
   it('renders nothing if total value is zero', () => {
     const { container } = render(<Pagination total={0} />);
+    expect(container.querySelectorAll('*:not(style)')).toHaveLength(0);
+  });
+
+  it('renders nothing if total value is 1 and hideWithOnePage is true', () => {
+    const { container } = render(<Pagination total={1} hideWithOnePage />);
     expect(container.querySelectorAll('*:not(style)')).toHaveLength(0);
   });
 });

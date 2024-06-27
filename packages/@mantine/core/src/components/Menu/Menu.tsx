@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
 import {
   ExtendComponent,

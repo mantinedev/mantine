@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Box } from '@mantine/core';
 

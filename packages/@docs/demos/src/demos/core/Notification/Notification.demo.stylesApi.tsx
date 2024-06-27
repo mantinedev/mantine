@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconCheck } from '@tabler/icons-react';
 import { Box, Notification } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

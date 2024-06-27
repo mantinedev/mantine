@@ -1,17 +1,18 @@
-import React from 'react';
 import { AspectRatio } from './AspectRatio';
 
 export default { title: 'AspectRatio' };
 
+const WithProps = AspectRatio.withProps({ ratio: 112 / 9 });
+
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <AspectRatio ratio={16 / 9}>
+      <WithProps>
         <img
           src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
           alt="img"
         />
-      </AspectRatio>
+      </WithProps>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { YearLevel } from './YearLevel';
 
 export default { title: 'YearLevel' };

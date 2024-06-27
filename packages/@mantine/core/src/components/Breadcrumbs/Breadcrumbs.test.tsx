@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Breadcrumbs, BreadcrumbsProps, BreadcrumbsStylesNames } from './Breadcrumbs';
 
@@ -14,6 +13,7 @@ describe('@mantine/core/Breadcrumbs', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

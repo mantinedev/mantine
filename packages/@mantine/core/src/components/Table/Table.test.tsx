@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Table, TableProps, TableStylesNames } from './Table';
 import {
@@ -47,6 +46,7 @@ describe('@mantine/core/Table', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     id: true,

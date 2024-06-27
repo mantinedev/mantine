@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconArrowRight } from '@tabler/icons-react';
 import { Button, ButtonProps, Group, rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';

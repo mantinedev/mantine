@@ -1,4 +1,3 @@
-import React from 'react';
 import { List, ListProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 

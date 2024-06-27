@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from 'react';
+
 import { useForm } from '../use-form';
 import { FormBase } from './_base';
 

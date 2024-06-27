@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { ClearErrors, ClearFieldError, FormErrors, SetErrors, SetFieldError } from '../../types';
 import { filterErrors } from './filter-errors/filter-errors';
 
@@ -14,18 +14,21 @@ export function useFormErrors<Values extends Record<string, any>>(
   initialErrors: FormErrors
 ): $FormErrors<Values> {
   const [errorsState, setErrorsState] = useState(filterErrors(initialErrors));
+  const errorsRef = useRef(errorsState);
 
   const setErrors: SetErrors = useCallback((errors) => {
-    setErrorsState((current) =>
-      filterErrors(typeof errors === 'function' ? errors(current) : errors)
-    );
+    setErrorsState((current) => {
+      const newErrors = filterErrors(typeof errors === 'function' ? errors(current) : errors);
+      errorsRef.current = newErrors;
+      return newErrors;
+    });
   }, []);
 
-  const clearErrors: ClearErrors = useCallback(() => setErrorsState({}), []);
+  const clearErrors: ClearErrors = useCallback(() => setErrors({}), []);
 
   const clearFieldError: ClearFieldError = useCallback(
     (path) => {
-      if (errorsState[path as string] === undefined) {
+      if (errorsRef.current[path as string] === undefined) {
         return;
       }
 
@@ -42,7 +45,7 @@ export function useFormErrors<Values extends Record<string, any>>(
     (path, error) => {
       if (error == null || error === false) {
         clearFieldError(path);
-      } else if (errorsState[path as string] !== error) {
+      } else if (errorsRef.current[path as string] !== error) {
         setErrors((current) => ({ ...current, [path]: error }));
       }
     },

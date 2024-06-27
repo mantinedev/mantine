@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import React from 'react';
 import { Button } from '@mantine/core';
 import { YearPickerInput } from './YearPickerInput';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { MdxTitle } from '../MdxTitle/MdxTitle';
 import { MdxCode, MdxLi, MdxParagraph, MdxUl } from '../MdxTypography/MdxTypography';
 

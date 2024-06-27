@@ -1,4 +1,4 @@
-import React, { cloneElement } from 'react';
+import { cloneElement } from 'react';
 import { useFocusTrap, useMergedRef } from '@mantine/hooks';
 import { isElement } from '../../core';
 import { VisuallyHidden } from '../VisuallyHidden';
