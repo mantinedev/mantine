@@ -285,6 +285,15 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
 
     if (event.key === 'Enter' && length > 0 && !event.nativeEvent.isComposing) {
       event.preventDefault();
+
+      const hasActiveSelection = !!document.querySelector<HTMLDivElement>(
+        `#${combobox.listId} [data-combobox-option][data-combobox-selected]`
+      );
+
+      if (hasActiveSelection) {
+        return;
+      }
+
       handleValueSelect(inputValue);
     }
 
@@ -362,6 +371,8 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
           onOptionSubmit?.(val);
           setSearchValue('');
           _value.length < maxTags! && setValue([..._value, optionsLockup[val].label]);
+
+          combobox.resetSelectedOption();
         }}
         {...comboboxProps}
       >
