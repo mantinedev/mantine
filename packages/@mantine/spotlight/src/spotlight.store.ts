@@ -82,7 +82,7 @@ function findElementByQuerySelector<T extends HTMLElement>(
 
 export function selectAction(index: number, store: SpotlightStore): number {
   const state = store.getState();
-  const actionsList = findElementByQuerySelector(`#${state.listId}`);
+  const actionsList = state.listId ? findElementByQuerySelector(`#${state.listId}`) : null;
   const selected = actionsList?.querySelector<HTMLButtonElement>('[data-selected]');
   const actions = actionsList?.querySelectorAll<HTMLButtonElement>('[data-action]') ?? [];
   const nextIndex = index === -1 ? actions.length - 1 : index === actions.length ? 0 : index;
