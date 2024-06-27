@@ -77,11 +77,11 @@
   justify-content: center;
 
   @mixin where-light {
-    background-color: rgba(255, 255, 255, 0.35);
+    background-color: rgba(255, 255, 255, 0.15);
   }
 
   @mixin where-dark {
-    background-color: rgba(0, 0, 0, 0.35);
+    background-color: rgba(0, 0, 0, 0.15);
   }
 }
 
