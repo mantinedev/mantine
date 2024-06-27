@@ -68,6 +68,11 @@ export const Demo_search = {
   render: renderDemo(demos.search),
 };
 
+export const Demo_selectFirst = {
+  name: '⭐ Demo: selectFirstOptionOnChange',
+  render: renderDemo(demos.selectFirst),
+};
+
 export const Demo_scrollArea = {
   name: '⭐ Demo: scrollArea',
   render: renderDemo(demos.scrollArea),

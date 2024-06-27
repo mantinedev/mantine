@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -342,6 +342,12 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       {item}
     </Pill>
   ));
+
+  useEffect(() => {
+    if (selectFirstOptionOnChange) {
+      combobox.selectFirstOption();
+    }
+  }, [selectFirstOptionOnChange, _value, _searchValue]);
 
   const clearButton = clearable && _value.length > 0 && !disabled && !readOnly && (
     <Combobox.ClearButton
