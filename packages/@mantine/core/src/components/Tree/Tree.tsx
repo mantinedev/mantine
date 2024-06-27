@@ -133,6 +133,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     clearSelectionOnOutsideClick,
     allowRangeSelection,
     expandOnSpace,
+    levelOffset,
     ...others
   } = props;
 
