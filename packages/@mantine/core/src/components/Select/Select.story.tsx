@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 import { Button } from '../Button';
 import { Select } from './Select';
@@ -10,8 +11,8 @@ export function Usage() {
       <Select
         data={['React', 'Angular', 'Svelte']}
         placeholder="Select something"
-        defaultValue="First"
-        name="usage-select"
+        onChange={console.log}
+        allowDeselect={false}
       />
     </div>
   );

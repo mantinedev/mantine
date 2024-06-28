@@ -243,7 +243,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
 
           const nextValue = optionLockup ? optionLockup.value : null;
 
-          setValue(nextValue, optionLockup);
+          nextValue !== _value && setValue(nextValue, optionLockup);
           !controlled && setSearch(typeof nextValue === 'string' ? optionLockup?.label || '' : '');
           combobox.closeDropdown();
         }}
