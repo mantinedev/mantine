@@ -279,7 +279,6 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
   });
 
   const sharedYAxisProps = {
-    hide: !withYAxis,
     axisLine: false,
     ...(orientation === 'vertical'
       ? { dataKey, type: 'category' as const }
@@ -352,10 +351,11 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
             yAxisId="left"
             orientation="left"
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
+            hide={!withYAxis}
             {...sharedYAxisProps}
             {...yAxisProps}
           >
-            {rightYAxisLabel && (
+            {yAxisLabel && (
               <Label
                 position="insideLeft"
                 angle={-90}
@@ -364,7 +364,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
                 offset={-5}
                 {...getStyles('axisLabel')}
               >
-                {rightYAxisLabel}
+                {yAxisLabel}
               </Label>
             )}
             {yAxisProps?.children}
@@ -374,10 +374,11 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
             yAxisId="right"
             orientation="right"
             tick={{ transform: 'translate(10, 0)', fontSize: 12, fill: 'currentColor' }}
+            hide={!withRightYAxis}
             {...sharedYAxisProps}
             {...rightYAxisProps}
           >
-            {yAxisLabel && (
+            {rightYAxisLabel && (
               <Label
                 position="insideRight"
                 angle={90}
@@ -386,7 +387,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
                 offset={-5}
                 {...getStyles('axisLabel')}
               >
-                {yAxisLabel}
+                {rightYAxisLabel}
               </Label>
             )}
             {yAxisProps?.children}
