@@ -23,7 +23,7 @@ export interface TooltipFloatingProps extends TooltipBaseProps {
   /** Offset from mouse in px, `10` by default */
   offset?: number;
   /** Uncontrolled tooltip initial opened state */
-  defaultOpened?:boolean
+  defaultOpened?: boolean;
 }
 
 export type TooltipFloatingFactory = Factory<{

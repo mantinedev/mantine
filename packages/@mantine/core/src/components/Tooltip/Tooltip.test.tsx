@@ -82,5 +82,5 @@ describe('@mantine/core/Tooltip', () => {
     );
 
     expect(screen.getByText('test-tooltip')).toBeInTheDocument();
-  })
+  });
 });

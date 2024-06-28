@@ -209,17 +209,17 @@ export function Inline() {
 export function DefaultOpened() {
   return (
     <div style={{ padding: 40 }}>
-    <Tooltip
-      position="right"
-      label="Tooltip visible by default"
-      withArrow
-      transitionProps={{ duration: 0 }}
-      color="cyan"
-      radius="md"
-      defaultOpened
-    >
-      <button type="button">target</button>
-    </Tooltip>
+      <Tooltip
+        position="right"
+        label="Tooltip visible by default"
+        withArrow
+        transitionProps={{ duration: 0 }}
+        color="cyan"
+        radius="md"
+        defaultOpened
+      >
+        <button type="button">target</button>
+      </Tooltip>
     </div>
   );
 }

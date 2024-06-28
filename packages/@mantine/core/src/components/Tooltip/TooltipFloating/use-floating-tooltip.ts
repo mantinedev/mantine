@@ -5,7 +5,7 @@ import { FloatingPosition } from '../../Floating';
 interface UseFloatingTooltip {
   offset: number;
   position: FloatingPosition;
-  defaultOpened?:boolean
+  defaultOpened?: boolean;
 }
 
 export function useFloatingTooltip<T extends HTMLElement = any>({

@@ -99,7 +99,7 @@ const defaultProps: Partial<TooltipProps> = {
   refProp: 'ref',
   withinPortal: true,
   inline: false,
-  defaultOpened:false,
+  defaultOpened: false,
   arrowSize: 4,
   arrowOffset: 5,
   arrowRadius: 0,
