@@ -95,6 +95,7 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props, ref) => 
                 onKeyDown: onKeyDownCapture,
               })}
               data-position={ctx.placement}
+              data-fixed={ctx.floatingStrategy === 'fixed' || undefined}
               {...ctx.getStyles('dropdown', {
                 className,
                 props,

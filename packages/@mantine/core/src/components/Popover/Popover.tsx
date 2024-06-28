@@ -318,6 +318,7 @@ export function Popover(_props: PopoverProps) {
         variant,
         keepMounted,
         getStyles,
+        floatingStrategy,
       }}
     >
       {children}
