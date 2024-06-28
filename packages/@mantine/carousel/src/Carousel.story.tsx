@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react';
+/* eslint-disable no-console */
+import { useCallback, useRef, useState } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import type { EmblaCarouselType } from 'embla-carousel-react';
 import { Button, Modal } from '@mantine/core';
@@ -17,9 +18,14 @@ const slides = (
 );
 
 export function Usage() {
+  const [value, setValue] = useState(0);
+  const log = useCallback((index: any) => console.log({ value, index }), [value]);
   return (
     <div style={{ padding: 40, maxWidth: 500 }}>
-      <Carousel slideSize={70} slideGap="md" height={200} withIndicators>
+      <button type="button" onClick={() => setValue(Math.random())}>
+        random
+      </button>
+      <Carousel slideGap="md" height={200} withIndicators onSlideChange={log}>
         {slides}
       </Carousel>
     </div>
