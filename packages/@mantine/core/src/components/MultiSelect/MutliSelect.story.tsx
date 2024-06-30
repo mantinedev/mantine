@@ -215,6 +215,18 @@ export function Searchable() {
   );
 }
 
+export function NoDataProvidedMessage() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MultiSelect
+        data={[]}
+        placeholder="MultiSelect something"
+        nothingFoundMessage="Try adding some data..."
+      />
+    </div>
+  );
+}
+
 export function SearchableHidePicked() {
   return (
     <div style={{ padding: 40 }}>

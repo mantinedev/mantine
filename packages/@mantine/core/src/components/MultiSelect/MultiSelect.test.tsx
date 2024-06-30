@@ -82,4 +82,17 @@ describe('@mantine/core/MultiSelect', () => {
     await userEvent.click(screen.getByRole('textbox'));
     expect(screen.queryByRole('listbox')).toBe(null);
   });
+
+  it('displays the nothing found message if no options matched the search query', async () => {
+    render(<MultiSelect {...defaultProps} searchable nothingFoundMessage="Nothing found" />);
+    await userEvent.click(screen.getByRole('textbox'));
+    await userEvent.type(screen.getByRole('textbox'), 'test-3');
+    expect(screen.getByText('Nothing found')).toBeVisible();
+  });
+
+  it('displays the nothing found message if there is no data', async () => {
+    render(<MultiSelect {...defaultProps} data={[]} nothingFoundMessage="No data" />);
+    await userEvent.click(screen.getByRole('textbox'));
+    expect(screen.getByText('No data')).toBeVisible();
+  });
 });
