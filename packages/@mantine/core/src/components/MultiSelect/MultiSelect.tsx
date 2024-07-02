@@ -73,7 +73,7 @@ export interface MultiSelectProps
   /** Determines whether the select should be searchable, `false` by default */
   searchable?: boolean;
 
-  /** Message displayed when no option matched current search query, only applicable when `searchable` prop is set */
+  /** Message displayed when no option matches the current search query while the `searchable` prop is set or there is no data */
   nothingFoundMessage?: React.ReactNode;
 
   /** Determines whether check icon should be displayed near the selected option label, `true` by default */
@@ -408,11 +408,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
           filter={filter}
           search={_searchValue}
           limit={limit}
-          hiddenWhenEmpty={
-            !searchable ||
-            !nothingFoundMessage ||
-            (hidePickedOptions && filteredData.length === 0 && _searchValue.trim().length === 0)
-          }
+          hiddenWhenEmpty={!nothingFoundMessage}
           withScrollArea={withScrollArea}
           maxDropdownHeight={maxDropdownHeight}
           filterOptions={searchable}

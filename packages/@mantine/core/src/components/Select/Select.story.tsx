@@ -266,6 +266,18 @@ export function Searchable() {
   );
 }
 
+export function NoDataProvidedMessage() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Select
+        data={[]}
+        placeholder="Select something"
+        nothingFoundMessage="Try adding some data..."
+      />
+    </div>
+  );
+}
+
 export function HiddenDropdown() {
   return (
     <div style={{ padding: 40 }}>

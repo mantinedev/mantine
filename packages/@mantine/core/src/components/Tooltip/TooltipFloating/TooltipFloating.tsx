@@ -22,6 +22,8 @@ import classes from '../Tooltip.module.css';
 export interface TooltipFloatingProps extends TooltipBaseProps {
   /** Offset from mouse in px, `10` by default */
   offset?: number;
+  /** Uncontrolled tooltip initial opened state */
+  defaultOpened?: boolean;
 }
 
 export type TooltipFloatingFactory = Factory<{
@@ -35,6 +37,7 @@ const defaultProps: Partial<TooltipFloatingProps> = {
   refProp: 'ref',
   withinPortal: true,
   offset: 10,
+  defaultOpened: false,
   position: 'right',
   zIndex: getDefaultZIndex('popover'),
 };
@@ -66,6 +69,7 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => 
     multiline,
     zIndex,
     disabled,
+    defaultOpened,
     variant,
     vars,
     portalProps,
@@ -90,6 +94,7 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => 
   const { handleMouseMove, x, y, opened, boundaryRef, floating, setOpened } = useFloatingTooltip({
     offset: offset!,
     position: position!,
+    defaultOpened: defaultOpened!,
   });
 
   if (!isElement(children)) {
