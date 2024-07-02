@@ -22,6 +22,7 @@ describe('@mantine/charts/ScatterChart', () => {
     polymorphic: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

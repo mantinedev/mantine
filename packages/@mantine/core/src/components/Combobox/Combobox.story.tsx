@@ -1,8 +1,11 @@
 /* eslint-disable no-console */
 
 import { useState } from 'react';
+import { Anchor } from '../Anchor';
 import { Button } from '../Button';
+import { Popover } from '../Popover';
 import { ScrollArea } from '../ScrollArea';
+import { Text } from '../Text';
 import { TextInput } from '../TextInput';
 import { Combobox } from './Combobox';
 import { useCombobox } from './use-combobox/use-combobox';
@@ -333,5 +336,63 @@ export function WithGroups() {
         <Combobox.Option value="angular">Angular</Combobox.Option>
       </Combobox.Group>
     </StoryBase>
+  );
+}
+
+export function InteractiveHeaderAndFooter() {
+  const store = useCombobox();
+  const [active, setActive] = useState<string | null>(null);
+  const [value, setValue] = useState('');
+
+  const options = fruitsData.map((fruit) => (
+    <Combobox.Option value={fruit.value} key={fruit.value} active={active === fruit.value}>
+      {active === fruit.value && '✓'} {fruit.label}
+    </Combobox.Option>
+  ));
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Combobox
+        store={store}
+        withinPortal={false}
+        onOptionSubmit={(val) => {
+          setActive(val);
+          setValue(fruitsData.find((fruit) => fruit.value === val)!.label);
+        }}
+      >
+        <Combobox.Target>
+          <TextInput
+            placeholder="Pick a value"
+            onFocus={() => store.openDropdown()}
+            onBlur={() => store.closeDropdown()}
+            value={value}
+            onChange={(event) => {
+              setValue(event.currentTarget.value);
+            }}
+          />
+        </Combobox.Target>
+        <Combobox.Dropdown>
+          <Combobox.Header>
+            <Popover width={200} position="right" withArrow shadow="md">
+              <Popover.Target>
+                <Button size="compact-xs">Toggle popover</Button>
+              </Popover.Target>
+              <Popover.Dropdown>
+                <Text size="xs">
+                  The TextInput remains focused and the ComboBox stays visible, even though we
+                  expect the `onBlur` event to close the dropdown
+                </Text>
+              </Popover.Dropdown>
+            </Popover>
+          </Combobox.Header>
+          <Combobox.Options>{options}</Combobox.Options>
+          <Combobox.Footer>
+            <Anchor fz="xs" href="https://mantine.dev" target="_blank">
+              Visit mantine.dev while ComboBox stays open
+            </Anchor>
+          </Combobox.Footer>
+        </Combobox.Dropdown>
+      </Combobox>
+    </div>
   );
 }

@@ -46,6 +46,7 @@ describe('@mantine/core/Table', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     id: true,

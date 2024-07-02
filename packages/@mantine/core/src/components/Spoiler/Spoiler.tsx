@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useElementSize, useId } from '@mantine/hooks';
+import { useElementSize, useId, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -38,6 +37,12 @@ export interface SpoilerProps
 
   /** Initial spoiler state, true to wrap content in spoiler, false to show content without spoiler, opened state is updated on mount */
   initialState?: boolean;
+
+  /** Controlled expanded state value */
+  expanded?: boolean;
+
+  /** Called when expanded state changes (when spoiler visibility is toggled by the user) */
+  onExpandedChange?: (expanded: boolean) => void;
 
   /** Spoiler reveal transition duration in ms, set 0 or null to turn off animation, `200` by default */
   transitionDuration?: number;
@@ -79,6 +84,8 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
     controlRef,
     transitionDuration,
     id,
+    expanded,
+    onExpandedChange,
     ...others
   } = props;
 
@@ -97,7 +104,12 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
 
   const _id = useId(id);
   const regionId = `${_id}-region`;
-  const [show, setShowState] = useState(initialState);
+  const [show, setShowState] = useUncontrolled({
+    value: expanded,
+    defaultValue: initialState,
+    finalValue: false,
+    onChange: onExpandedChange,
+  });
   const { ref: contentRef, height } = useElementSize();
   const spoilerMoreContent = show ? hideLabel : showLabel;
   const spoiler = spoilerMoreContent !== null && maxHeight! < height;
@@ -115,7 +127,7 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
           component="button"
           type="button"
           ref={controlRef}
-          onClick={() => setShowState((opened) => !opened)}
+          onClick={() => setShowState(!show)}
           aria-expanded={show}
           aria-controls={regionId}
           {...getStyles('control')}

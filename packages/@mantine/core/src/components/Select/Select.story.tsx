@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 import { Button } from '../Button';
 import { Select } from './Select';
@@ -10,8 +11,8 @@ export function Usage() {
       <Select
         data={['React', 'Angular', 'Svelte']}
         placeholder="Select something"
-        defaultValue="First"
-        name="usage-select"
+        onChange={console.log}
+        allowDeselect={false}
       />
     </div>
   );
@@ -193,6 +194,24 @@ export function SearchControlledValue() {
         data={['React', 'Angular', 'Svelte']}
         placeholder="Select something"
         searchable
+      />
+    </div>
+  );
+}
+
+export function ControlledSearchAndValue() {
+  const [value, setValue] = useState<string | null>('Angular');
+  const [searchValue, setSearchValue] = useState('');
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Select
+        searchable
+        searchValue={searchValue}
+        onSearchChange={setSearchValue}
+        data={['React', 'Angular', 'Svelte']}
+        value={value}
+        onChange={setValue}
       />
     </div>
   );

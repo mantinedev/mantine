@@ -19,6 +19,7 @@ export interface ChartSeries {
   name: string;
   color?: MantineColor;
   label?: string;
+  yAxisId?: string;
 }
 
 export type BaseChartStylesNames =
@@ -52,6 +53,9 @@ export interface GridChartBaseProps {
 
   /** Props passed down to the `YAxis` recharts component */
   yAxisProps?: Omit<YAxisProps, 'ref'>;
+
+  /** Props passed down to the `YAxis` recharts component rendered on the right side */
+  rightYAxisProps?: Omit<YAxisProps, 'ref'>;
 
   /** Props passed down to the `CartesianGrid` component */
   gridProps?: Omit<CartesianGridProps, 'ref'>;
@@ -100,4 +104,10 @@ export interface GridChartBaseProps {
 
   /** A label to display next to the y-axis */
   yAxisLabel?: string;
+
+  /** A label to display next to the right y-axis */
+  rightYAxisLabel?: string;
+
+  /** Determines whether additional y-axis should be displayed on the right side of the chart, `false` by default */
+  withRightYAxis?: boolean;
 }

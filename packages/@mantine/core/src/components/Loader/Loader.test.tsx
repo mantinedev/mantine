@@ -17,6 +17,7 @@ describe('@mantine/core/Loader', () => {
     size: true,
     variant: true,
     extend: true,
+    withProps: true,
     classes: true,
     id: true,
     refType: HTMLSpanElement,

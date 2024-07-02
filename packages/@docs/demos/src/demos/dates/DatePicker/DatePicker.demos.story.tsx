@@ -107,3 +107,8 @@ export const Demo_hideOutsideDates = {
   name: '⭐ Demo: hideOutsideDates',
   render: renderDemo(demos.hideOutsideDates),
 };
+
+export const Demo_excludeDate = {
+  name: '⭐ Demo: excludeDate',
+  render: renderDemo(demos.excludeDate),
+};

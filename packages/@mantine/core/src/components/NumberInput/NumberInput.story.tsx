@@ -25,6 +25,27 @@ export function Usage() {
   );
 }
 
+export function LargeNumbers() {
+  const [val, setVal] = useState<string | number>('');
+
+  return (
+    <>
+      <h1>Version 7.10.2</h1>
+      <NumberInput
+        label="Input label"
+        description="Input description"
+        placeholder="Input placeholder"
+        value={val}
+        onChange={setVal}
+      />
+      <div>
+        state: {val} <br />
+        typeof State: {typeof val}
+      </div>
+    </>
+  );
+}
+
 export function AllowLeadingZeros() {
   const [value, setValue] = useState<number | string>('');
   return (

@@ -26,6 +26,7 @@ describe('@mantine/dates/DatePickerInput', () => {
     props: defaultPropsWithInputProps,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

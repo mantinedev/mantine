@@ -16,6 +16,7 @@ describe('@mantine/dropzone/DropzoneFullScreen', () => {
     props: defaultProps,
     children: true,
     extend: true,
+    withProps: true,
     classes: true,
     id: true,
     refType: HTMLDivElement,

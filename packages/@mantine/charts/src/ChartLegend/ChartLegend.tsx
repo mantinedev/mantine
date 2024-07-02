@@ -37,6 +37,9 @@ export interface ChartLegendProps
 
   /** Determines whether color swatch should be shown next to the label, `true` by default */
   showColor?: boolean;
+
+  /** Determines whether the legend should be centered, `false` by default */
+  centered?: boolean;
 }
 
 export type ChartLegendFactory = Factory<{
@@ -62,6 +65,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     mod,
     series,
     showColor,
+    centered,
     ...others
   } = props;
 
@@ -102,7 +106,12 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
   ));
 
   return (
-    <Box ref={ref} mod={[{ position: legendPosition }, mod]} {...getStyles('legend')} {...others}>
+    <Box
+      ref={ref}
+      mod={[{ position: legendPosition, centered }, mod]}
+      {...getStyles('legend')}
+      {...others}
+    >
       {items}
     </Box>
   );

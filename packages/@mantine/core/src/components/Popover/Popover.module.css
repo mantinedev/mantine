@@ -5,6 +5,10 @@
   box-shadow: var(--popover-shadow, none);
   border-radius: var(--popover-radius, var(--mantine-radius-default));
 
+  &:where([data-fixed]) {
+    position: fixed;
+  }
+
   &:focus {
     outline: none;
   }

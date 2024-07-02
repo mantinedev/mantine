@@ -57,33 +57,33 @@ export const data = [
 export const multiData = [
   {
     product: 'Apples',
-    sales_january: 120,
-    sales_february: 100,
+    'Sales January': 120,
+    'Sales February': 100,
   },
   {
     product: 'Oranges',
-    sales_january: 98,
-    sales_february: 90,
+    'Sales January': 98,
+    'Sales February': 90,
   },
   {
     product: 'Tomatoes',
-    sales_january: 86,
-    sales_february: 70,
+    'Sales January': 86,
+    'Sales February': 70,
   },
   {
     product: 'Grapes',
-    sales_january: 99,
-    sales_february: 80,
+    'Sales January': 99,
+    'Sales February': 80,
   },
   {
     product: 'Bananas',
-    sales_january: 85,
-    sales_february: 120,
+    'Sales January': 85,
+    'Sales February': 120,
   },
   {
     product: 'Lemons',
-    sales_january: 65,
-    sales_february: 150,
+    'Sales January': 65,
+    'Sales February': 150,
   },
 ];
 
@@ -91,32 +91,32 @@ export const multiDataCode = `
 export const data = [
   {
     product: 'Apples',
-    sales_january: 120,
-    sales_february: 100,
+    'Sales January': 120,
+    'Sales February': 100,
   },
   {
     product: 'Oranges',
-    sales_january: 98,
-    sales_february: 90,
+    'Sales January': 98,
+    'Sales February': 90,
   },
   {
     product: 'Tomatoes',
-    sales_january: 86,
-    sales_february: 70,
+    'Sales January': 86,
+    'Sales February': 70,
   },
   {
     product: 'Grapes',
-    sales_january: 99,
-    sales_february: 80,
+    'Sales January': 99,
+    'Sales February': 80,
   },
   {
     product: 'Bananas',
-    sales_january: 85,
-    sales_february: 120,
+    'Sales January': 85,
+    'Sales February': 120,
   },
   {
     product: 'Lemons',
-    sales_january: 65,
-    sales_february: 150,
+    'Sales January': 65,
+    'Sales February': 150,
   },
 ];`;

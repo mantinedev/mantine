@@ -1,4 +1,3 @@
-import { rem } from '../../../core';
 import type { ArrowPosition, FloatingPlacement, FloatingPosition, FloatingSide } from '../types';
 
 function horizontalSide(
@@ -81,14 +80,14 @@ export function getArrowPositionStyles({
 }) {
   const [side, placement = 'center'] = position.split('-') as [FloatingSide, FloatingPlacement];
   const baseStyles = {
-    width: rem(arrowSize),
-    height: rem(arrowSize),
+    width: arrowSize,
+    height: arrowSize,
     transform: 'rotate(45deg)',
     position: 'absolute',
-    [radiusByFloatingSide[side]]: rem(arrowRadius),
+    [radiusByFloatingSide[side]]: arrowRadius,
   };
 
-  const arrowPlacement = rem(-arrowSize / 2);
+  const arrowPlacement = -arrowSize / 2;
 
   if (side === 'left') {
     return {

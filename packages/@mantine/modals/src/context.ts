@@ -36,7 +36,7 @@ export interface ModalsContextProps {
   closeAll: () => void;
 }
 
-export type MantineModalsOverride = {};
+export interface MantineModalsOverride {}
 
 export type MantineModalsOverwritten = MantineModalsOverride extends {
   modals: Record<string, React.FC<ContextModalProps<any>>>;

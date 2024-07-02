@@ -33,7 +33,7 @@ const waterfallData = [
 
 export function Usage() {
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ background: 'silver' }}>
       <BarChart
         h={300}
         data={simpleData}

@@ -20,7 +20,7 @@ export function Uncontrolled() {
       }}
     >
       <div style={{ padding: 40 }}>
-        <Popover opened>
+        <Popover opened floatingStrategy="fixed">
           <Popover.Target>
             <button type="button">Toggle popover</button>
           </Popover.Target>

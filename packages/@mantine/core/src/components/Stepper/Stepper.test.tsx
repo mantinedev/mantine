@@ -31,6 +31,7 @@ describe('@mantine/core/Stepper', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,
