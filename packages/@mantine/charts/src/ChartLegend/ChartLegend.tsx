@@ -13,8 +13,23 @@ import { ChartSeries } from '../types';
 import { getSeriesLabels } from '../utils';
 import classes from './ChartLegend.module.css';
 
+function updateChartLegendPayload(payload: Record<string, any>[]): Record<string, any>[] {
+  return payload.map((item) => {
+    const newDataKey = item.dataKey.split('.').pop();
+    return {
+      ...item,
+      dataKey: newDataKey,
+      payload: {
+        ...item.payload,
+        name: newDataKey,
+        dataKey: newDataKey,
+      },
+    };
+  });
+}
+
 export function getFilteredChartLegendPayload(payload: Record<string, any>[]) {
-  return payload.filter((item) => item.color !== 'none');
+  return updateChartLegendPayload(payload.filter((item) => item.color !== 'none'));
 }
 
 export type ChartLegendStylesNames = 'legendItem' | 'legendItemColor' | 'legendItemName' | 'legend';

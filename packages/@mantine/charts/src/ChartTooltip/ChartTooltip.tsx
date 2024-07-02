@@ -15,8 +15,20 @@ import { ChartSeries } from '../types';
 import { getSeriesLabels } from '../utils';
 import classes from './ChartTooltip.module.css';
 
+function updateChartTooltipPayload(payload: Record<string, any>[]): Record<string, any>[] {
+  return payload.map((item) => {
+    const newDataKey = item.name.split('.').pop();
+    return {
+      ...item,
+      name: newDataKey,
+    };
+  });
+}
+
 export function getFilteredChartTooltipPayload(payload: Record<string, any>[], segmentId?: string) {
-  const duplicatesFilter = payload.filter((item) => item.fill !== 'none' || !item.color);
+  const duplicatesFilter = updateChartTooltipPayload(
+    payload.filter((item) => item.fill !== 'none' || !item.color)
+  );
 
   if (!segmentId) {
     return duplicatesFilter;
