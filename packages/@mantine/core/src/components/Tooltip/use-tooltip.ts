@@ -29,6 +29,7 @@ interface UseTooltip {
   openDelay?: number;
   onPositionChange?: (position: FloatingPosition) => void;
   opened?: boolean;
+  defaultOpened?: boolean;
   offset: number | FloatingAxesOffsets;
   arrowRef?: React.RefObject<HTMLDivElement>;
   arrowOffset?: number;
@@ -39,7 +40,7 @@ interface UseTooltip {
 }
 
 export function useTooltip(settings: UseTooltip) {
-  const [uncontrolledOpened, setUncontrolledOpened] = useState(false);
+  const [uncontrolledOpened, setUncontrolledOpened] = useState(settings.defaultOpened);
   const controlled = typeof settings.opened === 'boolean';
   const opened = controlled ? settings.opened : uncontrolledOpened;
   const withinGroup = useTooltipGroupContext();

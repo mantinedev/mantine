@@ -5,13 +5,15 @@ import { FloatingPosition } from '../../Floating';
 interface UseFloatingTooltip {
   offset: number;
   position: FloatingPosition;
+  defaultOpened?: boolean;
 }
 
 export function useFloatingTooltip<T extends HTMLElement = any>({
   offset,
   position,
+  defaultOpened,
 }: UseFloatingTooltip) {
-  const [opened, setOpened] = useState(false);
+  const [opened, setOpened] = useState(defaultOpened);
   const boundaryRef = useRef<T>();
   const { x, y, elements, refs, update, placement } = useFloating({
     placement: position,
