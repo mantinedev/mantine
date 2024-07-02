@@ -143,3 +143,12 @@ export function SelectOnClick() {
     </div>
   );
 }
+
+export function Animation() {
+  const tree = useTree();
+  return (
+    <div style={{ padding: 40 }}>
+      <Tree data={data} tree={tree} animation={{ transitionDuration: 200 }} />
+    </div>
+  );
+}

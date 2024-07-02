@@ -3,6 +3,7 @@ import { useRef } from 'react';
 import { findElementAncestor, GetStylesApi } from '../../core';
 import type { RenderNode, TreeFactory, TreeNodeData } from './Tree';
 import type { TreeController } from './use-tree';
+import { Collapse, CollapseProps } from '../Collapse';
 
 function getValuesRange(anchor: string | null, value: string | undefined, flatValues: string[]) {
   if (!anchor || !value) {
@@ -30,6 +31,7 @@ interface TreeNodeProps {
   selectOnClick: boolean | undefined;
   allowRangeSelection: boolean | undefined;
   expandOnSpace: boolean | undefined;
+  animation: Omit<CollapseProps, 'in' | 'onAnimationEnd'> | undefined;
 }
 
 export function TreeNode({
@@ -45,6 +47,7 @@ export function TreeNode({
   flatValues,
   allowRangeSelection,
   expandOnSpace,
+  animation,
 }: TreeNodeProps) {
   const ref = useRef<HTMLLIElement>(null);
   const nested = (node.children || []).map((child) => (
@@ -62,6 +65,7 @@ export function TreeNode({
       selectOnClick={selectOnClick}
       allowRangeSelection={allowRangeSelection}
       expandOnSpace={expandOnSpace}
+      animation={animation}
     />
   ));
 
@@ -182,10 +186,12 @@ export function TreeNode({
         <div {...elementProps}>{node.label}</div>
       )}
 
-      {controller.expandedState[node.value] && nested.length > 0 && (
-        <ul role="group" {...getStyles('subtree')} data-level={level}>
-          {nested}
-        </ul>
+      {nested.length > 0 && (
+        <Collapse in={controller.expandedState[node.value]} {...animation}>
+          <ul role="group" {...getStyles('subtree')} data-level={level}>
+            {nested}
+          </ul>
+        </Collapse>
       )}
     </li>
   );
