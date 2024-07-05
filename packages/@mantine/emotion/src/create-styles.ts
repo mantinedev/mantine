@@ -44,7 +44,7 @@ export function createStyles<
     const classes = Object.keys(cssObject).reduce<Record<string, string>>((acc, key) => {
       acc[key] = css(cssObject[key]);
       return acc;
-    }, {});
+    }, {}) as Record<keyof Input, string>;
 
     return { classes, cx, theme };
   };
