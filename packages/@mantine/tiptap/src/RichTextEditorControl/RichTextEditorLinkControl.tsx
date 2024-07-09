@@ -8,6 +8,7 @@ import {
   Popover,
   PopoverProps,
   rem,
+  Stack,
   TextInput,
   Tooltip,
   UnstyledButton,
@@ -25,6 +26,7 @@ export type RichTextEditorLinkControlStylesNames =
   | 'linkEditor'
   | 'linkEditorDropdown'
   | 'linkEditorSave'
+  | 'linkEditorTextInput'
   | 'linkEditorInput'
   | 'linkEditorExternalControl';
 
@@ -73,12 +75,23 @@ export const RichTextEditorLinkControl = factory<RichTextEditorLinkControlFactor
 
     const stylesApiProps = { classNames, styles };
 
+    const [linkText, setLinkText] = useState('');
     const [url, setUrl] = useInputState('');
     const [external, setExternal] = useState(initialExternal);
     const [opened, { open, close }] = useDisclosure(false);
 
     const handleOpen = () => {
       open();
+
+      const startOfTextSelection = ctx.editor?.view.state.selection.from;
+      const endOfTextSelection = ctx.editor?.view.state.selection.to;
+
+      if (startOfTextSelection && endOfTextSelection) {
+        setLinkText(
+          ctx.editor?.view.state.doc.textBetween(startOfTextSelection, endOfTextSelection, '') || ''
+        );
+      }
+
       const linkData = ctx.editor?.getAttributes('link');
       setUrl(linkData?.href || '');
       setExternal(linkData?.href ? linkData?.target === '_blank' : initialExternal);
@@ -86,6 +99,7 @@ export const RichTextEditorLinkControl = factory<RichTextEditorLinkControlFactor
 
     const handleClose = () => {
       close();
+      setLinkText('');
       setUrl('');
       setExternal(initialExternal);
     };
@@ -99,6 +113,10 @@ export const RichTextEditorLinkControl = factory<RichTextEditorLinkControlFactor
             .focus()
             .extendMarkRange('link')
             .setLink({ href: url, target: external ? '_blank' : null })
+            .command(({ tr }) => {
+              tr.insertText(linkText);
+              return true;
+            })
             .run();
     };
 
@@ -142,7 +160,15 @@ export const RichTextEditorLinkControl = factory<RichTextEditorLinkControlFactor
         </Popover.Target>
 
         <Popover.Dropdown {...ctx.getStyles('linkEditorDropdown', stylesApiProps)}>
-          <div {...ctx.getStyles('linkEditor', stylesApiProps)}>
+          <Stack {...ctx.getStyles('linkEditor', stylesApiProps)}>
+            <TextInput
+              placeholder={ctx.labels.linkEditorTextInputPlaceholder}
+              aria-label={ctx.labels.linkEditorTextInputLabel}
+              type="text"
+              value={linkText}
+              onChange={(e) => setLinkText(e.currentTarget.value)}
+              classNames={{ input: ctx.getStyles('linkEditorTextInput', stylesApiProps).className }}
+            />
             <TextInput
               placeholder={ctx.labels.linkEditorInputPlaceholder}
               aria-label={ctx.labels.linkEditorInputLabel}
@@ -180,7 +206,7 @@ export const RichTextEditorLinkControl = factory<RichTextEditorLinkControlFactor
             >
               {ctx.labels.linkEditorSave}
             </Button>
-          </div>
+          </Stack>
         </Popover.Dropdown>
       </Popover>
     );

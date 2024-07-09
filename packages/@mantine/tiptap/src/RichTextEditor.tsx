@@ -29,6 +29,7 @@ export type RichTextEditorStylesNames =
   | 'controlsGroup'
   | 'toolbar'
   | 'linkEditor'
+  | 'linkEditorTextInput'
   | 'linkEditorInput'
   | 'linkEditorExternalControl';
 

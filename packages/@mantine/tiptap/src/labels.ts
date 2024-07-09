@@ -92,6 +92,12 @@ export interface RichTextEditorLabels {
   /** A function go get RichTextEditor.Color control aria-label based on color that control applies */
   colorControlLabel: (color: string) => string;
 
+  /** aria-label for link editor text input */
+  linkEditorTextInputLabel: string;
+
+  /** placeholder for link editor url input */
+  linkEditorTextInputPlaceholder: string;
+
   /** aria-label for link editor url input */
   linkEditorInputLabel: string;
 
@@ -175,6 +181,8 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   tasksLiftLabel: 'Increase task level',
 
   // Link editor
+  linkEditorTextInputLabel: 'Enter link text',
+  linkEditorTextInputPlaceholder: 'Enter link text',
   linkEditorInputLabel: 'Enter URL',
   linkEditorInputPlaceholder: 'https://example.com/',
   linkEditorExternalLink: 'Open link in a new tab',
