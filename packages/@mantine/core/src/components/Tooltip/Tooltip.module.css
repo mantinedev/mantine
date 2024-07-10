@@ -21,6 +21,10 @@
   &:where([data-multiline]) {
     white-space: normal;
   }
+
+  &:where([data-fixed]) {
+    position: fixed;
+  }
 }
 
 .arrow {

@@ -217,6 +217,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
           {(transitionStyles) => (
             <Box
               {...others}
+              data-fixed={floatingStrategy === 'fixed' || undefined}
               variant={variant}
               mod={[{ multiline }, mod]}
               {...tooltip.getFloatingProps({
