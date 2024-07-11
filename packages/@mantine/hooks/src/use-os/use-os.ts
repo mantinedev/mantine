@@ -40,11 +40,11 @@ function getOS(): OS {
 
   const { userAgent } = window.navigator;
 
-  if (isMacOS(userAgent)) {
-    return 'macos';
-  }
   if (isIOS(userAgent)) {
     return 'ios';
+  }
+  if (isMacOS(userAgent)) {
+    return 'macos';
   }
   if (isWindows(userAgent)) {
     return 'windows';
