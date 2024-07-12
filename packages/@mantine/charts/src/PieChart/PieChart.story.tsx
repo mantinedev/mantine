@@ -14,7 +14,7 @@ const data: PieChartCell[] = [
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <PieChart data={data} strokeWidth={1} />
+      <PieChart data={data} strokeWidth={1} strokeColor="red" />
     </div>
   );
 }
