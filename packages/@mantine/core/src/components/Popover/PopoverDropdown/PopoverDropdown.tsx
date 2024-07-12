@@ -83,12 +83,11 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props, ref) => 
         }
       >
         {(transitionStyles) => (
-          <FocusTrap active={ctx.trapFocus}>
+          <FocusTrap active={ctx.trapFocus} innerRef={mergedRef}>
             <Box
               {...accessibleProps}
               {...others}
               variant={variant}
-              ref={mergedRef}
               onKeyDownCapture={closeOnEscape(ctx.onClose, {
                 active: ctx.closeOnEscape,
                 onTrigger: returnFocus,

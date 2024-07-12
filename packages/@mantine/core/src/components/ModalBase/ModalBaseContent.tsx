@@ -26,14 +26,6 @@ export const ModalBaseContent = forwardRef<HTMLDivElement, _ModalBaseContentProp
   ({ transitionProps, className, innerProps, onKeyDown, style, ...others }, ref) => {
     const ctx = useModalBaseContext();
 
-    // const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    //   const shouldTrigger =
-    //     (event.target as HTMLElement)?.getAttribute('data-mantine-stop-propagation') !== 'true';
-    //   console.log((event.target as HTMLElement)?.getAttribute('data-mantine-stop-propagation'));
-    //   shouldTrigger && event.key === 'Escape' && ctx.closeOnEscape && ctx.onClose();
-    //   onKeyDown?.(event);
-    // };
-
     return (
       <Transition
         mounted={ctx.opened}
@@ -46,7 +38,7 @@ export const ModalBaseContent = forwardRef<HTMLDivElement, _ModalBaseContentProp
             {...innerProps}
             className={cx({ [classes.inner]: !ctx.unstyled }, innerProps.className)}
           >
-            <FocusTrap active={ctx.opened && ctx.trapFocus}>
+            <FocusTrap active={ctx.opened && ctx.trapFocus} innerRef={ref}>
               <Paper
                 {...others}
                 component="section"
@@ -55,8 +47,6 @@ export const ModalBaseContent = forwardRef<HTMLDivElement, _ModalBaseContentProp
                 aria-modal
                 aria-describedby={ctx.bodyMounted ? ctx.getBodyId() : undefined}
                 aria-labelledby={ctx.titleMounted ? ctx.getTitleId() : undefined}
-                // onKeyDown={handleKeyDown}
-                ref={ref}
                 style={[style, transitionStyles]}
                 className={cx({ [classes.content]: !ctx.unstyled }, className)}
                 unstyled={ctx.unstyled}
