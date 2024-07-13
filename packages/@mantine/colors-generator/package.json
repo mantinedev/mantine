@@ -1,6 +1,6 @@
 {
   "name": "@mantine/colors-generator",
-  "version": "7.11.1",
+  "version": "7.11.2",
   "description": "A library to generate 10 shades of color based on provided color value",
   "homepage": "https://mantine.dev",
   "license": "MIT",
