@@ -5,10 +5,6 @@ export function useInterval(fn: () => void, interval: number) {
   const intervalRef = useRef<number>();
   const fnRef = useRef<() => void>();
 
-  useEffect(() => {
-    fnRef.current = fn;
-  }, [fn]);
-
   const start = () => {
     setActive((old) => {
       if (!old && !intervalRef.current) {
@@ -31,6 +27,12 @@ export function useInterval(fn: () => void, interval: number) {
       start();
     }
   };
+
+  useEffect(() => {
+    fnRef.current = fn;
+    active && start();
+    return stop;
+  }, [fn, active, interval]);
 
   return { start, stop, toggle, active };
 }
