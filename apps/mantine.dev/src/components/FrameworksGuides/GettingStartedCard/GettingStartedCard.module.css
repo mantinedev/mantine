@@ -56,7 +56,8 @@
   }
 
   &[data-logo='next'] {
-    width: 160px;
+    width: 200px;
+    height: 80px;
   }
 
   &[data-logo='gatsby'],
@@ -86,7 +87,7 @@
   }
 
   &[data-logo='next'] {
-    width: 160px;
+    width: 200px;
   }
 
   &[data-logo='gatsby'] {
