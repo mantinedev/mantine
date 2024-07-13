@@ -25,4 +25,8 @@
       text-decoration: none;
     }
   }
+
+  &:where([data-line-clamp]) {
+    display: -webkit-box;
+  }
 }
