@@ -12,15 +12,19 @@ export interface FocusTrapProps {
 
   /** Prop that should be used to access component ref */
   refProp?: string;
+
+  /** Assigns element `ref` */
+  innerRef?: React.ForwardedRef<any>;
 }
 
 export function FocusTrap({
   children,
   active = true,
   refProp = 'ref',
+  innerRef,
 }: FocusTrapProps): React.ReactElement {
   const focusTrapRef = useFocusTrap(active);
-  const ref = useMergedRef(focusTrapRef, children?.ref);
+  const ref = useMergedRef(focusTrapRef, innerRef);
 
   if (!isElement(children)) {
     return children;

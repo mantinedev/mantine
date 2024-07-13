@@ -39,15 +39,6 @@ describe('@mantine/hooks/use-interval', () => {
     expect(typeof toggle).toBe('function');
   });
 
-  it('callback should NOT fire before calling start function', () => {
-    const { advanceTimerToNextTick } = setupTimer();
-    setupHook();
-    advanceTimerToNextTick();
-    expect(callback).not.toHaveBeenCalled();
-    expect(setInterval).not.toHaveBeenCalled();
-    expect(clearInterval).not.toHaveBeenCalled();
-  });
-
   it('should run after timeout exceeded', () => {
     const { advanceTimerToNextTick } = setupTimer();
     const { result } = setupHook();

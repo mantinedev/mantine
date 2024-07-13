@@ -83,6 +83,7 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
       <div
         {...scrollbarProps}
         ref={composeRefs}
+        data-mantine-scrollbar
         style={{ position: 'absolute', ...scrollbarProps.style }}
         onPointerDown={composeEventHandlers(props.onPointerDown, (event) => {
           event.preventDefault();

@@ -158,6 +158,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     children,
     pieChartProps,
     valueFormatter,
+    strokeColor,
     ...others
   } = props;
 

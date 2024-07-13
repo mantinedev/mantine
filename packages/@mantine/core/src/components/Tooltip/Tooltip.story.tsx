@@ -223,3 +223,20 @@ export function DefaultOpened() {
     </div>
   );
 }
+
+export function Fixed() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Tooltip
+        position="right"
+        label="Tooltip has fixed position"
+        withArrow
+        transitionProps={{ duration: 0 }}
+        opened
+        floatingStrategy="fixed"
+      >
+        <button type="button">target</button>
+      </Tooltip>
+    </div>
+  );
+}

@@ -186,6 +186,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
     labelsPosition,
     valueFormatter,
     labelsType,
+    strokeColor,
     ...others
   } = props;
 

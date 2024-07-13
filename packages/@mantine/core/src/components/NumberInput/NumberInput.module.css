@@ -72,7 +72,6 @@
   }
 
   &:last-of-type {
-    border-top: 1 solid var(--input-bd);
     border-radius: 0;
     border-end-end-radius: var(--control-radius);
   }

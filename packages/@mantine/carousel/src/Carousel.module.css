@@ -130,7 +130,7 @@
 
 .slide {
   position: relative;
-  flex: 0 0 var(--carousel-slide-size);
+  flex: 0 0 var(--carousel-slide-size, 100%);
 
   .root:where([data-include-gap-in-size]) & {
     &:where([data-orientation='vertical']) {
