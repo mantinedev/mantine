@@ -18,4 +18,11 @@
   &:where([data-underline='always']) {
     text-decoration: underline;
   }
+
+  &:where([data-variant='gradient']) {
+    &,
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }
