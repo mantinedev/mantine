@@ -1,7 +1,7 @@
 {
   "name": "@mantine/prism",
   "description": "Code highlight with Mantine theme",
-  "version": "6.0.21",
+  "version": "6.0.22",
   "main": "cjs/index.js",
   "module": "esm/index.js",
   "types": "lib/index.d.ts",
@@ -29,14 +29,14 @@
     "syntax-highlight"
   ],
   "peerDependencies": {
-    "@mantine/core": "6.0.21",
-    "@mantine/hooks": "6.0.21",
+    "@mantine/core": "6.0.22",
+    "@mantine/hooks": "6.0.22",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
     "prism-react-renderer": "^1.2.1",
-    "@mantine/utils": "6.0.21"
+    "@mantine/utils": "6.0.22"
   },
   "devDependencies": {}
 }
