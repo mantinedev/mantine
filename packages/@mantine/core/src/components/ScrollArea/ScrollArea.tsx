@@ -57,6 +57,12 @@ export interface ScrollAreaProps
 
   /** Called with current position (`x` and `y` coordinates) when viewport is scrolled */
   onScrollPositionChange?: (position: { x: number; y: number }) => void;
+
+  /** Called when scrollarea is scrolled all the way to the bottom */
+  onBottomReached?: () => void;
+
+  /** Called when scrollarea is scrolled all the way to the top */
+  onTopReached?: () => void;
 }
 
 export interface ScrollAreaAutosizeProps extends ScrollAreaProps {}
@@ -101,6 +107,8 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     children,
     offsetScrollbars,
     scrollbars,
+    onBottomReached,
+    onTopReached,
     ...others
   } = props;
 
@@ -137,6 +145,13 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
         onScroll={(e) => {
           viewportProps?.onScroll?.(e);
           onScrollPositionChange?.({ x: e.currentTarget.scrollLeft, y: e.currentTarget.scrollTop });
+          const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+          if (scrollTop - (scrollHeight - clientHeight) === 0) {
+            onBottomReached?.();
+          }
+          if (scrollTop === 0) {
+            onTopReached?.();
+          }
         }}
       >
         {children}

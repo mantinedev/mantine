@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 import { ScrollArea } from './ScrollArea';
 
@@ -16,7 +17,12 @@ const content = Array(10)
 export function Usage() {
   return (
     <div style={{ background: 'pink', maxWidth: 300 }}>
-      <ScrollArea h={200} scrollbars="y">
+      <ScrollArea
+        h={200}
+        scrollbars="y"
+        onBottomReached={() => console.log('bottom')}
+        onTopReached={() => console.log('top')}
+      >
         <div style={{ width: 600 }}>{content}</div>
       </ScrollArea>
     </div>
