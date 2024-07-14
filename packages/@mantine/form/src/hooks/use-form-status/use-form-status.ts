@@ -10,6 +10,7 @@ import {
   GetFieldStatus,
   ResetDirty,
   ResetStatus,
+  SetCalculatedFieldDirty,
   SetFieldDirty,
   SetFieldTouched,
 } from '../../types';
@@ -33,6 +34,7 @@ export interface $FormStatus<Values extends Record<string, any>> {
   isDirty: GetFieldStatus<Values>;
   getDirty: () => FormStatus;
   getTouched: () => FormStatus;
+  setCalculatedFieldDirty: SetCalculatedFieldDirty<Values>;
 }
 
 interface UseFormStatusInput<Values extends Record<string, any>> {
@@ -63,14 +65,17 @@ export function useFormStatus<Values extends Record<string, any>>({
     }
   }, []);
 
-  const setDirty = useCallback((values: FormStatus | ((current: FormStatus) => FormStatus)) => {
-    const resolvedValues = typeof values === 'function' ? values(dirtyRef.current) : values;
-    dirtyRef.current = resolvedValues;
+  const setDirty = useCallback(
+    (values: FormStatus | ((current: FormStatus) => FormStatus), forceUpdate = false) => {
+      const resolvedValues = typeof values === 'function' ? values(dirtyRef.current) : values;
+      dirtyRef.current = resolvedValues;
 
-    if (mode === 'controlled') {
-      setDirtyState(resolvedValues);
-    }
-  }, []);
+      if (mode === 'controlled' || forceUpdate) {
+        setDirtyState(resolvedValues);
+      }
+    },
+    []
+  );
 
   const resetTouched: ResetStatus = useCallback(() => setTouched({}), []);
 
@@ -92,14 +97,22 @@ export function useFormStatus<Values extends Record<string, any>>({
     });
   }, []);
 
-  const setFieldDirty: SetFieldDirty<Values> = useCallback((path, dirty) => {
+  const setFieldDirty: SetFieldDirty<Values> = useCallback((path, dirty, forceUpdate) => {
     setDirty((currentDirty) => {
       if (getStatus(currentDirty, path) === dirty) {
         return currentDirty;
       }
 
       return { ...currentDirty, [path]: dirty };
-    });
+    }, forceUpdate);
+  }, []);
+
+  const setCalculatedFieldDirty: SetCalculatedFieldDirty<Values> = useCallback((path, value) => {
+    const currentDirty = getStatus(dirtyRef.current, path);
+    const dirty = !isEqual(getPath(path, $values.getValuesSnapshot()), value);
+    const clearedState = clearListState(path, dirtyRef.current);
+    clearedState[path as string] = dirty;
+    setDirty(clearedState, currentDirty !== dirty);
   }, []);
 
   const isTouched: GetFieldStatus<Values> = useCallback(
@@ -167,5 +180,6 @@ export function useFormStatus<Values extends Record<string, any>>({
     isDirty,
     getDirty,
     getTouched,
+    setCalculatedFieldDirty,
   };
 }

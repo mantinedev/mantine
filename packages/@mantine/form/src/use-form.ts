@@ -68,8 +68,10 @@ export function useForm<
   const setFieldValue: SetFieldValue<Values> = useCallback(
     (path, value, options) => {
       const shouldValidate = shouldValidateOnChange(path, validateInputOnChange);
+      const resolvedValue =
+        value instanceof Function ? value(getPath(path, $values.refValues.current) as any) : value;
 
-      $status.clearFieldDirty(path);
+      $status.setCalculatedFieldDirty(path, resolvedValue);
       $status.setFieldTouched(path, true);
       !shouldValidate && clearInputErrorOnChange && $errors.clearFieldError(path);
 
