@@ -1,0 +1,58 @@
+import { Image } from '@mantine/core';
+import image from '@/images/notifications-missing-styles.png';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title:
+    "Why my screen is completely empty after I've added notifications package?",
+  description: 'You have used Notifications component incorrectly',
+  slug: 'notifications-empty-screen',
+  category: 'common',
+  tags: ['notifications', 'white screen'],
+  created_at: 'July 15, 2024',
+  last_updated_at: 'July 15, 2024',
+};
+
+export default Layout(meta);
+
+## Notifications component
+
+A common error of using [@mantine/notifications](https://mantine.dev/x/notifications/) package
+is to wrap your application with `Notifications` component:
+
+```tsx
+// ❌ This is incorrect
+import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
+
+function Demo() {
+  return (
+    <MantineProvider>
+      <Notifications>
+        <App />
+      </Notifications>
+    </MantineProvider>
+  );
+}
+```
+
+## How to fix
+
+`Notifications` component does not support `children` prop, if you put your application
+inside it, it will not be rendered. Instead, you should render `Notifications` component
+as a sibling to your application:
+
+```tsx
+// ✅ This is correct
+import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
+
+function Demo() {
+  return (
+    <MantineProvider>
+      <Notifications />
+      <App />
+    </MantineProvider>
+  );
+}
+```
