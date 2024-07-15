@@ -40,6 +40,5 @@
 
 .content {
   flex: 0 0 calc(100% - var(--table-of-contents-width));
-  overflow: hidden;
   max-width: 100%;
 }

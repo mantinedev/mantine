@@ -30,6 +30,7 @@ import { meta as otherLibs } from './pages/q/other-libs.mdx';
 import { meta as pinchToZoomModal } from './pages/q/pinch-to-zoom-modal.mdx';
 import { meta as privateCssVariables } from './pages/q/private-css-variables.mdx';
 import { meta as roadmap } from './pages/q/roadmap.mdx';
+import { meta as scrollToTheTopOfTheForm } from './pages/q/scroll-to-the-top-of-the-form.mdx';
 import { meta as segmentedControlNoValue } from './pages/q/segmented-control-no-value.mdx';
 import { meta as selectAutocompleteDifference } from './pages/q/select-autocomplete-difference.mdx';
 import { meta as serverComponents } from './pages/q/server-components.mdx';
@@ -72,6 +73,7 @@ export const MDX_DATA = [
   pinchToZoomModal,
   privateCssVariables,
   roadmap,
+  scrollToTheTopOfTheForm,
   segmentedControlNoValue,
   selectAutocompleteDifference,
   serverComponents,

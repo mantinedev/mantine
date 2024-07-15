@@ -1,0 +1,32 @@
+import { ScrollToTopOfForm } from '@/demos/ScrollToTopOfForm.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title:
+    'How to scroll to the top of the form if the form is submitted with errors?',
+  description:
+    'Learn how to call a function when the form is submitted with errors',
+  slug: 'scroll-to-the-top-of-the-form',
+  category: 'forms',
+  tags: ['form', 'scroll', 'errors', 'element', 'DOM'],
+  created_at: 'July 15, 2024',
+  last_updated_at: 'July 15, 2024',
+};
+
+export default Layout(meta);
+
+## use-form submit handlers
+
+`form.onSubmit` function accepts two functions: the first function is called with valid form values when validation passes,
+the second function is called with form errors when validation fails.
+
+## Scroll to the top of the form on submit
+
+Using the second callback of `form.onSubmit` you can scroll to the top of the form.
+If your application includes a fixed header (like Mantine Help Center website), use
+[scroll-margin](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin) CSS property
+to ensure that the form is not hidden behind the header. Note that `scroll-margin` does not
+work if the form has `overflow: hidden;` styles or is inside other element that has
+`overflow: hidden;` styles.
+
+<Demo data={ScrollToTopOfForm} />
