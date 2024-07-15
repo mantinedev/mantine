@@ -3,7 +3,7 @@ import { MantineDemo } from '@mantinex/demo';
 import classes from './InputThemeFocusStyles.demo.module.css';
 
 const cssCode = `.input {
-  &:focus {
+  &:focus-within {
     outline: rem(2px) solid var(--mantine-primary-color-filled);
   }
 }`;

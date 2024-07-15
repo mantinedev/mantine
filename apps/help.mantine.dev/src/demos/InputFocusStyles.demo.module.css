@@ -1,5 +1,5 @@
 .input {
-  &:focus {
+  &:focus-within {
     outline: 2px solid var(--mantine-primary-color-filled);
   }
 }
