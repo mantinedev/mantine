@@ -10,6 +10,7 @@ import { meta as dataGridINeed } from './pages/q/data-grid-i-need.mdx';
 import { meta as datesMissingStyles } from './pages/q/dates-missing-styles.mdx';
 import { meta as disableAllInputsInForm } from './pages/q/disable-all-inputs-in-form.mdx';
 import { meta as dynamicCssStyles } from './pages/q/dynamic-css-styles.mdx';
+import { meta as fileButtonInMenu } from './pages/q/file-button-in-menu.mdx';
 import { meta as floatingActionButton } from './pages/q/floating-action-button.mdx';
 import { meta as focusFirstInputWithError } from './pages/q/focus-first-input-with-error.mdx';
 import { meta as howCanIContribute } from './pages/q/how-can-i-contribute.mdx';
@@ -56,6 +57,7 @@ export const MDX_DATA = [
   datesMissingStyles,
   disableAllInputsInForm,
   dynamicCssStyles,
+  fileButtonInMenu,
   floatingActionButton,
   focusFirstInputWithError,
   howCanIContribute,
