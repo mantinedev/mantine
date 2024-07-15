@@ -1,4 +1,5 @@
 import { meta as alignInputButton } from './pages/q/align-input-button.mdx';
+import { meta as areMantineComponentsAccessible } from './pages/q/are-mantine-components-accessible.mdx';
 import { meta as browserZoomsOnFocus } from './pages/q/browser-zooms-on-focus.mdx';
 import { meta as canIUseMantineWithAstro } from './pages/q/can-i-use-mantine-with-astro.mdx';
 import { meta as canIUseMantineWithCra } from './pages/q/can-i-use-mantine-with-cra.mdx';
@@ -39,6 +40,7 @@ import { meta as whyVscodeCannotAutoimportText } from './pages/q/why-vscode-cann
 
 export const MDX_DATA = [
   alignInputButton,
+  areMantineComponentsAccessible,
   browserZoomsOnFocus,
   canIUseMantineWithAstro,
   canIUseMantineWithCra,
