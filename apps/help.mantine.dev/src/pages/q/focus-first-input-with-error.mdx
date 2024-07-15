@@ -1,0 +1,46 @@
+import { FocusFirstInputWithError } from '@/demos/FocusFirstInputWithError.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How can I focus the first input with error with use-form?',
+  description: 'Learn how to handle focus with use-form hook',
+  slug: 'focus-first-input-with-error',
+  category: 'forms',
+  tags: ['inputs', 'focus', 'error', 'use-form', 'useForm'],
+  created_at: 'July 15, 2024',
+  last_updated_at: 'July 15, 2024',
+};
+
+export default Layout(meta);
+
+## Get input DOM node with use-form
+
+You can use `form.getInputNode` function to get input DOM node at the given path.
+For example:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    order_id: null,
+    user: { email: '' },
+  },
+});
+
+// Returns input DOM node for order_id input
+form.getInputNode('order_id');
+
+// Returns input DOM node for user.email input
+form.getInputNode('user.email');
+```
+
+## Focus first input with error on form submit
+
+`form.onSubmit` handler accepts two functions: the first function is called
+with valid form values when validation passes, the second function is called
+with form errors when validation fails. You can use the second function and
+`form.getInputNode` to focus the first input with error:
+
+<Demo data={FocusFirstInputWithError} />
