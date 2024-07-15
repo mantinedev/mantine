@@ -219,3 +219,38 @@ function Demo() {
   );
 }
 ```
+
+## Error: Attempted to call extend() from the server
+
+<ErrorMessage error="Error: Attempted to call extend() from the server but extend is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component." />
+
+The error above occurs when you try to call `Component.extend` function without `'use client';` directive.
+To fix it, add `'use client';` directive to the top of the file.
+
+Example of code that will throw this error:
+
+```tsx
+// ❌ This will throw an error
+import { Button, createTheme } from '@mantine/core';
+
+export const theme = createTheme({
+  components: {
+    Button: Button.extend({}),
+  },
+});
+```
+
+Example of code that will work:
+
+```tsx
+// ✅ No error
+'use client';
+
+import { Button, createTheme } from '@mantine/core';
+
+export const theme = createTheme({
+  components: {
+    Button: Button.extend({}),
+  },
+});
+```
