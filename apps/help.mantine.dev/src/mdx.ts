@@ -26,6 +26,7 @@ import { meta as inputsPlaceholderColor } from './pages/q/inputs-placeholder-col
 import { meta as lightDarkIsNotEnough } from './pages/q/light-dark-is-not-enough.mdx';
 import { meta as mantineProviderMissing } from './pages/q/mantine-provider-missing.mdx';
 import { meta as nextLoadFonts } from './pages/q/next-load-fonts.mdx';
+import { meta as notificationsMissingStyles } from './pages/q/notifications-missing-styles.mdx';
 import { meta as otherLibs } from './pages/q/other-libs.mdx';
 import { meta as pinchToZoomModal } from './pages/q/pinch-to-zoom-modal.mdx';
 import { meta as privateCssVariables } from './pages/q/private-css-variables.mdx';
@@ -69,6 +70,7 @@ export const MDX_DATA = [
   lightDarkIsNotEnough,
   mantineProviderMissing,
   nextLoadFonts,
+  notificationsMissingStyles,
   otherLibs,
   pinchToZoomModal,
   privateCssVariables,
