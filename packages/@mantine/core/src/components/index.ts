@@ -80,6 +80,7 @@ export * from './Rating';
 export * from './RingProgress';
 export * from './SegmentedControl';
 export * from './Select';
+export * from './SemiCircleProgress';
 export * from './SimpleGrid';
 export * from './Skeleton';
 export * from './Slider';
