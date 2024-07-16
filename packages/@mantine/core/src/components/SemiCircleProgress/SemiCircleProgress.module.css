@@ -22,12 +22,10 @@
 }
 
 .filledSegment {
-  &:where([data-animate]) {
-    transition:
-      stroke-dashoffset var(--scp-transition-duration) ease,
-      stroke-dasharray var(--scp-transition-duration) ease,
-      stroke var(--scp-transition-duration);
-  }
+  transition:
+    stroke-dashoffset var(--scp-transition-duration) ease,
+    stroke-dasharray var(--scp-transition-duration) ease,
+    stroke var(--scp-transition-duration);
 }
 
 .label {
