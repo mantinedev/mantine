@@ -46,7 +46,7 @@
     }
   }
 
-  &[data-position='center'] {
+  &:where([data-position='center']) {
     top: 50%;
     padding-inline: calc(var(--scp-thickness) * 3);
   }

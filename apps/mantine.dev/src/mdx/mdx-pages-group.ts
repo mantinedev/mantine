@@ -262,6 +262,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.Skeleton,
           MDX_DATA.Progress,
           MDX_DATA.RingProgress,
+          MDX_DATA.SemiCircleProgress,
         ],
       },
       {

@@ -1163,4 +1163,16 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/Tree/Tree.tsx',
     docs: 'core/tree.mdx',
   },
+
+  SemiCircleProgress: {
+    title: 'SemiCircleProgress',
+    package: '@mantine/core',
+    slug: '/core/semi-circle-progress',
+    props: ['SemiCircleProgress'],
+    styles: ['SemiCircleProgress'],
+    description: 'Represent progress with semi circle diagram',
+    import: "import { SemiCircleProgress } from '@mantine/core';",
+    source: '@mantine/core/src/components/SemiCircleProgress/SemiCircleProgress.tsx',
+    docs: 'core/semi-circle-progress.mdx',
+  },
 };
