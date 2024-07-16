@@ -11,6 +11,7 @@ import {
 } from '@mantine/core';
 import { MantineEmotionProvider } from '@mantine/emotion';
 import { ModalsProvider } from '@mantine/modals';
+import { Notifications } from '@mantine/notifications';
 import { ShikiProvider } from '@mantinex/shiki';
 import { theme } from '../apps/mantine.dev/theme';
 
@@ -76,6 +77,7 @@ export const decorators = [
   ),
   (renderStory: any) => (
     <MantineProvider theme={theme}>
+      <Notifications zIndex={10000} />
       <MantineEmotionProvider>{renderStory()}</MantineEmotionProvider>
     </MantineProvider>
   ),
