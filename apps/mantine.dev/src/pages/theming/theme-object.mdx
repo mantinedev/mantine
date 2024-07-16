@@ -310,22 +310,22 @@ You can learn more about these features in [default props](/theming/default-prop
 `theme.other` is an object that can be used to store any other properties that you want to access with the theme objects.
 
 ```tsx
-import { MantineProvider } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  other: {
+    charcoal: '#333333',
+    primaryHeadingSize: 45,
+    fontWeights: {
+      bold: 700,
+      extraBold: 900,
+    },
+  },
+});
 
 function Demo() {
   return (
-    <MantineProvider
-      theme={{
-        other: {
-          charcoal: '#333333',
-          primaryHeadingSize: 45,
-          fontWeights: {
-            bold: 700,
-            extraBold: 900,
-          },
-        },
-      }}
-    >
+    <MantineProvider theme={theme}>
       {/* Your app here */}
     </MantineProvider>
   );
