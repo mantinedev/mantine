@@ -167,7 +167,7 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props, re
   return (
     <Box ref={ref} size={size} {...getStyles('root')} {...others}>
       {label && (
-        <p {...getStyles('label')} data-position={labelPosition}>
+        <p {...getStyles('label')} data-position={labelPosition} data-orientation={orientation}>
           {label}
         </p>
       )}

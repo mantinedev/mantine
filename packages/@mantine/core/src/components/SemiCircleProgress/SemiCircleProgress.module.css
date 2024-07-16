@@ -36,9 +36,14 @@
   text-align: center;
   z-index: 1;
 
-  &[data-position='bottom'] {
+  &:where([data-position='bottom']) {
     bottom: 0;
     padding-inline: calc(var(--scp-thickness) * 2);
+
+    &:where([data-orientation='down']) {
+      bottom: auto;
+      top: 0;
+    }
   }
 
   &[data-position='center'] {
