@@ -83,6 +83,7 @@ export * from './data/ScatterChart.styles-api';
 export * from './data/ScrollArea.styles-api';
 export * from './data/SegmentedControl.styles-api';
 export * from './data/Select.styles-api';
+export * from './data/SemiCircleProgress.styles-api';
 export * from './data/SimpleGrid.styles-api';
 export * from './data/Skeleton.styles-api';
 export * from './data/Slider.styles-api';
