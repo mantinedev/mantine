@@ -24,7 +24,16 @@ export const allVersions = [
     date: 'June 26, 2024',
     github: 'https://github.com/mantinedev/mantine/releases/tag/7.11.0',
     link: 'https://mantine.dev/changelog/7-11-0',
-    patches: [],
+    patches: [
+      {
+        version: '7.11.1',
+        date: 'July 2, 2024',
+      },
+      {
+        version: '7.11.2',
+        date: 'July 13, 2024',
+      },
+    ],
   },
   {
     version: '7.10.0',
