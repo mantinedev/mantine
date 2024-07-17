@@ -21,10 +21,15 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDidUpdate, useForceUpdate, useReducedMotion } from '@mantine/hooks';
+import {
+  getGroupedNotifications,
+  positions,
+} from './get-grouped-notifications/get-grouped-notifications';
 import { getNotificationStateStyles } from './get-notification-state-styles';
 import { NotificationContainer } from './NotificationContainer';
 import {
   hideNotification,
+  NotificationPosition,
   notifications,
   NotificationsStore,
   notificationsStore,
@@ -36,28 +41,15 @@ const Transition: any = _Transition;
 
 export type NotificationsStylesNames = 'root' | 'notification';
 export type NotificationsCssVariables = {
-  root:
-    | '--notifications-z-index'
-    | '--notifications-top'
-    | '--notifications-right'
-    | '--notifications-left'
-    | '--notifications-left'
-    | '--notifications-transform'
-    | '--notifications-container-width';
+  root: '--notifications-z-index' | '--notifications-container-width';
 };
 
 export interface NotificationsProps
   extends BoxProps,
     StylesApiProps<NotificationsFactory>,
     ElementProps<'div'> {
-  /** Notifications position, `'bottom-right'` by default */
-  position?:
-    | 'top-left'
-    | 'top-right'
-    | 'top-center'
-    | 'bottom-left'
-    | 'bottom-right'
-    | 'bottom-center';
+  /** Notifications default position, `'bottom-right'` by default */
+  position?: NotificationPosition;
 
   /** Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function, `4000` by default */
   autoClose?: number | false;
@@ -114,28 +106,12 @@ const defaultProps: Partial<NotificationsProps> = {
   withinPortal: true,
 };
 
-const varsResolver = createVarsResolver<NotificationsFactory>(
-  (_, { zIndex, position, containerWidth }) => {
-    const [vertical, horizontal] = position!.split('-');
-
-    return {
-      root: {
-        '--notifications-z-index': zIndex?.toString(),
-        '--notifications-top': vertical === 'top' ? 'var(--mantine-spacing-md)' : undefined,
-        '--notifications-bottom': vertical === 'bottom' ? 'var(--mantine-spacing-md)' : undefined,
-        '--notifications-left':
-          horizontal === 'left'
-            ? 'var(--mantine-spacing-md)'
-            : horizontal === 'center'
-              ? '50%'
-              : undefined,
-        '--notifications-right': horizontal === 'right' ? 'var(--mantine-spacing-md)' : undefined,
-        '--notifications-transform': horizontal === 'center' ? 'translateX(-50%)' : undefined,
-        '--notifications-container-width': rem(containerWidth),
-      },
-    };
-  }
-);
+const varsResolver = createVarsResolver<NotificationsFactory>((_, { zIndex, containerWidth }) => ({
+  root: {
+    '--notifications-z-index': zIndex?.toString(),
+    '--notifications-container-width': rem(containerWidth),
+  },
+}));
 
 export const Notifications = factory<NotificationsFactory>((_props, ref) => {
   const props = useProps('Notifications', defaultProps, _props);
@@ -183,8 +159,12 @@ export const Notifications = factory<NotificationsFactory>((_props, ref) => {
   });
 
   useEffect(() => {
-    store?.updateState((current) => ({ ...current, limit: limit || 5 }));
-  }, [limit]);
+    store?.updateState((current) => ({
+      ...current,
+      limit: limit || 5,
+      defaultPosition: position!,
+    }));
+  }, [limit, position]);
 
   useDidUpdate(() => {
     if (data.notifications.length > previousLength.current) {
@@ -193,41 +173,69 @@ export const Notifications = factory<NotificationsFactory>((_props, ref) => {
     previousLength.current = data.notifications.length;
   }, [data.notifications]);
 
-  const items = data.notifications.map(({ style: notificationStyle, ...notification }) => (
-    <Transition
-      key={notification.id}
-      timeout={duration}
-      onEnter={() => refs.current[notification.id!].offsetHeight}
-      nodeRef={{ current: refs.current[notification.id!] }}
-    >
-      {(state: TransitionStatus) => (
-        <NotificationContainer
-          ref={(node) => {
-            refs.current[notification.id!] = node!;
-          }}
-          data={notification}
-          onHide={(id) => hideNotification(id, store)}
-          autoClose={autoClose!}
-          {...getStyles('notification', {
-            style: {
-              ...getNotificationStateStyles({
-                state,
-                position,
-                transitionDuration: duration!,
-                maxHeight: notificationMaxHeight!,
-              }),
-              ...notificationStyle,
-            },
-          })}
-        />
-      )}
-    </Transition>
-  ));
+  const grouped = getGroupedNotifications(data.notifications, position!);
+  const groupedComponents = positions.reduce(
+    (acc, pos) => {
+      acc[pos] = grouped[pos].map(({ style: notificationStyle, ...notification }) => (
+        <Transition
+          key={notification.id}
+          timeout={duration}
+          onEnter={() => refs.current[notification.id!].offsetHeight}
+          nodeRef={{ current: refs.current[notification.id!] }}
+        >
+          {(state: TransitionStatus) => (
+            <NotificationContainer
+              ref={(node) => {
+                refs.current[notification.id!] = node!;
+              }}
+              data={notification}
+              onHide={(id) => hideNotification(id, store)}
+              autoClose={autoClose!}
+              {...getStyles('notification', {
+                style: {
+                  ...getNotificationStateStyles({
+                    state,
+                    position: pos,
+                    transitionDuration: duration!,
+                    maxHeight: notificationMaxHeight!,
+                  }),
+                  ...notificationStyle,
+                },
+              })}
+            />
+          )}
+        </Transition>
+      ));
+
+      return acc;
+    },
+    {} as Record<NotificationPosition, React.ReactNode>
+  );
 
   return (
     <OptionalPortal withinPortal={withinPortal} {...portalProps}>
-      <Box {...getStyles('root')} ref={ref} {...others}>
-        <TransitionGroup>{items}</TransitionGroup>
+      <Box {...getStyles('root')} data-position="top-center" ref={ref} {...others}>
+        <TransitionGroup>{groupedComponents['top-center']}</TransitionGroup>
+      </Box>
+
+      <Box {...getStyles('root')} data-position="top-left" {...others}>
+        <TransitionGroup>{groupedComponents['top-left']}</TransitionGroup>
+      </Box>
+
+      <Box {...getStyles('root')} data-position="top-right" {...others}>
+        <TransitionGroup>{groupedComponents['top-right']}</TransitionGroup>
+      </Box>
+
+      <Box {...getStyles('root')} data-position="bottom-right" {...others}>
+        <TransitionGroup>{groupedComponents['bottom-right']}</TransitionGroup>
+      </Box>
+
+      <Box {...getStyles('root')} data-position="bottom-left" {...others}>
+        <TransitionGroup>{groupedComponents['bottom-left']}</TransitionGroup>
+      </Box>
+
+      <Box {...getStyles('root')} data-position="bottom-center" {...others}>
+        <TransitionGroup>{groupedComponents['bottom-center']}</TransitionGroup>
       </Box>
     </OptionalPortal>
   );

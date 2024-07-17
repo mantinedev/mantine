@@ -2,12 +2,39 @@
   width: calc(100% - var(--mantine-spacing-md) * 2);
   position: fixed;
   z-index: var(--notifications-z-index);
-  top: var(--notifications-top);
-  left: var(--notifications-left);
-  right: var(--notifications-right);
-  bottom: var(--notifications-bottom);
-  transform: var(--notifications-transform);
   max-width: var(--notifications-container-width);
+
+  &:where([data-position='top-center']) {
+    top: var(--mantine-spacing-md);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &:where([data-position='top-left']) {
+    top: var(--mantine-spacing-md);
+    left: var(--mantine-spacing-md);
+  }
+
+  &:where([data-position='top-right']) {
+    top: var(--mantine-spacing-md);
+    right: var(--mantine-spacing-md);
+  }
+
+  &:where([data-position='bottom-center']) {
+    bottom: var(--mantine-spacing-md);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &:where([data-position='bottom-left']) {
+    bottom: var(--mantine-spacing-md);
+    left: var(--mantine-spacing-md);
+  }
+
+  &:where([data-position='bottom-right']) {
+    bottom: var(--mantine-spacing-md);
+    right: var(--mantine-spacing-md);
+  }
 }
 
 .notification {

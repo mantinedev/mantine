@@ -77,7 +77,6 @@ export const decorators = [
   ),
   (renderStory: any) => (
     <MantineProvider theme={theme}>
-      <Notifications zIndex={10000} />
       <MantineEmotionProvider>{renderStory()}</MantineEmotionProvider>
     </MantineProvider>
   ),
