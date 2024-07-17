@@ -7,7 +7,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     slug: '/core/box',
     description: 'Base component for all Mantine components',
     import: "import { Box } from '@mantine/core';",
-    source: '@mantine/core/src/components/Box/Box.tsx',
+    source: '@mantine/core/src/core/Box/Box.tsx',
     docs: 'core/box.mdx',
   },
 
