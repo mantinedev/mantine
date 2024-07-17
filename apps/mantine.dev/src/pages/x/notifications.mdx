@@ -74,6 +74,7 @@ import {
 `notifications.show` and `notification.update` functions can be called with an object that has the following properties:
 
 - `id` – notification id, it is used to update and remove notifications, by default `id` is randomly generated
+- `position` – notification position, by default the value from the `position` prop of the `Notifications` component is used
 - `withBorder` – determines whether notification should have a border
 - `withCloseButton` – determines whether the close button should be visible
 - `onClose` – calls when notification is unmounted
@@ -94,6 +95,7 @@ notifications.show({ message: 'Hello' });
 // Most used notification props
 notifications.show({
   id: 'hello-there',
+  position: 'bottom-center',
   withCloseButton: true,
   onClose: () => console.log('unmounted'),
   onOpen: () => console.log('mounted'),
@@ -124,8 +126,7 @@ Usually, it is better to override [Notification](/core/notification) styles with
 
 ## Notifications container position
 
-`Notifications` container has fixed position inside, it is rendered inside [Portal](/core/portal/) by default.
-Position cannot be changed per notification. `Notifications` supports the following positions:
+You can define notification position in `notifications.show` function. Possible `position` values:
 
 - `top-left`
 - `top-right`
@@ -133,6 +134,12 @@ Position cannot be changed per notification. `Notifications` supports the follow
 - `bottom-left`
 - `bottom-right`
 - `bottom-center`
+
+<Demo data={NotificationsDemos.position} />
+
+The `position` can be defined on the `Notifications` component.
+In the following example, notifications will be displayed in the top right corner of the screen
+if `position` is not defined in `notifications.show` function:
 
 ```tsx
 import { Notifications } from '@mantine/notifications';

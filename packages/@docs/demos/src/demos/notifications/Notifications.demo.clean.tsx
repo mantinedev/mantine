@@ -25,11 +25,11 @@ function Demo() {
         Show 10 notifications
       </Button>
 
-      <Button color="gray" onClick={() => notifications.cleanQueue()}>
+      <Button variant="default" onClick={() => notifications.cleanQueue()}>
         Clean queue
       </Button>
 
-      <Button color="red" onClick={() => notifications.clean()}>
+      <Button variant="outline" color="red" onClick={() => notifications.clean()}>
         Clean all
       </Button>
     </Group>
@@ -55,11 +55,11 @@ function Demo() {
         Show 10 notifications
       </Button>
 
-      <Button color="gray" onClick={() => notifications.cleanQueue()}>
+      <Button variant="default" onClick={() => notifications.cleanQueue()}>
         Clean queue
       </Button>
 
-      <Button color="red" onClick={() => notifications.clean()}>
+      <Button variant="outline" color="red" onClick={() => notifications.clean()}>
         Clean all
       </Button>
     </Group>
