@@ -5,7 +5,7 @@ import {
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
-export default Layout(MDX_DATA.Changelog7110);
+export default Layout(MDX_DATA.Changelog7120);
 
 ## Notifications at any position
 
@@ -13,6 +13,12 @@ It is now possible to display notifications at any position on the screen
 with [@mantine/notifications package](/x/notifications):
 
 <Demo data={NotificationsDemos.position} />
+
+## Subscribe to notifications state
+
+You can now subscribe to notifications state changes with `useNotifications` hook:
+
+<Demo data={NotificationsDemos.store} />
 
 ## SemiCircleProgress component
 

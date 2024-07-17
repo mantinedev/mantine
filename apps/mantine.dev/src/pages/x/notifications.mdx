@@ -220,3 +220,12 @@ notifications.update({
 `notifications.show` and `notifications.update` functions `autoClose` prop has higher priority.
 
 <Demo data={NotificationsDemos.autoclose} />
+
+## Subscribe to notifications state
+
+You can subscribe to notifications state changes with `useNotifications` hook.
+The hook returns an object with `notifications` and `queue` arrays. `notifications`
+array contains all notifications that are currently displayed, `queue` contains
+notifications that are waiting to be displayed.
+
+<Demo data={NotificationsDemos.store} />

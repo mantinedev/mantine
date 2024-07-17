@@ -37,3 +37,8 @@ export const Demo_position = {
   name: '⭐ Demo: position',
   render: renderDemo(demos.position),
 };
+
+export const Demo_store = {
+  name: '⭐ Demo: store',
+  render: renderDemo(demos.store),
+};
