@@ -451,3 +451,30 @@ Then you can use these mixins in your styles:
   @mixin circle 100px;
 }
 ```
+
+## Disable specific features
+
+You can disable specific features of the preset by setting them to `false`:
+
+```tsx
+module.exports = {
+  'postcss-preset-mantine': {
+    features: {
+      // Turn off `light-dark` function
+      lightDarkFunction: false,
+
+      // Turn off `postcss-nested` plugin
+      nested: false,
+
+      // Turn off `lighten`, `darken` and `alpha` functions
+      colorMixAlpha: false,
+
+      // Turn off `rem` and `em` functions
+      remEmFunctions: false,
+
+      // Turn off `postcss-mixins` plugin
+      mixins: false,
+    },
+  },
+};
+```

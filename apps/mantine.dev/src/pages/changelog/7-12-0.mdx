@@ -33,6 +33,35 @@ New [SemiCircleProgress](/core/semi-circle-progress) component:
 
 <Demo data={TreeDemos.checked} />
 
+## Disable specific features in postcss-preset-mantine
+
+You can now disable specific features of the [postcss-preset-mantine](/styles/postcss-preset)
+by setting them to `false` in the configuration object. This feature is available starting from
+`postcss-preset-mantine@1.17.0`.
+
+```tsx
+module.exports = {
+  'postcss-preset-mantine': {
+    features: {
+      // Turn off `light-dark` function
+      lightDarkFunction: false,
+
+      // Turn off `postcss-nested` plugin
+      nested: false,
+
+      // Turn off `lighten`, `darken` and `alpha` functions
+      colorMixAlpha: false,
+
+      // Turn off `rem` and `em` functions
+      remEmFunctions: false,
+
+      // Turn off `postcss-mixins` plugin
+      mixins: false,
+    },
+  },
+};
+```
+
 ## Help Center updates
 
 - [Server components guide](https://help.mantine.dev/q/server-components) has been updated to include `Component.extend` usage in server components.
