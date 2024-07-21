@@ -1,0 +1,73 @@
+import { LightDarkHiddenDemo } from '@/demos/LightDarkHidden.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title:
+    'How can I display different elements in light and dark color schemes?',
+  description:
+    'Learn how to hide/show elements based on color scheme',
+  slug: 'light-dark-elements',
+  category: 'styles',
+  tags: ['postcss-preset-mantine', 'lightHidden', 'darkHidden'],
+  created_at: 'July 21, 2024',
+  last_updated_at: 'July 21, 2024',
+};
+
+export default Layout(meta);
+
+## How Mantine color scheme works
+
+Mantine color scheme is defined by `data-mantine-color-scheme="value"` attribute on the `html` element.
+It can be either `light` or `dark`. `data-mantine-color-scheme` attribute is set
+by `ColorSchemeScript` component before the application is initialized in server-side
+rendering frameworks like Next.js, Remix, etc. and by `MantineProvider` component during the first render in
+client-side frameworks like Vite.
+
+## Can I get color scheme value in JavaScript?
+
+If your application does not have server-side rendering, you can get color scheme value
+with `useMantineColorScheme` hook:
+
+```tsx
+import { useMantineColorScheme } from '@mantine/core';
+
+function MyComponent() {
+  const { colorScheme } = useMantineColorScheme();
+
+  // ✅ Works in Vite and other client-side bundlers/frameworks
+  // ❌ Hydration mismatch in Next.js, Remix, and other server-side rendering frameworks
+  return <div>Color scheme is {colorScheme}</div>;
+}
+```
+
+If you have server-side rendering in your application (Next.js, Remix, etc.), you should
+not rely on JavaScript to get color scheme value – conditional rendering based on color
+scheme value will produce hydration mismatch. In this case, the only option is to use
+styles to hide/show elements based on the color scheme value.
+
+## lightHidden and darkHidden props
+
+All Mantine components support `lightHidden` and `darkHidden` props that allow you to hide
+components based on the color scheme value. These props are the most reliable way to render
+different elements based on the color scheme value.
+
+<Demo data={LightDarkHiddenDemo} />
+
+## Changing component styles based on color scheme
+
+For custom components that do not have access to `lightHidden` and `darkHidden` props, you can
+use `light` and `dark` mixins from [postcss-presets-mantine](https://mantine.dev/styles/postcss-preset):
+
+```scss
+.lightHidden {
+  @mixin light {
+    display: none;
+  }
+}
+
+.darkHidden {
+  @mixin dark {
+    display: none;
+  }
+}
+```
