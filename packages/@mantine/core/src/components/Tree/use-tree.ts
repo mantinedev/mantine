@@ -4,8 +4,8 @@ import {
   getAllCheckedNodes,
 } from './get-all-checked-nodes/get-all-checked-nodes';
 import { getChildrenNodesValues } from './get-children-nodes-values/get-children-nodes-values';
-import { isNodeChecked as _isNodeChecked } from './is-node-checked/is-node-checked';
-import { isNodeIndeterminate as _isNodeIndeterminate } from './is-node-indeterminate/is-node-indeterminate';
+import { memoizedIsNodeChecked } from './is-node-checked/is-node-checked';
+import { memoizedIsNodeIndeterminate } from './is-node-indeterminate/is-node-indeterminate';
 import type { TreeNodeData } from './Tree';
 
 export type TreeExpandedState = Record<string, boolean>;
@@ -224,8 +224,9 @@ export function useTree({
   }, []);
 
   const getCheckedNodes = () => getAllCheckedNodes(data, checkedState).result;
-  const isNodeChecked = (value: string) => _isNodeChecked(value, data, checkedState);
-  const isNodeIndeterminate = (value: string) => _isNodeIndeterminate(value, data, checkedState);
+  const isNodeChecked = (value: string) => memoizedIsNodeChecked(value, data, checkedState);
+  const isNodeIndeterminate = (value: string) =>
+    memoizedIsNodeIndeterminate(value, data, checkedState);
 
   return {
     multiple,

@@ -1,3 +1,4 @@
+import { memoize } from '../../../core';
 import { getAllCheckedNodes } from '../get-all-checked-nodes/get-all-checked-nodes';
 import type { TreeNodeData } from '../Tree';
 
@@ -17,3 +18,5 @@ export function isNodeChecked(
   const checkedNodes = getAllCheckedNodes(data, checkedState).result;
   return checkedNodes.some((node) => node.value === value && node.checked);
 }
+
+export const memoizedIsNodeChecked = memoize(isNodeChecked);

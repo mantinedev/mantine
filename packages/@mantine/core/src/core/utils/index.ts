@@ -29,3 +29,4 @@ export { getContextItemIndex } from './get-context-item-index/get-context-item-i
 export { useHovered } from './use-hovered/use-hovered';
 export { createUseExternalEvents } from './create-use-external-events/create-use-external-events';
 export { getEnv } from './get-env/get-env';
+export { memoize } from './memoize/memoize';
