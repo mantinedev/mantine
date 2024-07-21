@@ -22,3 +22,8 @@ export const Demo_controller = {
   name: '⭐ Demo: controller',
   render: renderDemo(demos.controller),
 };
+
+export const Demo_checked = {
+  name: '⭐ Demo: checked',
+  render: renderDemo(demos.checked),
+};
