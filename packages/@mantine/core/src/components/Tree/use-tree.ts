@@ -218,10 +218,13 @@ export function useTree({
     [data]
   );
 
-  const uncheckNode = useCallback((value: string) => {
-    const checkedNodes = getChildrenNodesValues(value, data);
-    setCheckedState((current) => current.filter((item) => checkedNodes.includes(item)));
-  }, []);
+  const uncheckNode = useCallback(
+    (value: string) => {
+      const checkedNodes = getChildrenNodesValues(value, data);
+      setCheckedState((current) => current.filter((item) => !checkedNodes.includes(item)));
+    },
+    [data]
+  );
 
   const getCheckedNodes = () => getAllCheckedNodes(data, checkedState).result;
   const isNodeChecked = (value: string) => memoizedIsNodeChecked(value, data, checkedState);
