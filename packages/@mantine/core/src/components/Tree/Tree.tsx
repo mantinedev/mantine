@@ -40,6 +40,9 @@ export interface RenderTreeNodePayload {
   /** Node data from the `data` prop of `Tree` */
   node: TreeNodeData;
 
+  /** Tree controller instance, return value of `useTree` hook */
+  tree: TreeController;
+
   /** Props to spread into the root node element */
   elementProps: {
     className: string;
