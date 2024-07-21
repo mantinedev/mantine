@@ -1,5 +1,5 @@
 import { IconChevronDown } from '@tabler/icons-react';
-import { Checkbox, Group, Tree } from '@mantine/core';
+import { Checkbox, Group, RenderTreeNodePayload, Tree } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { data, dataCode } from './data';
 
@@ -30,34 +30,40 @@ function Demo() {
 }
 `;
 
-function Demo() {
+const renderTreeNode = ({
+  node,
+  expanded,
+  hasChildren,
+  elementProps,
+  tree,
+}: RenderTreeNodePayload) => {
+  const checked = tree.isNodeChecked(node.value);
+  const indeterminate = tree.isNodeIndeterminate(node.value);
+
   return (
-    <Tree
-      data={data}
-      levelOffset={23}
-      expandOnClick={false}
-      renderNode={({ node, expanded, hasChildren, elementProps, tree }) => (
-        <Group gap="xs" {...elementProps}>
-          <Checkbox.Indicator
-            checked={tree.isNodeChecked(node.value)}
-            indeterminate={tree.isNodeIndeterminate(node.value)}
-            onClick={() => tree.toggleNodeCheck(node.value)}
+    <Group gap="xs" {...elementProps}>
+      <Checkbox.Indicator
+        checked={checked}
+        indeterminate={indeterminate}
+        onClick={() => (!checked ? tree.checkNode(node.value) : tree.uncheckNode(node.value))}
+      />
+
+      <Group gap={5} onClick={() => tree.toggleExpanded(node.value)}>
+        <span>{node.label}</span>
+
+        {hasChildren && (
+          <IconChevronDown
+            size={14}
+            style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
           />
-
-          <Group gap={5} onClick={() => tree.toggleExpanded(node.value)}>
-            <span>{node.label}</span>
-
-            {hasChildren && (
-              <IconChevronDown
-                size={14}
-                style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
-              />
-            )}
-          </Group>
-        </Group>
-      )}
-    />
+        )}
+      </Group>
+    </Group>
   );
+};
+
+function Demo() {
+  return <Tree data={data} levelOffset={23} expandOnClick={false} renderNode={renderTreeNode} />;
 }
 
 export const checked: MantineDemo = {

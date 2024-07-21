@@ -18,7 +18,13 @@ export function getAllCheckedNodes(
     if (Array.isArray(node.children) && node.children.length > 0) {
       const innerChecked = getAllCheckedNodes(node.children, checkedState, acc);
       if (innerChecked.currentTreeChecked.length === node.children.length) {
-        const item = { checked: true, indeterminate: false, value: node.value, hasChildren: true };
+        const isChecked = innerChecked.currentTreeChecked.every((item) => item.checked);
+        const item = {
+          checked: isChecked,
+          indeterminate: !isChecked,
+          value: node.value,
+          hasChildren: true,
+        };
         currentTreeChecked.push(item);
         acc.push(item);
       } else if (innerChecked.currentTreeChecked.length > 0) {

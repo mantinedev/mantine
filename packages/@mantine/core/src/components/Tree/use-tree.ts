@@ -3,6 +3,7 @@ import {
   CheckedNodeStatus,
   getAllCheckedNodes,
 } from './get-all-checked-nodes/get-all-checked-nodes';
+import { getChildrenNodesValues } from './get-children-nodes-values/get-children-nodes-values';
 import { isNodeChecked as _isNodeChecked } from './is-node-checked/is-node-checked';
 import { isNodeIndeterminate as _isNodeIndeterminate } from './is-node-indeterminate/is-node-indeterminate';
 import type { TreeNodeData } from './Tree';
@@ -102,9 +103,6 @@ export interface UseTreeReturnType {
 
   /** Unchecks node with provided value */
   uncheckNode: (value: string) => void;
-
-  /** Toggles checked state of the node with provided value */
-  toggleNodeCheck: (value: string) => void;
 
   /** Returns all checked nodes with status */
   getCheckedNodes: () => CheckedNodeStatus[];
@@ -212,21 +210,18 @@ export function useTree({
     setAnchorNode(null);
   }, []);
 
-  const checkNode = useCallback((value: string) => {
-    setCheckedState((current) => (current.includes(value) ? current : [...current, value]));
-  }, []);
+  const checkNode = useCallback(
+    (value: string) => {
+      const checkedNodes = getChildrenNodesValues(value, data);
+      setCheckedState((current) => Array.from(new Set([...current, ...checkedNodes])));
+    },
+    [data]
+  );
 
   const uncheckNode = useCallback((value: string) => {
-    setCheckedState((current) => current.filter((item) => item !== value));
+    const checkedNodes = getChildrenNodesValues(value, data);
+    setCheckedState((current) => current.filter((item) => checkedNodes.includes(item)));
   }, []);
-
-  const toggleNodeCheck = useCallback(
-    (value: string) =>
-      setCheckedState((current) =>
-        current.includes(value) ? current.filter((item) => item !== value) : [...current, value]
-      ),
-    []
-  );
 
   const getCheckedNodes = () => getAllCheckedNodes(data, checkedState).result;
   const isNodeChecked = (value: string) => _isNodeChecked(value, data, checkedState);
@@ -248,7 +243,6 @@ export function useTree({
     setExpandedState,
     checkNode,
     uncheckNode,
-    toggleNodeCheck,
 
     toggleSelected,
     select,
