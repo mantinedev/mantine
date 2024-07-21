@@ -4,6 +4,7 @@ import { MantineDemo } from '@mantinex/demo';
 const code = `
 import { SemiCircleProgress } from '@mantine/core';
 
+
 function Demo() {
   return (
     <SemiCircleProgress
