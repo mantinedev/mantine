@@ -65,9 +65,11 @@ export function MdxLayout({ meta, children }: MdxLayoutProps) {
             </Text>
           </Container>
         </header>
-        <Container size="md" className={classes.inner}>
-          <div className={classes.content} id="mdx">
-            {children}
+        <Container size="md" className={classes.innerContainer}>
+          <div className={classes.inner}>
+            <div className={classes.content} id="mdx">
+              {children}
+            </div>
           </div>
           <TableOfContents />
         </Container>

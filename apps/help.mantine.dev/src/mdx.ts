@@ -6,6 +6,7 @@ import { meta as canIUseMantineWithAstro } from './pages/q/can-i-use-mantine-wit
 import { meta as canIUseMantineWithCra } from './pages/q/can-i-use-mantine-with-cra.mdx';
 import { meta as colorSchemeColor } from './pages/q/color-scheme-color.mdx';
 import { meta as comboboxTesting } from './pages/q/combobox-testing.mdx';
+import { meta as customInputUseForm } from './pages/q/custom-input-use-form.mdx';
 import { meta as dataGridINeed } from './pages/q/data-grid-i-need.mdx';
 import { meta as datesMissingStyles } from './pages/q/dates-missing-styles.mdx';
 import { meta as disableAllInputsInForm } from './pages/q/disable-all-inputs-in-form.mdx';
@@ -54,6 +55,7 @@ export const MDX_DATA = [
   canIUseMantineWithCra,
   colorSchemeColor,
   comboboxTesting,
+  customInputUseForm,
   dataGridINeed,
   datesMissingStyles,
   disableAllInputsInForm,
