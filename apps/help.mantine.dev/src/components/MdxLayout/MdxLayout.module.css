@@ -39,6 +39,7 @@
 }
 
 .inner {
+  width: 100%;
   max-width: calc(100% - var(--table-of-contents-width));
   overflow: hidden;
 }
