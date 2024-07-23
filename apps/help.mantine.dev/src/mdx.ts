@@ -36,6 +36,7 @@ import { meta as notificationsMissingStyles } from './pages/q/notifications-miss
 import { meta as otherLibs } from './pages/q/other-libs.mdx';
 import { meta as pinchToZoomModal } from './pages/q/pinch-to-zoom-modal.mdx';
 import { meta as privateCssVariables } from './pages/q/private-css-variables.mdx';
+import { meta as remixLoadFonts } from './pages/q/remix-load-fonts.mdx';
 import { meta as roadmap } from './pages/q/roadmap.mdx';
 import { meta as scrollToTheTopOfTheForm } from './pages/q/scroll-to-the-top-of-the-form.mdx';
 import { meta as segmentedControlNoValue } from './pages/q/segmented-control-no-value.mdx';
@@ -86,6 +87,7 @@ export const MDX_DATA = [
   otherLibs,
   pinchToZoomModal,
   privateCssVariables,
+  remixLoadFonts,
   roadmap,
   scrollToTheTopOfTheForm,
   segmentedControlNoValue,
