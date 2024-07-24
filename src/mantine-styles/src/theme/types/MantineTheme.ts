@@ -8,7 +8,9 @@ import type { ColorScheme } from './ColorScheme';
 import type { CSSObject } from '../../tss';
 
 export type LoaderType = 'bars' | 'oval' | 'dots';
-export type MantineThemeOther = Record<string, any>;
+export interface MantineThemeOther {
+  [key: string]: any;
+}
 export type MantineThemeComponents = Record<string, ThemeComponent>;
 
 export interface HeadingStyle {
