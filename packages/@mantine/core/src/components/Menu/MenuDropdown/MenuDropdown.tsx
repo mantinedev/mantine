@@ -84,7 +84,13 @@ export const MenuDropdown = factory<MenuDropdownFactory>((props, ref) => {
       data-menu-dropdown
       onKeyDown={handleKeyDown}
     >
-      <div tabIndex={-1} data-autofocus aria-hidden style={{ outline: 0 }} />
+      <div
+        tabIndex={-1}
+        data-autofocus
+        data-mantine-stop-propagation
+        aria-hidden
+        style={{ outline: 0 }}
+      />
       {children}
     </Popover.Dropdown>
   );
