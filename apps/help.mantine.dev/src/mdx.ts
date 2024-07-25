@@ -28,6 +28,7 @@ import { meta as inputMask } from './pages/q/input-mask.mdx';
 import { meta as inputsPlaceholderColor } from './pages/q/inputs-placeholder-color.mdx';
 import { meta as lightDarkElements } from './pages/q/light-dark-elements.mdx';
 import { meta as lightDarkIsNotEnough } from './pages/q/light-dark-is-not-enough.mdx';
+import { meta as listOfStringsInUseForm } from './pages/q/list-of-strings-in-use-form.mdx';
 import { meta as mantineProviderMissing } from './pages/q/mantine-provider-missing.mdx';
 import { meta as multiselectValuePlaceholder } from './pages/q/multiselect-value-placeholder.mdx';
 import { meta as nextLoadFonts } from './pages/q/next-load-fonts.mdx';
@@ -81,6 +82,7 @@ export const MDX_DATA = [
   inputsPlaceholderColor,
   lightDarkElements,
   lightDarkIsNotEnough,
+  listOfStringsInUseForm,
   mantineProviderMissing,
   multiselectValuePlaceholder,
   nextLoadFonts,
