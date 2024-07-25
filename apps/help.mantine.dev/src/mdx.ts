@@ -42,6 +42,7 @@ import { meta as scrollToTheTopOfTheForm } from './pages/q/scroll-to-the-top-of-
 import { meta as segmentedControlNoValue } from './pages/q/segmented-control-no-value.mdx';
 import { meta as selectAutocompleteDifference } from './pages/q/select-autocomplete-difference.mdx';
 import { meta as serverComponents } from './pages/q/server-components.mdx';
+import { meta as stylesOrder } from './pages/q/styles-order.mdx';
 import { meta as tabsBorderColor } from './pages/q/tabs-border-color.mdx';
 import { meta as thirdPartyStyles } from './pages/q/third-party-styles.mdx';
 import { meta as viteLoadFonts } from './pages/q/vite-load-fonts.mdx';
@@ -93,6 +94,7 @@ export const MDX_DATA = [
   segmentedControlNoValue,
   selectAutocompleteDifference,
   serverComponents,
+  stylesOrder,
   tabsBorderColor,
   thirdPartyStyles,
   viteLoadFonts,
