@@ -84,6 +84,9 @@ export interface BarChartProps
 
   /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"`, `false` by default */
   withBarValueLabel?: boolean;
+
+  /** Sets minimum height of the bar in px, `0` by default */
+  minBarSize?: number;
 }
 
 export type BarChartFactory = Factory<{
@@ -194,6 +197,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     withRightYAxis,
     rightYAxisLabel,
     rightYAxisProps,
+    minBarSize,
     ...others
   } = props;
 
@@ -246,6 +250,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         stackId={stacked ? 'stack' : undefined}
         label={withBarValueLabel ? <BarLabel valueFormatter={valueFormatter} /> : undefined}
         yAxisId={item.yAxisId || 'left'}
+        minPointSize={minBarSize}
         {...(typeof barProps === 'function' ? barProps(item) : barProps)}
       >
         {inputData.map((entry, index) => (

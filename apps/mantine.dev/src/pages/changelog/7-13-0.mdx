@@ -1,8 +1,18 @@
-import { FloatingIndicatorDemos, SliderDemos } from '@docs/demos';
+import {
+  BarChartDemos,
+  FloatingIndicatorDemos,
+  SliderDemos,
+} from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog7130);
+
+## BarChart: Minimum bar size
+
+[BarChart](/charts/bar-chart) now supports `minBarSize` prop to set the minimum size of the bar in px:
+
+<Demo data={BarChartDemos.minBarSize} />
 
 ## New demo: Custom Tabs variant
 

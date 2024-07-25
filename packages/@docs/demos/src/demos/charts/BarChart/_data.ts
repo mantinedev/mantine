@@ -42,3 +42,21 @@ export const data =
   { item: 'ETR', 'Effective tax rate in %': 3.5, color: 'blue', standalone: true },
 ];
 `;
+
+export const zeroData = [
+  { month: 'January', Smartphones: 1200, Laptops: 900, Tablets: 0 },
+  { month: 'February', Smartphones: 1900, Laptops: 1200, Tablets: 400 },
+  { month: 'March', Smartphones: 0, Laptops: 1000, Tablets: 200 },
+  { month: 'April', Smartphones: 1000, Laptops: 200, Tablets: 800 },
+  { month: 'May', Smartphones: 800, Laptops: 0, Tablets: 1200 },
+  { month: 'June', Smartphones: 0, Laptops: 600, Tablets: 1000 },
+];
+
+export const zeroDataCode = `export const zeroData = [
+  { month: 'January', Smartphones: 1200, Laptops: 900, Tablets: 0 },
+  { month: 'February', Smartphones: 1900, Laptops: 1200, Tablets: 400 },
+  { month: 'March', Smartphones: 0, Laptops: 1000, Tablets: 200 },
+  { month: 'April', Smartphones: 1000, Laptops: 200, Tablets: 800 },
+  { month: 'May', Smartphones: 800, Laptops: 0, Tablets: 1200 },
+  { month: 'June', Smartphones: 0, Laptops: 600, Tablets: 1000 },
+];`;
