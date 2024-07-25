@@ -35,6 +35,7 @@ import { meta as notificationsEmptyScreen } from './pages/q/notifications-empty-
 import { meta as notificationsMissingStyles } from './pages/q/notifications-missing-styles.mdx';
 import { meta as otherLibs } from './pages/q/other-libs.mdx';
 import { meta as pinchToZoomModal } from './pages/q/pinch-to-zoom-modal.mdx';
+import { meta as polymorphicInPolymorphic } from './pages/q/polymorphic-in-polymorphic.mdx';
 import { meta as privateCssVariables } from './pages/q/private-css-variables.mdx';
 import { meta as remixLoadFonts } from './pages/q/remix-load-fonts.mdx';
 import { meta as roadmap } from './pages/q/roadmap.mdx';
@@ -87,6 +88,7 @@ export const MDX_DATA = [
   notificationsMissingStyles,
   otherLibs,
   pinchToZoomModal,
+  polymorphicInPolymorphic,
   privateCssVariables,
   remixLoadFonts,
   roadmap,
