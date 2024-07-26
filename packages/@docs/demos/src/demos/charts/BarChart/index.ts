@@ -24,3 +24,4 @@ export { barProps } from './BarChart.demo.barProps';
 export { axisLabels } from './BarChart.demo.axisLabels';
 export { barValueLabel } from './BarChart.demo.barValueLabel';
 export { minBarSize } from './BarChart.demo.minBarSize';
+export { mixedStack } from './BarChart.demo.mixedStack';

@@ -60,3 +60,21 @@ export const zeroDataCode = `export const zeroData = [
   { month: 'May', Smartphones: 800, Laptops: 0, Tablets: 1200 },
   { month: 'June', Smartphones: 0, Laptops: 600, Tablets: 1000 },
 ];`;
+
+export const mixedStackData = [
+  { month: 'January', Smartphones: 1200, Laptops: 500, Tablets: 800 },
+  { month: 'February', Smartphones: 1900, Laptops: 1200, Tablets: 400 },
+  { month: 'March', Smartphones: 1800, Laptops: 1000, Tablets: 200 },
+  { month: 'April', Smartphones: 1000, Laptops: 200, Tablets: 800 },
+  { month: 'May', Smartphones: 800, Laptops: 200, Tablets: 700 },
+  { month: 'June', Smartphones: 800, Laptops: 500, Tablets: 200 },
+];
+
+export const mixedStackDataCode = `export const mixedStack = [
+  { month: 'January', Smartphones: 1200, Laptops: 500, Tablets: 800 },
+  { month: 'February', Smartphones: 1900, Laptops: 1200, Tablets: 400 },
+  { month: 'March', Smartphones: 1800, Laptops: 1000, Tablets: 200 },
+  { month: 'April', Smartphones: 1000, Laptops: 200, Tablets: 800 },
+  { month: 'May', Smartphones: 800, Laptops: 200, Tablets: 700 },
+  { month: 'June', Smartphones: 800, Laptops: 500, Tablets: 200 },
+];`;

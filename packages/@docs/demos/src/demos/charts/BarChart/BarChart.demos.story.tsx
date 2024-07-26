@@ -132,3 +132,8 @@ export const Demo_minBarSize = {
   name: '⭐ Demo: minBarSize',
   render: renderDemo(demos.minBarSize),
 };
+
+export const Demo_mixedStack = {
+  name: '⭐ Demo: mixedStack',
+  render: renderDemo(demos.mixedStack),
+};

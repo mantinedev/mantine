@@ -37,7 +37,9 @@ function valueToPercent(value: number) {
   return `${(value * 100).toFixed(0)}%`;
 }
 
-export interface BarChartSeries extends ChartSeries {}
+export interface BarChartSeries extends ChartSeries {
+  stackId?: string;
+}
 
 export type BarChartType = 'default' | 'stacked' | 'percent' | 'waterfall';
 
@@ -247,7 +249,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         isAnimationActive={false}
         fillOpacity={dimmed ? 0.1 : fillOpacity}
         strokeOpacity={dimmed ? 0.2 : 0}
-        stackId={stacked ? 'stack' : undefined}
+        stackId={stacked ? 'stack' : item.stackId || undefined}
         label={withBarValueLabel ? <BarLabel valueFormatter={valueFormatter} /> : undefined}
         yAxisId={item.yAxisId || 'left'}
         minPointSize={minBarSize}
