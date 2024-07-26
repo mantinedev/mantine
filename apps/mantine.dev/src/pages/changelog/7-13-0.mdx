@@ -2,6 +2,7 @@ import {
   BarChartDemos,
   FloatingIndicatorDemos,
   LineChartDemos,
+  ScatterChartDemos,
   SliderDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
@@ -14,6 +15,10 @@ export default Layout(MDX_DATA.Changelog7130);
 [LineChart](/charts/line-chart) and [AreaChart](/charts/area-chart) now support `withPointLabels` prop to display labels on data points:
 
 <Demo data={LineChartDemos.pointLabels} />
+
+[ScatterChart](/charts/scatter-chart) also supports point labels, but also allows to control which axis should display labels with `pointLabels` prop:
+
+<Demo data={ScatterChartDemos.pointLabels} />
 
 ## BarChart: Mixed stacks
 

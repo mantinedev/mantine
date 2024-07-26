@@ -77,3 +77,8 @@ export const Demo_dotSize = {
   name: '⭐ Demo: dotSize',
   render: renderDemo(demos.dotSize),
 };
+
+export const Demo_pointLabels = {
+  name: '⭐ Demo: pointLabels',
+  render: renderDemo(demos.pointLabels),
+};
