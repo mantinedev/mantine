@@ -106,10 +106,10 @@ export interface LineChartProps
   /** Determines whether points with `null` values should be connected, `true` by default */
   connectNulls?: boolean;
 
-  /** Additional components that are rendered inside recharts `AreaChart` component */
+  /** Additional components that are rendered inside recharts `LineChart` component */
   children?: React.ReactNode;
 
-  /** Props passed down to recharts `Area` component */
+  /** Props passed down to recharts `Line` component */
   lineProps?:
     | ((series: LineChartSeries) => Partial<Omit<LineProps, 'ref'>>)
     | Partial<Omit<LineProps, 'ref'>>;

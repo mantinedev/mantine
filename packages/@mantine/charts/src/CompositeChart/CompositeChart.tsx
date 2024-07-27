@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import {
+  Area,
+  AreaProps,
   Bar,
   BarProps,
   CartesianGrid,
-  Cell,
+  DotProps,
   Label,
   Legend,
-  BarChart as ReChartsBarChart,
+  Line,
+  LineProps,
+  ComposedChart as ReChartsCompositeChart,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -21,68 +25,100 @@ import {
   factory,
   Factory,
   getThemeColor,
-  MantineColor,
   StylesApiProps,
   useMantineTheme,
   useProps,
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { BarLabel } from '../BarChart/BarChart';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
+import { PointLabel } from '../PointLabel/PointLabel';
 import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
 import classes from '../grid-chart.module.css';
 
-function valueToPercent(value: number) {
-  return `${(value * 100).toFixed(0)}%`;
+export type CompositeChartCurveType =
+  | 'bump'
+  | 'linear'
+  | 'natural'
+  | 'monotone'
+  | 'step'
+  | 'stepBefore'
+  | 'stepAfter';
+
+export interface CompositeChartSeries extends ChartSeries {
+  type: 'line' | 'area' | 'bar';
+  strokeDasharray?: string | number;
 }
 
-export interface BarChartSeries extends ChartSeries {
-  stackId?: string;
-}
-
-export type BarChartType = 'default' | 'stacked' | 'percent' | 'waterfall';
-
-export type BarChartStylesNames =
+export type CompositeChartStylesNames =
+  | 'line'
+  | 'area'
   | 'bar'
   | BaseChartStylesNames
   | ChartLegendStylesNames
   | ChartTooltipStylesNames;
 
-export type BarChartCssVariables = {
-  root: '--chart-text-color' | '--chart-grid-color' | '--chart-cursor-fill';
+export type CompositeChartCssVariables = {
+  root: '--chart-text-color' | '--chart-grid-color';
 };
 
-export interface BarChartProps
+export interface CompositeChartProps
   extends BoxProps,
     GridChartBaseProps,
-    StylesApiProps<BarChartFactory>,
+    StylesApiProps<CompositeChartFactory>,
     ElementProps<'div'> {
-  /** Data used to display chart. */
+  /** Data used to display chart */
   data: Record<string, any>[];
 
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
-  series: BarChartSeries[];
+  series: CompositeChartSeries[];
 
-  /** Controls how bars are positioned relative to each other, `'default'` by default */
-  type?: BarChartType;
+  /** Type of the curve, `'monotone'` by default */
+  curveType?: CompositeChartCurveType;
 
-  /** Controls fill opacity of all bars, `1` by default */
+  /** Controls fill opacity of all lines, `1` by default */
   fillOpacity?: number;
 
-  /** Fill of hovered bar section, by default value is based on color scheme */
-  cursorFill?: MantineColor;
+  /** Determines whether dots should be displayed, `true` by default */
+  withDots?: boolean;
 
-  /** Props passed down to recharts `BarChart` component */
-  barChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsBarChart>;
+  /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
+  dotProps?: Omit<DotProps, 'ref'>;
 
-  /** Additional components that are rendered inside recharts `BarChart` component */
+  /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
+  activeDotProps?: Omit<DotProps, 'ref'>;
+
+  /** Stroke width for the chart lines, `2` by default */
+  strokeWidth?: number;
+
+  /** Props passed down to recharts `CompositeChart` component */
+  lineChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsCompositeChart>;
+
+  /** Determines whether points with `null` values should be connected, `true` by default */
+  connectNulls?: boolean;
+
+  /** Additional components that are rendered inside recharts `AreaChart` component */
   children?: React.ReactNode;
+
+  /** Props passed down to recharts `Line` component */
+  lineProps?:
+    | ((series: CompositeChartSeries) => Partial<Omit<LineProps, 'ref'>>)
+    | Partial<Omit<LineProps, 'ref'>>;
+
+  /** Props passed down to recharts `Area` component */
+  areaProps?:
+    | ((series: CompositeChartSeries) => Partial<Omit<AreaProps, 'ref'>>)
+    | Partial<Omit<AreaProps, 'ref'>>;
 
   /** Props passed down to recharts `Bar` component */
   barProps?:
-    | ((series: BarChartSeries) => Partial<Omit<BarProps, 'ref'>>)
+    | ((series: CompositeChartSeries) => Partial<Omit<BarProps, 'ref'>>)
     | Partial<Omit<BarProps, 'ref'>>;
+
+  /** Determines whether each point should have associated label, `false` by default */
+  withPointLabels?: boolean;
 
   /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"`, `false` by default */
   withBarValueLabel?: boolean;
@@ -91,14 +127,14 @@ export interface BarChartProps
   minBarSize?: number;
 }
 
-export type BarChartFactory = Factory<{
-  props: BarChartProps;
+export type CompositeChartFactory = Factory<{
+  props: CompositeChartProps;
   ref: HTMLDivElement;
-  stylesNames: BarChartStylesNames;
-  vars: BarChartCssVariables;
+  stylesNames: CompositeChartStylesNames;
+  vars: CompositeChartCssVariables;
 }>;
 
-const defaultProps: Partial<BarChartProps> = {
+const defaultProps: Partial<CompositeChartProps> = {
   withXAxis: true,
   withYAxis: true,
   withTooltip: true,
@@ -107,58 +143,23 @@ const defaultProps: Partial<BarChartProps> = {
   tickLine: 'y',
   strokeDasharray: '5 5',
   gridAxis: 'x',
-  type: 'default',
+  withDots: true,
+  connectNulls: true,
+  strokeWidth: 2,
+  curveType: 'monotone',
 };
 
-const varsResolver = createVarsResolver<BarChartFactory>(
-  (theme, { textColor, gridColor, cursorFill }) => ({
+const varsResolver = createVarsResolver<CompositeChartFactory>(
+  (theme, { textColor, gridColor }) => ({
     root: {
       '--chart-text-color': textColor ? getThemeColor(textColor, theme) : undefined,
       '--chart-grid-color': gridColor ? getThemeColor(gridColor, theme) : undefined,
-      '--chart-cursor-fill': cursorFill ? getThemeColor(cursorFill, theme) : undefined,
     },
   })
 );
 
-export function BarLabel({ value, valueFormatter, ...others }: Record<string, any>) {
-  return (
-    <text
-      {...others}
-      dy={-10}
-      fontSize={12}
-      fill="var(--chart-text-color, var(--mantine-color-dimmed))"
-      textAnchor="center"
-    >
-      {typeof valueFormatter === 'function' ? valueFormatter(value) : value}
-    </text>
-  );
-}
-
-function calculateCumulativeTotal(waterfallData: Record<string, any>[], dataKey: string) {
-  let start: number = 0;
-  let end: number = 0;
-  return waterfallData.map((item) => {
-    if (item.standalone) {
-      for (const prop in item) {
-        if (typeof item[prop] === 'number' && prop !== dataKey) {
-          item[prop] = [0, item[prop]];
-        }
-      }
-    } else {
-      for (const prop in item) {
-        if (typeof item[prop] === 'number' && prop !== dataKey) {
-          end += item[prop];
-          item[prop] = [start, end];
-          start = end;
-        }
-      }
-    }
-    return item;
-  });
-}
-
-export const BarChart = factory<BarChartFactory>((_props, ref) => {
-  const props = useProps('BarChart', defaultProps, _props);
+export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
+  const props = useProps('CompositeChart', defaultProps, _props);
   const {
     classNames,
     className,
@@ -185,20 +186,28 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     gridProps,
     tooltipProps,
     referenceLines,
+    withDots,
+    dotProps,
+    activeDotProps,
+    strokeWidth,
+    lineChartProps,
+    connectNulls,
     fillOpacity,
-    barChartProps,
-    type,
+    curveType,
     orientation,
     dir,
     valueFormatter,
     children,
-    barProps,
+    lineProps,
     xAxisLabel,
     yAxisLabel,
-    withBarValueLabel,
     withRightYAxis,
     rightYAxisLabel,
     rightYAxisProps,
+    withPointLabels,
+    areaProps,
+    barProps,
+    withBarValueLabel,
     minBarSize,
     ...others
   } = props;
@@ -208,21 +217,18 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
   const withYTickLine = gridAxis !== 'none' && (tickLine === 'y' || tickLine === 'xy');
   const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
   const shouldHighlight = highlightedArea !== null;
-  const stacked = type === 'stacked' || type === 'percent';
   const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
     setHighlightedArea(null);
     onMouseLeave?.(event);
   };
-  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<BarChartFactory>({
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<CompositeChartFactory>({
     classNames,
     styles,
     props,
   });
 
-  const inputData = type === 'waterfall' ? calculateCumulativeTotal(data, dataKey) : data;
-
-  const getStyles = useStyles<BarChartFactory>({
-    name: 'BarChart',
+  const getStyles = useStyles<CompositeChartFactory>({
+    name: 'CompositeChart',
     classes,
     props,
     className,
@@ -234,35 +240,103 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const bars = series.map((item) => {
+  const lines = series.map((item) => {
     const color = getThemeColor(item.color, theme);
     const dimmed = shouldHighlight && highlightedArea !== item.name;
 
-    return (
-      <Bar
-        {...getStyles('bar')}
-        key={item.name}
-        name={item.name}
-        dataKey={item.name}
-        fill={color}
-        stroke={color}
-        isAnimationActive={false}
-        fillOpacity={dimmed ? 0.1 : fillOpacity}
-        strokeOpacity={dimmed ? 0.2 : 0}
-        stackId={stacked ? 'stack' : item.stackId || undefined}
-        label={withBarValueLabel ? <BarLabel valueFormatter={valueFormatter} /> : undefined}
-        yAxisId={item.yAxisId || 'left'}
-        minPointSize={minBarSize}
-        {...(typeof barProps === 'function' ? barProps(item) : barProps)}
-      >
-        {inputData.map((entry, index) => (
-          <Cell
-            key={`cell-${index}`}
-            fill={entry.color ? getThemeColor(entry.color, theme) : color}
-          />
-        ))}
-      </Bar>
-    );
+    if (item.type === 'line') {
+      return (
+        <Line
+          {...getStyles('line')}
+          key={item.name}
+          name={item.name}
+          dataKey={item.name}
+          dot={
+            withDots
+              ? {
+                  fillOpacity: dimmed ? 0 : 1,
+                  strokeOpacity: dimmed ? 0 : 1,
+                  strokeWidth: 1,
+                  fill: color,
+                  stroke: color,
+                  ...dotProps,
+                }
+              : false
+          }
+          activeDot={
+            withDots
+              ? { fill: 'var(--mantine-color-white)', stroke: color, ...activeDotProps }
+              : false
+          }
+          fill={color}
+          stroke={color}
+          strokeWidth={strokeWidth}
+          isAnimationActive={false}
+          fillOpacity={dimmed ? 0 : fillOpacity}
+          strokeOpacity={dimmed ? 0.5 : fillOpacity}
+          connectNulls={connectNulls}
+          type={curveType}
+          strokeDasharray={item.strokeDasharray}
+          yAxisId={item.yAxisId || 'left'}
+          label={withPointLabels ? <PointLabel /> : undefined}
+          {...(typeof lineProps === 'function' ? lineProps(item) : lineProps)}
+        />
+      );
+    }
+
+    if (item.type === 'area') {
+      return (
+        <Area
+          {...getStyles('area')}
+          name={item.name}
+          type={curveType}
+          dataKey={item.name}
+          fill={color}
+          strokeWidth={strokeWidth}
+          stroke={color}
+          isAnimationActive={false}
+          connectNulls={connectNulls}
+          dot={
+            withDots
+              ? { fill: color, fillOpacity: dimmed ? 0 : 1, strokeWidth: 2, r: 3, ...dotProps }
+              : false
+          }
+          activeDot={
+            withDots
+              ? { fill: theme.white, stroke: color, strokeWidth: 2, r: 4, ...activeDotProps }
+              : false
+          }
+          fillOpacity={dimmed ? 0 : 0.2}
+          strokeOpacity={dimmed ? 0.5 : 1}
+          strokeDasharray={item.strokeDasharray}
+          yAxisId={item.yAxisId || 'left'}
+          label={withPointLabels ? <PointLabel /> : undefined}
+          {...(typeof areaProps === 'function' ? areaProps(item) : areaProps)}
+        />
+      );
+    }
+
+    if (item.type === 'bar') {
+      return (
+        <Bar
+          {...getStyles('bar')}
+          key={item.name}
+          name={item.name}
+          dataKey={item.name}
+          fill={color}
+          stroke={color}
+          isAnimationActive={false}
+          fillOpacity={dimmed ? 0.1 : fillOpacity}
+          strokeOpacity={dimmed ? 0.2 : 0}
+          label={withBarValueLabel ? <BarLabel valueFormatter={valueFormatter} /> : undefined}
+          yAxisId={item.yAxisId || 'left'}
+          minPointSize={minBarSize}
+          {...(typeof barProps === 'function' ? barProps(item) : barProps)}
+        />
+      );
+    }
+
+    return null;
   });
 
   const referenceLinesItems = referenceLines?.map((line, index) => {
@@ -293,7 +367,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     tickLine: withYTickLine ? { stroke: 'currentColor' } : false,
     allowDecimals: true,
     unit,
-    tickFormatter: type === 'percent' ? valueToPercent : valueFormatter,
+    tickFormatter: valueFormatter,
     ...getStyles('axis'),
   };
 
@@ -306,16 +380,15 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
       {...others}
     >
       <ResponsiveContainer {...getStyles('container')}>
-        <ReChartsBarChart
-          data={inputData}
-          stackOffset={type === 'percent' ? 'expand' : undefined}
+        <ReChartsCompositeChart
+          data={data}
           layout={orientation}
           margin={{
             bottom: xAxisLabel ? 30 : undefined,
             left: yAxisLabel ? 10 : undefined,
             right: yAxisLabel ? 5 : undefined,
           }}
-          {...barChartProps}
+          {...lineChartProps}
         >
           {withLegend && (
             <Legend
@@ -328,7 +401,6 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={series}
-                  showColor={type !== 'waterfall'}
                 />
               )}
               {...legendProps}
@@ -417,13 +489,11 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
                 stroke: 'var(--chart-grid-color)',
                 strokeWidth: 1,
                 strokeDasharray,
-                fill: 'var(--chart-cursor-fill)',
               }}
               content={({ label, payload }) => (
                 <ChartTooltip
                   label={label}
                   payload={payload}
-                  type={type === 'waterfall' ? 'scatter' : undefined}
                   unit={unit}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
@@ -435,14 +505,14 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
             />
           )}
 
-          {bars}
+          {lines}
           {referenceLinesItems}
           {children}
-        </ReChartsBarChart>
+        </ReChartsCompositeChart>
       </ResponsiveContainer>
     </Box>
   );
 });
 
-BarChart.displayName = '@mantine/charts/BarChart';
-BarChart.classes = classes;
+CompositeChart.displayName = '@mantine/charts/CompositeChart';
+CompositeChart.classes = classes;
