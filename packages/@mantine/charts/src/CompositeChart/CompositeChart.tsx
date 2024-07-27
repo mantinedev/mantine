@@ -66,7 +66,7 @@ export type CompositeChartCssVariables = {
 
 export interface CompositeChartProps
   extends BoxProps,
-    GridChartBaseProps,
+    Omit<GridChartBaseProps, 'orientation'>,
     StylesApiProps<CompositeChartFactory>,
     ElementProps<'div'> {
   /** Data used to display chart */
@@ -77,9 +77,6 @@ export interface CompositeChartProps
 
   /** Type of the curve, `'monotone'` by default */
   curveType?: CompositeChartCurveType;
-
-  /** Controls fill opacity of all lines, `1` by default */
-  fillOpacity?: number;
 
   /** Determines whether dots should be displayed, `true` by default */
   withDots?: boolean;
@@ -92,9 +89,6 @@ export interface CompositeChartProps
 
   /** Stroke width for the chart lines, `2` by default */
   strokeWidth?: number;
-
-  /** Props passed down to recharts `CompositeChart` component */
-  lineChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsCompositeChart>;
 
   /** Determines whether points with `null` values should be connected, `true` by default */
   connectNulls?: boolean;
@@ -128,6 +122,9 @@ export interface CompositeChartProps
 
   /** Maximum bar width in px */
   maxBarWidth?: number;
+
+  /** Props passed down to recharts `AreaChart` component */
+  composedChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsCompositeChart>;
 }
 
 export type CompositeChartFactory = Factory<{
@@ -142,7 +139,6 @@ const defaultProps: Partial<CompositeChartProps> = {
   withYAxis: true,
   withTooltip: true,
   tooltipAnimationDuration: 0,
-  fillOpacity: 1,
   tickLine: 'y',
   strokeDasharray: '5 5',
   gridAxis: 'x',
@@ -193,11 +189,8 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
     dotProps,
     activeDotProps,
     strokeWidth,
-    lineChartProps,
     connectNulls,
-    fillOpacity,
     curveType,
-    orientation,
     dir,
     valueFormatter,
     children,
@@ -213,6 +206,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
     withBarValueLabel,
     minBarSize,
     maxBarWidth,
+    composedChartProps,
     ...others
   } = props;
 
@@ -276,8 +270,8 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
           stroke={color}
           strokeWidth={strokeWidth}
           isAnimationActive={false}
-          fillOpacity={dimmed ? 0 : fillOpacity}
-          strokeOpacity={dimmed ? 0.5 : fillOpacity}
+          fillOpacity={dimmed ? 0 : 1}
+          strokeOpacity={dimmed ? 0.5 : 1}
           connectNulls={connectNulls}
           type={curveType}
           strokeDasharray={item.strokeDasharray}
@@ -302,12 +296,25 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
           connectNulls={connectNulls}
           dot={
             withDots
-              ? { fill: color, fillOpacity: dimmed ? 0 : 1, strokeWidth: 2, r: 3, ...dotProps }
+              ? {
+                  fillOpacity: dimmed ? 0 : 1,
+                  strokeOpacity: dimmed ? 0 : 1,
+                  strokeWidth: 1,
+                  fill: color,
+                  stroke: color,
+                  ...dotProps,
+                }
               : false
           }
           activeDot={
             withDots
-              ? { fill: theme.white, stroke: color, strokeWidth: 2, r: 4, ...activeDotProps }
+              ? {
+                  fill: theme.white,
+                  stroke: color,
+                  strokeWidth: 2,
+                  r: 4,
+                  ...activeDotProps,
+                }
               : false
           }
           fillOpacity={dimmed ? 0 : 0.2}
@@ -330,7 +337,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
           fill={color}
           stroke={color}
           isAnimationActive={false}
-          fillOpacity={dimmed ? 0.1 : fillOpacity}
+          fillOpacity={dimmed ? 0.1 : 1}
           strokeOpacity={dimmed ? 0.2 : 0}
           label={withBarValueLabel ? <BarLabel valueFormatter={valueFormatter} /> : undefined}
           yAxisId={item.yAxisId || 'left'}
@@ -365,9 +372,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
 
   const sharedYAxisProps = {
     axisLine: false,
-    ...(orientation === 'vertical'
-      ? { dataKey, type: 'category' as const }
-      : { type: 'number' as const }),
+    type: 'number' as const,
     tickLine: withYTickLine ? { stroke: 'currentColor' } : false,
     allowDecimals: true,
     unit,
@@ -387,13 +392,12 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
         <ReChartsCompositeChart
           data={data}
           maxBarSize={maxBarWidth}
-          layout={orientation}
           margin={{
             bottom: xAxisLabel ? 30 : undefined,
             left: yAxisLabel ? 10 : undefined,
             right: yAxisLabel ? 5 : undefined,
           }}
-          {...lineChartProps}
+          {...composedChartProps}
         >
           {withLegend && (
             <Legend
@@ -414,7 +418,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
 
           <XAxis
             hide={!withXAxis}
-            {...(orientation === 'vertical' ? { type: 'number' } : { dataKey })}
+            dataKey={dataKey}
             tick={{ transform: 'translate(0, 10)', fontSize: 12, fill: 'currentColor' }}
             stroke=""
             interval="preserveStartEnd"
@@ -489,7 +493,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
             <Tooltip
               animationDuration={tooltipAnimationDuration}
               isAnimationActive={tooltipAnimationDuration !== 0}
-              position={orientation === 'vertical' ? {} : { y: 0 }}
+              position={{ y: 0 }}
               cursor={{
                 stroke: 'var(--chart-grid-color)',
                 strokeWidth: 1,
