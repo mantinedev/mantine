@@ -89,6 +89,9 @@ export interface BarChartProps
 
   /** Sets minimum height of the bar in px, `0` by default */
   minBarSize?: number;
+
+  /** Maximum bar width in px */
+  maxBarWidth?: number;
 }
 
 export type BarChartFactory = Factory<{
@@ -200,6 +203,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     rightYAxisLabel,
     rightYAxisProps,
     minBarSize,
+    maxBarWidth,
     ...others
   } = props;
 
@@ -310,6 +314,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
           data={inputData}
           stackOffset={type === 'percent' ? 'expand' : undefined}
           layout={orientation}
+          maxBarSize={maxBarWidth}
           margin={{
             bottom: xAxisLabel ? 30 : undefined,
             left: yAxisLabel ? 10 : undefined,

@@ -125,6 +125,9 @@ export interface CompositeChartProps
 
   /** Sets minimum height of the bar in px, `0` by default */
   minBarSize?: number;
+
+  /** Maximum bar width in px */
+  maxBarWidth?: number;
 }
 
 export type CompositeChartFactory = Factory<{
@@ -209,6 +212,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
     barProps,
     withBarValueLabel,
     minBarSize,
+    maxBarWidth,
     ...others
   } = props;
 
@@ -382,6 +386,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsCompositeChart
           data={data}
+          maxBarSize={maxBarWidth}
           layout={orientation}
           margin={{
             bottom: xAxisLabel ? 30 : undefined,
