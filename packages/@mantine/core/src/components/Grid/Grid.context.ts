@@ -1,5 +1,4 @@
-import { MantineSize } from '../../../lib';
-import { createSafeContext, GetStylesApi } from '../../core';
+import { createSafeContext, GetStylesApi, MantineSize } from '../../core';
 import type { GridFactory } from './Grid';
 
 export type GridBreakpoints = Record<MantineSize, string>;

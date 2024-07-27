@@ -2,6 +2,7 @@ import {
   BarChartDemos,
   CompositeChartDemos,
   FloatingIndicatorDemos,
+  GridDemos,
   LineChartDemos,
   ScatterChartDemos,
   SliderDemos,
@@ -10,6 +11,17 @@ import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog7130);
+
+## Container queries support in Grid
+
+You can now use [container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries)
+in [Grid](/core/grid) component. With container queries, all responsive values
+are adjusted based on the container width, not the viewport width.
+
+Example of using container queries. To see how the grid changes, resize the root element
+of the demo with the resize handle located at the bottom right corner of the demo:
+
+<Demo data={GridDemos.container} />
 
 ## CompositeChart component
 

@@ -52,8 +52,8 @@ export function GridVariables({ gutter, selector, breakpoints, type }: GridVaria
   return (
     <InlineStyles
       styles={baseStyles}
-      media={breakpoints ? undefined : values}
-      container={breakpoints ? values : undefined}
+      media={type === 'container' ? undefined : values}
+      container={type === 'container' ? values : undefined}
       selector={selector}
     />
   );
