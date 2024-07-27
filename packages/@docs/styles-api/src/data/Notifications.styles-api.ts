@@ -10,10 +10,6 @@ export const NotificationsStylesApi: StylesApiData<NotificationsFactory> = {
   vars: {
     root: {
       '--notifications-container-width': 'Controls notifications container `max-width`',
-      '--notifications-left': 'Controls notifications container `left`',
-      '--notifications-right': 'Controls notifications container `right`',
-      '--notifications-top': 'Controls notifications container `top`',
-      '--notifications-transform': 'Controls notifications container `transform`',
       '--notifications-z-index': 'Controls notifications container `z-index`',
     },
   },

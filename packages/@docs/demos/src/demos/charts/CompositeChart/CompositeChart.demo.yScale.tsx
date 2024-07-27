@@ -13,7 +13,7 @@ function Demo() {
       data={data}
       dataKey="date"
       yAxisProps={{ domain: [0, 100] }}
-      series={[{ name: 'Apples', color: 'indigo.6' }]}
+      series={[{ name: 'Apples', color: 'indigo.6', type: 'area' }]}
     />
   );
 }
