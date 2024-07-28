@@ -4,7 +4,7 @@ import { PageSection } from '../PageSection/PageSection';
 
 export function JoinCommunity() {
   return (
-    <PageSection title="Join the community">
+    <PageSection title="Join the community" alt>
       <Space h="md" />
       <SocialCards />
       <Space h={120} />

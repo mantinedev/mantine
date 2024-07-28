@@ -48,6 +48,9 @@ export interface PaginationProps extends PaginationRootProps {
 
   /** Key of `theme.spacing`, gap between controls, `8` by default */
   gap?: MantineSize | (string & {}) | number;
+
+  /** Determines whether the pagination should be hidden when only one page is available (`total={1}`), `false` by default */
+  hideWithOnePage?: boolean;
 }
 
 export type PaginationFactory = Factory<{
@@ -87,10 +90,11 @@ export const Pagination = factory<PaginationFactory>((_props, ref) => {
     dotsIcon,
     total,
     gap,
+    hideWithOnePage,
     ...others
   } = props;
 
-  if (total <= 0) {
+  if (total <= 0 || (hideWithOnePage && total === 1)) {
     return null;
   }
 

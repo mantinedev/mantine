@@ -167,6 +167,7 @@ export const Stepper = factory<StepperFactory>((_props, ref) => {
     radius,
     allowNextStepsSelect,
     wrap,
+    autoContrast,
     ...others
   } = props;
 

@@ -19,6 +19,21 @@ export function Usage() {
   );
 }
 
+export function InitialsColor() {
+  const names = [
+    'John Doe',
+    'Jane Mol',
+    'Alex Lump',
+    'Sarah Condor',
+    'Mike Johnson',
+    'Kate Kok',
+    'Tom Smith',
+  ];
+
+  const items = names.map((name) => <Avatar key={name} name={name} color="initials" />);
+  return <div style={{ padding: 40, display: 'flex', gap: 10 }}>{items}</div>;
+}
+
 export function AutoContrast() {
   const buttons = Array(10)
     .fill(0)

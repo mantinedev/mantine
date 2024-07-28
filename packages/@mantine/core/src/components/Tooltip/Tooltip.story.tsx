@@ -205,3 +205,38 @@ export function Inline() {
     </div>
   );
 }
+
+export function DefaultOpened() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Tooltip
+        position="right"
+        label="Tooltip visible by default"
+        withArrow
+        transitionProps={{ duration: 0 }}
+        color="cyan"
+        radius="md"
+        defaultOpened
+      >
+        <button type="button">target</button>
+      </Tooltip>
+    </div>
+  );
+}
+
+export function Fixed() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Tooltip
+        position="right"
+        label="Tooltip has fixed position"
+        withArrow
+        transitionProps={{ duration: 0 }}
+        opened
+        floatingStrategy="fixed"
+      >
+        <button type="button">target</button>
+      </Tooltip>
+    </div>
+  );
+}

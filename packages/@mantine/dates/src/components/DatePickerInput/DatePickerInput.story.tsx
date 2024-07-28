@@ -13,6 +13,7 @@ export function Usage() {
         placeholder="Date picker input"
         // eslint-disable-next-line no-console
         popoverProps={{ onClose: () => console.log('close') }}
+        highlightToday
       />
     </div>
   );

@@ -111,6 +111,14 @@ control or add styles:
 
 <Demo data={DatePickerDemos.controlProps} />
 
+## Exclude dates
+
+To disable specific dates use `excludeDate` prop.
+It accepts function that takes date as argument and returns boolean value – if `true` is returned, date will be disabled.
+Example of disabling all dates that are not Fridays:
+
+<Demo data={DatePickerDemos.excludeDate} />
+
 ## Number of columns
 
 Set `numberOfColumns` prop to define number of pickers that will be rendered side by side:

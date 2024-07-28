@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { ReactElement, useState } from 'react';
-import { fireEvent, render, RenderOptions, RenderResult, screen } from '@testing-library/react';
+import { render, RenderOptions, RenderResult, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { useFocusTrap } from './use-focus-trap';
 
 function InnerComponent({ testId }: { testId: string }) {
@@ -59,13 +60,13 @@ describe('@mantine/hooks/use-focus-trap', () => {
     expect(screen.getByTestId('root-script')).not.toHaveAttribute('aria-hidden');
     expect(screen.queryByTestId('container-1')).toBeFalsy();
   });
-  it('correctly abandons restoration of aria-hidden if another handler has instantiated before cleanup', () => {
+  it('correctly abandons restoration of aria-hidden if another handler has instantiated before cleanup', async () => {
     const { rerender } = quietRender(<WrapperComponent />, { container: document.body });
     expect(screen.getByTestId('root-1')).toHaveAttribute('aria-hidden', 'true');
     expect(screen.getByTestId('root-2')).toHaveAttribute('aria-hidden', 'true');
     expect(screen.getByTestId('container-1')).not.toHaveAttribute('aria-hidden');
 
-    fireEvent.click(screen.getByText('Toggle'));
+    await userEvent.click(screen.getByText('Toggle'));
     expect(screen.queryByTestId('container-1')).toBeFalsy();
     expect(screen.getByTestId('container-2')).not.toHaveAttribute('aria-hidden');
 

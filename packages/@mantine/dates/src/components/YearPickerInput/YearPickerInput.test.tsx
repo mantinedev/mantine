@@ -33,6 +33,7 @@ describe('@mantine/dates/YearPickerInput', () => {
     props: defaultPropsWithInputProps,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

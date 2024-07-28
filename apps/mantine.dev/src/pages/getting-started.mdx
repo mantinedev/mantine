@@ -14,12 +14,12 @@ All templates include required dependencies and pre-configured settings.
 Some templates also include additional features like [Jest](https://jestjs.io/),
 [Storybook](https://storybook.js.org/), [ESLint](https://eslint.org/), etc.
 
-All templates include only `@mantine/core` and `@mantine/hooks` packages,
-if you need additional `@mantine/*` packages follow installation instructions
+Templates include only `@mantine/core` and `@mantine/hooks` packages,
+if you need additional `@mantine/*` packages, follow installation instructions
 of the package you want to use.
 
-To get started with a template, open it on GitHub and click on the "Use this template"
-button. Note that you need to be logged in to your GitHub account to use this feature.
+To get started with a template, open it on GitHub and click "Use this template"
+button. In order to use this feature you need to be logged in to your GitHub account.
 If you are not familiar with GitHub, you can find a detailed instruction on how to
 bootstrap a project from a template [on this page](/templates-usage).
 
@@ -29,19 +29,29 @@ Templates list:
 
 ## Community templates
 
-Community templates are created and maintained by the community. These templates
-usually include additional features and third-party integrations. You are welcome
+Community templates are created and maintained by the community members. These templates
+include additional features and third-party integrations. You are welcome
 to share your template with the community by following [this guide](/submit-template/).
 
 <TemplatesList community />
 
 ## Framework guide
 
-Follow one of the guides below to get started with Mantine and your preferred framework.
-Note that usually it is better to start a new project with a template. Use guides if you want
-to add Mantine to an existing project or if enjoy doing things manually.
+If you want to add Mantine to an existing project or prefer to set up everything manually,
+follow one of the guides below to get started with Mantine and your preferred framework.
 
-<FrameworksGuides />
+<FrameworksGuides
+  primaryCols={{ lg: 2 }}
+  secondaryCols={{ xl: 3 }}
+  secondaryBreakpoint="xl"
+/>
+
+## Can I use Mantine with create-react-app?
+
+[Create React App](https://create-react-app.dev/) was deprecated in early 2023 ([comment from maintainers](https://github.com/reactjs/react.dev/pull/5487#issuecomment-1409720741)).
+It is not recommended to use it for new projects. It is recommended to use [Vite](https://vitejs.dev/) or [Next.js](https://nextjs.org/) instead.
+Starting from version 7.0, certain Mantine styling features are no longer officially supported in Create React App.
+If you still prefer to use Create React App, follow [this guide](https://help.mantine.dev/q/can-i-use-mantine-with-cra).
 
 ## Get started without framework
 
@@ -56,9 +66,9 @@ Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
 
 > **PostCSS without framework**
 >
-> Note that if you are using a framework that is not officially supported, you may need
-> to set up PostCSS manually. Refer to the framework documentation to learn how to do that.
-> For example, if you are using Webpack, you will need to install and configure [postcss-loader](https://webpack.js.org/loaders/postcss-loader/).
+> If you are using a framework that is not officially supported,
+> you may need to configure PostCSS manually. Please refer to the framework's documentation for specific instructions.
+> For instance, if you are using Webpack, it will be necessary to install and set up [postcss-loader](https://webpack.js.org/loaders/postcss-loader/).
 
 Create `postcss.config.cjs` file at the root of your application with the following content:
 
@@ -138,7 +148,7 @@ function Demo() {
 }
 ```
 
-All set! Now you can use Mantine components in your application.
+All set! You can now use Mantine components in your application.
 
 ## Set up VS Code
 
@@ -177,21 +187,21 @@ The most important documentation pages are:
 
 ## Get help
 
-<SocialCards twitter={false} />
+<SocialCards twitter={false} cols={{ xl: 2 }} />
 
 ## Support Mantine
 
-If you enjoy working with Mantine we would appreciate your contribution to the project.
-There are multiple ways to support the project:
+All contributions to the projects are welcome and appreciated.
+There are many ways to support the project:
 
 - Share your feedback in [GitHub Discussions](https://github.com/mantinedev/mantine/discussions/categories/feedback) –
-  we are always happy to hear your thoughts on how to make Mantine better. Most of the new features and components
-  are based on the feedback we receive from the community.
+  we are always happy to hear your thoughts on how to improve Mantine. Most of the new features and components
+  are based on the feedback received from the community.
 - Help others on [Discord](https://discord.gg/wbH82zuWMN) and/or [GitHub Discussions](https://github.com/mantinedev/mantine/discussions). There are usually 10-20 new questions every day,
   you can help people with their issues and questions. While helping others, you will learn yourself and become
   more proficient with React and Mantine.
-- Give us a code review. You are welcome to explore `@mantine/*` packages [source code](https://github.com/mantinedev/mantine)
-  and provide your feedback on how we can improve it. We are always open to new ideas and suggestions.
+- Give us a code review. You are welcome to explore the [source code](https://github.com/mantinedev/mantine) of `@mantine/*` packages
+  and provide your feedback on how it can be improved. We are always open to new ideas and suggestions.
 - Send us some [kind words](https://github.com/mantinedev/mantine/discussions/categories/kind-words). We usually receive only
   bug reports and feature requests, it is always nice to hear that people enjoy working with Mantine.
 - Star the project on [GitHub](https://github.com/mantinedev/mantine). It is a small thing that helps us grow and get more
@@ -204,9 +214,9 @@ There are multiple ways to support the project:
 
 ## Mantine for Figma
 
-Design files are not used during the development process of the library – there are no official
-Figma or Sketch files. However, there are community-driven projects that provide Figma components
-based on Mantine. Note that these projects are not maintained by Mantine team, and we do not guarantee
+Design is not a part of the development process – there are no official
+Figma or Sketch design files. However, there are community-driven projects that provide Figma components
+based on Mantine. Note that these projects are not maintained by Mantine team, and it is not guaranteed
 that they are up-to-date with the latest Mantine version.
 
 - [Design files by **Ravn**](https://www.figma.com/community/file/1293978471602433537)

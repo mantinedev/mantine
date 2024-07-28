@@ -3,29 +3,56 @@ import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-eff
 
 export type OS = 'undetermined' | 'macos' | 'ios' | 'windows' | 'android' | 'linux';
 
+function isMacOS(userAgent: string): boolean {
+  const macosPattern = /(Macintosh)|(MacIntel)|(MacPPC)|(Mac68K)/i;
+
+  return macosPattern.test(userAgent);
+}
+
+function isIOS(userAgent: string): boolean {
+  const iosPattern = /(iPhone)|(iPad)|(iPod)/i;
+
+  return iosPattern.test(userAgent);
+}
+
+function isWindows(userAgent: string): boolean {
+  const windowsPattern = /(Win32)|(Win64)|(Windows)|(WinCE)/i;
+
+  return windowsPattern.test(userAgent);
+}
+
+function isAndroid(userAgent: string): boolean {
+  const androidPattern = /Android/i;
+
+  return androidPattern.test(userAgent);
+}
+
+function isLinux(userAgent: string): boolean {
+  const linuxPattern = /Linux/i;
+
+  return linuxPattern.test(userAgent);
+}
+
 function getOS(): OS {
   if (typeof window === 'undefined') {
     return 'undetermined';
   }
 
   const { userAgent } = window.navigator;
-  const macosPlatforms = /(Macintosh)|(MacIntel)|(MacPPC)|(Mac68K)/i;
-  const windowsPlatforms = /(Win32)|(Win64)|(Windows)|(WinCE)/i;
-  const iosPlatforms = /(iPhone)|(iPad)|(iPod)/i;
 
-  if (macosPlatforms.test(userAgent)) {
-    return 'macos';
-  }
-  if (iosPlatforms.test(userAgent)) {
+  if (isIOS(userAgent)) {
     return 'ios';
   }
-  if (windowsPlatforms.test(userAgent)) {
+  if (isMacOS(userAgent)) {
+    return 'macos';
+  }
+  if (isWindows(userAgent)) {
     return 'windows';
   }
-  if (/Android/i.test(userAgent)) {
+  if (isAndroid(userAgent)) {
     return 'android';
   }
-  if (/Linux/i.test(userAgent)) {
+  if (isLinux(userAgent)) {
     return 'linux';
   }
 

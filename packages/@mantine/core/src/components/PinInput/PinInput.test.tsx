@@ -14,6 +14,7 @@ describe('@mantine/core/PinInput', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

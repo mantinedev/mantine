@@ -21,6 +21,7 @@ describe('@mantine/dates/TimeInput', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

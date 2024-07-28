@@ -8,6 +8,23 @@ export default Layout(MDX_DATA.Avatar);
 
 <Demo data={AvatarDemos.usage} />
 
+## Initials
+
+To display initials instead of the default placeholder, set `name` prop
+to the name of the person, for example, `name="John Doe"`. If the name
+is set, you can use `color="initials"` to generate color based on the name:
+
+<Demo data={AvatarDemos.initials} />
+
+## Allowed initials colors
+
+By default, all colors from the default theme are allowed for initials, you can restrict them
+by providing `allowedInitialsColors` prop with an array of colors. Note that the default colors
+array does not include custom colors defined in the theme, you need to provide them manually
+if needed.
+
+<Demo data={AvatarDemos.allowedColors} />
+
 ## Placeholder
 
 If the image cannot be loaded or not provided, `Avatar` will display a placeholder instead. By default,

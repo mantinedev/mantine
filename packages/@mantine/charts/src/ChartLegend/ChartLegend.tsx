@@ -13,8 +13,23 @@ import { ChartSeries } from '../types';
 import { getSeriesLabels } from '../utils';
 import classes from './ChartLegend.module.css';
 
+function updateChartLegendPayload(payload: Record<string, any>[]): Record<string, any>[] {
+  return payload.map((item) => {
+    const newDataKey = item.dataKey.split('.').pop();
+    return {
+      ...item,
+      dataKey: newDataKey,
+      payload: {
+        ...item.payload,
+        name: newDataKey,
+        dataKey: newDataKey,
+      },
+    };
+  });
+}
+
 export function getFilteredChartLegendPayload(payload: Record<string, any>[]) {
-  return payload.filter((item) => item.color !== 'none');
+  return updateChartLegendPayload(payload.filter((item) => item.color !== 'none'));
 }
 
 export type ChartLegendStylesNames = 'legendItem' | 'legendItemColor' | 'legendItemName' | 'legend';
@@ -37,6 +52,9 @@ export interface ChartLegendProps
 
   /** Determines whether color swatch should be shown next to the label, `true` by default */
   showColor?: boolean;
+
+  /** Determines whether the legend should be centered, `false` by default */
+  centered?: boolean;
 }
 
 export type ChartLegendFactory = Factory<{
@@ -62,6 +80,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     mod,
     series,
     showColor,
+    centered,
     ...others
   } = props;
 
@@ -102,7 +121,12 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
   ));
 
   return (
-    <Box ref={ref} mod={[{ position: legendPosition }, mod]} {...getStyles('legend')} {...others}>
+    <Box
+      ref={ref}
+      mod={[{ position: legendPosition, centered }, mod]}
+      {...getStyles('legend')}
+      {...others}
+    >
       {items}
     </Box>
   );

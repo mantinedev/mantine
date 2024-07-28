@@ -26,6 +26,7 @@ describe('@mantine/dates/PickerControl', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

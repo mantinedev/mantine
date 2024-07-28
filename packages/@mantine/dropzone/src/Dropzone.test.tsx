@@ -16,6 +16,7 @@ describe('@mantine/dropzone/Dropzone', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

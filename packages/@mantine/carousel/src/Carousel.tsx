@@ -263,8 +263,8 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
     if (!embla) return;
     const slide = embla.selectedScrollSnap();
     setSelected(slide);
-    onSlideChange?.(slide);
-  }, [embla, setSelected]);
+    slide !== selected && onSlideChange?.(slide);
+  }, [embla, setSelected, onSlideChange, selected]);
 
   const handlePrevious = useCallback(() => {
     embla?.scrollPrev();
@@ -306,7 +306,7 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
     }
 
     return undefined;
-  }, [embla, slidesToScroll]);
+  }, [embla, slidesToScroll, handleSelect]);
 
   useEffect(() => {
     if (embla) {

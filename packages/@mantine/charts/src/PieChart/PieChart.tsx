@@ -28,6 +28,7 @@ import { ChartTooltip } from '../ChartTooltip/ChartTooltip';
 import classes from './PieChart.module.css';
 
 export interface PieChartCell {
+  key?: string | number;
   name: string;
   value: number;
   color: MantineColor;
@@ -185,6 +186,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
     labelsPosition,
     valueFormatter,
     labelsType,
+    strokeColor,
     ...others
   } = props;
 

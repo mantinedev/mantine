@@ -83,18 +83,18 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props, ref) => 
         }
       >
         {(transitionStyles) => (
-          <FocusTrap active={ctx.trapFocus}>
+          <FocusTrap active={ctx.trapFocus} innerRef={mergedRef}>
             <Box
               {...accessibleProps}
               {...others}
               variant={variant}
-              ref={mergedRef}
               onKeyDownCapture={closeOnEscape(ctx.onClose, {
                 active: ctx.closeOnEscape,
                 onTrigger: returnFocus,
                 onKeyDown: onKeyDownCapture,
               })}
               data-position={ctx.placement}
+              data-fixed={ctx.floatingStrategy === 'fixed' || undefined}
               {...ctx.getStyles('dropdown', {
                 className,
                 props,

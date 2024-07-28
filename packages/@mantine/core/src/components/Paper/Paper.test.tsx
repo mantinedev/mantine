@@ -12,6 +12,7 @@ describe('@mantine/core/Paper', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

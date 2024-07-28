@@ -100,9 +100,8 @@ function Demo() {
 
 ## Nothing found
 
-Set `nothingFoundMessage` prop to display given message when no options match search query.
-If `nothingFoundMessage` is not set, `Select` dropdown will be hidden when no options match search query.
-The message is not displayed when trimmed search query is empty.
+Set the `nothingFoundMessage` prop to display a given message when no options match the search query
+or there is no data available. If the `nothingFoundMessage` prop is not set, the `Select` dropdown will be hidden.
 
 <Demo data={SelectDemos.nothingFound} />
 
@@ -181,6 +180,13 @@ underlying [Popover](/core/popover) component.
 Example of dropdown that is always displayed above the input:
 
 <Demo data={SelectDemos.dropdownPosition} />
+
+## Dropdown width
+
+To change dropdown width, set `width` prop in `comboboxProps`. By default,
+dropdown width is equal to the input width.
+
+<Demo data={SelectDemos.dropdownWidth} />
 
 ## Dropdown offset
 

@@ -11,6 +11,7 @@ describe('@mantine/core/InputError', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,

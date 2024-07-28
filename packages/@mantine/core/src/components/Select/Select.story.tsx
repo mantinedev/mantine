@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 import { Button } from '../Button';
 import { Select } from './Select';
@@ -10,8 +11,9 @@ export function Usage() {
       <Select
         data={['React', 'Angular', 'Svelte']}
         placeholder="Select something"
-        defaultValue="First"
-        name="usage-select"
+        onChange={console.log}
+        allowDeselect={false}
+        dropdownOpened
       />
     </div>
   );
@@ -198,6 +200,24 @@ export function SearchControlledValue() {
   );
 }
 
+export function ControlledSearchAndValue() {
+  const [value, setValue] = useState<string | null>('Angular');
+  const [searchValue, setSearchValue] = useState('');
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Select
+        searchable
+        searchValue={searchValue}
+        onSearchChange={setSearchValue}
+        data={['React', 'Angular', 'Svelte']}
+        value={value}
+        onChange={setValue}
+      />
+    </div>
+  );
+}
+
 export function AllowDeselectFalse() {
   return (
     <div style={{ padding: 40 }}>
@@ -242,6 +262,18 @@ export function Searchable() {
         placeholder="Select something"
         searchable
         nothingFoundMessage="Nothing found..."
+      />
+    </div>
+  );
+}
+
+export function NoDataProvidedMessage() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Select
+        data={[]}
+        placeholder="Select something"
+        nothingFoundMessage="Try adding some data..."
       />
     </div>
   );

@@ -21,16 +21,25 @@ import {
   factory,
   Factory,
   getThemeColor,
+  MantineColor,
   StylesApiProps,
   useMantineTheme,
   useProps,
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { useId } from '@mantine/hooks';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
 import classes from '../grid-chart.module.css';
+
+export type LineChartType = 'default' | 'gradient';
+
+export interface LineChartGradientStop {
+  offset: number;
+  color: MantineColor;
+}
 
 export type LineChartCurveType =
   | 'bump'
@@ -65,6 +74,12 @@ export interface LineChartProps
 
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: LineChartSeries[];
+
+  /** Controls styles of the line, `'default'` by default */
+  type?: LineChartType;
+
+  /** Data used to generate gradient stops, `[{ offset: 0, color: 'red' }, { offset: 100, color: 'blue' }]` by default */
+  gradientStops?: LineChartGradientStop[];
 
   /** Type of the curve, `'monotone'` by default */
   curveType?: LineChartCurveType;
@@ -119,6 +134,10 @@ const defaultProps: Partial<LineChartProps> = {
   connectNulls: true,
   strokeWidth: 2,
   curveType: 'monotone',
+  gradientStops: [
+    { offset: 0, color: 'red' },
+    { offset: 100, color: 'blue' },
+  ],
 };
 
 const varsResolver = createVarsResolver<LineChartFactory>((theme, { textColor, gridColor }) => ({
@@ -171,6 +190,11 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     lineProps,
     xAxisLabel,
     yAxisLabel,
+    type,
+    gradientStops,
+    withRightYAxis,
+    rightYAxisLabel,
+    rightYAxisProps,
     ...others
   } = props;
 
@@ -202,6 +226,16 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     varsResolver,
   });
 
+  const id = useId();
+  const gradientId = `line-chart-gradient-${id}`;
+  const stops = gradientStops?.map((stop) => (
+    <stop
+      key={stop.color}
+      offset={`${stop.offset}%`}
+      stopColor={getThemeColor(stop.color, theme)}
+    />
+  ));
+
   const lines = series.map((item) => {
     const color = getThemeColor(item.color, theme);
     const dimmed = shouldHighlight && highlightedArea !== item.name;
@@ -214,12 +248,27 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         dataKey={item.name}
         dot={
           withDots
-            ? { fillOpacity: dimmed ? 0 : 1, strokeOpacity: dimmed ? 0 : 1, ...dotProps }
+            ? {
+                fillOpacity: dimmed ? 0 : 1,
+                strokeOpacity: dimmed ? 0 : 1,
+                strokeWidth: 1,
+                fill: type === 'gradient' ? 'var(--mantine-color-gray-7)' : color,
+                stroke: type === 'gradient' ? 'white' : color,
+                ...dotProps,
+              }
             : false
         }
-        activeDot={withDots ? { fill: color, stroke: color, ...activeDotProps } : false}
+        activeDot={
+          withDots
+            ? {
+                fill: type === 'gradient' ? 'var(--mantine-color-gray-7)' : color,
+                stroke: type === 'gradient' ? 'white' : color,
+                ...activeDotProps,
+              }
+            : false
+        }
         fill={color}
-        stroke={color}
+        stroke={type === 'gradient' ? `url(#${gradientId})` : color}
         strokeWidth={strokeWidth}
         isAnimationActive={false}
         fillOpacity={dimmed ? 0 : fillOpacity}
@@ -227,6 +276,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         connectNulls={connectNulls}
         type={curveType}
         strokeDasharray={item.strokeDasharray}
+        yAxisId={item.yAxisId || 'left'}
         {...(typeof lineProps === 'function' ? lineProps(item) : lineProps)}
       />
     );
@@ -239,6 +289,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         key={index}
         stroke={line.color ? color : 'var(--chart-grid-color)'}
         strokeWidth={1}
+        yAxisId={line.yAxisId || 'left'}
         {...line}
         label={{
           value: line.label,
@@ -250,6 +301,18 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
       />
     );
   });
+
+  const sharedYAxisProps = {
+    axisLine: false,
+    ...(orientation === 'vertical'
+      ? { dataKey, type: 'category' as const }
+      : { type: 'number' as const }),
+    tickLine: withYTickLine ? { stroke: 'currentColor' } : false,
+    allowDecimals: true,
+    unit,
+    tickFormatter: valueFormatter,
+    ...getStyles('axis'),
+  };
 
   return (
     <Box
@@ -270,6 +333,14 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
           }}
           {...lineChartProps}
         >
+          {type === 'gradient' && (
+            <defs>
+              <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                {stops}
+              </linearGradient>
+            </defs>
+          )}
+
           {withLegend && (
             <Legend
               verticalAlign="top"
@@ -281,6 +352,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={series}
+                  showColor={type !== 'gradient'}
                 />
               )}
               {...legendProps}
@@ -307,15 +379,11 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
           </XAxis>
 
           <YAxis
-            hide={!withYAxis}
-            axisLine={false}
-            {...(orientation === 'vertical' ? { dataKey, type: 'category' } : { type: 'number' })}
-            tickLine={withYTickLine ? { stroke: 'currentColor' } : false}
+            yAxisId="left"
+            orientation="left"
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
-            allowDecimals
-            unit={unit}
-            tickFormatter={valueFormatter}
-            {...getStyles('axis')}
+            hide={!withYAxis}
+            {...sharedYAxisProps}
             {...yAxisProps}
           >
             {yAxisLabel && (
@@ -328,6 +396,29 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
                 {...getStyles('axisLabel')}
               >
                 {yAxisLabel}
+              </Label>
+            )}
+            {yAxisProps?.children}
+          </YAxis>
+
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            tick={{ transform: 'translate(10, 0)', fontSize: 12, fill: 'currentColor' }}
+            hide={!withRightYAxis}
+            {...sharedYAxisProps}
+            {...rightYAxisProps}
+          >
+            {rightYAxisLabel && (
+              <Label
+                position="insideRight"
+                angle={90}
+                textAnchor="middle"
+                fontSize={12}
+                offset={-5}
+                {...getStyles('axisLabel')}
+              >
+                {rightYAxisLabel}
               </Label>
             )}
             {yAxisProps?.children}
@@ -360,6 +451,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
                   styles={resolvedStyles}
                   series={series}
                   valueFormatter={valueFormatter}
+                  showColor={type !== 'gradient'}
                 />
               )}
               {...tooltipProps}

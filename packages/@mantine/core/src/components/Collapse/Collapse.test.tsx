@@ -13,6 +13,7 @@ describe('@mantine/core/Collapse', () => {
     children: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/Collapse',
   });

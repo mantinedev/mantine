@@ -12,6 +12,7 @@ describe('@mantine/core/Overlay', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

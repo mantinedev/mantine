@@ -132,3 +132,8 @@ export const Demo_renderOption = {
   name: '⭐ Demo: renderOption',
   render: renderDemo(demos.renderOption),
 };
+
+export const Demo_dropdownWidth = {
+  name: '⭐ Demo: dropdownWidth',
+  render: renderDemo(demos.dropdownWidth),
+};

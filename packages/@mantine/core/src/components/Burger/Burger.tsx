@@ -9,6 +9,7 @@ import {
   getThemeColor,
   MantineColor,
   MantineSize,
+  rem,
   StylesApiProps,
   useProps,
   useStyles,
@@ -21,6 +22,7 @@ export type BurgerCssVariables = {
   root:
     | '--burger-color'
     | '--burger-size'
+    | '--burger-line-size'
     | '--burger-transition-duration'
     | '--burger-transition-timing-function';
 };
@@ -31,6 +33,9 @@ export interface BurgerProps
     ElementProps<'button'> {
   /** Controls burger `width` and `height`, numbers are converted to rem, `'md'` by default */
   size?: MantineSize | (string & {}) | number;
+
+  /** Controls height of lines, by default calculated based on `size` prop */
+  lineSize?: string | number;
 
   /** Key of `theme.colors` of any valid CSS value, by default `theme.white` in dark color scheme and `theme.black` in light */
   color?: MantineColor;
@@ -55,10 +60,11 @@ export type BurgerFactory = Factory<{
 const defaultProps: Partial<BurgerProps> = {};
 
 const varsResolver = createVarsResolver<BurgerFactory>(
-  (theme, { color, size, transitionDuration, transitionTimingFunction }) => ({
+  (theme, { color, size, lineSize, transitionDuration, transitionTimingFunction }) => ({
     root: {
       '--burger-color': color ? getThemeColor(color, theme) : undefined,
       '--burger-size': getSize(size, 'burger-size'),
+      '--burger-line-size': lineSize ? rem(lineSize) : undefined,
       '--burger-transition-duration':
         transitionDuration === undefined ? undefined : `${transitionDuration}ms`,
       '--burger-transition-timing-function': transitionTimingFunction,
@@ -79,6 +85,7 @@ export const Burger = factory<BurgerFactory>((_props, ref) => {
     children,
     transitionDuration,
     transitionTimingFunction,
+    lineSize,
     ...others
   } = props;
 

@@ -75,36 +75,42 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
     [onValuesChange]
   );
 
-  const setFieldValue = useCallback((payload: SetFieldValueInput<Values>) => {
-    const currentValue = getPath(payload.path, refValues.current);
-    const updatedValue =
-      payload.value instanceof Function ? payload.value(currentValue) : payload.value;
+  const setFieldValue = useCallback(
+    (payload: SetFieldValueInput<Values>) => {
+      const currentValue = getPath(payload.path, refValues.current);
+      const updatedValue =
+        payload.value instanceof Function ? payload.value(currentValue) : payload.value;
 
-    if (currentValue !== updatedValue) {
-      const previousValues = refValues.current;
-      const updatedValues = setPath(payload.path, updatedValue, refValues.current);
-      setValues({ values: updatedValues, updateState: payload.updateState });
+      if (currentValue !== updatedValue) {
+        const previousValues = refValues.current;
+        const updatedValues = setPath(payload.path, updatedValue, refValues.current);
+        setValues({ values: updatedValues, updateState: payload.updateState });
 
-      payload.subscribers
-        ?.filter(Boolean)
-        .forEach((subscriber) =>
-          subscriber!({ path: payload.path, updatedValues, previousValues })
-        );
-    }
-  }, []);
+        payload.subscribers
+          ?.filter(Boolean)
+          .forEach((subscriber) =>
+            subscriber!({ path: payload.path, updatedValues, previousValues })
+          );
+      }
+    },
+    [setValues]
+  );
 
   const setValuesSnapshot = useCallback((payload: Values) => {
     valuesSnapshot.current = payload;
   }, []);
 
-  const initialize = useCallback((values: Values, onInitialize: () => void) => {
-    if (!initialized.current) {
-      initialized.current = true;
-      setValues({ values, updateState: mode === 'controlled' });
-      setValuesSnapshot(values);
-      onInitialize();
-    }
-  }, []);
+  const initialize = useCallback(
+    (values: Values, onInitialize: () => void) => {
+      if (!initialized.current) {
+        initialized.current = true;
+        setValues({ values, updateState: mode === 'controlled' });
+        setValuesSnapshot(values);
+        onInitialize();
+      }
+    },
+    [setValues]
+  );
 
   const resetValues = useCallback(() => {
     setValues({
@@ -112,7 +118,7 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
       updateState: true,
       mergeWithPreviousValues: false,
     });
-  }, []);
+  }, [setValues]);
 
   const getValues = useCallback(() => refValues.current, []);
 

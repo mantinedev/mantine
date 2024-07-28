@@ -30,6 +30,7 @@ describe('@mantine/core/SwitchGroup', () => {
     styleProps: true,
     children: true,
     extend: true,
+    withProps: true,
     classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/core/SwitchGroup',

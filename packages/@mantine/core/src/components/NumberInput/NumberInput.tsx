@@ -460,7 +460,11 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
         if (trimLeadingZeroesOnBlur && typeof _value === 'string') {
           const replaced = _value.replace(/^0+/, '');
           const parsedValue = parseFloat(replaced);
-          setValue(Number.isNaN(parsedValue) ? replaced : parsedValue);
+          setValue(
+            Number.isNaN(parsedValue) || parsedValue > Number.MAX_SAFE_INTEGER
+              ? replaced
+              : parsedValue
+          );
         }
       }}
       isAllowed={(val) => {

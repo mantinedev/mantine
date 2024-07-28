@@ -12,6 +12,7 @@ describe('@mantine/core/LoadingOverlay', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     variant: true,
     size: true,
     classes: true,

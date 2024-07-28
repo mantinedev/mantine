@@ -19,6 +19,7 @@ describe('@mantine/core/Tooltip', () => {
     mod: true,
     styleProps: true,
     extend: true,
+    withProps: true,
     size: true,
     variant: true,
     classes: true,
@@ -72,5 +73,15 @@ describe('@mantine/core/Tooltip', () => {
   it('exposes TooltipGroup and TooltipFloating as static properties', () => {
     expect(Tooltip.Floating).toBe(TooltipFloating);
     expect(Tooltip.Group).toBe(TooltipGroup);
+  });
+
+  it('shows tooltip by default', () => {
+    render(
+      <Tooltip label="test-tooltip" defaultOpened transitionProps={{ duration: 0 }}>
+        <button type="button">target</button>
+      </Tooltip>
+    );
+
+    expect(screen.getByText('test-tooltip')).toBeInTheDocument();
   });
 });

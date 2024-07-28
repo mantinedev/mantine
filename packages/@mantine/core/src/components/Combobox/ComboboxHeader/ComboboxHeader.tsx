@@ -40,6 +40,9 @@ export const ComboboxHeader = factory<ComboboxHeaderFactory>((props, ref) => {
       ref={ref}
       {...ctx.getStyles('header', { className, classNames, style, styles })}
       {...others}
+      onMouseDown={(event) => {
+        event.preventDefault();
+      }}
     />
   );
 });

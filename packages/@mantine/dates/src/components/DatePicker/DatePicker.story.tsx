@@ -10,7 +10,7 @@ export default { title: 'DatePicker' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <DatePicker />
+      <DatePicker highlightToday />
     </div>
   );
 }

@@ -17,6 +17,7 @@
   background-color: var(--mantine-color-body);
   z-index: 1000;
   min-height: 60px;
+  transition: padding-inline-end 100ms;
 }
 
 .inner {
@@ -31,6 +32,14 @@
 .content {
   pointer-events: all;
   box-shadow: var(--mb-shadow, var(--mantine-shadow-xl));
+
+  & [data-mantine-scrollbar] {
+    z-index: 1001;
+  }
+
+  &:has([data-mantine-scrollbar][data-state='visible']) .header {
+    padding-inline-end: calc(var(--mb-padding, var(--mantine-spacing-md)) + rem(5px));
+  }
 }
 
 .close {

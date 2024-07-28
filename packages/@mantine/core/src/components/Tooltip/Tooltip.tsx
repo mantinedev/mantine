@@ -43,6 +43,9 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Controlled opened state */
   opened?: boolean;
 
+  /** Uncontrolled tooltip initial opened state */
+  defaultOpened?: boolean;
+
   /** Space between target element and tooltip in px, `5` by default */
   offset?: number | FloatingAxesOffsets;
 
@@ -96,6 +99,7 @@ const defaultProps: Partial<TooltipProps> = {
   refProp: 'ref',
   withinPortal: true,
   inline: false,
+  defaultOpened: false,
   arrowSize: 4,
   arrowOffset: 5,
   arrowRadius: 0,
@@ -126,6 +130,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     closeDelay,
     onPositionChange,
     opened,
+    defaultOpened,
     withinPortal,
     radius,
     color,
@@ -167,6 +172,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     openDelay,
     onPositionChange,
     opened,
+    defaultOpened,
     events,
     arrowRef,
     arrowOffset,
@@ -211,6 +217,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
           {(transitionStyles) => (
             <Box
               {...others}
+              data-fixed={floatingStrategy === 'fixed' || undefined}
               variant={variant}
               mod={[{ multiline }, mod]}
               {...tooltip.getFloatingProps({

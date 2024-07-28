@@ -376,6 +376,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
         wrap="nowrap"
         variant={variant}
         __size={size}
+        dir="ltr"
       >
         {_value.map((char: string, index: number) => (
           <Input

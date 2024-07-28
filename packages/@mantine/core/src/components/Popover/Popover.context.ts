@@ -6,7 +6,7 @@ import {
   MantineShadow,
   Styles,
 } from '../../core';
-import { ArrowPosition, FloatingPosition } from '../Floating';
+import { ArrowPosition, FloatingPosition, FloatingStrategy } from '../Floating';
 import { PortalProps } from '../Portal';
 import { TransitionOverride } from '../Transition';
 import type { PopoverFactory } from './Popover';
@@ -52,6 +52,7 @@ interface PopoverContext {
   variant: string | undefined;
   keepMounted: boolean | undefined;
   getStyles: GetStylesApi<PopoverFactory>;
+  floatingStrategy: FloatingStrategy | undefined;
 }
 
 export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContext>(
