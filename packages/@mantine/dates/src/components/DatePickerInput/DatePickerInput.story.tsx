@@ -169,6 +169,41 @@ export function Range() {
   );
 }
 
+export function Presets() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DatePickerInput
+        type="range"
+        label="Date picker input with presets"
+        presetButtonsProps={{
+          size: 'compact-sm',
+        }}
+        numberOfColumns={2}
+        presets={[
+          {
+            label: 'Current month',
+            dates: [dayjs().startOf('month').toDate(), dayjs().endOf('day').toDate()],
+          },
+          {
+            label: 'Last 7 days',
+            dates: [
+              dayjs().startOf('day').subtract(7, 'days').toDate(),
+              dayjs().subtract(1, 'days').endOf('day').toDate(),
+            ],
+          },
+          {
+            label: 'Last month',
+            dates: [
+              dayjs().startOf('month').subtract(1, 'days').startOf('month').toDate(),
+              dayjs().startOf('month').subtract(1, 'days').endOf('month').toDate(),
+            ],
+          },
+        ]}
+      />
+    </div>
+  );
+}
+
 export function Multiple() {
   return (
     <div style={{ padding: 40 }}>

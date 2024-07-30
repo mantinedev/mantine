@@ -1,10 +1,14 @@
 import {
   __InputStylesNames,
   BoxProps,
+  Button,
+  ButtonProps,
   factory,
   Factory,
+  Group,
   InputVariant,
   MantineComponentStaticProperties,
+  Stack,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -26,6 +30,10 @@ export interface DatePickerInputProps<Type extends DatePickerType = 'default'>
     StylesApiProps<DatePickerInputFactory> {
   /** Dayjs format to display input value, "MMMM D, YYYY" by default  */
   valueFormat?: string;
+  /** List of presets  */
+  presets?: { label: string; dates: [Date, Date] }[];
+  /** Props passed down to preset buttons */
+  presetButtonsProps?: ButtonProps;
 }
 
 export type DatePickerInputFactory = Factory<{
@@ -84,6 +92,8 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
 
     const { calendarProps, others } = pickCalendarProps(rest);
 
+    const { presetButtonsProps } = others;
+
     const {
       _value,
       setValue,
@@ -127,27 +137,39 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
         type={type as any}
         __staticSelector="DatePickerInput"
       >
-        <DatePicker
-          {...calendarProps}
-          size={size}
-          variant={variant}
-          type={type}
-          value={_value}
-          defaultDate={
-            _defaultDate || getDefaultClampedDate({ maxDate, minDate, timezone: ctx.getTimezone() })
-          }
-          onChange={setValue}
-          locale={locale}
-          classNames={resolvedClassNames}
-          styles={resolvedStyles}
-          unstyled={unstyled}
-          __staticSelector="DatePickerInput"
-          __stopPropagation={dropdownType === 'popover'}
-          minDate={minDate}
-          maxDate={maxDate}
-          date={shiftTimezone('add', calendarProps.date, ctx.getTimezone())}
-          __timezoneApplied
-        />
+        <Stack>
+          <DatePicker
+            {...calendarProps}
+            size={size}
+            variant={variant}
+            type={type}
+            value={_value}
+            defaultDate={
+              _defaultDate ||
+              getDefaultClampedDate({ maxDate, minDate, timezone: ctx.getTimezone() })
+            }
+            onChange={setValue}
+            locale={locale}
+            classNames={resolvedClassNames}
+            styles={resolvedStyles}
+            unstyled={unstyled}
+            __staticSelector="DatePickerInput"
+            __stopPropagation={dropdownType === 'popover'}
+            minDate={minDate}
+            maxDate={maxDate}
+            date={shiftTimezone('add', calendarProps.date, ctx.getTimezone())}
+            __timezoneApplied
+          />
+          {props.presets && props.presets.length > 0 && (
+            <Group gap="xs" justify="space-between" wrap="wrap">
+              {props.presets.map(({ label, dates }) => (
+                <Button key={label} {...presetButtonsProps} onClick={() => setValue(dates)}>
+                  {label}
+                </Button>
+              ))}
+            </Group>
+          )}
+        </Stack>
       </PickerInputBase>
     );
   }

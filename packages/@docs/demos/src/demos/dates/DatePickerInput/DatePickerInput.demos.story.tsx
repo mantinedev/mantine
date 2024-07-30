@@ -18,6 +18,11 @@ export const Demo_range = {
   render: renderDemo(demos.range),
 };
 
+export const Demo_presets = {
+  name: '⭐ Demo: presets',
+  render: renderDemo(demos.presets),
+};
+
 export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),

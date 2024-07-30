@@ -3,6 +3,7 @@ import { getPickerInputConfiguratorDemo } from './picker-input-configurator.demo
 import { getPickerInputIconDemo } from './picker-input-icon.demo';
 import { getPickerInputModalDemo } from './picker-input-modal.demo';
 import { getPickerInputMultipleDemo } from './picker-input-multiple.demo';
+import { getPickerInputPresetsDemo } from './picker-input-presets.demo';
 import { getPickerInputRangeDemo } from './picker-input-range.demo';
 import { getPickerInputUsageDemo } from './picker-input-usage.demo';
 import { getPickerInputValueFormatterDemo } from './picker-input-value-formatter.demo';
@@ -12,6 +13,7 @@ export function getSharedPickerInputDemos(component: React.FC<any>) {
     usage: getPickerInputUsageDemo(component),
     multiple: getPickerInputMultipleDemo(component),
     range: getPickerInputRangeDemo(component),
+    presets: getPickerInputPresetsDemo(component),
     configurator: getPickerInputConfiguratorDemo(component),
     modal: getPickerInputModalDemo(component),
     icon: getPickerInputIconDemo(component),
