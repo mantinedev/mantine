@@ -21,24 +21,32 @@ export function Usage() {
 
 export function WithLabels() {
   return (
-    <div style={{ padding: 40 }}>
-      <PieChart data={data} withLabels size={200} />
+    <div
+      style={{
+        padding: 40,
+        gap: 40,
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <PieChart data={data} withLabels size={200} labelsPosition="inside" />
-      <PieChart data={data} withLabels size={200} labelsType="percent" />
-      <PieChart
-        style={{ width: '350px' }}
-        data={data}
-        withLabels
-        size={200}
-        valueFormatter={(number) =>
-          new Intl.NumberFormat('en', { currency: 'USD', style: 'currency' }).format(number)
-        }
-      />
       <PieChart
         data={data}
         withLabels
         size={200}
         labelsPosition="inside"
+        valueFormatter={(number) =>
+          new Intl.NumberFormat('en', { currency: 'USD', style: 'currency' }).format(number)
+        }
+      />
+
+      <PieChart style={{ width: '350px' }} data={data} withLabels size={200} />
+      <PieChart style={{ width: '350px' }} data={data} withLabels size={200} labelsType="percent" />
+      <PieChart
+        style={{ width: '350px' }}
+        data={data}
+        withLabels
+        size={200}
         valueFormatter={(number) =>
           new Intl.NumberFormat('en', { currency: 'USD', style: 'currency' }).format(number)
         }
