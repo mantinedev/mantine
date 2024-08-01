@@ -25,6 +25,15 @@ export function WithLabels() {
       <PieChart data={data} withLabels size={200} />
       <PieChart data={data} withLabels size={200} labelsPosition="inside" />
       <PieChart data={data} withLabels size={200} labelsType="percent" />
+      <PieChart
+        style={{ width: '350px' }}
+        data={data}
+        withLabels
+        size={200}
+        valueFormatter={(number) =>
+          new Intl.NumberFormat('en', { currency: 'USD', style: 'currency' }).format(number)
+        }
+      />
     </div>
   );
 }
