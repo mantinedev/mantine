@@ -34,6 +34,15 @@ export function WithLabels() {
           new Intl.NumberFormat('en', { currency: 'USD', style: 'currency' }).format(number)
         }
       />
+      <PieChart
+        data={data}
+        withLabels
+        size={200}
+        labelsPosition="inside"
+        valueFormatter={(number) =>
+          new Intl.NumberFormat('en', { currency: 'USD', style: 'currency' }).format(number)
+        }
+      />
     </div>
   );
 }
