@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useFormActions } from './actions';
 import { getInputOnChange } from './get-input-on-change';
 import { useFormErrors } from './hooks/use-form-errors/use-form-errors';
@@ -44,6 +44,7 @@ export function useForm<
   transformValues = ((values: Values) => values) as any,
   enhanceGetInputProps,
   validate: rules,
+  showWarningOnUnloadWhenDirty = false,
 }: UseFormInput<Values, TransformValues> = {}): UseFormReturnType<Values, TransformValues> {
   const $errors = useFormErrors<Values>(initialErrors);
   const $values = useFormValues<Values>({ initialValues, onValuesChange, mode });
@@ -221,6 +222,24 @@ export function useForm<
     (path) => document.querySelector(`[data-path="${getDataPath(name, path)}"]`),
     []
   );
+
+
+  useEffect(() => {
+    if (showWarningOnUnloadWhenDirty) {
+      const handler = (event: BeforeUnloadEvent) => {
+        if ($status.isDirty()) {
+          event.preventDefault();
+          event.returnValue = true;
+        }
+      };
+
+      window.addEventListener("beforeunload", handler);
+
+      return () => {
+        window.removeEventListener("beforeunload", handler);
+      };
+    }
+  }, [$status, showWarningOnUnloadWhenDirty]);
 
   const form: UseFormReturnType<Values, TransformValues> = {
     watch: $watch.watch,

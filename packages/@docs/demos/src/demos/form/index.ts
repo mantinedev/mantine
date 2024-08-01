@@ -30,3 +30,4 @@ export { uncontrolled } from './Form.demo.uncontrolled';
 export { onValuesChange } from './Form.demo.onValuesChange';
 export { watch } from './Form.demo.watch';
 export { focusError } from './Form.demo.focusError';
+export { showWarningOnUnloadWhenDirty } from './Form.demo.showWarningOnUnloadWhenDirty';

@@ -162,3 +162,8 @@ export const Demo_focusError = {
   name: '⭐ Demo: focusError',
   render: renderDemo(demos.focusError),
 };
+
+export const Demo_showWarningOnUnloadWhenDirty = {
+  name: '⭐ Demo: showWarningOnUnloadWhenDirty',
+  render: renderDemo(demos.showWarningOnUnloadWhenDirty),
+};
