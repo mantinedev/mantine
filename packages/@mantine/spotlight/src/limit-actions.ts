@@ -21,7 +21,7 @@ export function limitActions(actions: SpotlightActions[], limit: number) {
       count += groupActions.length;
     } else {
       acc.push(item);
-      count++;
+      count += 1;
     }
 
     return acc;
