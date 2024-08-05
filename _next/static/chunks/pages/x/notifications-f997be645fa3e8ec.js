@@ -238,20 +238,30 @@ function Demo() {
 
   return <Group>{buttons}</Group>;
 }`,centered:!0,component:function(){let i=a.map(i=>(0,t.jsx)(e.z,{onClick:()=>c.N9.show({title:`Notification at ${i}`,message:`Notification at ${i} message`,position:i}),children:i},i));return(0,t.jsx)(s.Z,{children:i})}}},65037:function(i,n,o){"use strict";o.d(n,{h:function(){return l}});var t=o(52322),e=o(17115),s=o(8582),c=o(45909),a=o(43647),r=o(60048);let l={type:"code",code:`
-import { Button } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
-
 function Demo() {
+  const [counter, { increment }] = useCounter();
+  const notificationsStore = useNotifications();
+
+  const showNotification = () => {
+    notifications.show({
+      title: \`Notification \${counter}\`,
+      message: 'Most notifications are added to queue',
+    });
+
+    increment();
+  };
+
   return (
-    <Button
-      onClick={() =>
-        notifications.show({
-          title: 'Default notification',
-          message: 'Do not forget to star Mantine on GitHub! \u{1F31F}',
-        })
-      }
-    >
-      Show notification
-    </Button>
+    <>
+      <Button onClick={showNotification} mb="md">
+        Show notification
+      </Button>
+
+      <Text>Notifications state</Text>
+      <Code block>{JSON.stringify(notificationsStore.notifications, null, 2)}</Code>
+
+      <Text mt="md">Notifications queue</Text>
+      <Code block>{JSON.stringify(notificationsStore.queue, null, 2)}</Code>
+    </>
   );
 }`,component:function(){let[i,{increment:n}]=(0,a.C)(),o=(0,r.zn)();return(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(e.z,{onClick:()=>{r.N9.show({title:`Notification ${i}`,message:"Most notifications are added to queue"}),n()},mb:"md",children:"Show notification"}),(0,t.jsx)(s.x,{children:"Notifications state"}),(0,t.jsx)(c.E,{block:!0,children:JSON.stringify(o.notifications,null,2)}),(0,t.jsx)(s.x,{mt:"md",children:"Notifications queue"}),(0,t.jsx)(c.E,{block:!0,children:JSON.stringify(o.queue,null,2)})]})}}},43647:function(i,n,o){"use strict";o.d(n,{C:function(){return c}});var t=o(2784),e=o(82692);let s={min:-1/0,max:1/0};function c(i=0,n){let{min:o,max:c}={...s,...n},[a,r]=(0,t.useState)((0,e.u)(i,o,c));return[a,{increment:()=>r(i=>(0,e.u)(i+1,o,c)),decrement:()=>r(i=>(0,e.u)(i-1,o,c)),set:i=>r((0,e.u)(i,o,c)),reset:()=>r((0,e.u)(i,o,c))}]}}},function(i){i.O(0,[61177,66748,11340,92888,49774,40179],function(){return i(i.s=32548)}),_N_E=i.O()}]);
