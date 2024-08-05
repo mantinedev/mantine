@@ -25,6 +25,7 @@ function Demo() {
               width: \`\${value * 100}%\`,
               height: rem(16),
               backgroundColor: 'var(--mantine-color-blue-filled)',
+              opacity: 0.7,
             }}
           />
 
@@ -48,7 +49,7 @@ function Demo() {
     </>
   );
 }
-`,component:function(){let[e,t]=(0,s.useState)(.2),{ref:o}=(0,d.r)(({x:e})=>t(e));return(0,n.jsxs)(n.Fragment,{children:[(0,n.jsx)(a.Z,{justify:"center",children:(0,n.jsxs)("div",{ref:o,style:{width:(0,l.h)(400),height:(0,l.h)(16),backgroundColor:"var(--mantine-color-blue-light)",position:"relative"},children:[(0,n.jsx)("div",{style:{width:`${100*e}%`,height:(0,l.h)(16),backgroundColor:"var(--mantine-color-blue-filled)"}}),(0,n.jsx)("div",{style:{position:"absolute",left:`calc(${100*e}% - ${(0,l.h)(8)})`,top:0,width:(0,l.h)(16),height:(0,l.h)(16),backgroundColor:"var(--mantine-color-blue-7)"}})]})}),(0,n.jsxs)(c.x,{ta:"center",mt:"sm",children:["Value: ",Math.round(100*e)]})]})}},h={type:"code",code:`
+`,component:function(){let[e,t]=(0,s.useState)(.2),{ref:o}=(0,d.r)(({x:e})=>t(e));return(0,n.jsxs)(n.Fragment,{children:[(0,n.jsx)(a.Z,{justify:"center",children:(0,n.jsxs)("div",{ref:o,style:{width:(0,l.h)(400),height:(0,l.h)(16),backgroundColor:"var(--mantine-color-blue-light)",position:"relative"},children:[(0,n.jsx)("div",{style:{width:`${100*e}%`,height:(0,l.h)(16),backgroundColor:"var(--mantine-color-blue-filled)",opacity:.7}}),(0,n.jsx)("div",{style:{position:"absolute",left:`calc(${100*e}% - ${(0,l.h)(8)})`,top:0,width:(0,l.h)(16),height:(0,l.h)(16),backgroundColor:"var(--mantine-color-blue-7)"}})]})}),(0,n.jsxs)(c.x,{ta:"center",mt:"sm",children:["Value: ",Math.round(100*e)]})]})}},h={type:"code",code:`
 import { useState } from 'react';
 import { Group, Text, rem } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
@@ -77,6 +78,7 @@ function Demo() {
               height: \`\${value * 100}%\`,
               width: rem(16),
               backgroundColor: 'var(--mantine-color-blue-filled)',
+              opacity: 0.7,
             }}
           />
 
@@ -99,7 +101,7 @@ function Demo() {
       </Text>
     </>
   );
-}`,component:function(){let[e,t]=(0,s.useState)(.2),{ref:o}=(0,d.r)(({y:e})=>t(1-e));return(0,n.jsxs)(n.Fragment,{children:[(0,n.jsx)(a.Z,{justify:"center",children:(0,n.jsxs)("div",{ref:o,style:{width:(0,l.h)(16),height:(0,l.h)(120),backgroundColor:"var(--mantine-color-blue-light)",position:"relative"},children:[(0,n.jsx)("div",{style:{position:"absolute",bottom:0,height:`${100*e}%`,width:(0,l.h)(16),backgroundColor:"var(--mantine-color-blue-filled)"}}),(0,n.jsx)("div",{style:{position:"absolute",bottom:`calc(${100*e}% - ${(0,l.h)(8)})`,left:0,width:(0,l.h)(16),height:(0,l.h)(16),backgroundColor:"var(--mantine-color-blue-7)"}})]})}),(0,n.jsxs)(c.x,{ta:"center",mt:"sm",children:["Value: ",Math.round(100*e)]})]})}},m={type:"code",code:`
+}`,component:function(){let[e,t]=(0,s.useState)(.2),{ref:o}=(0,d.r)(({y:e})=>t(1-e));return(0,n.jsxs)(n.Fragment,{children:[(0,n.jsx)(a.Z,{justify:"center",children:(0,n.jsxs)("div",{ref:o,style:{width:(0,l.h)(16),height:(0,l.h)(120),backgroundColor:"var(--mantine-color-blue-light)",position:"relative"},children:[(0,n.jsx)("div",{style:{position:"absolute",bottom:0,height:`${100*e}%`,width:(0,l.h)(16),backgroundColor:"var(--mantine-color-blue-filled)",opacity:.7}}),(0,n.jsx)("div",{style:{position:"absolute",bottom:`calc(${100*e}% - ${(0,l.h)(8)})`,left:0,width:(0,l.h)(16),height:(0,l.h)(16),backgroundColor:"var(--mantine-color-blue-7)"}})]})}),(0,n.jsxs)(c.x,{ta:"center",mt:"sm",children:["Value: ",Math.round(100*e)]})]})}},m={type:"code",code:`
 import { useState } from 'react';
 import { rem } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
