@@ -140,13 +140,13 @@ const getLabelValue = (
   percent: number,
   valueFormatter?: PieChartProps['valueFormatter']
 ) => {
-  if (typeof valueFormatter === 'function' && labelsType === 'percent') {
-    console.warn('[@mantine/charts] `valueFormatter` & `labelsType={percent}` are incompatible');
+  if (labelsType === 'percent') {
+    return `${(percent * 100).toFixed(0)}%`;
   }
 
-  if (labelsType === 'percent') return `${(percent * 100).toFixed(0)}%`;
-
-  if (typeof valueFormatter === 'function') return valueFormatter(value);
+  if (typeof valueFormatter === 'function') {
+    return valueFormatter(value);
+  }
 
   return value;
 };
