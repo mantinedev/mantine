@@ -33,7 +33,8 @@
   line-height: var(--badge-lh);
   text-decoration: none;
   padding: 0 var(--badge-padding-x);
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   justify-content: center;
   width: fit-content;
@@ -54,6 +55,7 @@
 
   &:where([data-circle]) {
     padding-inline: 2px;
+    display: flex;
     width: var(--badge-height);
   }
 }
