@@ -266,6 +266,8 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
+    if (event.isPropagationStopped()) return;
+
     const inputValue = _searchValue.trim();
     const { length } = inputValue;
 
