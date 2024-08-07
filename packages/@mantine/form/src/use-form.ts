@@ -61,23 +61,33 @@ export function useForm<
     mode === 'uncontrolled' && setFormKey((key) => key + 1);
   }, []);
 
-  const initialize: Initialize<Values> = useCallback((values) => {
-    const previousValues = $values.refValues.current;
-    $values.initialize(values, () => mode === 'uncontrolled' && setFormKey((key) => key + 1));
-    clearInputErrorOnChange && $errors.clearErrors();
-    mode === 'uncontrolled' && setFormKey((key) => key + 1);
+  const handleValuesChanges = useCallback(
+    (previousValues: Values) => {
+      clearInputErrorOnChange && $errors.clearErrors();
+      mode === 'uncontrolled' && setFormKey((key) => key + 1);
 
-    Object.keys($watch.subscribers.current).forEach((path) => {
-      const value = getPath(path, $values.refValues.current);
-      const previousValue = getPath(path, previousValues);
+      Object.keys($watch.subscribers.current).forEach((path) => {
+        const value = getPath(path, $values.refValues.current);
+        const previousValue = getPath(path, previousValues);
 
-      if (value !== previousValue) {
-        $watch
-          .getFieldSubscribers(path)
-          .forEach((cb) => cb({ previousValues, updatedValues: $values.refValues.current }));
-      }
-    });
-  }, [clearInputErrorOnChange]);
+        if (value !== previousValue) {
+          $watch
+            .getFieldSubscribers(path)
+            .forEach((cb) => cb({ previousValues, updatedValues: $values.refValues.current }));
+        }
+      });
+    },
+    [clearInputErrorOnChange]
+  );
+
+  const initialize: Initialize<Values> = useCallback(
+    (values) => {
+      const previousValues = $values.refValues.current;
+      $values.initialize(values, () => mode === 'uncontrolled' && setFormKey((key) => key + 1));
+      handleValuesChanges(previousValues);
+    },
+    [handleValuesChanges]
+  );
 
   const setFieldValue: SetFieldValue<Values> = useCallback(
     (path, value, options) => {
@@ -120,21 +130,9 @@ export function useForm<
     (values) => {
       const previousValues = $values.refValues.current;
       $values.setValues({ values, updateState: mode === 'controlled' });
-      clearInputErrorOnChange && $errors.clearErrors();
-      mode === 'uncontrolled' && setFormKey((key) => key + 1);
-
-      Object.keys($watch.subscribers.current).forEach((path) => {
-        const value = getPath(path, $values.refValues.current);
-        const previousValue = getPath(path, previousValues);
-
-        if (value !== previousValue) {
-          $watch
-            .getFieldSubscribers(path)
-            .forEach((cb) => cb({ previousValues, updatedValues: $values.refValues.current }));
-        }
-      });
+      handleValuesChanges(previousValues);
     },
-    [onValuesChange, clearInputErrorOnChange]
+    [onValuesChange, handleValuesChanges]
   );
 
   const validate: Validate = useCallback(() => {
