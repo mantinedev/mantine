@@ -71,6 +71,18 @@ export function identity<T>(value: T): T {
   return value;
 }
 
+export function getWithProps<T, Props>(Component: T): (props: Partial<Props>) => T {
+  const _Component = Component as any;
+  return (fixedProps: any) => {
+    const Extended = forwardRef((props, ref) => (
+      <_Component {...fixedProps} {...props} ref={ref as any} />
+    )) as any;
+    Extended.extend = _Component.extend;
+    Extended.displayName = `WithProps(${_Component.displayName})`;
+    return Extended;
+  };
+}
+
 export function factory<Payload extends FactoryPayload>(
   ui: React.ForwardRefRenderFunction<Payload['ref'], Payload['props']>
 ) {
