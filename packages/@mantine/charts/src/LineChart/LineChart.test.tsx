@@ -41,30 +41,6 @@ const nestedData = [
       OrangesProp: 2103,
     },
   },
-  {
-    date: 'Mar 24',
-    TomatoesProp: 1821,
-    salad: {
-      ApplesProp: 3322,
-      OrangesProp: 986,
-    },
-  },
-  {
-    date: 'Mar 25',
-    TomatoesProp: 2809,
-    salad: {
-      ApplesProp: 3470,
-      OrangesProp: 2108,
-    },
-  },
-  {
-    date: 'Mar 26',
-    TomatoesProp: 2290,
-    salad: {
-      ApplesProp: 3129,
-      OrangesProp: 1726,
-    },
-  },
 ];
 
 const data = [
@@ -79,24 +55,6 @@ const data = [
     Apples: 2756,
     Oranges: 2103,
     Tomatoes: 2402,
-  },
-  {
-    date: 'Mar 24',
-    Apples: 3322,
-    Oranges: 986,
-    Tomatoes: 1821,
-  },
-  {
-    date: 'Mar 25',
-    Apples: 3470,
-    Oranges: 2108,
-    Tomatoes: 2809,
-  },
-  {
-    date: 'Mar 26',
-    Apples: 3129,
-    Oranges: 1726,
-    Tomatoes: 2290,
   },
 ];
 

@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {
   Box,
   BoxProps,
@@ -21,7 +20,7 @@ function updateChartTooltipPayload(payload: Record<string, any>[]): Record<strin
     const matchFound = item.name.search(/\./);
     if (matchFound >= 0) {
       const newDataKey = item.name.substring(0, matchFound);
-      const nestedPayload = _.clone(item.payload[newDataKey]);
+      const nestedPayload = { ...item.payload[newDataKey] };
       const shallowPayload = Object.entries(item.payload).reduce((acc, current) => {
         const [k, v] = current;
         return k === newDataKey ? acc : { ...acc, [k]: v };
