@@ -1,5 +1,5 @@
 import { FloatingDelayGroup } from '@floating-ui/react';
-import { useProps } from '../../../core';
+import { ExtendComponent, Factory, MantineThemeComponent, useProps } from '../../../core';
 import { TooltipGroupProvider } from './TooltipGroup.context';
 
 export interface TooltipGroupProps {
@@ -30,4 +30,9 @@ export function TooltipGroup(props: TooltipGroupProps) {
   );
 }
 
+export type TooltipGroupFactory = Factory<{
+  props: TooltipGroupProps;
+}>;
+
 TooltipGroup.displayName = '@mantine/core/TooltipGroup';
+TooltipGroup.extend = (c: ExtendComponent<TooltipGroupFactory>): MantineThemeComponent => c;
