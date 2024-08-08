@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, renderHook, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { FormFieldSubscriber } from '../../types';
 import { useForm } from '../../use-form';
@@ -40,12 +40,45 @@ describe('@mantine/form/watch', () => {
     });
   });
 
-  it('does now call subscriber function when other field changes', async () => {
+  it('does not call subscriber function when other field changes', async () => {
     const spy = jest.fn();
     render(<TestComponent watch={spy} />);
     expect(spy).not.toHaveBeenCalled();
 
     await userEvent.type(screen.getByLabelText('area'), '1');
+
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('calls subscriber function when field changes due to form initialize', async () => {
+    const hook = renderHook(() =>
+      useForm({ mode: 'uncontrolled', initialValues: { a: '', b: '' } })
+    );
+    const spy = jest.fn();
+
+    act(() => renderHook(() => hook.result.current.watch('a', spy)));
+    expect(spy).not.toHaveBeenCalled();
+
+    act(() => hook.result.current.initialize({ a: 'c', b: '' }));
+
+    expect(spy).toHaveBeenCalledWith({
+      previousValue: '',
+      value: 'c',
+      touched: false,
+      dirty: false,
+    });
+  });
+
+  it('does not call subscriber function when other field changes due to form initialize', async () => {
+    const hook = renderHook(() =>
+      useForm({ mode: 'uncontrolled', initialValues: { a: '', b: '' } })
+    );
+    const spy = jest.fn();
+
+    act(() => renderHook(() => hook.result.current.watch('a', spy)));
+    expect(spy).not.toHaveBeenCalled();
+
+    act(() => hook.result.current.initialize({ a: '', b: 'd' }));
 
     expect(spy).not.toHaveBeenCalled();
   });
