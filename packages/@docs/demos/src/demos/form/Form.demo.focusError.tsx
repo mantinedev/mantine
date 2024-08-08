@@ -11,6 +11,7 @@ import { isEmail, isNotEmpty, useForm } from '@mantine/form';
 function Demo() {
   const form = useForm({
     mode: 'uncontrolled',
+    name: 'register-form',
     initialValues: {
       name: '',
       email: '',
@@ -60,6 +61,7 @@ function Demo() {
 function Demo() {
   const form = useForm({
     mode: 'uncontrolled',
+    name: 'register-form',
     initialValues: {
       name: '',
       email: '',
