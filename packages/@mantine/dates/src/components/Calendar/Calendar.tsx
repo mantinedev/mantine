@@ -261,8 +261,10 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
   const ctx = useDatesContext();
 
   const _columnsToScroll = columnsToScroll || numberOfColumns || 1;
-  const currentDate =
-    _date || shiftTimezone('add', new Date(minDate || Date.now()), ctx.getTimezone());
+
+  const now = new Date();
+  const fallbackDate = minDate && minDate > now ? minDate : now;
+  const currentDate = _date || shiftTimezone('add', fallbackDate, ctx.getTimezone());
 
   const handleNextMonth = () => {
     const nextDate = dayjs(currentDate).add(_columnsToScroll, 'month').toDate();
