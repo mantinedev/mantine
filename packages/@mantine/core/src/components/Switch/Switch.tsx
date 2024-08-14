@@ -215,7 +215,7 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
 
       <Box
         aria-hidden="true"
-        mod={{ error, 'label-position': labelPosition }}
+        mod={{ error, 'label-position': labelPosition, 'without-labels': !onLabel && !offLabel }}
         {...getStyles('track')}
       >
         <Box component="span" mod="reduce-motion" {...getStyles('thumb')}>

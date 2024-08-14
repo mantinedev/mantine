@@ -108,9 +108,9 @@ export function useFloatingIndicator({
         }
       };
 
-      document.addEventListener('transitionend', handleTransitionEnd);
+      parent.addEventListener('transitionend', handleTransitionEnd);
       return () => {
-        document.removeEventListener('transitionend', handleTransitionEnd);
+        parent.removeEventListener('transitionend', handleTransitionEnd);
       };
     }
 

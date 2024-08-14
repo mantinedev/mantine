@@ -10,6 +10,23 @@ export default Layout(MDX_DATA.TimeInput);
 
 <Demo data={TimeInputDemos.configurator} />
 
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { TimeInput } from '@mantine/dates';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  return (
+    <TimeInput
+      value={value}
+      onChange={(event) => setValue(event.currentTarget.value)}
+    />
+  );
+}
+```
+
 ## Show browser picker
 
 You can show browser picker by calling `showPicker` method of input element.

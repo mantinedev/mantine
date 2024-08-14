@@ -2,30 +2,28 @@ import { isActionsGroup } from './is-actions-group';
 import type { SpotlightActionData, SpotlightActions } from './Spotlight';
 
 export function limitActions(actions: SpotlightActions[], limit: number) {
-  const result: SpotlightActions[] = [];
-
   if (!Array.isArray(actions)) {
     return [];
   }
 
-  for (let i = 0; i < actions.length; i += 1) {
-    const item = actions[i];
-
-    if (result.length >= limit) {
-      return result;
+  let count = 0;
+  return actions.reduce<SpotlightActions[]>((acc, item) => {
+    if (count >= limit) {
+      return acc;
     }
 
     if (isActionsGroup(item)) {
-      result.push({
+      const groupActions = limitActions(item.actions, limit - count);
+      acc.push({
         group: item.group,
-        actions: limitActions(item.actions, limit - result.length) as SpotlightActionData[],
+        actions: groupActions as SpotlightActionData[],
       });
+      count += groupActions.length;
+    } else {
+      acc.push(item);
+      count += 1;
     }
 
-    if (!isActionsGroup(item)) {
-      result.push(item);
-    }
-  }
-
-  return result;
+    return acc;
+  }, []);
 }

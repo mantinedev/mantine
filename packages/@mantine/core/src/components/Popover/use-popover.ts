@@ -88,15 +88,20 @@ function getPopoverMiddlewares(
     middlewares.push(
       size({
         ...(typeof middlewaresOptions.size === 'boolean' ? {} : middlewaresOptions.size),
-        apply({ rects, availableWidth, availableHeight }) {
+        apply({ rects, availableWidth, availableHeight, ...rest }) {
           const floating = getFloating();
           const styles = floating.refs.floating.current?.style ?? {};
 
           if (middlewaresOptions.size) {
-            Object.assign(styles, {
-              maxWidth: `${availableWidth}px`,
-              maxHeight: `${availableHeight}px`,
-            });
+            //if custom apply function is given use that else set defaults
+            if (typeof middlewaresOptions.size === 'object' && !!middlewaresOptions.size.apply) {
+              middlewaresOptions.size.apply({ rects, availableWidth, availableHeight, ...rest });
+            } else {
+              Object.assign(styles, {
+                maxWidth: `${availableWidth}px`,
+                maxHeight: `${availableHeight}px`,
+              });
+            }
           }
 
           if (options.width === 'target') {

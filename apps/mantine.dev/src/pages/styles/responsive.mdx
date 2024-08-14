@@ -132,7 +132,7 @@ function CustomComponent() {
 Some components support `size` prop, which changes various aspects of component appearance.
 `size` prop is not responsive – it is not possible to define different component sizes for different
 screen sizes. Instead, you can render multiple components with different sizes and show/hide them
-based on media query:
+based on media query with `className` or `hiddenFrom`/`visibleFrom` props:
 
 <Demo data={StylesDemos.sizesMedia} />
 

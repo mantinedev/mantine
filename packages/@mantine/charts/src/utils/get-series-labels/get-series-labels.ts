@@ -8,6 +8,12 @@ export function getSeriesLabels(series: ChartSeries[] | undefined): ChartSeriesL
   }
 
   return series.reduce<ChartSeriesLabels>((acc, item) => {
+    const matchFound = item.name.search(/\./);
+    if (matchFound >= 0) {
+      const key = item.name.substring(matchFound + 1);
+      acc[key] = item.label;
+      return acc;
+    }
     acc[item.name] = item.label;
     return acc;
   }, {});

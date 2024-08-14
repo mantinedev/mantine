@@ -48,12 +48,12 @@ describe('@mantine/hooks/use-color-scheme', () => {
     expect(trace).toHaveBeenCalledTimes(1);
     expect(trace.mock.calls[0][0]).toBe('dark');
   });
-  it('correctly returns initial light state with deafult props', async () => {
+  it('correctly returns initial light state with default props', async () => {
     render(<WrapperComponent />);
     expect(trace).toHaveBeenCalledTimes(1);
     expect(trace.mock.calls[0][0]).toBe('light');
   });
-  it('correctly returns initial dark state with deafult props', async () => {
+  it('correctly returns initial dark state with default props', async () => {
     window.matchMedia = mockmatchMedia;
     render(<WrapperComponent />);
     expect(trace).toHaveBeenCalledTimes(2);

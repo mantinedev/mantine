@@ -13,7 +13,8 @@
 
   &::-webkit-datetime-edit-hour-field,
   &::-webkit-datetime-edit-minute-field,
-  &::-webkit-datetime-edit-second-field {
+  &::-webkit-datetime-edit-second-field,
+  &::-webkit-datetime-edit-ampm-field {
     padding-top: 0;
     max-height: 30px;
     display: inline;
