@@ -257,6 +257,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
       ]}
       {...others}
       role="radiogroup"
+      data-disabled={disabled}
     >
       {typeof _value === 'string' && (
         <FloatingIndicator

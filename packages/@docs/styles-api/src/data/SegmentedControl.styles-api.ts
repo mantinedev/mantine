@@ -32,6 +32,7 @@ export const SegmentedControlStylesApi: StylesApiData<SegmentedControlFactory> =
       selector: 'root',
       condition: '`withItemsBorder` prop is not `false`',
     },
+    { modifier: 'data-disabled', selector: 'root', condition: 'Value of `disabled` prop' },
     { modifier: 'data-orientation', selector: 'control', value: 'Value of `orientation` prop' },
     {
       modifier: 'data-active',

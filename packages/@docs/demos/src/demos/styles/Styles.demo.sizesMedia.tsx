@@ -1,62 +1,24 @@
 import { TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import classes from './Styles.demo.sizesMedia.module.css';
 
 const code = `
 import { TextInput } from '@mantine/core';
-import classes from './Demo.module.css';
 
 function Demo() {
   return (
     <>
-      <TextInput
-        label="My input"
-        placeholder="My input"
-        size="xs"
-        className={classes['input-mobile']}
-      />
-      <TextInput
-        label="My input"
-        placeholder="My input"
-        size="xl"
-        className={classes['input-desktop']}
-      />
+      <TextInput size="xs" hiddenFrom="sm" label="My input" placeholder="My input" />
+      <TextInput size="xl" visibleFrom="sm" label="My input" placeholder="My input" />
     </>
   );
 }
 `;
 
-const cssCode = `
-.input-mobile {
-  @media (min-width: em(750px)) {
-    display: none;
-  }
-}
-
-.input-desktop {
-  display: none;
-
-  @media (min-width: em(750px)) {
-    display: block;
-  }
-}
-`;
-
 function Demo() {
   return (
     <>
-      <TextInput
-        label="My input"
-        placeholder="My input"
-        size="xs"
-        className={classes['input-mobile']}
-      />
-      <TextInput
-        label="My input"
-        placeholder="My input"
-        size="xl"
-        className={classes['input-desktop']}
-      />
+      <TextInput size="xs" hiddenFrom="sm" label="My input" placeholder="My input" />
+      <TextInput size="xl" visibleFrom="sm" label="My input" placeholder="My input" />
     </>
   );
 }
@@ -64,8 +26,5 @@ function Demo() {
 export const sizesMedia: MantineDemo = {
   type: 'code',
   component: Demo,
-  code: [
-    { fileName: 'Demo.tsx', code, language: 'tsx' },
-    { fileName: 'Demo.module.css', code: cssCode, language: 'scss' },
-  ],
+  code: { fileName: 'Demo.tsx', code, language: 'tsx' },
 };

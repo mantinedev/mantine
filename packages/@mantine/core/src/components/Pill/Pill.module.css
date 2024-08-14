@@ -84,6 +84,8 @@
   padding-inline-start: 0.1em;
   padding-inline-end: 0.3em;
   flex: 0;
+  border-end-end-radius: var(--pill-radius, 50%);
+  border-start-end-radius: var(--pill-radius, 50%);
 
   .root[data-disabled] > &,
   &:disabled {

@@ -4,6 +4,10 @@
 
   &:has([data-mantine-scrollbar]) {
     padding-inline-end: 0;
+
+    .search {
+      max-width: calc(100% + var(--combobox-padding));
+    }
   }
 
   &[data-hidden] {

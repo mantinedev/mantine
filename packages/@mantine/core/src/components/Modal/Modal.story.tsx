@@ -1,5 +1,6 @@
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
+import { Menu } from '../Menu';
 import { ScrollArea } from '../ScrollArea';
 import { Select } from '../Select';
 import { Tabs } from '../Tabs';
@@ -43,6 +44,27 @@ export function WithSelect() {
       <Button onClick={open}>Open modal</Button>
       <Modal opened={opened} onClose={close} title="Just a Modal">
         <Select data={['React', 'Angular']} searchable />
+      </Modal>
+    </div>
+  );
+}
+
+export function WithMenu() {
+  const [opened, { open, close }] = useDisclosure(true);
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={open}>Open modal</Button>
+      <Modal opened={opened} onClose={close} title="Just a Modal">
+        <Menu>
+          <Menu.Target>
+            <Button>Toggle menu</Button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item>One</Menu.Item>
+            <Menu.Item>Two</Menu.Item>
+            <Menu.Item>Three</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
       </Modal>
     </div>
   );

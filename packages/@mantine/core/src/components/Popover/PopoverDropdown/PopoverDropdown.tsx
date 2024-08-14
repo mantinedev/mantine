@@ -83,7 +83,7 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props, ref) => 
         }
       >
         {(transitionStyles) => (
-          <FocusTrap active={ctx.trapFocus} innerRef={mergedRef}>
+          <FocusTrap active={ctx.trapFocus && ctx.opened} innerRef={mergedRef}>
             <Box
               {...accessibleProps}
               {...others}
