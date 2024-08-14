@@ -12,7 +12,7 @@ interface HeaderControlsProps extends BoxProps {
   withSearch?: boolean;
   withGithub?: boolean;
   withDiscord?: boolean;
-  discordLink: string;
+  discordLink?: string;
   withColorScheme?: boolean;
 }
 
