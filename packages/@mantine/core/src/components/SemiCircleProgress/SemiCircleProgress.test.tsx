@@ -1,4 +1,4 @@
-import { render, screen, tests } from '@mantine-tests/core';
+import { patchConsoleError, render, screen, tests } from '@mantine-tests/core';
 import {
   SemiCircleProgress,
   SemiCircleProgressProps,
@@ -6,10 +6,20 @@ import {
 } from './SemiCircleProgress';
 
 const defaultProps: SemiCircleProgressProps = {
+  size: 200,
+  thickness: 12,
   value: 40,
 };
 
 describe('@mantine/core/SemiCircleProgress', () => {
+  beforeAll(() => {
+    patchConsoleError();
+  });
+
+  afterAll(() => {
+    patchConsoleError.release();
+  });
+
   tests.itSupportsSystemProps<SemiCircleProgressProps, SemiCircleProgressStylesNames>({
     component: SemiCircleProgress,
     props: defaultProps,
