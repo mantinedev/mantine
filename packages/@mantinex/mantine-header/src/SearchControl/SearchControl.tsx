@@ -5,8 +5,8 @@ import classes from './SearchControl.module.css';
 import type { ReactNode } from 'react'
 
 interface SearchControlProps extends BoxProps, ElementProps<'button'> {
-  placeholder?: ReactNode
-  shortcuts?: ReactNode
+  placeholder: ReactNode
+  shortcuts: ReactNode
 }
 
 export function SearchControl({ className, placeholder, shortcuts,  ...others }: SearchControlProps) {
