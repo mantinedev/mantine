@@ -24,7 +24,8 @@
   --badge-lh: calc(var(--badge-height) - rem(2px));
   --badge-color: var(--mantine-color-white);
   --badge-bg: var(--mantine-primary-color-filled);
-  --badge-bd: 1px solid transparent;
+  --badge-border-width: 1px;
+  --badge-bd: var(--badge-border-width) solid transparent;
 
   -webkit-tap-highlight-color: transparent;
   font-size: var(--badge-fz);
@@ -98,6 +99,7 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  max-height: calc(var(--badge-height) - var(--badge-border-width) * 2);
 
   &:where([data-position='left']) {
     margin-inline-end: var(--badge-section-margin);
