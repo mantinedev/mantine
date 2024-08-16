@@ -34,8 +34,7 @@
   line-height: var(--badge-lh);
   text-decoration: none;
   padding: 0 var(--badge-padding-x);
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: fit-content;
@@ -56,7 +55,6 @@
 
   &:where([data-circle]) {
     padding-inline: 2px;
-    display: flex;
     width: var(--badge-height);
   }
 }
@@ -79,7 +77,7 @@
   &::before {
     content: '';
     display: block;
-    width: var(--badge-dot-size);
+    min-width: var(--badge-dot-size);
     height: var(--badge-dot-size);
     border-radius: var(--badge-dot-size);
     background-color: var(--badge-dot-color);
