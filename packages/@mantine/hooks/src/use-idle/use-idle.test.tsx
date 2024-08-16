@@ -11,6 +11,20 @@ describe('@mantine/hooks/use-idle', () => {
     expect(hook.result.current).toBe(true);
   });
 
+  it('Starts the timer immediately instead of waiting for the first event to happen', () => {
+    const spy = jest.spyOn(window, 'setTimeout');
+    expect(spy).not.toHaveBeenCalled();
+
+    const hook = renderHook(() => useIdle(1000, { initialState: false, events: ['click', 'keypress'] }));
+
+    expect(hook.result.current).toBe(false);
+    expect(spy).toHaveBeenCalledTimes(1);
+    setTimeout(() => {
+      expect(hook.result.current).toBe(true);
+      expect(spy).toHaveBeenCalledTimes(2);
+    }, 1001);
+  });
+
   it('Returns correct value on firing keypress event', () => {
     const hook = renderHook(() => useIdle(1000));
 
