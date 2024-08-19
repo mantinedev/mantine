@@ -27,7 +27,9 @@ function getInitialExpandedState(
   return acc;
 }
 
-function getInitialCheckedState(initialState: string[], data: TreeNodeData[], acc: string[] = []) {
+function getInitialCheckedState(initialState: string[], data: TreeNodeData[]) {
+  const acc: string[] = [];
+
   initialState.forEach((node) => acc.push(...getChildrenNodesValues(node, data)));
 
   return acc;
