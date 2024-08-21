@@ -37,12 +37,13 @@ const defaultProps: Partial<TabsPanelProps> = {};
 
 export const TabsPanel = factory<TabsPanelFactory>((_props, ref) => {
   const props = useProps('TabsPanel', defaultProps, _props);
-  const { children, className, value, classNames, styles, style, mod, ...others } = props;
+  const { children, className, value, classNames, styles, style, mod, keepMounted, ...others } =
+    props;
 
   const ctx = useTabsContext();
 
   const active = ctx.value === value;
-  const content = ctx.keepMounted || props.keepMounted ? children : active ? children : null;
+  const content = ctx.keepMounted || keepMounted ? children : active ? children : null;
 
   return (
     <Box
