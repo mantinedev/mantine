@@ -170,6 +170,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
     const isBothSelected = _value[0] != null && _value[1] != null;
     if (isNeitherSelected || isBothSelected) {
       setPickedDate(null);
+      setHoveredDate(null);
     }
   }, [_value]);
 
