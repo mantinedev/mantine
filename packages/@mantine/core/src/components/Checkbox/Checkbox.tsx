@@ -37,7 +37,7 @@ export type CheckboxCssVariables = {
 export interface CheckboxProps
   extends BoxProps,
     StylesApiProps<CheckboxFactory>,
-    ElementProps<'input', 'size'> {
+    ElementProps<'input', 'size' | 'children'> {
   /** Id used to connect input with the label. If not set, unique id is generated instead. */
   id?: string;
 
@@ -137,7 +137,6 @@ export const Checkbox = factory<CheckboxFactory>((_props, ref) => {
     size,
     radius,
     wrapperProps,
-    children,
     checked,
     labelPosition,
     description,
