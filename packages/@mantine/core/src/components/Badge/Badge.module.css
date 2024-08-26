@@ -34,8 +34,7 @@
   line-height: var(--badge-lh);
   text-decoration: none;
   padding: 0 var(--badge-padding-x);
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: inline-grid;
   align-items: center;
   justify-content: center;
   width: fit-content;
@@ -48,6 +47,18 @@
   color: var(--badge-color);
   background: var(--badge-bg);
   border: var(--badge-bd);
+
+  &:where([data-with-right-section]) {
+    grid-template-columns: 1fr auto;
+  }
+
+  &:where([data-with-left-section], [data-variant='dot']) {
+    grid-template-columns: auto 1fr;
+  }
+
+  &:where([data-with-left-section][data-with-right-section]) {
+    grid-template-columns: auto 1fr auto;
+  }
 
   &:where([data-block]) {
     display: flex;
@@ -91,6 +102,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: center;
 }
 
 .section {

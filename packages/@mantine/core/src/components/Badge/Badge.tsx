@@ -147,7 +147,15 @@ export const Badge = polymorphicFactory<BadgeFactory>((_props, ref) => {
   return (
     <Box
       variant={variant}
-      mod={[{ block: fullWidth, circle }, mod]}
+      mod={[
+        {
+          block: fullWidth,
+          circle,
+          'with-right-section': !!rightSection,
+          'with-left-section': !!leftSection,
+        },
+        mod,
+      ]}
       {...getStyles('root', { variant })}
       ref={ref}
       {...others}
