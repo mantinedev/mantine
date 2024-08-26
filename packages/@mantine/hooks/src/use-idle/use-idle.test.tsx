@@ -15,7 +15,9 @@ describe('@mantine/hooks/use-idle', () => {
     const spy = jest.spyOn(window, 'setTimeout');
     expect(spy).not.toHaveBeenCalled();
 
-    const hook = renderHook(() => useIdle(1000, { initialState: false, events: ['click', 'keypress'] }));
+    const hook = renderHook(() =>
+      useIdle(1000, { initialState: false, events: ['click', 'keypress'] })
+    );
 
     expect(hook.result.current).toBe(false);
     expect(spy).toHaveBeenCalledTimes(1);
