@@ -79,7 +79,7 @@ Form name must be a string that contains only letters, numbers and dashes:
 import { useForm } from '@mantine/form';
 
 // ✅ Valid form name
-const valid = useForm({ name: 'valid-FORM-name-10' mode: 'uncontrolled' });
+const valid = useForm({ name: 'valid-FORM-name-10', mode: 'uncontrolled' });
 
 // ❌ Invalid form name: must not contain spaces and special characters
 const invalid = useForm({ name: 'invalid_form name', mode: 'uncontrolled' });
