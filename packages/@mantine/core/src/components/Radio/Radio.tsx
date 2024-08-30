@@ -42,7 +42,7 @@ export type RadioCssVariables = {
 export interface RadioProps
   extends BoxProps,
     StylesApiProps<RadioFactory>,
-    ElementProps<'input', 'size'> {
+    ElementProps<'input', 'size' | 'children'> {
   /** Content of the `label` associated with the radio */
   label?: React.ReactNode;
 

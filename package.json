@@ -1,8 +1,8 @@
 {
   "name": "mantine-a91763c0e2",
-  "version": "7.12.1",
+  "version": "7.12.2",
   "description": "Mantine Components Monorepo",
-  "packageManager": "yarn@4.4.0",
+  "packageManager": "yarn@4.4.1",
   "license": "MIT",
   "private": true,
   "author": "Vitaly Rtishchev <rtivital@gmail.com>",

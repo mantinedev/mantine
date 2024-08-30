@@ -10,7 +10,7 @@ import type { TreeNodeData } from './Tree';
 
 export type TreeExpandedState = Record<string, boolean>;
 
-function getInitialState(
+function getInitialExpandedState(
   initialState: TreeExpandedState,
   data: TreeNodeData[],
   value: string | string[] | undefined,
@@ -20,9 +20,17 @@ function getInitialState(
     acc[node.value] = node.value in initialState ? initialState[node.value] : node.value === value;
 
     if (Array.isArray(node.children)) {
-      getInitialState(initialState, node.children, value, acc);
+      getInitialExpandedState(initialState, node.children, value, acc);
     }
   });
+
+  return acc;
+}
+
+function getInitialCheckedState(initialState: string[], data: TreeNodeData[]) {
+  const acc: string[] = [];
+
+  initialState.forEach((node) => acc.push(...getChildrenNodesValues(node, data)));
 
   return acc;
 }
@@ -33,6 +41,9 @@ export interface UseTreeInput {
 
   /** Initial selected state of nodes */
   initialSelectedState?: string[];
+
+  /** Initial checked state of nodes */
+  initialCheckedState?: string[];
 
   /** Determines whether multiple node can be selected at a time */
   multiple?: boolean;
@@ -116,22 +127,24 @@ export interface UseTreeReturnType {
 
 export function useTree({
   initialSelectedState = [],
+  initialCheckedState = [],
   initialExpandedState = {},
   multiple = false,
 }: UseTreeInput = {}): UseTreeReturnType {
   const [data, setData] = useState<TreeNodeData[]>([]);
   const [expandedState, setExpandedState] = useState(initialExpandedState);
   const [selectedState, setSelectedState] = useState(initialSelectedState);
-  const [checkedState, setCheckedState] = useState<string[]>([]);
+  const [checkedState, setCheckedState] = useState(initialCheckedState);
   const [anchorNode, setAnchorNode] = useState<string | null>(null);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
   const initialize = useCallback(
     (_data: TreeNodeData[]) => {
-      setExpandedState((current) => getInitialState(current, _data, selectedState));
+      setExpandedState((current) => getInitialExpandedState(current, _data, selectedState));
+      setCheckedState((current) => getInitialCheckedState(current, _data));
       setData(_data);
     },
-    [selectedState]
+    [selectedState, checkedState]
   );
 
   const toggleExpanded = useCallback((value: string) => {

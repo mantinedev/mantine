@@ -43,7 +43,7 @@ export type SwitchCssVariables = {
 export interface SwitchProps
   extends BoxProps,
     StylesApiProps<SwitchFactory>,
-    ElementProps<'input', 'size'> {
+    ElementProps<'input', 'size' | 'children'> {
   /** Id used to bind input and label, if not passed, unique id will be generated instead */
   id?: string;
 
@@ -127,7 +127,6 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
     size,
     radius,
     wrapperProps,
-    children,
     thumbIcon,
     checked,
     defaultChecked,

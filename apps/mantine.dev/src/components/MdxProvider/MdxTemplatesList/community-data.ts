@@ -32,6 +32,12 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
     description: 'Next.js app router + Mantine + Bun template',
   },
   {
+    type: 'next',
+    name: 'ship-template',
+    link: 'https://github.com/paralect/ship',
+    description: 'Fullstack boilerplate with Next.js, auth, MongoDB, Turborepo',
+  },
+  {
     type: 'vite',
     name: 'nx-vite-monorepo-template',
     link: 'https://github.com/dipiash/nx-vite-react-ts-mantine-boilerplate',

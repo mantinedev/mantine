@@ -14,6 +14,7 @@ export function Search() {
     label: page.title,
     description:
       page.search || page.description || (page.date ? `Released ${page.date}` : undefined),
+    keywords: page.searchTags,
     onClick: () => router.push(page.slug),
   }));
 

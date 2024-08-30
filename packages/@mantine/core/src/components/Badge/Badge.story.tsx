@@ -33,6 +33,24 @@ export function Usage() {
   );
 }
 
+export function WithFixedWidth() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Badge w={200} rightSection="R" leftSection="L">
+        Badge
+      </Badge>
+      <Badge w={200} leftSection="L">
+        Badge
+      </Badge>
+      <Badge w={200} rightSection="R">
+        Badge
+      </Badge>
+      <Badge w={200}>Badge</Badge>
+      <span>Other content</span>
+    </div>
+  );
+}
+
 export function WithIconInSection() {
   return (
     <Badge
