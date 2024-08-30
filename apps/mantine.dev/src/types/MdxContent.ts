@@ -20,6 +20,9 @@ export interface Frontmatter {
   /** Page keywords, used for search in spotlight */
   search?: string;
 
+  /** Tags used for search, not visible in UI */
+  searchTags?: string;
+
   /** Release date, displayed in changelogs */
   date?: string;
 
