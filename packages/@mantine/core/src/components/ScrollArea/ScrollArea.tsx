@@ -212,6 +212,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaFactory>((props, ref) => {
     scrollbars,
     style,
     vars,
+    onBottomReached,
     ...others
   } = useProps('ScrollAreaAutosize', defaultProps, props);
 
@@ -233,6 +234,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaFactory>((props, ref) => {
           viewportProps={viewportProps}
           vars={vars}
           scrollbars={scrollbars}
+          onBottomReached={onBottomReached}
         >
           {children}
         </ScrollArea>

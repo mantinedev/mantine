@@ -35,6 +35,11 @@ export function useIdle(
 
     events.forEach((event) => document.addEventListener(event, handleEvents));
 
+    // Start the timer immediately instead of waiting for the first event to happen
+    timer.current = window.setTimeout(() => {
+      setIdle(true);
+    }, timeout);
+
     return () => {
       events.forEach((event) => document.removeEventListener(event, handleEvents));
     };
