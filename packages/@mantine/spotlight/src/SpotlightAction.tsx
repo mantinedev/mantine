@@ -29,7 +29,7 @@ export interface SpotlightActionProps
   label?: string;
 
   /** Action description, pass string to use in default filter */
-  description?: string;
+  description?: React.ReactNode;
 
   /** Section displayed on the left side of the label, for example, icon */
   leftSection?: React.ReactNode;
