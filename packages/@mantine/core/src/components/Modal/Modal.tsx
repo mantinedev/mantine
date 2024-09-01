@@ -1,3 +1,4 @@
+import { useEffect, useId } from 'react';
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
 import { ModalBaseCloseButtonProps, ModalBaseOverlayProps } from '../ModalBase';
 import { ModalBody } from './ModalBody';
@@ -11,6 +12,7 @@ import {
   ModalRootProps,
   ModalRootStylesNames,
 } from './ModalRoot';
+import { ModalStack, useModalStackContext } from './ModalStack';
 import { ModalTitle } from './ModalTitle';
 import classes from './Modal.module.css';
 
@@ -52,6 +54,7 @@ export type ModalFactory = Factory<{
     Header: typeof ModalHeader;
     Title: typeof ModalTitle;
     CloseButton: typeof ModalCloseButton;
+    Stack: typeof ModalStack;
   };
 }>;
 
@@ -78,13 +81,28 @@ export const Modal = factory<ModalFactory>((_props, ref) => {
     closeButtonProps,
     children,
     radius,
+    opened,
     ...others
   } = useProps('Modal', defaultProps, _props);
-
+  const stackId = useId();
+  const ctx = useModalStackContext();
   const hasHeader = !!title || withCloseButton;
+  const stackProps = ctx
+    ? {
+        closeOnEscape: ctx.currentId === stackId,
+        trapFocus: ctx.currentId === stackId,
+        zIndex: ctx.getZIndex(stackId),
+      }
+    : {};
+
+  useEffect(() => {
+    if (ctx) {
+      opened ? ctx.addModal(stackId) : ctx.removeModal(stackId);
+    }
+  }, [opened]);
 
   return (
-    <ModalRoot ref={ref} radius={radius} {...others}>
+    <ModalRoot ref={ref} radius={radius} opened={opened} {...others} {...stackProps}>
       {withOverlay && <ModalOverlay {...overlayProps} />}
       <ModalContent radius={radius}>
         {hasHeader && (
@@ -109,3 +127,4 @@ Modal.Body = ModalBody;
 Modal.Header = ModalHeader;
 Modal.Title = ModalTitle;
 Modal.CloseButton = ModalCloseButton;
+Modal.Stack = ModalStack;

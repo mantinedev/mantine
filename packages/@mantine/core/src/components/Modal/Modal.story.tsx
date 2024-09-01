@@ -37,6 +37,29 @@ export function Usage() {
   );
 }
 
+export function Stack() {
+  const [opened1, handlers1] = useDisclosure(false);
+  const [opened2, handlers2] = useDisclosure(false);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={handlers1.open}>Open modal</Button>
+      <Modal.Stack>
+        <Modal opened={opened1} onClose={handlers1.close} title="First modal">
+          First modal
+          <Button onClick={handlers2.open} fullWidth mt="md">
+            Open second modal
+          </Button>
+        </Modal>
+
+        <Modal opened={opened2} onClose={handlers2.close} title="Second modal">
+          Second modal
+        </Modal>
+      </Modal.Stack>
+    </div>
+  );
+}
+
 export function WithSelect() {
   const [opened, { open, close }] = useDisclosure(true);
   return (
