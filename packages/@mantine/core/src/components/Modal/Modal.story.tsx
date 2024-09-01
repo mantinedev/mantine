@@ -5,6 +5,7 @@ import { ScrollArea } from '../ScrollArea';
 import { Select } from '../Select';
 import { Tabs } from '../Tabs';
 import { Modal } from './Modal';
+import { useModalsStack } from './use-modals-stack';
 
 export default { title: 'Modal' };
 
@@ -38,22 +39,31 @@ export function Usage() {
 }
 
 export function Stack() {
-  const [opened1, handlers1] = useDisclosure(false);
-  const [opened2, handlers2] = useDisclosure(false);
+  const stack = useModalsStack(['first', 'second', 'third']);
 
   return (
     <div style={{ padding: 40 }}>
-      <Button onClick={handlers1.open}>Open modal</Button>
+      <Button onClick={() => stack.open('first')}>Open modal</Button>
       <Modal.Stack>
-        <Modal opened={opened1} onClose={handlers1.close} title="First modal">
+        <Modal {...stack.register('first')} title="First modal" overlayProps={{ blur: 3 }}>
           First modal
-          <Button onClick={handlers2.open} fullWidth mt="md">
+          <Button onClick={() => stack.open('second')} fullWidth mt="md">
             Open second modal
           </Button>
         </Modal>
 
-        <Modal opened={opened2} onClose={handlers2.close} title="Second modal">
+        <Modal {...stack.register('second')} title="Second modal" overlayProps={{ blur: 3 }}>
           Second modal
+          <Button onClick={() => stack.open('third')} fullWidth mt="md">
+            Open third modal
+          </Button>
+        </Modal>
+
+        <Modal {...stack.register('third')} title="Third modal" overlayProps={{ blur: 3 }}>
+          Third modal
+          <Button onClick={() => stack.closeAll()} fullWidth mt="md">
+            Close all
+          </Button>
         </Modal>
       </Modal.Stack>
     </div>

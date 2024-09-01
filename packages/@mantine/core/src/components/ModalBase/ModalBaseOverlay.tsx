@@ -10,15 +10,22 @@ export interface ModalBaseOverlayProps
     ElementProps<'div', 'color'> {
   /** Props passed down to the `Transition` component */
   transitionProps?: TransitionOverride;
+
+  /** Determines whether the overlay should be visible. By default, has the same value as `opened` state. */
+  visible?: boolean;
 }
 
 export const ModalBaseOverlay = forwardRef<HTMLDivElement, ModalBaseOverlayProps>(
-  ({ onClick, transitionProps, style, ...others }, ref) => {
+  ({ onClick, transitionProps, style, visible, ...others }, ref) => {
     const ctx = useModalBaseContext();
     const transition = useModalTransition(transitionProps);
 
     return (
-      <Transition mounted={ctx.opened} {...transition} transition="fade">
+      <Transition
+        mounted={visible !== undefined ? visible : ctx.opened}
+        {...transition}
+        transition="fade"
+      >
         {(transitionStyles) => (
           <Overlay
             ref={ref}

@@ -1,4 +1,4 @@
-import { useEffect, useId } from 'react';
+import { useEffect } from 'react';
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
 import { ModalBaseCloseButtonProps, ModalBaseOverlayProps } from '../ModalBase';
 import { ModalBody } from './ModalBody';
@@ -39,6 +39,9 @@ export interface ModalProps extends ModalRootProps {
 
   /** Props passed down to the close button */
   closeButtonProps?: ModalBaseCloseButtonProps;
+
+  /** Id of the modal in the `Modal.Stack` */
+  stackId?: string;
 }
 
 export type ModalFactory = Factory<{
@@ -82,29 +85,42 @@ export const Modal = factory<ModalFactory>((_props, ref) => {
     children,
     radius,
     opened,
+    stackId,
     ...others
   } = useProps('Modal', defaultProps, _props);
-  const stackId = useId();
   const ctx = useModalStackContext();
   const hasHeader = !!title || withCloseButton;
-  const stackProps = ctx
-    ? {
-        closeOnEscape: ctx.currentId === stackId,
-        trapFocus: ctx.currentId === stackId,
-        zIndex: ctx.getZIndex(stackId),
-      }
-    : {};
+  const stackProps =
+    ctx && stackId
+      ? {
+          closeOnEscape: ctx.currentId === stackId,
+          trapFocus: ctx.currentId === stackId,
+          zIndex: ctx.getZIndex(stackId),
+        }
+      : {};
+
+  const overlayVisible =
+    withOverlay === false ? false : stackId && ctx ? ctx.currentId === stackId : false;
 
   useEffect(() => {
-    if (ctx) {
+    if (ctx && stackId) {
       opened ? ctx.addModal(stackId) : ctx.removeModal(stackId);
     }
-  }, [opened]);
+  }, [opened, stackId]);
 
   return (
     <ModalRoot ref={ref} radius={radius} opened={opened} {...others} {...stackProps}>
-      {withOverlay && <ModalOverlay {...overlayProps} />}
-      <ModalContent radius={radius}>
+      {withOverlay && (
+        <ModalOverlay
+          visible={overlayVisible}
+          transitionProps={{ duration: 0 }}
+          {...overlayProps}
+        />
+      )}
+      <ModalContent
+        radius={radius}
+        __hidden={ctx && stackId && opened ? stackId !== ctx.currentId : false}
+      >
         {hasHeader && (
           <ModalHeader>
             {title && <ModalTitle>{title}</ModalTitle>}
