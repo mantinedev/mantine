@@ -101,7 +101,7 @@ export const Modal = factory<ModalFactory>((_props, ref) => {
       : {};
 
   const overlayVisible =
-    withOverlay === false ? false : stackId && ctx ? ctx.currentId === stackId : false;
+    withOverlay === false ? false : stackId && ctx ? ctx.currentId === stackId : opened;
 
   useEffect(() => {
     if (ctx && stackId) {

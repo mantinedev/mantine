@@ -137,6 +137,70 @@ You can use the following compound components to have full control over the `Mod
 
 <Demo data={ModalDemos.composition} />
 
+## Modal.Stack
+
+Use `Modal.Stack` component to render multiple modals at the same time.
+`Modal.Stack` keeps track of opened modals, manages z-index values, focus trapping
+and `closeOnEscape` behavior. `Modal.Stack` is designed to be used with `useModalsStack` hook.
+
+Differences from using multiple `Modal` components:
+
+- `Modal.Stack` manages z-index values – modals that are opened later will always have higher z-index value disregarding their order in the DOM
+- `Modal.Stack` disables focus trap and `Escape` key handling for all modals except the one that is currently opened
+- Modals that are not currently opened are present in the DOM but are hidden with `opacity: 0` and `pointer-events: none`
+- Only one overlay is rendered at a time
+
+<Demo data={ModalDemos.stack} />
+
+## useModalsStack hook
+
+`useModalsStack` hook provides an easy way to control multiple modals at the same time.
+It accepts an array of unique modals ids and returns an object with the following properties:
+
+```tsx
+interface ModalStackReturnType<T extends string> {
+  // Current opened state of each modal
+  state: Record<T, boolean>;
+
+  // Opens modal with the given id
+  open: (id: T) => void;
+
+  // Closes modal with the given id
+  close: (id: T) => void;
+
+  // Toggles modal with the given id
+  toggle: (id: T) => void;
+
+  // Closes all modals within the stack
+  closeAll: () => void;
+
+  // Returns props for modal with the given id
+  register: (id: T) => {
+    opened: boolean;
+    onClose: () => void;
+    stackId: T;
+  };
+}
+```
+
+Example of using `useModalsStack` with `Modal` component:
+
+```tsx
+import { Modal, useModalsStack } from '@mantine/core';
+
+function Demo() {
+  const stack = useModalsStack(['first', 'second']);
+
+  return (
+    <>
+      <Modal {...stack.register('first')}>First</Modal>
+      <Modal {...stack.register('second')}>Second</Modal>
+      <Button onClick={() => stack.open('first')}>Open first</Button>
+    </>
+  );
+}
+```
+
 ## Fixed elements offset
 
 `Modal` component uses [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
