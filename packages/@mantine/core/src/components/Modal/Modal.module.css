@@ -42,16 +42,12 @@
   max-height: var(--modal-content-max-height, calc(100dvh - var(--modal-y-offset) * 2));
   height: var(--modal-content-height, auto);
   overflow-y: auto;
-  transition:
-    opacity 200ms ease,
-    transform 200ms ease !important;
 
   &[data-full-screen] {
     border-radius: 0;
   }
 
   &[data-hidden] {
-    transform: scale(0.8) !important;
     opacity: 0 !important;
   }
 }

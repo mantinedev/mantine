@@ -47,6 +47,7 @@ export function Stack() {
       <Modal.Stack>
         <Modal {...stack.register('first')} title="First modal" overlayProps={{ blur: 3 }}>
           First modal
+          {content}
           <Button onClick={() => stack.open('second')} fullWidth mt="md">
             Open second modal
           </Button>

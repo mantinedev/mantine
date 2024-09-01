@@ -86,6 +86,7 @@ export const Modal = factory<ModalFactory>((_props, ref) => {
     radius,
     opened,
     stackId,
+    zIndex,
     ...others
   } = useProps('Modal', defaultProps, _props);
   const ctx = useModalStackContext();
@@ -104,16 +105,25 @@ export const Modal = factory<ModalFactory>((_props, ref) => {
 
   useEffect(() => {
     if (ctx && stackId) {
-      opened ? ctx.addModal(stackId) : ctx.removeModal(stackId);
+      opened
+        ? ctx.addModal(stackId, zIndex || getDefaultZIndex('modal'))
+        : ctx.removeModal(stackId);
     }
-  }, [opened, stackId]);
+  }, [opened, stackId, zIndex]);
 
   return (
-    <ModalRoot ref={ref} radius={radius} opened={opened} {...others} {...stackProps}>
+    <ModalRoot
+      ref={ref}
+      radius={radius}
+      opened={opened}
+      zIndex={ctx && stackId ? ctx.getZIndex(stackId) : zIndex}
+      {...others}
+      {...stackProps}
+    >
       {withOverlay && (
         <ModalOverlay
           visible={overlayVisible}
-          transitionProps={{ duration: 0 }}
+          transitionProps={ctx && stackId ? { duration: 0 } : undefined}
           {...overlayProps}
         />
       )}
