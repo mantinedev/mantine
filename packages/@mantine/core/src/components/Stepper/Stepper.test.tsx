@@ -23,7 +23,7 @@ const defaultProps: StepperProps = {
 };
 
 describe('@mantine/core/Stepper', () => {
-  tests.axe([<Stepper {...defaultProps} />]);
+  tests.axe([<Stepper {...defaultProps} key="1" />]);
 
   tests.itSupportsSystemProps<StepperProps, StepperStylesNames>({
     component: Stepper,

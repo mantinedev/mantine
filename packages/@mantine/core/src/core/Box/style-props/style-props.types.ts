@@ -9,94 +9,94 @@ import type {
 export type StyleProp<Value> = Value | Partial<Record<MantineBreakpoint | (string & {}), Value>>;
 
 export interface MantineStyleProps {
-  /** margin, theme key: theme.spacing */
+  /** Margin, theme key: theme.spacing */
   m?: StyleProp<MantineSpacing>;
-  /** marginBlock, theme key: theme.spacing */
+  /** MarginBlock, theme key: theme.spacing */
   my?: StyleProp<MantineSpacing>;
-  /** marginInline, theme key: theme.spacing */
+  /** MarginInline, theme key: theme.spacing */
   mx?: StyleProp<MantineSpacing>;
-  /** marginTop, theme key: theme.spacing */
+  /** MarginTop, theme key: theme.spacing */
   mt?: StyleProp<MantineSpacing>;
-  /** marginBottom, theme key: theme.spacing */
+  /** MarginBottom, theme key: theme.spacing */
   mb?: StyleProp<MantineSpacing>;
-  /** marginInlineStart, theme key: theme.spacing */
+  /** MarginInlineStart, theme key: theme.spacing */
   ms?: StyleProp<MantineSpacing>;
-  /** marginInlineEnd, theme key: theme.spacing */
+  /** MarginInlineEnd, theme key: theme.spacing */
   me?: StyleProp<MantineSpacing>;
-  /** marginLeft, theme key: theme.spacing */
+  /** MarginLeft, theme key: theme.spacing */
   ml?: StyleProp<MantineSpacing>;
-  /** marginRight, theme key: theme.spacing */
+  /** MarginRight, theme key: theme.spacing */
   mr?: StyleProp<MantineSpacing>;
-  /** padding, theme key: theme.spacing */
+  /** Padding, theme key: theme.spacing */
 
   p?: StyleProp<MantineSpacing>;
-  /** paddingBlock, theme key: theme.spacing */
+  /** PaddingBlock, theme key: theme.spacing */
   py?: StyleProp<MantineSpacing>;
-  /** paddingInline, theme key: theme.spacing */
+  /** PaddingInline, theme key: theme.spacing */
   px?: StyleProp<MantineSpacing>;
-  /** paddingTop, theme key: theme.spacing */
+  /** PaddingTop, theme key: theme.spacing */
   pt?: StyleProp<MantineSpacing>;
-  /** paddingBottom, theme key: theme.spacing */
+  /** PaddingBottom, theme key: theme.spacing */
   pb?: StyleProp<MantineSpacing>;
-  /** paddingInlineStart, theme key: theme.spacing */
+  /** PaddingInlineStart, theme key: theme.spacing */
   ps?: StyleProp<MantineSpacing>;
-  /** paddingInlineEnd, theme key: theme.spacing */
+  /** PaddingInlineEnd, theme key: theme.spacing */
   pe?: StyleProp<MantineSpacing>;
-  /** paddingLeft, theme key: theme.spacing */
+  /** PaddingLeft, theme key: theme.spacing */
   pl?: StyleProp<MantineSpacing>;
-  /** paddingRight, theme key: theme.spacing */
+  /** PaddingRight, theme key: theme.spacing */
   pr?: StyleProp<MantineSpacing>;
 
-  /** border */
+  /** Border */
   bd?: StyleProp<React.CSSProperties['border']>;
-  /** background, theme key: theme.colors */
+  /** Background, theme key: theme.colors */
   bg?: StyleProp<MantineColor>;
-  /** color */
+  /** Color */
   c?: StyleProp<MantineColor>;
   opacity?: StyleProp<React.CSSProperties['opacity']>;
 
-  /** fontFamily */
+  /** FontFamily */
   ff?: StyleProp<'monospace' | 'text' | 'heading' | (string & {})>;
-  /** fontSize, theme key: theme.fontSizes */
+  /** FontSize, theme key: theme.fontSizes */
   fz?: StyleProp<MantineFontSize | `h${1 | 2 | 3 | 4 | 5 | 6}` | number | (string & {})>;
-  /** fontWeight */
+  /** FontWeight */
   fw?: StyleProp<React.CSSProperties['fontWeight']>;
-  /** letterSpacing */
+  /** LetterSpacing */
   lts?: StyleProp<React.CSSProperties['letterSpacing']>;
-  /** textAlign */
+  /** TextAlign */
   ta?: StyleProp<React.CSSProperties['textAlign']>;
-  /** lineHeight, theme key: lineHeights */
+  /** LineHeight, theme key: lineHeights */
   lh?: StyleProp<MantineLineHeight | `h${1 | 2 | 3 | 4 | 5 | 6}` | number | (string & {})>;
-  /** fontStyle */
+  /** FontStyle */
   fs?: StyleProp<React.CSSProperties['fontStyle']>;
-  /** textTransform */
+  /** TextTransform */
   tt?: StyleProp<React.CSSProperties['textTransform']>;
-  /** textDecoration */
+  /** TextDecoration */
   td?: StyleProp<React.CSSProperties['textDecoration']>;
 
-  /** width, theme key: theme.spacing */
+  /** Width, theme key: theme.spacing */
   w?: StyleProp<React.CSSProperties['width']>;
-  /** minWidth, theme key: theme.spacing*/
+  /** MinWidth, theme key: theme.spacing*/
   miw?: StyleProp<React.CSSProperties['minWidth']>;
-  /** maxWidth, theme key: theme.spacing */
+  /** MaxWidth, theme key: theme.spacing */
   maw?: StyleProp<React.CSSProperties['maxWidth']>;
-  /** height, theme key: theme.spacing */
+  /** Height, theme key: theme.spacing */
   h?: StyleProp<React.CSSProperties['height']>;
-  /** minHeight, theme key: theme.spacing */
+  /** MinHeight, theme key: theme.spacing */
   mih?: StyleProp<React.CSSProperties['minHeight']>;
-  /** maxHeight, theme key: theme.spacing */
+  /** MaxHeight, theme key: theme.spacing */
   mah?: StyleProp<React.CSSProperties['maxHeight']>;
 
-  /** backgroundSize */
+  /** BackgroundSize */
   bgsz?: StyleProp<React.CSSProperties['backgroundSize']>;
-  /** backgroundPosition */
+  /** BackgroundPosition */
   bgp?: StyleProp<React.CSSProperties['backgroundPosition']>;
-  /** backgroundRepeat */
+  /** BackgroundRepeat */
   bgr?: StyleProp<React.CSSProperties['backgroundRepeat']>;
-  /** backgroundAttachment */
+  /** BackgroundAttachment */
   bga?: StyleProp<React.CSSProperties['backgroundAttachment']>;
 
-  /** position */
+  /** Position */
   pos?: StyleProp<React.CSSProperties['position']>;
   top?: StyleProp<React.CSSProperties['top']>;
   left?: StyleProp<React.CSSProperties['left']>;

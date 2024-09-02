@@ -3,8 +3,7 @@ import { keys } from '../../../utils';
 import { resolvers } from '../resolvers';
 import type { SystemPropData } from '../style-props-data';
 import type { StyleProp } from '../style-props.types';
-import type { SortMediaQueriesResult } from './sort-media-queries';
-import { sortMediaQueries } from './sort-media-queries';
+import { sortMediaQueries, SortMediaQueriesResult } from './sort-media-queries';
 
 function hasResponsiveStyles(styleProp: StyleProp<unknown>) {
   if (typeof styleProp !== 'object' || styleProp === null) {

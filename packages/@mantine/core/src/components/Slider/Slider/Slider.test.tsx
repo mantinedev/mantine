@@ -18,7 +18,7 @@ const pressArrow = (kind: 'right' | 'left') =>
   userEvent.type(screen.getByRole('slider'), kind === 'right' ? '{arrowright}' : '{arrowleft}');
 
 describe('@mantine/core/Slider', () => {
-  tests.axe([<Slider {...defaultProps} />]);
+  tests.axe([<Slider {...defaultProps} key="1" />]);
   tests.itSupportsSystemProps<SliderProps, SliderStylesNames>({
     component: Slider,
     props: defaultProps,

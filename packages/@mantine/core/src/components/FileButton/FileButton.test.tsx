@@ -11,7 +11,7 @@ const defaultProps: FileButtonProps = {
 };
 
 describe('@mantine/core/FileButton', () => {
-  tests.axe([<FileButton {...defaultProps} />]);
+  tests.axe([<FileButton {...defaultProps} key="1" />]);
   tests.itSupportsRef({
     component: FileButton,
     props: defaultProps,

@@ -150,3 +150,5 @@ export const ModalBase = forwardRef<HTMLDivElement, ModalBaseProps>(
     );
   }
 );
+
+ModalBase.displayName = '@mantine/core/ModalBase';

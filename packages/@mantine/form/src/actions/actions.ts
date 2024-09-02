@@ -104,11 +104,11 @@ export function createFormActions<FormValues extends Record<string, any> = Recor
   };
 }
 
-function useFormEvent(eventKey: string | undefined, handler: Function) {
+function useFormEvent(eventKey: string | undefined, handler: (event: any) => void) {
   useIsomorphicEffect(() => {
     if (eventKey) {
-      window.addEventListener(eventKey, handler as any);
-      return () => window.removeEventListener(eventKey, handler as any);
+      window.addEventListener(eventKey, handler);
+      return () => window.removeEventListener(eventKey, handler);
     }
     return undefined;
   }, [eventKey]);

@@ -12,8 +12,8 @@ const defaultProps: SegmentedControlProps = {
 
 describe('@mantine/core/SegmentedControl', () => {
   tests.axe([
-    <SegmentedControl {...defaultProps} />,
-    <SegmentedControl {...defaultProps} aria-label="group label" />,
+    <SegmentedControl {...defaultProps} key="1" />,
+    <SegmentedControl {...defaultProps} aria-label="group label" key="2" />,
   ]);
 
   tests.itSupportsSystemProps<SegmentedControlProps, SegmentedControlStylesNames>({

@@ -58,7 +58,7 @@ function Demo() {
     mode: 'uncontrolled',
     initialValues: { name: '', email: '', age: 0 },
 
-    // functions will be used to validate values at corresponding key
+    // Functions will be used to validate values at corresponding key
     validate: {
       name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),

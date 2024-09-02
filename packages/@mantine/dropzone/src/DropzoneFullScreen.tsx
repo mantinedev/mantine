@@ -27,7 +27,7 @@ export interface DropzoneFullScreenProps
   /** Determines whether user can drop files to browser window, true by default */
   active?: boolean;
 
-  /** z-index value, 9999 by default */
+  /** Z-index value, 9999 by default */
   zIndex?: React.CSSProperties['zIndex'];
 
   /** Determines whether component should be rendered within Portal, true by default */
@@ -111,7 +111,9 @@ export const DropzoneFullScreen = factory<DropzoneFullScreenFactory>((_props, re
   }, [counter]);
 
   useEffect(() => {
-    if (!active) return undefined;
+    if (!active) {
+      return undefined;
+    }
 
     document.addEventListener('dragenter', handleDragEnter, false);
     document.addEventListener('dragleave', handleDragLeave, false);

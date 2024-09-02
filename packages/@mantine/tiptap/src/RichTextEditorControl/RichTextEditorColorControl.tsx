@@ -32,3 +32,5 @@ export const RichTextEditorColorControl = forwardRef<
     </RichTextEditorControl>
   );
 });
+
+RichTextEditorColorControl.displayName = '@mantine/tiptap/RichTextEditorColorControl';

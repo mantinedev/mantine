@@ -29,7 +29,7 @@ function Demo() {
 function Demo() {
   return (
     // Wrapper div is added for demonstration purposes only,
-    // it is not required in real projects
+    // It is not required in real projects
     <div style={{ resize: 'horizontal', overflow: 'hidden', maxWidth: '100%' }}>
       <SimpleGrid
         type="container"

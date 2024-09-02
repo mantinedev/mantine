@@ -4,7 +4,12 @@ import { RadioCard, RadioCardProps, RadioCardStylesNames } from './RadioCard';
 const defaultProps: RadioCardProps = {};
 
 describe('@mantine/core/RadioCard', () => {
-  tests.axe([<RadioCard>Label</RadioCard>, <RadioCard checked>Label</RadioCard>]);
+  tests.axe([
+    <RadioCard key="1">Label</RadioCard>,
+    <RadioCard checked key="2">
+      Label
+    </RadioCard>,
+  ]);
 
   tests.itSupportsSystemProps<RadioCardProps, RadioCardStylesNames>({
     component: RadioCard,

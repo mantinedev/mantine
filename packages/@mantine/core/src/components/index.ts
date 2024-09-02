@@ -16,7 +16,7 @@ export * from './InputBase';
 export * from './Flex';
 export * from './FloatingIndicator';
 
-// regular components
+// Regular components
 export * from './Accordion';
 export * from './Affix';
 export * from './Alert';

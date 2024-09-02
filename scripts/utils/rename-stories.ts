@@ -3,7 +3,7 @@ import fs from 'fs-extra';
 import { getPath } from './get-path';
 
 function replaceName(input: string) {
-  return input.replace(/([a-z])([A-Z])/, (match, p1, p2) => `${p1}_${p2.toLowerCase()}`);
+  return input.replace(/([a-z])([A-Z])/, (_match, p1, p2) => `${p1}_${p2.toLowerCase()}`);
 }
 
 function replaceFile(filePath: string) {

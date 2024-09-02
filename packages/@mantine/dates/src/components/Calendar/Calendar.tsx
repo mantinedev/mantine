@@ -106,7 +106,7 @@ export interface CalendarBaseProps {
   /** Number of columns to scroll when user clicks next/prev buttons, defaults to numberOfColumns */
   columnsToScroll?: number;
 
-  /** aria-label attributes for controls on different levels */
+  /** Aria-label attributes for controls on different levels */
   ariaLabels?: CalendarAriaLabels;
 
   /** Called when next decade button is clicked */

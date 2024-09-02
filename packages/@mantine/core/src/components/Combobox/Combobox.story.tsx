@@ -262,7 +262,7 @@ export function WithActive() {
 }
 
 export function Chevron() {
-  return <Combobox.Chevron size="xl" style={{ color: 'red' }}></Combobox.Chevron>;
+  return <Combobox.Chevron size="xl" style={{ color: 'red' }} />;
 }
 
 export function DifferentTargets() {

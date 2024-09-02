@@ -77,7 +77,7 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   /** Determines whether node should be selected on click, `false` by default */
   selectOnClick?: boolean;
 
-  /** use-tree hook instance that can be used to manipulate component state */
+  /** Use-tree hook instance that can be used to manipulate component state */
   tree?: TreeController;
 
   /** A function to render tree node label */

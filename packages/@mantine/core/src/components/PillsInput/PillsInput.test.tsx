@@ -8,19 +8,19 @@ const defaultProps: PillsInputProps = {
 
 describe('@mantine/core/PillsInput', () => {
   tests.axe([
-    <PillsInput label="test-label">
+    <PillsInput label="test-label" key="1">
       <PillsInput.Field />
     </PillsInput>,
 
-    <PillsInput label="test-label" description="test-description">
+    <PillsInput label="test-label" description="test-description" key="2">
       <PillsInput.Field />
     </PillsInput>,
 
-    <PillsInput label="test-label" error="test-error">
+    <PillsInput label="test-label" error="test-error" key="3">
       <PillsInput.Field />
     </PillsInput>,
 
-    <PillsInput>
+    <PillsInput key="4">
       <PillsInput.Field aria-label="test-label" />
     </PillsInput>,
   ]);

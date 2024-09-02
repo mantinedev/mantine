@@ -3,7 +3,7 @@ import { useColorScheme } from './use-color-scheme';
 
 describe('@mantine/hooks/use-color-scheme', () => {
   let trace = jest.fn<(colorScheme: string) => void, string[]>();
-  const mockmatchMedia = jest.fn().mockImplementation(() => ({
+  const mockMatchMedia = jest.fn().mockImplementation(() => ({
     matches: true,
     media: '',
     onchange: null,
@@ -26,35 +26,35 @@ describe('@mantine/hooks/use-color-scheme', () => {
       getInitialValueInEffect,
     });
     trace(colorScheme);
-    return <>{colorScheme}</>;
+    return colorScheme;
   }
 
-  it('correctly returns initial dark state state without useEffect', async () => {
-    window.matchMedia = mockmatchMedia;
+  it('correctly returns initial dark state state without useEffect', () => {
+    window.matchMedia = mockMatchMedia;
     render(<WrapperComponent initialValue="dark" getInitialValueInEffect={false} />);
     expect(trace).toHaveBeenCalledTimes(1);
     expect(trace.mock.calls[0][0]).toBe('dark');
   });
 
-  it('correctly returns initial light state with useEffect', async () => {
+  it('correctly returns initial light state with useEffect', () => {
     render(<WrapperComponent initialValue="dark" getInitialValueInEffect />);
     expect(trace).toHaveBeenCalledTimes(2);
     expect(trace.mock.calls[0][0]).toBe('dark');
     expect(trace.mock.calls[1][0]).toBe('light');
   });
-  it('correctly returns initial dark state with useEffect', async () => {
-    window.matchMedia = mockmatchMedia;
+  it('correctly returns initial dark state with useEffect', () => {
+    window.matchMedia = mockMatchMedia;
     render(<WrapperComponent initialValue="dark" getInitialValueInEffect />);
     expect(trace).toHaveBeenCalledTimes(1);
     expect(trace.mock.calls[0][0]).toBe('dark');
   });
-  it('correctly returns initial light state with default props', async () => {
+  it('correctly returns initial light state with default props', () => {
     render(<WrapperComponent />);
     expect(trace).toHaveBeenCalledTimes(1);
     expect(trace.mock.calls[0][0]).toBe('light');
   });
-  it('correctly returns initial dark state with default props', async () => {
-    window.matchMedia = mockmatchMedia;
+  it('correctly returns initial dark state with default props', () => {
+    window.matchMedia = mockMatchMedia;
     render(<WrapperComponent />);
     expect(trace).toHaveBeenCalledTimes(2);
     expect(trace.mock.calls[0][0]).toBe('light');

@@ -16,7 +16,7 @@ const defaultProps: RadioGroupProps = {
 
 describe('@mantine/core/RadioGroup', () => {
   tests.axe([
-    <RadioGroup>
+    <RadioGroup key="1">
       <Radio value="test-1" label="test-1" />
       <Radio value="test-2" label="test-2" />
       <Radio value="test-3" label="test-3" />

@@ -6,28 +6,28 @@ interface UseHashOptions {
 }
 
 export function useHash({ getInitialValueInEffect = true }: UseHashOptions = {}) {
-  const [hash, setHashValue] = useState<string>(
+  const [hash, setHash] = useState<string>(
     getInitialValueInEffect ? '' : window.location.hash || ''
   );
 
-  const setHash = (value: string) => {
+  const setHashHandler = (value: string) => {
     const valueWithHash = value.startsWith('#') ? value : `#${value}`;
     window.location.hash = valueWithHash;
-    setHashValue(valueWithHash);
+    setHash(valueWithHash);
   };
 
   useWindowEvent('hashchange', () => {
     const newHash = window.location.hash;
     if (hash !== newHash) {
-      setHashValue(newHash);
+      setHash(newHash);
     }
   });
 
   useEffect(() => {
     if (getInitialValueInEffect) {
-      setHashValue(window.location.hash);
+      setHash(window.location.hash);
     }
   }, []);
 
-  return [hash, setHash] as const;
+  return [hash, setHashHandler] as const;
 }

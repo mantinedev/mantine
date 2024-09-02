@@ -9,8 +9,8 @@ const defaultProps: ColorSwatchProps = {
 
 describe('@mantine/core/ColorSwatch', () => {
   tests.axe([
-    <ColorSwatch color="#000" component="button" type="button" aria-label="test-color" />,
-    <ColorSwatch color="#000" component="button" type="button">
+    <ColorSwatch color="#000" component="button" type="button" aria-label="test-color" key="1" />,
+    <ColorSwatch color="#000" component="button" type="button" key="2">
       test-color
     </ColorSwatch>,
   ]);

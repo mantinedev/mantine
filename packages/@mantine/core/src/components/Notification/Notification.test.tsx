@@ -10,7 +10,7 @@ const defaultProps: NotificationProps = {
 };
 
 describe('@mantine/core/Notification', () => {
-  tests.axe([<Notification {...defaultProps} />]);
+  tests.axe([<Notification {...defaultProps} key="1" />]);
 
   tests.itSupportsSystemProps<NotificationProps, NotificationStylesNames>({
     component: Notification,

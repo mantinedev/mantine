@@ -126,7 +126,7 @@ export function Unstyled() {
 export function WithoutDescription() {
   return (
     <div style={{ maxWidth: 500, margin: 'auto', padding: 40 }}>
-      <Alert icon="$" title="Bummer!" color="red" variant="light" withCloseButton></Alert>
+      <Alert icon="$" title="Bummer!" color="red" variant="light" withCloseButton />
     </div>
   );
 }
@@ -138,7 +138,7 @@ export function CSSVariables() {
         components: {
           Alert: Alert.extend({
             defaultProps: {
-              // color: 'red',
+              // Color: 'red',
             },
           }),
         },

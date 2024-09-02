@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
 import { useRef } from 'react';
 import { findElementAncestor, GetStylesApi } from '../../core';
 import type { RenderNode, TreeFactory, TreeNodeData } from './Tree';

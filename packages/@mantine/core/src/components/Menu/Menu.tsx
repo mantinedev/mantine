@@ -82,7 +82,7 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
   /** Events that trigger outside clicks */
   clickOutsideEvents?: string[];
 
-  /** id base to create accessibility connections */
+  /** Id base to create accessibility connections */
   id?: string;
 
   /** Set the `tabindex` on all menu items. Defaults to -1 */

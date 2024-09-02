@@ -13,7 +13,7 @@ export function itSupportsOnDayKeydown(options: Options, name = 'supports __onDa
       <options.component
         {...options.props}
         month={new Date(2022, 3, 11)}
-        __onDayKeyDown={(event: any, payload: any) => {
+        __onDayKeyDown={(_event: any, payload: any) => {
           spy(payload);
         }}
       />

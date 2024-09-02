@@ -53,10 +53,10 @@ function Demo() {
 
 const useStyles = createStyles((theme, _, u) => ({
   button: {
-    // assign reference to selector
+    // Assign reference to selector
     ref: u.ref('button'),
 
-    // and add any other properties
+    // And add any other properties
     backgroundColor: theme.colors.blue[6],
     color: theme.white,
     padding: `${theme.spacing.sm} ${theme.spacing.lg}`,
@@ -78,7 +78,7 @@ const useStyles = createStyles((theme, _, u) => ({
       backgroundColor: theme.colors.dark[8],
     },
 
-    // reference button with nested selector
+    // Reference button with nested selector
     [`&:hover .${u.ref('button')}`]: {
       backgroundColor: theme.colors.violet[6],
     },

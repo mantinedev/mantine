@@ -11,6 +11,6 @@ export const getScrollStart = ({ axis, parent }: any) => {
 
   const { body, documentElement } = document;
 
-  // while one of it has a value the second is equal 0
+  // While one of it has a value the second is equal 0
   return body[method] + documentElement[method];
 };

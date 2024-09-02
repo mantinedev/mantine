@@ -152,14 +152,12 @@ export const Indicator = factory<IndicatorFactory>((_props, ref) => {
   return (
     <Box ref={ref} {...getStyles('root')} mod={[{ inline }, mod]} {...others}>
       {!disabled && (
-        <>
-          <Box
-            mod={{ 'with-label': !!label, 'with-border': withBorder, processing }}
-            {...getStyles('indicator')}
-          >
-            {label}
-          </Box>
-        </>
+        <Box
+          mod={{ 'with-label': !!label, 'with-border': withBorder, processing }}
+          {...getStyles('indicator')}
+        >
+          {label}
+        </Box>
       )}
       {children}
     </Box>

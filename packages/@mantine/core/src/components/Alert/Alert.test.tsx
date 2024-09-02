@@ -11,9 +11,11 @@ const defaultProps: AlertProps = {
 
 describe('@mantine/core/Alert', () => {
   tests.axe([
-    <Alert>Alert message</Alert>,
-    <Alert title="Alert title">Alert message</Alert>,
-    <Alert withCloseButton closeButtonLabel="test-close">
+    <Alert key="1">Alert message</Alert>,
+    <Alert title="Alert title" key="2">
+      Alert message
+    </Alert>,
+    <Alert withCloseButton closeButtonLabel="test-close" key="3">
       Alert message
     </Alert>,
   ]);

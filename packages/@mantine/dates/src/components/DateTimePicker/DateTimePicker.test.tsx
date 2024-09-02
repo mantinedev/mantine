@@ -48,11 +48,11 @@ const getClearButton = () => screen.queryAllByLabelText('test-clear')[0];
 
 describe('@mantine/dates/DateTimePicker', () => {
   tests.axe([
-    <DateTimePicker aria-label="test-label" />,
-    <DateTimePicker placeholder="test-placeholder" />,
-    <DateTimePicker aria-label="test-label" error />,
-    <DateTimePicker aria-label="test-label" error="test-error" id="test" />,
-    <DateTimePicker aria-label="test-label" description="test-description" />,
+    <DateTimePicker aria-label="test-label" key="1" />,
+    <DateTimePicker placeholder="test-placeholder" key="2" />,
+    <DateTimePicker aria-label="test-label" error key="3" />,
+    <DateTimePicker aria-label="test-label" error="test-error" id="test" key="4" />,
+    <DateTimePicker aria-label="test-label" description="test-description" key="5" />,
   ]);
 
   tests.itSupportsSystemProps<DateTimePickerProps, __InputStylesNames>({

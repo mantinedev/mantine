@@ -7,7 +7,7 @@ const defaultProps: PillProps = {
 };
 
 describe('@mantine/core/Pill', () => {
-  tests.axe([<Pill {...defaultProps} />]);
+  tests.axe([<Pill {...defaultProps} key="1" />]);
 
   tests.itSupportsSystemProps<PillProps, PillStylesNames>({
     component: Pill,

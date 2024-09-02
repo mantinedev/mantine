@@ -30,7 +30,7 @@ function Demo() {
     <>
       <Text ta="center">{inViewport ? 'Box is visible' : 'Scroll to see box'}</Text>
       <Box h={64} style={{ overflow: 'scroll' }}>
-        <Box h={128}></Box>
+        <Box h={128} />
         <Box ref={ref} bg="blue" h={32} p={8}>
           <Text ta="center" c="white">
             A box

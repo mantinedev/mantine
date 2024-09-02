@@ -58,7 +58,9 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
     const handleWheel = (event: WheelEvent) => {
       const element = event.target as HTMLElement;
       const isScrollbarWheel = scrollbar?.contains(element);
-      if (isScrollbarWheel) handleWheelScroll(event, maxScrollPos);
+      if (isScrollbarWheel) {
+        handleWheelScroll(event, maxScrollPos);
+      }
     };
     document.addEventListener('wheel', handleWheel, { passive: false });
     return () => document.removeEventListener('wheel', handleWheel, { passive: false } as any);

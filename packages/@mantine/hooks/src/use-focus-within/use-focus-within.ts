@@ -18,23 +18,24 @@ export function useFocusWithin<T extends HTMLElement = any>({
   onFocus,
 }: UseFocusWithinOptions = {}): { ref: React.MutableRefObject<T>; focused: boolean } {
   const ref = useRef<T>();
-  const [focused, _setFocused] = useState(false);
+  const [focused, setFocused] = useState(false);
   const focusedRef = useRef(false);
-  const setFocused = (value: boolean) => {
-    _setFocused(value);
+
+  const _setFocused = (value: boolean) => {
+    setFocused(value);
     focusedRef.current = value;
   };
 
   const handleFocusIn = (event: FocusEvent) => {
     if (!focusedRef.current) {
-      setFocused(true);
+      _setFocused(true);
       onFocus?.(event);
     }
   };
 
   const handleFocusOut = (event: FocusEvent) => {
     if (focusedRef.current && !containsRelatedTarget(event)) {
-      setFocused(false);
+      _setFocused(false);
       onBlur?.(event);
     }
   };

@@ -130,6 +130,8 @@ const RingLoader: MantineLoaderComponent = forwardRef(({ style, ...others }, ref
   </svg>
 ));
 
+RingLoader.displayName = '@mantine/core/RingLoader';
+
 export function CustomComponent() {
   return (
     <div style={{ padding: 40 }}>
