@@ -22,6 +22,6 @@ export interface ControlsGroupSettings {
   /** Maximum possible date */
   maxDate?: Date;
 
-  /** dayjs locale, defaults to value defined in DatesProvider */
+  /** Dayjs locale, defaults to value defined in DatesProvider */
   locale?: string;
 }

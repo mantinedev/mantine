@@ -61,19 +61,17 @@ export function IconInsideThumb() {
 
 export function SwitchGroup() {
   return (
-    <>
-      <Switch.Group
-        defaultValue={['one', 'three']}
-        m={4}
-        label="Switch Group"
-        description="Some description"
-        classNames={{ label: 'test-label' }}
-      >
-        <Switch value="one" label="one" />
-        <Switch value="two" label="two" />
-        <Switch value="three" label="three" />
-      </Switch.Group>
-    </>
+    <Switch.Group
+      defaultValue={['one', 'three']}
+      m={4}
+      label="Switch Group"
+      description="Some description"
+      classNames={{ label: 'test-label' }}
+    >
+      <Switch value="one" label="one" />
+      <Switch value="two" label="two" />
+      <Switch value="three" label="three" />
+    </Switch.Group>
   );
 }
 

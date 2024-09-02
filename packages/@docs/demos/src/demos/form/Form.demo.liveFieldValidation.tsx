@@ -82,12 +82,12 @@ function Demo() {
     validateInputOnChange: [
       'email',
       'name',
-      // use FORM_INDEX to reference fields indices
+      // Use FORM_INDEX to reference fields indices
       `jobs.${FORM_INDEX}.title`,
     ],
     initialValues: { name: '', email: '', age: 0, jobs: [{ title: '' }, { title: '' }] },
 
-    // functions will be used to validate values at corresponding key
+    // Functions will be used to validate values at corresponding key
     validate: {
       name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),

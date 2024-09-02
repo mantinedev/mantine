@@ -3,14 +3,14 @@ import { changeErrorIndices } from './change-error-indices';
 const TEST_ERRORS = {
   name: 'name-error',
 
-  // single level of nesting
+  // Single level of nesting
   'fruits.0.name': 'fruit-error-1',
   'fruits.0.available': 'fruit-error-2',
   'fruits.4.available': 'fruit-error-3',
   'fruits.15.inner.name': 'fruit-error-4',
   'fruits.15.inner.0.name': 'fruit-error-5',
 
-  // multiple levels of nesting
+  // Multiple levels of nesting
   'nested.0.inner.1.name': 'nested-error-1',
   'nested.0.inner.2.name': 'nested-error-2',
   'nested.2.inner.2.name': 'keep-nested-error-1',

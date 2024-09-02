@@ -218,7 +218,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
       {...others}
       type="default"
       __staticSelector="DateTimePicker"
-      // valueFormatter={valueFormatter}
+      // ValueFormatter={valueFormatter}
     >
       <DatePicker
         {...calendarProps}

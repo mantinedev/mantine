@@ -16,24 +16,23 @@ interface DemoProps {
 }
 
 export function Demo({ data }: DemoProps) {
-  const { component: Component } = data;
   switch (data.type) {
     case 'code':
       return (
         <CodeDemo {...data}>
-          <Component />
+          <data.component />
         </CodeDemo>
       );
     case 'configurator':
       return (
         <ConfiguratorDemo {...data}>
-          <Component />
+          <data.component />
         </ConfiguratorDemo>
       );
     case 'styles-api':
       return (
         <StylesApiDemo {...data}>
-          <Component />
+          <data.component />
         </StylesApiDemo>
       );
     default:

@@ -61,7 +61,7 @@ export function AutoContrast() {
         value="hello"
         defaultChecked
         color="lime.4"
-        // autoContrast
+        // AutoContrast
       />
     </div>
   );
@@ -173,7 +173,7 @@ export function WithError() {
 
 export function Sizes() {
   return ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => (
-    <Checkbox size={size} defaultChecked label={`Size ${size}`} mt="md" />
+    <Checkbox size={size} defaultChecked label={`Size ${size}`} mt="md" key={size} />
   ));
 }
 

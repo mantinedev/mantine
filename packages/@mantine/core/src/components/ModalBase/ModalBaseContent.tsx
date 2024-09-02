@@ -60,3 +60,5 @@ export const ModalBaseContent = forwardRef<HTMLDivElement, _ModalBaseContentProp
     );
   }
 );
+
+ModalBaseContent.displayName = '@mantine/core/ModalBaseContent';

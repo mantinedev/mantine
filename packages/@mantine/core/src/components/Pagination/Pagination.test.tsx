@@ -7,7 +7,7 @@ const defaultProps: PaginationProps = {
 };
 
 describe('@mantine/core/Pagination', () => {
-  tests.axe([<Pagination {...defaultProps} />]);
+  tests.axe([<Pagination {...defaultProps} key="1" />]);
 
   tests.itSupportsSystemProps<PaginationProps, PaginationStylesNames>({
     component: Pagination,

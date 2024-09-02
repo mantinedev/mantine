@@ -49,7 +49,7 @@ export function SingleButton() {
           components: {
             ActionIcon: ActionIcon.extend({
               defaultProps: {
-                // color: 'red',
+                // Color: 'red',
               },
             }),
           },
@@ -182,7 +182,7 @@ export function Variables() {
       <ActionIcon
         size="xl"
         __vars={{ '--aasdsad': 'asdasd' }}
-        vars={(theme, props) => {
+        vars={(_theme, props) => {
           const result = { root: {} as any };
           if (props.size === 'xl') {
             result.root['--ai-size'] = rem('12rem');

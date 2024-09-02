@@ -37,10 +37,10 @@ export interface CalendarHeaderSettings {
   /** Change previous icon */
   previousIcon?: React.ReactNode;
 
-  /** aria-label for next button */
+  /** Aria-label for next button */
   nextLabel?: string;
 
-  /** aria-label for previous button */
+  /** Aria-label for previous button */
   previousLabel?: string;
 
   /** Called when next button is clicked */
@@ -81,7 +81,7 @@ export interface CalendarHeaderProps
   /** Label displayed between next and previous buttons */
   label: React.ReactNode;
 
-  /** aria-label for level control */
+  /** Aria-label for level control */
   levelControlAriaLabel?: string;
 }
 

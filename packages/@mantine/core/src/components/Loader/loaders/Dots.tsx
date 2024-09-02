@@ -11,3 +11,5 @@ export const Dots: MantineLoaderComponent = forwardRef(({ className, ...others }
     <span className={classes.dot} />
   </Box>
 ));
+
+Dots.displayName = '@mantine/core/Dots';

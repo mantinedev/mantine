@@ -44,7 +44,7 @@ const getTab = (value: TabValue) => {
 const clickTab = (value: TabValue) => userEvent.click(getTab(value));
 
 describe('@mantine/core/Tabs', () => {
-  tests.axe([<Tabs {...defaultProps} defaultValue="tab-1" />]);
+  tests.axe([<Tabs {...defaultProps} defaultValue="tab-1" key="1" />]);
   tests.itSupportsSystemProps<TabsProps, TabsStylesNames>({
     component: Tabs,
     props: defaultProps,

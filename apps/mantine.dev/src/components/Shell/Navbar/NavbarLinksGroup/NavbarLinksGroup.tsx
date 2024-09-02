@@ -51,7 +51,7 @@ interface NavbarLinksGroupProps {
 export function NavbarLinksGroup({ data, onNavbarClose }: NavbarLinksGroupProps) {
   const router = useRouter();
   const [opened, setOpened] = useState(hasActiveLink(data, router.pathname));
-  // const [opened, setOpened] = useState(true);
+  // Const [opened, setOpened] = useState(true);
   const itemRefs = useRef<Record<string, HTMLAnchorElement>>({});
 
   const scrollToLink = (pathname: string) => {

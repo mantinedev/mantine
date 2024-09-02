@@ -31,13 +31,13 @@ export interface WeekdaysRowProps
   /** Controls size */
   size?: MantineSize;
 
-  /** dayjs locale, defaults to value defined in DatesProvider */
+  /** Dayjs locale, defaults to value defined in DatesProvider */
   locale?: string;
 
-  /** number 0-6, 0 – Sunday, 6 – Saturday, defaults to 1 – Monday */
+  /** Number 0-6, 0 – Sunday, 6 – Saturday, defaults to 1 – Monday */
   firstDayOfWeek?: DayOfWeek;
 
-  /** dayjs format to get weekday name, defaults to "dd" */
+  /** Dayjs format to get weekday name, defaults to "dd" */
   weekdayFormat?: string | ((date: Date) => React.ReactNode);
 
   /** Choose cell type that will be used to render weekdays, defaults to th */

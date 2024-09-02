@@ -5,7 +5,9 @@ export function addUnlinkedScrollListener(node: HTMLElement, handler = () => {})
     const position = { left: node.scrollLeft, top: node.scrollTop };
     const isHorizontalScroll = prevPosition.left !== position.left;
     const isVerticalScroll = prevPosition.top !== position.top;
-    if (isHorizontalScroll || isVerticalScroll) handler();
+    if (isHorizontalScroll || isVerticalScroll) {
+      handler();
+    }
     prevPosition = position;
     rAF = window.requestAnimationFrame(loop);
   })();

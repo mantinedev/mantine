@@ -55,13 +55,13 @@ export interface MonthSettings {
   /** Assigns ref of every day based on its position in the table, used for arrows navigation */
   __getDayRef?: (rowIndex: number, cellIndex: number, node: HTMLButtonElement) => void;
 
-  /** dayjs locale, defaults to value defined in DatesProvider */
+  /** Dayjs locale, defaults to value defined in DatesProvider */
   locale?: string;
 
-  /** number 0-6, 0 – Sunday, 6 – Saturday, defaults to 1 – Monday */
+  /** Number 0-6, 0 – Sunday, 6 – Saturday, defaults to 1 – Monday */
   firstDayOfWeek?: DayOfWeek;
 
-  /** dayjs format for weekdays names, defaults to "dd" */
+  /** Dayjs format for weekdays names, defaults to "dd" */
   weekdayFormat?: string | ((date: Date) => React.ReactNode);
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday, defaults to value defined in DatesProvider */

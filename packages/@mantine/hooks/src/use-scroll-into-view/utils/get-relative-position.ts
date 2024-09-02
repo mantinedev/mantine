@@ -20,7 +20,9 @@ export const getRelativePosition = ({
   if (axis === 'y') {
     const diff = getDiff('top');
 
-    if (diff === 0) return 0;
+    if (diff === 0) {
+      return 0;
+    }
 
     if (alignment === 'start') {
       const distance = diff - offset;
@@ -48,7 +50,9 @@ export const getRelativePosition = ({
   if (axis === 'x') {
     const diff = getDiff('left');
 
-    if (diff === 0) return 0;
+    if (diff === 0) {
+      return 0;
+    }
 
     if (alignment === 'start') {
       const distance = diff - offset;

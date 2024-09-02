@@ -92,10 +92,10 @@ export interface RichTextEditorLabels {
   /** A function go get RichTextEditor.Color control aria-label based on color that control applies */
   colorControlLabel: (color: string) => string;
 
-  /** aria-label for link editor url input */
+  /** Aria-label for link editor url input */
   linkEditorInputLabel: string;
 
-  /** placeholder for link editor url input */
+  /** Placeholder for link editor url input */
   linkEditorInputPlaceholder: string;
 
   /** Content of external button tooltip in link editor when the link was chosen to open in a new tab */
@@ -122,16 +122,16 @@ export interface RichTextEditorLabels {
   /** Save button title text in color picker control */
   colorPickerSave: string;
 
-  /** aria-label for color palette colors */
+  /** Aria-label for color palette colors */
   colorPickerColorLabel: (color: string) => string;
 
-  /** aria-label for task list control */
+  /** Aria-label for task list control */
   tasksControlLabel: string;
 
-  /** aria-label for task list sink task */
+  /** Aria-label for task list sink task */
   tasksSinkLabel: string;
 
-  /** aria-label for task list lift task */
+  /** Aria-label for task list lift task */
   tasksLiftLabel: string;
 }
 

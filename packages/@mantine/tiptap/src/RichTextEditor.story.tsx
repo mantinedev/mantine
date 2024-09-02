@@ -316,6 +316,8 @@ export function PlaceholderExtension() {
   );
 }
 
+const TestIcon = () => <div>$</div>;
+
 export function ControlStylesApi() {
   const editor = useEditor({
     extensions: [StarterKit, Link],
@@ -328,7 +330,7 @@ export function ControlStylesApi() {
         <RichTextEditor.Toolbar>
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.Bold />
-            <RichTextEditor.Link icon={() => <div>$</div>} />
+            <RichTextEditor.Link icon={TestIcon} />
           </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
 

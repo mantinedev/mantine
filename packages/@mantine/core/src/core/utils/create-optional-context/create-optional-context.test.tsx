@@ -20,7 +20,7 @@ describe('@mantine/core/create-optional-context', () => {
 
   it('returns null when useSafeContext hook was called without Provider', () => {
     const [, useContext] = createOptionalContext<ContextType>();
-    const wrapper = ({ children }: { children: React.ReactNode }) => <>{children}</>;
+    const wrapper = ({ children }: { children: React.ReactNode }) => children;
 
     const view = renderHook(() => useContext(), { wrapper });
     expect(view.result.current).toBe(null);

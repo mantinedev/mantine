@@ -10,7 +10,7 @@ const defaultProps: SwitchProps = {
 };
 
 describe('@mantine/core/Switch', () => {
-  tests.axe([<Switch label="test-label" />, <Switch aria-label="test-label" />]);
+  tests.axe([<Switch label="test-label" key="1" />, <Switch aria-label="test-label" key="2" />]);
   tests.itSupportsFocusEvents({ component: Switch, props: defaultProps, selector: 'input' });
   tests.itHandlesSwitchCheckboxState({ component: Switch, props: defaultProps });
   tests.itConnectsLabelAndInput({ component: Switch, props: defaultProps });

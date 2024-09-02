@@ -15,11 +15,11 @@ const defaultProps: NativeSelectProps = {
 
 describe('@mantine/core/NativeSelect', () => {
   tests.axe([
-    <NativeSelect aria-label="test-label" />,
-    <NativeSelect label="test-label" />,
-    <NativeSelect label="test-label" error />,
-    <NativeSelect label="test-label" error="test-error" id="test" />,
-    <NativeSelect label="test-label" description="test-description" />,
+    <NativeSelect aria-label="test-label" key="1" />,
+    <NativeSelect label="test-label" key="2" />,
+    <NativeSelect label="test-label" error key="3" />,
+    <NativeSelect label="test-label" error="test-error" id="test" key="4" />,
+    <NativeSelect label="test-label" description="test-description" key="5" />,
   ]);
 
   tests.itSupportsSystemProps<NativeSelectProps, __InputStylesNames>({

@@ -23,7 +23,7 @@ export function Dirty() {
 
   return (
     <>
-      {form.values.formArray.map((item, index) => (
+      {form.values.formArray.map((_item, index) => (
         <Group key={index}>
           <ActionIcon onClick={() => form.removeListItem('formArray', index)}>
             <IconTrash size={16} />

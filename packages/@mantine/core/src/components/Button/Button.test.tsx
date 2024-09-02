@@ -10,8 +10,8 @@ const defaultProps: ButtonProps = {
 
 describe('@mantine/core/Button', () => {
   tests.axe([
-    <Button aria-label="test" />,
-    <Button.Group aria-label="test">
+    <Button aria-label="test" key="1" />,
+    <Button.Group aria-label="test" key="2">
       <Button aria-label="test-1" />
       <Button aria-label="test-2" />
     </Button.Group>,
