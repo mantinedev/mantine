@@ -187,7 +187,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
 
         return {
           modalProps: rest,
-          content: <>{currentModalChildren}</>,
+          content: currentModalChildren,
         };
       }
       default: {

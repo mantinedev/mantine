@@ -7,7 +7,7 @@ const defaultProps: FileInputProps = {
 };
 
 describe('@mantine/core/FileInput', () => {
-  tests.axe([<FileInput aria-label="test-label" />]);
+  tests.axe([<FileInput aria-label="test-label" key="1" />]);
 
   tests.itSupportsSystemProps<FileInputProps, __InputStylesNames>({
     component: FileInput,

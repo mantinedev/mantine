@@ -4,7 +4,12 @@ import { CheckboxCard, CheckboxCardProps, CheckboxCardStylesNames } from './Chec
 const defaultProps: CheckboxCardProps = {};
 
 describe('@mantine/core/CheckboxCard', () => {
-  tests.axe([<CheckboxCard>Label</CheckboxCard>, <CheckboxCard checked>Label</CheckboxCard>]);
+  tests.axe([
+    <CheckboxCard key="1">Label</CheckboxCard>,
+    <CheckboxCard checked key="2">
+      Label
+    </CheckboxCard>,
+  ]);
 
   tests.itSupportsSystemProps<CheckboxCardProps, CheckboxCardStylesNames>({
     component: CheckboxCard,

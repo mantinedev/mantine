@@ -5,21 +5,27 @@ import { CssVariableColorSwatch } from './CssVariableColorSwatch/CssVariableColo
 export function CssVariablesList() {
   const resolvedVariables = defaultCssVariablesResolver(DEFAULT_THEME);
   const variables = keys(resolvedVariables.variables).map((key) => [
-    <Code style={{ whiteSpace: 'nowrap' }}>{key}</Code>,
+    <Code style={{ whiteSpace: 'nowrap' }} key="code">
+      {key}
+    </Code>,
     resolvedVariables.variables[key],
-    <CssVariableColorSwatch variable={resolvedVariables.variables[key]} />,
+    <CssVariableColorSwatch variable={resolvedVariables.variables[key]} key="swatch" />,
   ]);
 
   const lightVariables = keys(resolvedVariables.light).map((key) => [
-    <Code style={{ whiteSpace: 'nowrap' }}>{key}</Code>,
+    <Code style={{ whiteSpace: 'nowrap' }} key="code">
+      {key}
+    </Code>,
     resolvedVariables.light[key],
-    <CssVariableColorSwatch variable={resolvedVariables.light[key]} />,
+    <CssVariableColorSwatch variable={resolvedVariables.light[key]} key="swatch" />,
   ]);
 
   const darkVariables = keys(resolvedVariables.dark).map((key) => [
-    <Code style={{ whiteSpace: 'nowrap' }}>{key}</Code>,
+    <Code style={{ whiteSpace: 'nowrap' }} key="code">
+      {key}
+    </Code>,
     resolvedVariables.dark[key],
-    <CssVariableColorSwatch variable={resolvedVariables.dark[key]} />,
+    <CssVariableColorSwatch variable={resolvedVariables.dark[key]} key="swatch" />,
   ]);
 
   return (

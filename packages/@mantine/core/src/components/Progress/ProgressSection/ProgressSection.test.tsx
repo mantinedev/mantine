@@ -13,7 +13,7 @@ const defaultProps: ProgressSectionProps = {
 };
 
 describe('@mantine/core/ProgressSection', () => {
-  tests.axe([<TestContainer {...defaultProps} aria-label="test" />]);
+  tests.axe([<TestContainer {...defaultProps} aria-label="test" key="1" />]);
 
   tests.itSupportsSystemProps<ProgressSectionProps, ProgressSectionStylesNames>({
     component: TestContainer,

@@ -5,7 +5,7 @@ import { FOCUS_SELECTOR, focusable, tabbable } from './tabbable';
 
 export function useFocusTrap(active = true): (instance: HTMLElement | null) => void {
   const ref = useRef<HTMLElement | null>();
-  const restoreAria = useRef<Function | null>(null);
+  const restoreAria = useRef<(() => void) | null>(null);
 
   const focusNode = (node: HTMLElement) => {
     let focusElement: HTMLElement | null = node.querySelector('[data-autofocus]');
@@ -13,7 +13,9 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
     if (!focusElement) {
       const children = Array.from<HTMLElement>(node.querySelectorAll(FOCUS_SELECTOR));
       focusElement = children.find(tabbable) || children.find(focusable) || null;
-      if (!focusElement && focusable(node)) focusElement = node;
+      if (!focusElement && focusable(node)) {
+        focusElement = node;
+      }
     }
 
     if (focusElement) {

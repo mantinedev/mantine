@@ -10,8 +10,8 @@ describe('use-debounced-state', () => {
     jest.clearAllMocks();
   });
 
-  let timeoutCallback: Function;
-  const setTimeout = jest.spyOn(window, 'setTimeout').mockImplementation(((cb: Function) => {
+  let timeoutCallback: () => void;
+  const setTimeout = jest.spyOn(window, 'setTimeout').mockImplementation(((cb: () => void) => {
     timeoutCallback = cb;
     return 1;
   }) as any);

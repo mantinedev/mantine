@@ -117,7 +117,7 @@ export interface UseFieldReturnType<
   /** Resets touched state to false */
   resetTouched: () => void;
 
-  /** key that should be added to the input when mode is uncontrolled */
+  /** Key that should be added to the input when mode is uncontrolled */
   key: number;
 }
 
@@ -156,7 +156,7 @@ export function useField<
   }, []);
 
   const setValue = useCallback(
-    async (
+    (
       value: T,
       {
         updateKey = mode === 'uncontrolled',

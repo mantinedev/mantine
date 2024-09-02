@@ -45,7 +45,9 @@ export const SpotlightSearch = factory<SpotlightSearchFactory>((props, ref) => {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
-    if (isComposing) return;
+    if (isComposing) {
+      return;
+    }
 
     if (event.nativeEvent.code === 'ArrowDown') {
       event.preventDefault();

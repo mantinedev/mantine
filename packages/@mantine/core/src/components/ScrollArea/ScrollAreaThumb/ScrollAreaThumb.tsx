@@ -61,6 +61,8 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>((props, forwardedRef
   );
 });
 
+Thumb.displayName = '@mantine/core/ScrollAreaThumb';
+
 interface ScrollAreaThumbProps extends ThumbProps {
   forceMount?: true;
 }
@@ -77,3 +79,5 @@ export const ScrollAreaThumb = forwardRef<HTMLDivElement, ScrollAreaThumbProps>(
     return null;
   }
 );
+
+ScrollAreaThumb.displayName = '@mantine/core/ScrollAreaThumb';

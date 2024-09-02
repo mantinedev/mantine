@@ -147,7 +147,7 @@ describe('@mantine/dates/Calendar', () => {
     expectLevelsCount([1, 0]);
   });
 
-  it('supports defaultLevel prop (uncontrolled)', async () => {
+  it('supports defaultLevel prop (uncontrolled)', () => {
     render(<Calendar {...defaultProps} defaultLevel="year" />);
     expectLevelsCount([0, 1]);
   });

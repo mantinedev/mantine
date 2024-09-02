@@ -17,7 +17,7 @@ const expectInputValue = (value: string, container: HTMLElement, index: 0 | 1) =
   expect(getInput(container, index)).toHaveValue(value);
 
 describe('@mantine/core/RangeSlider', () => {
-  tests.axe([<RangeSlider {...defaultProps} />]);
+  tests.axe([<RangeSlider {...defaultProps} key="1" />]);
   tests.itSupportsSystemProps<RangeSliderProps, SliderStylesNames>({
     component: RangeSlider,
     props: defaultProps,

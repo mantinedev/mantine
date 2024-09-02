@@ -26,7 +26,7 @@ export function itSupportsMonthProps(options: Options, name = 'supports month pr
       const days = getDays(container);
       expect(days).toHaveLength(35);
 
-      // first week of April 2022 (with outside dates)
+      // First week of April 2022 (with outside dates)
       expect(days[0].textContent).toBe('28');
       expect(days[1].textContent).toBe('29');
       expect(days[2].textContent).toBe('30');
@@ -84,7 +84,7 @@ export function itSupportsMonthProps(options: Options, name = 'supports month pr
       const { container } = render(<options.component {...options.props} />);
       const days = getDays(container);
 
-      // first week of April 2022 (with outside dates)
+      // First week of April 2022 (with outside dates)
       expect(days[0]).toHaveAttribute('data-outside');
       expect(days[1]).toHaveAttribute('data-outside');
       expect(days[2]).toHaveAttribute('data-outside');

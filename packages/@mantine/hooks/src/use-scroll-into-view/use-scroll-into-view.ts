@@ -7,30 +7,30 @@ import { getScrollStart } from './utils/get-scroll-start';
 import { setScrollParam } from './utils/set-scroll-param';
 
 interface ScrollIntoViewAnimation {
-  /** target element alignment relatively to parent based on current axis */
+  /** Target element alignment relatively to parent based on current axis */
   alignment?: 'start' | 'end' | 'center';
 }
 
 interface ScrollIntoViewParams {
-  /** callback fired after scroll */
+  /** Callback fired after scroll */
   onScrollFinish?: () => void;
 
-  /** duration of scroll in milliseconds */
+  /** Duration of scroll in milliseconds */
   duration?: number;
 
-  /** axis of scroll */
+  /** Axis of scroll */
   axis?: 'x' | 'y';
 
-  /** custom mathematical easing function */
+  /** Custom mathematical easing function */
   easing?: (t: number) => number;
 
-  /** additional distance between nearest edge and element */
+  /** Additional distance between nearest edge and element */
   offset?: number;
 
-  /** indicator if animation may be interrupted by user scrolling */
+  /** Indicator if animation may be interrupted by user scrolling */
   cancelable?: boolean;
 
-  /** prevents content jumping in scrolling lists with multiple targets */
+  /** Prevents content jumping in scrolling lists with multiple targets */
   isList?: boolean;
 }
 
@@ -99,7 +99,7 @@ export function useScrollIntoView<
         const now = performance.now();
         const elapsed = now - startTime.current;
 
-        // easing timing progress
+        // Easing timing progress
         const t = reducedMotion || duration === 0 ? 1 : elapsed / duration;
 
         const distance = start + change * easing(t);
@@ -131,7 +131,7 @@ export function useScrollIntoView<
   };
 
   /**
-   * detection of one of these events stops scroll animation
+   * Detection of one of these events stops scroll animation
    * wheel - mouse wheel / touch pad
    * touchmove - any touchable device
    */
@@ -144,7 +144,7 @@ export function useScrollIntoView<
     passive: true,
   });
 
-  // cleanup requestAnimationFrame
+  // Cleanup requestAnimationFrame
   useEffect(() => cancel, []);
 
   return {

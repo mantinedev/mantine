@@ -30,7 +30,9 @@ export function useComboboxTargetProps({
 
     if (withKeyboardNavigation) {
       // Ignore during composition in IME
-      if (event.nativeEvent.isComposing) return;
+      if (event.nativeEvent.isComposing) {
+        return;
+      }
 
       if (event.nativeEvent.code === 'ArrowDown') {
         event.preventDefault();
@@ -57,7 +59,9 @@ export function useComboboxTargetProps({
       if (event.nativeEvent.code === 'Enter' || event.nativeEvent.code === 'NumpadEnter') {
         // This is a workaround for handling differences in behavior of isComposing property in Safari
         // See: https://dninomiya.github.io/form-guide/stop-enter-submit
-        if (event.nativeEvent.keyCode === 229) return;
+        if (event.nativeEvent.keyCode === 229) {
+          return;
+        }
 
         const selectedOptionIndex = ctx.store.getSelectedOptionIndex();
 

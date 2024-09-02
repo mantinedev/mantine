@@ -42,3 +42,5 @@ export const ScrollAreaScrollbarAuto = forwardRef<HTMLDivElement, ScrollAreaScro
     return null;
   }
 );
+
+ScrollAreaScrollbarAuto.displayName = '@mantine/core/ScrollAreaScrollbarAuto';

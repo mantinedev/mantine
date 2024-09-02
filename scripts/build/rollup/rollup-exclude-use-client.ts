@@ -1,4 +1,4 @@
-// files names that should not have use client directive at the top of the output file
+// Files names that should not have use client directive at the top of the output file
 export const ROLLUP_EXCLUDE_USE_CLIENT = [
   'index',
   'core/utils/deep-merge/deep-merge',

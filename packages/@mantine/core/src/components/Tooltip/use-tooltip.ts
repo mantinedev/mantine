@@ -89,7 +89,7 @@ export function useTooltip(settings: UseTooltip) {
     }),
     useFocus(context, { enabled: settings.events?.focus, visibleOnly: true }),
     useRole(context, { role: 'tooltip' }),
-    // cannot be used with controlled tooltip, page jumps
+    // Cannot be used with controlled tooltip, page jumps
     useDismiss(context, { enabled: typeof settings.opened === 'undefined' }),
     useDelayGroup(context, { id: uid }),
   ]);

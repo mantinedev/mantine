@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { getPackagesList, Package } from '../packages/get-packages-list';
 
 export async function getPackageBuildOrder(
@@ -7,7 +8,9 @@ export async function getPackageBuildOrder(
 ) {
   const name = pkg.packageJson.name!;
 
-  if (name in order) return;
+  if (name in order) {
+    return;
+  }
   if (pkg.packageJson.private) {
     order[name] = -1;
     return;

@@ -31,7 +31,7 @@ export interface YearsListSettings extends ControlsGroupSettings {
   /** Determines whether propagation for Escape key should be stopped */
   __stopPropagation?: boolean;
 
-  /** dayjs format for years list, `'YYYY'` by default  */
+  /** Dayjs format for years list, `'YYYY'` by default  */
   yearsListFormat?: string;
 
   /** Adds props to year picker control based on date */

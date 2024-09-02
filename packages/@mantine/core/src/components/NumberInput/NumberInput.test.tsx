@@ -28,11 +28,11 @@ const focusInput = () => fireEvent.focus(getInput());
 
 describe('@mantine/core/NumberInput', () => {
   tests.axe([
-    <NumberInput aria-label="test-label" />,
-    <NumberInput label="test-label" />,
-    <NumberInput label="test-label" error />,
-    <NumberInput label="test-label" error="test-error" id="test" />,
-    <NumberInput label="test-label" description="test-description" />,
+    <NumberInput aria-label="test-label" key="1" />,
+    <NumberInput label="test-label" key="2" />,
+    <NumberInput label="test-label" error key="3" />,
+    <NumberInput label="test-label" error="test-error" id="test" key="4" />,
+    <NumberInput label="test-label" description="test-description" key="5" />,
   ]);
 
   tests.itSupportsSystemProps<NumberInputProps, __InputStylesNames>({

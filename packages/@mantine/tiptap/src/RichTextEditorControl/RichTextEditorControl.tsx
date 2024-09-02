@@ -108,7 +108,7 @@ export function createControl({
   icon,
   isDisabled,
 }: CreateControlProps) {
-  return forwardRef<HTMLButtonElement, RichTextEditorControlBaseProps>((props, ref) => {
+  const Control = forwardRef<HTMLButtonElement, RichTextEditorControlBaseProps>((props, ref) => {
     const { editor, labels } = useRichTextEditorContext();
     const _label = labels[label] as string;
     return (
@@ -124,4 +124,8 @@ export function createControl({
       />
     );
   });
+
+  Control.displayName = `@mantine/tiptap/${label}`;
+
+  return Control;
 }

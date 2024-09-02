@@ -124,7 +124,7 @@ export function CompoundComponents() {
         description="Input description"
         error="Input error"
         id="test-id"
-        styles={(theme, props) => ({
+        styles={(_theme, props) => ({
           description: {
             background: props.required ? 'orange' : 'pink',
           },

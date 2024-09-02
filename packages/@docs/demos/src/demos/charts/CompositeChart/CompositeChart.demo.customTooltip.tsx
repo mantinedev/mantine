@@ -56,7 +56,9 @@ interface ChartTooltipProps {
 }
 
 function ChartTooltip({ label, payload }: ChartTooltipProps) {
-  if (!payload) return null;
+  if (!payload) {
+    return null;
+  }
 
   return (
     <Paper px="md" py="sm" withBorder shadow="md" radius="md">

@@ -1,14 +1,16 @@
 import { useCallback, useState } from 'react';
 
 export function useSetState<T extends Record<string, any>>(initialState: T) {
-  const [state, _setState] = useState(initialState);
-  const setState = useCallback(
+  const [state, setState] = useState(initialState);
+
+  const _setState = useCallback(
     (statePartial: Partial<T> | ((currentState: T) => Partial<T>)) =>
-      _setState((current) => ({
+      setState((current) => ({
         ...current,
         ...(typeof statePartial === 'function' ? statePartial(current) : statePartial),
       })),
     []
   );
-  return [state, setState] as const;
+
+  return [state, _setState] as const;
 }

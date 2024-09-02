@@ -3,6 +3,7 @@ import { isElement } from './is-element';
 
 const TestComponent = () => <div />;
 const TextRefComponent = forwardRef<HTMLDivElement>((_props, ref) => <div ref={ref} />);
+TextRefComponent.displayName = 'TextRefComponent';
 
 describe('@mantine/utils/is-element', () => {
   it('correctly detects elements', () => {
@@ -18,6 +19,6 @@ describe('@mantine/utils/is-element', () => {
     expect(isElement(null)).toBe(false);
     expect(isElement(undefined)).toBe(false);
     expect(isElement(true)).toBe(false);
-    expect(isElement([<div>Element</div>])).toBe(false);
+    expect(isElement([<div key="1">Element</div>])).toBe(false);
   });
 });

@@ -30,10 +30,10 @@ export function Usage() {
         centered
         controls={[
           // {
-          //   type: 'color',
-          //   prop: 'color',
-          //   initialValue: 'yellow',
-          //   libraryValue: 'yellow',
+          //   Type: 'color',
+          //   Prop: 'color',
+          //   InitialValue: 'yellow',
+          //   LibraryValue: 'yellow',
           // },
           {
             type: 'select',

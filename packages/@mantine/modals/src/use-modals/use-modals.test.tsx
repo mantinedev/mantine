@@ -105,7 +105,7 @@ describe('@mantine/modals/use-modals', () => {
     expect(screen.getByText('Cancel')).toBeInTheDocument();
   });
 
-  it('correctly renders a confirm modal with labels as HTMLElement', async () => {
+  it('correctly renders a confirm modal with labels as HTMLElement', () => {
     const wrapper = ({ children }: any) => (
       <MantineProvider>
         <ModalsProvider>{children}</ModalsProvider>

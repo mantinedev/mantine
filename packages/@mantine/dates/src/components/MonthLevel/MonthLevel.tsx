@@ -19,7 +19,7 @@ import { Month, MonthSettings, MonthStylesNames } from '../Month';
 export type MonthLevelStylesNames = MonthStylesNames | CalendarHeaderStylesNames;
 
 export interface MonthLevelBaseSettings extends MonthSettings {
-  /** dayjs label format to display month label or a function that returns month label based on month value, defaults to "MMMM YYYY" */
+  /** Dayjs label format to display month label or a function that returns month label based on month value, defaults to "MMMM YYYY" */
   monthLabelFormat?: string | ((month: Date) => React.ReactNode);
 }
 
@@ -37,7 +37,7 @@ export interface MonthLevelProps
   /** Month that is currently displayed */
   month: Date;
 
-  /** aria-label for change level control */
+  /** Aria-label for change level control */
   levelControlAriaLabel?: string;
 
   /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */

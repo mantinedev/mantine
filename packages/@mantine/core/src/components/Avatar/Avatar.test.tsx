@@ -6,7 +6,7 @@ import { AvatarGroup } from './AvatarGroup/AvatarGroup';
 const defaultProps: AvatarProps = {};
 
 describe('@mantine/core/Avatar', () => {
-  tests.axe([<Avatar src="test.png" alt="test" />, <Avatar alt="test" />]);
+  tests.axe([<Avatar src="test.png" alt="test" key="1" />, <Avatar alt="test" key="2" />]);
   tests.itSupportsSystemProps<AvatarProps, AvatarStylesNames>({
     component: Avatar,
     props: defaultProps,

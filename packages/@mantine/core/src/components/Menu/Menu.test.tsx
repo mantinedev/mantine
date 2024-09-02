@@ -34,7 +34,7 @@ const expectOpened = () => expect(screen.getByRole('menu')).toBeInTheDocument();
 const getControl = () => screen.getByRole('button');
 
 describe('@mantine/core/Menu', () => {
-  tests.axe([<TestContainer opened={false} />]);
+  tests.axe([<TestContainer opened={false} key="1" />]);
   tests.itHasExtend({ component: Menu });
   tests.itHasClasses({ component: Menu });
   tests.itRendersChildren({ component: Menu, props: {} });
@@ -199,7 +199,7 @@ describe('@mantine/core/Menu', () => {
     expect(onChange).toHaveBeenLastCalledWith(false);
   });
 
-  it('correctly calls callbacks when opening and closing the controlled menu only via prop', async () => {
+  it('correctly calls callbacks when opening and closing the controlled menu only via prop', () => {
     const onOpen = jest.fn();
     const onClose = jest.fn();
     const onChange = jest.fn();
