@@ -7,8 +7,8 @@ import { Grid } from '@mantine/core';
 
 function Demo() {
   return (
-    // Wrapper div is added for demonstration purposes only,
-    // it is not required in real projects
+    // Wrapper div is added for demonstration purposes only.
+    // It is not required in real projects.
     <div style={{ resize: 'horizontal', overflow: 'hidden', maxWidth: '100%' }}>
       <Grid
         type="container"
@@ -26,8 +26,8 @@ function Demo() {
 
 function Demo() {
   return (
-    // Wrapper div is added for demonstration purposes only,
-    // it is not required in real projects
+    // Wrapper div is added for demonstration purposes only.
+    // It is not required in real projects.
     <div style={{ resize: 'horizontal', overflow: 'hidden', maxWidth: '100%' }}>
       <Grid
         type="container"
