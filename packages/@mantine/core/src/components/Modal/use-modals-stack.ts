@@ -44,3 +44,5 @@ export function useModalsStack<const T extends string>(modals: T[]): ModalStackR
 
   return { state, open, close, closeAll, toggle, register };
 }
+
+export const useDrawersStack = useModalsStack;

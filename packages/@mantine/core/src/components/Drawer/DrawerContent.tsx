@@ -7,7 +7,9 @@ export type DrawerContentStylesNames = 'content' | 'inner';
 
 export interface DrawerContentProps
   extends ModalBaseContentProps,
-    CompoundStylesApiProps<DrawerContentFactory> {}
+    CompoundStylesApiProps<DrawerContentFactory> {
+  __hidden?: boolean;
+}
 
 export type DrawerContentFactory = Factory<{
   props: DrawerContentProps;
@@ -20,7 +22,8 @@ const defaultProps: Partial<DrawerContentProps> = {};
 
 export const DrawerContent = factory<DrawerContentFactory>((_props, ref) => {
   const props = useProps('DrawerContent', defaultProps, _props);
-  const { classNames, className, style, styles, vars, children, radius, ...others } = props;
+  const { classNames, className, style, styles, vars, children, radius, __hidden, ...others } =
+    props;
 
   const ctx = useDrawerContext();
   const Scroll: React.FC<any> = ctx.scrollAreaComponent || NativeScrollArea;
@@ -32,6 +35,7 @@ export const DrawerContent = factory<DrawerContentFactory>((_props, ref) => {
       ref={ref}
       {...others}
       radius={radius || ctx.radius || 0}
+      data-hidden={__hidden || undefined}
     >
       <Scroll style={{ height: 'calc(100vh - var(--drawer-offset) * 2)' }}>{children}</Scroll>
     </ModalBaseContent>

@@ -4,9 +4,9 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog7140);
 
-## Modal.Stack
+## Modal.Stack and Drawer.Stack components
 
-New [Modal.Stack](/core/modal/) component simplifies usage of multiple modals at the same time.
+New [Modal.Stack](/core/modal/) and [Drawer.Stack](/core/drawer) components simplify usage of multiple modals/drawers at the same time.
 
 Use `Modal.Stack` component to render multiple modals at the same time.
 `Modal.Stack` keeps track of opened modals, manages z-index values, focus trapping
@@ -21,7 +21,7 @@ Differences from using multiple `Modal` components:
 
 <Demo data={ModalDemos.stack} />
 
-## useModalsStack hook
+## useModalsStack/useDrawersStack hooks
 
 `useModalsStack` hook provides an easy way to control multiple modals at the same time.
 It accepts an array of unique modals ids and returns an object with the following properties:

@@ -158,7 +158,7 @@ Differences from using multiple `Modal` components:
 It accepts an array of unique modals ids and returns an object with the following properties:
 
 ```tsx
-interface ModalStackReturnType<T extends string> {
+interface UseModalsStackReturnType<T extends string> {
   // Current opened state of each modal
   state: Record<T, boolean>;
 
