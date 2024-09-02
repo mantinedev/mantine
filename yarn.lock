@@ -13274,6 +13274,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-config-mantine@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "eslint-config-mantine@npm:4.0.1"
+  peerDependencies:
+    "@eslint/js": ^9.9.1
+    eslint: ^9.9.1
+    eslint-plugin-jest: ^28.8.2
+    eslint-plugin-jsx-a11y: ^6.9.0
+    eslint-plugin-react: ^7.35.0
+    typescript-eslint: ^8.3.0
+  checksum: 10c0/948048402a981e1a683b9ccd263dc76e024fc1c59b89e8e9ed379329b1a9ec78c7aa9e4c58aa69edc7c3c14d808093544afa0ab8fdfc9000dc491e9573e993aa
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-jest@npm:^28.8.2":
   version: 28.8.2
   resolution: "eslint-plugin-jest@npm:28.8.2"
@@ -17903,6 +17917,7 @@ __metadata:
     esbuild: "npm:^0.19.5"
     esbuild-jest: "npm:^0.5.0"
     eslint: "npm:^9.9.1"
+    eslint-config-mantine: "npm:^4.0.1"
     eslint-plugin-jest: "npm:^28.8.2"
     eslint-plugin-jsx-a11y: "npm:^6.9.0"
     eslint-plugin-react: "npm:^7.35.0"
