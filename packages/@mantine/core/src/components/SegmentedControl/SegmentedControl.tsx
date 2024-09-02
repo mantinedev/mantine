@@ -32,13 +32,13 @@ export type SegmentedControlStylesNames =
   | 'innerLabel';
 export type SegmentedControlCssVariables = {
   root:
-    | '--sc-radius'
-    | '--sc-color'
-    | '--sc-font-size'
-    | '--sc-padding'
-    | '--sc-shadow'
-    | '--sc-transition-duration'
-    | '--sc-transition-timing-function';
+  | '--sc-radius'
+  | '--sc-color'
+  | '--sc-font-size'
+  | '--sc-padding'
+  | '--sc-shadow'
+  | '--sc-transition-duration'
+  | '--sc-transition-timing-function';
 };
 
 export interface SegmentedControlItem {
@@ -47,21 +47,21 @@ export interface SegmentedControlItem {
   disabled?: boolean;
 }
 
-export interface SegmentedControlProps
+export interface SegmentedControlProps<T extends string = string>
   extends BoxProps,
-    StylesApiProps<SegmentedControlFactory>,
-    ElementProps<'div', 'onChange'> {
+  StylesApiProps<SegmentedControlFactory>,
+  ElementProps<'div', 'onChange'> {
   /** Data based on which controls are rendered */
-  data: (string | SegmentedControlItem)[];
+  data: (T | SegmentedControlItem)[];
 
   /** Controlled component value */
-  value?: string;
+  value?: T;
 
   /** Uncontrolled component default value */
-  defaultValue?: string;
+  defaultValue?: T;
 
   /** Called when value changes */
-  onChange?: (value: string) => void;
+  onChange?: (value: T) => void;
 
   /** Determines whether the component is disabled */
   disabled?: boolean;
