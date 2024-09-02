@@ -10,7 +10,7 @@ import type { TreeNodeData } from './Tree';
 
 export type TreeExpandedState = Record<string, boolean>;
 
-function getInitialExpandedState(
+function getInitialTreeExpandedState(
   initialState: TreeExpandedState,
   data: TreeNodeData[],
   value: string | string[] | undefined,
@@ -20,11 +20,20 @@ function getInitialExpandedState(
     acc[node.value] = node.value in initialState ? initialState[node.value] : node.value === value;
 
     if (Array.isArray(node.children)) {
-      getInitialExpandedState(initialState, node.children, value, acc);
+      getInitialTreeExpandedState(initialState, node.children, value, acc);
     }
   });
 
   return acc;
+}
+
+export function getTreeExpandedState(data: TreeNodeData[], expandedNodesValues: string[]) {
+  const state = getInitialTreeExpandedState({}, data, []);
+  expandedNodesValues.forEach((node) => {
+    state[node] = true;
+  });
+
+  return state;
 }
 
 function getInitialCheckedState(initialState: string[], data: TreeNodeData[]) {
@@ -148,7 +157,7 @@ export function useTree({
 
   const initialize = useCallback(
     (_data: TreeNodeData[]) => {
-      setExpandedState((current) => getInitialExpandedState(current, _data, selectedState));
+      setExpandedState((current) => getInitialTreeExpandedState(current, _data, selectedState));
       setCheckedState((current) => getInitialCheckedState(current, _data));
       setData(_data);
     },

@@ -27,3 +27,8 @@ export const Demo_checked = {
   name: '⭐ Demo: checked',
   render: renderDemo(demos.checked),
 };
+
+export const Demo_expandedState = {
+  name: '⭐ Demo: expandedState',
+  render: renderDemo(demos.expandedState),
+};

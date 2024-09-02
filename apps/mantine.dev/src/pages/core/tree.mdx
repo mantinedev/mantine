@@ -120,7 +120,7 @@ The hook accepts an object with the following properties:
 ```tsx
 export interface UseTreeInput {
   /** Initial expanded state of all nodes */
-  initialExpandedState?: TreeExpandedState;
+  initialExpandedState?: Record<string, boolean>;
 
   /** Initial selected state of nodes */
   initialSelectedState?: string[];
@@ -232,6 +232,15 @@ to control tree state:
 To implement checked state, you need to render `Checkbox.Indicator` in the `renderNode` function:
 
 <Demo data={TreeDemos.checked} />
+
+## Initial expanded state
+
+Expanded state is an object of `node.value` and boolean values that represent nodes expanded state.
+To change initial expanded state, pass `initialExpandedState` to the `useTree` hook.
+To generate expanded state from data with expanded nodes, you can use `getTreeExpandedState` function:
+it accepts data and an array of expanded nodes values and returns expanded state object.
+
+<Demo data={TreeDemos.expandedState} />
 
 ## Example: files tree
 

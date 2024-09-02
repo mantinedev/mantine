@@ -1,5 +1,5 @@
 export { Tree } from './Tree';
-export { useTree } from './use-tree';
+export { useTree, getTreeExpandedState } from './use-tree';
 export type {
   TreeCssVariables,
   TreeFactory,
