@@ -6,23 +6,12 @@ const code = `
 import { PasswordInput } from '@mantine/core';
 import { IconEyeCheck, IconEyeOff } from '@tabler/icons-react';
 
-function Demo() {
-  return (
-    <PasswordInput
-      label="Change visibility toggle icon"
-      placeholder="Change visibility toggle icon"
-      defaultValue="secret"
-      visibilityToggleIcon={({ reveal }) =>
-        reveal ? (
-          <IconEyeOff style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
-        ) : (
-          <IconEyeCheck style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
-        )
-      }
-    />
+const VisibilityToggleIcon = ({ reveal }: { reveal: boolean }) =>
+  reveal ? (
+    <IconEyeOff style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
+  ) : (
+    <IconEyeCheck style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
   );
-}
-`;
 
 function Demo() {
   return (
@@ -32,13 +21,28 @@ function Demo() {
       label="Change visibility toggle icon"
       placeholder="Change visibility toggle icon"
       defaultValue="secret"
-      visibilityToggleIcon={({ reveal }) =>
-        reveal ? (
-          <IconEyeOff style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
-        ) : (
-          <IconEyeCheck style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
-        )
-      }
+      visibilityToggleIcon={VisibilityToggleIcon}
+    />
+  );
+}
+`;
+
+const VisibilityToggleIcon = ({ reveal }: { reveal: boolean }) =>
+  reveal ? (
+    <IconEyeOff style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
+  ) : (
+    <IconEyeCheck style={{ width: 'var(--psi-icon-size)', height: 'var(--psi-icon-size)' }} />
+  );
+
+function Demo() {
+  return (
+    <PasswordInput
+      maw={320}
+      mx="auto"
+      label="Change visibility toggle icon"
+      placeholder="Change visibility toggle icon"
+      defaultValue="secret"
+      visibilityToggleIcon={VisibilityToggleIcon}
     />
   );
 }

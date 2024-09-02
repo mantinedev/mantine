@@ -118,6 +118,7 @@ export function DynamicNestedItems() {
     .fill(0)
     .map((_, index) => (
       <NavLink
+        key={index}
         label="Child link 1"
         leftSection={<IconHome2 size={16} stroke={1.5} key={index} />}
       />

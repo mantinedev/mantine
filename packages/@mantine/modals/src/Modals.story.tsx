@@ -14,6 +14,16 @@ import {
 
 export default { title: 'Modals manager' };
 
+const ContextModal = ({ context, id, innerProps }: ContextModalProps<{ contextProp: string }>) => {
+  console.log(innerProps, id, context);
+  return (
+    <div>
+      <div>Test custom modal: {innerProps.contextProp}</div>
+      <Button onClick={() => context.closeModal(id)}>Close</Button>
+    </div>
+  );
+};
+
 export function Usage() {
   const showContextModal = () =>
     openContextModal({
@@ -75,17 +85,7 @@ export function Usage() {
   return (
     <ModalsProvider
       modalProps={{ centered: true }}
-      modals={{
-        hello: ({ context, id, innerProps }: ContextModalProps<{ contextProp: string }>) => {
-          console.log(innerProps, id, context);
-          return (
-            <div>
-              <div>Test custom modal: {innerProps.contextProp}</div>
-              <Button onClick={() => context.closeModal(id)}>Close</Button>
-            </div>
-          );
-        },
-      }}
+      modals={{ hello: ContextModal }}
       labels={{ confirm: 'Confirm', cancel: 'Cancel' }}
     >
       <Group p={40}>
@@ -105,7 +105,8 @@ export function Usage() {
 }
 
 export function NestedInsideModal() {
-  const [opened, setIsOpened] = useState(false);
+  const [opened, setOpened] = useState(false);
+
   const handleConfirm = () =>
     openConfirmModal({
       title: 'Title',
@@ -114,12 +115,12 @@ export function NestedInsideModal() {
     });
   return (
     <ModalsProvider>
-      <Button onClick={() => setIsOpened(true)}>Open modal</Button>
+      <Button onClick={() => setOpened(true)}>Open modal</Button>
       <Modal
         size="xl"
         padding={0}
         opened={opened}
-        onClose={() => setIsOpened(false)}
+        onClose={() => setOpened(false)}
         centered
         styles={{
           header: {

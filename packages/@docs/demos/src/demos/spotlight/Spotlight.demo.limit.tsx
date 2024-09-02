@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { IconSearch } from '@tabler/icons-react';
 import { rem } from '@mantine/core';
 import { SpotlightActionData } from '@mantine/spotlight';

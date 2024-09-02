@@ -7,7 +7,7 @@ const key = 'mantine-use-local-storage-1';
 
 export function Usage() {
   const [id, set] = useLocalStorage({
-    // defaultValue: 123,
+    // DefaultValue: 123,
     getInitialValueInEffect: false,
     key,
   });

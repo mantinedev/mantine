@@ -50,7 +50,7 @@ describe('@mantine/form/watch', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it('calls subscriber function when field changes due to form initialize', async () => {
+  it('calls subscriber function when field changes due to form initialize', () => {
     const hook = renderHook(() =>
       useForm({ mode: 'uncontrolled', initialValues: { a: '', b: '' } })
     );
@@ -69,7 +69,7 @@ describe('@mantine/form/watch', () => {
     });
   });
 
-  it('does not call subscriber function when other field changes due to form initialize', async () => {
+  it('does not call subscriber function when other field changes due to form initialize', () => {
     const hook = renderHook(() =>
       useForm({ mode: 'uncontrolled', initialValues: { a: '', b: '' } })
     );

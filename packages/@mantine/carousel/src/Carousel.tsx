@@ -260,7 +260,9 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
   const handleScroll = useCallback((index: number) => embla && embla.scrollTo(index), [embla]);
 
   const handleSelect = useCallback(() => {
-    if (!embla) return;
+    if (!embla) {
+      return;
+    }
     const slide = embla.selectedScrollSnap();
     setSelected(slide);
     slide !== selected && onSlideChange?.(slide);

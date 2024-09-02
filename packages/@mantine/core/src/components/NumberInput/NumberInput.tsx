@@ -20,11 +20,11 @@ import { UnstyledButton } from '../UnstyledButton';
 import { NumberInputChevron } from './NumberInputChevron';
 import classes from './NumberInput.module.css';
 
-// re for negative -0, -0., -0.0, -0.00, -0.000 ... strings
-// and for positive 0., 0.0, 0.00, 0.000 ... strings
+// Re for negative -0, -0., -0.0, -0.00, -0.000 ... strings
+// And for positive 0., 0.0, 0.00, 0.000 ... strings
 const leadingDecimalZeroPattern = /^(0\.0*|-0(\.0*)?)$/;
 
-// re for 01, 006, 00.02, -0010, -000.293 ... and negative counterparts
+// Re for 01, 006, 00.02, -0010, -000.293 ... and negative counterparts
 const leadingZerosPattern = /^-?0\d+(\.\d+)?\.?$/;
 
 export interface NumberInputHandlers {

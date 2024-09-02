@@ -42,8 +42,8 @@ export function Compound() {
         onSpotlightClose={() => console.log('close')}
         clearQueryOnClose
         scrollable
-        // fullScreen
-        // maxHeight="100vh"
+        // FullScreen
+        // MaxHeight="100vh"
       >
         <Spotlight.Search
           placeholder="Search something..."
@@ -103,7 +103,7 @@ export function NotScrollable() {
           { id: '2', label: 'About', description: 'About me', keywords: 'ng' },
           { id: '3', label: 'Contact', description: 'Contact me', keywords: 'react' },
         ]}
-        // scrollable
+        // Scrollable
         nothingFound="Nothing found"
         highlightQuery
         clearQueryOnClose

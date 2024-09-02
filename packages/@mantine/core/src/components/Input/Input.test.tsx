@@ -15,14 +15,15 @@ const getInputWrapper = (element: HTMLElement) => element.querySelector('.mantin
 
 describe('@mantine/core/Input', () => {
   tests.axe([
-    <Input aria-label="test-input" />,
-    <Input placeholder="test-input" />,
-    <Input placeholder="test-input" error />,
+    <Input aria-label="test-input" key="1" />,
+    <Input placeholder="test-input" key="2" />,
+    <Input placeholder="test-input" error key="3" />,
     <Input.Wrapper
       id="test-id"
       label="test-label"
       description="test-description"
       error="test-error"
+      key="4"
     >
       <Input id="test-id" />
     </Input.Wrapper>,

@@ -74,8 +74,8 @@ export function MultilineWithJsx() {
           </>
         }
         w={300}
-        // withArrow
-        // transitionProps={{ duration: 0 }}
+        // WithArrow
+        // TransitionProps={{ duration: 0 }}
         radius="md"
         multiline
       >

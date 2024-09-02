@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import {

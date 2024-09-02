@@ -5,7 +5,7 @@ import { CloseIcon } from './CloseIcon';
 const defaultProps: CloseButtonProps = {};
 
 describe('@mantine/core/CloseButton', () => {
-  tests.axe([<CloseButton aria-label="test" />]);
+  tests.axe([<CloseButton aria-label="test" key="1" />]);
 
   tests.itSupportsFocusEvents<CloseButtonProps>({
     component: CloseButton,

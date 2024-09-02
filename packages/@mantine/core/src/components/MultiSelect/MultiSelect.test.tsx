@@ -15,12 +15,23 @@ const defaultProps: MultiSelectProps = {
 
 describe('@mantine/core/MultiSelect', () => {
   tests.axe([
-    <MultiSelect aria-label="test-label" data={['test-1', 'test-2']} />,
-    <MultiSelect label="test-label" data={['test-1', 'test-2']} />,
-    <MultiSelect label="test-label" error data={['test-1', 'test-2']} />,
-    <MultiSelect label="test-label" error="test-error" id="test" data={['test-1', 'test-2']} />,
-    <MultiSelect label="test-label" description="test-description" data={['test-1', 'test-2']} />,
-    <MultiSelect label="test-label" data={['test-1', 'test-2']} dropdownOpened />,
+    <MultiSelect aria-label="test-label" data={['test-1', 'test-2']} key="1" />,
+    <MultiSelect label="test-label" data={['test-1', 'test-2']} key="2" />,
+    <MultiSelect label="test-label" error data={['test-1', 'test-2']} key="3" />,
+    <MultiSelect
+      label="test-label"
+      error="test-error"
+      id="test"
+      data={['test-1', 'test-2']}
+      key="4"
+    />,
+    <MultiSelect
+      label="test-label"
+      description="test-description"
+      data={['test-1', 'test-2']}
+      key="5"
+    />,
+    <MultiSelect label="test-label" data={['test-1', 'test-2']} dropdownOpened key="6" />,
   ]);
 
   tests.itSupportsSystemProps<MultiSelectProps, MultiSelectStylesNames>({

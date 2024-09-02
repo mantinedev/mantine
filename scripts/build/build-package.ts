@@ -29,7 +29,7 @@ export async function buildPackage(_packageName: string) {
     logger.log(`Generating ${formattedPackageName} *.d.ts files...`);
     await generateDts(packagePath);
 
-    const config = await createPackageConfig(packagePath);
+    const config = createPackageConfig(packagePath);
     logger.log(`Compiling ${formattedPackageName} package with rollup...`);
 
     await compile(config);

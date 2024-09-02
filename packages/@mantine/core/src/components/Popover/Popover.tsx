@@ -133,7 +133,7 @@ export interface PopoverProps extends __PopoverProps, StylesApiProps<PopoverFact
   /** Determines whether dropdown should be closed when `Escape` key is pressed, `true` by default */
   closeOnEscape?: boolean;
 
-  /** id base to create accessibility connections */
+  /** Id base to create accessibility connections */
   id?: string;
 
   /** Determines whether dropdown and target elements should have accessible roles, `true` by default */

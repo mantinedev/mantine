@@ -15,7 +15,7 @@ function TestContainer(props: Partial<HoverCardProps>) {
 }
 
 describe('@mantine/core/HoverCard', () => {
-  tests.axe([<TestContainer initiallyOpened />, <TestContainer />]);
+  tests.axe([<TestContainer initiallyOpened key="1" />, <TestContainer key="2" />]);
   tests.itRendersChildren({
     component: HoverCard,
     props: {},

@@ -6,8 +6,8 @@ const defaultProps: BurgerProps = {};
 
 describe('@mantine/core/Burger', () => {
   tests.axe([
-    <Burger aria-label="test" />,
-    <Burger>
+    <Burger aria-label="test" key="1" />,
+    <Burger key="2">
       <VisuallyHidden>test</VisuallyHidden>
     </Burger>,
   ]);

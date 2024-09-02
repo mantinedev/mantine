@@ -14,7 +14,9 @@ export const ScrollAreaScrollbarX = forwardRef<HTMLDivElement, ScrollAreaScrollb
     const composeRefs = useMergedRef(forwardedRef, ref, ctx.onScrollbarXChange);
 
     useEffect(() => {
-      if (ref.current) setComputedStyle(getComputedStyle(ref.current));
+      if (ref.current) {
+        setComputedStyle(getComputedStyle(ref.current));
+      }
     }, [ref]);
 
     return (
@@ -55,3 +57,5 @@ export const ScrollAreaScrollbarX = forwardRef<HTMLDivElement, ScrollAreaScrollb
     );
   }
 );
+
+ScrollAreaScrollbarX.displayName = '@mantine/core/ScrollAreaScrollbarX';

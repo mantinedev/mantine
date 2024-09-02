@@ -16,12 +16,17 @@ const defaultProps: SelectProps = {
 
 describe('@mantine/core/Select', () => {
   tests.axe([
-    <Select aria-label="test-label" data={['test-1', 'test-2']} />,
-    <Select aria-label="test-label" dropdownOpened data={['test-1', 'test-2']} />,
-    <Select label="test-label" data={['test-1', 'test-2']} />,
-    <Select label="test-label" error data={['test-1', 'test-2']} />,
-    <Select label="test-label" error="test-error" id="test" data={['test-1', 'test-2']} />,
-    <Select label="test-label" description="test-description" data={['test-1', 'test-2']} />,
+    <Select aria-label="test-label" data={['test-1', 'test-2']} key="1" />,
+    <Select aria-label="test-label" dropdownOpened data={['test-1', 'test-2']} key="2" />,
+    <Select label="test-label" data={['test-1', 'test-2']} key="3" />,
+    <Select label="test-label" error data={['test-1', 'test-2']} key="4" />,
+    <Select label="test-label" error="test-error" id="test" data={['test-1', 'test-2']} key="5" />,
+    <Select
+      label="test-label"
+      description="test-description"
+      data={['test-1', 'test-2']}
+      key="6"
+    />,
   ]);
 
   tests.itSupportsSystemProps<SelectProps, SelectStylesNames>({
@@ -199,7 +204,7 @@ describe('@mantine/core/Select', () => {
     render(<Wrapper />);
 
     await userEvent.click(screen.getByRole('textbox'));
-    // type backspace to remove last character
+    // Type backspace to remove last character
     await userEvent.type(screen.getByRole('textbox'), '{backspace}');
     expect(screen.getByRole('textbox')).toHaveValue('Angula');
   });

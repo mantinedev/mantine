@@ -11,3 +11,5 @@ export const Bars: MantineLoaderComponent = forwardRef(({ className, ...others }
     <span className={classes.bar} />
   </Box>
 ));
+
+Bars.displayName = '@mantine/core/Bars';
