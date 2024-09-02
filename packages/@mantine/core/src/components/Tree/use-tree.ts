@@ -47,6 +47,12 @@ export interface UseTreeInput {
 
   /** Determines whether multiple node can be selected at a time */
   multiple?: boolean;
+
+  /** Called with the node value when it is expanded */
+  onNodeExpand?: (value: string) => void;
+
+  /** Called with the node value when it is collapsed */
+  onNodeCollapse?: (value: string) => void;
 }
 
 export interface UseTreeReturnType {
@@ -130,6 +136,8 @@ export function useTree({
   initialCheckedState = [],
   initialExpandedState = {},
   multiple = false,
+  onNodeCollapse,
+  onNodeExpand,
 }: UseTreeInput = {}): UseTreeReturnType {
   const [data, setData] = useState<TreeNodeData[]>([]);
   const [expandedState, setExpandedState] = useState(initialExpandedState);
@@ -147,17 +155,42 @@ export function useTree({
     [selectedState, checkedState]
   );
 
-  const toggleExpanded = useCallback((value: string) => {
-    setExpandedState((current) => ({ ...current, [value]: !current[value] }));
-  }, []);
+  const toggleExpanded = useCallback(
+    (value: string) => {
+      setExpandedState((current) => {
+        const nextState = { ...current, [value]: !current[value] };
+        nextState[value] ? onNodeExpand?.(value) : onNodeCollapse?.(value);
+        return nextState;
+      });
+    },
+    [onNodeCollapse, onNodeExpand]
+  );
 
-  const collapse = useCallback((value: string) => {
-    setExpandedState((current) => ({ ...current, [value]: false }));
-  }, []);
+  const collapse = useCallback(
+    (value: string) => {
+      setExpandedState((current) => {
+        if (current[value] !== false) {
+          onNodeCollapse?.(value);
+        }
 
-  const expand = useCallback((value: string) => {
-    setExpandedState((current) => ({ ...current, [value]: true }));
-  }, []);
+        return { ...current, [value]: false };
+      });
+    },
+    [onNodeCollapse]
+  );
+
+  const expand = useCallback(
+    (value: string) => {
+      setExpandedState((current) => {
+        if (current[value] !== true) {
+          onNodeExpand?.(value);
+        }
+
+        return { ...current, [value]: true };
+      });
+    },
+    [onNodeExpand]
+  );
 
   const expandAllNodes = useCallback(() => {
     setExpandedState((current) => {

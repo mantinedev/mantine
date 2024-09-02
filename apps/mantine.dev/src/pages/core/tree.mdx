@@ -130,6 +130,12 @@ export interface UseTreeInput {
 
   /** Determines whether multiple node can be selected at a time */
   multiple?: boolean;
+
+  /** Called with the node value when it is expanded */
+  onNodeExpand?: (value: string) => void;
+
+  /** Called with the node value when it is collapsed */
+  onNodeCollapse?: (value: string) => void;
 }
 ```
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { IconChevronDown } from '@tabler/icons-react';
 import { Button } from '../Button';
 import { Group } from '../Group';
@@ -58,7 +59,10 @@ export function Usage() {
 }
 
 export function Controller() {
-  const tree = useTree();
+  const tree = useTree({
+    onNodeCollapse: (value) => console.log('Node collapsed:', value),
+    onNodeExpand: (value) => console.log('Node expanded:', value),
+  });
   return (
     <div style={{ padding: 40 }}>
       <Tree data={data} tree={tree} />
