@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { changeErrorIndices, reorderErrors } from '../../lists';
-import { insertPath, removePath, reorderPath } from '../../paths';
-import { InsertListItem, RemoveListItem, ReorderListItem } from '../../types';
+import { insertPath, removePath, reorderPath, replacePath } from '../../paths';
+import { InsertListItem, RemoveListItem, ReorderListItem, ReplaceListItem } from '../../types';
 import type { $FormErrors } from '../use-form-errors/use-form-errors';
 import type { $FormStatus } from '../use-form-status/use-form-status';
 import type { $FormValues } from '../use-form-values/use-form-values';
@@ -44,5 +44,13 @@ export function useFormList<Values extends Record<string, any>>({
     });
   }, []);
 
-  return { reorderListItem, removeListItem, insertListItem };
+  const replaceListItem: ReplaceListItem<Values> = useCallback((path, index, item) => {
+    $status.clearFieldDirty(path);
+    $values.setValues({
+      values: replacePath(path, item, index, $values.refValues.current),
+      updateState: true,
+    });
+  }, []);
+
+  return { reorderListItem, removeListItem, insertListItem, replaceListItem };
 }
