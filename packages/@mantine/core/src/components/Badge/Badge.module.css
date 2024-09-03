@@ -53,7 +53,7 @@
   }
 
   &:where([data-with-left-section], [data-variant='dot']) {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto 1fr auto;
   }
 
   &:where([data-with-left-section][data-with-right-section]) {
