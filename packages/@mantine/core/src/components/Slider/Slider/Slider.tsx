@@ -104,6 +104,9 @@ export interface SliderProps
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+
+  /** Determines whether the selection should be only allowed from the given marks array, `false` by default */
+  restrictToMarks?: boolean;
 }
 
 export type SliderFactory = Factory<{
@@ -140,6 +143,12 @@ const varsResolver = createVarsResolver<SliderFactory>(
   })
 );
 
+function findClosest(target: number, numbers: number[]): number {
+  return numbers.reduce((prev, curr) =>
+    Math.abs(curr - target) < Math.abs(prev - target) ? curr : prev
+  );
+}
+
 export const Slider = factory<SliderFactory>((_props, ref) => {
   const props = useProps('Slider', defaultProps, _props);
   const {
@@ -170,6 +179,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
     style,
     vars,
     hiddenInputProps,
+    restrictToMarks,
     ...others
   } = props;
 
@@ -213,16 +223,33 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
           step: step!,
           precision,
         });
-        setValue(nextValue);
+        setValue(
+          restrictToMarks && marks?.length
+            ? findClosest(
+                nextValue,
+                marks.map((mark) => mark.value)
+              )
+            : nextValue
+        );
         valueRef.current = nextValue;
       }
     },
-    [disabled, min, max, step, precision, setValue]
+    [disabled, min, max, step, precision, setValue, marks, restrictToMarks]
   );
 
   const { ref: container, active } = useMove(
     handleChange,
-    { onScrubEnd: () => onChangeEnd?.(valueRef.current) },
+    {
+      onScrubEnd: () =>
+        onChangeEnd?.(
+          restrictToMarks && marks?.length
+            ? findClosest(
+                valueRef.current,
+                marks.map((mark) => mark.value)
+              )
+            : valueRef.current
+        ),
+    },
     dir
   );
 
