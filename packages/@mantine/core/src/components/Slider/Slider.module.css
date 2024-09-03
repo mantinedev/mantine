@@ -178,7 +178,6 @@
   height: var(--slider-size);
   width: var(--slider-size);
   border-radius: 1000px;
-  transform: translateX(calc(var(--slider-size) / -2));
   background-color: var(--mantine-color-white);
   pointer-events: none;
 

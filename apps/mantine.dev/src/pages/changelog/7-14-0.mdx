@@ -1,4 +1,4 @@
-import { ModalDemos } from '@docs/demos';
+import { ModalDemos, SliderDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -69,6 +69,13 @@ function Demo() {
   );
 }
 ```
+
+## Restrict Slider selection to marks
+
+[Slider](/core/slider) component now supports `restrictToMarks` prop that restricts slider value to marks only.
+Note that in this case `step` prop is ignored:
+
+<Demo data={SliderDemos.restrictToMarks} />
 
 ## Other changes
 
