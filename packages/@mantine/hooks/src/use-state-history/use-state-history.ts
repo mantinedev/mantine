@@ -54,10 +54,7 @@ export function useStateHistory<T>(
     setState({ history: [initialValue], current: 0 });
   }, [initialValue]);
 
-  const handlers = useMemo(
-    () => ({ set, forward, back, reset }),
-    [back, forward, reset, set]
-  );
-  
+  const handlers = useMemo(() => ({ back, forward, reset, set }), [back, forward, reset, set]);
+
   return [state.history[state.current], handlers, state];
 }
