@@ -4,6 +4,7 @@ export interface UseStateHistoryHandlers<T> {
   set: (value: T) => void;
   back: (steps?: number) => void;
   forward: (steps?: number) => void;
+  reset: () => void;
 }
 
 export interface StateHistory<T> {
@@ -49,7 +50,14 @@ export function useStateHistory<T>(
     []
   );
 
-  const handlers = useMemo(() => ({ set, forward, back }), []);
+  const reset = useCallback(() => {
+    setState({ history: [initialValue], current: 0 });
+  }, [initialValue]);
 
+  const handlers = useMemo(
+    () => ({ set, forward, back, reset }),
+    [back, forward, reset, set]
+  );
+  
   return [state.history[state.current], handlers, state];
 }
