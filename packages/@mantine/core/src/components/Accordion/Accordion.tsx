@@ -108,6 +108,13 @@ const varsResolver = createVarsResolver<AccordionFactory>(
   })
 );
 
+/**
+ * [Documentation](https://mantine.dev/core/accordion)
+ *
+ * [Props](https://mantine.dev/core/accordion?t=props)
+ *
+ * [Styles API](https://mantine.dev/core/accordion?t=styles-api)
+ */
 export function Accordion<Multiple extends boolean = false>(_props: AccordionProps<Multiple>) {
   const props = useProps('Accordion', defaultProps as AccordionProps<Multiple>, _props);
   const {
