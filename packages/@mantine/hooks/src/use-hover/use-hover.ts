@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export const useHover = <T extends HTMLElement = HTMLDivElement>() => {
+export function useHover<T extends HTMLElement = HTMLDivElement>() {
   const [hovered, setHovered] = useState(false);
   const ref = useRef<T>(null);
   const onMouseEnter = useCallback(() => setHovered(true), []);
@@ -18,4 +18,4 @@ export const useHover = <T extends HTMLElement = HTMLDivElement>() => {
   }, [ref.current]);
 
   return { ref, hovered };
-};
+}
