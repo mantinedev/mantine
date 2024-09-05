@@ -1,0 +1,9 @@
+.root {
+  @mixin where-light {
+    --chart-empty-background: var(--mantine-color-gray-1);
+  }
+
+  @mixin where-dark {
+    --chart-empty-background: var(--mantine-color-dark-6);
+  }
+}
