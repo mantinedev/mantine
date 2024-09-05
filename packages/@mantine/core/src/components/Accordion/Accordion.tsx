@@ -109,6 +109,8 @@ const varsResolver = createVarsResolver<AccordionFactory>(
 );
 
 /**
+ * Divide content into collapsible sections
+ *
  * [Documentation](https://mantine.dev/core/accordion)
  *
  * [Props](https://mantine.dev/core/accordion?t=props)

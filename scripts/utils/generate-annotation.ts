@@ -3,6 +3,7 @@ import path from 'node:path';
 import fs from 'fs-extra';
 import { hideBin } from 'yargs/helpers';
 import yargs from 'yargs/yargs';
+import { MDX_DATA } from '../../apps/mantine.dev/src/mdx';
 import { getPath } from './get-path';
 import { createLogger } from './signale';
 
@@ -39,13 +40,17 @@ export function camelToKebabCase(value: string) {
   }
 
   const url = `https://mantine.dev/core/${camelToKebabCase(componentName)}`;
-  const annotation = `/**
-* [Documentation](${url})
-*
-* [Props](${url}?t=props)
-*
-* [Styles API](${url}?t=styles-api)
-*/`;
+  const { description } = MDX_DATA[componentName];
+
+  const annotationContent = [
+    description,
+    `[Documentation](${url})`,
+    `[Props](${url}?t=props)`,
+    `[Styles API](${url}?t=styles-api)`,
+  ]
+    .map((v) => `\n * ${v}`)
+    .join('\n *'); // Add spacing between each line
+  const annotation = `/**${annotationContent}\n */`;
 
   const fileContent = fs.readFileSync(componentPath, 'utf-8');
   const lines = fileContent.split(os.EOL);
