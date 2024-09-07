@@ -5,37 +5,37 @@ export default { title: 'RadialBarChart' };
 const data = [
   {
     name: '18-24',
-    uv: 31.47,
+    value: 31.47,
     color: 'blue.7',
   },
   {
     name: '25-29',
-    uv: 26.69,
+    value: 26.69,
     color: 'orange.6',
   },
   {
     name: '30-34',
-    uv: 15.69,
+    value: 15.69,
     color: 'yellow.7',
   },
   {
     name: '35-39',
-    uv: 8.22,
+    value: 8.22,
     color: 'cyan.6',
   },
   {
     name: '40-49',
-    uv: 8.63,
+    value: 8.63,
     color: 'green',
   },
   {
     name: '50+',
-    uv: 2.63,
+    value: 2.63,
     color: 'pink',
   },
   {
     name: 'unknown',
-    uv: 6.67,
+    value: 6.67,
     color: 'gray',
   },
 ];
@@ -43,7 +43,7 @@ const data = [
 export function Usage() {
   return (
     <div style={{}}>
-      <RadialBarChart data={data} h={400} dataKey="uv" barSize={20} withLabels withLegend />
+      <RadialBarChart data={data} h={400} dataKey="value" barSize={20} withLabels withLegend />
     </div>
   );
 }

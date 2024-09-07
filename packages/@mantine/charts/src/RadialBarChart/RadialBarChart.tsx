@@ -6,15 +6,20 @@ import {
   RadialBarProps,
   RadialBarChart as ReChartsRadialBarChart,
   ResponsiveContainer,
+  Tooltip,
+  TooltipProps,
 } from 'recharts';
 import {
   Box,
   BoxProps,
+  ColorSwatch,
   createVarsResolver,
   ElementProps,
   factory,
   Factory,
   getThemeColor,
+  Group,
+  Paper,
   StylesApiProps,
   useMantineTheme,
   useProps,
@@ -24,7 +29,7 @@ import {
 import { ChartLegend } from '../ChartLegend';
 import classes from './RadialBarChart.module.css';
 
-export type RadialBarChartStylesNames = 'root';
+export type RadialBarChartStylesNames = 'root' | 'tooltip';
 export type RadialBarChartCssVariables = {
   root: '--chart-empty-background';
 };
@@ -51,6 +56,9 @@ export interface RadialBarChartProps
   /** Determines whether the legend should be displayed, `false` by default */
   withLegend?: boolean;
 
+  /** Determines whether the tooltip should be displayed when one of the bars is hovered, `true` by default */
+  withTooltip?: boolean;
+
   /** Color of the empty background, by default depends on the color scheme */
   emptyBackgroundColor?: string;
 
@@ -62,6 +70,9 @@ export interface RadialBarChartProps
 
   /** Props passed down to recharts Legend component */
   legendProps?: Omit<LegendProps, 'ref'>;
+
+  /** Props passed down to `Tooltip` recharts component */
+  tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
 }
 
 export type RadialBarChartFactory = Factory<{
@@ -74,6 +85,7 @@ export type RadialBarChartFactory = Factory<{
 const defaultProps: Partial<RadialBarChartProps> = {
   barSize: 20,
   withBackground: true,
+  withTooltip: true,
 };
 
 const varsResolver = createVarsResolver<RadialBarChartFactory>(
@@ -104,6 +116,8 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
     withLabels,
     withLegend,
     legendProps,
+    withTooltip,
+    tooltipProps,
     ...others
   } = props;
   const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
@@ -185,6 +199,25 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
                 />
               )}
               {...legendProps}
+            />
+          )}
+
+          {withTooltip && (
+            <Tooltip
+              animationDuration={0}
+              isAnimationActive={false}
+              cursor={{ stroke: 'var(--chart-cursor-color)' }}
+              content={({ payload }) => (
+                <Paper {...getStyles('tooltip')}>
+                  <Group gap="sm">
+                    <ColorSwatch color={payload?.[0]?.payload.fill} size={12} withShadow={false} />
+                    <span>{payload?.[0]?.payload.name}</span>
+                  </Group>
+
+                  <span>{payload?.[0]?.payload[dataKey]}</span>
+                </Paper>
+              )}
+              {...tooltipProps}
             />
           )}
         </ReChartsRadialBarChart>
