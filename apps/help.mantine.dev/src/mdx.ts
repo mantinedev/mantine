@@ -4,6 +4,7 @@ import { meta as autocompleteValueLabel } from './pages/q/autocomplete-value-lab
 import { meta as browserZoomsOnFocus } from './pages/q/browser-zooms-on-focus.mdx';
 import { meta as canIUseMantineWithAstro } from './pages/q/can-i-use-mantine-with-astro.mdx';
 import { meta as canIUseMantineWithCra } from './pages/q/can-i-use-mantine-with-cra.mdx';
+import { meta as carouselMissingStyles } from './pages/q/carousel-missing-styles.mdx';
 import { meta as colorSchemeColor } from './pages/q/color-scheme-color.mdx';
 import { meta as comboboxTesting } from './pages/q/combobox-testing.mdx';
 import { meta as customInputUseForm } from './pages/q/custom-input-use-form.mdx';
@@ -60,6 +61,7 @@ export const MDX_DATA = [
   browserZoomsOnFocus,
   canIUseMantineWithAstro,
   canIUseMantineWithCra,
+  carouselMissingStyles,
   colorSchemeColor,
   comboboxTesting,
   customInputUseForm,
