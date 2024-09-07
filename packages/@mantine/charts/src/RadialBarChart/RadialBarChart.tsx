@@ -62,6 +62,12 @@ export interface RadialBarChartProps
   /** Color of the empty background, by default depends on the color scheme */
   emptyBackgroundColor?: string;
 
+  /** Angle at which chart starts, `90` by default */
+  startAngle?: number;
+
+  /** Angle at which chart ends, `-270` by default */
+  endAngle?: number;
+
   /** Props passed down to recharts RadialBar component */
   radialBarProps?: Omit<RadialBarProps, 'ref'>;
 
@@ -84,6 +90,8 @@ export type RadialBarChartFactory = Factory<{
 
 const defaultProps: Partial<RadialBarChartProps> = {
   barSize: 20,
+  startAngle: 90,
+  endAngle: -270,
   withBackground: true,
   withTooltip: true,
 };
@@ -118,6 +126,8 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
     legendProps,
     withTooltip,
     tooltipProps,
+    startAngle,
+    endAngle,
     ...others
   } = props;
   const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
@@ -160,9 +170,14 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
     <Box ref={ref} {...getStyles('root')} {...others}>
       <ResponsiveContainer>
         <ReChartsRadialBarChart
+          margin={{ top: 0, bottom: 0, left: 0, right: 0 }}
           innerRadius="10%"
           outerRadius="100%"
+          cx="50%"
+          cy="50%"
           barSize={barSize}
+          startAngle={startAngle}
+          endAngle={endAngle}
           data={dataWithResolvedColor}
           {...radialBarChartProps}
         >

@@ -130,4 +130,16 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/charts/src/CompositeChart/CompositeChart.tsx',
     docs: 'charts/composite-chart.mdx',
   },
+
+  RadialBarChart: {
+    title: 'RadialBarChart',
+    props: ['RadialBarChart'],
+    styles: ['RadialBarChart'],
+    package: '@mantine/charts',
+    slug: '/charts/radial-bar-chart',
+    description: 'Radial bar chart component',
+    import: "import { RadialBarChart } from '@mantine/charts';",
+    source: '@mantine/charts/src/RadialBarChart/RadialBarChart.tsx',
+    docs: 'charts/radial-bar-chart.mdx',
+  },
 };

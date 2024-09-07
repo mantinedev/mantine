@@ -132,6 +132,7 @@ export * as RadarChartDemos from './demos/charts/RadarChart';
 export * as ScatterChartDemos from './demos/charts/ScatterChart';
 export * as BubbleChartDemos from './demos/charts/BubbleChart';
 export * as CompositeChartDemos from './demos/charts/CompositeChart';
+export * as RadialBarChartDemos from './demos/charts/RadialBarChart';
 
 // Extensions demos
 export * as NotificationsDemos from './demos/notifications';

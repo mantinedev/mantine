@@ -76,6 +76,7 @@ export * from './data/PinInput.styles-api';
 export * from './data/Popover.styles-api';
 export * from './data/Progress.styles-api';
 export * from './data/RadarChart.styles-api';
+export * from './data/RadialBarChart.styles-api';
 export * from './data/Radio.styles-api';
 export * from './data/Rating.styles-api';
 export * from './data/RichTextEditor.styles-api';
