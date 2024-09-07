@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import {
+  Legend,
+  LegendProps,
   RadialBar,
   RadialBarProps,
   RadialBarChart as ReChartsRadialBarChart,
@@ -15,8 +18,10 @@ import {
   StylesApiProps,
   useMantineTheme,
   useProps,
+  useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartLegend } from '../ChartLegend';
 import classes from './RadialBarChart.module.css';
 
 export type RadialBarChartStylesNames = 'root';
@@ -40,8 +45,11 @@ export interface RadialBarChartProps
   /** Determines whether empty bars area should be visible, `true` by default */
   withBackground?: boolean;
 
-  /** Determines whether labels should be displayed, true` by default */
+  /** Determines whether labels should be displayed, `false` by default */
   withLabels?: boolean;
+
+  /** Determines whether the legend should be displayed, `false` by default */
+  withLegend?: boolean;
 
   /** Color of the empty background, by default depends on the color scheme */
   emptyBackgroundColor?: string;
@@ -51,6 +59,9 @@ export interface RadialBarChartProps
 
   /** Props passed down to recharts RadarChartChart component */
   radialBarChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsRadialBarChart>;
+
+  /** Props passed down to recharts Legend component */
+  legendProps?: Omit<LegendProps, 'ref'>;
 }
 
 export type RadialBarChartFactory = Factory<{
@@ -63,7 +74,6 @@ export type RadialBarChartFactory = Factory<{
 const defaultProps: Partial<RadialBarChartProps> = {
   barSize: 20,
   withBackground: true,
-  withLabels: true,
 };
 
 const varsResolver = createVarsResolver<RadialBarChartFactory>(
@@ -92,8 +102,11 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
     radialBarProps,
     radialBarChartProps,
     withLabels,
+    withLegend,
+    legendProps,
     ...others
   } = props;
+  const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
 
   const getStyles = useStyles<RadialBarChartFactory>({
     name: 'RadialBarChart',
@@ -109,10 +122,25 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
   });
 
   const theme = useMantineTheme();
-  const dataWithResolvedColor = data.map(({ color, ...item }) => ({
-    ...item,
-    fill: getThemeColor(color, theme),
-  }));
+  const dataWithResolvedColor = data.map(({ color, ...item }) => {
+    const resolvedColor = getThemeColor(color, theme);
+
+    return {
+      ...item,
+      fill: resolvedColor,
+      fillOpacity: highlightedArea
+        ? highlightedArea === item.name
+          ? item.opacity || 1
+          : 0.05
+        : item.opacity || 1,
+    };
+  });
+
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<RadialBarChartFactory>({
+    classNames,
+    styles,
+    props,
+  });
 
   return (
     <Box ref={ref} {...getStyles('root')} {...others}>
@@ -127,7 +155,11 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
           <RadialBar
             label={
               withLabels
-                ? { position: 'insideStart', fill: 'var(--mantine-color-white)', fontSize: 12 }
+                ? {
+                    position: 'insideStart',
+                    fill: 'var(--mantine-color-white)',
+                    fontSize: 12,
+                  }
                 : undefined
             }
             background={withBackground ? { fill: 'var(--chart-empty-background)' } : undefined}
@@ -135,6 +167,26 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
             isAnimationActive={false}
             {...radialBarProps}
           />
+
+          {withLegend && (
+            <Legend
+              verticalAlign="bottom"
+              content={(payload) => (
+                <ChartLegend
+                  payload={payload.payload?.map((item) => ({
+                    ...item,
+                    dataKey: (item.payload as any)?.name,
+                  }))}
+                  onHighlight={setHighlightedArea}
+                  legendPosition={legendProps?.verticalAlign || 'bottom'}
+                  classNames={resolvedClassNames}
+                  styles={resolvedStyles}
+                  centered
+                />
+              )}
+              {...legendProps}
+            />
+          )}
         </ReChartsRadialBarChart>
       </ResponsiveContainer>
     </Box>

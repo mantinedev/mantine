@@ -2,7 +2,12 @@ import { patchConsoleWarn, tests } from '@mantine-tests/core';
 import { RadialBarChart, RadialBarChartProps, RadialBarChartStylesNames } from './RadialBarChart';
 
 const defaultProps: RadialBarChartProps = {
-  data: [],
+  data: [
+    { name: 'A', value: 10 },
+    { name: 'B', value: 20 },
+    { name: 'C', value: 30 },
+  ],
+  dataKey: 'value',
 };
 
 describe('@mantine/core/RadialBarChart', () => {

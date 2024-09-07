@@ -36,14 +36,14 @@ const data = [
   {
     name: 'unknown',
     uv: 6.67,
-    color: 'red',
+    color: 'gray',
   },
 ];
 
 export function Usage() {
   return (
     <div style={{}}>
-      <RadialBarChart data={data} h={400} dataKey="uv" />
+      <RadialBarChart data={data} h={400} dataKey="uv" barSize={20} withLabels withLegend />
     </div>
   );
 }
