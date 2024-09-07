@@ -31,6 +31,7 @@ import { meta as lightDarkIsNotEnough } from './pages/q/light-dark-is-not-enough
 import { meta as listOfStringsInUseForm } from './pages/q/list-of-strings-in-use-form.mdx';
 import { meta as mantineProviderMissing } from './pages/q/mantine-provider-missing.mdx';
 import { meta as multiselectValuePlaceholder } from './pages/q/multiselect-value-placeholder.mdx';
+import { meta as nestedInlineStyles } from './pages/q/nested-inline-styles.mdx';
 import { meta as nextLoadFonts } from './pages/q/next-load-fonts.mdx';
 import { meta as notificationsEmptyScreen } from './pages/q/notifications-empty-screen.mdx';
 import { meta as notificationsMissingStyles } from './pages/q/notifications-missing-styles.mdx';
@@ -85,6 +86,7 @@ export const MDX_DATA = [
   listOfStringsInUseForm,
   mantineProviderMissing,
   multiselectValuePlaceholder,
+  nestedInlineStyles,
   nextLoadFonts,
   notificationsEmptyScreen,
   notificationsMissingStyles,

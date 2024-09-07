@@ -1,0 +1,99 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'Can I use nested inline styles with Mantine components?',
+  description: 'Nested styles are supported only in CSS files',
+  slug: 'nested-inline-styles',
+  category: 'styles',
+  tags: ['hover', 'focus', 'data-', '::selection'],
+  created_at: 'September 7, 2024',
+  last_updated_at: 'September 7, 2024',
+};
+
+export default Layout(meta);
+
+## What are nested inline styles?
+
+Nested inline styles are commonly used in CSS-in-JS libraries like [emotion](https://emotion.sh/).
+Nested inline styles syntax looks something like this (example from [emotion documentation](https://emotion.sh/docs/css-prop#object-styles)):
+
+```tsx
+render(
+  <div
+    css={{
+      backgroundColor: 'hotpink',
+      '&:hover': {
+        color: 'lightgreen',
+      },
+    }}
+  >
+    This has a hotpink background.
+  </div>
+);
+```
+
+## Styles in Mantine components
+
+Mantine components do not support nested inline styles out of the box. The following
+example will not work:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button
+      style={{
+        // ✅ This works
+        backgroundColor: 'hotpink',
+
+        // ❌ This does not work
+        '&:hover': { color: 'lightgreen' },
+      }}
+      styles={{
+        root: {
+          // ✅ This works
+          backgroundColor: 'hotpink',
+
+          // ❌ This does not work
+          '&[data-disabled]': { color: 'lightgreen' },
+          '&:hover': { color: 'lightgreen' },
+          '&:focus': { color: 'lightgreen' },
+          '& span': { color: 'lightgreen' },
+        },
+      }}
+    >
+      This has a hotpink background.
+    </Button>
+  );
+}
+```
+
+## Why nested inline styles are not supported?
+
+Mantine does not use CSS-in-JS library for styling – all styles are either in CSS files
+or inline in the `style` attribute which does not support nested styles. Mantine does not
+use CSS-in-JS to keep bundle size small, provide support for server-side rendering and
+improve performance. You can learn more about performance [in the styles performance guide](https://mantine.dev/styles/styles-performance/).
+
+## What is the alternative?
+
+You can use nested selectors in [CSS files](https://mantine.dev/styles/css-modules/):
+
+```scss
+.button {
+  background-color: hotpink;
+
+  &:hover {
+    color: lightgreen;
+  }
+}
+```
+
+To learn more about styles in Mantine, follow [CSS modules](https://mantine.dev/styles/css-modules/),
+[PostCSS preset](https://mantine.dev/styles/postcss-preset/) and [Styles API](https://mantine.dev/styles/styles-api/) guides.
+
+## I still want to use nested inline styles
+
+Mantine has support for emotion. To set it up, follow [emotion installation guide](https://mantine.dev/styles/emotion/).
+Note that this will increase bundle size and will affect performance.
