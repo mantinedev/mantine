@@ -1,0 +1,42 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How can I change body background color?',
+  description: 'Use CSS to change body background color',
+  slug: 'body-background',
+  category: 'styles',
+  tags: ['body', 'html', 'global styles'],
+  created_at: 'September 8, 2024',
+  last_updated_at: 'September 8, 2024',
+};
+
+export default Layout(meta);
+
+## Change body background with CSS
+
+To change `body` background color you can use CSS. To do that, create `styles.css`
+file in your project and import it at the root of your application:
+
+```css
+body {
+  background-color: #f9f9f9;
+}
+```
+
+## Change body background with CSS variable
+
+`--mantine-color-body` CSS variable is used for body background and
+as background color of some components ([Modal](https://mantine.dev/core/modal/), [Paper](https://mantine.dev/core/paper/), etc.).
+To override this variable, create `styles.css` file in your project and import it at the root of your application:
+
+```scss
+:root {
+  @mixin light {
+    --mantine-color-body: #f9f9f9;
+  }
+
+  @mixin dark {
+    --mantine-color-body: #333;
+  }
+}
+```

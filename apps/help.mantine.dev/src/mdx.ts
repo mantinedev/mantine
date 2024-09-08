@@ -1,6 +1,7 @@
 import { meta as alignInputButton } from './pages/q/align-input-button.mdx';
 import { meta as areMantineComponentsAccessible } from './pages/q/are-mantine-components-accessible.mdx';
 import { meta as autocompleteValueLabel } from './pages/q/autocomplete-value-label.mdx';
+import { meta as bodyBackground } from './pages/q/body-background.mdx';
 import { meta as browserZoomsOnFocus } from './pages/q/browser-zooms-on-focus.mdx';
 import { meta as canIUseMantineWithAstro } from './pages/q/can-i-use-mantine-with-astro.mdx';
 import { meta as canIUseMantineWithCra } from './pages/q/can-i-use-mantine-with-cra.mdx';
@@ -60,6 +61,7 @@ export const MDX_DATA = [
   alignInputButton,
   areMantineComponentsAccessible,
   autocompleteValueLabel,
+  bodyBackground,
   browserZoomsOnFocus,
   canIUseMantineWithAstro,
   canIUseMantineWithCra,
