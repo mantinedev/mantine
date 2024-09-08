@@ -1,0 +1,30 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title:
+    'My buttons are transparent and the background is visible only on hover, what is wrong?',
+  description:
+    'You have installed a third-party library that overrides Mantine styles',
+  slug: 'transparent-buttons',
+  category: 'styles',
+  tags: ['tailwind', 'hover'],
+  created_at: 'September 8, 2024',
+  last_updated_at: 'September 8, 2024',
+};
+
+export default Layout(meta);
+
+## Why my buttons are transparent?
+
+If your buttons are transparent and the background is visible only on hover, you have installed a third-party library that overrides Mantine styles.
+Tailwind CSS is the most common library that causes this issue.
+
+## How to fix it?
+
+To fix the issue follow one of the [guides from the community](https://github.com/orgs/mantinedev/discussions/1672)
+that suits your project setup the best.
+
+## I do not use Tailwind, what else can cause this issue?
+
+This issue can be caused by any third-party library that overrides Mantine styles.
+Explore element in dev tools to find out which styles are applied to the button and which library is responsible for it.

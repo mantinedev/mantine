@@ -50,6 +50,7 @@ import { meta as serverComponents } from './pages/q/server-components.mdx';
 import { meta as stylesOrder } from './pages/q/styles-order.mdx';
 import { meta as tabsBorderColor } from './pages/q/tabs-border-color.mdx';
 import { meta as thirdPartyStyles } from './pages/q/third-party-styles.mdx';
+import { meta as transparentButtons } from './pages/q/transparent-buttons.mdx';
 import { meta as viteLoadFonts } from './pages/q/vite-load-fonts.mdx';
 import { meta as vueSvelteAngular } from './pages/q/vue-svelte-angular.mdx';
 import { meta as whyVscodeCannotAutoimportText } from './pages/q/why-vscode-cannot-autoimport-text.mdx';
@@ -107,6 +108,7 @@ export const MDX_DATA = [
   stylesOrder,
   tabsBorderColor,
   thirdPartyStyles,
+  transparentButtons,
   viteLoadFonts,
   vueSvelteAngular,
   whyVscodeCannotAutoimportText,
