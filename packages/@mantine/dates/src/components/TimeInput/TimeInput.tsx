@@ -17,7 +17,7 @@ export interface TimeInputProps
   extends BoxProps,
     __BaseInputProps,
     StylesApiProps<TimeInputFactory>,
-    ElementProps<'input', 'size'> {
+    ElementProps<'input', 'size' | 'placeholder'> {
   /** Determines whether seconds input should be rendered */
   withSeconds?: boolean;
 
