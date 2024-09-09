@@ -4,7 +4,7 @@ import { getPrimaryShade } from '../get-primary-shade/get-primary-shade';
 import { isLightColor } from '../luminance/luminance';
 
 interface ParseThemeColorOptions {
-  color: unknown;
+  color: string;
   theme: MantineTheme;
   colorScheme?: MantineColorScheme;
 }
