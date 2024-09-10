@@ -6,7 +6,7 @@
 [![npm](https://img.shields.io/npm/dm/@mantine/hooks)](https://www.npmjs.com/package/@mantine/hooks)
 [![Help wanted](https://img.shields.io/github/labels/mantinedev/mantine/help%20wanted?label=Contribute)](https://github.com/mantinedev/mantine/labels/help%20wanted)
 [![Discord](https://img.shields.io/badge/Chat%20on-Discord-%235865f2)](https://discord.gg/wbH82zuWMN)
-[![Twitter Follow](https://img.shields.io/twitter/follow/mantinedev?style=social)](https://twitter.com/mantinedev)
+[![X Follow](https://img.shields.io/twitter/follow/mantinedev?style=social)](https://x.com/mantinedev)
 
 ## Links
 
@@ -14,7 +14,7 @@
 - [Contribute](https://mantine.dev/contribute)
 - [Ask question or give feedback](https://github.com/mantinedev/mantine/discussions)
 - [Changelog](https://mantine.dev/changelog/all-releases)
-- [Follow on Twitter](https://twitter.com/mantinedev)
+- [Follow on X](https://x.com/mantinedev)
 - [Join Discord community](https://discord.gg/wbH82zuWMN)
 
 ## Packages
