@@ -32,7 +32,6 @@ export function PropsTablesList({ components, componentPrefix }: PropsTablesList
         placeholder="Search props"
         radius="md"
         size="lg"
-        autoFocus
       />
       {tables}
     </div>
