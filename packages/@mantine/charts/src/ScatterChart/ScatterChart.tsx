@@ -74,7 +74,7 @@ export interface ScatterChartProps
   scatterChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsScatterChart>;
 
   /** Props passed down to recharts `Scatter` component */
-  scatterProps?: Omit<ScatterProps, 'ref'>;
+  scatterProps?: Partial<Omit<ScatterProps, 'ref'>>;
 }
 
 function getAxis(key: string, dataKey: { x: string; y: string }) {
