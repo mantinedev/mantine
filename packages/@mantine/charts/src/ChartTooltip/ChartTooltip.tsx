@@ -17,7 +17,7 @@ import classes from './ChartTooltip.module.css';
 
 function updateChartTooltipPayload(payload: Record<string, any>[]): Record<string, any>[] {
   return payload.map((item) => {
-    if(!item.payload || item.payload[item.name]) {
+    if (!item.payload || item.payload[item.name]) {
       return item;
     }
     const matchFound = item.name.search(/\./);
