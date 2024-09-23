@@ -3,7 +3,10 @@ import {
   CheckedNodeStatus,
   getAllCheckedNodes,
 } from './get-all-checked-nodes/get-all-checked-nodes';
-import { getChildrenNodesValues } from './get-children-nodes-values/get-children-nodes-values';
+import {
+  getAllChildrenNodes,
+  getChildrenNodesValues,
+} from './get-children-nodes-values/get-children-nodes-values';
 import { memoizedIsNodeChecked } from './is-node-checked/is-node-checked';
 import { memoizedIsNodeIndeterminate } from './is-node-indeterminate/is-node-indeterminate';
 import type { TreeNodeData } from './Tree';
@@ -27,8 +30,13 @@ function getInitialTreeExpandedState(
   return acc;
 }
 
-export function getTreeExpandedState(data: TreeNodeData[], expandedNodesValues: string[]) {
+export function getTreeExpandedState(data: TreeNodeData[], expandedNodesValues: string[] | '*') {
   const state = getInitialTreeExpandedState({}, data, []);
+
+  if (expandedNodesValues === '*') {
+    return Object.keys(state).reduce((acc, key) => ({ ...acc, [key]: true }), {});
+  }
+
   expandedNodesValues.forEach((node) => {
     state[node] = true;
   });
@@ -41,7 +49,7 @@ function getInitialCheckedState(initialState: string[], data: TreeNodeData[]) {
 
   initialState.forEach((node) => acc.push(...getChildrenNodesValues(node, data)));
 
-  return acc;
+  return Array.from(new Set(acc));
 }
 
 export interface UseTreeInput {
@@ -129,6 +137,15 @@ export interface UseTreeReturnType {
 
   /** Unchecks node with provided value */
   uncheckNode: (value: string) => void;
+
+  /** Checks all nodes */
+  checkAllNodes: () => void;
+
+  /** Unchecks all nodes */
+  uncheckAllNodes: () => void;
+
+  /** Sets checked state */
+  setCheckedState: React.Dispatch<React.SetStateAction<string[]>>;
 
   /** Returns all checked nodes with status */
   getCheckedNodes: () => CheckedNodeStatus[];
@@ -281,6 +298,14 @@ export function useTree({
     [data]
   );
 
+  const checkAllNodes = useCallback(() => {
+    setCheckedState(() => getAllChildrenNodes(data));
+  }, [data]);
+
+  const uncheckAllNodes = useCallback(() => {
+    setCheckedState([]);
+  }, []);
+
   const getCheckedNodes = () => getAllCheckedNodes(data, checkedState).result;
   const isNodeChecked = (value: string) => memoizedIsNodeChecked(value, data, checkedState);
   const isNodeIndeterminate = (value: string) =>
@@ -300,8 +325,12 @@ export function useTree({
     expandAllNodes,
     collapseAllNodes,
     setExpandedState,
+
     checkNode,
     uncheckNode,
+    checkAllNodes,
+    uncheckAllNodes,
+    setCheckedState,
 
     toggleSelected,
     select,

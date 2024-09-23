@@ -32,3 +32,8 @@ export const Demo_expandedState = {
   name: '⭐ Demo: expandedState',
   render: renderDemo(demos.expandedState),
 };
+
+export const Demo_checkAllNodes = {
+  name: '⭐ Demo: checkAllNodes',
+  render: renderDemo(demos.checkAllNodes),
+};
