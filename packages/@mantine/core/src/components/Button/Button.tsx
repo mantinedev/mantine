@@ -23,7 +23,7 @@ import { ButtonGroup } from './ButtonGroup/ButtonGroup';
 import classes from './Button.module.css';
 
 export type ButtonStylesNames = 'root' | 'inner' | 'loader' | 'section' | 'label';
-export type ButtonVariant =
+export type ButtonVariantTypes =
   | 'filled'
   | 'light'
   | 'outline'
@@ -32,6 +32,10 @@ export type ButtonVariant =
   | 'subtle'
   | 'default'
   | 'gradient';
+
+export type ButtonVariant =
+  | ButtonVariantTypes
+  | { dark?: ButtonVariantTypes; light?: ButtonVariantTypes };
 
 export type ButtonCssVariables = {
   root:

@@ -10,7 +10,7 @@ export interface FactoryPayload {
   ref?: any;
   stylesNames?: string;
   vars?: any;
-  variant?: string;
+  variant?: string | { dark?: string; light?: string };
   staticComponents?: Record<string, any>;
   // Compound components cannot have classNames, styles and vars on MantineProvider
   compound?: boolean;

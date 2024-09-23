@@ -45,7 +45,9 @@ export type StylesRecord<StylesNames extends string, Payload> = Partial<
 
 export interface StylesApiProps<Payload extends FactoryPayload> {
   unstyled?: boolean;
-  variant?: Payload['variant'] extends string ? Payload['variant'] | (string & {}) : string;
+  variant?: Payload['variant'] extends string | { dark?: string; light?: string }
+    ? Payload['variant']
+    : string | { dark?: string; light?: string };
   classNames?: ClassNames<Payload>;
   styles?: Styles<Payload>;
   vars?: PartialVarsResolver<Payload>;

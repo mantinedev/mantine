@@ -1,5 +1,6 @@
 import { rem } from '../../../utils';
 import { MantineColor, MantineGradient, MantineTheme } from '../../theme.types';
+import { useMantineColorScheme } from '../../use-mantine-color-scheme';
 import { darken } from '../darken/darken';
 import { getGradient } from '../get-gradient/get-gradient';
 import { parseThemeColor } from '../parse-theme-color/parse-theme-color';
@@ -8,7 +9,7 @@ import { rgba } from '../rgba/rgba';
 export interface VariantColorsResolverInput {
   color: MantineColor | undefined;
   theme: MantineTheme;
-  variant: string;
+  variant: string | { dark?: string; light?: string };
   gradient?: MantineGradient;
   autoContrast?: boolean;
 }
@@ -33,10 +34,19 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
   autoContrast,
 }) => {
   const parsed = parseThemeColor({ color, theme });
+  const { colorScheme } = useMantineColorScheme();
 
   const _autoContrast = typeof autoContrast === 'boolean' ? autoContrast : theme.autoContrast;
+  const realVariant =
+    typeof variant === 'string'
+      ? variant
+      : colorScheme === 'light'
+        ? variant?.light
+        : colorScheme === 'dark'
+          ? variant?.dark
+          : variant;
 
-  if (variant === 'filled') {
+  if (realVariant === 'filled') {
     const textColor = _autoContrast
       ? parsed.isLight
         ? 'var(--mantine-color-black)'
@@ -68,7 +78,7 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
     };
   }
 
-  if (variant === 'light') {
+  if (realVariant === 'light') {
     if (parsed.isThemeColor) {
       if (parsed.shade === undefined) {
         return {
@@ -97,7 +107,7 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
     };
   }
 
-  if (variant === 'outline') {
+  if (realVariant === 'outline') {
     if (parsed.isThemeColor) {
       if (parsed.shade === undefined) {
         return {
@@ -124,7 +134,7 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
     };
   }
 
-  if (variant === 'subtle') {
+  if (realVariant === 'subtle') {
     if (parsed.isThemeColor) {
       if (parsed.shade === undefined) {
         return {
@@ -153,7 +163,7 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
     };
   }
 
-  if (variant === 'transparent') {
+  if (realVariant === 'transparent') {
     if (parsed.isThemeColor) {
       if (parsed.shade === undefined) {
         return {
@@ -180,7 +190,7 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
     };
   }
 
-  if (variant === 'white') {
+  if (realVariant === 'white') {
     if (parsed.isThemeColor) {
       if (parsed.shade === undefined) {
         return {
@@ -207,7 +217,7 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
     };
   }
 
-  if (variant === 'gradient') {
+  if (realVariant === 'gradient') {
     return {
       background: getGradient(gradient, theme),
       hover: getGradient(gradient, theme),
@@ -216,7 +226,7 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
     };
   }
 
-  if (variant === 'default') {
+  if (realVariant === 'default') {
     return {
       background: 'var(--mantine-color-default)',
       hover: 'var(--mantine-color-default-hover)',

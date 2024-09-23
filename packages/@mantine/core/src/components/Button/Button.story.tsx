@@ -353,6 +353,21 @@ export function ButtonGroup() {
   );
 }
 
+export function SwitchThemeVariant() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Button
+        variant={{
+          light: 'default',
+          dark: 'filled',
+        }}
+      >
+        Default
+      </Button>
+    </div>
+  );
+}
+
 export function Unstyled() {
   return (
     <div style={{ padding: 40 }}>
