@@ -4,6 +4,8 @@ import { MantineDemo } from '@mantinex/demo';
 const code = `
 import { Group, Button, MantineProvider, createTheme } from '@mantine/core';
 
+const theme = createTheme();
+
 function Demo() {
   return (
     <MantineThemeProvider theme={theme}>
@@ -14,7 +16,7 @@ function Demo() {
             dark: 'outline',
           }}
         >
-          Primary variant
+          Button
         </Button>
       </Group>
     </MantineThemeProvider>
@@ -34,7 +36,7 @@ function Demo() {
             dark: 'outline',
           }}
         >
-          Primary variant
+          Button
         </Button>
       </Group>
     </MantineThemeProvider>

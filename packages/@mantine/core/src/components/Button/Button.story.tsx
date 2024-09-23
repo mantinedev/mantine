@@ -362,7 +362,7 @@ export function SwitchThemeVariant() {
           dark: 'filled',
         }}
       >
-        Default
+        Button
       </Button>
     </div>
   );
