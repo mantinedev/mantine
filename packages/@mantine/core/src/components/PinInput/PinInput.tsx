@@ -310,13 +310,15 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     } else if (key === 'Delete') {
       setFieldValue('', index);
     } else if (key === 'Backspace') {
-      setFieldValue('', index);
-      if (length === index + 1) {
-        if ((event.target as HTMLInputElement).value === '') {
+      if (index !== 0) {
+        setFieldValue('', index);
+        if (length === index + 1) {
+          if ((event.target as HTMLInputElement).value === '') {
+            focusInputField('prev', index, event);
+          }
+        } else {
           focusInputField('prev', index, event);
         }
-      } else {
-        focusInputField('prev', index, event);
       }
     } else if (inputValue.length > 0 && key === _value[index]) {
       focusInputField('next', index, event);

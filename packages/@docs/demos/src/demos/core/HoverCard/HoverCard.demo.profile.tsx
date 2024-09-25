@@ -19,7 +19,7 @@ function Demo() {
                 Mantine
               </Text>
               <Anchor
-                href="https://twitter.com/mantinedev"
+                href="https://x.com/mantinedev"
                 c="dimmed"
                 size="xs"
                 style={{ lineHeight: 1 }}
@@ -60,12 +60,7 @@ export function HoverCardHomePageDemo({ children }: { children: React.ReactNode 
             <Text size="sm" fw={700} style={{ lineHeight: 1 }}>
               Mantine
             </Text>
-            <Anchor
-              href="https://twitter.com/mantinedev"
-              c="dimmed"
-              size="xs"
-              style={{ lineHeight: 1 }}
-            >
+            <Anchor href="https://x.com/mantinedev" c="dimmed" size="xs" style={{ lineHeight: 1 }}>
               @mantinedev
             </Anchor>
           </Stack>

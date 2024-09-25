@@ -123,7 +123,13 @@ const varsResolver = createVarsResolver<BarChartFactory>(
   })
 );
 
-export function BarLabel({ value, valueFormatter, ...others }: Record<string, any>) {
+export function BarLabel({
+  value,
+  valueFormatter,
+  textBreakAll,
+  parentViewBox,
+  ...others
+}: Record<string, any>) {
   return (
     <text
       {...others}

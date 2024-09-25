@@ -107,7 +107,7 @@ export interface BubbleChartProps
   tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
 
   /** Props passed down to the `Scatter` component */
-  scatterProps?: Omit<ScatterProps, 'ref'>;
+  scatterProps?: Partial<Omit<ScatterProps, 'ref'>>;
 
   /** Color of the text displayed inside the chart, `'dimmed'` by default */
   textColor?: MantineColor;

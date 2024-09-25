@@ -21,6 +21,7 @@ interface UseStateHistoryHandlers<T> {
   set: (value: T) => void;
   back: (steps?: number) => void;
   forward: (steps?: number) => void;
+  reset: () => void;
 }
 
 interface StateHistory<T> {
