@@ -123,7 +123,7 @@ const varsResolver = createVarsResolver<BarChartFactory>(
   })
 );
 
-function BarLabel({
+export function BarLabel({
   value,
   valueFormatter,
   textBreakAll,
