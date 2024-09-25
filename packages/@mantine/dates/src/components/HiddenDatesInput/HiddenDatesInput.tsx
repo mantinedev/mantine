@@ -1,4 +1,7 @@
+import dayjs from 'dayjs';
 import { DatePickerType, DatesRangeValue, DateValue } from '../../types';
+import { shiftTimezone } from '../../utils';
+import { useDatesContext } from '../DatesProvider';
 
 export type HiddenDatesInputValue = DatesRangeValue | DateValue | DateValue[];
 
@@ -10,6 +13,14 @@ export interface HiddenDatesInputProps {
 }
 
 function formatValue(value: HiddenDatesInputValue, type: DatePickerType) {
+  const ctx = useDatesContext();
+  const locale = ctx.getLocale();
+  dayjs.locale(locale);
+  const formatDateWithTimezoneAndLocale = (date: Date) => {
+    const shiftedDate = shiftTimezone('add', date, ctx.getTimezone());
+    return dayjs(shiftedDate).format();
+  };
+
   if (type === 'range' && Array.isArray(value)) {
     const [startDate, endDate] = value;
     if (!startDate) {
@@ -17,21 +28,21 @@ function formatValue(value: HiddenDatesInputValue, type: DatePickerType) {
     }
 
     if (!endDate) {
-      return `${startDate.toISOString()} –`;
+      return `${formatDateWithTimezoneAndLocale(startDate)} –`;
     }
 
-    return `${startDate.toISOString()} – ${endDate.toISOString()}`;
+    return `${formatDateWithTimezoneAndLocale(startDate)} – ${formatDateWithTimezoneAndLocale(endDate)}`;
   }
 
   if (type === 'multiple' && Array.isArray(value)) {
     return value
-      .map((date) => date?.toISOString())
+      .map((date) => date && formatDateWithTimezoneAndLocale(date))
       .filter(Boolean)
       .join(', ');
   }
 
   if (!Array.isArray(value) && value) {
-    return value.toISOString();
+    return formatDateWithTimezoneAndLocale(value);
   }
 
   return '';
