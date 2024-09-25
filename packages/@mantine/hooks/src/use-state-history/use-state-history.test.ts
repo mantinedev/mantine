@@ -83,4 +83,15 @@ describe('@mantine/hooks/use-state-history', () => {
     expect(hook.result.current[0]).toBe(5);
     expect(hook.result.current[2]).toStrictEqual({ history: [1, 5], current: 1 });
   });
+
+  it('resets history', () => {
+    const hook = renderHook(() => useStateHistory(1));
+    act(() => hook.result.current[1].set(2));
+    act(() => hook.result.current[1].set(3));
+    act(() => hook.result.current[1].set(4));
+    act(() => hook.result.current[1].reset());
+
+    expect(hook.result.current[0]).toBe(1);
+    expect(hook.result.current[2]).toStrictEqual({ history: [1], current: 0 });
+  });
 });
