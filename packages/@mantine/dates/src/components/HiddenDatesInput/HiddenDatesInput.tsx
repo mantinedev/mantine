@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { DatePickerType, DatesRangeValue, DateValue } from '../../types';
 import { shiftTimezone } from '../../utils';
 import { useDatesContext } from '../DatesProvider';
@@ -14,11 +13,8 @@ export interface HiddenDatesInputProps {
 
 function formatValue(value: HiddenDatesInputValue, type: DatePickerType) {
   const ctx = useDatesContext();
-  const locale = ctx.getLocale();
-  dayjs.locale(locale);
-  const formatDateWithTimezoneAndLocale = (date: Date) => {
-    const shiftedDate = shiftTimezone('add', date, ctx.getTimezone());
-    return dayjs(shiftedDate).format();
+  const formatDateWithTimezone = (date: Date) => {
+    return shiftTimezone('remove', date, ctx.getTimezone()).toISOString();
   };
 
   if (type === 'range' && Array.isArray(value)) {
@@ -28,21 +24,21 @@ function formatValue(value: HiddenDatesInputValue, type: DatePickerType) {
     }
 
     if (!endDate) {
-      return `${formatDateWithTimezoneAndLocale(startDate)} –`;
+      return `${formatDateWithTimezone(startDate)} –`;
     }
 
-    return `${formatDateWithTimezoneAndLocale(startDate)} – ${formatDateWithTimezoneAndLocale(endDate)}`;
+    return `${formatDateWithTimezone(startDate)} – ${formatDateWithTimezone(endDate)}`;
   }
 
   if (type === 'multiple' && Array.isArray(value)) {
     return value
-      .map((date) => date && formatDateWithTimezoneAndLocale(date))
+      .map((date) => date && formatDateWithTimezone(date))
       .filter(Boolean)
       .join(', ');
   }
 
   if (!Array.isArray(value) && value) {
-    return formatDateWithTimezoneAndLocale(value);
+    return formatDateWithTimezone(value);
   }
 
   return '';
