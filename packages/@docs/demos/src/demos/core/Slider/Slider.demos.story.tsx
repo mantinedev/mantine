@@ -72,3 +72,8 @@ export const Demo_decimalRange = {
   name: '⭐ Demo: decimalRange',
   render: renderDemo(demos.decimalRange),
 };
+
+export const Demo_customSlider = {
+  name: '⭐ Demo: customSlider',
+  render: renderDemo(demos.customSlider),
+};

@@ -12,6 +12,7 @@ function Demo() {
       </Title>
       <Title size="h4">H1 heading with h4 font-size</Title>
       <Title size="1rem">H1 heading with 1rem size</Title>
+      <Title size="xs">H1 heading with xs size</Title>
     </>
   );
 }
@@ -25,6 +26,7 @@ function Demo() {
       </Title>
       <Title size="h4">H1 heading with h4 font-size</Title>
       <Title size="1rem">H1 heading with 1rem size</Title>
+      <Title size="xs">H1 heading with xs size</Title>
     </>
   );
 }

@@ -26,7 +26,7 @@
   margin-top: var(--mantine-spacing-lg);
 }
 
-.inner {
+.innerContainer {
   --table-of-contents-width: 300px;
 
   display: flex;
@@ -36,6 +36,12 @@
   @mixin smaller-than $md {
     --table-of-contents-width: 0;
   }
+}
+
+.inner {
+  width: 100%;
+  max-width: calc(100% - var(--table-of-contents-width));
+  overflow: hidden;
 }
 
 .content {

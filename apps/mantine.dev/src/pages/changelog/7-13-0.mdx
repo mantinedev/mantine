@@ -1,0 +1,79 @@
+import {
+  BarChartDemos,
+  CompositeChartDemos,
+  FloatingIndicatorDemos,
+  GridDemos,
+  LineChartDemos,
+  ScatterChartDemos,
+  SliderDemos,
+} from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog7130);
+
+## Container queries support in Grid
+
+You can now use [container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries)
+in [Grid](/core/grid) component. With container queries, all responsive values
+are adjusted based on the container width, not the viewport width.
+
+Example of using container queries. To see how the grid changes, resize the root element
+of the demo with the resize handle located at the bottom right corner of the demo:
+
+<Demo data={GridDemos.container} />
+
+## CompositeChart component
+
+New [CompositeChart](/charts/composite-chart) component allows using `Line`, `Area` and `Bar` charts together in a single chart:
+
+<Demo data={CompositeChartDemos.unit} />
+
+## Points labels
+
+[LineChart](/charts/line-chart) and [AreaChart](/charts/area-chart) now support `withPointLabels` prop to display labels on data points:
+
+<Demo data={LineChartDemos.pointLabels} />
+
+[ScatterChart](/charts/scatter-chart) also supports point labels, but also allows to control which axis should display labels with `pointLabels` prop:
+
+<Demo data={ScatterChartDemos.pointLabels} />
+
+## BarChart: Mixed stacks
+
+You can now control how [BarChart](/charts/bar-chart) series are stacked by setting `stackId` property in series object:
+
+<Demo data={BarChartDemos.mixedStack} />
+
+## BarChart: Minimum bar size
+
+[BarChart](/charts/bar-chart) now supports `minBarSize` prop to set the minimum size of the bar in px:
+
+<Demo data={BarChartDemos.minBarSize} />
+
+## New demo: Custom Tabs variant
+
+A new example of adding a custom variant to [Tabs](/core/tabs) component with
+[FloatingIndicator](/core/floating-indicator):
+
+<Demo data={FloatingIndicatorDemos.tabs} />
+
+## New demo: Custom slider
+
+Example of [use-move](/hooks/use-move) hook usage to create a custom slider:
+
+<Demo data={SliderDemos.customSlider} />
+
+## Help Center updates
+
+- New [How to integrate custom input with use-form hook?](https://help.mantine.dev/q/custom-input-use-form) question
+- New [Can I remove MultiSelect placeholder when the component has selected values?](https://help.mantine.dev/q/multiselect-value-placeholder) question
+- New [How can I load fonts in Remix?](https://help.mantine.dev/q/remix-load-fonts) question
+- New [My styles are overridden by Mantine components styles, what should I do?](https://help.mantine.dev/q/styles-order) question
+- New [Why I cannot use one polymorphic component in component prop of another polymorphic component?](https://help.mantine.dev/q/polymorphic-in-polymorphic) question
+- New [Can I use an array of strings as a list in use-form?](https://help.mantine.dev/q/list-of-strings-in-use-form) question
+
+## Other changes
+
+- New demo has been added to [Chip](/core/chip) component with an example of how to deselect radio chip
+- [BarChart](/charts/bar-chart) now supports `maxBarWidth` prop to set the maximum width of each bar in px

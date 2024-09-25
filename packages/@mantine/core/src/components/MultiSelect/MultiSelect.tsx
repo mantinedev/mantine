@@ -49,7 +49,7 @@ export interface MultiSelectProps
   /** Default value for uncontrolled component */
   defaultValue?: string[];
 
-  /** Called whe value changes */
+  /** Called when value changes */
   onChange?: (value: string[]) => void;
 
   /** Called with `value` of the removed item */

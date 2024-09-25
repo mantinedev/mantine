@@ -60,7 +60,7 @@ export function assignAsideVariables({
   }
 
   if (aside?.collapsed?.mobile) {
-    const breakpointValue = getBreakpointValue(aside!.breakpoint, theme) - 0.1;
+    const breakpointValue = getBreakpointValue(aside!.breakpoint, theme.breakpoints) - 0.1;
     maxMediaStyles[breakpointValue] = maxMediaStyles[breakpointValue] || {};
     maxMediaStyles[breakpointValue]['--app-shell-aside-width'] = '100%';
     maxMediaStyles[breakpointValue]['--app-shell-aside-offset'] = '0px';

@@ -118,4 +118,16 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/charts/src/BubbleChart/BubbleChart.tsx',
     docs: 'charts/bubble-chart.mdx',
   },
+
+  CompositeChart: {
+    title: 'CompositeChart',
+    props: ['CompositeChart'],
+    styles: ['CompositeChart'],
+    package: '@mantine/charts',
+    slug: '/charts/composite-chart',
+    description: 'Composed chart with support for Area, Bar and Line charts',
+    import: "import { CompositeChart } from '@mantine/charts';",
+    source: '@mantine/charts/src/CompositeChart/CompositeChart.tsx',
+    docs: 'charts/composite-chart.mdx',
+  },
 };
