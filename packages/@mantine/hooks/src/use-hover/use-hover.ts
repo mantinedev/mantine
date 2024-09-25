@@ -7,14 +7,17 @@ export function useHover<T extends HTMLElement = HTMLDivElement>() {
   const onMouseLeave = useCallback(() => setHovered(false), []);
 
   useEffect(() => {
-    if (!ref.current) return;
-    ref.current.addEventListener('mouseenter', onMouseEnter);
-    ref.current.addEventListener('mouseleave', onMouseLeave);
+    if (ref.current) {
+      ref.current.addEventListener('mouseenter', onMouseEnter);
+      ref.current.addEventListener('mouseleave', onMouseLeave);
 
-    return () => {
-      ref.current?.removeEventListener('mouseenter', onMouseEnter);
-      ref.current?.removeEventListener('mouseleave', onMouseLeave);
-    };
+      return () => {
+        ref.current?.removeEventListener('mouseenter', onMouseEnter);
+        ref.current?.removeEventListener('mouseleave', onMouseLeave);
+      };
+    }
+
+    return undefined;
   }, [ref.current]);
 
   return { ref, hovered };
