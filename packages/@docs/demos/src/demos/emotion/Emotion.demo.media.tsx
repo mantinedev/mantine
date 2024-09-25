@@ -12,7 +12,7 @@ const useStyles = createStyles((theme, _, u) => ({
     backgroundColor: theme.colors.blue[6],
 
     // Media query with value from theme
-    [\`@media (max-width: \${em(getBreakpointValue(theme.breakpoints.xl, theme) - 1)})\`]: {
+    [\`@media (max-width: \${em(getBreakpointValue(theme.breakpoints.xl, theme.breakpoints) - 1)})\`]: {
       backgroundColor: theme.colors.pink[6],
     },
 
@@ -40,9 +40,10 @@ const useStyles = createStyles((theme, _, u) => ({
     backgroundColor: theme.colors.blue[6],
 
     // Media query with value from theme
-    [`@media (max-width: ${em(getBreakpointValue(theme.breakpoints.xl, theme) - 1)})`]: {
-      backgroundColor: theme.colors.pink[6],
-    },
+    [`@media (max-width: ${em(getBreakpointValue(theme.breakpoints.xl, theme.breakpoints) - 1)})`]:
+      {
+        backgroundColor: theme.colors.pink[6],
+      },
 
     // Simplify media query writing with theme functions
     [u.smallerThan('lg')]: {

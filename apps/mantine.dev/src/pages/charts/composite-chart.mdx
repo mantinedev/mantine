@@ -1,0 +1,212 @@
+import { CompositeChartDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.CompositeChart);
+
+## Usage
+
+`CompositeChart` allows using `Line`, `Area` and `Bar` charts together in a single
+chart:
+
+<Demo data={CompositeChartDemos.usage} />
+
+## Legend
+
+To display chart legend, set `withLegend` prop. When one of the items in the legend
+is hovered, the corresponding data series is highlighted in the chart.
+
+<Demo data={CompositeChartDemos.legend} />
+
+## Legend position
+
+You can pass props down to recharts [Legend](https://recharts.org/en-US/api/Legend)
+component with `legendProps` prop. For example, setting `legendProps={{ verticalAlign: 'bottom', height: 50 }}`
+will render the legend at the bottom of the chart and set its height to 50px.
+
+<Demo data={CompositeChartDemos.legendPosition} />
+
+## Series labels
+
+By default, series `name` is used as a label. To change it, set `label`
+property in `series` object:
+
+<Demo data={CompositeChartDemos.seriesLabels} />
+
+## Points labels
+
+To display labels on data points, set `withPointLabels`. This feature is supported
+only for `Line` and `Area` charts:
+
+<Demo data={CompositeChartDemos.pointLabels} />
+
+## X and Y axis props
+
+Use `xAxisProps` and `yAxisProps` to pass props down to recharts [XAxis](https://recharts.org/en-US/api/XAxis)
+and [YAxis](https://recharts.org/en-US/api/YAxis) components. For example, these props
+can be used to change orientation of axis:
+
+<Demo data={CompositeChartDemos.axisProps} />
+
+## Axis labels
+
+Use `xAxisLabel` and `yAxisLabel` props to display axis labels:
+
+<Demo data={CompositeChartDemos.axisLabels} />
+
+## X axis offset
+
+Use `xAxisProps` to set padding between the charts ends and the x-axis:
+
+<Demo data={CompositeChartDemos.xAxisOffset} />
+
+## Y axis scale
+
+Use `yAxisProps` to change domain of the Y axis. For example, if you know that
+your data will always be in the range of 0 to 100, you can set domain to `[0, 100]`:
+
+<Demo data={CompositeChartDemos.yScale} />
+
+## Right Y axis
+
+To display additional Y axis on the right side of the chart, set `withRightYAxis` prop.
+You can pass props down to recharts [YAxis](https://recharts.org/en-US/api/YAxis)
+component with `rightYAxisProps` prop and assign a label to the right Y axis with
+`rightYAxisLabel` prop. Note that you need to bind data series to the right Y axis
+by setting `yAxisId` in the `series` object.
+
+<Demo data={CompositeChartDemos.rightYAxis} />
+
+## Rotate x-axis labels
+
+To rotate x-axis labels, set `xAxisProps.angle` to a number of degrees to rotate:
+
+<Demo data={CompositeChartDemos.rotateLabels} />
+
+## Value formatter
+
+To format values in the tooltip and axis ticks, use `valueFormat` prop. It accepts
+a function that takes number value as an argument and returns formatted value:
+
+<Demo data={CompositeChartDemos.valueFormatter} />
+
+## Chart color
+
+You can reference colors from [theme](/theming/theme-object) the same way as in
+other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
+color value is also accepted.
+
+<Demo data={CompositeChartDemos.color} />
+
+## Change chart color depending on color scheme
+
+You can use CSS variables in `color` property. To define a CSS variable that
+changes depending on the color scheme, use [light/dark mixins](/styles/postcss-preset/#dark-and-light-mixins)
+or [light-dark function](/styles/postcss-preset/#light-dark-function). Example
+of chart that is dark orange in light mode and lime in dark mode:
+
+<Demo data={CompositeChartDemos.colorSchemeColor} />
+
+## Stroke dash array
+
+Set `strokeDasharray` prop to control the stroke dash array of the grid and cursor
+lines. The value represent the lengths of alternating dashes and gaps. For example,
+`strokeDasharray="10 5"` will render a dashed line with 10px dashes and 5px gaps.
+
+<Demo data={CompositeChartDemos.strokeDasharray} />
+
+## Grid and text colors
+
+Use `--chart-grid-color` and `--chart-text-color` to change colors of
+grid lines and text within the chart. With [CSS modules](/styles/css-modules/), you can change colors
+depending on color scheme:
+
+<Demo data={CompositeChartDemos.gridColor} />
+
+If your application has only one color scheme, you can use `gridColor` and `textColor`
+props instead of CSS variables:
+
+```tsx
+import { CompositeChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <CompositeChart
+      h={300}
+      data={data}
+      dataKey="date"
+      type="stacked"
+      gridColor="gray.5"
+      textColor="gray.9"
+      series={[
+        { name: 'Apples', color: 'indigo.6', type: 'line' },
+        { name: 'Oranges', color: 'blue.6', type: 'bar' },
+        { name: 'Tomatoes', color: 'teal.6', type: 'area' },
+      ]}
+    />
+  );
+}
+```
+
+## Tooltip animation
+
+By default, tooltip animation is disabled. To enable it, set `tooltipAnimationDuration`
+prop to a number of milliseconds to animate the tooltip position change.
+
+<Demo data={CompositeChartDemos.tooltipAnimation} />
+
+## Units
+
+Set `unit` prop to render a unit label next to the y-axis ticks and tooltip values:
+
+<Demo data={CompositeChartDemos.unit} />
+
+## Custom tooltip
+
+Use `tooltipProps.content` to pass custom tooltip renderer to recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)
+component. Note that it is required to filter recharts payload with `getFilteredChartTooltipPayload`
+function to remove empty values that are used for styling purposes only.
+
+<Demo data={CompositeChartDemos.customTooltip} />
+
+## Remove tooltip
+
+To remove tooltip, set `withTooltip={false}`. It also removes the cursor line
+and disables interactions with the chart.
+
+<Demo data={CompositeChartDemos.noTooltip} />
+
+## Customize dots
+
+Use `dotProps` to pass props down to recharts dot in regular state and `activeDotProps`
+to pass props down to recharts dot in active state (when cursor is over the current series).
+
+<Demo data={CompositeChartDemos.dotProps} />
+
+## Stroke width
+
+Use `strokeWidth` prop to control the stroke width of all areas/lines:
+
+<Demo data={CompositeChartDemos.strokeWidth} />
+
+## Sync multiple charts
+
+You can pass props down to recharts [ComposedChart](https://recharts.org/en-US/api/ComposedChart)
+component with `composedChartProps` prop. For example, setting `composedChartProps={{ syncId: 'any-id' }}`
+will sync tooltip of multiple `CompositeChart` components with the same `syncId` prop.
+
+<Demo data={CompositeChartDemos.sync} />
+
+## Dashed lines
+
+Set `strokeDasharray` property in `series` to change line style to dashed:
+
+<Demo data={CompositeChartDemos.lineDasharray} />
+
+## Reference lines
+
+Use `referenceLines` prop to render reference lines. Reference lines are always
+rendered behind the chart.
+
+<Demo data={CompositeChartDemos.referenceLines} />

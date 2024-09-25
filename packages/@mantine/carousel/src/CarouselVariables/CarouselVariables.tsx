@@ -42,7 +42,7 @@ export function CarouselVariables({ slideGap, slideSize, selector }: CarouselVar
     {}
   );
 
-  const sortedBreakpoints = getSortedBreakpoints(keys(queries), theme).filter(
+  const sortedBreakpoints = getSortedBreakpoints(keys(queries), theme.breakpoints).filter(
     (breakpoint) => keys(queries[breakpoint.value]).length > 0
   );
 

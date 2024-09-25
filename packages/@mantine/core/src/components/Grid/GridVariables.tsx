@@ -5,23 +5,24 @@ import {
   getSpacing,
   InlineStyles,
   keys,
-  MantineBreakpoint,
   useMantineTheme,
 } from '../../core';
 import type { GridProps } from './Grid';
+import type { GridBreakpoints } from './Grid.context';
 
 interface GridVariablesProps extends GridProps {
   selector: string;
 }
 
-export function GridVariables({ gutter, selector }: GridVariablesProps) {
+export function GridVariables({ gutter, selector, breakpoints, type }: GridVariablesProps) {
   const theme = useMantineTheme();
+  const _breakpoints = breakpoints || theme.breakpoints;
 
   const baseStyles: Record<string, string | undefined> = filterProps({
     '--grid-gutter': getSpacing(getBaseValue(gutter)),
   });
 
-  const queries = keys(theme.breakpoints).reduce<Record<string, Record<string, any>>>(
+  const queries = keys(_breakpoints).reduce<Record<string, Record<string, any>>>(
     (acc, breakpoint) => {
       if (!acc[breakpoint]) {
         acc[breakpoint] = {};
@@ -36,14 +37,24 @@ export function GridVariables({ gutter, selector }: GridVariablesProps) {
     {}
   );
 
-  const sortedBreakpoints = getSortedBreakpoints(keys(queries), theme).filter(
+  const sortedBreakpoints = getSortedBreakpoints(keys(queries), _breakpoints).filter(
     (breakpoint) => keys(queries[breakpoint.value]).length > 0
   );
 
-  const media = sortedBreakpoints.map((breakpoint) => ({
-    query: `(min-width: ${theme.breakpoints[breakpoint.value as MantineBreakpoint]})`,
+  const values = sortedBreakpoints.map((breakpoint) => ({
+    query:
+      type === 'container'
+        ? `mantine-grid (min-width: ${_breakpoints[breakpoint.value as keyof GridBreakpoints]})`
+        : `(min-width: ${_breakpoints[breakpoint.value as keyof GridBreakpoints]})`,
     styles: queries[breakpoint.value],
   }));
 
-  return <InlineStyles styles={baseStyles} media={media} selector={selector} />;
+  return (
+    <InlineStyles
+      styles={baseStyles}
+      media={type === 'container' ? undefined : values}
+      container={type === 'container' ? values : undefined}
+      selector={selector}
+    />
+  );
 }

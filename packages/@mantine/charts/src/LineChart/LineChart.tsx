@@ -31,6 +31,7 @@ import {
 import { useId } from '@mantine/hooks';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
+import { PointLabel } from '../PointLabel/PointLabel';
 import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
 import classes from '../grid-chart.module.css';
 
@@ -105,13 +106,16 @@ export interface LineChartProps
   /** Determines whether points with `null` values should be connected, `true` by default */
   connectNulls?: boolean;
 
-  /** Additional components that are rendered inside recharts `AreaChart` component */
+  /** Additional components that are rendered inside recharts `LineChart` component */
   children?: React.ReactNode;
 
-  /** Props passed down to recharts `Area` component */
+  /** Props passed down to recharts `Line` component */
   lineProps?:
     | ((series: LineChartSeries) => Partial<Omit<LineProps, 'ref'>>)
     | Partial<Omit<LineProps, 'ref'>>;
+
+  /** Determines whether each point should have associated label, `false` by default */
+  withPointLabels?: boolean;
 }
 
 export type LineChartFactory = Factory<{
@@ -195,6 +199,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     withRightYAxis,
     rightYAxisLabel,
     rightYAxisProps,
+    withPointLabels,
     ...others
   } = props;
 
@@ -277,6 +282,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         type={curveType}
         strokeDasharray={item.strokeDasharray}
         yAxisId={item.yAxisId || 'left'}
+        label={withPointLabels ? <PointLabel /> : undefined}
         {...(typeof lineProps === 'function' ? lineProps(item) : lineProps)}
       />
     );

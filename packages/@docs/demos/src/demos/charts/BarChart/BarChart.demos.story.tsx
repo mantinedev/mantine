@@ -127,3 +127,13 @@ export const Demo_barValueLabel = {
   name: '⭐ Demo: barValueLabel',
   render: renderDemo(demos.barValueLabel),
 };
+
+export const Demo_minBarSize = {
+  name: '⭐ Demo: minBarSize',
+  render: renderDemo(demos.minBarSize),
+};
+
+export const Demo_mixedStack = {
+  name: '⭐ Demo: mixedStack',
+  render: renderDemo(demos.mixedStack),
+};

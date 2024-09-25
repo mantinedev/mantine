@@ -79,7 +79,13 @@ const data = [
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <ScatterChart data={data} dataKey={{ x: 'age', y: 'BMI' }} h={400} withLegend />
+      <ScatterChart
+        data={data}
+        dataKey={{ x: 'age', y: 'BMI' }}
+        h={400}
+        withLegend
+        pointLabels="x"
+      />
     </div>
   );
 }

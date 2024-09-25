@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   CartesianGrid,
   Label,
+  LabelList,
   Legend,
   ScatterChart as ReChartsScatterChart,
   ReferenceLine,
@@ -75,6 +76,9 @@ export interface ScatterChartProps
 
   /** Props passed down to recharts `Scatter` component */
   scatterProps?: Partial<Omit<ScatterProps, 'ref'>>;
+
+  /** If set, displays labels next to points for the given axis */
+  pointLabels?: 'x' | 'y';
 }
 
 function getAxis(key: string, dataKey: { x: string; y: string }) {
@@ -143,6 +147,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
     labels,
     valueFormatter,
     scatterProps,
+    pointLabels,
     ...others
   } = props;
 
@@ -215,7 +220,10 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
         isAnimationActive={false}
         fillOpacity={dimmed ? 0.1 : 1}
         {...scatterProps}
-      />
+      >
+        {pointLabels && <LabelList dataKey={dataKey[pointLabels]} fontSize={8} dy={10} />}
+        {scatterProps?.children}
+      </Scatter>
     );
   });
 
