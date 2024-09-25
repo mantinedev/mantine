@@ -3,7 +3,6 @@
   "exclude": ["./lib", "./esm", "./cjs"],
   "compilerOptions": {
     "rootDir": "src",
-
     "declaration": true,
     "declarationDir": "lib",
     "types": ["node", "jest", "@testing-library/jest-dom"],

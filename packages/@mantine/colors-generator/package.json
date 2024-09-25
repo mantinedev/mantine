@@ -37,6 +37,6 @@
     "directory": "packages/@mantine/colors-generator"
   },
   "peerDependencies": {
-    "chroma-js": "^2.4.2"
+    "chroma-js": "^3.1.1"
   }
 }
