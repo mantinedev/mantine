@@ -63,7 +63,7 @@ __metadata:
   resolution: "@babel/code-frame@npm:7.22.13"
   dependencies:
     "@babel/highlight": "npm:^7.22.13"
-    chalk: "npm:^2.4.2"
+    chalk: "npm:>=2.4.2"
   checksum: 10c0/f4cc8ae1000265677daf4845083b72f88d00d311adb1a93c94eb4b07bf0ed6828a81ae4ac43ee7d476775000b93a28a9cddec18fbdc5796212d8dcccd5de72bd
   languageName: node
   linkType: hard
@@ -82,7 +82,7 @@ __metadata:
   resolution: "@babel/code-frame@npm:7.23.5"
   dependencies:
     "@babel/highlight": "npm:^7.23.4"
-    chalk: "npm:^2.4.2"
+    chalk: "npm:>=2.4.2"
   checksum: 10c0/a10e843595ddd9f97faa99917414813c06214f4d9205294013e20c70fbdf4f943760da37dec1d998bf3e6fc20fa2918a47c0e987a7e458663feb7698063ad7c6
   languageName: node
   linkType: hard
@@ -1064,7 +1064,7 @@ __metadata:
   resolution: "@babel/highlight@npm:7.22.20"
   dependencies:
     "@babel/helper-validator-identifier": "npm:^7.22.20"
-    chalk: "npm:^2.4.2"
+    chalk: "npm:>=2.4.2"
     js-tokens: "npm:^4.0.0"
   checksum: 10c0/f3c3a193afad23434297d88e81d1d6c0c2cf02423de2139ada7ce0a7fc62d8559abf4cc996533c1a9beca7fc990010eb8d544097f75e818ac113bf39ed810aa2
   languageName: node
@@ -1086,7 +1086,7 @@ __metadata:
   resolution: "@babel/highlight@npm:7.23.4"
   dependencies:
     "@babel/helper-validator-identifier": "npm:^7.22.20"
-    chalk: "npm:^2.4.2"
+    chalk: "npm:>=2.4.2"
     js-tokens: "npm:^4.0.0"
   checksum: 10c0/fbff9fcb2f5539289c3c097d130e852afd10d89a3a08ac0b5ebebbc055cc84a4bcc3dcfed463d488cde12dd0902ef1858279e31d7349b2e8cee43913744bda33
   languageName: node
@@ -1097,7 +1097,7 @@ __metadata:
   resolution: "@babel/highlight@npm:7.24.5"
   dependencies:
     "@babel/helper-validator-identifier": "npm:^7.24.5"
-    chalk: "npm:^2.4.2"
+    chalk: "npm:>=2.4.2"
     js-tokens: "npm:^4.0.0"
     picocolors: "npm:^1.0.0"
   checksum: 10c0/e98047d3ad24608bfa596d000c861a2cc875af897427f2833b91a4e0d4cead07301a7ec15fa26093dcd61e036e2eed2db338ae54f93016fe0dc785fadc4159db
@@ -5458,7 +5458,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/colors-generator@workspace:packages/@mantine/colors-generator"
   peerDependencies:
-    chroma-js: ^2.4.2
+    chroma-js: ">=2.4.2"
   languageName: unknown
   linkType: soft
 
@@ -10383,7 +10383,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^2.0.0, chalk@npm:^2.3.2, chalk@npm:^2.4.2":
+"chalk@npm:^2.0.0, chalk@npm:^2.3.2, chalk@npm:>=2.4.2":
   version: 2.4.2
   resolution: "chalk@npm:2.4.2"
   dependencies:
@@ -10489,7 +10489,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chroma-js@npm:^2.4.2":
+"chroma-js@npm:>=2.4.2":
   version: 2.4.2
   resolution: "chroma-js@npm:2.4.2"
   checksum: 10c0/5657cd10892538c4a41e8bd95524d018c3a43318b26dfb20d572b2084bc6d5af742457a6d5701ddecb4d4eceb99995873b22293c1b396ab0b35ef55a264550c8
@@ -12130,7 +12130,7 @@ __metadata:
     "@types/github-slugger": "npm:^2.0.0"
     "@types/node": "npm:^20.9.0"
     "@types/react": "npm:18.3.1"
-    chroma-js: "npm:^2.4.2"
+    chroma-js: "npm:>=2.4.2"
     dayjs: "npm:^1.11.10"
     embla-carousel: "npm:^7.1.0"
     embla-carousel-autoplay: "npm:^7.1.0"
@@ -17906,7 +17906,7 @@ __metadata:
     "@types/yargs": "npm:^17.0.31"
     babel-loader: "npm:^9.1.3"
     chalk: "npm:^5.3.0"
-    chroma-js: "npm:^2.4.2"
+    chroma-js: "npm:>=2.4.2"
     clsx: "npm:^2.1.1"
     css-loader: "npm:^6.8.1"
     cssnano: "npm:^6.0.1"
