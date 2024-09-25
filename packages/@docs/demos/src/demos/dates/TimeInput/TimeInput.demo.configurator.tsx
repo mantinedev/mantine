@@ -10,14 +10,13 @@ function Demo() {
   return (
     <TimeInput
       {{props}}
-      placeholder="Input placeholder"
     />
   );
 }
 `;
 
 function Wrapper(props: any) {
-  return <TimeInput {...props} placeholder="Input placeholder" />;
+  return <TimeInput {...props} />;
 }
 
 export const configurator: MantineDemo = {
