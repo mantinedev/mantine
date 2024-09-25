@@ -15,6 +15,7 @@ function Demo() {
         <Button onClick={() => handlers.set(Math.ceil(Math.random() * 100) + 1)}>Set value</Button>
         <Button onClick={() => handlers.back()}>Back</Button>
         <Button onClick={() => handlers.forward()}>Forward</Button>
+        <Button onClick={() => handlers.reset()}>Reset</Button>
       </Group>
       <Code block>{JSON.stringify(history, null, 2)}</Code>
     </>
@@ -31,6 +32,7 @@ function Demo() {
         <Button onClick={() => handlers.set(Math.ceil(Math.random() * 100) + 1)}>Set value</Button>
         <Button onClick={() => handlers.back()}>Back</Button>
         <Button onClick={() => handlers.forward()}>Forward</Button>
+        <Button onClick={() => handlers.reset()}>Reset</Button>
       </Group>
       <Code block>{JSON.stringify(history, null, 2)}</Code>
     </>

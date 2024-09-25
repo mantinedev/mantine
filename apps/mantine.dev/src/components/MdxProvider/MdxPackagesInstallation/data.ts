@@ -41,7 +41,7 @@ export const PACKAGES_DATA = [
       '@mantine/hooks',
       '@mantine/core',
       '@mantine/tiptap',
-      '@tabler/icons-react',
+      '@tiptap/pm',
       '@tiptap/react',
       '@tiptap/extension-link',
       '@tiptap/starter-kit',
@@ -55,7 +55,12 @@ export const PACKAGES_DATA = [
   {
     package: '@mantine/carousel',
     description: 'Embla based carousel component',
-    dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/carousel', 'embla-carousel-react'],
+    dependencies: [
+      '@mantine/hooks',
+      '@mantine/core',
+      '@mantine/carousel',
+      'embla-carousel-react@^7.1.0',
+    ],
   },
   {
     package: '@mantine/spotlight',

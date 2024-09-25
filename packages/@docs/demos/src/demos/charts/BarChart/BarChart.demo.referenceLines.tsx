@@ -14,7 +14,7 @@ function Demo() {
       dataKey="month"
       referenceLines={[
         {
-          y: 130,
+          y: 1130,
           color: 'red.5',
           label: 'Profit reached',
           labelPosition: 'insideTopRight',
@@ -38,7 +38,7 @@ function Demo() {
       dataKey="month"
       referenceLines={[
         {
-          y: 130,
+          y: 1130,
           color: 'red.5',
           label: 'Profit reached',
           labelPosition: 'insideTopRight',

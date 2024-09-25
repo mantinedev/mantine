@@ -1,0 +1,28 @@
+import { MultiSelectPlaceholderDemo } from '@/demos/MultiSelectPlaceholder.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title:
+    'Can I remove MultiSelect placeholder when the component has selected values?',
+  description:
+    'Learn why MultiSelect placeholder is not removed when values are selected and how to remove it with CSS',
+  slug: 'multiselect-value-placeholder',
+  category: 'components',
+  tags: ['multi-select', 'placeholder'],
+  created_at: 'July 23, 2024',
+  last_updated_at: 'July 23, 2024',
+};
+
+export default Layout(meta);
+
+## Why MultiSelect placeholder is not removed when values are selected?
+
+[MultiSelect](https://mantine.dev/core/multi-select) component uses placeholder to indicate that
+there are values available for selection. It is different from [Select](https://mantine.dev/core/select)
+component where placeholder is removed when value is selected – user can select only one value.
+
+## How to remove MultiSelect placeholder when values are selected?
+
+Apply the following styles to the MultiSelect component to remove placeholder when values are selected:
+
+<Demo data={MultiSelectPlaceholderDemo} />

@@ -30,6 +30,7 @@ import {
 } from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
+import { PointLabel } from '../PointLabel/PointLabel';
 import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
 import { AreaGradient } from './AreaGradient';
 import { AreaSplit } from './AreaSplit';
@@ -117,6 +118,9 @@ export interface AreaChartProps
   areaProps?:
     | ((series: AreaChartSeries) => Partial<Omit<AreaProps, 'ref'>>)
     | Partial<Omit<AreaProps, 'ref'>>;
+
+  /** Determines whether each point should have associated label, `false` by default */
+  withPointLabels?: boolean;
 }
 
 export type AreaChartFactory = Factory<{
@@ -201,6 +205,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     withRightYAxis,
     rightYAxisLabel,
     rightYAxisProps,
+    withPointLabels,
     ...others
   } = props;
 
@@ -294,6 +299,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           strokeOpacity={dimmed ? 0.5 : 1}
           strokeDasharray={item.strokeDasharray}
           yAxisId={item.yAxisId || 'left'}
+          label={withPointLabels ? <PointLabel /> : undefined}
           {...(typeof areaProps === 'function' ? areaProps(item) : areaProps)}
         />
       </Fragment>
