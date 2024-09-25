@@ -12,11 +12,11 @@ function Demo() {
       h={300}
       data={data}
       dataKey="date"
-      type="percent"
+      withPointLabels
       series={[
-        { name: 'Apples', color: 'indigo.6' },
-        { name: 'Oranges', color: 'blue.6' },
-        { name: 'Tomatoes', color: 'teal.6' },
+        { name: 'Tomatoes', color: 'rgba(18, 120, 255, 0.2)', type: 'bar' },
+        { name: 'Apples', color: 'red.8', type: 'line' },
+        { name: 'Oranges', color: 'yellow.8', type: 'area' },
       ]}
     />
   );
