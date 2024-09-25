@@ -1,0 +1,63 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title:
+    'My styles are overridden by Mantine components styles, what should I do?',
+  description:
+    'Learn how to use CSS layers to control styles order and prevent Mantine components from overriding your styles',
+  slug: 'styles-order',
+  category: 'styles',
+  tags: ['css-layers', '@layer', 'overrides', 'styles'],
+  created_at: 'July 25, 2024',
+  last_updated_at: 'July 25, 2024',
+};
+
+export default Layout(meta);
+
+## How Mantine styles work
+
+All `@mantine/*` packages that include styles export `@mantine/*/styles.css`
+file which includes all the styles for the package.
+These files are handled by your framework/build tool (Next.js, Vite, Remix, etc.)
+and included in the final bundle.
+
+Most of Mantine styles (99%+) have low specificity (class selectors) to allow
+easy customization and overrides.
+
+## Styles overriding conflicts
+
+In some cases, you might experience conflicts when Mantine styles override your
+styles. It happens when your styles have the same or lower specificity than
+Mantine styles and Mantine styles are imported after your styles. Usually, this
+issue can be resolved by changing the import order:
+
+```tsx
+// ❌ Wrong order – Mantine styles override your styles
+import './styles.css';
+import '@mantine/core/styles.css';
+```
+
+```tsx
+// ✅ Correct order – your styles override Mantine styles
+import '@mantine/core/styles.css';
+import './styles.css';
+```
+
+## CSS layers
+
+Some frameworks/build tools might not allow you to fully control styles order.
+This usually happens when the framework has a bug/limitation or when you use
+specific features that mess up styles order (for example dynamic components imports).
+
+In this case the only solution is to use [CSS layers](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer).
+The `@layer` CSS at-rule is used to declare a cascade layer and can also be used to define the order of precedence in case of multiple cascade layers.
+When styles are wrapped with `@layer` at-rule, their specificity is automatically reduced
+compared to regular styles.
+
+In addition to regular styles, `@mantine/*` packages also provide `@mantine/*/styles.layer.css`
+in which all selectors are wrapped with `@layer mantine {}`. To use CSS layers in your application,
+simply replace `@mantine/*/styles.css` imports with `@mantine/*/styles.layer.css`:
+
+```tsx
+import '@mantine/core/styles.layer.css';
+```

@@ -37,7 +37,9 @@ function valueToPercent(value: number) {
   return `${(value * 100).toFixed(0)}%`;
 }
 
-export interface BarChartSeries extends ChartSeries {}
+export interface BarChartSeries extends ChartSeries {
+  stackId?: string;
+}
 
 export type BarChartType = 'default' | 'stacked' | 'percent' | 'waterfall';
 
@@ -84,6 +86,12 @@ export interface BarChartProps
 
   /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"`, `false` by default */
   withBarValueLabel?: boolean;
+
+  /** Sets minimum height of the bar in px, `0` by default */
+  minBarSize?: number;
+
+  /** Maximum bar width in px */
+  maxBarWidth?: number;
 }
 
 export type BarChartFactory = Factory<{
@@ -200,6 +208,8 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     withRightYAxis,
     rightYAxisLabel,
     rightYAxisProps,
+    minBarSize,
+    maxBarWidth,
     ...others
   } = props;
 
@@ -249,9 +259,10 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         isAnimationActive={false}
         fillOpacity={dimmed ? 0.1 : fillOpacity}
         strokeOpacity={dimmed ? 0.2 : 0}
-        stackId={stacked ? 'stack' : undefined}
+        stackId={stacked ? 'stack' : item.stackId || undefined}
         label={withBarValueLabel ? <BarLabel valueFormatter={valueFormatter} /> : undefined}
         yAxisId={item.yAxisId || 'left'}
+        minPointSize={minBarSize}
         {...(typeof barProps === 'function' ? barProps(item) : barProps)}
       >
         {inputData.map((entry, index) => (
@@ -309,6 +320,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
           data={inputData}
           stackOffset={type === 'percent' ? 'expand' : undefined}
           layout={orientation}
+          maxBarSize={maxBarWidth}
           margin={{
             bottom: xAxisLabel ? 30 : undefined,
             left: yAxisLabel ? 10 : undefined,

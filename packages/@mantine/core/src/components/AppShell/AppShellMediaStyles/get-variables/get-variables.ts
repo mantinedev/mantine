@@ -43,15 +43,19 @@ export function getVariables({ navbar, header, footer, aside, padding, theme }: 
   assignFooterVariables({ baseStyles, minMediaStyles, footer });
   assignPaddingVariables({ baseStyles, minMediaStyles, padding });
 
-  const minMedia = getSortedBreakpoints(keys(minMediaStyles), theme).map((breakpoint) => ({
-    query: `(min-width: ${em(breakpoint.px)})`,
-    styles: minMediaStyles[breakpoint.value],
-  }));
+  const minMedia = getSortedBreakpoints(keys(minMediaStyles), theme.breakpoints).map(
+    (breakpoint) => ({
+      query: `(min-width: ${em(breakpoint.px)})`,
+      styles: minMediaStyles[breakpoint.value],
+    })
+  );
 
-  const maxMedia = getSortedBreakpoints(keys(maxMediaStyles), theme).map((breakpoint) => ({
-    query: `(max-width: ${em(breakpoint.px)})`,
-    styles: maxMediaStyles[breakpoint.value],
-  }));
+  const maxMedia = getSortedBreakpoints(keys(maxMediaStyles), theme.breakpoints).map(
+    (breakpoint) => ({
+      query: `(max-width: ${em(breakpoint.px)})`,
+      styles: maxMediaStyles[breakpoint.value],
+    })
+  );
 
   const media = [...minMedia, ...maxMedia];
 

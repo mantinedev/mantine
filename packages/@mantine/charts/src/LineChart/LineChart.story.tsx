@@ -70,6 +70,7 @@ export function Usage() {
           { name: 'Tomatoes', color: 'teal.6' },
         ]}
         withLegend
+        withPointLabels
       />
     </div>
   );
