@@ -10,7 +10,7 @@ export function shouldValidateOnChange(path: unknown, validateInputOnChange: boo
   }
 
   if (Array.isArray(validateInputOnChange)) {
-    return validateInputOnChange.includes((path as string).replace(/[.][0-9]/g, `.${FORM_INDEX}`));
+    return validateInputOnChange.includes((path as string).replace(/[.][0-9]+/g, `.${FORM_INDEX}`));
   }
 
   return false;
