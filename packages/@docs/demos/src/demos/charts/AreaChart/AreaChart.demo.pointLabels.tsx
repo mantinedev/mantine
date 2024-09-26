@@ -12,7 +12,7 @@ function Demo() {
       h={300}
       data={data}
       dataKey="date"
-      type="percent"
+      withPointLabels
       series={[
         { name: 'Apples', color: 'indigo.6' },
         { name: 'Oranges', color: 'blue.6' },
@@ -32,6 +32,7 @@ function Demo() {
       withPointLabels
       series={[
         { name: 'Apples', color: 'indigo.6' },
+        { name: 'Oranges', color: 'blue.6' },
         { name: 'Tomatoes', color: 'teal.6' },
       ]}
     />
