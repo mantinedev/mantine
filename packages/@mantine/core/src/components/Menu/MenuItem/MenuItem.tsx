@@ -116,7 +116,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
         loop: ctx.loop,
         dir,
         orientation: 'vertical',
-        onKeyDown: _others.onKeydown,
+        onKeyDown: _others.onKeyDown,
       })}
       __vars={{
         '--menu-item-color':
