@@ -75,7 +75,7 @@ export interface ScatterChartProps
   scatterChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsScatterChart>;
 
   /** Props passed down to recharts `Scatter` component */
-  scatterProps?: Omit<ScatterProps, 'ref'>;
+  scatterProps?: Partial<Omit<ScatterProps, 'ref'>>;
 
   /** If set, displays labels next to points for the given axis */
   pointLabels?: 'x' | 'y';

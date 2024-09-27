@@ -16,6 +16,9 @@ import classes from './ChartTooltip.module.css';
 
 function updateChartTooltipPayload(payload: Record<string, any>[]): Record<string, any>[] {
   return payload.map((item) => {
+    if (!item.payload || item.payload[item.name]) {
+      return item;
+    }
     const matchFound = item.name.search(/\./);
     if (matchFound >= 0) {
       const newDataKey = item.name.substring(0, matchFound);
