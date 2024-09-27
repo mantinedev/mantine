@@ -29,7 +29,7 @@ export const withLabels: MantineDemo = {
       prop: 'labelsPosition',
       initialValue: 'right',
       libraryValue: '__',
-      data: ['inside', 'right', 'left'],
+      data: ['left', 'inside', 'right'],
     },
   ],
 };

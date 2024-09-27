@@ -192,7 +192,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
             )}
             {data.map((entry, index) => (
               <Cell
-                key={`cell-${index}`}
+                key={index}
                 fill={getThemeColor(entry.color, theme)}
                 stroke="var(--chart-stroke-color, var(--mantine-color-body))"
                 strokeWidth={strokeWidth}

@@ -1,0 +1,70 @@
+import { FunnelChartDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.FunnelChart);
+
+## Usage
+
+`FunnelChart` is based on [FunnelChart recharts component](https://recharts.org/en-US/api/FunnelChart):
+
+<Demo data={FunnelChartDemos.usage} />
+
+## Segments labels
+
+Set `withLabels` prop to display labels next to each segment.
+Use `labelPosition` prop to control the position of labels relative to the corresponding segment.
+
+<Demo data={FunnelChartDemos.withLabels} />
+
+## Size and thickness
+
+Set `size` prop to control width and height of the chart.
+You can override this behavior by setting `h` [style prop](/styles/style-props).
+
+<Demo data={FunnelChartDemos.size} />
+
+## Segment color
+
+You can reference colors from [theme](/theming/theme-object) the same way as in
+other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
+color value is also accepted.
+
+<Demo data={FunnelChartDemos.color} />
+
+## Tooltip data source
+
+By default, the tooltip displays data for all segments when hovered over any segment.
+To display data only for the hovered segment, set `tooltipDataSource="segment"`:
+
+<Demo data={FunnelChartDemos.tooltipDataSource} />
+
+## Without tooltip
+
+To remove the tooltip, set `withTooltip={false}`:
+
+<Demo data={FunnelChartDemos.noTooltip} />
+
+## Segments stroke
+
+Use `strokeWidth` prop to control the width of the stroke around each segment:
+
+<Demo data={FunnelChartDemos.strokeWidth} />
+
+To change color of the stroke, use `strokeColor` prop. You can reference colors from [theme](/theming/theme-object) the same way as in
+other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
+color value is also accepted.
+
+```tsx
+import { FunnelChart } from '@mantine/charts';
+
+function Demo() {
+  return <FunnelChart data={[]} strokeColor="red.5" />;
+}
+```
+
+By default, segments stroke color is the same as the background color of the body element
+(`--mantine-color-body` CSS variable). If you want to change it depending on the color scheme,
+define CSS variable and pass it to the `strokeColor` prop:
+
+<Demo data={FunnelChartDemos.strokeColor} />

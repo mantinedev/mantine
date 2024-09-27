@@ -1,4 +1,5 @@
 import { FunnelChart } from '@mantine/charts';
+import { Center } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { data, dataCode } from './_data';
 
@@ -12,7 +13,11 @@ function Demo() {
 `;
 
 function Wrapper(props: any) {
-  return <FunnelChart {...props} data={data} mih={300} />;
+  return (
+    <Center mih={300}>
+      <FunnelChart {...props} data={data} />
+    </Center>
+  );
 }
 
 export const size: MantineDemo = {
