@@ -8,8 +8,3 @@
     outline: 0;
   }
 }
-
-.label {
-  fill: var(--mantine-color-white);
-  font-size: var(--mantine-font-size-xs);
-}
