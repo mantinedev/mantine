@@ -38,6 +38,7 @@ export const MenuDropdown = factory<MenuDropdownFactory>((props, ref) => {
     vars,
     onMouseEnter,
     onMouseLeave,
+    onKeyDown,
     children,
     ...others
   } = useProps('MenuDropdown', defaultProps, props);
@@ -45,14 +46,14 @@ export const MenuDropdown = factory<MenuDropdownFactory>((props, ref) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const ctx = useMenuContext();
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = createEventHandler<any>(onKeyDown, (event) => {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault();
       wrapperRef.current
         ?.querySelectorAll<HTMLButtonElement>('[data-menu-item]:not(:disabled)')[0]
         ?.focus();
     }
-  };
+  });
 
   const handleMouseEnter = createEventHandler<any>(
     onMouseEnter,
