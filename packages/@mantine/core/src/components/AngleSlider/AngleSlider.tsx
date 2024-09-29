@@ -7,6 +7,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  findClosestNumber,
   rem,
   StylesApiProps,
   useProps,
@@ -31,6 +32,9 @@ export interface AngleSliderProps
   marks?: { value: number; label?: string }[];
   size?: number;
   thumbSize?: number;
+
+  /** Determines whether the selection should be only allowed from the given marks array, `false` by default */
+  restrictToMarks?: boolean;
 }
 
 export type AngleSliderFactory = Factory<{
@@ -93,6 +97,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     withLabel,
     marks,
     thumbSize,
+    restrictToMarks,
     ...others
   } = props;
 
@@ -117,18 +122,26 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const updateWithEvent = (event: MouseEvent) => {
+  const update = (event: MouseEvent) => {
     const deg = getAngle([event.x, event.y], rootRef.current!);
     const val = normalize(deg, step || 1);
-    setValue(val);
+
+    setValue(
+      restrictToMarks && Array.isArray(marks)
+        ? findClosestNumber(
+            val,
+            marks.map((mark) => mark.value)
+          )
+        : val
+    );
   };
 
   const handleMouseMove = useCallback((event: MouseEvent) => {
-    updateWithEvent(event);
+    update(event);
   }, []);
 
   const handleMouseUp = useCallback((event: MouseEvent) => {
-    updateWithEvent(event);
+    update(event);
     endTracking();
   }, []);
 
@@ -147,10 +160,11 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     beginTracking();
   };
 
-  const marksItems = marks?.map((mark) => (
+  const marksItems = marks?.map((mark, index) => (
     <div
       {...getStyles('mark', { style: { '--angle': `${mark.value}deg` } })}
       data-label={mark.label || undefined}
+      key={index}
     />
   ));
 

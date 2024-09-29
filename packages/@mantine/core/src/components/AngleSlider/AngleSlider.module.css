@@ -83,7 +83,7 @@
     width: 3px;
 
     @mixin where-light {
-      background-color: var(--mantine-color-gray-5);
+      background-color: var(--mantine-color-black);
     }
 
     @mixin where-dark {
