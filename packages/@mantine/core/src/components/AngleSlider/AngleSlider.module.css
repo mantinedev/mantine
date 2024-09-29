@@ -1,0 +1,52 @@
+.root {
+  width: var(--slider-size);
+  height: var(--slider-size);
+  position: relative;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+
+  --slider-size: 60px;
+  --thumb-size: calc(var(--slider-size) / 5);
+
+  @mixin where-light {
+    background-color: var(--mantine-color-gray-1);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-5);
+  }
+}
+
+.thumb {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: calc(50% - 1.5px);
+  height: 100%;
+  width: 3px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: var(--thumb-size);
+    width: 3px;
+
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-6);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-1);
+    }
+  }
+}
+
+.label {
+  font-size: var(--mantine-font-size-xs);
+}
