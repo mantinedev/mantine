@@ -52,11 +52,11 @@ function getAngle(vector: [number, number], element: HTMLElement) {
   const x = vector[0] - center[0];
   const y = vector[1] - center[1];
   let deg = radiansToDegrees(Math.atan2(x, y));
-  deg -= 180;
+  deg += 180;
   if (deg < 0) {
     deg += 360;
   }
-  return deg;
+  return 360 - deg;
 }
 
 function normalize(degree: number, { max, min, step }: { max: number; min: number; step: number }) {
@@ -158,7 +158,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
       {...others}
     >
       {withLabel && <div {...getStyles('label')}>{_value}</div>}
-      <div {...getStyles('thumb', { style: { transform: `rotate(-${_value}deg)` } })} />
+      <div {...getStyles('thumb', { style: { transform: `rotate(${_value}deg)` } })} />
     </Box>
   );
 });
