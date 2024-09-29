@@ -32,6 +32,7 @@ export interface AngleSliderProps
   marks?: { value: number; label?: string }[];
   size?: number;
   thumbSize?: number;
+  formatLabel?: (value: number) => React.ReactNode;
 
   /** Determines whether the selection should be only allowed from the given marks array, `false` by default */
   restrictToMarks?: boolean;
@@ -98,6 +99,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     marks,
     thumbSize,
     restrictToMarks,
+    formatLabel,
     ...others
   } = props;
 
@@ -177,7 +179,11 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     >
       {marksItems && marksItems.length > 0 && <div {...getStyles('marks')}>{marksItems}</div>}
 
-      {withLabel && <div {...getStyles('label')}>{_value}</div>}
+      {withLabel && (
+        <div {...getStyles('label')}>
+          {typeof formatLabel === 'function' ? formatLabel(_value) : _value}
+        </div>
+      )}
       <div {...getStyles('thumb', { style: { transform: `rotate(${_value}deg)` } })} />
     </Box>
   );
