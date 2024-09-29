@@ -20,6 +20,51 @@
   }
 }
 
+.marks {
+  position: absolute;
+  inset: 1px;
+  border-radius: var(--slider-size);
+  pointer-events: none;
+}
+
+.mark {
+  width: 2px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 1px);
+  transform: rotate(var(--angle));
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--thumb-size) / 3);
+    left: 0.5px;
+    width: 1px;
+    height: calc(var(--thumb-size) / 1.5);
+    transform: translate(-50%, -50%);
+
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-4);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-3);
+    }
+  }
+
+  &::after {
+    min-width: 18px;
+    text-align: center;
+    content: attr(data-label);
+    position: absolute;
+    top: -24px;
+    left: -7px;
+    transform: rotate(calc(360deg - var(--angle)));
+    font-size: var(--mantine-font-size-xs);
+  }
+}
+
 .thumb {
   position: absolute;
   top: 0;

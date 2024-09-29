@@ -13,7 +13,7 @@ import {
 } from '../../core';
 import classes from './AngleSlider.module.css';
 
-export type AngleSliderStylesNames = 'root' | 'thumb' | 'label';
+export type AngleSliderStylesNames = 'root' | 'thumb' | 'label' | 'marks' | 'mark';
 export type AngleSliderCssVariables = {
   root: '--test';
 };
@@ -22,8 +22,6 @@ export interface AngleSliderProps
   extends BoxProps,
     StylesApiProps<AngleSliderFactory>,
     ElementProps<'div', 'onChange'> {
-  min?: number;
-  max?: number;
   step?: number;
   value?: number;
   defaultValue?: number;
@@ -47,28 +45,22 @@ function getElementCenter(element: HTMLElement) {
   return [rect.left + rect.width / 2, rect.top + rect.height / 2];
 }
 
-function getAngle(vector: [number, number], element: HTMLElement) {
+function getAngle(coordinates: [number, number], element: HTMLElement) {
   const center = getElementCenter(element);
-  const x = vector[0] - center[0];
-  const y = vector[1] - center[1];
-  let deg = radiansToDegrees(Math.atan2(x, y));
-  deg += 180;
-  if (deg < 0) {
-    deg += 360;
-  }
+  const x = coordinates[0] - center[0];
+  const y = coordinates[1] - center[1];
+  const deg = radiansToDegrees(Math.atan2(x, y)) + 180;
   return 360 - deg;
 }
 
-function normalize(degree: number, { max, min, step }: { max: number; min: number; step: number }) {
-  const clamped = clamp(degree, min, max);
+function normalize(degree: number, step: number) {
+  const clamped = clamp(degree, 0, 360);
   const high = Math.ceil(clamped / step);
   const low = Math.round(clamped / step);
   return high >= clamped / step ? (high * step === 360 ? 0 : high * step) : low * step;
 }
 
 const defaultProps: Partial<AngleSliderProps> = {
-  min: 0,
-  max: 360,
   step: 1,
   withLabel: true,
 };
@@ -88,8 +80,6 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     styles,
     unstyled,
     vars,
-    min,
-    max,
     step,
     value,
     defaultValue,
@@ -122,7 +112,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
 
   const updateWithEvent = (event: MouseEvent) => {
     const deg = getAngle([event.x, event.y], rootRef.current!);
-    const val = normalize(deg, { min: min!, max: max!, step: step! });
+    const val = normalize(deg, step || 1);
     setValue(val);
   };
 
@@ -157,6 +147,10 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
       onMouseDown={handleMouseDown}
       {...others}
     >
+      <div {...getStyles('marks')}>
+        <div {...getStyles('mark', { style: { '--angle': `${_value}deg` } })} data-label={_value} />
+      </div>
+
       {withLabel && <div {...getStyles('label')}>{_value}</div>}
       <div {...getStyles('thumb', { style: { transform: `rotate(${_value}deg)` } })} />
     </Box>
