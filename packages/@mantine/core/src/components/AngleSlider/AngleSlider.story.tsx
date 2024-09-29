@@ -5,7 +5,7 @@ export default { title: 'AngleSlider' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <AngleSlider size={100} formatLabel={(value) => `${value}°`} restrictToMarks />
+      <AngleSlider size={100} formatLabel={(value) => `${value}°`} />
     </div>
   );
 }

@@ -28,6 +28,7 @@ export interface AngleSliderProps
   value?: number;
   defaultValue?: number;
   onChange?: (value: number) => void;
+  onChangeEnd?: (value: number) => void;
   withLabel?: boolean;
   marks?: { value: number; label?: string }[];
   size?: number;
@@ -100,6 +101,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     thumbSize,
     restrictToMarks,
     formatLabel,
+    onChangeEnd,
     ...others
   } = props;
 
@@ -124,18 +126,19 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const update = (event: MouseEvent) => {
+  const update = (event: MouseEvent, done = false) => {
     const deg = getAngle([event.x, event.y], rootRef.current!);
     const val = normalize(deg, step || 1);
-
-    setValue(
+    const newValue =
       restrictToMarks && Array.isArray(marks)
         ? findClosestNumber(
             val,
             marks.map((mark) => mark.value)
           )
-        : val
-    );
+        : val;
+
+    setValue(newValue);
+    done && onChangeEnd?.(newValue);
   };
 
   const handleMouseMove = useCallback((event: MouseEvent) => {
@@ -143,7 +146,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
   }, []);
 
   const handleMouseUp = useCallback((event: MouseEvent) => {
-    update(event);
+    update(event, true);
     endTracking();
   }, []);
 
