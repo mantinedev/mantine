@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import type { EmotionCache } from '@emotion/cache';
 import { RegisteredCache, serializeStyles } from '@emotion/serialize';
 import { getRegisteredStyles, insertStyles } from '@emotion/utils';

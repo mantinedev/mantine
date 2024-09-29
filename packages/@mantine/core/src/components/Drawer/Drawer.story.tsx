@@ -30,6 +30,27 @@ export function Usage() {
   );
 }
 
+export function ScrollbarWithOffset() {
+  const [opened, { open, close }] = useDisclosure(true);
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={open}>Open modal</Button>
+      <Button onClick={open}>Open modal</Button>
+      <Drawer
+        opened={opened}
+        onClose={close}
+        title="Just a Drawer"
+        size="md"
+        scrollAreaComponent={ScrollArea.Autosize}
+        offset={8}
+        radius="md"
+      >
+        {content}
+      </Drawer>
+    </div>
+  );
+}
+
 export function FloatingVariant() {
   const [opened, { open, close }] = useDisclosure(true);
   return (

@@ -1,6 +1,6 @@
 import htmlReactParser from 'html-react-parser';
 
-// type is not imported to avoid dependency on @emotion/server
+// Type is not imported to avoid dependency on @emotion/server
 type EmotionServer = any;
 type NextDocumentType = any;
 

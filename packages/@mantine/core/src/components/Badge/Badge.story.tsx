@@ -1,3 +1,4 @@
+import { IconStarFilled } from '@tabler/icons-react';
 import { Group } from '../Group';
 import { Badge } from './Badge';
 
@@ -29,6 +30,36 @@ export function Usage() {
         Both sections
       </Badge>
     </div>
+  );
+}
+
+export function WithFixedWidth() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Badge w={200} rightSection="R" leftSection="L">
+        Badge
+      </Badge>
+      <Badge w={200} leftSection="L">
+        Badge
+      </Badge>
+      <Badge w={200} rightSection="R">
+        Badge
+      </Badge>
+      <Badge w={200}>Badge</Badge>
+      <span>Other content</span>
+    </div>
+  );
+}
+
+export function WithIconInSection() {
+  return (
+    <Badge
+      leftSection={<IconStarFilled size={12} color="var(--mantine-color-yellow-5)" />}
+      color="dark"
+      variant="filled"
+    >
+      Badge with icon
+    </Badge>
   );
 }
 

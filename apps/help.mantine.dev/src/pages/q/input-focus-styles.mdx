@@ -9,14 +9,16 @@ export const meta = {
   category: 'styles',
   tags: ['tabs', 'Styles API'],
   created_at: 'February 15, 2024',
-  last_updated_at: 'February 15, 2024',
+  last_updated_at: 'July 15, 2024',
 };
 
 export default Layout(meta);
 
 ## Change focus styles of a single input
 
-To change focus styles of a single input, use [Styles API](https://mantine.dev/styles/styles-api):
+To change focus styles of a single input, use [Styles API](https://mantine.dev/styles/styles-api).
+Note that in order for this to work correctly with all inputs, you need to use
+`:focus-within` pseudo-class instead of `:focus`:
 
 <Demo data={InputFocusStyles} />
 

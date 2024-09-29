@@ -4,7 +4,10 @@ import { UnstyledButton, UnstyledButtonProps, UnstyledButtonStylesNames } from '
 const defaultProps: UnstyledButtonProps = {};
 
 describe('@mantine/core/UnstyledButton', () => {
-  tests.axe([<UnstyledButton aria-label="test" />, <UnstyledButton>test</UnstyledButton>]);
+  tests.axe([
+    <UnstyledButton aria-label="test" key="1" />,
+    <UnstyledButton key="2">test</UnstyledButton>,
+  ]);
 
   tests.itSupportsFocusEvents<UnstyledButtonProps>({
     component: UnstyledButton,

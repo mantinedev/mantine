@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
-import type { MouseEvent } from 'react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 
 export function useMouse<T extends HTMLElement = any>(
   options: { resetOnExit?: boolean } = { resetOnExit: false }
@@ -33,11 +32,15 @@ export function useMouse<T extends HTMLElement = any>(
   useEffect(() => {
     const element = ref?.current ? ref.current : document;
     element.addEventListener('mousemove', setMousePosition as any);
-    if (options.resetOnExit) element.addEventListener('mouseleave', resetMousePosition as any);
+    if (options.resetOnExit) {
+      element.addEventListener('mouseleave', resetMousePosition as any);
+    }
 
     return () => {
       element.removeEventListener('mousemove', setMousePosition as any);
-      if (options.resetOnExit) element.removeEventListener('mouseleave', resetMousePosition as any);
+      if (options.resetOnExit) {
+        element.removeEventListener('mouseleave', resetMousePosition as any);
+      }
     };
   }, [ref.current]);
 

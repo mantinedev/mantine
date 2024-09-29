@@ -29,24 +29,22 @@ export function Track({
   const { getStyles } = useSliderContext();
 
   return (
-    <>
-      <Box {...getStyles('trackContainer')} mod={{ disabled }} {...containerProps}>
-        <Box {...getStyles('track')} mod={{ inverted, disabled }}>
-          <Box
-            mod={{ inverted, disabled }}
-            __vars={{
-              '--slider-bar-width': `calc(${filled}% + var(--slider-size))`,
-              '--slider-bar-offset': `calc(${offset}% - var(--slider-size))`,
-            }}
-            {...getStyles('bar')}
-          />
+    <Box {...getStyles('trackContainer')} mod={{ disabled }} {...containerProps}>
+      <Box {...getStyles('track')} mod={{ inverted, disabled }}>
+        <Box
+          mod={{ inverted, disabled }}
+          __vars={{
+            '--slider-bar-width': `calc(${filled}% + var(--slider-size))`,
+            '--slider-bar-offset': `calc(${offset}% - var(--slider-size))`,
+          }}
+          {...getStyles('bar')}
+        />
 
-          {children}
+        {children}
 
-          <Marks {...others} offset={marksOffset} disabled={disabled} inverted={inverted} />
-        </Box>
+        <Marks {...others} offset={marksOffset} disabled={disabled} inverted={inverted} />
       </Box>
-    </>
+    </Box>
   );
 }
 

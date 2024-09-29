@@ -8,6 +8,20 @@ export default Layout(MDX_DATA.useInterval);
 
 <Demo data={HooksDemos.useIntervalDemo} />
 
+## Auto invoke interval
+
+To automatically start interval when component is mounted, set `autoInvoke` option to `true`:
+
+```tsx
+import { useInterval } from '@mantine/hooks';
+
+const interval = useInterval(
+  () => console.log('Interval tick'),
+  1000,
+  { autoInvoke: true }
+);
+```
+
 ## API
 
 ```tsx
@@ -31,9 +45,15 @@ Return object:
 ## Definition
 
 ```tsx
+interface UseIntervalOptions {
+  /** If set, the interval will start automatically when the component is mounted, `false` by default */
+  autoInvoke?: boolean;
+}
+
 function useInterval(
   fn: () => void,
-  interval: number
+  interval: number,
+  options?: UseIntervalOptions
 ): {
   start: () => void;
   stop: () => void;

@@ -67,7 +67,9 @@ export const ScrollAreaScrollbarVisible = forwardRef<
           }
         }}
         onWheelScroll={(scrollPos) => {
-          if (context.viewport) context.viewport.scrollLeft = scrollPos;
+          if (context.viewport) {
+            context.viewport.scrollLeft = scrollPos;
+          }
         }}
         onDragScroll={(pointerPos) => {
           if (context.viewport) {
@@ -96,10 +98,14 @@ export const ScrollAreaScrollbarVisible = forwardRef<
           }
         }}
         onWheelScroll={(scrollPos) => {
-          if (context.viewport) context.viewport.scrollTop = scrollPos;
+          if (context.viewport) {
+            context.viewport.scrollTop = scrollPos;
+          }
         }}
         onDragScroll={(pointerPos) => {
-          if (context.viewport) context.viewport.scrollTop = getScrollPosition(pointerPos);
+          if (context.viewport) {
+            context.viewport.scrollTop = getScrollPosition(pointerPos);
+          }
         }}
       />
     );
@@ -107,3 +113,5 @@ export const ScrollAreaScrollbarVisible = forwardRef<
 
   return null;
 });
+
+ScrollAreaScrollbarVisible.displayName = '@mantine/core/ScrollAreaScrollbarVisible';

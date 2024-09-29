@@ -187,34 +187,41 @@
     caption-side: bottom;
     margin-bottom: var(--mantine-spacing-md);
 
+    @mixin where-light {
+      --table-border-color: var(--mantine-color-gray-3);
+    }
+
+    @mixin where-dark {
+      --table-border-color: var(--mantine-color-dark-4);
+    }
+
     & :where(caption) {
       margin-top: var(--mantine-spacing-xs);
       font-size: var(--mantine-font-size-sm);
-      color: var(--mantine-color-gray-6);
+      color: var(--mantine-color-dimmed);
     }
 
     & :where(th) {
       text-align: left;
       font-weight: bold;
-      color: var(--mantine-color-gray-7);
       font-size: var(--mantine-font-size-sm);
       padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
     }
 
     & :where(thead th) {
       border-bottom: 1px solid;
-      border-color: var(--mantine-color-gray-3);
+      border-color: var(--table-border-color);
     }
 
     & :where(tfoot th) {
       border-top: 1px solid;
-      border-color: var(--mantine-color-gray-3);
+      border-color: var(--table-border-color);
     }
 
     & :where(td) {
       padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
       border-bottom: 1px solid;
-      border-color: var(--mantine-color-gray-3);
+      border-color: var(--table-border-color);
       font-size: var(--mantine-font-size-sm);
     }
 

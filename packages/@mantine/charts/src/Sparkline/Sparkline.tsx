@@ -33,7 +33,7 @@ export interface SparklineProps
     StylesApiProps<SparklineFactory>,
     ElementProps<'div'> {
   /** Data used to render the chart */
-  data: number[];
+  data: (number | null)[];
 
   /** Key of `theme.colors` or any valid CSS color, `theme.primaryColor` by default */
   color?: MantineColor;
@@ -75,9 +75,13 @@ const defaultProps: Partial<SparklineProps> = {
   curveType: 'linear',
 };
 
-function getTrendColor(data: number[], trendColors: SparklineTrendColors) {
+function getTrendColor(data: (number | null)[], trendColors: SparklineTrendColors) {
   const first = data[0];
   const last = data[data.length - 1];
+
+  if (first === null || last === null) {
+    return trendColors.neutral || trendColors.positive;
+  }
 
   if (first < last) {
     return trendColors.positive;

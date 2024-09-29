@@ -1,0 +1,46 @@
+import { FileButtonMenuBroken } from '@/demos/FileButtonMenuBroken.demo';
+import { FileButtonMenuFix } from '@/demos/FileButtonMenuFix.demo';
+import { FileButtonMenuFix2 } from '@/demos/FileButtonMenuFix2.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'Why FileButton does not work in Menu?',
+  description: 'Learn how to use FileButton in Menu component',
+  slug: 'file-button-in-menu',
+  category: 'components',
+  tags: ['menu', 'file button', 'dropdown', 'file upload'],
+  created_at: 'July 15, 2024',
+  last_updated_at: 'July 15, 2024',
+};
+
+export default Layout(meta);
+
+## Example of the issue
+
+In the following example, the `onChange` callback will never be called
+even though the `FileButton` is rendered inside the `Menu` component and
+the file dialog is opened when the second `Menu.Item` is clicked.
+
+<Demo data={FileButtonMenuBroken} />
+
+## Source of the issue
+
+The `onChange` callback is not triggered in the example above because, by default,
+`Menu` component is closed automatically when an item is clicked. When the `Menu` is
+closed, the `FileButton` is unmounted from the DOM with the underlying `input[type="file"]`
+element. When the file is selected, the `input[type="file"]` element is not in the DOM
+and the `onChange` callback is not triggered.
+
+## How to fix the issue
+
+There are two solutions to this issue. The first one is to set `keepMounted` prop
+on the `Menu` component. This way, the `FileButton` will not be unmounted when the
+`Menu` is closed:
+
+<Demo data={FileButtonMenuFix} />
+
+The other solution is to prevent `Menu` from closing when `Menu.Item` that contains
+`FileButton` is clicked. This can be done by setting `closeOnItemClick={false}` prop
+on the `Menu.Item` component:
+
+<Demo data={FileButtonMenuFix2} />

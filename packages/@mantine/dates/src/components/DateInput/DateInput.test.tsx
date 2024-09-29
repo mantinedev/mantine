@@ -42,11 +42,11 @@ function getInput(container: HTMLElement | null) {
 
 describe('@mantine/dates/DateInput', () => {
   tests.axe([
-    <DateInput aria-label="test-label" />,
-    <DateInput label="test-label" />,
-    <DateInput label="test-label" error />,
-    <DateInput label="test-label" error="test-error" id="test" />,
-    <DateInput label="test-label" description="test-description" />,
+    <DateInput aria-label="test-label" key="1" />,
+    <DateInput label="test-label" key="2" />,
+    <DateInput label="test-label" error key="3" />,
+    <DateInput label="test-label" error="test-error" id="test" key="4" />,
+    <DateInput label="test-label" description="test-description" key="5" />,
   ]);
 
   tests.itSupportsSystemProps<DateInputProps, __InputStylesNames>({

@@ -1,0 +1,33 @@
+import { Image } from '@mantine/core';
+import { Layout } from '@/layout';
+import textComponentImage from '../../images/vscode-text-component.png';
+import textConstructorImage from '../../images/vscode-text-constructor.png';
+
+export const meta = {
+  title: 'Why VSCode cannot autoimport Text component?',
+  description: 'It is confused by the native Text constructor',
+  slug: 'why-vscode-cannot-autoimport-text',
+  category: 'tooling',
+  tags: ['vscode', 'autoimport'],
+  created_at: 'July 15, 2024',
+  last_updated_at: 'July 15, 2024',
+};
+
+export default Layout(meta);
+
+## Why Text component is not automatically imported?
+
+VSCode cannot automatically import [Text](https://mantine.dev/core/text) component
+because it confuses it with the native [Text](https://developer.mozilla.org/en-US/docs/Web/API/Text/Text) constructor
+which always appears as a first type reference in the editor.
+
+<Image src={textConstructorImage.src} maw={800} />
+
+## How can I import Text component with VSCode?
+
+To import Mantine `Text` component, you need to manually select it from the list of suggestions
+(usually, it appears as the second option):
+
+<Image src={textComponentImage.src} maw={800} />
+
+To learn more about VSCode IntelliSense and autoimport, visit the [official documentation](https://code.visualstudio.com/docs/editor/intellisense).

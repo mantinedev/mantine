@@ -22,10 +22,10 @@ const defaultPropsWithInputProps = {
 
 describe('@mantine/dates/YearPickerInput', () => {
   tests.axe([
-    <YearPickerInput aria-label="test-label" />,
-    <YearPickerInput aria-label="test-label" error />,
-    <YearPickerInput aria-label="test-label" error="test-error" id="test" />,
-    <YearPickerInput aria-label="test-label" description="test-description" />,
+    <YearPickerInput aria-label="test-label" key="1" />,
+    <YearPickerInput aria-label="test-label" error key="2" />,
+    <YearPickerInput aria-label="test-label" error="test-error" id="test" key="3" />,
+    <YearPickerInput aria-label="test-label" description="test-description" key="4" />,
   ]);
 
   tests.itSupportsSystemProps<YearPickerInputProps, __InputStylesNames>({

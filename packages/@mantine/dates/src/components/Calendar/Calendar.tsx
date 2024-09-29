@@ -106,8 +106,14 @@ export interface CalendarBaseProps {
   /** Number of columns to scroll when user clicks next/prev buttons, defaults to numberOfColumns */
   columnsToScroll?: number;
 
-  /** aria-label attributes for controls on different levels */
+  /** Aria-label attributes for controls on different levels */
   ariaLabels?: CalendarAriaLabels;
+
+  /** Arial-label for next button */
+  nextLabel?: string;
+
+  /** Arial-label for previous button */
+  previousLabel?: string;
 
   /** Called when next decade button is clicked */
   onNextDecade?: (date: Date) => void;
@@ -172,6 +178,8 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     numberOfColumns,
     columnsToScroll,
     ariaLabels,
+    nextLabel,
+    previousLabel,
     onYearSelect,
     onMonthSelect,
     onYearMouseEnter,
@@ -261,7 +269,10 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
   const ctx = useDatesContext();
 
   const _columnsToScroll = columnsToScroll || numberOfColumns || 1;
-  const currentDate = _date || shiftTimezone('add', new Date(), ctx.getTimezone());
+
+  const now = new Date();
+  const fallbackDate = minDate && minDate > now ? minDate : now;
+  const currentDate = _date || shiftTimezone('add', fallbackDate, ctx.getTimezone());
 
   const handleNextMonth = () => {
     const nextDate = dayjs(currentDate).add(_columnsToScroll, 'month').toDate();
@@ -326,9 +337,9 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           numberOfColumns={numberOfColumns}
           locale={locale}
           levelControlAriaLabel={ariaLabels?.monthLevelControl}
-          nextLabel={ariaLabels?.nextMonth}
+          nextLabel={ariaLabels?.nextMonth ?? nextLabel}
           nextIcon={nextIcon}
-          previousLabel={ariaLabels?.previousMonth}
+          previousLabel={ariaLabels?.previousMonth ?? previousLabel}
           previousIcon={previousIcon}
           monthLabelFormat={monthLabelFormat}
           __onDayClick={__onDayClick}
@@ -356,9 +367,9 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           hasNextLevel={maxLevel !== 'month' && maxLevel !== 'year'}
           onLevelClick={() => setLevel('decade')}
           levelControlAriaLabel={ariaLabels?.yearLevelControl}
-          nextLabel={ariaLabels?.nextYear}
+          nextLabel={ariaLabels?.nextYear ?? nextLabel}
           nextIcon={nextIcon}
-          previousLabel={ariaLabels?.previousYear}
+          previousLabel={ariaLabels?.previousYear ?? previousLabel}
           previousIcon={previousIcon}
           yearLabelFormat={yearLabelFormat}
           __onControlMouseEnter={onMonthMouseEnter}
@@ -385,9 +396,9 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           onNext={handleNextDecade}
           onPrevious={handlePreviousDecade}
           numberOfColumns={numberOfColumns}
-          nextLabel={ariaLabels?.nextDecade}
+          nextLabel={ariaLabels?.nextDecade ?? nextLabel}
           nextIcon={nextIcon}
-          previousLabel={ariaLabels?.previousDecade}
+          previousLabel={ariaLabels?.previousDecade ?? previousLabel}
           previousIcon={previousIcon}
           decadeLabelFormat={decadeLabelFormat}
           __onControlMouseEnter={onYearMouseEnter}

@@ -10,7 +10,7 @@ const defaultProps: ProgressProps = {
 };
 
 describe('@mantine/core/Progress', () => {
-  tests.axe([<Progress {...defaultProps} />]);
+  tests.axe([<Progress {...defaultProps} key="1" />]);
 
   tests.itSupportsSystemProps<ProgressProps, ProgressStylesNames>({
     component: Progress,

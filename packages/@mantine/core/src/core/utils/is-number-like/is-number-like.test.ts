@@ -36,4 +36,11 @@ describe('@mantine/core/isNumberLike', () => {
     expect(isNumberLike('a')).toBe(false);
     expect(isNumberLike('a1')).toBe(false);
   });
+
+  it('returns false for custom sizes', () => {
+    expect(isNumberLike('2xl')).toBe(false);
+    expect(isNumberLike('3xl')).toBe(false);
+    expect(isNumberLike('2xs')).toBe(false);
+    expect(isNumberLike('3xs')).toBe(false);
+  });
 });

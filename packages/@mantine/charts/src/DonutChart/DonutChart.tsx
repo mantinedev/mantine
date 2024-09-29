@@ -54,7 +54,7 @@ export interface DonutChartProps
   tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
 
   /** Props passed down to recharts `Pie` component */
-  pieProps?: Omit<PieProps, 'ref'>;
+  pieProps?: Partial<Omit<PieProps, 'ref'>>;
 
   /** Controls color of the segments stroke, by default depends on color scheme */
   strokeColor?: MantineColor;
@@ -158,6 +158,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     children,
     pieChartProps,
     valueFormatter,
+    strokeColor,
     ...others
   } = props;
 

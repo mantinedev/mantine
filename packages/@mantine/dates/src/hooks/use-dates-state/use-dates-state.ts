@@ -162,10 +162,17 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
   const onHoveredDateChange = type === 'range' && pickedDate ? setHoveredDate : () => {};
 
   useEffect(() => {
-    if (type === 'range' && !_value[0] && !_value[1]) {
-      setPickedDate(null);
+    if (type !== 'range') {
+      return;
     }
-  }, [value]);
+
+    const isNeitherSelected = _value[0] == null && _value[1] == null;
+    const isBothSelected = _value[0] != null && _value[1] != null;
+    if (isNeitherSelected || isBothSelected) {
+      setPickedDate(null);
+      setHoveredDate(null);
+    }
+  }, [_value]);
 
   return {
     onDateChange,

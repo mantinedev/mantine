@@ -85,7 +85,7 @@ function Demo() {
 }
 `;
 
-// register languages that your are planning to use
+// Register languages that your are planning to use
 lowlight.register('ts', tsLanguageSyntax);
 
 function escapeHtml(unsafe: string) {

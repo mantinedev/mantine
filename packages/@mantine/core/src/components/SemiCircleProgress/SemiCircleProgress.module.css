@@ -1,0 +1,53 @@
+.root {
+  --scp-filled-segment-color: var(--mantine-primary-color-filled);
+  --scp-transition-duration: 0ms;
+  --scp-thickness: 10px;
+
+  @mixin where-light {
+    --scp-empty-segment-color: var(--mantine-color-gray-2);
+  }
+
+  @mixin where-dark {
+    --scp-empty-segment-color: var(--mantine-color-dark-4);
+  }
+
+  position: relative;
+  width: fit-content;
+}
+
+.svg {
+  display: block;
+  transform: var(--scp-rotation);
+  overflow: hidden;
+}
+
+.filledSegment {
+  transition:
+    stroke-dashoffset var(--scp-transition-duration) ease,
+    stroke-dasharray var(--scp-transition-duration) ease,
+    stroke var(--scp-transition-duration);
+}
+
+.label {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  inset-inline: 0;
+  text-align: center;
+  z-index: 1;
+
+  &:where([data-position='bottom']) {
+    bottom: 0;
+    padding-inline: calc(var(--scp-thickness) * 2);
+
+    &:where([data-orientation='down']) {
+      bottom: auto;
+      top: 0;
+    }
+  }
+
+  &:where([data-position='center']) {
+    top: 50%;
+    padding-inline: calc(var(--scp-thickness) * 3);
+  }
+}

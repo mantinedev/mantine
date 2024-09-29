@@ -98,5 +98,5 @@ export function Sizes() {
   const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
     <Wrapper size={size} key={size} />
   ));
-  return <>{sizes}</>;
+  return sizes;
 }

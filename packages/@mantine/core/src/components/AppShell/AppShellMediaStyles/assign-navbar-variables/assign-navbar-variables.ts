@@ -61,7 +61,7 @@ export function assignNavbarVariables({
   }
 
   if (navbar?.collapsed?.mobile) {
-    const breakpointValue = getBreakpointValue(navbar!.breakpoint, theme) - 0.1;
+    const breakpointValue = getBreakpointValue(navbar!.breakpoint, theme.breakpoints) - 0.1;
     maxMediaStyles[breakpointValue] = maxMediaStyles[breakpointValue] || {};
     maxMediaStyles[breakpointValue]['--app-shell-navbar-width'] = '100%';
     maxMediaStyles[breakpointValue]['--app-shell-navbar-offset'] = '0px';

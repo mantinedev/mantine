@@ -8,11 +8,11 @@ const defaultProps: TextareaProps = {
 
 describe('@mantine/core/Textarea', () => {
   tests.axe([
-    <Textarea aria-label="test-label" />,
-    <Textarea label="test-label" />,
-    <Textarea label="test-label" error />,
-    <Textarea label="test-label" error="test-error" id="test" />,
-    <Textarea label="test-label" description="test-description" />,
+    <Textarea aria-label="test-label" key="1" />,
+    <Textarea label="test-label" key="2" />,
+    <Textarea label="test-label" error key="3" />,
+    <Textarea label="test-label" error="test-error" id="test" key="4" />,
+    <Textarea label="test-label" description="test-description" key="5" />,
   ]);
 
   tests.itSupportsSystemProps<TextareaProps, __InputStylesNames>({

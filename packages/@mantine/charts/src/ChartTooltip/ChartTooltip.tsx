@@ -15,8 +15,37 @@ import { ChartSeries } from '../types';
 import { getSeriesLabels } from '../utils';
 import classes from './ChartTooltip.module.css';
 
+function updateChartTooltipPayload(payload: Record<string, any>[]): Record<string, any>[] {
+  return payload.map((item) => {
+    if (!item.payload || item.payload[item.name]) {
+      return item;
+    }
+    const matchFound = item.name.search(/\./);
+    if (matchFound >= 0) {
+      const newDataKey = item.name.substring(0, matchFound);
+      const nestedPayload = { ...item.payload[newDataKey] };
+      const shallowPayload = Object.entries(item.payload).reduce((acc, current) => {
+        const [k, v] = current;
+        return k === newDataKey ? acc : { ...acc, [k]: v };
+      }, {});
+
+      return {
+        ...item,
+        name: item.name.substring(matchFound + 1),
+        payload: {
+          ...shallowPayload,
+          ...nestedPayload,
+        },
+      };
+    }
+    return item;
+  });
+}
+
 export function getFilteredChartTooltipPayload(payload: Record<string, any>[], segmentId?: string) {
-  const duplicatesFilter = payload.filter((item) => item.fill !== 'none' || !item.color);
+  const duplicatesFilter = updateChartTooltipPayload(
+    payload.filter((item) => item.fill !== 'none' || !item.color)
+  );
 
   if (!segmentId) {
     return duplicatesFilter;
@@ -36,7 +65,7 @@ function getData(item: Record<string, any>, type: 'area' | 'radial' | 'scatter')
   if (Array.isArray(item.payload[item.dataKey])) {
     return item.payload[item.dataKey][1] - item.payload[item.dataKey][0];
   }
-  return item.payload[item.dataKey];
+  return item.payload[item.name];
 }
 
 export type ChartTooltipStylesNames =

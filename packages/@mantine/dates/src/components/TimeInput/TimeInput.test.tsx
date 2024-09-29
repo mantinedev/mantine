@@ -8,11 +8,11 @@ const defaultProps: TimeInputProps = {
 
 describe('@mantine/dates/TimeInput', () => {
   tests.axe([
-    <TimeInput aria-label="test-label" />,
-    <TimeInput label="test-label" />,
-    <TimeInput label="test-label" error />,
-    <TimeInput label="test-label" error="test-error" id="test" />,
-    <TimeInput label="test-label" description="test-description" />,
+    <TimeInput aria-label="test-label" key="1" />,
+    <TimeInput label="test-label" key="2" />,
+    <TimeInput label="test-label" error key="3" />,
+    <TimeInput label="test-label" error="test-error" id="test" key="4" />,
+    <TimeInput label="test-label" description="test-description" key="5" />,
   ]);
 
   tests.itSupportsSystemProps<TimeInputProps, __InputStylesNames>({

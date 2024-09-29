@@ -12,7 +12,7 @@ function Demo() {
       onClick={() =>
         notifications.show({
           title: 'Default notification',
-          message: 'Hey there, your code is awesome! 🤥',
+          message: 'Do not forget to star Mantine on GitHub! 🌟',
         })
       }
     >
@@ -27,7 +27,7 @@ function Demo() {
       onClick={() =>
         notifications.show({
           title: 'Default notification',
-          message: 'Hey there, your code is awesome! 🤥',
+          message: 'Do not forget to star Mantine on GitHub! 🌟',
         })
       }
     >

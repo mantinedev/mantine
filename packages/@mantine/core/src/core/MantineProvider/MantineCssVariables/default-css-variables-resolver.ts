@@ -1,4 +1,3 @@
-/* eslint-disable prefer-destructuring */
 import { keys, rem } from '../../utils';
 import { getPrimaryContrastColor, getPrimaryShade } from '../color-functions';
 import { ConvertCSSVariablesInput } from '../convert-css-variables';

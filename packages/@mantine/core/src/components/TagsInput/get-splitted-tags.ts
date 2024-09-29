@@ -1,5 +1,7 @@
 function splitTags(splitChars: string[] | undefined, value: string) {
-  if (!splitChars) return [value];
+  if (!splitChars) {
+    return [value];
+  }
 
   return value
     .split(new RegExp(`[${splitChars.join('')}]`))

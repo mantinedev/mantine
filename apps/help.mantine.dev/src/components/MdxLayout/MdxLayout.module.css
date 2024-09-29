@@ -26,7 +26,7 @@
   margin-top: var(--mantine-spacing-lg);
 }
 
-.inner {
+.innerContainer {
   --table-of-contents-width: 300px;
 
   display: flex;
@@ -38,8 +38,13 @@
   }
 }
 
+.inner {
+  width: 100%;
+  max-width: calc(100% - var(--table-of-contents-width));
+  overflow: hidden;
+}
+
 .content {
   flex: 0 0 calc(100% - var(--table-of-contents-width));
-  overflow: hidden;
   max-width: 100%;
 }

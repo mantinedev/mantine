@@ -33,7 +33,7 @@ export const DrawerContent = factory<DrawerContentFactory>((_props, ref) => {
       {...others}
       radius={radius || ctx.radius || 0}
     >
-      <Scroll style={{ height: '100vh' }}>{children}</Scroll>
+      <Scroll style={{ height: 'calc(100vh - var(--drawer-offset) * 2)' }}>{children}</Scroll>
     </ModalBaseContent>
   );
 });

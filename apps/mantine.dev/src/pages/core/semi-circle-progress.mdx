@@ -1,0 +1,30 @@
+import { SemiCircleProgressDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.SemiCircleProgress);
+
+## Usage
+
+<Demo data={SemiCircleProgressDemos.usage} />
+
+## Change empty segment color
+
+Use `emptySegmentColor` prop to change color of empty segment,
+it accepts key of `theme.colors` or any valid CSS color value:
+
+<Demo data={SemiCircleProgressDemos.emptySegmentColor} />
+
+## Change label position
+
+By default, the label is displayed at the bottom of the component,
+you can change its position to `center` by using `labelPosition` prop:
+
+<Demo data={SemiCircleProgressDemos.labelPosition} />
+
+## Filled segment transition
+
+By default, transitions are disabled, to enable them, set `transitionDuration` prop
+to a number of milliseconds:
+
+<Demo data={SemiCircleProgressDemos.transitions} />

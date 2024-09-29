@@ -1,13 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 
-export function useInterval(fn: () => void, interval: number) {
+interface UseIntervalOptions {
+  /** If set, the interval will start automatically when the component is mounted, `false` by default */
+  autoInvoke?: boolean;
+}
+
+export function useInterval(
+  fn: () => void,
+  interval: number,
+  { autoInvoke = false }: UseIntervalOptions = {}
+) {
   const [active, setActive] = useState(false);
   const intervalRef = useRef<number>();
   const fnRef = useRef<() => void>();
-
-  useEffect(() => {
-    fnRef.current = fn;
-  }, [fn]);
 
   const start = () => {
     setActive((old) => {
@@ -31,6 +36,18 @@ export function useInterval(fn: () => void, interval: number) {
       start();
     }
   };
+
+  useEffect(() => {
+    fnRef.current = fn;
+    active && start();
+    return stop;
+  }, [fn, active, interval]);
+
+  useEffect(() => {
+    if (autoInvoke) {
+      start();
+    }
+  }, []);
 
   return { start, stop, toggle, active };
 }

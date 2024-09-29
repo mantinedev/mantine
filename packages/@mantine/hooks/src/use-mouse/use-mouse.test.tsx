@@ -30,7 +30,7 @@ describe('@mantine/hook/use-mouse', () => {
     render(<Target />);
     const target = screen.getByTestId('target');
 
-    // work around to pass pageX and pageY to the event
+    // Work around to pass pageX and pageY to the event
     const customEvent = new MouseEvent('mousemove', {
       clientX: 123,
       clientY: 456,

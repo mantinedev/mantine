@@ -105,6 +105,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
       data-menu-item
       data-disabled={disabled || undefined}
       data-hovered={ctx.hovered === itemIndex ? true : undefined}
+      data-mantine-stop-propagation
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
@@ -115,7 +116,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
         loop: ctx.loop,
         dir,
         orientation: 'vertical',
-        onKeyDown: _others.onKeydown,
+        onKeyDown: _others.onKeyDown,
       })}
       __vars={{
         '--menu-item-color':

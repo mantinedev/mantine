@@ -39,21 +39,21 @@ Default values for theme properties:
 `theme.fontSizes` property defines font-size values for all Mantine components:
 
 ```tsx
-import { MantineProvider, rem } from '@mantine/core';
+import { createTheme, MantineProvider, rem } from '@mantine/core';
+
+const theme = createTheme({
+  fontSizes: {
+    xs: rem(10),
+    sm: rem(11),
+    md: rem(14),
+    lg: rem(16),
+    xl: rem(20),
+  },
+});
 
 function Demo() {
   return (
-    <MantineProvider
-      theme={{
-        fontSizes: {
-          xs: rem(10),
-          sm: rem(11),
-          md: rem(14),
-          lg: rem(16),
-          xl: rem(20),
-        },
-      }}
-    >
+    <MantineProvider theme={theme}>
       {/* Your app here */}
     </MantineProvider>
   );
@@ -77,21 +77,21 @@ Default `theme.fontSizes` values:
 most other components use `theme.lineHeights.md` by default:
 
 ```tsx
-import { MantineProvider } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  lineHeights: {
+    xs: '1.4',
+    sm: '1.45',
+    md: '1.55',
+    lg: '1.6',
+    xl: '1.65',
+  },
+});
 
 function Demo() {
   return (
-    <MantineProvider
-      theme={{
-        lineHeights: {
-          xs: '1.4',
-          sm: '1.45',
-          md: '1.55',
-          lg: '1.6',
-          xl: '1.65',
-        },
-      }}
-    >
+    <MantineProvider theme={theme}>
       {/* Your app here */}
     </MantineProvider>
   );
@@ -114,31 +114,31 @@ To customize headings styles in [Title](/core/title/) and [TypographyStylesProvi
 set `theme.headings`:
 
 ```tsx
-import { MantineProvider, rem } from '@mantine/core';
+import { createTheme, MantineProvider, rem } from '@mantine/core';
+
+const theme = createTheme({
+  headings: {
+    // properties for all headings
+    fontWeight: '400',
+    fontFamily: 'Roboto',
+
+    // properties for individual headings, all of them are optional
+    sizes: {
+      h1: {
+        fontWeight: '100',
+        fontSize: rem(36),
+        lineHeight: '1.4',
+      },
+      h2: { fontSize: rem(30), lineHeight: '1.5' },
+      // ...up to h6
+      h6: { fontWeight: '900' },
+    },
+  },
+});
 
 function Demo() {
   return (
-    <MantineProvider
-      theme={{
-        headings: {
-          // properties for all headings
-          fontWeight: '400',
-          fontFamily: 'Roboto',
-
-          // properties for individual headings, all of them are optional
-          sizes: {
-            h1: {
-              fontWeight: '100',
-              fontSize: rem(36),
-              lineHeight: '1.4',
-            },
-            h2: { fontSize: rem(30), lineHeight: '1.5' },
-            // ...up to h6
-            h6: { fontWeight: '900' },
-          },
-        },
-      }}
-    >
+    <MantineProvider theme={theme}>
       {/* Your app here */}
     </MantineProvider>
   );

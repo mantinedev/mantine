@@ -44,9 +44,9 @@ export function MdxLayout({ meta, children }: MdxLayoutProps) {
               </PageHeaderLink>
               <PageHeaderLink
                 icon={<IconBug size={18} stroke={1.5} />}
-                link={`https://github.com/mantinedev/help.mantine.dev/issues/new?template=article_report.yml&title=${encodeURIComponent(
-                  `Issue with article ${meta.title}`
-                )}`}
+                link={`https://github.com/mantinedev/mantine/issues/new?template=docs_report.yml&title=${encodeURIComponent(
+                  `Issue with Help Center article "${meta.title}"`
+                )}&link=${encodeURIComponent(`https://help.mantine.dev/q/${meta.slug}`)}`}
               >
                 Report issue with the article
               </PageHeaderLink>
@@ -65,9 +65,11 @@ export function MdxLayout({ meta, children }: MdxLayoutProps) {
             </Text>
           </Container>
         </header>
-        <Container size="md" className={classes.inner}>
-          <div className={classes.content} id="mdx">
-            {children}
+        <Container size="md" className={classes.innerContainer}>
+          <div className={classes.inner}>
+            <div className={classes.content} id="mdx">
+              {children}
+            </div>
           </div>
           <TableOfContents />
         </Container>

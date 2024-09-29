@@ -30,5 +30,5 @@ function AxeTest() {
 }
 
 describe('@mantine/core/Combobox', () => {
-  tests.axe([<AxeTest />]);
+  tests.axe([<AxeTest key="1" />]);
 });

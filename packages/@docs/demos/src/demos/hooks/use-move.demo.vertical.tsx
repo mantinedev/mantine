@@ -32,6 +32,7 @@ function Demo() {
               height: \`\${value * 100}%\`,
               width: rem(16),
               backgroundColor: 'var(--mantine-color-blue-filled)',
+              opacity: 0.7,
             }}
           />
 
@@ -80,6 +81,7 @@ function Demo() {
               height: `${value * 100}%`,
               width: rem(16),
               backgroundColor: 'var(--mantine-color-blue-filled)',
+              opacity: 0.7,
             }}
           />
 

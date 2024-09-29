@@ -1,0 +1,53 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'Are Mantine components accessible?',
+  description:
+    'Learn about Mantine components accessibility features',
+  slug: 'are-mantine-components-accessible',
+  category: 'about',
+  tags: ['inputs', 'a11y', 'axe', 'accessibility'],
+  created_at: 'July 15, 2024',
+  last_updated_at: 'July 15, 2024',
+};
+
+export default Layout(meta);
+
+## Are Mantine components accessible?
+
+Yes, Mantine components follow [WAI-ARIA](https://www.w3.org/WAI/standards-guidelines/aria/)
+accessibility guidelines. All components have proper roles, aria-\* attributes and semantics,
+provide full keyboard support, manage focus correctly and support screen readers.
+
+## How Mantine components are tested for accessibility?
+
+All components that have interactive elements are tested with [axe](https://www.deque.com/axe/)
+([jest-axe](https://www.npmjs.com/package/jest-axe)) to ensure that they have all required
+roles and aria-\* attributes. Additionally, all components are tested for keyboard support
+and focus management with unit tests, you can view an example of these tests [here](https://github.com/mantinedev/mantine/blob/master/packages/%40mantine/core/src/components/Tabs/Tabs.test.tsx).
+In Mantine codebase, there are more than unit 10,000 tests.
+
+In addition to automated tests, Mantine components are manually tested with screen readers
+(VoiceOver) to ensure that they are fully accessible for assistive technologies users.
+
+## Is there anything I need to do on my side to make my app accessible?
+
+Of course! While Mantine components provide a solid foundation for accessible applications,
+there are still things that you need to do to ensure that your app is fully accessible.
+If the component requires props to make it accessible, it will be mentioned in the component
+documentation.
+
+Things to look out for while building accessible applications:
+
+- Use semantic HTML elements where possible: use `<button>` for buttons, `<a>` for links, etc.
+- Provide proper labels for inputs
+- Use `aria-label` attribute where necessary
+- Ensure that your app is fully navigable with a keyboard
+- Ensure that all elements in your app have proper color contrast
+- And more
+
+If you are interested in learning more about web accessibility, you can check out these
+free courses:
+
+- [Web Accessibility on Udacity](https://www.udacity.com/course/web-accessibility--ud891)
+- [Develop Accessible Web Apps with React on Egghead](https://egghead.io/courses/develop-accessible-web-apps-with-react)

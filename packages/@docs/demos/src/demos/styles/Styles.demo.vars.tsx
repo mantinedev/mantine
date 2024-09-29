@@ -87,7 +87,7 @@ function Demo() {
 }
 `;
 
-const varsResolver: PartialVarsResolver<ButtonFactory> = (theme, props) => {
+const varsResolver: PartialVarsResolver<ButtonFactory> = (_theme, props) => {
   if (props.size === 'xxl') {
     return {
       root: {
@@ -112,7 +112,7 @@ const varsResolver: PartialVarsResolver<ButtonFactory> = (theme, props) => {
 };
 
 Button.extend({
-  vars: (theme, props) => {
+  vars: (_theme, props) => {
     if (props.size === 'xxl') {
       return {
         root: {

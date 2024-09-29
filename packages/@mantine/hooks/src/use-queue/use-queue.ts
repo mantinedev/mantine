@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export function useQueue<T>({ initialValues = [], limit }: { initialValues?: T[]; limit: number }) {
-  const [{ state, queue }, setState] = useState({
+  const [state, setState] = useState({
     state: initialValues.slice(0, limit),
     queue: initialValues.slice(limit),
   });
@@ -29,8 +29,8 @@ export function useQueue<T>({ initialValues = [], limit }: { initialValues?: T[]
   const cleanQueue = () => setState((current) => ({ state: current.state, queue: [] }));
 
   return {
-    state,
-    queue,
+    state: state.state,
+    queue: state.queue,
     add,
     update,
     cleanQueue,

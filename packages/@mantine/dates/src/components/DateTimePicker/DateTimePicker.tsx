@@ -42,7 +42,10 @@ export type DateTimePickerStylesNames =
 
 export interface DateTimePickerProps
   extends BoxProps,
-    Omit<DateInputSharedProps, 'classNames' | 'styles' | 'closeOnChange' | 'size'>,
+    Omit<
+      DateInputSharedProps,
+      'classNames' | 'styles' | 'closeOnChange' | 'size' | 'valueFormatter'
+    >,
     Omit<CalendarBaseProps, 'defaultDate'>,
     Omit<CalendarSettings, 'onYearMouseEnter' | 'onMonthMouseEnter'>,
     StylesApiProps<DateTimePickerFactory> {
@@ -215,6 +218,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
       {...others}
       type="default"
       __staticSelector="DateTimePicker"
+      // ValueFormatter={valueFormatter}
     >
       <DatePicker
         {...calendarProps}

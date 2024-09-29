@@ -9,7 +9,7 @@ export interface MantineTheme {
    */
   focusRing: 'auto' | 'always' | 'never';
 
-  /** rem units scale, change if you customize font-size of `<html />` element
+  /** Rem units scale, change if you customize font-size of `<html />` element
    *  default value is `1` (for `100%`/`16px` font-size on `<html />`)
    */
   scale: number;
@@ -61,7 +61,7 @@ export interface MantineTheme {
    * */
   luminanceThreshold: number;
 
-  /** font-family used in all components, system fonts by default */
+  /** Font-family used in all components, system fonts by default */
   fontFamily: string;
 
   /** Monospace font-family, used in code and other similar components, system fonts by default  */

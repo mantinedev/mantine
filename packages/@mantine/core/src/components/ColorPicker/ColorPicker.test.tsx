@@ -14,6 +14,7 @@ describe('@mantine/core/ColorPicker', () => {
       saturationLabel="Saturation"
       alphaLabel="Alpha"
       hueLabel="Hue"
+      key="1"
     />,
   ]);
 

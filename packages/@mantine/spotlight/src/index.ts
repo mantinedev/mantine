@@ -12,6 +12,7 @@ export type { SpotlightState, SpotlightStore } from './spotlight.store';
 export { isActionsGroup } from './is-actions-group';
 
 export { Spotlight } from './Spotlight';
+export { SpotlightRoot } from './SpotlightRoot';
 export { SpotlightAction } from './SpotlightAction';
 export { SpotlightActionsGroup } from './SpotlightActionsGroup';
 export { SpotlightActionsList } from './SpotlightActionsList';

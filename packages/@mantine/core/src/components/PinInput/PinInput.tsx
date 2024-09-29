@@ -16,7 +16,7 @@ import {
   useStyles,
 } from '../../core';
 import { Group } from '../Group';
-import { Input } from '../Input';
+import { Input, InputProps } from '../Input';
 import { InputBase } from '../InputBase';
 import { createPinArray } from './create-pin-array/create-pin-array';
 import classes from './PinInput.module.css';
@@ -119,6 +119,9 @@ export interface PinInputProps
 
   /** Assigns ref of the root element */
   rootRef?: React.ForwardedRef<HTMLDivElement>;
+
+  /** Props added to the input element depending on its index */
+  getInputProps?: (index: number) => InputProps & ElementProps<'input', 'size'>;
 }
 
 export type PinInputFactory = Factory<{
@@ -178,6 +181,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     id,
     hiddenInputProps,
     rootRef,
+    getInputProps,
     ...others
   } = useProps('PinInput', defaultProps, props);
 
@@ -306,13 +310,15 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     } else if (key === 'Delete') {
       setFieldValue('', index);
     } else if (key === 'Backspace') {
-      setFieldValue('', index);
-      if (length === index + 1) {
-        if ((event.target as HTMLInputElement).value === '') {
+      if (index !== 0) {
+        setFieldValue('', index);
+        if (length === index + 1) {
+          if ((event.target as HTMLInputElement).value === '') {
+            focusInputField('prev', index, event);
+          }
+        } else {
           focusInputField('prev', index, event);
         }
-      } else {
-        focusInputField('prev', index, event);
       }
     } else if (inputValue.length > 0 && key === _value[index]) {
       focusInputField('next', index, event);
@@ -341,7 +347,9 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
   };
 
   useEffect(() => {
-    if (_valueToString.length !== length) return;
+    if (_valueToString.length !== length) {
+      return;
+    }
     onComplete?.(_valueToString);
   }, [length, _valueToString]);
 
@@ -415,6 +423,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
             unstyled={unstyled}
             aria-label={ariaLabel}
             readOnly={readOnly}
+            {...getInputProps?.(index)}
           />
         ))}
       </Group>

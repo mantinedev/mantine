@@ -16,7 +16,10 @@ export type AccordionPanelStylesNames = 'panel' | 'content';
 export interface AccordionPanelProps
   extends BoxProps,
     CompoundStylesApiProps<AccordionPanelFactory>,
-    ElementProps<'div', 'onTransitionEnd'> {}
+    ElementProps<'div'> {
+  /** Called when the panel animation completes */
+  onTransitionEnd?: () => void;
+}
 
 export type AccordionPanelFactory = Factory<{
   props: AccordionPanelProps;

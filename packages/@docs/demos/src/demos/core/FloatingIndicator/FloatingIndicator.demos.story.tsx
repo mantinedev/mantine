@@ -12,3 +12,8 @@ export const Demo_segmented = {
   name: '⭐ Demo: segmented',
   render: renderDemo(demos.segmented),
 };
+
+export const Demo_tabs = {
+  name: '⭐ Demo: tabs',
+  render: renderDemo(demos.tabs),
+};

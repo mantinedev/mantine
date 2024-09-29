@@ -2,17 +2,17 @@ import { Button, Code, Group, Title } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Button, Code, Title, MantineProvider } from '@mantine/core';
+import { Button, Code, Title, MantineProvider, createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  fontFamily: 'Verdana, sans-serif',
+  fontFamilyMonospace: 'Monaco, Courier, monospace',
+  headings: { fontFamily: 'Greycliff CF, sans-serif' },
+});
 
 function Demo() {
   return (
-    <MantineProvider
-      theme={{
-        fontFamily: 'Verdana, sans-serif',
-        fontFamilyMonospace: 'Monaco, Courier, monospace',
-        headings: { fontFamily: 'Greycliff CF, sans-serif' },
-      }}
-    >
+    <MantineProvider theme={theme}>
       <Title order={3}>Greycliff CF or sans-serif title</Title>
       <Button>Verdana button</Button>
       <Code>Monaco, Courier Code</Code>

@@ -79,6 +79,10 @@ body {
   &:active {
     transform: translateY(rem(1px));
   }
+
+  fieldset:disabled &:active {
+    transform: none;
+  }
 }
 
 .mantine-rotate-rtl {

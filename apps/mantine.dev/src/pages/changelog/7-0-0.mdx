@@ -297,17 +297,17 @@ Note that it is usually better to generate colors in advance to avoid contrast i
 
 ```tsx
 import { generateColors } from '@mantine/colors-generator';
-import { MantineProvider } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    'pale-blue': generateColors('#375EAC'),
+  },
+});
 
 function Demo() {
   return (
-    <MantineProvider
-      theme={{
-        colors: {
-          'pale-blue': generateColors('#375EAC'),
-        },
-      }}
-    >
+    <MantineProvider theme={theme}>
       {/* Your app here */}
     </MantineProvider>
   );

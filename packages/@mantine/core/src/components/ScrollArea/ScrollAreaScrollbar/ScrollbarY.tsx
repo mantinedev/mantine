@@ -57,3 +57,5 @@ export const ScrollAreaScrollbarY = forwardRef<HTMLDivElement, ScrollAreaScrollb
     );
   }
 );
+
+ScrollAreaScrollbarY.displayName = '@mantine/core/ScrollAreaScrollbarY';

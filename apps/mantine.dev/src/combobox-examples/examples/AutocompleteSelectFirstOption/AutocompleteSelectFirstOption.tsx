@@ -28,7 +28,7 @@ export function AutocompleteSelectFirstOption() {
   ));
 
   useEffect(() => {
-    // we need to wait for options to render before we can select first one
+    // We need to wait for options to render before we can select first one
     combobox.selectFirstOption();
   }, [value]);
 

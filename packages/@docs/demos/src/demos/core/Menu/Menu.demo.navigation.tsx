@@ -27,7 +27,7 @@ function Demo() {
 function Demo() {
   const menus = Array(4)
     .fill(0)
-    .map((e, i) => (
+    .map((_, i) => (
       <Menu
         key={i}
         trigger="click-hover"

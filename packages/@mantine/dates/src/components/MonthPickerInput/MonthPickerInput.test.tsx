@@ -22,10 +22,10 @@ const defaultPropsWithInputProps = {
 
 describe('@mantine/dates/MonthPickerInput', () => {
   tests.axe([
-    <MonthPickerInput aria-label="test-label" />,
-    <MonthPickerInput aria-label="test-label" error />,
-    <MonthPickerInput aria-label="test-label" error="test-error" id="test" />,
-    <MonthPickerInput aria-label="test-label" description="test-description" />,
+    <MonthPickerInput aria-label="test-label" key="1" />,
+    <MonthPickerInput aria-label="test-label" error key="2" />,
+    <MonthPickerInput aria-label="test-label" error="test-error" id="test" key="3" />,
+    <MonthPickerInput aria-label="test-label" description="test-description" key="4" />,
   ]);
 
   tests.itSupportsSystemProps<MonthPickerInputProps, __InputStylesNames>({

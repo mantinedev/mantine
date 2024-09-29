@@ -13,6 +13,7 @@ export interface $FormValues<Values extends Record<PropertyKey, any>> {
   setValuesSnapshot: (payload: Values) => void;
   initialize: (values: Values, onInitialize: () => void) => void;
   getValues: () => Values;
+  getValuesSnapshot: () => Values;
 }
 
 export interface SetValuesSubscriberPayload<Values> {
@@ -121,6 +122,7 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
   }, [setValues]);
 
   const getValues = useCallback(() => refValues.current, []);
+  const getValuesSnapshot = useCallback(() => valuesSnapshot.current, []);
 
   return {
     initialized,
@@ -133,5 +135,6 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
     setValuesSnapshot,
     initialize,
     getValues,
+    getValuesSnapshot,
   };
 }

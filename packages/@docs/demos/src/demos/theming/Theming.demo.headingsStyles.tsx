@@ -1,4 +1,4 @@
-import { MantineThemeProvider, Title } from '@mantine/core';
+import { createTheme, MantineThemeProvider, Title } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Theming.demo.headingStyles.module.css';
 
@@ -6,26 +6,26 @@ const code = `
 import { Title, MantineProvider } from '@mantine/core';
 import classes from './Demo.module.css';
 
+const theme = createTheme({
+  components: {
+    Title: Title.extend({
+      classNames: {
+        root: classes.heading,
+      },
+    }),
+  },
+});
+
 function Demo() {
   return (
-    <MantineProvider
-      theme={{
-        components: {
-          Title: Title.extend({
-            classNames: {
-              root: classes.heading,
-            },
-          }),
-        },
-      }}
-    >
+    <MantineThemeProvider theme={theme}>
       <Title order={1}>Heading 1</Title>
       <Title order={2}>Heading 2</Title>
       <Title order={3}>Heading 3</Title>
       <Title order={4}>Heading 4</Title>
       <Title order={5}>Heading 5</Title>
       <Title order={6}>Heading 6</Title>
-    </MantineProvider>
+    </MantineThemeProvider>
   );
 }
 `;
@@ -43,19 +43,19 @@ const cssCode = `
 }
 `;
 
+const theme = createTheme({
+  components: {
+    Title: Title.extend({
+      classNames: {
+        root: classes.heading,
+      },
+    }),
+  },
+});
+
 function Demo() {
   return (
-    <MantineThemeProvider
-      theme={{
-        components: {
-          Title: Title.extend({
-            classNames: {
-              root: classes.heading,
-            },
-          }),
-        },
-      }}
-    >
+    <MantineThemeProvider theme={theme}>
       <Title order={1}>Heading 1</Title>
       <Title order={2}>Heading 2</Title>
       <Title order={3}>Heading 3</Title>

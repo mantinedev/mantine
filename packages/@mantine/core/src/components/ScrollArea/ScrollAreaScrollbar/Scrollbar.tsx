@@ -58,7 +58,9 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
     const handleWheel = (event: WheelEvent) => {
       const element = event.target as HTMLElement;
       const isScrollbarWheel = scrollbar?.contains(element);
-      if (isScrollbarWheel) handleWheelScroll(event, maxScrollPos);
+      if (isScrollbarWheel) {
+        handleWheelScroll(event, maxScrollPos);
+      }
     };
     document.addEventListener('wheel', handleWheel, { passive: false });
     return () => document.removeEventListener('wheel', handleWheel, { passive: false } as any);
@@ -83,6 +85,7 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
       <div
         {...scrollbarProps}
         ref={composeRefs}
+        data-mantine-scrollbar
         style={{ position: 'absolute', ...scrollbarProps.style }}
         onPointerDown={composeEventHandlers(props.onPointerDown, (event) => {
           event.preventDefault();
@@ -94,7 +97,6 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
             rectRef.current = scrollbar!.getBoundingClientRect();
             prevWebkitUserSelectRef.current = document.body.style.webkitUserSelect;
             document.body.style.webkitUserSelect = 'none';
-            document.body.style.pointerEvents = 'none';
             handleDragScroll(event);
           }
         })}
@@ -107,7 +109,6 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
             element.releasePointerCapture(event.pointerId);
           }
           document.body.style.webkitUserSelect = prevWebkitUserSelectRef.current;
-          document.body.style.pointerEvents = 'auto';
           rectRef.current = null;
         })}
       />

@@ -80,6 +80,7 @@ export * as RingProgressDemos from './demos/core/RingProgress';
 export * as ScrollAreaDemos from './demos/core/ScrollArea';
 export * as SegmentedControlDemos from './demos/core/SegmentedControl';
 export * as SelectDemos from './demos/core/Select';
+export * as SemiCircleProgressDemos from './demos/core/SemiCircleProgress';
 export * as SimpleGridDemos from './demos/core/SimpleGrid';
 export * as SkeletonDemos from './demos/core/Skeleton';
 export * as SliderDemos from './demos/core/Slider';
@@ -130,6 +131,7 @@ export * as PieChartDemos from './demos/charts/PieChart';
 export * as RadarChartDemos from './demos/charts/RadarChart';
 export * as ScatterChartDemos from './demos/charts/ScatterChart';
 export * as BubbleChartDemos from './demos/charts/BubbleChart';
+export * as CompositeChartDemos from './demos/charts/CompositeChart';
 
 // Extensions demos
 export * as NotificationsDemos from './demos/notifications';

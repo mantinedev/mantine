@@ -299,8 +299,16 @@ export const DynamicTabs = () => {
   const list = Array(count)
     .fill(0)
     .map((_, index) => index.toString());
-  const tabs = list.map((item) => <Tabs.Tab value={item}>Tab {item}</Tabs.Tab>);
-  const panels = list.map((item) => <Tabs.Panel value={item}>Panel {item}</Tabs.Panel>);
+  const tabs = list.map((item) => (
+    <Tabs.Tab value={item} key={item}>
+      Tab {item}
+    </Tabs.Tab>
+  ));
+  const panels = list.map((item) => (
+    <Tabs.Panel value={item} key={item}>
+      Panel {item}
+    </Tabs.Panel>
+  ));
 
   return (
     <Tabs>

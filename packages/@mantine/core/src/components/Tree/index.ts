@@ -9,3 +9,4 @@ export type {
   RenderTreeNodePayload,
 } from './Tree';
 export type { UseTreeInput, UseTreeReturnType } from './use-tree';
+export type { CheckedNodeStatus } from './get-all-checked-nodes/get-all-checked-nodes';

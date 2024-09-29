@@ -56,7 +56,7 @@ export interface PieChartProps
   tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
 
   /** Props passed down to recharts `Pie` component */
-  pieProps?: Omit<PieProps, 'ref'>;
+  pieProps?: Partial<Omit<PieProps, 'ref'>>;
 
   /** Controls color of the segments stroke, by default depends on color scheme */
   strokeColor?: MantineColor;
@@ -134,6 +134,23 @@ const varsResolver = createVarsResolver<PieChartFactory>(
   })
 );
 
+const getLabelValue = (
+  labelsType: PieChartProps['labelsType'],
+  value: number,
+  percent: number,
+  valueFormatter?: PieChartProps['valueFormatter']
+) => {
+  if (labelsType === 'percent') {
+    return `${(percent * 100).toFixed(0)}%`;
+  }
+
+  if (typeof valueFormatter === 'function') {
+    return valueFormatter(value);
+  }
+
+  return value;
+};
+
 const getInsideLabel =
   (labelsType: 'value' | 'percent', valueFormatter?: PieChartProps['valueFormatter']): PieLabel =>
   ({ cx, cy, midAngle, innerRadius, outerRadius, value, percent }) => {
@@ -150,14 +167,27 @@ const getInsideLabel =
         dominantBaseline="central"
         className={classes.label}
       >
-        {labelsType === 'percent'
-          ? `${(percent * 100).toFixed(0)}%`
-          : typeof valueFormatter === 'function'
-            ? valueFormatter(value)
-            : value}
+        {getLabelValue(labelsType, value, percent, valueFormatter)}
       </text>
     );
   };
+
+const getOutsideLabel =
+  (labelsType: 'value' | 'percent', valueFormatter?: PieChartProps['valueFormatter']): PieLabel =>
+  ({ x, y, cx, cy, percent, value }) => (
+    <text
+      x={x}
+      y={y}
+      cx={cx}
+      cy={cy}
+      textAnchor={x > cx ? 'start' : 'end'}
+      fill="var(--chart-labels-color, var(--mantine-color-dimmed))"
+      fontFamily="var(--mantine-font-family)"
+      fontSize={12}
+    >
+      <tspan x={x}>{getLabelValue(labelsType, value, percent, valueFormatter)}</tspan>
+    </text>
+  );
 
 export const PieChart = factory<PieChartFactory>((_props, ref) => {
   const props = useProps('PieChart', defaultProps, _props);
@@ -186,6 +216,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
     labelsPosition,
     valueFormatter,
     labelsType,
+    strokeColor,
     ...others
   } = props;
 
@@ -236,27 +267,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
               withLabels
                 ? labelsPosition === 'inside'
                   ? getInsideLabel(labelsType || 'value', valueFormatter)
-                  : labelsType === 'percent'
-                    ? ({ percent, x, y, cx, cy }) => (
-                        <text
-                          x={x}
-                          y={y}
-                          cx={cx}
-                          cy={cy}
-                          textAnchor={x > cx ? 'start' : 'end'}
-                          dominantBaseline="central"
-                          fill="var(--chart-labels-color, var(--mantine-color-dimmed))"
-                          fontFamily="var(--mantine-font-family)"
-                          fontSize={12}
-                        >
-                          <tspan x={x}>{`${(percent * 100).toFixed(0)}%`}</tspan>
-                        </text>
-                      )
-                    : {
-                        fill: 'var(--chart-labels-color, var(--mantine-color-dimmed))',
-                        fontSize: 12,
-                        fontFamily: 'var(--mantine-font-family)',
-                      }
+                  : getOutsideLabel(labelsType || 'value', valueFormatter)
                 : false
             }
             labelLine={

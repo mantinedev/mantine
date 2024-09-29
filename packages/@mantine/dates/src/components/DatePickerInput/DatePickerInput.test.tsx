@@ -15,10 +15,10 @@ const defaultPropsWithInputProps = {
 
 describe('@mantine/dates/DatePickerInput', () => {
   tests.axe([
-    <DatePickerInput aria-label="test-label" />,
-    <DatePickerInput aria-label="test-label" error />,
-    <DatePickerInput aria-label="test-label" error="test-error" id="test" />,
-    <DatePickerInput aria-label="test-label" description="test-description" />,
+    <DatePickerInput aria-label="test-label" key="1" />,
+    <DatePickerInput aria-label="test-label" error key="2" />,
+    <DatePickerInput aria-label="test-label" error="test-error" id="test" key="3" />,
+    <DatePickerInput aria-label="test-label" description="test-description" key="4" />,
   ]);
 
   tests.itSupportsSystemProps<DatePickerInputProps, __InputStylesNames>({

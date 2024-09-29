@@ -11,7 +11,7 @@ describe('@mantine/hooks/use-did-update', () => {
     let dependency = '';
     const { rerender } = renderHook(() => useDidUpdate(fn, [dependency]));
     expect(fn).not.toHaveBeenCalled();
-    //change dependency and rerender
+    //Change dependency and rerender
     dependency = 'foo';
     rerender();
     expect(fn).toHaveBeenCalled();

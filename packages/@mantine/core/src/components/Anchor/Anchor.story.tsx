@@ -38,3 +38,13 @@ export function Unstyled() {
     </Anchor>
   );
 }
+
+export function LineClamp() {
+  return (
+    <Anchor href="#" lineClamp={1}>
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam non ipsum aliquid
+      voluptatibus. Repellat, illo cumque a inventore excepturi dolorem? Asperiores quasi numquam
+      natus ipsum rerum architecto cumque quo ut.
+    </Anchor>
+  );
+}

@@ -20,12 +20,19 @@ const slides = (
 export function Usage() {
   const [value, setValue] = useState(0);
   const log = useCallback((index: any) => console.log({ value, index }), [value]);
+
   return (
     <div style={{ padding: 40, maxWidth: 500 }}>
       <button type="button" onClick={() => setValue(Math.random())}>
         random
       </button>
-      <Carousel slideGap="md" height={200} withIndicators onSlideChange={log}>
+      <Carousel
+        slideGap="md"
+        slideSize={{ md: '50%' }}
+        height={200}
+        withIndicators
+        onSlideChange={log}
+      >
         {slides}
       </Carousel>
     </div>

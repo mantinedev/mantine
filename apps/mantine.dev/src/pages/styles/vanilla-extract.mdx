@@ -57,15 +57,19 @@ properties are already exposed as CSS variables. Instead, use `themeToVars` func
 to create an object with CSS variables from Mantine theme:
 
 ```tsx
-// theme.css.ts
+// theme.ts
 import { createTheme } from '@mantine/core';
-import { themeToVars } from '@mantine/vanilla-extract';
 
 // Do not forget to pass theme to MantineProvider
 export const theme = createTheme({
   fontFamily: 'serif',
   primaryColor: 'cyan',
 });
+```
+
+```tsx
+// theme.css.ts
+import { theme } from './theme';
 
 // CSS variables object, can be access in *.css.ts files
 export const vars = themeToVars(theme);

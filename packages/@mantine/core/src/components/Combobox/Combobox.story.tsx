@@ -262,7 +262,7 @@ export function WithActive() {
 }
 
 export function Chevron() {
-  return <Combobox.Chevron size="xl" style={{ color: 'red' }}></Combobox.Chevron>;
+  return <Combobox.Chevron size="xl" style={{ color: 'red' }} />;
 }
 
 export function DifferentTargets() {
@@ -394,5 +394,79 @@ export function InteractiveHeaderAndFooter() {
         </Combobox.Dropdown>
       </Combobox>
     </div>
+  );
+}
+
+const groceries = [
+  '🍎 Apples',
+  '🍌 Bananas',
+  '🥦 Broccoli',
+  '🥕 Carrots',
+  '🍫 Chocolate',
+  '🍇 Grapes',
+  '🍋 Lemon',
+  '🥬 Lettuce',
+  '🍄 Mushrooms',
+  '🍊 Oranges',
+  '🥔 Potatoes',
+  '🍅 Tomatoes',
+  '🥚 Eggs',
+  '🥛 Milk',
+  '🍞 Bread',
+  '🍗 Chicken',
+  '🍔 Hamburger',
+  '🧀 Cheese',
+  '🥩 Steak',
+  '🍟 French Fries',
+  '🍕 Pizza',
+  '🥦 Cauliflower',
+  '🥜 Peanuts',
+  '🍦 Ice Cream',
+  '🍯 Honey',
+  '🥖 Baguette',
+  '🍣 Sushi',
+  '🥝 Kiwi',
+  '🍓 Strawberries',
+];
+
+export function SearchWithScrollArea() {
+  const combobox = useCombobox({
+    onDropdownClose: () => combobox.resetSelectedOption(),
+  });
+
+  const [value, setValue] = useState('');
+  const shouldFilterOptions = !groceries.some((item) => item === value);
+  const filteredOptions = shouldFilterOptions
+    ? groceries.filter((item) => item.toLowerCase().includes(value.toLowerCase().trim()))
+    : groceries;
+
+  const options = filteredOptions.map((item) => (
+    <Combobox.Option value={item} key={item}>
+      {item}
+    </Combobox.Option>
+  ));
+
+  return (
+    <Combobox
+      onOptionSubmit={(optionValue) => {
+        setValue(optionValue);
+        combobox.closeDropdown();
+      }}
+      store={combobox}
+      withinPortal={false}
+    >
+      <Combobox.Target>
+        <Button onClick={() => combobox.openDropdown()}>{value || 'Select an item'}</Button>
+      </Combobox.Target>
+
+      <Combobox.Dropdown>
+        <Combobox.Search />
+        <Combobox.Options>
+          <ScrollArea.Autosize mah={200} type="scroll">
+            {options.length === 0 ? <Combobox.Empty>Nothing found</Combobox.Empty> : options}
+          </ScrollArea.Autosize>
+        </Combobox.Options>
+      </Combobox.Dropdown>
+    </Combobox>
   );
 }

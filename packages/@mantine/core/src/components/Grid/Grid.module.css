@@ -1,3 +1,7 @@
+.container {
+  container: mantine-grid / inline-size;
+}
+
 .root {
   --grid-overflow: visible;
   --grid-margin: calc(var(--grid-gutter) / -2);

@@ -1,4 +1,5 @@
 import { IconBadge } from '@tabler/icons-react';
+import { Box } from '../../core';
 import { Group } from '../Group';
 import { Stack } from '../Stack';
 import { Switch } from './Switch';
@@ -60,19 +61,17 @@ export function IconInsideThumb() {
 
 export function SwitchGroup() {
   return (
-    <>
-      <Switch.Group
-        defaultValue={['one', 'three']}
-        m={4}
-        label="Switch Group"
-        description="Some description"
-        classNames={{ label: 'test-label' }}
-      >
-        <Switch value="one" label="one" />
-        <Switch value="two" label="two" />
-        <Switch value="three" label="three" />
-      </Switch.Group>
-    </>
+    <Switch.Group
+      defaultValue={['one', 'three']}
+      m={4}
+      label="Switch Group"
+      description="Some description"
+      classNames={{ label: 'test-label' }}
+    >
+      <Switch value="one" label="one" />
+      <Switch value="two" label="two" />
+      <Switch value="three" label="three" />
+    </Switch.Group>
   );
 }
 
@@ -119,6 +118,33 @@ export function WithError() {
   );
 }
 
-export function Alignment() {
-  return <Switch />;
+export function Shrinking() {
+  return (
+    <Box bg="blue.1" w={400}>
+      <Switch bg="green" value="svelte" label="Larger Switch" />
+      <Switch
+        bg="green"
+        value="react"
+        label="Same"
+        description="Short description - No Issue"
+        styles={{
+          labelWrapper: { backgroundColor: 'var(--mantine-color-green-2)' },
+        }}
+      />
+      <Switch
+        styles={{
+          labelWrapper: { backgroundColor: 'var(--mantine-color-red-4)' },
+        }}
+        bg="red"
+        value="svelte"
+        label="Smaller"
+        description="Long description, You can see how the Switch is smaller :( Description has to be multiline"
+      />
+      <Switch
+        bg="red"
+        value="svelte"
+        label="Testing if its also broken when the label is  long. Yep, seems a small."
+      />
+    </Box>
+  );
 }

@@ -12,7 +12,7 @@ import { getPath } from '../../utils/get-path';
 import { ROLLUP_EXCLUDE_USE_CLIENT } from './rollup-exclude-use-client';
 import { ROLLUP_EXTERNALS } from './rollup-externals';
 
-export async function createPackageConfig(packagePath: string): Promise<RollupOptions> {
+export function createPackageConfig(packagePath: string): RollupOptions {
   const packagesList = getPackagesList();
 
   const aliasEntries: Alias[] = packagesList.map((pkg) => ({

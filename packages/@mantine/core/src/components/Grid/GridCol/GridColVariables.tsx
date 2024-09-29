@@ -4,10 +4,9 @@ import {
   getSortedBreakpoints,
   InlineStyles,
   keys,
-  MantineBreakpoint,
   useMantineTheme,
 } from '../../../core';
-import { useGridContext } from '../Grid.context';
+import { GridBreakpoints, useGridContext } from '../Grid.context';
 import type { ColSpan, GridColProps } from './GridCol';
 
 interface GridColVariablesProps {
@@ -59,6 +58,7 @@ const getColumnOffset = (offset: number | undefined, columns: number) =>
 export function GridColVariables({ span, order, offset, selector }: GridColVariablesProps) {
   const theme = useMantineTheme();
   const ctx = useGridContext();
+  const _breakpoints = ctx.breakpoints || theme.breakpoints;
 
   const baseValue = getBaseValue(span);
   const baseSpan = baseValue === undefined ? 12 : getBaseValue(span);
@@ -72,7 +72,7 @@ export function GridColVariables({ span, order, offset, selector }: GridColVaria
     '--col-offset': getColumnOffset(getBaseValue(offset), ctx.columns),
   });
 
-  const queries = keys(theme.breakpoints).reduce<Record<string, Record<string, any>>>(
+  const queries = keys(_breakpoints).reduce<Record<string, Record<string, any>>>(
     (acc, breakpoint) => {
       if (!acc[breakpoint]) {
         acc[breakpoint] = {};
@@ -102,14 +102,24 @@ export function GridColVariables({ span, order, offset, selector }: GridColVaria
     {}
   );
 
-  const sortedBreakpoints = getSortedBreakpoints(keys(queries), theme).filter(
+  const sortedBreakpoints = getSortedBreakpoints(keys(queries), _breakpoints).filter(
     (breakpoint) => keys(queries[breakpoint.value]).length > 0
   );
 
-  const media = sortedBreakpoints.map((breakpoint) => ({
-    query: `(min-width: ${theme.breakpoints[breakpoint.value as MantineBreakpoint]})`,
+  const values = sortedBreakpoints.map((breakpoint) => ({
+    query:
+      ctx.type === 'container'
+        ? `mantine-grid (min-width: ${_breakpoints[breakpoint.value as keyof GridBreakpoints]})`
+        : `(min-width: ${_breakpoints[breakpoint.value as keyof GridBreakpoints]})`,
     styles: queries[breakpoint.value],
   }));
 
-  return <InlineStyles styles={baseStyles} media={media} selector={selector} />;
+  return (
+    <InlineStyles
+      styles={baseStyles}
+      media={ctx.type === 'container' ? undefined : values}
+      container={ctx.type === 'container' ? values : undefined}
+      selector={selector}
+    />
+  );
 }

@@ -125,7 +125,13 @@ export type SetFieldTouched<Values> = <Field extends LooseKeys<Values>>(
 
 export type SetFieldDirty<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
-  dirty: boolean
+  dirty: boolean,
+  forceUpdate?: boolean
+) => void;
+
+export type SetCalculatedFieldDirty<Values> = <Field extends LooseKeys<Values>>(
+  path: Field,
+  value: PathValue<Values, Field>
 ) => void;
 
 export type ReorderListItem<Values> = <Field extends LooseKeys<Values>>(

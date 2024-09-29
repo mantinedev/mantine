@@ -12,3 +12,4 @@ export { inverted } from './Slider.demo.inverted';
 export { stylesApi } from './Slider.demo.stylesApi';
 export { decimal } from './Slider.demo.decimal';
 export { decimalRange } from './Slider.demo.decimalRange';
+export { customSlider } from './Slider.demo.customSlider';

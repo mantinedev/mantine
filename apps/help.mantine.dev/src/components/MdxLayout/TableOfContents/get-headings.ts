@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-loop-func */
 export interface Heading {
   depth: number;
   content: string;

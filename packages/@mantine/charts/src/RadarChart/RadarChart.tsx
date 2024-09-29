@@ -72,7 +72,9 @@ export interface RadarChartProps
   withPolarRadiusAxis?: boolean;
 
   /** Props passed down to recharts Radar component */
-  radarProps?: ((series: RadarChartSeries) => Omit<RadarProps, 'ref'>) | Omit<RadarProps, 'ref'>;
+  radarProps?:
+    | ((series: RadarChartSeries) => Partial<Omit<RadarProps, 'ref'>>)
+    | Partial<Omit<RadarProps, 'ref'>>;
 
   /** Props passed down to recharts RadarChart component */
   radarChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsRadarChart>;

@@ -58,7 +58,9 @@ function Demo() {
   const [embla, setEmbla] = useState<Embla | null>(null);
 
   const handleScroll = useCallback(() => {
-    if (!embla) return;
+    if (!embla) {
+      return;
+    }
     const progress = Math.max(0, Math.min(1, embla.scrollProgress()));
     setScrollProgress(progress * 100);
   }, [embla, setScrollProgress]);

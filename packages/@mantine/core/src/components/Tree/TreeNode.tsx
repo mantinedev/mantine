@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
 import { useRef } from 'react';
 import { findElementAncestor, GetStylesApi } from '../../core';
 import type { RenderNode, TreeFactory, TreeNodeData } from './Tree';
@@ -174,6 +173,7 @@ export function TreeNode({
           node,
           level,
           selected,
+          tree: controller,
           expanded: controller.expandedState[node.value] || false,
           hasChildren: Array.isArray(node.children) && node.children.length > 0,
           elementProps,
