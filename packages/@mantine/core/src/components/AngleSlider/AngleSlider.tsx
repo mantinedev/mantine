@@ -34,6 +34,7 @@ export interface AngleSliderProps
   size?: number;
   thumbSize?: number;
   formatLabel?: (value: number) => React.ReactNode;
+  disabled?: boolean;
 
   /** Determines whether the selection should be only allowed from the given marks array, `false` by default */
   restrictToMarks?: boolean;
@@ -102,6 +103,8 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     restrictToMarks,
     formatLabel,
     onChangeEnd,
+    disabled,
+    onTouchStart,
     ...others
   } = props;
 
@@ -127,18 +130,20 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
   });
 
   const update = (event: MouseEvent, done = false) => {
-    const deg = getAngle([event.x, event.y], rootRef.current!);
-    const val = normalize(deg, step || 1);
-    const newValue =
-      restrictToMarks && Array.isArray(marks)
-        ? findClosestNumber(
-            val,
-            marks.map((mark) => mark.value)
-          )
-        : val;
+    if (rootRef.current) {
+      const deg = getAngle([event.clientX, event.clientY], rootRef.current);
+      const val = normalize(deg, step || 1);
+      const newValue =
+        restrictToMarks && Array.isArray(marks)
+          ? findClosestNumber(
+              val,
+              marks.map((mark) => mark.value)
+            )
+          : val;
 
-    setValue(newValue);
-    done && onChangeEnd?.(newValue);
+      setValue(newValue);
+      done && onChangeEnd?.(newValue);
+    }
   };
 
   const handleMouseMove = useCallback((event: MouseEvent) => {
@@ -150,19 +155,51 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     endTracking();
   }, []);
 
+  const handleTouchMove = useCallback((event: TouchEvent) => {
+    update(event.touches[0] as any);
+  }, []);
+
+  const handleTouchEnd = useCallback((event: TouchEvent) => {
+    update(event.changedTouches[0] as any, true);
+    endTracking();
+  }, []);
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    onTouchStart?.(event);
+    beginTracking();
+  };
+
   const beginTracking = () => {
     document.addEventListener('mousemove', handleMouseMove, false);
     document.addEventListener('mouseup', handleMouseUp, false);
+    document.addEventListener('touchmove', handleTouchMove, false);
+    document.addEventListener('touchend', handleTouchEnd, false);
   };
 
   const endTracking = () => {
     document.removeEventListener('mousemove', handleMouseMove, false);
     document.removeEventListener('mouseup', handleMouseUp, false);
+    document.removeEventListener('touchmove', handleTouchMove, false);
+    document.removeEventListener('touchend', handleTouchEnd, false);
   };
 
   const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
     onMouseDown?.(event);
     beginTracking();
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (disabled) {
+      return;
+    }
+
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
+      setValue(normalize(_value - step!, step!));
+    }
+
+    if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
+      setValue(normalize(_value + step!, step!));
+    }
   };
 
   const marksItems = marks?.map((mark, index) => (
@@ -176,8 +213,9 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
   return (
     <Box
       ref={useMergedRef(ref, rootRef)}
-      {...getStyles('root')}
+      {...getStyles('root', { focusable: true })}
       onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
       {...others}
     >
       {marksItems && marksItems.length > 0 && <div {...getStyles('marks')}>{marksItems}</div>}
@@ -187,7 +225,15 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
           {typeof formatLabel === 'function' ? formatLabel(_value) : _value}
         </div>
       )}
-      <div {...getStyles('thumb', { style: { transform: `rotate(${_value}deg)` } })} />
+      <div
+        tabIndex={disabled ? -1 : 0}
+        role="slider"
+        aria-valuemax={360}
+        aria-valuemin={0}
+        aria-valuenow={_value}
+        onKeyDown={handleKeyDown}
+        {...getStyles('thumb', { style: { transform: `rotate(${_value}deg)` } })}
+      />
     </Box>
   );
 });

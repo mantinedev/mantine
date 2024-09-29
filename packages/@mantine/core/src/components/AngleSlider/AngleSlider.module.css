@@ -8,6 +8,11 @@
   justify-content: center;
   user-select: none;
 
+  &:focus-within {
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: 2px;
+  }
+
   --slider-size: 60px;
   --thumb-size: calc(var(--slider-size) / 5);
 
@@ -73,6 +78,8 @@
   left: calc(50% - 1.5px);
   height: 100%;
   width: 3px;
+  outline: none;
+  pointer-events: none;
 
   &::before {
     content: '';
