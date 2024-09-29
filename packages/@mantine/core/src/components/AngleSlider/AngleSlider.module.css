@@ -53,7 +53,7 @@
     }
   }
 
-  &::after {
+  &[data-label]::after {
     min-width: 18px;
     text-align: center;
     content: attr(data-label);
@@ -83,7 +83,7 @@
     width: 3px;
 
     @mixin where-light {
-      background-color: var(--mantine-color-black);
+      background-color: var(--mantine-color-gray-7);
     }
 
     @mixin where-dark {
