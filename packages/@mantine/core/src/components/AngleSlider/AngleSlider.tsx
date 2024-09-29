@@ -7,6 +7,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  rem,
   StylesApiProps,
   useProps,
   useStyles,
@@ -15,7 +16,7 @@ import classes from './AngleSlider.module.css';
 
 export type AngleSliderStylesNames = 'root' | 'thumb' | 'label' | 'marks' | 'mark';
 export type AngleSliderCssVariables = {
-  root: '--test';
+  root: '--slider-size' | '--thumb-size';
 };
 
 export interface AngleSliderProps
@@ -27,6 +28,9 @@ export interface AngleSliderProps
   defaultValue?: number;
   onChange?: (value: number) => void;
   withLabel?: boolean;
+  marks?: { value: number; label?: string }[];
+  size?: number;
+  thumbSize?: number;
 }
 
 export type AngleSliderFactory = Factory<{
@@ -65,9 +69,10 @@ const defaultProps: Partial<AngleSliderProps> = {
   withLabel: true,
 };
 
-const varsResolver = createVarsResolver<AngleSliderFactory>(() => ({
+const varsResolver = createVarsResolver<AngleSliderFactory>((_, { size, thumbSize }) => ({
   root: {
-    '--test': 'test',
+    '--slider-size': rem(size),
+    '--thumb-size': rem(thumbSize),
   },
 }));
 
@@ -86,6 +91,8 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     onChange,
     onMouseDown,
     withLabel,
+    marks,
+    thumbSize,
     ...others
   } = props;
 
@@ -140,6 +147,13 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     beginTracking();
   };
 
+  const marksItems = marks?.map((mark) => (
+    <div
+      {...getStyles('mark', { style: { '--angle': `${mark.value}deg` } })}
+      data-label={mark.label || undefined}
+    />
+  ));
+
   return (
     <Box
       ref={useMergedRef(ref, rootRef)}
@@ -147,9 +161,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
       onMouseDown={handleMouseDown}
       {...others}
     >
-      <div {...getStyles('marks')}>
-        <div {...getStyles('mark', { style: { '--angle': `${_value}deg` } })} data-label={_value} />
-      </div>
+      {marksItems && marksItems.length > 0 && <div {...getStyles('marks')}>{marksItems}</div>}
 
       {withLabel && <div {...getStyles('label')}>{_value}</div>}
       <div {...getStyles('thumb', { style: { transform: `rotate(${_value}deg)` } })} />

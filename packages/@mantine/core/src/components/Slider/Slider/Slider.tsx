@@ -6,6 +6,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  findClosestNumber,
   getRadius,
   getSize,
   getThemeColor,
@@ -143,12 +144,6 @@ const varsResolver = createVarsResolver<SliderFactory>(
   })
 );
 
-function findClosest(target: number, numbers: number[]): number {
-  return numbers.reduce((prev, curr) =>
-    Math.abs(curr - target) < Math.abs(prev - target) ? curr : prev
-  );
-}
-
 export const Slider = factory<SliderFactory>((_props, ref) => {
   const props = useProps('Slider', defaultProps, _props);
   const {
@@ -225,7 +220,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
         });
         setValue(
           restrictToMarks && marks?.length
-            ? findClosest(
+            ? findClosestNumber(
                 nextValue,
                 marks.map((mark) => mark.value)
               )
@@ -243,7 +238,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
       onScrubEnd: () =>
         onChangeEnd?.(
           restrictToMarks && marks?.length
-            ? findClosest(
+            ? findClosestNumber(
                 valueRef.current,
                 marks.map((mark) => mark.value)
               )
