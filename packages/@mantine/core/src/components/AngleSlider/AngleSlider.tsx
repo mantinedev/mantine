@@ -38,6 +38,12 @@ export interface AngleSliderProps
 
   /** Determines whether the selection should be only allowed from the given marks array, `false` by default */
   restrictToMarks?: boolean;
+
+  /** Props passed down to the hidden input */
+  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+
+  /** Hidden input name, use with uncontrolled component */
+  name?: string;
 }
 
 export type AngleSliderFactory = Factory<{
@@ -105,6 +111,9 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     onChangeEnd,
     disabled,
     onTouchStart,
+    name,
+    hiddenInputProps,
+    'aria-label': ariaLabel,
     ...others
   } = props;
 
@@ -232,8 +241,10 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
         aria-valuemin={0}
         aria-valuenow={_value}
         onKeyDown={handleKeyDown}
+        aria-label={ariaLabel}
         {...getStyles('thumb', { style: { transform: `rotate(${_value}deg)` } })}
       />
+      <input type="hidden" name={name} value={_value} {...hiddenInputProps} />
     </Box>
   );
 });
