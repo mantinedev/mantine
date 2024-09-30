@@ -203,11 +203,15 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     }
 
     if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
-      setValue(normalize(_value - step!, step!));
+      const normalized = normalize(_value - step!, step!);
+      setValue(normalized);
+      onChangeEnd?.(normalized);
     }
 
     if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
-      setValue(normalize(_value + step!, step!));
+      const normalized = normalize(_value + step!, step!);
+      setValue(normalized);
+      onChangeEnd?.(normalized);
     }
   };
 

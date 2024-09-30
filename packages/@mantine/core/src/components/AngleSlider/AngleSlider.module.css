@@ -86,7 +86,7 @@
     position: absolute;
     right: 0;
     top: 0;
-    height: var(--thumb-size);
+    height: min(var(--thumb-size), calc(var(--slider-size) / 2));
     width: 3px;
 
     @mixin where-light {
