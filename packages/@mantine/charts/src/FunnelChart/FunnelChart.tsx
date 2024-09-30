@@ -161,10 +161,6 @@ export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
     props,
   });
 
-  const getLabelContent = (entry: any) => {
-    return typeof valueFormatter === 'function' ? valueFormatter(entry.value) : entry.value;
-  };
-
   return (
     <Box ref={ref} size={size} {...getStyles('root')} {...others}>
       <ResponsiveContainer>
@@ -187,7 +183,12 @@ export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
                 }
                 stroke="none"
                 fontFamily="var(--mantine-font-family)"
-                dataKey={getLabelContent}
+                fontSize={14}
+                dataKey={(entry) => {
+                  return typeof valueFormatter === 'function'
+                    ? valueFormatter(entry.value as number)
+                    : entry.value;
+                }}
               />
             )}
             {data.map((entry, index) => (
