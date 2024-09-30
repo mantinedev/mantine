@@ -112,10 +112,10 @@ export const DecadeLevelGroupStylesApi: StylesApiData<DecadeLevelGroupFactory> =
 export const YearLevelGroupStylesApi: StylesApiData<YearLevelGroupFactory> = {
   selectors: {
     ...CalendarHeaderStylesApi.selectors,
-    levelsGroup: 'Group of decades levels',
-    monthsList: 'Years list table element',
-    monthsListRow: 'Years list row element',
-    monthsListCell: 'Years list cell element',
+    levelsGroup: 'Group of years levels',
+    monthsList: 'Months list table element',
+    monthsListRow: 'Months list row element',
+    monthsListCell: 'Monthss list cell element',
     monthsListControl: 'Button used to pick months and years',
   },
 
@@ -125,7 +125,7 @@ export const YearLevelGroupStylesApi: StylesApiData<YearLevelGroupFactory> = {
 export const MonthLevelGroupStylesApi: StylesApiData<MonthLevelGroupFactory> = {
   selectors: {
     ...CalendarHeaderStylesApi.selectors,
-    levelsGroup: 'Group of decades levels',
+    levelsGroup: 'Group of months levels',
     ...MonthStylesApi.selectors,
   },
 
