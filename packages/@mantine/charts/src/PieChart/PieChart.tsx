@@ -56,7 +56,7 @@ export interface PieChartProps
   tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
 
   /** Props passed down to recharts `Pie` component */
-  pieProps?: Omit<PieProps, 'ref'>;
+  pieProps?: Partial<Omit<PieProps, 'ref'>>;
 
   /** Controls color of the segments stroke, by default depends on color scheme */
   strokeColor?: MantineColor;

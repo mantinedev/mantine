@@ -3,6 +3,7 @@ import type { StylesApiData } from '../types';
 
 export const GridStylesApi: StylesApiData<GridFactory> = {
   selectors: {
+    container: 'Container element, only used with `type="container"` prop',
     root: 'Root element',
     inner: 'Columns wrapper',
     col: '`Grid.Col` root element',

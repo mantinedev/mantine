@@ -353,6 +353,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       MDX_DATA.AreaChart,
       MDX_DATA.BarChart,
       MDX_DATA.LineChart,
+      MDX_DATA.CompositeChart,
       MDX_DATA.DonutChart,
       MDX_DATA.PieChart,
       MDX_DATA.RadarChart,
@@ -377,6 +378,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   {
     group: 'changelog',
     pages: [
+      MDX_DATA.Changelog7130,
       MDX_DATA.Changelog7120,
       MDX_DATA.Changelog7110,
       MDX_DATA.Changelog7100,

@@ -57,3 +57,8 @@ export const Demo_gutter = {
   name: '⭐ Demo: gutter',
   render: renderDemo(demos.gutter),
 };
+
+export const Demo_container = {
+  name: '⭐ Demo: container',
+  render: renderDemo(demos.container),
+};
