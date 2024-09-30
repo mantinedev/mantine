@@ -42,14 +42,13 @@ export function camelToKebabCase(value: string) {
   const url = `https://mantine.dev/core/${camelToKebabCase(componentName)}`;
   const { description } = MDX_DATA[componentName];
 
-  const annotationContent = [
-    description,
+  const links = [
     `[Documentation](${url})`,
     `[Props](${url}?t=props)`,
     `[Styles API](${url}?t=styles-api)`,
-  ]
-    .map((v) => `\n * ${v}`)
-    .join('\n *'); // Add spacing between each line
+  ].join(' | ');
+
+  const annotationContent = [description, links].map((v) => `\n * ${v}`).join('\n *'); // Add spacing between each line
   const annotation = `/**${annotationContent}\n */`;
 
   const fileContent = fs.readFileSync(componentPath, 'utf-8');

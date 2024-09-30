@@ -92,11 +92,7 @@ const varsResolver = createVarsResolver<AlertFactory>(
 /**
  * Attract user attention with important static message
  *
- * [Documentation](https://mantine.dev/core/alert)
- *
- * [Props](https://mantine.dev/core/alert?t=props)
- *
- * [Styles API](https://mantine.dev/core/alert?t=styles-api)
+ * [Documentation](https://mantine.dev/core/alert) | [Props](https://mantine.dev/core/alert?t=props) | [Styles API](https://mantine.dev/core/alert?t=styles-api)
  */
 export const Alert = factory<AlertFactory>((_props, ref) => {
   const props = useProps('Alert', defaultProps, _props);
