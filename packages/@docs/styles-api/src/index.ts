@@ -5,6 +5,7 @@ export * from './data/ActionIcon.styles-api';
 export * from './data/Affix.styles-api';
 export * from './data/Alert.styles-api';
 export * from './data/Anchor.styles-api';
+export * from './data/AngleSlider.styles-api';
 export * from './data/AppShell.styles-api';
 export * from './data/AreaChart.styles-api';
 export * from './data/AspectRatio.styles-api';
