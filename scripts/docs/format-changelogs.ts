@@ -8,6 +8,11 @@ const files = fs.readdirSync(changelogFolder).filter((file) => file.endsWith('.m
 
 files.forEach((file) => {
   const content = fs.readFileSync(path.join(changelogFolder, file), 'utf8');
+
+  if (content.includes('<Demo ')) {
+    throw new Error(`Changelog ${file} contains <Demo> component`);
+  }
+
   const replacedLinks = content.replaceAll('](/', '](https://mantine.dev/');
   fs.writeFileSync(path.join(changelogFolder, file), replacedLinks);
 });
