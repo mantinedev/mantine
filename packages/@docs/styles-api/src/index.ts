@@ -43,6 +43,7 @@ export * from './data/Fieldset.styles-api';
 export * from './data/FileInput.styles-api';
 export * from './data/Flex.styles-api';
 export * from './data/FloatingIndicator.styles-api';
+export * from './data/FunnelChart.styles-api';
 export * from './data/Grid.styles-api';
 export * from './data/Group.styles-api';
 export * from './data/Highlight.styles-api';

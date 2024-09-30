@@ -134,6 +134,7 @@ export * as ScatterChartDemos from './demos/charts/ScatterChart';
 export * as BubbleChartDemos from './demos/charts/BubbleChart';
 export * as CompositeChartDemos from './demos/charts/CompositeChart';
 export * as RadialBarChartDemos from './demos/charts/RadialBarChart';
+export * as FunnelChartDemos from './demos/charts/FunnelChart';
 
 // Extensions demos
 export * as NotificationsDemos from './demos/notifications';

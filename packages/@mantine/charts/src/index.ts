@@ -11,4 +11,5 @@ export * from './ScatterChart/index.js';
 export * from './BubbleChart/index.js';
 export * from './CompositeChart/index.js';
 export * from './RadialBarChart/index.js';
+export * from './FunnelChart/index.js';
 export * from './types';
