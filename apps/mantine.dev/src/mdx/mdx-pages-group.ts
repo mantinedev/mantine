@@ -215,6 +215,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.FileInput,
           MDX_DATA.ColorInput,
           MDX_DATA.NumberInput,
+          MDX_DATA.AngleSlider,
         ],
       },
       {

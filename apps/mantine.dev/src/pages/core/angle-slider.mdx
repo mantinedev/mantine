@@ -1,0 +1,62 @@
+import { AngleSliderDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.AngleSlider);
+
+## Usage
+
+Use `AngleSlider` component to pick angle value between 0 and 360:
+
+<Demo data={AngleSliderDemos.usage} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { AngleSlider } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState(180);
+  return <AngleSlider value={value} onChange={setValue} />;
+}
+```
+
+## formatLabel
+
+To change angle label format use `formatLabel` prop.
+It accepts function that takes the angle value and returns React node:
+
+<Demo data={AngleSliderDemos.formatLabel} />
+
+## Marks
+
+Set `marks` prop to display marks on the slider. In mark object `value` is required,
+`label` is optional. To restrict selection to marks only, set `restrictToMarks` prop:
+
+<Demo data={AngleSliderDemos.marks} />
+
+## onChangeEnd
+
+`onChangeEnd` callback is called when user the slider is stopped from being dragged or value is changed with keyboard.
+You can use it as a debounced callback to avoid too frequent updates.
+
+<Demo data={AngleSliderDemos.onChangeEnd} />
+
+## Accessibility
+
+`AngleSlider` is fully accessible and supports keyboard interactions:
+
+- `ArrowLeft`/`ArrowDown` and `ArrowRight`/`Arrowup` decrease/increase value by `step`
+- `Home` to set value to 0
+- `End` to set value to 359
+
+To make the component visible to screen readers, set `aria-label` prop:
+
+```tsx
+import { AngleSlider } from '@mantine/core';
+
+function Demo() {
+  return <AngleSlider aria-label="Gradient angle" />;
+}
+```

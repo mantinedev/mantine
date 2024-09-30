@@ -235,6 +235,16 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
       setValue(normalized);
       onChangeEnd?.(normalized);
     }
+
+    if (event.key === 'Home') {
+      setValue(0);
+      onChangeEnd?.(0);
+    }
+
+    if (event.key === 'End') {
+      setValue(359);
+      onChangeEnd?.(359);
+    }
   };
 
   const marksItems = marks?.map((mark, index) => (

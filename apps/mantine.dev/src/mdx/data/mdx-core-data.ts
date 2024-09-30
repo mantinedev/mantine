@@ -1175,4 +1175,16 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/SemiCircleProgress/SemiCircleProgress.tsx',
     docs: 'core/semi-circle-progress.mdx',
   },
+
+  AngleSlider: {
+    title: 'AngleSlider',
+    package: '@mantine/core',
+    slug: '/core/angle-slider',
+    props: ['AngleSlider'],
+    styles: ['AngleSlider'],
+    description: 'Pick angle value between 0 and 360',
+    import: "import { AngleSlider } from '@mantine/core';",
+    source: '@mantine/core/src/components/AngleSlider/AngleSlider.tsx',
+    docs: 'core/angle-slider.mdx',
+  },
 };
