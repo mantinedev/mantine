@@ -16,7 +16,7 @@ export const FOOTER_LINKS_DATA: LinksGroupProps[] = [
     title: 'Community',
     data: [
       { type: 'link', label: 'Chat on Discord', link: meta.discordLink },
-      { type: 'link', label: 'Follow on Twitter', link: meta.twitterLink },
+      { type: 'link', label: 'Follow on X', link: meta.twitterLink },
       { type: 'link', label: 'Follow on Github', link: 'https://github.com/rtivital' },
       {
         type: 'link',

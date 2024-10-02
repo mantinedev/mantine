@@ -13,3 +13,4 @@ export { labels } from './ScatterChart.demo.labels';
 export { customTooltip } from './ScatterChart.demo.customTooltip';
 export { valueFormatter } from './ScatterChart.demo.valueFormatter';
 export { dotSize } from './ScatterChart.demo.dotSize';
+export { pointLabels } from './ScatterChart.demo.pointLabels';

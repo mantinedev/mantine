@@ -18,7 +18,7 @@ export function useHover<T extends HTMLElement = HTMLDivElement>() {
     }
 
     return undefined;
-  }, []);
+  }, [ref.current]);
 
   return { ref, hovered };
 }

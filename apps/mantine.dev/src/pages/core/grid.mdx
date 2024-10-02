@@ -96,6 +96,20 @@ In the following example, first column takes 50% with 12 span (12/24), second an
 
 <Demo data={GridDemos.columns} />
 
+## Container queries
+
+To use [container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries)
+instead of media queries, set `type="container"`. With container queries, all responsive values
+are adjusted based on the container width, not the viewport width.
+
+Note that, when using container queries, it is also required to set `breakpoints` prop
+to the exact container width values.
+
+To see how the grid changes, resize the root element of the demo
+with the resize handle located at the bottom right corner of the demo:
+
+<Demo data={GridDemos.container} />
+
 ## overflow: hidden
 
 By default, `Grid` has `overflow: visible` style on the root element. In some cases

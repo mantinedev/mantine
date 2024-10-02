@@ -113,6 +113,7 @@ export function Usage() {
         curveType="linear"
         withGradient
         withLegend
+        withPointLabels
         series={[
           { name: 'Apples', color: 'indigo.6', strokeDasharray: '5 5' },
           { name: 'Oranges', color: 'blue.6' },

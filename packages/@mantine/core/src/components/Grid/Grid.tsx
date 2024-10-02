@@ -12,12 +12,12 @@ import {
   useRandomClassName,
   useStyles,
 } from '../../core';
-import { GridProvider } from './Grid.context';
+import { GridBreakpoints, GridProvider } from './Grid.context';
 import { GridCol } from './GridCol/GridCol';
 import { GridVariables } from './GridVariables';
 import classes from './Grid.module.css';
 
-export type GridStylesNames = 'root' | 'col' | 'inner';
+export type GridStylesNames = 'root' | 'col' | 'inner' | 'container';
 export type GridCssVariables = {
   root: '--grid-justify' | '--grid-align' | '--grid-overflow';
 };
@@ -40,6 +40,12 @@ export interface GridProps extends BoxProps, StylesApiProps<GridFactory>, Elemen
 
   /** Sets `overflow` CSS property on the root element, `'visible'` by default */
   overflow?: React.CSSProperties['overflow'];
+
+  /** Determines typeof of queries that are used for responsive styles, `'media'` by default */
+  type?: 'media' | 'container';
+
+  /** Breakpoints values, only applicable when `type="container"` is set, ignored when `type` is not set or `type="media"` is set. */
+  breakpoints?: GridBreakpoints;
 }
 
 export type GridFactory = Factory<{
@@ -81,6 +87,8 @@ export const Grid = factory<GridFactory>((_props, ref) => {
     align,
     justify,
     children,
+    breakpoints,
+    type,
     ...others
   } = props;
 
@@ -99,8 +107,21 @@ export const Grid = factory<GridFactory>((_props, ref) => {
 
   const responsiveClassName = useRandomClassName();
 
+  if (type === 'container' && breakpoints) {
+    return (
+      <GridProvider value={{ getStyles, grow, columns: columns || 12, breakpoints, type }}>
+        <GridVariables selector={`.${responsiveClassName}`} {...props} />
+        <div {...getStyles('container')}>
+          <Box ref={ref} {...getStyles('root', { className: responsiveClassName })} {...others}>
+            <div {...getStyles('inner')}>{children}</div>
+          </Box>
+        </div>
+      </GridProvider>
+    );
+  }
+
   return (
-    <GridProvider value={{ getStyles, grow, columns: columns! }}>
+    <GridProvider value={{ getStyles, grow, columns: columns || 12, breakpoints, type }}>
       <GridVariables selector={`.${responsiveClassName}`} {...props} />
       <Box ref={ref} {...getStyles('root', { className: responsiveClassName })} {...others}>
         <div {...getStyles('inner')}>{children}</div>

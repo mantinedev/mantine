@@ -48,15 +48,18 @@
   background: var(--badge-bg);
   border: var(--badge-bd);
 
-  &:where([data-with-right-section]) {
-    grid-template-columns: 1fr auto;
-  }
-
   &:where([data-with-left-section], [data-variant='dot']) {
     grid-template-columns: auto 1fr;
   }
 
-  &:where([data-with-left-section][data-with-right-section]) {
+  &:where([data-with-right-section]) {
+    grid-template-columns: 1fr auto;
+  }
+
+  &:where(
+      [data-with-left-section][data-with-right-section],
+      [data-variant='dot'][data-with-right-section]
+    ) {
     grid-template-columns: auto 1fr auto;
   }
 

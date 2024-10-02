@@ -336,7 +336,8 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       key={`${item}-${index}`}
       withRemoveButton={!readOnly}
       onRemove={() => {
-        setValue(_value.filter((i) => item !== i));
+        _value.splice(index, 1);
+        setValue([..._value]);
         onRemove?.(item);
       }}
       unstyled={unstyled}
