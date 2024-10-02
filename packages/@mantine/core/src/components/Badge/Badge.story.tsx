@@ -168,3 +168,16 @@ export function Sizes() {
 
   return <div style={{ padding: 40, display: 'flex', gap: 40 }}>{sizes}</div>;
 }
+
+export function DotWithRightSection() {
+  return (
+    <>
+      <Badge variant="dot" rightSection="R" color="red" w={300}>
+        Badge
+      </Badge>
+      <Badge variant="dot" color="red" w={300}>
+        Badge
+      </Badge>
+    </>
+  );
+}
