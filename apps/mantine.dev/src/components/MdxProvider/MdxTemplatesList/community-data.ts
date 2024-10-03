@@ -22,7 +22,7 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
   {
     type: 'next',
     name: 'next-tailwind-template',
-    link: 'https://github.com/hasib-rashid/next-app-tailwind-template',
+    link: 'https://github.com/songkeys/next-app-mantine-tailwind-template',
     description: 'Next.js app router + Mantine + Tailwind template',
   },
   {
