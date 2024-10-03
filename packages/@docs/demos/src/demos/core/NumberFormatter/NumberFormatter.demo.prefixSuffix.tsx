@@ -8,10 +8,10 @@ function Demo() {
   return (
     <>
       <div>
-        With prefix: <NumberFormatter prefix="$ " value={100} />
+        With prefix: <NumberFormatter prefix="$" value={100} />
       </div>
       <div>
-        With suffix: <NumberFormatter value={100} suffix=" RUB" />
+        With suffix: <NumberFormatter value={100} suffix="%" />
       </div>
     </>
   );
@@ -22,10 +22,10 @@ function Demo() {
   return (
     <>
       <div>
-        With prefix: <NumberFormatter prefix="$ " value={100} />
+        With prefix: <NumberFormatter prefix="$" value={100} />
       </div>
       <div>
-        With suffix: <NumberFormatter value={100} suffix=" RUB" />
+        With suffix: <NumberFormatter value={100} suffix="%" />
       </div>
     </>
   );

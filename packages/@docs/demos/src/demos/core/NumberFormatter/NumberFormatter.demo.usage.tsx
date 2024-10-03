@@ -5,12 +5,12 @@ const code = `
 import { NumberFormatter } from '@mantine/core';
 
 function Demo() {
-  return <NumberFormatter prefix="$ " value={1000000} thousandSeparator />;
+  return <NumberFormatter prefix="$" value={1000000} thousandSeparator />;
 }
 `;
 
 function Demo() {
-  return <NumberFormatter prefix="$ " value={1000000} thousandSeparator />;
+  return <NumberFormatter prefix="$" value={1000000} thousandSeparator />;
 }
 
 export const usage: MantineDemo = {
