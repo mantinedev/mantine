@@ -32,10 +32,24 @@ export interface NumberInputHandlers {
   decrement: () => void;
 }
 
-function isValidNumber(value: number | string | undefined): value is number {
+function getDecimalPlaces(inputValue: string | number): number {
+  // All digits must be counted, parseFloat precision depends
+  // on the number of digits in the input, not only on the decimal scale
+  return inputValue.toString().replace('.', '').length;
+}
+
+function isValidNumber(
+  floatValue: number | undefined,
+  value: string | undefined
+): floatValue is number {
+  if (typeof value === 'string') {
+    return getDecimalPlaces(value) < 14 && value !== '';
+  }
+
   return (
-    (typeof value === 'number' ? value < Number.MAX_SAFE_INTEGER : !Number.isNaN(Number(value))) &&
-    !Number.isNaN(value)
+    (typeof floatValue === 'number'
+      ? floatValue < Number.MAX_SAFE_INTEGER
+      : !Number.isNaN(Number(floatValue))) && !Number.isNaN(floatValue)
   );
 }
 
@@ -244,7 +258,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
   const handleValueChange: OnValueChange = (payload, event) => {
     if (event.source === 'event') {
       setValue(
-        isValidNumber(payload.floatValue) &&
+        isValidNumber(payload.floatValue, payload.value) &&
           !leadingDecimalZeroPattern.test(payload.value) &&
           !(allowLeadingZeros ? leadingZerosPattern.test(payload.value) : false)
           ? payload.floatValue
@@ -457,7 +471,11 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
             setValue(clamp(_value, min, max));
           }
         }
-        if (trimLeadingZeroesOnBlur && typeof _value === 'string') {
+        if (
+          trimLeadingZeroesOnBlur &&
+          typeof _value === 'string' &&
+          getDecimalPlaces(_value) < 15
+        ) {
           const replaced = _value.replace(/^0+/, '');
           const parsedValue = parseFloat(replaced);
           setValue(
