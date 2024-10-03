@@ -146,7 +146,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
           viewportProps?.onScroll?.(e);
           onScrollPositionChange?.({ x: e.currentTarget.scrollLeft, y: e.currentTarget.scrollTop });
           const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-          if (scrollTop - (scrollHeight - clientHeight) === 0) {
+          if (scrollTop - (scrollHeight - clientHeight) >= 0) {
             onBottomReached?.();
           }
           if (scrollTop === 0) {

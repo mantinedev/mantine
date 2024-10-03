@@ -1,5 +1,9 @@
 /* eslint-disable no-console */
 import { useState } from 'react';
+import { Box } from '../../core';
+import { Code } from '../Code';
+import { Paper } from '../Paper';
+import { Stack } from '../Stack';
 import { ScrollArea } from './ScrollArea';
 
 export default { title: 'ScrollArea' };
@@ -26,6 +30,37 @@ export function Usage() {
         <div style={{ width: 600 }}>{content}</div>
       </ScrollArea>
     </div>
+  );
+}
+
+export function BottomReachedDecimal() {
+  const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 });
+  const [hasReachedBottom, setHasReachedBottom] = useState(false);
+
+  return (
+    <Stack mt={16} w="100%" align="center" justify="center">
+      <Paper withBorder h={100} w={200}>
+        <ScrollArea
+          w="100%"
+          h={100}
+          onScrollPositionChange={onScrollPositionChange}
+          onBottomReached={() => setHasReachedBottom(true)}
+        >
+          {Array.from({ length: 7 }).map((_k, i) => (
+            <Box h={40.5} key={`example-${i}`}>
+              <h1 style={{ fontSize: '50.25px' }}>My Example</h1>
+            </Box>
+          ))}
+        </ScrollArea>
+      </Paper>
+
+      <div>
+        Scroll position: <Code>{`{ x: ${scrollPosition.x}, y: ${scrollPosition.y} }`}</Code>
+      </div>
+      <div>
+        Has Reached Bottom: <Code>{`{ ${hasReachedBottom} }`}</Code>
+      </div>
+    </Stack>
   );
 }
 
