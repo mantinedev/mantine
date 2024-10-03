@@ -212,7 +212,9 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
   const _getDayProps = (day: Date) => ({
     ...getDayProps?.(day),
     selected: dayjs(_value!).isSame(day, 'day'),
-    onClick: () => {
+    onClick: (event: any) => {
+      getDayProps?.(day).onClick?.(event);
+
       const valueWithTime = preserveTime ? assignTime(_value!, day) : day;
       const val =
         clearable && _allowDeselect
