@@ -41,7 +41,7 @@
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.25px;
-  cursor: inherit;
+  cursor: default;
   text-overflow: ellipsis;
   overflow: hidden;
   color: var(--badge-color);
@@ -106,6 +106,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: center;
+  cursor: inherit;
 }
 
 .section {
