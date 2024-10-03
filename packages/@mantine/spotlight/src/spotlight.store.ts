@@ -41,7 +41,10 @@ export function closeSpotlightAction(store: SpotlightStore) {
 }
 
 export function toggleSpotlightAction(store: SpotlightStore) {
-  updateSpotlightStateAction((state) => ({ opened: !state.opened }), store);
+  updateSpotlightStateAction(
+    (state) => ({ opened: !state.opened, selected: state.opened ? state.selected : -1 }),
+    store
+  );
 }
 
 export function setSelectedAction(index: number, store: SpotlightStore) {

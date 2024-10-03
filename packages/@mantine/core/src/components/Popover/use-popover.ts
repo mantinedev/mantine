@@ -118,7 +118,7 @@ function getPopoverMiddlewares(
 }
 
 export function usePopover(options: UsePopoverOptions) {
-  const [_opened, setOpened] = useUncontrolled({
+  const [_opened, setOpened, isControlled] = useUncontrolled({
     value: options.opened,
     defaultValue: options.defaultOpened,
     finalValue: false,
@@ -149,7 +149,7 @@ export function usePopover(options: UsePopoverOptions) {
   });
 
   useFloatingAutoUpdate({
-    opened: options.opened,
+    opened: _opened,
     position: options.position,
     positionDependencies: options.positionDependencies || [],
     floating,
@@ -160,12 +160,14 @@ export function usePopover(options: UsePopoverOptions) {
   }, [floating.placement]);
 
   useDidUpdate(() => {
-    if (!options.opened) {
-      options.onClose?.();
-    } else {
-      options.onOpen?.();
+    if (!isControlled) {
+      if (!options.opened) {
+        options.onClose?.();
+      } else {
+        options.onOpen?.();
+      }
     }
-  }, [options.opened]);
+  }, [options.opened, isControlled]);
 
   return {
     floating,
