@@ -25,7 +25,7 @@ export function useFloatingAutoUpdate({
   const [delayedUpdate, setDelayedUpdate] = useState(0);
 
   useEffect(() => {
-    if (floating.refs.reference.current && floating.refs.floating.current) {
+    if (floating.refs.reference.current && floating.refs.floating.current && opened) {
       return autoUpdate(
         floating.refs.reference.current,
         floating.refs.floating.current,

@@ -149,7 +149,7 @@ export function usePopover(options: UsePopoverOptions) {
   });
 
   useFloatingAutoUpdate({
-    opened: options.opened,
+    opened: _opened,
     position: options.position,
     positionDependencies: options.positionDependencies || [],
     floating,

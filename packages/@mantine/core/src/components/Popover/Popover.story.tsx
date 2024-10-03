@@ -6,6 +6,13 @@ import { Popover } from './Popover';
 
 export default { title: 'Popover' };
 
+const lorem =
+  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, facilis rerum molestias voluptatem, quidem sunt, omnis iste ipsa corporis itaque optio. Amet fugiat explicabo, molestias exercitationem consequatur quis dicta unde?';
+
+const content = Array(10)
+  .fill(0)
+  .map((_, index) => <p key={index}>{lorem}</p>);
+
 export function Uncontrolled() {
   return (
     <MantineThemeProvider
@@ -20,7 +27,7 @@ export function Uncontrolled() {
       }}
     >
       <div style={{ padding: 40 }}>
-        <Popover opened floatingStrategy="fixed">
+        <Popover>
           <Popover.Target>
             <button type="button">Toggle popover</button>
           </Popover.Target>
@@ -29,6 +36,22 @@ export function Uncontrolled() {
         </Popover>
       </div>
     </MantineThemeProvider>
+  );
+}
+
+export function Scrollable() {
+  return (
+    <div>
+      {content}
+      {content}
+      {content}
+
+      <Uncontrolled />
+
+      {content}
+      {content}
+      {content}
+    </div>
   );
 }
 
