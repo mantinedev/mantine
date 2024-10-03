@@ -1,22 +1,25 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
-export function useInViewport<T extends HTMLElement = any>() {
-  const ref = useRef<T>(null);
+export function useInViewport<T extends HTMLElement>() {
+  const observer = useRef<IntersectionObserver | null>(null);
   const [inViewport, setInViewport] = useState(false);
 
-  const observer = useMemo(() => {
-    if (typeof IntersectionObserver === 'undefined') {
-      return null;
-    }
-    return new IntersectionObserver(([entry]) => setInViewport(entry.isIntersecting));
-  }, [ref]);
+  const ref = useCallback((node: T | null) => {
+    if (typeof IntersectionObserver !== 'undefined') {
+      if (node && !observer.current) {
+        observer.current = new IntersectionObserver(([entry]) =>
+          setInViewport(entry.isIntersecting)
+        );
+      } else {
+        observer.current?.disconnect();
+      }
 
-  useEffect(() => {
-    if (ref.current && observer) {
-      observer.observe(ref.current);
-      return () => observer.disconnect();
+      if (node) {
+        observer.current?.observe(node);
+      } else {
+        setInViewport(false);
+      }
     }
-    return () => null;
   }, []);
 
   return { ref, inViewport };
