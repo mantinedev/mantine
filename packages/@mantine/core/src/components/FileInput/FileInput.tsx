@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useUncontrolled } from '@mantine/hooks';
+import { useMergedRef, useUncontrolled } from '@mantine/hooks';
 import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '../../core';
 import { CloseButton } from '../CloseButton';
 import { FileButton } from '../FileButton';
@@ -52,6 +52,9 @@ export interface FileInputProps<Multiple = false>
 
   /** Input placeholder */
   placeholder?: React.ReactNode;
+
+  /** Reference of the function that should be called when value changes to null or empty array */
+  resetRef?: React.ForwardedRef<() => void>;
 }
 
 export type FileInputFactory = Factory<{
@@ -92,6 +95,7 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
     rightSection,
     size,
     placeholder,
+    resetRef: resetRefProp,
     ...others
   } = props;
 
@@ -133,7 +137,7 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
       accept={accept}
       name={name}
       form={form}
-      resetRef={resetRef}
+      resetRef={useMergedRef(resetRef, resetRefProp)}
       disabled={readOnly}
       capture={capture}
       inputProps={fileInputProps}
