@@ -144,7 +144,7 @@ describe('@mantine/core/NumberInput', () => {
 
     focusInput();
     await enterText('{backspace}');
-    expect(spy).toHaveBeenLastCalledWith(900719925474099);
+    expect(spy).toHaveBeenLastCalledWith('900719925474099');
     expect(spy).toHaveBeenCalledTimes(1);
 
     await enterText('2');
