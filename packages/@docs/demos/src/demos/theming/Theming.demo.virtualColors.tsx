@@ -25,6 +25,7 @@ const theme = createTheme({
       light: 'cyan',
     }),
   },
+  primaryColor: 'primary',
 });
 
 function App() {
