@@ -142,7 +142,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
   });
 
   const formatTime = (dateValue: Date) =>
-    dateValue ? dayjs(dateValue).format(withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
+    dateValue ? dayjs(dateValue).format(withSeconds ? 'HH:mm:ss' : 'HH:mm') : undefined;
 
   const [timeValue, setTimeValue] = useState(formatTime(_value!));
   const [currentLevel, setCurrentLevel] = useState(level || defaultLevel || 'month');
