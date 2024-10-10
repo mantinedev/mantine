@@ -38,7 +38,7 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
   const context = useScrollAreaContext();
   const [scrollbar, setScrollbar] = useState<HTMLDivElement | null>(null);
   const composeRefs = useMergedRef(forwardedRef, (node) => setScrollbar(node));
-  const rectRef = useRef<ClientRect | null>(null);
+  const rectRef = useRef<DOMRect | null>(null);
   const prevWebkitUserSelectRef = useRef<string>('');
   const { viewport } = context;
   const maxScrollPos = sizes.content - sizes.viewport;
