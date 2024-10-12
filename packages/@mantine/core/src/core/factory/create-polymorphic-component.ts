@@ -33,7 +33,7 @@ export function createPolymorphicComponent<
   type ComponentProps<C> = PolymorphicComponentProps<C, Props>;
 
   type _PolymorphicComponent = <C = ComponentDefaultType>(
-    props: ComponentProps<C>
+    props: ComponentProps<C> & Props
   ) => React.ReactElement;
 
   type ComponentProperties = Omit<React.FunctionComponent<ComponentProps<any>>, never>;
