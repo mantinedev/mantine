@@ -155,3 +155,23 @@ export function ReferenceLines() {
     </div>
   );
 }
+
+export function VerticalOrientationValueFormatter() {
+  return (
+    <BarChart
+      h={300}
+      p="xl"
+      data={data}
+      dataKey="month"
+      type="stacked"
+      orientation="vertical"
+      valueFormatter={(value) => `${value * 2}%`}
+      yAxisProps={{ width: 80 }}
+      series={[
+        { name: 'Smartphones', color: 'violet.6' },
+        { name: 'Laptops', color: 'blue.6' },
+        { name: 'Tablets', color: 'teal.6' },
+      ]}
+    />
+  );
+}
