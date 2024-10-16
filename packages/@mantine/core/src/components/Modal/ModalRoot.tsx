@@ -60,7 +60,7 @@ const defaultProps: Partial<ModalRootProps> = {
   closeOnEscape: true,
   keepMounted: false,
   zIndex: getDefaultZIndex('modal'),
-  transitionProps: { duration: 200, transition: 'pop' },
+  transitionProps: { duration: 200, transition: 'fade-down' },
   yOffset: '5dvh',
 };
 
