@@ -30,6 +30,7 @@ export const DropzoneStylesApi: StylesApiData<DropzoneFactory> = {
     },
     { modifier: 'data-idle', selector: 'root', condition: 'Dropzone is idle' },
     { modifier: 'data-loading', selector: 'root', condition: '`loading` prop is set' },
+    { modifier: 'data-disabled', selector: 'root', condition: '`disabled` prop is set' },
     {
       modifier: 'data-activate-on-click',
       selector: 'root',

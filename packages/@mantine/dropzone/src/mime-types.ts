@@ -7,6 +7,7 @@ export const MIME_TYPES = {
   webp: 'image/webp',
   avif: 'image/avif',
   heic: 'image/heic',
+  heif: 'image/heif',
 
   // Documents
   mp4: 'video/mp4',
@@ -32,6 +33,7 @@ export const IMAGE_MIME_TYPE = [
   MIME_TYPES.webp,
   MIME_TYPES.avif,
   MIME_TYPES.heic,
+  MIME_TYPES.heif,
 ];
 
 export const PDF_MIME_TYPE = [MIME_TYPES.pdf];

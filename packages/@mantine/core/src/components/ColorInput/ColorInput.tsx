@@ -229,8 +229,8 @@ export const ColorInput = factory<ColorInputFactory>((_props, ref) => {
         __staticSelector="ColorInput"
         position="bottom-start"
         offset={5}
-        {...popoverProps}
         opened={dropdownOpened}
+        {...popoverProps}
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}

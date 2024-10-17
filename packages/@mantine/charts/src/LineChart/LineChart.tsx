@@ -316,7 +316,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     tickLine: withYTickLine ? { stroke: 'currentColor' } : false,
     allowDecimals: true,
     unit,
-    tickFormatter: valueFormatter,
+    tickFormatter: orientation === 'vertical' ? undefined : valueFormatter,
     ...getStyles('axis'),
   };
 
@@ -373,6 +373,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
             interval="preserveStartEnd"
             tickLine={withXTickLine ? { stroke: 'currentColor' } : false}
             minTickGap={5}
+            tickFormatter={orientation === 'vertical' ? valueFormatter : undefined}
             {...getStyles('axis')}
             {...xAxisProps}
           >

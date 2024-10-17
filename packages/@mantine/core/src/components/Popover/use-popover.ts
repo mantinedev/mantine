@@ -127,7 +127,7 @@ export function usePopover(options: UsePopoverOptions) {
 
   const onClose = () => {
     if (_opened) {
-      options.onClose?.();
+      !isControlled && options.onClose?.();
       setOpened(false);
     }
   };
@@ -160,12 +160,10 @@ export function usePopover(options: UsePopoverOptions) {
   }, [floating.placement]);
 
   useDidUpdate(() => {
-    if (!isControlled) {
-      if (!options.opened) {
-        options.onClose?.();
-      } else {
-        options.onOpen?.();
-      }
+    if (!options.opened) {
+      options.onClose?.();
+    } else {
+      options.onOpen?.();
     }
   }, [options.opened, isControlled]);
 

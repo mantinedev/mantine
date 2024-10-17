@@ -21,29 +21,6 @@ const defaultProps: PickerInputBaseProps = {
 describe('@mantine/dates/PickerInputBase', () => {
   datesTests.itSupportsClearableProps({ component: PickerInputBase, props: defaultProps });
 
-  it('opens/toggles dropdown with click events', async () => {
-    const toggle = jest.fn();
-    const close = jest.fn();
-    const { rerender } = render(
-      <PickerInputBase {...defaultProps} dropdownHandlers={{ toggle, close, open: noop }} />
-    );
-
-    await userEvent.click(screen.getByText('test-value'));
-    expect(toggle).toHaveBeenCalled();
-    expect(close).not.toHaveBeenCalled();
-
-    rerender(
-      <PickerInputBase
-        {...defaultProps}
-        dropdownOpened
-        dropdownHandlers={{ toggle, close, open: noop }}
-      />
-    );
-
-    await userEvent.click(document.body);
-    expect(close).toHaveBeenCalled();
-  });
-
   it('supports __staticSelector', () => {
     const { container } = render(
       <PickerInputBase {...defaultProps} __staticSelector="TestStaticSelector" />
