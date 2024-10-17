@@ -305,6 +305,8 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     );
   });
 
+  const tickFormatter = type === 'percent' ? valueToPercent : valueFormatter;
+
   const sharedYAxisProps = {
     axisLine: false,
     ...(orientation === 'vertical'
@@ -313,7 +315,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     tickLine: withYTickLine ? { stroke: 'currentColor' } : false,
     allowDecimals: true,
     unit,
-    tickFormatter: type === 'percent' ? valueToPercent : valueFormatter,
+    tickFormatter: orientation === 'vertical' ? undefined : tickFormatter,
     ...getStyles('axis'),
   };
 
@@ -364,6 +366,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
             interval="preserveStartEnd"
             tickLine={withXTickLine ? { stroke: 'currentColor' } : false}
             minTickGap={5}
+            tickFormatter={orientation === 'vertical' ? tickFormatter : undefined}
             {...getStyles('axis')}
             {...xAxisProps}
           >

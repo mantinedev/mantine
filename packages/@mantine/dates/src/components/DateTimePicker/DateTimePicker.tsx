@@ -62,7 +62,9 @@ export interface DateTimePickerProps
   onChange?: (value: DateValue) => void;
 
   /** TimeInput component props */
-  timeInputProps?: TimeInputProps & { ref?: React.ComponentPropsWithRef<'input'>['ref'] };
+  timeInputProps?: Omit<TimeInputProps, 'defaultValue' | 'value'> & {
+    ref?: React.ComponentPropsWithRef<'input'>['ref'];
+  };
 
   /** Props passed down to the submit button */
   submitButtonProps?: ActionIconProps & React.ComponentPropsWithoutRef<'button'>;
