@@ -15,7 +15,12 @@ import { Notifications } from '@mantine/notifications';
 import { ShikiProvider } from '@mantinex/shiki';
 import { theme } from '../apps/mantine.dev/theme';
 
-export const parameters = { layout: 'fullscreen' };
+export const parameters = {
+  layout: 'fullscreen',
+  options: {
+    showPanel: false,
+  },
+};
 
 const channel = addons.getChannel();
 

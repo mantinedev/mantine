@@ -32,6 +32,11 @@ const storiesPath = !argv._[1]
 
 export default {
   stories: storiesPath,
+  core: {
+    disableWhatsNewNotifications: true,
+    disableTelemetry: true,
+    enableCrashReports: false,
+  },
 
   addons: [
     getAbsolutePath('storybook-dark-mode'),
