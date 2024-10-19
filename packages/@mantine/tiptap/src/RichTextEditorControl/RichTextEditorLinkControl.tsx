@@ -120,7 +120,7 @@ export const RichTextEditorLinkControl = factory<RichTextEditorLinkControlFactor
         shadow="md"
         withinPortal
         opened={opened}
-        onClose={handleClose}
+        onChange={(_opened) => !_opened && handleClose()}
         offset={-44}
         zIndex={10000}
         {...popoverProps}
