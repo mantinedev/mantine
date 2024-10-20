@@ -27,7 +27,7 @@ export function Uncontrolled() {
       }}
     >
       <div style={{ padding: 40 }}>
-        <Popover>
+        <Popover onClose={() => console.log('closed')} onOpen={() => console.log('opened')}>
           <Popover.Target>
             <button type="button">Toggle popover</button>
           </Popover.Target>
@@ -125,6 +125,8 @@ export function Controlled() {
         trapFocus
         radius="md"
         returnFocus
+        onClose={() => console.log('closed')}
+        onOpen={() => console.log('opened')}
       >
         <Popover.Target>
           <button type="button" onClick={() => setState((c) => !c)}>

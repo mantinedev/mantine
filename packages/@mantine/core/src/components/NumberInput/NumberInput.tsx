@@ -160,7 +160,7 @@ export interface NumberInputProps
 
 export type NumberInputFactory = Factory<{
   props: NumberInputProps;
-  ref: HTMLDivElement;
+  ref: HTMLInputElement;
   stylesNames: NumberInputStylesNames;
   vars: NumberInputCssVariables;
   variant: InputVariant;
