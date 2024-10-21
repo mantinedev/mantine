@@ -1,3 +1,4 @@
+import React, { useEffect, useRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -10,10 +11,15 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { ScrollArea } from '../ScrollArea';
+import { ScrollArea, ScrollAreaProps } from '../ScrollArea';
+import { StickyTableHeader } from './StickyTableHeader';
 import classes from './Table.module.css';
 
-export type TableScrollContainerStylesNames = 'scrollContainer' | 'scrollContainerInner';
+export type TableScrollContainerStylesNames =
+  | 'scrollContainer'
+  | 'scrollContainerInner'
+  | 'stickyHeader';
+
 export type TableScrollContainerCssVariables = {
   scrollContainer: '--table-min-width' | '--table-overflow';
 };
@@ -22,11 +28,10 @@ export interface TableScrollContainerProps
   extends BoxProps,
     StylesApiProps<TableScrollContainerFactory>,
     ElementProps<'div'> {
-  /** `min-width` of the `Table` at which it should become scrollable */
-  minWidth: React.CSSProperties['minWidth'];
-
-  /** Type of the scroll container, `native` to use native scrollbars, `scrollarea` to use `ScrollArea` component, `scrollarea` by default */
+  minWidth?: React.CSSProperties['minWidth'];
   type?: 'native' | 'scrollarea';
+  stickyHeader?: boolean;
+  stickyHeaderOffset?: number;
 }
 
 export type TableScrollContainerFactory = Factory<{
@@ -38,54 +43,112 @@ export type TableScrollContainerFactory = Factory<{
 
 const defaultProps: Partial<TableScrollContainerProps> = {
   type: 'scrollarea',
+  stickyHeader: false,
+  stickyHeaderOffset: 0,
 };
 
-const varsResolver = createVarsResolver<TableScrollContainerFactory>((_, { minWidth, type }) => ({
+const varsResolver = createVarsResolver<TableScrollContainerFactory>((_, { minWidth }) => ({
   scrollContainer: {
-    '--table-min-width': rem(minWidth),
-    '--table-overflow': type === 'native' ? 'auto' : undefined,
+    '--table-min-width': minWidth ? rem(minWidth) : undefined,
+    '--table-overflow': 'hidden',
   },
 }));
 
-export const TableScrollContainer = factory<TableScrollContainerFactory>((_props, ref) => {
-  const props = useProps('TableScrollContainer', defaultProps, _props);
-  const {
-    classNames,
-    className,
-    style,
-    styles,
-    unstyled,
-    vars,
-    children,
-    minWidth,
-    type,
-    ...others
-  } = props;
+export const TableScrollContainer = factory<TableScrollContainerFactory>((props, ref) => {
+  const { className, children, minWidth, type, stickyHeader, stickyHeaderOffset, ...others } =
+    useProps('TableScrollContainer', defaultProps, props);
 
   const getStyles = useStyles<TableScrollContainerFactory>({
     name: 'TableScrollContainer',
     classes,
     props,
     className,
-    style,
-    classNames,
-    styles,
-    unstyled,
-    vars,
+    style: others.style,
+    classNames: others.classNames,
+    styles: others.styles,
+    unstyled: others.unstyled,
+    vars: others.vars,
     varsResolver,
     rootSelector: 'scrollContainer',
   });
 
+  const tableRef = useRef<HTMLTableElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const cloneContainerRef = useRef<HTMLDivElement>(null);
+  const stickyInstance = useRef<StickyTableHeader | null>(null);
+
+  useEffect(() => {
+    if (stickyHeader && tableRef.current && cloneContainerRef.current && containerRef.current) {
+      stickyInstance.current = new StickyTableHeader(
+        tableRef.current,
+        cloneContainerRef.current,
+        {
+          max: stickyHeaderOffset ?? 0,
+        },
+        containerRef.current
+      );
+
+      return () => {
+        if (stickyInstance.current) {
+          stickyInstance.current.destroy();
+        }
+      };
+    }
+  }, [stickyHeader, stickyHeaderOffset, children]);
+
+  const content = (
+    <div ref={containerRef} style={{ position: 'relative', width: '100%' }}>
+      <div
+        {...getStyles('scrollContainerInner')}
+        style={{
+          minWidth,
+          width: '100%',
+          position: 'relative',
+          overflowX: 'auto',
+          overflowY: stickyHeader ? 'visible' : 'auto',
+        }}
+        data-sticky-header={stickyHeader || undefined}
+      >
+        {React.Children.map(children, (child) => {
+          if (React.isValidElement(child) && typeof child.type !== 'string') {
+            return React.cloneElement(
+              child as React.ReactElement<{ ref: React.Ref<HTMLTableElement> }>,
+              { ref: tableRef }
+            );
+          }
+          return child;
+        })}
+      </div>
+      {stickyHeader && (
+        <div
+          ref={cloneContainerRef}
+          {...getStyles('stickyHeader')}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1000,
+            overflow: 'hidden',
+            display: 'none',
+          }}
+        />
+      )}
+    </div>
+  );
+
+  if (type === 'native') {
+    return (
+      <Box ref={ref} {...getStyles('scrollContainer')} {...others}>
+        {content}
+      </Box>
+    );
+  }
+
   return (
-    <Box<any>
-      component={type === 'scrollarea' ? ScrollArea : 'div'}
-      {...(type === 'scrollarea' ? { offsetScrollbars: 'x' } : {})}
-      ref={ref}
-      {...getStyles('scrollContainer')}
-      {...others}
-    >
-      <div {...getStyles('scrollContainerInner')}>{children}</div>
-    </Box>
+    <ScrollArea {...(others as ScrollAreaProps)} ref={ref}>
+      {content}
+    </ScrollArea>
   );
 });
 
