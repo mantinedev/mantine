@@ -102,6 +102,10 @@
   top: var(--table-sticky-header-offset, 0);
   z-index: 3;
   background-color: var(--mantine-color-body);
+
+  &:where([data-sticky]) {
+    position: sticky;
+  }
 }
 
 .caption {
