@@ -167,7 +167,7 @@ export function Combobox(_props: ComboboxProps) {
       <Popover
         opened={store.dropdownOpened}
         {...others}
-        onClose={onDropdownClose}
+        onChange={(_opened) => !_opened && onDropdownClose()}
         withRoles={false}
         unstyled={unstyled}
       >

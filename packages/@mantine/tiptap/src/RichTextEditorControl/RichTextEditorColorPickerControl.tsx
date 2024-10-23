@@ -72,7 +72,13 @@ export const RichTextEditorColorPickerControl = forwardRef<
   ));
 
   return (
-    <Popover opened={opened} withinPortal trapFocus onClose={close} {...popoverProps}>
+    <Popover
+      opened={opened}
+      withinPortal
+      trapFocus
+      onChange={(_opened) => !_opened && close()}
+      {...popoverProps}
+    >
       <Popover.Target>
         <RichTextEditorControl
           {...others}
