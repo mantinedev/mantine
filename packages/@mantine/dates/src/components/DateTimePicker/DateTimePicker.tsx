@@ -205,7 +205,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
   return (
     <PickerInputBase
       formattedValue={formattedValue}
-      dropdownOpened={dropdownOpened}
+      dropdownOpened={!rest.disabled ? dropdownOpened : false}
       dropdownHandlers={dropdownHandlers}
       classNames={resolvedClassNames}
       styles={resolvedStyles}
