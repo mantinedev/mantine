@@ -79,13 +79,13 @@ export function useFormStatus<Values extends Record<string, any>>({
 
   const resetTouched: ResetStatus = useCallback(() => setTouched({}), []);
 
-  const resetDirty: ResetDirty<Values> = (values) => {
+  const resetDirty: ResetDirty<Values> = useCallback((values) => {
     const newSnapshot = values
       ? { ...values, ...$values.refValues.current }
       : $values.refValues.current;
     $values.setValuesSnapshot(newSnapshot);
     setDirty({});
-  };
+  }, []);
 
   const setFieldTouched: SetFieldTouched<Values> = useCallback((path, touched) => {
     setTouched((currentTouched) => {
