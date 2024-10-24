@@ -286,6 +286,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
       return (
         <Area
           {...getStyles('area')}
+          key={item.name}
           name={item.name}
           type={curveType}
           dataKey={item.name}
