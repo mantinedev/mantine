@@ -47,6 +47,9 @@ export interface NotificationProps
   /** Notification icon, replaces color line */
   icon?: React.ReactNode;
 
+  /** Notification close button, replaces close button */
+  closeButton?: React.ReactNode;
+
   /** Notification title, displayed before body */
   title?: React.ReactNode;
 
@@ -95,6 +98,7 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
     withBorder,
     title,
     icon,
+    closeButton,
     children,
     onClose,
     closeButtonProps,
@@ -141,7 +145,9 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
         </Box>
       </div>
 
-      {withCloseButton && (
+      {withCloseButton && closeButton ? (
+        closeButton
+      ) : (
         <CloseButton
           iconSize={16}
           color="gray"
