@@ -25,7 +25,7 @@ export function PaginationItems({ dotsIcon }: PaginationItemsProps) {
         disabled={ctx.disabled}
         {...ctx.getItemProps?.(page)}
       >
-        {page}
+        {ctx.getItemProps?.(page)?.children ?? page}
       </PaginationControl>
     );
   });

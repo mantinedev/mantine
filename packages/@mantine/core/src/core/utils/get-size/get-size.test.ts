@@ -7,6 +7,9 @@ describe('@mantine/core/get-size', () => {
     expect(getSize('10px')).toBe('calc(0.625rem * var(--mantine-scale))');
     expect(getSize('10rem')).toBe('calc(10rem * var(--mantine-scale))');
     expect(getSize('10%')).toBe('10%');
+    expect(getSize('10vh')).toBe('10vh');
+    expect(getSize('10cqw')).toBe('10cqw');
+    expect(getSize('10cqmax')).toBe('10cqmax');
   });
 
   it('returns correct size with custom prefix', () => {

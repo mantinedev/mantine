@@ -12,7 +12,7 @@ function Demo() {
       h={300}
       data={data}
       dataKey="month"
-      withLegend
+      minBarSize={10}
       series={[
         { name: 'Smartphones', color: 'violet.6' },
         { name: 'Laptops', color: 'blue.6' },

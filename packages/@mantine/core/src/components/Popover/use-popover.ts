@@ -127,20 +127,11 @@ export function usePopover(options: UsePopoverOptions) {
 
   const onClose = () => {
     if (_opened) {
-      options.onClose?.();
       setOpened(false);
     }
   };
 
-  const onToggle = () => {
-    if (_opened) {
-      options.onClose?.();
-      setOpened(false);
-    } else {
-      options.onOpen?.();
-      setOpened(true);
-    }
-  };
+  const onToggle = () => setOpened(!_opened);
 
   const floating: UseFloatingReturn<Element> = useFloating({
     strategy: options.strategy,
@@ -149,7 +140,7 @@ export function usePopover(options: UsePopoverOptions) {
   });
 
   useFloatingAutoUpdate({
-    opened: options.opened,
+    opened: _opened,
     position: options.position,
     positionDependencies: options.positionDependencies || [],
     floating,
@@ -160,12 +151,12 @@ export function usePopover(options: UsePopoverOptions) {
   }, [floating.placement]);
 
   useDidUpdate(() => {
-    if (!options.opened) {
+    if (!_opened) {
       options.onClose?.();
     } else {
       options.onOpen?.();
     }
-  }, [options.opened]);
+  }, [_opened, options.onClose, options.onOpen]);
 
   return {
     floating,

@@ -25,12 +25,11 @@ export function Usage() {
   );
 }
 
-export function LargeNumbers() {
-  const [val, setVal] = useState<string | number>('');
+export function LargeDecimalPoints() {
+  const [val, setVal] = useState<string | number>(2.99999999999999);
 
   return (
     <>
-      <h1>Version 7.10.2</h1>
       <NumberInput
         label="Input label"
         description="Input description"

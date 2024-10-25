@@ -288,6 +288,7 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
             accept: isDragAccept,
             reject: isDragReject,
             idle: isIdle,
+            disabled,
             loading,
             'activate-on-click': activateOnClick,
           },

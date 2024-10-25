@@ -83,7 +83,7 @@ import { ColorSchemeScript } from '@mantine/core';
 
 export default function Document() {
   return (
-    <Html lang="en">
+    <Html lang="en" suppressHydrationWarning>
       <Head>
         <ColorSchemeScript defaultColorScheme="auto" />
       </Head>
@@ -125,7 +125,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <ColorSchemeScript />
       </head>
@@ -149,25 +149,6 @@ If you use both app and pages router in one application, you need to setup both 
 and `app/layout.tsx` files as described above.
 
 ## Next.js Link with polymorphic components
-
-Next.js `Link` does not work in the same way as other similar components in all Next.js versions.
-
-With Next.js 12 and below:
-
-```tsx
-import Link from 'next/link';
-import { Button } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Link href="/hello" passHref>
-      <Button component="a">Next link button</Button>
-    </Link>
-  );
-}
-```
-
-With Next.js 13 and above:
 
 ```tsx
 import Link from 'next/link';
@@ -264,3 +245,9 @@ export default {
   },
 };
 ```
+
+## Troubleshooting
+
+If you have any issues with Mantine in your Next.js application, please check
+[Help Center article](https://help.mantine.dev/q/server-components) that covers
+most common issues with app router and server components.

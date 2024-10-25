@@ -155,6 +155,11 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
       variant="subtle"
       color="gray"
       unstyled={unstyled}
+      onTouchEnd={(event) => {
+        event.preventDefault();
+        visibilityToggleButtonProps?.onTouchEnd?.(event);
+        toggleVisibility();
+      }}
       onMouseDown={(event) => {
         event.preventDefault();
         visibilityToggleButtonProps?.onMouseDown?.(event);

@@ -62,7 +62,9 @@ export interface DateTimePickerProps
   onChange?: (value: DateValue) => void;
 
   /** TimeInput component props */
-  timeInputProps?: TimeInputProps & { ref?: React.ComponentPropsWithRef<'input'>['ref'] };
+  timeInputProps?: Omit<TimeInputProps, 'defaultValue' | 'value'> & {
+    ref?: React.ComponentPropsWithRef<'input'>['ref'];
+  };
 
   /** Props passed down to the submit button */
   submitButtonProps?: ActionIconProps & React.ComponentPropsWithoutRef<'button'>;
@@ -203,7 +205,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
   return (
     <PickerInputBase
       formattedValue={formattedValue}
-      dropdownOpened={dropdownOpened}
+      dropdownOpened={!rest.disabled ? dropdownOpened : false}
       dropdownHandlers={dropdownHandlers}
       classNames={resolvedClassNames}
       styles={resolvedStyles}

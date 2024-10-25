@@ -44,7 +44,7 @@ const data = [
   {
     icon: IconFingerprint,
     label: 'Security',
-    rightSection: <IconChevronRight size="1rem" stroke={1.5} />,
+    rightSection: <IconChevronRight size="1rem" stroke={1.5} className="mantine-rotate-rtl" />,
   },
   { icon: IconActivity, label: 'Activity' },
 ];
