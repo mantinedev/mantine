@@ -184,6 +184,33 @@ function Demo() {
 }
 ```
 
+## Usage with @tanstack/react-router
+
+```tsx
+import { useNavigate, useParams } from '@tanstack/react-router';
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  const navigate = useNavigate();
+  const { tabValue } = useParams({ from: '/tabs/$tabId' });
+
+  return (
+    <Tabs
+      value={tabValue}
+      onChange={(value) => navigate({
+        to: `/tabs/$tabId`,
+        params: { tabId: value }
+      })}
+    >
+      <Tabs.List>
+        <Tabs.Tab value="first">First tab</Tabs.Tab>
+        <Tabs.Tab value="second">Second tab</Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
+
 ## Usage with Next.js router
 
 ```tsx
