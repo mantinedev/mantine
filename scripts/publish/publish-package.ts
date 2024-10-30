@@ -12,7 +12,7 @@ interface PublishPackage {
 
 export async function publishPackage({ packagePath, name, tag }: PublishPackage) {
   try {
-    await execa('yarn', ['npm', 'publish', '--access', 'public', '--tag', tag], {
+    await execa('npm', ['publish', '--access', 'public', '--tag', tag], {
       cwd: packagePath,
     });
     logger.success(`Package ${chalk.cyan(name)} has been published`);
