@@ -22,6 +22,9 @@ export interface TooltipBaseProps
   /** Determines whether tooltip should be rendered within Portal */
   withinPortal?: boolean;
 
+  /** Target element of Portal component */
+  target?: HTMLElement | string;
+
   /** Radius from theme.radius or number to set border-radius in px */
   radius?: MantineNumberSize;
 

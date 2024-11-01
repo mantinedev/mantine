@@ -90,6 +90,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
     onPositionChange,
     opened,
     withinPortal,
+    target,
     radius,
     color,
     classNames,
@@ -145,7 +146,7 @@ const _Tooltip = forwardRef<HTMLElement, TooltipProps>((props, ref) => {
 
   return (
     <>
-      <OptionalPortal withinPortal={withinPortal}>
+      <OptionalPortal withinPortal={withinPortal} target={target}>
         <Transition
           mounted={!disabled && tooltip.opened}
           transition={transition}
