@@ -346,6 +346,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       MDX_DATA.YearPickerInput,
       MDX_DATA.TimeInput,
       MDX_DATA.TimePicker,
+      MDX_DATA.TimeValue,
     ],
   },
   {

@@ -10,10 +10,10 @@ function Demo() {
   return (
     <div>
       <Text>
-        24h format: <TimeValue value="18:45:34" />
+        24h format: <TimeValue value={new Date(2021, 1, 1, 18, 45, 34)} />
       </Text>
       <Text>
-        12h format: <TimeValue value="18:45:34" format="12h" />
+        12h format: <TimeValue format="12h" value={new Date(2021, 1, 1, 18, 45, 34)} />
       </Text>
     </div>
   );
@@ -24,16 +24,16 @@ function Demo() {
   return (
     <div>
       <Text>
-        24h format: <TimeValue value="18:45:34" />
+        24h format: <TimeValue value={new Date(2021, 1, 1, 18, 45, 34)} />
       </Text>
       <Text>
-        12h format: <TimeValue value="18:45:34" format="12h" />
+        12h format: <TimeValue format="12h" value={new Date(2021, 1, 1, 18, 45, 34)} />
       </Text>
     </div>
   );
 }
 
-export const usage: MantineDemo = {
+export const dateObject: MantineDemo = {
   type: 'code',
   component: Demo,
   code,

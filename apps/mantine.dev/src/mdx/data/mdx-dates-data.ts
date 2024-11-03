@@ -152,4 +152,15 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     source: '@mantine/dates/src/components/TimePicker/TimePicker.tsx',
     docs: 'dates/time-picker.mdx',
   },
+
+  TimeValue: {
+    title: 'TimeValue',
+    package: '@mantine/dates',
+    slug: '/dates/time-value',
+    props: ['TimeValue'],
+    description: 'Display a formatted time value',
+    import: "import { TimeValue } from '@mantine/dates';",
+    source: '@mantine/dates/src/components/TimeValue/TimeValue.tsx',
+    docs: 'dates/time-value.mdx',
+  },
 };

@@ -10,10 +10,8 @@ function Demo() {
   return (
     <div>
       <Text>
-        24h format: <TimeValue value="18:45:34" />
-      </Text>
-      <Text>
-        12h format: <TimeValue value="18:45:34" format="12h" />
+        Custom AM/PM labels:{' '}
+        <TimeValue value="18:45:34" format="12h" amPmLabels={{ am: 'पूर्वाह्न', pm: 'अपराह्न' }} />
       </Text>
     </div>
   );
@@ -24,16 +22,14 @@ function Demo() {
   return (
     <div>
       <Text>
-        24h format: <TimeValue value="18:45:34" />
-      </Text>
-      <Text>
-        12h format: <TimeValue value="18:45:34" format="12h" />
+        Custom AM/PM labels:{' '}
+        <TimeValue value="18:45:34" format="12h" amPmLabels={{ am: 'पूर्वाह्न', pm: 'अपराह्न' }} />
       </Text>
     </div>
   );
 }
 
-export const usage: MantineDemo = {
+export const amPmLabels: MantineDemo = {
   type: 'code',
   component: Demo,
   code,

@@ -1,0 +1,29 @@
+import { TimeValueDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.TimeValue);
+
+## Usage
+
+Use `TimeValue` component to display time in different formats:
+
+<Demo data={TimeValueDemos.usage} />
+
+## With seconds
+
+Use `withSeconds` prop to display seconds:
+
+<Demo data={TimeValueDemos.withSeconds} />
+
+## AM/PM labels
+
+Use `amPmLabels` prop to display AM/PM labels:
+
+<Demo data={TimeValueDemos.amPmLabels} />
+
+## Date object
+
+You can use `Date` object instead of string as `value`:
+
+<Demo data={TimeValueDemos.dateObject} />
