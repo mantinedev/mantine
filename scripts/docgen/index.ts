@@ -19,6 +19,7 @@ generateDeclarations({
     '((series: RadarChartSeries) => Omit<Props, "ref">) | Omit<Props, "ref"> | undefined':
       '((series: RadarChartSeries) => RechartsProps) | RechartsProps',
     'TimePickerAmPmLabels | undefined': '{ am: string; pm: string }',
+    'TimePickerFormat | undefined': '"12h" | "24h"',
     '(Omit<DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectElement>, HTMLSelectElement>, "ref"> & DataAttributes) | undefined':
       'React.ComponentPropsWithoutRef<"select">',
     '(CloseButtonProps & ElementProps<"button"> & DataAttributes) | undefined': 'CloseButtonProps',
