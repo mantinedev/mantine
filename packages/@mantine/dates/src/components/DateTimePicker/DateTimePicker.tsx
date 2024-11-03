@@ -259,7 +259,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
             hoursRef={timeInputRefMerged}
           />
 
-          <ActionIcon<'button'>
+          <ActionIcon
             variant="default"
             size={`input-${size || 'sm'}`}
             {...getStyles('submitButton', {

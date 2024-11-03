@@ -1,4 +1,8 @@
-import { TimePickerDemos, TimeValueDemos } from '@docs/demos';
+import {
+  DateTimePickerDemos,
+  TimePickerDemos,
+  TimeValueDemos,
+} from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -11,6 +15,19 @@ New [TimePicker](/dates/time-picker) component is an alternative to
 dropdown with hours, minutes and seconds, and more.
 
 <Demo data={TimePickerDemos.withDropdown} />
+
+## DateTimePicker component changes
+
+[DateTimePicker](/dates/date-time-picker) component now uses [TimePicker](/dates/time-picker) under
+the hood instead of [TimeInput](/dates/time-input). You can now use all [TimePicker](/dates/time-picker)
+features with [DateTimePicker](/dates/date-time-picker) component.
+
+Prop `timeInputProps` is no longer available, to pass props down to the underlying [TimePicker](/dates/time-picker)
+you need to use `timePickerProps` prop.
+
+Example of enabling dropdown and setting `12h` format for time picker:
+
+<Demo data={DateTimePickerDemos.timePickerProps} />
 
 ## TimeValue component
 

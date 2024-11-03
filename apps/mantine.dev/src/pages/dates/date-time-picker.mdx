@@ -17,6 +17,14 @@ read through [DatePicker](/dates/date-picker/) documentation to learn about all 
 
 <Demo data={DateTimePickerDemos.withSeconds} />
 
+## TimePicker props
+
+You can pass props down to the underlying [TimePicker](/dates/time-picker/) component
+with `timePickerProps` prop. Example of enabling dropdown and setting `12h` format
+for time picker:
+
+<Demo data={DateTimePickerDemos.timePickerProps} />
+
 ## Value format
 
 Use `valueFormat` prop to change [dayjs format](https://day.js.org/docs/en/display/format) of value label:
