@@ -121,6 +121,7 @@ export * as DatesProviderDemos from './demos/dates/DatesProvider';
 export * as DateTimePickerDemos from './demos/dates/DateTimePicker';
 export * as DateInputDemos from './demos/dates/DateInput';
 export * as CalendarDemos from './demos/dates/Calendar';
+export * as TimePickerDemos from './demos/dates/TimePicker';
 
 // @mantine/charts
 export * as AreaChartDemos from './demos/charts/AreaChart';
