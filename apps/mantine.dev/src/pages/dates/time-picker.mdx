@@ -108,3 +108,21 @@ The clear button is visible when at least one of the fields has value.
 <Demo data={TimePickerDemos.configurator} />
 
 ## Accessibility
+
+Set aria labels for hours, minutes, seconds and am/pm inputs and clear button with corresponding props:
+
+```tsx
+import { TimePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <TimePicker
+      hoursInputLabel="Hours"
+      minutesInputLabel="Minutes"
+      secondsInputLabel="Seconds"
+      amPmInputLabel="AM/PM"
+      clearButtonProps={{ 'aria-label': 'Clear time' }}
+    />
+  );
+}
+```
