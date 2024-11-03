@@ -6,41 +6,90 @@ export default Layout(MDX_DATA.TimePicker);
 
 ## Usage
 
+`TimePicker` component is an alternative to [TimeInput](/dates/time-input) that offers more
+features, it supports 24-hour and 12-hour formats, dropdown with hours, minutes and seconds, and
+more.
+
 <Demo data={TimePickerDemos.usage} />
 
+## Controlled
+
+`TimePicker` component value is a string in `hh:mm:ss` 24-hour format (for example `18:34:55`).
+Empty string is used to represent no value. `onChange` function is called only when the entered value is valid.
+The input value is considered valid in the following cases:
+
+- All inputs are empty. In this case `onChange` is called with an empty string.
+- All inputs are filled. For example if `withSeconds` prop is set and the user entered `12:34:56`, `onChange` will be called with `12:34:56`. But if the user entered `12:34`, `onChange` will not be called because seconds value is missing.
+
+```tsx
+import { useState } from 'react';
+import { TimePicker } from '@mantine/dates';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  return <TimePicker value={value} onChange={setValue} />;
+}
+```
+
 ## With seconds
+
+Set `withSeconds` prop to enable seconds input. Note that if this prop is used,
+`onChange` is not called until all inputs are filled – it is not possible
+to enter only hours and minutes.
 
 <Demo data={TimePickerDemos.withSeconds} />
 
 ## 12-hour format
 
+Set `format="12h"` to use 12-hour format. Note that `onChange` is called only when all inputs are filled
+including am/pm input.
+
 <Demo data={TimePickerDemos.format12h} />
 
 ## Change am/pm labels
+
+To change am/pm labels use `amPmLabels` prop. Example of changing labels to Hindi:
 
 <Demo data={TimePickerDemos.amPmLabels} />
 
 ## Min and max values
 
+Set `min` and `max` props to limit available time range:
+
 <Demo data={TimePickerDemos.minMax} />
 
 ## With dropdown
+
+Set `withDropdown` prop to display the dropdown with hours, minutes, seconds and am/pm selects.
+By default, the dropdown is visible when one of the inputs is focused.
 
 <Demo data={TimePickerDemos.withDropdown} />
 
 ## Hours/minutes/seconds step
 
+Use `hoursStep`, `minutesStep` and `secondsStep` props to control step for each input.
+These props are used to control value by which the input is incremented or decremented when
+up/down arrow keys are pressed and to generate corresponding values range in the dropdown.
+
 <Demo data={TimePickerDemos.steps} />
 
 ## Control dropdown opened state
+
+Use `popoverProps` to pass props down to the underlying [Popover](/core/popover) component:
 
 <Demo data={TimePickerDemos.controlledDropdown} />
 
 ## Paste events
 
+By default, `TimePicker` handles only time in 24-hour format (for example `17:33:43` or `19:22`) for paste events.
+With `pasteSplit` prop you can create a custom paste time parser:
+
 <Demo data={TimePickerDemos.pasteSplit} />
 
 ## Clearable
+
+Set `clearable` prop to display a clear button in the right section of the input.
+The clear button is visible when at least one of the fields has value.
 
 <Demo data={TimePickerDemos.clearable} />
 
@@ -54,4 +103,8 @@ export default Layout(MDX_DATA.TimePicker);
 
 ## Input props
 
+<InputFeatures component="TimePicker" element="div" />
+
 <Demo data={TimePickerDemos.configurator} />
+
+## Accessibility
