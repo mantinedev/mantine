@@ -102,7 +102,9 @@ export function useTimePicker({
       onChange?.(clamped.timeString);
     } else {
       acceptChange.current = false;
-      value !== '' && onChange?.('');
+      if (typeof value === 'string' && value !== '') {
+        onChange?.('');
+      }
     }
   };
 

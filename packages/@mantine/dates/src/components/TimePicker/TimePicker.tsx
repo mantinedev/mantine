@@ -1,10 +1,12 @@
 import { useRef, useState } from 'react';
 import {
   __BaseInputProps,
+  __InputStylesNames,
   BoxProps,
   CloseButton,
   CloseButtonProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -15,6 +17,7 @@ import {
   PopoverProps,
   StylesApiProps,
   useProps,
+  useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
 import { useId } from '@mantine/hooks';
@@ -29,13 +32,14 @@ import { getParsedTime } from './utils/get-parsed-time/get-parsed-time';
 import classes from './TimePicker.module.css';
 
 export type TimePickerStylesNames =
-  | 'root'
-  | 'field'
+  | 'fieldsRoot'
   | 'fieldsGroup'
+  | 'field'
   | 'controlsList'
   | 'controlsListGroup'
   | 'control'
-  | 'dropdown';
+  | 'dropdown'
+  | __InputStylesNames;
 
 export type TimePickerCssVariables = {
   dropdown: '--control-font-size';
@@ -113,19 +117,19 @@ export interface TimePickerProps
   onBlur?: (event: React.FocusEvent<HTMLDivElement>) => void;
 
   /** Props passed down to clear button */
-  clearButtonProps?: CloseButtonProps & ElementProps<'button'>;
+  clearButtonProps?: CloseButtonProps & ElementProps<'button'> & DataAttributes;
 
   /** Props passed down to hours input */
-  hoursInputProps?: React.ComponentPropsWithoutRef<'input'>;
+  hoursInputProps?: React.ComponentPropsWithoutRef<'input'> & DataAttributes;
 
   /** Props passed down to minutes input */
-  minutesInputProps?: React.ComponentPropsWithoutRef<'input'>;
+  minutesInputProps?: React.ComponentPropsWithoutRef<'input'> & DataAttributes;
 
   /** Props passed down to seconds input */
-  secondsInputProps?: React.ComponentPropsWithoutRef<'input'>;
+  secondsInputProps?: React.ComponentPropsWithoutRef<'input'> & DataAttributes;
 
   /** Props passed down to am/pm select */
-  amPmSelectProps?: React.ComponentPropsWithoutRef<'select'>;
+  amPmSelectProps?: React.ComponentPropsWithoutRef<'select'> & DataAttributes;
 
   /** If set, the value cannot be updated */
   readOnly?: boolean;
@@ -134,7 +138,7 @@ export interface TimePickerProps
   disabled?: boolean;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'> & DataAttributes;
 
   /** A function to transform paste values, by default time in 24h format can be parsed on paste for example `23:34:22` */
   pasteSplit?: TimePickerPasteSplit;
@@ -213,6 +217,12 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
     pasteSplit,
     ...others
   } = props;
+
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<TimePickerFactory>({
+    classNames,
+    styles,
+    props,
+  });
 
   const getStyles = useStyles<TimePickerFactory>({
     name: 'TimePicker',
@@ -309,9 +319,14 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
               ))
             }
             labelProps={{ htmlFor: hoursInputId, ...labelProps }}
+            style={style}
+            className={className}
+            classNames={resolvedClassNames}
+            styles={resolvedStyles}
+            __staticSelector="TimePicker"
             {...others}
           >
-            <div {...getStyles('root')} dir="ltr">
+            <div {...getStyles('fieldsRoot')} dir="ltr">
               <div {...getStyles('fieldsGroup')} onBlur={handleBlur}>
                 <SpinInput
                   id={hoursInputId}

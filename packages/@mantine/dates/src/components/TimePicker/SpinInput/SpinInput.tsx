@@ -59,7 +59,7 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
         return;
       }
 
-      if (event.key === 'Backspace') {
+      if (event.key === 'Backspace' || event.key === 'Delete') {
         event.preventDefault();
 
         if (value !== null) {
@@ -97,6 +97,10 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
         {...ctx.getStyles('field', { className, style })}
         ref={ref}
         type="text"
+        role="spinbutton"
+        aria-valuemin={min}
+        aria-valuemax={max}
+        aria-valuenow={value === null ? 0 : value}
         data-empty={value === null || undefined}
         inputMode="numeric"
         placeholder="--"

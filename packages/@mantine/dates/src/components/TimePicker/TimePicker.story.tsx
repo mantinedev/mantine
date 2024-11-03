@@ -12,7 +12,6 @@ export function Usage() {
         withSeconds
         secondsStep={5}
         clearable
-        defaultValue="12:34:56"
         name="time-picker"
         form="my-form"
       />

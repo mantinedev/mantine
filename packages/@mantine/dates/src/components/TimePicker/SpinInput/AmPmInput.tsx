@@ -19,7 +19,7 @@ export const AmPmInput = forwardRef<HTMLSelectElement, AmPmInputProps>(
         return;
       }
 
-      if (event.key === 'Backspace') {
+      if (event.key === 'Backspace' || event.key === 'Delete') {
         event.preventDefault();
         if (value === null) {
           onPreviousInput?.();
