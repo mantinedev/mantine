@@ -31,6 +31,7 @@ import {
   PickerInputBaseStylesNames,
 } from '../PickerInputBase';
 import { TimePicker, TimePickerProps } from '../TimePicker/TimePicker';
+import { getMaxTime, getMinTime } from './get-min-max-time/get-min-max-time';
 import classes from './DateTimePicker.module.css';
 
 export type DateTimePickerStylesNames =
@@ -192,9 +193,6 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     }
   }, [dropdownOpened]);
 
-  const minTime = minDate ? dayjs(minDate).format('HH:mm:ss') : null;
-  const maxTime = maxDate ? dayjs(maxDate).format('HH:mm:ss') : null;
-
   const __stopPropagation = dropdownType === 'popover';
 
   return (
@@ -215,7 +213,6 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
       {...others}
       type="default"
       __staticSelector="DateTimePicker"
-      // ValueFormatter={valueFormatter}
     >
       <DatePicker
         {...calendarProps}
@@ -248,20 +245,8 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
             value={timeValue}
             withSeconds={withSeconds}
             unstyled={unstyled}
-            // minTime={
-            //   _value && minDate && _value.toDateString() === minDate.toDateString()
-            //     ? minTime != null
-            //       ? minTime
-            //       : undefined
-            //     : undefined
-            // }
-            // maxTime={
-            //   _value && maxDate && _value.toDateString() === maxDate.toDateString()
-            //     ? maxTime != null
-            //       ? maxTime
-            //       : undefined
-            //     : undefined
-            // }
+            min={getMinTime({ minDate, value: _value })}
+            max={getMaxTime({ maxDate, value: _value })}
             {...timePickerProps}
             {...getStyles('timeInput', {
               className: timePickerProps?.className,
