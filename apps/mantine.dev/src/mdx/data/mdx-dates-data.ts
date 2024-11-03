@@ -140,4 +140,16 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     source: '@mantine/dates/src/components/YearPickerInput/YearPickerInput.tsx',
     docs: 'dates/year-picker-input.mdx',
   },
+
+  TimePicker: {
+    title: 'TimePicker',
+    package: '@mantine/dates',
+    slug: '/dates/time-picker',
+    props: ['TimePicker'],
+    styles: ['TimePicker'],
+    description: 'Captures time value from the user',
+    import: "import { TimePicker } from '@mantine/dates';",
+    source: '@mantine/dates/src/components/TimePicker/TimePicker.tsx',
+    docs: 'dates/time-picker.mdx',
+  },
 };
