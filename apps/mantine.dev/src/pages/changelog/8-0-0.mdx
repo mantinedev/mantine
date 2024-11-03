@@ -1,0 +1,13 @@
+import { TimePickerDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog7150);
+
+## TimePicker component
+
+New [TimePicker](/dates/time-picker) component is an alternative to
+[TimeInput](/dates/time-input) that offers more features. It supports 24-hour and 12-hour formats,
+dropdown with hours, minutes and seconds, and more.
+
+<Demo data={TimePickerDemos.withDropdown} />

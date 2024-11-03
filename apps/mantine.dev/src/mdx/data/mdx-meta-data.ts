@@ -196,4 +196,12 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/all-releases',
     hideHeader: true,
   },
+
+  Changelog800: {
+    title: 'Version v8.0.0',
+    slug: '/changelog/8-0-0',
+    release: 'https://github.com/mantinedev/mantine/releases/tag/8.0.0',
+    date: 'January 14th, 2025',
+    searchTags: '8-0-0, 800',
+  },
 };
