@@ -30,7 +30,7 @@ import {
   PickerInputBase,
   PickerInputBaseStylesNames,
 } from '../PickerInputBase';
-import { TimeInput, TimeInputProps } from '../TimeInput';
+import { TimePicker, TimePickerProps } from '../TimePicker/TimePicker';
 import classes from './DateTimePicker.module.css';
 
 export type DateTimePickerStylesNames =
@@ -61,10 +61,8 @@ export interface DateTimePickerProps
   /** Called when value changes */
   onChange?: (value: DateValue) => void;
 
-  /** TimeInput component props */
-  timeInputProps?: Omit<TimeInputProps, 'defaultValue' | 'value'> & {
-    ref?: React.ComponentPropsWithRef<'input'>['ref'];
-  };
+  /** Props passed down to `TimePicker` component */
+  timePickerProps?: Omit<TimePickerProps, 'defaultValue' | 'value'>;
 
   /** Props passed down to the submit button */
   submitButtonProps?: ActionIconProps & React.ComponentPropsWithoutRef<'button'>;
@@ -95,7 +93,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
-    timeInputProps,
+    timePickerProps,
     submitButtonProps,
     withSeconds,
     level,
@@ -128,7 +126,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
   const _valueFormat = valueFormat || (withSeconds ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm');
 
   const timeInputRef = useRef<HTMLInputElement>();
-  const timeInputRefMerged = useMergedRef(timeInputRef, timeInputProps?.ref);
+  const timeInputRefMerged = useMergedRef(timeInputRef, timePickerProps?.hoursRef);
 
   const {
     calendarProps: { allowSingleDateInRange, ...calendarProps },
@@ -154,13 +152,12 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     ? dayjs(_value).locale(ctx.getLocale(locale)).format(_valueFormat)
     : '';
 
-  const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    timeInputProps?.onChange?.(event);
-    const val = event.currentTarget.value;
-    setTimeValue(val);
+  const handleTimeChange = (timeString: string) => {
+    timePickerProps?.onChange?.(timeString);
+    setTimeValue(timeString);
 
-    if (val) {
-      const [hours, minutes, seconds] = val.split(':').map(Number);
+    if (timeString) {
+      const [hours, minutes, seconds] = timeString.split(':').map(Number);
       const timeDate = shiftTimezone('add', new Date(), ctx.getTimezone());
       timeDate.setHours(hours);
       timeDate.setMinutes(minutes);
@@ -177,8 +174,6 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
   };
 
   const handleTimeInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    timeInputProps?.onKeyDown?.(event);
-
     if (event.key === 'Enter') {
       event.preventDefault();
       dropdownHandlers.close();
@@ -249,34 +244,34 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
 
       {currentLevel === 'month' && (
         <div {...getStyles('timeWrapper')}>
-          <TimeInput
+          <TimePicker
             value={timeValue}
             withSeconds={withSeconds}
-            ref={timeInputRefMerged}
             unstyled={unstyled}
-            minTime={
-              _value && minDate && _value.toDateString() === minDate.toDateString()
-                ? minTime != null
-                  ? minTime
-                  : undefined
-                : undefined
-            }
-            maxTime={
-              _value && maxDate && _value.toDateString() === maxDate.toDateString()
-                ? maxTime != null
-                  ? maxTime
-                  : undefined
-                : undefined
-            }
-            {...timeInputProps}
+            // minTime={
+            //   _value && minDate && _value.toDateString() === minDate.toDateString()
+            //     ? minTime != null
+            //       ? minTime
+            //       : undefined
+            //     : undefined
+            // }
+            // maxTime={
+            //   _value && maxDate && _value.toDateString() === maxDate.toDateString()
+            //     ? maxTime != null
+            //       ? maxTime
+            //       : undefined
+            //     : undefined
+            // }
+            {...timePickerProps}
             {...getStyles('timeInput', {
-              className: timeInputProps?.className,
-              style: timeInputProps?.style,
+              className: timePickerProps?.className,
+              style: timePickerProps?.style,
             })}
             onChange={handleTimeChange}
             onKeyDown={handleTimeInputKeyDown}
             size={size}
             data-mantine-stop-propagation={__stopPropagation || undefined}
+            hoursRef={timeInputRefMerged}
           />
 
           <ActionIcon<'button'>
