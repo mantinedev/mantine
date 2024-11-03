@@ -4,6 +4,7 @@ export * from './utils/index.js';
 export * from './components/DatesProvider/index.js';
 export * from './components/HiddenDatesInput/index.js';
 export * from './components/TimeInput/index.js';
+export * from './components/TimePicker/index.js';
 export * from './components/Day/index.js';
 export * from './components/WeekdaysRow/index.js';
 export * from './components/Month/index.js';

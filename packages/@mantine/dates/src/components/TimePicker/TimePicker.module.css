@@ -1,0 +1,101 @@
+.root {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+
+  @mixin where-rtl {
+    flex-direction: row-reverse;
+  }
+}
+
+.fieldsGroup {
+  display: flex;
+  align-items: center;
+  height: calc(var(--input-height) - 15px);
+}
+
+.controlsList {
+  display: flex;
+  flex-direction: column;
+}
+
+.controlsListGroup {
+  display: flex;
+  gap: 4px;
+}
+
+.dropdown {
+  padding: 4px;
+}
+
+.control {
+  text-align: center;
+  width: 2.5em;
+  height: 2em;
+  border-radius: var(--mantine-radius-default);
+  font-size: var(--control-font-size, var(--mantine-font-size-sm));
+
+  &:where([data-active]) {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-color-white);
+  }
+
+  @mixin hover {
+    &:where(:not([data-active])) {
+      color: var(--mantine-color-bright);
+
+      @mixin where-dark {
+        background-color: var(--mantine-color-dark-5);
+      }
+
+      @mixin where-light {
+        background-color: var(--mantine-color-gray-1);
+      }
+    }
+  }
+}
+
+.field {
+  width: calc(2ch + 0.3em);
+  caret-color: transparent;
+  font-variant-numeric: tabular-nums;
+  position: relative;
+  height: 100%;
+  line-height: 1;
+  padding-inline: 0.15em;
+  border: 0;
+  text-align: center;
+  text-align-last: center;
+  background-color: transparent;
+  color: var(--input-color);
+  border-radius: 2px;
+  appearance: none;
+
+  &:where([data-am-pm]) {
+    width: calc(3ch + 0.3em);
+  }
+
+  &:where(:disabled) {
+    cursor: not-allowed;
+  }
+
+  &::selection {
+    background-color: transparent;
+  }
+
+  &::placeholder {
+    opacity: 1;
+    color: inherit;
+  }
+
+  &:focus {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-color-white);
+    outline: 0;
+
+    &::placeholder {
+      color: var(--mantine-color-white);
+    }
+  }
+}
