@@ -20,7 +20,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { useId } from '@mantine/hooks';
+import { useId, useMergedRef } from '@mantine/hooks';
 import { AmPmInput } from './SpinInput/AmPmInput';
 import { SpinInput } from './SpinInput/SpinInput';
 import { AmPmControlsList } from './TimeControlsList/AmPmControlsList';
@@ -142,6 +142,18 @@ export interface TimePickerProps
 
   /** A function to transform paste values, by default time in 24h format can be parsed on paste for example `23:34:22` */
   pasteSplit?: TimePickerPasteSplit;
+
+  /** A ref object to get node reference of the hours input */
+  hoursRef?: React.Ref<HTMLInputElement>;
+
+  /** A ref object to get node reference of the minutes input */
+  minutesRef?: React.Ref<HTMLInputElement>;
+
+  /** A ref object to get node reference of the seconds input */
+  secondsRef?: React.Ref<HTMLInputElement>;
+
+  /** A ref object to get node reference of the am/pm select */
+  amPmRef?: React.Ref<HTMLSelectElement>;
 }
 
 export type TimePickerFactory = Factory<{
@@ -215,6 +227,10 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
     hiddenInputProps,
     labelProps,
     pasteSplit,
+    hoursRef,
+    minutesRef,
+    secondsRef,
+    amPmRef,
     ...others
   } = props;
 
@@ -251,6 +267,11 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
     readOnly,
     pasteSplit,
   });
+
+  const _hoursRef = useMergedRef(controller.refs.hours, hoursRef);
+  const _minutesRef = useMergedRef(controller.refs.minutes, minutesRef);
+  const _secondsRef = useMergedRef(controller.refs.seconds, secondsRef);
+  const _amPmRef = useMergedRef(controller.refs.amPm, amPmRef);
 
   const hoursInputId = useId();
   const hasFocusRef = useRef(false);
@@ -338,7 +359,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                   max={format === '12h' ? 12 : 23}
                   focusable
                   step={hoursStep!}
-                  ref={controller.refs.hours}
+                  ref={_hoursRef}
                   aria-label={hoursInputLabel}
                   readOnly={readOnly}
                   disabled={disabled}
@@ -357,7 +378,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                   max={59}
                   focusable
                   step={minutesStep!}
-                  ref={controller.refs.minutes}
+                  ref={_minutesRef}
                   onPreviousInput={() => controller.focus('hours')}
                   onNextInput={() =>
                     withSeconds ? controller.focus('seconds') : controller.focus('amPm')
@@ -384,7 +405,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                       max={59}
                       focusable
                       step={secondsStep!}
-                      ref={controller.refs.seconds}
+                      ref={_secondsRef}
                       onPreviousInput={() => controller.focus('minutes')}
                       onNextInput={() => controller.focus('amPm')}
                       aria-label={secondsInputLabel}
@@ -406,7 +427,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                     labels={amPmLabels!}
                     value={controller.values.amPm}
                     onChange={controller.setAmPm}
-                    ref={controller.refs.amPm}
+                    ref={_amPmRef}
                     aria-label={amPmInputLabel}
                     onPreviousInput={() =>
                       withSeconds ? controller.focus('seconds') : controller.focus('minutes')

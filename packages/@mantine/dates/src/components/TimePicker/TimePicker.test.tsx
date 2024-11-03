@@ -1,3 +1,4 @@
+import { createRef } from 'react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { TimePicker, TimePickerProps, TimePickerStylesNames } from './TimePicker';
 
@@ -561,5 +562,29 @@ describe('@mantine/dates/TimePicker', () => {
 
     await userEvent.tab();
     expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('allows getting inputs refs', () => {
+    const hoursRef = createRef<HTMLInputElement>();
+    const minutesRef = createRef<HTMLInputElement>();
+    const secondsRef = createRef<HTMLInputElement>();
+    const amPmRef = createRef<HTMLSelectElement>();
+
+    render(
+      <TimePicker
+        {...defaultProps}
+        format="12h"
+        withSeconds
+        hoursRef={hoursRef}
+        minutesRef={minutesRef}
+        secondsRef={secondsRef}
+        amPmRef={amPmRef}
+      />
+    );
+
+    expect(hoursRef.current).toBe(screen.getByLabelText('test-hours'));
+    expect(minutesRef.current).toBe(screen.getByLabelText('test-minutes'));
+    expect(secondsRef.current).toBe(screen.getByLabelText('test-seconds'));
+    expect(amPmRef.current).toBe(screen.getByLabelText('test-am-pm'));
   });
 });
