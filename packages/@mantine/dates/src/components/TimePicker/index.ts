@@ -8,5 +8,5 @@ export type {
 export type {
   TimePickerAmPmLabels,
   TimePickerFormat,
-  TimePickerPasteSplitReturnType,
+  TimePickerPasteSplit,
 } from './TimePicker.types';

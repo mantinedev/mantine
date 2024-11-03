@@ -22,3 +22,48 @@ export const Demo_readOnly = {
   name: '⭐ Demo: readOnly',
   render: renderDemo(demos.readOnly),
 };
+
+export const Demo_withSeconds = {
+  name: '⭐ Demo: withSeconds',
+  render: renderDemo(demos.withSeconds),
+};
+
+export const Demo_format12h = {
+  name: '⭐ Demo: format12h',
+  render: renderDemo(demos.format12h),
+};
+
+export const Demo_minMax = {
+  name: '⭐ Demo: minMax',
+  render: renderDemo(demos.minMax),
+};
+
+export const Demo_withDropdown = {
+  name: '⭐ Demo: withDropdown',
+  render: renderDemo(demos.withDropdown),
+};
+
+export const Demo_steps = {
+  name: '⭐ Demo: steps',
+  render: renderDemo(demos.steps),
+};
+
+export const Demo_amPmLabels = {
+  name: '⭐ Demo: amPmLabels',
+  render: renderDemo(demos.amPmLabels),
+};
+
+export const Demo_controlledDropdown = {
+  name: '⭐ Demo: controlledDropdown',
+  render: renderDemo(demos.controlledDropdown),
+};
+
+export const Demo_pasteSplit = {
+  name: '⭐ Demo: pasteSplit',
+  render: renderDemo(demos.pasteSplit),
+};
+
+export const Demo_configurator = {
+  name: '⭐ Demo: configurator',
+  render: renderDemo(demos.configurator),
+};
