@@ -147,3 +147,35 @@ function Demo() {
   );
 }
 ```
+
+Keyboard interactions:
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowDown',
+      description: 'Decrements current value by step',
+    },
+    {
+      key: 'ArrowUp',
+      description: 'Increments current value by step',
+    },
+    {
+      key: 'Home',
+      description: 'Sets current value to max possible value',
+    },
+    {
+      key: 'End',
+      description: 'Sets current value to min possible value',
+    },
+    { key: 'Backspace', description: 'Clears current value' },
+    {
+      key: 'ArrowRight',
+      description: 'Moves focus to the next input',
+    },
+    {
+      key: 'ArrowLeft',
+      description: 'Moves focus to the previous input',
+    },
+  ]}
+/>
