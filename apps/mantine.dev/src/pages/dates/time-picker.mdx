@@ -128,6 +128,23 @@ The clear button is visible when at least one of the fields has value.
 
 <Demo data={TimePickerDemos.configurator} />
 
+## onFocus and onBlur events
+
+`onFocus` and `onBlur` events are called when the first input is focused and the last input is blurred:
+
+```tsx
+import { TimePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <TimePicker
+      onFocus={() => console.log('Focused')}
+      onBlur={() => console.log('Blurred')}
+    />
+  );
+}
+```
+
 ## Accessibility
 
 Set aria labels for hours, minutes, seconds and am/pm inputs and clear button with corresponding props:
