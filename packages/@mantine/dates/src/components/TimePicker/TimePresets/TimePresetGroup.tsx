@@ -1,5 +1,7 @@
+import { SimpleGrid } from '@mantine/core';
 import { useTimePickerContext } from '../TimePicker.context';
 import { TimePickerAmPmLabels, TimePickerFormat, TimePickerPresetGroup } from '../TimePicker.types';
+import { isSameTime } from '../utils/is-same-time/is-same-time';
 import { TimePresetControl } from './TimePresetControl';
 
 interface TimePresetGroupProps {
@@ -28,7 +30,7 @@ export function TimePresetGroup({
       format={format}
       amPmLabels={amPmLabels}
       withSeconds={withSeconds}
-      active={item === value}
+      active={isSameTime({ time: item, compare: value, withSeconds })}
       onChange={onChange}
     />
   ));
@@ -36,7 +38,7 @@ export function TimePresetGroup({
   return (
     <div {...ctx.getStyles('presetsGroup')}>
       <div {...ctx.getStyles('presetsGroupLabel')}>{data.label}</div>
-      {items}
+      <SimpleGrid cols={withSeconds ? 2 : 3}>{items}</SimpleGrid>
     </div>
   );
 }

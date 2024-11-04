@@ -56,6 +56,33 @@
   }
 }
 
+.presetControl {
+  text-align: center;
+  height: 2em;
+  padding-inline: 0.5em;
+  border-radius: var(--mantine-radius-default);
+  font-size: var(--control-font-size, var(--mantine-font-size-sm));
+
+  &:where([data-active]) {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-color-white);
+  }
+
+  @mixin hover {
+    &:where(:not([data-active])) {
+      color: var(--mantine-color-bright);
+
+      @mixin where-dark {
+        background-color: var(--mantine-color-dark-5);
+      }
+
+      @mixin where-light {
+        background-color: var(--mantine-color-gray-1);
+      }
+    }
+  }
+}
+
 .field {
   width: calc(2ch + 0.3em);
   caret-color: transparent;

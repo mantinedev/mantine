@@ -31,12 +31,12 @@ export function WithPresets() {
   return (
     <div style={{ padding: 40 }}>
       <TimePicker
-        withSeconds
+        // withSeconds
         secondsStep={5}
         clearable
         defaultValue="12:34:55"
         withDropdown
-        presets={['12:00', '15:00', '18:00', '21:00', '00:00']}
+        presets={['12:00:00', '15:00:00', '18:00:00', '21:00:00', '00:00:00']}
       />
     </div>
   );
