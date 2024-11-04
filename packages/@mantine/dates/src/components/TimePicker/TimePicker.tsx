@@ -26,7 +26,13 @@ import { SpinInput } from './SpinInput/SpinInput';
 import { AmPmControlsList } from './TimeControlsList/AmPmControlsList';
 import { TimeControlsList } from './TimeControlsList/TimeControlsList';
 import { TimePickerProvider } from './TimePicker.context';
-import { TimePickerAmPmLabels, TimePickerFormat, TimePickerPasteSplit } from './TimePicker.types';
+import {
+  TimePickerAmPmLabels,
+  TimePickerFormat,
+  TimePickerPasteSplit,
+  TimePickerPresets,
+} from './TimePicker.types';
+import { TimePresets } from './TimePresets/TimePresets';
 import { useTimePicker } from './use-time-picker';
 import { getParsedTime } from './utils/get-parsed-time/get-parsed-time';
 import classes from './TimePicker.module.css';
@@ -39,6 +45,10 @@ export type TimePickerStylesNames =
   | 'controlsListGroup'
   | 'control'
   | 'dropdown'
+  | 'presetsRoot'
+  | 'presetsGroup'
+  | 'presetsGroupLabel'
+  | 'presetControl'
   | __InputStylesNames;
 
 export type TimePickerCssVariables = {
@@ -154,6 +164,9 @@ export interface TimePickerProps
 
   /** A ref object to get node reference of the am/pm select */
   amPmRef?: React.Ref<HTMLSelectElement>;
+
+  /** Time presets to display in the dropdown */
+  presets?: TimePickerPresets;
 }
 
 export type TimePickerFactory = Factory<{
@@ -231,6 +244,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
     minutesRef,
     secondsRef,
     amPmRef,
+    presets,
     ...others
   } = props;
 
@@ -458,38 +472,49 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
           {...getStyles('dropdown')}
           onMouseDown={(event) => event.preventDefault()}
         >
-          <div {...getStyles('controlsListGroup')}>
-            <TimeControlsList
-              min={format === '12h' ? 1 : 0}
-              max={format === '12h' ? 12 : 23}
-              step={hoursStep!}
-              value={controller.values.hours}
-              onSelect={controller.setHours}
+          {presets ? (
+            <TimePresets
+              value={controller.hiddenInputValue}
+              onChange={controller.setTimeString}
+              format={format!}
+              presets={presets}
+              amPmLabels={amPmLabels!}
+              withSeconds={withSeconds || false}
             />
-            <TimeControlsList
-              min={0}
-              max={59}
-              step={minutesStep!}
-              value={controller.values.minutes}
-              onSelect={controller.setMinutes}
-            />
-            {withSeconds && (
+          ) : (
+            <div {...getStyles('controlsListGroup')}>
+              <TimeControlsList
+                min={format === '12h' ? 1 : 0}
+                max={format === '12h' ? 12 : 23}
+                step={hoursStep!}
+                value={controller.values.hours}
+                onSelect={controller.setHours}
+              />
               <TimeControlsList
                 min={0}
                 max={59}
-                step={secondsStep!}
-                value={controller.values.seconds}
-                onSelect={controller.setSeconds}
+                step={minutesStep!}
+                value={controller.values.minutes}
+                onSelect={controller.setMinutes}
               />
-            )}
-            {format === '12h' && (
-              <AmPmControlsList
-                labels={amPmLabels!}
-                value={controller.values.amPm}
-                onSelect={controller.setAmPm}
-              />
-            )}
-          </div>
+              {withSeconds && (
+                <TimeControlsList
+                  min={0}
+                  max={59}
+                  step={secondsStep!}
+                  value={controller.values.seconds}
+                  onSelect={controller.setSeconds}
+                />
+              )}
+              {format === '12h' && (
+                <AmPmControlsList
+                  labels={amPmLabels!}
+                  value={controller.values.amPm}
+                  onSelect={controller.setAmPm}
+                />
+              )}
+            </div>
+          )}
         </Popover.Dropdown>
       </Popover>
     </TimePickerProvider>

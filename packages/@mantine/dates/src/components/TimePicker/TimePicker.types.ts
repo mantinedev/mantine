@@ -5,8 +5,6 @@ export interface TimePickerAmPmLabels {
   pm: string;
 }
 
-// time: value, format: '24h', amPmLabels: { am: 'AM', pm: 'PM' }
-
 export interface TimePickerPasteSplitInput {
   time: string;
   format: TimePickerFormat;
@@ -23,3 +21,10 @@ export interface TimePickerPasteSplitReturnType {
 export type TimePickerPasteSplit = (
   input: TimePickerPasteSplitInput
 ) => TimePickerPasteSplitReturnType;
+
+interface TimePickerPresetGroup {
+  label: React.ReactNode;
+  values: string[];
+}
+
+export type TimePickerPresets = string[] | TimePickerPresetGroup[];

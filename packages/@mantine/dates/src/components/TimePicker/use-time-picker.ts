@@ -108,6 +108,18 @@ export function useTimePicker({
     }
   };
 
+  const setTimeString = (timeString: string) => {
+    acceptChange.current = false;
+
+    const parsedTime = getParsedTime({ time: timeString, amPmLabels, format });
+    setHours(parsedTime.hours);
+    setMinutes(parsedTime.minutes);
+    setSeconds(parsedTime.seconds);
+    setAmPm(parsedTime.amPm);
+
+    onChange?.(timeString);
+  };
+
   const onHoursChange = (value: number | null) => {
     setHours(value);
     handleTimeChange('hours', value);
@@ -189,6 +201,7 @@ export function useTimePicker({
     focus,
     clear,
     onPaste,
+    setTimeString,
     isClearable,
     hiddenInputValue: hiddenInputValue.value,
   };
