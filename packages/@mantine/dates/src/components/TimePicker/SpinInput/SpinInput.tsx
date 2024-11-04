@@ -59,6 +59,23 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
         return;
       }
 
+      if (event.key === '0' || event.key === 'Num0') {
+        if (value === 0) {
+          event.preventDefault();
+          onNextInput?.();
+        }
+      }
+
+      if (event.key === 'Home') {
+        event.preventDefault();
+        onChange(min);
+      }
+
+      if (event.key === 'End') {
+        event.preventDefault();
+        onChange(max);
+      }
+
       if (event.key === 'Backspace' || event.key === 'Delete') {
         event.preventDefault();
 

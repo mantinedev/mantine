@@ -19,6 +19,16 @@ export const AmPmInput = forwardRef<HTMLSelectElement, AmPmInputProps>(
         return;
       }
 
+      if (event.key === 'Home') {
+        event.preventDefault();
+        onChange(labels.am);
+      }
+
+      if (event.key === 'End') {
+        event.preventDefault();
+        onChange(labels.pm);
+      }
+
       if (event.key === 'Backspace' || event.key === 'Delete') {
         event.preventDefault();
         if (value === null) {
