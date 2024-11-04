@@ -587,4 +587,14 @@ describe('@mantine/dates/TimePicker', () => {
     expect(secondsRef.current).toBe(screen.getByLabelText('test-seconds'));
     expect(amPmRef.current).toBe(screen.getByLabelText('test-am-pm'));
   });
+
+  it('moves focus to the next input when double zero is entered', async () => {
+    render(<TimePicker {...defaultProps} withSeconds format="24h" />);
+
+    await userEvent.type(screen.getByLabelText('test-hours'), '0');
+    expect(screen.getByLabelText('test-hours')).toHaveFocus();
+
+    await userEvent.type(screen.getByLabelText('test-hours'), '0');
+    expect(screen.getByLabelText('test-minutes')).toHaveFocus();
+  });
 });
