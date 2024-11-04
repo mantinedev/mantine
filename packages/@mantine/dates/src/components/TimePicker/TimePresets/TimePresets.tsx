@@ -1,4 +1,4 @@
-import { SimpleGrid } from '@mantine/core';
+import { ScrollArea, SimpleGrid } from '@mantine/core';
 import { useTimePickerContext } from '../TimePicker.context';
 import {
   TimePickerAmPmLabels,
@@ -47,11 +47,18 @@ export function TimePresets({
     ));
 
     return (
-      <div {...ctx.getStyles('presetsRoot')}>
-        <SimpleGrid cols={withSeconds ? 2 : 3} spacing={4}>
-          {items}
-        </SimpleGrid>
-      </div>
+      <ScrollArea.Autosize
+        mah={ctx.maxDropdownContentHeight}
+        type="never"
+        {...ctx.getStyles('scrollarea')}
+        {...ctx.scrollAreaProps}
+      >
+        <div {...ctx.getStyles('presetsRoot')}>
+          <SimpleGrid cols={withSeconds ? 2 : 3} spacing={4}>
+            {items}
+          </SimpleGrid>
+        </div>
+      </ScrollArea.Autosize>
     );
   }
 
@@ -67,7 +74,16 @@ export function TimePresets({
     />
   ));
 
-  return <div {...ctx.getStyles('presetsRoot')}>{groups}</div>;
+  return (
+    <ScrollArea.Autosize
+      mah={ctx.maxDropdownContentHeight}
+      type="never"
+      {...ctx.getStyles('scrollarea')}
+      {...ctx.scrollAreaProps}
+    >
+      <div {...ctx.getStyles('presetsRoot')}>{groups}</div>
+    </ScrollArea.Autosize>
+  );
 }
 
 TimePresets.displayName = '@mantine/dates/TimePresets';

@@ -15,6 +15,7 @@ import {
   InputVariant,
   Popover,
   PopoverProps,
+  ScrollAreaProps,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -49,6 +50,7 @@ export type TimePickerStylesNames =
   | 'presetsGroup'
   | 'presetsGroupLabel'
   | 'presetControl'
+  | 'scrollarea'
   | __InputStylesNames;
 
 export type TimePickerCssVariables = {
@@ -167,6 +169,12 @@ export interface TimePickerProps
 
   /** Time presets to display in the dropdown */
   presets?: TimePickerPresets;
+
+  /** Maximum height of the content displayed in the dropdown in px, `200` by default */
+  maxDropdownContentHeight?: number;
+
+  /** Props passed down to all underlying `ScrollArea` components */
+  scrollAreaProps?: ScrollAreaProps;
 }
 
 export type TimePickerFactory = Factory<{
@@ -185,6 +193,7 @@ const defaultProps: Partial<TimePickerProps> = {
   amPmLabels: { am: 'AM', pm: 'PM' },
   withDropdown: false,
   pasteSplit: getParsedTime,
+  maxDropdownContentHeight: 200,
 };
 
 const varsResolver = createVarsResolver<TimePickerFactory>((_theme, { size }) => ({
@@ -245,6 +254,8 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
     secondsRef,
     amPmRef,
     presets,
+    maxDropdownContentHeight,
+    scrollAreaProps,
     ...others
   } = props;
 
@@ -306,7 +317,9 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
   };
 
   return (
-    <TimePickerProvider value={{ getStyles }}>
+    <TimePickerProvider
+      value={{ getStyles, scrollAreaProps, maxDropdownContentHeight: maxDropdownContentHeight! }}
+    >
       <Popover
         opened={withDropdown && !readOnly && dropdownOpened}
         transitionProps={{ duration: 0 }}

@@ -85,6 +85,14 @@ export function WithPresets() {
         label="Range interval"
         presets={getTimeRange({ startTime: '06:00:00', endTime: '18:00:00', interval: '01:30:00' })}
       />
+      <TimePicker
+        secondsStep={5}
+        clearable
+        withDropdown
+        mt={120}
+        label="Long range interval"
+        presets={getTimeRange({ startTime: '06:00:00', endTime: '18:00:00', interval: '00:10:00' })}
+      />
     </div>
   );
 }

@@ -58,7 +58,13 @@ export function TimeControlsList({ min, max, step, value, onSelect }: TimeContro
   }, [value]);
 
   return (
-    <ScrollArea h={200} type="never" viewportRef={ref}>
+    <ScrollArea
+      h={ctx.maxDropdownContentHeight}
+      type="never"
+      viewportRef={ref}
+      {...ctx.getStyles('scrollarea')}
+      {...ctx.scrollAreaProps}
+    >
       <div {...ctx.getStyles('controlsList')}>{controls}</div>
     </ScrollArea>
   );
