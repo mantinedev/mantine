@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ActionIcon, Button, Group, Stack } from '@mantine/core';
 import { TimePicker } from './TimePicker';
+import { getTimeRange } from './utils/get-time-range/get-time-range';
 
 export default { title: 'TimePicker' };
 
@@ -68,12 +69,21 @@ export function WithPresets() {
         defaultValue="12:34:55"
         withDropdown
         mt={120}
-        // format="12h"
         label="Grouped presets"
         presets={[
           { label: 'Morning', values: ['06:00:00', '09:00:00', '12:00:00'] },
           { label: 'Evening', values: ['15:00:00', '18:00:00', '21:00:00'] },
         ]}
+      />
+
+      <TimePicker
+        secondsStep={5}
+        clearable
+        defaultValue="12:34:55"
+        withDropdown
+        mt={120}
+        label="Range interval"
+        presets={getTimeRange({ startTime: '06:00:00', endTime: '18:00:00', interval: '01:30:00' })}
       />
     </div>
   );
