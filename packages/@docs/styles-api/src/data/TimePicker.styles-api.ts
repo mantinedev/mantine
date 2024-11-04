@@ -13,6 +13,10 @@ export const TimePickerStylesApi: StylesApiData<TimePickerFactory> = {
     fieldsRoot: 'A wrapper element for all fieldsGroups',
     fieldsGroup: 'A wrapper element for hours/minutes/seconds/am-pm fields',
     field: 'Hours/minutes/seconds/am-pm input field',
+    presetControl: 'Time preset button',
+    presetsGroup: 'Wraps preset controls and label',
+    presetsGroupLabel: 'Labels of the preset group',
+    presetsRoot: 'Element wrapping all presets content',
   },
 
   vars: {

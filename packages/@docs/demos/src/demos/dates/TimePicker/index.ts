@@ -11,3 +11,6 @@ export { amPmLabels } from './TimePicker.demo.amPmLabels';
 export { controlledDropdown } from './TimePicker.demo.controlledDropdown';
 export { pasteSplit } from './TimePicker.demo.pasteSplit';
 export { configurator } from './TimePicker.demo.configurator';
+export { presets } from './TimePicker.demo.presets';
+export { presetsGroups } from './TimePicker.demo.presetsGroups';
+export { presetsRange } from './TimePicker.demo.presetsRange';

@@ -22,7 +22,7 @@ export type TimePickerPasteSplit = (
   input: TimePickerPasteSplitInput
 ) => TimePickerPasteSplitReturnType;
 
-interface TimePickerPresetGroup {
+export interface TimePickerPresetGroup {
   label: React.ReactNode;
   values: string[];
 }

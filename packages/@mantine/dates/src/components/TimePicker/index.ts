@@ -10,4 +10,5 @@ export type {
   TimePickerAmPmLabels,
   TimePickerFormat,
   TimePickerPasteSplit,
+  TimePickerPresets,
 } from './TimePicker.types';

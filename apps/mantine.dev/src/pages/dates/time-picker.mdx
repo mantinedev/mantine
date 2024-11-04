@@ -79,6 +79,27 @@ Use `popoverProps` to pass props down to the underlying [Popover](/core/popover)
 
 <Demo data={TimePickerDemos.controlledDropdown} />
 
+## Time presets
+
+You can define time presets with `presets` prop. Presets are displayed in the dropdown and can be selected by clicking on them.
+Time values for presets should be in `hh:mm:ss` or `hh:mm` 24-hour time format. Presets
+display value is generated based on `format`, `amPmLabels` and `withSeconds` props.
+
+<Demo data={TimePickerDemos.presets} />
+
+## Time presets groups
+
+To group presets use an array of objects with `label` and `values` keys:
+
+<Demo data={TimePickerDemos.presetsGroups} />
+
+## Time presets range
+
+If you need to generate a range of time values, use `getTimeRange` function exported from
+`@mantine/dates` package. The function accepts start, end time and interval in `hh:mm:ss` format.
+
+<Demo data={TimePickerDemos.presetsRange} />
+
 ## Paste events
 
 By default, `TimePicker` handles only time in 24-hour format (for example `17:33:43` or `19:22`) for paste events.

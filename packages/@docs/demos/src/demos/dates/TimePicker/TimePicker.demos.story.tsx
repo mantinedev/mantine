@@ -67,3 +67,18 @@ export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
 };
+
+export const Demo_presets = {
+  name: '⭐ Demo: presets',
+  render: renderDemo(demos.presets),
+};
+
+export const Demo_presetsGroups = {
+  name: '⭐ Demo: presetsGroups',
+  render: renderDemo(demos.presetsGroups),
+};
+
+export const Demo_presetsRange = {
+  name: '⭐ Demo: presetsRange',
+  render: renderDemo(demos.presetsRange),
+};
