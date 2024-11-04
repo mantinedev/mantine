@@ -100,6 +100,24 @@ If you need to generate a range of time values, use `getTimeRange` function expo
 
 <Demo data={TimePickerDemos.presetsRange} />
 
+## Dropdown position
+
+By default, the dropdown is displayed below the input if there is enough space; otherwise it is displayed above the input.
+You can change this behavior by setting `position` and `middlewares` props, which are passed down to the
+underlying [Popover](/core/popover) component.
+
+Example of dropdown that is always displayed above the input:
+
+<Demo data={TimePickerDemos.dropdownPosition} />
+
+## Dropdown width
+
+To change dropdown width, set `width` prop in `comboboxProps`. By default,
+dropdown width is adjusted to fit all content. Example of dropdown width set
+to the input width:
+
+<Demo data={TimePickerDemos.dropdownWidth} />
+
 ## Paste events
 
 By default, `TimePicker` handles only time in 24-hour format (for example `17:33:43` or `19:22`) for paste events.
@@ -127,6 +145,31 @@ The clear button is visible when at least one of the fields has value.
 <InputFeatures component="TimePicker" element="div" />
 
 <Demo data={TimePickerDemos.configurator} />
+
+## Get refs of inner inputs
+
+Use `hoursRef`, `minutesRef`, `secondsRef` and `amPmRef` props to get refs of inner inputs:
+
+```tsx
+import { useRef } from 'react';
+import { TimePicker } from '@mantine/dates';
+
+function Demo() {
+  const hoursRef = useRef<HTMLInputElement>(null);
+  const minutesRef = useRef<HTMLInputElement>(null);
+  const secondsRef = useRef<HTMLInputElement>(null);
+  const amPmRef = useRef<HTMLSelectElement>(null);
+
+  return (
+    <TimePicker
+      hoursRef={hoursRef}
+      minutesRef={minutesRef}
+      secondsRef={secondsRef}
+      amPmRef={amPmRef}
+    />
+  );
+}
+```
 
 ## onFocus and onBlur events
 

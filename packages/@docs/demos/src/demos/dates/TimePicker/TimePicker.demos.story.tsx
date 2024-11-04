@@ -82,3 +82,13 @@ export const Demo_presetsRange = {
   name: '⭐ Demo: presetsRange',
   render: renderDemo(demos.presetsRange),
 };
+
+export const Demo_dropdownPosition = {
+  name: '⭐ Demo: dropdownPosition',
+  render: renderDemo(demos.dropdownPosition),
+};
+
+export const Demo_dropdownWidth = {
+  name: '⭐ Demo: dropdownWidth',
+  render: renderDemo(demos.dropdownWidth),
+};
