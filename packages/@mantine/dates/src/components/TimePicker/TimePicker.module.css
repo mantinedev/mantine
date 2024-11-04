@@ -83,6 +83,38 @@
   }
 }
 
+.presetsGroup {
+  & + & {
+    margin-top: var(--mantine-spacing-sm);
+  }
+}
+
+.presetsGroupLabel {
+  margin-bottom: 4px;
+  color: var(--mantine-color-dimmed);
+  font-size: calc(var(--control-font-size, var(--mantine-font-size-sm)) - 2px);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  padding-inline-start: 7px;
+
+  &::after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    flex: 1;
+    margin-inline-start: var(--mantine-spacing-xs);
+
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-2);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-4);
+    }
+  }
+}
+
 .field {
   width: calc(2ch + 0.3em);
   caret-color: transparent;

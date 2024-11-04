@@ -308,8 +308,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
   return (
     <TimePickerProvider value={{ getStyles }}>
       <Popover
-        // opened={withDropdown && !readOnly && dropdownOpened}
-        opened
+        opened={withDropdown && !readOnly && dropdownOpened}
         transitionProps={{ duration: 0 }}
         position="bottom-start"
         withRoles={false}

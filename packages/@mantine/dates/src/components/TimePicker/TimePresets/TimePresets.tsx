@@ -1,8 +1,14 @@
 import { SimpleGrid } from '@mantine/core';
 import { useTimePickerContext } from '../TimePicker.context';
-import { TimePickerAmPmLabels, TimePickerFormat, TimePickerPresets } from '../TimePicker.types';
+import {
+  TimePickerAmPmLabels,
+  TimePickerFormat,
+  TimePickerPresetGroup,
+  TimePickerPresets,
+} from '../TimePicker.types';
 import { isSameTime } from '../utils/is-same-time/is-same-time';
 import { TimePresetControl } from './TimePresetControl';
+import { TimePresetGroup } from './TimePresetGroup';
 
 interface TimePresetsProps {
   presets: TimePickerPresets;
@@ -48,6 +54,20 @@ export function TimePresets({
       </div>
     );
   }
+
+  const groups = (presets as TimePickerPresetGroup[]).map((group, index) => (
+    <TimePresetGroup
+      key={index}
+      data={group}
+      value={value}
+      format={format}
+      amPmLabels={amPmLabels}
+      withSeconds={withSeconds}
+      onChange={onChange}
+    />
+  ));
+
+  return <div {...ctx.getStyles('presetsRoot')}>{groups}</div>;
 }
 
 TimePresets.displayName = '@mantine/dates/TimePresets';

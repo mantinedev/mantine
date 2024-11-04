@@ -38,7 +38,9 @@ export function TimePresetGroup({
   return (
     <div {...ctx.getStyles('presetsGroup')}>
       <div {...ctx.getStyles('presetsGroupLabel')}>{data.label}</div>
-      <SimpleGrid cols={withSeconds ? 2 : 3}>{items}</SimpleGrid>
+      <SimpleGrid cols={withSeconds ? 2 : 3} spacing={4}>
+        {items}
+      </SimpleGrid>
     </div>
   );
 }
