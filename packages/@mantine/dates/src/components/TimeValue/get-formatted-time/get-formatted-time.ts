@@ -31,10 +31,10 @@ export function getFormattedTime({
     return `${padTime(splitted.hours)}:${padTime(splitted.minutes)}${withSeconds ? `:${padTime(splitted.seconds || 0)}` : ''}`;
   }
 
-  const isAm = splitted.hours < 12;
-  const hours = isAm ? splitted.hours : splitted.hours - 12 === 0 ? 12 : splitted.hours - 12;
+  const isPm = splitted.hours >= 12;
+  const hours = splitted.hours % 12 === 0 ? 12 : splitted.hours % 12;
 
   return `${hours}:${padTime(splitted.minutes)}${withSeconds ? `:${padTime(splitted.seconds || 0)}` : ''} ${
-    isAm ? amPmLabels.am : amPmLabels.pm
+    isPm ? amPmLabels.pm : amPmLabels.am
   }`;
 }

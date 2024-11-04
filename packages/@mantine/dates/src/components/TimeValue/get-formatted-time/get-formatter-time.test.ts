@@ -1,6 +1,26 @@
 import { getFormattedTime } from './get-formatted-time';
 
 describe('@mantine/dates/get-formatted-time', () => {
+  it('correctly formats edge cases for 12h format', () => {
+    expect(
+      getFormattedTime({
+        value: '12:00:00',
+        format: '12h',
+        amPmLabels: { am: 'AM', pm: 'PM' },
+        withSeconds: true,
+      })
+    ).toBe('12:00:00 PM');
+
+    expect(
+      getFormattedTime({
+        value: '00:00:00',
+        format: '12h',
+        amPmLabels: { am: 'AM', pm: 'PM' },
+        withSeconds: true,
+      })
+    ).toBe('12:00:00 AM');
+  });
+
   it('formats given time string', () => {
     expect(
       getFormattedTime({
