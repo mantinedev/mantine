@@ -22,8 +22,8 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useId, useMergedRef } from '@mantine/hooks';
-import { AmPmInput } from './SpinInput/AmPmInput';
-import { SpinInput } from './SpinInput/SpinInput';
+import { SpinInput } from '../SpinInput';
+import { AmPmInput } from './AmPmInput/AmPmInput';
 import { AmPmControlsList } from './TimeControlsList/AmPmControlsList';
 import { TimeControlsList } from './TimeControlsList/TimeControlsList';
 import { TimePickerProvider } from './TimePicker.context';
@@ -379,6 +379,10 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                 <SpinInput
                   id={hoursInputId}
                   {...hoursInputProps}
+                  {...getStyles('field', {
+                    className: hoursInputProps?.className,
+                    style: hoursInputProps?.style,
+                  })}
                   value={controller.values.hours}
                   onChange={controller.setHours}
                   onNextInput={() => controller.focus('minutes')}
@@ -399,6 +403,10 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                 <span>:</span>
                 <SpinInput
                   {...minutesInputProps}
+                  {...getStyles('field', {
+                    className: minutesInputProps?.className,
+                    style: minutesInputProps?.style,
+                  })}
                   value={controller.values.minutes}
                   onChange={controller.setMinutes}
                   min={0}
@@ -426,6 +434,10 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                     <span>:</span>
                     <SpinInput
                       {...secondsInputProps}
+                      {...getStyles('field', {
+                        className: secondsInputProps?.className,
+                        style: secondsInputProps?.style,
+                      })}
                       value={controller.values.seconds}
                       onChange={controller.setSeconds}
                       min={0}

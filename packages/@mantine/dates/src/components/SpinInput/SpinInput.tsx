@@ -1,7 +1,6 @@
 import { forwardRef } from 'react';
 import { clamp } from '@mantine/hooks';
-import { useTimePickerContext } from '../TimePicker.context';
-import { padTime } from '../utils/pad-time/pad-time';
+import { padTime } from '../TimePicker/utils/pad-time/pad-time';
 
 interface SpinInputProps
   extends Omit<React.ComponentPropsWithoutRef<'input'>, 'onChange' | 'value'> {
@@ -26,8 +25,6 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
       onChange,
       focusable,
       step,
-      className,
-      style,
       onNextInput,
       onPreviousInput,
       onFocus,
@@ -36,7 +33,6 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
     },
     ref
   ) => {
-    const ctx = useTimePickerContext();
     const maxDigit = getMaxDigit(max);
 
     const handleChange = (value: string) => {
@@ -111,7 +107,6 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
 
     return (
       <input
-        {...ctx.getStyles('field', { className, style })}
         ref={ref}
         type="text"
         role="spinbutton"
