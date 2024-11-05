@@ -125,7 +125,7 @@ export interface TimePickerProps
   /** Called once when one of the inputs is focused, not called when focused is shifted between hours, minutes, seconds and am/pm inputs */
   onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
 
-  /** Called once when the focus is no longer on one of the inputs */
+  /** Called once when the focus is no longer on any of the inputs */
   onBlur?: (event: React.FocusEvent<HTMLDivElement>) => void;
 
   /** Props passed down to clear button */

@@ -1,0 +1,39 @@
+.field {
+  width: calc(2ch + 0.3em);
+  caret-color: transparent;
+  font-variant-numeric: tabular-nums;
+  position: relative;
+  height: 100%;
+  line-height: 1;
+  padding-inline: 0.15em;
+  border: 0;
+  text-align: center;
+  text-align-last: center;
+  background-color: transparent;
+  color: var(--input-color);
+  border-radius: 2px;
+  appearance: none;
+
+  &:where(:disabled) {
+    cursor: not-allowed;
+  }
+
+  &::selection {
+    background-color: transparent;
+  }
+
+  &::placeholder {
+    opacity: 1;
+    color: inherit;
+  }
+
+  &:focus {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-color-white);
+    outline: 0;
+
+    &::placeholder {
+      color: var(--mantine-color-white);
+    }
+  }
+}
