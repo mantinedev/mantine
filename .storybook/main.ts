@@ -42,7 +42,11 @@ export default {
           {
             test: /\.css$/,
             sideEffects: true,
-            use: ['style-loader', 'css-loader', 'postcss-loader'],
+            use: [
+              'style-loader',
+              { loader: 'css-loader', options: { modules: { namedExport: false } } },
+              'postcss-loader',
+            ],
           },
         ],
       },
