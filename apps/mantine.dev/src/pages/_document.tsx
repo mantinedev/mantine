@@ -18,6 +18,6 @@ export default function Document() {
   );
 }
 
-const stylesServer = createEmotionServer(emotionCache);
+const stylesServer = createEmotionServer(emotionCache as any);
 
 Document.getInitialProps = createGetInitialProps(NextDocument, stylesServer);
