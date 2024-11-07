@@ -48,12 +48,12 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@floating-ui/react": "^0.26.9",
+    "@floating-ui/react": "^0.26.27",
     "clsx": "^2.1.1",
-    "react-number-format": "^5.3.1",
-    "react-remove-scroll": "^2.5.7",
-    "react-textarea-autosize": "8.5.3",
-    "type-fest": "^4.12.0"
+    "react-number-format": "^5.4.2",
+    "react-remove-scroll": "^2.6.0",
+    "react-textarea-autosize": "8.5.4",
+    "type-fest": "^4.26.1"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",

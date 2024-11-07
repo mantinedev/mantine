@@ -41,7 +41,7 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "html-react-parser": "^5.1.10"
+    "html-react-parser": "^5.1.18"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
