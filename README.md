@@ -7,6 +7,7 @@
 [![Help wanted](https://img.shields.io/github/labels/mantinedev/mantine/help%20wanted?label=Contribute)](https://github.com/mantinedev/mantine/labels/help%20wanted)
 [![Discord](https://img.shields.io/badge/Chat%20on-Discord-%235865f2)](https://discord.gg/wbH82zuWMN)
 [![X Follow](https://img.shields.io/twitter/follow/mantinedev?style=social)](https://x.com/mantinedev)
+[![Gurubase](https://img.shields.io/badge/Gurubase-Ask%20Mantine%20Guru-006BFF)](https://gurubase.io/g/mantine)
 
 ## Links
 
