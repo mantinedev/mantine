@@ -50,7 +50,11 @@ export type BarChartStylesNames =
   | ChartTooltipStylesNames;
 
 export type BarChartCssVariables = {
-  root: '--chart-text-color' | '--chart-grid-color' | '--chart-cursor-fill';
+  root:
+    | '--chart-text-color'
+    | '--chart-grid-color'
+    | '--chart-cursor-fill'
+    | '--chart-bar-label-color';
 };
 
 export interface BarChartProps
@@ -92,6 +96,9 @@ export interface BarChartProps
 
   /** Maximum bar width in px */
   maxBarWidth?: number;
+
+  /** Controls color of the bar label, by default the value is determined by the chart orientation */
+  barLabelColor?: MantineColor;
 }
 
 export type BarChartFactory = Factory<{
@@ -114,11 +121,12 @@ const defaultProps: Partial<BarChartProps> = {
 };
 
 const varsResolver = createVarsResolver<BarChartFactory>(
-  (theme, { textColor, gridColor, cursorFill }) => ({
+  (theme, { textColor, gridColor, cursorFill, barLabelColor }) => ({
     root: {
       '--chart-text-color': textColor ? getThemeColor(textColor, theme) : undefined,
       '--chart-grid-color': gridColor ? getThemeColor(gridColor, theme) : undefined,
       '--chart-cursor-fill': cursorFill ? getThemeColor(cursorFill, theme) : undefined,
+      '--chart-bar-label-color': barLabelColor ? getThemeColor(barLabelColor, theme) : undefined,
     },
   })
 );
@@ -128,26 +136,19 @@ export function BarLabel({
   valueFormatter,
   textBreakAll,
   parentViewBox,
+  orientation,
+  viewBox,
+  width,
+  height,
   ...others
 }: Record<string, any>) {
-  function labelCoordinates(): { dx: number; dy: number } {
-    return {
-      dx:
-        others.props.h < 300
-          ? Math.ceil(others?.width + 10)
-          : Math.ceil(others?.width - others?.viewBox?.x / 2),
-      dy: Math.ceil(others.props.h / 15),
-    };
-  }
-
   return (
     <text
       {...others}
-      dy={labelCoordinates().dy}
-      dx={labelCoordinates().dx}
+      dy={orientation === 'vertical' ? height / 2 + 4 : -10}
+      dx={orientation === 'vertical' ? width - 30 : 0}
       fontSize={12}
-      fill="var(--chart-text-color, var(--mantine-color-dimmed))"
-      textAnchor="center"
+      fill="var(--chart-bar-label-color, var(--mantine-color-dimmed))"
     >
       {typeof valueFormatter === 'function' ? valueFormatter(value) : value}
     </text>
@@ -221,6 +222,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     rightYAxisProps,
     minBarSize,
     maxBarWidth,
+    mod,
     ...others
   } = props;
 
@@ -273,7 +275,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         stackId={stacked ? 'stack' : item.stackId || undefined}
         label={
           withBarValueLabel ? (
-            <BarLabel valueFormatter={valueFormatter} props={_props} />
+            <BarLabel valueFormatter={valueFormatter} orientation={orientation} />
           ) : undefined
         }
         yAxisId={item.yAxisId || 'left'}
@@ -330,6 +332,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
       {...getStyles('root')}
       onMouseLeave={handleMouseLeave}
       dir={dir || 'ltr'}
+      mod={[{ orientation }, mod]}
       {...others}
     >
       <ResponsiveContainer {...getStyles('container')}>
