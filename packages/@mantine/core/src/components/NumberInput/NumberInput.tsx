@@ -477,7 +477,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
           setValue(
             Number.isNaN(parsedValue) || parsedValue > Number.MAX_SAFE_INTEGER
               ? replaced
-              : parsedValue
+              : clamp(parsedValue, min, max)
           );
         }
       }}
