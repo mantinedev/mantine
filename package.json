@@ -110,10 +110,10 @@
     "type-fest": "^4.26.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.0",
-    "@babel/preset-env": "^7.26.0",
+    "@babel/core": "7.26.0",
+    "@babel/preset-env": "7.26.0",
     "@babel/preset-react": "^7.25.9",
-    "@babel/preset-typescript": "^7.26.0",
+    "@babel/preset-typescript": "7.26.0",
     "@eslint/js": "^9.14.0",
     "@hello-pangea/dnd": "^16.3.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
@@ -196,6 +196,7 @@
     "yargs": "^17.7.2"
   },
   "resolutions": {
-    "prosemirror-model": "1.18.1"
+    "prosemirror-model": "1.18.1",
+    "@babel/core": "7.26.0"
   }
 }
