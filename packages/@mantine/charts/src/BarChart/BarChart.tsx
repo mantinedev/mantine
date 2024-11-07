@@ -130,10 +130,21 @@ export function BarLabel({
   parentViewBox,
   ...others
 }: Record<string, any>) {
+  function labelCoordinates(): { dx: number; dy: number } {
+    return {
+      dx:
+        others.props.h < 300
+          ? Math.ceil(others?.width + 10)
+          : Math.ceil(others?.width - others?.viewBox?.x / 2),
+      dy: Math.ceil(others.props.h / 15),
+    };
+  }
+
   return (
     <text
       {...others}
-      dy={-10}
+      dy={labelCoordinates().dy}
+      dx={labelCoordinates().dx}
       fontSize={12}
       fill="var(--chart-text-color, var(--mantine-color-dimmed))"
       textAnchor="center"
@@ -260,7 +271,11 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         fillOpacity={dimmed ? 0.1 : fillOpacity}
         strokeOpacity={dimmed ? 0.2 : 0}
         stackId={stacked ? 'stack' : item.stackId || undefined}
-        label={withBarValueLabel ? <BarLabel valueFormatter={valueFormatter} /> : undefined}
+        label={
+          withBarValueLabel ? (
+            <BarLabel valueFormatter={valueFormatter} props={_props} />
+          ) : undefined
+        }
         yAxisId={item.yAxisId || 'left'}
         minPointSize={minBarSize}
         {...(typeof barProps === 'function' ? barProps(item) : barProps)}
