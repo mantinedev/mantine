@@ -39,7 +39,7 @@
     "@mantine/hooks": "7.13.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "recharts": "^2.10.3"
+    "recharts": "^2.13.3"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",

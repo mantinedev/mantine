@@ -31,6 +31,7 @@ export const h = (order: 1 | 2 | 3 | 4 | 5 | 6) => (props: any) => (
 );
 
 function getLanguage(children: any) {
+  // @ts-ignore
   const matches = (children.props.className || '').match(/language-(?<lang>.*)/);
   return matches && matches.groups && matches.groups.lang ? matches.groups.lang : 'tsx';
 }
