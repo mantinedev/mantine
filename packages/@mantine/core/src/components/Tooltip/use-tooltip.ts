@@ -4,6 +4,8 @@ import {
   flip,
   inline,
   offset,
+  Placement,
+  ReferenceType,
   shift,
   useDelayGroup,
   useDelayGroupContext,
@@ -39,7 +41,21 @@ interface UseTooltip {
   strategy?: FloatingStrategy;
 }
 
-export function useTooltip(settings: UseTooltip) {
+export interface UseTooltipReturnType {
+  x: number;
+  y: number;
+  arrowX?: number;
+  arrowY?: number;
+  reference: (node: ReferenceType | null) => void;
+  floating: (node: HTMLElement | null) => void;
+  getReferenceProps: (userProps?: React.HTMLProps<Element>) => Record<string, unknown>;
+  getFloatingProps: (userProps?: React.HTMLProps<HTMLElement>) => Record<string, unknown>;
+  isGroupPhase: any;
+  opened?: boolean;
+  placement: Placement;
+}
+
+export function useTooltip(settings: UseTooltip): UseTooltipReturnType {
   const [uncontrolledOpened, setUncontrolledOpened] = useState(settings.defaultOpened);
   const controlled = typeof settings.opened === 'boolean';
   const opened = controlled ? settings.opened : uncontrolledOpened;

@@ -117,7 +117,15 @@ function getPopoverMiddlewares(
   return middlewares;
 }
 
-export function usePopover(options: UsePopoverOptions) {
+export interface UsePopoverReturnType {
+  floating: UseFloatingReturn<Element>;
+  controlled: boolean;
+  opened: boolean;
+  onClose: () => void;
+  onToggle: () => void;
+}
+
+export function usePopover(options: UsePopoverOptions): UsePopoverReturnType {
   const [_opened, setOpened] = useUncontrolled({
     value: options.opened,
     defaultValue: options.defaultOpened,
