@@ -143,15 +143,18 @@ All done! you can now use breakpoint variables, `rem` function, `hover`, `light`
 
 Install `sass`:
 
-<InstallScript packages="sass" dev />
+<InstallScript packages="sass-embedded" dev />
 
 Add mantine resources in your `next.config.mjs` file:
 
 ```tsx
+import path from 'node:path';
+
 export default {
   // ...other config
   sassOptions: {
-    prependData: `@import "./_mantine.scss";`,
+    implementation: 'sass-embedded',
+    additionalData: `@use "${path.join(process.cwd(), '_mantine')}" as mantine;`,
   },
 };
 ```
@@ -230,24 +233,25 @@ All done! you can now use breakpoint variables, `rem` function, `hover`, `light`
 ```scss
 // example.module.scss
 .title {
+  // light-dark function is handled by PostCSS
   color: light-dark(
     var(--mantine-color-black),
     var(--mantine-color-white)
   );
-  font-size: rem(100px);
+  font-size: mantine.rem(100px);
   font-weight: 900;
-  letter-spacing: rem(-2px);
+  letter-spacing: mantine.rem(-2px);
 
-  @include light {
+  @include mantine.light {
     background-color: red;
   }
 
-  @include dark {
+  @include mantine.dark {
     background-color: blue;
   }
 
-  @include smaller-than($mantine-breakpoint-md) {
-    font-size: rem(50px);
+  @include mantine.smaller-than(mantine.$mantine-breakpoint-md) {
+    font-size: mantine.rem(50px);
   }
 }
 ```
