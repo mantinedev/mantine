@@ -37,8 +37,8 @@
   "peerDependencies": {
     "@mantine/core": "7.13.4",
     "@mantine/hooks": "7.13.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.x || ^19.x",
+    "react-dom": "^18.x || ^19.x",
     "recharts": "^2.13.3"
   },
   "devDependencies": {
