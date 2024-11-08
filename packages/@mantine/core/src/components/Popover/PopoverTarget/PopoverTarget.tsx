@@ -1,7 +1,7 @@
 import { cloneElement } from 'react';
 import cx from 'clsx';
 import { useMergedRef } from '@mantine/hooks';
-import { factory, Factory, isElement, useProps } from '../../../core';
+import { factory, Factory, getRefProp, isElement, useProps } from '../../../core';
 import { usePopoverContext } from '../Popover.context';
 
 export interface PopoverTargetProps {
@@ -41,7 +41,7 @@ export const PopoverTarget = factory<PopoverTargetFactory>((props, ref) => {
 
   const forwardedProps: any = others;
   const ctx = usePopoverContext();
-  const targetRef = useMergedRef(ctx.reference, (children as any).ref, ref);
+  const targetRef = useMergedRef(ctx.reference, getRefProp(children), ref);
 
   const accessibleProps = ctx.withRoles
     ? {

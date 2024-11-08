@@ -40,6 +40,7 @@ export function useComboboxTargetProps({
         if (!ctx.store.dropdownOpened) {
           ctx.store.openDropdown('keyboard');
           setSelectedOptionId(ctx.store.selectActiveOption());
+          ctx.store.updateSelectedOptionIndex('selected', { scrollIntoView: true });
         } else {
           setSelectedOptionId(ctx.store.selectNextOption());
         }
@@ -51,6 +52,7 @@ export function useComboboxTargetProps({
         if (!ctx.store.dropdownOpened) {
           ctx.store.openDropdown('keyboard');
           setSelectedOptionId(ctx.store.selectActiveOption());
+          ctx.store.updateSelectedOptionIndex('selected', { scrollIntoView: true });
         } else {
           setSelectedOptionId(ctx.store.selectPreviousOption());
         }

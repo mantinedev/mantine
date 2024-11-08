@@ -29,6 +29,7 @@ export const BarChartStylesApi: StylesApiData<BarChartFactory> = {
       '--chart-grid-color': 'Controls color of the grid and cursor lines',
       '--chart-text-color': 'Controls color of the axis labels',
       '--chart-cursor-fill': 'Controls fill color of the cursor line',
+      '--chart-bar-label-color': 'Controls color of the bar labels',
     },
   },
 

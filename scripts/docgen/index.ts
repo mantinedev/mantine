@@ -25,5 +25,7 @@ generateDeclarations({
     '(CloseButtonProps & ElementProps<"button"> & DataAttributes) | undefined': 'CloseButtonProps',
     '(Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref"> & DataAttributes) | undefined':
       'React.ComponentPropsWithoutRef<"input">',
+    'Omit<CategoricalChartProps & RefAttributes<{ readonly eventEmitterSymbol: Symbol; clipPathId: string; accessibilityManager: AccessibilityManager; ... 63 more ...; UNSAFE_componentWillUpdate?(nextProps: Readonly<...>, nextState: Readonly<...>, nextContext: any): void; }>, "ref"> | undefined':
+      'RechartsProps',
   },
 });

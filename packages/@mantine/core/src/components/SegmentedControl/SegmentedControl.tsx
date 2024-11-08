@@ -187,7 +187,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
     value,
     defaultValue,
     finalValue: Array.isArray(data)
-      ? _data.find((item) => !item.disabled)?.value ?? (data[0] as any)?.value ?? null
+      ? (_data.find((item) => !item.disabled)?.value ?? (data[0] as any)?.value ?? null)
       : null,
     onChange,
   });

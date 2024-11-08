@@ -1,6 +1,6 @@
 {
   "name": "@mantine/dropzone",
-  "version": "7.13.5-alpha.0",
+  "version": "7.13.5",
   "description": "Dropzone component built with Mantine theme and components",
   "homepage": "https://mantine.dev/x/dropzone/",
   "license": "MIT",
@@ -44,10 +44,10 @@
     "directory": "packages/@mantine/dropzone"
   },
   "peerDependencies": {
-    "@mantine/core": "7.13.5-alpha.0",
-    "@mantine/hooks": "7.13.5-alpha.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@mantine/core": "7.13.5",
+    "@mantine/hooks": "7.13.5",
+    "react": "^18.x || ^19.x",
+    "react-dom": "^18.x || ^19.x"
   },
   "dependencies": {
     "react-dropzone-esm": "15.0.1"

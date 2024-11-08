@@ -31,7 +31,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { BarLabel } from '../BarChart/BarChart';
+import { BarLabel } from '../BarChart/BarLabel';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { PointLabel } from '../PointLabel/PointLabel';
@@ -286,6 +286,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
       return (
         <Area
           {...getStyles('area')}
+          key={item.name}
           name={item.name}
           type={curveType}
           dataKey={item.name}
