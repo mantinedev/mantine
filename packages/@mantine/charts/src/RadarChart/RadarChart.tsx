@@ -36,6 +36,7 @@ export interface RadarChartSeries {
   color: MantineColor;
   strokeColor?: MantineColor;
   opacity?: number;
+  label?: string;
 }
 
 export type RadarChartStylesNames = 'root' | 'container';

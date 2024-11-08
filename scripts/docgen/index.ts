@@ -18,5 +18,7 @@ generateDeclarations({
     'Omit<TooltipProps<any, any>, "ref"> | undefined': 'RechartsProps',
     '((series: RadarChartSeries) => Omit<Props, "ref">) | Omit<Props, "ref"> | undefined':
       '((series: RadarChartSeries) => RechartsProps) | RechartsProps',
+    'Omit<CategoricalChartProps & RefAttributes<{ readonly eventEmitterSymbol: Symbol; clipPathId: string; accessibilityManager: AccessibilityManager; ... 63 more ...; UNSAFE_componentWillUpdate?(nextProps: Readonly<...>, nextState: Readonly<...>, nextContext: any): void; }>, "ref"> | undefined':
+      'RechartsProps',
   },
 });

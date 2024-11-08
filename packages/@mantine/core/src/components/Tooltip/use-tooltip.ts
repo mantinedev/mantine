@@ -81,6 +81,8 @@ export function useTooltip(settings: UseTooltip) {
     ],
   });
 
+  useDelayGroup(context, { id: uid });
+
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useHover(context, {
       enabled: settings.events?.hover,
@@ -91,7 +93,6 @@ export function useTooltip(settings: UseTooltip) {
     useRole(context, { role: 'tooltip' }),
     // Cannot be used with controlled tooltip, page jumps
     useDismiss(context, { enabled: typeof settings.opened === 'undefined' }),
-    useDelayGroup(context, { id: uid }),
   ]);
 
   useFloatingAutoUpdate({

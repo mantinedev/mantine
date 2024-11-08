@@ -7,6 +7,7 @@ import {
   Factory,
   getDefaultZIndex,
   getRadius,
+  getRefProp,
   getStyleObject,
   getThemeColor,
   isElement,
@@ -103,7 +104,7 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => 
     );
   }
 
-  const targetRef = useMergedRef(boundaryRef, (children as any).ref, ref);
+  const targetRef = useMergedRef(boundaryRef, getRefProp(children), ref);
 
   const onMouseEnter = (event: React.MouseEvent<unknown, MouseEvent>) => {
     children.props.onMouseEnter?.(event);

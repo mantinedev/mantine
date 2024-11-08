@@ -33,8 +33,8 @@
     "@tiptap/react": "*",
     "dayjs": "*",
     "embla-carousel-react": "*",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.x || ^19.x",
+    "react-dom": "^18.x || ^19.x"
   },
   "devDependencies": {
     "@mantine/carousel": "workspace:*",
