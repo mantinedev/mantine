@@ -73,7 +73,9 @@ export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, File
     };
 
     const reset = () => {
-      inputRef.current!.value = '';
+      if (inputRef.current) {
+        inputRef.current.value = '';
+      }
     };
 
     assignRef(resetRef!, reset);

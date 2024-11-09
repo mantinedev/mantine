@@ -73,15 +73,14 @@ function IncorrectItem() {
 }
 
 // ✅ Will work correctly with Menu.Item
-function CorrectItem(
-  props: React.ComponentPropsWithoutRef<'button'>
-) {
-  return (
-    <button type="button" {...props}>
-      My custom Menu item
-    </button>
-  );
-}
+const CorrectItem = forwardRef<
+  HTMLButtonElement,
+  React.ComponentPropsWithoutRef<'button'>
+>((props, ref) => (
+  <button type="button" {...props} ref={ref}>
+    My custom Menu item
+  </button>
+));
 
 function Demo() {
   // ❌ Will not work

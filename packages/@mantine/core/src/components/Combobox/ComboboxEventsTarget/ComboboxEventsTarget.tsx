@@ -1,6 +1,6 @@
 import { cloneElement } from 'react';
 import { useMergedRef } from '@mantine/hooks';
-import { factory, Factory, isElement, useProps } from '../../../core';
+import { factory, Factory, getRefProp, isElement, useProps } from '../../../core';
 import { useComboboxContext } from '../Combobox.context';
 import { useComboboxTargetProps } from '../use-combobox-target-props/use-combobox-target-props';
 
@@ -76,7 +76,7 @@ export const ComboboxEventsTarget = factory<ComboboxEventsTargetFactory>((props,
   return cloneElement(children, {
     ...targetProps,
     ...others,
-    [refProp!]: useMergedRef(ref, ctx.store.targetRef, (children as any)?.ref),
+    [refProp!]: useMergedRef(ref, ctx.store.targetRef, getRefProp(children)),
   });
 });
 

@@ -19,12 +19,12 @@ export function MdxKeyboardEventsTable({ data }: KeyboardEventsTableProps) {
   return (
     <div style={{ overflowX: 'auto' }}>
       <div style={{ minWidth: rem(500) }}>
-        <Table verticalSpacing="md">
+        <Table verticalSpacing="xs">
           <Table.Thead>
             <Table.Tr>
-              <Table.Td>Key</Table.Td>
-              <Table.Td>Description</Table.Td>
-              {hasCondition && <Table.Td>Condition</Table.Td>}
+              <Table.Th>Key</Table.Th>
+              <Table.Th>Description</Table.Th>
+              {hasCondition && <Table.Th>Condition</Table.Th>}
             </Table.Tr>
           </Table.Thead>
           <tbody>{rows}</tbody>
