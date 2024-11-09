@@ -185,12 +185,7 @@ const AsyncProcessingModal = ({
     <Text size="sm" c="dimmed">
       {innerProps.modalBody}
     </Text>
-    <Button
-      w="100%"
-      mt="md"
-      disabled={innerProps.disabled}
-      onClick={() => context.closeModal(id)}
-    >
+    <Button w="100%" mt="md" disabled={innerProps.disabled} onClick={() => context.closeModal(id)}>
       Close
     </Button>
   </>
@@ -202,7 +197,10 @@ function UpdateContextModal() {
   const handleOpenAsyncConfirmModal = () => {
     const modalId = modals.openContextModal('asyncProcessing', {
       title: 'Processing...',
-      innerProps: { modalBody: 'You cannot close the modal during this operation.', disabled: true },
+      innerProps: {
+        modalBody: 'You cannot close the modal during this operation.',
+        disabled: true,
+      },
       closeButtonProps: { disabled: true },
       closeOnEscape: false,
       closeOnClickOutside: false,
@@ -216,7 +214,10 @@ function UpdateContextModal() {
         closeButtonProps: { disabled: false },
         closeOnEscape: true,
         closeOnClickOutside: true,
-        innerProps: { modalBody: 'Processing complete. You can now close the modal.', disabled: false },
+        innerProps: {
+          modalBody: 'Processing complete. You can now close the modal.',
+          disabled: false,
+        },
       });
     }, 2000);
   };
@@ -264,9 +265,7 @@ function UpdateModal() {
 
 export function UpdateExample() {
   return (
-    <ModalsProvider
-      modals={{ asyncProcessing: AsyncProcessingModal }}
-    >
+    <ModalsProvider modals={{ asyncProcessing: AsyncProcessingModal }}>
       <Group p={40}>
         <UpdateModal />
         <UpdateContextModal />

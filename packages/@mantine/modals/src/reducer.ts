@@ -1,4 +1,4 @@
-import {ModalSettings, ModalState, OpenContextModal} from './context';
+import { ModalSettings, ModalState, OpenContextModal } from './context';
 
 interface ModalsState {
   modals: ModalState[];
