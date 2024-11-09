@@ -176,15 +176,67 @@ export function closeAll() {
   );
 }
 
-function UpdateModalButton() {
+const AsyncProcessingModal = ({
+  context,
+  id,
+  innerProps,
+}: ContextModalProps<{ modalBody: string; disabled: boolean }>) => (
+  <>
+    <Text size="sm" c="dimmed">
+      {innerProps.modalBody}
+    </Text>
+    <Button
+      w="100%"
+      mt="md"
+      disabled={innerProps.disabled}
+      onClick={() => context.closeModal(id)}
+    >
+      Close
+    </Button>
+  </>
+);
+
+function UpdateContextModal() {
   const modals = useModals();
 
-  const showUpdatableModal = () => {
+  const handleOpenAsyncConfirmModal = () => {
+    const modalId = modals.openContextModal('asyncProcessing', {
+      title: 'Processing...',
+      innerProps: { modalBody: 'You cannot close the modal during this operation.', disabled: true },
+      closeButtonProps: { disabled: true },
+      closeOnEscape: false,
+      closeOnClickOutside: false,
+      onClose: () => console.log('Async context modal closed'),
+    });
+
+    setTimeout(() => {
+      modals.updateContextModal({
+        modalId,
+        title: 'Processing Complete!',
+        closeButtonProps: { disabled: false },
+        closeOnEscape: true,
+        closeOnClickOutside: true,
+        innerProps: { modalBody: 'Processing complete. You can now close the modal.', disabled: false },
+      });
+    }, 2000);
+  };
+
+  return (
+    <Button onClick={handleOpenAsyncConfirmModal} color="green">
+      Open updatable context modal
+    </Button>
+  );
+}
+
+function UpdateModal() {
+  const modals = useModals();
+
+  const handleOpenUpdatableModal = () => {
     const modalId = modals.openModal({
       title: 'Initial Modal Title',
       children: (
         <Text size="sm" c="dimmed">
-          This is the initial content of the modal.
+          This modal will update after 2 seconds.
         </Text>
       ),
       onClose: () => console.log('Modal closed'),
@@ -196,7 +248,7 @@ function UpdateModalButton() {
         title: 'Updated Modal Title',
         children: (
           <Text size="sm" c="dimmed">
-            This is the updated content of the modal.
+            Huzzah! The text and title updated.
           </Text>
         ),
       });
@@ -204,7 +256,7 @@ function UpdateModalButton() {
   };
 
   return (
-    <Button onClick={showUpdatableModal} color="blue">
+    <Button onClick={handleOpenUpdatableModal} color="blue">
       Open updatable modal
     </Button>
   );
@@ -212,64 +264,13 @@ function UpdateModalButton() {
 
 export function UpdateExample() {
   return (
-    <ModalsProvider>
-      <Group p={40}>
-        <UpdateModalButton />
-      </Group>
-    </ModalsProvider>
-  );
-}
-
-const AsyncProcessingModal = ({
-  context,
-  id,
-  innerProps,
-}: ContextModalProps<{ modalBody: string, disabled: boolean }>) => (
-  <>
-    <Text size="sm" c="dimmed">{innerProps.modalBody}</Text>
-    <Button w="100%" mt="md" disabled={innerProps.disabled} onClick={() => context.closeModal(id)}>Close</Button>
-  </>
-);
-
-function AsyncConfirmModalButton() {
-  const modals = useModals();
-
-  const showAsyncConfirmModal = () => {
-    const modalId = modals.openContextModal('asyncProcessing', {
-      title: 'Processing...',
-      innerProps: { modalBody: 'You cannot close the modal during this operation.', disabled: true, closeEnabled: false },
-      closeButtonProps: { disabled: true },
-      closeOnEscape: false,
-      closeOnClickOutside: false,
-      onClose: () => console.log('Async context modal closed'),
-    });
-
-    setTimeout(() => {
-      modals.updateContextModal({
-        modalId,
-        title: "Processing Complete!",
-        closeButtonProps: { disabled: false },
-        closeOnEscape: true,
-        closeOnClickOutside: true,
-        innerProps: { modalBody: 'Processing complete. You can now close the modal.', disabled: false, closeEnabled: true },
-      });
-    }, 2000);
-  };
-
-  return (
-    <Button onClick={showAsyncConfirmModal} color="blue">
-      Open async context modal
-    </Button>
-  );
-}
-
-export function AsyncExample() {
-  return (
     <ModalsProvider
       modals={{ asyncProcessing: AsyncProcessingModal }}
-      labels={{ confirm: 'Confirm', cancel: 'Cancel' }}
     >
-      <AsyncConfirmModalButton />
+      <Group p={40}>
+        <UpdateModal />
+        <UpdateContextModal />
+      </Group>
     </ModalsProvider>
   );
 }
