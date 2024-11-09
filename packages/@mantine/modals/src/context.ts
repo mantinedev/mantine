@@ -34,6 +34,8 @@ export interface ModalsContextProps {
   closeModal: (id: string, canceled?: boolean) => void;
   closeContextModal: <TKey extends MantineModal>(id: TKey, canceled?: boolean) => void;
   closeAll: () => void;
+  updateModal: (payload: { modalId: string } & Partial<ModalSettings>) => void;
+  updateContextModal: (payload: { modalId: string } & Partial<OpenContextModal<any>>) => void;
 }
 
 export interface MantineModalsOverride {}

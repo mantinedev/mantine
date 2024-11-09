@@ -71,7 +71,7 @@ export function Usage() {
       confirmProps: { color: 'red' },
       closeOnConfirm: false,
       children: (
-        <Text size="sm" color="dimmed">
+        <Text size="sm" c="dimmed">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione magnam modi vitae
           molestias unde tempora exercitationem fugit, ex repellat doloribus maiores facilis quo
           quis, itaque temporibus obcaecati vel iusto praesentium.
@@ -172,6 +172,104 @@ export function closeAll() {
   return (
     <ModalsProvider>
       <CloseAllApp />
+    </ModalsProvider>
+  );
+}
+
+function UpdateModalButton() {
+  const modals = useModals();
+
+  const showUpdatableModal = () => {
+    const modalId = modals.openModal({
+      title: 'Initial Modal Title',
+      children: (
+        <Text size="sm" c="dimmed">
+          This is the initial content of the modal.
+        </Text>
+      ),
+      onClose: () => console.log('Modal closed'),
+    });
+
+    setTimeout(() => {
+      modals.updateModal({
+        modalId,
+        title: 'Updated Modal Title',
+        children: (
+          <Text size="sm" c="dimmed">
+            This is the updated content of the modal.
+          </Text>
+        ),
+      });
+    }, 2000);
+  };
+
+  return (
+    <Button onClick={showUpdatableModal} color="blue">
+      Open updatable modal
+    </Button>
+  );
+}
+
+export function UpdateExample() {
+  return (
+    <ModalsProvider>
+      <Group p={40}>
+        <UpdateModalButton />
+      </Group>
+    </ModalsProvider>
+  );
+}
+
+const AsyncProcessingModal = ({
+  context,
+  id,
+  innerProps,
+}: ContextModalProps<{ modalBody: string, disabled: boolean }>) => (
+  <>
+    <Text size="sm" c="dimmed">{innerProps.modalBody}</Text>
+    <Button w="100%" mt="md" disabled={innerProps.disabled} onClick={() => context.closeModal(id)}>Close</Button>
+  </>
+);
+
+function AsyncConfirmModalButton() {
+  const modals = useModals();
+
+  const showAsyncConfirmModal = () => {
+    const modalId = modals.openContextModal('asyncProcessing', {
+      title: 'Processing...',
+      innerProps: { modalBody: 'You cannot close the modal during this operation.', disabled: true, closeEnabled: false },
+      closeButtonProps: { disabled: true },
+      closeOnEscape: false,
+      closeOnClickOutside: false,
+      onClose: () => console.log('Async context modal closed'),
+    });
+
+    setTimeout(() => {
+      modals.updateContextModal({
+        modalId,
+        title: "Processing Complete!",
+        closeButtonProps: { disabled: false },
+        closeOnEscape: true,
+        closeOnClickOutside: true,
+        innerProps: { modalBody: 'Processing complete. You can now close the modal.', disabled: false, closeEnabled: true },
+      });
+    }, 2000);
+  };
+
+  return (
+    <Button onClick={showAsyncConfirmModal} color="blue">
+      Open async context modal
+    </Button>
+  );
+}
+
+export function AsyncExample() {
+  return (
+    <ModalsProvider
+      modals={{ asyncProcessing: AsyncProcessingModal }}
+      labels={{ confirm: 'Confirm', cancel: 'Cancel' }}
+    >
+      <AsyncConfirmModalButton />
     </ModalsProvider>
   );
 }

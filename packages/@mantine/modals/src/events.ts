@@ -16,6 +16,8 @@ type ModalsEvents = {
   openContextModal: <TKey extends MantineModal>(
     payload: OpenContextModal<Parameters<MantineModals[TKey]>[0]['innerProps']> & { modal: TKey }
   ) => void;
+  updateModal: (payload: { modalId: string } & Partial<ModalSettings>) => void;
+  updateContextModal: (payload: { modalId: string } & Partial<OpenContextModal<any>>) => void;
 };
 
 export const [useModalsEvents, createEvent] =
@@ -31,6 +33,10 @@ export const openConfirmModal = createEvent('openConfirmModal');
 export const openContextModal: ModalsEvents['openContextModal'] = <TKey extends MantineModal>(
   payload: OpenContextModal<Parameters<MantineModals[TKey]>[0]['innerProps']> & { modal: TKey }
 ) => createEvent('openContextModal')(payload);
+export const updateModal = (payload: { modalId: string } & Partial<ModalSettings>) =>
+  createEvent('updateModal')(payload);
+export const updateContextModal = (payload: { modalId: string } & Partial<OpenContextModal<any>>) =>
+  createEvent('updateContextModal')(payload);
 
 export const modals: {
   open: ModalsEvents['openModal'];

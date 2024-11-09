@@ -1,4 +1,4 @@
-import { ModalState } from './context';
+import {ModalSettings, ModalState, OpenContextModal} from './context';
 
 interface ModalsState {
   modals: ModalState[];
@@ -26,6 +26,12 @@ interface CloseAllAction {
   canceled?: boolean;
 }
 
+interface UpdateAction {
+  type: 'UPDATE';
+  modalId: string;
+  newProps: Partial<ModalSettings>;
+}
+
 function handleCloseModal(modal: ModalState, canceled?: boolean) {
   if (canceled && modal.type === 'confirm') {
     modal.props.onCancel?.();
@@ -36,7 +42,7 @@ function handleCloseModal(modal: ModalState, canceled?: boolean) {
 
 export function modalsReducer(
   state: ModalsState,
-  action: OpenAction | CloseAction | CloseAllAction
+  action: OpenAction | CloseAction | CloseAllAction | UpdateAction
 ): ModalsState {
   switch (action.type) {
     case 'OPEN': {
@@ -76,6 +82,52 @@ export function modalsReducer(
       return {
         current: state.current,
         modals: [],
+      };
+    }
+    case 'UPDATE': {
+      const { modalId, newProps } = action;
+
+      const updatedModals = state.modals.map((modal) => {
+        if (modal.id !== modalId) {
+          return modal;
+        }
+
+        if (modal.type === 'content' || modal.type === 'confirm') {
+          return {
+            ...modal,
+            props: {
+              ...modal.props,
+              ...newProps,
+            },
+          };
+        }
+
+        if (modal.type === 'context') {
+          return {
+            ...modal,
+            props: {
+              ...modal.props,
+              ...newProps,
+              innerProps: {
+                ...modal.props.innerProps,
+                ...(newProps as Partial<OpenContextModal<any>>).innerProps,
+              },
+            },
+          };
+        }
+
+        return modal;
+      });
+
+      const currentModal =
+        state.current?.id === modalId
+          ? updatedModals.find((modal) => modal.id === modalId) || state.current
+          : state.current;
+
+      return {
+        ...state,
+        modals: updatedModals,
+        current: currentModal,
       };
     }
     default: {
