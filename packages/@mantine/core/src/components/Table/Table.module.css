@@ -24,6 +24,10 @@
     border: rem(1px) solid var(--table-border-color);
   }
 
+  &:where([data-tabular-nums]) {
+    font-variant-numeric: tabular-nums;
+  }
+
   &:where([data-variant='vertical']) :where(.th) {
     font-weight: 500;
 

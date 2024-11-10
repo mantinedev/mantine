@@ -166,3 +166,28 @@ export function HighlightOnHover() {
     </div>
   );
 }
+
+const nums = [2214411234, 9983812411, 1234567890, 9948811128, 9933771777];
+
+export function TabularNums() {
+  const rows = nums.map((num) => (
+    <Table.Tr key={num}>
+      <Table.Td>Units sold</Table.Td>
+      <Table.Td>{num}</Table.Td>
+    </Table.Tr>
+  ));
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Table tabularNums>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Name</Table.Th>
+            <Table.Th>Units sold</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
+      </Table>
+    </div>
+  );
+}

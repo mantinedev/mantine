@@ -10,4 +10,12 @@ export default Layout(MDX_DATA.Changelog7150);
 
 <Demo data={TableDemos.vertical} />
 
+## Table tabular numbers
+
+[Table](/core/table) component now supports `tabularNums` prop to render numbers in tabular style. It sets
+`font-variant-numeric: tabular-nums` which makes numbers to have equal width.
+This is useful when you have columns with numbers and you want them to be aligned:
+
+<Demo data={TableDemos.tabularNums} />
+
 ## Other changes
