@@ -28,6 +28,8 @@ import { TableDataRenderer } from './TableDataRenderer';
 import { TableScrollContainer } from './TableScrollContainer';
 import classes from './Table.module.css';
 
+export type TableVariant = 'default' | 'vertical';
+
 export type TableStylesNames =
   | 'table'
   | 'thead'
@@ -109,6 +111,7 @@ export type TableFactory = Factory<{
   ref: HTMLTableElement;
   stylesNames: TableStylesNames;
   vars: TableCssVariables;
+  variant: TableVariant;
   staticComponents: {
     Thead: typeof TableThead;
     Tbody: typeof TableTbody;

@@ -47,3 +47,8 @@ export const Demo_stickyHeader = {
   name: '⭐ Demo: stickyHeader',
   render: renderDemo(demos.stickyHeader),
 };
+
+export const Demo_vertical = {
+  name: '⭐ Demo: vertical',
+  render: renderDemo(demos.vertical),
+};
