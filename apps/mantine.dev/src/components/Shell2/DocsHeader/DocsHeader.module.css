@@ -1,5 +1,4 @@
 .header {
-  padding-inline: var(--mantine-spacing-md);
   height: var(--docs-header-height);
   border-bottom: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
   position: sticky;
