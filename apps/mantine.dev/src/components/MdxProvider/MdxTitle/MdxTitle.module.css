@@ -3,7 +3,7 @@
   margin-bottom: var(--mantine-spacing-md);
   word-break: break-word;
   font-family: var(--docs-font-primary);
-  font-weight: 700;
+  font-weight: 500;
   position: relative;
 
   @mixin light {
@@ -21,7 +21,7 @@
   }
 
   &[data-h1] {
-    font-weight: 900;
+    font-weight: 600;
     font-size: 40px;
     margin-top: 0;
   }
@@ -35,35 +35,4 @@
 .offset {
   position: relative;
   top: calc(var(--docs-header-height) * -1);
-}
-
-.copyButton {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  min-width: 18px;
-  color: var(--mantine-color-dimmed);
-  border-radius: var(--mantine-radius-sm);
-  opacity: 0.2;
-  transition: opacity 100ms ease;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -28px;
-  padding-right: 10px;
-  padding-top: 8px;
-  padding-bottom: 4px;
-
-  @mixin hover {
-    color: var(--mantine-color-blue-5);
-  }
-
-  @mixin smaller-than $mantine-breakpoint-lg {
-    display: none;
-  }
-}
-
-.copyIcon {
-  width: 18px;
-  height: 18px;
 }
