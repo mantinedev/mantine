@@ -13,7 +13,7 @@ export function MdxRawContent({ children, meta }: MdxRawContentProps) {
   return (
     <PageBase>
       <div className={classes.wrapper}>
-        <div className={classes.container}>
+        <div className={classes.container} id="mdx">
           {children}
           <MdxSiblings meta={meta} />
         </div>

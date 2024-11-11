@@ -26,7 +26,7 @@ import { HotKeysHandler } from '@/components/HotKeysHandler';
 import { MdxProvider } from '@/components/MdxProvider';
 import { ModalsProviderDemo } from '@/components/ModalsProviderDemo';
 import { Search } from '@/components/Search';
-import { Shell } from '@/components/Shell';
+import { Shell } from '@/components/Shell2';
 import { FontsStyle } from '@/fonts';
 import { theme } from '../../theme';
 import { emotionCache } from '../emotion';
@@ -85,7 +85,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
                 <MdxProvider>
                   <HotKeysHandler />
                   {shouldRenderShell ? (
-                    <Shell withNavbar={navbarOpened}>
+                    <Shell>
                       <Component {...pageProps} />
                     </Shell>
                   ) : (

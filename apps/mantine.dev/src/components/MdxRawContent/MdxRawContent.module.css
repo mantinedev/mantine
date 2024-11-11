@@ -3,8 +3,6 @@
   display: flex;
   position: relative;
   justify-content: space-between;
-  padding-left: calc(var(--mantine-spacing-xl) * 2);
-  padding-right: calc(var(--mantine-spacing-xl) * 2);
   background-color: var(--mantine-color-body);
 
   @media (max-width: $docs-mdx-breakpoint) {
@@ -14,12 +12,6 @@
 }
 
 .container {
-  margin-top: var(--mantine-spacing-xl);
-  width: calc(100% - var(--docs-table-of-contents-width));
-  max-width: var(--docs-mdx-content-width);
-  margin-left: auto;
-  margin-right: auto;
-
   @media (max-width: $docs-mdx-breakpoint) {
     width: 100%;
   }

@@ -1,9 +1,9 @@
 .wrapper {
   padding-left: var(--mantine-spacing-md);
   position: sticky;
-  top: var(--mantine-spacing-xl);
+  top: var(--docs-header-height);
+  padding-top: var(--mantine-spacing-xl);
   right: 0;
-  padding-top: 55px;
   flex: 0 0 calc(var(--docs-table-of-contents-width) - 20px);
 
   @media (max-width: $docs-mdx-breakpoint) {
