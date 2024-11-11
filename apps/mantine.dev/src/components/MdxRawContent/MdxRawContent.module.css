@@ -4,6 +4,7 @@
   position: relative;
   justify-content: space-between;
   background-color: var(--mantine-color-body);
+  width: 100%;
 
   @media (max-width: $docs-mdx-breakpoint) {
     padding-left: var(--mantine-spacing-xl);
@@ -12,8 +13,12 @@
 }
 
 .container {
-  @media (max-width: $docs-mdx-breakpoint) {
-    width: 100%;
+  flex: 1;
+  padding-inline: 50px;
+  padding-block: var(--mantine-spacing-xl);
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    padding: var(--mantine-spacing-md);
   }
 }
 

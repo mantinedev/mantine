@@ -34,7 +34,7 @@
 
 .offset {
   position: relative;
-  top: -62px;
+  top: calc(var(--docs-header-height) * -1);
 }
 
 .copyButton {

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { IconList } from '@tabler/icons-react';
 import { Box, rem, ScrollArea, Text } from '@mantine/core';
 import { getHeadings, Heading } from './get-headings';
 import classes from './TableOfContents.module.css';
@@ -62,7 +61,6 @@ export function TableOfContents({ withTabs }: TableOfContentsProps) {
     <Text<'a'>
       key={heading.id}
       component="a"
-      fz="sm"
       className={classes.link}
       mod={{ active: active === index }}
       href={`#${heading.id}`}
@@ -80,10 +78,7 @@ export function TableOfContents({ withTabs }: TableOfContentsProps) {
     <Box component="nav" mod={{ 'with-tabs': withTabs }} className={classes.wrapper}>
       <div className={classes.inner}>
         <div>
-          <div className={classes.header}>
-            <IconList style={{ width: rem(20), height: rem(20) }} stroke={1.5} />
-            <Text className={classes.title}>Table of contents</Text>
-          </div>
+          <Text className={classes.title}>Table of contents</Text>
           <ScrollArea.Autosize mah={`calc(100vh - ${rem(140)})`} type="never" offsetScrollbars>
             <div className={classes.items}>{items}</div>
           </ScrollArea.Autosize>

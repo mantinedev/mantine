@@ -9,9 +9,5 @@
 }
 
 .content {
-  padding: 50px;
-
-  @mixin smaller-than $mantine-breakpoint-md {
-    padding: var(--mantine-spacing-md);
-  }
+  flex: 1;
 }
