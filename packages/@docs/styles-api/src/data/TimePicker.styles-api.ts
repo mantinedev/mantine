@@ -17,6 +17,7 @@ export const TimePickerStylesApi: StylesApiData<TimePickerFactory> = {
     presetsGroup: 'Wraps preset controls and label',
     presetsGroupLabel: 'Labels of the preset group',
     presetsRoot: 'Element wrapping all presets content',
+    scrollarea: 'Scroll area in the dropdown',
   },
 
   vars: {
