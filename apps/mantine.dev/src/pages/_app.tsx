@@ -27,7 +27,6 @@ import { MdxProvider } from '@/components/MdxProvider';
 import { ModalsProviderDemo } from '@/components/ModalsProviderDemo';
 import { Search } from '@/components/Search';
 import { Shell } from '@/components/Shell2';
-import { FontsStyle } from '@/fonts';
 import { theme } from '../../theme';
 import { emotionCache } from '../emotion';
 
@@ -72,9 +71,14 @@ export default function App({ Component, pageProps, router }: AppProps) {
           name="og:image"
           content="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/social-preview.png"
         />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <GaScript />
-      <FontsStyle />
       <DirectionProvider initialDirection="ltr" detectDirection={false}>
         <MantineEmotionProvider cache={emotionCache}>
           <MantineProvider theme={theme} defaultColorScheme="light">
