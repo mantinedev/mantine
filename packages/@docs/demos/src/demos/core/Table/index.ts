@@ -7,3 +7,5 @@ export { scrollContainerNative } from './Table.demo.scrollContainerNative';
 export { rowSelection } from './Table.demo.rowSelection';
 export { data } from './Table.demo.data';
 export { stickyHeader } from './Table.demo.stickyHeader';
+export { vertical } from './Table.demo.vertical';
+export { tabularNums } from './Table.demo.tabularNums';

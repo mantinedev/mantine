@@ -47,3 +47,13 @@ export const Demo_stickyHeader = {
   name: '⭐ Demo: stickyHeader',
   render: renderDemo(demos.stickyHeader),
 };
+
+export const Demo_vertical = {
+  name: '⭐ Demo: vertical',
+  render: renderDemo(demos.vertical),
+};
+
+export const Demo_tabularNums = {
+  name: '⭐ Demo: tabularNums',
+  render: renderDemo(demos.tabularNums),
+};
