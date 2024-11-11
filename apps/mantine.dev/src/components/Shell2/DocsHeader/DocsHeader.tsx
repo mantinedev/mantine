@@ -1,7 +1,11 @@
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Container } from '@mantine/core';
 import { HeaderControls } from '@mantinex/mantine-header';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import { meta } from '@mantinex/mantine-meta';
+import { MDX_DATA, MdxNavCategory } from '@/mdx';
+import { getActiveCategory } from '../get-active-category';
 import classes from './DocsHeader.module.css';
 
 const mainLinksData = [
@@ -11,17 +15,26 @@ const mainLinksData = [
   { link: 'https://theme.mantine.dev', label: 'Apps' },
 ];
 
-const navigationLinksData = [
-  { link: '/getting-started', label: 'Get started' },
-  { link: '/theming', label: 'Theming' },
-  { link: '/styles', label: 'Styles' },
-  { link: '/hooks', label: 'Hooks' },
-  { link: '/components', label: 'Components' },
-  { link: '/form', label: 'Form' },
-  { link: '/extensions', label: 'Extensions' },
+interface NavigationLinkData {
+  link: string;
+  label: string;
+  category: MdxNavCategory;
+}
+
+const navigationLinksData: NavigationLinkData[] = [
+  { link: MDX_DATA.GettingStarted.slug, label: 'Get started', category: 'gettingStarted' },
+  { link: MDX_DATA.MantineProvider.slug, label: 'Theming', category: 'theming' },
+  { link: MDX_DATA.StylesOverview.slug, label: 'Styles', category: 'styles' },
+  { link: '/hooks', label: 'Hooks', category: 'hooks' },
+  { link: '/components', label: 'Components', category: 'components' },
+  { link: '/form', label: 'Form', category: 'form' },
+  { link: '/extensions', label: 'Extensions', category: 'extensions' },
 ];
 
 export function DocsHeader() {
+  const router = useRouter();
+  const activeCategory = getActiveCategory(router.pathname);
+
   const mainLinks = mainLinksData.map((link) => (
     <a key={link.label} href={link.link} className={classes.mainLink}>
       {link.label}
@@ -29,15 +42,14 @@ export function DocsHeader() {
   ));
 
   const navigationLinks = navigationLinksData.map((link) => (
-    <a
+    <Link
       key={link.label}
       href={link.link}
       className={classes.navigationLink}
-      onClick={(event) => event.preventDefault()}
-      data-active={link.link === '/getting-started' || undefined}
+      data-active={activeCategory === link.category || undefined}
     >
       {link.label}
-    </a>
+    </Link>
   ));
 
   return (

@@ -71,12 +71,6 @@ export default function App({ Component, pageProps, router }: AppProps) {
           name="og:image"
           content="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/social-preview.png"
         />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
-          rel="stylesheet"
-        />
       </Head>
       <GaScript />
       <DirectionProvider initialDirection="ltr" detectDirection={false}>
