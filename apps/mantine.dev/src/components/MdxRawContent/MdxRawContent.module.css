@@ -13,9 +13,12 @@
 }
 
 .container {
-  flex: 1;
   padding-inline: 50px;
   padding-block: var(--mantine-spacing-xl);
+  max-width: min(
+    calc(1440px - var(--docs-table-of-contents-width) - var(--docs-navbar-width) - 50px),
+    calc(100vw - var(--docs-table-of-contents-width) - var(--docs-navbar-width) - 50px)
+  );
 
   @mixin smaller-than $mantine-breakpoint-md {
     padding: var(--mantine-spacing-md);
