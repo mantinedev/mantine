@@ -249,7 +249,7 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
       <ScrollArea type="auto" dir="ltr" offsetScrollbars={false}>
         <Box {...getStyles('codeWrapper')} mod={{ expanded: _expanded }}>
           {!highlighted.highlighted ? (
-            <pre {...getStyles('pre')}>
+            <pre data-not-highlighted {...getStyles('pre')}>
               <code data-mantine-code={currentCode.language || 'tsx'} {...getStyles('code')}>
                 {highlighted.code}
               </code>

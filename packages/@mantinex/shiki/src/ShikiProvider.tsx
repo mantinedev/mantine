@@ -44,6 +44,8 @@ export function ShikiProvider({ children, loadShiki }: ShikiProviderProps) {
         return { code, highlighted: false };
       }
 
+      // return { code, highlighted: false };
+
       return {
         code: prepareHtmlCode(
           shiki.codeToHtml(code, {

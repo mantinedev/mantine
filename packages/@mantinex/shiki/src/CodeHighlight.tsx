@@ -105,7 +105,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
 
       <ScrollArea type="hover" dir="ltr" offsetScrollbars={false}>
         {!highlighted.highlighted ? (
-          <pre {...getStyles('pre')}>
+          <pre data-not-highlighted {...getStyles('pre')}>
             <code data-mantine-code={language || 'tsx'} {...getStyles('code')}>
               {code.trim()}
             </code>
