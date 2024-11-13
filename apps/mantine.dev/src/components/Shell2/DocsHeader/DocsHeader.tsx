@@ -25,10 +25,10 @@ const navigationLinksData: NavigationLinkData[] = [
   { link: MDX_DATA.GettingStarted.slug, label: 'Get started', category: 'gettingStarted' },
   { link: MDX_DATA.MantineProvider.slug, label: 'Theming', category: 'theming' },
   { link: MDX_DATA.StylesOverview.slug, label: 'Styles', category: 'styles' },
-  { link: '/hooks', label: 'Hooks', category: 'hooks' },
-  { link: '/components', label: 'Components', category: 'components' },
-  { link: '/form', label: 'Form', category: 'form' },
-  { link: '/extensions', label: 'Extensions', category: 'extensions' },
+  { link: MDX_DATA.useClickOutside.slug, label: 'Hooks', category: 'hooks' },
+  { link: MDX_DATA.AppShell.slug, label: 'Components', category: 'components' },
+  { link: MDX_DATA.useForm.slug, label: 'Form', category: 'form' },
+  { link: MDX_DATA.GettingStartedDates.slug, label: 'Extensions', category: 'extensions' },
 ];
 
 export function DocsHeader() {
