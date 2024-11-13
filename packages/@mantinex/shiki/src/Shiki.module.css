@@ -163,7 +163,7 @@
   }
 
   @mixin where-light {
-    --code-background: #fcfcfc;
+    --code-background: var(--mantine-color-gray-0);
   }
 
   @mixin where-dark {
