@@ -60,9 +60,6 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.DefaultProps,
     ],
   },
-];
-
-const STYLES_PAGES_GROUP: MdxPagesCategory[] = [
   {
     category: 'Styles',
     pages: [
@@ -405,7 +402,6 @@ const FORM_PAGES_GROUP: MdxPagesCategory[] = [
 export const MDX_NAV_DATA = {
   gettingStarted: GETTING_STARTED_PAGES_GROUP,
   theming: THEMING_PAGES_GROUP,
-  styles: STYLES_PAGES_GROUP,
   hooks: HOOKS_PAGES_GROUP,
   components: COMPONENTS_PAGES_GROUP,
   extensions: EXTENSIONS_PAGES_GROUP,
