@@ -1,4 +1,6 @@
 *.d.ts
+*.mdx
+*.md
 packages/*/*/styles.css
 packages/*/*/styles.layer.css
 packages/*/*/styles/*.css

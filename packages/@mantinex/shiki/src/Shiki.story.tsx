@@ -7,6 +7,10 @@ const tsxCode = `
 import { forwardRef } from 'react';
 import { Group, Avatar, Text, Select } from '@mantine/core';
 
+console.log('Highlighted') // [!code highlight]
+console.log('Highlighted') // [!code highlight]
+console.log('Highlighted') // [!code highlight]
+
 // Data for select
 // You can use any data structure you want
 
@@ -180,7 +184,7 @@ function CSSIcon(props: React.ComponentProps<'svg'>) {
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <CodeHighlight code={tsxCode} highlightOnClient />
+      <CodeHighlight code={tsxCode} />
     </div>
   );
 }

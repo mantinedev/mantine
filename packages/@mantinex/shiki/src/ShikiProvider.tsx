@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { transformerNotationDiff, transformerNotationHighlight } from '@shikijs/transformers';
 import type { HighlighterGeneric } from 'shiki';
 import { useComputedColorScheme } from '@mantine/core';
 import { dark, light } from './themes';
@@ -15,6 +16,9 @@ function prepareHtmlCode(code: string) {
     .replaceAll('tabindex="0"', '')
     .replace('<code>', `<code class="${classes.code}">`)
     .replaceAll('class="shiki "', `class="${classes.pre}"`)
+    .replaceAll('class="shiki  has-highlighted"', `class="${classes.pre}"`)
+    .replaceAll('class="shiki  has-diff"', `class="${classes.pre}"`)
+    .replaceAll('class="shiki  has-diff has-highlighted"', `class="${classes.pre}"`)
     .replaceAll('style="background-color:#ffffff;color:#1f2328"', '')
     .replaceAll('style="background-color:#0d1117;color:#e6edf3', '');
 }
@@ -45,6 +49,7 @@ export function ShikiProvider({ children, loadShiki }: ShikiProviderProps) {
           shiki.codeToHtml(code, {
             lang: language,
             theme: (computedColorScheme === 'light' ? light : dark) as any,
+            transformers: [transformerNotationDiff(), transformerNotationHighlight()],
           })
         ),
         highlighted: true,

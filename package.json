@@ -68,6 +68,7 @@
     "@emotion/server": "^11.11.0",
     "@emotion/utils": "^1.4.1",
     "@floating-ui/react": "^0.26.27",
+    "@shikijs/transformers": "^1.22.2",
     "@tabler/icons-react": "^3.3.0",
     "@tiptap/core": "^2.9.1",
     "@tiptap/extension-code-block": "^2.9.1",
@@ -106,7 +107,7 @@
     "react-textarea-autosize": "8.5.4",
     "react-transition-group": "4.4.5",
     "recharts": "^2.13.3",
-    "shiki": "^1.1.7",
+    "shiki": "^1.22.2",
     "type-fest": "^4.26.1"
   },
   "devDependencies": {

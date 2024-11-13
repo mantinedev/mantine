@@ -1,9 +1,8 @@
 .code {
+  width: 100%;
   display: inline-block;
-  padding: 1px 3px;
   font-size: 13px;
   border-radius: var(--mantine-radius-xs);
-  line-height: var(--code-line-height, var(--mantine-line-height));
   font-family: var(--mantine-font-family-monospace);
 }
 
@@ -12,6 +11,39 @@
   display: block;
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   margin: 0;
+
+  & :global(.line) {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    width: calc(100% + 2 * var(--mantine-spacing-md));
+    line-height: var(--code-line-height);
+    height: 100%;
+    padding-inline: var(--mantine-spacing-md);
+    margin-inline: calc(var(--mantine-spacing-md) * -1);
+    position: relative;
+  }
+
+  & :global(.line.highlighted) {
+    background-color: light-dark(
+      var(--mantine-color-blue-0),
+      alpha(var(--mantine-color-blue-7), 0.15)
+    );
+  }
+
+  & :global(.line.add) {
+    background-color: light-dark(
+      alpha(var(--mantine-color-teal-6), 0.2),
+      alpha(var(--mantine-color-teal-8), 0.2)
+    );
+  }
+
+  & :global(.line.remove) {
+    background-color: light-dark(
+      alpha(var(--mantine-color-red-6), 0.2),
+      alpha(var(--mantine-color-red-8), 0.2)
+    );
+  }
 }
 
 .header {

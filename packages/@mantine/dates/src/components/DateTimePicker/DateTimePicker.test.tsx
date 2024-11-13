@@ -22,7 +22,7 @@ import { DateTimePicker, DateTimePickerProps } from './DateTimePicker';
 const defaultProps: DateTimePickerProps = {
   popoverProps: { withinPortal: false, transitionProps: { duration: 0 } },
   modalProps: { withinPortal: false, transitionProps: { duration: 0 } },
-  timeInputProps: { 'aria-label': 'test-time-input' },
+  timePickerProps: { 'aria-label': 'test-time-input' },
   submitButtonProps: { 'aria-label': 'test-submit' },
   clearButtonProps: { 'aria-label': 'test-clear' },
   ariaLabels: {

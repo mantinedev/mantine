@@ -22,14 +22,6 @@ const config = {
     '^./(?!.*.css$).*$',
     '\\.css$',
   ],
-  overrides: [
-    {
-      files: '*.mdx',
-      options: {
-        printWidth: 70,
-      },
-    },
-  ],
 };
 
 export default config;
