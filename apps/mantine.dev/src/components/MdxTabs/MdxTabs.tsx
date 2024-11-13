@@ -58,7 +58,7 @@ export function MdxTabs({ children, meta }: MdxTabsProps) {
               justifyContent: 'space-between',
             }}
           >
-            <div className={classes.main}>
+            <div className={classes.main} id="mdx">
               {children}
               <MdxSiblings meta={meta} />
             </div>

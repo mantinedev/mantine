@@ -35,7 +35,7 @@
 
   &[data-active] {
     border-color: var(--mantine-color-blue-5);
-    color: var(--mantine-color-blue-text);
+    color: light-dark(var(--mantine-color-blue-7), var(--mantine-color-blue-4));
     background-color: light-dark(
       alpha(var(--mantine-color-blue-0), 0.5),
       alpha(var(--mantine-color-blue-6), 0.1)
