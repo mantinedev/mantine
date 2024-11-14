@@ -13,8 +13,18 @@
 
 .categories {
   padding-inline-end: var(--mantine-spacing-md);
-  padding-top: var(--mantine-spacing-xl);
-  padding-bottom: 80px;
+
+  &:first-of-type {
+    padding-top: var(--mantine-spacing-xl);
+  }
+
+  &:last-of-type {
+    padding-bottom: 80px;
+  }
+
+  & + & {
+    margin-top: var(--mantine-spacing-xl);
+  }
 }
 
 .link {
@@ -37,6 +47,11 @@
       alpha(var(--mantine-color-blue-6), 0.1)
     );
   }
+
+  @mixin smaller-than $docs-mdx-breakpoint {
+    font-size: var(--mantine-font-size-md);
+    padding: 8px 15px;
+  }
 }
 
 .category {
@@ -52,4 +67,25 @@
   font-weight: 500;
   margin-bottom: 5px;
   font-family: var(--docs-font-primary);
+
+  @mixin smaller-than $docs-mdx-breakpoint {
+    padding-inline-start: 15px;
+    font-size: var(--mantine-font-size-lg);
+  }
+}
+
+.mobileNavbar {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  top: var(--docs-header-height);
+  background-color: var(--mantine-color-body);
+
+  @mixin larger-than $docs-mdx-breakpoint {
+    display: none;
+  }
+}
+
+.mobileNavbarInner {
+  padding-inline: var(--mantine-spacing-md);
 }

@@ -7,6 +7,7 @@ import { meta } from '@mantinex/mantine-meta';
 import { searchHandlers } from '@/components/Search';
 import { MDX_DATA, MdxNavCategory } from '@/mdx';
 import { getActiveCategory } from '../get-active-category';
+import { useShellContext } from '../Shell.context';
 import classes from './DocsHeader.module.css';
 
 const mainLinksData = [
@@ -34,6 +35,7 @@ const navigationLinksData: NavigationLinkData[] = [
 export function DocsHeader() {
   const router = useRouter();
   const activeCategory = getActiveCategory(router.pathname);
+  const ctx = useShellContext();
 
   const mainLinks = mainLinksData.map((link) => (
     <a key={link.label} href={link.link} className={classes.mainLink}>
@@ -56,7 +58,13 @@ export function DocsHeader() {
     <header className={classes.header}>
       <Container size={1440}>
         <div className={classes.headerMain}>
-          <Burger opened={false} size={20} lineSize={2} className={classes.burger} />
+          <Burger
+            opened={ctx.navbarOpened}
+            size={20}
+            lineSize={2}
+            className={classes.burger}
+            onClick={ctx.toggleNavbar}
+          />
 
           <div className={classes.headerMainSection}>
             <MantineLogo size={32} className={classes.logo} />
