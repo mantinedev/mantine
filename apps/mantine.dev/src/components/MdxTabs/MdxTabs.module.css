@@ -96,3 +96,8 @@
     display: none;
   }
 }
+
+.tabContent {
+  max-width: var(--docs-mdx-content-width);
+  padding-inline: 50px;
+}
