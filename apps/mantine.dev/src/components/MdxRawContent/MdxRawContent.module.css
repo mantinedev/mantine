@@ -5,20 +5,17 @@
   justify-content: space-between;
   background-color: var(--mantine-color-body);
   width: 100%;
-
-  @media (max-width: $docs-mdx-breakpoint) {
-    padding-left: var(--mantine-spacing-xl);
-    padding-right: var(--mantine-spacing-xl);
-  }
 }
 
 .container {
   padding-inline: 50px;
   padding-block: var(--mantine-spacing-xl);
   max-width: var(--docs-mdx-content-width);
+  width: 100%;
 
-  @mixin smaller-than $mantine-breakpoint-md {
-    padding: var(--mantine-spacing-md);
+  @mixin smaller-than $docs-mdx-breakpoint {
+    padding-inline: 0;
+    padding-block: var(--mantine-spacing-md);
   }
 }
 

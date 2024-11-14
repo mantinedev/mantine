@@ -86,6 +86,10 @@
 .main {
   max-width: var(--docs-mdx-content-width);
   padding-inline: 50px;
+
+  @mixin smaller-than $docs-mdx-breakpoint {
+    padding-inline: 0;
+  }
 }
 
 .tableOfContents {
@@ -99,5 +103,10 @@
 
 .tabContent {
   max-width: var(--docs-mdx-content-width);
+  width: 100%;
   padding-inline: 50px;
+
+  @mixin smaller-than $docs-mdx-breakpoint {
+    padding-inline: 0;
+  }
 }

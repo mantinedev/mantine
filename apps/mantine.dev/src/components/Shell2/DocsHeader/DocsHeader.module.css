@@ -28,7 +28,7 @@
   gap: 7px;
   margin-inline-start: 40px;
 
-  @mixin smaller-than 900px {
+  @mixin smaller-than $docs-mdx-breakpoint {
     display: none;
   }
 }
@@ -55,7 +55,7 @@
   align-items: flex-end;
   gap: var(--mantine-spacing-lg);
 
-  @mixin smaller-than 650px {
+  @mixin smaller-than $docs-mdx-breakpoint {
     display: none;
   }
 }
@@ -85,14 +85,19 @@
 }
 
 .desktopHeaderControls {
-  @mixin smaller-than 650px {
+  @mixin smaller-than $docs-mdx-breakpoint {
     display: none;
   }
 }
 
-.burger,
+.burger {
+  @mixin larger-than $docs-mdx-breakpoint {
+    display: none;
+  }
+}
+
 .mobileHeaderControls {
-  @mixin larger-than 650px {
+  @mixin larger-than $docs-mdx-breakpoint {
     display: none;
   }
 }

@@ -5,6 +5,10 @@
   flex: 0 0 var(--docs-navbar-width);
   border-inline-end: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
   background-color: var(--mantine-color-body);
+
+  @mixin smaller-than $docs-mdx-breakpoint {
+    display: none;
+  }
 }
 
 .categories {
