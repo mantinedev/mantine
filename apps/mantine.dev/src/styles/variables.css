@@ -2,6 +2,12 @@ body {
   --docs-header-height: 60px;
   --docs-navbar-width: 260px;
   --docs-table-of-contents-width: 260px;
-  --docs-mdx-content-width: 820px;
+
+  /* 1140px – container width, 50px – padding */
+  --docs-mdx-content-width: min(
+    calc(1440px - var(--docs-table-of-contents-width) - var(--docs-navbar-width)),
+    calc(100vw - var(--docs-table-of-contents-width) - var(--docs-navbar-width))
+  );
+
   --docs-font-primary: 'Outfit', sans-serif;
 }

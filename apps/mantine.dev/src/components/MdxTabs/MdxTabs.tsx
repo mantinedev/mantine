@@ -51,7 +51,6 @@ export function MdxTabs({ children, meta }: MdxTabsProps) {
 
         <Tabs.Panel value="docs">
           <div
-            className={classes.tabContent}
             style={{
               display: 'flex',
               position: 'relative',

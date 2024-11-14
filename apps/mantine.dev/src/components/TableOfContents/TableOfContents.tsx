@@ -79,7 +79,7 @@ export function TableOfContents({ withTabs }: TableOfContentsProps) {
       <div className={classes.inner}>
         <div>
           <Text className={classes.title}>Table of contents</Text>
-          <ScrollArea.Autosize mah={`calc(100vh - ${rem(140)})`} type="never" offsetScrollbars>
+          <ScrollArea.Autosize mah={`calc(100vh - ${rem(140)})`} type="never">
             <div className={classes.items}>{items}</div>
           </ScrollArea.Autosize>
         </div>
