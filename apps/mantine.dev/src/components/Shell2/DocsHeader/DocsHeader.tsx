@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Container } from '@mantine/core';
-import { HeaderControls } from '@mantinex/mantine-header';
+import { Burger, Container, Group } from '@mantine/core';
+import { ColorSchemeControl, HeaderControls, SearchMobileControl } from '@mantinex/mantine-header';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import { meta } from '@mantinex/mantine-meta';
+import { searchHandlers } from '@/components/Search';
 import { MDX_DATA, MdxNavCategory } from '@/mdx';
 import { getActiveCategory } from '../get-active-category';
 import classes from './DocsHeader.module.css';
@@ -55,13 +56,15 @@ export function DocsHeader() {
     <header className={classes.header}>
       <Container size={1440}>
         <div className={classes.headerMain}>
+          <Burger opened={false} size={20} lineSize={2} className={classes.burger} />
+
           <div className={classes.headerMainSection}>
             <MantineLogo size={32} className={classes.logo} />
 
             <div className={classes.mainLinks}>{mainLinks}</div>
           </div>
 
-          <div className={classes.headerControls}>
+          <div className={classes.desktopHeaderControls}>
             <HeaderControls
               className={classes.controls}
               onSearch={() => {}}
@@ -69,6 +72,11 @@ export function DocsHeader() {
               discordLink={meta.discordLink}
             />
           </div>
+
+          <Group gap="sm" className={classes.mobileHeaderControls}>
+            <SearchMobileControl onSearch={searchHandlers.open} />
+            <ColorSchemeControl />
+          </Group>
         </div>
 
         <nav className={classes.headerNavigation}>{navigationLinks}</nav>

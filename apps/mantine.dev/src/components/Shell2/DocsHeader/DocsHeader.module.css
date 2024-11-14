@@ -27,6 +27,10 @@
   display: flex;
   gap: 7px;
   margin-inline-start: 40px;
+
+  @mixin smaller-than 900px {
+    display: none;
+  }
 }
 
 .mainLink {
@@ -49,8 +53,11 @@
   height: var(--nav-section-height);
   display: flex;
   align-items: flex-end;
-  border-bottom:;
   gap: var(--mantine-spacing-lg);
+
+  @mixin smaller-than 650px {
+    display: none;
+  }
 }
 
 .navigationLink {
@@ -75,4 +82,17 @@
 
 .logo {
   color: var(--mantine-color-bright);
+}
+
+.desktopHeaderControls {
+  @mixin smaller-than 650px {
+    display: none;
+  }
+}
+
+.burger,
+.mobileHeaderControls {
+  @mixin larger-than 650px {
+    display: none;
+  }
 }

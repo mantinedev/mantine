@@ -2,6 +2,10 @@
   --docs-header-height: 100px;
   --docs-navbar-width: 220px;
   --docs-table-of-contents-width: 250px;
+
+  @mixin smaller-than 650px {
+    --docs-header-height: 56px;
+  }
 }
 
 .inner {
