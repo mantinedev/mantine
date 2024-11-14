@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { RangeSlider } from './RangeSlider/RangeSlider';
 import { Slider } from './Slider/Slider';
 
@@ -32,11 +33,11 @@ export function WithinDisabledFieldset() {
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <Slider defaultValue={45} marks={marks} size="md" />
-      <Slider defaultValue={45} disabled mt={60} />
+      <Slider defaultValue={45} marks={marks} size="md" onChangeEnd={console.log} restrictToMarks />
+      {/* <Slider defaultValue={45} disabled mt={60} />
       <Slider defaultValue={45} inverted mt="xl" />
       <Slider defaultValue={45} inverted disabled mt="xl" />
-      <Slider defaultValue={45} mt="xl" labelAlwaysOn />
+      <Slider defaultValue={45} mt="xl" labelAlwaysOn /> */}
     </div>
   );
 }

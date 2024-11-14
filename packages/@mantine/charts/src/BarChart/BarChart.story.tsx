@@ -33,14 +33,32 @@ const waterfallData = [
 
 export function Usage() {
   return (
-    <div style={{ background: 'silver' }}>
+    <div style={{ padding: 40 }}>
       <BarChart
         h={300}
         data={simpleData}
         dataKey="product"
         series={[{ name: 'sales', color: 'indigo.6' }]}
         withLegend
-      />
+        barProps={() => ({ fill: 'url(#diagonalStripes)' })}
+      >
+        <defs>
+          <pattern
+            id="diagonalStripes"
+            patternUnits="userSpaceOnUse"
+            width={8}
+            height={8}
+            patternTransform="rotate(45)"
+          >
+            <rect
+              width="2"
+              height="8"
+              transform="translate(0,0)"
+              fill="color-mix(in lch, var(--mantine-color-indigo-6), rgba(0,0,0,0))"
+            />
+          </pattern>
+        </defs>
+      </BarChart>
     </div>
   );
 }

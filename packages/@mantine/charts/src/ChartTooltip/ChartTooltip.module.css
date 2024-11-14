@@ -29,6 +29,11 @@
   }
 }
 
+.tooltipItemColor {
+  width: 12px;
+  height: 12px;
+}
+
 .tooltipItem {
   font-size: var(--mantine-font-size-sm);
   display: flex;

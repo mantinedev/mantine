@@ -44,6 +44,15 @@ Use the `standalone` prop inside data to decouple the bar from the flow.
 
 <Demo data={BarChartDemos.waterfall} />
 
+## SVG patter as bar fill
+
+You can use SVG patterns as bar fill. To do so, set `fill` property in series object to
+a url of the SVG pattern that is defined in the `defs` section of the chart `children`.
+
+Example of using diagonal stripes and crosshatch patterns as bar fill:
+
+<Demo data={BarChartDemos.stripes} />
+
 ## Legend
 
 To display chart legend, set `withLegend` prop. When one of the items in the legend

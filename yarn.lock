@@ -4037,8 +4037,8 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
   peerDependencies:
-    "@mantine/core": 7.13.5
-    "@mantine/hooks": 7.13.5
+    "@mantine/core": 7.14.0
+    "@mantine/hooks": 7.14.0
     embla-carousel-react: ">=7.0.0"
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
@@ -4053,8 +4053,8 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
   peerDependencies:
-    "@mantine/core": 7.13.5
-    "@mantine/hooks": 7.13.5
+    "@mantine/core": 7.14.0
+    "@mantine/hooks": 7.14.0
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
     recharts: ^2.13.3
@@ -4071,8 +4071,8 @@ __metadata:
     clsx: "npm:^2.1.1"
     highlight.js: "npm:^11.10.0"
   peerDependencies:
-    "@mantine/core": 7.13.5
-    "@mantine/hooks": 7.13.5
+    "@mantine/core": 7.14.0
+    "@mantine/hooks": 7.14.0
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
   languageName: unknown
@@ -4099,7 +4099,7 @@ __metadata:
     react-textarea-autosize: "npm:8.5.4"
     type-fest: "npm:^4.26.1"
   peerDependencies:
-    "@mantine/hooks": 7.13.5
+    "@mantine/hooks": 7.14.0
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
   languageName: unknown
@@ -4115,8 +4115,8 @@ __metadata:
     "@mantine/hooks": "workspace:*"
     clsx: "npm:^2.1.1"
   peerDependencies:
-    "@mantine/core": 7.13.5
-    "@mantine/hooks": 7.13.5
+    "@mantine/core": 7.14.0
+    "@mantine/hooks": 7.14.0
     dayjs: ">=1.0.0"
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
@@ -4132,8 +4132,8 @@ __metadata:
     "@mantine/hooks": "workspace:*"
     react-dropzone-esm: "npm:15.0.1"
   peerDependencies:
-    "@mantine/core": 7.13.5
-    "@mantine/hooks": 7.13.5
+    "@mantine/core": 7.14.0
+    "@mantine/hooks": 7.14.0
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
   languageName: unknown
@@ -4152,8 +4152,8 @@ __metadata:
     "@emotion/react": ^11.11.4
     "@emotion/serialize": ^1.1.4
     "@emotion/utils": ^1.2.1
-    "@mantine/core": 7.13.5
-    "@mantine/hooks": 7.13.5
+    "@mantine/core": 7.14.0
+    "@mantine/hooks": 7.14.0
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
   languageName: unknown
@@ -4185,8 +4185,8 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
   peerDependencies:
-    "@mantine/core": 7.13.5
-    "@mantine/hooks": 7.13.5
+    "@mantine/core": 7.14.0
+    "@mantine/hooks": 7.14.0
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
   languageName: unknown
@@ -4199,11 +4199,11 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@mantine/store": "npm:7.13.5"
+    "@mantine/store": "npm:7.14.0"
     react-transition-group: "npm:4.4.5"
   peerDependencies:
-    "@mantine/core": 7.13.5
-    "@mantine/hooks": 7.13.5
+    "@mantine/core": 7.14.0
+    "@mantine/hooks": 7.14.0
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
   languageName: unknown
@@ -4216,10 +4216,10 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@mantine/store": "npm:7.13.5"
+    "@mantine/store": "npm:7.14.0"
   peerDependencies:
-    "@mantine/core": 7.13.5
-    "@mantine/hooks": 7.13.5
+    "@mantine/core": 7.14.0
+    "@mantine/hooks": 7.14.0
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
   languageName: unknown
@@ -4232,16 +4232,16 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@mantine/store": "npm:7.13.5"
+    "@mantine/store": "npm:7.14.0"
   peerDependencies:
-    "@mantine/core": 7.13.5
-    "@mantine/hooks": 7.13.5
+    "@mantine/core": 7.14.0
+    "@mantine/hooks": 7.14.0
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
   languageName: unknown
   linkType: soft
 
-"@mantine/store@npm:7.13.5, @mantine/store@workspace:*, @mantine/store@workspace:packages/@mantine/store":
+"@mantine/store@npm:7.14.0, @mantine/store@workspace:*, @mantine/store@workspace:packages/@mantine/store":
   version: 0.0.0-use.local
   resolution: "@mantine/store@workspace:packages/@mantine/store"
   peerDependencies:
@@ -4257,8 +4257,8 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
   peerDependencies:
-    "@mantine/core": 7.13.5
-    "@mantine/hooks": 7.13.5
+    "@mantine/core": 7.14.0
+    "@mantine/hooks": 7.14.0
     "@tiptap/extension-link": ">=2.1.12"
     "@tiptap/react": ">=2.1.12"
     react: ^18.x || ^19.x
@@ -4270,7 +4270,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/vanilla-extract@workspace:packages/@mantine/vanilla-extract"
   peerDependencies:
-    "@mantine/core": 7.13.5
+    "@mantine/core": 7.14.0
   languageName: unknown
   linkType: soft
 
@@ -16950,11 +16950,11 @@ __metadata:
   linkType: hard
 
 "npm-run-path@npm:^5.1.0":
-  version: 5.3.0
-  resolution: "npm-run-path@npm:5.3.0"
+  version: 5.1.0
+  resolution: "npm-run-path@npm:5.1.0"
   dependencies:
     path-key: "npm:^4.0.0"
-  checksum: 10c0/124df74820c40c2eb9a8612a254ea1d557ddfab1581c3e751f825e3e366d9f00b0d76a3c94ecd8398e7f3eee193018622677e95816e8491f0797b21e30b2deba
+  checksum: 10c0/ff6d77514489f47fa1c3b1311d09cd4b6d09a874cc1866260f9dea12cbaabda0436ed7f8c2ee44d147bf99a3af29307c6f63b0f83d242b0b6b0ab25dff2629e3
   languageName: node
   linkType: hard
 

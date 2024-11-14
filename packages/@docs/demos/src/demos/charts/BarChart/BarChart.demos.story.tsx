@@ -137,3 +137,8 @@ export const Demo_mixedStack = {
   name: '⭐ Demo: mixedStack',
   render: renderDemo(demos.mixedStack),
 };
+
+export const Demo_stripes = {
+  name: '⭐ Demo: stripes',
+  render: renderDemo(demos.stripes),
+};

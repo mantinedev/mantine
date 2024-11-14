@@ -30,4 +30,5 @@ export { useHovered } from './use-hovered/use-hovered';
 export { createUseExternalEvents } from './create-use-external-events/create-use-external-events';
 export { getEnv } from './get-env/get-env';
 export { memoize } from './memoize/memoize';
+export { findClosestNumber } from './find-closest-number/find-closest-number';
 export { getRefProp } from './get-ref-prop/get-ref-prop';

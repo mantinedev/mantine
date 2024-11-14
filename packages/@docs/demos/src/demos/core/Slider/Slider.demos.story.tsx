@@ -77,3 +77,8 @@ export const Demo_customSlider = {
   name: '⭐ Demo: customSlider',
   render: renderDemo(demos.customSlider),
 };
+
+export const Demo_restrictToMarks = {
+  name: '⭐ Demo: restrictToMarks',
+  render: renderDemo(demos.restrictToMarks),
+};

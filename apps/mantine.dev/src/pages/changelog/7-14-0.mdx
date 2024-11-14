@@ -1,0 +1,126 @@
+import {
+  AngleSliderDemos,
+  BarChartDemos,
+  FunnelChartDemos,
+  ModalDemos,
+  RadialBarChartDemos,
+  SliderDemos,
+} from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog7140);
+
+## AngleSlider component
+
+New [AngleSlider](/core/angle-slider/) component:
+
+<Demo data={AngleSliderDemos.marks} />
+
+## RadialBarChart component
+
+New [RadialBarChart](/charts/radial-bar-chart/) component:
+
+<Demo data={RadialBarChartDemos.labels} />
+
+## FunnelChart component
+
+New [FunnelChart](/charts/funnel-chart/) component:
+
+<Demo data={FunnelChartDemos.usage} />
+
+## Modal.Stack and Drawer.Stack components
+
+New [Modal.Stack](/core/modal/) and [Drawer.Stack](/core/drawer) components simplify usage of multiple modals/drawers at the same time.
+
+Use `Modal.Stack` component to render multiple modals at the same time.
+`Modal.Stack` keeps track of opened modals, manages z-index values, focus trapping
+and `closeOnEscape` behavior. `Modal.Stack` is designed to be used with `useModalsStack` hook.
+
+Differences from using multiple `Modal` components:
+
+- `Modal.Stack` manages z-index values – modals that are opened later will always have higher z-index value disregarding their order in the DOM
+- `Modal.Stack` disables focus trap and `Escape` key handling for all modals except the one that is currently opened
+- Modals that are not currently opened are present in the DOM but are hidden with `opacity: 0` and `pointer-events: none`
+- Only one overlay is rendered at a time
+
+<Demo data={ModalDemos.stack} />
+
+## useModalsStack/useDrawersStack hooks
+
+`useModalsStack` hook provides an easy way to control multiple modals at the same time.
+It accepts an array of unique modals ids and returns an object with the following properties:
+
+```tsx
+interface ModalStackReturnType<T extends string> {
+  // Current opened state of each modal
+  state: Record<T, boolean>;
+
+  // Opens modal with the given id
+  open: (id: T) => void;
+
+  // Closes modal with the given id
+  close: (id: T) => void;
+
+  // Toggles modal with the given id
+  toggle: (id: T) => void;
+
+  // Closes all modals within the stack
+  closeAll: () => void;
+
+  // Returns props for modal with the given id
+  register: (id: T) => {
+    opened: boolean;
+    onClose: () => void;
+    stackId: T;
+  };
+}
+```
+
+Example of using `useModalsStack` with `Modal` component:
+
+```tsx
+import { Modal, useModalsStack } from '@mantine/core';
+
+function Demo() {
+  const stack = useModalsStack(['first', 'second']);
+
+  return (
+    <>
+      <Modal {...stack.register('first')}>First</Modal>
+      <Modal {...stack.register('second')}>Second</Modal>
+      <Button onClick={() => stack.open('first')}>Open first</Button>
+    </>
+  );
+}
+```
+
+## Restrict Slider selection to marks
+
+[Slider](/core/slider) component now supports `restrictToMarks` prop that restricts slider value to marks only.
+Note that in this case `step` prop is ignored:
+
+<Demo data={SliderDemos.restrictToMarks} />
+
+## BarChart SVG pattern fill
+
+[BarChart](/charts/bar-chart) now can be used with SVG pattern fill:
+
+<Demo data={BarChartDemos.stripes} />
+
+## Help center updates
+
+- New [Can I use nested inline styles with Mantine components?](https://help.mantine.dev/q/nested-inline-styles) question
+- New [Can I use PostCSS function in inline styles?](https://help.mantine.dev/q/postcss-fns-inline) question
+- New [Why my Carousel slides are in vertical orientation?](https://help.mantine.dev/q/carousel-missing-styles) question
+- New [My buttons are transparent and the background is visible only on hover, what is wrong?](https://help.mantine.dev/q/transparent-buttons) question
+- New [Can I have different primary color for light and dark color schemes?](https://help.mantine.dev/q/primary-virtual-color) question
+- New [How can I change body background color?](https://help.mantine.dev/q/body-background) question
+- New [My Popover dropdown closes when I click on the dropdown of nested Popover](https://help.mantine.dev/q/nested-popover-closes) question
+
+## Other changes
+
+- [useTree](/core/tree/) hook now accepts `onNodeExpand` and `onNodeCollapse` callbacks
+- [useTree](/core/tree/) hook now returns additional `checkAllNodes`, `uncheckAllNodes` and `setCheckedState` handlers
+- [Tree](/core/tree) component now includes `getTreeExpandedState` to generate expanded state based on the tree data
+- [use-form](/form/use-form) now supports `form.replaceListItem` handler to replace list item at given index

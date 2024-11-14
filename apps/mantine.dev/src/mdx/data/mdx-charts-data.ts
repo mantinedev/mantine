@@ -119,6 +119,18 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     docs: 'charts/bubble-chart.mdx',
   },
 
+  FunnelChart: {
+    title: 'FunnelChart',
+    props: ['FunnelChart'],
+    styles: ['FunnelChart'],
+    package: '@mantine/charts',
+    slug: '/charts/funnel-chart',
+    description: 'Funnel chart component',
+    import: "import { FunnelChart } from '@mantine/charts';",
+    source: '@mantine/charts/src/FunnelChart/FunnelChart.tsx',
+    docs: 'charts/funnel-chart.mdx',
+  },
+
   CompositeChart: {
     title: 'CompositeChart',
     props: ['CompositeChart'],
@@ -129,5 +141,17 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     import: "import { CompositeChart } from '@mantine/charts';",
     source: '@mantine/charts/src/CompositeChart/CompositeChart.tsx',
     docs: 'charts/composite-chart.mdx',
+  },
+
+  RadialBarChart: {
+    title: 'RadialBarChart',
+    props: ['RadialBarChart'],
+    styles: ['RadialBarChart'],
+    package: '@mantine/charts',
+    slug: '/charts/radial-bar-chart',
+    description: 'Radial bar chart component',
+    import: "import { RadialBarChart } from '@mantine/charts';",
+    source: '@mantine/charts/src/RadialBarChart/RadialBarChart.tsx',
+    docs: 'charts/radial-bar-chart.mdx',
   },
 };
