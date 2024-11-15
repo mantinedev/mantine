@@ -1,27 +1,16 @@
-import { SimpleGrid, SimpleGridProps, Space } from '@mantine/core';
+import { SimpleGrid, Space } from '@mantine/core';
 import { GettingStartedCard } from './GettingStartedCard/GettingStartedCard';
 
-interface FrameworksGuidesProps {
-  primaryCols?: SimpleGridProps['cols'];
-  secondaryCols?: SimpleGridProps['cols'];
-  secondaryBreakpoint?: 'md' | 'xl';
-}
-
-export function FrameworksGuides({
-  primaryCols = { md: 2 },
-  secondaryCols = { md: 3 },
-  secondaryBreakpoint = 'md',
-}: FrameworksGuidesProps) {
+export function FrameworksGuides() {
   return (
     <>
-      <SimpleGrid cols={primaryCols} spacing="lg">
+      <SimpleGrid type="container" cols={{ base: 1, '800px': 2 }} spacing="lg">
         <GettingStartedCard
           title="Vite"
           description="Best choice for a single page application (SPA)"
           logo="vite"
           type="primary"
           link="/guides/vite"
-          secondaryBreakpoint={secondaryBreakpoint}
         />
         <GettingStartedCard
           title="Next.js"
@@ -29,18 +18,16 @@ export function FrameworksGuides({
           logo="next"
           type="primary"
           link="/guides/next"
-          secondaryBreakpoint={secondaryBreakpoint}
         />
       </SimpleGrid>
 
-      <SimpleGrid cols={secondaryCols} mt="lg" spacing="lg">
+      <SimpleGrid type="container" cols={{ base: 1, '580px': 2, '920px': 3 }} mt="lg" spacing="lg">
         <GettingStartedCard
           title="Remix"
           logo="remix"
           type="secondary"
           link="/guides/remix"
           description="Get started with Remix"
-          secondaryBreakpoint={secondaryBreakpoint}
         />
 
         <GettingStartedCard
@@ -49,7 +36,6 @@ export function FrameworksGuides({
           logo="redwood"
           type="secondary"
           link="/guides/redwood"
-          secondaryBreakpoint={secondaryBreakpoint}
         />
         <GettingStartedCard
           title="Gatsby"
@@ -57,7 +43,6 @@ export function FrameworksGuides({
           type="secondary"
           link="/guides/gatsby"
           description="Get started with Gatsby"
-          secondaryBreakpoint={secondaryBreakpoint}
         />
       </SimpleGrid>
       <Space h="xl" />

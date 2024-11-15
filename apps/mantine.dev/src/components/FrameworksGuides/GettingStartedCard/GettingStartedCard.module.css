@@ -63,18 +63,7 @@
   &[data-logo='gatsby'],
   &[data-logo='redwood'] {
     justify-content: flex-start;
-
-    &[data-breakpoint='xl'] {
-      @mixin smaller-than $mantine-breakpoint-xl {
-        width: 80px;
-      }
-    }
-
-    &[data-breakpoint='md'] {
-      @mixin smaller-than $mantine-breakpoint-md {
-        width: 80px;
-      }
-    }
+    width: 40px;
   }
 }
 
@@ -99,7 +88,7 @@
   }
 
   &[data-logo='remix'] {
-    width: 80px;
+    width: 40px;
   }
 }
 

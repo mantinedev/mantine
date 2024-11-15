@@ -10,7 +10,6 @@ interface GettingStartedCardProps {
   logo: keyof typeof frameworkIcons;
   link: string;
   type: 'primary' | 'secondary';
-  secondaryBreakpoint: 'md' | 'xl';
 }
 
 export function GettingStartedCard({
@@ -19,7 +18,6 @@ export function GettingStartedCard({
   logo,
   link,
   type,
-  secondaryBreakpoint,
 }: GettingStartedCardProps) {
   const Icon = frameworkIcons[logo];
   return (
@@ -41,7 +39,7 @@ export function GettingStartedCard({
         </>
       )}
 
-      <div className={classes.iconWrapper} data-logo={logo} data-breakpoint={secondaryBreakpoint}>
+      <div className={classes.iconWrapper} data-logo={logo}>
         <Icon className={classes.icon} data-logo={logo} />
       </div>
 
