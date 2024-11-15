@@ -2,6 +2,7 @@ body {
   --docs-header-height: 60px;
   --docs-navbar-width: 260px;
   --docs-table-of-contents-width: 260px;
+  --docs-font-size: 15px;
 
   /* 1140px – container width, 50px – padding */
   --docs-mdx-content-width: min(
@@ -10,4 +11,8 @@ body {
   );
 
   --docs-font-primary: 'Outfit', sans-serif;
+
+  @mixin smaller-than $docs-mdx-breakpoint {
+    --docs-font-size: 16px;
+  }
 }

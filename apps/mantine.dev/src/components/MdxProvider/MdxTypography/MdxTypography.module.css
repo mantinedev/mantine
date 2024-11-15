@@ -1,17 +1,17 @@
 .paragraph {
   line-height: 1.65;
-  font-size: 15px;
+  font-size: var(--docs-font-size);
 }
 
 .ul {
   line-height: 1.65;
   margin-bottom: 20px;
   margin-top: 10px;
-  font-size: 15px;
+  font-size: var(--docs-font-size);
   padding-left: var(--mantine-spacing-xl);
 }
 
 .li {
   margin-top: 4px;
-  font-size: 15px;
+  font-size: var(--docs-font-size);
 }

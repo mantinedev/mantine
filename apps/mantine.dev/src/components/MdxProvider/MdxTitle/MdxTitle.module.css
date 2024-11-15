@@ -5,25 +5,28 @@
   font-family: var(--docs-font-primary);
   font-weight: 500;
   position: relative;
+  color: var(--mantine-color-bright);
 
-  @mixin light {
-    color: var(--mantine-color-black);
-  }
-
-  @mixin dark {
-    color: var(--mantine-color-white);
-  }
-
-  @mixin hover {
-    .copyButton {
-      opacity: 1;
-    }
-  }
-
-  &[data-h1] {
+  &:is(h1) {
     font-weight: 600;
     font-size: 40px;
     margin-top: 0;
+
+    @mixin smaller-than $docs-mdx-breakpoint {
+      font-size: 32px;
+    }
+  }
+
+  &:is(h2) {
+    @mixin smaller-than $docs-mdx-breakpoint {
+      font-size: 24px;
+    }
+  }
+
+  &:is(h3) {
+    @mixin smaller-than $docs-mdx-breakpoint {
+      font-size: 20px;
+    }
   }
 }
 
