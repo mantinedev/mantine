@@ -3,12 +3,5 @@
   user-select: none;
   display: flex;
   align-items: center;
-
-  @mixin light {
-    color: var(--mantine-color-black);
-  }
-
-  @mixin dark {
-    color: var(--mantine-color-white);
-  }
+  color: var(--mantine-color-bright);
 }

@@ -14,26 +14,14 @@
   width: 100%;
   height: 32px;
   cursor: pointer;
-
-  @mixin light {
-    color: var(--mantine-color-gray-7);
-  }
-
-  @mixin dark {
-    color: var(--mantine-color-white);
-  }
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-white));
 }
 
 .chevron {
   width: 15px;
   height: 15px;
-  margin-right: var(--mantine-spacing-md);
+  margin-inline-end: var(--mantine-spacing-md);
   transition: transform 150ms ease;
-
-  @mixin rtl {
-    margin-right: 0;
-    margin-left: var(--mantine-spacing-md);
-  }
 
   &[data-collapsed] {
     transform: rotate(-90deg);

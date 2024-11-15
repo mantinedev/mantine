@@ -7,12 +7,7 @@
 
 .socialButtonSection {
   &[data-position='left'] {
-    margin-right: var(--mantine-spacing-md);
-
-    @mixin rtl {
-      margin-left: var(--mantine-spacing-md);
-      margin-right: 0;
-    }
+    margin-inline-end: var(--mantine-spacing-md);
   }
 }
 

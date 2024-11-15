@@ -6,12 +6,7 @@
   bottom: 0;
   width: var(--combobox-shell-navbar-width);
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
-  border-right: 1px solid var(--border-color);
-
-  @mixin rtl {
-    border-right: none;
-    border-left: 1px solid var(--border-color);
-  }
+  border-inline-end: 1px solid var(--border-color);
 
   @media (max-width: $docs-mdx-breakpoint) {
     width: unset;
