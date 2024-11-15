@@ -1,23 +1,22 @@
+.root {
+  container-type: inline-size;
+}
+
 .columns {
   display: flex;
 
-  @media (max-width: 55em) {
+  @container (max-width: 770px) {
     flex-direction: column;
   }
 }
 
 .controls {
   flex: 0 0 250px;
-  border-left: 1px solid var(--demo-border);
+  border-inline-start: 1px solid var(--demo-border);
   padding: 4px;
   padding-bottom: var(--mantine-spacing-xs);
 
-  @mixin rtl {
-    border-left: none;
-    border-right: 1px solid var(--demo-border);
-  }
-
-  @media (max-width: 55em) {
+  @container (max-width: 770px) {
     flex: unset;
     border-left: none;
     border-right: none !important;

@@ -7,8 +7,8 @@ const code = `import { Highlight } from '@mantine/core';
 
 function Demo() {
   return (
-    <Highlight highlight="this"%%props%%>
-      %%children%%
+    <Highlight highlight="this"{{props}}>
+      {{children}}
     </Highlight>
   );
 }`;
@@ -29,12 +29,12 @@ export function Usage() {
         code={code}
         centered
         controls={[
-          // {
-          //   Type: 'color',
-          //   Prop: 'color',
-          //   InitialValue: 'yellow',
-          //   LibraryValue: 'yellow',
-          // },
+          {
+            type: 'color',
+            prop: 'color',
+            initialValue: 'yellow',
+            libraryValue: 'yellow',
+          },
           {
             type: 'select',
             prop: 'color',

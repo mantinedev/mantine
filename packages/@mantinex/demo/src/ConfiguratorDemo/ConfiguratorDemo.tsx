@@ -1,5 +1,4 @@
 import { cloneElement, useState } from 'react';
-import { Stack } from '@mantine/core';
 import { DemoAreaProps } from '../DemoArea';
 import { DemoCode } from '../DemoCode';
 import { DemoColumns } from '../DemoColumns';
@@ -21,7 +20,6 @@ import {
   ConfiguratorStringControlOptions,
 } from './controls';
 import { Code, getCodeArray } from './get-code-array';
-import classes from './ConfiguratorDemo.module.css';
 
 const ControlComponents = {
   boolean: ConfiguratorBooleanControl,
@@ -83,11 +81,7 @@ export function ConfiguratorDemo({
   return (
     <DemoRoot>
       <DemoColumns
-        controls={
-          <Stack className={classes.controls} gap="sm">
-            {items}
-          </Stack>
-        }
+        controls={items}
         centered={centered}
         withPadding={withPadding}
         maxWidth={maxWidth}
