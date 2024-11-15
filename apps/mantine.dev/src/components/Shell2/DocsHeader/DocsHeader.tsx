@@ -79,7 +79,7 @@ export function DocsHeader({ headerControlsProps, withNav }: DocsHeaderProps) {
           <div className={classes.desktopHeaderControls}>
             <HeaderControls
               className={classes.controls}
-              onSearch={() => {}}
+              onSearch={searchHandlers.open}
               githubLink="https://github.com/mantinedev/mantine"
               discordLink={meta.discordLink}
               {...headerControlsProps}
