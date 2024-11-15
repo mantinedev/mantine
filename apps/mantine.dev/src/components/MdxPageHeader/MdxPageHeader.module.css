@@ -1,28 +1,11 @@
 .wrapper {
   position: relative;
   z-index: 4;
-  padding-left: calc(var(--mantine-spacing-xl) * 2);
-  padding-right: calc(var(--mantine-spacing-xl) * 2);
-
-  @mixin light {
-    background-color: var(--mantine-color-gray-0);
-  }
-
-  @mixin dark {
-    background-color: var(--mantine-color-dark-8);
-  }
-
-  @media (max-width: $docs-mdx-breakpoint) {
-    padding-left: var(--mantine-spacing-xl);
-    padding-right: var(--mantine-spacing-xl);
-  }
+  padding-inline: var(--docs-inline-spacing);
 }
 
 .header {
   padding-top: var(--mantine-spacing-xl);
-  max-width: 1082px;
-  margin-left: auto;
-  margin-right: auto;
   padding-bottom: calc(var(--mantine-spacing-xl) * 1.5);
 
   &[data-with-tabs] {

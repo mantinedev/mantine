@@ -8,13 +8,12 @@
 }
 
 .container {
-  padding-inline: 50px;
+  padding-inline: var(--docs-inline-spacing);
   padding-block: var(--mantine-spacing-xl);
   max-width: var(--docs-mdx-content-width);
   width: 100%;
 
   @mixin smaller-than $docs-mdx-breakpoint {
-    padding-inline: 0;
     padding-block: var(--mantine-spacing-md);
   }
 }

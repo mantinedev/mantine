@@ -3,6 +3,7 @@ body {
   --docs-navbar-width: 260px;
   --docs-table-of-contents-width: 260px;
   --docs-font-size: 15px;
+  --docs-inline-spacing: 50px;
 
   /* 1140px – container width, 50px – padding */
   --docs-mdx-content-width: min(
@@ -14,5 +15,6 @@ body {
 
   @mixin smaller-than $docs-mdx-breakpoint {
     --docs-font-size: 16px;
+    --docs-inline-spacing: 0px;
   }
 }
