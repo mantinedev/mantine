@@ -1,5 +1,5 @@
 import { IconCalendar, IconLicense, IconPencil, IconSwitch2 } from '@tabler/icons-react';
-import { Box, rem, Text, Title } from '@mantine/core';
+import { Text, Title } from '@mantine/core';
 import { GithubIcon, NpmIcon } from '@mantinex/dev-icons';
 import { Frontmatter } from '@/types';
 import { LinkItem } from './LinkItem/LinkItem';
@@ -27,15 +27,15 @@ export function MdxPageHeader({ meta }: MdxPageHeaderProps) {
   }
 
   return (
-    <div className={classes.wrapper}>
-      <Box className={classes.header} mod={{ 'with-tabs': withTabs }}>
+    <div className={classes.wrapper} data-with-tabs={withTabs || undefined}>
+      <div className={classes.header} data-with-tabs={withTabs || undefined}>
         <Title className={classes.title}>{meta.title}</Title>
         <Text className={classes.description}>{meta.description}</Text>
 
         {meta.polymorphic && (
           <LinkItem
             label="Polymorphic"
-            icon={<IconSwitch2 style={{ width: rem(14), height: rem(14) }} stroke={1.5} />}
+            icon={<IconSwitch2 size={14} stroke={1.5} />}
             link="/guides/polymorphic"
           >
             Polymorphic component
@@ -55,7 +55,7 @@ export function MdxPageHeader({ meta }: MdxPageHeaderProps) {
         {meta.date && meta.release && (
           <LinkItem
             label="Release date"
-            icon={<IconCalendar style={{ width: rem(14), height: rem(14) }} stroke={1.5} />}
+            icon={<IconCalendar size={14} stroke={1.5} />}
             link={meta.release}
           >
             {meta.date}
@@ -71,7 +71,7 @@ export function MdxPageHeader({ meta }: MdxPageHeaderProps) {
         {meta.docs && (
           <LinkItem
             label="Docs"
-            icon={<IconPencil style={{ width: rem(14), height: rem(14) }} stroke={1.5} />}
+            icon={<IconPencil size={14} stroke={1.5} />}
             link={`${DOCS_BASE}/${meta.docs}`}
           >
             Edit this page
@@ -91,13 +91,13 @@ export function MdxPageHeader({ meta }: MdxPageHeaderProps) {
         {meta.license && (
           <LinkItem
             label="License"
-            icon={<IconLicense style={{ width: rem(14), height: rem(14) }} stroke={1.5} />}
+            icon={<IconLicense size={14} stroke={1.5} />}
             link="https://github.com/mantinedev/mantine/blob/master/LICENSE"
           >
             MIT
           </LinkItem>
         )}
-      </Box>
+      </div>
     </div>
   );
 }
