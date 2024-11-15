@@ -57,10 +57,10 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
-  SubmitTemplate: {
-    title: 'Submit a template',
-    slug: '/submit-template',
-    search: 'Learn how to submit a template',
+  EslintConfig: {
+    title: 'eslint-config-mantine',
+    slug: '/eslint-config-mantine',
+    search: 'Linting configuration for Mantine projects',
     hideSiblings: true,
     hideHeader: true,
   },

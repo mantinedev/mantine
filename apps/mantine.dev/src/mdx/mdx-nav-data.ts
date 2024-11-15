@@ -34,6 +34,7 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.JavaScript,
       MDX_DATA.Jest,
       MDX_DATA.Vitest,
+      MDX_DATA.EslintConfig,
     ],
   },
 
