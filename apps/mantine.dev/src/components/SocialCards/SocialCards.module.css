@@ -18,6 +18,11 @@
     transform: scale(1.01);
     box-shadow: var(--mantine-shadow-md);
   }
+
+  @container (max-width: 800px) {
+    height: auto;
+    min-height: 220px;
+  }
 }
 
 .discord {
@@ -62,6 +67,7 @@
 
 .icon {
   margin-right: var(--mantine-spacing-lg);
+  margin-bottom: var(--mantine-spacing-lg);
   height: 60px;
   width: 60px;
   min-width: 60px;

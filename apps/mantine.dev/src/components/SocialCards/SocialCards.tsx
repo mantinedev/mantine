@@ -1,6 +1,6 @@
 import { IconArrowUpRight } from '@tabler/icons-react';
 import cx from 'clsx';
-import { SimpleGrid, SimpleGridProps } from '@mantine/core';
+import { SimpleGrid } from '@mantine/core';
 import { DiscordIcon, GithubIcon, XIcon } from '@mantinex/dev-icons';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import { meta } from '@mantinex/mantine-meta';
@@ -90,7 +90,6 @@ interface SocialCardsProps {
   github?: boolean;
   twitter?: boolean;
   helpCenter?: boolean;
-  cols?: SimpleGridProps['cols'];
 }
 
 export function SocialCards({
@@ -98,10 +97,9 @@ export function SocialCards({
   github = true,
   twitter = true,
   helpCenter = true,
-  cols = { md: 2 },
 }: SocialCardsProps) {
   return (
-    <SimpleGrid cols={cols} spacing="lg">
+    <SimpleGrid type="container" cols={{ base: 1, '700px': 2 }} spacing="lg">
       {discord && <DiscordCard />}
       {github && <GitHubCard />}
       {helpCenter && <HelpCenterCard />}
