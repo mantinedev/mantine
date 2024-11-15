@@ -1,6 +1,13 @@
 import { Frontmatter, MdxPagesCategory } from '@/types';
 import { MDX_DATA } from './mdx-data';
 
+function sortCategoriesPages(categories: MdxPagesCategory[]) {
+  return categories.map((category) => ({
+    ...category,
+    pages: category.pages.sort((a, b) => a.title.localeCompare(b.title)),
+  }));
+}
+
 const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
   {
     category: 'Overview',
@@ -89,7 +96,7 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
   },
 ];
 
-const HOOKS_PAGES_GROUP: MdxPagesCategory[] = [
+const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
   {
     category: 'UI and Dom',
     pages: [
@@ -181,11 +188,11 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.useIsFirstRender,
     ],
   },
-];
+]);
 
-const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = [
+const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
   {
-    category: 'layout',
+    category: 'Layout',
     pages: [
       MDX_DATA.Container,
       MDX_DATA.Center,
@@ -200,7 +207,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = [
     ],
   },
   {
-    category: 'inputs',
+    category: 'Inputs',
     pages: [
       MDX_DATA.Input,
       MDX_DATA.ColorPicker,
@@ -225,7 +232,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = [
     ],
   },
   {
-    category: 'combobox',
+    category: 'Combobox',
     pages: [
       MDX_DATA.Combobox,
       MDX_DATA.Pill,
@@ -237,7 +244,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = [
     ],
   },
   {
-    category: 'buttons',
+    category: 'Buttons',
     pages: [
       MDX_DATA.ActionIcon,
       MDX_DATA.Button,
@@ -248,7 +255,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = [
     ],
   },
   {
-    category: 'navigation',
+    category: 'Navigation',
     pages: [
       MDX_DATA.Anchor,
       MDX_DATA.Tabs,
@@ -261,7 +268,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = [
     ],
   },
   {
-    category: 'feedback',
+    category: 'Feedback',
     pages: [
       MDX_DATA.Loader,
       MDX_DATA.Alert,
@@ -273,7 +280,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = [
     ],
   },
   {
-    category: 'overlays',
+    category: 'Overlays',
     pages: [
       MDX_DATA.Popover,
       MDX_DATA.Tooltip,
@@ -307,7 +314,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = [
     ],
   },
   {
-    category: 'typography',
+    category: 'Typography',
     pages: [
       MDX_DATA.Blockquote,
       MDX_DATA.Code,
@@ -321,7 +328,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = [
     ],
   },
   {
-    category: 'misc',
+    category: 'Miscellaneous',
     pages: [
       MDX_DATA.Collapse,
       MDX_DATA.FocusTrap,
@@ -334,7 +341,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.Box,
     ],
   },
-];
+]);
 
 const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
   {
