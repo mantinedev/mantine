@@ -25,18 +25,26 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
-  TemplatesUsage: {
-    title: 'Getting started with a template',
-    slug: '/templates-usage',
+  Support: {
+    title: 'Support',
+    slug: '/support',
     hideInSearch: true,
     hideSiblings: true,
     hideHeader: true,
   },
 
+  BrowserSupport: {
+    title: 'Browser support',
+    slug: '/browser-support',
+    search: 'Browser versions supported by Mantine',
+    hideSiblings: true,
+    hideHeader: true,
+  },
+
   Overview: {
-    title: 'Mantine API overview',
+    title: 'Features overview',
     slug: '/overview',
-    search: 'Overview of Mantine components API',
+    search: 'Overview of features provided by Mantine',
     hideSiblings: true,
     hideHeader: true,
   },

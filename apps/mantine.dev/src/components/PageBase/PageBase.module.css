@@ -1,5 +1,5 @@
 .content {
-  min-height: calc(100vh - 350px);
+  min-height: calc(100vh - 150px);
   position: relative;
   z-index: 1;
   padding-bottom: 80px;

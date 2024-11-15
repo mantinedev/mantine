@@ -88,26 +88,6 @@ function Demo() {
 }
 ```
 
-## Colors
-
-[Colors](/theming/colors) are stored in `theme.colors` object and are exposed as [CSS variables](/styles/css-variables).
-Each color must have at least 10 shades. You can generate new colors based on a single color value
-with the [colors generator](/colors-generator).
-
-Colors are numbered from 0 to 9 where 0 is the lightest and 9 is the darkest color. Example of `blue`
-color from the default theme:
-
-<ColorsGroup group="blue" />
-
-To access colors in styles use [CSS variables](/styles/css-variables):
-
-```css
-.demo {
-  background: var(--mantine-color-blue-9);
-  color: var(--mantine-color-blue-0);
-}
-```
-
 ## CSS modules
 
 All Mantine components use [CSS modules](/styles/css-modules) for styling.
