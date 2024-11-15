@@ -50,14 +50,7 @@ export function MdxTabs({ children, meta }: MdxTabsProps) {
         </div>
 
         <Tabs.Panel value="docs">
-          <div
-            className={classes.contentWrapper}
-            // style={{
-            //   display: 'flex',
-            //   position: 'relative',
-            //   justifyContent: 'space-between',
-            // }}
-          >
+          <div className={classes.contentWrapper}>
             <div className={classes.main} id="mdx">
               {children}
               <MdxSiblings meta={meta} />

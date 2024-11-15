@@ -100,7 +100,11 @@
 .tabContent {
   margin-top: 24px;
   width: 100%;
+  max-width: var(--docs-full-mdx-content-width);
   padding-inline-start: var(--docs-inline-spacing);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .contentWrapper {

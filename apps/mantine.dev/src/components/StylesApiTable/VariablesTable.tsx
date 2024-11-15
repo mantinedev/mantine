@@ -30,7 +30,7 @@ export function VariablesTable({ data, fixedLayout = true, ...others }: Variable
   }, []);
 
   return (
-    <Table.ScrollContainer minWidth={600}>
+    <Table.ScrollContainer minWidth={800}>
       <Table layout={fixedLayout ? 'fixed' : undefined} {...others}>
         <Table.Thead>
           <Table.Tr>

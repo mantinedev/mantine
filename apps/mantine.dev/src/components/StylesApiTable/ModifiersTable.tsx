@@ -35,7 +35,7 @@ export function ModifiersTable({ data, fixedLayout = true, ...others }: Modifier
     )) || [];
 
   return (
-    <Table.ScrollContainer minWidth={600}>
+    <Table.ScrollContainer minWidth={800}>
       <Table layout={fixedLayout ? 'fixed' : undefined} {...others}>
         <Table.Thead>
           <Table.Tr>

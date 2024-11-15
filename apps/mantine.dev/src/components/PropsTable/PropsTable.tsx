@@ -80,7 +80,10 @@ export function PropsTable({ component, query }: PropsTableProps) {
 
   return (
     <DocsSection>
-      <Table.ScrollContainer minWidth={800}>
+      <Table.ScrollContainer
+        minWidth={800}
+        style={{ maxWidth: 'var(--docs-full-mdx-content-width)' }}
+      >
         <Table layout="fixed">
           <Table.Thead>
             <Table.Tr>
