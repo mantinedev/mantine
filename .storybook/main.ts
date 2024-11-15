@@ -99,10 +99,6 @@ export default {
     autodocs: false,
   },
 
-  core: {
-    disableTelemetry: true,
-  },
-
   typescript: {
     reactDocgen: false,
   },
