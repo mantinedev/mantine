@@ -58,7 +58,7 @@ export function TableOfContents({ withTabs }: TableOfContentsProps) {
   }
 
   const items = filteredHeadings.map((heading, index) => (
-    <Text<'a'>
+    <Text
       key={heading.id}
       component="a"
       className={classes.link}
