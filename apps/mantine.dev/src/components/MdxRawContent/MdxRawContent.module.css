@@ -13,6 +13,10 @@
   max-width: var(--docs-mdx-content-width);
   width: 100%;
 
+  @mixin smaller-than $docs-toc-breakpoint {
+    padding-inline-end: 0;
+  }
+
   @mixin smaller-than $docs-mdx-breakpoint {
     padding-block: var(--mantine-spacing-md);
   }
@@ -20,8 +24,4 @@
 
 .tableOfContents {
   flex: 0 0 var(--docs-table-of-contents-width);
-
-  @mixin smaller-than $docs-mdx-breakpoint {
-    display: none;
-  }
 }

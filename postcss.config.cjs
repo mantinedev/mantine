@@ -11,6 +11,7 @@ module.exports = {
         'mantine-breakpoint-lg': '75em',
         'mantine-breakpoint-xl': '88em',
         'docs-navbar-breakpoint': '47.5em',
+        'docs-toc-breakpoint': '78em',
         'docs-mdx-breakpoint': '67.5em',
       },
     },

@@ -4,7 +4,7 @@
   padding-top: var(--mantine-spacing-xl);
   flex: 0 0 var(--docs-table-of-contents-width);
 
-  @mixin smaller-than $docs-mdx-breakpoint {
+  @mixin smaller-than $docs-toc-breakpoint {
     display: none;
   }
 

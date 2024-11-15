@@ -25,4 +25,8 @@ body {
     --docs-inline-spacing: 0px;
     --docs-full-mdx-content-width: var(--docs-mdx-content-width);
   }
+
+  @mixin smaller-than $docs-toc-breakpoint {
+    --docs-table-of-contents-width: 0px;
+  }
 }

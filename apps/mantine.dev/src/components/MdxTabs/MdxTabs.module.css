@@ -54,15 +54,15 @@
 .main {
   max-width: var(--docs-mdx-content-width);
   padding-inline: var(--docs-inline-spacing);
+
+  @mixin smaller-than $docs-toc-breakpoint {
+    padding-inline-end: 0;
+  }
 }
 
 .tableOfContents {
   flex: 0 0 var(--docs-table-of-contents-width);
   margin-top: var(--mantine-spacing-xl);
-
-  @mixin smaller-than $docs-mdx-breakpoint {
-    display: none;
-  }
 }
 
 .tabContent {
