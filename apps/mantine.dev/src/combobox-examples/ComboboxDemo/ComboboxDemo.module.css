@@ -1,21 +1,16 @@
 .root {
   --preview-size: 600px;
-  padding-top: var(--preview-size);
+  padding-bottom: 50px;
+  max-width: calc(100vw - var(--combobox-shell-navbar-width) - var(--mantine-spacing-md) * 2);
+
+  @mixin smaller-than $docs-mdx-breakpoint {
+    max-width: calc(100vw - 48px);
+  }
 }
 
 .preview {
   background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
   height: var(--preview-size);
-  position: fixed;
-  top: var(--docs-header-height);
-  left: var(--combobox-shell-navbar-width);
-  right: 0;
-  z-index: 1;
-
-  @mixin rtl {
-    left: 0;
-    right: var(--combobox-shell-navbar-width);
-  }
 }
 
 .header {
@@ -24,7 +19,6 @@
   justify-content: space-between;
   padding: var(--mantine-spacing-md) var(--mantine-spacing-lg);
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
-  border-bottom: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8));
 
   @media (max-width: $docs-navbar-breakpoint) {
     flex-direction: column-reverse;

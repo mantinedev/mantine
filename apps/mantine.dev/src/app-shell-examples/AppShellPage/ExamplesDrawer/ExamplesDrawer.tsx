@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { IconArrowLeft, IconCode, IconLayoutBoard, IconMenu2 } from '@tabler/icons-react';
-import { Affix, Button, Drawer, Group, rem, ScrollArea, Text, UnstyledButton } from '@mantine/core';
+import { Affix, Button, Drawer, Group, ScrollArea, Text, UnstyledButton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { APP_SHELL_EXAMPLES_DATA } from '../../app-shell-examples-data';
 import classes from './ExamplesDrawer.module.css';
@@ -40,12 +40,7 @@ export function ExamplesDrawer() {
             href="/core/app-shell"
             variant="default"
             size="md"
-            leftSection={
-              <IconArrowLeft
-                className="mantine-rotate-rtl"
-                style={{ width: rem(20), height: rem(20) }}
-              />
-            }
+            leftSection={<IconArrowLeft className="mantine-rotate-rtl" size={20} />}
             style={{ boxShadow: 'var(--mantine-shadow-sm)' }}
             radius="xl"
           >
@@ -58,7 +53,7 @@ export function ExamplesDrawer() {
             variant="default"
             size="md"
             w={160}
-            leftSection={<StateIcon style={{ width: rem(20), height: rem(20) }} />}
+            leftSection={<StateIcon size={20} />}
             style={{ boxShadow: 'var(--mantine-shadow-sm)' }}
             radius="xl"
           >
@@ -69,7 +64,7 @@ export function ExamplesDrawer() {
             onClick={open}
             size="md"
             radius="xl"
-            leftSection={<IconMenu2 style={{ width: rem(20), height: rem(20) }} />}
+            leftSection={<IconMenu2 size={20} />}
             w="var(--button-height)"
             style={{ boxShadow: 'var(--mantine-shadow-sm)' }}
             aria-label="Other examples"

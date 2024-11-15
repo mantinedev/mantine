@@ -11,15 +11,8 @@
   }
 
   &[data-active] {
-    @mixin light {
-      color: var(--mantine-color-blue-8);
-      background-color: var(--mantine-color-blue-0);
-    }
-
-    @mixin dark {
-      color: var(--mantine-color-blue-1);
-      background-color: rgba(24, 100, 171, 0.45);
-    }
+    color: var(--mantine-color-blue-light-color);
+    background-color: var(--mantine-color-blue-light);
   }
 }
 
@@ -37,11 +30,5 @@
 }
 
 .menuButton {
-  @mixin not-rtl {
-    padding-right: 5px;
-  }
-
-  @mixin rtl {
-    padding-left: 5px;
-  }
+  padding-inline-end: 5px;
 }

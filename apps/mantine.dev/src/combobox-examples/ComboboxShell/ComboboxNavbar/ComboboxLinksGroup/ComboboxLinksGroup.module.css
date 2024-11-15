@@ -67,43 +67,16 @@
   font-size: var(--mantine-font-size-sm);
   user-select: none;
   text-decoration: none;
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-1));
 
   @mixin hover {
     background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
   }
 
-  @mixin light {
-    color: var(--mantine-color-gray-7);
-  }
-
-  @mixin dark {
-    color: var(--mantine-color-dark-1);
-  }
-
-  @mixin rtl {
-    padding-left: var(--mantine-spacing-md);
-    padding-right: 23px;
-    border-left: 0;
-    border-right: 1px solid var(--border-color);
-    margin-left: 0;
-    margin-right: 7px;
-    border-radius: 0;
-    border-top-left-radius: var(--mantine-radius-sm);
-    border-bottom-left-radius: var(--mantine-radius-sm);
-  }
-
   &[data-navbar-link-active] {
-    border-color: var(--mantine-color-blue-5) !important;
-
-    @mixin light {
-      color: var(--mantine-color-blue-8);
-      background-color: var(--mantine-color-blue-0);
-    }
-
-    @mixin dark {
-      color: var(--mantine-color-blue-1);
-      background-color: rgba(24, 100, 171, 0.45);
-    }
+    border-color: var(--mantine-color-blue-5);
+    color: var(--mantine-color-blue-light-color);
+    background-color: var(--mantine-color-blue-light);
 
     & .linkTitle {
       font-weight: 500;

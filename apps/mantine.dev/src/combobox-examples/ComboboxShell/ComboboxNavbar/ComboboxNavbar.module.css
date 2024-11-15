@@ -1,11 +1,11 @@
 .navbar {
-  --border-color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-8));
+  --border-color: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
 
   position: fixed;
-  top: var(--docs-header-height);
+  top: var(--docs-main-header-section-height);
   bottom: 0;
   width: var(--combobox-shell-navbar-width);
-  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
   border-right: 1px solid var(--border-color);
 
   @mixin rtl {
@@ -13,7 +13,7 @@
     border-left: 1px solid var(--border-color);
   }
 
-  @media (max-width: $docs-navbar-breakpoint) {
+  @media (max-width: $docs-mdx-breakpoint) {
     width: unset;
     left: 0;
     right: 0;
@@ -21,7 +21,7 @@
   }
 
   &[data-hidden] {
-    @media (max-width: $docs-navbar-breakpoint) {
+    @media (max-width: $docs-mdx-breakpoint) {
       display: none;
     }
   }

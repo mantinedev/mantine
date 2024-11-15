@@ -32,7 +32,12 @@ const navigationLinksData: NavigationLinkData[] = [
   { link: MDX_DATA.GettingStartedDates.slug, label: 'Extensions', category: 'extensions' },
 ];
 
-export function DocsHeader() {
+interface DocsHeaderProps {
+  headerControlsProps?: Partial<React.ComponentProps<typeof HeaderControls>>;
+  withNav?: boolean;
+}
+
+export function DocsHeader({ headerControlsProps, withNav }: DocsHeaderProps) {
   const router = useRouter();
   const activeCategory = getActiveCategory(router.pathname);
   const ctx = useShellContext();
@@ -55,7 +60,7 @@ export function DocsHeader() {
   ));
 
   return (
-    <header className={classes.header}>
+    <header className={classes.header} data-without-nav={!withNav || undefined}>
       <Container size={1440}>
         <div className={classes.headerMain}>
           <Burger
@@ -68,7 +73,6 @@ export function DocsHeader() {
 
           <div className={classes.headerMainSection}>
             <MantineLogo size={32} className={classes.logo} />
-
             <div className={classes.mainLinks}>{mainLinks}</div>
           </div>
 
@@ -78,6 +82,7 @@ export function DocsHeader() {
               onSearch={() => {}}
               githubLink="https://github.com/mantinedev/mantine"
               discordLink={meta.discordLink}
+              {...headerControlsProps}
             />
           </div>
 
@@ -87,7 +92,7 @@ export function DocsHeader() {
           </Group>
         </div>
 
-        <nav className={classes.headerNavigation}>{navigationLinks}</nav>
+        {withNav && <nav className={classes.headerNavigation}>{navigationLinks}</nav>}
       </Container>
     </header>
   );

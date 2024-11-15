@@ -7,15 +7,18 @@
   background-color: alpha(var(--mantine-color-body), 0.85);
   backdrop-filter: blur(5px);
 
-  --main-section-height: 56px;
-  --nav-section-height: calc(var(--docs-header-height) - var(--main-section-height));
+  &[data-without-nav] {
+    height: var(--docs-main-header-section-height);
+  }
+
+  --nav-section-height: calc(var(--docs-header-height) - var(--docs-main-header-section-height));
 }
 
 .headerMain {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 56px;
+  height: var(--docs-main-header-section-height);
 }
 
 .headerMainSection {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDirection } from '@mantine/core';
-import { Shell } from '@/components/Shell';
+import { Shell } from '@/components/Shell2';
 import { ComboboxNavbar } from './ComboboxNavbar/ComboboxNavbar';
 import classes from './ComboboxShell.module.css';
 
@@ -20,6 +20,8 @@ export function ComboboxShell({ children }: ComboboxShellProps) {
     <div className={classes.root}>
       <Shell
         withNavbar={false}
+        withMobileNavbar={false}
+        withNav={false}
         navbarOpened={opened}
         onNavbarOpenedChange={setNavbarOpened}
         headerControlsProps={{ withDirectionToggle: false }}

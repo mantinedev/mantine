@@ -5,6 +5,7 @@ body {
   --docs-header-height: 100px;
   --docs-navbar-width: 220px;
   --docs-table-of-contents-width: 250px;
+  --docs-main-header-section-height: 56px;
 
   --docs-mdx-content-width: min(
     calc(1440px - var(--docs-table-of-contents-width) - var(--docs-navbar-width) - 50px),
