@@ -5,7 +5,7 @@
 .columns {
   display: flex;
 
-  @container (max-width: 770px) {
+  @container (max-width: 620px) {
     flex-direction: column;
   }
 }
@@ -16,7 +16,7 @@
   padding: 4px;
   padding-bottom: var(--mantine-spacing-xs);
 
-  @container (max-width: 770px) {
+  @container (max-width: 620px) {
     flex: unset;
     border-left: none;
     border-right: none !important;

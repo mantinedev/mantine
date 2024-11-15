@@ -48,7 +48,7 @@ export function DemoColumns({
             </div>
           )}
 
-          <SimpleGrid type="container" cols={{ base: 1, '340px': 2, '680px': 4 }} p={8}>
+          <SimpleGrid type="container" cols={{ base: 1, '480px': 2, '780px': 4 }} p={8}>
             {controls}
           </SimpleGrid>
         </div>
