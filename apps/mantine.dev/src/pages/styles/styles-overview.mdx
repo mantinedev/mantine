@@ -126,13 +126,13 @@ CSS modules are the most performant and flexible way of styling components.
 // Demo.module.css
 
 .root {
-  padding-right: rem(100px);
+  padding-right: 100px;
 
   &[data-collapsed] {
-    padding-right: rem(40px);
+    padding-right: 40px;
 
     & .control {
-      max-width: rem(200px);
+      max-width: 200px;
     }
   }
 }
@@ -141,7 +141,7 @@ CSS modules are the most performant and flexible way of styling components.
   background-color: var(--mantine-color-blue-1);
   color: var(--mantine-color-blue-filled);
   padding: var(--mantine-spacing-xl);
-  margin-left: rem(40px);
+  margin-left: 40px;
 
   @media (max-width: $mantine-breakpoint-sm) {
     margin-left: 0;

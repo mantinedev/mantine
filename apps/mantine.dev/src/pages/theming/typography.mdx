@@ -39,15 +39,15 @@ Default values for theme properties:
 `theme.fontSizes` property defines font-size values for all Mantine components:
 
 ```tsx
-import { createTheme, MantineProvider, rem } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   fontSizes: {
-    xs: rem(10),
-    sm: rem(11),
-    md: rem(14),
-    lg: rem(16),
-    xl: rem(20),
+    xs: 10,
+    sm: 11,
+    md: 14,
+    lg: 16,
+    xl: 20,
   },
 });
 
@@ -126,10 +126,10 @@ const theme = createTheme({
     sizes: {
       h1: {
         fontWeight: '100',
-        fontSize: rem(36),
+        fontSize: 36,
         lineHeight: '1.4',
       },
-      h2: { fontSize: rem(30), lineHeight: '1.5' },
+      h2: { fontSize: 30, lineHeight: '1.5' },
       // ...up to h6
       h6: { fontWeight: '900' },
     },
