@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Burger, Container, Group } from '@mantine/core';
+import { IconChevronDown, IconExternalLink } from '@tabler/icons-react';
+import { Burger, Container, Group, Menu, Text, UnstyledButton } from '@mantine/core';
 import { ColorSchemeControl, HeaderControls, SearchMobileControl } from '@mantinex/mantine-header';
 import { MantineLogo } from '@mantinex/mantine-logo';
-import { meta } from '@mantinex/mantine-meta';
+import { majorVersions, meta } from '@mantinex/mantine-meta';
 import { searchHandlers } from '@/components/Search';
 import { MDX_DATA, MdxNavCategory } from '@/mdx';
+import packageJson from '../../../../../../package.json';
 import { getActiveCategory } from '../get-active-category';
 import { useShellContext } from '../Shell.context';
 import classes from './DocsHeader.module.css';
@@ -59,6 +61,24 @@ export function DocsHeader({ headerControlsProps, withNav }: DocsHeaderProps) {
     </Link>
   ));
 
+  const versionItems = majorVersions.map((item) => (
+    <Menu.Item
+      key={item.name}
+      component="a"
+      c="bright"
+      href={item.link}
+      target="_blank"
+      rightSection={
+        <IconExternalLink size={16} className={classes.versionExternalIcon} stroke={1.5} />
+      }
+    >
+      <b>{item.v}.x</b>{' '}
+      <Text span c="dimmed" fz="xs">
+        (v{item.name})
+      </Text>
+    </Menu.Item>
+  ));
+
   return (
     <header className={classes.header} data-without-nav={!withNav || undefined}>
       <Container size={1440}>
@@ -77,6 +97,23 @@ export function DocsHeader({ headerControlsProps, withNav }: DocsHeaderProps) {
           </div>
 
           <div className={classes.desktopHeaderControls}>
+            <Menu
+              width={180}
+              withinPortal={false}
+              radius="md"
+              position="bottom-start"
+              transitionProps={{ transition: 'pop', duration: 100 }}
+            >
+              <Menu.Target>
+                <UnstyledButton className={classes.versionControl}>
+                  <span>v{packageJson.version}</span>
+                  <IconChevronDown size={16} className={classes.versionChevron} stroke={1.5} />
+                </UnstyledButton>
+              </Menu.Target>
+
+              <Menu.Dropdown>{versionItems}</Menu.Dropdown>
+            </Menu>
+
             <HeaderControls
               className={classes.controls}
               onSearch={searchHandlers.open}

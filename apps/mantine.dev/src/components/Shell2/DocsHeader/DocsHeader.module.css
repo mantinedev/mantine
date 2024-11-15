@@ -88,6 +88,10 @@
 }
 
 .desktopHeaderControls {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-md);
+
   @mixin smaller-than $docs-mdx-breakpoint {
     display: none;
   }
@@ -103,4 +107,25 @@
   @mixin larger-than $docs-mdx-breakpoint {
     display: none;
   }
+}
+
+.versionControl {
+  display: flex;
+  align-items: center;
+  height: 34px;
+  gap: 7px;
+  border-radius: var(--mantine-radius-md);
+  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
+  padding-inline-start: 12px;
+  padding-inline-end: 7px;
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--mantine-color-bright);
+}
+
+.versionExternalIcon,
+.versionChevron {
+  color: var(--mantine-color-dimmed);
 }
