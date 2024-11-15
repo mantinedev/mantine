@@ -2,13 +2,13 @@
   display: flex;
   gap: 50px;
 
-  @media (max-width: em(950px)) {
+  @mixin smaller-than em(950px) {
     flex-direction: column;
   }
 }
 
 .colorPicker {
-  @media (max-width: em(950px)) {
+  @mixin smaller-than em(950px) {
     width: 100%;
   }
 }
@@ -23,14 +23,14 @@
   max-width: 280px;
   margin-bottom: var(--mantine-spacing-sm);
 
-  @media (max-width: em(950px)) {
+  @mixin smaller-than em(950px) {
     width: 100%;
     max-width: 100%;
   }
 }
 
 .switch {
-  @media (max-width: em(600px)) {
+  @mixin smaller-than em(600px) {
     display: none;
   }
 }

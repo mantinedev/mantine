@@ -13,7 +13,7 @@
 }
 
 .hiddenMobile {
-  @media (max-width: em(750px)) {
+  @mixin smaller-than em(750px) {
     display: none;
   }
 }

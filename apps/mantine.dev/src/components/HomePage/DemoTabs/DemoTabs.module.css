@@ -15,7 +15,7 @@
   padding-bottom: 100px;
   background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
 
-  @media (max-width: $mantine-breakpoint-sm) {
+  @mixin smaller-than $mantine-breakpoint-sm {
     padding-top: 60px;
     padding-bottom: 60px;
   }
@@ -49,7 +49,7 @@
     background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-8));
   }
 
-  @media (max-width: $mantine-breakpoint-sm) {
+  @mixin smaller-than $mantine-breakpoint-sm {
     height: 60px;
     padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   }
@@ -68,13 +68,13 @@
   position: relative;
   z-index: 5;
 
-  @media (max-width: $mantine-breakpoint-sm) {
+  @mixin smaller-than $mantine-breakpoint-sm {
     font-size: var(--mantine-font-size-sm);
   }
 }
 
 .controlDescription {
-  @media (max-width: $mantine-breakpoint-sm) {
+  @mixin smaller-than $mantine-breakpoint-sm {
     font-size: var(--mantine-font-size-xs);
   }
 }
@@ -101,7 +101,7 @@
     padding-left: 0;
   }
 
-  @media (max-width: $mantine-breakpoint-md) {
+  @mixin smaller-than $mantine-breakpoint-md {
     padding-left: 0;
     padding-top: var(--mantine-spacing-xl);
 

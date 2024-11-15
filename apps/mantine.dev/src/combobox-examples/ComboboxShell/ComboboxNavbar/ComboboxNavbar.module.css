@@ -8,7 +8,7 @@
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
   border-inline-end: 1px solid var(--border-color);
 
-  @media (max-width: $docs-mdx-breakpoint) {
+  @mixin smaller-than $docs-mdx-breakpoint {
     width: unset;
     left: 0;
     right: 0;
@@ -16,7 +16,7 @@
   }
 
   &[data-hidden] {
-    @media (max-width: $docs-mdx-breakpoint) {
+    @mixin smaller-than $docs-mdx-breakpoint {
       display: none;
     }
   }

@@ -4,7 +4,7 @@
   gap: var(--mantine-spacing-xl);
   margin-top: 50px;
 
-  @media (max-width: em(700px)) {
+  @mixin smaller-than em(700px) {
     flex-direction: column;
     align-items: stretch;
     gap: var(--mantine-spacing-md);

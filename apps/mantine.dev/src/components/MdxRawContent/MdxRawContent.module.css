@@ -21,7 +21,7 @@
 .tableOfContents {
   flex: 0 0 var(--docs-table-of-contents-width);
 
-  @media (max-width: $docs-mdx-breakpoint) {
+  @mixin smaller-than $docs-mdx-breakpoint {
     display: none;
   }
 }

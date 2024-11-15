@@ -9,7 +9,7 @@
   flex: 1;
   max-width: calc(50% - var(--mantine-spacing-xl) / 2);
 
-  @media (max-width: em(500px)) {
+  @mixin smaller-than em(500px) {
     max-width: 100%;
   }
 }

@@ -1,7 +1,7 @@
 .wrapper {
   white-space: nowrap;
 
-  @media (max-width: 31em) {
+  @mixin smaller-than 31em {
     display: none;
   }
 }

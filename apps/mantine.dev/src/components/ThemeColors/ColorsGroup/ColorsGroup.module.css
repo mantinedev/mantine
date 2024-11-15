@@ -11,7 +11,7 @@ $theme-colors-breakpoint: em(820px);
   flex-direction: column;
   flex: 0 0 calc(10% - 7px);
 
-  @media (max-width: $theme-colors-breakpoint) {
+  @mixin smaller-than $theme-colors-breakpoint {
     flex: 0 0 calc(20% - 7px);
   }
 }
@@ -31,7 +31,7 @@ $theme-colors-breakpoint: em(820px);
   display: flex;
   gap: 7px;
 
-  @media (max-width: $theme-colors-breakpoint) {
+  @mixin smaller-than $theme-colors-breakpoint {
     flex-wrap: wrap;
   }
 }

@@ -4,11 +4,11 @@ $footer-breakpoint-mobile: 40em;
 .root {
   --docs-footer-height: 400px;
 
-  @media (max-width: $footer-breakpoint-tablet) {
+  @mixin smaller-than $footer-breakpoint-tablet {
     --docs-footer-height: 520px;
   }
 
-  @media (max-width: $footer-breakpoint-mobile) {
+  @mixin smaller-than $footer-breakpoint-mobile {
     --docs-footer-height: 380px;
   }
 }
@@ -31,11 +31,11 @@ $footer-breakpoint-mobile: 40em;
     );
     padding-inline-end: calc(var(--mantine-spacing-md) * 2);
 
-    @media (max-width: 1520px) {
+    @mixin smaller-than 1520px {
       padding-inline-start: calc(var(--docs-navbar-width) + var(--docs-inline-spacing));
     }
 
-    @media (max-width: $docs-mdx-breakpoint) {
+    @mixin smaller-than $docs-mdx-breakpoint {
       padding-inline-start: var(--docs-inline-spacing);
       padding-inline-end: var(--docs-inline-spacing);
     }
@@ -48,11 +48,11 @@ $footer-breakpoint-mobile: 40em;
   display: flex;
   justify-content: space-between;
 
-  @media (max-width: $footer-breakpoint-tablet) {
+  @mixin smaller-than $footer-breakpoint-tablet {
     flex-direction: column;
   }
 
-  @media (max-width: $footer-breakpoint-mobile) {
+  @mixin smaller-than $footer-breakpoint-mobile {
     padding-bottom: var(--mantine-spacing-md);
   }
 }
@@ -60,11 +60,11 @@ $footer-breakpoint-mobile: 40em;
 .logoSection {
   max-width: 300px;
 
-  @media (max-width: $footer-breakpoint-tablet) {
+  @mixin smaller-than $footer-breakpoint-tablet {
     margin-bottom: var(--mantine-spacing-xl);
   }
 
-  @media (max-width: $footer-breakpoint-mobile) {
+  @mixin smaller-than $footer-breakpoint-mobile {
     margin-bottom: 0;
   }
 }
@@ -89,7 +89,7 @@ $footer-breakpoint-mobile: 40em;
 .groups {
   display: flex;
 
-  @media (max-width: $footer-breakpoint-mobile) {
+  @mixin smaller-than $footer-breakpoint-mobile {
     display: none;
   }
 }
@@ -97,7 +97,7 @@ $footer-breakpoint-mobile: 40em;
 .social {
   display: flex;
 
-  @media (max-width: $footer-breakpoint-mobile) {
+  @mixin smaller-than $footer-breakpoint-mobile {
     display: block;
   }
 }
@@ -107,7 +107,7 @@ $footer-breakpoint-mobile: 40em;
     margin-inline-start: var(--mantine-spacing-md);
   }
 
-  @media (max-width: $footer-breakpoint-mobile) {
+  @mixin smaller-than $footer-breakpoint-mobile {
     width: 100%;
     margin-left: 0 !important;
     margin-right: 0 !important;

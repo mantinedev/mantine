@@ -20,7 +20,7 @@
   padding: var(--mantine-spacing-md) var(--mantine-spacing-lg);
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
 
-  @media (max-width: $docs-navbar-breakpoint) {
+  @mixin smaller-than $docs-navbar-breakpoint {
     flex-direction: column-reverse;
     align-items: flex-start;
     gap: 7px;

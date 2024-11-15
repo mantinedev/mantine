@@ -16,7 +16,7 @@
   line-height: 20px;
   color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-2));
 
-  @media (max-width: 31em) {
+  @mixin smaller-than 31em {
     display: none;
   }
 }

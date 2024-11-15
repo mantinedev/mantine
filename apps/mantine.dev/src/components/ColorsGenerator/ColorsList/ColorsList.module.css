@@ -32,7 +32,7 @@
     box-shadow: var(--mantine-shadow-md);
     border-radius: var(--mantine-radius-md);
 
-    @media (max-width: em(600px)) {
+    @mixin smaller-than em(600px) {
       transform: none;
       box-shadow: none;
       border-radius: 0;
@@ -46,7 +46,7 @@
   text-align: center;
   gap: 5px;
 
-  @media (max-width: em(600px)) {
+  @mixin smaller-than em(600px) {
     display: none;
   }
 }

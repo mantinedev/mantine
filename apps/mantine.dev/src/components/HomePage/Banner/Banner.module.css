@@ -3,7 +3,7 @@
   min-height: 580px;
   background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
 
-  @media (max-width: $mantine-breakpoint-sm) {
+  @mixin smaller-than $mantine-breakpoint-sm {
     min-height: auto;
     padding-bottom: var(--mantine-spacing-xl);
   }
@@ -26,7 +26,7 @@
   opacity: 0.8;
   margin-bottom: var(--mantine-spacing-sm);
 
-  @media (max-width: $mantine-breakpoint-sm) {
+  @mixin smaller-than $mantine-breakpoint-sm {
     font-size: var(--mantine-font-size-xs);
   }
 }
@@ -38,7 +38,7 @@
   line-height: 1.2;
   font-weight: 900;
 
-  @media (max-width: $mantine-breakpoint-sm) {
+  @mixin smaller-than $mantine-breakpoint-sm {
     font-size: 26px;
   }
 }
@@ -64,7 +64,7 @@
   position: relative;
   z-index: 1;
 
-  @media (max-width: $mantine-breakpoint-sm) {
+  @mixin smaller-than $mantine-breakpoint-sm {
     padding-top: calc(var(--mantine-spacing-xl) * 2);
   }
 }
@@ -86,7 +86,7 @@
     display: none;
   }
 
-  @media (max-width: $mantine-breakpoint-md) {
+  @mixin smaller-than $mantine-breakpoint-md {
     display: none;
   }
 }
@@ -98,7 +98,7 @@
   flex-wrap: wrap;
 
   & > * {
-    @media (max-width: $mantine-breakpoint-sm) {
+    @mixin smaller-than $mantine-breakpoint-sm {
       flex: 1;
     }
   }

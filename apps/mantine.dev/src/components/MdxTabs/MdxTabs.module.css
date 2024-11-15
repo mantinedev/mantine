@@ -60,7 +60,7 @@
   flex: 0 0 var(--docs-table-of-contents-width);
   margin-top: var(--mantine-spacing-xl);
 
-  @media (max-width: $docs-mdx-breakpoint) {
+  @mixin smaller-than $docs-mdx-breakpoint {
     display: none;
   }
 }
