@@ -42,10 +42,10 @@
   }
 
   &[data-active] {
-    color: light-dark(var(--mantine-color-blue-7), var(--mantine-color-blue-4));
+    color: light-dark(var(--mantine-color-blue-8), var(--mantine-color-blue-2));
     background-color: light-dark(
-      alpha(var(--mantine-color-blue-0), 0.5),
-      alpha(var(--mantine-color-blue-6), 0.1)
+      var(--mantine-color-blue-0),
+      alpha(var(--mantine-color-blue-6), 0.17)
     );
   }
 
