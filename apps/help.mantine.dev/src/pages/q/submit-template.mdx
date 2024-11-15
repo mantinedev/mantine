@@ -1,0 +1,50 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title:
+    'How can I submit a template to Mantine documentation?',
+  description:
+    'Learn how to create and submit a template to Mantine documentation',
+  slug: 'submit-template',
+  category: 'about',
+  tags: ['template', 'community', 'contribution'],
+  created_at: 'November 15, 2024',
+  last_updated_at: 'November 15, 2024',
+};
+
+export default Layout(meta);
+
+# Submit a template
+
+You are welcome to create and share a template with the community. Templates that you submit
+are listed on the [getting started](https://mantine.dev/getting-started/) page.
+
+## What is a template
+
+Template is a GitHub repository that has the following properties:
+
+- It depends on `@mantine/hooks` and `@mantine/core` packages version 7.0.0 or higher
+- It has a "Use this template" button
+- It has MIT license
+
+Official Mantine templates provide minimal setup for different use cases.
+Community templates, on the other hand, can provide more complex setups or
+implement specific features that are not available in official templates.
+For example, there are no official templates for Mantine + runtime CSS-in-JS libraries,
+but there are community templates available to get you started.
+
+Template examples:
+
+- Next.js pages router + MDX + Mantine blog template
+- Next.js app router + Mantine + styled-components template
+- Vite + Mantine + Emotion template
+
+## How to submit a template
+
+- Make sure that features you want to implement are not available in official templates or other community templates
+- Create a repository on GitHub
+- Add your template code to the repository
+- Go to repository settings and enable the "Template repository" option
+- Make sure that your template has all the properties listed above
+- Submit your template by creating [an issue on Github](https://github.com/mantinedev/mantine/issues/new/choose)
+- After your template is reviewed, it will be added to the [getting started](/getting-started/) page
