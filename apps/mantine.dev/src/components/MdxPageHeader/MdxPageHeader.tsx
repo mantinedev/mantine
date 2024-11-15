@@ -2,7 +2,6 @@ import { IconCalendar, IconLicense, IconPencil, IconSwitch2 } from '@tabler/icon
 import { Box, rem, Text, Title } from '@mantine/core';
 import { GithubIcon, NpmIcon } from '@mantinex/dev-icons';
 import { Frontmatter } from '@/types';
-import { ImportStatement } from './ImportStatement/ImportStatement';
 import { LinkItem } from './LinkItem/LinkItem';
 import classes from './MdxPageHeader.module.css';
 
@@ -16,7 +15,7 @@ interface MdxPageHeaderProps {
 
 export function MdxPageHeader({ meta }: MdxPageHeaderProps) {
   const withTabs = Array.isArray(meta.props);
-  const hasLinks = !!(meta.import || meta.source);
+  const hasLinks = !!meta.source;
   const withTitle = !!meta.title;
 
   if (meta.hideHeader) {
@@ -32,8 +31,6 @@ export function MdxPageHeader({ meta }: MdxPageHeaderProps) {
       <Box className={classes.header} mod={{ 'with-tabs': withTabs }}>
         <Title className={classes.title}>{meta.title}</Title>
         <Text className={classes.description}>{meta.description}</Text>
-
-        {meta.import && <ImportStatement code={meta.import} />}
 
         {meta.polymorphic && (
           <LinkItem

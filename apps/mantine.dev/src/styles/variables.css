@@ -1,19 +1,21 @@
 body {
-  --docs-header-height: 60px;
-  --docs-navbar-width: 260px;
-  --docs-table-of-contents-width: 260px;
+  --docs-font-primary: 'Outfit', sans-serif;
   --docs-font-size: 15px;
   --docs-inline-spacing: 50px;
+  --docs-header-height: 100px;
+  --docs-navbar-width: 220px;
+  --docs-table-of-contents-width: 250px;
 
-  /* 1140px – container width, 50px – padding */
   --docs-mdx-content-width: min(
-    calc(1440px - var(--docs-table-of-contents-width) - var(--docs-navbar-width)),
-    calc(100vw - var(--docs-table-of-contents-width) - var(--docs-navbar-width))
+    calc(1440px - var(--docs-table-of-contents-width) - var(--docs-navbar-width) - 50px),
+    calc(100vw - var(--docs-table-of-contents-width) - var(--docs-navbar-width) - 50px)
   );
 
-  --docs-font-primary: 'Outfit', sans-serif;
-
   @mixin smaller-than $docs-mdx-breakpoint {
+    --docs-header-height: 56px;
+    --docs-navbar-width: 0px;
+    --docs-mdx-content-width: calc(100vw - 48px);
+
     --docs-font-size: 16px;
     --docs-inline-spacing: 0px;
   }

@@ -21,7 +21,7 @@ export function Shell({ children }: ShellProps) {
         closeNavbar: mobileNavbarHandlers.close,
       }}
     >
-      <div className={classes.root}>
+      <div>
         <DocsHeader />
         <Container size={1440}>
           <div className={classes.inner}>

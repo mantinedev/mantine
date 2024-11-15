@@ -1,20 +1,3 @@
-.root {
-  --docs-header-height: 100px;
-  --docs-navbar-width: 220px;
-  --docs-table-of-contents-width: 250px;
-
-  --docs-mdx-content-width: min(
-    calc(1440px - var(--docs-table-of-contents-width) - var(--docs-navbar-width)),
-    calc(100vw - var(--docs-table-of-contents-width) - var(--docs-navbar-width))
-  );
-
-  @mixin smaller-than $docs-mdx-breakpoint {
-    --docs-header-height: 56px;
-    --docs-navbar-width: 0px;
-    --docs-mdx-content-width: calc(100vw - 48px);
-  }
-}
-
 .inner {
   display: flex;
 }

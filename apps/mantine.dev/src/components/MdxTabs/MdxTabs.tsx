@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { rem, Tabs } from '@mantine/core';
+import { Tabs } from '@mantine/core';
 import { MdxSiblings } from '@/components/MdxSiblings';
 import { PageBase } from '@/components/PageBase';
 import { PropsTablesList } from '@/components/PropsTable';
@@ -51,11 +51,12 @@ export function MdxTabs({ children, meta }: MdxTabsProps) {
 
         <Tabs.Panel value="docs">
           <div
-            style={{
-              display: 'flex',
-              position: 'relative',
-              justifyContent: 'space-between',
-            }}
+            className={classes.contentWrapper}
+            // style={{
+            //   display: 'flex',
+            //   position: 'relative',
+            //   justifyContent: 'space-between',
+            // }}
           >
             <div className={classes.main} id="mdx">
               {children}
@@ -69,29 +70,13 @@ export function MdxTabs({ children, meta }: MdxTabsProps) {
         </Tabs.Panel>
 
         <Tabs.Panel value="props">
-          <div
-            style={{
-              maxWidth: rem(1178),
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              marginTop: rem(24),
-            }}
-            className={classes.tabContent}
-          >
+          <div className={classes.tabContent}>
             <PropsTablesList components={meta.props!} componentPrefix={meta.componentPrefix} />
           </div>
         </Tabs.Panel>
 
         <Tabs.Panel value="styles-api">
-          <div
-            style={{
-              maxWidth: rem(1178),
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              marginTop: rem(24),
-            }}
-            className={classes.tabContent}
-          >
+          <div className={classes.tabContent}>
             <StylesApiTablesList components={meta.styles!} componentPrefix={meta.componentPrefix} />
           </div>
         </Tabs.Panel>

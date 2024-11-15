@@ -98,7 +98,14 @@
 }
 
 .tabContent {
-  max-width: var(--docs-mdx-content-width);
+  margin-top: 24px;
   width: 100%;
-  padding-inline: var(--docs-inline-spacing);
+  padding-inline-start: var(--docs-inline-spacing);
+}
+
+.contentWrapper {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  max-width: 100%;
 }

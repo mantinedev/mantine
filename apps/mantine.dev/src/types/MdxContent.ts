@@ -35,9 +35,6 @@ export interface Frontmatter {
   /** Component props, used to display data in props tab */
   props?: string[];
 
-  /** Import statement, displayed in the header */
-  import?: string;
-
   /** Documentation source path */
   docs?: string;
 
