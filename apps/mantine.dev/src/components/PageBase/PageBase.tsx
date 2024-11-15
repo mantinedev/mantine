@@ -1,4 +1,4 @@
-// import { Footer } from '@/components/Footer';
+import { Footer } from '@/components/Footer';
 import classes from './PageBase.module.css';
 
 interface PageBaseProps {
@@ -9,7 +9,7 @@ export function PageBase({ children }: PageBaseProps) {
   return (
     <>
       <div className={classes.content}>{children}</div>
-      {/* <Footer withNavbar /> */}
+      <Footer withNavbar />
     </>
   );
 }

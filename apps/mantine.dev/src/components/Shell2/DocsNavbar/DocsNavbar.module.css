@@ -1,5 +1,6 @@
 .navbar {
   position: sticky;
+  z-index: 100;
   top: var(--docs-header-height);
   height: calc(100vh - var(--docs-header-height));
   flex: 0 0 var(--docs-navbar-width);

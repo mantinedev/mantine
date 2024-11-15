@@ -22,7 +22,7 @@ export function Footer({ withNavbar }: FooterProps) {
         mod={{ 'with-navbar': withNavbar }}
         className={cx(classes.wrapper, RemoveScroll.classNames.fullWidth)}
       >
-        <Container size={1100}>
+        <Container size={1170}>
           <div className={classes.inner}>
             <div className={classes.logoSection}>
               <Logo />
