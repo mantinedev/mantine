@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import { IconSearch } from '@tabler/icons-react';
-import { rem } from '@mantine/core';
 import { createSpotlight, Spotlight } from '@mantine/spotlight';
 import { SEARCH_MDX_PAGES } from '@/mdx';
 
@@ -30,7 +29,7 @@ export function Search() {
       limit={7}
       nothingFound="Nothing found..."
       searchProps={{
-        leftSection: <IconSearch style={{ width: rem(20), height: rem(20) }} />,
+        leftSection: <IconSearch size={20} />,
         placeholder: 'Search documentation...',
       }}
     />

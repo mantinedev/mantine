@@ -2,16 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { IconCheck, IconCopy } from '@tabler/icons-react';
 import chroma from 'chroma-js';
-import {
-  Button,
-  ColorPicker,
-  ColorSwatch,
-  Group,
-  Input,
-  rem,
-  Switch,
-  TextInput,
-} from '@mantine/core';
+import { Button, ColorPicker, ColorSwatch, Group, Input, Switch, TextInput } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { COLORS_PRESET } from './colors-preset';
 import classes from './ColorsInput.module.css';
@@ -100,13 +91,7 @@ export function ColorsInput({
 
         <Button
           fullWidth
-          leftSection={
-            clipboard.copied ? (
-              <IconCheck style={{ width: rem(18) }} />
-            ) : (
-              <IconCopy style={{ width: rem(18) }} />
-            )
-          }
+          leftSection={clipboard.copied ? <IconCheck size={18} /> : <IconCopy size={18} />}
           rightSection={<span />}
           justify="space-between"
           size="md"

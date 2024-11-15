@@ -1,5 +1,5 @@
 import { IconExternalLink } from '@tabler/icons-react';
-import { Button, rem } from '@mantine/core';
+import { Button } from '@mantine/core';
 
 interface MdxExamplesButtonProps {
   label: string;
@@ -12,7 +12,7 @@ export function MdxExamplesButton({ label, link }: MdxExamplesButtonProps) {
       component="a"
       href={link}
       target="_blank"
-      rightSection={<IconExternalLink style={{ width: rem(18), height: rem(18) }} stroke={1.5} />}
+      rightSection={<IconExternalLink size={18} stroke={1.5} />}
       fullWidth
       justify="space-between"
       h={50}

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Box, rem, ScrollArea, Text } from '@mantine/core';
+import { Box, rem, ScrollArea, Space, Text } from '@mantine/core';
 import { getHeadings, Heading } from './get-headings';
 import classes from './TableOfContents.module.css';
 
@@ -79,8 +79,9 @@ export function TableOfContents({ withTabs }: TableOfContentsProps) {
       <div className={classes.inner}>
         <div>
           <Text className={classes.title}>Table of contents</Text>
-          <ScrollArea.Autosize mah={`calc(100vh - ${rem(140)})`} type="never">
+          <ScrollArea.Autosize mah={`calc(100vh - ${rem(172)})`} type="never">
             <div className={classes.items}>{items}</div>
+            <Space h="xl" />
           </ScrollArea.Autosize>
         </div>
       </div>

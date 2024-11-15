@@ -1,4 +1,4 @@
-import { rem, Table } from '@mantine/core';
+import { Table } from '@mantine/core';
 import { DocsSection } from '@/components/DocsSection';
 
 interface DataTableProps {
@@ -42,18 +42,16 @@ export function MdxDataTable({ data, head }: DataTableProps) {
 
   return (
     <DocsSection>
-      <div style={{ overflowX: 'auto' }}>
-        <div style={{ minWidth: rem(400) }}>
-          <Table>
-            {ths && (
-              <Table.Thead>
-                <Table.Tr>{ths}</Table.Tr>
-              </Table.Thead>
-            )}
-            <Table.Tbody>{rows}</Table.Tbody>
-          </Table>
-        </div>
-      </div>
+      <Table.ScrollContainer minWidth={500}>
+        <Table>
+          {ths && (
+            <Table.Thead>
+              <Table.Tr>{ths}</Table.Tr>
+            </Table.Thead>
+          )}
+          <Table.Tbody>{rows}</Table.Tbody>
+        </Table>
+      </Table.ScrollContainer>
     </DocsSection>
   );
 }
