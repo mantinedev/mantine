@@ -51,6 +51,7 @@ import { meta as segmentedControlNoValue } from './pages/q/segmented-control-no-
 import { meta as selectAutocompleteDifference } from './pages/q/select-autocomplete-difference.mdx';
 import { meta as serverComponents } from './pages/q/server-components.mdx';
 import { meta as stylesOrder } from './pages/q/styles-order.mdx';
+import { meta as submitTemplate } from './pages/q/submit-template.mdx';
 import { meta as tabsBorderColor } from './pages/q/tabs-border-color.mdx';
 import { meta as templatesUsage } from './pages/q/templates-usage.mdx';
 import { meta as thirdPartyStyles } from './pages/q/third-party-styles.mdx';
@@ -113,6 +114,7 @@ export const MDX_DATA = [
   selectAutocompleteDifference,
   serverComponents,
   stylesOrder,
+  submitTemplate,
   tabsBorderColor,
   templatesUsage,
   thirdPartyStyles,
