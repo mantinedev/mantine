@@ -1,59 +1,54 @@
-import { useUncontrolled } from '@mantine/hooks';
-import { Header, HeaderControlsProps } from './Header/Header';
-import { Navbar } from './Navbar/Navbar';
+import { Container } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { HeaderControls } from '@mantinex/mantine-header';
+import { DocsHeader } from './DocsHeader/DocsHeader';
+import { DocsMobileNavbar } from './DocsNavbar/DocsMobileNavbar';
+import { DocsNavbar } from './DocsNavbar/DocsNavbar';
+import { ShellProvider } from './Shell.context';
 import classes from './Shell.module.css';
 
 interface ShellProps {
   children: React.ReactNode;
+  withNav?: boolean;
   withNavbar?: boolean;
+  withMobileNavbar?: boolean;
   navbarOpened?: boolean;
-  mobileNavbarOnly?: boolean;
   onNavbarOpenedChange?: (opened: boolean) => void;
-  headerControlsProps?: HeaderControlsProps;
+  headerControlsProps?: Partial<React.ComponentProps<typeof HeaderControls>>;
 }
 
 export function Shell({
   children,
+  withNav = true,
   withNavbar = true,
-  mobileNavbarOnly = false,
+  withMobileNavbar = true,
   navbarOpened,
   onNavbarOpenedChange,
   headerControlsProps,
 }: ShellProps) {
-  const [opened, setNavbarOpened] = useUncontrolled({
-    value: navbarOpened,
-    defaultValue: false,
-    finalValue: false,
-    onChange: onNavbarOpenedChange,
+  const [mobileNavbarOpened, mobileNavbarHandlers] = useDisclosure(false, {
+    onClose: () => onNavbarOpenedChange?.(false),
+    onOpen: () => onNavbarOpenedChange?.(true),
   });
 
-  const toggleNavbar = () => setNavbarOpened(!opened);
-  const closeNavbar = () => setNavbarOpened(false);
-
   return (
-    <>
-      <Header
-        navbarOpened={opened}
-        onNavbarToggle={toggleNavbar}
-        headerControlsProps={headerControlsProps}
-      />
-      {withNavbar && (
-        <Navbar
-          navbarOpened={opened}
-          onNavbarClose={closeNavbar}
-          mobileNavbarOnly={mobileNavbarOnly}
-        />
-      )}
-      <main
-        className={classes.main}
-        id="mdx"
-        style={{
-          paddingLeft: withNavbar && !mobileNavbarOnly ? undefined : 0,
-          paddingRight: withNavbar && !mobileNavbarOnly ? undefined : 0,
-        }}
-      >
-        {children}
-      </main>
-    </>
+    <ShellProvider
+      value={{
+        navbarOpened: typeof navbarOpened === 'boolean' ? navbarOpened : mobileNavbarOpened,
+        toggleNavbar: mobileNavbarHandlers.toggle,
+        closeNavbar: mobileNavbarHandlers.close,
+      }}
+    >
+      <div>
+        <DocsHeader headerControlsProps={headerControlsProps} withNav={withNav} />
+        <Container size={1440}>
+          <div className={classes.inner}>
+            {withMobileNavbar && mobileNavbarOpened && <DocsMobileNavbar />}
+            {withNavbar && <DocsNavbar />}
+            <main className={classes.content}>{children}</main>
+          </div>
+        </Container>
+      </div>
+    </ShellProvider>
   );
 }

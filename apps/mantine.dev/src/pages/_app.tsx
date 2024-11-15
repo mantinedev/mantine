@@ -26,7 +26,7 @@ import { HotKeysHandler } from '@/components/HotKeysHandler';
 import { MdxProvider } from '@/components/MdxProvider';
 import { ModalsProviderDemo } from '@/components/ModalsProviderDemo';
 import { Search } from '@/components/Search';
-import { Shell } from '@/components/Shell2';
+import { Shell } from '@/components/Shell';
 import { theme } from '../../theme';
 import { emotionCache } from '../emotion';
 
