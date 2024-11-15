@@ -1,27 +1,14 @@
 .searchIcon {
   width: 22px;
   height: 22px;
-
-  @mixin light {
-    color: var(--mantine-color-gray-4);
-  }
-
-  @mixin dark {
-    color: var(--mantine-color-dark-3);
-  }
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-3));
 }
 
 .title {
   font-family: var(--docs-font-primary);
+  font-weight: 500;
   margin-bottom: var(--mantine-spacing-lg);
-
-  @mixin light {
-    color: var(--mantine-color-black);
-  }
-
-  @mixin dark {
-    color: var(--mantine-color-white);
-  }
+  color: var(--mantine-color-bright);
 }
 
 .section {

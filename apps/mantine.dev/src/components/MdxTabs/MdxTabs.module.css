@@ -1,85 +1,53 @@
 .tabsWrapper {
-  padding-left: calc(var(--mantine-spacing-xl) * 2);
-
-  @mixin light {
-    background-color: var(--mantine-color-gray-0);
-    border-bottom: 1px solid var(--mantine-color-gray-2);
-  }
-
-  @mixin dark {
-    background-color: var(--mantine-color-dark-8);
-    border-bottom: 1px solid var(--mantine-color-dark-6);
-  }
-
-  @media (max-width: $docs-mdx-breakpoint) {
-    padding-left: var(--mantine-spacing-xl);
-  }
-
-  @media (min-width: 86.25em) {
-    padding-left: 0;
-  }
-}
-
-.tabsList {
-  max-width: 1082px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: -1px;
-
-  @media (max-width: $docs-mdx-breakpoint) {
-    max-width: 100%;
-    padding-right: 0;
-  }
-
-  &::before {
-    @mixin light {
-      border-color: var(--mantine-color-gray-2);
-    }
-
-    @mixin dark {
-      border-color: var(--mantine-color-dark-6);
-    }
-  }
+  padding-inline: var(--docs-inline-spacing);
+  border-bottom: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  padding-bottom: var(--mantine-spacing-md);
 }
 
 .tab {
   font-size: var(--mantine-font-size-md);
   font-weight: 500;
-  height: 46px;
-  padding-left: var(--mantine-spacing-lg);
-  padding-right: var(--mantine-spacing-lg);
-  background-color: transparent;
+  height: 42px;
+  padding-inline-start: var(--mantine-spacing-sm);
+  padding-inline-end: var(--mantine-spacing-lg);
+  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  color: var(--mantine-color-bright);
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
 
-  @media (max-width: $docs-mdx-breakpoint) {
+  @mixin hover {
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-5));
+  }
+
+  @mixin smaller-than $docs-mdx-breakpoint {
     font-size: var(--mantine-font-size-sm);
     padding-left: var(--mantine-spacing-md);
     padding-right: var(--mantine-spacing-md);
   }
 
   &[data-active] {
-    background-color: var(--mantine-color-body);
+    border-color: transparent;
+    color: light-dark(var(--mantine-color-white), var(--mantine-color-black));
+    background-color: light-dark(var(--mantine-color-gray-9), var(--mantine-color-gray-1));
 
-    @mixin light {
-      color: var(--mantine-color-black);
-      border-color: var(--mantine-color-gray-2);
-      border-bottom-color: transparent;
-
-      &::before,
-      &::after {
-        background-color: var(--mantine-color-gray-2);
-      }
+    .tabIcon {
+      color: inherit;
     }
+  }
+}
 
-    @mixin dark {
-      color: var(--mantine-color-white);
-      border-color: var(--mantine-color-dark-6);
-      border-bottom-color: transparent;
+.tabInner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: var(--mantine-spacing-xs);
+}
 
-      &::before,
-      &::after {
-        background-color: var(--mantine-color-dark-6);
-      }
-    }
+.tabIcon {
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-1));
+
+  @mixin smaller-than $docs-mdx-breakpoint {
+    display: none;
   }
 }
 
@@ -98,7 +66,7 @@
 }
 
 .tabContent {
-  margin-top: 24px;
+  margin-top: 39px;
   width: 100%;
   max-width: var(--docs-full-mdx-content-width);
   padding-inline-start: var(--docs-inline-spacing);

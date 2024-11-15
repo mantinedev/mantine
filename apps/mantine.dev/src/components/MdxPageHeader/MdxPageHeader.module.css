@@ -12,7 +12,7 @@
     padding-bottom: calc(var(--mantine-spacing-xl) * 1.5);
   }
 
-  @media (max-width: $docs-mdx-breakpoint) {
+  @mixin smaller-than $docs-mdx-breakpoint {
     max-width: 100%;
     padding-bottom: var(--mantine-spacing-xl);
   }
@@ -21,19 +21,12 @@
 .title {
   font-size: 44px;
   margin-bottom: 5px;
-  font-weight: 900;
+  font-weight: 600;
   font-family: var(--docs-font-primary);
+  color: var(--mantine-color-bright);
 
-  @media (max-width: $docs-mdx-breakpoint) {
+  @mixin smaller-than $docs-mdx-breakpoint {
     font-size: 32px;
-  }
-
-  @mixin light {
-    color: var(--mantine-color-black);
-  }
-
-  @mixin dark {
-    color: var(--mantine-color-white);
   }
 }
 
@@ -41,16 +34,9 @@
   max-width: 450px;
   margin-bottom: var(--mantine-spacing-xl);
   font-size: var(--mantine-font-size-lg);
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-1));
 
-  @media (max-width: $docs-mdx-breakpoint) {
+  @mixin smaller-than $docs-mdx-breakpoint {
     font-size: var(--mantine-font-size-md);
-  }
-
-  @mixin light {
-    color: var(--mantine-color-gray-6);
-  }
-
-  @mixin dark {
-    color: var(--mantine-color-dark-1);
   }
 }

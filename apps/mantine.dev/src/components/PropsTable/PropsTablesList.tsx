@@ -33,6 +33,7 @@ export function PropsTablesList({ components, componentPrefix }: PropsTablesList
         radius="md"
         size="lg"
         autoFocus
+        pt={7}
       />
       {tables}
     </div>

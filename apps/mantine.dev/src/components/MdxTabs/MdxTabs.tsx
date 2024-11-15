@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { IconAdjustments, IconCode, IconFileText } from '@tabler/icons-react';
 import { Tabs } from '@mantine/core';
 import { MdxSiblings } from '@/components/MdxSiblings';
 import { PageBase } from '@/components/PageBase';
@@ -31,9 +32,9 @@ export function MdxTabs({ children, meta }: MdxTabsProps) {
   return (
     <PageBase>
       <Tabs
-        variant="outline"
+        variant="pills"
         value={activeTab}
-        classNames={{ list: classes.tabsList, tab: classes.tab }}
+        classNames={{ list: classes.tabsList, tab: classes.tab, tabSection: classes.tabSection }}
         keepMounted={false}
         radius="md"
         onChange={(value) => {
@@ -43,9 +44,28 @@ export function MdxTabs({ children, meta }: MdxTabsProps) {
       >
         <div className={classes.tabsWrapper}>
           <Tabs.List>
-            <Tabs.Tab value="docs">Documentation</Tabs.Tab>
-            {hasProps && <Tabs.Tab value="props">Props</Tabs.Tab>}
-            {hasStyles && <Tabs.Tab value="styles-api">Styles API</Tabs.Tab>}
+            <Tabs.Tab value="docs">
+              <div className={classes.tabInner}>
+                <IconFileText size={20} stroke={1.5} className={classes.tabIcon} />
+                Documentation
+              </div>
+            </Tabs.Tab>
+            {hasProps && (
+              <Tabs.Tab value="props">
+                <div className={classes.tabInner}>
+                  <IconCode size={20} stroke={1.5} className={classes.tabIcon} />
+                  Props
+                </div>
+              </Tabs.Tab>
+            )}
+            {hasStyles && (
+              <Tabs.Tab value="styles-api">
+                <div className={classes.tabInner}>
+                  <IconAdjustments size={20} stroke={1.5} className={classes.tabIcon} />
+                  Styles API
+                </div>
+              </Tabs.Tab>
+            )}
           </Tabs.List>
         </div>
 

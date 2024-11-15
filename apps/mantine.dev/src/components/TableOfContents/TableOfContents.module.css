@@ -10,7 +10,7 @@
 
   &[data-with-tabs] {
     padding-top: 0;
-    top: calc(var(--mantine-spacing-xl) + 60px);
+    top: calc(var(--docs-header-height) + var(--mantine-spacing-md));
   }
 }
 
