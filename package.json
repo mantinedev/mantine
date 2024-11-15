@@ -58,8 +58,8 @@
     "stylelint": "stylelint \"**/*.css\" --cache",
     "syncpack": "syncpack list-mismatches",
     "syncpack:format": "syncpack format",
-    "prettier:test": "prettier --check \"**/*.{ts,tsx,mdx,css}\"",
-    "prettier:write": "prettier --write \"**/*.{ts,tsx,mdx,css}\""
+    "prettier:test": "prettier --check \"**/*.{ts,tsx,css}\"",
+    "prettier:write": "prettier --write \"**/*.{ts,tsx,css}\""
   },
   "dependencies": {
     "@emotion/cache": "^11.13.1",
