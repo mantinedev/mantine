@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ScrollArea } from '@mantine/core';
@@ -42,13 +43,20 @@ export function CategoriesList({ categories }: CategoriesListProps) {
 export function DocsNavbar() {
   const router = useRouter();
   const activeCategory = getActiveCategory(router.pathname);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.querySelector(`[data-active="true"]`)?.scrollIntoView({ block: 'nearest' });
+    }
+  }, []);
 
   if (!activeCategory) {
     return null;
   }
 
   return (
-    <nav className={classes.navbar}>
+    <nav className={classes.navbar} ref={ref}>
       <ScrollArea h="calc(100vh - var(--docs-header-height))" type="never">
         <CategoriesList categories={MDX_NAV_DATA[activeCategory]} />
       </ScrollArea>
