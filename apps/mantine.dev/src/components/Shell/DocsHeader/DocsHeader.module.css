@@ -83,7 +83,10 @@
   }
 }
 
-.logo {
+.logoLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
   color: var(--mantine-color-bright);
 }
 

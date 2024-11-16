@@ -92,7 +92,9 @@ export function DocsHeader({ headerControlsProps, withNav }: DocsHeaderProps) {
           />
 
           <div className={classes.headerMainSection}>
-            <MantineLogo size={32} className={classes.logo} />
+            <Link href="/" className={classes.logoLink}>
+              <MantineLogo size={32} />
+            </Link>
             <div className={classes.mainLinks}>{mainLinks}</div>
           </div>
 
