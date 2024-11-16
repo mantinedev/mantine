@@ -148,7 +148,7 @@ function Demo() {
     </>
   );
 }
-`,centered:!0,component:function(){let[e,{open:n,close:o}]=(0,c.q)(!1);return(0,r.jsxs)(r.Fragment,{children:[(0,r.jsxs)(s.d,{opened:e,onClose:o,title:"Focus demo",children:[(0,r.jsx)(g.o,{label:"First input",placeholder:"First input"}),(0,r.jsx)(g.o,{"data-autofocus":!0,label:"Input with initial focus",placeholder:"It has data-autofocus attribute",mt:"md"})]}),(0,r.jsx)(i.z,{onClick:n,children:"Open drawer"})]})}};var C=o(10266);let b={type:"code",code:`
+`,centered:!0,component:function(){let[e,{open:n,close:o}]=(0,c.q)(!1);return(0,r.jsxs)(r.Fragment,{children:[(0,r.jsxs)(s.d,{opened:e,onClose:o,title:"Focus demo",children:[(0,r.jsx)(g.o,{label:"First input",placeholder:"First input"}),(0,r.jsx)(g.o,{"data-autofocus":!0,label:"Input with initial focus",placeholder:"It has data-autofocus attribute",mt:"md"})]}),(0,r.jsx)(i.z,{onClick:n,children:"Open drawer"})]})}};var C=o(99573);let b={type:"code",code:`
 import { useDisclosure } from '@mantine/hooks';
 import { Drawer, Button, TextInput, FocusTrap } from '@mantine/core';
 

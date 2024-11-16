@@ -146,7 +146,7 @@ function Demo() {
     </Stack>
   );
 }
-`,centered:!0}},35221:function(e,t,n){"use strict";n.d(t,{g:function(){return c}});var r=n(52322),s=n(31946),i=n(10266),a=n(74770),o=n(17115),l=n(3900);let c={type:"code",code:`
+`,centered:!0}},35221:function(e,t,n){"use strict";n.d(t,{g:function(){return c}});var r=n(52322),s=n(31946),i=n(99573),a=n(74770),o=n(17115),l=n(3900);let c={type:"code",code:`
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button, TextInput, FocusTrap } from '@mantine/core';
 
