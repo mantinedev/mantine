@@ -1,8 +1,10 @@
 .root {
   display: flex;
   align-items: center;
-  gap: var(--mantine-spacing-xl);
+  justify-content: space-between;
   margin-top: 50px;
+  border-top: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  padding-top: var(--mantine-spacing-lg);
 
   @mixin smaller-than em(700px) {
     flex-direction: column;
@@ -13,45 +15,28 @@
 
 .link {
   -webkit-tap-highlight-color: transparent;
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
   text-decoration: none;
-  padding: var(--mantine-spacing-md);
+  padding: 7px 12px;
   border-radius: var(--mantine-radius-md);
   color: var(--mantine-color-bright);
-  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
-  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  gap: var(--mantine-spacing-xs);
 
   @mixin hover {
     background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-5));
   }
 }
 
-.body {
-  &[data-next] {
-    text-align: start;
-    margin-inline-end: var(--mantine-spacing-md);
-  }
-
-  &[data-prev] {
-    text-align: end;
-    margin-inline-start: var(--mantine-spacing-md);
-  }
-}
-
 .title {
-  font-size: var(--mantine-font-size-lg);
-}
-
-.description {
   font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
 }
 
 .icon {
-  width: 25px;
-  height: 25px;
+  width: 18px;
+  height: 18px;
 
   @mixin rtl {
     transform: rotate(180deg);
