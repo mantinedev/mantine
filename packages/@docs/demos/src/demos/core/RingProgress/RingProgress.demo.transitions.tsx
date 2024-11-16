@@ -1,26 +1,24 @@
 import { useState } from 'react';
-import { Button, RingProgress, Text } from '@mantine/core';
+import { Button, RingProgress, Stack, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { Button, RingProgress, Text } from '@mantine/core';
+import { Button, RingProgress, Stack, Text } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState(30);
 
   return (
-    <>
+    <Stack align="center">
       <RingProgress
         sections={[{ value, color: 'blue' }]}
         transitionDuration={250}
         label={<Text ta="center">{value}%</Text>}
       />
 
-      <Button onClick={() => setValue(Math.floor(Math.random() * 100))} mt="xl" fullWidth>
-        Set random value
-      </Button>
-    </>
+      <Button onClick={() => setValue(Math.floor(Math.random() * 100))}>Set random value</Button>
+    </Stack>
   );
 }
 `;
@@ -29,17 +27,15 @@ function Demo() {
   const [value, setValue] = useState(30);
 
   return (
-    <>
+    <Stack align="center">
       <RingProgress
         sections={[{ value, color: 'blue' }]}
         transitionDuration={250}
         label={<Text ta="center">{value}%</Text>}
       />
 
-      <Button onClick={() => setValue(Math.floor(Math.random() * 100))} mt="xl" fullWidth>
-        Set random value
-      </Button>
-    </>
+      <Button onClick={() => setValue(Math.floor(Math.random() * 100))}>Set random value</Button>
+    </Stack>
   );
 }
 
