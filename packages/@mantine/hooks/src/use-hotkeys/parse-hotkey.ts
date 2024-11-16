@@ -4,6 +4,7 @@ export type KeyboardModifiers = {
   meta: boolean;
   mod: boolean;
   shift: boolean;
+  plus: boolean;
 };
 
 export type Hotkey = KeyboardModifiers & {
@@ -24,6 +25,7 @@ export function parseHotkey(hotkey: string): Hotkey {
     meta: keys.includes('meta'),
     mod: keys.includes('mod'),
     shift: keys.includes('shift'),
+    plus: keys.includes('[plus]'),
   };
 
   const reservedKeys = ['alt', 'ctrl', 'meta', 'shift', 'mod'];
@@ -32,7 +34,7 @@ export function parseHotkey(hotkey: string): Hotkey {
 
   return {
     ...modifiers,
-    key: freeKey,
+    key: freeKey === '[plus]' ? '+' : freeKey,
   };
 }
 

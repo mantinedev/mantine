@@ -27,4 +27,11 @@ describe('@mantine/hooks/use-hotkey', () => {
     dispatchEvent({ metaKey: true, altKey: true, key: 'P' });
     expect(handler).not.toHaveBeenCalled();
   });
+
+  it('correctly handles [plus] key', () => {
+    const handler = jest.fn();
+    renderHook(() => useHotkeys([['shift+[plus]', handler]]));
+    dispatchEvent({ shiftKey: true, key: '+' });
+    expect(handler).toHaveBeenCalled();
+  });
 });
