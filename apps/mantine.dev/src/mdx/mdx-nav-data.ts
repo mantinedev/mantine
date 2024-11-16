@@ -1,4 +1,5 @@
 import { Frontmatter, MdxPagesCategory } from '@/types';
+import { MDX_META_DATA } from './data/mdx-meta-data';
 import { MDX_DATA } from './mdx-data';
 
 function sortCategoriesPages(categories: MdxPagesCategory[]) {
@@ -435,3 +436,34 @@ export const FLAT_MDX_NAV_DATA = Object.entries(MDX_NAV_DATA).reduce(
   },
   {} as Record<MdxNavCategory, Frontmatter[]>
 );
+
+export const MDX_NAV_DATA_PAGES = Object.values(MDX_NAV_DATA).reduce<Frontmatter[]>(
+  (acc, categories) => {
+    const groupPages = categories.reduce(
+      (groupAcc, { pages }) => [...groupAcc, ...pages],
+      [] as Frontmatter[]
+    );
+    return [...acc, ...groupPages];
+  },
+  [] as Frontmatter[]
+);
+
+export const MDX_NAV_SEARCH_PAGES: Frontmatter[] = [
+  ...MDX_NAV_DATA_PAGES,
+  ...Object.keys(MDX_META_DATA).map((key) => MDX_META_DATA[key]),
+  {
+    title: 'Combobox examples',
+    slug: '/combobox/?e=BasicSelect',
+    search: '50+ examples of Combobox usage',
+  },
+  {
+    title: 'AppShell examples',
+    slug: '/app-shell/?e=BasicAppShell',
+    search: '10+ examples of AppShell usage',
+  },
+].reduce<Frontmatter[]>((acc, item) => {
+  if (!acc.some((accItem) => accItem.slug === item.slug)) {
+    acc.push(item);
+  }
+  return acc;
+}, []);

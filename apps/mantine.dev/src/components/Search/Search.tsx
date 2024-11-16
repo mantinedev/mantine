@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router';
 import { IconSearch } from '@tabler/icons-react';
 import { createSpotlight, Spotlight } from '@mantine/spotlight';
-import { SEARCH_MDX_PAGES } from '@/mdx';
+import { MDX_NAV_SEARCH_PAGES } from '@/mdx';
 
 export const [searchStore, searchHandlers] = createSpotlight();
 
 export function Search() {
   const router = useRouter();
 
-  const actions = SEARCH_MDX_PAGES.filter((page) => !page.hideInSearch).map((page) => ({
+  const actions = MDX_NAV_SEARCH_PAGES.filter((page) => !page.hideInSearch).map((page) => ({
     id: page.slug,
     label: page.title,
     description:
