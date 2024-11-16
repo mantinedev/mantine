@@ -48,7 +48,13 @@ import '@mantine/core/styles/Flex.css';
 All Mantine components depend on global styles, you need to import them before
 all other styles:
 
+- `baseline.css` – a minimal CSS reset, sets `box-sizing: border-box` and changes font properties
+- `default-css-variables.css` – contains all CSS variables generated from the default theme
+- `global.css` – global classes used in Mantine components
+
 ```tsx
+import '@mantine/core/styles/baseline.css';
+import '@mantine/core/styles/default-css-variables.css';
 import '@mantine/core/styles/global.css';
 ```
 
@@ -71,5 +77,8 @@ import '@mantine/core/styles/UnstyledButton.css';
 ```
 
 ## Files list
+
+Note that if you cannot find a particular file in the list below, it means that
+the component does not have any styles on its own or it is built on top of other components.
 
 <CssFilesList />

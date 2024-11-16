@@ -8,6 +8,26 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog7150);
 
+## Granular global styles exports
+
+Global styles are now splitted between 3 files:
+
+- `baseline.css` – a minimal CSS reset, sets `box-sizing: border-box` and changes font properties
+- `default-css-variables.css` – contains all CSS variables generated from the default theme
+- `global.css` – global classes used in Mantine components
+
+If you previously imported individual styles from `@mantine/core` package, you need to update imports
+to use new files:
+
+```tsx
+import '@mantine/core/styles/baseline.css';
+import '@mantine/core/styles/default-css-variables.css';
+import '@mantine/core/styles/global.css';
+```
+
+If you imported `@mantine/core/styles.css`, no changes are required –
+all new files are already included in `styles.css`.
+
 ## TimePicker component
 
 New [TimePicker](/dates/time-picker) component is an alternative to

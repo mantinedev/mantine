@@ -15,6 +15,15 @@ Global styles are automatically imported with:
 import '@mantine/core/styles.css';
 ```
 
+If you want to import styles [per component](/styles/css-files-list), you need to import all global
+styles manually:
+
+```tsx
+import '@mantine/core/styles/baseline.css';
+import '@mantine/core/styles/default-css-variables.css';
+import '@mantine/core/styles/global.css';
+```
+
 ## CSS reset
 
 `@mantine/core` package includes minimal CSS reset – it includes only basic styles required for components to work
