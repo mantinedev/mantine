@@ -18,6 +18,7 @@
     "scss/at-rule-no-unknown": null,
     "value-keyword-case": null,
     "media-feature-range-notation": null,
+    "color-hex-length": null,
     "selector-pseudo-class-no-unknown": [
       true,
       {
