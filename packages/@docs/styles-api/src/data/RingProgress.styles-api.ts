@@ -13,6 +13,7 @@ export const RingProgressStylesApi: StylesApiData<RingProgressFactory> = {
     root: {
       '--rp-label-offset': 'Label offset on the left and right sides of the ring',
       '--rp-size': 'Controls `height` and `width` of svg and root elements',
+      '--rp-transition-duration': 'Controls transition duration of filled segments',
     },
   },
 };

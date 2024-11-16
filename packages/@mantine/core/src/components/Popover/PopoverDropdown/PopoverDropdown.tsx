@@ -108,6 +108,8 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props, ref) => 
                     left: ctx.x ?? 0,
                     width: ctx.width === 'target' ? undefined : rem(ctx.width),
                   },
+                  ctx.resolvedStyles.dropdown,
+                  styles?.dropdown,
                   style,
                 ],
               })}

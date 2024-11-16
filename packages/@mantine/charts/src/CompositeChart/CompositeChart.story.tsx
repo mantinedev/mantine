@@ -55,6 +55,7 @@ export function Usage() {
         ]}
         withLegend
         withPointLabels
+        valueFormatter={(value) => `$ ${value}`}
       />
     </div>
   );

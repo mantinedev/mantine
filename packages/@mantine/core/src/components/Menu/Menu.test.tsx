@@ -31,7 +31,7 @@ function TestContainer(props: MenuProps) {
 
 const expectClosed = () => expect(screen.queryAllByRole('menu')).toHaveLength(0);
 const expectOpened = () => expect(screen.getByRole('menu')).toBeInTheDocument();
-const getControl = () => screen.getByRole('button');
+const getControl = () => screen.getByRole('button', { name: 'test-target' });
 
 describe('@mantine/core/Menu', () => {
   tests.axe([<TestContainer opened={false} key="1" />]);
@@ -231,7 +231,9 @@ describe('@mantine/core/Menu', () => {
     const onClose = jest.fn();
     const onChange = jest.fn();
 
-    render(<TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened={false} />);
+    const { rerender } = render(
+      <TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened={false} />
+    );
 
     await userEvent.click(getControl());
 
@@ -244,7 +246,7 @@ describe('@mantine/core/Menu', () => {
     onOpen.mockReset();
     onClose.mockReset();
     onChange.mockReset();
-    render(<TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened />);
+    rerender(<TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened />);
 
     expectOpened();
     await userEvent.click(getControl());
@@ -255,7 +257,9 @@ describe('@mantine/core/Menu', () => {
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveBeenLastCalledWith(false);
 
-    render(<TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened={false} />);
+    rerender(
+      <TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened={false} />
+    );
     () => expect(screen.queryAllByRole('menu')).toHaveLength(1);
   });
 });
