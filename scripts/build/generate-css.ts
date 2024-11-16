@@ -48,11 +48,16 @@ export async function generateCoreCSS() {
   const packagesPath = glob.convertPathToPattern(getPath('packages'));
   const files = await glob(`${packagesPath}/@mantine/core/src/**/*.css`);
   const modules = files.filter((file) => file.endsWith('.module.css'));
-  const global = files.find((file) => file.endsWith('global.css'))!;
+  const global = files.filter(
+    (file) =>
+      file.endsWith('global.css') ||
+      file.endsWith('baseline.css') ||
+      file.endsWith('default-css-variables.css')
+  );
 
   fs.writeJsonSync(
     getPath('apps/mantine.dev/src/.docgen/css-exports.json'),
-    { modules: modules.map(transformFileName), global: transformFileName(global) },
+    { modules: modules.map(transformFileName), global: global.map(transformFileName) },
     { spaces: 2 }
   );
 
@@ -61,7 +66,7 @@ export async function generateCoreCSS() {
   await fs.ensureDir(outputFolder);
 
   modules.forEach((file) => processFile(file, 'local', outputFolder));
-  processFile(global, 'global', outputFolder);
+  global.forEach((file) => processFile(file, 'global', outputFolder));
 }
 
 export async function generateCSS() {
