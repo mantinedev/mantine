@@ -1,4 +1,5 @@
 import './global.css';
+import './default-css-variables.css';
 
 import { localStorageColorSchemeManager, MantineColorSchemeManager } from './color-scheme-managers';
 import { MantineContext, MantineStylesTransform } from './Mantine.context';

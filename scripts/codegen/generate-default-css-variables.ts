@@ -9,5 +9,5 @@ fs.writeFileSync(
     process.cwd(),
     'packages/@mantine/core/src/core/MantineProvider/default-css-variables.css'
   ),
-  convertCssVariables(defaultCssVariablesResolver(DEFAULT_THEME), ':root')
+  `/* stylelint-disable */\n${convertCssVariables(defaultCssVariablesResolver(DEFAULT_THEME), ':root')}`
 );
