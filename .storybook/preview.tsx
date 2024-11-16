@@ -17,9 +17,6 @@ import { theme } from '../apps/mantine.dev/theme';
 
 export const parameters = {
   layout: 'fullscreen',
-  options: {
-    showPanel: false,
-  },
 };
 
 const channel = addons.getChannel();
