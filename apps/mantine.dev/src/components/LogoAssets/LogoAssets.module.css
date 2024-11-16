@@ -3,13 +3,18 @@
   flex-wrap: wrap;
   gap: var(--mantine-spacing-xl);
   margin-bottom: var(--mantine-spacing-xl);
+  container-type: inline-size;
 }
 
 .asset {
   flex: 1;
+  min-width: 300px;
   max-width: calc(50% - var(--mantine-spacing-xl) / 2);
 
-  @mixin smaller-than em(500px) {
+  @container (max-width: 600px) {
+    flex: 1;
+    min-width: none;
     max-width: 100%;
+    width: 100%;
   }
 }
