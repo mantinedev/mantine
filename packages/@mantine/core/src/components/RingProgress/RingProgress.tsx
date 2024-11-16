@@ -27,7 +27,7 @@ interface RingProgressSection extends React.ComponentPropsWithRef<'circle'> {
 
 export type RingProgressStylesNames = 'root' | 'svg' | 'label' | 'curve';
 export type RingProgressCssVariables = {
-  root: '--rp-size' | '--rp-label-offset';
+  root: '--rp-size' | '--rp-label-offset' | '--rp-transition-duration';
 };
 
 export interface RingProgressProps
@@ -51,6 +51,9 @@ export interface RingProgressProps
 
   /** Color of the root section, key of theme.colors or CSS color value */
   rootColor?: MantineColor;
+
+  /** Transition duration of filled section styles changes in ms, `0` by default */
+  transitionDuration?: number;
 }
 
 export type RingProgressFactory = Factory<{
@@ -65,12 +68,15 @@ const defaultProps: Partial<RingProgressProps> = {
   thickness: 12,
 };
 
-const varsResolver = createVarsResolver<RingProgressFactory>((_, { size, thickness }) => ({
-  root: {
-    '--rp-size': rem(size),
-    '--rp-label-offset': rem(thickness! * 2),
-  },
-}));
+const varsResolver = createVarsResolver<RingProgressFactory>(
+  (_, { size, thickness, transitionDuration }) => ({
+    root: {
+      '--rp-size': rem(size),
+      '--rp-label-offset': rem(thickness! * 2),
+      '--rp-transition-duration': transitionDuration ? `${transitionDuration}ms` : undefined,
+    },
+  })
+);
 
 export const RingProgress = factory<RingProgressFactory>((_props, ref) => {
   const props = useProps('RingProgress', defaultProps, _props);
@@ -87,6 +93,7 @@ export const RingProgress = factory<RingProgressFactory>((_props, ref) => {
     thickness,
     roundCaps,
     rootColor,
+    transitionDuration,
     ...others
   } = props;
 
