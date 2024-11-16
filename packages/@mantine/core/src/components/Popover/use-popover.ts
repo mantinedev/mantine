@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import {
   arrow,
   flip,
@@ -124,6 +125,7 @@ export function usePopover(options: UsePopoverOptions) {
     finalValue: false,
     onChange: options.onChange,
   });
+  const previouslyOpened = useRef(_opened);
 
   const onClose = () => {
     if (_opened) {
@@ -151,11 +153,15 @@ export function usePopover(options: UsePopoverOptions) {
   }, [floating.placement]);
 
   useDidUpdate(() => {
-    if (!_opened) {
-      options.onClose?.();
-    } else {
-      options.onOpen?.();
+    if (_opened !== previouslyOpened.current) {
+      if (!_opened) {
+        options.onClose?.();
+      } else {
+        options.onOpen?.();
+      }
     }
+
+    previouslyOpened.current = _opened;
   }, [_opened, options.onClose, options.onOpen]);
 
   return {

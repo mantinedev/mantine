@@ -12,6 +12,7 @@ import {
   StylesApiProps,
   useDirection,
   useProps,
+  useResolvedStylesApi,
   useStyles,
 } from '../../core';
 import {
@@ -232,6 +233,8 @@ export function Popover(_props: PopoverProps) {
     varsResolver,
   });
 
+  const { resolvedStyles } = useResolvedStylesApi<PopoverFactory>({ classNames, styles, props });
+
   const arrowRef = useRef<HTMLDivElement | null>(null);
   const [targetNode, setTargetNode] = useState<HTMLElement | null>(null);
   const [dropdownNode, setDropdownNode] = useState<HTMLElement | null>(null);
@@ -318,6 +321,7 @@ export function Popover(_props: PopoverProps) {
         variant,
         keepMounted,
         getStyles,
+        resolvedStyles,
         floatingStrategy,
       }}
     >

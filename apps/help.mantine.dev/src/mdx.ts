@@ -17,6 +17,7 @@ import { meta as fileButtonInMenu } from './pages/q/file-button-in-menu.mdx';
 import { meta as floatingActionButton } from './pages/q/floating-action-button.mdx';
 import { meta as focusFirstInputWithError } from './pages/q/focus-first-input-with-error.mdx';
 import { meta as howCanIContribute } from './pages/q/how-can-i-contribute.mdx';
+import { meta as howThatThingIsDone } from './pages/q/how-that-thing-is-done.mdx';
 import { meta as howToAddHoverStyles } from './pages/q/how-to-add-hover-styles.mdx';
 import { meta as howToCallFunctionWhenModalCloses } from './pages/q/how-to-call-function-when-modal-closes.mdx';
 import { meta as howToGetColorSchemeValueInJs } from './pages/q/how-to-get-color-scheme-value-in-js.mdx';
@@ -80,6 +81,7 @@ export const MDX_DATA = [
   floatingActionButton,
   focusFirstInputWithError,
   howCanIContribute,
+  howThatThingIsDone,
   howToAddHoverStyles,
   howToCallFunctionWhenModalCloses,
   howToGetColorSchemeValueInJs,

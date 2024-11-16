@@ -1,11 +1,9 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { createAriaHider } from './create-aria-hider';
 import { scopeTab } from './scope-tab';
 import { FOCUS_SELECTOR, focusable, tabbable } from './tabbable';
 
 export function useFocusTrap(active = true): (instance: HTMLElement | null) => void {
   const ref = useRef<HTMLElement | null>();
-  const restoreAria = useRef<(() => void) | null>(null);
 
   const focusNode = (node: HTMLElement) => {
     let focusElement: HTMLElement | null = node.querySelector('[data-autofocus]');
@@ -36,14 +34,9 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
       }
 
       if (node === null) {
-        if (restoreAria.current) {
-          restoreAria.current();
-          restoreAria.current = null;
-        }
         return;
       }
 
-      restoreAria.current = createAriaHider(node);
       if (ref.current === node) {
         return;
       }
@@ -81,13 +74,7 @@ export function useFocusTrap(active = true): (instance: HTMLElement | null) => v
     };
 
     document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-
-      if (restoreAria.current) {
-        restoreAria.current();
-      }
-    };
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [active]);
 
   return setRef;
