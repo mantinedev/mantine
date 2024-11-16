@@ -1,13 +1,10 @@
 import { IconCalendar, IconLicense, IconPencil, IconSwitch2 } from '@tabler/icons-react';
 import { Text, Title } from '@mantine/core';
 import { GithubIcon, NpmIcon } from '@mantinex/dev-icons';
+import { DOCS_BASE, SOURCE_BASE } from '@/links';
 import { Frontmatter } from '@/types';
 import { LinkItem } from './LinkItem/LinkItem';
 import classes from './MdxPageHeader.module.css';
-
-const REPO_BASE = 'https://github.com/mantinedev/mantine/blob/master';
-const DOCS_BASE = `${REPO_BASE}/apps/mantine.dev/src/pages`;
-const SOURCE_BASE = `${REPO_BASE}/packages`;
 
 interface MdxPageHeaderProps {
   meta: Frontmatter;

@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
+import { IconPencil } from '@tabler/icons-react';
 import { Box, rem, ScrollArea, Space, Text } from '@mantine/core';
 import { getHeadings, Heading } from './get-headings';
 import classes from './TableOfContents.module.css';
 
 interface TableOfContentsProps {
   withTabs: boolean;
+  editPageLink?: string;
 }
 
 function getActiveElement(rects: DOMRect[]) {
@@ -30,7 +32,7 @@ function getActiveElement(rects: DOMRect[]) {
   return closest.index;
 }
 
-export function TableOfContents({ withTabs }: TableOfContentsProps) {
+export function TableOfContents({ withTabs, editPageLink }: TableOfContentsProps) {
   const [active, setActive] = useState(0);
   const [headings, setHeadings] = useState<Heading[]>([]);
   const headingsRef = useRef<Heading[]>([]);
@@ -81,6 +83,13 @@ export function TableOfContents({ withTabs }: TableOfContentsProps) {
           <Text className={classes.title}>Table of contents</Text>
           <ScrollArea.Autosize mah={`calc(100vh - ${rem(172)})`} type="never">
             <div className={classes.items}>{items}</div>
+
+            {editPageLink && (
+              <Text component="a" className={classes.editPage} href={editPageLink} target="_blank">
+                <IconPencil className={classes.editPageIcon} size={18} stroke={1.5} />
+                <span>Edit this page</span>
+              </Text>
+            )}
             <Space h="xl" />
           </ScrollArea.Autosize>
         </div>

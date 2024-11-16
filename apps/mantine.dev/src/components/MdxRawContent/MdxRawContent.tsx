@@ -1,6 +1,7 @@
 import { MdxSiblings } from '@/components/MdxSiblings';
 import { PageBase } from '@/components/PageBase';
 import { TableOfContents } from '@/components/TableOfContents';
+import { DOCS_BASE } from '@/links';
 import { Frontmatter } from '@/types';
 import classes from './MdxRawContent.module.css';
 
@@ -19,7 +20,7 @@ export function MdxRawContent({ children, meta }: MdxRawContentProps) {
         </div>
 
         <div className={classes.tableOfContents}>
-          <TableOfContents withTabs={false} />
+          <TableOfContents withTabs={false} editPageLink={`${DOCS_BASE}${meta.slug}.mdx`} />
         </div>
       </div>
     </PageBase>

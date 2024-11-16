@@ -54,3 +54,22 @@
   border-inline-start: 1px solid
     light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
 }
+
+.editPage {
+  color: var(--mantine-color-bright);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--mantine-font-size-sm);
+  margin-top: var(--mantine-spacing-md);
+  padding-top: var(--mantine-spacing-md);
+  border-top: 1px solid light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-6));
+
+  @mixin hover {
+    text-decoration: underline;
+  }
+}
+
+.editPageIcon {
+  color: var(--mantine-color-dimmed);
+}
