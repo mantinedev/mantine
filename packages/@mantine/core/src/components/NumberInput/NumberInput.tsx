@@ -33,7 +33,15 @@ export interface NumberInputHandlers {
 }
 
 function isNumberString(value: unknown) {
-  return typeof value === 'string' && !Number.isNaN(Number(value));
+  return typeof value === 'string' && value !== '' && !Number.isNaN(Number(value));
+}
+
+function canIncrement(value: number | string) {
+  if (typeof value === 'number') {
+    return value < Number.MAX_SAFE_INTEGER;
+  }
+
+  return value === '';
 }
 
 function getDecimalPlaces(inputValue: string | number): number {
@@ -247,6 +255,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
+    finalValue: '',
     onChange,
   });
 
@@ -284,6 +293,10 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
 
   const incrementRef = useRef<() => void>();
   incrementRef.current = () => {
+    if (!canIncrement(_value)) {
+      return;
+    }
+
     let val: number;
     const currentValuePrecision = getDecimalPlaces(_value);
     const stepPrecision = getDecimalPlaces(step!);
@@ -311,6 +324,10 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
 
   const decrementRef = useRef<() => void>();
   decrementRef.current = () => {
+    if (!canIncrement(_value)) {
+      return;
+    }
+
     let val: number;
     const minValue = min !== undefined ? min : !allowNegative ? 0 : Number.MIN_SAFE_INTEGER;
     const currentValuePrecision = getDecimalPlaces(_value);
@@ -454,7 +471,9 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       value={_value}
       getInputRef={useMergedRef(ref, inputRef)}
       onValueChange={handleValueChange}
-      rightSection={hideControls || readOnly ? rightSection : rightSection || controls}
+      rightSection={
+        hideControls || readOnly || !canIncrement(_value) ? rightSection : rightSection || controls
+      }
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       unstyled={unstyled}
