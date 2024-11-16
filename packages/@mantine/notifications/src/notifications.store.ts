@@ -10,7 +10,9 @@ export type NotificationPosition =
   | 'bottom-right'
   | 'bottom-center';
 
-export interface NotificationData extends Omit<NotificationProps, 'onClose'>, Record<string, any> {
+export interface NotificationData
+  extends Omit<NotificationProps, 'onClose'>,
+    Record<`data-${string}`, any> {
   /** Notification id, can be used to close or update notification */
   id?: string;
 
