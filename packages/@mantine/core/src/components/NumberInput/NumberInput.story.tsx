@@ -9,7 +9,7 @@ import { NumberInput, NumberInputHandlers } from './NumberInput';
 export default { title: 'NumberInput' };
 
 export function Usage() {
-  const [value, setValue] = useState<number | string>(345);
+  const [value, setValue] = useState<number | string>('345');
   return (
     <div style={{ padding: 40 }}>
       <NumberInput

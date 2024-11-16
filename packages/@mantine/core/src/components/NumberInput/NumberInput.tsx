@@ -32,6 +32,10 @@ export interface NumberInputHandlers {
   decrement: () => void;
 }
 
+function isNumberString(value: unknown) {
+  return typeof value === 'string' && !Number.isNaN(Number(value));
+}
+
 function getDecimalPlaces(inputValue: string | number): number {
   // All digits must be counted, parseFloat precision depends
   // on the number of digits in the input, not only on the decimal scale
@@ -286,13 +290,14 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     const maxPrecision = Math.max(currentValuePrecision, stepPrecision);
     const factor = 10 ** maxPrecision;
 
-    if (typeof _value !== 'number' || Number.isNaN(_value)) {
+    if (!isNumberString(_value) && (typeof _value !== 'number' || Number.isNaN(_value))) {
       val = clamp(startValue!, min, max);
     } else if (max !== undefined) {
-      const incrementedValue = (Math.round(_value * factor) + Math.round(step! * factor)) / factor;
+      const incrementedValue =
+        (Math.round(Number(_value) * factor) + Math.round(step! * factor)) / factor;
       val = incrementedValue <= max ? incrementedValue : max;
     } else {
-      val = (Math.round(_value * factor) + Math.round(step! * factor)) / factor;
+      val = (Math.round(Number(_value) * factor) + Math.round(step! * factor)) / factor;
     }
 
     const formattedValue = val.toFixed(maxPrecision);
@@ -313,10 +318,11 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     const maxPrecision = Math.max(currentValuePrecision, stepPrecision);
     const factor = 10 ** maxPrecision;
 
-    if (typeof _value !== 'number' || Number.isNaN(_value)) {
+    if ((!isNumberString(_value) && typeof _value !== 'number') || Number.isNaN(_value)) {
       val = clamp(startValue!, minValue, max);
     } else {
-      const decrementedValue = (Math.round(_value * factor) - Math.round(step! * factor)) / factor;
+      const decrementedValue =
+        (Math.round(Number(_value) * factor) - Math.round(step! * factor)) / factor;
       val = minValue !== undefined && decrementedValue < minValue ? minValue : decrementedValue;
     }
 
