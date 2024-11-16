@@ -14,7 +14,6 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
     category: 'Overview',
     pages: [
       MDX_DATA.GettingStarted,
-      MDX_DATA.Overview,
       MDX_DATA.BrowserSupport,
       MDX_DATA.Contribute,
       MDX_DATA.About,

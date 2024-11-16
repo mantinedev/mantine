@@ -41,14 +41,6 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
-  Overview: {
-    title: 'Features overview',
-    slug: '/overview',
-    search: 'Overview of features provided by Mantine',
-    hideSiblings: true,
-    hideHeader: true,
-  },
-
   Contribute: {
     title: 'Contributing to Mantine',
     slug: '/contribute',
