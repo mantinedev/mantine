@@ -3,9 +3,34 @@
 }
 
 .column {
-  max-width: calc(50vw - 50px);
+  max-width: calc(50vw - calc(var(--mantine-spacing-lg) / 2));
 
   @mixin smaller-than $mantine-breakpoint-md {
     max-width: calc(100vw - 50px);
   }
+}
+
+.demos {
+  margin-top: var(--mantine-spacing-xl);
+}
+
+.title {
+  margin-bottom: 3px;
+}
+
+.titleLink {
+  color: var(--mantine-color-bright);
+  text-decoration: none;
+  font-family: var(--docs-font-primary);
+  font-size: 28px;
+}
+
+.description {
+  color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-lg);
+  max-width: 500px;
+}
+
+.header {
+  height: 120px;
 }
