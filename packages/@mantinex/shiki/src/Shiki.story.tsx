@@ -203,6 +203,7 @@ export function Tabs() {
           },
         ]}
         defaultExpanded={false}
+        maxCollapsedHeight={500}
       >
         {tsxCode}
       </CodeHighlightTabs>

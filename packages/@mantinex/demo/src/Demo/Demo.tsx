@@ -15,6 +15,7 @@ interface DemoProps {
   data: MantineDemo;
   demoProps?: {
     defaultExpanded?: boolean;
+    maxCollapsedHeight?: number;
   };
 }
 
