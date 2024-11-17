@@ -60,6 +60,9 @@ export interface DateInputSharedProps
 
   /** A function to format selected dates values into a string. By default, date is formatted based on the input type. */
   valueFormatter?: DateFormatter;
+
+  /** Called when the dropdown is closed */
+  onDropdownClose?: () => void;
 }
 
 export interface PickerInputBaseProps
@@ -116,6 +119,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
     name,
     form,
     type,
+    onDropdownClose,
     ...others
   } = useInputProps('PickerInputBase', defaultProps, _props);
 
@@ -138,6 +142,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
     }
 
     dropdownHandlers.close();
+    onDropdownClose?.();
   };
 
   return (

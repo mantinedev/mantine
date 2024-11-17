@@ -16,7 +16,7 @@ import {
 import { useDidUpdate, useDisclosure, useMergedRef } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
 import { DateValue } from '../../types';
-import { assignTime, shiftTimezone } from '../../utils';
+import { assignTime, clampDate, shiftTimezone } from '../../utils';
 import {
   CalendarBaseProps,
   CalendarSettings,
@@ -169,7 +169,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
 
   const handleDateChange = (date: DateValue) => {
     if (date) {
-      setValue(assignTime(_value, date));
+      setValue(clampDate(minDate, maxDate, assignTime(_value, date)));
     }
     timeInputRef.current?.focus();
   };
@@ -195,6 +195,13 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
 
   const __stopPropagation = dropdownType === 'popover';
 
+  const handleDropdownClose = () => {
+    const clamped = clampDate(minDate, maxDate, _value);
+    if (_value && _value.toISOString() !== clamped.toISOString()) {
+      setValue(clampDate(minDate, maxDate, _value));
+    }
+  };
+
   return (
     <PickerInputBase
       formattedValue={formattedValue}
@@ -213,6 +220,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
       {...others}
       type="default"
       __staticSelector="DateTimePicker"
+      onDropdownClose={handleDropdownClose}
     >
       <DatePicker
         {...calendarProps}
@@ -274,6 +282,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
             onClick={(event) => {
               submitButtonProps?.onClick?.(event);
               dropdownHandlers.close();
+              handleDropdownClose();
             }}
           />
         </div>
