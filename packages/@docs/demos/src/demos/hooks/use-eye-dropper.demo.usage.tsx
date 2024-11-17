@@ -30,8 +30,8 @@ function Demo() {
 
   return (
     <Group>
-      <ActionIcon variant="default" onClick={pickColor}>
-        <IconColorPicker size="1rem" stroke={1.5} />
+      <ActionIcon variant="default" onClick={pickColor} size="xl" radius="md">
+        <IconColorPicker stroke={1.5} />
       </ActionIcon>
       {color ? (
         <Group gap="xs">
@@ -67,8 +67,8 @@ function Demo() {
 
   return (
     <Group>
-      <ActionIcon variant="default" onClick={pickColor}>
-        <IconColorPicker size="1rem" stroke={1.5} />
+      <ActionIcon variant="default" onClick={pickColor} size="xl" radius="md">
+        <IconColorPicker stroke={1.5} />
       </ActionIcon>
       {color ? (
         <Group gap="xs">
@@ -87,4 +87,5 @@ export const useEyeDropperUsage: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  centered: true,
 };

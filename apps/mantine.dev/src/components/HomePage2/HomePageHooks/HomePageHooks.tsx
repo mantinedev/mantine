@@ -12,8 +12,6 @@ import classes from './HomePageHooks.module.css';
 // use-hotkeys +
 
 // use-eye-dropper
-// use-clipboard
-// use-click-outside
 
 export function HomePageHooks() {
   const isMobile = useMediaQuery('(max-width: 62em)');
@@ -36,6 +34,12 @@ export function HomePageHooks() {
           </div>
           <div className={classes.column}>
             <Demo data={HooksDemos.useHotkeysDemoIndex} demoProps={{ defaultExpanded: false }} />
+          </div>
+          <div className={classes.column}>
+            <Demo
+              data={HooksDemos.useEyeDropperUsage}
+              demoProps={{ defaultExpanded: false, maxCollapsedHeight: isMobile ? 150 : 204 }}
+            />
           </div>
         </SimpleGrid>
       </HomePageContainer>
