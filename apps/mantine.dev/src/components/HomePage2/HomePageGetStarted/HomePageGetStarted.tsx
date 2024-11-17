@@ -1,8 +1,8 @@
+import { FrameworksGuides } from '@/components/FrameworksGuides';
 import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer';
 import { HomePageDescription } from '../shared/HomePageDescription/HomePageDescription';
 import { HomePageLearnMore } from '../shared/HomePageLearnMore/HomePageLearnMore';
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
-import { FrameworksGuides } from './FrameworksGuides';
 import classes from './HomePageGetStarted.module.css';
 
 export function HomePageGetStarted() {
