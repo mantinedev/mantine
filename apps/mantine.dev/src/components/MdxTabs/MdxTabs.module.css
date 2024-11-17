@@ -54,6 +54,7 @@
 .main {
   max-width: var(--docs-mdx-content-width);
   padding-inline: var(--docs-inline-spacing);
+  width: 100%;
 
   @mixin smaller-than $docs-toc-breakpoint {
     padding-inline-end: 0;
