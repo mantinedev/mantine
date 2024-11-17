@@ -1,0 +1,92 @@
+.card {
+  position: relative;
+  min-width: 300px;
+  height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--mantine-color-white);
+  border-radius: var(--mantine-radius-lg);
+  padding: var(--mantine-spacing-xl);
+  padding-inline-end: 80px;
+  text-decoration: none;
+  transition: transform 200ms ease;
+
+  @mixin hover {
+    transform: scale(1.005);
+  }
+}
+
+.discord {
+  height: 490px;
+  background-color: #5865f2;
+  background-image: linear-gradient(180deg, #5865f2, #535ed4);
+
+  & .icon {
+    background-color: #4753d4;
+  }
+}
+
+.hc {
+  background-image: linear-gradient(
+    180deg,
+    var(--mantine-color-blue-6),
+    var(--mantine-color-blue-7)
+  );
+
+  & .icon {
+    padding: 0;
+    background-color: var(--mantine-color-blue-8);
+
+    svg > path:first-child {
+      fill: var(--mantine-color-blue-8);
+    }
+  }
+}
+
+.github,
+.twitter {
+  background-color: var(--mantine-color-gray-0);
+  color: var(--mantine-color-black);
+
+  & .icon {
+    background-color: var(--mantine-color-dark-7);
+    color: var(--mantine-color-white);
+  }
+}
+
+.icon {
+  margin-right: var(--mantine-spacing-lg);
+  height: 60px;
+  width: 60px;
+  min-width: 60px;
+  min-height: 60px;
+  padding: 15px;
+  border-radius: var(--mantine-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 550;
+  font-family: var(--docs-font-family);
+}
+
+.description {
+  margin-top: 10px;
+  font-size: var(--mantine-font-size-sm);
+  text-wrap: balance;
+  opacity: 0.8;
+}
+
+.arrow {
+  --icon-size: 30px;
+
+  width: var(--icon-size);
+  height: var(--icon-size);
+  position: absolute;
+  bottom: var(--mantine-spacing-xl);
+  right: var(--mantine-spacing-xl);
+}

@@ -1,0 +1,47 @@
+.controls {
+  display: flex;
+  gap: 3px;
+  position: relative;
+}
+
+.control {
+  font-size: var(--mantine-font-size-lg);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-lg);
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-1));
+  font-family: var(--docs-font-family);
+  transition:
+    color 100ms ease,
+    background-color 100ms ease;
+  font-weight: 500;
+  border-radius: var(--mantine-radius-md);
+
+  &[data-active] {
+    color: var(--mantine-color-blue-0);
+  }
+
+  @mixin hover {
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+
+    &:not([data-active]) {
+      color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+    }
+  }
+}
+
+.controlLabel {
+  position: relative;
+  z-index: 2;
+}
+
+.content {
+  padding-top: var(--mantine-spacing-xl);
+}
+
+.indicator {
+  cursor: pointer;
+  background-image: var(--hp-primary-bg);
+  box-shadow: var(--hp-primary-shadow);
+  border-bottom: var(--hp-primary-border);
+  border-radius: var(--mantine-radius-md);
+  z-index: 1;
+}

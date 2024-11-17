@@ -1,0 +1,10 @@
+.root {
+  max-width: 670px;
+  font-size: var(--mantine-font-size-xl);
+  color: var(--mantine-color-gray-7);
+  margin-top: var(--mantine-spacing-lg);
+
+  @mixin dark {
+    color: var(--mantine-color-dark-1);
+  }
+}

@@ -1,0 +1,8 @@
+.root {
+  padding-block: 120px;
+}
+
+.description {
+  max-width: 1000px;
+  margin-bottom: var(--mantine-spacing-xl);
+}

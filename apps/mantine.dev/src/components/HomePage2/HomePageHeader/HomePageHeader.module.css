@@ -1,0 +1,172 @@
+.header {
+  padding-top: 40px;
+  height: 88px;
+  background-color: var(--mantine-color-gray-0);
+  color: var(--mantine-color-black);
+
+  @mixin dark {
+    background-color: var(--mantine-color-dark-8);
+    color: var(--mantine-color-white);
+  }
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.versionChevron {
+  width: 18px;
+  height: 18px;
+}
+
+.versionMenuItem {
+  &[data-hovered] {
+    background-color: var(--mantine-color-gray-0);
+
+    @mixin dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+  }
+}
+
+.versionsDropdown {
+  @mixin dark {
+    background-color: var(--mantine-color-dark-7);
+  }
+}
+
+.versionItem {
+  color: var(--mantine-color-bright);
+  font-weight: 700;
+}
+
+.exactVersion {
+  font-weight: 400;
+  color: var(--mantine-color-dimmed);
+}
+
+.versionExternalIcon {
+  width: 16px;
+  height: 16px;
+  color: var(--mantine-color-dimmed);
+}
+
+.control {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--mantine-radius-md);
+  color: var(--mantine-color-gray-9);
+  background-color: var(--mantine-color-white);
+  opacity: 0.7;
+
+  @mixin hover {
+    background-color: var(--mantine-color-gray-0);
+    opacity: 1;
+
+    &[data-discord] {
+      background-color: rgba(88, 101, 242, 0.1);
+      color: #5865f2;
+    }
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-white);
+    background-color: var(--mantine-color-dark-7);
+
+    @mixin hover {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding-inline: 14px;
+  border-radius: var(--mantine-radius-md);
+  text-decoration: none;
+  color: var(--mantine-color-gray-8);
+  font-size: var(--mantine-font-size-md);
+  font-weight: 500;
+
+  @mixin hover {
+    color: var(--mantine-color-black);
+    background-color: var(--mantine-color-gray-0);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-dark-0);
+    background-color: var(--mantine-color-dark-7);
+
+    @mixin hover {
+      background-color: var(--mantine-color-dark-6);
+      color: var(--mantine-color-white);
+    }
+  }
+}
+
+.nav {
+  background-color: var(--mantine-color-white);
+  border-radius: var(--mantine-radius-lg);
+  padding: var(--mantine-spacing-xs);
+  align-items: center;
+  border: 1px solid var(--mantine-color-gray-2);
+
+  @mixin dark {
+    background-color: var(--mantine-color-dark-7);
+    border-color: var(--mantine-color-dark-5);
+  }
+}
+
+.version {
+  font-weight: 700;
+  font-size: var(--mantine-font-size-sm);
+  line-height: 1;
+  padding-inline: 18px;
+  padding-right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--mantine-color-white);
+  color: var(--mantine-color-gray-8);
+  height: 36px;
+  border-radius: var(--mantine-radius-md);
+
+  &[data-expanded] {
+    background-color: var(--mantine-color-gray-0);
+
+    @mixin dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+
+  @mixin hover {
+    background-color: var(--mantine-color-gray-0);
+  }
+
+  @mixin dark {
+    background-color: var(--mantine-color-dark-7);
+    color: var(--mantine-color-white);
+
+    @mixin hover {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+}
+
+.divider {
+  margin-inline: 15px;
+  height: 28px;
+  align-self: center;
+  border-color: var(--mantine-color-gray-2);
+
+  @mixin dark {
+    border-color: var(--mantine-color-dark-5);
+  }
+}

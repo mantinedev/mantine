@@ -1,0 +1,46 @@
+import { useMantineColorScheme } from '@mantine/core';
+import { useHotkeys } from '@mantine/hooks';
+import { HomePageAccessibility } from './HomePageAccessibility/HomePageAccessibility';
+import { HomePageCombobox } from './HomePageCombobox/HomePageCombobox';
+import { HomePageCommunity } from './HomePageCommunity/HomePageCommunity';
+import { HomePageComponents } from './HomePageComponents/HomePageComponents';
+import { HomePageDarkColorScheme } from './HomePageDarkColorScheme/HomePageDarkColorScheme';
+import { HomePageExtensions } from './HomePageExtensions/HomePageExtensions';
+import { HomePageFooter } from './HomePageFooter/HomePageFooter';
+import { HomePageForm } from './HomePageForm/HomePageForm';
+import { HomePageGetStarted } from './HomePageGetStarted/HomePageGetStarted';
+import { HomePageHeader } from './HomePageHeader/HomePageHeader';
+import { HomePageHooks } from './HomePageHooks/HomePageHooks';
+import { HomePageJoin } from './HomePageJoin/HomePageJoin';
+import { HomePageJumbotron } from './HomePageJumbotron/HomePageJumbotron';
+import { HomePageStyles } from './HomePageStyles/HomePageStyles';
+import { HomePageTheming } from './HomePageTheming/HomePageTheming';
+import { HomePageUI } from './HomePageUI/HomePageUI';
+import classes from './HomePage.module.css';
+
+export function HomePage() {
+  const { toggleColorScheme } = useMantineColorScheme();
+  useHotkeys([['mod+j', () => toggleColorScheme()]]);
+
+  return (
+    <div className={classes.root}>
+      <HomePageHeader />
+      <HomePageJumbotron />
+      <HomePageComponents />
+      <HomePageAccessibility />
+      <HomePageHooks />
+      <HomePageTheming />
+      <HomePageStyles />
+      <HomePageDarkColorScheme />
+      <HomePageCombobox />
+      <HomePageExtensions />
+      <HomePageForm />
+      <HomePageUI />
+      <HomePageCommunity />
+      <div style={{ height: 200 }} />
+      <HomePageGetStarted />
+      <HomePageJoin />
+      <HomePageFooter />
+    </div>
+  );
+}

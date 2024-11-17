@@ -1,0 +1,17 @@
+.root {
+  padding-top: 120px;
+}
+
+.container {
+  position: relative;
+  height: 580px;
+  overflow: hidden;
+}
+
+.icon {
+  position: absolute;
+  top: -34px;
+  right: -34px;
+  color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  z-index: -1;
+}

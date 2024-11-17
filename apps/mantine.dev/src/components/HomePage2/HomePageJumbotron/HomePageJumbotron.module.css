@@ -1,0 +1,59 @@
+.root {
+  height: 692px;
+  padding-top: 200px;
+  padding-bottom: 120px;
+  background-color: var(--mantine-color-gray-0);
+
+  @mixin dark {
+    background-color: var(--mantine-color-dark-8);
+  }
+}
+
+.action {
+  height: 60px;
+  width: 220px;
+  border-radius: var(--mantine-radius-md);
+  font-size: var(--mantine-font-size-lg);
+  padding-inline: var(--mantine-spacing-lg);
+  font-weight: 500;
+  padding-top: 3px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+
+  transition:
+    box-shadow 100ms ease,
+    transform 100ms ease;
+
+  @mixin hover {
+    box-shadow: var(--mantine-shadow-md);
+    transform: translateY(-1px) scale(1.01);
+  }
+
+  &[data-get-started] {
+    background: var(--hp-primary-bg);
+    box-shadow: var(--hp-primary-shadow);
+    border-bottom: var(--hp-primary-border);
+  }
+
+  &[data-github] {
+    background-color: var(--mantine-color-dark-7);
+    color: var(--mantine-color-white);
+    font-weight: 600;
+
+    @mixin hover {
+      background-color: var(--mantine-color-black);
+    }
+
+    @mixin dark {
+      border-color: var(--mantine-color-dark-5);
+      background-color: var(--mantine-color-gray-1);
+      color: var(--mantine-color-black);
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  gap: var(--mantine-spacing-lg);
+  margin-top: 40px;
+}

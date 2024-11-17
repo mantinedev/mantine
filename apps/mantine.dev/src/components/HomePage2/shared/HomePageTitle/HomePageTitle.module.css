@@ -1,0 +1,17 @@
+.title {
+  font-family: var(--docs-font-family);
+  font-weight: 450;
+  line-height: 1.1;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  color: var(--mantine-color-bright);
+
+  &[data-order='1'] {
+    font-size: 72px;
+  }
+
+  &[data-order='2'] {
+    font-size: 54px;
+  }
+}

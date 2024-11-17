@@ -1,0 +1,20 @@
+.floating {
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--mantine-radius-md);
+  height: 200px;
+  margin-top: 5px;
+  padding: var(--mantine-spacing-lg);
+  font-size: var(--mantine-font-size-lg);
+  cursor: default;
+}
+
+.popoverDropdown {
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+}
+
+.label {
+  color: var(--mantine-color-bright);
+}

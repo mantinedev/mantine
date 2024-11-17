@@ -1,0 +1,13 @@
+.root {
+  width: fit-content;
+  display: block;
+  color: var(--mantine-color-blue-7);
+  font-size: var(--mantine-font-size-lg);
+  margin-top: var(--mantine-spacing-lg);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+}
