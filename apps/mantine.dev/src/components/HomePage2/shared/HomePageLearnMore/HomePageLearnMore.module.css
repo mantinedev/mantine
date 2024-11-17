@@ -1,7 +1,7 @@
 .root {
   width: fit-content;
   display: block;
-  color: var(--mantine-color-blue-7);
+  color: light-dark(var(--mantine-color-blue-7), var(--mantine-color-blue-5));
   font-size: var(--mantine-font-size-lg);
   margin-top: var(--mantine-spacing-lg);
 }

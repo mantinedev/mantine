@@ -1,5 +1,5 @@
 .root {
-  background-color: var(--mantine-color-gray-0);
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
   padding-top: 120px;
   padding-bottom: 120px;
 }
@@ -18,10 +18,10 @@
 }
 
 .review {
-  background-color: var(--mantine-color-white);
+  background-color: var(--mantine-color-body);
   padding: var(--mantine-spacing-lg);
   border-radius: var(--mantine-radius-lg);
-  border: 1px solid var(--mantine-color-gray-2);
+  border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
 
   & + & {
     margin-top: var(--mantine-spacing-xl);
@@ -33,12 +33,14 @@
   font-size: var(--mantine-font-size-lg);
   font-weight: 500;
   margin-bottom: var(--mantine-spacing-sm);
+  color: var(--mantine-color-bright);
 }
 
 .reviewHeader {
   display: flex;
   justify-content: space-between;
   margin-bottom: var(--mantine-spacing-md);
+  color: var(--mantine-color-bright);
 }
 
 .reviewBody {
@@ -66,7 +68,7 @@
 
 .reviewExternalLink {
   font-size: var(--mantine-font-size-sm);
-  color: var(--mantine-color-gray-7);
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-2));
   display: flex;
   align-items: center;
   gap: var(--mantine-spacing-xs);
@@ -97,12 +99,12 @@
 }
 
 .statLabel {
-  color: var(--mantine-color-gray-7);
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-2));
   font-size: var(--mantine-font-size-sm);
 }
 
 .statDivider {
   align-self: center;
   height: 48px;
-  border-color: var(--mantine-color-gray-3);
+  border-color: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
 }
