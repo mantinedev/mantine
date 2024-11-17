@@ -9,6 +9,7 @@ import classes from './Shell.module.css';
 
 interface ShellProps {
   children: React.ReactNode;
+  fluid?: boolean;
   withNav?: boolean;
   withNavbar?: boolean;
   withMobileNavbar?: boolean;
@@ -22,6 +23,7 @@ export function Shell({
   withNav = true,
   withNavbar = true,
   withMobileNavbar = true,
+  fluid = false,
   navbarOpened,
   onNavbarOpenedChange,
   headerControlsProps,
@@ -41,7 +43,7 @@ export function Shell({
     >
       <div>
         <DocsHeader headerControlsProps={headerControlsProps} withNav={withNav} />
-        <Container size={1440}>
+        <Container size={1440} fluid={fluid} px={fluid ? 0 : undefined}>
           <div className={classes.inner}>
             {withMobileNavbar && mobileNavbarOpened && <DocsMobileNavbar />}
             {withNavbar && <DocsNavbar />}

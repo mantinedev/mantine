@@ -1,5 +1,6 @@
 import { useMantineColorScheme } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
+import { Shell } from '../Shell';
 import { HomePageAccessibility } from './HomePageAccessibility/HomePageAccessibility';
 import { HomePageCombobox } from './HomePageCombobox/HomePageCombobox';
 import { HomePageCommunity } from './HomePageCommunity/HomePageCommunity';
@@ -9,7 +10,6 @@ import { HomePageExtensions } from './HomePageExtensions/HomePageExtensions';
 import { HomePageFooter } from './HomePageFooter/HomePageFooter';
 import { HomePageForm } from './HomePageForm/HomePageForm';
 import { HomePageGetStarted } from './HomePageGetStarted/HomePageGetStarted';
-import { HomePageHeader } from './HomePageHeader/HomePageHeader';
 import { HomePageHooks } from './HomePageHooks/HomePageHooks';
 import { HomePageJoin } from './HomePageJoin/HomePageJoin';
 import { HomePageJumbotron } from './HomePageJumbotron/HomePageJumbotron';
@@ -23,24 +23,25 @@ export function HomePage() {
   useHotkeys([['mod+j', () => toggleColorScheme()]]);
 
   return (
-    <div className={classes.root}>
-      <HomePageHeader />
-      <HomePageJumbotron />
-      <HomePageComponents />
-      <HomePageAccessibility />
-      <HomePageHooks />
-      <HomePageTheming />
-      <HomePageStyles />
-      <HomePageDarkColorScheme />
-      <HomePageCombobox />
-      <HomePageExtensions />
-      <HomePageForm />
-      <HomePageUI />
-      <HomePageCommunity />
-      <div style={{ height: 200 }} />
-      <HomePageGetStarted />
-      <HomePageJoin />
-      <HomePageFooter />
-    </div>
+    <Shell withNavbar={false} fluid withNav={false}>
+      <div className={classes.root}>
+        <HomePageJumbotron />
+        <HomePageComponents />
+        <HomePageAccessibility />
+        <HomePageHooks />
+        <HomePageTheming />
+        <HomePageStyles />
+        <HomePageDarkColorScheme />
+        <HomePageCombobox />
+        <HomePageExtensions />
+        <HomePageForm />
+        <HomePageUI />
+        <HomePageCommunity />
+        <div style={{ height: 200 }} />
+        <HomePageGetStarted />
+        <HomePageJoin />
+        <HomePageFooter />
+      </div>
+    </Shell>
   );
 }
