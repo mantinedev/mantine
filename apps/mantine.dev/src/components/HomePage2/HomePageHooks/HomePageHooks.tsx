@@ -1,6 +1,6 @@
 import { SimpleGrid } from '@mantine/core';
 import { Demo } from '@mantinex/demo';
-import { SliderDemos } from '@docs/demos';
+import { HooksDemos, SliderDemos } from '@docs/demos';
 import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer';
 import { HomePageDescription } from '../shared/HomePageDescription/HomePageDescription';
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
@@ -21,12 +21,12 @@ export function HomePageHooks() {
         <HomePageTitle order={2}>Hooks library</HomePageTitle>
         <HomePageDescription className={classes.description}>70+ hooks for</HomePageDescription>
 
-        <SimpleGrid cols={2}>
-          <div>
+        <SimpleGrid cols={{ md: 2 }}>
+          <div className={classes.column}>
             <Demo data={SliderDemos.customSlider} demoProps={{ defaultExpanded: false }} />
           </div>
-          <div>
-            <Demo data={SliderDemos.customSlider} demoProps={{ defaultExpanded: false }} />
+          <div className={classes.column}>
+            <Demo data={HooksDemos.useResizeObserverDemo} demoProps={{ defaultExpanded: false }} />
           </div>
         </SimpleGrid>
       </HomePageContainer>

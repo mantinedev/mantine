@@ -1,6 +1,8 @@
+import Link from 'next/link';
 import { IconArrowUpRight } from '@tabler/icons-react';
 import { Button } from '@mantine/core';
 import { GithubIcon } from '@mantinex/dev-icons';
+import { meta } from '@mantinex/mantine-meta';
 import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer';
 import { HomePageDescription } from '../shared/HomePageDescription/HomePageDescription';
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
@@ -22,6 +24,8 @@ export function HomePageJumbotron() {
 
         <div className={classes.actions}>
           <Button
+            component={Link}
+            href="/getting-started"
             className={classes.action}
             data-get-started
             justify="space-between"
@@ -34,6 +38,8 @@ export function HomePageJumbotron() {
             data-github
             rightSection={<GithubIcon size={26} />}
             justify="space-between"
+            component="a"
+            href={meta.gitHubLinks.mantine}
           >
             GitHub
           </Button>

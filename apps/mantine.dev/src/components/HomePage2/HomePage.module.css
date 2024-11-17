@@ -1,6 +1,6 @@
 .root {
   position: relative;
-  z-index: 100;
+  z-index: 5;
   background-color: var(--mantine-color-body);
   border-bottom: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
 

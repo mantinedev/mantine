@@ -1,3 +1,11 @@
 .root {
   padding-block: 120px;
 }
+
+.column {
+  max-width: calc(50vw - 50px);
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    max-width: calc(100vw - 50px);
+  }
+}
