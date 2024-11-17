@@ -74,7 +74,7 @@
   color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
 
   &[data-active] {
-    border-bottom-color: var(--mantine-color-blue-text);
+    border-bottom-color: light-dark(var(--mantine-color-blue-6), var(--mantine-color-blue-5));
     color: var(--mantine-color-bright);
   }
 
