@@ -1,0 +1,24 @@
+.root {
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.demo {
+  width: 400px;
+  max-width: 800px;
+  min-width: 160px;
+  height: 200px;
+  max-height: 220px;
+  min-height: 80px;
+  background-color: light-dark(var(--mantine-color-blue-6), var(--mantine-color-blue-8));
+  resize: both;
+  overflow: auto;
+  color: var(--mantine-color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 500;
+}
