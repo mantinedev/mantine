@@ -82,7 +82,7 @@ $footer-breakpoint-mobile: 40em;
 .afterFooterNote {
   &,
   & a {
-    color: var(--mantine-color-dimmed);
+    color: var(--mantine-color-bright);
   }
 }
 
