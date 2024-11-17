@@ -17,7 +17,7 @@ export function HomePageJumbotron() {
 
         <HomePageDescription>
           Build fully functional accessible web applications faster than ever – Mantine includes
-          more than 100 customizable components and 50 hooks to cover you in any situation
+          more than 120 customizable components and 70 hooks to cover you in any situation
         </HomePageDescription>
 
         <div className={classes.actions}>

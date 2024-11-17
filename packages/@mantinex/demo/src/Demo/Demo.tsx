@@ -13,25 +13,28 @@ export type MantineDemo =
 
 interface DemoProps {
   data: MantineDemo;
+  demoProps?: {
+    defaultExpanded?: boolean;
+  };
 }
 
-export function Demo({ data }: DemoProps) {
+export function Demo({ data, demoProps }: DemoProps) {
   switch (data.type) {
     case 'code':
       return (
-        <CodeDemo {...data}>
+        <CodeDemo {...data} {...demoProps}>
           <data.component />
         </CodeDemo>
       );
     case 'configurator':
       return (
-        <ConfiguratorDemo {...data}>
+        <ConfiguratorDemo {...data} {...demoProps}>
           <data.component />
         </ConfiguratorDemo>
       );
     case 'styles-api':
       return (
-        <StylesApiDemo {...data}>
+        <StylesApiDemo {...data} {...demoProps}>
           <data.component />
         </StylesApiDemo>
       );
