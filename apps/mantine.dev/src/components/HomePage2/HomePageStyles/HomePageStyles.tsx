@@ -12,7 +12,7 @@ export function HomePageStyles() {
 
         <HomePageDescription className={classes.description}>Description</HomePageDescription>
 
-        <HomePageLearnMore>Learn more about styles</HomePageLearnMore>
+        <HomePageLearnMore href="/">Learn more about styles</HomePageLearnMore>
       </HomePageContainer>
     </section>
   );

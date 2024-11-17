@@ -17,7 +17,7 @@ export function HomePageGetStarted() {
           using one of the available templates.
         </HomePageDescription>
 
-        <HomePageLearnMore>Get started without a framework</HomePageLearnMore>
+        <HomePageLearnMore href="/">Get started without a framework</HomePageLearnMore>
 
         <div className={classes.guides}>
           <FrameworksGuides />

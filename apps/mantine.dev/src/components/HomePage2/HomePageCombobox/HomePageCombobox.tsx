@@ -12,7 +12,7 @@ export function HomePageCombobox() {
 
         <HomePageDescription className={classes.description}>Description</HomePageDescription>
 
-        <HomePageLearnMore>Explore 50+ Combobox examples</HomePageLearnMore>
+        <HomePageLearnMore href="/">Explore 50+ Combobox examples</HomePageLearnMore>
       </HomePageContainer>
     </section>
   );

@@ -12,7 +12,7 @@ export function HomePageForm() {
 
         <HomePageDescription className={classes.description}>Description</HomePageDescription>
 
-        <HomePageLearnMore>Open form editor</HomePageLearnMore>
+        <HomePageLearnMore href="/">Open form editor</HomePageLearnMore>
       </HomePageContainer>
     </section>
   );

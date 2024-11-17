@@ -12,7 +12,7 @@ export function HomePageTheming() {
 
         <HomePageDescription className={classes.description}>Description</HomePageDescription>
 
-        <HomePageLearnMore>Open theme editor</HomePageLearnMore>
+        <HomePageLearnMore href="/">Open theme editor</HomePageLearnMore>
       </HomePageContainer>
     </section>
   );

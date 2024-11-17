@@ -12,7 +12,7 @@ export function HomePageDarkColorScheme() {
 
         <HomePageDescription className={classes.description}>Description</HomePageDescription>
 
-        <HomePageLearnMore>Learn more about dark color scheme</HomePageLearnMore>
+        <HomePageLearnMore href="/">Learn more about dark color scheme</HomePageLearnMore>
       </HomePageContainer>
     </section>
   );

@@ -19,7 +19,7 @@ export function HomePageAccessibility() {
           focus properly and are tested with a screen reader.
         </HomePageDescription>
 
-        <HomePageLearnMore>Learn more about accessibility in Mantine</HomePageLearnMore>
+        <HomePageLearnMore href="/">Learn more about accessibility in Mantine</HomePageLearnMore>
 
         <Text mt="xl">
           Here will be an example that shows how to interact with components using keyboard.
