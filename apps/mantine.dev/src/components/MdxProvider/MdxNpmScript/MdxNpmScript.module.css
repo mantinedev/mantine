@@ -1,10 +1,32 @@
-.root {
-  border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
-  border-radius: var(--mantine-radius-md);
-  overflow: hidden;
-  margin-bottom: var(--mantine-spacing-xl);
-}
-
 .icon {
   margin-inline-end: 5px;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  font-family: var(--mantine-font-family-monospace);
+  font-weight: 700;
+  font-size: 12px;
+  border-radius: var(--mantine-radius-md);
+  border-end-end-radius: 0;
+  border-end-start-radius: 0;
+
+  @mixin hover {
+    background-color: transparent;
+  }
+
+  &[data-active] {
+    background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-8));
+    color: var(--mantine-color-bright);
+  }
+}
+
+.code {
+  margin: 0;
+  background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-8));
+
+  &[data-without-radius] {
+    border-start-start-radius: 0;
+  }
 }
