@@ -17,7 +17,6 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   HooksPackage: {
     title: 'Get started',
     slug: '/hooks/package',
-    search: 'Get started @mantine/hooks package',
     hideInSearch: true,
     hideHeader: true,
   },

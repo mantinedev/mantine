@@ -204,6 +204,10 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
 
 const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
   {
+    category: '',
+    pages: [MDX_DATA.CorePackage],
+  },
+  {
     category: 'Layout',
     pages: [
       MDX_DATA.Container,

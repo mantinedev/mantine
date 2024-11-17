@@ -1,6 +1,13 @@
 import { Frontmatter } from '@/types';
 
 export const MDX_CORE_DATA: Record<string, Frontmatter> = {
+  CorePackage: {
+    title: 'Get started',
+    slug: '/core/package',
+    hideInSearch: true,
+    hideHeader: true,
+  },
+
   Box: {
     title: 'Box',
     package: '@mantine/core',
