@@ -6,13 +6,13 @@ import { HomePageDescription } from '../shared/HomePageDescription/HomePageDescr
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
 import classes from './HomePageHooks.module.css';
 
-// use-resize-observer
-// use-move
-// use-hotkeys
-// use-click-outside
-// use-local-storage
-// use-clipboard
+// use-resize-observer +
+// use-move +
+// use-hotkeys +
+
 // use-eye-dropper
+// use-clipboard
+// use-click-outside
 
 export function HomePageHooks() {
   return (
@@ -27,6 +27,9 @@ export function HomePageHooks() {
           </div>
           <div className={classes.column}>
             <Demo data={HooksDemos.useResizeObserverDemo} demoProps={{ defaultExpanded: false }} />
+          </div>
+          <div className={classes.column}>
+            <Demo data={HooksDemos.useHotkeysDemoIndex} demoProps={{ defaultExpanded: false }} />
           </div>
         </SimpleGrid>
       </HomePageContainer>

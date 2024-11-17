@@ -5,7 +5,7 @@ export default { title: 'Kbd' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Kbd>Shift</Kbd>
+      <Kbd size={30}>Shift</Kbd>
     </div>
   );
 }

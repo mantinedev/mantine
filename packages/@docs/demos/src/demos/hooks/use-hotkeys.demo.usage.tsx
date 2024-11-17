@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { TextInput } from '@mantine/core';
-import { getHotkeyHandler, useHotkeys } from '@mantine/hooks';
+import { getHotkeyHandler } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { MantineDemo } from '@mantinex/demo';
 
@@ -31,15 +31,6 @@ function Demo() {
 `;
 
 function Demo() {
-  useHotkeys([
-    [
-      'alt+mod+shift+X',
-      () => {
-        window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-      },
-    ],
-  ]);
-
   const [value, setValue] = useState("I've just used a hotkey to send a message");
   const handleSubmit = () => notifications.show({ title: 'Your message', message: value });
   const handleSave = () =>

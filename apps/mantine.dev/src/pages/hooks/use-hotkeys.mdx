@@ -12,21 +12,7 @@ export default Layout(MDX_DATA.useHotkeys);
 - `handler` - event handler called when a given combination was pressed
 - `options` - object with extra options for hotkey handler
 
-```tsx
-import { useHotkeys } from '@mantine/hooks';
-
-function Demo() {
-  // ctrl + J and ⌘ + J to toggle color scheme
-  // ctrl + K and ⌘ + K to search
-  useHotkeys([
-    ['mod+J', () => console.log('Toggle color scheme')],
-    ['ctrl+K', () => console.log('Trigger search')],
-    ['alt+mod+shift+X', () => console.log('Rick roll')],
-  ]);
-
-  return null;
-}
-```
+<Demo data={HooksDemos.useHotkeysDemoIndex} />
 
 The second argument is a list of HTML tags on which hotkeys should be ignored.
 By default, hotkeys events are ignored if the focus is in `input`, `textarea` and `select` elements.

@@ -6,22 +6,16 @@
   --kbd-fz-xl: 20px;
   --kbd-fz: var(--kbd-fz-sm);
 
-  --kbd-padding-xs: 2px 4px;
-  --kbd-padding-sm: 3px 5px;
-  --kbd-padding-md: 4px 7px;
-  --kbd-padding-lg: 5px 9px;
-  --kbd-padding-xl: 8px 14px;
-  --kbd-padding: var(--kbd-padding-sm);
-
   font-family: var(--mantine-font-family-monospace);
   line-height: var(--mantine-line-height);
   font-weight: 700;
-  padding: var(--kbd-padding);
   font-size: var(--kbd-fz);
   border-radius: var(--mantine-radius-sm);
   border: 1px solid;
   border-bottom-width: 3px;
   unicode-bidi: embed;
+  text-align: center;
+  padding: 0.12em 0.45em;
 
   @mixin where-light {
     border-color: var(--mantine-color-gray-3);

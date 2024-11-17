@@ -15,12 +15,12 @@ import classes from './Kbd.module.css';
 
 export type KbdStylesNames = 'root';
 export type KbdCssVariables = {
-  root: '--kbd-padding' | '--kbd-fz';
+  root: '--kbd-fz';
 };
 
 export interface KbdProps extends BoxProps, StylesApiProps<KbdFactory>, ElementProps<'kbd'> {
-  /** Controls font-size and padding, `'sm'` by default */
-  size?: MantineSize | (string & {});
+  /** Controls `font-size` and `padding`, `'sm'` by default */
+  size?: MantineSize | number | (string & {});
 }
 
 export type KbdFactory = Factory<{
@@ -33,10 +33,7 @@ export type KbdFactory = Factory<{
 const defaultProps: Partial<KbdProps> = {};
 
 const varsResolver = createVarsResolver<KbdFactory>((_, { size }) => ({
-  root: {
-    '--kbd-fz': getSize(size, 'kbd-fz'),
-    '--kbd-padding': getSize(size, 'kbd-padding'),
-  },
+  root: { '--kbd-fz': getSize(size, 'kbd-fz') },
 }));
 
 export const Kbd = factory<KbdFactory>((_props, ref) => {

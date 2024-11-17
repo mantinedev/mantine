@@ -108,6 +108,11 @@ export const Demo_useHotkeysDemo = {
   render: renderDemo(demos.useHotkeysDemo),
 };
 
+export const Demo_useHotkeysDemoIndex = {
+  name: '⭐ Demo: useHotkeysDemoIndex',
+  render: renderDemo(demos.useHotkeysDemoIndex),
+};
+
 export const Demo_useHoverDemo = {
   name: '⭐ Demo: useHoverDemo',
   render: renderDemo(demos.useHoverDemo),

@@ -19,6 +19,7 @@ export { useFullscreenRefDemo } from './use-fullscreen.demo.ref';
 export { useHashDemo } from './use-hash.demo.usage';
 export { useHeadroomDemo } from './use-headroom.demo.usage';
 export { useHotkeysDemo } from './use-hotkeys.demo.usage';
+export { useHotkeysDemoIndex } from './use-hotkeys.demo.index';
 export { useHoverDemo } from './use-hover.demo.usage';
 export { useIdleDemo } from './use-idle.demo.usage';
 export { useIdleEvents } from './use-idle.demo.events';

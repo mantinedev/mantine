@@ -9,7 +9,6 @@ export const KbdStylesApi: StylesApiData<KbdFactory> = {
   vars: {
     root: {
       '--kbd-fz': 'Controls `font-size`',
-      '--kbd-padding': 'Controls `padding`',
     },
   },
 };
