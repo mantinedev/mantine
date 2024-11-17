@@ -1,5 +1,6 @@
 import { useMantineColorScheme } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
+import { Footer } from '../Footer';
 import { Shell } from '../Shell';
 import { HomePageAccessibility } from './HomePageAccessibility/HomePageAccessibility';
 import { HomePageCombobox } from './HomePageCombobox/HomePageCombobox';
@@ -7,7 +8,6 @@ import { HomePageCommunity } from './HomePageCommunity/HomePageCommunity';
 import { HomePageComponents } from './HomePageComponents/HomePageComponents';
 import { HomePageDarkColorScheme } from './HomePageDarkColorScheme/HomePageDarkColorScheme';
 import { HomePageExtensions } from './HomePageExtensions/HomePageExtensions';
-import { HomePageFooter } from './HomePageFooter/HomePageFooter';
 import { HomePageForm } from './HomePageForm/HomePageForm';
 import { HomePageGetStarted } from './HomePageGetStarted/HomePageGetStarted';
 import { HomePageHooks } from './HomePageHooks/HomePageHooks';
@@ -40,8 +40,8 @@ export function HomePage() {
         <div style={{ height: 200 }} />
         <HomePageGetStarted />
         <HomePageJoin />
-        <HomePageFooter />
       </div>
+      <Footer withNavbar={false} />
     </Shell>
   );
 }

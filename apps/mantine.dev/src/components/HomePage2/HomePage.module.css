@@ -1,4 +1,9 @@
 .root {
+  position: relative;
+  z-index: 100;
+  background-color: var(--mantine-color-body);
+  border-bottom: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
+
   --hp-primary-bg: linear-gradient(
       45deg,
       var(--mantine-color-blue-6) 15%,
