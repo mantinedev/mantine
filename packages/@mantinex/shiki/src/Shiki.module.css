@@ -90,7 +90,7 @@
   justify-content: center;
   font-size: var(--mantine-font-size-xs);
   gap: 7px;
-  padding: 6px 12px;
+  padding: 5px 9px;
   font-family: var(--mantine-font-family-monospace);
   font-weight: 700;
   line-height: 1;
@@ -100,7 +100,7 @@
   border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
   white-space: nowrap;
   margin: 0;
-  border-radius: var(--mantine-radius-xl);
+  border-radius: var(--mantine-radius-sm);
   color: light-dark(var(--mantine-color-gray-8), var(--mantine-color-dark-0));
 
   @mixin hover {
@@ -120,7 +120,7 @@
 
 .files {
   display: flex;
-  padding: 7px 10px;
+  padding: 12px 10px;
   padding-bottom: 0;
   gap: var(--mantine-spacing-xs);
 }
