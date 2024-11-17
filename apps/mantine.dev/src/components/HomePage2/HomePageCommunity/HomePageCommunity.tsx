@@ -75,10 +75,10 @@ export function HomePageCommunity() {
               <HomePageLearnMore>View all reviews from the community</HomePageLearnMore>
 
               <div className={classes.stats}>
-                <Stat value="25,000+" label="Stars on GitHub" link={meta.gitHubLinks.mantine} />
+                <Stat value="28,000+" label="Stars on GitHub" link={meta.gitHubLinks.mantine} />
                 <Divider className={classes.statDivider} orientation="vertical" />
                 <Stat
-                  value="1.8M+"
+                  value="2.2M+"
                   label="Monthly downloads"
                   link="https://www.npmjs.com/package/@mantine/hooks"
                 />
