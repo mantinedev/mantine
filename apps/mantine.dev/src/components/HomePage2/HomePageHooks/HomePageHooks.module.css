@@ -11,11 +11,12 @@
 }
 
 .demos {
-  margin-top: var(--mantine-spacing-xl);
+  margin-top: 60px;
 }
 
 .title {
-  margin-bottom: 3px;
+  margin-bottom: 5px;
+  font-weight: 400;
 }
 
 .titleLink {

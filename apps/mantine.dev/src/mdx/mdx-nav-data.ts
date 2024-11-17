@@ -106,6 +106,10 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
 
 const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
   {
+    category: '',
+    pages: [MDX_DATA.HooksPackage],
+  },
+  {
     category: 'UI and Dom',
     pages: [
       MDX_DATA.useClickOutside,

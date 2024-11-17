@@ -31,7 +31,7 @@ export function CategoriesList({ categories }: CategoriesListProps) {
 
     return (
       <div key={category.category} className={classes.category}>
-        <div className={classes.categoryTitle}>{category.category}</div>
+        {category.category && <div className={classes.categoryTitle}>{category.category}</div>}
         <div className={classes.links}>{links}</div>
       </div>
     );

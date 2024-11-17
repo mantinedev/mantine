@@ -5,6 +5,7 @@ import { Demo } from '@mantinex/demo';
 import { HooksDemos, SliderDemos } from '@docs/demos';
 import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer';
 import { HomePageDescription } from '../shared/HomePageDescription/HomePageDescription';
+import { HomePageLearnMore } from '../shared/HomePageLearnMore/HomePageLearnMore';
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
 import classes from './HomePageHooks.module.css';
 
@@ -40,7 +41,11 @@ export function HomePageHooks() {
     <section className={classes.root}>
       <HomePageContainer>
         <HomePageTitle order={2}>Hooks library</HomePageTitle>
-        <HomePageDescription>70+ hooks for</HomePageDescription>
+        <HomePageDescription>
+          70+ hooks for handling tricky and common parts of your application
+        </HomePageDescription>
+
+        <HomePageLearnMore href="/hooks/package">Browse all hooks</HomePageLearnMore>
 
         <SimpleGrid cols={{ md: 2 }} className={classes.demos} spacing="xl">
           <DemoColumn

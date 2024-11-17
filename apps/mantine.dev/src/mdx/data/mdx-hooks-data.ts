@@ -14,6 +14,14 @@ function hDocs(hook: string, description: string): Frontmatter {
 }
 
 export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
+  HooksPackage: {
+    title: 'Get started',
+    slug: '/hooks/package',
+    search: 'Get started @mantine/hooks package',
+    hideInSearch: true,
+    hideHeader: true,
+  },
+
   useClickOutside: hDocs(
     'useClickOutside',
     'Detects click and touch events outside of given element or elements group'
