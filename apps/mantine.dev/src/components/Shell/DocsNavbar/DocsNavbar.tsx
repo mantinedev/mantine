@@ -10,13 +10,18 @@ import classes from './DocsNavbar.module.css';
 
 interface CategoriesListProps {
   categories: MdxPagesCategory[];
+  hideEmptyCategories?: boolean;
 }
 
-export function CategoriesList({ categories }: CategoriesListProps) {
+export function CategoriesList({ categories, hideEmptyCategories }: CategoriesListProps) {
   const router = useRouter();
   const ctx = useShellContext();
 
   const items = categories.map((category) => {
+    if (hideEmptyCategories && category.category === '') {
+      return null;
+    }
+
     const links = category.pages.map((page) => (
       <Link
         key={page.slug}

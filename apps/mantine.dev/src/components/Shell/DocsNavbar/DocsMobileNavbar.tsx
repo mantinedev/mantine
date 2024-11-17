@@ -8,7 +8,9 @@ import classes from './DocsNavbar.module.css';
 const groups = keys(MDX_NAV_DATA);
 
 export function DocsMobileNavbar() {
-  const categories = groups.map((group) => <CategoriesList categories={MDX_NAV_DATA[group]} />);
+  const categories = groups.map((group) => (
+    <CategoriesList categories={MDX_NAV_DATA[group]} hideEmptyCategories />
+  ));
   const isMobile = useMediaQuery('(max-width: 67.5em)');
 
   return (
