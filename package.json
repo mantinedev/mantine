@@ -28,7 +28,7 @@
     "storybook": "storybook dev -p 2356",
     "dev": "npm run docs",
     "docs": "cd apps/mantine.dev && npm run dev",
-    "docs:docgen": "tsx scripts/docgen",
+    "docs:docgen": "tsx scripts/docgen && npm run docs:count",
     "docs:codegen": "tsx scripts/codegen",
     "docs:build": "npm run docs:docgen && cd apps/mantine.dev && npm run build",
     "docs:build:alpha": "npm run docs:docgen && cd apps/mantine.dev && npm run build:alpha",

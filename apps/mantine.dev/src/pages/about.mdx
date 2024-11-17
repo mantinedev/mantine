@@ -2,6 +2,7 @@ import { GuidesDemos } from '@docs/demos';
 import { LogoAssets } from '@/components/LogoAssets';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
+import count from '@/.docgen/count.json';
 
 export default Layout(MDX_DATA.About);
 
@@ -34,6 +35,15 @@ All `@mantine/*` packages follow [semver](https://semver.org/):
 Mantine is built and maintained by [Vitaly Rtishchev](https://github.com/rtivital) and [more than 500 other contributors](https://github.com/mantinedev/mantine/graphs/contributors).
 Most of new features and components/hooks are added to the library based on feedback from the community –
 you can participate in new features discussions on [GitHub](https://github.com/mantinedev/mantine/discussions) or [Discord](https://discord.gg/wbH82zuWMN).
+
+## Stats
+
+Stats are counted automatically each time new version is published:
+
+- {count.components} components (all `@mantine/*` packages)
+- {count.hooks} hooks (`@mantine/hooks` package)
+- {count.pages} documentation pages
+- {count.demos} demos
 
 ## Mantine logo
 
