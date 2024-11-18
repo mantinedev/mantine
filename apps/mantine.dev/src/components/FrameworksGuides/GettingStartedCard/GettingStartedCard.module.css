@@ -8,6 +8,10 @@
     transform 100ms ease,
     box-shadow 100ms ease;
 
+  [data-dimmed] & {
+    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+  }
+
   &[data-type='primary'] {
     height: 340px;
     padding-inline-end: 80px;

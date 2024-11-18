@@ -19,7 +19,7 @@ export function HomePageGetStarted() {
 
         <HomePageLearnMore href="/">Get started without a framework</HomePageLearnMore>
 
-        <div className={classes.guides}>
+        <div className={classes.guides} data-dimmed>
           <FrameworksGuides />
         </div>
       </HomePageContainer>

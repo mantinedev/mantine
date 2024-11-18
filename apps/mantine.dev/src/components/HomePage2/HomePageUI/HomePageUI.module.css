@@ -1,3 +1,111 @@
-.root {
-  padding-block: 120px;
+.wrapper {
+  position: relative;
+  overflow: hidden;
+  min-height: 580px;
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
+  border-top: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-7));
+  border-bottom: 1px solid light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-5));
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    min-height: auto;
+    padding-bottom: var(--mantine-spacing-xl);
+  }
+}
+
+.overlay {
+  background-color: transparent;
+  background-image: linear-gradient(
+    45deg,
+    light-dark(var(--mantine-color-white), var(--mantine-color-dark-8)) 25%,
+    rgba(0, 0, 0, 0) 95%
+  );
+}
+
+.supTitle {
+  font-size: var(--mantine-font-size-sm);
+  text-transform: uppercase;
+  font-weight: bold;
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  opacity: 0.8;
+  margin-bottom: var(--mantine-spacing-sm);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: var(--mantine-font-size-xs);
+  }
+}
+
+.title {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  font-family: var(--docs-font-primary);
+  font-size: 44px;
+  line-height: 1.2;
+  font-weight: 500;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 26px;
+  }
+}
+
+.highlight {
+  color: light-dark(var(--mantine-color-blue-7), var(--mantine-color-blue-5));
+}
+
+.description {
+  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-1));
+  line-height: 1.5;
+  max-width: 580px;
+  margin-top: var(--mantine-spacing-lg);
+}
+
+.body {
+  flex: 0 0 300px;
+  padding-top: 140px;
+  position: relative;
+  z-index: 1;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding-top: calc(var(--mantine-spacing-xl) * 2);
+  }
+}
+
+.image {
+  min-height: 800px;
+  min-width: 820px;
+  flex: 1;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: right;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 0;
+
+  @mixin rtl {
+    display: none;
+  }
+
+  @mixin smaller-than $mantine-breakpoint-lg {
+    min-height: 500px;
+  }
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    display: none;
+  }
+}
+
+.controls {
+  margin-top: var(--mantine-spacing-xl);
+}
+
+.control {
+  background: var(--hp-primary-bg);
+  box-shadow: var(--hp-primary-shadow);
+  border-bottom: var(--hp-primary-border);
+  transition: transform 100ms ease;
+  height: 60px;
+
+  @mixin hover {
+    transform: translateY(-1px) scale(1.01);
+  }
 }
