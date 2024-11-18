@@ -40,8 +40,8 @@ function MenuDemo() {
       <Menu.Target>
         <Button
           variant="default"
-          rightSection={<IconDots size={18} stroke={1.5} />}
-          miw={180}
+          rightSection={<IconDots size={24} stroke={1.5} />}
+          miw={200}
           size="lg"
           radius="md"
           justify="space-between"
