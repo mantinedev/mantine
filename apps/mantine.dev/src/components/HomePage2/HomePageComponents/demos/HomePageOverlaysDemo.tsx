@@ -44,7 +44,7 @@ export function HomePageOverlaysDemo() {
       </Drawer>
 
       <SimpleGrid cols={{ md: 2 }} spacing="xl">
-        <SimpleGrid cols={2}>
+        <SimpleGrid cols={{ xs: 2 }}>
           <div>
             <Input.Label labelElement="div" size="lg" mb="sm" display="block">
               Popover
