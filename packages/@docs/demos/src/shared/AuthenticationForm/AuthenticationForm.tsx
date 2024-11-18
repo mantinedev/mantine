@@ -78,6 +78,7 @@ export function AuthenticationForm({
               required
               placeholder="Your first name"
               label="First name"
+              radius="md"
               {...form.getInputProps('firstName')}
             />
 
@@ -85,6 +86,7 @@ export function AuthenticationForm({
               required
               placeholder="Your last name"
               label="Last name"
+              radius="md"
               {...form.getInputProps('lastName')}
             />
           </Group>
@@ -96,6 +98,7 @@ export function AuthenticationForm({
           placeholder="Your email"
           label="Email"
           leftSection={<IconAt size={16} stroke={1.5} />}
+          radius="md"
           {...form.getInputProps('email')}
         />
 
@@ -105,6 +108,7 @@ export function AuthenticationForm({
           placeholder="Password"
           label="Password"
           leftSection={<IconLock size={16} stroke={1.5} />}
+          radius="md"
           {...form.getInputProps('password')}
         />
 
@@ -115,6 +119,7 @@ export function AuthenticationForm({
             label="Confirm Password"
             placeholder="Confirm password"
             leftSection={<IconLock size={16} stroke={1.5} />}
+            radius="md"
             {...form.getInputProps('confirmPassword')}
           />
         )}
@@ -141,7 +146,7 @@ export function AuthenticationForm({
                 : "Don't have an account? Register"}
             </Anchor>
 
-            <Button color="blue" type="submit">
+            <Button color="blue" type="submit" radius="md">
               {formType === 'register' ? 'Register' : 'Login'}
             </Button>
           </Group>
