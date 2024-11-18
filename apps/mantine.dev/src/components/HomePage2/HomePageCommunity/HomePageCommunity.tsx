@@ -1,5 +1,5 @@
 import { IconExternalLink } from '@tabler/icons-react';
-import { Anchor, Avatar, Divider, Group, SimpleGrid, Text } from '@mantine/core';
+import { Anchor, Avatar, Group, SimpleGrid, Text } from '@mantine/core';
 import { meta } from '@mantinex/mantine-meta';
 import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer';
 import { HomePageDescription } from '../shared/HomePageDescription/HomePageDescription';
@@ -63,7 +63,7 @@ export function HomePageCommunity() {
   return (
     <section className={classes.root}>
       <HomePageContainer className={classes.container}>
-        <SimpleGrid cols={2} spacing={60}>
+        <SimpleGrid cols={{ md: 2 }} spacing={60}>
           <div>
             <div className={classes.primaryColumn}>
               <HomePageTitle order={2}>Loved by the community</HomePageTitle>
@@ -76,13 +76,11 @@ export function HomePageCommunity() {
 
               <div className={classes.stats}>
                 <Stat value="28,000+" label="Stars on GitHub" link={meta.gitHubLinks.mantine} />
-                <Divider className={classes.statDivider} orientation="vertical" />
                 <Stat
                   value="2.2M+"
                   label="Monthly downloads"
                   link="https://www.npmjs.com/package/@mantine/hooks"
                 />
-                <Divider className={classes.statDivider} orientation="vertical" />
                 <Stat value="11,000+" label="Discord members" link={meta.discordLink} />
               </div>
             </div>

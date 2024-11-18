@@ -25,6 +25,10 @@
   & .icon {
     background-color: #4753d4;
   }
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    height: 240px;
+  }
 }
 
 .hc {

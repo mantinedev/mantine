@@ -19,7 +19,7 @@ export function HomePageJoin() {
         </HomePageDescription>
 
         <div className={classes.cards}>
-          <SimpleGrid cols={2} spacing={10}>
+          <SimpleGrid cols={{ md: 2 }} spacing={10}>
             <DiscordCard />
             <Stack gap={10}>
               <GitHubCard />

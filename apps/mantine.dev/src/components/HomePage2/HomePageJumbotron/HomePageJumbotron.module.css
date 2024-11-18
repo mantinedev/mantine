@@ -7,6 +7,11 @@
   @mixin dark {
     background-color: var(--mantine-color-dark-8);
   }
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    padding-top: 120px;
+    height: auto;
+  }
 }
 
 .action {
@@ -50,10 +55,18 @@
       color: var(--mantine-color-black);
     }
   }
+
+  @mixin smaller-than $mantine-breakpoint-xs {
+    width: 100%;
+  }
 }
 
 .actions {
   display: flex;
   gap: var(--mantine-spacing-lg);
   margin-top: 40px;
+
+  @mixin smaller-than $mantine-breakpoint-xs {
+    flex-direction: column;
+  }
 }

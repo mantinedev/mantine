@@ -11,10 +11,18 @@
 .primaryColumn {
   position: sticky;
   top: 120px;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    position: static;
+  }
 }
 
 .secondaryColumn {
   padding-top: 84px;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    padding-top: 30px;
+  }
 }
 
 .review {
@@ -86,25 +94,40 @@
   display: flex;
   gap: var(--mantine-spacing-xl);
   margin-top: var(--mantine-spacing-xl);
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    flex-direction: column;
+  }
 }
 
 .stat {
   color: inherit;
   text-decoration: none;
+
+  & + & {
+    padding-inline-start: var(--mantine-spacing-lg);
+    border-inline-start: 1px solid
+      light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+
+    @mixin smaller-than $mantine-breakpoint-md {
+      padding-inline-start: 0;
+      border-inline-start: none;
+      padding-top: var(--mantine-spacing-lg);
+      border-top: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+    }
+  }
 }
 
 .statValue {
   font-weight: 500;
   font-size: 28px;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    font-size: 20px;
+  }
 }
 
 .statLabel {
   color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-2));
   font-size: var(--mantine-font-size-sm);
-}
-
-.statDivider {
-  align-self: center;
-  height: 48px;
-  border-color: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
 }
