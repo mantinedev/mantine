@@ -402,6 +402,10 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
 
 const FORM_PAGES_GROUP: MdxPagesCategory[] = [
   {
+    category: '',
+    pages: [MDX_DATA.FormPackage],
+  },
+  {
     category: 'Form',
     pages: [
       MDX_DATA.useForm,

@@ -1,6 +1,13 @@
 import { Frontmatter } from '@/types';
 
 export const MDX_FORM_DATA: Record<string, Frontmatter> = {
+  FormPackage: {
+    title: 'Get started',
+    slug: '/form/package',
+    hideInSearch: true,
+    hideHeader: true,
+  },
+
   useForm: {
     title: 'use-form',
     package: '@mantine/form',

@@ -9,10 +9,8 @@ export function HomePageForm() {
     <section className={classes.root}>
       <HomePageContainer>
         <HomePageTitle order={2}>Form library</HomePageTitle>
-
         <HomePageDescription className={classes.description}>Description</HomePageDescription>
-
-        <HomePageLearnMore href="/">Open form editor</HomePageLearnMore>
+        <HomePageLearnMore href="/form/package">Explore all form features</HomePageLearnMore>
       </HomePageContainer>
     </section>
   );
