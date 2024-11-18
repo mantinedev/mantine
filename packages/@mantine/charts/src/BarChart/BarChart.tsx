@@ -155,6 +155,14 @@ function calculateCumulativeTotal(waterfallData: Record<string, any>[], dataKey:
   });
 }
 
+function getBarFill(barProps: BarChartProps['barProps'], series: BarChartSeries) {
+  if (typeof barProps === 'function') {
+    return barProps(series).fill;
+  }
+
+  return barProps?.fill;
+}
+
 export const BarChart = factory<BarChartFactory>((_props, ref) => {
   const props = useProps('BarChart', defaultProps, _props);
   const {
@@ -262,7 +270,9 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         {inputData.map((entry, index) => (
           <Cell
             key={`cell-${index}`}
-            fill={entry.color ? getThemeColor(entry.color, theme) : color}
+            fill={
+              entry.color ? getThemeColor(entry.color, theme) : getBarFill(barProps, item) || color
+            }
           />
         ))}
       </Bar>

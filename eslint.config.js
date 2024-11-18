@@ -20,6 +20,7 @@ module.exports = tseslint.config(
       'jest/no-export': 'off',
       'jest/expect-expect': 'off',
       'jest/valid-title': 'off',
+      '@typescript-eslint/no-namespace': 'off',
     },
   }
 );

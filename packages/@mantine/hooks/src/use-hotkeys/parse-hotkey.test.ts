@@ -79,4 +79,24 @@ describe('@mantine/hooks/use-hot-key/parse-hotkey', () => {
       )
     ).toBe(false);
   });
+
+  it('parses [plus] key correctly', () => {
+    expect(parseHotkey('ctrl+[plus]')).toMatchObject({
+      alt: false,
+      ctrl: true,
+      meta: false,
+      mod: false,
+      shift: false,
+      key: '+',
+    });
+
+    expect(parseHotkey('ctrl+[plus]+shift+alt+[plus]')).toMatchObject({
+      alt: true,
+      ctrl: true,
+      meta: false,
+      mod: false,
+      shift: true,
+      key: '+',
+    });
+  });
 });

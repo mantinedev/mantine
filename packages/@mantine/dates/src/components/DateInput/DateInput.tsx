@@ -166,7 +166,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
   });
 
   useEffect(() => {
-    if (controlled) {
+    if (controlled && value !== null) {
       setDate(value!);
     }
   }, [controlled, value]);
@@ -294,7 +294,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
               locale={locale}
               getDayProps={_getDayProps}
               size={inputProps.size as MantineSize}
-              date={_date!}
+              date={_date}
               onDateChange={setDate}
             />
           </Popover.Dropdown>

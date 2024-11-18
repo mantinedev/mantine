@@ -69,6 +69,7 @@ export function Usage() {
           { name: 'Oranges', color: 'blue.6' },
           { name: 'Tomatoes', color: 'teal.6' },
         ]}
+        valueFormatter={(value) => `$ ${value}`}
         withLegend
         withPointLabels
       />

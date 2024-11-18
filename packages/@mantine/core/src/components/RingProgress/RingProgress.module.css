@@ -4,6 +4,7 @@
   height: var(--rp-size);
   min-width: var(--rp-size);
   min-height: var(--rp-size);
+  --rp-transition-duration: 0ms;
 }
 
 .svg {
@@ -16,6 +17,10 @@
 
 .curve {
   stroke: var(--curve-color, var(--rp-curve-root-color));
+  transition:
+    stroke-dashoffset var(--rp-transition-duration) ease,
+    stroke-dasharray var(--rp-transition-duration) ease,
+    stroke var(--rp-transition-duration);
 
   @mixin light {
     --rp-curve-root-color: var(--mantine-color-gray-2);

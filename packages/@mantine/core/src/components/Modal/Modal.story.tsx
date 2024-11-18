@@ -5,6 +5,7 @@ import { ScrollArea } from '../ScrollArea';
 import { Select } from '../Select';
 import { Tabs } from '../Tabs';
 import { Modal } from './Modal';
+import { useModalsStack } from './use-modals-stack';
 
 export default { title: 'Modal' };
 
@@ -33,6 +34,39 @@ export function Usage() {
       <Modal opened={opened} onClose={close} title="Just a Modal" zIndex={73812}>
         <input data-autofocus />
       </Modal>
+    </div>
+  );
+}
+
+export function Stack() {
+  const stack = useModalsStack(['first', 'second', 'third']);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={() => stack.open('first')}>Open modal</Button>
+      <Modal.Stack>
+        <Modal {...stack.register('first')} title="First modal" overlayProps={{ blur: 3 }}>
+          First modal
+          {content}
+          <Button onClick={() => stack.open('second')} fullWidth mt="md">
+            Open second modal
+          </Button>
+        </Modal>
+
+        <Modal {...stack.register('second')} title="Second modal" overlayProps={{ blur: 3 }}>
+          Second modal
+          <Button onClick={() => stack.open('third')} fullWidth mt="md">
+            Open third modal
+          </Button>
+        </Modal>
+
+        <Modal {...stack.register('third')} title="Third modal" overlayProps={{ blur: 3 }}>
+          Third modal
+          <Button onClick={() => stack.closeAll()} fullWidth mt="md">
+            Close all
+          </Button>
+        </Modal>
+      </Modal.Stack>
     </div>
   );
 }

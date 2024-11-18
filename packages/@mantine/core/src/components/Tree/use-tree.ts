@@ -3,14 +3,17 @@ import {
   CheckedNodeStatus,
   getAllCheckedNodes,
 } from './get-all-checked-nodes/get-all-checked-nodes';
-import { getChildrenNodesValues } from './get-children-nodes-values/get-children-nodes-values';
+import {
+  getAllChildrenNodes,
+  getChildrenNodesValues,
+} from './get-children-nodes-values/get-children-nodes-values';
 import { memoizedIsNodeChecked } from './is-node-checked/is-node-checked';
 import { memoizedIsNodeIndeterminate } from './is-node-indeterminate/is-node-indeterminate';
 import type { TreeNodeData } from './Tree';
 
 export type TreeExpandedState = Record<string, boolean>;
 
-function getInitialExpandedState(
+function getInitialTreeExpandedState(
   initialState: TreeExpandedState,
   data: TreeNodeData[],
   value: string | string[] | undefined,
@@ -20,11 +23,25 @@ function getInitialExpandedState(
     acc[node.value] = node.value in initialState ? initialState[node.value] : node.value === value;
 
     if (Array.isArray(node.children)) {
-      getInitialExpandedState(initialState, node.children, value, acc);
+      getInitialTreeExpandedState(initialState, node.children, value, acc);
     }
   });
 
   return acc;
+}
+
+export function getTreeExpandedState(data: TreeNodeData[], expandedNodesValues: string[] | '*') {
+  const state = getInitialTreeExpandedState({}, data, []);
+
+  if (expandedNodesValues === '*') {
+    return Object.keys(state).reduce((acc, key) => ({ ...acc, [key]: true }), {});
+  }
+
+  expandedNodesValues.forEach((node) => {
+    state[node] = true;
+  });
+
+  return state;
 }
 
 function getInitialCheckedState(initialState: string[], data: TreeNodeData[]) {
@@ -32,7 +49,7 @@ function getInitialCheckedState(initialState: string[], data: TreeNodeData[]) {
 
   initialState.forEach((node) => acc.push(...getChildrenNodesValues(node, data)));
 
-  return acc;
+  return Array.from(new Set(acc));
 }
 
 export interface UseTreeInput {
@@ -47,6 +64,12 @@ export interface UseTreeInput {
 
   /** Determines whether multiple node can be selected at a time */
   multiple?: boolean;
+
+  /** Called with the node value when it is expanded */
+  onNodeExpand?: (value: string) => void;
+
+  /** Called with the node value when it is collapsed */
+  onNodeCollapse?: (value: string) => void;
 }
 
 export interface UseTreeReturnType {
@@ -115,6 +138,15 @@ export interface UseTreeReturnType {
   /** Unchecks node with provided value */
   uncheckNode: (value: string) => void;
 
+  /** Checks all nodes */
+  checkAllNodes: () => void;
+
+  /** Unchecks all nodes */
+  uncheckAllNodes: () => void;
+
+  /** Sets checked state */
+  setCheckedState: React.Dispatch<React.SetStateAction<string[]>>;
+
   /** Returns all checked nodes with status */
   getCheckedNodes: () => CheckedNodeStatus[];
 
@@ -130,6 +162,8 @@ export function useTree({
   initialCheckedState = [],
   initialExpandedState = {},
   multiple = false,
+  onNodeCollapse,
+  onNodeExpand,
 }: UseTreeInput = {}): UseTreeReturnType {
   const [data, setData] = useState<TreeNodeData[]>([]);
   const [expandedState, setExpandedState] = useState(initialExpandedState);
@@ -140,24 +174,49 @@ export function useTree({
 
   const initialize = useCallback(
     (_data: TreeNodeData[]) => {
-      setExpandedState((current) => getInitialExpandedState(current, _data, selectedState));
+      setExpandedState((current) => getInitialTreeExpandedState(current, _data, selectedState));
       setCheckedState((current) => getInitialCheckedState(current, _data));
       setData(_data);
     },
     [selectedState, checkedState]
   );
 
-  const toggleExpanded = useCallback((value: string) => {
-    setExpandedState((current) => ({ ...current, [value]: !current[value] }));
-  }, []);
+  const toggleExpanded = useCallback(
+    (value: string) => {
+      setExpandedState((current) => {
+        const nextState = { ...current, [value]: !current[value] };
+        nextState[value] ? onNodeExpand?.(value) : onNodeCollapse?.(value);
+        return nextState;
+      });
+    },
+    [onNodeCollapse, onNodeExpand]
+  );
 
-  const collapse = useCallback((value: string) => {
-    setExpandedState((current) => ({ ...current, [value]: false }));
-  }, []);
+  const collapse = useCallback(
+    (value: string) => {
+      setExpandedState((current) => {
+        if (current[value] !== false) {
+          onNodeCollapse?.(value);
+        }
 
-  const expand = useCallback((value: string) => {
-    setExpandedState((current) => ({ ...current, [value]: true }));
-  }, []);
+        return { ...current, [value]: false };
+      });
+    },
+    [onNodeCollapse]
+  );
+
+  const expand = useCallback(
+    (value: string) => {
+      setExpandedState((current) => {
+        if (current[value] !== true) {
+          onNodeExpand?.(value);
+        }
+
+        return { ...current, [value]: true };
+      });
+    },
+    [onNodeExpand]
+  );
 
   const expandAllNodes = useCallback(() => {
     setExpandedState((current) => {
@@ -239,6 +298,14 @@ export function useTree({
     [data]
   );
 
+  const checkAllNodes = useCallback(() => {
+    setCheckedState(() => getAllChildrenNodes(data));
+  }, [data]);
+
+  const uncheckAllNodes = useCallback(() => {
+    setCheckedState([]);
+  }, []);
+
   const getCheckedNodes = () => getAllCheckedNodes(data, checkedState).result;
   const isNodeChecked = (value: string) => memoizedIsNodeChecked(value, data, checkedState);
   const isNodeIndeterminate = (value: string) =>
@@ -258,8 +325,12 @@ export function useTree({
     expandAllNodes,
     collapseAllNodes,
     setExpandedState,
+
     checkNode,
     uncheckNode,
+    checkAllNodes,
+    uncheckAllNodes,
+    setCheckedState,
 
     toggleSelected,
     select,

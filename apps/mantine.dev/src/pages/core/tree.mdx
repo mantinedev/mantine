@@ -120,7 +120,7 @@ The hook accepts an object with the following properties:
 ```tsx
 export interface UseTreeInput {
   /** Initial expanded state of all nodes */
-  initialExpandedState?: TreeExpandedState;
+  initialExpandedState?: Record<string, boolean>;
 
   /** Initial selected state of nodes */
   initialSelectedState?: string[];
@@ -130,6 +130,12 @@ export interface UseTreeInput {
 
   /** Determines whether multiple node can be selected at a time */
   multiple?: boolean;
+
+  /** Called with the node value when it is expanded */
+  onNodeExpand?: (value: string) => void;
+
+  /** Called with the node value when it is collapsed */
+  onNodeCollapse?: (value: string) => void;
 }
 ```
 
@@ -204,6 +210,15 @@ export interface UseTreeReturnType {
   /** Unchecks node with provided value */
   uncheckNode: (value: string) => void;
 
+  /** Checks all nodes */
+  checkAllNodes: () => void;
+
+  /** Unchecks all nodes */
+  uncheckAllNodes: () => void;
+
+  /** Sets checked state */
+  setCheckedState: React.Dispatch<React.SetStateAction<string[]>>;
+
   /** Returns all checked nodes with status */
   getCheckedNodes: () => CheckedNodeStatus[];
 
@@ -226,6 +241,31 @@ to control tree state:
 To implement checked state, you need to render `Checkbox.Indicator` in the `renderNode` function:
 
 <Demo data={TreeDemos.checked} />
+
+To check/uncheck nodes, use `checkAllNodes` and `uncheckAllNodes` functions:
+
+<Demo data={TreeDemos.checkAllNodes} />
+
+## Initial expanded state
+
+Expanded state is an object of `node.value` and boolean values that represent nodes expanded state.
+To change initial expanded state, pass `initialExpandedState` to the `useTree` hook.
+To generate expanded state from data with expanded nodes, you can use `getTreeExpandedState` function:
+it accepts data and an array of expanded nodes values and returns expanded state object.
+
+If `'*'` is passed as the second argument to `getTreeExpandedState`, all nodes will be expanded:
+
+```tsx
+import { getTreeExpandedState } from '@mantine/core';
+
+// Expand two given nodes
+getTreeExpandedState(data, ['src', 'src/components']);
+
+// Expand all nodes
+getTreeExpandedState(data, '*');
+```
+
+<Demo data={TreeDemos.expandedState} />
 
 ## Example: files tree
 

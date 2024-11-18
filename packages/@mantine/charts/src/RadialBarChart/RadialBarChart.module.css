@@ -1,0 +1,29 @@
+.root {
+  @mixin where-light {
+    --chart-empty-background: var(--mantine-color-gray-1);
+    --chart-cursor-color: var(--mantine-color-gray-4);
+  }
+
+  @mixin where-dark {
+    --chart-empty-background: var(--mantine-color-dark-6);
+    --chart-cursor-color: var(--mantine-color-dark-4);
+  }
+}
+
+.tooltip {
+  padding: var(--mantine-spacing-md);
+  box-shadow: var(--mantine-shadow-md);
+  min-width: 200px;
+  font-size: var(--mantine-font-size-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @mixin where-light {
+    border: 1px solid var(--mantine-color-gray-2);
+  }
+
+  @mixin where-dark {
+    border: 1px solid var(--mantine-color-dark-4);
+  }
+}

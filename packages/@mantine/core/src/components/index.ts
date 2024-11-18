@@ -21,6 +21,7 @@ export * from './Accordion';
 export * from './Affix';
 export * from './Alert';
 export * from './Anchor';
+export * from './AngleSlider';
 export * from './AppShell';
 export * from './AspectRatio';
 export * from './Autocomplete';

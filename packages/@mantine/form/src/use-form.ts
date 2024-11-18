@@ -265,6 +265,7 @@ export function useForm<
     reorderListItem: $list.reorderListItem,
     insertListItem: $list.insertListItem,
     removeListItem: $list.removeListItem,
+    replaceListItem: $list.replaceListItem,
 
     reset,
     validate,

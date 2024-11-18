@@ -1,0 +1,35 @@
+import { RadialBarChartDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.RadialBarChart);
+
+## Usage
+
+`RadialBarChart` is based on [RadialBarChart recharts component](https://recharts.org/en-US/api/RadialBarChart):
+
+<Demo data={RadialBarChartDemos.usage} />
+
+## Change color
+
+You can reference theme colors or use any valid CSS color in `color` property of `data`:
+
+<Demo data={RadialBarChartDemos.color} />
+
+## Legend
+
+To show legend, set `withLegend` prop:
+
+<Demo data={RadialBarChartDemos.legend} />
+
+## Labels
+
+To show labels, set `withLabels` prop:
+
+<Demo data={RadialBarChartDemos.labels} />
+
+## Hide tooltip
+
+To hide tooltip, set `withTooltip={false}` prop:
+
+<Demo data={RadialBarChartDemos.noTooltip} />

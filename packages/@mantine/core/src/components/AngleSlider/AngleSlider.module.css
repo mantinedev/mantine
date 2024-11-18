@@ -1,0 +1,104 @@
+.root {
+  width: var(--slider-size);
+  height: var(--slider-size);
+  position: relative;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+
+  &:focus-within {
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: 2px;
+  }
+
+  --slider-size: 60px;
+  --thumb-size: calc(var(--slider-size) / 5);
+
+  @mixin where-light {
+    background-color: var(--mantine-color-gray-1);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-5);
+  }
+}
+
+.marks {
+  position: absolute;
+  inset: 1px;
+  border-radius: var(--slider-size);
+  pointer-events: none;
+}
+
+.mark {
+  width: 2px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - 1px);
+  transform: rotate(var(--angle));
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--thumb-size) / 3);
+    left: 0.5px;
+    width: 1px;
+    height: calc(var(--thumb-size) / 1.5);
+    transform: translate(-50%, -50%);
+
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-4);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-3);
+    }
+  }
+
+  &[data-label]::after {
+    min-width: 18px;
+    text-align: center;
+    content: attr(data-label);
+    position: absolute;
+    top: -24px;
+    left: -7px;
+    transform: rotate(calc(360deg - var(--angle)));
+    font-size: var(--mantine-font-size-xs);
+  }
+}
+
+.thumb {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: calc(50% - 1.5px);
+  height: 100%;
+  width: 3px;
+  outline: none;
+  pointer-events: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: min(var(--thumb-size), calc(var(--slider-size) / 2));
+    width: 3px;
+
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-7);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-1);
+    }
+  }
+}
+
+.label {
+  font-size: var(--mantine-font-size-xs);
+}

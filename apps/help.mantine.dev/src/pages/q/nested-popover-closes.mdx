@@ -1,0 +1,44 @@
+import {
+  NestedPopovers,
+  NestedPopoversWorking,
+} from '@/demos/NestedPopovers.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title:
+    'My Popover dropdown closes when I click on the dropdown of nested Popover',
+  description:
+    'Popover dropdown is closed when it detects click outside events',
+  slug: 'nested-popover-closes',
+  category: 'components',
+  tags: ['popover', 'menu', 'DatePicker', 'Select'],
+  created_at: 'September 8, 2024',
+  last_updated_at: 'September 8, 2024',
+};
+
+export default Layout(meta);
+
+## Nested popovers
+
+By default, all popovers and dropdowns are rendered within [Portal](https://mantine.dev/core/portal/)
+component which is attached to the `document.body`.
+This allows popovers to be rendered on top of all other elements and to be positioned correctly even if parent element has `overflow: hidden`.
+
+[Popover](https://mantine.dev/core/popover/) component uses [use-click-outside](https://mantine.dev/hooks/use-click-outside/) hook to detect clicks outside of the popover.
+When you click on the nested popover, it detects that click as outside click and closes the parent popover.
+This happens with every component that uses [Popover](https://mantine.dev/core/popover/) under the hood, including [DatePicker](https://mantine.dev/dates/date-picker/), [Select](https://mantine.dev/select/select/),
+[Menu](https://mantine.dev/menu/menu/), and others.
+
+Example of the issue:
+
+<Demo data={NestedPopovers} />
+
+## How to fix
+
+To fix the issue, set `withinPortal={false}` prop on the nested popover. Note that
+this option might be a part of the other prop (for example `comboboxProps` in [Select](https://mantine.dev/select/select/)).
+To learn which prop to use, check the documentation of the component you are using.
+
+Example of the fixed issue:
+
+<Demo data={NestedPopoversWorking} />

@@ -299,7 +299,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           strokeOpacity={dimmed ? 0.5 : 1}
           strokeDasharray={item.strokeDasharray}
           yAxisId={item.yAxisId || 'left'}
-          label={withPointLabels ? <PointLabel /> : undefined}
+          label={withPointLabels ? <PointLabel valueFormatter={valueFormatter} /> : undefined}
           {...(typeof areaProps === 'function' ? areaProps(item) : areaProps)}
         />
       </Fragment>
