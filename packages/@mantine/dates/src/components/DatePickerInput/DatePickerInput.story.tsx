@@ -1,6 +1,21 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { Button, Group } from '@mantine/core';
+import {
+  Autocomplete,
+  Button,
+  Checkbox,
+  ColorInput,
+  Group,
+  Input,
+  MultiSelect,
+  NumberInput,
+  Radio,
+  RangeSlider,
+  Select,
+  SimpleGrid,
+  Slider,
+  Stack,
+} from '@mantine/core';
 import { DatesProvider } from '../DatesProvider';
 import { DatePickerInput } from './DatePickerInput';
 
@@ -222,5 +237,96 @@ export function DefaultDate() {
       <DatePickerInput defaultDate={new Date('1990/01/01')} />
       <DatePickerInput defaultDate={new Date()} />
     </div>
+  );
+}
+
+export function DarkColorSchemeDemo() {
+  return (
+    <SimpleGrid maw={1040} cols={2} p={80} spacing="xl" verticalSpacing="md">
+      <DatePickerInput
+        type="range"
+        defaultValue={[new Date(2024, 9, 12), new Date(2024, 9, 17)]}
+        label="Date range picker"
+        size="lg"
+        radius="md"
+      />
+
+      <Select
+        data={['React']}
+        placeholder="Custom select"
+        label="Custom select"
+        size="lg"
+        radius="md"
+      />
+
+      <MultiSelect
+        data={['React', 'Angular']}
+        defaultValue={['React', 'Angular']}
+        label="Multiselect"
+        placeholder="Search items"
+        size="lg"
+        radius="md"
+        styles={{ pill: { background: 'var(--mantine-color-dark-5)' } }}
+      />
+
+      <NumberInput
+        label="NumberInput"
+        value={5361.44}
+        thousandSeparator
+        fixedDecimalScale
+        decimalScale={2}
+        prefix="$ "
+        size="lg"
+        radius="md"
+      />
+
+      <div>
+        <Autocomplete
+          label="Autocomplete"
+          placeholder="Autocomplete"
+          data={[]}
+          size="lg"
+          radius="md"
+          mb="md"
+        />
+        <Stack gap="lg">
+          <Radio.Group label="Radio" size="lg" defaultValue="react">
+            <Group mt={5}>
+              <Radio value="react" label="React" size="lg" />
+              <Radio value="angular" label="Angular" size="lg" />
+              <Radio value="vue" label="Vue" size="lg" />
+            </Group>
+          </Radio.Group>
+
+          <Checkbox label="Checkbox" size="lg" defaultChecked />
+        </Stack>
+      </div>
+
+      <div>
+        <ColorInput
+          defaultValue="#7048e8"
+          withEyeDropper={false}
+          label="Color input"
+          size="lg"
+          radius="md"
+          mb="md"
+        />
+
+        <Input.Label size="lg">Slider and RangeSlider</Input.Label>
+        <Slider defaultValue={60} size="lg" mt="sm" />
+        <RangeSlider
+          defaultValue={[25, 75]}
+          size="lg"
+          mt="sm"
+          marks={[
+            { value: 0, label: 'xs' },
+            { value: 25, label: 'sm' },
+            { value: 50, label: 'md' },
+            { value: 75, label: 'lg' },
+            { value: 100, label: 'xl' },
+          ]}
+        />
+      </div>
+    </SimpleGrid>
   );
 }
