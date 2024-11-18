@@ -4,6 +4,7 @@ import { HomePageTabs } from '../shared/HomePageTabs/HomePageTabs';
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
 import { HomePageDatePickerDemos } from './demos/HomePageDatePickersDemo';
 import { HomePageInputsDemo } from './demos/HomePageInputsDemo';
+import { HomePageNavigationDemo } from './demos/HomePageNavigationDemo';
 import { HomePageOverlaysDemo } from './demos/HomePageOverlaysDemo';
 import classes from './HomePageComponents.module.css';
 
@@ -23,7 +24,7 @@ export function HomePageComponents() {
           data={[
             { label: 'Inputs', value: 'inputs', content: <HomePageInputsDemo /> },
             { label: 'Overlays', value: 'overlays', content: <HomePageOverlaysDemo /> },
-            { label: 'Navigation', value: 'navigation', content: <div>navigation content</div> },
+            { label: 'Navigation', value: 'navigation', content: <HomePageNavigationDemo /> },
             {
               label: 'Date pickers',
               value: 'date-pickers',

@@ -46,7 +46,7 @@ export function HomePageOverlaysDemo() {
       <SimpleGrid cols={{ md: 2 }} spacing="xl">
         <SimpleGrid cols={2}>
           <div>
-            <Input.Label size="lg" mb="sm" display="block">
+            <Input.Label labelElement="div" size="lg" mb="sm" display="block">
               Popover
             </Input.Label>
 
@@ -66,8 +66,8 @@ export function HomePageOverlaysDemo() {
 
               <Popover.Dropdown className={classes.popoverDropdown}>
                 <Input.Label
-                  display="block"
                   labelElement="div"
+                  display="block"
                   mb={3}
                   size="md"
                   className={classes.label}
@@ -77,8 +77,8 @@ export function HomePageOverlaysDemo() {
                 <SegmentedControl data={['In progress', 'Delivered']} radius="md" size="md" />
 
                 <Input.Label
-                  display="block"
                   labelElement="div"
+                  display="block"
                   mb={5}
                   mt="md"
                   size="md"
@@ -94,8 +94,8 @@ export function HomePageOverlaysDemo() {
                 <Checkbox label="Leica" mt={8} size="md" />
 
                 <Input.Label
-                  display="block"
                   labelElement="div"
+                  display="block"
                   mb={5}
                   mt={24}
                   size="md"
@@ -118,7 +118,7 @@ export function HomePageOverlaysDemo() {
           </div>
 
           <div>
-            <Input.Label size="lg" mb="sm">
+            <Input.Label labelElement="div" size="lg" mb="sm">
               Hover card
             </Input.Label>
             <HoverCard
@@ -187,7 +187,7 @@ export function HomePageOverlaysDemo() {
           </div>
 
           <div>
-            <Input.Label size="lg" mb="sm" display="block">
+            <Input.Label labelElement="div" size="lg" mb="sm" display="block">
               Tooltip
             </Input.Label>
             <Tooltip label="Tooltip" withArrow>
@@ -197,7 +197,7 @@ export function HomePageOverlaysDemo() {
             </Tooltip>
           </div>
           <div>
-            <Input.Label size="lg" mb="sm" display="block">
+            <Input.Label labelElement="div" size="lg" mb="sm" display="block">
               Modal and Drawer
             </Input.Label>
             <Group>
@@ -212,7 +212,9 @@ export function HomePageOverlaysDemo() {
         </SimpleGrid>
 
         <div>
-          <Input.Label size="lg">Floating tooltip</Input.Label>
+          <Input.Label labelElement="div" size="lg">
+            Floating tooltip
+          </Input.Label>
           <Tooltip.Floating label="Floating tooltip" withinPortal={false}>
             <div className={classes.floating}>
               Hover me to see a tooltip that follows mouse cursor

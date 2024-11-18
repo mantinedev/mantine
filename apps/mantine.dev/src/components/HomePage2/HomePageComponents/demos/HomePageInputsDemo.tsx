@@ -3,7 +3,6 @@ import {
   FileInput,
   Input,
   MultiSelect,
-  NativeSelect,
   NumberInput,
   PasswordInput,
   PinInput,
@@ -11,6 +10,7 @@ import {
   SimpleGrid,
   TextInput,
 } from '@mantine/core';
+import { DatePickerInput } from '@mantine/dates';
 
 const inputProps = {
   size: 'lg' as const,
@@ -30,10 +30,12 @@ export function HomePageInputsDemo() {
           thousandSeparator
           defaultValue={30712}
         />
-        <NativeSelect
-          label="Native select"
+        <DatePickerInput
+          label="Date range picker"
+          placeholder="Your last vacation"
+          popoverProps={{ radius: 'md' }}
+          type="range"
           {...inputProps}
-          data={['Option 1', 'Option 2', 'Option 3']}
         />
         <ColorInput
           label="Color input"
