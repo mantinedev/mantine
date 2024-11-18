@@ -4,6 +4,12 @@ import { HomePageLearnMore } from '../shared/HomePageLearnMore/HomePageLearnMore
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
 import classes from './HomePageExtensions.module.css';
 
+// charts
+// notifications
+// spotlight
+// carousel
+// rich text editor
+
 export function HomePageExtensions() {
   return (
     <section className={classes.root}>
@@ -12,7 +18,7 @@ export function HomePageExtensions() {
 
         <HomePageDescription className={classes.description}>Description</HomePageDescription>
 
-        <HomePageLearnMore href="/">Extensions</HomePageLearnMore>
+        <HomePageLearnMore href="/x/extensions">Browse all extensions</HomePageLearnMore>
       </HomePageContainer>
     </section>
   );

@@ -2,7 +2,6 @@ import { useMantineColorScheme } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
 import { Footer } from '../Footer';
 import { Shell } from '../Shell';
-import { HomePageAccessibility } from './HomePageAccessibility/HomePageAccessibility';
 import { HomePageCombobox } from './HomePageCombobox/HomePageCombobox';
 import { HomePageCommunity } from './HomePageCommunity/HomePageCommunity';
 import { HomePageComponents } from './HomePageComponents/HomePageComponents';
@@ -26,7 +25,6 @@ export function HomePage() {
       <div className={classes.root}>
         <HomePageJumbotron />
         <HomePageComponents />
-        <HomePageAccessibility />
         <HomePageHooks />
         <HomePageStyles />
         <HomePageDarkColorScheme />
