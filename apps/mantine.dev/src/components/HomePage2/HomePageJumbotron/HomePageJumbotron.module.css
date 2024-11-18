@@ -1,8 +1,18 @@
+@keyframes slide {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(0, -2076px, 0); /* The image width */
+  }
+}
+
 .root {
   height: 692px;
-  padding-top: 200px;
-  padding-bottom: 120px;
-  background-color: var(--mantine-color-gray-0);
+  background-color: var(--mantine-color-body);
+  position: relative;
+  overflow: hidden;
 
   @mixin dark {
     background-color: var(--mantine-color-dark-8);
@@ -12,6 +22,37 @@
     padding-top: 120px;
     height: auto;
   }
+}
+
+.container {
+  position: relative;
+  padding-top: 200px;
+  padding-bottom: 120px;
+}
+
+.image {
+  height: calc(692px * 3);
+  position: absolute;
+  width: 1000px;
+  background-size: contain;
+  z-index: 1;
+  right: 0;
+  top: 0;
+  background-repeat: repeat-y;
+  animation: slide 120s linear infinite;
+}
+
+.main {
+  position: relative;
+  z-index: 3;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  /* background: linear-gradient(-90deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%); */
+  background: linear-gradient(-90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%);
 }
 
 .action {
