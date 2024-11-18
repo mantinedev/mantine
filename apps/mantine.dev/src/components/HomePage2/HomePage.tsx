@@ -37,9 +37,8 @@ export function HomePage() {
         <HomePageForm />
         <HomePageUI />
         <HomePageCommunity />
-        <div style={{ height: 200 }} />
-        <HomePageGetStarted />
         <HomePageJoin />
+        <HomePageGetStarted />
       </div>
       <Footer withNavbar={false} />
     </Shell>
