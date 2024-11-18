@@ -20,7 +20,7 @@ const inputProps = {
 export function HomePageInputsDemo() {
   return (
     <div>
-      <SimpleGrid cols={3} spacing="xl" verticalSpacing={25}>
+      <SimpleGrid cols={{ md: 3 }} spacing="xl" verticalSpacing={25}>
         <TextInput label="Text input" placeholder="Text input" {...inputProps} />
         <NumberInput
           label="Number input"

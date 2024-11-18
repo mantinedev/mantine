@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { IconAdjustments } from '@tabler/icons-react';
 import {
   Anchor,
