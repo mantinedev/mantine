@@ -14,7 +14,6 @@ import { HomePageHooks } from './HomePageHooks/HomePageHooks';
 import { HomePageJoin } from './HomePageJoin/HomePageJoin';
 import { HomePageJumbotron } from './HomePageJumbotron/HomePageJumbotron';
 import { HomePageStyles } from './HomePageStyles/HomePageStyles';
-import { HomePageTheming } from './HomePageTheming/HomePageTheming';
 import { HomePageUI } from './HomePageUI/HomePageUI';
 import classes from './HomePage.module.css';
 
@@ -29,7 +28,6 @@ export function HomePage() {
         <HomePageComponents />
         <HomePageAccessibility />
         <HomePageHooks />
-        <HomePageTheming />
         <HomePageStyles />
         <HomePageDarkColorScheme />
         <HomePageCombobox />
