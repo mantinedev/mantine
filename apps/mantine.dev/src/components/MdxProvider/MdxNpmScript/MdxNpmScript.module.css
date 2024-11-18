@@ -23,7 +23,7 @@
 }
 
 .code {
-  margin: 0;
+  margin-top: 0;
   background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-8));
 
   &[data-without-radius] {
