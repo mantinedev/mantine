@@ -99,7 +99,7 @@
     "klona": "^2.0.6",
     "lowlight": "^3.1.0",
     "react": "^18.3.1",
-    "react-dropzone-esm": "15.0.1",
+    "react-dropzone-esm": "15.2.0",
     "react-imask": "^7.6.1",
     "react-number-format": "^5.4.2",
     "react-remove-scroll": "^2.6.0",

@@ -8,7 +8,7 @@ export const FOOTER_LINKS_DATA: LinksGroupProps[] = [
       { type: 'next', label: 'Contribute', link: '/contribute' },
       { type: 'next', label: 'About Mantine', link: '/about' },
       { type: 'next', label: 'Changelog', link: '/changelog/previous-versions' },
-      { type: 'link', label: 'Releases', link: meta.gitHubLinks.releases },
+      { type: 'link', label: 'GitHub Releases', link: meta.gitHubLinks.releases },
     ],
   },
 
@@ -29,7 +29,7 @@ export const FOOTER_LINKS_DATA: LinksGroupProps[] = [
     title: 'Project',
     data: [
       { type: 'link', label: 'Mantine UI', link: meta.uiLink },
-      { type: 'link', label: 'Documentation', link: meta.docsLink },
+      { type: 'link', label: 'Help Center', link: meta.helpCenterLink },
       { type: 'link', label: 'Github organization', link: meta.gitHubLinks.organization },
       { type: 'link', label: 'npm organization', link: meta.npmLink },
     ],
