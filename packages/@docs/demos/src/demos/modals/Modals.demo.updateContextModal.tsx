@@ -1,5 +1,5 @@
 import { Button } from '@mantine/core';
-import { modals} from '@mantine/modals';
+import { modals } from '@mantine/modals';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
@@ -81,10 +81,9 @@ function Demo() {
           title: 'Processing...',
           closeOnEscape: false,
           closeOnClickOutside: false,
-          closeButtonProps:{ disabled:true },
+          closeButtonProps: { disabled: true },
           innerProps: {
-            modalBody:
-              'You cannot close this modal until 2 seconds have passed.',
+            modalBody: 'You cannot close this modal until 2 seconds have passed.',
             loading: true,
           },
         });
@@ -92,16 +91,15 @@ function Demo() {
         setTimeout(() => {
           modals.updateContextModal({
             modalId,
-            title: "Processing Complete!",
+            title: 'Processing Complete!',
             closeOnEscape: true,
             closeOnClickOutside: true,
-            closeButtonProps:{ disabled: false },
+            closeButtonProps: { disabled: false },
             innerProps: {
-              modalBody:
-                'You can now close the modal.',
+              modalBody: 'You can now close the modal.',
               loading: false,
             },
-          })
+          });
         }, 2000);
       }}
     >

@@ -1,6 +1,6 @@
-import {Button, Center, Loader, rem, Stack, Text} from '@mantine/core';
+import { IconCheck } from '@tabler/icons-react';
+import { Button, Center, Loader, rem, Stack, Text } from '@mantine/core';
 import { ContextModalProps, ModalsProvider } from '@mantine/modals';
-import { IconCheck } from "@tabler/icons-react";
 
 interface ModalsProviderDemoProps {
   children: React.ReactNode;
@@ -19,20 +19,19 @@ const demonstrationModal = ({
   </>
 );
 
-
 const asyncDemonstrationModal = ({
   context,
   id,
   innerProps,
-}: ContextModalProps<{ modalBody: string, loading: boolean }>) => (
+}: ContextModalProps<{ modalBody: string; loading: boolean }>) => (
   <>
     <Stack>
       <Text size="sm">{innerProps.modalBody}</Text>
       <Center>
         {innerProps.loading ? (
-          <Loader size={32}/>
-        ): (
-          <IconCheck style={{ width: rem(32), height: rem(32), color: "green" }} />
+          <Loader size={32} />
+        ) : (
+          <IconCheck style={{ width: rem(32), height: rem(32), color: 'green' }} />
         )}
       </Center>
     </Stack>

@@ -47,11 +47,7 @@ function Demo() {
           modals.updateModal({
             modalId,
             title: 'Updated Modal Title',
-            children: (
-              <Text size="sm">
-                This is the updated content of the modal.
-              </Text>
-            ),
+            children: <Text size="sm">This is the updated content of the modal.</Text>,
           });
         }, 2000);
       }}
