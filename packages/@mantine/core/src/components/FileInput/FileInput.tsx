@@ -11,6 +11,8 @@ export interface FileInputProps<Multiple = false>
     __BaseInputProps,
     StylesApiProps<FileInputFactory>,
     ElementProps<'button', 'value' | 'defaultValue' | 'onChange' | 'placeholder'> {
+  component?: any;
+
   /** Called when value changes */
   onChange?: (payload: Multiple extends true ? File[] : File | null) => void;
 
@@ -95,6 +97,7 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
     rightSection,
     size,
     placeholder,
+    component,
     resetRef: resetRefProp,
     ...others
   } = props;
@@ -144,7 +147,7 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
     >
       {(fileButtonProps) => (
         <InputBase
-          component="button"
+          component={component || 'button'}
           ref={ref}
           rightSection={_rightSection}
           {...fileButtonProps}
