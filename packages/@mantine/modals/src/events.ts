@@ -8,7 +8,7 @@ import {
 } from './context';
 
 type ModalsEvents = {
-  openModal: (payload: ModalSettings) => void;
+  openModal: (payload: ModalSettings) => string;
   closeModal: (id: string) => void;
   closeContextModal: <TKey extends MantineModal>(id: TKey) => void;
   closeAllModals: () => void;
@@ -23,20 +23,36 @@ type ModalsEvents = {
 export const [useModalsEvents, createEvent] =
   createUseExternalEvents<ModalsEvents>('mantine-modals');
 
-export const openModal = createEvent('openModal');
+export const openModal: ModalsEvents['openModal'] = (payload) => {
+  createEvent('openModal')(payload);
+  return payload.modalId!;
+};
+
+export const openConfirmModal: ModalsEvents['openConfirmModal'] = (payload) => {
+  createEvent('openConfirmModal')(payload);
+  return payload.modalId!;
+};
+
+export const openContextModal: ModalsEvents['openContextModal'] = <TKey extends MantineModal>(
+  payload: OpenContextModal<Parameters<MantineModals[TKey]>[0]['innerProps']> & { modal: TKey }
+) => {
+  createEvent('openContextModal')(payload);
+  return payload.modalId!;
+};
+
 export const closeModal = createEvent('closeModal');
+
 export const closeContextModal: ModalsEvents['closeContextModal'] = <TKey extends MantineModal>(
   id: TKey
 ) => createEvent('closeContextModal')(id);
+
 export const closeAllModals = createEvent('closeAllModals');
-export const openConfirmModal = createEvent('openConfirmModal');
-export const openContextModal: ModalsEvents['openContextModal'] = <TKey extends MantineModal>(
-  payload: OpenContextModal<Parameters<MantineModals[TKey]>[0]['innerProps']> & { modal: TKey }
-) => createEvent('openContextModal')(payload);
+
 export const updateModal = (payload: { modalId: string } & Partial<ModalSettings>) =>
   createEvent('updateModal')(payload);
+
 export const updateContextModal = (payload: { modalId: string } & Partial<OpenContextModal<any>>) =>
-  createEvent('updateContextModal')(payload);
+  createEvent('updateContextModal')(payload);;
 
 export const modals: {
   open: ModalsEvents['openModal'];
