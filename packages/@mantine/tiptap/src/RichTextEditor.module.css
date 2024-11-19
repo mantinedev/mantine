@@ -185,7 +185,7 @@
     }
   }
 
-  &:where([data-interactive]) {
+  &:where([data-interactive]:not([data-disabled])) {
     cursor: pointer;
 
     @mixin hover {
