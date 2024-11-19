@@ -77,6 +77,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
     __onDayMouseEnter,
     withCellSpacing,
     highlightToday,
+    showWeekNumbers,
 
     // CalendarHeader settings
     __preventFocus,
@@ -181,6 +182,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
         static={isStatic}
         withCellSpacing={withCellSpacing}
         highlightToday={highlightToday}
+        showWeekNumbers={showWeekNumbers}
         {...stylesApiProps}
       />
     </Box>

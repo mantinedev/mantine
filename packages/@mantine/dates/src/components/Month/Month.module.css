@@ -10,3 +10,10 @@
     padding: 0.5px;
   }
 }
+
+.weekNumber {
+  color: var(--mantine-color-dimmed);
+  font-weight: normal;
+  font-size: var(--wn-fz, var(--mantine-font-size-sm));
+  text-align: center;
+}

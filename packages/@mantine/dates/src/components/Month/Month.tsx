@@ -2,9 +2,11 @@ import dayjs from 'dayjs';
 import {
   Box,
   BoxProps,
+  createVarsResolver,
   ElementProps,
   factory,
   Factory,
+  getFontSize,
   MantineSize,
   StylesApiProps,
   useProps,
@@ -21,6 +23,7 @@ import { isAfterMinDate } from './is-after-min-date/is-after-min-date';
 import { isBeforeMaxDate } from './is-before-max-date/is-before-max-date';
 import { isSameMonth } from './is-same-month/is-same-month';
 import classes from './Month.module.css';
+import { getWeekNumber } from './get-week-number/get-week-number';
 
 export type MonthStylesNames =
   | 'month'
@@ -31,6 +34,7 @@ export type MonthStylesNames =
   | 'monthThead'
   | 'monthTbody'
   | 'monthCell'
+  | 'weekNumber'
   | DayStylesNames;
 
 export interface MonthSettings {
@@ -99,6 +103,9 @@ export interface MonthSettings {
 
   /** Determines whether today should be highlighted with a border, `false` by default */
   highlightToday?: boolean;
+
+  /** Determines whether week numbers should be displayed */
+  showWeekNumbers?: boolean;
 }
 
 export interface MonthProps
@@ -124,6 +131,12 @@ export type MonthFactory = Factory<{
 const defaultProps: Partial<MonthProps> = {
   withCellSpacing: true,
 };
+
+const varsResolver = createVarsResolver<MonthFactory>((_, { size }) => ({
+  weekNumber: {
+    '--wn-fz': getFontSize(size),
+  },
+}));
 
 export const Month = factory<MonthFactory>((_props, ref) => {
   const props = useProps('Month', defaultProps, _props);
@@ -158,6 +171,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
     withCellSpacing,
     size,
     highlightToday,
+    showWeekNumbers,
     ...others
   } = props;
 
@@ -171,6 +185,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
     styles,
     unstyled,
     vars,
+    varsResolver,
     rootSelector: 'month',
   });
 
@@ -261,6 +276,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
 
     return (
       <tr key={rowIndex} {...getStyles('monthRow')}>
+        {showWeekNumbers && <td {...getStyles('weekNumber')}>{getWeekNumber(row)}</td>}
         {cells}
       </tr>
     );
@@ -279,6 +295,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
             classNames={resolvedClassNames}
             styles={resolvedStyles}
             unstyled={unstyled}
+            showWeekNumbers={showWeekNumbers}
           />
         </thead>
       )}
