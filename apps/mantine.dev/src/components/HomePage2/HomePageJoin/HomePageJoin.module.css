@@ -2,6 +2,10 @@
   padding-block: var(--hp-block-spacing);
 }
 
+.description {
+  max-width: 900px;
+}
+
 .cards {
   margin-top: 40px;
 }

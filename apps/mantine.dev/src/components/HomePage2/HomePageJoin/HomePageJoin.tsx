@@ -12,7 +12,7 @@ export function HomePageJoin() {
       <HomePageContainer>
         <HomePageTitle order={2}>Join the community</HomePageTitle>
 
-        <HomePageDescription>
+        <HomePageDescription className={classes.description}>
           Mantine is an open-source project with a growing community of developers and contributors.
           Join us on GitHub, Discord, Twitter and other platforms to stay updated and get help with
           your projects.
