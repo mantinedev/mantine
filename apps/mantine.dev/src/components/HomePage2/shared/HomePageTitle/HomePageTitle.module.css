@@ -9,9 +9,17 @@
 
   &[data-order='1'] {
     font-size: 72px;
+
+    @mixin smaller-than $mantine-breakpoint-md {
+      font-size: 44px;
+    }
   }
 
   &[data-order='2'] {
     font-size: 54px;
+
+    @mixin smaller-than $mantine-breakpoint-md {
+      font-size: 38px;
+    }
   }
 }

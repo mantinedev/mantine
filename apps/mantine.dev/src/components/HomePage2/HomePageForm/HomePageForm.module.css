@@ -1,5 +1,9 @@
 .root {
   padding-block: 120px;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    padding-block: 40px;
+  }
 }
 
 .column {

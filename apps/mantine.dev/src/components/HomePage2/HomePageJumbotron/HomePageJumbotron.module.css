@@ -19,7 +19,6 @@
   }
 
   @mixin smaller-than $mantine-breakpoint-md {
-    padding-top: 120px;
     height: auto;
   }
 }
@@ -28,6 +27,11 @@
   position: relative;
   padding-top: 200px;
   padding-bottom: 120px;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    padding-top: 80px;
+    padding-bottom: 40px;
+  }
 }
 
 .image {
@@ -40,6 +44,10 @@
   top: 0;
   background-repeat: repeat-y;
   animation: slide 120s linear infinite;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    display: none;
+  }
 }
 
 .main {

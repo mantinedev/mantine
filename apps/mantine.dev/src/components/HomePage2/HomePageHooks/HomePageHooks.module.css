@@ -1,5 +1,9 @@
 .root {
   padding-block: 120px;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    padding-block: 40px;
+  }
 }
 
 .column {
@@ -11,7 +15,11 @@
 }
 
 .demos {
-  margin-top: 60px;
+  margin-top: 50px;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    margin-top: 20px;
+  }
 }
 
 .title {

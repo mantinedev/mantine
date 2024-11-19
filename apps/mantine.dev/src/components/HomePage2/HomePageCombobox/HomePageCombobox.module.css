@@ -1,6 +1,10 @@
 .root {
   padding-block: 120px;
   padding-top: 60px;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    padding-block: 40px;
+  }
 }
 
 .description {
