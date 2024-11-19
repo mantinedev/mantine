@@ -37,3 +37,8 @@ export const Demo_updateModal = {
   name: '⭐ Demo: updateModal',
   render: renderDemo(demos.updateModal),
 };
+
+export const Demo_updateContextModal = {
+  name: '⭐ Demo: updateContextModal',
+  render: renderDemo(demos.updateContextModal),
+};

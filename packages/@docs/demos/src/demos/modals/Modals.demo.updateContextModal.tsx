@@ -1,70 +1,45 @@
-import { Button } from '@mantine/core';
-import { modals } from '@mantine/modals';
+import {Button, Loader, Text} from '@mantine/core';
+import {ContextModalProps, modals} from '@mantine/modals';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Button, Text } from '@mantine/core';
-import { modals } from '@mantine/modals';
 
-function Demo() {
-  const handleOpenUpdatableContextModal = () => {
-    const modalId = modals.openContextModal('demonstration', {
-      title: 'Processing...',
-      innerProps: {
-        modalBody: 'You cannot close the modal during this operation.',
-      },
-      closeOnEscape: false,
-      closeOnClickOutside: false,
-    });
-
-    setTimeout(() => {
-      modals.updateContextModal({
-        modalId,
-        title: 'Processing Complete!',
-        innerProps: {
-          modalBody: 'You can now close this modal.',
-        },
-        closeOnEscape: true,
-        closeOnClickOutside: true,
-      });
-    }, 2000);
-  };
-
-  return (
-    <Button onClick={handleOpenUpdatableContextModal}>
-      Open Updatable Context Modal
-    </Button>
-  );
-}
 `;
 
 function Demo() {
-  const handleOpenUpdatableContextModal = () => {
-    const modalId = modals.openContextModal('demonstration', {
-      title: 'Processing...',
-      innerProps: {
-        modalBody: 'You cannot close the modal during this operation.',
-      },
-      closeOnEscape: false,
-      closeOnClickOutside: false,
-    });
-
-    setTimeout(() => {
-      modals.updateContextModal({
-        modalId,
-        title: 'Processing Complete!',
-        innerProps: {
-          modalBody: 'You can now close this modal.',
-        },
-        closeOnEscape: true,
-        closeOnClickOutside: true,
-      });
-    }, 2000);
-  };
-
   return (
-    <Button onClick={handleOpenUpdatableContextModal}>
-      Open Updatable Context Modal
+    <Button
+      onClick={() => {
+        const modalId = modals.openContextModal({
+          modal: 'asyncDemonstration',
+          title: 'Processing...',
+          closeOnEscape: false,
+          closeOnClickOutside: false,
+          closeButtonProps:{ disabled:true },
+          innerProps: {
+            modalBody:
+              'You cannot close this modal until 2 seconds have passed.',
+            loading: true,
+          },
+        });
+
+        setTimeout(() => {
+          modals.updateContextModal({
+            modalId,
+            title: "Processing Complete!",
+            closeOnEscape: true,
+            closeOnClickOutside: true,
+            closeButtonProps:{ disabled: false },
+            innerProps: {
+              modalBody:
+                'You can now close the modal.',
+              loading: false,
+            },
+          })
+        }, 2000);
+      }}
+    >
+      Open updating modal
     </Button>
   );
 }
