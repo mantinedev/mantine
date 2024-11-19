@@ -52,7 +52,7 @@ export const updateModal = (payload: { modalId: string } & Partial<ModalSettings
   createEvent('updateModal')(payload);
 
 export const updateContextModal = (payload: { modalId: string } & Partial<OpenContextModal<any>>) =>
-  createEvent('updateContextModal')(payload);;
+  createEvent('updateContextModal')(payload);
 
 export const modals: {
   open: ModalsEvents['openModal'];
@@ -60,12 +60,12 @@ export const modals: {
   closeAll: ModalsEvents['closeAllModals'];
   openConfirmModal: ModalsEvents['openConfirmModal'];
   openContextModal: ModalsEvents['openContextModal'];
-  updateModal: ModalsEvents['updateModal']
+  updateModal: ModalsEvents['updateModal'];
 } = {
   open: openModal,
   close: closeModal,
   closeAll: closeAllModals,
   openConfirmModal,
   openContextModal,
-  updateModal
+  updateModal,
 };
