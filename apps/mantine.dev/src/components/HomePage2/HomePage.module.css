@@ -4,6 +4,14 @@
   background-color: var(--mantine-color-body);
   border-bottom: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
 
+  --hp-column-max-width: calc(50vw - calc(var(--mantine-spacing-lg) / 2));
+  --hp-block-spacing: 120px;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    --hp-column-max-width: calc(100vw - 50px);
+    --hp-block-spacing: 40px;
+  }
+
   --hp-primary-bg: linear-gradient(
       45deg,
       var(--mantine-color-blue-6) 15%,

@@ -1,14 +1,18 @@
 import { IconBalloon, IconGauge, IconPuzzle, IconRocket } from '@tabler/icons-react';
-import { SimpleGrid, Text, ThemeIcon } from '@mantine/core';
+import { SimpleGrid } from '@mantine/core';
 import { Demo } from '@mantinex/demo';
 import { FormDemos } from '@docs/demos';
 import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer';
 import { HomePageDescription } from '../shared/HomePageDescription/HomePageDescription';
+import {
+  HomePageFeatures,
+  HomePageFeaturesData,
+} from '../shared/HomePageFeatures/HomePageFeatures';
 import { HomePageLearnMore } from '../shared/HomePageLearnMore/HomePageLearnMore';
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
 import classes from './HomePageForm.module.css';
 
-const features: FormFeatureProps[] = [
+const features: HomePageFeaturesData = [
   {
     icon: IconPuzzle,
     title: 'Seamless integration',
@@ -33,36 +37,11 @@ const features: FormFeatureProps[] = [
   },
 ];
 
-interface FormFeatureProps {
-  icon: typeof IconPuzzle;
-  title: string;
-  description: string;
-}
-
-function FormFeature({ icon: Icon, title, description }: FormFeatureProps) {
-  return (
-    <section className={classes.feature}>
-      <ThemeIcon className={classes.featureIcon} size={50} radius="md">
-        <Icon size={30} stroke={1.5} />
-      </ThemeIcon>
-      <div>
-        <Text component="h3" className={classes.featureTitle}>
-          {title}
-        </Text>
-
-        <Text className={classes.featureDescription}>{description}</Text>
-      </div>
-    </section>
-  );
-}
-
 export function HomePageForm() {
-  const items = features.map((feature, index) => <FormFeature key={index} {...feature} />);
-
   return (
     <section className={classes.root}>
       <HomePageContainer>
-        <SimpleGrid cols={{ md: 2 }}>
+        <SimpleGrid cols={{ md: 2 }} spacing={50} verticalSpacing={30}>
           <div className={classes.column} data-primary>
             <div className={classes.main}>
               <HomePageTitle order={2}>Form library</HomePageTitle>
@@ -72,7 +51,7 @@ export function HomePageForm() {
               </HomePageDescription>
               <HomePageLearnMore href="/form/package">Explore all form features</HomePageLearnMore>
 
-              <div className={classes.features}>{items}</div>
+              <HomePageFeatures data={features} />
             </div>
           </div>
           <div className={classes.column}>

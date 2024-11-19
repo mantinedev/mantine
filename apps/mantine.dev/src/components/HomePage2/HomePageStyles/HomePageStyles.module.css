@@ -1,7 +1,17 @@
 .root {
   padding-block: 120px;
+  position: relative;
 
   @mixin smaller-than $mantine-breakpoint-md {
     padding-block: 40px;
   }
+}
+
+.main {
+  position: sticky;
+  top: 120px;
+}
+
+.column {
+  max-width: var(--hp-column-max-width);
 }

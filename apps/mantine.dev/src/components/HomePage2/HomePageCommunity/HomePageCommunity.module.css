@@ -1,7 +1,6 @@
 .root {
   background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
-  padding-top: 120px;
-  padding-bottom: 120px;
+  padding-block: var(--hp-block-spacing);
 }
 
 .container {
@@ -111,7 +110,7 @@
 
     @mixin smaller-than $mantine-breakpoint-md {
       padding-inline-start: 0;
-      border-inline-start: none;
+      border-inline-start: none !important;
       padding-top: var(--mantine-spacing-lg);
       border-top: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
     }

@@ -26,11 +26,10 @@
 .container {
   position: relative;
   padding-top: 200px;
-  padding-bottom: 120px;
+  padding-bottom: var(--hp-block-spacing);
 
   @mixin smaller-than $mantine-breakpoint-md {
     padding-top: 80px;
-    padding-bottom: 40px;
   }
 }
 

@@ -1,17 +1,9 @@
 .root {
-  padding-block: 120px;
-
-  @mixin smaller-than $mantine-breakpoint-md {
-    padding-block: 40px;
-  }
+  padding-block: var(--hp-block-spacing);
 }
 
 .column {
-  max-width: calc(50vw - calc(var(--mantine-spacing-lg) / 2));
-
-  @mixin smaller-than $mantine-breakpoint-md {
-    max-width: calc(100vw - 50px);
-  }
+  max-width: var(--hp-column-max-width);
 }
 
 .demos {
