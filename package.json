@@ -151,7 +151,6 @@
     "eslint-plugin-jest": "^28.9.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.2",
-    "execa": "^8.0.1",
     "fast-glob": "^3.3.2",
     "fs-extra": "^11.2.0",
     "gh-pages": "^6.2.0",
@@ -193,7 +192,8 @@
     "version-next": "^1.0.2",
     "webpack": "^5.96.1",
     "wrangler": "^3.84.1",
-    "yargs": "^17.7.2"
+    "yargs": "^17.7.2",
+    "zx": "^8.2.2"
   },
   "resolutions": {
     "prosemirror-model": "1.18.1",

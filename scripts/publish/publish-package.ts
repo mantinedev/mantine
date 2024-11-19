@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { execa } from 'execa';
+import { $ } from 'zx';
 import { createLogger } from '../utils/signale';
 
 const logger = createLogger('publish-package');
@@ -12,9 +12,7 @@ interface PublishPackage {
 
 export async function publishPackage({ packagePath, name, tag }: PublishPackage) {
   try {
-    await execa('npm', ['publish', '--access', 'public', '--tag', tag], {
-      cwd: packagePath,
-    });
+    $`cd ${packagePath} && npm publish --access public --tag ${tag}`;
     logger.success(`Package ${chalk.cyan(name)} has been published`);
   } catch (error: any) {
     logger.error(`Failed to publish package ${chalk.red(name)}`);
