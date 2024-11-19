@@ -6,6 +6,7 @@ import {
   OpenConfirmModal,
   OpenContextModal,
 } from './context';
+import {randomId} from "@mantine/hooks";
 
 type ModalsEvents = {
   openModal: (payload: ModalSettings) => string;
@@ -24,20 +25,24 @@ export const [useModalsEvents, createEvent] =
   createUseExternalEvents<ModalsEvents>('mantine-modals');
 
 export const openModal: ModalsEvents['openModal'] = (payload) => {
-  createEvent('openModal')(payload);
-  return payload.modalId!;
+  const id = payload.modalId || randomId();
+  createEvent('openModal')({ ...payload, modalId: id });
+  return id;
 };
 
 export const openConfirmModal: ModalsEvents['openConfirmModal'] = (payload) => {
+  const id = payload.modalId || randomId();
   createEvent('openConfirmModal')(payload);
-  return payload.modalId!;
+  return id;
 };
 
 export const openContextModal: ModalsEvents['openContextModal'] = <TKey extends MantineModal>(
   payload: OpenContextModal<Parameters<MantineModals[TKey]>[0]['innerProps']> & { modal: TKey }
 ) => {
+
+  const id = payload.modalId || randomId();
   createEvent('openContextModal')(payload);
-  return payload.modalId!;
+  return id;
 };
 
 export const closeModal = createEvent('closeModal');

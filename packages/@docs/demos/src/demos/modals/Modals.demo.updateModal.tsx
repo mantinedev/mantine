@@ -40,7 +40,7 @@ function Demo() {
       onClick={() => {
         const modalId = modals.open({
           title: 'Initial Modal Title',
-          children: <Text>This text will update in 2 seconds.</Text>,
+          children: <Text size="sm">This text will update after 2 seconds.</Text>,
         });
 
         setTimeout(() => {
@@ -48,7 +48,7 @@ function Demo() {
             modalId,
             title: 'Updated Modal Title',
             children: (
-              <Text size="sm" c="dimmed">
+              <Text size="sm">
                 This is the updated content of the modal.
               </Text>
             ),
