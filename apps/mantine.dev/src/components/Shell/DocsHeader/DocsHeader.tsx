@@ -31,7 +31,7 @@ const navigationLinksData: NavigationLinkData[] = [
   { link: MDX_DATA.HooksPackage.slug, label: 'Hooks', category: 'hooks' },
   { link: MDX_DATA.CorePackage.slug, label: 'Components', category: 'components' },
   { link: MDX_DATA.useForm.slug, label: 'Form', category: 'form' },
-  { link: MDX_DATA.GettingStartedDates.slug, label: 'Extensions', category: 'extensions' },
+  { link: MDX_DATA.ExtensionsPackage.slug, label: 'Extensions', category: 'extensions' },
 ];
 
 interface DocsHeaderProps {

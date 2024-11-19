@@ -1,6 +1,13 @@
 import { Frontmatter } from '@/types';
 
 export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
+  ExtensionsPackage: {
+    title: 'Get started',
+    slug: '/x/extensions',
+    hideInSearch: true,
+    hideHeader: true,
+  },
+
   Notifications: {
     title: 'Notifications system',
     package: '@mantine/notifications',

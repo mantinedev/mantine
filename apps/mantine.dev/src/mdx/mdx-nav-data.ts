@@ -361,6 +361,10 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
 
 const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
   {
+    category: '',
+    pages: [MDX_DATA.ExtensionsPackage],
+  },
+  {
     category: '@mantine/dates',
     pages: [
       MDX_DATA.GettingStartedDates,
