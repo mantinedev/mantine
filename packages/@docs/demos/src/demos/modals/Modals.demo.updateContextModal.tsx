@@ -3,9 +3,9 @@ import { modals} from '@mantine/modals';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Button, Text, Stack, Center, rem } from '@mantine/core';
+import { Button, Text, Stack, Center, Loader, rem } from '@mantine/core';
 import { modals, ContextModalProps, ModalsProvider } from '@mantine/modals';
-import { IconCheck } from "@tabler/icons-react";
+import { IconCheck } from '@tabler/icons-react';
 
 const TestModal = ({
   context,
