@@ -50,7 +50,7 @@
     "react-dom": "^18.x || ^19.x"
   },
   "dependencies": {
-    "react-dropzone-esm": "15.0.1"
+    "react-dropzone-esm": "15.2.0"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
