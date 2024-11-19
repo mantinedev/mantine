@@ -1,6 +1,6 @@
 import {Button, Center, Loader, rem, Stack, Text} from '@mantine/core';
 import { ContextModalProps, ModalsProvider } from '@mantine/modals';
-import {IconCheck, IconCircleCheck} from "@tabler/icons-react";
+import { IconCheck } from "@tabler/icons-react";
 
 interface ModalsProviderDemoProps {
   children: React.ReactNode;
