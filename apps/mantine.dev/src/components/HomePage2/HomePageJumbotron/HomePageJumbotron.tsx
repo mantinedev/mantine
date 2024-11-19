@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import { IconArrowUpRight } from '@tabler/icons-react';
-import { Button } from '@mantine/core';
+import { Box, Button } from '@mantine/core';
 import { GithubIcon } from '@mantinex/dev-icons';
 import { meta } from '@mantinex/mantine-meta';
 import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer';
 import { HomePageDescription } from '../shared/HomePageDescription/HomePageDescription';
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
-import img from './img.png';
+import darkImg from './images/dark-collage.webp';
+import lightImg from './images/light-collage.webp';
 import classes from './HomePageJumbotron.module.css';
 
 export function HomePageJumbotron() {
@@ -14,7 +15,16 @@ export function HomePageJumbotron() {
     <section className={classes.root}>
       <div className={classes.overlay} />
       <HomePageContainer className={classes.container}>
-        <div className={classes.image} style={{ backgroundImage: `url(${img.src})` }} />
+        <Box
+          darkHidden
+          className={classes.image}
+          style={{ backgroundImage: `url(${lightImg.src})` }}
+        />
+        <Box
+          lightHidden
+          className={classes.image}
+          style={{ backgroundImage: `url(${darkImg.src})` }}
+        />
         <div className={classes.main}>
           <HomePageTitle order={1}>
             A fully featured React

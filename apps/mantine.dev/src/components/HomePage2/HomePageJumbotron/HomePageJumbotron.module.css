@@ -15,7 +15,7 @@
   overflow: hidden;
 
   @mixin dark {
-    background-color: var(--mantine-color-dark-8);
+    background-color: var(--mantine-color-dark-7);
   }
 
   @mixin smaller-than $mantine-breakpoint-md {
@@ -31,7 +31,7 @@
 }
 
 .image {
-  height: calc(692px * 3);
+  height: calc(2052px * 3);
   position: absolute;
   width: 1000px;
   background-size: contain;
@@ -51,8 +51,15 @@
   position: absolute;
   inset: 0;
   z-index: 2;
-  /* background: linear-gradient(-90deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%); */
-  background: linear-gradient(-90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%);
+  background: linear-gradient(-95deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 1) 60%);
+
+  @mixin dark {
+    background: linear-gradient(
+      -95deg,
+      alpha(var(--mantine-color-dark-7), 0.5) 0%,
+      var(--mantine-color-dark-7) 60%
+    );
+  }
 }
 
 .action {
