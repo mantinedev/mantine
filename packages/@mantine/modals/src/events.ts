@@ -44,10 +44,12 @@ export const modals: {
   closeAll: ModalsEvents['closeAllModals'];
   openConfirmModal: ModalsEvents['openConfirmModal'];
   openContextModal: ModalsEvents['openContextModal'];
+  updateModal: ModalsEvents['updateModal']
 } = {
   open: openModal,
   close: closeModal,
   closeAll: closeAllModals,
   openConfirmModal,
   openContextModal,
+  updateModal
 };
