@@ -1,9 +1,9 @@
 import chalk from 'chalk';
-import { execa } from 'execa';
 import simpleGit from 'simple-git';
 import { getNextVersion } from 'version-next';
 import { hideBin } from 'yargs/helpers';
 import yargs from 'yargs/yargs';
+import { $ } from 'zx';
 import packageJson from '../../package.json';
 import { buildAllPackages } from '../build/build-all-packages';
 import { getMantinePackagesList } from '../packages/get-packages-list';
@@ -65,7 +65,7 @@ async function release() {
 
   logger.success('All packages have been published successfully');
 
-  await execa('yarn');
+  await $`yarn`;
   await git.add([
     getPath('packages'),
     getPath('package.json'),

@@ -1,8 +1,16 @@
-import { TableDemos, BarChartDemos } from '@docs/demos';
+import { TableDemos, BarChartDemos, ModalsDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog7150);
+
+## BarChart color based on value
+
+[BarChart](/charts/bar-chart) component now supports `getBarColor` prop to assign color based on value.
+`getBarColor` function is called with two arguments: value and series object. It should return a color
+string (theme color reference or any valid CSS color value).
+
+<Demo data={BarChartDemos.getBarColor} />
 
 ## Table vertical variant
 
@@ -17,6 +25,34 @@ export default Layout(MDX_DATA.Changelog7150);
 This is useful when you have columns with numbers and you want them to be aligned:
 
 <Demo data={TableDemos.tabularNums} />
+
+## Update function in modals manager
+
+[Modals manager](/x/modals) now supports `modals.updateModal` and `modals.updateContextModal`
+function to update modal after it was opened:
+
+<Demo data={ModalsDemos.updateModal} />
+
+## useForm onSubmitPreventDefault option
+
+[use-form](/form/use-form) hook now supports `onSubmitPreventDefault` option.
+This option is useful if you want to integrate `useForm` hook with [server actions](https://github.com/mantinedev/mantine/issues/7142).
+By default, `event.preventDefault()` is called on the form `onSubmit` handler.
+If you want to change this behavior, you can pass `onSubmitPreventDefault` option
+to `useForm` hook. It can have the following values:
+
+- `always` (default) - always call `event.preventDefault()`
+- `never` - never call `event.preventDefault()`
+- `validation-failed` - call `event.preventDefault()` only if validation failed
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  onSubmitPreventDefault: 'never',
+});
+```
 
 ## New demo: BarChart with overlay
 

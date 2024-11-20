@@ -9,8 +9,7 @@ export function Usage() {
       <MonthPickerInput
         label="Month picker input"
         placeholder="Pick month"
-        numberOfColumns={3}
-        allowDeselect
+        defaultDate={new Date(1994, 2)}
       />
     </div>
   );

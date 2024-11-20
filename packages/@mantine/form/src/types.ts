@@ -206,6 +206,7 @@ export interface UseFormInput<
     options: GetInputPropsOptions;
     form: UseFormReturnType<Values, TransformValues>;
   }) => Record<string, any> | undefined | void;
+  onSubmitPreventDefault?: 'always' | 'never' | 'validation-failed';
 }
 
 export interface UseFormReturnType<
