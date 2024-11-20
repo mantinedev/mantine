@@ -1,6 +1,14 @@
 import { useEffect, useRef } from 'react';
 import { useMergedRef, useUncontrolled } from '@mantine/hooks';
-import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '../../core';
+import {
+  BoxProps,
+  ElementProps,
+  factory,
+  Factory,
+  StylesApiProps,
+  useProps,
+  useResolvedStylesApi,
+} from '../../core';
 import { CloseButton } from '../CloseButton';
 import { FileButton } from '../FileButton';
 import { __BaseInputProps, __InputStylesNames, Input, InputVariant } from '../Input';
@@ -62,7 +70,7 @@ export interface FileInputProps<Multiple = false>
 export type FileInputFactory = Factory<{
   props: FileInputProps;
   ref: HTMLButtonElement;
-  stylesNames: __InputStylesNames;
+  stylesNames: __InputStylesNames | 'placeholder';
   variant: InputVariant;
 }>;
 
@@ -99,10 +107,17 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
     placeholder,
     component,
     resetRef: resetRefProp,
+    classNames,
+    styles,
     ...others
   } = props;
 
   const resetRef = useRef<() => void>(null);
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<FileInputFactory>({
+    classNames,
+    styles,
+    props,
+  });
 
   const [_value, setValue] = useUncontrolled<null | File | File[]>({
     value,
@@ -159,9 +174,17 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
           __stylesApiProps={props}
           unstyled={unstyled}
           size={size}
+          classNames={classNames}
+          styles={styles}
         >
           {!hasValue ? (
-            <Input.Placeholder>{placeholder}</Input.Placeholder>
+            <Input.Placeholder
+              __staticSelector="FileInput"
+              classNames={resolvedClassNames}
+              styles={resolvedStyles}
+            >
+              {placeholder}
+            </Input.Placeholder>
           ) : (
             <ValueComponent value={_value} />
           )}
