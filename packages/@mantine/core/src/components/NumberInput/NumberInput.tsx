@@ -41,7 +41,7 @@ function canIncrement(value: number | string) {
     return value < Number.MAX_SAFE_INTEGER;
   }
 
-  return value === '';
+  return value === '' || (isNumberString(value) && Number(value) < Number.MAX_SAFE_INTEGER);
 }
 
 function getDecimalPlaces(inputValue: string | number): number {

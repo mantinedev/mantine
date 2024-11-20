@@ -32,6 +32,48 @@ you should look for documentation on [tiptap.dev](https://tiptap.dev/) website.
 
 <Demo data={TipTapDemos.usage} />
 
+## Controlled
+
+To control editor state, create a wrapper component and pass `onChange` handler
+to `useEditor` hook:
+
+```tsx
+import { useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import { RichTextEditor as MantineRichTextEditor } from '@mantine/tiptap';
+
+interface RichTextEditorProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export function RichTextEditor({
+  value,
+  onChange,
+}: RichTextEditorProps) {
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: value,
+    onUpdate: ({ editor }) => {
+      onChange(editor.getHTML());
+    },
+  });
+
+  return (
+    <MantineRichTextEditor editor={editor}>
+      <MantineRichTextEditor.Toolbar>
+        <MantineRichTextEditor.ControlsGroup>
+          <MantineRichTextEditor.Bold />
+          <MantineRichTextEditor.Italic />
+        </MantineRichTextEditor.ControlsGroup>
+      </MantineRichTextEditor.Toolbar>
+
+      <MantineRichTextEditor.Content />
+    </MantineRichTextEditor>
+  );
+}
+```
+
 ## Controls and extensions
 
 Some controls require installation of additional [Tiptap extensions](https://tiptap.dev/extensions).

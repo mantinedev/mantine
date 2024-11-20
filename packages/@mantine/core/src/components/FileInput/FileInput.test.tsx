@@ -4,12 +4,13 @@ import { FileInput, FileInputProps } from './FileInput';
 
 const defaultProps: FileInputProps = {
   ...inputDefaultProps,
+  placeholder: 'test-placeholder',
 };
 
 describe('@mantine/core/FileInput', () => {
   tests.axe([<FileInput aria-label="test-label" key="1" />]);
 
-  tests.itSupportsSystemProps<FileInputProps, __InputStylesNames>({
+  tests.itSupportsSystemProps<FileInputProps, __InputStylesNames | 'placeholder'>({
     component: FileInput,
     props: defaultProps,
     mod: true,

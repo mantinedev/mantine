@@ -195,5 +195,6 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     title: 'All releases',
     slug: '/changelog/all-releases',
     hideHeader: true,
+    hideInSearch: true,
   },
 };

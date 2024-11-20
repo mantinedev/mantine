@@ -136,6 +136,24 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     [stateRef, dispatch]
   );
 
+  const updateModal = useCallback(
+    ({ modalId, ...newProps }: Partial<ModalSettings> & { modalId: string }) => {
+      dispatch({
+        type: 'UPDATE',
+        modalId,
+        newProps,
+      });
+    },
+    [dispatch]
+  );
+
+  const updateContextModal = useCallback(
+    (payload: { modalId: string } & Partial<OpenContextModal<any>>) => {
+      dispatch({ type: 'UPDATE', modalId: payload.modalId, newProps: payload });
+    },
+    [dispatch]
+  );
+
   useModalsEvents({
     openModal,
     openConfirmModal,
@@ -143,6 +161,8 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     closeModal,
     closeContextModal: closeModal,
     closeAllModals: closeAll,
+    updateModal,
+    updateContextModal,
   });
 
   const ctx: ModalsContextProps = {
@@ -153,6 +173,8 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     closeModal,
     closeContextModal: closeModal,
     closeAll,
+    updateModal,
+    updateContextModal,
   };
 
   const getCurrentModal = () => {

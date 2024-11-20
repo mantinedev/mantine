@@ -1,8 +1,8 @@
 import path from 'node:path';
 import chalk from 'chalk';
-import { execa } from 'execa';
 import fs from 'fs-extra';
 import { argv } from 'yargs';
+import { $ } from 'zx';
 import { getPath } from '../utils/get-path';
 import { createLogger } from '../utils/signale';
 
@@ -54,4 +54,4 @@ fs.writeFileSync(path.join(packagePath, 'tsconfig.build.json'), replacePlacehold
 
 logger.success(`Package ${chalk.cyan(packageName)} has been created`);
 
-execa('yarn');
+$`yarn`;
