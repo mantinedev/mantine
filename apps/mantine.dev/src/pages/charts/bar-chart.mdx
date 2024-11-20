@@ -59,6 +59,9 @@ Use `getBarColor` prop to assign color based on value. `getBarColor` function is
 called with two arguments: value and series object. It should return a color
 string (theme color reference or any valid CSS color value).
 
+Note that color returned by `getBarColor` does not impact colors of the legend
+and tooltip.
+
 <Demo data={BarChartDemos.getBarColor} />
 
 ## Legend
