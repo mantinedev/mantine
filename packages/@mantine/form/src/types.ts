@@ -22,6 +22,8 @@ export interface ReorderPayload {
 
 type Rule<Value, Values> = (value: Value, values: Values, path: string) => React.ReactNode;
 
+type SetSubmitting = React.Dispatch<React.SetStateAction<boolean>>;
+
 export type FormRule<Value, Values> =
   NonNullable<Value> extends Array<infer ListValue>
     ?
@@ -52,7 +54,7 @@ export type OnSubmit<Values, TransformValues extends _TransformValues<Values>> =
   handleSubmit: (
     values: ReturnType<TransformValues>,
     event: React.FormEvent<HTMLFormElement> | undefined
-  ) => void,
+  ) => void | Promise<any>,
   handleValidationFailure?: (
     errors: FormErrors,
     values: Values,
@@ -214,8 +216,10 @@ export interface UseFormReturnType<
   TransformValues extends _TransformValues<Values> = (values: Values) => Values,
 > {
   values: Values;
+  submitting: boolean;
   initialized: boolean;
   errors: FormErrors;
+  setSubmitting: SetSubmitting;
   initialize: Initialize<Values>;
   setValues: SetValues<Values>;
   setInitialValues: SetInitialValues<Values>;
