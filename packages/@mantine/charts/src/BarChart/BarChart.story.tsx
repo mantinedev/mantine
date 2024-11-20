@@ -38,27 +38,10 @@ export function Usage() {
         h={300}
         data={simpleData}
         dataKey="product"
-        series={[{ name: 'sales', color: 'indigo.6' }]}
+        series={[{ name: 'sales', color: 'indigo' }]}
         withLegend
-        barProps={() => ({ fill: 'url(#diagonalStripes)' })}
-      >
-        <defs>
-          <pattern
-            id="diagonalStripes"
-            patternUnits="userSpaceOnUse"
-            width={8}
-            height={8}
-            patternTransform="rotate(45)"
-          >
-            <rect
-              width="2"
-              height="8"
-              transform="translate(0,0)"
-              fill="color-mix(in lch, var(--mantine-color-indigo-6), rgba(0,0,0,0))"
-            />
-          </pattern>
-        </defs>
-      </BarChart>
+        getBarColor={(value) => (value > 700 ? 'teal.8' : 'red.8')}
+      />
     </div>
   );
 }
