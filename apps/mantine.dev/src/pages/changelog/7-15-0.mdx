@@ -33,6 +33,27 @@ function to update modal after it was opened:
 
 <Demo data={ModalsDemos.updateModal} />
 
+## useForm onSubmitPreventDefault option
+
+[use-form](/form/use-form) hook now supports `onSubmitPreventDefault` option.
+This option is useful if you want to integrate `useForm` hook with [server actions](https://github.com/mantinedev/mantine/issues/7142).
+By default, `event.preventDefault()` is called on the form `onSubmit` handler.
+If you want to change this behavior, you can pass `onSubmitPreventDefault` option
+to `useForm` hook. It can have the following values:
+
+- `always` (default) - always call `event.preventDefault()`
+- `never` - never call `event.preventDefault()`
+- `validation-failed` - call `event.preventDefault()` only if validation failed
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  onSubmitPreventDefault: 'never',
+});
+```
+
 ## New demo: BarChart with overlay
 
 <Demo data={BarChartDemos.overlay} />
