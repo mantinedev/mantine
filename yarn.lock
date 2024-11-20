@@ -2381,16 +2381,19 @@ __metadata:
     "@mantinex/demo": "workspace:*"
     "@mantinex/dev-icons": "workspace:*"
     "@mantinex/shiki": "workspace:*"
+    "@tiptap/core": "npm:^2.9.1"
+    "@tiptap/extension-link": "npm:^2.9.1"
+    "@tiptap/pm": "npm:^2.9.1"
+    "@tiptap/react": "npm:^2.9.1"
+    dayjs: "npm:^1.11.13"
+    embla-carousel-react: "npm:^7.1.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    recharts: "npm:^2.13.3"
+    shiki: "npm:^1.23.1"
   peerDependencies:
-    "@tabler/icons-react": "*"
-    "@tiptap/extension-link": "*"
-    "@tiptap/react": "*"
-    dayjs: "*"
-    embla-carousel-react: "*"
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
-    recharts: ^2.13.3
-    shiki: ^1.23.1
   languageName: unknown
   linkType: soft
 
@@ -2408,12 +2411,17 @@ __metadata:
     "@mantine/nprogress": "workspace:*"
     "@mantine/spotlight": "workspace:*"
     "@mantine/tiptap": "workspace:*"
+    "@tiptap/core": "npm:^2.9.1"
+    "@tiptap/extension-link": "npm:^2.9.1"
+    "@tiptap/pm": "npm:^2.9.1"
+    "@tiptap/react": "npm:^2.9.1"
+    dayjs: "npm:^1.11.13"
+    embla-carousel-react: "npm:^7.1.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    recharts: "npm:^2.13.3"
+    shiki: "npm:^1.23.1"
   peerDependencies:
-    "@tabler/icons-react": "*"
-    "@tiptap/extension-link": "*"
-    "@tiptap/react": "*"
-    dayjs: "*"
-    embla-carousel-react: "*"
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
   languageName: unknown
@@ -4007,6 +4015,8 @@ __metadata:
   dependencies:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   peerDependencies:
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
@@ -4021,6 +4031,9 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/dates": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    dayjs: "npm:^1.11.13"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   peerDependencies:
     dayjs: "*"
     react: ^18.x || ^19.x
@@ -4035,6 +4048,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   peerDependencies:
     "@mantine/core": 7.14.2-alpha.0
     "@mantine/hooks": 7.14.2-alpha.0
@@ -4051,6 +4066,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   peerDependencies:
     "@mantine/core": 7.14.2-alpha.0
     "@mantine/hooks": 7.14.2-alpha.0
@@ -4069,6 +4086,8 @@ __metadata:
     "@mantine/hooks": "workspace:*"
     clsx: "npm:^2.1.1"
     highlight.js: "npm:^11.10.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   peerDependencies:
     "@mantine/core": 7.14.2-alpha.0
     "@mantine/hooks": 7.14.2-alpha.0
@@ -4093,6 +4112,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     clsx: "npm:^2.1.1"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
     react-number-format: "npm:^5.4.2"
     react-remove-scroll: "npm:^2.6.0"
     react-textarea-autosize: "npm:8.5.5"
@@ -4113,6 +4134,8 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     clsx: "npm:^2.1.1"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   peerDependencies:
     "@mantine/core": 7.14.2-alpha.0
     "@mantine/hooks": 7.14.2-alpha.0
@@ -4129,6 +4152,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
     react-dropzone-esm: "npm:15.2.0"
   peerDependencies:
     "@mantine/core": 7.14.2-alpha.0
@@ -4146,6 +4171,8 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     html-react-parser: "npm:^5.1.18"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   peerDependencies:
     "@emotion/cache": ^11.11.0
     "@emotion/react": ^11.11.4
@@ -4183,6 +4210,8 @@ __metadata:
   dependencies:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   peerDependencies:
     "@mantine/core": 7.14.2-alpha.0
     "@mantine/hooks": 7.14.2-alpha.0
@@ -4199,6 +4228,8 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     "@mantine/store": "npm:7.14.2-alpha.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
     react-transition-group: "npm:4.4.5"
   peerDependencies:
     "@mantine/core": 7.14.2-alpha.0
@@ -4216,6 +4247,8 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     "@mantine/store": "npm:7.14.2-alpha.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   peerDependencies:
     "@mantine/core": 7.14.2-alpha.0
     "@mantine/hooks": 7.14.2-alpha.0
@@ -4232,6 +4265,8 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     "@mantine/store": "npm:7.14.2-alpha.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   peerDependencies:
     "@mantine/core": 7.14.2-alpha.0
     "@mantine/hooks": 7.14.2-alpha.0
@@ -4255,6 +4290,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   peerDependencies:
     "@mantine/core": 7.14.2-alpha.0
     "@mantine/hooks": 7.14.2-alpha.0
@@ -4268,6 +4305,9 @@ __metadata:
 "@mantine/vanilla-extract@workspace:packages/@mantine/vanilla-extract":
   version: 0.0.0-use.local
   resolution: "@mantine/vanilla-extract@workspace:packages/@mantine/vanilla-extract"
+  dependencies:
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   peerDependencies:
     "@mantine/core": 7.14.2-alpha.0
   languageName: unknown
@@ -4281,6 +4321,9 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     "@mantinex/shiki": "workspace:*"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
+    shiki: "npm:^1.23.1"
   peerDependencies:
     "@mantine/core": ">=7.0.0"
     "@mantine/hooks": ">=7.0.0"
@@ -4299,6 +4342,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   peerDependencies:
     "@mantine/core": ">=7.0.0"
     "@mantine/hooks": ">=7.0.0"
@@ -4314,6 +4359,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   peerDependencies:
     "@mantine/core": ">=7.0.0"
     "@mantine/hooks": ">=7.0.0"
@@ -4331,6 +4378,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   peerDependencies:
     "@mantine/core": ">=7.0.0"
     "@mantine/hooks": ">=7.0.0"
@@ -4342,15 +4391,6 @@ __metadata:
 "@mantinex/mantine-meta@workspace:*, @mantinex/mantine-meta@workspace:packages/@mantinex/mantine-meta":
   version: 0.0.0-use.local
   resolution: "@mantinex/mantine-meta@workspace:packages/@mantinex/mantine-meta"
-  dependencies:
-    "@mantine-tests/core": "workspace:*"
-    "@mantine/core": "workspace:*"
-    "@mantine/hooks": "workspace:*"
-  peerDependencies:
-    "@mantine/core": ">=7.0.0"
-    "@mantine/hooks": ">=7.0.0"
-    react: ^18.x || ^19.x
-    react-dom: ^18.x || ^19.x
   languageName: unknown
   linkType: soft
 
@@ -4361,6 +4401,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
   peerDependencies:
     "@mantine/core": ">=7.0.0"
     "@mantine/hooks": ">=7.0.0"
@@ -6535,12 +6577,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.9.0":
-  version: 20.9.0
-  resolution: "@types/node@npm:20.9.0"
+"@types/node@npm:^22.9.1":
+  version: 22.9.1
+  resolution: "@types/node@npm:22.9.1"
   dependencies:
-    undici-types: "npm:~5.26.4"
-  checksum: 10c0/755d07de735eafda4e20af75ad9d03bdbfddef327d790e9a896142eac7493db5d8501591376e1c8227aa12eeb88e522bc727c6024504842ed40e539e8a466db9
+    undici-types: "npm:~6.19.8"
+  checksum: 10c0/ea489ae603aa8874e4e88980aab6f2dad09c755da779c88dd142983bfe9609803c89415ca7781f723072934066f63daf2b3339ef084a8ad1a8079cf3958be243
   languageName: node
   linkType: hard
 
@@ -10240,7 +10282,7 @@ __metadata:
     "@tiptap/starter-kit": "npm:^2.9.1"
     "@types/chroma-js": "npm:^2.4.4"
     "@types/github-slugger": "npm:^2.0.0"
-    "@types/node": "npm:^20.9.0"
+    "@types/node": "npm:^22.9.1"
     "@types/react": "npm:18.3.12"
     chroma-js: "npm:^3.1.2"
     dayjs: "npm:^1.11.13"
@@ -12946,7 +12988,7 @@ __metadata:
     "@next/mdx": "npm:^14.0.2"
     "@tabler/icons-react": "npm:^3.3.0"
     "@types/mdx": "npm:2.0.10"
-    "@types/node": "npm:^20.9.0"
+    "@types/node": "npm:^22.9.1"
     "@types/react": "npm:18.3.12"
     "@types/react-dom": "npm:18.3.1"
     dayjs: "npm:^1.11.13"
@@ -15608,6 +15650,7 @@ __metadata:
     "@types/jest": "npm:^29.5.14"
     "@types/jest-axe": "npm:^3.5.9"
     "@types/lodash": "npm:^4.17.13"
+    "@types/node": "npm:^22.9.1"
     "@types/react": "npm:18.3.12"
     "@types/react-dom": "npm:18.3.1"
     "@types/react-transition-group": "npm:^4.4.11"
@@ -22320,13 +22363,6 @@ __metadata:
     has-symbols: "npm:^1.0.3"
     which-boxed-primitive: "npm:^1.0.2"
   checksum: 10c0/81ca2e81134167cc8f75fa79fbcc8a94379d6c61de67090986a2273850989dd3bae8440c163121b77434b68263e34787a675cbdcb34bb2f764c6b9c843a11b66
-  languageName: node
-  linkType: hard
-
-"undici-types@npm:~5.26.4":
-  version: 5.26.5
-  resolution: "undici-types@npm:5.26.5"
-  checksum: 10c0/bb673d7876c2d411b6eb6c560e0c571eef4a01c1c19925175d16e3a30c4c428181fb8d7ae802a261f283e4166a0ac435e2f505743aa9e45d893f9a3df017b501
   languageName: node
   linkType: hard
 
