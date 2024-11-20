@@ -59,7 +59,7 @@
     "@tiptap/starter-kit": "^2.9.1",
     "@types/node": "^20.9.0",
     "@types/react": "18.3.12",
-    "chroma-js": ">=2.4.2",
+    "chroma-js": "^3.1.2",
     "dayjs": "^1.11.13",
     "embla-carousel": "^7.1.0",
     "embla-carousel-autoplay": "^7.1.0",
