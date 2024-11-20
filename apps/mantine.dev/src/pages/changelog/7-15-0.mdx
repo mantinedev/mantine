@@ -1,4 +1,4 @@
-import { TableDemos, BarChartDemos } from '@docs/demos';
+import { TableDemos, BarChartDemos, ModalsDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -25,6 +25,13 @@ string (theme color reference or any valid CSS color value).
 This is useful when you have columns with numbers and you want them to be aligned:
 
 <Demo data={TableDemos.tabularNums} />
+
+## Update function in modals manager
+
+[Modals manager](/x/modals) now supports `modals.updateModal` and `modals.updateContextModal`
+function to update modal after it was opened:
+
+<Demo data={ModalsDemos.updateModal} />
 
 ## New demo: BarChart with overlay
 
