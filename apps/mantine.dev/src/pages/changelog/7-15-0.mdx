@@ -1,4 +1,4 @@
-import { TableDemos, BarChartDemos, ModalsDemos } from '@docs/demos';
+import { TableDemos, BarChartDemos, ModalsDemos, FormDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -32,6 +32,32 @@ This is useful when you have columns with numbers and you want them to be aligne
 function to update modal after it was opened:
 
 <Demo data={ModalsDemos.updateModal} />
+
+## useForm submitting state
+
+[use-form](/form/use-form) hook now supports `form.submitting` field
+and `form.setSubmitting` function to track form submission state.
+
+`form.submitting` field will be set to `true` if function passed to
+`form.onSubmit` returns a promise. After the promise is resolved or rejected,
+`form.submitting` will be set to `false`:
+
+<Demo data={FormDemos.submitting} />
+
+You can also manually set `form.submitting` to `true` or `false`:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({ mode: 'uncontrolled' });
+form.submitting; // -> false
+
+form.setSubmitting(true);
+form.submitting; // -> true
+
+form.setSubmitting(false);
+form.submitting; // -> false
+```
 
 ## useForm onSubmitPreventDefault option
 

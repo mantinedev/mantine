@@ -44,10 +44,10 @@ export const MDX_FORM_DATA: Record<string, Frontmatter> = {
   },
 
   formStatus: {
-    title: 'Touched & dirty',
+    title: 'Touched, dirty and submitting',
     package: '@mantine/form',
     slug: '/form/status',
-    description: 'Get fields and form touched and dirty status',
+    description: 'Get fields and form touched, dirty and submitting statuses',
     docs: 'form/status.mdx',
   },
 
