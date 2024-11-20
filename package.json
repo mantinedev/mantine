@@ -59,7 +59,10 @@
     "syncpack": "syncpack list-mismatches",
     "syncpack:format": "syncpack format",
     "prettier:test": "prettier --check \"**/*.{ts,tsx,mdx,css}\"",
-    "prettier:write": "prettier --write \"**/*.{ts,tsx,mdx,css}\""
+    "prettier:write": "prettier --write \"**/*.{ts,tsx,mdx,css}\"",
+    "ncu:docs": "npx npm-check-updates --packageFile './apps/*/package.json' -x @tabler/icons-react",
+    "ncu:root": "npx npm-check-updates --packageFile './package.json' -x @tabler/icons-react",
+    "ncu": "npm run ncu:docs && npm run ncu:root"
   },
   "dependencies": {
     "@emotion/cache": "^11.13.1",
