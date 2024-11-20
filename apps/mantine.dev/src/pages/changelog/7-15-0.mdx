@@ -4,6 +4,14 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog7150);
 
+## BarChart color based on value
+
+[BarChart](/charts/bar-chart) component now supports `getBarColor` prop to assign color based on value.
+`getBarColor` function is called with two arguments: value and series object. It should return a color
+string (theme color reference or any valid CSS color value).
+
+<Demo data={BarChartDemos.getBarColor} />
+
 ## Table vertical variant
 
 [Table](/core/table) component now support `variant="vertical"`:
