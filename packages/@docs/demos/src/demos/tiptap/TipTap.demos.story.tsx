@@ -52,3 +52,8 @@ export const Demo_typographyStyles = {
   name: '⭐ Demo: typographyStyles',
   render: renderDemo(demos.typographyStyles),
 };
+
+export const Demo_subtleVariant = {
+  name: '⭐ Demo: subtleVariant',
+  render: renderDemo(demos.subtleVariant),
+};
