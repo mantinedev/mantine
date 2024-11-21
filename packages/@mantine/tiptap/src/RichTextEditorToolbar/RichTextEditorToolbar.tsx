@@ -35,14 +35,25 @@ const defaultProps: Partial<RichTextEditorToolbarProps> = {};
 
 export const RichTextEditorToolbar = factory<RichTextEditorToolbarFactory>((_props, ref) => {
   const props = useProps('RichTextEditorToolbar', defaultProps, _props);
-  const { classNames, className, style, styles, vars, sticky, stickyOffset, mod, ...others } =
-    props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    vars,
+    sticky,
+    stickyOffset,
+    mod,
+    variant,
+    ...others
+  } = props;
   const ctx = useRichTextEditorContext();
 
   return (
     <Box
       ref={ref}
       mod={[{ sticky }, mod]}
+      variant={variant || ctx.variant}
       {...ctx.getStyles('toolbar', { className, style, styles, classNames })}
       {...others}
       __vars={{ '--rte-sticky-offset': rem(stickyOffset) }}

@@ -152,14 +152,23 @@
 }
 
 .control {
-  min-width: 26px;
-  height: 26px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid;
   border-radius: var(--mantine-radius-default);
   cursor: default;
+
+  &:where([data-variant='default']) {
+    border: 1px solid;
+    min-width: 26px;
+    height: 26px;
+  }
+
+  &:where([data-variant='subtle']) {
+    --control-icon-size: 20px;
+    min-width: 32px;
+    height: 32px;
+  }
 
   @mixin where-light {
     background-color: var(--mantine-color-white);
@@ -167,8 +176,15 @@
   }
 
   @mixin where-dark {
-    background-color: var(--mantine-color-dark-6);
     border-color: var(--mantine-color-dark-4);
+
+    &:where([data-variant='default']) {
+      background-color: var(--mantine-color-dark-6);
+    }
+
+    &:where([data-variant='subtle']) {
+      background-color: var(--mantine-color-dark-7);
+    }
   }
 
   &:where([data-disabled]) {
@@ -190,7 +206,13 @@
 
     @mixin hover {
       @mixin where-light {
-        background-color: var(--mantine-color-gray-0);
+        &:where([data-variant='default']) {
+          background-color: var(--mantine-color-gray-0);
+        }
+
+        &:where([data-variant='subtle']) {
+          background-color: var(--mantine-color-gray-1);
+        }
       }
 
       @mixin where-dark {
@@ -209,25 +231,32 @@
   }
 }
 
+.controlIcon {
+  width: var(--control-icon-size, 16px);
+  height: var(--control-icon-size, 16px);
+}
+
 .controlsGroup {
   display: flex;
   background-color: var(--mantine-color-body);
 
-  & :where([data-rich-text-editor-control]) {
-    border-radius: 0;
+  &:where([data-variant='default']) {
+    & :where([data-rich-text-editor-control]) {
+      border-radius: 0;
 
-    &:where(:not(:last-of-type)) {
-      border-inline-end-width: 0;
-    }
+      &:where(:not(:last-of-type)) {
+        border-inline-end-width: 0;
+      }
 
-    &:where(:last-of-type) {
-      border-start-end-radius: var(--mantine-radius-default);
-      border-end-end-radius: var(--mantine-radius-default);
-    }
+      &:where(:last-of-type) {
+        border-start-end-radius: var(--mantine-radius-default);
+        border-end-end-radius: var(--mantine-radius-default);
+      }
 
-    &:where(:first-of-type) {
-      border-start-start-radius: var(--mantine-radius-default);
-      border-end-start-radius: var(--mantine-radius-default);
+      &:where(:first-of-type) {
+        border-start-start-radius: var(--mantine-radius-default);
+        border-end-start-radius: var(--mantine-radius-default);
+      }
     }
   }
 }
@@ -282,13 +311,20 @@
   align-items: center;
   flex-wrap: wrap;
   gap: var(--mantine-spacing-sm);
-  top: var(--rte-sticky-offset, 0);
+  top: var(--rte-sticky-offset, 0px);
   background-color: var(--mantine-color-body);
   z-index: 1;
   border-start-end-radius: var(--mantine-radius-default);
   border-start-start-radius: var(--mantine-radius-default);
   border-bottom: 1px solid;
-  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+
+  &:where([data-variant='default']) {
+    padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  }
+
+  &:where([data-variant='subtle']) {
+    padding: 4px;
+  }
 
   @mixin where-light {
     border-color: var(--mantine-color-gray-4);

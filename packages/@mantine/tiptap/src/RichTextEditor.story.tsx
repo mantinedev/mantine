@@ -1,4 +1,4 @@
-import { IconColorPicker } from '@tabler/icons-react';
+// import { IconColorPicker } from '@tabler/icons-react';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { Color } from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
@@ -136,7 +136,7 @@ function BasicEditor({
             <RichTextEditor.CodeBlock />
           </RichTextEditor.ControlsGroup>
 
-          <RichTextEditor.ControlsGroup>
+          {/* <RichTextEditor.ControlsGroup>
             <RichTextEditor.Control interactive={false}>
               <IconColorPicker size={16} stroke={1.5} />
             </RichTextEditor.Control>
@@ -146,7 +146,7 @@ function BasicEditor({
             <RichTextEditor.Color color="#37B24D" />
             <RichTextEditor.Color color="#F59F00" />
             <RichTextEditor.UnsetColor />
-          </RichTextEditor.ControlsGroup>
+          </RichTextEditor.ControlsGroup> */}
         </RichTextEditor.Toolbar>
 
         <RichTextEditor.Content />
@@ -157,6 +157,10 @@ function BasicEditor({
 
 export function Usage() {
   return <BasicEditor />;
+}
+
+export function SubtleVariant() {
+  return <BasicEditor editorProps={{ variant: 'subtle' }} />;
 }
 
 function escapeHtml(unsafe: string) {

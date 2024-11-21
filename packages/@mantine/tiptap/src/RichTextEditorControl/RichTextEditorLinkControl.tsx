@@ -138,6 +138,7 @@ export const RichTextEditorLinkControl = factory<RichTextEditorLinkControlFactor
             styles={resolvedStyles}
             className={className}
             style={style}
+            variant={ctx.variant}
           />
         </Popover.Target>
 
