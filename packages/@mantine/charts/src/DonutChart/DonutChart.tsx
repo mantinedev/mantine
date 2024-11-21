@@ -153,7 +153,7 @@ const getLabelValue = (
   return value;
 };
 
-export const getLabel =
+const getLabel =
   (labelsType: 'value' | 'percent', valueFormatter?: DonutChartProps['valueFormatter']): PieLabel =>
   ({ x, y, cx, cy, percent, value }) => (
     <text
