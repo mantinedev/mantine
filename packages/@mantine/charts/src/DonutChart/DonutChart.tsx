@@ -245,10 +245,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
             paddingAngle={paddingAngle}
             startAngle={startAngle}
             endAngle={endAngle}
-            label={
-              withLabels ? getLabel(labelsType || 'value', valueFormatter)
-                : false
-            }
+            label={withLabels ? getLabel(labelsType || 'value', valueFormatter) : false}
             labelLine={
               withLabelsLine
                 ? {
