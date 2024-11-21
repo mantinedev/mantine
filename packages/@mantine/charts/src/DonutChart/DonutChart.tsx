@@ -1,6 +1,7 @@
 import {
   Cell,
   Pie,
+  PieLabel,
   PieProps,
   PieChart as ReChartsPieChart,
   ResponsiveContainer,
@@ -98,6 +99,9 @@ export interface DonutChartProps
   /** Props passed down to recharts `PieChart` component */
   pieChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsPieChart>;
 
+  /** Type of labels to display, `'value'` by default */
+  labelsType?: 'value' | 'percent';
+
   /** A function to format values inside the tooltip */
   valueFormatter?: (value: number) => string;
 }
@@ -118,6 +122,7 @@ const defaultProps: Partial<DonutChartProps> = {
   strokeWidth: 1,
   startAngle: 0,
   endAngle: 360,
+  labelsType: 'value',
   tooltipDataSource: 'all',
 };
 
@@ -130,6 +135,40 @@ const varsResolver = createVarsResolver<DonutChartFactory>(
     },
   })
 );
+
+const getLabelValue = (
+  labelsType: DonutChartProps['labelsType'],
+  value: number,
+  percent: number,
+  valueFormatter?: DonutChartProps['valueFormatter']
+) => {
+  if (labelsType === 'percent') {
+    return `${(percent * 100).toFixed(0)}%`;
+  }
+
+  if (typeof valueFormatter === 'function') {
+    return valueFormatter(value);
+  }
+
+  return value;
+};
+
+export const getLabel =
+  (labelsType: 'value' | 'percent', valueFormatter?: DonutChartProps['valueFormatter']): PieLabel =>
+  ({ x, y, cx, cy, percent, value }) => (
+    <text
+      x={x}
+      y={y}
+      cx={cx}
+      cy={cy}
+      textAnchor={x > cx ? 'start' : 'end'}
+      fill="var(--chart-labels-color, var(--mantine-color-dimmed))"
+      fontFamily="var(--mantine-font-family)"
+      fontSize={12}
+    >
+      <tspan x={x}>{getLabelValue(labelsType, value, percent, valueFormatter)}</tspan>
+    </text>
+  );
 
 export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
   const props = useProps('DonutChart', defaultProps, _props);
@@ -159,6 +198,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     pieChartProps,
     valueFormatter,
     strokeColor,
+    labelsType,
     ...others
   } = props;
 
@@ -206,12 +246,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
             startAngle={startAngle}
             endAngle={endAngle}
             label={
-              withLabels
-                ? {
-                    fill: 'var(--chart-labels-color, var(--mantine-color-dimmed))',
-                    fontSize: 12,
-                    fontFamily: 'var(--mantine-font-family)',
-                  }
+              withLabels ? getLabel(labelsType || 'value', valueFormatter)
                 : false
             }
             labelLine={
