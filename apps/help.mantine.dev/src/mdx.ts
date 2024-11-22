@@ -55,6 +55,7 @@ import { meta as stylesOrder } from './pages/q/styles-order.mdx';
 import { meta as submitTemplate } from './pages/q/submit-template.mdx';
 import { meta as tabsBorderColor } from './pages/q/tabs-border-color.mdx';
 import { meta as templatesUsage } from './pages/q/templates-usage.mdx';
+import { meta as tenShadesPerColor } from './pages/q/ten-shades-per-color.mdx';
 import { meta as thirdPartyStyles } from './pages/q/third-party-styles.mdx';
 import { meta as transparentButtons } from './pages/q/transparent-buttons.mdx';
 import { meta as viteLoadFonts } from './pages/q/vite-load-fonts.mdx';
@@ -119,6 +120,7 @@ export const MDX_DATA = [
   submitTemplate,
   tabsBorderColor,
   templatesUsage,
+  tenShadesPerColor,
   thirdPartyStyles,
   transparentButtons,
   viteLoadFonts,

@@ -42,7 +42,7 @@ export const RichTextEditorColorPickerControl = forwardRef<
     props
   );
 
-  const { editor, labels, getStyles } = useRichTextEditorContext();
+  const { editor, labels, getStyles, variant } = useRichTextEditorContext();
   const [opened, { toggle, close }] = useDisclosure(false);
   const [state, setState] = useState<'palette' | 'colorPicker'>('palette');
   const currentColor = editor?.getAttributes('textStyle').color || 'var(--mantine-color-text)';
@@ -82,6 +82,7 @@ export const RichTextEditorColorPickerControl = forwardRef<
       <Popover.Target>
         <RichTextEditorControl
           {...others}
+          variant={variant}
           aria-label={labels.colorPickerControlLabel}
           title={labels.colorPickerControlLabel}
           ref={ref}

@@ -181,7 +181,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     title: 'Version v7.15.0',
     slug: '/changelog/7-15-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.15.0',
-    date: 'January 14th, 2025',
+    date: 'December 10th, 2024',
     searchTags: '7-15-0, 7150',
   },
 

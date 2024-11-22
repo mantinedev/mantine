@@ -36,15 +36,8 @@
     "directory": "packages/@docs/demos"
   },
   "peerDependencies": {
-    "@tabler/icons-react": "*",
-    "@tiptap/extension-link": "*",
-    "@tiptap/react": "*",
-    "dayjs": "*",
-    "embla-carousel-react": "*",
     "react": "^18.x || ^19.x",
-    "react-dom": "^18.x || ^19.x",
-    "recharts": "^2.13.3",
-    "shiki": "^1.23.1"
+    "react-dom": "^18.x || ^19.x"
   },
   "devDependencies": {
     "@docs/styles-api": "workspace:*",
@@ -62,6 +55,16 @@
     "@mantine/tiptap": "workspace:*",
     "@mantinex/demo": "workspace:*",
     "@mantinex/dev-icons": "workspace:*",
-    "@mantinex/shiki": "workspace:*"
+    "@mantinex/shiki": "workspace:*",
+    "@tiptap/core": "^2.9.1",
+    "@tiptap/extension-link": "^2.9.1",
+    "@tiptap/pm": "^2.9.1",
+    "@tiptap/react": "^2.9.1",
+    "dayjs": "^1.11.13",
+    "embla-carousel-react": "^7.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "^2.13.3",
+    "shiki": "^1.23.1"
   }
 }

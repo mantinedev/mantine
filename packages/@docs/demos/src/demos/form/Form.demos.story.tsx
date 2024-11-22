@@ -162,3 +162,8 @@ export const Demo_focusError = {
   name: '⭐ Demo: focusError',
   render: renderDemo(demos.focusError),
 };
+
+export const Demo_submitting = {
+  name: '⭐ Demo: submitting',
+  render: renderDemo(demos.submitting),
+};

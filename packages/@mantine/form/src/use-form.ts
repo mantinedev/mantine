@@ -53,6 +53,7 @@ export function useForm<
   const $watch = useFormWatch<Values>({ $status });
   const [formKey, setFormKey] = useState(0);
   const [fieldKeys, setFieldKeys] = useState<Record<string, number>>({});
+  const [submitting, setSubmitting] = useState(false);
 
   const reset: Reset = useCallback(() => {
     $values.resetValues();
@@ -216,7 +217,15 @@ export function useForm<
 
         handleValidationFailure?.(results.errors, $values.refValues.current, event);
       } else {
-        handleSubmit?.(transformValues($values.refValues.current) as any, event);
+        const submitResult = handleSubmit?.(
+          transformValues($values.refValues.current) as any,
+          event
+        );
+
+        if (submitResult instanceof Promise) {
+          setSubmitting(true);
+          submitResult.finally(() => setSubmitting(false));
+        }
       }
     };
 
@@ -254,6 +263,9 @@ export function useForm<
     initialize,
     setValues,
     setFieldValue,
+
+    submitting,
+    setSubmitting,
 
     errors: $errors.errorsState,
     setErrors: $errors.setErrors,

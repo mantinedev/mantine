@@ -94,3 +94,26 @@ form.isDirty(); // -> false
 form.setValues({ a: 3 });
 form.isDirty(); // -> true
 ```
+
+## Submitting state
+
+`form.submitting` field will be set to `true` if function passed to
+`form.onSubmit` returns a promise. After the promise is resolved or rejected,
+`form.submitting` will be set to `false`:
+
+<Demo data={FormDemos.submitting} />
+
+You can also manually set `form.submitting` to `true` or `false`:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({ mode: 'uncontrolled' });
+form.submitting; // -> false
+
+form.setSubmitting(true);
+form.submitting; // -> true
+
+form.setSubmitting(false);
+form.submitting; // -> false
+```

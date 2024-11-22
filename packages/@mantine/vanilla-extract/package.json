@@ -36,5 +36,9 @@
   },
   "peerDependencies": {
     "@mantine/core": "7.14.2-alpha.0"
+  },
+  "devDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }
