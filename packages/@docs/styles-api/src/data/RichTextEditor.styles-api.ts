@@ -8,6 +8,7 @@ export const RichTextEditorStylesApi: StylesApiData<RichTextEditorFactory> = {
     content: 'Content area',
     typographyStylesProvider: 'TypographyStylesProvider component, wraps content',
     control: 'RichTextEditor.Control root element, used as a base for all controls',
+    controlIcon: 'Control icon element',
     controlsGroup: 'RichTextEditor.ControlsGroup component root',
     linkEditor: 'Link editor root element',
     linkEditorSave: 'Link editor save button',
