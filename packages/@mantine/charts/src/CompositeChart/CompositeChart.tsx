@@ -7,6 +7,7 @@ import {
   CartesianGrid,
   DotProps,
   Label,
+  LabelList,
   Legend,
   Line,
   LineProps,
@@ -31,7 +32,6 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { BarLabel } from '../BarChart/BarLabel';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { PointLabel } from '../PointLabel/PointLabel';
@@ -340,11 +340,12 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
           isAnimationActive={false}
           fillOpacity={dimmed ? 0.1 : 1}
           strokeOpacity={dimmed ? 0.2 : 0}
-          label={withBarValueLabel ? <BarLabel valueFormatter={valueFormatter} /> : undefined}
           yAxisId={item.yAxisId || 'left'}
           minPointSize={minBarSize}
           {...(typeof barProps === 'function' ? barProps(item) : barProps)}
-        />
+        >
+          {withBarValueLabel && (<LabelList position='top' fontSize={12} fill="var(--chart-bar-label-color, var(--mantine-color-dimmed))" formatter={valueFormatter} />)}
+        </Bar>
       );
     }
 

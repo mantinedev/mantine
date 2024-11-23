@@ -128,6 +128,11 @@ export const Demo_barValueLabel = {
   render: renderDemo(demos.barValueLabel),
 };
 
+export const Demo_valueLabelProps = {
+  name: '⭐ Demo: valueLabelProps',
+  render: renderDemo(demos.valueLabelProps),
+};
+
 export const Demo_minBarSize = {
   name: '⭐ Demo: minBarSize',
   render: renderDemo(demos.minBarSize),
