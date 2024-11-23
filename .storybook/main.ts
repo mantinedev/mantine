@@ -32,6 +32,11 @@ const storiesPath = !argv._[1]
 
 export default {
   stories: storiesPath,
+  core: {
+    disableWhatsNewNotifications: true,
+    disableTelemetry: true,
+    enableCrashReports: false,
+  },
 
   addons: [
     getAbsolutePath('storybook-dark-mode'),
@@ -42,7 +47,11 @@ export default {
           {
             test: /\.css$/,
             sideEffects: true,
-            use: ['style-loader', 'css-loader', 'postcss-loader'],
+            use: [
+              'style-loader',
+              { loader: 'css-loader', options: { modules: { namedExport: false } } },
+              'postcss-loader',
+            ],
           },
         ],
       },
@@ -88,10 +97,6 @@ export default {
 
   docs: {
     autodocs: false,
-  },
-
-  core: {
-    disableTelemetry: true,
   },
 
   typescript: {

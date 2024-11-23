@@ -136,6 +136,70 @@ You can use the following compound components to have full control over the `Dra
 
 <Demo data={DrawerDemos.composition} />
 
+## Drawer.Stack
+
+Use `Drawer.Stack` component to render multiple drawers at the same time.
+`Drawer.Stack` keeps track of opened drawers, manages z-index values, focus trapping
+and `closeOnEscape` behavior. `Drawer.Stack` is designed to be used with `useDrawersStack` hook.
+
+Differences from using multiple `Drawer` components:
+
+- `Drawer.Stack` manages z-index values – drawers that are opened later will always have higher z-index value disregarding their order in the DOM
+- `Drawer.Stack` disables focus trap and `Escape` key handling for all drawers except the one that is currently opened
+- Drawers that are not currently opened are present in the DOM but are hidden with `opacity: 0` and `pointer-events: none`
+- Only one overlay is rendered at a time
+
+<Demo data={DrawerDemos.stack} />
+
+## useDrawersStack hook
+
+`useDrawersStack` hook provides an easy way to control multiple drawers at the same time.
+It accepts an array of unique drawers ids and returns an object with the following properties:
+
+```tsx
+interface UseDrawersStackReturnType<T extends string> {
+  // Current opened state of each drawer
+  state: Record<T, boolean>;
+
+  // Opens drawer with the given id
+  open: (id: T) => void;
+
+  // Closes drawer with the given id
+  close: (id: T) => void;
+
+  // Toggles drawer with the given id
+  toggle: (id: T) => void;
+
+  // Closes all drawers within the stack
+  closeAll: () => void;
+
+  // Returns props for drawer with the given id
+  register: (id: T) => {
+    opened: boolean;
+    onClose: () => void;
+    stackId: T;
+  };
+}
+```
+
+Example of using `useDrawersStack` with `Drawer` component:
+
+```tsx
+import { Drawer, useDrawersStack } from '@mantine/core';
+
+function Demo() {
+  const stack = useDrawersStack(['first', 'second']);
+
+  return (
+    <>
+      <Drawer {...stack.register('first')}>First</Drawer>
+      <Drawer {...stack.register('second')}>Second</Drawer>
+      <Button onClick={() => stack.open('first')}>Open first</Button>
+    </>
+  );
+}
+```
+
 ## Fixed elements offset
 
 `Drawer` component uses [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
@@ -180,7 +244,7 @@ import { Drawer } from '@mantine/core';
 function Demo() {
   return (
     <Drawer
-      closeButtonProps={{ 'aria-label': 'Close modal' }}
+      closeButtonProps={{ 'aria-label': 'Close drawer' }}
       opened
       onClose={() => {}}
     />

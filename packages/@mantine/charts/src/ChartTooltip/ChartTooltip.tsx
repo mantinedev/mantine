@@ -1,7 +1,6 @@
 import {
   Box,
   BoxProps,
-  ColorSwatch,
   ElementProps,
   factory,
   Factory,
@@ -165,12 +164,16 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
     <div key={item?.key ?? item.name} data-type={type} {...getStyles('tooltipItem')}>
       <div {...getStyles('tooltipItemBody')}>
         {showColor && (
-          <ColorSwatch
-            color={getThemeColor(item.color, theme)}
-            size={12}
-            {...getStyles('tooltipItemColor')}
-            withShadow={false}
-          />
+          <svg {...getStyles('tooltipItemColor')}>
+            <circle
+              r={6}
+              fill={getThemeColor(item.color, theme)}
+              width={12}
+              height={12}
+              cx={6}
+              cy={6}
+            />
+          </svg>
         )}
         <div {...getStyles('tooltipItemName')}>{labels[item.name] || item.name}</div>
       </div>

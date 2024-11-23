@@ -62,6 +62,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/7-0-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.0.0',
     date: 'September 18th, 2023',
+    searchTags: '7-0-0, 700',
   },
 
   Changelog710: {
@@ -69,6 +70,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/7-1-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.1.0',
     date: 'September 28th, 2023',
+    searchTags: '7-1-0, 710',
   },
 
   Changelog720: {
@@ -76,6 +78,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/7-2-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.2.0',
     date: 'November 7th, 2023',
+    searchTags: '7-2-0, 720',
   },
 
   Changelog730: {
@@ -83,6 +86,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/7-3-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.3.0',
     date: 'December 5th, 2023',
+    searchTags: '7-3-0, 730',
   },
 
   Changelog740: {
@@ -90,6 +94,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/7-4-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.4.0',
     date: 'January 3rd, 2024',
+    searchTags: '7-4-0, 740',
   },
 
   Changelog750: {
@@ -97,6 +102,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/7-5-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.5.0',
     date: 'January 26th, 2024',
+    searchTags: '7-5-0, 750',
   },
 
   Changelog760: {
@@ -104,6 +110,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/7-6-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.6.0',
     date: 'February 27th, 2024',
+    searchTags: '7-6-0, 760',
   },
 
   Changelog770: {
@@ -111,6 +118,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/7-7-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.7.0',
     date: 'March 26th, 2024',
+    searchTags: '7-7-0, 770',
   },
 
   Changelog780: {
@@ -118,6 +126,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/7-8-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.8.0',
     date: 'April 12th, 2024',
+    searchTags: '7-8-0, 780',
   },
 
   Changelog790: {
@@ -125,6 +134,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/7-9-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.9.0',
     date: 'May 2nd, 2024',
+    searchTags: '7-9-0, 790',
   },
 
   Changelog7100: {
@@ -132,6 +142,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/7-10-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.10.0',
     date: 'May 23rd, 2024',
+    searchTags: '7-10-0, 7100',
   },
 
   Changelog7110: {
@@ -139,6 +150,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/7-11-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.11.0',
     date: 'June 26th, 2024',
+    searchTags: '7-11-0, 7110',
   },
 
   Changelog7120: {
@@ -146,6 +158,7 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/7-12-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.12.0',
     date: 'August 6th, 2024',
+    searchTags: '7-12-0, 7120',
   },
 
   Changelog7130: {
@@ -153,6 +166,15 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/7-13-0',
     release: 'https://github.com/mantinedev/mantine/releases/tag/7.13.0',
     date: 'September 26th, 2024',
+    searchTags: '7-13-0, 7130',
+  },
+
+  Changelog7140: {
+    title: 'Version v7.14.0',
+    slug: '/changelog/7-14-0',
+    release: 'https://github.com/mantinedev/mantine/releases/tag/7.14.0',
+    date: 'November 12th, 2024',
+    searchTags: '7-14-0, 7140',
   },
 
   PreviousChangelogs: {
@@ -165,5 +187,6 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     title: 'All releases',
     slug: '/changelog/all-releases',
     hideHeader: true,
+    hideInSearch: true,
   },
 };

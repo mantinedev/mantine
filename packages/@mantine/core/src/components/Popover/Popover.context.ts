@@ -52,6 +52,7 @@ interface PopoverContext {
   variant: string | undefined;
   keepMounted: boolean | undefined;
   getStyles: GetStylesApi<PopoverFactory>;
+  resolvedStyles: Record<string, any>;
   floatingStrategy: FloatingStrategy | undefined;
 }
 

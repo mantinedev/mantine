@@ -32,3 +32,8 @@ export const Demo_rootColor = {
   name: '⭐ Demo: rootColor',
   render: renderDemo(demos.rootColor),
 };
+
+export const Demo_transitions = {
+  name: '⭐ Demo: transitions',
+  render: renderDemo(demos.transitions),
+};

@@ -256,7 +256,6 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     if ((!isDuplicate || (isDuplicate && allowDuplicates)) && _value.length < maxTags!) {
       onOptionSubmit?.(val);
       setSearchValue('');
-
       if (val.length > 0) {
         setValue([..._value, val]);
       }
@@ -336,8 +335,9 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       key={`${item}-${index}`}
       withRemoveButton={!readOnly}
       onRemove={() => {
-        _value.splice(index, 1);
-        setValue([..._value]);
+        const next_value = _value.slice();
+        next_value.splice(index, 1);
+        setValue(next_value);
         onRemove?.(item);
       }}
       unstyled={unstyled}

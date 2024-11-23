@@ -10,9 +10,7 @@ export function Usage() {
       <YearPickerInput
         label="Year picker input"
         placeholder="Pick year"
-        numberOfColumns={3}
-        closeOnChange={false}
-        allowDeselect
+        defaultDate={new Date(1994, 2)}
       />
     </div>
   );

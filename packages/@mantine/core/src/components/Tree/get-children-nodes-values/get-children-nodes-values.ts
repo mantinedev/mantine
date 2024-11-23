@@ -42,3 +42,15 @@ export function getChildrenNodesValues(
 
   return acc;
 }
+
+export function getAllChildrenNodes(data: TreeNodeData[]) {
+  return data.reduce((acc, node) => {
+    if (Array.isArray(node.children) && node.children.length > 0) {
+      acc.push(...getAllChildrenNodes(node.children));
+    } else {
+      acc.push(node.value);
+    }
+
+    return acc;
+  }, [] as string[]);
+}

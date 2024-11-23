@@ -1,6 +1,6 @@
 {
   "name": "@mantine/form",
-  "version": "7.13.4",
+  "version": "7.14.2-alpha.0",
   "description": "Mantine form management library",
   "homepage": "https://mantine.dev",
   "license": "MIT",
@@ -32,7 +32,7 @@
     "directory": "packages/@mantine/form"
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": "^18.x || ^19.x"
   },
   "dependencies": {
     "fast-deep-equal": "^3.1.3",

@@ -19,6 +19,11 @@
   max-width: calc(100% - var(--drawer-offset) * 2);
   max-height: calc(100% - var(--drawer-offset) * 2);
   overflow-y: auto;
+
+  &[data-hidden] {
+    opacity: 0 !important;
+    pointer-events: none;
+  }
 }
 
 .inner {

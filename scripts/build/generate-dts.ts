@@ -1,9 +1,9 @@
 import path from 'node:path';
-import { execa } from 'execa';
 import fs from 'fs-extra';
+import { $ } from 'zx';
 
 export async function generateDts(packagePath: string) {
-  await execa('yarn', ['tsc', '--project', path.join(packagePath, 'tsconfig.build.json')]);
+  await $`yarn tsc --project ${path.join(packagePath, 'tsconfig.build.json')}`;
 
   // Duplicate the type definitions for ESM
   await fs.copy(

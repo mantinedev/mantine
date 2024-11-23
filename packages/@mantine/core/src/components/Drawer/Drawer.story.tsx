@@ -1,5 +1,6 @@
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
+import { useModalsStack } from '../Modal';
 import { ScrollArea } from '../ScrollArea';
 import { Tabs } from '../Tabs';
 import { Drawer } from './Drawer';
@@ -163,6 +164,39 @@ export function AutosizeScrollarea() {
       >
         {content}
       </Drawer>
+    </div>
+  );
+}
+
+export function Stack() {
+  const stack = useModalsStack(['first', 'second', 'third']);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={() => stack.open('first')}>Open modal</Button>
+      <Drawer.Stack>
+        <Drawer {...stack.register('first')} title="First modal" overlayProps={{ blur: 3 }}>
+          First modal
+          {content}
+          <Button onClick={() => stack.open('second')} fullWidth mt="md">
+            Open second modal
+          </Button>
+        </Drawer>
+
+        <Drawer {...stack.register('second')} title="Second modal" overlayProps={{ blur: 3 }}>
+          Second modal
+          <Button onClick={() => stack.open('third')} fullWidth mt="md">
+            Open third modal
+          </Button>
+        </Drawer>
+
+        <Drawer {...stack.register('third')} title="Third modal" overlayProps={{ blur: 3 }}>
+          Third modal
+          <Button onClick={() => stack.closeAll()} fullWidth mt="md">
+            Close all
+          </Button>
+        </Drawer>
+      </Drawer.Stack>
     </div>
   );
 }

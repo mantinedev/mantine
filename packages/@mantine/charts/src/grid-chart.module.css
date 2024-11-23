@@ -2,6 +2,8 @@
   display: block;
   width: 100%;
 
+  --chart-bar-label-color: var(--mantine-color-dimmed);
+
   svg {
     overflow: visible;
   }
@@ -19,6 +21,10 @@
   & :where(text) {
     font-family: var(--mantine-font-family);
     color: var(--chart-text-color, var(--mantine-color-dimmed));
+  }
+
+  &:where([data-orientation='vertical']) {
+    --chart-bar-label-color: var(--mantine-color-white);
   }
 }
 

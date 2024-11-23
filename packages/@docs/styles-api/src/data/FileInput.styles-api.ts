@@ -6,6 +6,7 @@ export const FileInputStylesApi: StylesApiData<FileInputFactory> = {
   selectors: {
     ...InputStylesApi.selectors,
     ...InputWrapperStylesApi.selectors,
+    placeholder: 'Placeholder text',
   },
 
   vars: {},

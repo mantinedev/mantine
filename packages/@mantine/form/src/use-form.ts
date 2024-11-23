@@ -44,6 +44,7 @@ export function useForm<
   transformValues = ((values: Values) => values) as any,
   enhanceGetInputProps,
   validate: rules,
+  onSubmitPreventDefault = 'always',
 }: UseFormInput<Values, TransformValues> = {}): UseFormReturnType<Values, TransformValues> {
   const $errors = useFormErrors<Values>(initialErrors);
   const $values = useFormValues<Values>({ initialValues, onValuesChange, mode });
@@ -202,10 +203,17 @@ export function useForm<
 
   const onSubmit: OnSubmit<Values, TransformValues> =
     (handleSubmit, handleValidationFailure) => (event) => {
-      event?.preventDefault();
+      if (onSubmitPreventDefault === 'always') {
+        event?.preventDefault();
+      }
+
       const results = validate();
 
       if (results.hasErrors) {
+        if (onSubmitPreventDefault === 'validation-failed') {
+          event?.preventDefault();
+        }
+
         handleValidationFailure?.(results.errors, $values.refValues.current, event);
       } else {
         handleSubmit?.(transformValues($values.refValues.current) as any, event);
@@ -265,6 +273,7 @@ export function useForm<
     reorderListItem: $list.reorderListItem,
     insertListItem: $list.insertListItem,
     removeListItem: $list.removeListItem,
+    replaceListItem: $list.replaceListItem,
 
     reset,
     validate,

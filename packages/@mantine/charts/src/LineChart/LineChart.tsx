@@ -282,7 +282,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         type={curveType}
         strokeDasharray={item.strokeDasharray}
         yAxisId={item.yAxisId || 'left'}
-        label={withPointLabels ? <PointLabel /> : undefined}
+        label={withPointLabels ? <PointLabel valueFormatter={valueFormatter} /> : undefined}
         {...(typeof lineProps === 'function' ? lineProps(item) : lineProps)}
       />
     );

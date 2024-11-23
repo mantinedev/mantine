@@ -215,6 +215,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.FileInput,
           MDX_DATA.ColorInput,
           MDX_DATA.NumberInput,
+          MDX_DATA.AngleSlider,
         ],
       },
       {
@@ -356,9 +357,11 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       MDX_DATA.CompositeChart,
       MDX_DATA.DonutChart,
       MDX_DATA.PieChart,
+      MDX_DATA.FunnelChart,
       MDX_DATA.RadarChart,
       MDX_DATA.ScatterChart,
       MDX_DATA.BubbleChart,
+      MDX_DATA.RadialBarChart,
       MDX_DATA.Sparkline,
     ],
   },
@@ -378,6 +381,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   {
     group: 'changelog',
     pages: [
+      MDX_DATA.Changelog7140,
       MDX_DATA.Changelog7130,
       MDX_DATA.Changelog7120,
       MDX_DATA.Changelog7110,

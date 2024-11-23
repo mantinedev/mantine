@@ -46,6 +46,11 @@
   &[data-full-screen] {
     border-radius: 0;
   }
+
+  &[data-hidden] {
+    opacity: 0 !important;
+    pointer-events: none;
+  }
 }
 
 .inner {

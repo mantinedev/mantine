@@ -8,6 +8,7 @@ import {
   Factory,
   getDefaultZIndex,
   getRadius,
+  getRefProp,
   getThemeColor,
   isElement,
   useDirection,
@@ -202,7 +203,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     );
   }
 
-  const targetRef = useMergedRef(tooltip.reference, (children as any).ref, ref);
+  const targetRef = useMergedRef(tooltip.reference, getRefProp(children), ref);
   const transition = getTransitionProps(transitionProps, { duration: 100, transition: 'fade' });
 
   return (

@@ -167,7 +167,7 @@
   --button-border-width: 1px;
   display: flex;
 
-  & :where(*) {
+  & :where(.root) {
     &:focus {
       position: relative;
       z-index: 1;

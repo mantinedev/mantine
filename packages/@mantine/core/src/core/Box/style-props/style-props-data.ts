@@ -55,7 +55,7 @@ export const STYlE_PROPS_DATA: Record<keyof MantineStyleProps, SystemPropData> =
   bga: { type: 'identity', property: 'backgroundAttachment' },
 
   pos: { type: 'identity', property: 'position' },
-  top: { type: 'identity', property: 'top' },
+  top: { type: 'size', property: 'top' },
   left: { type: 'size', property: 'left' },
   bottom: { type: 'size', property: 'bottom' },
   right: { type: 'size', property: 'right' },

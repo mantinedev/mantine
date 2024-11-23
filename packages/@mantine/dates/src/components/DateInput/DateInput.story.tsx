@@ -21,6 +21,20 @@ export function Usage() {
   );
 }
 
+export function WithDefaultDate() {
+  const [value, setValue] = useState<Date | null>(null);
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DateInput
+        placeholder="Enter date"
+        value={value}
+        onChange={setValue}
+        defaultDate={new Date(1994, 1, 2)}
+      />
+    </div>
+  );
+}
+
 export function CloseButton() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>

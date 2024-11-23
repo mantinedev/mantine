@@ -67,3 +67,8 @@ export const Demo_initialFocusTrap = {
   name: '⭐ Demo: initialFocusTrap',
   render: renderDemo(demos.initialFocusTrap),
 };
+
+export const Demo_stack = {
+  name: '⭐ Demo: stack',
+  render: renderDemo(demos.stack),
+};

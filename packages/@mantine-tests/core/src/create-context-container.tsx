@@ -5,9 +5,9 @@ export function createContextContainer<T>(
   Provider: React.FC<any>,
   providerProps?: Record<string, any>
 ) {
-  const Container = forwardRef((props: T, ref) => (
+  const Container = forwardRef((props: React.PropsWithoutRef<T>, ref) => (
     <Provider {...providerProps}>
-      <Component {...props} ref={ref} />
+      <Component {...(props as any)} ref={ref} />
     </Provider>
   ));
 

@@ -40,6 +40,7 @@ export function useComboboxTargetProps({
         if (!ctx.store.dropdownOpened) {
           ctx.store.openDropdown('keyboard');
           setSelectedOptionId(ctx.store.selectActiveOption());
+          ctx.store.updateSelectedOptionIndex('selected', { scrollIntoView: true });
         } else {
           setSelectedOptionId(ctx.store.selectNextOption());
         }
@@ -51,6 +52,7 @@ export function useComboboxTargetProps({
         if (!ctx.store.dropdownOpened) {
           ctx.store.openDropdown('keyboard');
           setSelectedOptionId(ctx.store.selectActiveOption());
+          ctx.store.updateSelectedOptionIndex('selected', { scrollIntoView: true });
         } else {
           setSelectedOptionId(ctx.store.selectPreviousOption());
         }
@@ -92,7 +94,7 @@ export function useComboboxTargetProps({
         'aria-haspopup': 'listbox',
         'aria-expanded':
           (withExpandedAttribute && !!(ctx.store.listId && ctx.store.dropdownOpened)) || undefined,
-        'aria-controls': ctx.store.listId,
+        'aria-controls': ctx.store.dropdownOpened ? ctx.store.listId : undefined,
         'aria-activedescendant': ctx.store.dropdownOpened
           ? selectedOptionId || undefined
           : undefined,

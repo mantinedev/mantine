@@ -136,9 +136,10 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
           type={type}
           value={_value}
           defaultDate={
-            Array.isArray(_value)
+            calendarProps.defaultDate ||
+            (Array.isArray(_value)
               ? _value[0] || getDefaultClampedDate({ maxDate, minDate })
-              : _value || getDefaultClampedDate({ maxDate, minDate })
+              : _value || getDefaultClampedDate({ maxDate, minDate }))
           }
           onChange={setValue}
           locale={locale}

@@ -1,6 +1,6 @@
 {
   "name": "@mantine/store",
-  "version": "7.13.4",
+  "version": "7.14.2-alpha.0",
   "description": "A library to sync external React state updates",
   "homepage": "https://mantine.dev",
   "license": "MIT",
@@ -37,6 +37,6 @@
     "directory": "packages/@mantine/store"
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": "^18.x || ^19.x"
   }
 }

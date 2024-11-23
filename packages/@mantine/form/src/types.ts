@@ -145,6 +145,12 @@ export type InsertListItem<Values> = <Field extends LooseKeys<Values>>(
   index?: number
 ) => void;
 
+export type ReplaceListItem<Values> = <Field extends LooseKeys<Values>>(
+  path: Field,
+  index: number,
+  item: unknown
+) => void;
+
 export type RemoveListItem<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   index: number
@@ -200,6 +206,7 @@ export interface UseFormInput<
     options: GetInputPropsOptions;
     form: UseFormReturnType<Values, TransformValues>;
   }) => Record<string, any> | undefined | void;
+  onSubmitPreventDefault?: 'always' | 'never' | 'validation-failed';
 }
 
 export interface UseFormReturnType<
@@ -222,6 +229,7 @@ export interface UseFormReturnType<
   validateField: ValidateField<Values>;
   reorderListItem: ReorderListItem<Values>;
   removeListItem: RemoveListItem<Values>;
+  replaceListItem: ReplaceListItem<Values>;
   insertListItem: InsertListItem<Values>;
   getInputProps: GetInputProps<Values>;
   onSubmit: OnSubmit<Values, TransformValues>;

@@ -175,10 +175,12 @@ props:
 
 ## Dynamic Content and the modals manager
 
-Note that when using the Modals manager, dynamic content is not supported.
-Once modal is opened, a snapshot is saved into internal state and cannot be updated.
+The Modals manager allows you to dynamically update the content and properties of both standard and context modals after they are opened.
 
-If you intend to have dynamic content in modals, either:
+To update regular modals, use the `modals.updateModal` function:
 
-- Use internal component state, or
-- Use the modal component instead of modals manager
+<Demo data={ModalsDemos.updateModal} />
+
+Context modals can also be updated dynamically using `modals.updateContextModal`:
+
+<Demo data={ModalsDemos.updateContextModal} />

@@ -25,3 +25,4 @@ export { axisLabels } from './BarChart.demo.axisLabels';
 export { barValueLabel } from './BarChart.demo.barValueLabel';
 export { minBarSize } from './BarChart.demo.minBarSize';
 export { mixedStack } from './BarChart.demo.mixedStack';
+export { stripes } from './BarChart.demo.stripes';
