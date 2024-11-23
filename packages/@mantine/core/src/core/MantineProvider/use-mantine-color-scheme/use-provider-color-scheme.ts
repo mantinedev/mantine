@@ -7,12 +7,13 @@ function setColorSchemeAttribute(
   colorScheme: MantineColorScheme,
   getRootElement: () => HTMLElement | undefined
 ) {
+  const hasDarkColorScheme =
+    typeof window !== 'undefined' &&
+    'matchMedia' in window &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches;
+
   const computedColorScheme =
-    colorScheme !== 'auto'
-      ? colorScheme
-      : window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light';
+    colorScheme !== 'auto' ? colorScheme : hasDarkColorScheme ? 'dark' : 'light';
   getRootElement()?.setAttribute('data-mantine-color-scheme', computedColorScheme);
 }
 
@@ -71,7 +72,10 @@ export function useProviderColorScheme({
       setColorSchemeAttribute(value, getRootElement);
     }
 
-    media.current = window.matchMedia('(prefers-color-scheme: dark)');
+    if (typeof window !== 'undefined' && 'matchMedia' in window) {
+      media.current = window.matchMedia('(prefers-color-scheme: dark)');
+    }
+
     const listener: MediaQueryCallback = (event) => {
       if (value === 'auto') {
         setColorSchemeAttribute(event.matches ? 'dark' : 'light', getRootElement);
