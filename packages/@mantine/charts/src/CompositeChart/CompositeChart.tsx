@@ -344,7 +344,14 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
           minPointSize={minBarSize}
           {...(typeof barProps === 'function' ? barProps(item) : barProps)}
         >
-          {withBarValueLabel && (<LabelList position='top' fontSize={12} fill="var(--chart-bar-label-color, var(--mantine-color-dimmed))" formatter={valueFormatter} />)}
+          {withBarValueLabel && (
+            <LabelList
+              position="top"
+              fontSize={12}
+              fill="var(--chart-bar-label-color, var(--mantine-color-dimmed))"
+              formatter={valueFormatter}
+            />
+          )}
         </Bar>
       );
     }

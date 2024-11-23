@@ -5,6 +5,8 @@ import {
   CartesianGrid,
   Cell,
   Label,
+  LabelList,
+  LabelListProps,
   Legend,
   BarChart as ReChartsBarChart,
   ReferenceLine,
@@ -12,8 +14,6 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-  LabelList,
-  LabelListProps,
 } from 'recharts';
 import {
   Box,
@@ -283,7 +283,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
           <LabelList
             position={orientation === 'vertical' ? 'right' : 'top'}
             fontSize={12}
-            fill='var(--chart-bar-label-color, var(--mantine-color-dimmed))'
+            fill="var(--chart-bar-label-color, var(--mantine-color-dimmed))"
             formatter={tickFormatter}
             {...(typeof valueLabelProps === 'function' ? valueLabelProps(item) : valueLabelProps)}
           />
@@ -311,7 +311,6 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
       />
     );
   });
-
 
   const sharedYAxisProps = {
     axisLine: false,
