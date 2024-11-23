@@ -281,7 +281,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         ))}
         {withBarValueLabel && (
           <LabelList
-            position={stacked ? orientation === 'vertical' ? 'insideRight' : 'insideTop' : orientation === 'vertical' ? 'right' : 'top'}
+            position={orientation === 'vertical' ? 'right' : 'top'}
             fontSize={12}
             fill='var(--chart-bar-label-color, var(--mantine-color-dimmed))'
             formatter={tickFormatter}
