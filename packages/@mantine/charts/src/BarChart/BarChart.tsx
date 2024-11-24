@@ -5,6 +5,8 @@ import {
   CartesianGrid,
   Cell,
   Label,
+  LabelList,
+  LabelListProps,
   Legend,
   BarChart as ReChartsBarChart,
   ReferenceLine,
@@ -31,7 +33,6 @@ import {
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
-import { BarLabel } from './BarLabel';
 import classes from '../grid-chart.module.css';
 
 function valueToPercent(value: number) {
@@ -91,6 +92,11 @@ export interface BarChartProps
 
   /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"`, `false` by default */
   withBarValueLabel?: boolean;
+
+  /** Props passed down to recharts `LabelList` component */
+  valueLabelProps?:
+    | ((series: BarChartSeries) => Partial<Omit<LabelListProps<Record<string, any>>, 'ref'>>)
+    | Partial<LabelListProps<Record<string, any>>>;
 
   /** Sets minimum height of the bar in px, `0` by default */
   minBarSize?: number;
@@ -205,6 +211,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     xAxisLabel,
     yAxisLabel,
     withBarValueLabel,
+    valueLabelProps,
     withRightYAxis,
     rightYAxisLabel,
     rightYAxisProps,
@@ -221,6 +228,8 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
   const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
   const shouldHighlight = highlightedArea !== null;
   const stacked = type === 'stacked' || type === 'percent';
+  const tickFormatter = type === 'percent' ? valueToPercent : valueFormatter;
+
   const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
     setHighlightedArea(null);
     onMouseLeave?.(event);
@@ -262,11 +271,6 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         fillOpacity={dimmed ? 0.1 : fillOpacity}
         strokeOpacity={dimmed ? 0.2 : 0}
         stackId={stacked ? 'stack' : item.stackId || undefined}
-        label={
-          withBarValueLabel ? (
-            <BarLabel valueFormatter={valueFormatter} orientation={orientation} />
-          ) : undefined
-        }
         yAxisId={item.yAxisId || 'left'}
         minPointSize={minBarSize}
         {...(typeof barProps === 'function' ? barProps(item) : barProps)}
@@ -280,6 +284,15 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
 
           return <Cell key={`cell-${index}`} fill={cellColor} />;
         })}
+        {withBarValueLabel && (
+          <LabelList
+            position={orientation === 'vertical' ? 'right' : 'top'}
+            fontSize={12}
+            fill="var(--chart-bar-label-color, var(--mantine-color-dimmed))"
+            formatter={tickFormatter}
+            {...(typeof valueLabelProps === 'function' ? valueLabelProps(item) : valueLabelProps)}
+          />
+        )}
       </Bar>
     );
   });
@@ -303,8 +316,6 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
       />
     );
   });
-
-  const tickFormatter = type === 'percent' ? valueToPercent : valueFormatter;
 
   const sharedYAxisProps = {
     axisLine: false,

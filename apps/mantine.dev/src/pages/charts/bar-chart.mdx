@@ -249,6 +249,15 @@ To display value above each bar, set `withBarValueLabel`:
 
 <Demo data={BarChartDemos.barValueLabel} />
 
+## Bar value label props
+
+You can pass props down to recharts [LabelList](https://recharts.org/en-US/api/LabelList)
+component with `valueLabelProps` prop. `valueLabelProps` accepts either an object with props
+or a function that receives series data as an argument and returns an object with
+props.
+
+<Demo data={BarChartDemos.valueLabelProps} />
+
 ## Bar overlays
 
 <Demo data={BarChartDemos.overlay} />

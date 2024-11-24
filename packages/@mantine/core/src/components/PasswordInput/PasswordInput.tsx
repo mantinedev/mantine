@@ -152,7 +152,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
       aria-hidden={!visibilityToggleButtonProps}
       tabIndex={-1}
       {...visibilityToggleButtonProps}
-      variant="subtle"
+      variant={visibilityToggleButtonProps?.variant ?? 'subtle'}
       color="gray"
       unstyled={unstyled}
       onTouchEnd={(event) => {
