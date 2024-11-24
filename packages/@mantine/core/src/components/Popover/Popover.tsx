@@ -61,6 +61,12 @@ export interface __PopoverProps {
   /** Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type, `{ duration: 150, transition: 'fade' }` by default */
   transitionProps?: TransitionOverride;
 
+  /** Called when exit transition ends */
+  onExitTransitionEnd?: () => void;
+
+  /** Called when enter transition ends */
+  onEnterTransitionEnd?: () => void;
+
   /** Dropdown width, or `'target'` to make dropdown width the same as target element, `'max-content'` by default */
   width?: PopoverWidth;
 
@@ -186,6 +192,8 @@ export function Popover(_props: PopoverProps) {
     positionDependencies,
     opened,
     transitionProps,
+    onExitTransitionEnd,
+    onEnterTransitionEnd,
     width,
     middlewares,
     withArrow,
@@ -279,6 +287,16 @@ export function Popover(_props: PopoverProps) {
     [popover.floating.refs.setFloating]
   );
 
+  const onExited = useCallback(() => {
+    transitionProps?.onExited?.();
+    onExitTransitionEnd?.();
+  }, [transitionProps?.onExited, onExitTransitionEnd]);
+
+  const onEntered = useCallback(() => {
+    transitionProps?.onEntered?.();
+    onEnterTransitionEnd?.();
+  }, [transitionProps?.onEntered, onEnterTransitionEnd]);
+
   return (
     <PopoverContextProvider
       value={{
@@ -293,7 +311,7 @@ export function Popover(_props: PopoverProps) {
         arrowY: popover.floating?.middlewareData?.arrow?.y,
         opened: popover.opened,
         arrowRef,
-        transitionProps,
+        transitionProps: { ...transitionProps, onExited, onEntered },
         width,
         withArrow,
         arrowSize: arrowSize!,

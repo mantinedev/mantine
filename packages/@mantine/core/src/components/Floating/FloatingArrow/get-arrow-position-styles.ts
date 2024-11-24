@@ -96,6 +96,7 @@ export function getArrowPositionStyles({
       right: arrowPlacement,
       borderLeftColor: 'transparent',
       borderBottomColor: 'transparent',
+      clipPath: 'polygon(100% 0, 0 0, 100% 100%)',
     };
   }
 
@@ -106,6 +107,7 @@ export function getArrowPositionStyles({
       left: arrowPlacement,
       borderRightColor: 'transparent',
       borderTopColor: 'transparent',
+      clipPath: 'polygon(0 100%, 0 0, 100% 100%)',
     };
   }
 
@@ -116,6 +118,7 @@ export function getArrowPositionStyles({
       bottom: arrowPlacement,
       borderTopColor: 'transparent',
       borderLeftColor: 'transparent',
+      clipPath: 'polygon(0 100%, 100% 100%, 100% 0)',
     };
   }
 
@@ -126,6 +129,7 @@ export function getArrowPositionStyles({
       top: arrowPlacement,
       borderBottomColor: 'transparent',
       borderRightColor: 'transparent',
+      clipPath: 'polygon(0 100%, 0 0, 100% 0)',
     };
   }
 

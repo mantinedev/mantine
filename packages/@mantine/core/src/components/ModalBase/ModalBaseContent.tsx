@@ -31,6 +31,14 @@ export const ModalBaseContent = forwardRef<HTMLDivElement, _ModalBaseContentProp
         mounted={ctx.opened}
         transition="pop"
         {...ctx.transitionProps}
+        onExited={() => {
+          ctx.onExitTransitionEnd?.();
+          ctx.transitionProps?.onExited?.();
+        }}
+        onEntered={() => {
+          ctx.onEnterTransitionEnd?.();
+          ctx.transitionProps?.onEntered?.();
+        }}
         {...transitionProps}
       >
         {(transitionStyles) => (

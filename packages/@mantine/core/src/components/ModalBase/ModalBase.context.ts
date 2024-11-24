@@ -10,6 +10,8 @@ interface ModalBaseContextValue {
   getTitleId: () => string;
   getBodyId: () => string;
   transitionProps: Partial<TransitionOverride> | undefined;
+  onExitTransitionEnd: (() => void) | undefined;
+  onEnterTransitionEnd: (() => void) | undefined;
   zIndex: string | number | undefined;
 
   opened: boolean;
