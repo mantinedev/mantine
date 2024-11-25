@@ -1,4 +1,4 @@
-import { TableDemos, BarChartDemos, ModalsDemos, FormDemos, TipTapDemos } from '@docs/demos';
+import { TableDemos, BarChartDemos, ModalsDemos, FormDemos, TipTapDemos, ModalDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -85,6 +85,14 @@ const form = useForm({
 [RichTextEditor](/x/tiptap) component now supports `subtle` variant:
 
 <Demo data={TipTapDemos.subtleVariant} />
+
+## onExitTransitionEnd and onEnterTransitionEnd
+
+[Modal](/core/modal) and [Drawer](/core/drawer) components now support `onExitTransitionEnd` and `onEnterTransitionEnd` props,
+which can be used to run code after exit/enter transition is finished. For example, this is useful when you want to clear
+data after modal is closed:
+
+<Demo data={ModalDemos.transitionEnd} />
 
 ## New demo: BarChart with overlay
 

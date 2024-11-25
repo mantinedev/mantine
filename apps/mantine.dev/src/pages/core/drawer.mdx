@@ -68,6 +68,14 @@ prop to customize any [Transition](/core/transition/) properties:
 
 <Demo data={DrawerDemos.transitions} />
 
+## onExitTransitionEnd and onEnterTransitionEnd
+
+`onExitTransitionEnd` and `onEnterTransitionEnd` props can be used to run code after
+exit/enter transition is finished. For example, this is useful when you want to clear
+data after drawer is closed:
+
+<Demo data={DrawerDemos.transitionEnd} />
+
 ## Initial focus
 
 `Drawer` uses [FocusTrap](/core/focus-trap/) to trap focus. Add `data-autofocus`
