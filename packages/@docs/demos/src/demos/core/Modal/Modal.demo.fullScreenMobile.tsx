@@ -22,7 +22,9 @@ function Demo() {
         The Modal will be full screen only on mobile
       </Modal>
 
-      <Button onClick={open}>Open Modal</Button>
+      <Button variant="default" onClick={open}>
+        Open modal
+      </Button>
     </>
   );
 }
@@ -44,7 +46,9 @@ function Demo() {
         The Modal will be full screen only on mobile
       </Modal>
 
-      <Button onClick={open}>Open Modal</Button>
+      <Button variant="default" onClick={open}>
+        Open modal
+      </Button>
     </>
   );
 }

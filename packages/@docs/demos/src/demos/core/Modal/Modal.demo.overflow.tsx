@@ -19,7 +19,9 @@ function Demo() {
         {content}
       </Modal>
 
-      <Button onClick={open}>Open modal</Button>
+      <Button variant="default" onClick={open}>
+        Open modal
+      </Button>
     </>
   );
 }
@@ -38,7 +40,9 @@ function Demo() {
         {content}
       </Modal>
 
-      <Button onClick={open}>Open modal</Button>
+      <Button variant="default" onClick={open}>
+        Open modal
+      </Button>
     </>
   );
 }

@@ -21,7 +21,9 @@ function Demo() {
         {/* Drawer content */}
       </Drawer>
 
-      <Button onClick={open}>Open Drawer</Button>
+      <Button variant="default" onClick={open}>
+        Open Drawer
+      </Button>
     </>
   );
 }
@@ -42,7 +44,9 @@ function Demo() {
         <AuthenticationForm noShadow noPadding />
       </Drawer>
 
-      <Button onClick={open}>Open Drawer</Button>
+      <Button variant="default" onClick={open}>
+        Open Drawer
+      </Button>
     </>
   );
 }

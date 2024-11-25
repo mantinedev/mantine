@@ -22,7 +22,9 @@ function Demo() {
         />
       </Drawer>
 
-      <Button onClick={open}>Open drawer</Button>
+      <Button variant="default" onClick={open}>
+        Open Drawer
+      </Button>
     </>
   );
 }
@@ -44,7 +46,9 @@ function Demo() {
         />
       </Drawer>
 
-      <Button onClick={open}>Open drawer</Button>
+      <Button variant="default" onClick={open}>
+        Open Drawer
+      </Button>
     </>
   );
 }

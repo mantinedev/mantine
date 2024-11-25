@@ -50,7 +50,9 @@ function Demo() {
         </Modal>
       </Modal.Stack>
 
-      <Button onClick={() => stack.open('delete-page')}>Open modal</Button>
+      <Button variant="default" onClick={() => stack.open('delete-page')}>
+        Open modal
+      </Button>
     </>
   );
 }
@@ -102,7 +104,9 @@ function Demo() {
         </Modal>
       </Modal.Stack>
 
-      <Button onClick={() => stack.open('delete-page')}>Open modal</Button>
+      <Button variant="default" onClick={() => stack.open('delete-page')}>
+        Open modal
+      </Button>
     </>
   );
 }
