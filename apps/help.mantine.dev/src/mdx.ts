@@ -43,6 +43,7 @@ import { meta as notificationsMissingStyles } from './pages/q/notifications-miss
 import { meta as otherLibs } from './pages/q/other-libs.mdx';
 import { meta as pinchToZoomModal } from './pages/q/pinch-to-zoom-modal.mdx';
 import { meta as polymorphicInPolymorphic } from './pages/q/polymorphic-in-polymorphic.mdx';
+import { meta as portalsTesting } from './pages/q/portals-testing.mdx';
 import { meta as postcssFnsInline } from './pages/q/postcss-fns-inline.mdx';
 import { meta as primaryVirtualColor } from './pages/q/primary-virtual-color.mdx';
 import { meta as privateCssVariables } from './pages/q/private-css-variables.mdx';
@@ -109,6 +110,7 @@ export const MDX_DATA = [
   otherLibs,
   pinchToZoomModal,
   polymorphicInPolymorphic,
+  portalsTesting,
   postcssFnsInline,
   primaryVirtualColor,
   privateCssVariables,
