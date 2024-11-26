@@ -1,7 +1,9 @@
 import { tests } from '@mantine-tests/core';
 import { TimeGrid, TimeGridProps, TimeGridStylesNames } from './TimeGrid';
 
-const defaultProps: TimeGridProps = {};
+const defaultProps: TimeGridProps = {
+  data: ['10:00', '15:00'],
+};
 
 describe('@mantine/dates/TimeGrid', () => {
   tests.itSupportsSystemProps<TimeGridProps, TimeGridStylesNames>({
