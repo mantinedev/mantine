@@ -36,25 +36,27 @@ function normalize(degree: number, step: number) {
   );
 }
 
+export interface UseRadialMoveOptions {
+  /** Number by which value is incremented/decremented with mouse and touch events, `0.01` by default */
+  step?: number;
+
+  /** Called in `onMouseUp` and `onTouchEnd` events with the current value */
+  onChangeEnd?: (value: number) => void;
+
+  /** Called in `onMouseDown` and `onTouchStart` events */
+  onScrubStart?: () => void;
+
+  /** Called in `onMouseUp` and `onTouchEnd` events */
+  onScrubEnd?: () => void;
+}
+
 export function useRadialMove<T extends HTMLElement = HTMLDivElement>(
   onChange: (value: number) => void,
-  {
-    step = 0.01,
-    onChangeEnd,
-    onScrubStart,
-    onScrubEnd,
-  }: {
-    step?: number;
-    onChangeEnd?: (value: number) => void;
-    onScrubStart?: () => void;
-    onScrubEnd?: () => void;
-  } = {}
+  { step = 0.01, onChangeEnd, onScrubStart, onScrubEnd }: UseRadialMoveOptions = {}
 ) {
   const ref = useRef<T>(null);
   const mounted = useRef<boolean>(false);
-  // const isSliding = useRef(false);
-  // const frame = useRef(0);
-  // const [active, setActive] = useState(false);
+  const [active, setActive] = useState(false);
 
   useEffect(() => {
     mounted.current = true;
@@ -63,6 +65,7 @@ export function useRadialMove<T extends HTMLElement = HTMLDivElement>(
   useEffect(() => {
     const update = (event: MouseEvent, done = false) => {
       if (ref.current) {
+        ref.current.style.userSelect = 'none';
         const deg = getAngle([event.clientX, event.clientY], ref.current);
         const newValue = normalize(deg, step || 1);
 
@@ -72,6 +75,8 @@ export function useRadialMove<T extends HTMLElement = HTMLDivElement>(
     };
 
     const beginTracking = () => {
+      onScrubStart?.();
+      setActive(true);
       document.addEventListener('mousemove', handleMouseMove, false);
       document.addEventListener('mouseup', handleMouseUp, false);
       document.addEventListener('touchmove', handleTouchMove, { passive: false });
@@ -79,14 +84,17 @@ export function useRadialMove<T extends HTMLElement = HTMLDivElement>(
     };
 
     const endTracking = () => {
+      onScrubEnd?.();
+      setActive(false);
       document.removeEventListener('mousemove', handleMouseMove, false);
       document.removeEventListener('mouseup', handleMouseUp, false);
       document.removeEventListener('touchmove', handleTouchMove, false);
       document.removeEventListener('touchend', handleTouchEnd, false);
     };
 
-    const onMouseDown = () => {
+    const onMouseDown = (event: MouseEvent) => {
       beginTracking();
+      update(event);
     };
 
     const handleMouseMove = (event: MouseEvent) => {
@@ -111,6 +119,7 @@ export function useRadialMove<T extends HTMLElement = HTMLDivElement>(
     const handleTouchStart = (event: TouchEvent) => {
       event.preventDefault();
       beginTracking();
+      update(event.touches[0] as any);
     };
 
     ref.current?.addEventListener('mousedown', onMouseDown);
@@ -124,5 +133,5 @@ export function useRadialMove<T extends HTMLElement = HTMLDivElement>(
     };
   }, [onChange]);
 
-  return { ref };
+  return { ref, active };
 }
