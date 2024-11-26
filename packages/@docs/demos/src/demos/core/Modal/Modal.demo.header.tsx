@@ -15,7 +15,9 @@ function Demo() {
         Modal without header, press escape or click on overlay to close
       </Modal>
 
-      <Button onClick={open}>Open Modal</Button>
+      <Button variant="default" onClick={open}>
+        Open modal
+      </Button>
     </>
   );
 }
@@ -31,7 +33,9 @@ function Demo() {
         Modal without header, press escape or click on overlay to close
       </Modal>
 
-      <Button onClick={open}>Open Modal</Button>
+      <Button variant="default" onClick={open}>
+        Open modal
+      </Button>
     </>
   );
 }

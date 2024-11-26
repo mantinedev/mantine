@@ -7,6 +7,7 @@ import { meta as canIUseMantineWithAstro } from './pages/q/can-i-use-mantine-wit
 import { meta as canIUseMantineWithCra } from './pages/q/can-i-use-mantine-with-cra.mdx';
 import { meta as carouselMissingStyles } from './pages/q/carousel-missing-styles.mdx';
 import { meta as colorSchemeColor } from './pages/q/color-scheme-color.mdx';
+import { meta as colorSchemeFlickering } from './pages/q/color-scheme-flickering.mdx';
 import { meta as comboboxTesting } from './pages/q/combobox-testing.mdx';
 import { meta as customInputUseForm } from './pages/q/custom-input-use-form.mdx';
 import { meta as dataGridINeed } from './pages/q/data-grid-i-need.mdx';
@@ -42,6 +43,7 @@ import { meta as notificationsMissingStyles } from './pages/q/notifications-miss
 import { meta as otherLibs } from './pages/q/other-libs.mdx';
 import { meta as pinchToZoomModal } from './pages/q/pinch-to-zoom-modal.mdx';
 import { meta as polymorphicInPolymorphic } from './pages/q/polymorphic-in-polymorphic.mdx';
+import { meta as portalsTesting } from './pages/q/portals-testing.mdx';
 import { meta as postcssFnsInline } from './pages/q/postcss-fns-inline.mdx';
 import { meta as primaryVirtualColor } from './pages/q/primary-virtual-color.mdx';
 import { meta as privateCssVariables } from './pages/q/private-css-variables.mdx';
@@ -72,6 +74,7 @@ export const MDX_DATA = [
   canIUseMantineWithCra,
   carouselMissingStyles,
   colorSchemeColor,
+  colorSchemeFlickering,
   comboboxTesting,
   customInputUseForm,
   dataGridINeed,
@@ -107,6 +110,7 @@ export const MDX_DATA = [
   otherLibs,
   pinchToZoomModal,
   polymorphicInPolymorphic,
+  portalsTesting,
   postcssFnsInline,
   primaryVirtualColor,
   privateCssVariables,

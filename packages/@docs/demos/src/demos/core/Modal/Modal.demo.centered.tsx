@@ -16,7 +16,9 @@ function Demo() {
         {/* Modal content */}
       </Modal>
 
-      <Button onClick={open}>Open centered Modal</Button>
+      <Button variant="default" onClick={open}>
+        Open centered Modal
+      </Button>
     </>
   );
 }
@@ -31,7 +33,9 @@ function Demo() {
         <AuthenticationForm noPadding noShadow />
       </Modal>
 
-      <Button onClick={open}>Open centered Modal</Button>
+      <Button variant="default" onClick={open}>
+        Open centered Modal
+      </Button>
     </>
   );
 }

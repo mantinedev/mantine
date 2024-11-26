@@ -12,3 +12,4 @@ export { offset } from './Drawer.demo.offset';
 export { closeIcon } from './Drawer.demo.closeIcon';
 export { initialFocusTrap } from './Drawer.demo.initialFocusTrap';
 export { stack } from './Drawer.demo.stack';
+export { transitionEnd } from './Drawer.demo.transitionEnd';

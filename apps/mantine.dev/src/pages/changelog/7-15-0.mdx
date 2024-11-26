@@ -1,8 +1,14 @@
-import { TableDemos, BarChartDemos, ModalsDemos, FormDemos, TipTapDemos } from '@docs/demos';
+import { ActionIconDemos, TableDemos, BarChartDemos, ModalsDemos, FormDemos, TipTapDemos, ModalDemos, HooksDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog7150);
+
+## use-radial-move hook
+
+New [use-radial-move](/hooks/use-radial-move) hook can be used to create custom radial sliders:
+
+<Demo data={HooksDemos.useRadialMoveUsage} />
 
 ## BarChart color based on value
 
@@ -11,6 +17,14 @@ export default Layout(MDX_DATA.Changelog7150);
 string (theme color reference or any valid CSS color value).
 
 <Demo data={BarChartDemos.getBarColor} />
+
+## Button.GroupSection and ActionIcon.GroupSection
+
+`ActionIcon.GroupSection` and `Button.GroupSection` are new components that
+can be used in `ActionIcon.Group`/`Button.Group` to create sections that are
+not `ActionIcon`/`Button` components:
+
+<Demo data={ActionIconDemos.groupSection} />
 
 ## Table vertical variant
 
@@ -86,12 +100,40 @@ const form = useForm({
 
 <Demo data={TipTapDemos.subtleVariant} />
 
+## onExitTransitionEnd and onEnterTransitionEnd
+
+[Modal](/core/modal) and [Drawer](/core/drawer) components now support `onExitTransitionEnd` and `onEnterTransitionEnd` props,
+which can be used to run code after exit/enter transition is finished. For example, this is useful when you want to clear
+data after modal is closed:
+
+<Demo data={ModalDemos.transitionEnd} />
+
 ## New demo: BarChart with overlay
 
 <Demo data={BarChartDemos.overlay} />
+
+## Variants types augmentation
+
+[Custom variants](/styles/variants-sizes#custom-variants-types) types augmentation guide was added to the documentation.
+
+Example of adding custom variant type to [Button](/core/button) component:
+
+```tsx
+import { ButtonVariant, MantineSize } from '@mantine/core';
+
+type ExtendedButtonVariant = ButtonVariant | 'contrast' | 'radial-gradient';
+
+declare module '@mantine/core' {
+  export interface ButtonProps {
+    variant?: ExtendedButtonVariant;
+  }
+}
+```
 
 ## Help Center updates
 
 - [How to use Mantine template on GitHub?](https://help.mantine.dev/q/templates-usage) and [How can I submit a template to Mantine documentation?](https://help.mantine.dev/q/submit-template) pages were moved from the documentation to Help Center
 - [How that thing is done on mantine.dev website?](https://help.mantine.dev/q/how-that-thing-is-done) question
 - [Why is it required to have 10 shades per color?](https://help.mantine.dev/q/ten-shades-per-color) question
+- [Why I see color scheme flickering on page load?](https://help.mantine.dev/q/color-scheme-flickering) question
+- [How can I test Modal/Drawer/Popover components?](https://help.mantine.dev/q/portals-testing) question

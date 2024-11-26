@@ -15,7 +15,9 @@ function Demo() {
         Drawer without header, press escape or click on overlay to close
       </Drawer>
 
-      <Button onClick={open}>Open drawer</Button>
+      <Button variant="default" onClick={open}>
+        Open Drawer
+      </Button>
     </>
   );
 }
@@ -31,7 +33,9 @@ function Demo() {
         Drawer without header, press escape or click on overlay to close
       </Drawer>
 
-      <Button onClick={open}>Open drawer</Button>
+      <Button variant="default" onClick={open}>
+        Open Drawer
+      </Button>
     </>
   );
 }
