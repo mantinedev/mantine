@@ -82,3 +82,8 @@ export const Demo_autoContrast = {
   name: '⭐ Demo: autoContrast',
   render: renderDemo(demos.autoContrast),
 };
+
+export const Demo_groupSection = {
+  name: '⭐ Demo: groupSection',
+  render: renderDemo(demos.groupSection),
+};

@@ -1,4 +1,4 @@
-import { TableDemos, BarChartDemos, ModalsDemos, FormDemos, TipTapDemos, ModalDemos, HooksDemos } from '@docs/demos';
+import { ActionIconDemos, TableDemos, BarChartDemos, ModalsDemos, FormDemos, TipTapDemos, ModalDemos, HooksDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -17,6 +17,14 @@ New [use-radial-move](/hooks/use-radial-move) hook can be used to create custom 
 string (theme color reference or any valid CSS color value).
 
 <Demo data={BarChartDemos.getBarColor} />
+
+## Button.GroupSection and ActionIcon.GroupSection
+
+`ActionIcon.GroupSection` and `Button.GroupSection` are new components that
+can be used in `ActionIcon.Group`/`Button.Group` to create sections that are
+not `ActionIcon`/`Button` components:
+
+<Demo data={ActionIconDemos.groupSection} />
 
 ## Table vertical variant
 

@@ -77,3 +77,8 @@ export const Demo_inputSize = {
   name: '⭐ Demo: inputSize',
   render: renderDemo(demos.inputSize),
 };
+
+export const Demo_groupSection = {
+  name: '⭐ Demo: groupSection',
+  render: renderDemo(demos.groupSection),
+};
