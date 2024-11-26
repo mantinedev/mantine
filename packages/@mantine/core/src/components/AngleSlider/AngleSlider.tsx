@@ -1,5 +1,4 @@
-import { useCallback, useRef } from 'react';
-import { clamp, useMergedRef, useUncontrolled } from '@mantine/hooks';
+import { normalizeRadialValue, useMergedRef, useRadialMove, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -39,6 +38,12 @@ export interface AngleSliderProps
   /** Called after the selection is finished */
   onChangeEnd?: (value: number) => void;
 
+  /** Called in `onMouseDown` and `onTouchStart` events */
+  onScrubStart?: () => void;
+
+  /** Called in `onMouseUp` and `onTouchEnd` events */
+  onScrubEnd?: () => void;
+
   /** Determines whether the label should be displayed inside the slider, `true` by default */
   withLabel?: boolean;
 
@@ -73,30 +78,6 @@ export type AngleSliderFactory = Factory<{
   stylesNames: AngleSliderStylesNames;
   vars: AngleSliderCssVariables;
 }>;
-
-function radiansToDegrees(radians: number) {
-  return radians * (180 / Math.PI);
-}
-
-function getElementCenter(element: HTMLElement) {
-  const rect = element.getBoundingClientRect();
-  return [rect.left + rect.width / 2, rect.top + rect.height / 2];
-}
-
-function getAngle(coordinates: [number, number], element: HTMLElement) {
-  const center = getElementCenter(element);
-  const x = coordinates[0] - center[0];
-  const y = coordinates[1] - center[1];
-  const deg = radiansToDegrees(Math.atan2(x, y)) + 180;
-  return 360 - deg;
-}
-
-function normalize(degree: number, step: number) {
-  const clamped = clamp(degree, 0, 360);
-  const high = Math.ceil(clamped / step);
-  const low = Math.round(clamped / step);
-  return high >= clamped / step ? (high * step === 360 ? 0 : high * step) : low * step;
-}
 
 const defaultProps: Partial<AngleSliderProps> = {
   step: 1,
@@ -136,15 +117,37 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     hiddenInputProps,
     'aria-label': ariaLabel,
     tabIndex,
+    onScrubStart,
+    onScrubEnd,
     ...others
   } = props;
 
-  const rootRef = useRef<HTMLDivElement>(null);
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
     finalValue: 0,
     onChange,
+  });
+
+  const update = (val: number) => {
+    if (rootRef.current) {
+      const newValue =
+        restrictToMarks && Array.isArray(marks)
+          ? findClosestNumber(
+              val,
+              marks.map((mark) => mark.value)
+            )
+          : val;
+
+      setValue(newValue);
+    }
+  };
+
+  const { ref: rootRef } = useRadialMove(update, {
+    step,
+    onChangeEnd,
+    onScrubStart,
+    onScrubEnd,
   });
 
   const getStyles = useStyles<AngleSliderFactory>({
@@ -160,80 +163,19 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const update = (event: MouseEvent, done = false) => {
-    if (rootRef.current) {
-      const deg = getAngle([event.clientX, event.clientY], rootRef.current);
-      const val = normalize(deg, step || 1);
-      const newValue =
-        restrictToMarks && Array.isArray(marks)
-          ? findClosestNumber(
-              val,
-              marks.map((mark) => mark.value)
-            )
-          : val;
-
-      setValue(newValue);
-      done && onChangeEnd?.(newValue);
-    }
-  };
-
-  const handleMouseMove = useCallback((event: MouseEvent) => {
-    update(event);
-  }, []);
-
-  const handleMouseUp = useCallback((event: MouseEvent) => {
-    update(event, true);
-    endTracking();
-  }, []);
-
-  const handleTouchMove = useCallback((event: TouchEvent) => {
-    event.preventDefault();
-    update(event.touches[0] as any);
-  }, []);
-
-  const handleTouchEnd = useCallback((event: TouchEvent) => {
-    update(event.changedTouches[0] as any, true);
-    endTracking();
-  }, []);
-
-  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    onTouchStart?.(event);
-    beginTracking();
-  };
-
-  const beginTracking = () => {
-    document.addEventListener('mousemove', handleMouseMove, false);
-    document.addEventListener('mouseup', handleMouseUp, false);
-    document.addEventListener('touchmove', handleTouchMove, { passive: false });
-    document.addEventListener('touchend', handleTouchEnd, false);
-  };
-
-  const endTracking = () => {
-    document.removeEventListener('mousemove', handleMouseMove, false);
-    document.removeEventListener('mouseup', handleMouseUp, false);
-    document.removeEventListener('touchmove', handleTouchMove, false);
-    document.removeEventListener('touchend', handleTouchEnd, false);
-  };
-
-  const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
-    onMouseDown?.(event);
-    beginTracking();
-  };
-
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (disabled) {
       return;
     }
 
     if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
-      const normalized = normalize(_value - step!, step!);
+      const normalized = normalizeRadialValue(_value - step!, step!);
       setValue(normalized);
       onChangeEnd?.(normalized);
     }
 
     if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
-      const normalized = normalize(_value + step!, step!);
+      const normalized = normalizeRadialValue(_value + step!, step!);
       setValue(normalized);
       onChangeEnd?.(normalized);
     }
@@ -258,13 +200,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
   ));
 
   return (
-    <Box
-      ref={useMergedRef(ref, rootRef)}
-      {...getStyles('root', { focusable: true })}
-      onMouseDown={handleMouseDown}
-      onTouchStart={handleTouchStart}
-      {...others}
-    >
+    <Box ref={useMergedRef(ref, rootRef)} {...getStyles('root', { focusable: true })} {...others}>
       {marksItems && marksItems.length > 0 && <div {...getStyles('marks')}>{marksItems}</div>}
 
       {withLabel && (

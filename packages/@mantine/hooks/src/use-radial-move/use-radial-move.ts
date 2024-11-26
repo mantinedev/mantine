@@ -26,7 +26,7 @@ function getDigitsAfterDot(value: number) {
   return value.toString().split('.')[1]?.length || 0;
 }
 
-function normalize(degree: number, step: number) {
+export function normalizeRadialValue(degree: number, step: number) {
   const clamped = clamp(degree, 0, 360);
   const high = Math.ceil(clamped / step);
   const low = Math.round(clamped / step);
@@ -67,7 +67,7 @@ export function useRadialMove<T extends HTMLElement = HTMLDivElement>(
       if (ref.current) {
         ref.current.style.userSelect = 'none';
         const deg = getAngle([event.clientX, event.clientY], ref.current);
-        const newValue = normalize(deg, step || 1);
+        const newValue = normalizeRadialValue(deg, step || 1);
 
         onChange(newValue);
         done && onChangeEnd?.(newValue);
