@@ -1,0 +1,48 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useRadialMove);
+
+## Usage
+
+`use-radial-move` hook can be used to create custom radial sliders, for example [AngleSlider](/core/angle-slider)
+component is based on this hook. It works similar to [use-move](/hooks/use-move) hook.
+
+Example of creating custom radial slider:
+
+<Demo data={HooksDemos.useRadialMoveUsage} />
+
+## Hook options
+
+`use-radial-move` hook accepts 2 arguments:
+- A callback function that is called when the value changes
+- An option object described below
+
+```tsx
+export interface UseRadialMoveOptions {
+  /** Number by which value is incremented/decremented with mouse and touch events, `0.01` by default */
+  step?: number;
+
+  /** Called in `onMouseUp` and `onTouchEnd` events with the current value */
+  onChangeEnd?: (value: number) => void;
+
+  /** Called in `onMouseDown` and `onTouchStart` events */
+  onScrubStart?: () => void;
+
+  /** Called in `onMouseUp` and `onTouchEnd` events */
+  onScrubEnd?: () => void;
+}
+```
+
+## Definition
+
+```tsx
+function useRadialMove<T extends HTMLElement = HTMLDivElement>(
+  onChange: (value: number) => void,
+  options?: UseRadialMoveOptions
+): {
+  ref: React.RefObject<T>;
+  active: boolean;
+};
+```

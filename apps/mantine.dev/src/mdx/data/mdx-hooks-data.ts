@@ -174,4 +174,8 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   useDebouncedCallback: hDocs('useDebouncedCallback', 'Debounces function calls'),
   useSet: hDocs('useSet', 'Use Set as React state'),
   useMap: hDocs('useMap', 'Use Map as React state'),
+  useRadialMove: hDocs(
+    'useRadialMove',
+    'Handles radial move behavior over given element, can be used to build custom radial sliders'
+  ),
 };
