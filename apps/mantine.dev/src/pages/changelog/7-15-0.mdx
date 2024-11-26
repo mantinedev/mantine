@@ -112,6 +112,24 @@ data after modal is closed:
 
 <Demo data={BarChartDemos.overlay} />
 
+## Variants types augmentation
+
+[Custom variants](/styles/variants-sizes#custom-variants-types) types augmentation guide was added to the documentation.
+
+Example of adding custom variant type to [Button](/core/button) component:
+
+```tsx
+import { ButtonVariant, MantineSize } from '@mantine/core';
+
+type ExtendedButtonVariant = ButtonVariant | 'contrast' | 'radial-gradient';
+
+declare module '@mantine/core' {
+  export interface ButtonProps {
+    variant?: ExtendedButtonVariant;
+  }
+}
+```
+
 ## Help Center updates
 
 - [How to use Mantine template on GitHub?](https://help.mantine.dev/q/templates-usage) and [How can I submit a template to Mantine documentation?](https://help.mantine.dev/q/submit-template) pages were moved from the documentation to Help Center

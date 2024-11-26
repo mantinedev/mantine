@@ -209,3 +209,22 @@ declare module '@mantine/core' {
 
 Note that extending theme type is not required, it is only needed if you want to
 make your theme object types more strict and add autocomplete in your editor.
+
+## Custom variants types
+
+You can define types for custom [variants](/styles/variants-sizes) by
+extending `{x}Props` interface with the new variant type in your `mantine.d.ts` file.
+
+Example of adding custom variant type to [Button](/core/button) component:
+
+```tsx
+import { ButtonVariant, MantineSize } from '@mantine/core';
+
+type ExtendedButtonVariant = ButtonVariant | 'contrast' | 'radial-gradient';
+
+declare module '@mantine/core' {
+  export interface ButtonProps {
+    variant?: ExtendedButtonVariant;
+  }
+}
+```
