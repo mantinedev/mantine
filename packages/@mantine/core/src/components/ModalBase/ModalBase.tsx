@@ -114,7 +114,6 @@ export const ModalBase = forwardRef<HTMLDivElement, ModalBaseProps>(
       useModal({ id, transitionProps, opened, trapFocus, closeOnEscape, onClose, returnFocus });
 
     const { key: removeScrollKey, ...otherRemoveScrollProps } = removeScrollProps || {};
-    console.log(transitionProps);
 
     return (
       <OptionalPortal {...portalProps} withinPortal={withinPortal}>
