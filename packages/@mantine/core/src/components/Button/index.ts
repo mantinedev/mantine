@@ -1,5 +1,6 @@
 export { Button } from './Button';
 export { ButtonGroup } from './ButtonGroup/ButtonGroup';
+export { ButtonGroupSection } from './ButtonGroupSection/ButtonGroupSection';
 export type {
   ButtonProps,
   ButtonStylesNames,
@@ -13,3 +14,9 @@ export type {
   ButtonGroupStylesNames,
   ButtonGroupFactory,
 } from './ButtonGroup/ButtonGroup';
+export type {
+  ButtonGroupSectionProps,
+  ButtonGroupSectionCssVariables,
+  ButtonGroupSectionStylesNames,
+  ButtonGroupSectionFactory,
+} from './ButtonGroupSection/ButtonGroupSection';

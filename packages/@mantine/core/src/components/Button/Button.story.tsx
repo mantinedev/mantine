@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 import { DEFAULT_THEME, rem } from '../../core';
 import { Button, ButtonProps } from './Button';
 
@@ -359,6 +360,24 @@ export function Unstyled() {
       <Button unstyled loading>
         Unstyled
       </Button>
+    </div>
+  );
+}
+
+export function GroupSection() {
+  return (
+    <div>
+      <Button.Group>
+        <Button variant="default" size="lg" radius="md">
+          <IconChevronDown color="var(--mantine-color-red-text)" />
+        </Button>
+        <Button.GroupSection variant="default" size="lg" bg="var(--mantine-color-body)">
+          118
+        </Button.GroupSection>
+        <Button variant="default" size="lg" radius="md">
+          <IconChevronUp color="var(--mantine-color-teal-text)" />
+        </Button>
+      </Button.Group>
     </div>
   );
 }
