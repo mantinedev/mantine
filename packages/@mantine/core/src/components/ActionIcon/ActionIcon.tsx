@@ -18,6 +18,7 @@ import { Loader, LoaderProps } from '../Loader';
 import { Transition } from '../Transition';
 import { UnstyledButton } from '../UnstyledButton';
 import { ActionIconGroup } from './ActionIconGroup/ActionIconGroup';
+import { ActionIconGroupSection } from './ActionIconGroupSection/ActionIconGroupSection';
 import classes from './ActionIcon.module.css';
 
 export type ActionIconVariant =
@@ -83,6 +84,7 @@ export type ActionIconFactory = PolymorphicFactory<{
   vars: ActionIconCssVariables;
   staticComponents: {
     Group: typeof ActionIconGroup;
+    GroupSection: typeof ActionIconGroupSection;
   };
 }>;
 
@@ -179,3 +181,4 @@ export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) =>
 ActionIcon.classes = classes;
 ActionIcon.displayName = '@mantine/core/ActionIcon';
 ActionIcon.Group = ActionIconGroup;
+ActionIcon.GroupSection = ActionIconGroupSection;

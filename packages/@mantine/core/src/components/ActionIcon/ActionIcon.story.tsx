@@ -1,3 +1,4 @@
+import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 import { DEFAULT_THEME, MantineThemeProvider, rem } from '../../core';
 import { ActionIcon, ActionIconProps } from './ActionIcon';
 
@@ -279,6 +280,24 @@ export function Unstyled() {
         </ActionIcon>
         <ActionIcon unstyled size="lg" variant="default">
           $$
+        </ActionIcon>
+      </ActionIcon.Group>
+    </div>
+  );
+}
+
+export function GroupSection() {
+  return (
+    <div>
+      <ActionIcon.Group>
+        <ActionIcon variant="default" size="lg" radius="md">
+          <IconChevronDown color="var(--mantine-color-red-text)" />
+        </ActionIcon>
+        <ActionIcon.GroupSection variant="default" size="lg" bg="var(--mantine-color-body)">
+          118
+        </ActionIcon.GroupSection>
+        <ActionIcon variant="default" size="lg" radius="md">
+          <IconChevronUp color="var(--mantine-color-teal-text)" />
         </ActionIcon>
       </ActionIcon.Group>
     </div>
