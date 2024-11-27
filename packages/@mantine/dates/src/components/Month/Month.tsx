@@ -7,6 +7,7 @@ import {
   factory,
   Factory,
   getFontSize,
+  getSize,
   MantineSize,
   StylesApiProps,
   useProps,
@@ -135,6 +136,7 @@ const defaultProps: Partial<MonthProps> = {
 const varsResolver = createVarsResolver<MonthFactory>((_, { size }) => ({
   weekNumber: {
     '--wn-fz': getFontSize(size),
+    '--wn-size': getSize(size, 'wn-size'),
   },
 }));
 
