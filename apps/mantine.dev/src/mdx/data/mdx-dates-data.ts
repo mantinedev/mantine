@@ -141,6 +141,17 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     docs: 'dates/time-picker.mdx',
   },
 
+  TimeGrid: {
+    title: 'TimeGrid',
+    package: '@mantine/dates',
+    slug: '/dates/time-grid',
+    props: ['TimeGrid'],
+    styles: ['TimeGrid'],
+    description: 'Captures time value from the user with a predefined set of options',
+    source: '@mantine/dates/src/components/TimeGrid/TimeGrid.tsx',
+    docs: 'dates/time-grid.mdx',
+  },
+
   TimeValue: {
     title: 'TimeValue',
     package: '@mantine/dates',

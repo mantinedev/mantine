@@ -27,5 +27,7 @@ generateDeclarations({
       'React.ComponentPropsWithoutRef<"input">',
     'Omit<CategoricalChartProps & RefAttributes<{ readonly eventEmitterSymbol: Symbol; clipPathId: string; accessibilityManager: AccessibilityManager; ... 63 more ...; UNSAFE_componentWillUpdate?(nextProps: Readonly<...>, nextState: Readonly<...>, nextContext: any): void; }>, "ref"> | undefined':
       'RechartsProps',
+    '((time: string) => Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref"> & DataAttributes) | undefined':
+      '(time: string) => React.ComponentPropsWithoutRef<"button">',
   },
 });

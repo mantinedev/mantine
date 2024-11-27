@@ -1,0 +1,75 @@
+import { TimeGridDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.TimeGrid);
+
+## Usage
+
+Use `TimeGrid` component to capture time value from the user with a
+predefined set of time slots:
+
+<Demo data={TimeGridDemos.usage} />
+
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { TimeGrid } from '@mantine/dates';
+
+function Demo() {
+  const [value, setValue] = useState<string | null>('10:00');
+  return <TimeGrid value={value} onChange={setValue} data={['10:00', '12: 00']} />;
+}
+```
+
+## data prop
+
+`data` prop accepts an array of time values in 24-hour format. Values
+must be unique. To generate time range use `getTimeRange` function
+exported from `@mantine/dates` package:
+
+```tsx
+import { TimeGrid, getTimeRange } from '@mantine/dates';
+
+function WithArray() {
+  return <TimeGrid data={['10:00', '12:00']} />
+}
+
+function WithRange() {
+  // In this example we generate time range from 10:00 to 14:00 with 1 hour step:
+  // ['10:00', '11:00', '12:00', '13:00', '14:00']
+  return <TimeGrid data={getTimeRange({ from: '10:00', to: '14:00', step: '01:00' })} />
+}
+```
+
+## Min and max time
+
+Set `minTime` and `maxTime` props to limit available time range.
+Both props accept time values in 24-hour format:
+
+<Demo data={TimeGridDemos.minMax} />
+
+## Disable specific controls
+
+You can disable specific time values by providing an array of disabled
+values to the `disableTime` prop:
+
+<Demo data={TimeGridDemos.disableTime} />
+
+## Allow deselect
+
+Set `allowDeselect` prop to allow deselecting time value by clicking on
+the control with selected value:
+
+<Demo data={TimeGridDemos.allowDeselect} />
+
+## Change AM/PM labels
+
+<Demo data={TimeGridDemos.amPmLabels} />
+
+## Disabled
+
+Set `disabled` prop to disable all controls:
+
+<Demo data={TimeGridDemos.disabled} />

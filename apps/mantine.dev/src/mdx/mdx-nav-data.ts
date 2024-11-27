@@ -381,6 +381,7 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.YearPickerInput,
       MDX_DATA.TimeInput,
       MDX_DATA.TimePicker,
+      MDX_DATA.TimeGrid,
       MDX_DATA.TimeValue,
     ],
   },
