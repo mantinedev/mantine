@@ -6,7 +6,7 @@ import { ComboboxItem, ComboboxLikeRenderOptionInput, ComboboxParsedItem } from 
 import { defaultOptionsFilter, FilterOptionsInput } from './default-options-filter';
 import { isEmptyComboboxData } from './is-empty-combobox-data';
 import { isOptionsGroup } from './is-options-group';
-import { validateOptions } from './validate-options';
+import { validateOptions as validateOptionsFn } from './validate-options';
 import classes from '../Combobox.module.css';
 
 export type OptionsFilter = (input: FilterOptionsInput) => ComboboxParsedItem[];
@@ -95,6 +95,7 @@ export interface OptionsDropdownProps {
   hidden?: boolean;
   hiddenWhenEmpty?: boolean;
   filterOptions?: boolean;
+  validateOptions?: boolean;
   withCheckIcon?: boolean;
   value?: string | string[] | null;
   checkIconPosition?: 'left' | 'right';
@@ -116,6 +117,7 @@ export function OptionsDropdown({
   maxDropdownHeight,
   withScrollArea = true,
   filterOptions = true,
+  validateOptions = false,
   withCheckIcon = false,
   value,
   checkIconPosition,
@@ -126,7 +128,9 @@ export function OptionsDropdown({
   scrollAreaProps,
   'aria-label': ariaLabel,
 }: OptionsDropdownProps) {
-  validateOptions(data);
+  if (validateOptions) {
+    validateOptionsFn(data);
+  }
 
   const shouldFilter = typeof search === 'string';
   const filteredData = shouldFilter

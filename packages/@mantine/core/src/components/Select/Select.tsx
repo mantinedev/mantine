@@ -145,6 +145,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     clearButtonProps,
     hiddenInputProps,
     renderOption,
+    validateOptions,
     onClear,
     autoComplete,
     scrollAreaProps,
@@ -300,6 +301,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
           withScrollArea={withScrollArea}
           maxDropdownHeight={maxDropdownHeight}
           filterOptions={searchable && selectedOption?.label !== search}
+          validateOptions={validateOptions}
           value={_value}
           checkIconPosition={checkIconPosition}
           withCheckIcon={withCheckIcon}

@@ -189,6 +189,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     required,
     mod,
     renderOption,
+    validateOptions,
     onRemove,
     onClear,
     scrollAreaProps,
@@ -412,6 +413,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
           withScrollArea={withScrollArea}
           maxDropdownHeight={maxDropdownHeight}
           filterOptions={searchable}
+          validateOptions={validateOptions}
           value={_value}
           checkIconPosition={checkIconPosition}
           withCheckIcon={withCheckIcon}

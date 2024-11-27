@@ -34,7 +34,7 @@ export type ComboboxLikeStylesNames = Exclude<ComboboxStylesNames, 'header' | 'f
 export interface ComboboxLikeProps {
   /** Data used to generate options */
   data?: ComboboxData;
-
+  validateOptions?: boolean;
   /** Controlled dropdown opened state */
   dropdownOpened?: boolean;
 
