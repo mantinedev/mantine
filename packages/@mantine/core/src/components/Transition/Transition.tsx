@@ -22,7 +22,7 @@ export interface TransitionProps {
   mounted: boolean;
 
   /** Render function with transition styles argument */
-  children: (styles: React.CSSProperties) => JSX.Element;
+  children: (styles: React.CSSProperties) => React.JSX.Element;
 
   /** Called when exit transition ends */
   onExited?: () => void;
