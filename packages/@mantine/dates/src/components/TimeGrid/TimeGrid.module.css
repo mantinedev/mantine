@@ -9,7 +9,9 @@
   font-size: var(--time-grid-fz, var(--mantine-font-size-sm));
 
   @mixin hover {
-    background-color: var(--mantine-color-default-hover);
+    &:where(:not([data-disabled])) {
+      background-color: var(--mantine-color-default-hover);
+    }
   }
 
   &:where([data-active]) {
@@ -18,7 +20,14 @@
     border-color: transparent;
 
     @mixin hover {
-      background-color: var(--mantine-primary-color-filled-hover);
+      &:where(:not([data-disabled])) {
+        background-color: var(--mantine-primary-color-filled-hover);
+      }
     }
+  }
+
+  &:where(:disabled, [data-disabled]) {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }

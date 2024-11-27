@@ -19,6 +19,7 @@ import {
 import { useUncontrolled } from '@mantine/hooks';
 import type { TimePickerAmPmLabels, TimePickerFormat } from '../TimePicker';
 import { isSameTime } from '../TimePicker/utils/is-same-time/is-same-time';
+import { isTimeAfter, isTimeBefore } from './compare-time';
 import { TimeGridProvider } from './TimeGrid.context';
 import { TimeGridControl } from './TimeGridControl';
 import classes from './TimeGrid.module.css';
@@ -67,6 +68,18 @@ export interface TimeGridProps
 
   /** Control `font-size` of controls, key of `theme.fontSizes` or any valid CSS value, `'sm'` by default */
   size?: MantineSize;
+
+  /** All controls before this time are disabled */
+  minTime?: string;
+
+  /** All controls after this time are disabled */
+  maxTime?: string;
+
+  /** Array of time values to disable */
+  disableTime?: string[] | ((time: string) => boolean);
+
+  /** If set, all controls are disabled */
+  disabled?: boolean;
 }
 
 export type TimeGridFactory = Factory<{
@@ -108,6 +121,10 @@ export const TimeGrid = factory<TimeGridFactory>((_props, ref) => {
     allowDeselect,
     simpleGridProps,
     getControlProps,
+    minTime,
+    maxTime,
+    disableTime,
+    disabled,
     ...others
   } = props;
 
@@ -131,16 +148,31 @@ export const TimeGrid = factory<TimeGridFactory>((_props, ref) => {
     onChange,
   });
 
-  const controls = data.map((time) => (
-    <TimeGridControl
-      key={time}
-      active={isSameTime({ time, compare: _value || '', withSeconds: withSeconds || false })}
-      time={time}
-      onClick={() => setValue(allowDeselect && _value === time ? null : time)}
-      format={format!}
-      amPmLabels={amPmLabels!}
-    />
-  ));
+  const controls = data.map((time) => {
+    const isDisabled =
+      disabled ||
+      (!!minTime && isTimeBefore(time, minTime)) ||
+      (!!maxTime && isTimeAfter(time, maxTime)) ||
+      (Array.isArray(disableTime)
+        ? !!disableTime.find((t) =>
+            isSameTime({ time, compare: t, withSeconds: withSeconds || false })
+          )
+        : !!disableTime?.(time));
+
+    return (
+      <TimeGridControl
+        key={time}
+        active={isSameTime({ time, compare: _value || '', withSeconds: withSeconds || false })}
+        time={time}
+        onClick={() => setValue(allowDeselect && _value === time ? null : time)}
+        format={format!}
+        amPmLabels={amPmLabels!}
+        disabled={isDisabled}
+        data-disabled={isDisabled || undefined}
+        {...getControlProps?.(time)}
+      />
+    );
+  });
 
   return (
     <TimeGridProvider value={{ getStyles }}>
