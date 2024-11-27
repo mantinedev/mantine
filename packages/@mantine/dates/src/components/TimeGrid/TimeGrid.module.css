@@ -1,3 +1,24 @@
-.root {
-  background-color: red;
+.control {
+  text-align: center;
+  padding-inline: 1em;
+  padding-block: 0.25em;
+  border: 1px solid var(--mantine-color-default-border);
+  background-color: var(--mantine-color-default);
+  color: var(--mantine-color-default-color);
+  border-radius: var(--time-grid-radius, var(--mantine-radius-default));
+  font-size: var(--time-grid-fz, var(--mantine-font-size-sm));
+
+  @mixin hover {
+    background-color: var(--mantine-color-default-hover);
+  }
+
+  &:where([data-active]) {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-color-white);
+    border-color: transparent;
+
+    @mixin hover {
+      background-color: var(--mantine-primary-color-filled-hover);
+    }
+  }
 }

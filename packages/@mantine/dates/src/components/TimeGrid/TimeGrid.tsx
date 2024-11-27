@@ -6,6 +6,10 @@ import {
   ElementProps,
   factory,
   Factory,
+  getFontSize,
+  getRadius,
+  MantineRadius,
+  MantineSize,
   SimpleGrid,
   SimpleGridProps,
   StylesApiProps,
@@ -14,13 +18,14 @@ import {
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import type { TimePickerAmPmLabels, TimePickerFormat } from '../TimePicker';
+import { isSameTime } from '../TimePicker/utils/is-same-time/is-same-time';
 import { TimeGridProvider } from './TimeGrid.context';
 import { TimeGridControl } from './TimeGridControl';
 import classes from './TimeGrid.module.css';
 
 export type TimeGridStylesNames = 'root' | 'control' | 'simpleGrid';
 export type TimeGridCssVariables = {
-  root: '--test';
+  root: '--time-grid-fz' | '--time-grid-radius';
 };
 
 export interface TimeGridProps
@@ -56,6 +61,12 @@ export interface TimeGridProps
 
   /** A function to pass props down to control based on the time value */
   getControlProps?: (time: string) => React.ComponentPropsWithoutRef<'button'> & DataAttributes;
+
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
+  radius?: MantineRadius;
+
+  /** Control `font-size` of controls, key of `theme.fontSizes` or any valid CSS value, `'sm'` by default */
+  size?: MantineSize;
 }
 
 export type TimeGridFactory = Factory<{
@@ -66,14 +77,15 @@ export type TimeGridFactory = Factory<{
 }>;
 
 const defaultProps: Partial<TimeGridProps> = {
-  simpleGridProps: { cols: 2 },
+  simpleGridProps: { cols: 3, spacing: 'xs' },
   format: '24h',
   amPmLabels: { am: 'AM', pm: 'PM' },
 };
 
-const varsResolver = createVarsResolver<TimeGridFactory>(() => ({
+const varsResolver = createVarsResolver<TimeGridFactory>((_theme, { size, radius }) => ({
   root: {
-    '--test': 'test',
+    '--time-grid-fz': getFontSize(size),
+    '--time-grid-radius': getRadius(radius),
   },
 }));
 
@@ -116,12 +128,13 @@ export const TimeGrid = factory<TimeGridFactory>((_props, ref) => {
     value,
     defaultValue,
     finalValue: null,
+    onChange,
   });
 
   const controls = data.map((time) => (
     <TimeGridControl
       key={time}
-      active={time === _value}
+      active={isSameTime({ time, compare: _value || '', withSeconds: withSeconds || false })}
       time={time}
       onClick={() => setValue(allowDeselect && _value === time ? null : time)}
       format={format!}

@@ -24,6 +24,7 @@ export function TimeGridControl({
 
   return (
     <UnstyledButton
+      mod={[{ active }]}
       {...ctx.getStyles('control', { className: cx(theme.activeClassName, className) })}
       {...others}
     >
