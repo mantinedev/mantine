@@ -164,7 +164,10 @@ export const TimeGrid = factory<TimeGridFactory>((_props, ref) => {
         key={time}
         active={isSameTime({ time, compare: _value || '', withSeconds: withSeconds || false })}
         time={time}
-        onClick={() => setValue(allowDeselect && _value === time ? null : time)}
+        onClick={() => {
+          const nextValue = allowDeselect && _value === time ? null : time;
+          nextValue !== _value && setValue(nextValue);
+        }}
         format={format!}
         amPmLabels={amPmLabels!}
         disabled={isDisabled}
