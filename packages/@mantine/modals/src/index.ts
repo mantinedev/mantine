@@ -6,6 +6,8 @@ export {
   closeAllModals,
   openConfirmModal,
   openContextModal,
+  updateModal,
+  updateContextModal,
   modals,
 } from './events';
 

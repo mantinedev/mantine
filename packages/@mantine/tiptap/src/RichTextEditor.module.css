@@ -17,6 +17,7 @@
   margin: 0;
 
   & li > p {
+    display: inline-block;
     margin: 0;
   }
 
@@ -185,7 +186,7 @@
     }
   }
 
-  &:where([data-interactive]) {
+  &:where([data-interactive]:not([data-disabled])) {
     cursor: pointer;
 
     @mixin hover {
@@ -213,19 +214,19 @@
   display: flex;
   background-color: var(--mantine-color-body);
 
-  & [data-rich-text-editor-control] {
+  & :where([data-rich-text-editor-control]) {
     border-radius: 0;
 
-    &:not(:last-of-type) {
+    &:where(:not(:last-of-type)) {
       border-inline-end-width: 0;
     }
 
-    &:last-of-type {
+    &:where(:last-of-type) {
       border-start-end-radius: var(--mantine-radius-default);
       border-end-end-radius: var(--mantine-radius-default);
     }
 
-    &:first-of-type {
+    &:where(:first-of-type) {
       border-start-start-radius: var(--mantine-radius-default);
       border-end-start-radius: var(--mantine-radius-default);
     }

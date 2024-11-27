@@ -54,6 +54,12 @@ export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
   /** Props added to the `Transition` component that used to animate overlay and body, use to configure duration and animation type, `{ duration: 200, transition: 'pop' }` by default */
   transitionProps?: TransitionOverride;
 
+  /** Called when exit transition ends */
+  onExitTransitionEnd?: () => void;
+
+  /** Called when enter transition ends */
+  onEnterTransitionEnd?: () => void;
+
   /** Determines whether `onClose` should be called when user presses the escape key, `true` by default */
   closeOnEscape?: boolean;
 
@@ -84,6 +90,8 @@ export const ModalBase = forwardRef<HTMLDivElement, ModalBaseProps>(
       onClose,
       id,
       transitionProps,
+      onExitTransitionEnd,
+      onEnterTransitionEnd,
       trapFocus,
       closeOnEscape,
       returnFocus,
@@ -114,6 +122,8 @@ export const ModalBase = forwardRef<HTMLDivElement, ModalBaseProps>(
             opened,
             onClose,
             closeOnClickOutside,
+            onExitTransitionEnd,
+            onEnterTransitionEnd,
             transitionProps: { ...transitionProps, keepMounted },
             getTitleId: () => `${_id}-title`,
             getBodyId: () => `${_id}-body`,

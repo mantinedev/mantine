@@ -187,6 +187,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
   }, []);
 
   const handleTouchMove = useCallback((event: TouchEvent) => {
+    event.preventDefault();
     update(event.touches[0] as any);
   }, []);
 
@@ -196,6 +197,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
   }, []);
 
   const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    event.preventDefault();
     onTouchStart?.(event);
     beginTracking();
   };
@@ -203,7 +205,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
   const beginTracking = () => {
     document.addEventListener('mousemove', handleMouseMove, false);
     document.addEventListener('mouseup', handleMouseUp, false);
-    document.addEventListener('touchmove', handleTouchMove, false);
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
     document.addEventListener('touchend', handleTouchEnd, false);
   };
 

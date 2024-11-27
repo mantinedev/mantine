@@ -23,5 +23,14 @@ export const withLabels: MantineDemo = {
     { fileName: 'data.ts', code: dataCode, language: 'tsx' },
   ],
   centered: true,
-  controls: [{ type: 'boolean', prop: 'withLabelsLine', initialValue: true, libraryValue: '__' }],
+  controls: [
+    { type: 'boolean', prop: 'withLabelsLine', initialValue: true, libraryValue: '__' },
+    {
+      type: 'segmented',
+      prop: 'labelsType',
+      initialValue: 'value',
+      libraryValue: '__',
+      data: ['value', 'percent'],
+    },
+  ],
 };

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
 import { Menu } from '../Menu';
@@ -31,7 +32,13 @@ export function Usage() {
       <Button onClick={open}>Open modal</Button>
       {content}
       <Button onClick={open}>Open modal</Button>
-      <Modal opened={opened} onClose={close} title="Just a Modal" zIndex={73812}>
+      <Modal
+        opened={opened}
+        onClose={close}
+        title="Just a Modal"
+        transitionProps={{ duration: 500, onExited: () => console.log('onExited') }}
+        onExitTransitionEnd={() => console.log('onExitTransitionEnd')}
+      >
         <input data-autofocus />
       </Modal>
     </div>
