@@ -20,11 +20,11 @@ import { Day, DayProps, DayStylesNames } from '../Day';
 import { WeekdaysRow } from '../WeekdaysRow';
 import { getDateInTabOrder } from './get-date-in-tab-order/get-date-in-tab-order';
 import { getMonthDays } from './get-month-days/get-month-days';
+import { getWeekNumber } from './get-week-number/get-week-number';
 import { isAfterMinDate } from './is-after-min-date/is-after-min-date';
 import { isBeforeMaxDate } from './is-before-max-date/is-before-max-date';
 import { isSameMonth } from './is-same-month/is-same-month';
 import classes from './Month.module.css';
-import { getWeekNumber } from './get-week-number/get-week-number';
 
 export type MonthStylesNames =
   | 'month'
