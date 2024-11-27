@@ -57,7 +57,7 @@ export interface TimeGridProps
   /** Labels used for am/pm values, `{ am: 'AM', pm: 'PM' }` by default */
   amPmLabels?: TimePickerAmPmLabels;
 
-  /** Props passed down to the underlying `SimpleGrid` component, `{ cols: 2 }` by default */
+  /** Props passed down to the underlying `SimpleGrid` component, `{ cols: 3, spacing: 'xs' }` by default */
   simpleGridProps?: SimpleGridProps;
 
   /** A function to pass props down to control based on the time value */
@@ -116,7 +116,7 @@ export const TimeGrid = factory<TimeGridFactory>((_props, ref) => {
     defaultValue,
     onChange,
     format,
-    withSeconds,
+    withSeconds = false,
     amPmLabels,
     allowDeselect,
     simpleGridProps,
@@ -154,24 +154,27 @@ export const TimeGrid = factory<TimeGridFactory>((_props, ref) => {
       (!!minTime && isTimeBefore(time, minTime)) ||
       (!!maxTime && isTimeAfter(time, maxTime)) ||
       (Array.isArray(disableTime)
-        ? !!disableTime.find((t) =>
-            isSameTime({ time, compare: t, withSeconds: withSeconds || false })
-          )
+        ? !!disableTime.find((t) => isSameTime({ time, compare: t, withSeconds }))
         : !!disableTime?.(time));
 
     return (
       <TimeGridControl
         key={time}
-        active={isSameTime({ time, compare: _value || '', withSeconds: withSeconds || false })}
+        active={isSameTime({ time, compare: _value || '', withSeconds })}
         time={time}
         onClick={() => {
-          const nextValue = allowDeselect && _value === time ? null : time;
+          const nextValue =
+            allowDeselect &&
+            (_value === null ? time === _value : isSameTime({ time, compare: _value, withSeconds }))
+              ? null
+              : time;
           nextValue !== _value && setValue(nextValue);
         }}
         format={format!}
         amPmLabels={amPmLabels!}
         disabled={isDisabled}
         data-disabled={isDisabled || undefined}
+        withSeconds={withSeconds}
         {...getControlProps?.(time)}
       />
     );

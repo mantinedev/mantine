@@ -9,6 +9,7 @@ interface TimeGridControlProps extends React.ComponentPropsWithoutRef<'button'> 
   active: boolean;
   format: TimePickerFormat;
   amPmLabels: TimePickerAmPmLabels;
+  withSeconds: boolean | undefined;
 }
 
 export function TimeGridControl({
@@ -17,6 +18,7 @@ export function TimeGridControl({
   className,
   amPmLabels,
   format,
+  withSeconds,
   ...others
 }: TimeGridControlProps) {
   const ctx = useTimeGridContext();
@@ -28,7 +30,7 @@ export function TimeGridControl({
       {...ctx.getStyles('control', { className: cx(theme.activeClassName, className) })}
       {...others}
     >
-      <TimeValue value={time} format={format} amPmLabels={amPmLabels} />
+      <TimeValue value={time} format={format} amPmLabels={amPmLabels} withSeconds={withSeconds} />
     </UnstyledButton>
   );
 }
