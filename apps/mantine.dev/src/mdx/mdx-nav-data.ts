@@ -366,7 +366,7 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
     pages: [MDX_DATA.ExtensionsPackage],
   },
   {
-    category: '@mantine/dates',
+    category: 'Dates',
     pages: [
       MDX_DATA.GettingStartedDates,
       MDX_DATA.DatesProvider,
@@ -387,7 +387,7 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
   },
 
   {
-    category: '@mantine/charts',
+    category: 'Charts',
     pages: [
       MDX_DATA.GettingStartedCharts,
       MDX_DATA.AreaChart,
@@ -402,6 +402,20 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.BubbleChart,
       MDX_DATA.RadialBarChart,
       MDX_DATA.Sparkline,
+    ],
+  },
+
+  {
+    category: 'Other extensions',
+    pages: [
+      MDX_DATA.CodeHighlight,
+      MDX_DATA.Notifications,
+      MDX_DATA.Spotlight,
+      MDX_DATA.Carousel,
+      MDX_DATA.Dropzone,
+      MDX_DATA.Nprogress,
+      MDX_DATA.Modals,
+      MDX_DATA.TipTap,
     ],
   },
 ];

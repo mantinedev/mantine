@@ -2,7 +2,7 @@ import { Frontmatter } from '@/types';
 
 export const MDX_OTHERS_DATA: Record<string, Frontmatter> = {
   ExtensionsPackage: {
-    title: 'Get started',
+    title: 'Mantine extensions',
     slug: '/x/extensions',
     hideInSearch: true,
     hideHeader: true,
