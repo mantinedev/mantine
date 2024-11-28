@@ -12,7 +12,11 @@
 }
 
 .weekNumber {
+  --wn-size-xs: 30px;
   --wn-size-sm: 36px;
+  --wn-size-md: 42px;
+  --wn-size-lg: 48px;
+  --wn-size-xl: 54px;
   color: var(--mantine-color-dimmed);
   font-weight: normal;
   font-size: var(--wn-fz, var(--mantine-font-size-sm));

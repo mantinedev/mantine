@@ -113,7 +113,7 @@ export const Demo_excludeDate = {
   render: renderDemo(demos.excludeDate),
 };
 
-export const Demo_showWeekNumbers = {
-  name: '⭐ Demo: showWeekNumbers',
-  render: renderDemo(demos.showWeekNumbers),
+export const Demo_withWeekNumbers = {
+  name: '⭐ Demo: withWeekNumbers',
+  render: renderDemo(demos.withWeekNumbers),
 };

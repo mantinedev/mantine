@@ -106,7 +106,7 @@ export interface MonthSettings {
   highlightToday?: boolean;
 
   /** Determines whether week numbers should be displayed */
-  showWeekNumbers?: boolean;
+  withWeekNumbers?: boolean;
 }
 
 export interface MonthProps
@@ -173,7 +173,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
     withCellSpacing,
     size,
     highlightToday,
-    showWeekNumbers,
+    withWeekNumbers,
     ...others
   } = props;
 
@@ -278,7 +278,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
 
     return (
       <tr key={rowIndex} {...getStyles('monthRow')}>
-        {showWeekNumbers && <td {...getStyles('weekNumber')}>{getWeekNumber(row)}</td>}
+        {withWeekNumbers && <td {...getStyles('weekNumber')}>{getWeekNumber(row)}</td>}
         {cells}
       </tr>
     );
@@ -297,7 +297,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
             classNames={resolvedClassNames}
             styles={resolvedStyles}
             unstyled={unstyled}
-            showWeekNumbers={showWeekNumbers}
+            withWeekNumbers={withWeekNumbers}
           />
         </thead>
       )}

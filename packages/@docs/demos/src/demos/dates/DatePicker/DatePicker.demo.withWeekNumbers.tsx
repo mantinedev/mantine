@@ -5,15 +5,15 @@ const code = `
 import { DatePicker } from '@mantine/dates';
 
 function Demo() {
-  return <DatePicker showWeekNumbers />;
+  return <DatePicker withWeekNumbers />;
 }
 `;
 
 function Demo() {
-  return <DatePicker showWeekNumbers />;
+  return <DatePicker withWeekNumbers />;
 }
 
-export const showWeekNumbers: MantineDemo = {
+export const withWeekNumbers: MantineDemo = {
   type: 'code',
   centered: true,
   component: Demo,

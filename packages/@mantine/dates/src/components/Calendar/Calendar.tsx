@@ -204,7 +204,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     __onDayMouseEnter,
     withCellSpacing,
     highlightToday,
-    showWeekNumbers,
+    withWeekNumbers,
 
     // YearLevelGroup props
     monthsListFormat,
@@ -350,7 +350,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           static={isStatic}
           withCellSpacing={withCellSpacing}
           highlightToday={highlightToday}
-          showWeekNumbers={showWeekNumbers}
+          withWeekNumbers={withWeekNumbers}
           {...stylesApiProps}
         />
       )}
