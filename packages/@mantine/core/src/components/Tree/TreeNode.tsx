@@ -29,6 +29,7 @@ interface TreeNodeProps {
   selectOnClick: boolean | undefined;
   allowRangeSelection: boolean | undefined;
   expandOnSpace: boolean | undefined;
+  checkOnSpace: boolean | undefined;
 }
 
 export function TreeNode({
@@ -44,6 +45,7 @@ export function TreeNode({
   flatValues,
   allowRangeSelection,
   expandOnSpace,
+  checkOnSpace,
 }: TreeNodeProps) {
   const ref = useRef<HTMLLIElement>(null);
   const nested = (node.children || []).map((child) => (
@@ -61,6 +63,7 @@ export function TreeNode({
       selectOnClick={selectOnClick}
       allowRangeSelection={allowRangeSelection}
       expandOnSpace={expandOnSpace}
+      checkOnSpace={checkOnSpace}
     />
   ));
 
@@ -116,10 +119,20 @@ export function TreeNode({
       }
     }
 
-    if (event.nativeEvent.code === 'Space' && expandOnSpace) {
-      event.stopPropagation();
-      event.preventDefault();
-      controller.toggleExpanded(node.value);
+    if (event.nativeEvent.code === 'Space') {
+      if (expandOnSpace) {
+        event.stopPropagation();
+        event.preventDefault();
+        controller.toggleExpanded(node.value);
+      }
+
+      if (checkOnSpace) {
+        event.stopPropagation();
+        event.preventDefault();
+        controller.isNodeChecked(node.value)
+          ? controller.uncheckNode(node.value)
+          : controller.checkNode(node.value);
+      }
     }
   };
 

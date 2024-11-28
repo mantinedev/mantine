@@ -33,7 +33,7 @@ export interface AutocompleteProps
     Omit<ComboboxLikeProps, 'data'>,
     StylesApiProps<AutocompleteFactory>,
     ElementProps<'input', 'onChange' | 'size'> {
-  /** Data displayed in the dropdown */
+  /** Data displayed in the dropdown. Values must be unique, otherwise an error will be thrown and component will not render. */
   data?: ComboboxStringData;
 
   /** Controlled component value */

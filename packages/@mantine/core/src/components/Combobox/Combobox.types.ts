@@ -32,7 +32,7 @@ export type ComboboxParsedItem = ComboboxItem | ComboboxParsedItemGroup;
 export type ComboboxLikeStylesNames = Exclude<ComboboxStylesNames, 'header' | 'footer' | 'search'>;
 
 export interface ComboboxLikeProps {
-  /** Data used to generate options */
+  /** Data used to generate options. Values must be unique, otherwise an error will be thrown and component will not render. */
   data?: ComboboxData;
 
   /** Controlled dropdown opened state */

@@ -28,6 +28,7 @@ export const MonthStylesApi: StylesApiData<MonthFactory> = {
     weekdaysRow: 'Weekdays tr element',
     weekday: 'Weekday th element',
     day: 'Month day control',
+    weekNumber: 'Week number td element',
   },
 
   vars: {},

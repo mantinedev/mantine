@@ -60,7 +60,7 @@ export function StylesApiDemo({
           title="Component Styles API"
           description="Hover over selectors to highlight corresponding elements"
         >
-          {cloneElement(children as JSX.Element, {
+          {cloneElement(children as React.JSX.Element, {
             classNames: selectors.reduce<Record<string, string>>((acc, item) => {
               acc[item] = item;
               return acc;

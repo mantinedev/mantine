@@ -100,3 +100,7 @@ export function Sizes() {
   ));
   return sizes;
 }
+
+export function withWeekNumbers() {
+  return <Wrapper withWeekNumbers />;
+}
