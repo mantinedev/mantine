@@ -456,3 +456,24 @@ function Demo() {
 - `AppShell.Aside` root element is `aside`
 - `AppShell.Footer` root element is `footer`
 - `AppShell.Main` root element is `main` – **!important:** do not use `main` element inside `AppShell.Main` component
+
+## CSS variables
+
+You can use the following CSS variables in all components used inside `AppShell`:
+
+- `--app-shell-navbar-width` – width of the `AppShell.Navbar`
+- `--app-shell-navbar-offset` – offset of the `AppShell.Navbar`
+- `--app-shell-aside-width` – width of the `AppShell.Aside`
+- `--app-shell-aside-offset` – offset of the `AppShell.Aside`
+- `--app-shell-header-height` – height of the `AppShell.Header`
+- `--app-shell-header-offset` – offset of the `AppShell.Header`
+- `--app-shell-footer-height` – height of the `AppShell.Footer`
+- `--app-shell-footer-offset` – offset of the `AppShell.Footer`
+
+Example of using CSS variables in styles:
+
+```scss
+.main {
+  min-height: calc(100vh - var(--app-shell-header-height));
+}
+```
