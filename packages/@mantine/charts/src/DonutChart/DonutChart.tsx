@@ -104,6 +104,7 @@ export interface DonutChartProps
 
   /** A function to format values inside the tooltip */
   valueFormatter?: (value: number) => string;
+  legendOrientation?: 'top' | 'bottom' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'center-left' | 'center-right';
 }
 
 export type DonutChartFactory = Factory<{
@@ -199,6 +200,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     valueFormatter,
     strokeColor,
     labelsType,
+    legendOrientation,
     ...others
   } = props;
 
@@ -231,6 +233,19 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
       strokeWidth={strokeWidth}
     />
   ));
+
+  const legendPosition = {
+    'top': { x: 0, y: -180 },
+    'bottom': { x: 0, y: 180 },
+    'top-left': { x: -180, y: -180 },
+    'top-right': { x: 180, y: -180 },
+    'bottom-left': { x: -180, y: 180 },
+    'bottom-right': { x: 180, y: 180 },
+    'center-left': { x: -230, y: 0 },
+    'center-right': { x: 230, y: 0 },
+  };
+
+  const legendOffset = legendPosition[legendOrientation || 'center-right'];
 
   return (
     <Box ref={ref} size={size} {...getStyles('root')} {...others}>
@@ -285,6 +300,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
                   valueFormatter={valueFormatter}
                 />
               )}
+              position={{ x: legendOffset.x, y: legendOffset.y }}
               {...tooltipProps}
             />
           )}
