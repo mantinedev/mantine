@@ -1,4 +1,4 @@
-import { ActionIconDemos, TableDemos, BarChartDemos, ModalsDemos, FormDemos, TipTapDemos, ModalDemos, HooksDemos } from '@docs/demos';
+import { ActionIconDemos, TableDemos, BarChartDemos, ModalsDemos, FormDemos, TipTapDemos, ModalDemos, HooksDemos, DatePickerDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -107,6 +107,12 @@ which can be used to run code after exit/enter transition is finished. For examp
 data after modal is closed:
 
 <Demo data={ModalDemos.transitionEnd} />
+
+## Week numbers in DatePicker
+
+[DatePicker](/dates/date-picker) and other components based on Calendar component now support `withWeekNumbers` prop to display week numbers:
+
+<Demo data={DatePickerDemos.withWeekNumbers} />
 
 ## New demo: BarChart with overlay
 
