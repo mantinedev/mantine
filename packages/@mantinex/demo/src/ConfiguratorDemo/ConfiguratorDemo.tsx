@@ -95,7 +95,7 @@ export function ConfiguratorDemo({
         dimmed={dimmed}
         striped={striped}
       >
-        {cloneElement(children as JSX.Element, state)}
+        {cloneElement(children as React.JSX.Element, state)}
       </DemoColumns>
       <DemoCode code={getCodeArray({ code, controls, state })} />
     </DemoRoot>
