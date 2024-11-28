@@ -92,6 +92,7 @@
   position: relative;
   transition: background-color 150ms ease;
   overflow: hidden;
+  opacity: var(--thumb-opacity);
 
   &::before {
     content: '';
