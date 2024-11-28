@@ -1,3 +1,4 @@
+import { useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
   createVarsResolver,
@@ -24,8 +25,14 @@ export interface CheckboxCardProps
   extends BoxProps,
     StylesApiProps<CheckboxCardFactory>,
     ElementProps<'button', 'onChange'> {
-  /** Checked state */
+  /** Controlled component value */
   checked?: boolean;
+
+  /** Uncontrolled component default value */
+  defaultChecked?: boolean;
+
+  /** Called when value changes */
+  onChange?: (checked: boolean) => void;
 
   /** Determines whether the card should have border, `true` by default */
   withBorder?: boolean;
@@ -68,6 +75,8 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
     withBorder,
     value,
     onClick,
+    defaultChecked,
+    onChange,
     ...others
   } = props;
 
@@ -87,20 +96,28 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
 
   const ctx = useCheckboxGroupContext();
   const _checked =
-    typeof checked === 'boolean' ? checked : ctx?.value.includes(value || '') || false;
+    typeof checked === 'boolean' ? checked : ctx?.value.includes(value || '') || undefined;
+
+  const [_value, setValue] = useUncontrolled({
+    value: _checked,
+    defaultValue: defaultChecked,
+    finalValue: false,
+    onChange,
+  });
 
   return (
-    <CheckboxCardProvider value={{ checked: _checked }}>
+    <CheckboxCardProvider value={{ checked: _value }}>
       <UnstyledButton
         ref={ref}
-        mod={[{ 'with-border': withBorder, checked: _checked }, mod]}
+        mod={[{ 'with-border': withBorder, checked: _value }, mod]}
         {...getStyles('card')}
         {...others}
         role="checkbox"
-        aria-checked={_checked}
+        aria-checked={_value}
         onClick={(event) => {
           onClick?.(event);
           ctx?.onChange(value || '');
+          setValue(!_value);
         }}
       />
     </CheckboxCardProvider>
