@@ -24,7 +24,7 @@ export type ModalState =
   | { id: string; props: OpenContextModal; type: 'context'; ctx: string };
 
 export interface ModalsContextProps {
-  modalProps?: ModalSettings,
+  modalProps: ModalSettings,
   modals: ModalState[];
   openModal: (props: ModalSettings) => string;
   openConfirmModal: (props: OpenConfirmModal) => string;
