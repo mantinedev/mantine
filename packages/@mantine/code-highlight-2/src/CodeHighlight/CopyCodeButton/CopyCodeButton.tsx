@@ -1,6 +1,5 @@
-import { ActionIcon, Tooltip } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
-import { useCodeHighlightContext } from '../CodeHighlight.context';
+import { CodeHighlightControl } from '../CodeHighlightControl/CodeHighlightControl';
 import { CopyIcon } from './CopyIcon';
 
 interface CopyCodeButtonProps {
@@ -14,19 +13,16 @@ export function CopyCodeButton({
   copyLabel = 'Copy',
   copiedLabel = 'Copied',
 }: CopyCodeButtonProps) {
-  const ctx = useCodeHighlightContext();
   const clipboard = useClipboard();
 
   return (
-    <Tooltip label={clipboard.copied ? copiedLabel : copyLabel} fz="sm" position="left">
-      <ActionIcon
-        onClick={() => clipboard.copy(code.trim())}
-        variant="none"
-        {...ctx.getStyles('control')}
-      >
-        <CopyIcon copied={clipboard.copied} />
-      </ActionIcon>
-    </Tooltip>
+    <CodeHighlightControl
+      onClick={() => clipboard.copy(code.trim())}
+      variant="none"
+      tooltipLabel={clipboard.copied ? copiedLabel : copyLabel}
+    >
+      <CopyIcon copied={clipboard.copied} />
+    </CodeHighlightControl>
   );
 }
 

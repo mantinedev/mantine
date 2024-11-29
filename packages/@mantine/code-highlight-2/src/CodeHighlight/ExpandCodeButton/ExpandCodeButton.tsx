@@ -1,5 +1,4 @@
-import { ActionIcon, Tooltip } from '@mantine/core';
-import { useCodeHighlightContext } from '../CodeHighlight.context';
+import { CodeHighlightControl } from '../CodeHighlightControl/CodeHighlightControl';
 import { ExpandIcon } from './ExpandIcon';
 
 interface ExpandCodeButtonProps {
@@ -15,14 +14,13 @@ export function ExpandCodeButton({
   expandLabel = 'Expand code',
   collapseLabel = 'Collapse code',
 }: ExpandCodeButtonProps) {
-  const ctx = useCodeHighlightContext();
-
   return (
-    <Tooltip label={expanded ? collapseLabel : expandLabel} fz="sm" position="left">
-      <ActionIcon variant="none" onClick={() => onExpand(!expanded)} {...ctx.getStyles('control')}>
-        <ExpandIcon expanded={expanded} />
-      </ActionIcon>
-    </Tooltip>
+    <CodeHighlightControl
+      onClick={() => onExpand(!expanded)}
+      tooltipLabel={expanded ? collapseLabel : expandLabel}
+    >
+      <ExpandIcon expanded={expanded} />
+    </CodeHighlightControl>
   );
 }
 

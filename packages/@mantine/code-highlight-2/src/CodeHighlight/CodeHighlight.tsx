@@ -18,6 +18,7 @@ import {
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { CodeHighlightProvider } from './CodeHighlight.context';
+import { CodeHighlightControl } from './CodeHighlightControl/CodeHighlightControl';
 import { CopyCodeButton } from './CopyCodeButton/CopyCodeButton';
 import { ExpandCodeButton } from './ExpandCodeButton/ExpandCodeButton';
 import classes from '../CodeHighlight.module.css';
@@ -81,6 +82,9 @@ export interface CodeHighlightProps
 
   /** Determines whether the code block should have a border, `false` by default */
   withBorder?: boolean;
+
+  /** Extra controls to display in the controls list */
+  controls?: React.ReactNode[];
 }
 
 export type CodeHighlightFactory = Factory<{
@@ -88,6 +92,9 @@ export type CodeHighlightFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: CodeHighlightStylesNames;
   vars: CodeHighlightCssVariables;
+  staticComponents: {
+    Control: typeof CodeHighlightControl;
+  };
 }>;
 
 const defaultProps: Partial<CodeHighlightProps> = {
@@ -128,6 +135,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     radius,
     background,
     withBorder,
+    controls,
     ...others
   } = props;
 
@@ -151,6 +159,9 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     onChange: onExpandedChange,
   });
 
+  const shouldDisplayControls =
+    (controls && controls.length > 0) || withExpandButton || withCopyButton;
+
   return (
     <CodeHighlightProvider value={{ getStyles }}>
       <Box
@@ -160,19 +171,23 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
         dir="ltr"
         data-with-border={withBorder || undefined}
       >
-        <div {...getStyles('controls')}>
-          {withExpandButton && (
-            <ExpandCodeButton
-              expanded={_expanded}
-              onExpand={setExpanded}
-              expandLabel={expandLabel}
-              collapseLabel={collapseLabel}
-            />
-          )}
-          {withCopyButton && (
-            <CopyCodeButton code={code} copiedLabel={copiedLabel} copyLabel={copyLabel} />
-          )}
-        </div>
+        {shouldDisplayControls && (
+          <div {...getStyles('controls')}>
+            {controls}
+
+            {withExpandButton && (
+              <ExpandCodeButton
+                expanded={_expanded}
+                onExpand={setExpanded}
+                expandLabel={expandLabel}
+                collapseLabel={collapseLabel}
+              />
+            )}
+            {withCopyButton && (
+              <CopyCodeButton code={code} copiedLabel={copiedLabel} copyLabel={copyLabel} />
+            )}
+          </div>
+        )}
 
         <ScrollArea
           type="hover"
@@ -201,3 +216,4 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
 
 CodeHighlight.displayName = '@mantine/code-highlight/CodeHighlight';
 CodeHighlight.classes = classes;
+CodeHighlight.Control = CodeHighlightControl;

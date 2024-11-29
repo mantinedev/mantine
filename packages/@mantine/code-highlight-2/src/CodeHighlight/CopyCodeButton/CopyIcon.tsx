@@ -1,15 +1,11 @@
-import { useCodeHighlightContext } from '../CodeHighlight.context';
-
 interface CopyIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   copied: boolean;
 }
 
 export function CopyIcon({ copied, ...others }: CopyIconProps) {
-  const ctx = useCodeHighlightContext();
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      {...ctx.getStyles('controlIcon')}
       viewBox="0 0 24 24"
       strokeWidth="2"
       stroke="currentColor"

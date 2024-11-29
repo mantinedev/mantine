@@ -1,3 +1,4 @@
+import { IconBrandCodesandbox } from '@tabler/icons-react';
 import { CodeHighlight } from './CodeHighlight';
 
 export default { title: 'CodeHighlight2' };
@@ -88,6 +89,30 @@ export function Usage() {
         defaultExpanded={false}
         radius="md"
         withBorder
+      />
+    </div>
+  );
+}
+
+export function ExtraControls() {
+  return (
+    <div style={{ padding: 40 }}>
+      <CodeHighlight
+        code={tsxCode}
+        withExpandButton
+        defaultExpanded={false}
+        radius="md"
+        withBorder
+        controls={[
+          <CodeHighlight.Control
+            tooltipLabel="Open in codesandbox"
+            component="a"
+            href="https://codesandbox.io"
+            target="_blank"
+          >
+            <IconBrandCodesandbox />
+          </CodeHighlight.Control>,
+        ]}
       />
     </div>
   );
