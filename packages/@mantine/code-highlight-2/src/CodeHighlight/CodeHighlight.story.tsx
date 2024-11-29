@@ -82,7 +82,13 @@ function Demo() {
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <CodeHighlight code={tsxCode} withExpandButton defaultExpanded={false} />
+      <CodeHighlight
+        code={tsxCode}
+        withExpandButton
+        defaultExpanded={false}
+        radius="md"
+        withBorder
+      />
     </div>
   );
 }

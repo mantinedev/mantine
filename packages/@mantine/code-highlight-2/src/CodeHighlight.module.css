@@ -1,6 +1,25 @@
 .root {
   position: relative;
-  --code-background: var(--mantine-color-gray-0);
+  border-radius: var(--ch-radius, 0px);
+  overflow: hidden;
+
+  &:where([data-with-border]) {
+    @mixin where-light {
+      border: 1px solid var(--mantine-color-gray-2);
+    }
+
+    @mixin where-dark {
+      border: 1px solid var(--mantine-color-dark-6);
+    }
+  }
+
+  @mixin where-light {
+    --code-background: var(--mantine-color-gray-0);
+  }
+
+  @mixin where-dark {
+    --code-background: var(--mantine-color-dark-8);
+  }
 }
 
 .pre {
@@ -34,7 +53,9 @@
   top: 0;
   right: 0;
   z-index: 1;
-  padding: 5px;
+  padding: 8px;
+  background-color: var(--code-background);
+  border-bottom-left-radius: var(--mantine-radius-md);
 }
 
 .control {
@@ -75,6 +96,7 @@
   text-align: center;
   padding-top: var(--mantine-spacing-xs);
   padding-bottom: var(--mantine-spacing-xs);
+  white-space: nowrap;
 
   &[data-hidden] {
     display: none;

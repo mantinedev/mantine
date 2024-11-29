@@ -5,6 +5,10 @@ import {
   ElementProps,
   factory,
   Factory,
+  getRadius,
+  getThemeColor,
+  MantineColor,
+  MantineRadius,
   rem,
   ScrollArea,
   StylesApiProps,
@@ -29,7 +33,7 @@ export type CodeHighlightStylesNames =
   | 'showCodeButton';
 
 export type CodeHighlightCssVariables = {
-  root: '--ch-max-height' | '--ch-background';
+  root: '--ch-max-height' | '--ch-background' | '--ch-radius';
 };
 
 export interface CodeHighlightProps
@@ -68,6 +72,15 @@ export interface CodeHighlightProps
 
   /** Label for collapse button, `'Collapse code'` by default */
   collapseLabel?: string;
+
+  /** Controls background color of the code. By default, the value depends on color scheme. */
+  background?: MantineColor;
+
+  /** Key of `theme.radius` or any valid CSS value to set border-radius, `0` by default */
+  radius?: MantineRadius;
+
+  /** Determines whether the code block should have a border, `false` by default */
+  withBorder?: boolean;
 }
 
 export type CodeHighlightFactory = Factory<{
@@ -82,12 +95,15 @@ const defaultProps: Partial<CodeHighlightProps> = {
   expandLabel: 'Expand code',
 };
 
-const varsResolver = createVarsResolver<CodeHighlightFactory>((_theme, { maxCollapsedHeight }) => ({
-  root: {
-    '--ch-max-height': rem(maxCollapsedHeight),
-    '--ch-background': undefined,
-  },
-}));
+const varsResolver = createVarsResolver<CodeHighlightFactory>(
+  (theme, { maxCollapsedHeight, background, radius }) => ({
+    root: {
+      '--ch-max-height': rem(maxCollapsedHeight),
+      '--ch-background': getThemeColor(background, theme),
+      '--ch-radius': getRadius(radius),
+    },
+  })
+);
 
 export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
   const props = useProps('CodeHighlight', defaultProps, _props);
@@ -109,6 +125,9 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     withExpandButton,
     expandLabel,
     collapseLabel,
+    radius,
+    background,
+    withBorder,
     ...others
   } = props;
 
@@ -134,7 +153,13 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
 
   return (
     <CodeHighlightProvider value={{ getStyles }}>
-      <Box ref={ref} {...getStyles('root')} {...others} dir="ltr">
+      <Box
+        ref={ref}
+        {...getStyles('root')}
+        {...others}
+        dir="ltr"
+        data-with-border={withBorder || undefined}
+      >
         <div {...getStyles('controls')}>
           {withExpandButton && (
             <ExpandCodeButton
