@@ -166,6 +166,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
   });
 
   const ctx: ModalsContextProps = {
+    modalProps,
     modals: state.modals,
     openModal,
     openConfirmModal,
