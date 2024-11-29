@@ -18,7 +18,7 @@ export function CopyCodeButton({
   const clipboard = useClipboard();
 
   return (
-    <Tooltip label={clipboard.copied ? copiedLabel : copyLabel} fz="sm" position="bottom-end">
+    <Tooltip label={clipboard.copied ? copiedLabel : copyLabel} fz="sm" position="left">
       <ActionIcon
         onClick={() => clipboard.copy(code.trim())}
         variant="none"
@@ -29,3 +29,5 @@ export function CopyCodeButton({
     </Tooltip>
   );
 }
+
+CopyCodeButton.displayName = '@mantine/code-highlight/CopyCodeButton';
