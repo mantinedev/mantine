@@ -1,5 +1,6 @@
 .root {
   position: relative;
+  --code-background: var(--mantine-color-gray-0);
 }
 
 .pre {
@@ -16,6 +17,7 @@
 
 .code {
   display: inline-block;
+  background-color: var(--code-background);
   font-size: 13px;
   border-radius: var(--mantine-radius-xs);
   line-height: var(--code-line-height, var(--mantine-line-height));
@@ -42,5 +44,39 @@
   @mixin hover {
     color: var(--mantine-color-bright);
     opacity: 1;
+  }
+}
+
+.scrollarea {
+  &[data-collapsed] {
+    max-height: var(--ch-max-height, 250px);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset-inline: 0;
+      bottom: 0;
+      height: 80px;
+      pointer-events: none;
+      background-image: linear-gradient(0deg, var(--code-background) 25%, rgba(0, 0, 0, 0) 100%);
+    }
+  }
+}
+
+.showCodeButton {
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-anchor);
+  width: 100%;
+  text-align: center;
+  padding-top: var(--mantine-spacing-xs);
+  padding-bottom: var(--mantine-spacing-xs);
+
+  &[data-hidden] {
+    display: none;
   }
 }

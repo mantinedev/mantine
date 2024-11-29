@@ -8,6 +8,7 @@ import {
   rem,
   ScrollArea,
   StylesApiProps,
+  UnstyledButton,
   useProps,
   useStyles,
 } from '@mantine/core';
@@ -24,10 +25,11 @@ export type CodeHighlightStylesNames =
   | 'control'
   | 'controlIcon'
   | 'controls'
-  | 'scrollarea';
+  | 'scrollarea'
+  | 'showCodeButton';
 
 export type CodeHighlightCssVariables = {
-  root: '--ch-max-height';
+  root: '--ch-max-height' | '--ch-background';
 };
 
 export interface CodeHighlightProps
@@ -77,11 +79,13 @@ export type CodeHighlightFactory = Factory<{
 
 const defaultProps: Partial<CodeHighlightProps> = {
   withCopyButton: true,
+  expandLabel: 'Expand code',
 };
 
 const varsResolver = createVarsResolver<CodeHighlightFactory>((_theme, { maxCollapsedHeight }) => ({
   root: {
     '--ch-max-height': rem(maxCollapsedHeight),
+    '--ch-background': undefined,
   },
 }));
 
@@ -157,6 +161,14 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
             <code {...getStyles('code')}>{code.trim()}</code>
           </pre>
         </ScrollArea>
+
+        <UnstyledButton
+          {...getStyles('showCodeButton')}
+          mod={{ hidden: _expanded }}
+          onClick={() => setExpanded(true)}
+        >
+          {expandLabel}
+        </UnstyledButton>
       </Box>
     </CodeHighlightProvider>
   );
