@@ -36,6 +36,15 @@ export const defaultVariantColorsResolver: VariantColorsResolver = ({
 
   const _autoContrast = typeof autoContrast === 'boolean' ? autoContrast : theme.autoContrast;
 
+  if (variant === 'none') {
+    return {
+      background: 'transparent',
+      hover: 'transparent',
+      color: 'inherit',
+      border: 'none',
+    };
+  }
+
   if (variant === 'filled') {
     const textColor = _autoContrast
       ? parsed.isLight

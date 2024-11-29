@@ -1,0 +1,46 @@
+.root {
+  position: relative;
+}
+
+.pre {
+  --code-line-height: 1.7;
+
+  display: block;
+  margin: 0;
+
+  & .code {
+    display: block;
+    padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  }
+}
+
+.code {
+  display: inline-block;
+  font-size: 13px;
+  border-radius: var(--mantine-radius-xs);
+  line-height: var(--code-line-height, var(--mantine-line-height));
+  font-family: var(--mantine-font-family-monospace);
+}
+
+.controlIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  padding: 5px;
+}
+
+.control {
+  color: var(--mantine-color-text);
+  opacity: 0.5;
+
+  @mixin hover {
+    color: var(--mantine-color-bright);
+    opacity: 1;
+  }
+}
