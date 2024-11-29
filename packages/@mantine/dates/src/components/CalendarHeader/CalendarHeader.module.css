@@ -7,7 +7,7 @@
   --dch-control-size: var(--dch-control-size-sm);
 
   display: flex;
-  max-width: calc(var(--dch-control-size) * 7 + rem(7px));
+  max-width: calc(var(--dch-control-size) * 8 + rem(7px));
   margin-bottom: var(--mantine-spacing-xs);
 }
 

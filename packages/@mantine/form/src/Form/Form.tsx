@@ -9,7 +9,7 @@ export interface FormProps<Form extends UseFormReturnType<any>>
 
 export type FormComponent = (<Form extends UseFormReturnType<any>>(
   props: FormProps<Form>
-) => JSX.Element | React.ReactNode) & { displayName?: string };
+) => React.JSX.Element | React.ReactNode) & { displayName?: string };
 
 export const Form: FormComponent = forwardRef(
   <Form extends UseFormReturnType<any>>(

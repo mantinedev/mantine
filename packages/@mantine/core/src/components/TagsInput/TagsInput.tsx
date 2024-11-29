@@ -45,7 +45,7 @@ export interface TagsInputProps
     Omit<ComboboxLikeProps, 'data'>,
     StylesApiProps<TagsInputFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
-  /** Data displayed in the dropdown */
+  /** Data displayed in the dropdown. Values must be unique, otherwise an error will be thrown and component will not render. */
   data?: ComboboxStringData;
 
   /** Controlled component value */

@@ -3,7 +3,7 @@ import { render } from '../render';
 
 interface Options<Props = any> {
   component: React.ComponentType<Props>;
-  props: Props & JSX.IntrinsicAttributes;
+  props: Props & React.JSX.IntrinsicAttributes;
   error: string;
 }
 
