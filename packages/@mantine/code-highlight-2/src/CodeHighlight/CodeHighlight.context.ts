@@ -5,7 +5,7 @@ interface CodeHighlightContext {
   getStyles: GetStylesApi<CodeHighlightFactory>;
 }
 
-export const [CodeHighlightProvider, useCodeHighlightContext] =
+export const [CodeHighlightContextProvider, useCodeHighlightContext] =
   createSafeContext<CodeHighlightContext>(
     'CodeHighlightProvider was not found in the component tree'
   );

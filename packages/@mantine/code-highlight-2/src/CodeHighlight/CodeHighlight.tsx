@@ -17,7 +17,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
-import { CodeHighlightProvider } from './CodeHighlight.context';
+import { CodeHighlightContextProvider } from './CodeHighlight.context';
 import { CodeHighlightControl } from './CodeHighlightControl/CodeHighlightControl';
 import { CopyCodeButton } from './CopyCodeButton/CopyCodeButton';
 import { ExpandCodeButton } from './ExpandCodeButton/ExpandCodeButton';
@@ -163,7 +163,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     (controls && controls.length > 0) || withExpandButton || withCopyButton;
 
   return (
-    <CodeHighlightProvider value={{ getStyles }}>
+    <CodeHighlightContextProvider value={{ getStyles }}>
       <Box
         ref={ref}
         {...getStyles('root')}
@@ -210,7 +210,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
           {expandLabel}
         </UnstyledButton>
       </Box>
-    </CodeHighlightProvider>
+    </CodeHighlightContextProvider>
   );
 });
 

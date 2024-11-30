@@ -1,4 +1,6 @@
 import { IconBrandCodesandbox } from '@tabler/icons-react';
+import { createPlainTextAdapter } from '../CodeHighlightProvider/adapters/plain-text-adapter';
+import { CodeHighlightAdapterProvider } from '../CodeHighlightProvider/CodeHighlightProvider';
 import { CodeHighlight } from './CodeHighlight';
 
 export default { title: 'CodeHighlight2' };
@@ -80,16 +82,20 @@ function Demo() {
 }
 `;
 
+const plainTextAdapter = createPlainTextAdapter();
+
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <CodeHighlight
-        code={tsxCode}
-        withExpandButton
-        defaultExpanded={false}
-        radius="md"
-        withBorder
-      />
+      <CodeHighlightAdapterProvider adapter={plainTextAdapter}>
+        <CodeHighlight
+          code={tsxCode}
+          withExpandButton
+          defaultExpanded={false}
+          radius="md"
+          withBorder
+        />
+      </CodeHighlightAdapterProvider>
     </div>
   );
 }
@@ -97,23 +103,25 @@ export function Usage() {
 export function ExtraControls() {
   return (
     <div style={{ padding: 40 }}>
-      <CodeHighlight
-        code={tsxCode}
-        withExpandButton
-        defaultExpanded={false}
-        radius="md"
-        withBorder
-        controls={[
-          <CodeHighlight.Control
-            tooltipLabel="Open in codesandbox"
-            component="a"
-            href="https://codesandbox.io"
-            target="_blank"
-          >
-            <IconBrandCodesandbox />
-          </CodeHighlight.Control>,
-        ]}
-      />
+      <CodeHighlightAdapterProvider adapter={plainTextAdapter}>
+        <CodeHighlight
+          code={tsxCode}
+          withExpandButton
+          defaultExpanded={false}
+          radius="md"
+          withBorder
+          controls={[
+            <CodeHighlight.Control
+              tooltipLabel="Open in codesandbox"
+              component="a"
+              href="https://codesandbox.io"
+              target="_blank"
+            >
+              <IconBrandCodesandbox />
+            </CodeHighlight.Control>,
+          ]}
+        />
+      </CodeHighlightAdapterProvider>
     </div>
   );
 }
