@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { createSafeContext } from '@mantine/core';
+import { createOptionalContext } from '@mantine/core';
+import { plainTextAdapter } from './adapters/plain-text-adapter';
 
 interface HighlighterInput {
   colorScheme: 'light' | 'dark';
@@ -29,9 +30,10 @@ interface CodeHighlightProviderContext {
 }
 
 export const [CodeHighlightProvider, useCodeHighlight] =
-  createSafeContext<CodeHighlightProviderContext>(
-    'CodeHighlightProvider was not found in the component tree'
-  );
+  createOptionalContext<CodeHighlightProviderContext>({
+    adapter: plainTextAdapter,
+    highlight: plainTextAdapter.getHighlighter(null),
+  });
 
 export interface CodeHighlightAdapterProviderProps {
   adapter: CodeHighlightAdapter;
@@ -55,5 +57,6 @@ export function CodeHighlightAdapterProvider({
 }
 
 export function useHighlight() {
-  return useCodeHighlight().highlight;
+  const ctx = useCodeHighlight();
+  return ctx?.highlight || plainTextAdapter.getHighlighter(null);
 }

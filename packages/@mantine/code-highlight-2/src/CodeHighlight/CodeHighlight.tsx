@@ -115,7 +115,7 @@ const varsResolver = createVarsResolver<CodeHighlightFactory>(
   (theme, { maxCollapsedHeight, background, radius }) => ({
     root: {
       '--ch-max-height': rem(maxCollapsedHeight),
-      '--ch-background': getThemeColor(background, theme),
+      '--ch-background': background ? getThemeColor(background, theme) : undefined,
       '--ch-radius': getRadius(radius),
     },
   })

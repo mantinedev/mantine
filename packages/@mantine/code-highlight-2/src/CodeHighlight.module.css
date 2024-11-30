@@ -53,10 +53,9 @@
 
 .controls {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 8px;
+  right: 8px;
   z-index: 1;
-  padding: 8px;
   background-color: var(--ch-background);
   border-bottom-left-radius: var(--mantine-radius-md);
 }
