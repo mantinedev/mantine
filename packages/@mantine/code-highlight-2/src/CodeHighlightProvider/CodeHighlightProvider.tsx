@@ -44,3 +44,7 @@ export function CodeHighlightAdapterProvider({
 
   return <CodeHighlightProvider value={{ adapter, highlight }}>{children}</CodeHighlightProvider>;
 }
+
+export function useHighlight() {
+  return useCodeHighlight().highlight;
+}

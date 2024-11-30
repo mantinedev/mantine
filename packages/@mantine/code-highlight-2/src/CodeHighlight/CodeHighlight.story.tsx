@@ -1,5 +1,6 @@
 import { IconBrandCodesandbox } from '@tabler/icons-react';
 import { createPlainTextAdapter } from '../CodeHighlightProvider/adapters/plain-text-adapter';
+import { createShikiAdapter } from '../CodeHighlightProvider/adapters/shiki-adapter';
 import { CodeHighlightAdapterProvider } from '../CodeHighlightProvider/CodeHighlightProvider';
 import { CodeHighlight } from './CodeHighlight';
 
@@ -94,6 +95,35 @@ export function Usage() {
           defaultExpanded={false}
           radius="md"
           withBorder
+        />
+      </CodeHighlightAdapterProvider>
+    </div>
+  );
+}
+
+async function loadShiki() {
+  const { getHighlighter } = await import('shiki');
+  const shiki = await getHighlighter({
+    langs: ['tsx', 'scss', 'html', 'bash', 'json'],
+    themes: [],
+  });
+
+  return shiki;
+}
+
+const shikiAdapter = createShikiAdapter(loadShiki);
+
+export function ShikiAdapter() {
+  return (
+    <div style={{ padding: 40 }}>
+      <CodeHighlightAdapterProvider adapter={shikiAdapter}>
+        <CodeHighlight
+          code={tsxCode}
+          withExpandButton
+          defaultExpanded={false}
+          radius="md"
+          withBorder
+          language="tsx"
         />
       </CodeHighlightAdapterProvider>
     </div>

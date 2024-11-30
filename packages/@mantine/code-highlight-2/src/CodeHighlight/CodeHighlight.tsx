@@ -13,10 +13,12 @@ import {
   ScrollArea,
   StylesApiProps,
   UnstyledButton,
+  useComputedColorScheme,
   useProps,
   useStyles,
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
+import { useHighlight } from '../CodeHighlightProvider/CodeHighlightProvider';
 import { CodeHighlightContextProvider } from './CodeHighlight.context';
 import { CodeHighlightControl } from './CodeHighlightControl/CodeHighlightControl';
 import { CopyCodeButton } from './CopyCodeButton/CopyCodeButton';
@@ -85,6 +87,9 @@ export interface CodeHighlightProps
 
   /** Extra controls to display in the controls list */
   controls?: React.ReactNode[];
+
+  /** Language of the code, used for syntax highlighting */
+  language?: string;
 }
 
 export type CodeHighlightFactory = Factory<{
@@ -136,6 +141,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     background,
     withBorder,
     controls,
+    language,
     ...others
   } = props;
 
@@ -161,6 +167,10 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
 
   const shouldDisplayControls =
     (controls && controls.length > 0) || withExpandButton || withCopyButton;
+
+  const colorScheme = useComputedColorScheme();
+  const highlight = useHighlight();
+  const highlightedCode = highlight({ code: code.trim(), language, colorScheme });
 
   return (
     <CodeHighlightContextProvider value={{ getStyles }}>
@@ -197,9 +207,16 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
           data-collapsed={!_expanded || undefined}
           {...getStyles('scrollarea')}
         >
-          <pre {...getStyles('pre')}>
-            <code {...getStyles('code')}>{code.trim()}</code>
-          </pre>
+          {highlightedCode.highlighted ? (
+            <div dangerouslySetInnerHTML={{ __html: highlightedCode.code }} />
+          ) : (
+            <pre {...getStyles('pre')}>
+              <code
+                {...getStyles('code')}
+                dangerouslySetInnerHTML={{ __html: highlightedCode.code }}
+              />
+            </pre>
+          )}
         </ScrollArea>
 
         <UnstyledButton
