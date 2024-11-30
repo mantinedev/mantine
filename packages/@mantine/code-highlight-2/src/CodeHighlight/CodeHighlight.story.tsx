@@ -1,4 +1,6 @@
 import { IconBrandCodesandbox } from '@tabler/icons-react';
+import hljs from 'highlight.js';
+import { createHighlightJsAdapter } from '../CodeHighlightProvider/adapters/highlight-js-adapter';
 import { createPlainTextAdapter } from '../CodeHighlightProvider/adapters/plain-text-adapter';
 import { createShikiAdapter } from '../CodeHighlightProvider/adapters/shiki-adapter';
 import { CodeHighlightAdapterProvider } from '../CodeHighlightProvider/CodeHighlightProvider';
@@ -124,6 +126,26 @@ export function ShikiAdapter() {
           radius="md"
           withBorder
           language="tsx"
+        />
+      </CodeHighlightAdapterProvider>
+    </div>
+  );
+}
+
+const highlightJSAdapter = createHighlightJsAdapter(hljs);
+
+export function HighlightJsAdapter() {
+  return (
+    <div style={{ padding: 40 }}>
+      <CodeHighlightAdapterProvider adapter={highlightJSAdapter}>
+        <CodeHighlight
+          code={tsxCode}
+          withExpandButton
+          defaultExpanded={false}
+          radius="md"
+          withBorder
+          language="tsx"
+          background="var(--mantine-color-dark-8)"
         />
       </CodeHighlightAdapterProvider>
     </div>

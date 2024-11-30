@@ -14,11 +14,11 @@
   }
 
   @mixin where-light {
-    --code-background: var(--mantine-color-gray-0);
+    --ch-background: var(--mantine-color-gray-0);
   }
 
   @mixin where-dark {
-    --code-background: var(--mantine-color-dark-8);
+    --ch-background: var(--mantine-color-dark-8);
   }
 }
 
@@ -36,7 +36,7 @@
 
 .code {
   display: inline-block;
-  background-color: var(--code-background);
+  background-color: var(--ch-background);
   font-size: 13px;
   border-radius: var(--mantine-radius-xs);
   line-height: var(--code-line-height, var(--mantine-line-height));
@@ -49,7 +49,7 @@
   right: 0;
   z-index: 1;
   padding: 8px;
-  background-color: var(--code-background);
+  background-color: var(--ch-background);
   border-bottom-left-radius: var(--mantine-radius-md);
 }
 
@@ -80,7 +80,7 @@
       bottom: 0;
       height: 80px;
       pointer-events: none;
-      background-image: linear-gradient(0deg, var(--code-background) 25%, rgba(0, 0, 0, 0) 100%);
+      background-image: linear-gradient(0deg, var(--ch-background) 25%, rgba(0, 0, 0, 0) 100%);
     }
   }
 }

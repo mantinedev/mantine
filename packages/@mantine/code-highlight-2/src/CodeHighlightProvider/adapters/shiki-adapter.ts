@@ -25,12 +25,12 @@ export const createShikiAdapter = (loadShiki: () => Promise<any>): CodeHighlight
     loadContext: loadShiki,
     getHighlighter: (ctx) => {
       if (!ctx) {
-        return ({ code }) => ({ code, highlighted: false });
+        return ({ code }) => ({ highlightedCode: code, isHighlighted: false });
       }
 
       return ({ code, language, colorScheme }) => ({
-        highlighted: true,
-        code: stripShikiCodeBlocks(
+        isHighlighted: true,
+        highlightedCode: stripShikiCodeBlocks(
           ctx.codeToHtml(code, {
             lang: language,
             theme: (colorScheme === 'light' ? light : dark) as any,

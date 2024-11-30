@@ -4,6 +4,6 @@ export const createPlainTextAdapter = (): CodeHighlightAdapter => {
   return {
     getHighlighter:
       () =>
-      ({ code }) => ({ code, highlighted: false }),
+      ({ code }) => ({ highlightedCode: code, isHighlighted: false }),
   };
 };

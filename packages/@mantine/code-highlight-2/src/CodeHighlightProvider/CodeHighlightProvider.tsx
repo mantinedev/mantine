@@ -7,7 +7,16 @@ interface HighlighterInput {
   language?: string;
 }
 
-type Highlighter = (input: HighlighterInput) => { code: string; highlighted: boolean };
+type Highlighter = (input: HighlighterInput) => {
+  /** Highlighted code (html markup) */
+  highlightedCode: string;
+
+  /** `true` if the code is represented with html string, `false` for plain text string */
+  isHighlighted: boolean;
+
+  /** Props to pass down to `<code>` tag */
+  codeElementProps?: Record<string, any>;
+};
 
 export interface CodeHighlightAdapter {
   loadContext?: () => Promise<any>;

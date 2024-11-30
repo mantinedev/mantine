@@ -209,8 +209,12 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
         >
           <pre {...getStyles('pre')}>
             <code
-              {...getStyles('code')}
-              dangerouslySetInnerHTML={{ __html: highlightedCode.code }}
+              {...highlightedCode.codeElementProps}
+              {...getStyles('code', {
+                className: highlightedCode.codeElementProps?.className,
+                style: highlightedCode.codeElementProps?.style,
+              })}
+              dangerouslySetInnerHTML={{ __html: highlightedCode.highlightedCode }}
             />
           </pre>
         </ScrollArea>
