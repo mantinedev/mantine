@@ -11,6 +11,14 @@
     @mixin where-dark {
       border: 1px solid var(--mantine-color-dark-6);
     }
+
+    &:where([data-code-color-scheme='dark']) {
+      border: 1px solid var(--mantine-color-dark-6);
+    }
+
+    &:where([data-code-color-scheme='light']) {
+      border: 1px solid var(--mantine-color-gray-2);
+    }
   }
 
   @mixin where-light {
@@ -62,10 +70,38 @@
     opacity: 1;
   }
 
+  &:where([data-code-color-scheme='dark']) {
+    color: var(--mantine-color-dark-0);
+
+    @mixin hover {
+      color: var(--mantine-color-white);
+    }
+  }
+
+  &:where([data-code-color-scheme='light']) {
+    color: var(--mantine-color-black);
+
+    @mixin hover {
+      color: var(--mantine-color-black);
+    }
+  }
+
   & :where(svg) {
     width: 18px;
     height: 18px;
     display: block;
+  }
+}
+
+.controlTooltip {
+  &:where([data-code-color-scheme='light']) {
+    background-color: var(--mantine-color-gray-9);
+    color: var(--mantine-color-white);
+  }
+
+  &:where([data-code-color-scheme='dark']) {
+    background-color: var(--mantine-color-gray-2);
+    color: var(--mantine-color-black);
   }
 }
 

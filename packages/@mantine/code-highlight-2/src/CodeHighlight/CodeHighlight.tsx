@@ -31,6 +31,7 @@ export type CodeHighlightStylesNames =
   | 'code'
   | 'control'
   | 'controlIcon'
+  | 'controlTooltip'
   | 'controls'
   | 'scrollarea'
   | 'showCodeButton';
@@ -90,6 +91,9 @@ export interface CodeHighlightProps
 
   /** Language of the code, used for syntax highlighting */
   language?: string;
+
+  /** Set to change contrast of controls and other elements if you prefer to use dark code color scheme in light mode or light code color scheme in dark mode */
+  codeColorScheme?: 'dark' | 'light';
 }
 
 export type CodeHighlightFactory = Factory<{
@@ -142,6 +146,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     withBorder,
     controls,
     language,
+    codeColorScheme,
     ...others
   } = props;
 
@@ -173,12 +178,13 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
   const highlightedCode = highlight({ code: code.trim(), language, colorScheme });
 
   return (
-    <CodeHighlightContextProvider value={{ getStyles }}>
+    <CodeHighlightContextProvider value={{ getStyles, codeColorScheme }}>
       <Box
         ref={ref}
         {...getStyles('root')}
         {...others}
         dir="ltr"
+        data-code-color-scheme={codeColorScheme}
         data-with-border={withBorder || undefined}
       >
         {shouldDisplayControls && (

@@ -32,16 +32,31 @@ export const CodeHighlightControl = polymorphicFactory<CodeHighlightControlFacto
     const props = useProps('CodeHighlightControl', defaultProps, _props);
     const { children, vars, tooltipLabel, ...others } = props;
     const ctx = useCodeHighlightContext();
+    const tooltipStyles = ctx.getStyles('controlTooltip');
 
     const control = (
-      <ActionIcon ref={ref} {...ctx.getStyles('control')} {...others} variant="none">
+      <ActionIcon
+        ref={ref}
+        {...ctx.getStyles('control')}
+        {...others}
+        variant="none"
+        data-code-color-scheme={ctx.codeColorScheme}
+      >
         {children}
       </ActionIcon>
     );
 
     if (tooltipLabel) {
       return (
-        <Tooltip label={tooltipLabel} fz="sm" position="right">
+        <Tooltip
+          label={tooltipLabel}
+          fz="sm"
+          position="right"
+          classNames={{ tooltip: tooltipStyles.className }}
+          styles={{ tooltip: tooltipStyles.style }}
+          data-code-color-scheme={ctx.codeColorScheme}
+          transitionProps={{ duration: 0 }}
+        >
           {control}
         </Tooltip>
       );

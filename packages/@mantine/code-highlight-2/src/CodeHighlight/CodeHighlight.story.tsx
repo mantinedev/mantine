@@ -146,6 +146,7 @@ export function HighlightJsAdapter() {
           withBorder
           language="tsx"
           background="var(--mantine-color-dark-8)"
+          codeColorScheme="dark"
         />
       </CodeHighlightAdapterProvider>
     </div>
