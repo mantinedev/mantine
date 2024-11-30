@@ -207,16 +207,12 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
           data-collapsed={!_expanded || undefined}
           {...getStyles('scrollarea')}
         >
-          {highlightedCode.highlighted ? (
-            <div dangerouslySetInnerHTML={{ __html: highlightedCode.code }} />
-          ) : (
-            <pre {...getStyles('pre')}>
-              <code
-                {...getStyles('code')}
-                dangerouslySetInnerHTML={{ __html: highlightedCode.code }}
-              />
-            </pre>
-          )}
+          <pre {...getStyles('pre')}>
+            <code
+              {...getStyles('code')}
+              dangerouslySetInnerHTML={{ __html: highlightedCode.code }}
+            />
+          </pre>
         </ScrollArea>
 
         <UnstyledButton
