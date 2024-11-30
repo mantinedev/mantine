@@ -19,6 +19,7 @@ import {
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { useHighlight } from '../CodeHighlightProvider/CodeHighlightProvider';
+import type { CodeHighlightTabs } from '../CodeHighlightTabs/CodeHighlightTabs';
 import { CodeHighlightContextProvider } from './CodeHighlight.context';
 import { CodeHighlightControl } from './CodeHighlightControl/CodeHighlightControl';
 import { CopyCodeButton } from './CopyCodeButton/CopyCodeButton';
@@ -26,7 +27,7 @@ import { ExpandCodeButton } from './ExpandCodeButton/ExpandCodeButton';
 import classes from '../CodeHighlight.module.css';
 
 export type CodeHighlightStylesNames =
-  | 'root'
+  | 'codeHighlight'
   | 'pre'
   | 'code'
   | 'control'
@@ -37,16 +38,10 @@ export type CodeHighlightStylesNames =
   | 'showCodeButton';
 
 export type CodeHighlightCssVariables = {
-  root: '--ch-max-height' | '--ch-background' | '--ch-radius';
+  codeHighlight: '--ch-max-height' | '--ch-background' | '--ch-radius';
 };
 
-export interface CodeHighlightProps
-  extends BoxProps,
-    StylesApiProps<CodeHighlightFactory>,
-    ElementProps<'div'> {
-  /** Code to highlight */
-  code: string;
-
+export interface CodeHighlightSettings {
   /** Label for copy button in default state, `'Copy'` by default */
   copyLabel?: string;
 
@@ -89,11 +84,22 @@ export interface CodeHighlightProps
   /** Extra controls to display in the controls list */
   controls?: React.ReactNode[];
 
-  /** Language of the code, used for syntax highlighting */
-  language?: string;
-
   /** Set to change contrast of controls and other elements if you prefer to use dark code color scheme in light mode or light code color scheme in dark mode */
   codeColorScheme?: 'dark' | 'light';
+}
+
+export interface CodeHighlightProps
+  extends CodeHighlightSettings,
+    BoxProps,
+    StylesApiProps<CodeHighlightFactory>,
+    ElementProps<'div'> {
+  __withOffset?: boolean;
+
+  /** Code to highlight */
+  code: string;
+
+  /** Language of the code, used for syntax highlighting */
+  language?: string;
 }
 
 export type CodeHighlightFactory = Factory<{
@@ -103,6 +109,7 @@ export type CodeHighlightFactory = Factory<{
   vars: CodeHighlightCssVariables;
   staticComponents: {
     Control: typeof CodeHighlightControl;
+    Tabs: typeof CodeHighlightTabs;
   };
 }>;
 
@@ -113,10 +120,10 @@ const defaultProps: Partial<CodeHighlightProps> = {
 
 const varsResolver = createVarsResolver<CodeHighlightFactory>(
   (theme, { maxCollapsedHeight, background, radius }) => ({
-    root: {
+    codeHighlight: {
       '--ch-max-height': rem(maxCollapsedHeight),
       '--ch-background': background ? getThemeColor(background, theme) : undefined,
-      '--ch-radius': getRadius(radius),
+      '--ch-radius': typeof radius !== 'undefined' ? getRadius(radius) : undefined,
     },
   })
 );
@@ -147,6 +154,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     controls,
     language,
     codeColorScheme,
+    __withOffset,
     ...others
   } = props;
 
@@ -161,6 +169,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     unstyled,
     vars,
     varsResolver,
+    rootSelector: 'codeHighlight',
   });
 
   const [_expanded, setExpanded] = useUncontrolled({
@@ -181,14 +190,14 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     <CodeHighlightContextProvider value={{ getStyles, codeColorScheme }}>
       <Box
         ref={ref}
-        {...getStyles('root')}
+        {...getStyles('codeHighlight')}
         {...others}
         dir="ltr"
         data-code-color-scheme={codeColorScheme}
         data-with-border={withBorder || undefined}
       >
         {shouldDisplayControls && (
-          <div {...getStyles('controls')}>
+          <div {...getStyles('controls')} data-with-offset={__withOffset || undefined}>
             {controls}
 
             {withExpandButton && (
@@ -213,7 +222,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
           data-collapsed={!_expanded || undefined}
           {...getStyles('scrollarea')}
         >
-          <pre {...getStyles('pre')}>
+          <pre {...getStyles('pre')} data-with-offset={__withOffset || undefined}>
             <code
               {...highlightedCode.codeElementProps}
               {...getStyles('code', {

@@ -1,8 +1,10 @@
 import { IconBrandCodesandbox } from '@tabler/icons-react';
 import hljs from 'highlight.js';
+import { getCodeFileIcon } from '@mantinex/dev-icons';
 import { createHighlightJsAdapter } from '../CodeHighlightProvider/adapters/highlight-js-adapter';
 import { createShikiAdapter } from '../CodeHighlightProvider/adapters/shiki-adapter';
 import { CodeHighlightAdapterProvider } from '../CodeHighlightProvider/CodeHighlightProvider';
+import { CodeHighlightTabs } from '../CodeHighlightTabs/CodeHighlightTabs';
 import { CodeHighlight } from './CodeHighlight';
 
 export default { title: 'CodeHighlight2' };
@@ -81,6 +83,77 @@ function Demo() {
       }
     />
   );
+}
+`;
+
+const cssCode = `.root {
+  --ai-size-xs: rem(18px);
+  --ai-size-sm: rem(22px);
+  --ai-size-md: rem(28px);
+  --ai-size-lg: rem(34px);
+  --ai-size-xl: rem(44px);
+
+  --bg: var(--ai-bg);
+  --color: var(--ai-color);
+  --cursor: pointer;
+
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  user-select: none;
+
+  width: var(--ai-size);
+  height: var(--ai-size);
+  min-width: var(--ai-size);
+  min-height: var(--ai-size);
+  border-radius: var(--ai-radius);
+  background: var(--bg);
+  color: var(--color);
+  border: var(--ai-bd);
+  cursor: var(--cursor);
+
+  @mixin hover {
+    &:not([data-loading]):not(:disabled):not([data-disabled]) {
+      --bg: var(--ai-hover);
+    }
+  }
+
+  @mixin light {
+    --loading-overlay-bg: rgba(255, 255, 255, 0.35);
+    --disabled-bg: var(--mantine-color-gray-1);
+    --disabled-color: var(--mantine-color-gray-5);
+  }
+
+  @mixin dark {
+    --loading-overlay-bg: rgba(0, 0, 0, 0.35);
+    --disabled-bg: var(--mantine-color-dark-6);
+    --disabled-color: var(--mantine-color-dark-3);
+  }
+
+  &[data-loading] {
+    --cursor: not-allowed;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: rem(-1px);
+      border-radius: var(--ai-radius);
+      background-color: var(--loading-overlay_bg);
+    }
+  }
+
+  &:disabled:not([data-loading]),
+  &[data-disabled]:not([data-loading]) {
+    --cursor: not-allowed;
+    --bg: var(--disabled-bg);
+    --color: var(--disabled-color);
+  }
+}
+
+.loader {
+  z-index: 1;
 }
 `;
 
@@ -168,6 +241,30 @@ export function ExtraControls() {
           </CodeHighlight.Control>,
         ]}
       />
+    </div>
+  );
+}
+
+export function Tabs() {
+  return (
+    <div style={{ padding: 40 }}>
+      <CodeHighlightAdapterProvider adapter={shikiAdapter}>
+        <CodeHighlightTabs
+          withExpandButton
+          defaultExpanded={false}
+          radius="md"
+          getFileIcon={getCodeFileIcon}
+          code={[
+            { fileName: 'Component.tsx', code: tsxCode, language: 'tsx' },
+            { fileName: 'Component.module.css', code: cssCode, language: 'scss' },
+            {
+              fileName: 'Long-file-name-that-will-break-to-another-line.css',
+              code: cssCode,
+              language: 'scss',
+            },
+          ]}
+        />
+      </CodeHighlightAdapterProvider>
     </div>
   );
 }

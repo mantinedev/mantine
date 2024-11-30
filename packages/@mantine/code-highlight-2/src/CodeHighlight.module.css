@@ -1,5 +1,9 @@
 .root {
   position: relative;
+}
+
+.codeHighlight {
+  position: relative;
   border-radius: var(--ch-radius, 0px);
   overflow: hidden;
 
@@ -40,13 +44,16 @@
     display: block;
     padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   }
+
+  &[data-with-offset] .code {
+    padding-top: 50px;
+  }
 }
 
 .code {
   display: inline-block;
   background-color: var(--ch-background);
   font-size: 13px;
-  border-radius: var(--mantine-radius-xs);
   line-height: var(--code-line-height, var(--mantine-line-height));
   font-family: var(--mantine-font-family-monospace);
 }
@@ -58,6 +65,10 @@
   z-index: 1;
   background-color: var(--ch-background);
   border-bottom-left-radius: var(--mantine-radius-md);
+
+  &:where([data-with-offset]) {
+    top: 12px;
+  }
 }
 
 .control {
@@ -137,4 +148,53 @@
   &[data-hidden] {
     display: none;
   }
+}
+
+.file {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--mantine-font-size-xs);
+  gap: 7px;
+  padding: 5px 9px;
+  font-family: var(--mantine-font-family-monospace);
+  font-weight: 700;
+  line-height: 1;
+  user-select: none;
+  cursor: pointer;
+  opacity: 0.8;
+  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  white-space: nowrap;
+  margin: 0;
+  border-radius: var(--mantine-radius-default);
+  color: light-dark(var(--mantine-color-gray-8), var(--mantine-color-dark-0));
+
+  @mixin hover {
+    opacity: 1;
+  }
+
+  &:only-child {
+    cursor: default;
+  }
+
+  &[data-active] {
+    opacity: 1;
+    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-5));
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  }
+}
+
+.filesScrollarea {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 70px;
+}
+
+.files {
+  display: flex;
+  padding: 12px 10px;
+  padding-bottom: 0;
+  gap: var(--mantine-spacing-xs);
 }
