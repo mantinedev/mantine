@@ -8,6 +8,11 @@ export const Demo_confirm = {
   render: renderDemo(demos.confirm),
 };
 
+export const Demo_textInput = {
+  name: '⭐ Demo: textInput',
+  render: renderDemo(demos.textInput),
+};
+
 export const Demo_context = {
   name: '⭐ Demo: context',
   render: renderDemo(demos.context),

@@ -1,4 +1,5 @@
 export { confirm } from './Modals.demo.confirm';
+export { textInput } from './Modals.demo.textInput';
 export { context } from './Modals.demo.context';
 export { confirmCustomize } from './Modals.demo.confirmCustomize';
 export { multipleSteps } from './Modals.demo.multipleSteps';

@@ -27,9 +27,9 @@ function Demo() {
 
 ## Confirm modal
 
-@mantine/modals package includes special modal that can be used for confirmations.
-Component includes confirm and cancel buttons and supports children to display additional
-information about action. Use `openConfirmModal` function to open a confirm modal:
+@mantine/modals package includes a special modal that can be used for confirmations.
+This component includes confirm and cancel buttons and supports children to display additional
+information about action. Use the `openConfirmModal` function to open a confirm modal:
 
 <Demo data={ModalsDemos.confirm} />
 
@@ -46,7 +46,7 @@ information about action. Use `openConfirmModal` function to open a confirm moda
 - `groupProps` – buttons [Group](/core/group/) props
 - `labels` – cancel and confirm buttons labels, can be defined on ModalsProvider
 
-Using this properties you can customize confirm modal to match current context requirements:
+Using these properties you can customize confirm modal to match current context requirements:
 
 <Demo data={ModalsDemos.confirmCustomize} />
 
@@ -63,6 +63,21 @@ function Demo() {
   );
 }
 ```
+
+## TextInput modal
+@mantine/modals package also includes special modal that can be used for confirming user text input.
+This component is an extension built of the confirm modal, supporting the same properties as well as a few additional
+properties:
+
+- `onConfirm` - same as confirm modal, but also includes the user's input from the text field as an argument
+- `topSection` - used to render content above the text input
+- `bottomSection` - used to render content below the text input
+- `inputProps` – text input props
+- `onInputChange` - called when the text input value changes
+- `initialValue` - initial value of the text input
+- `autofocus` - whether to autofocus the input field when the modal opens (true by default)
+
+<Demo data={ModalsDemos.textInput} />
 
 ## Context modals
 
