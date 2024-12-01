@@ -40,7 +40,7 @@ function Demo() {
 
   return (
     <RichTextEditor editor={editor}>
-      <RichTextEditor.Toolbar sticky stickyOffset={60}>
+      <RichTextEditor.Toolbar sticky stickyOffset="var(--docs-header-height)">
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />
           <RichTextEditor.Italic />
@@ -91,7 +91,8 @@ function Demo() {
 }
 `;
 
-function Demo() {
+// Demo requires to have props as it is used on the home page
+function Demo({ stickyOffset = 'var(--docs-header-height)' }: { stickyOffset: string | number }) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -107,7 +108,7 @@ function Demo() {
 
   return (
     <RichTextEditor editor={editor}>
-      <RichTextEditor.Toolbar sticky stickyOffset={60}>
+      <RichTextEditor.Toolbar sticky stickyOffset={stickyOffset}>
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Bold />
           <RichTextEditor.Italic />

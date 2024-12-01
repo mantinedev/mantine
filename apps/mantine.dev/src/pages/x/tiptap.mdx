@@ -245,8 +245,8 @@ with any `RichTextEditor` controls. Floating menu will appear in an empty line:
 
 Set `sticky` prop on `RichTextEditor.Toolbar` component to make toolbar sticky,
 control `top` property with `stickyOffset`. For example, on mantine.dev documentation
-website there is a header with `60px` height (converted to rem), in this case we will need to
-set `stickyOffset={60}` to make sticky position correctly with fixed positioned element.
+website there is a header with `var(--docs-header-height)` height, in this case we will need to
+set `stickyOffset="var(--docs-header-height)"` to make sticky position correctly with fixed positioned element.
 
 <Demo data={TipTapDemos.usage} demoProps={{ toggle: true }} />
 

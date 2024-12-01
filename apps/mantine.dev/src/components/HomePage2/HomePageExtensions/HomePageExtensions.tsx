@@ -65,7 +65,7 @@ export function HomePageExtensions() {
 
         <SimpleGrid cols={{ md: 2 }} className={classes.grid} verticalSpacing={30}>
           <ExtensionDemo title="Rich text editor" description="TipTap based rich text editor">
-            <RichText />
+            <RichText stickyOffset={56} />
           </ExtensionDemo>
 
           <div>
