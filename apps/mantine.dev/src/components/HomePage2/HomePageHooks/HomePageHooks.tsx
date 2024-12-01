@@ -55,7 +55,7 @@ export function HomePageHooks() {
           >
             <Demo
               data={SliderDemos.customSlider}
-              demoProps={{ defaultExpanded: false, maxCollapsedHeight: isMobile ? 150 : 428 }}
+              demoProps={{ defaultExpanded: false, maxCollapsedHeight: isMobile ? 150 : 480 }}
             />
           </DemoColumn>
 
@@ -82,7 +82,7 @@ export function HomePageHooks() {
           >
             <Demo
               data={HooksDemos.useEyeDropperUsage}
-              demoProps={{ defaultExpanded: false, maxCollapsedHeight: isMobile ? 150 : 204 }}
+              demoProps={{ defaultExpanded: false, maxCollapsedHeight: isMobile ? 150 : 256 }}
             />
           </DemoColumn>
         </SimpleGrid>
