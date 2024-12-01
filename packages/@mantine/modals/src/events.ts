@@ -40,9 +40,9 @@ export const openConfirmModal: ModalsEvents['openConfirmModal'] = (payload) => {
 
 export const openTextInputModal: ModalsEvents['openTextInputModal'] = (payload) => {
   const id = payload.modalId || randomId();
-  createEvent('openTextInputModal')({...payload, modalId: id});
+  createEvent('openTextInputModal')({ ...payload, modalId: id });
   return id;
-}
+};
 
 export const openContextModal: ModalsEvents['openContextModal'] = <TKey extends MantineModal>(
   payload: OpenContextModal<Parameters<MantineModals[TKey]>[0]['innerProps']> & { modal: TKey }

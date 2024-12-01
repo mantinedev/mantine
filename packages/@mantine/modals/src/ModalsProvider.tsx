@@ -69,6 +69,55 @@ function separateConfirmModalProps(props: OpenConfirmModal) {
   };
 }
 
+function separateTextInputModalProps(props: OpenTextInputModal) {
+  if (!props) {
+    return { textInputProps: {}, modalProps: {} };
+  }
+
+  const {
+    id,
+    children,
+    onCancel,
+    bottomSection,
+    onConfirm,
+    closeOnConfirm,
+    closeOnCancel,
+    cancelProps,
+    confirmProps,
+    groupProps,
+    labels,
+    inputProps,
+    onInputChange,
+    initialValue,
+    autofocus,
+    ...others
+  } = props;
+
+  return {
+    textInputProps: {
+      id,
+      children,
+      onCancel,
+      bottomSection,
+      onConfirm,
+      closeOnConfirm,
+      closeOnCancel,
+      cancelProps,
+      confirmProps,
+      groupProps,
+      labels,
+      inputProps,
+      onInputChange,
+      initialValue,
+      autofocus,
+    },
+    modalProps: {
+      id,
+      ...others,
+    },
+  };
+}
+
 export function ModalsProvider({ children, modalProps, labels, modals }: ModalsProviderProps) {
   const [state, dispatch] = useReducer(modalsReducer, { modals: [], current: null });
   const stateRef = useRef(state);
@@ -225,8 +274,8 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
         };
       }
       case 'textInput': {
-        const { modalProps: separatedModalProps, confirmProps: separatedConfirmProps } =
-          separateConfirmModalProps(currentModal.props);
+        const { modalProps: separatedModalProps, textInputProps: separatedConfirmProps } =
+          separateTextInputModalProps(currentModal.props);
 
         return {
           modalProps: separatedModalProps,
