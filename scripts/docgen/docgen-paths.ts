@@ -117,9 +117,9 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/dropzone/src/DropzoneFullScreen.tsx',
 
   // CodeHighlight
-  'packages/@mantine/code-highlight/src/CodeHighlight.tsx',
-  'packages/@mantine/code-highlight/src/CodeHighlightTabs.tsx',
-  'packages/@mantine/code-highlight/src/InlineCodeHighlight.tsx',
+  'packages/@mantine/code-highlight/src/CodeHighlight/CodeHighlight.tsx',
+  'packages/@mantine/code-highlight/src/CodeHighlightTabs/CodeHighlightTabs.tsx',
+  'packages/@mantine/code-highlight/src/CodeHighlight/InlineCodeHighlight.tsx',
 
   // Nprogress
   'packages/@mantine/nprogress/src/NavigationProgress.tsx',
