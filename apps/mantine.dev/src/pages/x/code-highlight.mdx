@@ -14,13 +14,119 @@ After installation import package styles at the root of your application:
 import '@mantine/code-highlight/styles.css';
 ```
 
-## Usage
+## Example
 
-`CodeHighlight` highlight given code with [highlight.js](https://highlightjs.org/), it accepts
-`code` prop with string of code to highlight and `language` prop with language name.
-If `language` is not provided, `CodeHighlight` will assume that the code language is `tsx` (TypeScript).
+`CodeHighlight` component is used to display code snippets with syntax highlighting.
+It provides a flexible adapter system that allows using any code highlighting library
+of your choice.
+
+Example of code highlighting with [shiki](https://shiki.matsu.io/):
 
 <Demo data={CodeHighlightDemos.usage} />
+
+## Adapters
+
+`@mantine/code-highlight` package does not depend on any specific code highlighting library.
+You can choose one of the default adapters provided by the package or create your own.
+
+Default adapters:
+
+- `createShikiAdapter` – creates [shiki](https://shiki.matsu.io/) adapter
+- `createHighlightJsAdapter` – creates [highlight.js](https://highlightjs.org/) adapter
+- `plainTextAdapter` – does not highlight code, just displays it as plain text (used by default if no adapter provided)
+
+## Usage with shiki
+
+[Shiki](https://shiki.matsu.io/) library provides the most advanced syntax highlighting
+for TypeScript and CSS/Sass code. It uses textmate grammars to highlight code (same as in VSCode).
+Shiki adapter is recommended if you need to highlight advanced TypeScript (generics, jsx nested in props) or CSS code (custom syntaxes, newest features).
+Shiki adapter is used for all code highlighting in Mantine documentation.
+
+To use shiki adapter you need to install `shiki` package:
+
+<InstallScript packages="shiki" />
+
+Then wrap your app with `CodeHighlightAdapterProvider` and provide `createShikiAdapter` as `adapter` prop:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+import { CodeHighlightAdapterProvider, createShikiAdapter } from '@mantine/code-highlight';
+
+// Shiki requires async code to load the highlighter
+async function loadShiki() {
+  const { getHighlighter } = await import('shiki');
+  const shiki = await getHighlighter({
+    langs: ['tsx', 'scss', 'html', 'bash', 'json'],
+    themes: [],
+  });
+
+  return shiki;
+}
+
+const shikiAdapter = createShikiAdapter(loadShiki);
+
+function App() {
+  return (
+    <MantineProvider>
+      <CodeHighlightAdapterProvider adapter={shikiAdapter}>
+        {/* Your app here */}
+      </CodeHighlightAdapterProvider>
+    </MantineProvider>
+  );
+}
+```
+
+After that, you can use `CodeHighlight` component in your application:
+
+<Demo data={CodeHighlightDemos.usage} />
+
+All further code highlighting examples on this page are using shiki adapter.
+
+## Usage with highlight.js
+
+[Highlight.js](https://highlightjs.org/) provides less accurate highlighting compared to shiki,
+but it has smaller bundle size and better performance. Choose highlight.js adapter if you need
+to highlight basic JavaScript, HTML, and CSS code.
+
+To use highlight.js adapter you need to install `highlight.js` package:
+
+<InstallScript packages="highlight.js" />
+
+Then wrap your app with `CodeHighlightAdapterProvider` and provide `createHighlightJsAdapter` as `adapter` prop:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+import { CodeHighlightAdapterProvider, createHighlightJsAdapter } from '@mantine/code-highlight';
+import hljs from 'highlight.js/lib/core';
+import tsLang from 'highlight.js/lib/languages/typescript';
+
+hljs.registerLanguage('typescript', tsLang);
+
+const highlightJsAdapter = createHighlightJsAdapter(hljs);
+
+function App() {
+  return (
+    <MantineProvider>
+      <CodeHighlightAdapterProvider adapter={highlightJsAdapter}>
+        {/* Your app here */}
+      </CodeHighlightAdapterProvider>
+    </MantineProvider>
+  );
+}
+```
+
+Then you need to add styles of one of the highlight.js themes to your application.
+You can do that by importing css file from `highlight.js` package or adding it via
+CDN link to the head of your application:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"
+/>
+```
+
+After that, you can use `CodeHighlight` component in your application.
 
 ## Copy button
 
@@ -58,6 +164,13 @@ and `defaultExpanded={false}` props. To change label of the expand/collapse cont
 tooltip, use `expandCodeLabel` and `collapseCodeLabel`.
 
 <Demo data={CodeHighlightDemos.expand} />
+
+## Custom controls
+
+Use `controls` prop with `CodeHighlightControl` component to add custom controls
+to the code block:
+
+<Demo data={CodeHighlightDemos.customControl} />
 
 ## Inline code
 
