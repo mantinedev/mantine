@@ -6,6 +6,7 @@ import { createShikiAdapter } from '../CodeHighlightProvider/adapters/shiki-adap
 import { CodeHighlightAdapterProvider } from '../CodeHighlightProvider/CodeHighlightProvider';
 import { CodeHighlightTabs } from '../CodeHighlightTabs/CodeHighlightTabs';
 import { CodeHighlight } from './CodeHighlight';
+import { InlineCodeHighlight } from './InlineCodeHighlight';
 
 export default { title: 'CodeHighlight2' };
 
@@ -274,7 +275,7 @@ export function Inline() {
     <div style={{ padding: 40 }}>
       <CodeHighlightAdapterProvider adapter={shikiAdapter}>
         <p>
-          Here is some text <CodeHighlight code="const a = 5;" language="tsx" inline withBorder />{' '}
+          Here is some text <InlineCodeHighlight code="const a = 5;" language="tsx" withBorder />{' '}
           surrounding the code
         </p>
       </CodeHighlightAdapterProvider>

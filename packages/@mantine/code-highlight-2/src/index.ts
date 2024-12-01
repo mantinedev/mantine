@@ -1,8 +1,10 @@
 import { CodeHighlight } from './CodeHighlight/CodeHighlight';
+import { InlineCodeHighlight } from './CodeHighlight/InlineCodeHighlight';
 import { CodeHighlightTabs } from './CodeHighlightTabs/CodeHighlightTabs';
 
 CodeHighlight.Tabs = CodeHighlightTabs;
-export { CodeHighlight, CodeHighlightTabs };
+CodeHighlight.Inline = InlineCodeHighlight;
+export { CodeHighlight, CodeHighlightTabs, InlineCodeHighlight };
 
 export {
   CodeHighlightAdapterProvider,

@@ -25,11 +25,11 @@ import { CodeHighlightContextProvider } from './CodeHighlight.context';
 import { CodeHighlightControl } from './CodeHighlightControl/CodeHighlightControl';
 import { CopyCodeButton } from './CopyCodeButton/CopyCodeButton';
 import { ExpandCodeButton } from './ExpandCodeButton/ExpandCodeButton';
+import type { InlineCodeHighlight } from './InlineCodeHighlight';
 import classes from '../CodeHighlight.module.css';
 
 export type CodeHighlightStylesNames =
   | 'codeHighlight'
-  | 'inlineCodeHighlight'
   | 'pre'
   | 'code'
   | 'control'
@@ -41,7 +41,6 @@ export type CodeHighlightStylesNames =
 
 export type CodeHighlightCssVariables = {
   codeHighlight: '--ch-max-height' | '--ch-background' | '--ch-radius';
-  inlineCodeHighlight: '--ch-background' | '--ch-radius';
 };
 
 export interface CodeHighlightSettings {
@@ -98,14 +97,14 @@ export interface CodeHighlightProps
     ElementProps<'div'> {
   __withOffset?: boolean;
 
+  /** If set, the code will be rendered as inline element without `<pre>`, `false` by default */
+  __inline?: boolean;
+
   /** Code to highlight */
   code: string;
 
   /** Language of the code, used for syntax highlighting */
   language?: string;
-
-  /** If set, the code will be rendered as inline element without `<pre>`, `false` by default */
-  inline?: boolean;
 }
 
 export type CodeHighlightFactory = Factory<{
@@ -116,6 +115,7 @@ export type CodeHighlightFactory = Factory<{
   staticComponents: {
     Control: typeof CodeHighlightControl;
     Tabs: typeof CodeHighlightTabs;
+    Inline: typeof InlineCodeHighlight;
   };
 }>;
 
@@ -128,10 +128,6 @@ const varsResolver = createVarsResolver<CodeHighlightFactory>(
   (theme, { maxCollapsedHeight, background, radius }) => ({
     codeHighlight: {
       '--ch-max-height': rem(maxCollapsedHeight),
-      '--ch-background': background ? getThemeColor(background, theme) : undefined,
-      '--ch-radius': typeof radius !== 'undefined' ? getRadius(radius) : undefined,
-    },
-    inlineCodeHighlight: {
       '--ch-background': background ? getThemeColor(background, theme) : undefined,
       '--ch-radius': typeof radius !== 'undefined' ? getRadius(radius) : undefined,
     },
@@ -165,7 +161,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     language,
     codeColorScheme,
     __withOffset,
-    inline,
+    __inline,
     ...others
   } = props;
 
@@ -197,12 +193,12 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
   const highlight = useHighlight();
   const highlightedCode = highlight({ code: code.trim(), language, colorScheme });
 
-  if (inline) {
+  if (__inline) {
     return (
       <Box
         component="code"
         {...highlightedCode.codeElementProps}
-        {...getStyles('inlineCodeHighlight', {
+        {...getStyles('codeHighlight', {
           className: cx(highlightedCode.codeElementProps?.className, className),
           style: [{ ...highlightedCode.codeElementProps?.style }, style],
         })}
