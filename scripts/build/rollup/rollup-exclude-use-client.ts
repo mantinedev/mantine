@@ -14,6 +14,10 @@ export const ROLLUP_EXCLUDE_USE_CLIENT = [
   'core/MantineProvider/default-theme',
   'core/MantineProvider/merge-mantine-theme/merge-mantine-theme',
   'core/MantineProvider/MantineCssVariables/virtual-color/virtual-color',
+  'CodeHighlightProvider/adapters/plain-text-adapter',
+  'CodeHighlightProvider/adapters/shiki-adapter',
+  'CodeHighlightProvider/adapters/shiki-themes',
+  'CodeHighlightProvider/adapters/highlight-js-adapter',
   'theme-to-vars',
 ].reduce<string[]>((acc, name) => {
   acc.push(`${name}.js`, `${name}.mjs`, `${name}.cjs`);

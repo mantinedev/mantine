@@ -1,20 +1,32 @@
-export { CodeHighlightTabs } from './CodeHighlightTabs';
-export { CodeHighlight } from './CodeHighlight';
-export { InlineCodeHighlight } from './InlineCodeHighlight';
-export type {
-  CodeHighlightTabsFactory,
-  CodeHighlightTabsStylesNames,
-  CodeHighlightTabsProps,
-  CodeHighlightTabsCode,
-  CodeHighlightTabsCssVariables,
-} from './CodeHighlightTabs';
+import { CodeHighlight } from './CodeHighlight/CodeHighlight';
+import { InlineCodeHighlight } from './CodeHighlight/InlineCodeHighlight';
+import { CodeHighlightTabs } from './CodeHighlightTabs/CodeHighlightTabs';
+
+CodeHighlight.Tabs = CodeHighlightTabs;
+CodeHighlight.Inline = InlineCodeHighlight;
+export { CodeHighlight, CodeHighlightTabs, InlineCodeHighlight };
+
+export {
+  CodeHighlightAdapterProvider,
+  useHighlight,
+} from './CodeHighlightProvider/CodeHighlightProvider';
+
+export { createHighlightJsAdapter } from './CodeHighlightProvider/adapters/highlight-js-adapter';
+export { createShikiAdapter } from './CodeHighlightProvider/adapters/shiki-adapter';
+export { plainTextAdapter } from './CodeHighlightProvider/adapters/plain-text-adapter';
+
 export type {
   CodeHighlightFactory,
+  CodeHighlightCssVariables,
   CodeHighlightProps,
   CodeHighlightStylesNames,
-} from './CodeHighlight';
+} from './CodeHighlight/CodeHighlight';
+
 export type {
-  InlineCodeHighlightFactory,
-  InlineCodeHighlightProps,
-  InlineCodeHighlightStylesNames,
-} from './InlineCodeHighlight';
+  CodeHighlightTabsCode,
+  CodeHighlightTabsProps,
+  CodeHighlightTabsStylesNames,
+  CodeHighlightTabsCssVariables,
+  CodeHighlightTabsFactory,
+  CodeHighlightDefaultLanguage,
+} from './CodeHighlightTabs/CodeHighlightTabs';
