@@ -92,6 +92,13 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
+  SevenToEight: {
+    title: '7.x to 8.x migration',
+    slug: '/guides/7x-to-8x',
+    search: 'Migration guide from 7.x to 8.x',
+    hideHeader: true,
+  },
+
   FunctionsReference: {
     title: 'Functions reference',
     slug: '/guides/functions-reference',
