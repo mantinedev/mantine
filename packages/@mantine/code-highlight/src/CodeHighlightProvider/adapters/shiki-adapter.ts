@@ -20,7 +20,14 @@ function stripShikiCodeBlocks(data: string) {
   return stripElement('code', stripElement('pre', data));
 }
 
-export const createShikiAdapter = (loadShiki: () => Promise<any>): CodeHighlightAdapter => {
+interface CreateShikiAdapterOptions {
+  forceColorScheme?: 'dark' | 'light';
+}
+
+export const createShikiAdapter = (
+  loadShiki: () => Promise<any>,
+  { forceColorScheme }: CreateShikiAdapterOptions = {}
+): CodeHighlightAdapter => {
   return {
     loadContext: loadShiki,
     getHighlighter: (ctx) => {
@@ -33,7 +40,7 @@ export const createShikiAdapter = (loadShiki: () => Promise<any>): CodeHighlight
         highlightedCode: stripShikiCodeBlocks(
           ctx.codeToHtml(code, {
             lang: language,
-            theme: (colorScheme === 'light' ? light : dark) as any,
+            theme: forceColorScheme || ((colorScheme === 'light' ? light : dark) as any),
           })
         ),
       });
