@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Box, TextInput, TextInputProps } from '@mantine/core';
 import { ConfirmModal, ConfirmModalProps } from './ConfirmModal';
 
-export interface TextInputModalProps extends Omit<ConfirmModalProps, 'onConfirm'> {
+export interface TextInputModalProps extends Omit<ConfirmModalProps, 'onConfirm' | 'children'> {
+  topSection?: React.ReactNode;
   bottomSection?: React.ReactNode;
   onConfirm?: (value: string) => void;
   inputProps?: TextInputProps & React.ComponentPropsWithoutRef<'input'>;
@@ -12,6 +13,7 @@ export interface TextInputModalProps extends Omit<ConfirmModalProps, 'onConfirm'
 }
 
 export function TextInputModal({
+  topSection,
   bottomSection,
   onConfirm,
   inputProps,
@@ -31,7 +33,7 @@ export function TextInputModal({
   return (
     <ConfirmModal {...confirmModalProps} onConfirm={() => onConfirm?.(value)}>
       <>
-        {confirmModalProps.children && <Box mb="md">{confirmModalProps.children}</Box>}
+        {topSection && <Box mb="md">{topSection}</Box>}
         <TextInput
           mb="sm"
           value={value}

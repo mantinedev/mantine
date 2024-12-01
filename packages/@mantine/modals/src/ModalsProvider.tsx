@@ -76,9 +76,9 @@ function separateTextInputModalProps(props: OpenTextInputModal) {
 
   const {
     id,
-    children,
-    onCancel,
+    topSection,
     bottomSection,
+    onCancel,
     onConfirm,
     closeOnConfirm,
     closeOnCancel,
@@ -96,9 +96,9 @@ function separateTextInputModalProps(props: OpenTextInputModal) {
   return {
     textInputProps: {
       id,
-      children,
-      onCancel,
+      topSection,
       bottomSection,
+      onCancel,
       onConfirm,
       closeOnConfirm,
       closeOnCancel,
