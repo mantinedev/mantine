@@ -238,6 +238,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
           {...getStyles('showCodeButton')}
           mod={{ hidden: _expanded }}
           onClick={() => setExpanded(true)}
+          data-code-color-scheme={codeColorScheme}
         >
           {expandLabel}
         </UnstyledButton>
