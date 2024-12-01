@@ -128,6 +128,62 @@ CDN link to the head of your application:
 
 After that, you can use `CodeHighlight` component in your application.
 
+## Create custom adapter
+
+You can create a custom adapter if you want to enhance the default behavior of the code highlighting
+or use a different library.
+
+Example of creating a custom shiki adapter with custom themes and logic:
+
+```tsx
+import type { CodeHighlightAdapter, stripShikiCodeBlocks } from '@mantine/code-highlight';
+
+// Shiki transformers can be used to highlight diffs and other notations
+// https://shiki.style/packages/transformers
+import { transformerNotationDiff, transformerNotationHighlight } from '@shikijs/transformers'
+
+// Shiki themes as objects, you can use any VSCode themes
+import { darkTheme, lightTheme } from './shiki-themes';
+
+async function loadShiki() {
+  const { getHighlighter } = await import('shiki');
+  const shiki = await getHighlighter({
+    langs: ['tsx', 'scss', 'html', 'bash', 'json'],
+    themes: [],
+  });
+
+  return shiki;
+}
+
+// Pass this adapter to CodeHighlightAdapterProvider component
+export const customShikiAdapter: CodeHighlightAdapter = {
+  // loadContext is called on client side to load shiki highlighter
+  // It is required to be used if your library requires async initialization
+  // The value returned from loadContext is passed to getHighlighter as ctx argument
+  loadContext: loadShiki,
+
+  // ctx is the value returned from loadContext
+  // or null if loadContext is not used or has not resolved yet
+  getHighlighter: (ctx) => {
+    if (!ctx) {
+      return ({ code }) => ({ highlightedCode: code, isHighlighted: false });
+    }
+
+    return ({ code, language, colorScheme }) => ({
+      isHighlighted: true,
+      // stripShikiCodeBlocks removes <pre> and <code> tags from highlighted code
+      highlightedCode: stripShikiCodeBlocks(
+        ctx.codeToHtml(code, {
+          lang: language,
+          theme: (colorScheme === 'light' ? lightTheme : darkTheme) as any,
+          transformers: [transformerNotationDiff(), transformerNotationHighlight()],
+        })
+      ),
+    });
+  },
+};
+```
+
 ## Copy button
 
 You can customize copy button labels with `copyLabel` and `copiedLabel` props.
