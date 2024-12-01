@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { addons } from '@storybook/preview-api';
 import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
 import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
+import { CodeHighlightAdapterProvider, createShikiAdapter } from '@mantine/code-highlight';
 import {
   ActionIcon,
   DirectionProvider,
@@ -12,7 +13,6 @@ import {
 import { MantineEmotionProvider } from '@mantine/emotion';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
-import { ShikiProvider } from '@mantinex/shiki';
 import { theme } from '../apps/mantine.dev/theme';
 
 export const parameters = {
@@ -65,10 +65,16 @@ async function loadShiki() {
   return shiki;
 }
 
+const shikiAdapter = createShikiAdapter(loadShiki);
+
 export const decorators = [
   (renderStory: any) => <DirectionWrapper>{renderStory()}</DirectionWrapper>,
   (renderStory: any) => <ColorSchemeWrapper>{renderStory()}</ColorSchemeWrapper>,
-  (renderStory: any) => <ShikiProvider loadShiki={loadShiki}>{renderStory()}</ShikiProvider>,
+  (renderStory: any) => (
+    <CodeHighlightAdapterProvider adapter={shikiAdapter}>
+      {renderStory()}
+    </CodeHighlightAdapterProvider>
+  ),
   (renderStory: any) => (
     <ModalsProvider
       labels={{ confirm: 'Confirm', cancel: 'Cancel' }}

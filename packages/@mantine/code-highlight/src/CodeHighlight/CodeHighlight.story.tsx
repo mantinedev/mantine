@@ -8,7 +8,7 @@ import { CodeHighlightTabs } from '../CodeHighlightTabs/CodeHighlightTabs';
 import { CodeHighlight } from './CodeHighlight';
 import { InlineCodeHighlight } from './InlineCodeHighlight';
 
-export default { title: 'CodeHighlight2' };
+export default { title: 'CodeHighlight' };
 
 const tsxCode = `
 import { forwardRef } from 'react';

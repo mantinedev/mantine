@@ -58,7 +58,7 @@ export interface CodeHighlightSettings {
   /** Called when expanded state changes */
   onExpandedChange?: (expanded: boolean) => void;
 
-  /** Max height of collapsed state, `250px` by default */
+  /** Max height of collapsed state, `180px` by default */
   maxCollapsedHeight?: number | string;
 
   /** Determines whether the copy button should be displayed, `true` by default  */
