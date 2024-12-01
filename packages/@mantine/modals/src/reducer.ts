@@ -33,7 +33,7 @@ interface UpdateAction {
 }
 
 function handleCloseModal(modal: ModalState, canceled?: boolean) {
-  if (canceled && modal.type === 'confirm') {
+  if (canceled && (modal.type === 'confirm' || modal.type === 'textInput')) {
     modal.props.onCancel?.();
   }
 

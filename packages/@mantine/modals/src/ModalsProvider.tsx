@@ -10,9 +10,11 @@ import {
   ModalSettings,
   OpenConfirmModal,
   OpenContextModal,
+  OpenTextInputModal,
 } from './context';
 import { useModalsEvents } from './events';
 import { modalsReducer } from './reducer';
+import { TextInputModal } from './TextInputModal';
 
 export interface ModalsProviderProps {
   /** Your app */
@@ -112,6 +114,22 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     [dispatch]
   );
 
+  const openTextInputModal = useCallback(
+    ({ modalId, ...props }: OpenTextInputModal) => {
+      const id = modalId || randomId();
+      dispatch({
+        type: 'OPEN',
+        modal: {
+          id,
+          type: 'textInput',
+          props,
+        },
+      });
+      return id;
+    },
+    [dispatch]
+  );
+
   const openContextModal = useCallback(
     (modal: string, { modalId, ...props }: OpenContextModal) => {
       const id = modalId || randomId();
@@ -157,6 +175,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
   useModalsEvents({
     openModal,
     openConfirmModal,
+    openTextInputModal,
     openContextModal: ({ modal, ...payload }: any) => openContextModal(modal, payload),
     closeModal,
     closeContextModal: closeModal,
@@ -169,6 +188,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     modals: state.modals,
     openModal,
     openConfirmModal,
+    openTextInputModal,
     openContextModal,
     closeModal,
     closeContextModal: closeModal,
@@ -197,6 +217,21 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
           modalProps: separatedModalProps,
           content: (
             <ConfirmModal
+              {...separatedConfirmProps}
+              id={currentModal.id}
+              labels={currentModal.props.labels || labels}
+            />
+          ),
+        };
+      }
+      case 'textInput': {
+        const { modalProps: separatedModalProps, confirmProps: separatedConfirmProps } =
+          separateConfirmModalProps(currentModal.props);
+
+        return {
+          modalProps: separatedModalProps,
+          content: (
+            <TextInputModal
               {...separatedConfirmProps}
               id={currentModal.id}
               labels={currentModal.props.labels || labels}

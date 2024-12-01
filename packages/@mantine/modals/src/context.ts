@@ -1,12 +1,14 @@
 import { createContext, ReactNode } from 'react';
 import { ModalProps } from '@mantine/core';
 import type { ConfirmModalProps } from './ConfirmModal';
+import type { TextInputModalProps } from './TextInputModal';
 
 export type ModalSettings = Partial<Omit<ModalProps, 'opened'>> & { modalId?: string };
 
 export type ConfirmLabels = Record<'confirm' | 'cancel', ReactNode>;
 
 export interface OpenConfirmModal extends ModalSettings, ConfirmModalProps {}
+export interface OpenTextInputModal extends ModalSettings, TextInputModalProps {}
 export interface OpenContextModal<CustomProps extends Record<string, any> = {}>
   extends ModalSettings {
   innerProps: CustomProps;
@@ -21,12 +23,14 @@ export interface ContextModalProps<T extends Record<string, any> = {}> {
 export type ModalState =
   | { id: string; props: ModalSettings; type: 'content' }
   | { id: string; props: OpenConfirmModal; type: 'confirm' }
+  | { id: string; props: OpenTextInputModal; type: 'textInput' }
   | { id: string; props: OpenContextModal; type: 'context'; ctx: string };
 
 export interface ModalsContextProps {
   modals: ModalState[];
   openModal: (props: ModalSettings) => string;
   openConfirmModal: (props: OpenConfirmModal) => string;
+  openTextInputModal: (props: OpenTextInputModal) => string;
   openContextModal: <TKey extends MantineModal>(
     modal: TKey,
     props: OpenContextModal<Parameters<MantineModals[TKey]>[0]['innerProps']>

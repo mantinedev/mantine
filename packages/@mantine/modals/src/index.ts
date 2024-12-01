@@ -5,6 +5,7 @@ export {
   closeModal,
   closeAllModals,
   openConfirmModal,
+  openTextInputModal,
   openContextModal,
   updateModal,
   updateContextModal,

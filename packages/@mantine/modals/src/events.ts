@@ -6,11 +6,13 @@ import {
   ModalSettings,
   OpenConfirmModal,
   OpenContextModal,
+  OpenTextInputModal,
 } from './context';
 
 type ModalsEvents = {
   openModal: (payload: ModalSettings) => string;
   openConfirmModal: (payload: OpenConfirmModal) => string;
+  openTextInputModal: (payload: OpenTextInputModal) => string;
   openContextModal: <TKey extends MantineModal>(
     payload: OpenContextModal<Parameters<MantineModals[TKey]>[0]['innerProps']> & { modal: TKey }
   ) => string;
@@ -35,6 +37,12 @@ export const openConfirmModal: ModalsEvents['openConfirmModal'] = (payload) => {
   createEvent('openConfirmModal')({ ...payload, modalId: id });
   return id;
 };
+
+export const openTextInputModal: ModalsEvents['openTextInputModal'] = (payload) => {
+  const id = payload.modalId || randomId();
+  createEvent('openTextInputModal')({...payload, modalId: id});
+  return id;
+}
 
 export const openContextModal: ModalsEvents['openContextModal'] = <TKey extends MantineModal>(
   payload: OpenContextModal<Parameters<MantineModals[TKey]>[0]['innerProps']> & { modal: TKey }
@@ -63,6 +71,7 @@ export const modals: {
   close: ModalsEvents['closeModal'];
   closeAll: ModalsEvents['closeAllModals'];
   openConfirmModal: ModalsEvents['openConfirmModal'];
+  openTextInputModal: ModalsEvents['openTextInputModal'];
   openContextModal: ModalsEvents['openContextModal'];
   updateModal: ModalsEvents['updateModal'];
   updateContextModal: ModalsEvents['updateContextModal'];
@@ -71,6 +80,7 @@ export const modals: {
   close: closeModal,
   closeAll: closeAllModals,
   openConfirmModal,
+  openTextInputModal,
   openContextModal,
   updateModal,
   updateContextModal,
