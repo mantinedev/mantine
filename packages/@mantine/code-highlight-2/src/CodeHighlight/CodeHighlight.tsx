@@ -1,3 +1,4 @@
+import cx from 'clsx';
 import {
   Box,
   BoxProps,
@@ -28,6 +29,7 @@ import classes from '../CodeHighlight.module.css';
 
 export type CodeHighlightStylesNames =
   | 'codeHighlight'
+  | 'inlineCodeHighlight'
   | 'pre'
   | 'code'
   | 'control'
@@ -39,6 +41,7 @@ export type CodeHighlightStylesNames =
 
 export type CodeHighlightCssVariables = {
   codeHighlight: '--ch-max-height' | '--ch-background' | '--ch-radius';
+  inlineCodeHighlight: '--ch-background' | '--ch-radius';
 };
 
 export interface CodeHighlightSettings {
@@ -100,6 +103,9 @@ export interface CodeHighlightProps
 
   /** Language of the code, used for syntax highlighting */
   language?: string;
+
+  /** If set, the code will be rendered as inline element without `<pre>`, `false` by default */
+  inline?: boolean;
 }
 
 export type CodeHighlightFactory = Factory<{
@@ -122,6 +128,10 @@ const varsResolver = createVarsResolver<CodeHighlightFactory>(
   (theme, { maxCollapsedHeight, background, radius }) => ({
     codeHighlight: {
       '--ch-max-height': rem(maxCollapsedHeight),
+      '--ch-background': background ? getThemeColor(background, theme) : undefined,
+      '--ch-radius': typeof radius !== 'undefined' ? getRadius(radius) : undefined,
+    },
+    inlineCodeHighlight: {
       '--ch-background': background ? getThemeColor(background, theme) : undefined,
       '--ch-radius': typeof radius !== 'undefined' ? getRadius(radius) : undefined,
     },
@@ -155,6 +165,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     language,
     codeColorScheme,
     __withOffset,
+    inline,
     ...others
   } = props;
 
@@ -185,6 +196,21 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
   const colorScheme = useComputedColorScheme();
   const highlight = useHighlight();
   const highlightedCode = highlight({ code: code.trim(), language, colorScheme });
+
+  if (inline) {
+    return (
+      <Box
+        component="code"
+        {...highlightedCode.codeElementProps}
+        {...getStyles('inlineCodeHighlight', {
+          className: cx(highlightedCode.codeElementProps?.className, className),
+          style: [{ ...highlightedCode.codeElementProps?.style }, style],
+        })}
+        data-with-border={withBorder || undefined}
+        dangerouslySetInnerHTML={{ __html: highlightedCode.highlightedCode }}
+      />
+    );
+  }
 
   return (
     <CodeHighlightContextProvider value={{ getStyles, codeColorScheme }}>

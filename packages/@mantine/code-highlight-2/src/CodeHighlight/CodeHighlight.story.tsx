@@ -268,3 +268,16 @@ export function Tabs() {
     </div>
   );
 }
+
+export function Inline() {
+  return (
+    <div style={{ padding: 40 }}>
+      <CodeHighlightAdapterProvider adapter={shikiAdapter}>
+        <p>
+          Here is some text <CodeHighlight code="const a = 5;" language="tsx" inline withBorder />{' '}
+          surrounding the code
+        </p>
+      </CodeHighlightAdapterProvider>
+    </div>
+  );
+}
