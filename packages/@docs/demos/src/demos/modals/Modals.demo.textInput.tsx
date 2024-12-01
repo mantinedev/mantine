@@ -12,16 +12,8 @@ function Demo() {
     modals.openTextInputModal({
       modalId: 'test-id',
       title: 'Please enter your name',
-      children: (
-        <Text size="sm">
-          Children are rendered above the input field.
-        </Text>
-      ),
-      bottomSection: (
-        <Text size="sm">
-          But you can still render content below it.
-        </Text>
-      ),
+      topSection: <Text size="sm">Top section is rendered here.</Text>,
+      bottomSection: <Text size="sm">Bottom section is rendered here.</Text>,
       onCancel: () => console.log('Cancel'),
       onConfirm: (value) => console.log(\`Confirm with value \${value}\`),
     });
@@ -35,16 +27,8 @@ function Demo() {
     modals.openTextInputModal({
       modalId: 'test-id',
       title: 'Please enter your name',
-      topSection: (
-        <Text size="sm">
-          Top section is rendered here.
-        </Text>
-      ),
-      bottomSection: (
-        <Text size="sm">
-          Bottom section is rendered here.
-        </Text>
-      ),
+      topSection: <Text size="sm">Top section is rendered here.</Text>,
+      bottomSection: <Text size="sm">Bottom section is rendered here.</Text>,
       onCancel: () =>
         notifications.show({
           title: 'Canceled',
@@ -54,7 +38,7 @@ function Demo() {
       onConfirm: (value) =>
         notifications.show({
           title: 'Confirmed',
-            message: `TextInputModal was confirmed with input ${value}`,
+          message: `TextInputModal was confirmed with input ${value}`,
           color: 'teal',
         }),
     });
