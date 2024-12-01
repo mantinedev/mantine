@@ -279,6 +279,27 @@ export function Tabs() {
   );
 }
 
+export function TabsWithColorScheme() {
+  return (
+    <div style={{ padding: 40 }}>
+      <CodeHighlightAdapterProvider adapter={highlightJSAdapter}>
+        <CodeHighlightTabs
+          withExpandButton
+          defaultExpanded={false}
+          radius="md"
+          getFileIcon={getCodeFileIcon}
+          codeColorScheme="dark"
+          background="var(--mantine-color-dark-8)"
+          code={[
+            { fileName: 'Component.tsx', code: tsxCode, language: 'tsx' },
+            { fileName: 'Component.module.css', code: cssCode, language: 'scss' },
+          ]}
+        />
+      </CodeHighlightAdapterProvider>
+    </div>
+  );
+}
+
 export function Inline() {
   return (
     <div style={{ padding: 40 }}>

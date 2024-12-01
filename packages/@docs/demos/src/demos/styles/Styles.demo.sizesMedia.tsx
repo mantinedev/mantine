@@ -26,5 +26,5 @@ function Demo() {
 export const sizesMedia: MantineDemo = {
   type: 'code',
   component: Demo,
-  code: { fileName: 'Demo.tsx', code, language: 'tsx' },
+  code: [{ fileName: 'Demo.tsx', code, language: 'tsx' }],
 };

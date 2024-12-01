@@ -207,29 +207,66 @@
   user-select: none;
   cursor: pointer;
   opacity: 0.8;
-  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  border: 1px solid transparent;
   white-space: nowrap;
   margin: 0;
   border-radius: var(--mantine-radius-default);
-  color: light-dark(var(--mantine-color-gray-8), var(--mantine-color-dark-0));
+
+  &:where([data-active]) {
+    opacity: 1;
+  }
+
+  @mixin where-light {
+    border-color: var(--mantine-color-gray-3);
+    color: var(--mantine-color-gray-8);
+
+    &:where([data-active]) {
+      background-color: var(--mantine-color-white);
+      color: var(--mantine-color-black);
+    }
+  }
+
+  @mixin where-dark {
+    border-color: var(--mantine-color-dark-4);
+    color: var(--mantine-color-dark-0);
+
+    &:where([data-active]) {
+      background-color: var(--mantine-color-dark-5);
+      color: var(--mantine-color-white);
+    }
+  }
+
+  &:where([data-color-scheme='light']) {
+    border-color: var(--mantine-color-gray-3);
+    color: var(--mantine-color-gray-8);
+
+    &:where([data-active]) {
+      background-color: var(--mantine-color-white);
+      color: var(--mantine-color-black);
+    }
+  }
+
+  &:where([data-color-scheme='dark']) {
+    border-color: var(--mantine-color-dark-4);
+    color: var(--mantine-color-dark-0);
+
+    &:where([data-active]) {
+      background-color: var(--mantine-color-dark-5);
+      color: var(--mantine-color-white);
+    }
+  }
 
   @mixin hover {
     opacity: 1;
   }
 
-  &:only-child {
+  &:where(:only-child) {
     cursor: default;
-  }
-
-  &[data-active] {
-    opacity: 1;
-    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-5));
-    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
   }
 }
 
 .fileIcon {
-  & svg {
+  & :where(svg) {
     display: block;
   }
 }

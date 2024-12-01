@@ -20,12 +20,10 @@ import {
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { useHighlight } from '../CodeHighlightProvider/CodeHighlightProvider';
-import type { CodeHighlightTabs } from '../CodeHighlightTabs/CodeHighlightTabs';
 import { CodeHighlightContextProvider } from './CodeHighlight.context';
 import { CodeHighlightControl } from './CodeHighlightControl/CodeHighlightControl';
 import { CopyCodeButton } from './CopyCodeButton/CopyCodeButton';
 import { ExpandCodeButton } from './ExpandCodeButton/ExpandCodeButton';
-import type { InlineCodeHighlight } from './InlineCodeHighlight';
 import classes from '../CodeHighlight.module.css';
 
 export type CodeHighlightStylesNames =
@@ -114,8 +112,6 @@ export type CodeHighlightFactory = Factory<{
   vars: CodeHighlightCssVariables;
   staticComponents: {
     Control: typeof CodeHighlightControl;
-    Tabs: typeof CodeHighlightTabs;
-    Inline: typeof InlineCodeHighlight;
   };
 }>;
 

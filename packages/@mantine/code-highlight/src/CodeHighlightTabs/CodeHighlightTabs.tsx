@@ -92,6 +92,14 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
     withExpandButton,
     withBorder,
     radius,
+    maxCollapsedHeight,
+    copyLabel,
+    copiedLabel,
+    expandCodeLabel,
+    collapseCodeLabel,
+    background,
+    controls,
+    codeColorScheme,
     ...others
   } = props;
 
@@ -135,6 +143,7 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
       key={node.fileName}
       mod={{ active: index === value }}
       onClick={() => setValue(index)}
+      data-color-scheme={codeColorScheme}
     >
       <FileIcon
         fileIcon={node.icon}
@@ -162,6 +171,14 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
         withExpandButton={withExpandButton}
         withBorder={withBorder}
         radius={radius}
+        maxCollapsedHeight={maxCollapsedHeight}
+        copiedLabel={copiedLabel}
+        copyLabel={copyLabel}
+        expandCodeLabel={expandCodeLabel}
+        collapseCodeLabel={collapseCodeLabel}
+        background={background}
+        controls={controls}
+        codeColorScheme={codeColorScheme}
         __withOffset
         __staticSelector="CodeHighlightTabs"
         classNames={resolvedClassNames}

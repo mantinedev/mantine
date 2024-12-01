@@ -1,10 +1,7 @@
-import { CodeHighlight } from './CodeHighlight/CodeHighlight';
-import { InlineCodeHighlight } from './CodeHighlight/InlineCodeHighlight';
-import { CodeHighlightTabs } from './CodeHighlightTabs/CodeHighlightTabs';
-
-CodeHighlight.Tabs = CodeHighlightTabs;
-CodeHighlight.Inline = InlineCodeHighlight;
-export { CodeHighlight, CodeHighlightTabs, InlineCodeHighlight };
+export { CodeHighlight } from './CodeHighlight/CodeHighlight';
+export { InlineCodeHighlight } from './CodeHighlight/InlineCodeHighlight';
+export { CodeHighlightTabs } from './CodeHighlightTabs/CodeHighlightTabs';
+export { CodeHighlightControl } from './CodeHighlight/CodeHighlightControl/CodeHighlightControl';
 
 export {
   CodeHighlightAdapterProvider,
@@ -37,3 +34,5 @@ export type {
   InlineCodeHighlightFactory,
   InlineCodeHighlightStylesNames,
 } from './CodeHighlight/InlineCodeHighlight';
+
+export type { CodeHighlightControlProps } from './CodeHighlight/CodeHighlightControl/CodeHighlightControl';
