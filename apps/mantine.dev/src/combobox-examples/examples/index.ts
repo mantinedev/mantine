@@ -1,4 +1,4 @@
-import { ShikiLanguage } from '@mantinex/shiki';
+import { CodeHighlightDefaultLanguage } from '@mantine/code-highlight';
 import { ActiveOptionsFilter } from './ActiveOptionsFilter/ActiveOptionsFilter';
 import ActiveOptionsFilterCode from './ActiveOptionsFilter/code.json';
 import { AsyncAutocomplete } from './AsyncAutocomplete/AsyncAutocomplete';
@@ -90,7 +90,7 @@ interface ComboboxExampleComponent {
   component: () => JSX.Element;
   code: {
     fileName: string;
-    language: ShikiLanguage;
+    language: CodeHighlightDefaultLanguage;
     code: string;
   }[];
 }

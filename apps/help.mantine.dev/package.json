@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@mantine/code-highlight": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/dates": "workspace:*",
     "@mantine/dropzone": "workspace:*",
@@ -20,7 +21,6 @@
     "@mantinex/mantine-header": "workspace:*",
     "@mantinex/mantine-logo": "workspace:*",
     "@mantinex/mantine-meta": "workspace:*",
-    "@mantinex/shiki": "workspace:*",
     "@mdx-js/react": "^3.0.0",
     "@next/mdx": "^14.0.2",
     "@tabler/icons-react": "^3.3.0",

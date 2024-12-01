@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { IconArrowRight } from '@tabler/icons-react';
+import { CodeHighlight, CodeHighlightTabs } from '@mantine/code-highlight';
 import { Button, rem, SimpleGrid, Slider, Text } from '@mantine/core';
 import { getCodeFileIcon } from '@mantinex/dev-icons';
-import { CodeHighlight, CodeHighlightTabs } from '@mantinex/shiki';
 import { SliderStylesApi } from '@docs/styles-api';
 import { MdxDataTable } from '../../MdxProvider/MdxDataTable/MdxDataTable';
 import { PageSection } from '../PageSection/PageSection';

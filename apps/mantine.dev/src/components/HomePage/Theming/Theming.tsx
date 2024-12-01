@@ -1,5 +1,5 @@
+import { CodeHighlight } from '@mantine/code-highlight';
 import { Badge, Button, Group } from '@mantine/core';
-import { CodeHighlight } from '@mantinex/shiki';
 import { PageSection } from '../PageSection/PageSection';
 import classes from './Theming.module.css';
 

@@ -1,11 +1,13 @@
-import { ShikiLanguage } from '@mantinex/shiki';
+import { CodeHighlightDefaultLanguage } from '@mantine/code-highlight';
 import { clearProps } from './clear-props';
 import type { ConfiguratorControlOptions } from './ConfiguratorDemo';
 import { injectProps } from './inject-props';
 
 type CodePayload = string | ((props: Record<string, any>) => string);
 
-export type Code = CodePayload | { code: CodePayload; language: ShikiLanguage; fileName: string }[];
+export type Code =
+  | CodePayload
+  | { code: CodePayload; language: CodeHighlightDefaultLanguage; fileName: string }[];
 
 interface GetCodeArrayInput {
   code: Code;

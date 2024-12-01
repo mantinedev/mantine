@@ -1,6 +1,6 @@
+import { CodeHighlightTabs } from '@mantine/code-highlight';
 import { useLocalStorage } from '@mantine/hooks';
 import { NpmIcon, YarnIcon } from '@mantinex/dev-icons';
-import { CodeHighlightTabs } from '@mantinex/shiki';
 import classes from './MdxNpmScript.module.css';
 
 interface MdxNpmScriptProps {

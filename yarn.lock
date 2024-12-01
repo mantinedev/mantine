@@ -2380,7 +2380,6 @@ __metadata:
     "@mantine/tiptap": "workspace:*"
     "@mantinex/demo": "workspace:*"
     "@mantinex/dev-icons": "workspace:*"
-    "@mantinex/shiki": "workspace:*"
     "@tiptap/core": "npm:^2.9.1"
     "@tiptap/extension-link": "npm:^2.9.1"
     "@tiptap/pm": "npm:^2.9.1"
@@ -2390,7 +2389,6 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     recharts: "npm:^2.13.3"
-    shiki: "npm:^1.23.1"
   peerDependencies:
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
@@ -4318,17 +4316,17 @@ __metadata:
   resolution: "@mantinex/demo@workspace:packages/@mantinex/demo"
   dependencies:
     "@mantine-tests/core": "workspace:*"
+    "@mantine/code-highlight": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    "@mantinex/shiki": "workspace:*"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     shiki: "npm:^1.23.1"
   peerDependencies:
+    "@mantine/code-highlight": ">=7.0.0"
     "@mantine/core": ">=7.0.0"
     "@mantine/hooks": ">=7.0.0"
     "@mantinex/dev-icons": ">=1.0.0"
-    "@mantinex/shiki": ">=1.0.0"
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
     shiki: ^1.23.1
@@ -4391,24 +4389,6 @@ __metadata:
 "@mantinex/mantine-meta@workspace:*, @mantinex/mantine-meta@workspace:packages/@mantinex/mantine-meta":
   version: 0.0.0-use.local
   resolution: "@mantinex/mantine-meta@workspace:packages/@mantinex/mantine-meta"
-  languageName: unknown
-  linkType: soft
-
-"@mantinex/shiki@workspace:*, @mantinex/shiki@workspace:packages/@mantinex/shiki":
-  version: 0.0.0-use.local
-  resolution: "@mantinex/shiki@workspace:packages/@mantinex/shiki"
-  dependencies:
-    "@mantine-tests/core": "workspace:*"
-    "@mantine/core": "workspace:*"
-    "@mantine/hooks": "workspace:*"
-    react: "npm:^18.3.1"
-    react-dom: "npm:^18.3.1"
-  peerDependencies:
-    "@mantine/core": ">=7.0.0"
-    "@mantine/hooks": ">=7.0.0"
-    react: ^18.x || ^19.x
-    react-dom: ^18.x || ^19.x
-    shiki: ^1.23.1
   languageName: unknown
   linkType: soft
 
@@ -13026,6 +13006,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "help.mantine.dev@workspace:apps/help.mantine.dev"
   dependencies:
+    "@mantine/code-highlight": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/dates": "workspace:*"
     "@mantine/dropzone": "workspace:*"
@@ -13036,7 +13017,6 @@ __metadata:
     "@mantinex/mantine-header": "workspace:*"
     "@mantinex/mantine-logo": "workspace:*"
     "@mantinex/mantine-meta": "workspace:*"
-    "@mantinex/shiki": "workspace:*"
     "@mdx-js/loader": "npm:^3.0.0"
     "@mdx-js/react": "npm:^3.0.0"
     "@next/mdx": "npm:^14.0.2"

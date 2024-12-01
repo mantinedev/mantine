@@ -1,4 +1,4 @@
-import { ShikiLanguage } from '@mantinex/shiki';
+import { CodeHighlightDefaultLanguage } from '@mantine/code-highlight';
 import { AltLayout } from './AltLayout/AltLayout';
 import AltLayoutCode from './AltLayout/code.json';
 import { BasicAppShell } from './BasicAppShell/BasicAppShell';
@@ -24,7 +24,7 @@ interface AppShellExampleComponent {
   component: () => JSX.Element;
   code: {
     fileName: string;
-    language: ShikiLanguage;
+    language: CodeHighlightDefaultLanguage;
     code: string;
   }[];
 }

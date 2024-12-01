@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import cx from 'clsx';
+import { CodeHighlightTabs } from '@mantine/code-highlight';
 import { Badge, RemoveScroll, Text } from '@mantine/core';
 import { getCodeFileIcon } from '@mantinex/dev-icons';
-import { CodeHighlightTabs } from '@mantinex/shiki';
 import { COMBOBOX_EXAMPLES_DATA } from '../combobox-examples-data';
 import { COMBOBOX_EXAMPLES_COMPONENTS, ComboboxExampleId } from '../examples';
 import classes from './ComboboxDemo.module.css';
