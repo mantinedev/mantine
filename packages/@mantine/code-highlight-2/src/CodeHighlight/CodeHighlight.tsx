@@ -33,7 +33,6 @@ export type CodeHighlightStylesNames =
   | 'pre'
   | 'code'
   | 'control'
-  | 'controlIcon'
   | 'controlTooltip'
   | 'controls'
   | 'scrollarea'
@@ -96,6 +95,7 @@ export interface CodeHighlightProps
     StylesApiProps<CodeHighlightFactory>,
     ElementProps<'div'> {
   __withOffset?: boolean;
+  __staticSelector?: string;
 
   /** If set, the code will be rendered as inline element without `<pre>`, `false` by default */
   __inline?: boolean;
@@ -162,11 +162,12 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     codeColorScheme,
     __withOffset,
     __inline,
+    __staticSelector,
     ...others
   } = props;
 
   const getStyles = useStyles<CodeHighlightFactory>({
-    name: 'CodeHighlight',
+    name: __staticSelector || 'CodeHighlight',
     classes,
     props,
     className,
@@ -197,6 +198,8 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     return (
       <Box
         component="code"
+        ref={ref}
+        {...others}
         {...highlightedCode.codeElementProps}
         {...getStyles('codeHighlight', {
           className: cx(highlightedCode.codeElementProps?.className, className),

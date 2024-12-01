@@ -9,6 +9,7 @@ import {
   StylesApiProps,
   UnstyledButton,
   useProps,
+  useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
@@ -129,6 +130,12 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
     onChange: onExpandedChange,
   });
 
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<CodeHighlightTabsFactory>({
+    classNames,
+    styles,
+    props,
+  });
+
   const currentCode = code[value];
 
   const files = code.map((node, index) => (
@@ -165,10 +172,13 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
         withBorder={withBorder}
         radius={radius}
         __withOffset
+        __staticSelector="CodeHighlightTabs"
+        classNames={resolvedClassNames}
+        styles={resolvedStyles}
       />
     </Box>
   );
 });
 
-CodeHighlightTabs.displayName = '@mantine/core/CodeHighlightTabs';
+CodeHighlightTabs.displayName = '@mantine/code-highlight/CodeHighlightTabs';
 CodeHighlightTabs.classes = classes;
