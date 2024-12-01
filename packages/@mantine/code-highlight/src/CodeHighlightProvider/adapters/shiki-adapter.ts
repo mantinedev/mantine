@@ -16,7 +16,7 @@ function stripElement(openTag: string, data: string) {
   return striped.replace(`</${openTag}>`, '');
 }
 
-function stripShikiCodeBlocks(data: string) {
+export function stripShikiCodeBlocks(data: string) {
   return stripElement('code', stripElement('pre', data));
 }
 

@@ -9,7 +9,10 @@ export {
 } from './CodeHighlightProvider/CodeHighlightProvider';
 
 export { createHighlightJsAdapter } from './CodeHighlightProvider/adapters/highlight-js-adapter';
-export { createShikiAdapter } from './CodeHighlightProvider/adapters/shiki-adapter';
+export {
+  createShikiAdapter,
+  stripShikiCodeBlocks,
+} from './CodeHighlightProvider/adapters/shiki-adapter';
 export { plainTextAdapter } from './CodeHighlightProvider/adapters/plain-text-adapter';
 
 export type {
