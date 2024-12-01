@@ -16,7 +16,6 @@ import { CodeHighlight } from './CodeHighlight';
 import classes from '../CodeHighlight.module.css';
 
 export type InlineCodeHighlightStylesNames = 'inlineCodeHighlight';
-export type InlineCodeHighlightVariant = string;
 export type InlineCodeHighlightCssVariables = {
   inlineCodeHighlight: '--ch-background' | '--ch-radius';
 };
@@ -46,7 +45,6 @@ export type InlineCodeHighlightFactory = Factory<{
   ref: HTMLElement;
   stylesNames: InlineCodeHighlightStylesNames;
   vars: InlineCodeHighlightCssVariables;
-  variant: InlineCodeHighlightVariant;
 }>;
 
 const defaultProps: Partial<InlineCodeHighlightProps> = {};

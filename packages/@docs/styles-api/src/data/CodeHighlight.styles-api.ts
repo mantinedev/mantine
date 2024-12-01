@@ -5,19 +5,36 @@ import type {
 } from '@mantine/code-highlight';
 import type { StylesApiData } from '../types';
 
+export const CodeHighlightStylesApi: StylesApiData<CodeHighlightFactory> = {
+  selectors: {
+    codeHighlight: 'Root element',
+    showCodeButton: 'Button that reveals full code when it is collapsed',
+    pre: 'Pre element, contains code element',
+    code: 'Code element',
+    control: 'Control button, copy/collapse, custom controls',
+    controlTooltip: 'Root element of control tooltip',
+    controls: 'A wrapper around controls',
+    scrollarea: 'Scroll area, contains code',
+  },
+
+  vars: {
+    codeHighlight: {
+      '--ch-background': 'Background color',
+      '--ch-max-height': 'Max height of code block in collapsed state',
+      '--ch-radius': 'Border radius',
+    },
+  },
+};
+
 export const CodeHighlightTabsStylesApi: StylesApiData<CodeHighlightTabsFactory> = {
   selectors: {
+    ...CodeHighlightStylesApi.selectors,
     root: 'Root element',
-    pre: 'Pre element, contains code element',
-    codeWrapper: 'Wrapper around code element, used for expand/collapse logic',
-    code: 'Code element, contains highlighted code',
-    header: 'Header element, contains copy button and files names',
-    controls: 'Controls container, contains control buttons (copy/collapse, etc.)',
-    control: 'Control button, copy/collapse, etc.',
+    codeHighlight: 'Root element of inner CodeHighlight component',
+    filesScrollarea: 'Scrollarea with files list',
     files: 'Files names list',
     file: 'File name',
     fileIcon: 'File icon',
-    showCodeButton: 'Button that reveals full code when it is collapsed',
   },
 
   vars: {},
@@ -25,19 +42,13 @@ export const CodeHighlightTabsStylesApi: StylesApiData<CodeHighlightTabsFactory>
 
 export const InlineCodeHighlightStylesApi: StylesApiData<InlineCodeHighlightFactory> = {
   selectors: {
-    code: 'Root element',
+    inlineCodeHighlight: 'Root element',
   },
 
-  vars: {},
-};
-
-export const CodeHighlightStylesApi: StylesApiData<CodeHighlightFactory> = {
-  selectors: {
-    root: 'Root element',
-    pre: 'Pre element, contains code element',
-    code: 'Code element',
-    copy: 'Copy button',
+  vars: {
+    inlineCodeHighlight: {
+      '--ch-background': 'Background color',
+      '--ch-radius': 'Border radius',
+    },
   },
-
-  vars: {},
 };

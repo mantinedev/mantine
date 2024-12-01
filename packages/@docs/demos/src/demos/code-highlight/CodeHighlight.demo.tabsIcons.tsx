@@ -24,11 +24,12 @@ const tsxCode = \`${tsxCode}\`;
 const cssCode = \`${cssCode}\`;
 
 function Demo() {
-  const tsIcon = <TypeScriptIcon size={18} />;
-  const cssIcon = <CssIcon size={18} />;
+  const tsIcon = <TypeScriptIcon size={14} />;
+  const cssIcon = <CssIcon size={14} />;
 
   return (
     <CodeHighlightTabs
+      radius="md"
       code={[
         {
           fileName: 'Button.tsx',
@@ -51,18 +52,19 @@ function Demo() {
 function Demo() {
   return (
     <CodeHighlightTabs
+      radius="md"
       code={[
         {
           fileName: 'Button.tsx',
           code: tsxCode,
           language: 'tsx',
-          icon: <TypeScriptIcon size={18} />,
+          icon: <TypeScriptIcon size={14} />,
         },
         {
           fileName: 'Button.module.css',
           code: cssCode,
           language: 'scss',
-          icon: <CssIcon size={18} />,
+          icon: <CssIcon size={14} />,
         },
       ]}
     />

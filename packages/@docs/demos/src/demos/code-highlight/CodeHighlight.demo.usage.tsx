@@ -2,55 +2,18 @@ import { CodeHighlight } from '@mantine/code-highlight';
 import { MantineDemo } from '@mantinex/demo';
 
 const exampleCode = `
-// VisuallyHidden component source code
+type FilterPropsRes<T extends Record<string, any>> = {
+  [Key in keyof T]-?: T[Key] extends undefined ? never : T[Key];
+};
 
-import {
-  Box,
-  BoxProps,
-  StylesApiProps,
-  factory,
-  ElementProps,
-  useProps,
-  useStyles,
-  Factory,
-} from '../../core';
-import classes from './VisuallyHidden.module.css';
-
-export type VisuallyHiddenStylesNames = 'root';
-
-export interface VisuallyHiddenProps
-  extends BoxProps,
-    StylesApiProps<VisuallyHiddenFactory>,
-    ElementProps<'div'> {}
-
-export type VisuallyHiddenFactory = Factory<{
-  props: VisuallyHiddenProps;
-  ref: HTMLDivElement;
-  stylesNames: VisuallyHiddenStylesNames;
-}>;
-
-const defaultProps: Partial<VisuallyHiddenProps> = {};
-
-export const VisuallyHidden = factory<VisuallyHiddenFactory>((_props, ref) => {
-  const props = useProps('VisuallyHidden', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, ...others } = props;
-
-  const getStyles = useStyles<VisuallyHiddenFactory>({
-    name: 'VisuallyHidden',
-    classes,
-    props,
-    className,
-    style,
-    classNames,
-    styles,
-    unstyled,
-  });
-
-  return <Box component="span" ref={ref} {...getStyles('root')} {...others} />;
-});
-
-VisuallyHidden.classes = classes;
-VisuallyHidden.displayName = '@mantine/core/VisuallyHidden';
+export function filterProps<T extends Record<string, any>>(props: T) {
+  return Object.keys(props).reduce<FilterPropsRes<T>>((acc, key: keyof T) => {
+    if (props[key] !== undefined) {
+      acc[key] = props[key];
+    }
+    return acc;
+  }, {} as FilterPropsRes<T>);
+}
 `;
 
 const code = `
@@ -59,12 +22,12 @@ import { CodeHighlight } from '@mantine/code-highlight';
 const exampleCode = \`${exampleCode}\`;
 
 function Demo() {
-  return <CodeHighlight code={exampleCode} language="tsx" />;
+  return <CodeHighlight code={exampleCode} language="tsx" radius="md" />;
 }
 `;
 
 function Demo() {
-  return <CodeHighlight code={exampleCode} language="tsx" />;
+  return <CodeHighlight code={exampleCode} language="tsx" radius="md" />;
 }
 
 export const usage: MantineDemo = {

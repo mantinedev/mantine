@@ -25,11 +25,11 @@ const cssCode = \`${cssCode}\`;
 
 function getFileIcon(fileName: string) {
   if (fileName.endsWith('.ts') || fileName.endsWith('.tsx')) {
-    return <TypeScriptIcon size={18} />;
+    return <TypeScriptIcon size={14} />;
   }
 
   if (fileName.endsWith('.css')) {
-    return <CssIcon size={18} />;
+    return <CssIcon size={14} />;
   }
 
   return null;
@@ -39,6 +39,7 @@ function Demo() {
   return (
     <CodeHighlightTabs
       getFileIcon={getFileIcon}
+      radius="md"
       code={[
         {
           fileName: 'Button.tsx',
@@ -58,11 +59,11 @@ function Demo() {
 
 function getFileIcon(fileName: string) {
   if (fileName.endsWith('.ts') || fileName.endsWith('.tsx')) {
-    return <TypeScriptIcon size={18} />;
+    return <TypeScriptIcon size={14} />;
   }
 
   if (fileName.endsWith('.css')) {
-    return <CssIcon size={18} />;
+    return <CssIcon size={14} />;
   }
 
   return null;
@@ -72,6 +73,7 @@ function Demo() {
   return (
     <CodeHighlightTabs
       getFileIcon={getFileIcon}
+      radius="md"
       code={[
         {
           fileName: 'Button.tsx',

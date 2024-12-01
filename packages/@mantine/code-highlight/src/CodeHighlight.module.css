@@ -228,6 +228,12 @@
   }
 }
 
+.fileIcon {
+  & svg {
+    display: block;
+  }
+}
+
 .filesScrollarea {
   position: absolute;
   z-index: 2;

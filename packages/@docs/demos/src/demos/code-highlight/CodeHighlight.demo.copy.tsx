@@ -20,12 +20,14 @@ function Demo() {
         language="tsx"
         copyLabel="Copy button code"
         copiedLabel="Copied!"
+        radius="md"
       />
       <CodeHighlight
         code={\`// Without copy button\${exampleCode}\`}
         language="tsx"
         withCopyButton={false}
         mt="md"
+        radius="md"
       />
     </>
   );
@@ -40,12 +42,14 @@ function Demo() {
         language="tsx"
         copyLabel="Copy button code"
         copiedLabel="Copied!"
+        radius="md"
       />
       <CodeHighlight
         code={`// Without copy button${exampleCode}`}
         language="tsx"
         withCopyButton={false}
         mt="md"
+        radius="md"
       />
     </>
   );

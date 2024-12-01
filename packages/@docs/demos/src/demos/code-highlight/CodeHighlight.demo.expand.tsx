@@ -39,20 +39,23 @@ const cssCode = `
 }
 `;
 
+const codeFile = `
+export const tsxCode = \`${tsxCode}\`;
+
+export const cssCode = \`${cssCode}\`;
+`;
+
 const code = `
 import { CodeHighlightTabs } from '@mantine/code-highlight';
-
-const tsxCode = \`${tsxCode}\`;
-
-const cssCode = \`${cssCode}\`;
+import { tsxCode, cssCode } from './code';
 
 function Demo() {
   return (
     <CodeHighlightTabs
       withExpandButton
       defaultExpanded={false}
-      expandCodeLabel="Show full code"
-      collapseCodeLabel="Show less"
+      expandLabel="Show full code"
+      collapseLabel="Show less"
       code={[
         { fileName: 'Demo.tsx', code: tsxCode, language: 'tsx' },
         { fileName: 'Demo.module.css', code: cssCode, language: 'scss' },
@@ -80,5 +83,8 @@ function Demo() {
 export const expand: MantineDemo = {
   type: 'code',
   component: Demo,
-  code,
+  code: [
+    { fileName: 'Demo.tsx', code, language: 'tsx' },
+    { fileName: 'code.ts', code: codeFile, language: 'tsx' },
+  ],
 };

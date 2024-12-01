@@ -30,3 +30,10 @@ export type {
   CodeHighlightTabsFactory,
   CodeHighlightDefaultLanguage,
 } from './CodeHighlightTabs/CodeHighlightTabs';
+
+export type {
+  InlineCodeHighlightProps,
+  InlineCodeHighlightCssVariables,
+  InlineCodeHighlightFactory,
+  InlineCodeHighlightStylesNames,
+} from './CodeHighlight/InlineCodeHighlight';

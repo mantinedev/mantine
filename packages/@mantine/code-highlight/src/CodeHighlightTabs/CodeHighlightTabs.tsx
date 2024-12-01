@@ -1,7 +1,6 @@
 import {
   Box,
   BoxProps,
-  createVarsResolver,
   ElementProps,
   factory,
   Factory,
@@ -68,16 +67,9 @@ export type CodeHighlightTabsFactory = Factory<{
   props: CodeHighlightTabsProps;
   ref: HTMLDivElement;
   stylesNames: CodeHighlightTabsStylesNames;
-  vars: CodeHighlightTabsCssVariables;
 }>;
 
 const defaultProps: Partial<CodeHighlightTabsProps> = {};
-
-const varsResolver = createVarsResolver<CodeHighlightTabsFactory>(() => ({
-  root: {
-    '--test': 'test',
-  },
-}));
 
 export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref) => {
   const props = useProps('CodeHighlightTabs', defaultProps, _props);
@@ -113,7 +105,6 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
     styles,
     unstyled,
     vars,
-    varsResolver,
   });
 
   const [value, setValue] = useUncontrolled({

@@ -68,10 +68,10 @@ export interface CodeHighlightSettings {
   withExpandButton?: boolean;
 
   /** Label for expand button, `'Expand code'` by default */
-  expandLabel?: string;
+  expandCodeLabel?: string;
 
   /** Label for collapse button, `'Collapse code'` by default */
-  collapseLabel?: string;
+  collapseCodeLabel?: string;
 
   /** Controls background color of the code. By default, the value depends on color scheme. */
   background?: MantineColor;
@@ -121,7 +121,7 @@ export type CodeHighlightFactory = Factory<{
 
 const defaultProps: Partial<CodeHighlightProps> = {
   withCopyButton: true,
-  expandLabel: 'Expand code',
+  expandCodeLabel: 'Expand code',
 };
 
 const varsResolver = createVarsResolver<CodeHighlightFactory>(
@@ -152,8 +152,8 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     maxCollapsedHeight,
     withCopyButton,
     withExpandButton,
-    expandLabel,
-    collapseLabel,
+    expandCodeLabel,
+    collapseCodeLabel,
     radius,
     background,
     withBorder,
@@ -194,6 +194,10 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
   const highlight = useHighlight();
   const highlightedCode = highlight({ code: code.trim(), language, colorScheme });
 
+  const codeContent = highlightedCode.isHighlighted
+    ? { dangerouslySetInnerHTML: { __html: highlightedCode.highlightedCode } }
+    : { children: code.trim() };
+
   if (__inline) {
     return (
       <Box
@@ -206,7 +210,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
           style: [{ ...highlightedCode.codeElementProps?.style }, style],
         })}
         data-with-border={withBorder || undefined}
-        dangerouslySetInnerHTML={{ __html: highlightedCode.highlightedCode }}
+        {...codeContent}
       />
     );
   }
@@ -229,8 +233,8 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
               <ExpandCodeButton
                 expanded={_expanded}
                 onExpand={setExpanded}
-                expandLabel={expandLabel}
-                collapseLabel={collapseLabel}
+                expandCodeLabel={expandCodeLabel}
+                collapseCodeLabel={collapseCodeLabel}
               />
             )}
             {withCopyButton && (
@@ -254,7 +258,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
                 className: highlightedCode.codeElementProps?.className,
                 style: highlightedCode.codeElementProps?.style,
               })}
-              dangerouslySetInnerHTML={{ __html: highlightedCode.highlightedCode }}
+              {...codeContent}
             />
           </pre>
         </ScrollArea>
@@ -265,7 +269,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
           onClick={() => setExpanded(true)}
           data-code-color-scheme={codeColorScheme}
         >
-          {expandLabel}
+          {expandCodeLabel}
         </UnstyledButton>
       </Box>
     </CodeHighlightContextProvider>

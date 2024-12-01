@@ -51,7 +51,7 @@ export const CodeHighlightControl = polymorphicFactory<CodeHighlightControlFacto
         <Tooltip
           label={tooltipLabel}
           fz="sm"
-          position="right"
+          position="bottom-end"
           classNames={{ tooltip: tooltipStyles.className }}
           styles={{ tooltip: tooltipStyles.style }}
           data-code-color-scheme={ctx.codeColorScheme}

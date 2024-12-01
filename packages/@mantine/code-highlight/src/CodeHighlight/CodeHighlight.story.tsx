@@ -158,6 +158,8 @@ const cssCode = `.root {
 }
 `;
 
+const htmlCode = `<button>test-button</button>`;
+
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
@@ -168,6 +170,13 @@ export function Usage() {
         radius="md"
         withBorder
       />
+    </div>
+  );
+}
+export function HTMLCode() {
+  return (
+    <div style={{ padding: 40 }}>
+      <CodeHighlight code={htmlCode} radius="md" withBorder />
     </div>
   );
 }
