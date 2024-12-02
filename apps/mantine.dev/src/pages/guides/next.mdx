@@ -79,11 +79,11 @@ Note that it is required even if you use only one color scheme in your applicati
 
 ```tsx
 import { Head, Html, Main, NextScript } from 'next/document';
-import { ColorSchemeScript } from '@mantine/core';
+import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
 
 export default function Document() {
   return (
-    <Html lang="en" suppressHydrationWarning>
+    <Html lang="en" {...mantineHtmlProps}>
       <Head>
         <ColorSchemeScript defaultColorScheme="auto" />
       </Head>
@@ -112,7 +112,7 @@ and styles imports to the `app/layout.tsx` file:
 // All packages except `@mantine/hooks` require styles imports
 import '@mantine/core/styles.css';
 
-import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core';
 
 export const metadata = {
   title: 'My Mantine app',
@@ -125,7 +125,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" {...mantineHtmlProps}>
       <head>
         <ColorSchemeScript />
       </head>
