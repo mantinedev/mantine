@@ -7,6 +7,7 @@ import {
   ResponsiveContainer,
   Tooltip,
   TooltipProps,
+  Legend,
 } from 'recharts';
 import {
   Box,
@@ -104,6 +105,7 @@ export interface DonutChartProps
 
   /** A function to format values inside the tooltip */
   valueFormatter?: (value: number) => string;
+  legendMode?: 'hover' | 'side';
   legendOrientation?: 'top' | 'bottom' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'center-left' | 'center-right';
 }
 
@@ -119,7 +121,8 @@ const defaultProps: Partial<DonutChartProps> = {
   withLabelsLine: true,
   paddingAngle: 0,
   thickness: 20,
-  size: 160,
+  size: 240,
+  pieSize: 160,
   strokeWidth: 1,
   startAngle: 0,
   endAngle: 360,
@@ -189,6 +192,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     withLabels,
     withLabelsLine,
     size,
+    pieSize,
     thickness,
     strokeWidth,
     startAngle,
@@ -200,6 +204,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     valueFormatter,
     strokeColor,
     labelsType,
+    legendMode,
     legendOrientation,
     ...others
   } = props;
@@ -245,7 +250,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     'center-right': { x: 230, y: 0 },
   };
 
-  const legendOffset = legendPosition[legendOrientation || 'center-right'];
+  const legendOffset = { x: 260, y: legendPosition[legendOrientation || 'center-right'].y };
 
   return (
     <Box ref={ref} size={size} {...getStyles('root')} {...others}>
@@ -253,8 +258,8 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
         <ReChartsPieChart {...pieChartProps}>
           <Pie
             data={data}
-            innerRadius={size! / 2 - thickness!}
-            outerRadius={size! / 2}
+            innerRadius={pieSize! / 2 - thickness!}
+            outerRadius={pieSize! / 2}
             dataKey="value"
             isAnimationActive={false}
             paddingAngle={paddingAngle}
@@ -286,7 +291,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
             </text>
           )}
 
-          {withTooltip && (
+          {legendMode === 'hover' && withTooltip && (
             <Tooltip
               animationDuration={tooltipAnimationDuration}
               isAnimationActive={false}
@@ -302,6 +307,23 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
               )}
               position={{ x: legendOffset.x, y: legendOffset.y }}
               {...tooltipProps}
+            />
+          )}
+
+          {legendMode === 'side' && (
+            <Legend
+              layout="vertical"
+              verticalAlign="middle"
+              align="right"
+              wrapperStyle={{
+                position: 'absolute',
+                left: `${legendOffset.x}px`,
+                top: `${legendOffset.y}px`,
+                fontSize: '14px',
+                fontFamily: 'var(--mantine-font-family)',
+                whiteSpace: 'nowrap',
+                visibility: 'visible',
+              }}
             />
           )}
 
