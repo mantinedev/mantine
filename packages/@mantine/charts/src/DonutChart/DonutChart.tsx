@@ -27,6 +27,7 @@ import {
 } from '@mantine/core';
 import { ChartTooltip } from '../ChartTooltip/ChartTooltip';
 import classes from './DonutChart.module.css';
+import React, { useState } from 'react';
 
 export interface DonutChartCell {
   name: string;
@@ -76,8 +77,11 @@ export interface DonutChartProps
   /** Controls thickness of the chart segments, `20` by default */
   thickness?: number;
 
-  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. `80` by default */
+  /** Controls chart area size along with side legend */
   size?: number;
+
+  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. `80` by default */
+  pieSize?: number;
 
   /** Controls width of segments stroke, `1` by default */
   strokeWidth?: number;
@@ -105,8 +109,20 @@ export interface DonutChartProps
 
   /** A function to format values inside the tooltip */
   valueFormatter?: (value: number) => string;
+
+  /** Defines the behavior of the legend. Can be 'hover' (hover to highlight segments) or 'side' (static side legend). */
   legendMode?: 'hover' | 'side';
-  legendOrientation?: 'top' | 'bottom' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'center-left' | 'center-right';
+
+  /** Specifies the position of the legend on the chart. */
+  legendOrientation?:
+    | 'top'
+    | 'bottom'
+    | 'top-left'
+    | 'top-right'
+    | 'bottom-left'
+    | 'bottom-right'
+    | 'center-left'
+    | 'center-right';
 }
 
 export type DonutChartFactory = Factory<{
@@ -210,6 +226,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
   } = props;
 
   const theme = useMantineTheme();
+  const [hoveredSegment, setHoveredSegment] = useState<string | null>(null);
 
   const getStyles = useStyles<DonutChartFactory>({
     name: 'DonutChart',
@@ -236,6 +253,13 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
       fill={getThemeColor(item.color, theme)}
       stroke="var(--chart-stroke-color, var(--mantine-color-body))"
       strokeWidth={strokeWidth}
+      fillOpacity={
+        legendMode === 'side' && hoveredSegment !== null
+          ? hoveredSegment === item.name
+            ? 1
+            : 0.5
+          : 1
+      }
     />
   ));
 
@@ -301,7 +325,9 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   type="radial"
-                  segmentId={tooltipDataSource === 'segment' ? payload?.[0]?.name : undefined}
+                  segmentId={
+                    tooltipDataSource === 'segment' ? payload?.[0]?.name : undefined
+                  }
                   valueFormatter={valueFormatter}
                 />
               )}
@@ -315,6 +341,8 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
               layout="vertical"
               verticalAlign="middle"
               align="right"
+              onMouseEnter={(e: any) => setHoveredSegment(e?.value as string)}
+              onMouseLeave={() => setHoveredSegment(null)}
               wrapperStyle={{
                 position: 'absolute',
                 left: `${legendOffset.x}px`,
