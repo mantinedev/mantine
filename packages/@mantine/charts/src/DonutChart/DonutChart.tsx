@@ -1,5 +1,7 @@
+import React, { useState } from 'react';
 import {
   Cell,
+  Legend,
   Pie,
   PieLabel,
   PieProps,
@@ -7,7 +9,6 @@ import {
   ResponsiveContainer,
   Tooltip,
   TooltipProps,
-  Legend,
 } from 'recharts';
 import {
   Box,
@@ -27,7 +28,6 @@ import {
 } from '@mantine/core';
 import { ChartTooltip } from '../ChartTooltip/ChartTooltip';
 import classes from './DonutChart.module.css';
-import React, { useState } from 'react';
 
 export interface DonutChartCell {
   name: string;
@@ -264,8 +264,8 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
   ));
 
   const legendPosition = {
-    'top': { x: 0, y: -180 },
-    'bottom': { x: 0, y: 180 },
+    top: { x: 0, y: -180 },
+    bottom: { x: 0, y: 180 },
     'top-left': { x: -180, y: -180 },
     'top-right': { x: 180, y: -180 },
     'bottom-left': { x: -180, y: 180 },
@@ -325,9 +325,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   type="radial"
-                  segmentId={
-                    tooltipDataSource === 'segment' ? payload?.[0]?.name : undefined
-                  }
+                  segmentId={tooltipDataSource === 'segment' ? payload?.[0]?.name : undefined}
                   valueFormatter={valueFormatter}
                 />
               )}
