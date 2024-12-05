@@ -83,4 +83,8 @@ export type { EyeDropperOpenReturnType } from './use-eye-dropper/use-eye-dropper
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
 export type { UseStateHistoryHandlers, StateHistory } from './use-state-history/use-state-history';
 export type { UseFetchOptions } from './use-fetch/use-fetch';
-export type { UseScrollSpyOptions, UseScrollSpyHeadingData } from './use-scroll-spy/use-scroll-spy';
+export type {
+  UseScrollSpyOptions,
+  UseScrollSpyHeadingData,
+  UseScrollSpyReturnType,
+} from './use-scroll-spy/use-scroll-spy';

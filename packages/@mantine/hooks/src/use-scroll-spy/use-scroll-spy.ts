@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { randomId } from '../utils';
 
 function getHeadingsData(
   headings: HTMLElement[],
@@ -9,14 +10,12 @@ function getHeadingsData(
 
   for (let i = 0; i < headings.length; i += 1) {
     const heading = headings[i];
-    if (heading.id) {
-      result.push({
-        depth: getDepth(heading),
-        value: getValue(heading),
-        id: heading.id,
-        getNode: () => document.getElementById(heading.id)!,
-      });
-    }
+    result.push({
+      depth: getDepth(heading),
+      value: getValue(heading),
+      id: heading.id || randomId(),
+      getNode: () => (heading.id ? document.getElementById(heading.id)! : heading),
+    });
   }
 
   return result;
@@ -77,11 +76,25 @@ export interface UseScrollSpyOptions {
   getValue?: (element: HTMLElement) => string;
 }
 
+export interface UseScrollSpyReturnType {
+  /** Index of the active heading in the `data` array */
+  active: number;
+
+  /** Headings data. If not initialize, data is represented by an empty array. */
+  data: UseScrollSpyHeadingData[];
+
+  /** True if headings value have been retrieved from the DOM. */
+  initialized: boolean;
+
+  /** Function to update headings values after the parent component has mounted. */
+  reinitialize: () => void;
+}
+
 export function useScrollSpy({
   selector = 'h1, h2, h3, h4, h5, h6',
   getDepth = getDefaultDepth,
   getValue = getDefaultValue,
-}: UseScrollSpyOptions = {}) {
+}: UseScrollSpyOptions = {}): UseScrollSpyReturnType {
   const [active, setActive] = useState(-1);
   const [initialized, setInitialized] = useState(false);
   const [data, setData] = useState<UseScrollSpyHeadingData[]>([]);

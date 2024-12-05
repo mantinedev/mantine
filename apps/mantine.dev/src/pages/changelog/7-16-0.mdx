@@ -1,8 +1,17 @@
-import { InputDemos } from '@docs/demos';
+import { InputDemos, HooksDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog7160);
+
+## use-scroll-spy hook
+
+New [use-scroll-spy](/hooks/use-scroll-spy) hook tracks scroll position and returns index of the
+element that is currently in the viewport. It is useful for creating
+table of contents components (like in mantine.dev sidebar on the right side)
+and similar features.
+
+<Demo data={HooksDemos.useScrollSpyUsage} />
 
 ## Input.ClearButton component
 
