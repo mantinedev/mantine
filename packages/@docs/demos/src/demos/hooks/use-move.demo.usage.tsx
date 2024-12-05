@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Code, Group, rem, Text } from '@mantine/core';
+import { Code, Group, Text } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { Group, Text, Code, rem } from '@mantine/core';
+import { Group, Text, Code } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 
 function Demo() {
@@ -18,8 +18,8 @@ function Demo() {
         <div
           ref={ref}
           style={{
-            width: rem(400),
-            height: rem(120),
+            width: 400,
+            height: 120,
             backgroundColor: 'var(--mantine-color-blue-light)',
             position: 'relative',
           }}
@@ -27,10 +27,10 @@ function Demo() {
           <div
             style={{
               position: 'absolute',
-              left: \`calc(\${value.x * 100}% - \${rem(8)})\`,
-              top: \`calc(\${value.y * 100}% - \${rem(8)})\`,
-              width: rem(16),
-              height: rem(16),
+              left: \`calc(\${value.x * 100}% - 8px)\`,
+              top: \`calc(\${value.y * 100}% - 8px)\`,
+              width: 16,
+              height: 16,
               backgroundColor: active ? 'var(--mantine-color-teal-7)' : 'var(--mantine-color-blue-7)',
             }}
           />
@@ -53,8 +53,8 @@ function Demo() {
         <div
           ref={ref}
           style={{
-            width: rem(400),
-            height: rem(120),
+            width: 400,
+            height: 120,
             backgroundColor: 'var(--mantine-color-blue-light)',
             position: 'relative',
           }}
@@ -62,10 +62,10 @@ function Demo() {
           <div
             style={{
               position: 'absolute',
-              left: `calc(${value.x * 100}% - ${rem(8)})`,
-              top: `calc(${value.y * 100}% - ${rem(8)})`,
-              width: rem(16),
-              height: rem(16),
+              left: `calc(${value.x * 100}% - 8px)`,
+              top: `calc(${value.y * 100}% - 8px)`,
+              width: 16,
+              height: 16,
               backgroundColor: active
                 ? 'var(--mantine-color-teal-7)'
                 : 'var(--mantine-color-blue-7)',

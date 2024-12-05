@@ -13,7 +13,7 @@ const data = [
   {
     icon: IconFingerprint,
     label: 'Security',
-    rightSection: <IconChevronRight size="1rem" stroke={1.5} />,
+    rightSection: <IconChevronRight size={16} stroke={1.5} />,
   },
   { icon: IconActivity, label: 'Activity' },
 ];
@@ -29,7 +29,7 @@ function Demo() {
       label={item.label}
       description={item.description}
       rightSection={item.rightSection}
-      leftSection={<item.icon size="1rem" stroke={1.5} />}
+      leftSection={<item.icon size={16} stroke={1.5} />}
       onClick={() => setActive(index)}
       {{props}}
     />
@@ -44,7 +44,7 @@ const data = [
   {
     icon: IconFingerprint,
     label: 'Security',
-    rightSection: <IconChevronRight size="1rem" stroke={1.5} className="mantine-rotate-rtl" />,
+    rightSection: <IconChevronRight size={16} stroke={1.5} className="mantine-rotate-rtl" />,
   },
   { icon: IconActivity, label: 'Activity' },
 ];
@@ -60,7 +60,7 @@ function Demo(props: any) {
       label={item.label}
       description={item.description}
       rightSection={item.rightSection}
-      leftSection={<item.icon size="1rem" stroke={1.5} />}
+      leftSection={<item.icon size={16} stroke={1.5} />}
       onClick={() => setActive(index)}
       {...props}
     />

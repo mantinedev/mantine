@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Carousel, Embla, useAnimationOffsetEffect } from '@mantine/carousel';
-import { Button, Modal, rem } from '@mantine/core';
+import { Button, Modal } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { Button, Modal, rem } from '@mantine/core';
+import { Button, Modal } from '@mantine/core';
 import { Carousel, Embla, useAnimationOffsetEffect } from '@mantine/carousel';
 
 function Demo() {
@@ -31,21 +31,21 @@ function Demo() {
             <img
               src="https://cataas.com/cat"
               alt="Cat"
-              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
+              style={{ width: 300, height: 200, objectFit: 'cover' }}
             />
           </Carousel.Slide>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat/cute"
               alt="Cat"
-              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
+              style={{ width: 300, height: 200, objectFit: 'cover' }}
             />
           </Carousel.Slide>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat/angry"
               alt="Cat"
-              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
+              style={{ width: 300, height: 200, objectFit: 'cover' }}
             />
           </Carousel.Slide>
         </Carousel>
@@ -78,21 +78,21 @@ function Demo() {
             <img
               src="https://cataas.com/cat"
               alt="Cat"
-              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
+              style={{ width: 300, height: 200, objectFit: 'cover' }}
             />
           </Carousel.Slide>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat/cute"
               alt="Cat"
-              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
+              style={{ width: 300, height: 200, objectFit: 'cover' }}
             />
           </Carousel.Slide>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat/angry"
               alt="Cat"
-              style={{ width: rem(300), height: rem(200), objectFit: 'cover' }}
+              style={{ width: 300, height: 200, objectFit: 'cover' }}
             />
           </Carousel.Slide>
         </Carousel>

@@ -31,7 +31,7 @@ function Demo() {
   return (
     <Group>
       <ActionIcon variant="default" onClick={pickColor}>
-        <IconColorPicker size="1rem" stroke={1.5} />
+        <IconColorPicker size={16} stroke={1.5} />
       </ActionIcon>
       {color ? (
         <Group gap="xs">
@@ -68,7 +68,7 @@ function Demo() {
   return (
     <Group>
       <ActionIcon variant="default" onClick={pickColor}>
-        <IconColorPicker size="1rem" stroke={1.5} />
+        <IconColorPicker size={16} stroke={1.5} />
       </ActionIcon>
       {color ? (
         <Group gap="xs">

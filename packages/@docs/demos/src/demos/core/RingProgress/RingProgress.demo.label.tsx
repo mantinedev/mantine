@@ -1,9 +1,9 @@
 import { IconCheck } from '@tabler/icons-react';
-import { ActionIcon, Center, Group, rem, RingProgress, Text } from '@mantine/core';
+import { ActionIcon, Center, Group, RingProgress, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { ActionIcon, RingProgress, Text, Center, rem } from '@mantine/core';
+import { ActionIcon, RingProgress, Text, Center } from '@mantine/core';
 import { IconCheck } from '@tabler/icons-react';
 
 function Demo() {
@@ -23,7 +23,7 @@ function Demo() {
         label={
           <Center>
             <ActionIcon color="teal" variant="light" radius="xl" size="xl">
-              <IconCheck style={{ width: rem(22), height: rem(22) }} />
+              <IconCheck size={22} />
             </ActionIcon>
           </Center>
         }
@@ -50,7 +50,7 @@ function Demo() {
         label={
           <Center>
             <ActionIcon color="teal" variant="light" radius="xl" size="xl">
-              <IconCheck style={{ width: rem(22), height: rem(22) }} />
+              <IconCheck size={22} />
             </ActionIcon>
           </Center>
         }

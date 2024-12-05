@@ -1,16 +1,14 @@
-import { rem } from '@mantine/core';
 import { createStyles } from '@mantine/emotion';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { createStyles } from '@mantine/emotion';
-import { rem } from '@mantine/core';
 
 const useStyles = createStyles((theme, _, u) => ({
   wrapper: {
-    maxWidth: rem(400),
+    maxWidth: 400,
     width: '100%',
-    height: rem(180),
+    height: 180,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -68,9 +66,9 @@ function Demo() {
 
 const useStyles = createStyles((theme, _, u) => ({
   wrapper: {
-    maxWidth: rem(400),
+    maxWidth: 400,
     width: '100%',
-    height: rem(180),
+    height: 180,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

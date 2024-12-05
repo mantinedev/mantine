@@ -1,5 +1,3 @@
-import { rem } from '@mantine/core';
-
 interface AddressBookIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   size?: number | string;
 }
@@ -14,7 +12,7 @@ export function AddressBookIcon({ size, style, ...others }: AddressBookIconProps
       strokeLinejoin="round"
       strokeWidth="1.5"
       viewBox="0 0 24 24"
-      style={{ width: rem(size), height: rem(size), ...style }}
+      style={{ width: size, height: size, ...style }}
       {...others}
     >
       <path stroke="none" d="M0 0h24v24H0z" />

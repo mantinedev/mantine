@@ -9,4 +9,5 @@
   font-size: var(--mantine-font-size-xl);
   font-weight: bold;
   text-align: center;
+  height: 100%;
 }

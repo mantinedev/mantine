@@ -21,12 +21,7 @@ function Demo(props: any) {
       <Notification title="Please wait" loading withCloseButton={false} {...props}>
         The application is trying to reconnect to the server
       </Notification>
-      <Notification
-        mt="md"
-        icon={<IconCheck size="1.2rem" />}
-        title="We notify you that"
-        {...props}
-      >
+      <Notification mt="md" icon={<IconCheck size={18} />} title="We notify you that" {...props}>
         You are now obligated to give a star to Mantine project on GitHub
       </Notification>
     </Box>

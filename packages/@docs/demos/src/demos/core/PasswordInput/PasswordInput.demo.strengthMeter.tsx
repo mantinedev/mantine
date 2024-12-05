@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { IconCheck, IconX } from '@tabler/icons-react';
-import { Box, PasswordInput, Popover, Progress, rem, Text } from '@mantine/core';
+import { Box, PasswordInput, Popover, Progress, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
 import { IconX, IconCheck } from '@tabler/icons-react';
-import { PasswordInput, Progress, Text, Popover, Box, rem } from '@mantine/core';
+import { PasswordInput, Progress, Text, Popover, Box } from '@mantine/core';
 
 function PasswordRequirement({ meets, label }: { meets: boolean; label: string }) {
   return (
@@ -16,11 +16,7 @@ function PasswordRequirement({ meets, label }: { meets: boolean; label: string }
       mt={7}
       size="sm"
     >
-      {meets ? (
-        <IconCheck style={{ width: rem(14), height: rem(14) }} />
-      ) : (
-        <IconX style={{ width: rem(14), height: rem(14) }} />
-      )}{' '}
+      {meets ? <IconCheck size={14} /> : <IconX size={14} />}
       <Box ml={10}>{label}</Box>
     </Text>
   );
@@ -89,11 +85,7 @@ function PasswordRequirement({ meets, label }: { meets: boolean; label: string }
       mt={7}
       size="sm"
     >
-      {meets ? (
-        <IconCheck style={{ width: rem(14), height: rem(14) }} />
-      ) : (
-        <IconX style={{ width: rem(14), height: rem(14) }} />
-      )}{' '}
+      {meets ? <IconCheck size={14} /> : <IconX size={14} />}
       <Box ml={10}>{label}</Box>
     </Text>
   );

@@ -1,8 +1,8 @@
-import { Button, rem } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Button, rem } from '@mantine/core';
+import { Button } from '@mantine/core';
 
 function Demo() {
   const gradient =
@@ -13,7 +13,7 @@ function Demo() {
       radius="md"
       styles={{
         root: {
-          padding: rem(2),
+          padding: 2,
           border: 0,
           backgroundImage: gradient,
         },
@@ -48,7 +48,7 @@ function Demo() {
       radius="md"
       styles={{
         root: {
-          padding: rem(2),
+          padding: 2,
           border: 0,
           backgroundImage: gradient,
         },

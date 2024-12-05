@@ -1,9 +1,9 @@
 import { IconDots, IconEye, IconFileZip, IconTrash } from '@tabler/icons-react';
-import { ActionIcon, Card, Group, Image, Menu, rem, SimpleGrid, Text } from '@mantine/core';
+import { ActionIcon, Card, Group, Image, Menu, SimpleGrid, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Card, Group, Text, Menu, ActionIcon, Image, SimpleGrid, rem } from '@mantine/core';
+import { ActionIcon, Card, Group, Image, Menu, SimpleGrid, Text } from '@mantine/core';
 import { IconDots, IconEye, IconFileZip, IconTrash } from '@tabler/icons-react';
 
 const images = [
@@ -21,19 +21,19 @@ function Demo() {
           <Menu withinPortal position="bottom-end" shadow="sm">
             <Menu.Target>
               <ActionIcon variant="subtle" color="gray">
-                <IconDots style={{ width: rem(16), height: rem(16) }} />
+                <IconDots size={16} />
               </ActionIcon>
             </Menu.Target>
 
             <Menu.Dropdown>
-              <Menu.Item leftSection={<IconFileZip style={{ width: rem(14), height: rem(14) }} />}>
+              <Menu.Item leftSection={<IconFileZip size={14} />}>
                 Download zip
               </Menu.Item>
-              <Menu.Item leftSection={<IconEye style={{ width: rem(14), height: rem(14) }} />}>
+              <Menu.Item leftSection={<IconEye size={14} />}>
                 Preview all
               </Menu.Item>
               <Menu.Item
-                leftSection={<IconTrash style={{ width: rem(14), height: rem(14) }} />}
+                leftSection={<IconTrash size={14} />}
                 color="red"
               >
                 Delete all
@@ -81,21 +81,14 @@ function Demo() {
           <Menu withinPortal position="bottom-end" shadow="sm">
             <Menu.Target>
               <ActionIcon variant="subtle" color="gray">
-                <IconDots style={{ width: rem(16), height: rem(16) }} />
+                <IconDots size={16} />
               </ActionIcon>
             </Menu.Target>
 
             <Menu.Dropdown>
-              <Menu.Item leftSection={<IconFileZip style={{ width: rem(14), height: rem(14) }} />}>
-                Download zip
-              </Menu.Item>
-              <Menu.Item leftSection={<IconEye style={{ width: rem(14), height: rem(14) }} />}>
-                Preview all
-              </Menu.Item>
-              <Menu.Item
-                leftSection={<IconTrash style={{ width: rem(14), height: rem(14) }} />}
-                color="red"
-              >
+              <Menu.Item leftSection={<IconFileZip size={14} />}>Download zip</Menu.Item>
+              <Menu.Item leftSection={<IconEye size={14} />}>Preview all</Menu.Item>
+              <Menu.Item leftSection={<IconTrash size={14} />} color="red">
                 Delete all
               </Menu.Item>
             </Menu.Dropdown>

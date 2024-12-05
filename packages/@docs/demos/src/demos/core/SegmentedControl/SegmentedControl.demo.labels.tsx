@@ -1,9 +1,9 @@
 import { IconCode, IconExternalLink, IconEye } from '@tabler/icons-react';
-import { Center, rem, SegmentedControl } from '@mantine/core';
+import { Center, SegmentedControl } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Center, SegmentedControl, rem } from '@mantine/core';
+import { Center, SegmentedControl } from '@mantine/core';
 import { IconEye, IconCode, IconExternalLink } from '@tabler/icons-react';
 
 function Demo() {
@@ -14,7 +14,7 @@ function Demo() {
           value: 'preview',
           label: (
             <Center style={{ gap: 10 }}>
-              <IconEye style={{ width: rem(16), height: rem(16) }} />
+              <IconEye size={16} />
               <span>Preview</span>
             </Center>
           ),
@@ -23,7 +23,7 @@ function Demo() {
           value: 'code',
           label: (
             <Center style={{ gap: 10 }}>
-              <IconCode style={{ width: rem(16), height: rem(16) }} />
+              <IconCode size={16} />
               <span>Code</span>
             </Center>
           ),
@@ -32,7 +32,7 @@ function Demo() {
           value: 'export',
           label: (
             <Center style={{ gap: 10 }}>
-              <IconExternalLink style={{ width: rem(16), height: rem(16) }} />
+              <IconExternalLink size={16} />
               <span>Export</span>
             </Center>
           ),
@@ -51,7 +51,7 @@ function Demo() {
           value: 'preview',
           label: (
             <Center style={{ gap: 10 }}>
-              <IconEye style={{ width: rem(16), height: rem(16) }} />
+              <IconEye size={16} />
               <span>Preview</span>
             </Center>
           ),
@@ -60,7 +60,7 @@ function Demo() {
           value: 'code',
           label: (
             <Center style={{ gap: 10 }}>
-              <IconCode style={{ width: rem(16), height: rem(16) }} />
+              <IconCode size={16} />
               <span>Code</span>
             </Center>
           ),
@@ -69,7 +69,7 @@ function Demo() {
           value: 'export',
           label: (
             <Center style={{ gap: 10 }}>
-              <IconExternalLink style={{ width: rem(16), height: rem(16) }} />
+              <IconExternalLink size={16} />
               <span>Export</span>
             </Center>
           ),

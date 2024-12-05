@@ -1,10 +1,10 @@
 import { IconMessageCircle, IconPhoto, IconSettings } from '@tabler/icons-react';
-import { rem, Tabs } from '@mantine/core';
+import { Tabs } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Tabs.demo.customize.module.css';
 
 const code = `
-import { Tabs, rem } from '@mantine/core';
+import { Tabs } from '@mantine/core';
 import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
 import classes from './Demo.module.css';
 
@@ -14,19 +14,19 @@ function Demo() {
       <Tabs.List grow>
         <Tabs.Tab
           value="settings"
-          leftSection={<IconSettings style={{ width: rem(16), height: rem(16) }} />}
+          leftSection={<IconSettings size={16} />}
         >
           Settings
         </Tabs.Tab>
         <Tabs.Tab
           value="messages"
-          leftSection={<IconMessageCircle style={{ width: rem(16), height: rem(16) }} />}
+          leftSection={<IconMessageCircle size={16} />}
         >
           Messages
         </Tabs.Tab>
         <Tabs.Tab
           value="gallery"
-          leftSection={<IconPhoto style={{ width: rem(16), height: rem(16) }} />}
+          leftSection={<IconPhoto size={16} />}
         >
           Gallery
         </Tabs.Tab>
@@ -87,22 +87,13 @@ function Demo() {
   return (
     <Tabs variant="unstyled" defaultValue="settings" classNames={classes}>
       <Tabs.List grow>
-        <Tabs.Tab
-          value="settings"
-          leftSection={<IconSettings style={{ width: rem(16), height: rem(16) }} />}
-        >
+        <Tabs.Tab value="settings" leftSection={<IconSettings size={16} />}>
           Settings
         </Tabs.Tab>
-        <Tabs.Tab
-          value="messages"
-          leftSection={<IconMessageCircle style={{ width: rem(16), height: rem(16) }} />}
-        >
+        <Tabs.Tab value="messages" leftSection={<IconMessageCircle size={16} />}>
           Messages
         </Tabs.Tab>
-        <Tabs.Tab
-          value="gallery"
-          leftSection={<IconPhoto style={{ width: rem(16), height: rem(16) }} />}
-        >
+        <Tabs.Tab value="gallery" leftSection={<IconPhoto size={16} />}>
           Gallery
         </Tabs.Tab>
       </Tabs.List>

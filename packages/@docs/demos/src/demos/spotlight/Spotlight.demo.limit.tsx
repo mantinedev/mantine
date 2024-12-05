@@ -1,11 +1,10 @@
 import { IconSearch } from '@tabler/icons-react';
-import { rem } from '@mantine/core';
 import { SpotlightActionData } from '@mantine/spotlight';
 import { MantineDemo } from '@mantinex/demo';
 import { SpotlightDemoBase } from './_demo-base';
 
 const code = `
-import { rem, Button } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { Spotlight, SpotlightActionData, spotlight } from '@mantine/spotlight';
 import { IconSearch } from '@tabler/icons-react';
 
@@ -27,7 +26,7 @@ function Demo() {
         highlightQuery
         limit={7}
         searchProps={{
-          leftSection: <IconSearch style={{ width: rem(20), height: rem(20) }} stroke={1.5} />,
+          leftSection: <IconSearch size={20} stroke={1.5} />,
           placeholder: 'Search...',
         }}
       />
@@ -53,7 +52,7 @@ function Demo() {
       limit={7}
       shortcut={null}
       searchProps={{
-        leftSection: <IconSearch style={{ width: rem(20), height: rem(20) }} stroke={1.5} />,
+        leftSection: <IconSearch size={20} stroke={1.5} />,
         placeholder: 'Search...',
       }}
     />

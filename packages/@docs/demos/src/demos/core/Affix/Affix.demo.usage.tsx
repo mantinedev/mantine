@@ -1,12 +1,12 @@
 import { IconArrowUp } from '@tabler/icons-react';
-import { Affix, Button, rem, Text, Transition } from '@mantine/core';
+import { Affix, Button, Text, Transition } from '@mantine/core';
 import { useWindowScroll } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { IconArrowUp } from '@tabler/icons-react';
 import { useWindowScroll } from '@mantine/hooks';
-import { Affix, Button, Text, Transition, rem } from '@mantine/core';
+import { Affix, Button, Text, Transition } from '@mantine/core';
 
 function Demo() {
   const [scroll, scrollTo] = useWindowScroll();
@@ -18,7 +18,7 @@ function Demo() {
         <Transition transition="slide-up" mounted={scroll.y > 0}>
           {(transitionStyles) => (
             <Button
-              leftSection={<IconArrowUp style={{ width: rem(16), height: rem(16) }} />}
+              leftSection={<IconArrowUp size={16} />}
               style={transitionStyles}
               onClick={() => scrollTo({ y: 0 })}
             >
@@ -42,7 +42,7 @@ function Demo() {
         <Transition transition="slide-up" mounted={scroll.y > 0}>
           {(transitionStyles) => (
             <Button
-              leftSection={<IconArrowUp style={{ width: rem(16), height: rem(16) }} />}
+              leftSection={<IconArrowUp size={16} />}
               style={transitionStyles}
               onClick={() => scrollTo({ y: 0 })}
             >

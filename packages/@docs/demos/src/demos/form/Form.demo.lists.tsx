@@ -33,7 +33,7 @@ function Demo() {
         {...form.getInputProps(\`employees.\${index}.active\`, { type: 'checkbox' })}
       />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
-        <IconTrash size="1rem" />
+        <IconTrash size={16} />
       </ActionIcon>
     </Group>
   ));
@@ -94,7 +94,7 @@ function Demo() {
         {...form.getInputProps(`employees.${index}.active`, { type: 'checkbox' })}
       />
       <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
-        <IconTrash size="1rem" />
+        <IconTrash size={16} />
       </ActionIcon>
     </Group>
   ));

@@ -1,11 +1,9 @@
 import { useState } from 'react';
-import { rem } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { rem } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 
 function Demo() {
@@ -17,8 +15,8 @@ function Demo() {
       <div
         ref={ref}
         style={{
-          width: rem(300),
-          height: rem(150),
+          width: 300,
+          height: 150,
           backgroundColor: 'red',
           position: 'relative',
         }}
@@ -49,12 +47,12 @@ function Demo() {
         <div
           style={{
             position: 'absolute',
-            left: \`calc(\${value.x * 100}% - \${rem(8)})\`,
-            top: \`calc(\${value.y * 100}% - \${rem(8)})\`,
-            width: rem(16),
-            height: rem(16),
-            border: \`\${rem(2)} solid #fff\`,
-            borderRadius: rem(16),
+            left: \`calc(\${value.x * 100}% - 8px)\`,
+            top: \`calc(\${value.y * 100}% - 8px)\`,
+            width: 16,
+            height: 16,
+            border: '2px solid #fff',
+            borderRadius: 16,
           }}
         />
       </div>
@@ -71,8 +69,8 @@ function Demo() {
       <div
         ref={ref}
         style={{
-          width: rem(300),
-          height: rem(150),
+          width: 300,
+          height: 150,
           backgroundColor: 'red',
           position: 'relative',
         }}
@@ -103,12 +101,12 @@ function Demo() {
         <div
           style={{
             position: 'absolute',
-            left: `calc(${value.x * 100}% - ${rem(8)})`,
-            top: `calc(${value.y * 100}% - ${rem(8)})`,
-            width: rem(16),
-            height: rem(16),
-            border: `${rem(2)} solid #fff`,
-            borderRadius: rem(16),
+            left: `calc(${value.x * 100}% - 8px)`,
+            top: `calc(${value.y * 100}% - 8px)`,
+            width: 16,
+            height: 16,
+            border: '2px solid #fff',
+            borderRadius: 16,
           }}
         />
       </div>

@@ -1,9 +1,9 @@
 import { IconCircleX } from '@tabler/icons-react';
-import { rem, Stepper } from '@mantine/core';
+import { Stepper } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Stepper, rem } from '@mantine/core';
+import { Stepper } from '@mantine/core';
 import { IconCircleX } from '@tabler/icons-react';
 
 function Demo() {
@@ -14,7 +14,7 @@ function Demo() {
         label="Step 2"
         description="Verify email"
         color="red"
-        completedIcon={<IconCircleX style={{ width: rem(20), height: rem(20) }} />}
+        completedIcon={<IconCircleX size={20} />}
       />
       <Stepper.Step label="Step 3" description="Get full access" />
     </Stepper>
@@ -30,7 +30,7 @@ function Demo() {
         label="Step 2"
         description="Verify email"
         color="red"
-        completedIcon={<IconCircleX style={{ width: rem(20), height: rem(20) }} />}
+        completedIcon={<IconCircleX size={20} />}
       />
       <Stepper.Step label="Step 3" description="Get full access" />
     </Stepper>

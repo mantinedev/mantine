@@ -1,9 +1,9 @@
-import { Box, Portal, rem, Text } from '@mantine/core';
+import { Box, Portal, Text } from '@mantine/core';
 import { useHeadroom } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Box, Portal, rem, Text } from '@mantine/core';
+import { Box, Portal, Text } from '@mantine/core';
 import { useHeadroom } from '@mantine/hooks';
 
 function Demo() {
@@ -19,9 +19,9 @@ function Demo() {
             left: 0,
             right: 0,
             padding: 'var(--mantine-spacing-xs)',
-            height: rem(60),
+            height: 60,
             zIndex: 1000000,
-            transform: \`translate3d(0, \${pinned ? 0 : rem(-110)}, 0)\`,
+            transform: \`translate3d(0, \${pinned ? 0 : '-110px'}, 0)\`,
             transition: 'transform 400ms ease',
             backgroundColor: 'var(--mantine-color-body)',
           }}
@@ -49,9 +49,9 @@ function Demo() {
             left: 0,
             right: 0,
             padding: 'var(--mantine-spacing-xs)',
-            height: rem(60),
+            height: 60,
             zIndex: 1000000,
-            transform: `translate3d(0, ${pinned ? 0 : rem(-110)}, 0)`,
+            transform: `translate3d(0, ${pinned ? 0 : '-110px'}, 0)`,
             transition: 'transform 400ms ease',
             backgroundColor: 'var(--mantine-color-body)',
           }}

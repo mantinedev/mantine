@@ -1,11 +1,11 @@
 import { IconAt } from '@tabler/icons-react';
-import { FileInput, rem } from '@mantine/core';
+import { FileInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { FileInputStylesApi } from '@docs/styles-api';
 
 const code = `
 import { IconAt } from '@tabler/icons-react';
-import { FileInput, rem } from '@mantine/core';
+import { FileInput } from '@mantine/core';
 
 function Demo() {
   return (
@@ -15,7 +15,7 @@ function Demo() {
       description="Description"
       error="Error"
       withAsterisk
-      leftSection={<IconAt style={{ width: rem(18), height: rem(18) }} />}
+      leftSection={<IconAt size={18} />}
       {{props}}
     />
   );
@@ -30,7 +30,7 @@ function Demo(props: any) {
       description="Description"
       error="Error"
       withAsterisk
-      leftSection={<IconAt style={{ width: rem(18), height: rem(18) }} />}
+      leftSection={<IconAt size={18} />}
       {...props}
     />
   );

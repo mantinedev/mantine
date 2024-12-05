@@ -1,30 +1,32 @@
-import { Grid, GridProps, rem } from '@mantine/core';
+import { Grid, GridProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { ColWrapper as Col } from './_col-wrapper';
 
 function Wrapper(props: GridProps) {
   return (
     <Grid {...props} id="grid-configurator">
-      <Col span={3} style={{ minHeight: rem(80) }}>
+      <Col span={3} h={80}>
         1
       </Col>
-      <Col span={3} style={{ minHeight: rem(120) }}>
+      <Col span={3} h={120}>
         2
       </Col>
-      <Col span={3}>3</Col>
+      <Col span={3} h={100}>
+        3
+      </Col>
     </Grid>
   );
 }
 
 const code = `
-import { Grid, rem } from '@mantine/core';
+import { Grid } from '@mantine/core';
 
 function Demo() {
   return (
     <Grid{{props}}>
-      <Grid.Col span={3} style={{ minHeight: rem(80) }}>1</Grid.Col>
-      <Grid.Col span={3} style={{ minHeight: rem(120) }}>2</Grid.Col>
-      <Grid.Col span={3}>3</Grid.Col>
+      <Grid.Col span={3} h={80}>1</Grid.Col>
+      <Grid.Col span={3} h={120}>2</Grid.Col>
+      <Grid.Col span={3} h={100}>3</Grid.Col>
     </Grid>
   );
 }
@@ -51,13 +53,12 @@ export const flexConfigurator: MantineDemo = {
     {
       prop: 'align',
       type: 'select',
-      initialValue: 'stretch',
+      initialValue: 'flex-start',
       libraryValue: '__',
       data: [
         { label: 'flex-start', value: 'flex-start' },
         { label: 'flex-end', value: 'flex-end' },
         { label: 'center', value: 'center' },
-        { label: 'stretch', value: 'stretch' },
       ],
     },
   ],

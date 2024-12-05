@@ -1,9 +1,9 @@
 import { IconExclamationCircle } from '@tabler/icons-react';
-import { rem, TextInput } from '@mantine/core';
+import { TextInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { TextInput, rem } from '@mantine/core';
+import { TextInput } from '@mantine/core';
 import { IconExclamationCircle } from '@tabler/icons-react';
 
 function Demo() {
@@ -26,7 +26,7 @@ function Demo() {
         rightSectionPointerEvents="none"
         rightSection={
           <IconExclamationCircle
-            style={{ width: rem(20), height: rem(20) }}
+            size={20}
             color="var(--mantine-color-error)"
           />
         }
@@ -54,12 +54,7 @@ function Demo() {
         error="Something went wrong"
         withErrorStyles={false}
         rightSectionPointerEvents="none"
-        rightSection={
-          <IconExclamationCircle
-            style={{ width: rem(20), height: rem(20) }}
-            color="var(--mantine-color-error)"
-          />
-        }
+        rightSection={<IconExclamationCircle size={20} color="var(--mantine-color-error)" />}
       />
     </>
   );

@@ -3,7 +3,7 @@ import { MantineDemo } from '@mantinex/demo';
 import { ColorInputStylesApi } from '@docs/styles-api';
 
 const code = `
-import { ColorInput, rem } from '@mantine/core';
+import { ColorInput } from '@mantine/core';
 
 function Demo() {
   return (

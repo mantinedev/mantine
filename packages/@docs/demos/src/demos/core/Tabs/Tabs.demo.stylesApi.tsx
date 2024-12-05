@@ -1,24 +1,22 @@
 import { IconMessageCircle, IconPhoto, IconSettings } from '@tabler/icons-react';
-import { rem, Tabs, TabsProps } from '@mantine/core';
+import { Tabs, TabsProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { TabsStylesApi } from '@docs/styles-api';
 
 const code = `
-import { Tabs, rem } from '@mantine/core';
+import { Tabs } from '@mantine/core';
 
 function Demo() {
-  const iconStyle = { width: rem(12), height: rem(12) };
-
   return (
     <Tabs defaultValue="gallery"{{props}}>
       <Tabs.List>
-        <Tabs.Tab value="gallery" leftSection={<IconPhoto style={iconStyle} />}>
+        <Tabs.Tab value="gallery" leftSection={<IconPhoto size={12} />}>
           Gallery
         </Tabs.Tab>
-        <Tabs.Tab value="messages" leftSection={<IconMessageCircle style={iconStyle} />}>
+        <Tabs.Tab value="messages" leftSection={<IconMessageCircle size={12} />}>
           Messages
         </Tabs.Tab>
-        <Tabs.Tab value="settings" rightSection={<IconSettings style={iconStyle} />}>
+        <Tabs.Tab value="settings" rightSection={<IconSettings size={12} />}>
           Settings
         </Tabs.Tab>
       </Tabs.List>
@@ -40,18 +38,16 @@ function Demo() {
 `;
 
 function Demo(props: TabsProps) {
-  const iconStyle = { width: rem(12), height: rem(12) };
-
   return (
     <Tabs defaultValue="gallery" {...props}>
       <Tabs.List>
-        <Tabs.Tab value="gallery" leftSection={<IconPhoto style={iconStyle} />}>
+        <Tabs.Tab value="gallery" leftSection={<IconPhoto size={12} />}>
           Gallery
         </Tabs.Tab>
-        <Tabs.Tab value="messages" leftSection={<IconMessageCircle style={iconStyle} />}>
+        <Tabs.Tab value="messages" leftSection={<IconMessageCircle size={12} />}>
           Messages
         </Tabs.Tab>
-        <Tabs.Tab value="settings" rightSection={<IconSettings style={iconStyle} />}>
+        <Tabs.Tab value="settings" rightSection={<IconSettings size={12} />}>
           Settings
         </Tabs.Tab>
       </Tabs.List>

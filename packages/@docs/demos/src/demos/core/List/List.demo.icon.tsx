@@ -1,9 +1,9 @@
 import { IconCircleCheck, IconCircleDashed } from '@tabler/icons-react';
-import { List, rem, ThemeIcon } from '@mantine/core';
+import { List, ThemeIcon } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { List, ThemeIcon, rem } from '@mantine/core';
+import { List, ThemeIcon } from '@mantine/core';
 import { IconCircleCheck, IconCircleDashed } from '@tabler/icons-react';
 
 function Demo() {
@@ -14,7 +14,7 @@ function Demo() {
       center
       icon={
         <ThemeIcon color="teal" size={24} radius="xl">
-          <IconCircleCheck style={{ width: rem(16), height: rem(16) }} />
+          <IconCircleCheck size={16} />
         </ThemeIcon>
       }
     >
@@ -25,7 +25,7 @@ function Demo() {
       <List.Item
         icon={
           <ThemeIcon color="blue" size={24} radius="xl">
-            <IconCircleDashed style={{ width: rem(16), height: rem(16) }} />
+            <IconCircleDashed size={16} />
           </ThemeIcon>
         }
       >
@@ -44,7 +44,7 @@ function Demo() {
       center
       icon={
         <ThemeIcon color="teal" size={24} radius="xl">
-          <IconCircleCheck style={{ width: rem(16), height: rem(16) }} />
+          <IconCircleCheck size={16} />
         </ThemeIcon>
       }
     >
@@ -55,7 +55,7 @@ function Demo() {
       <List.Item
         icon={
           <ThemeIcon color="blue" size={24} radius="xl">
-            <IconCircleDashed style={{ width: rem(16), height: rem(16) }} />
+            <IconCircleDashed size={16} />
           </ThemeIcon>
         }
       >

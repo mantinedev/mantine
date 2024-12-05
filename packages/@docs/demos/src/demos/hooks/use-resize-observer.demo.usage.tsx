@@ -1,9 +1,9 @@
-import { Code, Group, rem, Text, useMantineTheme } from '@mantine/core';
+import { Code, Group, Text, useMantineTheme } from '@mantine/core';
 import { useResizeObserver } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Text, Code, rem } from '@mantine/core';
+import { Text, Code } from '@mantine/core';
 import { useResizeObserver } from '@mantine/hooks';
 
 function Demo() {
@@ -11,7 +11,7 @@ function Demo() {
 
   return (
     <>
-      <textarea ref={ref} style={{ width: rem(400), height: rem(120) }} />
+      <textarea ref={ref} style={{ width: 400, height: 120 }} />
       <Text ta="center">Rect: <Code>{JSON.stringify(rect)}</Code></Text>
     </>
   );
@@ -31,8 +31,8 @@ function Demo() {
         <textarea
           ref={ref}
           style={{
-            width: rem(400),
-            height: rem(120),
+            width: 400,
+            height: 120,
             border: 'none',
             backgroundColor: 'var(--mantine-color-body)',
             position: 'relative',

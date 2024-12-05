@@ -1,13 +1,13 @@
 import { IconFileCv } from '@tabler/icons-react';
-import { FileInput, rem } from '@mantine/core';
+import { FileInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { FileInput, rem } from '@mantine/core';
+import { FileInput } from '@mantine/core';
 import { IconFileCv } from '@tabler/icons-react';
 
 function Demo() {
-  const icon = <IconFileCv style={{ width: rem(18), height: rem(18) }} stroke={1.5} />;
+  const icon = <IconFileCv size={18} stroke={1.5} />;
 
   return (
     <>
@@ -30,7 +30,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const icon = <IconFileCv style={{ width: rem(18), height: rem(18) }} stroke={1.5} />;
+  const icon = <IconFileCv size={18} stroke={1.5} />;
 
   return (
     <>

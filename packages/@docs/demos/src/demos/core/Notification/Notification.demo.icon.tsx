@@ -1,14 +1,14 @@
 import { IconCheck, IconX } from '@tabler/icons-react';
-import { Notification, rem } from '@mantine/core';
+import { Notification } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { IconX, IconCheck } from '@tabler/icons-react';
-import { Notification, rem } from '@mantine/core';
+import { Notification } from '@mantine/core';
 
 function Demo() {
-  const xIcon = <IconX style={{ width: rem(20), height: rem(20) }} />;
-  const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />;
+  const xIcon = <IconX size={20} />;
+  const checkIcon = <IconCheck size={20} />;
 
   return (
     <>
@@ -24,8 +24,8 @@ function Demo() {
 `;
 
 function Demo() {
-  const xIcon = <IconX style={{ width: rem(20), height: rem(20) }} />;
-  const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />;
+  const xIcon = <IconX size={20} />;
+  const checkIcon = <IconCheck size={20} />;
 
   return (
     <>

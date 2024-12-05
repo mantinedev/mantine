@@ -1,14 +1,15 @@
 import { IconCode, IconExternalLink, IconEye } from '@tabler/icons-react';
-import { rem, SegmentedControl, VisuallyHidden } from '@mantine/core';
+import { SegmentedControl, VisuallyHidden } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { SegmentedControl, VisuallyHidden, rem } from '@mantine/core';
+import { SegmentedControl, VisuallyHidden } from '@mantine/core';
 import { IconEye, IconCode, IconExternalLink } from '@tabler/icons-react';
 
 function Demo() {
   const iconProps = {
-    style: { width: rem(20), height: rem(20), display: 'block' },
+    style: { display: 'block' },
+    size: 20,
     stroke: 1.5,
   };
 
@@ -50,7 +51,8 @@ function Demo() {
 
 function Demo() {
   const iconProps = {
-    style: { width: rem(20), height: rem(20), display: 'block' },
+    style: { display: 'block' },
+    size: 20,
     stroke: 1.5,
   };
 

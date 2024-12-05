@@ -1,15 +1,15 @@
 import { IconX } from '@tabler/icons-react';
-import { Chip, rem } from '@mantine/core';
+import { Chip } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Chip, rem } from '@mantine/core';
+import { Chip } from '@mantine/core';
 import { IconX } from '@tabler/icons-react';
 
 function Demo() {
   return (
     <Chip
-      icon={<IconX style={{ width: rem(16), height: rem(16) }} />}
+      icon={<IconX size={16} />}
       color="red"
       variant="filled"
       defaultChecked
@@ -22,12 +22,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Chip
-      icon={<IconX style={{ width: rem(16), height: rem(16) }} />}
-      color="red"
-      variant="filled"
-      defaultChecked
-    >
+    <Chip icon={<IconX size={16} />} color="red" variant="filled" defaultChecked>
       Forbidden
     </Chip>
   );

@@ -1,11 +1,11 @@
 import { IconLock } from '@tabler/icons-react';
-import { PasswordInput, rem } from '@mantine/core';
+import { PasswordInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { PasswordInputStylesApi } from '@docs/styles-api';
 
 const code = `
 import { IconLock } from '@tabler/icons-react';
-import { PasswordInput, rem } from '@mantine/core';
+import { PasswordInput } from '@mantine/core';
 
 function Demo() {
   return (
@@ -15,7 +15,7 @@ function Demo() {
       description="Description"
       error="Error"
       withAsterisk
-      leftSection={<IconLock style={{ width: rem(18), height: rem(18) }} />}
+      leftSection={<IconLock size={18} />}
       {{props}}
     />
   );
@@ -30,7 +30,7 @@ function Demo(props: any) {
       description="Description"
       error="Error"
       withAsterisk
-      leftSection={<IconLock style={{ width: rem(18), height: rem(18) }} />}
+      leftSection={<IconLock size={18} />}
       {...props}
     />
   );

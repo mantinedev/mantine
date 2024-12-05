@@ -1,13 +1,13 @@
 import { IconComponents } from '@tabler/icons-react';
-import { rem, TagsInput } from '@mantine/core';
+import { TagsInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { TagsInput, rem } from '@mantine/core';
+import { TagsInput } from '@mantine/core';
 import { IconComponents } from '@tabler/icons-react';
 
 function Demo() {
-  const icon = <IconComponents style={{ width: rem(16), height: rem(16) }} />;
+  const icon = <IconComponents size={16} />;
   return (
     <>
       <TagsInput
@@ -31,7 +31,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const icon = <IconComponents style={{ width: rem(16), height: rem(16) }} />;
+  const icon = <IconComponents size={16} />;
   return (
     <>
       <TagsInput

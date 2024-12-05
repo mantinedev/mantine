@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { rem, Stepper, StepperProps } from '@mantine/core';
+import { Stepper, StepperProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { Stepper, StepperProps, rem } from '@mantine/core';
+import { Stepper, StepperProps } from '@mantine/core';
 
 function StyledStepper(props: StepperProps) {
   return (
@@ -19,13 +19,13 @@ function StyledStepper(props: StepperProps) {
         },
 
         stepIcon: {
-          borderWidth: rem(4),
+          borderWidth: 4,
         },
 
         separator: {
-          marginLeft: rem(-2),
-          marginRight: rem(-2),
-          height: rem(10),
+          marginLeft: -2,
+          marginRight: -2,
+          height: 10,
         },
       }}
       {...props}
@@ -58,13 +58,13 @@ function StyledStepper(props: StepperProps) {
         },
 
         stepIcon: {
-          borderWidth: rem(3),
+          borderWidth: 3,
         },
 
         separator: {
-          marginLeft: rem(-2),
-          marginRight: rem(-2),
-          height: rem(6),
+          marginLeft: -2,
+          marginRight: -2,
+          height: 6,
         },
       }}
       {...props}

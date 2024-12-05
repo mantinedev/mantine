@@ -1,13 +1,13 @@
 import { IconColorPicker } from '@tabler/icons-react';
-import { ColorInput, rem } from '@mantine/core';
+import { ColorInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { ColorInput, rem } from '@mantine/core';
+import { ColorInput } from '@mantine/core';
 import { IconColorPicker } from '@tabler/icons-react';
 
 function Demo() {
-  const icon = <IconColorPicker style={{ width: rem(18), height: rem(18) }} stroke={1.5} />;
+  const icon = <IconColorPicker size={18} stroke={1.5} />;
 
   return (
     <>
@@ -30,7 +30,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const icon = <IconColorPicker style={{ width: rem(18), height: rem(18) }} stroke={1.5} />;
+  const icon = <IconColorPicker size={18} stroke={1.5} />;
 
   return (
     <>

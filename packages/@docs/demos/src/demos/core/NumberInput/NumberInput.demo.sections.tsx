@@ -1,13 +1,13 @@
 import { IconCurrencyDram } from '@tabler/icons-react';
-import { NumberInput, rem } from '@mantine/core';
+import { NumberInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { NumberInput, rem } from '@mantine/core';
+import { NumberInput } from '@mantine/core';
 import { IconCurrencyDram } from '@tabler/icons-react';
 
 function Demo() {
-  const icon = <IconCurrencyDram style={{ width: rem(20), height: rem(20) }} stroke={1.5} />;
+  const icon = <IconCurrencyDram size={20} stroke={1.5} />;
   return (
     <>
       <NumberInput leftSection={icon} label="With left section" placeholder="With left section" />
@@ -23,7 +23,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const icon = <IconCurrencyDram style={{ width: rem(20), height: rem(20) }} stroke={1.5} />;
+  const icon = <IconCurrencyDram size={20} stroke={1.5} />;
   return (
     <>
       <NumberInput leftSection={icon} label="With left section" placeholder="With left section" />

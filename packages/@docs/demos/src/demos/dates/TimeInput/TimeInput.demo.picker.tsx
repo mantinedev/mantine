@@ -1,12 +1,12 @@
 import { useRef } from 'react';
 import { IconClock } from '@tabler/icons-react';
-import { ActionIcon, rem } from '@mantine/core';
+import { ActionIcon } from '@mantine/core';
 import { TimeInput } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useRef } from 'react';
-import { ActionIcon, rem } from '@mantine/core';
+import { ActionIcon } from '@mantine/core';
 import { TimeInput } from '@mantine/dates';
 import { IconClock } from '@tabler/icons-react';
 
@@ -15,7 +15,7 @@ function Demo() {
 
   const pickerControl = (
     <ActionIcon variant="subtle" color="gray" onClick={() => ref.current?.showPicker()}>
-      <IconClock style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+      <IconClock size={16} stroke={1.5} />
     </ActionIcon>
   );
 
@@ -30,7 +30,7 @@ function Demo() {
 
   const pickerControl = (
     <ActionIcon variant="subtle" color="gray" onClick={() => ref.current?.showPicker()}>
-      <IconClock style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+      <IconClock size={16} stroke={1.5} />
     </ActionIcon>
   );
 

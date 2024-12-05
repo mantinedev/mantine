@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Group, rem, Text } from '@mantine/core';
+import { Group, Text } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { Group, Text, rem } from '@mantine/core';
+import { Group, Text } from '@mantine/core';
 import { useMove } from '@mantine/hooks';
 
 function Demo() {
@@ -18,8 +18,8 @@ function Demo() {
         <div
           ref={ref}
           style={{
-            width: rem(400),
-            height: rem(16),
+            width: 400,
+            height: 16,
             backgroundColor: 'var(--mantine-color-blue-light)',
             position: 'relative',
           }}
@@ -28,7 +28,7 @@ function Demo() {
           <div
             style={{
               width: \`\${value * 100}%\`,
-              height: rem(16),
+              height: 16,
               backgroundColor: 'var(--mantine-color-blue-filled)',
               opacity: 0.7,
             }}
@@ -38,10 +38,10 @@ function Demo() {
           <div
             style={{
               position: 'absolute',
-              left: \`calc(\${value * 100}% - \${rem(8)})\`,
+              left: \`calc(\${value * 100}% - 8px)\`,
               top: 0,
-              width: rem(16),
-              height: rem(16),
+              width: 16,
+              height: 16,
               backgroundColor: 'var(--mantine-color-blue-7)',
             }}
           />
@@ -66,8 +66,8 @@ function Demo() {
         <div
           ref={ref}
           style={{
-            width: rem(400),
-            height: rem(16),
+            width: 400,
+            height: 16,
             backgroundColor: 'var(--mantine-color-blue-light)',
             position: 'relative',
           }}
@@ -76,7 +76,7 @@ function Demo() {
           <div
             style={{
               width: `${value * 100}%`,
-              height: rem(16),
+              height: 16,
               backgroundColor: 'var(--mantine-color-blue-filled)',
               opacity: 0.7,
             }}
@@ -86,10 +86,10 @@ function Demo() {
           <div
             style={{
               position: 'absolute',
-              left: `calc(${value * 100}% - ${rem(8)})`,
+              left: `calc(${value * 100}% - 8px)`,
               top: 0,
-              width: rem(16),
-              height: rem(16),
+              width: 16,
+              height: 16,
               backgroundColor: 'var(--mantine-color-blue-7)',
             }}
           />
