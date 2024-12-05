@@ -178,6 +178,36 @@ describe('@mantine/core/Input', () => {
     expect(screen.getByText('right')).toBeInTheDocument();
   });
 
+  it('displays __defaultRightSection if __clearable is false and __clearSection is set', () => {
+    const { rerender } = render(
+      <Input
+        __clearable={false}
+        __clearSection="clear"
+        __defaultRightSection="default-right-section"
+      />
+    );
+    expect(screen.getByText('default-right-section')).toBeInTheDocument();
+    expect(screen.queryByText('clear')).not.toBeInTheDocument();
+
+    rerender(
+      <Input __clearable __clearSection="clear" __defaultRightSection="default-right-section" />
+    );
+    expect(screen.queryByText('default-right-section')).not.toBeInTheDocument();
+    expect(screen.getByText('clear')).toBeInTheDocument();
+
+    rerender(
+      <Input
+        rightSection="right-section"
+        __clearable
+        __clearSection="clear"
+        __defaultRightSection="default-right-section"
+      />
+    );
+    expect(screen.queryByText('default-right-section')).not.toBeInTheDocument();
+    expect(screen.queryByText('clear')).not.toBeInTheDocument();
+    expect(screen.getByText('right-section')).toBeInTheDocument();
+  });
+
   it('exposes compound components', () => {
     expect(Input.Wrapper).toBe(InputWrapper);
     expect(Input.Label).toBe(InputLabel);

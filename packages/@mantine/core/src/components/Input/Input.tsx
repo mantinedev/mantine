@@ -103,6 +103,15 @@ export interface __InputProps {
 
   /** `size` prop added to the input element */
   inputSize?: string;
+
+  /** Section to be displayed when the input is `__clearable` and `rightSection` is not defined */
+  __clearSection?: React.ReactNode;
+
+  /** Determines whether the `__clearSection` should be displayed if it is passed to the component, has no effect if `rightSection` is defined */
+  __clearable?: boolean;
+
+  /** Right section displayed when both `__clearSection` and `rightSection` are not defined */
+  __defaultRightSection?: React.ReactNode;
 }
 
 export interface InputProps extends BoxProps, __InputProps, StylesApiProps<InputFactory> {
@@ -110,12 +119,6 @@ export interface InputProps extends BoxProps, __InputProps, StylesApiProps<Input
 
   /** Props passed to Styles API context, replaces `Input.Wrapper` props */
   __stylesApiProps?: Record<string, any>;
-
-  /** Section to be displayed when the input is `__clearable` and `rightSection` is not defined */
-  __clearSection?: React.ReactNode;
-
-  /** Determines whether the `__clearSection` should be displayed if it is passed to the component, has no effect if `rightSection` is defined */
-  __clearable?: boolean;
 
   /** Determines whether the input should have error styles and `aria-invalid` attribute */
   error?: React.ReactNode;
@@ -207,6 +210,7 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
     inputSize,
     __clearSection,
     __clearable,
+    __defaultRightSection,
     ...others
   } = props;
 
@@ -239,7 +243,8 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
       }
     : {};
 
-  const _rightSection: React.ReactNode = rightSection || (__clearable && __clearSection) || null;
+  const _rightSection: React.ReactNode =
+    rightSection || (__clearable && __clearSection) || __defaultRightSection;
 
   return (
     <Box
