@@ -1,3 +1,4 @@
+import { useId, useScrollSpy, UseScrollSpyHeadingData, UseScrollSpyOptions } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -6,22 +7,22 @@ import {
   factory,
   Factory,
   getFontSize,
+  getRadius,
   MantineColor,
+  MantineRadius,
   MantineSize,
   rem,
   StylesApiProps,
-  UnstyledButton,
   useProps,
   useStyles,
-} from '@mantine/core';
-import { useId, useScrollSpy, UseScrollSpyHeadingData, UseScrollSpyOptions } from '@mantine/hooks';
-import { UnstyledButtonProps } from '../UnstyledButton';
+} from '../../core';
+import { UnstyledButton, UnstyledButtonProps } from '../UnstyledButton';
 import classes from './TableOfContents.module.css';
 
 export type TableOfContentsStylesNames = 'root' | 'control';
 export type TableOfContentsVariant = 'filled' | 'light' | 'none';
 export type TableOfContentsCssVariables = {
-  root: '--toc-bg' | '--toc-color' | '--toc-size' | '--toc-depth-offset';
+  root: '--toc-bg' | '--toc-color' | '--toc-size' | '--toc-depth-offset' | '--toc-radius';
 };
 
 export interface InitialTableOfContentsData {
@@ -72,6 +73,9 @@ export interface TableOfContentsProps
 
   /** Controls padding on the left side of control, multiplied by (`depth` - `minDepthToOffset`), `20px` by default  */
   depthOffset?: number | string;
+
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
+  radius?: MantineRadius;
 }
 
 export type TableOfContentsFactory = Factory<{
@@ -89,7 +93,7 @@ const defaultProps: Partial<TableOfContentsProps> = {
 };
 
 const varsResolver = createVarsResolver<TableOfContentsFactory>(
-  (theme, { color, size, variant, autoContrast, depthOffset }) => {
+  (theme, { color, size, variant, autoContrast, depthOffset, radius }) => {
     const colors = theme.variantColorResolver({
       color: color || theme.primaryColor,
       theme,
@@ -103,6 +107,7 @@ const varsResolver = createVarsResolver<TableOfContentsFactory>(
         '--toc-color': variant !== 'none' ? colors.color : undefined,
         '--toc-size': getFontSize(size),
         '--toc-depth-offset': rem(depthOffset),
+        '--toc-radius': getRadius(radius),
       },
     };
   }
@@ -124,6 +129,7 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
     getControlProps,
     minDepthToOffset,
     depthOffset,
+    variant,
     ...others
   } = props;
 
@@ -158,6 +164,8 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
       <UnstyledButton
         key={data.id || `${idBase}-${index}`}
         __vars={{ '--depth-offset': `${data.depth - (minDepthToOffset || 1)}` }}
+        data-active={index === spy.active || undefined}
+        variant={variant}
         {...controlProps}
         {...getStyles('control', {
           className: controlProps?.className,
@@ -168,7 +176,7 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
   });
 
   return (
-    <Box ref={ref} {...getStyles('root')} {...others}>
+    <Box ref={ref} variant={variant} {...getStyles('root')} {...others}>
       {controls}
     </Box>
   );
