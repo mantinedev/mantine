@@ -400,6 +400,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
             variant={variant}
             disabled={disabled}
             radius={radius}
+            rightSection={rightSection}
             __clearSection={clearButton}
             __clearable={clearable && _value.length > 0 && !disabled && !readOnly}
             rightSectionWidth={rightSectionWidth}
