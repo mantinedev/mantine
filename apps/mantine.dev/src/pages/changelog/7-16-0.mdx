@@ -1,8 +1,16 @@
-import { ActionIconDemos } from '@docs/demos';
+import { InputDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog7160);
+
+## Input.ClearButton component
+
+New `Input.ClearButton` component can be used to add clear button to custom inputs
+based on `Input` component. `size` of the clear button is automatically
+inherited from the input:
+
+<Demo data={InputDemos.clearButton} />
 
 ## Other changes
 

@@ -82,3 +82,8 @@ export const Demo_error = {
   name: '⭐ Demo: error',
   render: renderDemo(demos.error),
 };
+
+export const Demo_clearButton = {
+  name: '⭐ Demo: clearButton',
+  render: renderDemo(demos.clearButton),
+};
