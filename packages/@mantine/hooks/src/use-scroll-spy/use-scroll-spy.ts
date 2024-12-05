@@ -93,7 +93,7 @@ export function useScrollSpy({
     );
   };
 
-  useEffect(() => {
+  const initialize = () => {
     const headings = getHeadingsData(
       Array.from(document.querySelectorAll(selector)),
       getDepth,
@@ -103,11 +103,16 @@ export function useScrollSpy({
     setInitialized(true);
     setData(headings);
     setActive(getActiveElement(headings.map((d) => d.getNode().getBoundingClientRect())));
+  };
+
+  useEffect(() => {
+    initialize();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return {
+    reinitialize: initialize,
     active,
     initialized,
     data,
