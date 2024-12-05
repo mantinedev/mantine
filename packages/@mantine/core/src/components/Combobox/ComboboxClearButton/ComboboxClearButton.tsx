@@ -1,18 +1,15 @@
 import { forwardRef } from 'react';
-import { ElementProps, MantineSize } from '../../../core';
-import { __CloseButtonProps, CloseButton } from '../../CloseButton';
+import { ElementProps } from '../../../core';
+import { Input, InputClearButtonProps } from '../../Input';
 
-export interface ComboboxClearButtonProps extends __CloseButtonProps, ElementProps<'button'> {
-  size?: MantineSize | (string & {}) | number;
+export interface ComboboxClearButtonProps extends InputClearButtonProps, ElementProps<'button'> {
   onClear: () => void;
 }
 
 export const ComboboxClearButton = forwardRef<HTMLButtonElement, ComboboxClearButtonProps>(
   ({ size, onMouseDown, onClick, onClear, ...others }, ref) => (
-    <CloseButton
+    <Input.ClearButton
       ref={ref}
-      size={size || 'sm'}
-      variant="transparent"
       tabIndex={-1}
       aria-hidden
       {...others}

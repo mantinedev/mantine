@@ -9,7 +9,6 @@ import {
   useProps,
   useResolvedStylesApi,
 } from '../../core';
-import { __CloseButtonProps } from '../CloseButton';
 import {
   Combobox,
   ComboboxLikeProps,
@@ -22,7 +21,12 @@ import {
   OptionsDropdown,
   useCombobox,
 } from '../Combobox';
-import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
+import {
+  __BaseInputProps,
+  __InputStylesNames,
+  InputClearButtonProps,
+  InputVariant,
+} from '../Input';
 import { InputBase } from '../InputBase';
 import { ScrollAreaProps } from '../ScrollArea';
 
@@ -56,7 +60,7 @@ export interface AutocompleteProps
   onClear?: () => void;
 
   /** Props passed down to the clear button */
-  clearButtonProps?: __CloseButtonProps & ElementProps<'button'>;
+  clearButtonProps?: InputClearButtonProps & ElementProps<'button'>;
 
   /** Determines whether the clear button should be displayed in the right section when the component has value, `false` by default */
   clearable?: boolean;
@@ -146,7 +150,6 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
 
   const clearButton = (
     <Combobox.ClearButton
-      size={size as string}
       {...clearButtonProps}
       onClear={() => {
         setValue('');

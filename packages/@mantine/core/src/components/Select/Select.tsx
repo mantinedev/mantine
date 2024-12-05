@@ -9,7 +9,6 @@ import {
   useProps,
   useResolvedStylesApi,
 } from '../../core';
-import { __CloseButtonProps } from '../CloseButton';
 import {
   Combobox,
   ComboboxItem,
@@ -21,7 +20,12 @@ import {
   OptionsDropdown,
   useCombobox,
 } from '../Combobox';
-import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
+import {
+  __BaseInputProps,
+  __InputStylesNames,
+  InputClearButtonProps,
+  InputVariant,
+} from '../Input';
 import { InputBase } from '../InputBase';
 import { ScrollAreaProps } from '../ScrollArea';
 
@@ -73,7 +77,7 @@ export interface SelectProps
   clearable?: boolean;
 
   /** Props passed down to the clear button */
-  clearButtonProps?: __CloseButtonProps & ElementProps<'button'>;
+  clearButtonProps?: InputClearButtonProps & ElementProps<'button'>;
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: Omit<React.ComponentPropsWithoutRef<'input'>, 'value'>;
@@ -217,7 +221,6 @@ export const Select = factory<SelectFactory>((_props, ref) => {
 
   const clearButton = (
     <Combobox.ClearButton
-      size={size as string}
       {...clearButtonProps}
       onClear={() => {
         setValue(null, null);

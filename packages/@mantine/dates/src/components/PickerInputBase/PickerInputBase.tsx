@@ -3,7 +3,6 @@ import {
   __BaseInputProps,
   __InputStylesNames,
   BoxProps,
-  CloseButton,
   ElementProps,
   factory,
   Factory,
@@ -120,13 +119,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
   } = useInputProps('PickerInputBase', defaultProps, _props);
 
   const clearButton = (
-    <CloseButton
-      variant="transparent"
-      onClick={onClear}
-      unstyled={unstyled}
-      size={inputProps.size || 'sm'}
-      {...clearButtonProps}
-    />
+    <Input.ClearButton onClick={onClear} unstyled={unstyled} {...clearButtonProps} />
   );
 
   const handleClose = () => {
