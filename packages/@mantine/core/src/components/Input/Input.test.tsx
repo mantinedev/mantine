@@ -1,5 +1,6 @@
 import { render, screen, tests } from '@mantine-tests/core';
 import { Input, InputProps, InputStylesNames } from './Input';
+import { InputClearButton } from './InputClearButton/InputClearButton';
 import { InputDescription } from './InputDescription/InputDescription';
 import { InputError } from './InputError/InputError';
 import { InputLabel } from './InputLabel/InputLabel';
@@ -214,5 +215,6 @@ describe('@mantine/core/Input', () => {
     expect(Input.Description).toBe(InputDescription);
     expect(Input.Error).toBe(InputError);
     expect(Input.Placeholder).toBe(InputPlaceholder);
+    expect(Input.ClearButton).toBe(InputClearButton);
   });
 });

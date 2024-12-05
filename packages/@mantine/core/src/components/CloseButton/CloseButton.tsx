@@ -47,7 +47,9 @@ export interface __CloseButtonProps {
 export interface CloseButtonProps
   extends __CloseButtonProps,
     BoxProps,
-    StylesApiProps<CloseButtonFactory> {}
+    StylesApiProps<CloseButtonFactory> {
+  __staticSelector?: string;
+}
 
 export type CloseButtonFactory = PolymorphicFactory<{
   props: CloseButtonProps;
@@ -87,11 +89,12 @@ export const CloseButton = polymorphicFactory<CloseButtonFactory>((_props, ref) 
     variant,
     icon,
     mod,
+    __staticSelector,
     ...others
   } = props;
 
   const getStyles = useStyles<CloseButtonFactory>({
-    name: 'CloseButton',
+    name: __staticSelector || 'CloseButton',
     props,
     className,
     style,
