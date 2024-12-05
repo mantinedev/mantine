@@ -111,6 +111,12 @@ export interface InputProps extends BoxProps, __InputProps, StylesApiProps<Input
   /** Props passed to Styles API context, replaces `Input.Wrapper` props */
   __stylesApiProps?: Record<string, any>;
 
+  /** Section to be displayed when the input is `__clearable` and `rightSection` is not defined */
+  __clearSection?: React.ReactNode;
+
+  /** Determines whether the `__clearSection` should be displayed if it is passed to the component, has no effect if `rightSection` is defined */
+  __clearable?: boolean;
+
   /** Determines whether the input should have error styles and `aria-invalid` attribute */
   error?: React.ReactNode;
 
@@ -199,6 +205,8 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
     withErrorStyles,
     mod,
     inputSize,
+    __clearSection,
+    __clearable,
     ...others
   } = props;
 
@@ -230,6 +238,8 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
         id: ctx?.inputId || id,
       }
     : {};
+
+  const _rightSection: React.ReactNode = rightSection || (__clearable && __clearSection) || null;
 
   return (
     <Box
@@ -275,7 +285,7 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
         {...getStyles('input')}
       />
 
-      {rightSection && (
+      {_rightSection && (
         <div
           {...rightSectionProps}
           data-position="right"
@@ -284,7 +294,7 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
             style: rightSectionProps?.style,
           })}
         >
-          {rightSection}
+          {_rightSection}
         </div>
       )}
     </Box>

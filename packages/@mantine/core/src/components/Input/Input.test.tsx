@@ -164,6 +164,20 @@ describe('@mantine/core/Input', () => {
     expect(screen.getByRole('textbox')).toHaveAttribute('size', '5');
   });
 
+  it('displays given __clearSection in right section if __clearable is true', () => {
+    const { rerender } = render(<Input __clearable __clearSection="clear" />);
+    expect(screen.getByText('clear')).toBeInTheDocument();
+
+    rerender(<Input __clearable={false} __clearSection="clear" />);
+    expect(screen.queryByText('clear')).not.toBeInTheDocument();
+  });
+
+  it('does not display __clearSection if rightSection is set', () => {
+    render(<Input __clearable __clearSection="clear" rightSection="right" />);
+    expect(screen.queryByText('clear')).not.toBeInTheDocument();
+    expect(screen.getByText('right')).toBeInTheDocument();
+  });
+
   it('exposes compound components', () => {
     expect(Input.Wrapper).toBe(InputWrapper);
     expect(Input.Label).toBe(InputLabel);
