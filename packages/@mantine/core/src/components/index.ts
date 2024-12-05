@@ -91,6 +91,7 @@ export * from './Stack';
 export * from './Stepper';
 export * from './Switch';
 export * from './Table';
+export * from './TableOfContents';
 export * from './Tabs';
 export * from './TagsInput';
 export * from './Text';
