@@ -5,22 +5,74 @@ import {
   ElementProps,
   factory,
   Factory,
+  getFontSize,
+  MantineColor,
+  MantineSize,
+  rem,
   StylesApiProps,
+  UnstyledButton,
   useProps,
   useStyles,
 } from '@mantine/core';
+import { useId, useScrollSpy, UseScrollSpyHeadingData, UseScrollSpyOptions } from '@mantine/hooks';
+import { UnstyledButtonProps } from '../UnstyledButton';
 import classes from './TableOfContents.module.css';
 
-export type TableOfContentsStylesNames = 'root';
-export type TableOfContentsVariant = 'filled' | 'light' | 'unstyled';
+export type TableOfContentsStylesNames = 'root' | 'control';
+export type TableOfContentsVariant = 'filled' | 'light' | 'none';
 export type TableOfContentsCssVariables = {
-  root: '--test';
+  root: '--toc-bg' | '--toc-color' | '--toc-size' | '--toc-depth-offset';
 };
+
+export interface InitialTableOfContentsData {
+  /** Heading depth, 1-6 */
+  depth: number;
+
+  /** Heading text content value */
+  value: string;
+
+  /** Heading id, must be unique, used as `key` */
+  id?: string;
+}
+
+export interface TableOfContentsGetControlPropsPayload {
+  /** True if the associated heading is currently the best match in the viewport */
+  active: boolean;
+
+  /** Data passed down from `use-scroll-spy` hook: depth, id, value */
+  data: UseScrollSpyHeadingData;
+}
 
 export interface TableOfContentsProps
   extends BoxProps,
     StylesApiProps<TableOfContentsFactory>,
-    ElementProps<'div'> {}
+    ElementProps<'div'> {
+  /** Key of `theme.colors` or any valid CSS color value, `theme.primaryColor` by default */
+  color?: MantineColor;
+
+  /** Controls font-size and padding of all elements, `'md'` by default */
+  size?: MantineSize | (string & {}) | number;
+
+  /** Determines whether text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  autoContrast?: boolean;
+
+  /** Options passed down to `use-scroll-spy` hook */
+  scrollSpyOptions?: UseScrollSpyOptions;
+
+  /** Data used to render content until actual values are retrieved from the DOM, empty array by default */
+  initialData?: InitialTableOfContentsData[];
+
+  /** A function to pass props down to controls, accepts values from `use-scroll-spy` hook as an argument and active state. */
+  getControlProps?: (
+    payload: TableOfContentsGetControlPropsPayload
+  ) => UnstyledButtonProps & ElementProps<'button'> & Record<`data-${string}`, any>;
+
+  /** Minimum `depth` value that requires offset, `1` by default */
+  minDepthToOffset?: number;
+
+  /** Controls padding on the left side of control, multiplied by (`depth` - `minDepthToOffset`), `20px` by default  */
+  depthOffset?: number | string;
+}
 
 export type TableOfContentsFactory = Factory<{
   props: TableOfContentsProps;
@@ -30,17 +82,50 @@ export type TableOfContentsFactory = Factory<{
   variant: TableOfContentsVariant;
 }>;
 
-const defaultProps: Partial<TableOfContentsProps> = {};
+const defaultProps: Partial<TableOfContentsProps> = {
+  getControlProps: ({ data }) => ({
+    children: data.value,
+  }),
+};
 
-const varsResolver = createVarsResolver<TableOfContentsFactory>(() => ({
-  root: {
-    '--test': 'test',
-  },
-}));
+const varsResolver = createVarsResolver<TableOfContentsFactory>(
+  (theme, { color, size, variant, autoContrast, depthOffset }) => {
+    const colors = theme.variantColorResolver({
+      color: color || theme.primaryColor,
+      theme,
+      variant: variant || 'filled',
+      autoContrast,
+    });
+
+    return {
+      root: {
+        '--toc-bg': variant !== 'none' ? colors.background : undefined,
+        '--toc-color': variant !== 'none' ? colors.color : undefined,
+        '--toc-size': getFontSize(size),
+        '--toc-depth-offset': rem(depthOffset),
+      },
+    };
+  }
+);
 
 export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => {
   const props = useProps('TableOfContents', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, ...others } = props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    color,
+    autoContrast,
+    scrollSpyOptions,
+    initialData,
+    getControlProps,
+    minDepthToOffset,
+    depthOffset,
+    ...others
+  } = props;
 
   const getStyles = useStyles<TableOfContentsFactory>({
     name: 'TableOfContents',
@@ -55,7 +140,38 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
     varsResolver,
   });
 
-  return <Box ref={ref} {...getStyles('root')} {...others} />;
+  const idBase = useId();
+  const spy = useScrollSpy(scrollSpyOptions);
+  const headingsData = (
+    !spy.initialized ? spy.data : initialData || []
+  ) as UseScrollSpyHeadingData[];
+
+  const controls = headingsData.map((data, index) => {
+    const controlProps = getControlProps?.({
+      active: index === spy.active,
+      data: {
+        ...data,
+        getNode: data.getNode || (() => {}),
+      },
+    });
+    return (
+      <UnstyledButton
+        key={data.id || `${idBase}-${index}`}
+        __vars={{ '--depth-offset': `${data.depth - (minDepthToOffset || 1)}` }}
+        {...controlProps}
+        {...getStyles('control', {
+          className: controlProps?.className,
+          style: controlProps?.style,
+        })}
+      />
+    );
+  });
+
+  return (
+    <Box ref={ref} {...getStyles('root')} {...others}>
+      {controls}
+    </Box>
+  );
 });
 
 TableOfContents.displayName = '@mantine/core/TableOfContents';
