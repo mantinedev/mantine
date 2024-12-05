@@ -73,6 +73,7 @@ export { useIsFirstRender } from './use-is-first-render/use-is-first-render';
 export { useOrientation } from './use-orientation/use-orientation';
 export { useFetch } from './use-fetch/use-fetch';
 export { useRadialMove, normalizeRadialValue } from './use-radial-move/use-radial-move';
+export { useScrollSpy } from './use-scroll-spy/use-scroll-spy';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
@@ -82,3 +83,4 @@ export type { EyeDropperOpenReturnType } from './use-eye-dropper/use-eye-dropper
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
 export type { UseStateHistoryHandlers, StateHistory } from './use-state-history/use-state-history';
 export type { UseFetchOptions } from './use-fetch/use-fetch';
+export type { UseScrollSpyOptions, UseScrollSpyHeadingData } from './use-scroll-spy/use-scroll-spy';
