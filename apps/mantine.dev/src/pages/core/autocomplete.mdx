@@ -80,6 +80,17 @@ To use `Autocomplete` inside popover, you need to set `withinPortal: false`:
 
 <Demo data={AutocompleteDemos.withinPopover} />
 
+## Clearable
+
+Set `clearable` prop to display the clear button in the right section. The button is not displayed
+when:
+
+- The component does not have a value
+- The component is disabled
+- The component is read only
+
+<Demo data={AutocompleteDemos.clearable} />
+
 ## Control dropdown opened state
 
 You can control dropdown opened state with `dropdownOpened` prop. Additionally,

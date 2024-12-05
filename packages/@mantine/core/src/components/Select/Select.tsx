@@ -148,6 +148,9 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     onClear,
     autoComplete,
     scrollAreaProps,
+    __defaultRightSection,
+    __clearSection,
+    __clearable,
     ...others
   } = props;
 
@@ -212,7 +215,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     }
   }, [value, selectedOption]);
 
-  const clearButton = clearable && !!_value && !disabled && !readOnly && (
+  const clearButton = (
     <Combobox.ClearButton
       size={size as string}
       {...clearButtonProps}
@@ -254,10 +257,12 @@ export const Select = factory<SelectFactory>((_props, ref) => {
           <InputBase
             id={_id}
             ref={ref}
-            rightSection={
-              rightSection ||
-              clearButton || <Combobox.Chevron size={size} error={error} unstyled={unstyled} />
+            __defaultRightSection={
+              <Combobox.Chevron size={size} error={error} unstyled={unstyled} />
             }
+            __clearSection={clearButton}
+            __clearable={clearable && !!_value && !disabled && !readOnly}
+            rightSection={rightSection}
             rightSectionPointerEvents={rightSectionPointerEvents || (clearButton ? 'all' : 'none')}
             {...others}
             size={size}

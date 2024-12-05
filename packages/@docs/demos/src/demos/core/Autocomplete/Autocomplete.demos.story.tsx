@@ -102,3 +102,8 @@ export const Demo_renderOption = {
   name: '⭐ Demo: renderOption',
   render: renderDemo(demos.renderOption),
 };
+
+export const Demo_clearable = {
+  name: '⭐ Demo: clearable',
+  render: renderDemo(demos.clearable),
+};

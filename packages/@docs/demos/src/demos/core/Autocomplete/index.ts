@@ -18,3 +18,4 @@ export { dropdownPadding } from './Autocomplete.demo.dropdownPadding';
 export { dropdownShadow } from './Autocomplete.demo.dropdownShadow';
 export { withinPopover } from './Autocomplete.demo.withinPopover';
 export { renderOption } from './Autocomplete.demo.renderOption';
+export { clearable } from './Autocomplete.demo.clearable';

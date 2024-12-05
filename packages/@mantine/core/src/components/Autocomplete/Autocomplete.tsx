@@ -9,6 +9,7 @@ import {
   useProps,
   useResolvedStylesApi,
 } from '../../core';
+import { __CloseButtonProps } from '../CloseButton';
 import {
   Combobox,
   ComboboxLikeProps,
@@ -50,6 +51,15 @@ export interface AutocompleteProps
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
+
+  /** Called when the clear button is clicked */
+  onClear?: () => void;
+
+  /** Props passed down to the clear button */
+  clearButtonProps?: __CloseButtonProps & ElementProps<'button'>;
+
+  /** Determines whether the clear button should be displayed in the right section when the component has value, `false` by default */
+  clearable?: boolean;
 }
 
 export type AutocompleteFactory = Factory<{
@@ -93,6 +103,11 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     renderOption,
     autoComplete,
     scrollAreaProps,
+    onClear,
+    clearButtonProps,
+    error,
+    clearable,
+    rightSection,
     ...others
   } = props;
 
@@ -129,6 +144,17 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     }
   }, [selectFirstOptionOnChange, _value]);
 
+  const clearButton = (
+    <Combobox.ClearButton
+      size={size as string}
+      {...clearButtonProps}
+      onClear={() => {
+        setValue('');
+        onClear?.();
+      }}
+    />
+  );
+
   return (
     <Combobox
       store={combobox}
@@ -151,9 +177,13 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
           {...others}
           size={size}
           __staticSelector="Autocomplete"
+          __clearSection={clearButton}
+          __clearable={clearable && !!_value && !disabled && !readOnly}
+          rightSection={rightSection}
           disabled={disabled}
           readOnly={readOnly}
           value={_value}
+          error={error}
           onChange={(event) => {
             setValue(event.currentTarget.value);
             combobox.openDropdown();

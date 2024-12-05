@@ -279,7 +279,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     }
   }, [selectFirstOptionOnChange, _value]);
 
-  const clearButton = clearable && _value.length > 0 && !disabled && !readOnly && (
+  const clearButton = (
     <Combobox.ClearButton
       size={size as string}
       {...clearButtonProps}
@@ -330,10 +330,12 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
             variant={variant}
             disabled={disabled}
             radius={radius}
-            rightSection={
-              rightSection ||
-              clearButton || <Combobox.Chevron size={size} error={error} unstyled={unstyled} />
+            __defaultRightSection={
+              <Combobox.Chevron size={size} error={error} unstyled={unstyled} />
             }
+            __clearSection={clearButton}
+            __clearable={clearable && _value.length > 0 && !disabled && !readOnly}
+            rightSection={rightSection}
             rightSectionPointerEvents={rightSectionPointerEvents || (clearButton ? 'all' : 'none')}
             rightSectionWidth={rightSectionWidth}
             rightSectionProps={rightSectionProps}
