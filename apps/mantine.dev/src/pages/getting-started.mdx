@@ -1,3 +1,5 @@
+import { Button } from '@mantine/core';
+import { IconHeartFilled } from '@tabler/icons-react';
 import { FrameworksGuides } from '@/components/FrameworksGuides';
 import { SocialCards } from '@/components/SocialCards';
 import { Layout } from '@/layout';
@@ -192,7 +194,20 @@ The most important documentation pages are:
 ## Support Mantine
 
 All contributions to the projects are welcome and appreciated.
-There are many ways to support the project:
+Contribute financially by [sponsoring the project on OpenCollective](https://opencollective.com/mantinedev).
+Your sponsorship will help us to maintain the project and develop new features.
+
+<Button
+  rightSection={<IconHeartFilled size={22} color="var(--mantine-color-red-7)" />}
+  size="lg"
+  miw={300}
+  justify="space-between"
+  children="Sponsor Mantine"
+  variant="default"
+  radius="md"
+/>
+
+Other ways to support the project:
 
 - Contribute financially by [sponsoring the project on OpenCollective](https://opencollective.com/mantinedev).
   Your sponsorship will help us to maintain the project and develop new features.

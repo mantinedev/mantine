@@ -4,6 +4,13 @@
   }
 
   @mixin dark {
-    color: var(--mantine-color-red-6);
+    color: var(--mantine-color-white);
+    background-color: var(--mantine-color-red-9);
+    border-color: var(--mantine-color-red-9);
+
+    @mixin hover {
+      background-color: var(--mantine-color-red-8);
+      border-color: var(--mantine-color-red-8);
+    }
   }
 }
