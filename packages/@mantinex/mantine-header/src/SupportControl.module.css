@@ -1,0 +1,9 @@
+.support {
+  @mixin light {
+    color: var(--mantine-color-red-8);
+  }
+
+  @mixin dark {
+    color: var(--mantine-color-red-6);
+  }
+}
