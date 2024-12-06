@@ -1,4 +1,4 @@
-import { InputDemos, HooksDemos, TableOfContentsDemos } from '@docs/demos';
+import { InputDemos, HooksDemos, TableOfContentsDemos, PopoverDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -28,6 +28,12 @@ based on `Input` component. `size` of the clear button is automatically
 inherited from the input:
 
 <Demo data={InputDemos.clearButton} />
+
+## Popover with overlay
+
+[Popover](/core/popover) and other components based on it now support `withOverlay` prop:
+
+<Demo data={PopoverDemos.overlay} />
 
 ## Other changes
 

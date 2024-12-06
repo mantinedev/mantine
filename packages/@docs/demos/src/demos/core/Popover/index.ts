@@ -9,3 +9,4 @@ export { arrow } from './Popover.demo.arrow';
 export { clickOutsideEvents } from './Popover.demo.clickOutsideEvents';
 export { disabled } from './Popover.demo.disabled';
 export { portalChildren } from './Popover.demo.portalChildren';
+export { overlay } from './Popover.demo.overlay';

@@ -337,3 +337,23 @@ export function AxisOffset() {
     </div>
   );
 }
+
+export function WithOverlay() {
+  return (
+    <div style={{ padding: 40 }}>
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cupiditate enim est, quos
+        mollitia, expedita, corrupti molestias consectetur vero temporibus assumenda corporis non
+        porro? Iste a, reprehenderit debitis illum at error.
+      </p>
+      <Popover withOverlay overlayProps={{ blur: '8px', zIndex: 100 }}>
+        <Popover.Target>
+          <button type="button" style={{ position: 'relative', zIndex: 101 }}>
+            Toggle popover
+          </button>
+        </Popover.Target>
+        <Popover.Dropdown>Dropdown</Popover.Dropdown>
+      </Popover>
+    </div>
+  );
+}

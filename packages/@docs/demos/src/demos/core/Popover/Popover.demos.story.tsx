@@ -57,3 +57,8 @@ export const Demo_portalChildren = {
   name: '⭐ Demo: portalChildren',
   render: renderDemo(demos.portalChildren),
 };
+
+export const Demo_overlay = {
+  name: '⭐ Demo: overlay',
+  render: renderDemo(demos.overlay),
+};
