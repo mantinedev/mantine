@@ -42,6 +42,9 @@ export interface WeekdaysRowProps
 
   /** Choose cell type that will be used to render weekdays, defaults to th */
   cellComponent?: 'td' | 'th';
+
+  /** Determines whether week numbers should be displayed */
+  withWeekNumbers?: boolean;
 }
 
 export type WeekdaysRowFactory = Factory<{
@@ -74,6 +77,7 @@ export const WeekdaysRow = factory<WeekdaysRowFactory>((_props, ref) => {
     weekdayFormat,
     cellComponent: CellComponent = 'th',
     __staticSelector,
+    withWeekNumbers,
     ...others
   } = props;
 
@@ -105,6 +109,7 @@ export const WeekdaysRow = factory<WeekdaysRowFactory>((_props, ref) => {
 
   return (
     <Box component="tr" ref={ref} {...getStyles('weekdaysRow')} {...others}>
+      {withWeekNumbers && <CellComponent {...getStyles('weekday')}>#</CellComponent>}
       {weekdays}
     </Box>
   );

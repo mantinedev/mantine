@@ -112,3 +112,8 @@ export const Demo_excludeDate = {
   name: '⭐ Demo: excludeDate',
   render: renderDemo(demos.excludeDate),
 };
+
+export const Demo_withWeekNumbers = {
+  name: '⭐ Demo: withWeekNumbers',
+  render: renderDemo(demos.withWeekNumbers),
+};

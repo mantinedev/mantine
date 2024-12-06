@@ -201,6 +201,6 @@ type FileInputComponent = (<Multiple extends boolean = false>(
   props: FileInputProps<Multiple> & {
     ref?: React.ForwardedRef<HTMLButtonElement>;
   }
-) => JSX.Element) & { extend: typeof _FileInput.extend };
+) => React.JSX.Element) & { extend: typeof _FileInput.extend };
 
 export const FileInput: FileInputComponent = _FileInput as any;

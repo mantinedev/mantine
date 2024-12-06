@@ -45,7 +45,7 @@ const defaultProps: Partial<DatePickerInputProps> = {
 
 type DatePickerInputComponent = (<Type extends DatePickerType = 'default'>(
   props: DatePickerInputProps<Type> & { ref?: React.ForwardedRef<HTMLButtonElement> }
-) => JSX.Element) & {
+) => React.JSX.Element) & {
   displayName?: string;
 } & MantineComponentStaticProperties<DatePickerInputFactory>;
 

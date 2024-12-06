@@ -61,7 +61,9 @@ const defaultProps: Partial<MonthPickerProps> = {
 
 type MonthPickerComponent = (<Type extends DatePickerType = 'default'>(
   props: MonthPickerProps<Type> & { ref?: React.ForwardedRef<HTMLDivElement> }
-) => JSX.Element) & { displayName?: string } & MantineComponentStaticProperties<MonthPickerFactory>;
+) => React.JSX.Element) & {
+  displayName?: string;
+} & MantineComponentStaticProperties<MonthPickerFactory>;
 
 export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_props, ref) => {
   const props = useProps('MonthPicker', defaultProps, _props);

@@ -90,9 +90,9 @@ export const ScrollAreaScrollbarVisible = forwardRef<
             const scrollPos = context.viewport.scrollTop;
             const offset = getThumbOffsetFromScroll(scrollPos, sizes);
             if (sizes.scrollbar.size === 0) {
-              thumbRef.current.style.opacity = '0';
+              thumbRef.current.style.setProperty('--thumb-opacity', '0');
             } else {
-              thumbRef.current.style.opacity = '1';
+              thumbRef.current.style.setProperty('--thumb-opacity', '1');
             }
             thumbRef.current.style.transform = `translate3d(0, ${offset}px, 0)`;
           }

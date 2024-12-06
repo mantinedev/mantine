@@ -17,7 +17,7 @@ function createDropzoneStatus(status: keyof DropzoneContextValue) {
     const _children = isElement(children) ? children : <span>{children}</span>;
 
     if (ctx[status]) {
-      return cloneElement(_children as JSX.Element, others);
+      return cloneElement(_children as React.JSX.Element, others);
     }
 
     return null;
