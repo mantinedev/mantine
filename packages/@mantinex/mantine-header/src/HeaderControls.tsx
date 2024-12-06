@@ -4,6 +4,7 @@ import { DirectionControl } from './DirectionControl';
 import { DiscordControl } from './DiscordControl';
 import { GithubControl } from './GithubControl';
 import { SearchControl } from './SearchControl';
+import { SupportControl } from './SupportControl';
 
 interface HeaderControlsProps extends BoxProps {
   onSearch?: () => void;
@@ -14,6 +15,7 @@ interface HeaderControlsProps extends BoxProps {
   withDiscord?: boolean;
   discordLink: string;
   withColorScheme?: boolean;
+  withSupport?: boolean;
 }
 
 export function HeaderControls({
@@ -24,6 +26,7 @@ export function HeaderControls({
   withGithub = true,
   withDiscord = true,
   withColorScheme = true,
+  withSupport = true,
   discordLink,
   ...others
 }: HeaderControlsProps) {
@@ -32,6 +35,7 @@ export function HeaderControls({
       <Group gap="xs" {...others}>
         {withSearch && <SearchControl onClick={onSearch} />}
         {withDiscord && <DiscordControl link={discordLink} />}
+        {withSupport && <SupportControl />}
         {withGithub && <GithubControl link={githubLink!} />}
         {withDirectionToggle && <DirectionControl />}
         {withColorScheme && <ColorSchemeControl />}
