@@ -1,6 +1,7 @@
 .root {
   display: flex;
   flex-direction: column;
+  --toc-depth-offset: 0.8em;
 }
 
 .control {
@@ -8,6 +9,7 @@
   padding: 0.3em 0.8em;
   font-size: var(--toc-size, var(--mantine-font-size-md));
   border-radius: var(--toc-radius, var(--mantine-radius-default));
+  padding-left: max(calc(var(--depth-offset) * var(--toc-depth-offset)), 0.8em);
 
   @mixin where-hover {
     &:where(:not([data-variant='none'])) {

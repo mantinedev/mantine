@@ -1,4 +1,10 @@
-import { useId, useScrollSpy, UseScrollSpyHeadingData, UseScrollSpyOptions } from '@mantine/hooks';
+import {
+  assignRef,
+  useId,
+  useScrollSpy,
+  UseScrollSpyHeadingData,
+  UseScrollSpyOptions,
+} from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -76,6 +82,9 @@ export interface TableOfContentsProps
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
   radius?: MantineRadius;
+
+  /** A function to reinitialize headings from `use-scroll-spy` hook */
+  reinitializeRef?: React.RefObject<() => void>;
 }
 
 export type TableOfContentsFactory = Factory<{
@@ -130,6 +139,8 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
     minDepthToOffset,
     depthOffset,
     variant,
+    radius,
+    reinitializeRef,
     ...others
   } = props;
 
@@ -148,8 +159,11 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
 
   const idBase = useId();
   const spy = useScrollSpy(scrollSpyOptions);
+
+  assignRef(reinitializeRef, spy.reinitialize);
+
   const headingsData = (
-    !spy.initialized ? spy.data : initialData || []
+    spy.initialized ? spy.data : initialData || []
   ) as UseScrollSpyHeadingData[];
 
   const controls = headingsData.map((data, index) => {
@@ -160,6 +174,7 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
         getNode: data.getNode || (() => {}),
       },
     });
+
     return (
       <UnstyledButton
         key={data.id || `${idBase}-${index}`}

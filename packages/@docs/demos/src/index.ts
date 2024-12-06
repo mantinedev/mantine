@@ -90,6 +90,7 @@ export * as StackDemos from './demos/core/Stack';
 export * as StepperDemos from './demos/core/Stepper';
 export * as SwitchDemos from './demos/core/Switch';
 export * as TableDemos from './demos/core/Table';
+export * as TableOfContentsDemos from './demos/core/TableOfContents';
 export * as TabsDemos from './demos/core/Tabs';
 export * as TagsInputDemos from './demos/core/TagsInput';
 export * as TextDemos from './demos/core/Text';

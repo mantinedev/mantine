@@ -1,4 +1,4 @@
-import { InputDemos, HooksDemos } from '@docs/demos';
+import { InputDemos, HooksDemos, TableOfContentsDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -12,6 +12,14 @@ table of contents components (like in mantine.dev sidebar on the right side)
 and similar features.
 
 <Demo data={HooksDemos.useScrollSpyUsage} />
+
+## TableOfContents component
+
+New [TableOfContents](/core/table-of-contents) component is built on top of `use-scroll-spy` hook
+and can be used to create table of contents components like the one on the right side of mantine.dev
+documentation sidebar:
+
+<Demo data={TableOfContentsDemos.usage} />
 
 ## Input.ClearButton component
 
