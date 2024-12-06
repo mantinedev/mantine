@@ -5,11 +5,11 @@ import {
   IconMoodSad,
   IconMoodSmile,
 } from '@tabler/icons-react';
-import { Rating, rem } from '@mantine/core';
+import { Rating } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Rating, rem } from '@mantine/core';
+import { Rating } from '@mantine/core';
 import {
   IconMoodCry,
   IconMoodSad,
@@ -19,8 +19,8 @@ import {
 } from '@tabler/icons-react';
 
 const getIconStyle = (color?: string) => ({
-  width: rem(24),
-  height: rem(24),
+  width: 24,
+  height: 24,
   color: color ? \`var(--mantine-color-\${color}-7)\` : undefined,
 });
 
@@ -66,8 +66,8 @@ function Demo() {
 `;
 
 const getIconStyle = (color?: string) => ({
-  width: rem(24),
-  height: rem(24),
+  width: 24,
+  height: 24,
   color: color ? `var(--mantine-color-${color}-7)` : undefined,
 });
 

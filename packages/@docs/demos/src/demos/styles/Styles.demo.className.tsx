@@ -23,7 +23,7 @@ const cssCode = `
 }
 
 .highlight {
-  padding: 0.1rem 0.7rem;
+  padding: 4px 10px;
   display: inline-block;
   border-radius: var(--mantine-radius-md);
   background: var(--mantine-color-blue-light);

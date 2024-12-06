@@ -2,7 +2,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { IconChevronDown, IconExternalLink } from '@tabler/icons-react';
 import { Burger, Container, Group, Menu, Text, UnstyledButton } from '@mantine/core';
-import { ColorSchemeControl, HeaderControls, SearchMobileControl } from '@mantinex/mantine-header';
+import {
+  ColorSchemeControl,
+  HeaderControls,
+  SearchMobileControl,
+  SupportControl,
+} from '@mantinex/mantine-header';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import { majorVersions, meta } from '@mantinex/mantine-meta';
 import { searchHandlers } from '@/components/Search';
@@ -125,9 +130,10 @@ export function DocsHeader({ headerControlsProps, withNav }: DocsHeaderProps) {
             />
           </div>
 
-          <Group gap="sm" className={classes.mobileHeaderControls}>
+          <Group gap={5} className={classes.mobileHeaderControls}>
             <SearchMobileControl onSearch={searchHandlers.open} />
             <ColorSchemeControl />
+            <SupportControl />
           </Group>
         </div>
 

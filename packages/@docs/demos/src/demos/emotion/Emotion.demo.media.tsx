@@ -1,14 +1,14 @@
-import { em, getBreakpointValue, rem } from '@mantine/core';
+import { em, getBreakpointValue } from '@mantine/core';
 import { createStyles } from '@mantine/emotion';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { em, getBreakpointValue, rem } from '@mantine/core';
+import { em, getBreakpointValue } from '@mantine/core';
 import { createStyles } from '@mantine/emotion';
 
 const useStyles = createStyles((theme, _, u) => ({
   container: {
-    height: rem(100),
+    height: 100,
     backgroundColor: theme.colors.blue[6],
 
     // Media query with value from theme
@@ -36,7 +36,7 @@ function Demo() {
 
 const useStyles = createStyles((theme, _, u) => ({
   container: {
-    height: rem(100),
+    height: 100,
     backgroundColor: theme.colors.blue[6],
 
     // Media query with value from theme

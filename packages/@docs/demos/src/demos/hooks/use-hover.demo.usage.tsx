@@ -1,4 +1,4 @@
-import { rem, Text } from '@mantine/core';
+import { Text } from '@mantine/core';
 import { useHover } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
@@ -21,7 +21,7 @@ function Demo() {
     <div
       ref={ref}
       style={{
-        height: rem(60),
+        height: 60,
         backgroundColor: 'var(--mantine-color-blue-light)',
         display: 'flex',
         alignItems: 'center',

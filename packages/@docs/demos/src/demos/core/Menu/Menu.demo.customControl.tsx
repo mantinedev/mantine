@@ -40,7 +40,7 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
           </Text>
         </div>
 
-        {icon || <IconChevronRight size="1rem" />}
+        {icon || <IconChevronRight size={16} />}
       </Group>
     </UnstyledButton>
   )
@@ -93,7 +93,7 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
           </Text>
         </div>
 
-        {icon || <IconChevronRight size="1rem" />}
+        {icon || <IconChevronRight size={16} />}
       </Group>
     </UnstyledButton>
   )

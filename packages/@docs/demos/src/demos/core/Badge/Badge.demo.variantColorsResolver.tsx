@@ -5,7 +5,6 @@ import {
   Group,
   MantineThemeProvider,
   parseThemeColor,
-  rem,
   rgba,
   VariantColorsResolver,
 } from '@mantine/core';
@@ -20,7 +19,6 @@ import {
   defaultVariantColorsResolver,
   VariantColorsResolver,
   parseThemeColor,
-  rem,
   rgba,
   darken,
 } from '@mantine/core';
@@ -46,7 +44,7 @@ const variantColorResolver: VariantColorsResolver = (input) => {
     return {
       background: rgba(parsedColor.value, 0.1),
       hover: rgba(parsedColor.value, 0.15),
-      border: \`\${rem(1)} solid \${parsedColor.value}\`,
+      border: \`1px solid \${parsedColor.value}\`,
       color: darken(parsedColor.value, 0.1),
     };
   }
@@ -106,7 +104,7 @@ const variantColorResolver: VariantColorsResolver = (input) => {
     return {
       background: rgba(parsedColor.value, 0.1),
       hover: rgba(parsedColor.value, 0.15),
-      border: `${rem(1)} solid ${parsedColor.value}`,
+      border: `1px solid ${parsedColor.value}`,
       color: darken(parsedColor.value, 0.1),
     };
   }

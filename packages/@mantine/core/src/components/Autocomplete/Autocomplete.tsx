@@ -21,7 +21,12 @@ import {
   OptionsDropdown,
   useCombobox,
 } from '../Combobox';
-import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
+import {
+  __BaseInputProps,
+  __InputStylesNames,
+  InputClearButtonProps,
+  InputVariant,
+} from '../Input';
 import { InputBase } from '../InputBase';
 import { ScrollAreaProps } from '../ScrollArea';
 
@@ -50,6 +55,15 @@ export interface AutocompleteProps
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
+
+  /** Called when the clear button is clicked */
+  onClear?: () => void;
+
+  /** Props passed down to the clear button */
+  clearButtonProps?: InputClearButtonProps & ElementProps<'button'>;
+
+  /** Determines whether the clear button should be displayed in the right section when the component has value, `false` by default */
+  clearable?: boolean;
 }
 
 export type AutocompleteFactory = Factory<{
@@ -93,6 +107,11 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     renderOption,
     autoComplete,
     scrollAreaProps,
+    onClear,
+    clearButtonProps,
+    error,
+    clearable,
+    rightSection,
     ...others
   } = props;
 
@@ -129,6 +148,16 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     }
   }, [selectFirstOptionOnChange, _value]);
 
+  const clearButton = (
+    <Combobox.ClearButton
+      {...clearButtonProps}
+      onClear={() => {
+        setValue('');
+        onClear?.();
+      }}
+    />
+  );
+
   return (
     <Combobox
       store={combobox}
@@ -151,9 +180,13 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
           {...others}
           size={size}
           __staticSelector="Autocomplete"
+          __clearSection={clearButton}
+          __clearable={clearable && !!_value && !disabled && !readOnly}
+          rightSection={rightSection}
           disabled={disabled}
           readOnly={readOnly}
           value={_value}
+          error={error}
           onChange={(event) => {
             setValue(event.currentTarget.value);
             combobox.openDropdown();

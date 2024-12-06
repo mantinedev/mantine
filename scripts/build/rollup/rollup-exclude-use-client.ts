@@ -5,6 +5,7 @@ export const ROLLUP_EXCLUDE_USE_CLIENT = [
   'core/utils/units-converters/rem',
   'core/utils/units-converters/px',
   'core/factory/create-polymorphic-component',
+  'core/MantineProvider/mantine-html-props',
   'core/MantineProvider/create-theme/create-theme',
   'core/MantineProvider/color-functions/darken/darken',
   'core/MantineProvider/color-functions/lighten/lighten',

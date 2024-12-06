@@ -1,17 +1,17 @@
 import { IconAt } from '@tabler/icons-react';
-import { rem, Select } from '@mantine/core';
+import { Select } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { SelectStylesApi } from '@docs/styles-api';
 
 const code = `
 import { IconAt } from '@tabler/icons-react';
-import { Select, rem } from '@mantine/core';
+import { Select } from '@mantine/core';
 
 function Demo() {
   return (
     <Select
      {{props}}
-      leftSection={<IconAt style={{ width: rem(18), height: rem(18) }} stroke={1.5} />}
+      leftSection={<IconAt size={18} stroke={1.5} />}
       label="Select"
       description="Description"
       error="Error"
@@ -27,7 +27,7 @@ function Demo(props: any) {
     <Select
       {...props}
       dropdownOpened
-      leftSection={<IconAt style={{ width: rem(18), height: rem(18) }} stroke={1.5} />}
+      leftSection={<IconAt size={18} stroke={1.5} />}
       withAsterisk
       label="Select"
       description="Description"

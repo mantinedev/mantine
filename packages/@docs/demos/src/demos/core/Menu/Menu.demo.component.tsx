@@ -1,9 +1,9 @@
 import { IconExternalLink } from '@tabler/icons-react';
-import { Button, Menu, rem } from '@mantine/core';
+import { Button, Menu } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Menu, Button, rem } from '@mantine/core';
+import { Menu, Button } from '@mantine/core';
 import { IconExternalLink } from '@tabler/icons-react';
 
 function Demo() {
@@ -18,7 +18,7 @@ function Demo() {
           Mantine website
         </Menu.Item>
         <Menu.Item
-          leftSection={<IconExternalLink style={{ width: rem(14), height: rem(14) }} />}
+          leftSection={<IconExternalLink size={14} />}
           component="a"
           href="https://mantine.dev"
           target="_blank"
@@ -43,7 +43,7 @@ function Demo() {
           Mantine website
         </Menu.Item>
         <Menu.Item
-          leftSection={<IconExternalLink style={{ width: rem(14), height: rem(14) }} />}
+          leftSection={<IconExternalLink size={14} />}
           component="a"
           href="https://mantine.dev"
           target="_blank"

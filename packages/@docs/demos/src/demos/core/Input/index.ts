@@ -14,3 +14,4 @@ export { focusStyles } from './Input.demo.focusStyles';
 export { stylesApi } from './Input.demo.stylesApi';
 export { wrapperStylesApi } from './Input.demo.wrapperStylesApi';
 export { error } from './Input.demo.error';
+export { clearButton } from './Input.demo.clearButton';

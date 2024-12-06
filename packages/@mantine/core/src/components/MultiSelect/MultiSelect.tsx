@@ -11,7 +11,6 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '../../core';
-import { __CloseButtonProps } from '../CloseButton';
 import {
   Combobox,
   ComboboxItem,
@@ -23,7 +22,7 @@ import {
   OptionsDropdown,
   useCombobox,
 } from '../Combobox';
-import { __BaseInputProps, __InputStylesNames } from '../Input';
+import { __BaseInputProps, __InputStylesNames, InputClearButtonProps } from '../Input';
 import { InputBase } from '../InputBase';
 import { Pill } from '../Pill';
 import { PillsInput } from '../PillsInput';
@@ -89,7 +88,7 @@ export interface MultiSelectProps
   clearable?: boolean;
 
   /** Props passed down to the clear button */
-  clearButtonProps?: __CloseButtonProps & ElementProps<'button'>;
+  clearButtonProps?: InputClearButtonProps & ElementProps<'button'>;
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: Omit<React.ComponentPropsWithoutRef<'input'>, 'value'>;
@@ -279,9 +278,8 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     }
   }, [selectFirstOptionOnChange, _value]);
 
-  const clearButton = clearable && _value.length > 0 && !disabled && !readOnly && (
+  const clearButton = (
     <Combobox.ClearButton
-      size={size as string}
       {...clearButtonProps}
       onClear={() => {
         onClear?.();
@@ -330,10 +328,12 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
             variant={variant}
             disabled={disabled}
             radius={radius}
-            rightSection={
-              rightSection ||
-              clearButton || <Combobox.Chevron size={size} error={error} unstyled={unstyled} />
+            __defaultRightSection={
+              <Combobox.Chevron size={size} error={error} unstyled={unstyled} />
             }
+            __clearSection={clearButton}
+            __clearable={clearable && _value.length > 0 && !disabled && !readOnly}
+            rightSection={rightSection}
             rightSectionPointerEvents={rightSectionPointerEvents || (clearButton ? 'all' : 'none')}
             rightSectionWidth={rightSectionWidth}
             rightSectionProps={rightSectionProps}

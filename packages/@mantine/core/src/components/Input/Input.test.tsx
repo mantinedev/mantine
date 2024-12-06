@@ -1,5 +1,6 @@
 import { render, screen, tests } from '@mantine-tests/core';
 import { Input, InputProps, InputStylesNames } from './Input';
+import { InputClearButton } from './InputClearButton/InputClearButton';
 import { InputDescription } from './InputDescription/InputDescription';
 import { InputError } from './InputError/InputError';
 import { InputLabel } from './InputLabel/InputLabel';
@@ -164,11 +165,56 @@ describe('@mantine/core/Input', () => {
     expect(screen.getByRole('textbox')).toHaveAttribute('size', '5');
   });
 
+  it('displays given __clearSection in right section if __clearable is true', () => {
+    const { rerender } = render(<Input __clearable __clearSection="clear" />);
+    expect(screen.getByText('clear')).toBeInTheDocument();
+
+    rerender(<Input __clearable={false} __clearSection="clear" />);
+    expect(screen.queryByText('clear')).not.toBeInTheDocument();
+  });
+
+  it('does not display __clearSection if rightSection is set', () => {
+    render(<Input __clearable __clearSection="clear" rightSection="right" />);
+    expect(screen.queryByText('clear')).not.toBeInTheDocument();
+    expect(screen.getByText('right')).toBeInTheDocument();
+  });
+
+  it('displays __defaultRightSection if __clearable is false and __clearSection is set', () => {
+    const { rerender } = render(
+      <Input
+        __clearable={false}
+        __clearSection="clear"
+        __defaultRightSection="default-right-section"
+      />
+    );
+    expect(screen.getByText('default-right-section')).toBeInTheDocument();
+    expect(screen.queryByText('clear')).not.toBeInTheDocument();
+
+    rerender(
+      <Input __clearable __clearSection="clear" __defaultRightSection="default-right-section" />
+    );
+    expect(screen.queryByText('default-right-section')).not.toBeInTheDocument();
+    expect(screen.getByText('clear')).toBeInTheDocument();
+
+    rerender(
+      <Input
+        rightSection="right-section"
+        __clearable
+        __clearSection="clear"
+        __defaultRightSection="default-right-section"
+      />
+    );
+    expect(screen.queryByText('default-right-section')).not.toBeInTheDocument();
+    expect(screen.queryByText('clear')).not.toBeInTheDocument();
+    expect(screen.getByText('right-section')).toBeInTheDocument();
+  });
+
   it('exposes compound components', () => {
     expect(Input.Wrapper).toBe(InputWrapper);
     expect(Input.Label).toBe(InputLabel);
     expect(Input.Description).toBe(InputDescription);
     expect(Input.Error).toBe(InputError);
     expect(Input.Placeholder).toBe(InputPlaceholder);
+    expect(Input.ClearButton).toBe(InputClearButton);
   });
 });

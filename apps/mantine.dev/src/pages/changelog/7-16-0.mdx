@@ -1,0 +1,34 @@
+import { InputDemos, HooksDemos, TableOfContentsDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog7160);
+
+## use-scroll-spy hook
+
+New [use-scroll-spy](/hooks/use-scroll-spy) hook tracks scroll position and returns index of the
+element that is currently in the viewport. It is useful for creating
+table of contents components (like in mantine.dev sidebar on the right side)
+and similar features.
+
+<Demo data={HooksDemos.useScrollSpyUsage} />
+
+## TableOfContents component
+
+New [TableOfContents](/core/table-of-contents) component is built on top of `use-scroll-spy` hook
+and can be used to create table of contents components like the one on the right side of mantine.dev
+documentation sidebar:
+
+<Demo data={TableOfContentsDemos.usage} />
+
+## Input.ClearButton component
+
+New `Input.ClearButton` component can be used to add clear button to custom inputs
+based on `Input` component. `size` of the clear button is automatically
+inherited from the input:
+
+<Demo data={InputDemos.clearButton} />
+
+## Other changes
+
+- [Autocomplete](/core/autocomplete) now supports `clearable` prop

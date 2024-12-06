@@ -42,6 +42,7 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
     category: 'Changelog',
     pages: [
       MDX_DATA.Changelog800,
+      MDX_DATA.Changelog7160,
       MDX_DATA.Changelog7150,
       MDX_DATA.Changelog7140,
       MDX_DATA.Changelog7130,
@@ -136,6 +137,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.useResizeObserver,
       MDX_DATA.useMutationObserver,
       MDX_DATA.useScrollIntoView,
+      MDX_DATA.useScrollSpy,
       MDX_DATA.useViewportSize,
       MDX_DATA.useWindowEvent,
       MDX_DATA.useWindowScroll,
@@ -286,6 +288,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Pagination,
       MDX_DATA.Stepper,
       MDX_DATA.NavLink,
+      MDX_DATA.TableOfContents,
       MDX_DATA.Tree,
     ],
   },

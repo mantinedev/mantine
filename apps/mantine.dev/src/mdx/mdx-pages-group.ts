@@ -85,6 +85,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.useResizeObserver,
           MDX_DATA.useMutationObserver,
           MDX_DATA.useScrollIntoView,
+          MDX_DATA.useScrollSpy,
           MDX_DATA.useViewportSize,
           MDX_DATA.useWindowEvent,
           MDX_DATA.useWindowScroll,
@@ -252,6 +253,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.Pagination,
           MDX_DATA.Stepper,
           MDX_DATA.NavLink,
+          MDX_DATA.TableOfContents,
           MDX_DATA.Tree,
         ],
       },
@@ -384,6 +386,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   {
     group: 'changelog',
     pages: [
+      MDX_DATA.Changelog7160,
       MDX_DATA.Changelog7150,
       MDX_DATA.Changelog7140,
       MDX_DATA.Changelog7130,

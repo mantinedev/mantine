@@ -44,7 +44,7 @@ function Demo() {
 
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Control interactive={false}>
-            <IconColorPicker size="1rem" stroke={1.5} />
+            <IconColorPicker size={16} stroke={1.5} />
           </RichTextEditor.Control>
           <RichTextEditor.Color color="#F03E3E" />
           <RichTextEditor.Color color="#7048E8" />
@@ -92,7 +92,7 @@ function Demo() {
 
         <RichTextEditor.ControlsGroup>
           <RichTextEditor.Control interactive={false}>
-            <IconColorPicker size="1rem" stroke={1.5} />
+            <IconColorPicker size={16} stroke={1.5} />
           </RichTextEditor.Control>
           <RichTextEditor.Color color="#F03E3E" />
           <RichTextEditor.Color color="#7048E8" />

@@ -1,23 +1,22 @@
 import { IconMessageCircle, IconPhoto, IconSettings } from '@tabler/icons-react';
-import { rem, Tabs, TabsProps, useDirection } from '@mantine/core';
+import { Tabs, TabsProps, useDirection } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 function Wrapper(props: TabsProps) {
   const { dir } = useDirection();
   const panelProps =
     props.orientation === 'vertical' ? { [dir === 'rtl' ? 'pr' : 'pl']: 'xs' } : { pt: 'xs' };
-  const iconStyle = { width: rem(12), height: rem(12) };
 
   return (
     <Tabs defaultValue="gallery" {...props}>
       <Tabs.List>
-        <Tabs.Tab value="gallery" leftSection={<IconPhoto style={iconStyle} />}>
+        <Tabs.Tab value="gallery" leftSection={<IconPhoto size={12} />}>
           Gallery
         </Tabs.Tab>
-        <Tabs.Tab value="messages" leftSection={<IconMessageCircle style={iconStyle} />}>
+        <Tabs.Tab value="messages" leftSection={<IconMessageCircle size={12} />}>
           Messages
         </Tabs.Tab>
-        <Tabs.Tab value="settings" leftSection={<IconSettings style={iconStyle} />}>
+        <Tabs.Tab value="settings" leftSection={<IconSettings size={12} />}>
           Settings
         </Tabs.Tab>
       </Tabs.List>
@@ -38,22 +37,20 @@ function Wrapper(props: TabsProps) {
 }
 
 const code = `
-import { Tabs, rem } from '@mantine/core';
+import { Tabs } from '@mantine/core';
 import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
 
 function Demo() {
-  const iconStyle = { width: rem(12), height: rem(12) };
-
   return (
     <Tabs{{props}} defaultValue="gallery">
       <Tabs.List>
-        <Tabs.Tab value="gallery" leftSection={<IconPhoto style={iconStyle} />}>
+        <Tabs.Tab value="gallery" leftSection={<IconPhoto size={12} />}>
           Gallery
         </Tabs.Tab>
-        <Tabs.Tab value="messages" leftSection={<IconMessageCircle style={iconStyle} />}>
+        <Tabs.Tab value="messages" leftSection={<IconMessageCircle size={12} />}>
           Messages
         </Tabs.Tab>
-        <Tabs.Tab value="settings" leftSection={<IconSettings style={iconStyle} />}>
+        <Tabs.Tab value="settings" leftSection={<IconSettings size={12} />}>
           Settings
         </Tabs.Tab>
       </Tabs.List>

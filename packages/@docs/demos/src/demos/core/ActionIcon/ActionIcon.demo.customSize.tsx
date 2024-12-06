@@ -1,10 +1,10 @@
 import { IconHeart } from '@tabler/icons-react';
-import { ActionIcon, createTheme, Group, MantineThemeProvider, rem } from '@mantine/core';
+import { ActionIcon, createTheme, Group, MantineThemeProvider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './ActionIcon.demo.customSize.module.css';
 
 const code = `
-import { ActionIcon, createTheme, Group, MantineThemeProvider, rem } from '@mantine/core';
+import { ActionIcon, createTheme, Group, MantineThemeProvider } from '@mantine/core';
 import { IconHeart } from '@tabler/icons-react';
 import classes from './Demo.module.css';
 
@@ -21,11 +21,11 @@ function Demo() {
     <MantineThemeProvider theme={theme}>
       <Group justify="center">
         <ActionIcon size="xxs" aria-label="Custom xxs size">
-          <IconHeart style={{ width: rem(10), height: rem(10) }} />
+          <IconHeart size={10} />
         </ActionIcon>
 
         <ActionIcon size="xxl" aria-label="Custom xxl size">
-          <IconHeart style={{ width: rem(32), height: rem(32) }} />
+          <IconHeart size={32} />
         </ActionIcon>
       </Group>
     </MantineThemeProvider>
@@ -53,11 +53,11 @@ function Demo() {
     <MantineThemeProvider theme={theme}>
       <Group justify="center">
         <ActionIcon size="xxs" aria-label="Custom xxs size">
-          <IconHeart style={{ width: rem(10), height: rem(10) }} />
+          <IconHeart size={10} />
         </ActionIcon>
 
         <ActionIcon size="xxl" aria-label="Custom xxl size">
-          <IconHeart style={{ width: rem(32), height: rem(32) }} />
+          <IconHeart size={32} />
         </ActionIcon>
       </Group>
     </MantineThemeProvider>
@@ -68,7 +68,7 @@ export const customSize: MantineDemo = {
   type: 'code',
   component: Demo,
   code: [
-    { fileName: 'Demo.module.css', code: cssCode, language: 'scss' },
     { fileName: 'Demo.tsx', code, language: 'tsx' },
+    { fileName: 'Demo.module.css', code: cssCode, language: 'scss' },
   ],
 };

@@ -7,12 +7,12 @@ import { Rating } from '@mantine/core';
 import { IconSun, IconMoon } from '@tabler/icons-react';
 
 function Demo() {
-  return <Rating emptySymbol={<IconSun size="1rem" />} fullSymbol={<IconMoon size="1rem" />} />;
+  return <Rating emptySymbol={<IconSun size={16} />} fullSymbol={<IconMoon size={16} />} />;
 }
 `;
 
 function Demo() {
-  return <Rating emptySymbol={<IconSun size="1rem" />} fullSymbol={<IconMoon size="1rem" />} />;
+  return <Rating emptySymbol={<IconSun size={16} />} fullSymbol={<IconMoon size={16} />} />;
 }
 
 export const symbol: MantineDemo = {

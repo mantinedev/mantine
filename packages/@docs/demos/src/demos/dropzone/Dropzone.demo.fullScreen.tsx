@@ -7,7 +7,7 @@ import { DropzoneDemoChildren } from './_base';
 
 const code = `
 import { useState } from 'react';
-import { Group, Text, Button, rem } from '@mantine/core';
+import { Group, Text, Button } from '@mantine/core';
 import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
@@ -32,22 +32,13 @@ function Demo() {
       >
         <Group justify="center" gap="xl" mih={220} style={{ pointerEvents: 'none' }}>
           <Dropzone.Accept>
-            <IconUpload
-              style={{ width: rem(52), height: rem(52), color: 'var(--mantine-color-blue-6)' }}
-              stroke={1.5}
-            />
+            <IconUpload size={52} color="var(--mantine-color-blue-6)" stroke={1.5} />
           </Dropzone.Accept>
           <Dropzone.Reject>
-            <IconX
-              style={{ width: rem(52), height: rem(52), color: 'var(--mantine-color-red-6)' }}
-              stroke={1.5}
-            />
+            <IconX size={52} color="var(--mantine-color-red-6)" stroke={1.5} />
           </Dropzone.Reject>
           <Dropzone.Idle>
-            <IconPhoto
-              style={{ width: rem(52), height: rem(52), color: 'var(--mantine-color-dimmed)' }}
-              stroke={1.5}
-            />
+            <IconPhoto size={52} color="var(--mantine-color-dimmed)" stroke={1.5} />
           </Dropzone.Idle>
 
           <div>

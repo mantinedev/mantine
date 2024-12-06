@@ -1,11 +1,11 @@
 import { IconAt } from '@tabler/icons-react';
-import { rem, Textarea } from '@mantine/core';
+import { Textarea } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { TextareaStylesApi } from '@docs/styles-api';
 
 const code = `
 import { IconAt } from '@tabler/icons-react';
-import { Textarea, rem } from '@mantine/core';
+import { Textarea } from '@mantine/core';
 
 function Demo() {
   return (
@@ -15,7 +15,7 @@ function Demo() {
       description="Description"
       error="Error"
       withAsterisk
-      leftSection={<IconAt style={{ width: rem(18), height: rem(18) }} />}
+      leftSection={<IconAt size={18} />}
       autosize
       {{props}}
     />
@@ -31,7 +31,7 @@ function Demo(props: any) {
       description="Description"
       error="Error"
       withAsterisk
-      leftSection={<IconAt style={{ width: rem(18), height: rem(18) }} />}
+      leftSection={<IconAt size={18} />}
       autosize
       {...props}
     />

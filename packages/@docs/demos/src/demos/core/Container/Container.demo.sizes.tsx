@@ -4,14 +4,14 @@ import { MantineDemo } from '@mantinex/demo';
 const code = `
 import { Container, MantineProvider, createTheme, rem } from '@mantine/core';
 
-const CONTAINER_SIZES: Record<string, string> = {
-  xxs: rem(300),
-  xs: rem(400),
-  sm: rem(500),
-  md: rem(600),
-  lg: rem(700),
-  xl: rem(800),
-  xxl: rem(900),
+const CONTAINER_SIZES: Record<string, number> = {
+  xxs: 300,
+  xs: 400,
+  sm: 500,
+  md: 600,
+  lg: 700,
+  xl: 800,
+  xxl: 900,
 };
 
 const theme = createTheme({
@@ -22,8 +22,8 @@ const theme = createTheme({
           '--container-size': fluid
             ? '100%'
             : size !== undefined && size in CONTAINER_SIZES
-            ? CONTAINER_SIZES[size]
-            : rem(size),
+              ? rem(CONTAINER_SIZES[size])
+              : rem(size),
         },
       }),
     }),
@@ -42,14 +42,14 @@ function Demo() {
 
 `;
 
-const CONTAINER_SIZES: Record<string, string> = {
-  xxs: rem(300),
-  xs: rem(400),
-  sm: rem(500),
-  md: rem(600),
-  lg: rem(700),
-  xl: rem(800),
-  xxl: rem(900),
+const CONTAINER_SIZES: Record<string, number> = {
+  xxs: 300,
+  xs: 400,
+  sm: 500,
+  md: 600,
+  lg: 700,
+  xl: 800,
+  xxl: 900,
 };
 
 const theme = createTheme({
@@ -60,7 +60,7 @@ const theme = createTheme({
           '--container-size': fluid
             ? '100%'
             : size !== undefined && size in CONTAINER_SIZES
-              ? CONTAINER_SIZES[size]
+              ? rem(CONTAINER_SIZES[size])
               : rem(size),
         },
       }),

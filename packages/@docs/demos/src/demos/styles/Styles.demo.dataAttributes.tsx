@@ -1,10 +1,10 @@
 import { IconArrowRight } from '@tabler/icons-react';
-import { Button, ButtonProps, Group, rem } from '@mantine/core';
+import { Button, ButtonProps, Group } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import classes from './Styles.demo.dataAttributes.module.css';
 
 const code = `
-import { Button, ButtonProps, Group, rem } from '@mantine/core';
+import { Button, ButtonProps, Group } from '@mantine/core';
 import { IconArrowRight } from '@tabler/icons-react';
 import classes from './Demo.module.css';
 
@@ -17,13 +17,13 @@ function Demo() {
     <Group>
       <SendFilesButton
         leftSection="12"
-        rightSection={<IconArrowRight style={{ width: rem(18) }} />}
+        rightSection={<IconArrowRight size={18} />}
       >
         Send files
       </SendFilesButton>
       <SendFilesButton
         leftSection="3"
-        rightSection={<IconArrowRight style={{ width: rem(18) }} />}
+        rightSection={<IconArrowRight size={18} />}
         disabled
       >
         Send files
@@ -87,17 +87,10 @@ function SendFilesButton(props: ButtonProps & React.ComponentPropsWithoutRef<'bu
 function Demo() {
   return (
     <Group>
-      <SendFilesButton
-        leftSection="12"
-        rightSection={<IconArrowRight style={{ width: rem(18) }} />}
-      >
+      <SendFilesButton leftSection="12" rightSection={<IconArrowRight size={18} />}>
         Send files
       </SendFilesButton>
-      <SendFilesButton
-        leftSection="3"
-        rightSection={<IconArrowRight style={{ width: rem(18) }} />}
-        disabled
-      >
+      <SendFilesButton leftSection="3" rightSection={<IconArrowRight size={18} />} disabled>
         Send files
       </SendFilesButton>
     </Group>

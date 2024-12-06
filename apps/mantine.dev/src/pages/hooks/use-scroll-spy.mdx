@@ -1,0 +1,94 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useScrollSpy);
+
+## Usage
+
+`use-scroll-spy` hook tracks scroll position and returns index of the
+element that is currently in the viewport. It is useful for creating
+table of contents components (like in mantine.dev sidebar on the right side)
+and similar features.
+
+<Demo data={HooksDemos.useScrollSpyUsage} />
+
+## Hook options
+
+`use-scroll-spy` accepts an object with options:
+
+- `selector` - selector to get headings, by default it is `'h1, h2, h3, h4, h5, h6'`
+- `getDepth` - a function to retrieve depth of heading, by default depth is calculated based on tag name
+- `getValue` - a function to retrieve heading value, by default `element.textContent` is used
+
+Example of using custom options to get headings with `data-heading` attribute:
+
+<Demo data={HooksDemos.useScrollSpySelector} />
+
+## Reinitializing hook data
+
+By default, `use-scroll-spy` does not track changes in the DOM. If you want
+to update headings data after the parent component has mounted, you can use
+`reinitialize` function:
+
+```tsx
+import { useEffect } from 'react';
+import { useScrollSpy } from '@mantine/hooks';
+
+function Demo({ dependency }) {
+  const { reinitialize } = useScrollSpy();
+
+  useEffect(() => {
+    reinitialize();
+  }, [dependency]);
+
+  return null;
+}
+```
+
+## Definition
+
+All types used in the definition are exported from `@mantine/hooks` package.
+
+```tsx
+interface UseScrollSpyHeadingData {
+  /** Heading depth, 1-6 */
+  depth: number;
+
+  /** Heading text content value */
+  value: string;
+
+  /** Heading id */
+  id: string;
+
+  /** Function to get heading node */
+  getNode: () => HTMLElement;
+}
+
+interface UseScrollSpyOptions {
+  /** Selector to get headings, `'h1, h2, h3, h4, h5, h6'` by default */
+  selector?: string;
+
+  /** A function to retrieve depth of heading, by default depth is calculated based on tag name */
+  getDepth?: (element: HTMLElement) => number;
+
+  /** A function to retrieve heading value, by default `element.textContent` is used */
+  getValue?: (element: HTMLElement) => string;
+}
+
+interface UseScrollSpyReturnType {
+  /** Index of the active heading in the `data` array */
+  active: number;
+
+  /** Headings data. If not initialize, data is represented by an empty array. */
+  data: UseScrollSpyHeadingData[];
+
+  /** True if headings value have been retrieved from the DOM. */
+  initialized: boolean;
+
+  /** Function to update headings values after the parent component has mounted. */
+  reinitialize: () => void;
+}
+
+function useScrollSpy({ selector, getDepth, getValue, }?: UseScrollSpyOptions): UseScrollSpyReturnType
+```

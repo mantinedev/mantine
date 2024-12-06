@@ -1,24 +1,24 @@
 import { IconHeart, IconPhoto, IconSettings } from '@tabler/icons-react';
-import { ActionIcon, rem } from '@mantine/core';
+import { ActionIcon } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { ActionIcon, rem } from '@mantine/core';
+import { ActionIcon } from '@mantine/core';
 import { IconPhoto, IconSettings, IconHeart } from '@tabler/icons-react';
 
 function Demo() {
   return (
     <ActionIcon.Group{{props}}>
       <ActionIcon variant="default" size="lg" aria-label="Gallery">
-        <IconPhoto style={{ width: rem(20) }} stroke={1.5} />
+        <IconPhoto size={20} stroke={1.5} />
       </ActionIcon>
 
       <ActionIcon variant="default" size="lg" aria-label="Settings">
-        <IconSettings style={{ width: rem(20) }} stroke={1.5} />
+        <IconSettings size={20} stroke={1.5} />
       </ActionIcon>
 
       <ActionIcon variant="default" size="lg" aria-label="Likes">
-        <IconHeart style={{ width: rem(20) }} stroke={1.5} />
+        <IconHeart size={20} stroke={1.5} />
       </ActionIcon>
     </ActionIcon.Group>
   );
@@ -29,15 +29,15 @@ function Wrapper(props: any) {
   return (
     <ActionIcon.Group {...props}>
       <ActionIcon variant="default" size="lg" aria-label="Gallery">
-        <IconPhoto style={{ width: rem(20) }} stroke={1.5} />
+        <IconPhoto size={20} stroke={1.5} />
       </ActionIcon>
 
       <ActionIcon variant="default" size="lg" aria-label="Settings">
-        <IconSettings style={{ width: rem(20) }} stroke={1.5} />
+        <IconSettings size={20} stroke={1.5} />
       </ActionIcon>
 
       <ActionIcon variant="default" size="lg" aria-label="Likes">
-        <IconHeart style={{ width: rem(20) }} stroke={1.5} />
+        <IconHeart size={20} stroke={1.5} />
       </ActionIcon>
     </ActionIcon.Group>
   );

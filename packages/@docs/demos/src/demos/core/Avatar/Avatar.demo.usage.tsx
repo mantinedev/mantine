@@ -21,7 +21,7 @@ function Demo() {
 
       {/* Custom placeholder icon */}
       <Avatar color="blue" radius="sm">
-        <IconStar size="1.5rem" />
+        <IconStar size={20} />
       </Avatar>
     </>
   );
@@ -38,7 +38,7 @@ function Demo() {
         MK
       </Avatar>
       <Avatar color="blue" radius="sm">
-        <IconStar size="1.5rem" />
+        <IconStar size={20} />
       </Avatar>
     </Group>
   );

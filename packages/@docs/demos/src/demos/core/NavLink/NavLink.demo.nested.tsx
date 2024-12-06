@@ -12,7 +12,7 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="First parent link"
-        leftSection={<IconGauge size="1rem" stroke={1.5} />}
+        leftSection={<IconGauge size={16} stroke={1.5} />}
         childrenOffset={28}
       >
         <NavLink href="#required-for-focus" label="First child link" />
@@ -27,7 +27,7 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="Second parent link"
-        leftSection={<IconFingerprint size="1rem" stroke={1.5} />}
+        leftSection={<IconFingerprint size={16} stroke={1.5} />}
         childrenOffset={28}
         defaultOpened
       >
@@ -46,7 +46,7 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="First parent link"
-        leftSection={<IconGauge size="1rem" stroke={1.5} />}
+        leftSection={<IconGauge size={16} stroke={1.5} />}
         childrenOffset={28}
       >
         <NavLink href="#required-for-focus" label="First child link" />
@@ -61,7 +61,7 @@ function Demo() {
       <NavLink
         href="#required-for-focus"
         label="Second parent link"
-        leftSection={<IconFingerprint size="1rem" stroke={1.5} />}
+        leftSection={<IconFingerprint size={16} stroke={1.5} />}
         childrenOffset={28}
         defaultOpened
       >

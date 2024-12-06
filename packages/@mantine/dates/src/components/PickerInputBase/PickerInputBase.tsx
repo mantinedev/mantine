@@ -3,7 +3,6 @@ import {
   __BaseInputProps,
   __InputStylesNames,
   BoxProps,
-  CloseButton,
   ElementProps,
   factory,
   Factory,
@@ -123,17 +122,9 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
     ...others
   } = useInputProps('PickerInputBase', defaultProps, _props);
 
-  const _rightSection =
-    rightSection ||
-    (clearable && shouldClear && !readOnly && !disabled ? (
-      <CloseButton
-        variant="transparent"
-        onClick={onClear}
-        unstyled={unstyled}
-        size={inputProps.size || 'sm'}
-        {...clearButtonProps}
-      />
-    ) : null);
+  const clearButton = (
+    <Input.ClearButton onClick={onClear} unstyled={unstyled} {...clearButtonProps} />
+  );
 
   const handleClose = () => {
     const isInvalidRangeValue = type === 'range' && Array.isArray(value) && value[0] && !value[1];
@@ -189,7 +180,9 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
                 onClick?.(event);
                 dropdownHandlers.toggle();
               }}
-              rightSection={_rightSection}
+              __clearSection={clearButton}
+              __clearable={clearable && shouldClear && !readOnly && !disabled}
+              rightSection={rightSection}
               {...inputProps}
               ref={ref}
               classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}

@@ -1094,4 +1094,17 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/AngleSlider/AngleSlider.tsx',
     docs: 'core/angle-slider.mdx',
   },
+
+  TableOfContents: {
+    title: 'TableOfContents',
+    package: '@mantine/core',
+    slug: '/core/table-of-contents',
+    props: ['TableOfContents'],
+    styles: ['TableOfContents'],
+    description:
+      'Renders a list of headings on the page and tracks current heading visible in the viewport',
+    import: "import { TableOfContents } from '@mantine/core';",
+    source: '@mantine/core/src/components/TableOfContents/TableOfContents.tsx',
+    docs: 'core/table-of-contents.mdx',
+  },
 };

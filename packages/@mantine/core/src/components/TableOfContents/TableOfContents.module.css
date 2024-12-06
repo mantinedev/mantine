@@ -1,0 +1,30 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  --toc-depth-offset: 0.8em;
+}
+
+.control {
+  display: block;
+  padding: 0.3em 0.8em;
+  font-size: var(--toc-size, var(--mantine-font-size-md));
+  border-radius: var(--toc-radius, var(--mantine-radius-default));
+  padding-left: max(calc(var(--depth-offset) * var(--toc-depth-offset)), 0.8em);
+
+  @mixin where-hover {
+    &:where(:not([data-variant='none'])) {
+      @mixin where-light {
+        background-color: var(--mantine-color-gray-1);
+      }
+
+      @mixin where-dark {
+        background-color: var(--mantine-color-dark-5);
+      }
+    }
+  }
+
+  &:where([data-active]) {
+    background-color: var(--toc-bg);
+    color: var(--toc-color);
+  }
+}

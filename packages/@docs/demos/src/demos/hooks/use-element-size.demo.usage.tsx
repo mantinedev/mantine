@@ -1,17 +1,16 @@
-import { Group, rem, Text, useMantineTheme } from '@mantine/core';
+import { Group, Text, useMantineTheme } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useElementSize } from '@mantine/hooks';
-import { rem } from '@mantine/core';
 
 function Demo() {
   const { ref, width, height } = useElementSize();
 
   return (
     <>
-      <textarea ref={ref} style={{ width: rem(400), height: rem(120) }} />
+      <textarea ref={ref} style={{ width: 400, height: 120 }} />
       <div>Width: {width}, height: {height}</div>
     </>
   );
@@ -32,8 +31,8 @@ function Demo() {
           ref={ref}
           aria-label="Resize me"
           style={{
-            width: rem(400),
-            height: rem(120),
+            width: 400,
+            height: 120,
             border: 'none',
             backgroundColor: 'var(--mantine-color-body)',
             position: 'relative',

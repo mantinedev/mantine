@@ -1,16 +1,16 @@
-import { Button, ButtonFactory, Group, PartialVarsResolver, rem } from '@mantine/core';
+import { Button, ButtonFactory, Group, PartialVarsResolver } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const inlineCode = `
-import { Button, rem, PartialVarsResolver, ButtonFactory, Group } from '@mantine/core';
+import { Button, PartialVarsResolver, ButtonFactory, Group } from '@mantine/core';
 
 const varsResolver: PartialVarsResolver<ButtonFactory> = (theme, props) => {
   if (props.size === 'xxl') {
     return {
       root: {
-        '--button-height': rem(60),
-        '--button-padding-x': rem(30),
-        '--button-fz': rem(24),
+        '--button-height': '60px',
+        '--button-padding-x': '30px',
+        '--button-fz': '24px',
       },
     };
   }
@@ -18,9 +18,9 @@ const varsResolver: PartialVarsResolver<ButtonFactory> = (theme, props) => {
   if (props.size === 'xxs') {
     return {
       root: {
-        '--button-height': rem(24),
-        '--button-padding-x': rem(10),
-        '--button-fz': rem(10),
+        '--button-height': '24px',
+        '--button-padding-x': '10px',
+        '--button-fz': '10px',
       },
     };
   }
@@ -43,7 +43,7 @@ function Demo() {
 `;
 
 const providerCode = `
-import { Button, rem, Group, MantineProvider, createTheme } from '@mantine/core';
+import { Button, Group, MantineProvider, createTheme } from '@mantine/core';
 
 const theme = createTheme({
   components: {
@@ -52,9 +52,9 @@ const theme = createTheme({
         if (props.size === 'xxl') {
           return {
             root: {
-              '--button-height': rem(60),
-              '--button-padding-x': rem(30),
-              '--button-fz': rem(24),
+              '--button-height': '60px',
+              '--button-padding-x': '30px',
+              '--button-fz': '24px',
             },
           };
         }
@@ -62,9 +62,9 @@ const theme = createTheme({
         if (props.size === 'xxs') {
           return {
             root: {
-              '--button-height': rem(24),
-              '--button-padding-x': rem(10),
-              '--button-fz': rem(10),
+              '--button-height': '24px',
+              '--button-padding-x': '10px',
+              '--button-fz': '10px',
             },
           };
         }
@@ -91,9 +91,9 @@ const varsResolver: PartialVarsResolver<ButtonFactory> = (_theme, props) => {
   if (props.size === 'xxl') {
     return {
       root: {
-        '--button-height': rem(60),
-        '--button-padding-x': rem(30),
-        '--button-fz': rem(24),
+        '--button-height': '60px',
+        '--button-padding-x': '30px',
+        '--button-fz': '24px',
       },
     };
   }
@@ -101,9 +101,9 @@ const varsResolver: PartialVarsResolver<ButtonFactory> = (_theme, props) => {
   if (props.size === 'xxs') {
     return {
       root: {
-        '--button-height': rem(24),
-        '--button-padding-x': rem(10),
-        '--button-fz': rem(10),
+        '--button-height': '24px',
+        '--button-padding-x': '10px',
+        '--button-fz': '10px',
       },
     };
   }
@@ -116,9 +116,9 @@ Button.extend({
     if (props.size === 'xxl') {
       return {
         root: {
-          '--button-height': rem(60),
-          '--button-padding-x': rem(30),
-          '--button-fz': rem(24),
+          '--button-height': '60px',
+          '--button-padding-x': '30px',
+          '--button-fz': '24px',
         },
       };
     }
@@ -126,9 +126,9 @@ Button.extend({
     if (props.size === 'xxs') {
       return {
         root: {
-          '--button-height': rem(24),
-          '--button-padding-x': rem(10),
-          '--button-fz': rem(10),
+          '--button-height': '24px',
+          '--button-padding-x': '10px',
+          '--button-fz': '10px',
         },
       };
     }

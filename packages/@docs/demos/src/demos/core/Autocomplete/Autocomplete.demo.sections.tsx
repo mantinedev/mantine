@@ -1,13 +1,13 @@
 import { IconComponents } from '@tabler/icons-react';
-import { Autocomplete, rem } from '@mantine/core';
+import { Autocomplete } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Autocomplete, rem } from '@mantine/core';
+import { Autocomplete } from '@mantine/core';
 import { IconComponents } from '@tabler/icons-react';
 
 function Demo() {
-  const icon = <IconComponents style={{ width: rem(16), height: rem(16) }} />;
+  const icon = <IconComponents size={16} />;
   return (
     <>
       <Autocomplete
@@ -31,7 +31,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const icon = <IconComponents style={{ width: rem(16), height: rem(16) }} />;
+  const icon = <IconComponents size={16} />;
   return (
     <>
       <Autocomplete

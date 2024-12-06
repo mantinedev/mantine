@@ -15,6 +15,8 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import { InputContext } from './Input.context';
+import { InputClearButton } from './InputClearButton/InputClearButton';
 import { InputDescription } from './InputDescription/InputDescription';
 import { InputError } from './InputError/InputError';
 import { InputLabel } from './InputLabel/InputLabel';
@@ -103,6 +105,15 @@ export interface __InputProps {
 
   /** `size` prop added to the input element */
   inputSize?: string;
+
+  /** Section to be displayed when the input is `__clearable` and `rightSection` is not defined */
+  __clearSection?: React.ReactNode;
+
+  /** Determines whether the `__clearSection` should be displayed if it is passed to the component, has no effect if `rightSection` is defined */
+  __clearable?: boolean;
+
+  /** Right section displayed when both `__clearSection` and `rightSection` are not defined */
+  __defaultRightSection?: React.ReactNode;
 }
 
 export interface InputProps extends BoxProps, __InputProps, StylesApiProps<InputFactory> {
@@ -138,6 +149,7 @@ export type InputFactory = PolymorphicFactory<{
     Description: typeof InputDescription;
     Placeholder: typeof InputPlaceholder;
     Wrapper: typeof InputWrapper;
+    ClearButton: typeof InputClearButton;
   };
 }>;
 
@@ -199,6 +211,9 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
     withErrorStyles,
     mod,
     inputSize,
+    __clearSection,
+    __clearable,
+    __defaultRightSection,
     ...others
   } = props;
 
@@ -231,63 +246,68 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
       }
     : {};
 
+  const _rightSection: React.ReactNode =
+    rightSection || (__clearable && __clearSection) || __defaultRightSection;
+
   return (
-    <Box
-      {...getStyles('wrapper')}
-      {...styleProps}
-      {...wrapperProps}
-      mod={[
-        {
-          error: !!error && withErrorStyles,
-          pointer,
-          disabled,
-          multiline,
-          'data-with-right-section': !!rightSection,
-          'data-with-left-section': !!leftSection,
-        },
-        mod,
-      ]}
-      variant={variant}
-      size={size}
-    >
-      {leftSection && (
-        <div
-          {...leftSectionProps}
-          data-position="left"
-          {...getStyles('section', {
-            className: leftSectionProps?.className,
-            style: leftSectionProps?.style,
-          })}
-        >
-          {leftSection}
-        </div>
-      )}
-
+    <InputContext value={{ size: size || 'sm' }}>
       <Box
-        component="input"
-        {...rest}
-        {...ariaAttributes}
-        ref={ref}
-        required={required}
-        mod={{ disabled, error: !!error && withErrorStyles }}
+        {...getStyles('wrapper')}
+        {...styleProps}
+        {...wrapperProps}
+        mod={[
+          {
+            error: !!error && withErrorStyles,
+            pointer,
+            disabled,
+            multiline,
+            'data-with-right-section': !!rightSection,
+            'data-with-left-section': !!leftSection,
+          },
+          mod,
+        ]}
         variant={variant}
-        __size={inputSize}
-        {...getStyles('input')}
-      />
+        size={size}
+      >
+        {leftSection && (
+          <div
+            {...leftSectionProps}
+            data-position="left"
+            {...getStyles('section', {
+              className: leftSectionProps?.className,
+              style: leftSectionProps?.style,
+            })}
+          >
+            {leftSection}
+          </div>
+        )}
 
-      {rightSection && (
-        <div
-          {...rightSectionProps}
-          data-position="right"
-          {...getStyles('section', {
-            className: rightSectionProps?.className,
-            style: rightSectionProps?.style,
-          })}
-        >
-          {rightSection}
-        </div>
-      )}
-    </Box>
+        <Box
+          component="input"
+          {...rest}
+          {...ariaAttributes}
+          ref={ref}
+          required={required}
+          mod={{ disabled, error: !!error && withErrorStyles }}
+          variant={variant}
+          __size={inputSize}
+          {...getStyles('input')}
+        />
+
+        {_rightSection && (
+          <div
+            {...rightSectionProps}
+            data-position="right"
+            {...getStyles('section', {
+              className: rightSectionProps?.className,
+              style: rightSectionProps?.style,
+            })}
+          >
+            {_rightSection}
+          </div>
+        )}
+      </Box>
+    </InputContext>
   );
 });
 
@@ -297,4 +317,5 @@ Input.Label = InputLabel;
 Input.Error = InputError;
 Input.Description = InputDescription;
 Input.Placeholder = InputPlaceholder;
+Input.ClearButton = InputClearButton;
 Input.displayName = '@mantine/core/Input';

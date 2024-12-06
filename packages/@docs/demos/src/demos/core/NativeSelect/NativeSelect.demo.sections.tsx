@@ -1,23 +1,23 @@
 import { IconChevronDown, IconHash } from '@tabler/icons-react';
-import { NativeSelect, rem } from '@mantine/core';
+import { NativeSelect } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { NativeSelect, rem } from '@mantine/core';
+import { NativeSelect } from '@mantine/core';
 import { IconChevronDown, IconHash } from '@tabler/icons-react';
 
 function Demo() {
   return (
     <>
       <NativeSelect
-        leftSection={<IconHash style={{ width: rem(16), height: rem(16) }} />}
+        leftSection={<IconHash size={16} />}
         leftSectionPointerEvents="none"
         label="Left section"
         data={['React', 'Angular']}
       />
 
       <NativeSelect
-        rightSection={<IconChevronDown style={{ width: rem(16), height: rem(16) }} />}
+        rightSection={<IconChevronDown size={16} />}
         label="Right section"
         data={['React', 'Angular']}
         mt="md"
@@ -31,14 +31,14 @@ function Demo() {
   return (
     <>
       <NativeSelect
-        leftSection={<IconHash style={{ width: rem(16), height: rem(16) }} />}
+        leftSection={<IconHash size={16} />}
         leftSectionPointerEvents="none"
         label="Left section"
         data={['React', 'Angular']}
       />
 
       <NativeSelect
-        rightSection={<IconChevronDown style={{ width: rem(16), height: rem(16) }} />}
+        rightSection={<IconChevronDown size={16} />}
         label="Right section"
         data={['React', 'Angular']}
         mt="md"

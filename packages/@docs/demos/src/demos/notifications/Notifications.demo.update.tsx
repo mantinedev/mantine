@@ -1,10 +1,10 @@
 import { IconCheck } from '@tabler/icons-react';
-import { Button, rem } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Button, rem } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconCheck } from '@tabler/icons-react';
 
@@ -26,7 +26,7 @@ function Demo() {
             color: 'teal',
             title: 'Data was loaded',
             message: 'Notification will close in 2 seconds, you can close this notification now',
-            icon: <IconCheck style={{ width: rem(18), height: rem(18) }} />,
+            icon: <IconCheck size={18} />,
             loading: false,
             autoClose: 2000,
           });
@@ -57,7 +57,7 @@ function Demo() {
             color: 'teal',
             title: 'Data was loaded',
             message: 'Notification will close in 2 seconds, you can close this notification now',
-            icon: <IconCheck style={{ width: rem(18), height: rem(18) }} />,
+            icon: <IconCheck size={18} />,
             loading: false,
             autoClose: 2000,
           });

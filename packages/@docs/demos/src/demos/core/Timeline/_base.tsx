@@ -10,10 +10,7 @@ export function TimelineBase({ noIcon, ...props }: Partial<TimelineProps> & { no
   const displayIcon = !noIcon;
   return (
     <Timeline active={1} bulletSize={24} lineWidth={2} {...props}>
-      <Timeline.Item
-        bullet={displayIcon ? <IconGitBranch size="0.8rem" /> : null}
-        title="New branch"
-      >
+      <Timeline.Item bullet={displayIcon ? <IconGitBranch size={13} /> : null} title="New branch">
         <Text c="dimmed" size="sm">
           You&apos;ve created new branch{' '}
           <Text variant="link" component="span" inherit>
@@ -26,7 +23,7 @@ export function TimelineBase({ noIcon, ...props }: Partial<TimelineProps> & { no
         </Text>
       </Timeline.Item>
 
-      <Timeline.Item bullet={displayIcon ? <IconGitCommit size="0.8rem" /> : null} title="Commits">
+      <Timeline.Item bullet={displayIcon ? <IconGitCommit size={13} /> : null} title="Commits">
         <Text c="dimmed" size="sm">
           You&apos;ve pushed 23 commits to{' '}
           <Text variant="link" component="span" inherit>
@@ -41,7 +38,7 @@ export function TimelineBase({ noIcon, ...props }: Partial<TimelineProps> & { no
 
       <Timeline.Item
         title="Pull request"
-        bullet={displayIcon ? <IconGitPullRequest size="0.8rem" /> : null}
+        bullet={displayIcon ? <IconGitPullRequest size={13} /> : null}
         lineVariant="dashed"
       >
         <Text c="dimmed" size="sm">
@@ -57,7 +54,7 @@ export function TimelineBase({ noIcon, ...props }: Partial<TimelineProps> & { no
 
       <Timeline.Item
         title="Code review"
-        bullet={displayIcon ? <IconMessageDots size="0.8rem" /> : null}
+        bullet={displayIcon ? <IconMessageDots size={13} /> : null}
       >
         <Text c="dimmed" size="sm">
           <Text variant="link" component="span" inherit>

@@ -1,13 +1,13 @@
 import { IconLock } from '@tabler/icons-react';
-import { PasswordInput, rem } from '@mantine/core';
+import { PasswordInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { PasswordInput, rem } from '@mantine/core';
+import { PasswordInput } from '@mantine/core';
 import { IconLock } from '@tabler/icons-react';
 
 function Demo() {
-  const icon = <IconLock style={{ width: rem(18), height: rem(18) }} stroke={1.5} />;
+  const icon = <IconLock size={18} stroke={1.5} />;
 
   return (
     <>
@@ -24,7 +24,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const icon = <IconLock style={{ width: rem(18), height: rem(18) }} stroke={1.5} />;
+  const icon = <IconLock size={18} stroke={1.5} />;
 
   return (
     <>

@@ -1,8 +1,25 @@
+import { Button } from '@mantine/core';
+import { IconHeartFilled } from '@tabler/icons-react';
 import { ActionIconDemos, TableDemos, BarChartDemos, ModalsDemos, FormDemos, TipTapDemos, ModalDemos, HooksDemos, DatePickerDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog7150);
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds will be used to improve Mantine and create new features and components.
+
+<Button
+  rightSection={<IconHeartFilled size={22} color="var(--mantine-color-red-7)" />}
+  size="lg"
+  miw={300}
+  justify="space-between"
+  children="Sponsor Mantine"
+  variant="default"
+  radius="md"
+/>
 
 ## use-radial-move hook
 

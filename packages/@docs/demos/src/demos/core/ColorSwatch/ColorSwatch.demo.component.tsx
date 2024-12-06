@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { CheckIcon, ColorSwatch, rem } from '@mantine/core';
+import { CheckIcon, ColorSwatch } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { ColorSwatch, CheckIcon, rem } from '@mantine/core';
+import { ColorSwatch, CheckIcon } from '@mantine/core';
 
 function Demo() {
   const [checked, setChecked] = useState(true);
@@ -16,7 +16,7 @@ function Demo() {
       onClick={() => setChecked((c) => !c)}
       style={{ color: '#fff', cursor: 'pointer' }}
     >
-      {checked && <CheckIcon style={{ width: rem(12), height: rem(12) }} />}
+      {checked && <CheckIcon size={12} />}
     </ColorSwatch>
   );
 }
@@ -33,7 +33,7 @@ function Demo() {
       c="white"
       style={{ cursor: 'pointer' }}
     >
-      {checked && <CheckIcon style={{ width: rem(12), height: rem(12) }} />}
+      {checked && <CheckIcon size={12} />}
     </ColorSwatch>
   );
 }

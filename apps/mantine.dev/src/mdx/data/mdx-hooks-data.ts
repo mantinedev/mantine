@@ -183,4 +183,8 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'useRadialMove',
     'Handles radial move behavior over given element, can be used to build custom radial sliders'
   ),
+  useScrollSpy: hDocs(
+    'useScrollSpy',
+    'Track scroll position and detect which heading is currently in the viewport, can be used for table of contents'
+  ),
 };

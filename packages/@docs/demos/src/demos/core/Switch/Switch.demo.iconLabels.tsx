@@ -1,54 +1,32 @@
 import { IconMoonStars, IconSun } from '@tabler/icons-react';
-import { rem, Switch, useMantineTheme } from '@mantine/core';
+import { Switch } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Switch, useMantineTheme, rem } from '@mantine/core';
+import { Switch } from '@mantine/core';
 import { IconSun, IconMoonStars } from '@tabler/icons-react';
 
 function Demo() {
-  const theme = useMantineTheme();
-
-  const sunIcon = (
-    <IconSun
-      style={{ width: rem(16), height: rem(16) }}
-      stroke={2.5}
-      color={theme.colors.yellow[4]}
+  return (
+    <Switch
+      size="md"
+      color="dark.4"
+      onLabel={<IconSun size={16} stroke={2.5} color="var(--mantine-color-yellow-4)" />}
+      offLabel={<IconMoonStars size={16} stroke={2.5} color="var(--mantine-color-blue-6)" />}
     />
   );
-
-  const moonIcon = (
-    <IconMoonStars
-      style={{ width: rem(16), height: rem(16) }}
-      stroke={2.5}
-      color={theme.colors.blue[6]}
-    />
-  );
-
-  return <Switch size="md" color="dark.4" onLabel={sunIcon} offLabel={moonIcon} />;
 }
 `;
 
 function Demo() {
-  const theme = useMantineTheme();
-
-  const sunIcon = (
-    <IconSun
-      style={{ width: rem(16), height: rem(16) }}
-      stroke={2.5}
-      color={theme.colors.yellow[4]}
+  return (
+    <Switch
+      size="md"
+      color="dark.4"
+      onLabel={<IconSun size={16} stroke={2.5} color="var(--mantine-color-yellow-4)" />}
+      offLabel={<IconMoonStars size={16} stroke={2.5} color="var(--mantine-color-blue-6)" />}
     />
   );
-
-  const moonIcon = (
-    <IconMoonStars
-      style={{ width: rem(16), height: rem(16) }}
-      stroke={2.5}
-      color={theme.colors.blue[6]}
-    />
-  );
-
-  return <Switch size="md" color="dark.4" onLabel={sunIcon} offLabel={moonIcon} />;
 }
 
 export const iconLabels: MantineDemo = {

@@ -1,11 +1,9 @@
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { Carousel } from '@mantine/carousel';
-import { rem } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { Slides } from './_slides';
 
 const code = `
-import { rem } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 import { IconArrowRight, IconArrowLeft } from '@tabler/icons-react';
 
@@ -13,8 +11,8 @@ function Demo() {
   return (
     <Carousel
       height={180}
-      nextControlIcon={<IconArrowRight style={{ width: rem(16), height: rem(16) }} />}
-      previousControlIcon={<IconArrowLeft style={{ width: rem(16), height: rem(16) }} />}
+      nextControlIcon={<IconArrowRight size={16} />}
+      previousControlIcon={<IconArrowLeft size={16} />}
     >
       <Carousel.Slide>1</Carousel.Slide>
       <Carousel.Slide>2</Carousel.Slide>
@@ -29,8 +27,8 @@ function Demo() {
   return (
     <Carousel
       height={180}
-      nextControlIcon={<IconArrowRight style={{ width: rem(16), height: rem(16) }} />}
-      previousControlIcon={<IconArrowLeft style={{ width: rem(16), height: rem(16) }} />}
+      nextControlIcon={<IconArrowRight size={16} />}
+      previousControlIcon={<IconArrowLeft size={16} />}
     >
       <Slides count={5} />
     </Carousel>

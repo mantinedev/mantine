@@ -31,7 +31,7 @@ function Demo() {
       {(provided) => (
         <Group ref={provided.innerRef} mt="xs" {...provided.draggableProps}>
           <Center {...provided.dragHandleProps}>
-            <IconGripVertical size="1.2rem" />
+            <IconGripVertical size={18} />
           </Center>
           <TextInput
             placeholder="John Doe"
@@ -94,7 +94,7 @@ function Demo() {
       {(provided) => (
         <Group ref={provided.innerRef} mt="xs" {...provided.draggableProps}>
           <Center {...provided.dragHandleProps}>
-            <IconGripVertical size="1.2rem" />
+            <IconGripVertical size={18} />
           </Center>
           <TextInput
             placeholder="John Doe"
