@@ -15,3 +15,4 @@ export { cards } from './Carousel.demo.cards';
 export { animationOffset } from './Carousel.demo.animationOffset';
 export { brokenAnimation } from './Carousel.demo.brokenAnimation';
 export { stylesApi } from './Carousel.demo.stylesApi';
+export { container } from './Carousel.demo.container';
