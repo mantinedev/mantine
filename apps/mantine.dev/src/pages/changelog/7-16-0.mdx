@@ -1,4 +1,4 @@
-import { InputDemos, HooksDemos, TableOfContentsDemos, PopoverDemos } from '@docs/demos';
+import { InputDemos, HooksDemos, TableOfContentsDemos, PopoverDemos, CarouselDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -34,6 +34,17 @@ inherited from the input:
 [Popover](/core/popover) and other components based on it now support `withOverlay` prop:
 
 <Demo data={PopoverDemos.overlay} />
+
+## Container queries in Carousel
+
+You can now use [container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries)
+in [Carousel](/x/carousel) component. With container queries, all responsive values
+are adjusted based on the container width, not the viewport width.
+
+Example of using container queries. To see how the grid changes, resize the root element
+of the demo with the resize handle located at the bottom right corner of the demo:
+
+<Demo data={CarouselDemos.container} />
 
 ## Other changes
 
