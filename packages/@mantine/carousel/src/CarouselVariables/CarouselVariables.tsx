@@ -6,6 +6,7 @@ import {
   InlineStyles,
   keys,
   MantineBreakpoint,
+  px,
   rem,
   useMantineTheme,
 } from '@mantine/core';
@@ -52,4 +53,60 @@ export function CarouselVariables({ slideGap, slideSize, selector }: CarouselVar
   }));
 
   return <InlineStyles styles={baseStyles} media={media} selector={selector} />;
+}
+
+function getBreakpoints(values: unknown) {
+  if (typeof values === 'object' && values !== null) {
+    return keys(values);
+  }
+
+  return [];
+}
+
+function sortBreakpoints(breakpoints: string[]) {
+  return breakpoints.sort((a, b) => (px(a) as number) - (px(b) as number));
+}
+
+function getUniqueBreakpoints({ slideGap, slideSize }: Omit<CarouselVariablesProps, 'selector'>) {
+  const breakpoints = Array.from(
+    new Set([...getBreakpoints(slideGap), ...getBreakpoints(slideSize)])
+  );
+
+  return sortBreakpoints(breakpoints);
+}
+
+export function CarouselContainerVariables({
+  slideGap,
+  slideSize,
+  selector,
+}: CarouselVariablesProps) {
+  const baseStyles: Record<string, string | undefined> = filterProps({
+    '--carousel-slide-gap': getSpacing(getBaseValue(slideGap)),
+    '--carousel-slide-size': rem(getBaseValue(slideSize)),
+  });
+
+  const queries = getUniqueBreakpoints({ slideGap, slideSize }).reduce<
+    Record<string, Record<string, any>>
+  >((acc, breakpoint) => {
+    if (!acc[breakpoint]) {
+      acc[breakpoint] = {};
+    }
+
+    if (typeof slideGap === 'object' && slideGap[breakpoint] !== undefined) {
+      acc[breakpoint]['--carousel-slide-gap'] = getSpacing(slideGap[breakpoint]);
+    }
+
+    if (typeof slideSize === 'object' && slideSize[breakpoint] !== undefined) {
+      acc[breakpoint]['--carousel-slide-size'] = getSpacing(slideSize[breakpoint]);
+    }
+
+    return acc;
+  }, {});
+
+  const media = Object.keys(queries).map((breakpoint) => ({
+    query: `carousel (min-width: ${breakpoint})`,
+    styles: queries[breakpoint],
+  }));
+
+  return <InlineStyles styles={baseStyles} container={media} selector={selector} />;
 }

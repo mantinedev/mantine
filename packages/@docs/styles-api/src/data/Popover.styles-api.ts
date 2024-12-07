@@ -5,6 +5,7 @@ export const PopoverStylesApi: StylesApiData<PopoverFactory> = {
   selectors: {
     dropdown: 'Dropdown element',
     arrow: 'Dropdown arrow',
+    overlay: 'Overlay element',
   },
 
   vars: {

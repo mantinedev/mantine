@@ -22,7 +22,10 @@ import {
 import { clamp } from '@mantine/hooks';
 import { CarouselProvider } from './Carousel.context';
 import { CarouselSlide } from './CarouselSlide/CarouselSlide';
-import { CarouselVariables } from './CarouselVariables/CarouselVariables';
+import {
+  CarouselContainerVariables,
+  CarouselVariables,
+} from './CarouselVariables/CarouselVariables';
 import { getChevronRotation } from './get-chevron-rotation';
 import classes from './Carousel.module.css';
 
@@ -79,6 +82,9 @@ export interface CarouselProps
 
   /** Carousel orientation, `'horizontal'` by default */
   orientation?: 'horizontal' | 'vertical';
+
+  /** Determines type of queries used for responsive styles, `'media'` by default */
+  type?: 'media' | 'container';
 
   /** Slides container `height`, required for vertical orientation */
   height?: React.CSSProperties['height'];
@@ -165,6 +171,7 @@ const defaultProps: Partial<CarouselProps> = {
   skipSnaps: false,
   containScroll: '',
   withKeyboardEvents: true,
+  type: 'media',
 };
 
 const varsResolver = createVarsResolver<CarouselFactory>(
@@ -217,6 +224,7 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
     containScroll,
     withKeyboardEvents,
     mod,
+    type,
     ...others
   } = props;
 
@@ -339,16 +347,24 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
 
   return (
     <CarouselProvider value={{ getStyles, orientation }}>
-      <CarouselVariables {...props} selector={`.${responsiveClassName}`} />
+      {type === 'container' ? (
+        <CarouselContainerVariables {...props} selector={`.${responsiveClassName}`} />
+      ) : (
+        <CarouselVariables {...props} selector={`.${responsiveClassName}`} />
+      )}
+
       <Box
         ref={ref}
-        {...getStyles('root', { className: responsiveClassName })}
+        {...getStyles('root', { className: 'responsiveClassName' })}
         {...others}
         mod={[{ orientation, 'include-gap-in-size': includeGapInSize }, mod]}
         onKeyDownCapture={handleKeydown}
       >
-        <div {...getStyles('viewport')} ref={emblaRefElement}>
-          <div {...getStyles('container')} data-orientation={orientation}>
+        <div {...getStyles('viewport')} ref={emblaRefElement} data-type={type}>
+          <div
+            {...getStyles('container', { className: responsiveClassName })}
+            data-orientation={orientation}
+          >
             {children}
           </div>
         </div>

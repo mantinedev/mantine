@@ -1,8 +1,7 @@
-/* eslint-disable no-console */
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import type { EmblaCarouselType } from 'embla-carousel-react';
-import { Button, Modal } from '@mantine/core';
+import { Box, Button, Modal } from '@mantine/core';
 import { Carousel } from './Carousel';
 import { useAnimationOffsetEffect } from './use-animation-offset-effect';
 
@@ -10,28 +9,31 @@ export default { title: 'Carousel' };
 
 const slides = (
   <>
-    <Carousel.Slide bg="red">Slide 1</Carousel.Slide>
-    <Carousel.Slide bg="red">Slide 2</Carousel.Slide>
-    <Carousel.Slide bg="red">Slide 3</Carousel.Slide>
-    <Carousel.Slide bg="red">Slide 4</Carousel.Slide>
+    <Carousel.Slide bg="pink.1">
+      <Box bg="pink.5">Slide 1</Box>
+    </Carousel.Slide>
+    <Carousel.Slide bg="pink.1">
+      <Box bg="pink.5">Slide 2</Box>
+    </Carousel.Slide>
+    <Carousel.Slide bg="pink.1">
+      <Box bg="pink.5">Slide 3</Box>
+    </Carousel.Slide>
+    <Carousel.Slide bg="pink.1">
+      <Box bg="pink.5">Slide 4</Box>
+    </Carousel.Slide>
   </>
 );
 
 export function Usage() {
-  const [value, setValue] = useState(0);
-  const log = useCallback((index: any) => console.log({ value, index }), [value]);
-
   return (
-    <div style={{ padding: 40, maxWidth: 500 }}>
-      <button type="button" onClick={() => setValue(Math.random())}>
-        random
-      </button>
+    <div style={{ padding: 40 }}>
       <Carousel
         slideGap="md"
-        slideSize={{ md: '50%' }}
+        slideSize={{ base: '100%', '400px': '50%', '600px': '33.333333%' }}
         height={200}
         withIndicators
-        onSlideChange={log}
+        align="start"
+        type="container"
       >
         {slides}
       </Carousel>
