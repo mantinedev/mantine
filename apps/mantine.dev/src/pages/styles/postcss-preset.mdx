@@ -411,6 +411,31 @@ Will be transformed to:
 }
 ```
 
+## where-\* mixins
+
+`where-*` mixins are alternative to `light`, `dark`, `rlt` and `hover` mixins.
+They work exactly the same, but produced CSS is less specific. These mixins are
+useful when you want to easily override styles, for example, when you are building
+a library or extension.
+
+Example of using `where-light` mixin:
+
+```scss
+.demo {
+  @mixin where-light {
+    color: red;
+  }
+}
+```
+
+Will be transformed to:
+
+```scss
+:where([data-mantine-color-scheme='light']) .demo {
+  color: red;
+}
+```
+
 ## Custom mixins
 
 You can define custom mixins that are not included in the preset by specifying them
