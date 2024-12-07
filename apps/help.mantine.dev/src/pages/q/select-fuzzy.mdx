@@ -1,0 +1,54 @@
+import {SelectFuzzy} from '@/demos/SelectFuzzy.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How can I add fuzzy search to Select component?',
+  description: 'Learn how to integrate third-party fuzzy search libraries with Mantine Select component',
+  slug: 'select-fuzzy',
+  category: 'components',
+  tags: ['select', 'multi-select', 'autocomplete', 'tags-input'],
+  created_at: 'December 7, 2024',
+  last_updated_at: 'December 7, 2024',
+};
+
+export default Layout(meta);
+
+## Options filtering
+
+[Select](https://mantine.dev/core/select) and other components based on
+[Combobox](https://mantine.dev/core/combobox) component support custom
+options filtering with `filter` prop. You can use it to integrate
+third-party fuzzy search libraries like [fuse.js](https://fusejs.io/)
+or customize filtering logic to better suit your needs.
+
+Example of a custom filter function that matches options by words instead of letters sequence:
+
+```tsx
+import { Select, ComboboxItem, OptionsFilter } from '@mantine/core';
+
+const optionsFilter: OptionsFilter = ({ options, search }) => {
+  const splittedSearch = search.toLowerCase().trim().split(' ');
+  return (options as ComboboxItem[]).filter((option) => {
+    const words = option.label.toLowerCase().trim().split(' ');
+    return splittedSearch.every((searchWord) => words.some((word) => word.includes(searchWord)));
+  });
+};
+
+function Demo() {
+  return (
+    <Select
+      label="Your country"
+      placeholder="Pick value"
+      data={['Great Britain', 'Russian Federation', 'United States']}
+      filter={optionsFilter}
+      searchable
+    />
+  );
+}
+```
+
+## Example with fuse.js
+
+Example of adding fuzzy search with [fuse.js](https://fusejs.io/) to Select component:
+
+<Demo data={SelectFuzzy} />

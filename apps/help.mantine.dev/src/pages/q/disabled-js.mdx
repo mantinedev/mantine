@@ -1,0 +1,40 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'My styles are broken with disabled JavaScript. What should I do?',
+  description: 'Learn how to use Mantine without JavaScript enabled',
+  slug: 'disabled-js',
+  category: 'styles',
+  tags: ['noscript'],
+  created_at: 'December 7, 2024',
+  last_updated_at: 'December 7, 2024',
+};
+
+export default Layout(meta);
+
+## data-mantine-color-scheme attribute
+
+Most of Mantine styles rely on `data-mantine-color-scheme`
+attribute to be present on the root element of the application.
+If it is not there, your application will look broken and it may
+seem that styles are not applied at all. It is not the case, styles
+are applied, but there is no `data-mantine-color-scheme` attribute
+to match selectors.
+
+By default, `data-mantine-color-scheme` attribute is added automatically
+by `ColorSchemeScript` and `MantineProvider` components. Both of them
+are JavaScript components and require JavaScript to work.
+
+## Adding support for disabled JavaScript
+
+If you are planning to support users with disabled JavaScript, you
+need to defined `data-mantine-color-scheme` attribute manually on
+the root element of your application (usually it is `html`).
+
+```html
+<html data-mantine-color-scheme="light">
+<!-- ... rest of your application -->
+```
+
+Note that you can only used `light` or `dark` values for `data-mantine-color-scheme`
+in this case. `auto` value is not supported without JavaScript.
