@@ -6,6 +6,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  findClosestNumber,
   getRadius,
   getSize,
   getThemeColor,
@@ -28,6 +29,12 @@ import { getClientPosition } from '../utils/get-client-position/get-client-posit
 import { getFloatingValue } from '../utils/get-floating-value/get-gloating-value';
 import { getPosition } from '../utils/get-position/get-position';
 import { getPrecision } from '../utils/get-precision/get-precision';
+import {
+  getFirstMarkValue,
+  getLastMarkValue,
+  getNextMarkValue,
+  getPreviousMarkValue,
+} from '../utils/get-step-mark-value/get-step-mark-value';
 import classes from '../Slider.module.css';
 
 export type RangeSliderValue = [number, number];
@@ -116,6 +123,9 @@ export interface RangeSliderProps
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+
+  /** Determines whether the selection should be only allowed from the given marks array, `false` by default */
+  restrictToMarks?: boolean;
 }
 
 export type RangeSliderFactory = Factory<{
@@ -184,6 +194,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     style,
     vars,
     hiddenInputProps,
+    restrictToMarks,
     ...others
   } = props;
 
@@ -234,39 +245,76 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
   );
 
   const setRangedValue = (val: number, index: number, triggerChangeEnd: boolean) => {
-    const clone: RangeSliderValue = [...valueRef.current];
-    clone[index] = val;
-
-    if (index === 0) {
-      if (val > clone[1] - (minRange! - 0.000000001)) {
-        clone[1] = Math.min(val + minRange!, max!);
-      }
-
-      if (val > (max! - (minRange! - 0.000000001) || min!)) {
-        clone[index] = valueRef.current[index];
-      }
-
-      if (clone[1] - val > maxRange!) {
-        clone[1] = val + maxRange!;
-      }
+    if (index === -1) {
+      return;
     }
 
-    if (index === 1) {
-      if (val < clone[0] + minRange!) {
-        clone[0] = Math.max(val - minRange!, min!);
+    const clone: RangeSliderValue = [...valueRef.current];
+
+    if (restrictToMarks && marks) {
+      const closest = findClosestNumber(
+        val,
+        marks.map((m) => m.value)
+      );
+
+      const current = clone[index];
+      clone[index] = closest;
+      const otherIndex = index === 0 ? 1 : 0;
+
+      const lastMarkValue = getLastMarkValue(marks);
+      const firstMarkValue = getFirstMarkValue(marks);
+
+      if (closest === lastMarkValue && clone[otherIndex] === lastMarkValue) {
+        clone[index] = current;
+      } else if (closest === firstMarkValue && clone[otherIndex] === firstMarkValue) {
+        clone[index] = current;
+      } else if (closest === clone[otherIndex]) {
+        if (current > clone[otherIndex]) {
+          clone[otherIndex] = getPreviousMarkValue(closest, marks);
+        } else {
+          clone[otherIndex] = getNextMarkValue(closest, marks);
+        }
+      }
+    } else {
+      clone[index] = val;
+
+      if (index === 0) {
+        if (val > clone[1] - (minRange! - 0.000000001)) {
+          clone[1] = Math.min(val + minRange!, max!);
+        }
+
+        if (val > (max! - (minRange! - 0.000000001) || min!)) {
+          clone[index] = valueRef.current[index];
+        }
+
+        if (clone[1] - val > maxRange!) {
+          clone[1] = val + maxRange!;
+        }
       }
 
-      if (val < clone[0] + minRange!) {
-        clone[index] = valueRef.current[index];
-      }
+      if (index === 1) {
+        if (val < clone[0] + minRange!) {
+          clone[0] = Math.max(val - minRange!, min!);
+        }
 
-      if (val - clone[0] > maxRange!) {
-        clone[0] = val - maxRange!;
+        if (val < clone[0] + minRange!) {
+          clone[index] = valueRef.current[index];
+        }
+
+        if (val - clone[0] > maxRange!) {
+          clone[0] = val - maxRange!;
+        }
       }
     }
 
     clone[0] = getFloatingValue(clone[0], precision);
     clone[1] = getFloatingValue(clone[1], precision);
+
+    if (clone[0] > clone[1]) {
+      const temp = clone[0];
+      clone[0] = clone[1];
+      clone[1] = temp;
+    }
 
     _setValue(clone);
 
