@@ -5,7 +5,7 @@ export function useEventListener<K extends keyof HTMLElementEventMap, T extends 
   listener: (this: HTMLDivElement, ev: HTMLElementEventMap[K]) => any,
   options?: boolean | AddEventListenerOptions
 ) {
-  const ref = useRef<T>();
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     if (ref.current) {

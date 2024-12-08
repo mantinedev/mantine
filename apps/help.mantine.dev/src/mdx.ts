@@ -13,6 +13,8 @@ import { meta as customInputUseForm } from './pages/q/custom-input-use-form.mdx'
 import { meta as dataGridINeed } from './pages/q/data-grid-i-need.mdx';
 import { meta as datesMissingStyles } from './pages/q/dates-missing-styles.mdx';
 import { meta as disableAllInputsInForm } from './pages/q/disable-all-inputs-in-form.mdx';
+import { meta as disabledJs } from './pages/q/disabled-js.mdx';
+import { meta as dropzoneUpload } from './pages/q/dropzone-upload.mdx';
 import { meta as dynamicCssStyles } from './pages/q/dynamic-css-styles.mdx';
 import { meta as fileButtonInMenu } from './pages/q/file-button-in-menu.mdx';
 import { meta as floatingActionButton } from './pages/q/floating-action-button.mdx';
@@ -33,8 +35,10 @@ import { meta as inputsPlaceholderColor } from './pages/q/inputs-placeholder-col
 import { meta as lightDarkElements } from './pages/q/light-dark-elements.mdx';
 import { meta as lightDarkIsNotEnough } from './pages/q/light-dark-is-not-enough.mdx';
 import { meta as listOfStringsInUseForm } from './pages/q/list-of-strings-in-use-form.mdx';
+import { meta as localStorageEffect } from './pages/q/local-storage-effect.mdx';
 import { meta as mantineProviderMissing } from './pages/q/mantine-provider-missing.mdx';
 import { meta as multiselectValuePlaceholder } from './pages/q/multiselect-value-placeholder.mdx';
+import { meta as nativeRequired } from './pages/q/native-required.mdx';
 import { meta as nestedInlineStyles } from './pages/q/nested-inline-styles.mdx';
 import { meta as nestedPopoverCloses } from './pages/q/nested-popover-closes.mdx';
 import { meta as nextLoadFonts } from './pages/q/next-load-fonts.mdx';
@@ -52,6 +56,7 @@ import { meta as roadmap } from './pages/q/roadmap.mdx';
 import { meta as scrollToTheTopOfTheForm } from './pages/q/scroll-to-the-top-of-the-form.mdx';
 import { meta as segmentedControlNoValue } from './pages/q/segmented-control-no-value.mdx';
 import { meta as selectAutocompleteDifference } from './pages/q/select-autocomplete-difference.mdx';
+import { meta as selectFuzzy } from './pages/q/select-fuzzy.mdx';
 import { meta as serverComponents } from './pages/q/server-components.mdx';
 import { meta as stylesOrder } from './pages/q/styles-order.mdx';
 import { meta as submitTemplate } from './pages/q/submit-template.mdx';
@@ -80,6 +85,8 @@ export const MDX_DATA = [
   dataGridINeed,
   datesMissingStyles,
   disableAllInputsInForm,
+  disabledJs,
+  dropzoneUpload,
   dynamicCssStyles,
   fileButtonInMenu,
   floatingActionButton,
@@ -100,8 +107,10 @@ export const MDX_DATA = [
   lightDarkElements,
   lightDarkIsNotEnough,
   listOfStringsInUseForm,
+  localStorageEffect,
   mantineProviderMissing,
   multiselectValuePlaceholder,
+  nativeRequired,
   nestedInlineStyles,
   nestedPopoverCloses,
   nextLoadFonts,
@@ -119,6 +128,7 @@ export const MDX_DATA = [
   scrollToTheTopOfTheForm,
   segmentedControlNoValue,
   selectAutocompleteDifference,
+  selectFuzzy,
   serverComponents,
   stylesOrder,
   submitTemplate,

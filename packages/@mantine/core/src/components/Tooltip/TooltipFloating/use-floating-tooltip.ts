@@ -14,7 +14,7 @@ export function useFloatingTooltip<T extends HTMLElement = any>({
   defaultOpened,
 }: UseFloatingTooltip) {
   const [opened, setOpened] = useState(defaultOpened);
-  const boundaryRef = useRef<T>();
+  const boundaryRef = useRef<T>(null);
   const { x, y, elements, refs, update, placement } = useFloating({
     placement: position,
     middleware: [

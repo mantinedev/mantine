@@ -21,7 +21,7 @@ import ResponsiveSizesCode from './ResponsiveSizes/code.json';
 import { ResponsiveSizes } from './ResponsiveSizes/ResponsiveSizes';
 
 interface AppShellExampleComponent {
-  component: () => JSX.Element;
+  component: () => React.JSX.Element;
   code: {
     fileName: string;
     language: CodeHighlightDefaultLanguage;

@@ -82,7 +82,7 @@ export const Breadcrumbs = factory<BreadcrumbsFactory>((_props, ref) => {
   const items = Children.toArray(children).reduce<React.ReactNode[]>((acc, child, index, array) => {
     const item = isElement(child) ? (
       cloneElement(child, {
-        ...getStyles('breadcrumb', { className: child.props?.className }),
+        ...getStyles('breadcrumb', { className: (child.props as any)?.className }),
         key: index,
       })
     ) : (

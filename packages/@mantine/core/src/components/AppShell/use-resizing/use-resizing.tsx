@@ -8,8 +8,8 @@ interface UseResizingInput {
 
 export function useResizing({ transitionDuration, disabled }: UseResizingInput) {
   const [resizing, setResizing] = useState(true);
-  const resizingTimeout = useRef<number>();
-  const disabledTimeout = useRef<number>();
+  const resizingTimeout = useRef<number>(-1);
+  const disabledTimeout = useRef<number>(-1);
 
   useWindowEvent('resize', () => {
     setResizing(true);

@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from 'react';
 import { useClickOutside, useId } from '@mantine/hooks';
 import {
   createVarsResolver,
+  ElementProps,
   ExtendComponent,
   Factory,
   getDefaultZIndex,
@@ -22,8 +23,9 @@ import {
   FloatingStrategy,
   getFloatingPosition,
 } from '../Floating';
-import { PortalProps } from '../Portal';
-import { TransitionOverride } from '../Transition';
+import { Overlay, OverlayProps } from '../Overlay';
+import { OptionalPortal, PortalProps } from '../Portal';
+import { Transition, TransitionOverride } from '../Transition';
 import { PopoverContextProvider } from './Popover.context';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
 import { PopoverDropdown } from './PopoverDropdown/PopoverDropdown';
@@ -31,7 +33,7 @@ import { PopoverTarget } from './PopoverTarget/PopoverTarget';
 import { usePopover } from './use-popover';
 import classes from './Popover.module.css';
 
-export type PopoverStylesNames = 'dropdown' | 'arrow';
+export type PopoverStylesNames = 'dropdown' | 'arrow' | 'overlay';
 export type PopoverCssVariables = {
   dropdown: '--popover-radius' | '--popover-shadow';
 };
@@ -75,6 +77,12 @@ export interface __PopoverProps {
 
   /** Determines whether component should have an arrow, `false` by default */
   withArrow?: boolean;
+
+  /** Determines whether the overlay should be displayed when the dropdown is opened, `false` by default */
+  withOverlay?: boolean;
+
+  /** Props passed down to `Overlay` component */
+  overlayProps?: OverlayProps & ElementProps<'div'>;
 
   /** Arrow size in px, `7` by default */
   arrowSize?: number;
@@ -169,6 +177,7 @@ const defaultProps: Partial<PopoverProps> = {
   trapFocus: false,
   withRoles: true,
   returnFocus: false,
+  withOverlay: false,
   clickOutsideEvents: ['mousedown', 'touchstart'],
   zIndex: getDefaultZIndex('popover'),
   __staticSelector: 'Popover',
@@ -226,6 +235,8 @@ export function Popover(_props: PopoverProps) {
     keepMounted,
     vars,
     floatingStrategy,
+    withOverlay,
+    overlayProps,
     ...others
   } = props;
 
@@ -344,6 +355,26 @@ export function Popover(_props: PopoverProps) {
       }}
     >
       {children}
+      {withOverlay && (
+        <Transition
+          transition="fade"
+          mounted={popover.opened}
+          duration={transitionProps?.duration || 250}
+          exitDuration={transitionProps?.exitDuration || 250}
+        >
+          {(transitionStyles) => (
+            <OptionalPortal withinPortal={withinPortal}>
+              <Overlay
+                {...overlayProps}
+                {...getStyles('overlay', {
+                  className: overlayProps?.className,
+                  style: [transitionStyles, overlayProps?.style],
+                })}
+              />
+            </OptionalPortal>
+          )}
+        </Transition>
+      )}
     </PopoverContextProvider>
   );
 }

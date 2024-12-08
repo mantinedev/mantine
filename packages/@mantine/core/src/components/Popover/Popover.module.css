@@ -29,3 +29,8 @@
   border: 1px solid var(--popover-border-color);
   z-index: 1;
 }
+
+.overlay {
+  position: fixed;
+  inset: 0;
+}

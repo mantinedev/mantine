@@ -1,0 +1,57 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How can I upload files from Dropzone component?',
+  description: 'Learn how to process files dropped into Dropzone component',
+  slug: 'dropzone-upload',
+  category: 'components',
+  tags: ['S3', 'DND', 'drag and drop', 'file upload', 'file processing', 'AWS', 'Linode', 'DigitalOcean'],
+  created_at: 'December 7, 2024',
+  last_updated_at: 'December 7, 2024',
+};
+
+export default Layout(meta);
+
+## Example
+
+Example below demonstrates how to upload files from Dropzone component to S3 bucket
+with `axios`:
+
+```tsx
+import axios from 'axios';
+import { useState } from 'react';
+import { Dropzone } from '@mantine/dropzone';
+import { notifications } from '@mantine/notifications';
+
+function Demo() {
+  const [loading, setLoading] = useState(false);
+
+  const handleUpload = (files: File) => {
+    setLoading(true);
+
+    axios
+      .put('https://your-bucket.s3.amazonaws.com', file)
+      .then(() => {
+        notifications.showNotification({
+          title: 'File uploaded',
+          message: 'File uploaded successfully',
+          color: 'teal',
+        });
+      })
+      .catch((error) => {
+        notifications.showNotification({
+          title: 'File upload failed',
+          message: error.message,
+          color: 'red',
+        });
+      })
+      .finally(() => setLoading(false));
+  };
+
+  return (
+    <Dropzone onDrop={(files) => handleUpload(files[0])} loading={loading}>
+      {loading ? 'Uploading file...' : 'Drop file here'}
+    </Dropzone>
+  );
+}
+```

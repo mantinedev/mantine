@@ -23,8 +23,8 @@ import {
   useStyles,
 } from '../../core';
 import { StepperProvider } from './Stepper.context';
-import { StepperCompleted } from './StepperCompleted/StepperCompleted';
-import { StepperStep } from './StepperStep/StepperStep';
+import { StepperCompleted, StepperCompletedProps } from './StepperCompleted/StepperCompleted';
+import { StepperStep, StepperStepProps } from './StepperStep/StepperStep';
 import classes from './Stepper.module.css';
 
 export type StepFragmentComponent = React.FC<{ step: number }>;
@@ -185,59 +185,64 @@ export const Stepper = factory<StepperFactory>((_props, ref) => {
   });
 
   const convertedChildren = Children.toArray(children) as React.ReactElement[];
-  const _children = convertedChildren.filter((child) => child.type !== StepperCompleted);
-  const completedStep = convertedChildren.find((item) => item.type === StepperCompleted);
+  const _children = convertedChildren.filter(
+    (child) => child.type !== StepperCompleted
+  ) as React.ReactElement<StepperStepProps>[];
+  const completedStep = convertedChildren.find(
+    (item) => item.type === StepperCompleted
+  ) as React.ReactElement<StepperCompletedProps>;
 
-  const items = _children.reduce<React.ReactElement[]>((acc, item, index) => {
-    const state =
-      active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive';
+  const items = _children.reduce<React.ReactElement<StepperStepProps>[]>(
+    (acc, item: React.ReactElement<StepperStepProps>, index) => {
+      const state =
+        active === index ? 'stepProgress' : active > index ? 'stepCompleted' : 'stepInactive';
 
-    const shouldAllowSelect = () => {
-      if (typeof onStepClick !== 'function') {
-        return false;
-      }
+      const shouldAllowSelect = () => {
+        if (typeof onStepClick !== 'function') {
+          return false;
+        }
 
-      if (typeof item.props.allowStepSelect === 'boolean') {
-        return item.props.allowStepSelect;
-      }
+        if (typeof item.props.allowStepSelect === 'boolean') {
+          return item.props.allowStepSelect;
+        }
 
-      return state === 'stepCompleted' || allowNextStepsSelect;
-    };
+        return state === 'stepCompleted' || allowNextStepsSelect;
+      };
 
-    const isStepSelectionEnabled = shouldAllowSelect();
+      const isStepSelectionEnabled = shouldAllowSelect();
 
-    acc.push(
-      cloneElement(item, {
-        icon: item.props.icon || icon || index + 1,
-        key: index,
-        step: index,
-        state,
-        onClick: () => isStepSelectionEnabled && onStepClick?.(index),
-        allowStepClick: isStepSelectionEnabled,
-        completedIcon: item.props.completedIcon || completedIcon,
-        progressIcon: item.props.progressIcon || progressIcon,
-        color: item.props.color || color,
-        iconSize,
-        radius,
-        iconPosition: item.props.iconPosition || iconPosition,
-        orientation,
-        unstyled,
-      })
-    );
-
-    if (orientation === 'horizontal' && index !== _children.length - 1) {
       acc.push(
-        <div
-          {...getStyles('separator')}
-          data-active={index < active || undefined}
-          data-orientation={orientation}
-          key={`separator-${index}`}
-        />
+        cloneElement(item, {
+          icon: item.props.icon || icon || index + 1,
+          key: index,
+          step: index,
+          state,
+          onClick: () => isStepSelectionEnabled && onStepClick?.(index),
+          allowStepClick: isStepSelectionEnabled,
+          completedIcon: item.props.completedIcon || completedIcon,
+          progressIcon: item.props.progressIcon || progressIcon,
+          color: item.props.color || color,
+          iconSize,
+          iconPosition: item.props.iconPosition || iconPosition,
+          orientation,
+        })
       );
-    }
 
-    return acc;
-  }, []);
+      if (orientation === 'horizontal' && index !== _children.length - 1) {
+        acc.push(
+          <div
+            {...getStyles('separator')}
+            data-active={index < active || undefined}
+            data-orientation={orientation}
+            key={`separator-${index}`}
+          />
+        );
+      }
+
+      return acc;
+    },
+    []
+  );
 
   const stepContent = _children[active]?.props?.children;
   const completedContent = completedStep?.props?.children;

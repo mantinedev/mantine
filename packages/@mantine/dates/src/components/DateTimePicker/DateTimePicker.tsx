@@ -126,8 +126,8 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
 
   const _valueFormat = valueFormat || (withSeconds ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm');
 
-  const timeInputRef = useRef<HTMLInputElement>();
-  const timeInputRefMerged = useMergedRef(timeInputRef, timePickerProps?.hoursRef);
+  const timePickerRef = useRef<HTMLInputElement>(null);
+  const timePickerRefMerged = useMergedRef(timePickerRef, timePickerProps?.hoursRef);
 
   const {
     calendarProps: { allowSingleDateInRange, ...calendarProps },
@@ -171,7 +171,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     if (date) {
       setValue(clampDate(minDate, maxDate, assignTime(_value, date)));
     }
-    timeInputRef.current?.focus();
+    timePickerRef.current?.focus();
   };
 
   const handleTimeInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -264,7 +264,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
             onKeyDown={handleTimeInputKeyDown}
             size={size}
             data-mantine-stop-propagation={__stopPropagation || undefined}
-            hoursRef={timeInputRefMerged}
+            hoursRef={timePickerRefMerged}
           />
 
           <ActionIcon

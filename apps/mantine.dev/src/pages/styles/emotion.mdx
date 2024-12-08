@@ -281,7 +281,7 @@ import { CacheProvider } from '@emotion/react';
 export function RootStyleRegistry({
   children,
 }: {
-  children: JSX.Element;
+  children: React.ReactNode;
 }) {
   const [{ cache, flush }] = useState(() => {
     const cache = createCache({ key: 'my' });

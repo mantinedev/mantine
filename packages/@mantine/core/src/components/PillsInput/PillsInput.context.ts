@@ -2,7 +2,7 @@ import { createOptionalContext, MantineSize } from '../../core';
 import { InputVariant } from '../Input';
 
 export interface PillsInputContextValue {
-  fieldRef: React.MutableRefObject<HTMLInputElement | undefined>;
+  fieldRef: React.RefObject<HTMLInputElement | null>;
   size: MantineSize | (string & {});
   disabled: boolean | undefined;
   hasError: boolean | undefined;

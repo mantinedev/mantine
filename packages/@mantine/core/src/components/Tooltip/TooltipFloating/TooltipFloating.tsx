@@ -105,15 +105,16 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => 
   }
 
   const targetRef = useMergedRef(boundaryRef, getRefProp(children), ref);
+  const _childrenProps = children.props as any;
 
   const onMouseEnter = (event: React.MouseEvent<unknown, MouseEvent>) => {
-    children.props.onMouseEnter?.(event);
+    _childrenProps.onMouseEnter?.(event);
     handleMouseMove(event);
     setOpened(true);
   };
 
   const onMouseLeave = (event: React.MouseEvent<unknown, MouseEvent>) => {
-    children.props.onMouseLeave?.(event);
+    _childrenProps.onMouseLeave?.(event);
     setOpened(false);
   };
 
@@ -140,7 +141,7 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => 
       </OptionalPortal>
 
       {cloneElement(children, {
-        ...children.props,
+        ..._childrenProps,
         [refProp!]: targetRef,
         onMouseEnter,
         onMouseLeave,

@@ -68,7 +68,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
   const ctx = useMenuContext();
   const theme = useMantineTheme();
   const { dir } = useDirection();
-  const itemRef = useRef<HTMLButtonElement>();
+  const itemRef = useRef<HTMLButtonElement>(null);
   const itemIndex = ctx.getItemIndex(itemRef.current!);
   const _others: any = others;
 

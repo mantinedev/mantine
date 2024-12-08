@@ -14,6 +14,9 @@ export interface StorageProperties<T> {
   /** If set to true, value will be updated in useEffect after mount. Default value is true. */
   getInitialValueInEffect?: boolean;
 
+  /** Determines whether the value must be synced between browser tabs, `true` by default */
+  sync?: boolean;
+
   /** Function to serialize value into string to be save in storage */
   serialize?: (value: T) => string;
 
@@ -76,6 +79,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
     key,
     defaultValue,
     getInitialValueInEffect = true,
+    sync = true,
     deserialize = deserializeJSON,
     serialize = (value: T) => serializeJSON(value, hookName),
   }: StorageProperties<T>) {
@@ -131,14 +135,18 @@ export function createStorage<T>(type: StorageType, hookName: string) {
     }, []);
 
     useWindowEvent('storage', (event) => {
-      if (event.storageArea === window[type] && event.key === key) {
-        setValue(deserialize(event.newValue ?? undefined));
+      if (sync) {
+        if (event.storageArea === window[type] && event.key === key) {
+          setValue(deserialize(event.newValue ?? undefined));
+        }
       }
     });
 
     useWindowEvent(eventName, (event) => {
-      if (event.detail.key === key) {
-        setValue(event.detail.value);
+      if (sync) {
+        if (event.detail.key === key) {
+          setValue(event.detail.value);
+        }
       }
     });
 

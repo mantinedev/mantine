@@ -6,6 +6,10 @@
 .viewport {
   height: var(--carousel-height);
   overflow: hidden;
+
+  &[data-type='container'] {
+    container: carousel / inline-size;
+  }
 }
 
 .container {

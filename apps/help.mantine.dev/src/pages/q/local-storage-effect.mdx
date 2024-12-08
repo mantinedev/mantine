@@ -1,0 +1,65 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'use-local-storage hook returns real value only after mounting, is it a bug?',
+  description: 'Learn how Mantine retrieves local storage value',
+  slug: 'local-storage-effect',
+  category: 'common',
+  tags: ['local storage', 'session storage', 'use-local-storage', 'use-session-storage'],
+  created_at: 'December 7, 2024',
+  last_updated_at: 'December 7, 2024',
+};
+
+export default Layout(meta);
+
+## How use-local-storage hook works
+
+By default, [use-local-storage](https://mantine.dev/hooks/use-local-storage) hook
+retrieves value from local storage in `useEffect` only after component is mounted.
+It is implemented this way to avoid hydration mismatches if the value is used in
+output markup of the component.
+
+Example:
+
+- `value` during server-side rendering: `dark` (default value)
+- `value` at initial render: `dark` (default value)
+- `value` after mounting: `light` or `dark` depending on value in local storage (value from local storage)
+
+```tsx
+import { useLocalStorage } from '@mantine/hooks';
+
+function Demo() {
+  const [value, setValue] = useLocalStorage<'light' | 'dark'>({
+    key: 'color-scheme',
+    defaultValue: 'dark',
+  });
+
+  return <div>{value}</div>;
+}
+```
+
+## Reading value in first render
+
+If your application does not have server-side rendering or you do not use
+`value` in output markup of the component, you can read value from local storage
+in the first render. Do do that, set `getInitialValueInEffect: false` option:
+
+Example:
+
+- `value` during server-side rendering: `dark` (default value)
+- `value` at initial render: `light` or `dark` depending on value in local storage (value from local storage)
+- `value` at subsequent renders: `light` or `dark` depending on value in local storage (value from local storage)
+
+```tsx
+import { useLocalStorage } from '@mantine/hooks';
+
+function Demo() {
+  const [value, setValue] = useLocalStorage<'light' | 'dark'>({
+    key: 'color-scheme',
+    defaultValue: 'dark',
+    getInitialValueInEffect: false,
+  });
+
+  return <div>{value}</div>;
+}
+```

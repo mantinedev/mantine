@@ -1,4 +1,4 @@
-import { InputDemos, HooksDemos, TableOfContentsDemos } from '@docs/demos';
+import { InputDemos, HooksDemos, TableOfContentsDemos, PopoverDemos, CarouselDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -29,6 +29,34 @@ inherited from the input:
 
 <Demo data={InputDemos.clearButton} />
 
+## Popover with overlay
+
+[Popover](/core/popover) and other components based on it now support `withOverlay` prop:
+
+<Demo data={PopoverDemos.overlay} />
+
+## Container queries in Carousel
+
+You can now use [container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries)
+in [Carousel](/x/carousel) component. With container queries, all responsive values
+are adjusted based on the container width, not the viewport width.
+
+Example of using container queries. To see how the grid changes, resize the root element
+of the demo with the resize handle located at the bottom right corner of the demo:
+
+<Demo data={CarouselDemos.container} />
+
+## Help Center updates
+
+- [Native browser validation does not work in some components, what should I do?](https://help.mantine.dev/q/native-required) question
+- [My styles are broken with disabled JavaScript. What should I do?](https://help.mantine.dev/q/disabled-js) question
+- [How can I add fuzzy search to Select component?](https://help.mantine.dev/q/select-fuzzy) question
+- [use-local-storage hook returns real value only after mounting, is it a bug?](https://help.mantine.dev/q/local-storage-effect) question
+- [How can I upload files from Dropzone component?](https://help.mantine.dev/q/dropzone-upload) question
+
+
 ## Other changes
 
 - [Autocomplete](/core/autocomplete) now supports `clearable` prop
+- [where-* mixins](/styles/postcss-preset/#where--mixins) documentation has been added
+- [use-local-storage](/hooks/use-local-storage) hook now supports `sync` option which allows disabling synchronization between browser tabs

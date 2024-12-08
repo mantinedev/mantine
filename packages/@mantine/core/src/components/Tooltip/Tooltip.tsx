@@ -205,6 +205,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
 
   const targetRef = useMergedRef(tooltip.reference, getRefProp(children), ref);
   const transition = getTransitionProps(transitionProps, { duration: 100, transition: 'fade' });
+  const _childrenProps = children.props as any;
 
   return (
     <>
@@ -262,8 +263,8 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
           onPointerDown: props.onPointerDown,
           onPointerEnter: props.onPointerEnter,
           [refProp!]: targetRef,
-          className: cx(className, children.props.className),
-          ...children.props,
+          className: cx(className, _childrenProps.className),
+          ..._childrenProps,
         })
       )}
     </>

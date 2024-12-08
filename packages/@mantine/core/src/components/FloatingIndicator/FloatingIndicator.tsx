@@ -88,7 +88,7 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props, ref)
   const { initialized, hidden } = useFloatingIndicator({
     target,
     parent,
-    ref: innerRef,
+    ref: innerRef as any,
     displayAfterTransitionEnd,
   });
   const mergedRef = useMergedRef(ref, innerRef);
