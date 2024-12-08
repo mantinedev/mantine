@@ -26,8 +26,8 @@ export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((pr
   }
 
   const ctx = useHoverCardContext();
-  const onMouseEnter = createEventHandler(children.props.onMouseEnter, ctx.openDropdown);
-  const onMouseLeave = createEventHandler(children.props.onMouseLeave, ctx.closeDropdown);
+  const onMouseEnter = createEventHandler((children.props as any).onMouseEnter, ctx.openDropdown);
+  const onMouseLeave = createEventHandler((children.props as any).onMouseLeave, ctx.closeDropdown);
 
   const eventListeners = { onMouseEnter, onMouseLeave };
 

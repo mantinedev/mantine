@@ -32,7 +32,7 @@ export function useProviderColorScheme({
   getRootElement,
   forceColorScheme,
 }: UseProviderColorSchemeOptions) {
-  const media = useRef<MediaQueryList>();
+  const media = useRef<MediaQueryList>(null);
   const [value, setValue] = useState(() => manager.get(defaultColorScheme));
   const colorSchemeValue = forceColorScheme || value;
 

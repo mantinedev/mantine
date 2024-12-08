@@ -7,7 +7,7 @@ export function useClickOutside<T extends HTMLElement = any>(
   events?: string[] | null,
   nodes?: (HTMLElement | null)[]
 ) {
-  const ref = useRef<T>();
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     const listener = (event: any) => {

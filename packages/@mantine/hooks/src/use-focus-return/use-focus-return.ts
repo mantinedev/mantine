@@ -8,7 +8,7 @@ interface UseFocusReturn {
 
 /** Returns focus to last active element, used in Modal and Drawer */
 export function useFocusReturn({ opened, shouldReturnFocus = true }: UseFocusReturn) {
-  const lastActiveElement = useRef<HTMLElement>();
+  const lastActiveElement = useRef<HTMLElement>(null);
   const returnFocus = () => {
     if (
       lastActiveElement.current &&

@@ -12,7 +12,7 @@ function getAutoHeightDuration(height: number | string) {
 }
 
 export function getElementHeight(
-  el: React.RefObject<HTMLElement> | { current?: { scrollHeight: number } }
+  el: React.RefObject<HTMLElement | null> | { current?: { scrollHeight: number } }
 ) {
   return el?.current ? el.current.scrollHeight : 'auto';
 }

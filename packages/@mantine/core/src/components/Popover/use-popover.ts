@@ -32,7 +32,7 @@ interface UsePopoverOptions {
   onOpen?: () => void;
   width: PopoverWidth;
   middlewares: PopoverMiddlewares | undefined;
-  arrowRef: React.RefObject<HTMLDivElement>;
+  arrowRef: React.RefObject<HTMLDivElement | null>;
   arrowOffset: number;
   strategy?: FloatingStrategy;
 }

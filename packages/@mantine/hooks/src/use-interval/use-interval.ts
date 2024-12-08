@@ -11,8 +11,8 @@ export function useInterval(
   { autoInvoke = false }: UseIntervalOptions = {}
 ) {
   const [active, setActive] = useState(false);
-  const intervalRef = useRef<number>();
-  const fnRef = useRef<() => void>();
+  const intervalRef = useRef<number>(-1);
+  const fnRef = useRef<() => void>(null);
 
   const start = () => {
     setActive((old) => {
@@ -26,7 +26,7 @@ export function useInterval(
   const stop = () => {
     setActive(false);
     window.clearInterval(intervalRef.current);
-    intervalRef.current = undefined;
+    intervalRef.current = -1;
   };
 
   const toggle = () => {

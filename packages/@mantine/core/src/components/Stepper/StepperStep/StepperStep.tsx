@@ -71,7 +71,7 @@ export interface StepperStepProps
   description?: React.ReactNode | StepFragmentComponent;
 
   /** Icon wrapper size */
-  iconSize?: number;
+  iconSize?: string | number;
 
   /** Icon position relative to step body, controlled by Stepper component */
   iconPosition?: 'right' | 'left';

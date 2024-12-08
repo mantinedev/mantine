@@ -9,6 +9,7 @@ import {
   factory,
   Factory,
   getSize,
+  noop,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -291,7 +292,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     }
   };
 
-  const incrementRef = useRef<() => void>();
+  const incrementRef = useRef<() => void>(noop);
   incrementRef.current = () => {
     if (!canIncrement(_value)) {
       return;
@@ -322,7 +323,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     setTimeout(() => adjustCursor(inputRef.current?.value.length), 0);
   };
 
-  const decrementRef = useRef<() => void>();
+  const decrementRef = useRef<() => void>(noop);
   decrementRef.current = () => {
     if (!canIncrement(_value)) {
       return;

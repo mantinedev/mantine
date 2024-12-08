@@ -69,7 +69,7 @@ export const ComboboxEventsTarget = factory<ComboboxEventsTargetFactory>((props,
     withAriaAttributes,
     withKeyboardNavigation,
     withExpandedAttribute,
-    onKeyDown: children.props.onKeyDown,
+    onKeyDown: (children.props as any).onKeyDown,
     autoComplete,
   });
 
