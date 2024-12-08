@@ -207,8 +207,8 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
   });
 
   const valueRef = useRef(_value);
-  const root = useRef<HTMLDivElement>();
-  const thumb = useRef<HTMLDivElement>();
+  const root = useRef<HTMLDivElement>(null);
+  const thumb = useRef<HTMLDivElement>(null);
   const position = getPosition({ value: _value, min: min!, max: max! });
   const scaledValue = scale!(_value);
   const _label = typeof label === 'function' ? label(scaledValue) : label;

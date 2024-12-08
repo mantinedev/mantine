@@ -6,8 +6,8 @@ export function useThrottledCallbackWithClearTimeout<T extends (...args: any[]) 
   wait: number
 ) {
   const handleCallback = useCallbackRef(callback);
-  const latestInArgsRef = useRef<Parameters<T>>();
-  const latestOutArgsRef = useRef<Parameters<T>>();
+  const latestInArgsRef = useRef<Parameters<T>>(null);
+  const latestOutArgsRef = useRef<Parameters<T>>(null);
   const active = useRef(true);
   const waitRef = useRef(wait);
   const timeoutRef = useRef<number>(-1);

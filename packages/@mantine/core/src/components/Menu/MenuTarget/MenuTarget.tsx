@@ -25,8 +25,9 @@ export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) 
   }
 
   const ctx = useMenuContext();
+  const _childrenProps = children.props as any;
 
-  const onClick = createEventHandler(children.props.onClick, () => {
+  const onClick = createEventHandler(_childrenProps.onClick, () => {
     if (ctx.trigger === 'click') {
       ctx.toggleDropdown();
     } else if (ctx.trigger === 'click-hover') {
@@ -38,11 +39,11 @@ export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) 
   });
 
   const onMouseEnter = createEventHandler(
-    children.props.onMouseEnter,
+    _childrenProps.onMouseEnter,
     () => (ctx.trigger === 'hover' || ctx.trigger === 'click-hover') && ctx.openDropdown()
   );
 
-  const onMouseLeave = createEventHandler(children.props.onMouseLeave, () => {
+  const onMouseLeave = createEventHandler(_childrenProps.onMouseLeave, () => {
     if (ctx.trigger === 'hover') {
       ctx.closeDropdown();
     } else if (ctx.trigger === 'click-hover' && !ctx.openedViaClick) {
@@ -57,7 +58,7 @@ export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) 
         onMouseEnter,
         onMouseLeave,
         'data-expanded': ctx.opened ? true : undefined,
-      })}
+      } as any)}
     </Popover.Target>
   );
 });

@@ -71,7 +71,7 @@ export const ComboboxTarget = factory<ComboboxTargetFactory>((props, ref) => {
     withAriaAttributes,
     withKeyboardNavigation,
     withExpandedAttribute,
-    onKeyDown: children.props.onKeyDown,
+    onKeyDown: (children.props as any).onKeyDown,
     autoComplete,
   });
 

@@ -17,7 +17,7 @@ interface DemoTabsProps {
 
 export function DemoTabs({ data, title }: DemoTabsProps) {
   const [shouldAnimate, setShouldAnimate] = useState(false);
-  const animationTimeout = useRef<number>();
+  const animationTimeout = useRef<number>(-1);
   const [active, setActive] = useState(0);
   const theme = useMantineTheme();
   const controlSize = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`) ? 60 : 80;

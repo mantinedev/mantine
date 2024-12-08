@@ -87,7 +87,7 @@ import TransferListCode from './TransferList/code.json';
 import { TransferList } from './TransferList/TransferList';
 
 interface ComboboxExampleComponent {
-  component: () => JSX.Element;
+  component: () => React.JSX.Element;
   code: {
     fileName: string;
     language: ShikiLanguage;

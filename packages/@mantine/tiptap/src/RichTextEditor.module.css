@@ -17,7 +17,6 @@
   margin: 0;
 
   & li > p {
-    display: inline-block;
     margin: 0;
     display: inline-block;
   }

@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
 export function useGuaranteedMemo<T>(fn: () => T, deps: React.DependencyList): T {
-  const ref = useRef<{ v: T; prevDeps: unknown[] }>();
+  const ref = useRef<{ v: T; prevDeps: unknown[] }>(null);
 
   if (
     !ref.current ||

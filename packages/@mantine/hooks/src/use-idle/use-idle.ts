@@ -18,7 +18,7 @@ export function useIdle(
 ) {
   const { events, initialState } = { ...DEFAULT_OPTIONS, ...options };
   const [idle, setIdle] = useState<boolean>(initialState);
-  const timer = useRef<number>();
+  const timer = useRef<number>(-1);
 
   useEffect(() => {
     const handleEvents = () => {

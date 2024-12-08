@@ -31,7 +31,7 @@ interface UseTooltip {
   opened?: boolean;
   defaultOpened?: boolean;
   offset: number | FloatingAxesOffsets;
-  arrowRef?: React.RefObject<HTMLDivElement>;
+  arrowRef?: React.RefObject<HTMLDivElement | null>;
   arrowOffset?: number;
   events?: { hover: boolean; focus: boolean; touch: boolean };
   positionDependencies: any[];
