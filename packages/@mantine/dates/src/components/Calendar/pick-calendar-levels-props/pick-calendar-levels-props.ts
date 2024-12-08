@@ -29,6 +29,7 @@ export function pickCalendarProps<T extends Record<string, any>>(props: T) {
     highlightToday,
     __updateDateOnYearSelect,
     __updateDateOnMonthSelect,
+    withWeekNumbers,
 
     // MonthLevelGroup props
     firstDayOfWeek,
@@ -94,6 +95,7 @@ export function pickCalendarProps<T extends Record<string, any>>(props: T) {
       highlightToday,
       __updateDateOnYearSelect,
       __updateDateOnMonthSelect,
+      withWeekNumbers,
 
       // MonthLevelGroup props
       firstDayOfWeek,
