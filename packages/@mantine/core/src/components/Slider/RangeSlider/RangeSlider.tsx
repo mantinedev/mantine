@@ -383,36 +383,36 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           event.preventDefault();
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
-          setRangedValue(
-            getFloatingValue(
-              Math.min(Math.max(valueRef.current[focusedIndex] + step!, min!), max!),
-              precision
-            ),
-            focusedIndex,
-            true
-          );
+          const nextValue =
+            restrictToMarks && marks
+              ? getNextMarkValue(valueRef.current[focusedIndex], marks)
+              : Math.min(Math.max(valueRef.current[focusedIndex] + step!, min!), max!);
+          setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
           break;
         }
+
         case 'ArrowRight': {
           event.preventDefault();
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
-          setRangedValue(
-            getFloatingValue(
-              Math.min(
-                Math.max(
-                  dir === 'rtl'
-                    ? valueRef.current[focusedIndex] - step!
-                    : valueRef.current[focusedIndex] + step!,
-                  min!
-                ),
-                max!
-              ),
-              precision
-            ),
-            focusedIndex,
-            true
-          );
+
+          const nextValue =
+            restrictToMarks && marks
+              ? (dir === 'rtl' ? getPreviousMarkValue : getNextMarkValue)(
+                  valueRef.current[focusedIndex],
+                  marks
+                )
+              : Math.min(
+                  Math.max(
+                    dir === 'rtl'
+                      ? valueRef.current[focusedIndex] - step!
+                      : valueRef.current[focusedIndex] + step!,
+                    min!
+                  ),
+                  max!
+                );
+
+          setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
           break;
         }
 
@@ -420,36 +420,36 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           event.preventDefault();
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
-          setRangedValue(
-            getFloatingValue(
-              Math.min(Math.max(valueRef.current[focusedIndex] - step!, min!), max!),
-              precision
-            ),
-            focusedIndex,
-            true
-          );
+          const nextValue =
+            restrictToMarks && marks
+              ? getPreviousMarkValue(valueRef.current[focusedIndex], marks)
+              : Math.min(Math.max(valueRef.current[focusedIndex] - step!, min!), max!);
+          setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
           break;
         }
+
         case 'ArrowLeft': {
           event.preventDefault();
           const focusedIndex = getFocusedThumbIndex();
           thumbs.current[focusedIndex].focus();
-          setRangedValue(
-            getFloatingValue(
-              Math.min(
-                Math.max(
-                  dir === 'rtl'
-                    ? valueRef.current[focusedIndex] + step!
-                    : valueRef.current[focusedIndex] - step!,
-                  min!
-                ),
-                max!
-              ),
-              precision
-            ),
-            focusedIndex,
-            true
-          );
+
+          const nextValue =
+            restrictToMarks && marks
+              ? (dir === 'rtl' ? getNextMarkValue : getPreviousMarkValue)(
+                  valueRef.current[focusedIndex],
+                  marks
+                )
+              : Math.min(
+                  Math.max(
+                    dir === 'rtl'
+                      ? valueRef.current[focusedIndex] + step!
+                      : valueRef.current[focusedIndex] - step!,
+                    min!
+                  ),
+                  max!
+                );
+
+          setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
           break;
         }
 
