@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react';
 import { addons } from '@storybook/preview-api';
 import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
@@ -20,6 +21,16 @@ export const parameters = {
 };
 
 const channel = addons.getChannel();
+
+// Removes incorrect key error from SliderMarks component visible only in Storybook
+const originalError = console.error;
+console.error = (...args: any[]) => {
+  if (args.join('').includes('It was passed a child from @mantine/core/SliderMarks')) {
+    return;
+  }
+
+  originalError.call(console, ...args);
+};
 
 function ColorSchemeWrapper({ children }: { children: React.ReactNode }) {
   const { setColorScheme } = useMantineColorScheme();

@@ -22,6 +22,10 @@ export function AutoContrast() {
   return <Pagination total={45} color="lime.3" autoContrast />;
 }
 
+export function SimpleType() {
+  return <Pagination total={45} withPages={false} />;
+}
+
 export function Controlled() {
   const [value, setValue] = useState(1);
   return (

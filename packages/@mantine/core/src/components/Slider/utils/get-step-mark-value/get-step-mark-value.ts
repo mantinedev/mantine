@@ -17,7 +17,7 @@ export function getPreviousMarkValue(
 }
 
 export function getFirstMarkValue(marks: { value: number; label?: React.ReactNode }[]) {
-  const sortedMarks = [...marks].sort((a, b) => b.value - a.value);
+  const sortedMarks = [...marks].sort((a, b) => a.value - b.value);
   return sortedMarks.length > 0 ? sortedMarks[0].value : 0;
 }
 
