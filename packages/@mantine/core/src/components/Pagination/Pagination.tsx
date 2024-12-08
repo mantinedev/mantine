@@ -51,6 +51,9 @@ export interface PaginationProps extends PaginationRootProps {
 
   /** Determines whether the pagination should be hidden when only one page is available (`total={1}`), `false` by default */
   hideWithOnePage?: boolean;
+
+  /** Determines whether pages controls should be displayed, `true` by default */
+  withPages?: boolean;
 }
 
 export type PaginationFactory = Factory<{
@@ -72,6 +75,7 @@ export type PaginationFactory = Factory<{
 
 const defaultProps: Partial<PaginationProps> = {
   withControls: true,
+  withPages: true,
   siblings: 1,
   boundaries: 1,
   gap: 8,
@@ -91,6 +95,7 @@ export const Pagination = factory<PaginationFactory>((_props, ref) => {
     total,
     gap,
     hideWithOnePage,
+    withPages,
     ...others
   } = props;
 
@@ -105,7 +110,7 @@ export const Pagination = factory<PaginationFactory>((_props, ref) => {
         {withControls && (
           <PaginationPrevious icon={previousIcon} {...getControlProps?.('previous')} />
         )}
-        <PaginationItems dotsIcon={dotsIcon} />
+        {withPages && <PaginationItems dotsIcon={dotsIcon} />}
         {withControls && <PaginationNext icon={nextIcon} {...getControlProps?.('next')} />}
         {withEdges && <PaginationLast icon={lastIcon} {...getControlProps?.('last')} />}
       </Group>

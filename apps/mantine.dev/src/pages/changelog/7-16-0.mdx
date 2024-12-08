@@ -1,4 +1,4 @@
-import { InputDemos, HooksDemos, TableOfContentsDemos, PopoverDemos, CarouselDemos } from '@docs/demos';
+import { InputDemos, HooksDemos, TableOfContentsDemos, PopoverDemos, CarouselDemos, PaginationDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -45,6 +45,13 @@ Example of using container queries. To see how the grid changes, resize the root
 of the demo with the resize handle located at the bottom right corner of the demo:
 
 <Demo data={CarouselDemos.container} />
+
+## Pagination withPages prop
+
+[Pagination](/core/pagination) component now supports `withPages` prop which allows hiding pages
+controls and displaying only previous and next buttons:
+
+<Demo data={PaginationDemos.withPages} />
 
 ## Help Center updates
 
