@@ -35,7 +35,7 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         api: 'modern-compiler',
-        additionalData: `@use "${path.join(process.cwd(), 'src/_mantine')}" as mantine;`,
+        additionalData: `@use "${path.join(process.cwd(), 'src/_mantine').replace(/\\/g, '/')}" as mantine;`,
       },
     },
   },
@@ -154,7 +154,7 @@ export default {
   // ...other config
   sassOptions: {
     implementation: 'sass-embedded',
-    additionalData: `@use "${path.join(process.cwd(), '_mantine')}" as mantine;`,
+    additionalData: `@use "${path.join(process.cwd(), '_mantine').replace(/\\/g, '/')}" as mantine;`,
   },
 };
 ```
