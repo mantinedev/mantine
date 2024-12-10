@@ -97,6 +97,12 @@
     border-color: var(--mantine-color-white);
     background-color: var(--slider-color);
   }
+
+  & > svg {
+    @mixin where-dark {
+      stroke: var(--mantine-color-white);
+    }
+  }
 }
 
 .trackContainer {
