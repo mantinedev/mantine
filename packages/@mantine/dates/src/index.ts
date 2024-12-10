@@ -1,5 +1,6 @@
 export * from './types/index.js';
 export * from './utils/index.js';
+export * from './hooks/index.js';
 
 export * from './components/DatesProvider/index.js';
 export * from './components/HiddenDatesInput/index.js';
