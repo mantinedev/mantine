@@ -13,7 +13,7 @@ export const NotificationContainer = forwardRef<HTMLDivElement, NotificationCont
   ({ data, onHide, autoClose, ...others }, ref) => {
     const { autoClose: _autoClose, message, ...notificationProps } = data;
     const autoCloseDuration = getAutoClose(autoClose, data.autoClose);
-    const autoCloseTimeout = useRef<number>();
+    const autoCloseTimeout = useRef<number>(-1);
 
     const cancelAutoClose = () => window.clearTimeout(autoCloseTimeout.current);
 

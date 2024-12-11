@@ -71,6 +71,14 @@ prop to customize any [Transition](/core/transition/) properties:
 
 <Demo data={ModalDemos.transitions} />
 
+## onExitTransitionEnd and onEnterTransitionEnd
+
+`onExitTransitionEnd` and `onEnterTransitionEnd` props can be used to run code after
+exit/enter transition is finished. For example, this is useful when you want to clear
+data after modal is closed:
+
+<Demo data={ModalDemos.transitionEnd} />
+
 ## Initial focus
 
 Modal uses [FocusTrap](/core/focus-trap/) to trap focus. Add `data-autofocus`

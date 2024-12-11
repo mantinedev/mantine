@@ -50,7 +50,9 @@ function Demo() {
         </Drawer>
       </Drawer.Stack>
 
-      <Button onClick={() => stack.open('delete-page')}>Open drawer</Button>
+      <Button variant="default" onClick={() => stack.open('delete-page')}>
+        Open drawer
+      </Button>
     </>
   );
 }
@@ -102,7 +104,9 @@ function Demo() {
         </Drawer>
       </Drawer.Stack>
 
-      <Button onClick={() => stack.open('delete-page')}>Open drawer</Button>
+      <Button variant="default" onClick={() => stack.open('delete-page')}>
+        Open drawer
+      </Button>
     </>
   );
 }

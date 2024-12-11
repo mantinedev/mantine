@@ -63,3 +63,4 @@ export { useThrottledValueUsage } from './use-throttled-value.demo.usage';
 export { useThrottledCallbackUsage } from './use-throttled-callback.demo.usage';
 export { useOrientationUsage } from './use-orientation.demo.usage';
 export { useIsFirstRenderUsage } from './use-is-first-render.demo.usage';
+export { useRadialMoveUsage } from './use-radial-move.demo.usage';

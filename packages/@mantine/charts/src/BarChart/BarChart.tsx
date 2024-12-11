@@ -106,6 +106,9 @@ export interface BarChartProps
 
   /** Controls color of the bar label, by default the value is determined by the chart orientation */
   barLabelColor?: MantineColor;
+
+  /** A function to assign dynamic bar color based on its value */
+  getBarColor?: (value: number, series: BarChartSeries) => MantineColor;
 }
 
 export type BarChartFactory = Factory<{
@@ -215,6 +218,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     minBarSize,
     maxBarWidth,
     mod,
+    getBarColor,
     ...others
   } = props;
 
@@ -271,14 +275,15 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         minPointSize={minBarSize}
         {...(typeof barProps === 'function' ? barProps(item) : barProps)}
       >
-        {inputData.map((entry, index) => (
-          <Cell
-            key={`cell-${index}`}
-            fill={
-              entry.color ? getThemeColor(entry.color, theme) : getBarFill(barProps, item) || color
-            }
-          />
-        ))}
+        {inputData.map((entry, index) => {
+          const cellColor = entry.color
+            ? getThemeColor(entry.color, theme)
+            : typeof getBarColor === 'function'
+              ? getThemeColor(getBarColor(entry[item.name], item), theme)
+              : getBarFill(barProps, item) || color;
+
+          return <Cell key={`cell-${index}`} fill={cellColor} />;
+        })}
         {withBarValueLabel && (
           <LabelList
             position={orientation === 'vertical' ? 'right' : 'top'}

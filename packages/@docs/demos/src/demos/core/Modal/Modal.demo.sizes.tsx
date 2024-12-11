@@ -12,6 +12,7 @@ function Demo() {
   const buttons = SIZES.map((s) => (
     <Button
       key={s}
+      variant="default"
       onClick={() => {
         setSize(s);
         setOpened(true);

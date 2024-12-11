@@ -1,0 +1,28 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How that thing is done on mantine.dev website?',
+  description:
+    'Learn how various elements are implemented on mantine.dev website',
+  slug: 'how-that-thing-is-done',
+  category: 'about',
+  tags: ['footer', 'floating button', 'layout'],
+  created_at: 'November 16, 2024',
+  last_updated_at: 'November 16, 2024',
+};
+
+export default Layout(meta);
+
+## mantine.dev website
+
+[Mantine documentation](https://mantine.dev) website is built with Next.js and Mantine.
+You can find the source code of the website in the [repository](https://github.com/mantinedev/mantine).
+If you are interested how specific part of the website is implemented, you can browse the source code and learn from it.
+
+## How can I build the same footer?
+
+- Give footer fixed position with `position: fixed` and `bottom: 0` properties.
+- Create a div element that will contain all content except footer.
+- Set `min-height: 100vh` on the content container to make sure that footer is always under by the content.
+- Make sure that your content container has background color.
+- Done! You have a footer at the bottom of the page.

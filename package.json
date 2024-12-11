@@ -1,6 +1,6 @@
 {
   "name": "mantine-a91763c0e2",
-  "version": "7.14.3",
+  "version": "7.15.0",
   "description": "Mantine Components Monorepo",
   "packageManager": "yarn@4.5.3",
   "license": "MIT",
@@ -58,8 +58,8 @@
     "stylelint": "stylelint \"**/*.css\" --cache",
     "syncpack": "syncpack list-mismatches",
     "syncpack:format": "syncpack format",
-    "prettier:test": "prettier --check \"**/*.{ts,tsx,mdx,css}\"",
-    "prettier:write": "prettier --write \"**/*.{ts,tsx,mdx,css}\"",
+    "prettier:test": "prettier --check \"**/*.{ts,tsx,css}\"",
+    "prettier:write": "prettier --write \"**/*.{ts,tsx,css}\"",
     "ncu:docs": "npx npm-check-updates --packageFile './apps/*/package.json' -x @tabler/icons-react",
     "ncu:root": "npx npm-check-updates --packageFile './package.json' -x @tabler/icons-react",
     "ncu": "npm run ncu:docs && npm run ncu:root"
@@ -137,8 +137,9 @@
     "@types/jest": "^29.5.14",
     "@types/jest-axe": "^3.5.9",
     "@types/lodash": "^4.17.13",
-    "@types/react": "18.3.12",
-    "@types/react-dom": "18.3.1",
+    "@types/node": "^22.9.1",
+    "@types/react": "19.0.1",
+    "@types/react-dom": "19.0.1",
     "@types/react-transition-group": "^4.4.11",
     "@types/resize-observer-browser": "^0.1.11",
     "@types/rimraf": "^4.0.5",
@@ -200,6 +201,8 @@
   },
   "resolutions": {
     "prosemirror-model": "1.18.1",
-    "@babel/core": "7.26.0"
+    "@babel/core": "7.26.0",
+    "@types/react": "19.0.1",
+    "@types/react-dom": "19.0.1"
   }
 }

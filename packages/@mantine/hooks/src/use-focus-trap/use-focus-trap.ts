@@ -3,7 +3,7 @@ import { scopeTab } from './scope-tab';
 import { FOCUS_SELECTOR, focusable, tabbable } from './tabbable';
 
 export function useFocusTrap(active = true): (instance: HTMLElement | null) => void {
-  const ref = useRef<HTMLElement | null>();
+  const ref = useRef<HTMLElement>(null);
 
   const focusNode = (node: HTMLElement) => {
     let focusElement: HTMLElement | null = node.querySelector('[data-autofocus]');

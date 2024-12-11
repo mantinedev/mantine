@@ -15,3 +15,4 @@ export { fullScreenMobile } from './Modal.demo.fullScreenMobile';
 export { closeIcon } from './Modal.demo.closeIcon';
 export { initialFocusTrap } from './Modal.demo.initialFocusTrap';
 export { stack } from './Modal.demo.stack';
+export { transitionEnd } from './Modal.demo.transitionEnd';

@@ -56,7 +56,11 @@ export const PopoverTarget = factory<PopoverTargetFactory>((props, ref) => {
     ...forwardedProps,
     ...accessibleProps,
     ...ctx.targetProps,
-    className: cx(ctx.targetProps.className, forwardedProps.className, children.props.className),
+    className: cx(
+      ctx.targetProps.className,
+      forwardedProps.className,
+      (children.props as any).className
+    ),
     [refProp!]: targetRef,
     ...(!ctx.controlled ? { onClick: ctx.onToggle } : null),
   });

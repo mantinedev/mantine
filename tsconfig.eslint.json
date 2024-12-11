@@ -4,6 +4,8 @@
     "./apps/*/src",
     "./scripts",
     "./@types",
+    "./.storybook/main.ts",
+    "./.storybook/preview.tsx",
     "./packages/@mantine-tests/*/src",
     "./packages/@docs/*/src",
     "./packages/@mantine/*/src",

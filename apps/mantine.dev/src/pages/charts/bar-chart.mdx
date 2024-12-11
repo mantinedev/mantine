@@ -53,6 +53,17 @@ Example of using diagonal stripes and crosshatch patterns as bar fill:
 
 <Demo data={BarChartDemos.stripes} />
 
+## Bar color based on value
+
+Use `getBarColor` prop to assign color based on value. `getBarColor` function is
+called with two arguments: value and series object. It should return a color
+string (theme color reference or any valid CSS color value).
+
+Note that color returned by `getBarColor` does not impact colors of the legend
+and tooltip.
+
+<Demo data={BarChartDemos.getBarColor} />
+
 ## Legend
 
 To display chart legend, set `withLegend` prop. When one of the items in the legend
@@ -246,3 +257,7 @@ or a function that receives series data as an argument and returns an object wit
 props.
 
 <Demo data={BarChartDemos.valueLabelProps} />
+
+## Bar overlays
+
+<Demo data={BarChartDemos.overlay} />

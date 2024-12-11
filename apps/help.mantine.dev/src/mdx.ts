@@ -7,6 +7,7 @@ import { meta as canIUseMantineWithAstro } from './pages/q/can-i-use-mantine-wit
 import { meta as canIUseMantineWithCra } from './pages/q/can-i-use-mantine-with-cra.mdx';
 import { meta as carouselMissingStyles } from './pages/q/carousel-missing-styles.mdx';
 import { meta as colorSchemeColor } from './pages/q/color-scheme-color.mdx';
+import { meta as colorSchemeFlickering } from './pages/q/color-scheme-flickering.mdx';
 import { meta as comboboxTesting } from './pages/q/combobox-testing.mdx';
 import { meta as customInputUseForm } from './pages/q/custom-input-use-form.mdx';
 import { meta as dataGridINeed } from './pages/q/data-grid-i-need.mdx';
@@ -17,6 +18,7 @@ import { meta as fileButtonInMenu } from './pages/q/file-button-in-menu.mdx';
 import { meta as floatingActionButton } from './pages/q/floating-action-button.mdx';
 import { meta as focusFirstInputWithError } from './pages/q/focus-first-input-with-error.mdx';
 import { meta as howCanIContribute } from './pages/q/how-can-i-contribute.mdx';
+import { meta as howThatThingIsDone } from './pages/q/how-that-thing-is-done.mdx';
 import { meta as howToAddHoverStyles } from './pages/q/how-to-add-hover-styles.mdx';
 import { meta as howToCallFunctionWhenModalCloses } from './pages/q/how-to-call-function-when-modal-closes.mdx';
 import { meta as howToGetColorSchemeValueInJs } from './pages/q/how-to-get-color-scheme-value-in-js.mdx';
@@ -41,6 +43,7 @@ import { meta as notificationsMissingStyles } from './pages/q/notifications-miss
 import { meta as otherLibs } from './pages/q/other-libs.mdx';
 import { meta as pinchToZoomModal } from './pages/q/pinch-to-zoom-modal.mdx';
 import { meta as polymorphicInPolymorphic } from './pages/q/polymorphic-in-polymorphic.mdx';
+import { meta as portalsTesting } from './pages/q/portals-testing.mdx';
 import { meta as postcssFnsInline } from './pages/q/postcss-fns-inline.mdx';
 import { meta as primaryVirtualColor } from './pages/q/primary-virtual-color.mdx';
 import { meta as privateCssVariables } from './pages/q/private-css-variables.mdx';
@@ -51,7 +54,10 @@ import { meta as segmentedControlNoValue } from './pages/q/segmented-control-no-
 import { meta as selectAutocompleteDifference } from './pages/q/select-autocomplete-difference.mdx';
 import { meta as serverComponents } from './pages/q/server-components.mdx';
 import { meta as stylesOrder } from './pages/q/styles-order.mdx';
+import { meta as submitTemplate } from './pages/q/submit-template.mdx';
 import { meta as tabsBorderColor } from './pages/q/tabs-border-color.mdx';
+import { meta as templatesUsage } from './pages/q/templates-usage.mdx';
+import { meta as tenShadesPerColor } from './pages/q/ten-shades-per-color.mdx';
 import { meta as thirdPartyStyles } from './pages/q/third-party-styles.mdx';
 import { meta as transparentButtons } from './pages/q/transparent-buttons.mdx';
 import { meta as viteLoadFonts } from './pages/q/vite-load-fonts.mdx';
@@ -68,6 +74,7 @@ export const MDX_DATA = [
   canIUseMantineWithCra,
   carouselMissingStyles,
   colorSchemeColor,
+  colorSchemeFlickering,
   comboboxTesting,
   customInputUseForm,
   dataGridINeed,
@@ -78,6 +85,7 @@ export const MDX_DATA = [
   floatingActionButton,
   focusFirstInputWithError,
   howCanIContribute,
+  howThatThingIsDone,
   howToAddHoverStyles,
   howToCallFunctionWhenModalCloses,
   howToGetColorSchemeValueInJs,
@@ -102,6 +110,7 @@ export const MDX_DATA = [
   otherLibs,
   pinchToZoomModal,
   polymorphicInPolymorphic,
+  portalsTesting,
   postcssFnsInline,
   primaryVirtualColor,
   privateCssVariables,
@@ -112,7 +121,10 @@ export const MDX_DATA = [
   selectAutocompleteDifference,
   serverComponents,
   stylesOrder,
+  submitTemplate,
   tabsBorderColor,
+  templatesUsage,
+  tenShadesPerColor,
   thirdPartyStyles,
   transparentButtons,
   viteLoadFonts,

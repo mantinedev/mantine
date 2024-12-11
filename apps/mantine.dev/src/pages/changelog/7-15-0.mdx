@@ -1,0 +1,162 @@
+import { Button } from '@mantine/core';
+import { IconHeartFilled } from '@tabler/icons-react';
+import { ActionIconDemos, TableDemos, BarChartDemos, ModalsDemos, FormDemos, TipTapDemos, ModalDemos, HooksDemos, DatePickerDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog7150);
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds will be used to improve Mantine and create new features and components.
+
+<Button
+  rightSection={<IconHeartFilled size={22} color="var(--mantine-color-red-7)" />}
+  size="lg"
+  miw={300}
+  justify="space-between"
+  children="Sponsor Mantine"
+  variant="default"
+  radius="md"
+/>
+
+## use-radial-move hook
+
+New [use-radial-move](/hooks/use-radial-move) hook can be used to create custom radial sliders:
+
+<Demo data={HooksDemos.useRadialMoveUsage} />
+
+## BarChart color based on value
+
+[BarChart](/charts/bar-chart) component now supports `getBarColor` prop to assign color based on value.
+`getBarColor` function is called with two arguments: value and series object. It should return a color
+string (theme color reference or any valid CSS color value).
+
+<Demo data={BarChartDemos.getBarColor} />
+
+## Button.GroupSection and ActionIcon.GroupSection
+
+`ActionIcon.GroupSection` and `Button.GroupSection` are new components that
+can be used in `ActionIcon.Group`/`Button.Group` to create sections that are
+not `ActionIcon`/`Button` components:
+
+<Demo data={ActionIconDemos.groupSection} />
+
+## Table vertical variant
+
+[Table](/core/table) component now support `variant="vertical"`:
+
+<Demo data={TableDemos.vertical} />
+
+## Table tabular numbers
+
+[Table](/core/table) component now supports `tabularNums` prop to render numbers in tabular style. It sets
+`font-variant-numeric: tabular-nums` which makes numbers to have equal width.
+This is useful when you have columns with numbers and you want them to be aligned:
+
+<Demo data={TableDemos.tabularNums} />
+
+## Update function in modals manager
+
+[Modals manager](/x/modals) now supports `modals.updateModal` and `modals.updateContextModal`
+function to update modal after it was opened:
+
+<Demo data={ModalsDemos.updateModal} />
+
+## useForm submitting state
+
+[use-form](/form/use-form) hook now supports `form.submitting` field
+and `form.setSubmitting` function to track form submission state.
+
+`form.submitting` field will be set to `true` if function passed to
+`form.onSubmit` returns a promise. After the promise is resolved or rejected,
+`form.submitting` will be set to `false`:
+
+<Demo data={FormDemos.submitting} />
+
+You can also manually set `form.submitting` to `true` or `false`:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({ mode: 'uncontrolled' });
+form.submitting; // -> false
+
+form.setSubmitting(true);
+form.submitting; // -> true
+
+form.setSubmitting(false);
+form.submitting; // -> false
+```
+
+## useForm onSubmitPreventDefault option
+
+[use-form](/form/use-form) hook now supports `onSubmitPreventDefault` option.
+This option is useful if you want to integrate `useForm` hook with [server actions](https://github.com/mantinedev/mantine/issues/7142).
+By default, `event.preventDefault()` is called on the form `onSubmit` handler.
+If you want to change this behavior, you can pass `onSubmitPreventDefault` option
+to `useForm` hook. It can have the following values:
+
+- `always` (default) - always call `event.preventDefault()`
+- `never` - never call `event.preventDefault()`
+- `validation-failed` - call `event.preventDefault()` only if validation failed
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  onSubmitPreventDefault: 'never',
+});
+```
+
+## Subtle RichTextEditor variant
+
+[RichTextEditor](/x/tiptap) component now supports `subtle` variant:
+
+<Demo data={TipTapDemos.subtleVariant} />
+
+## onExitTransitionEnd and onEnterTransitionEnd
+
+[Modal](/core/modal) and [Drawer](/core/drawer) components now support `onExitTransitionEnd` and `onEnterTransitionEnd` props,
+which can be used to run code after exit/enter transition is finished. For example, this is useful when you want to clear
+data after modal is closed:
+
+<Demo data={ModalDemos.transitionEnd} />
+
+## Week numbers in DatePicker
+
+[DatePicker](/dates/date-picker) and other components based on Calendar component now support `withWeekNumbers` prop to display week numbers:
+
+<Demo data={DatePickerDemos.withWeekNumbers} />
+
+## New demo: BarChart with overlay
+
+<Demo data={BarChartDemos.overlay} />
+
+## Variants types augmentation
+
+[Custom variants](/styles/variants-sizes#custom-variants-types) types augmentation guide was added to the documentation.
+
+Example of adding custom variant type to [Button](/core/button) component:
+
+```tsx
+import { ButtonVariant, MantineSize } from '@mantine/core';
+
+type ExtendedButtonVariant = ButtonVariant | 'contrast' | 'radial-gradient';
+
+declare module '@mantine/core' {
+  export interface ButtonProps {
+    variant?: ExtendedButtonVariant;
+  }
+}
+```
+
+## Help Center updates
+
+- [How to use Mantine template on GitHub?](https://help.mantine.dev/q/templates-usage) and [How can I submit a template to Mantine documentation?](https://help.mantine.dev/q/submit-template) pages were moved from the documentation to Help Center
+- [How that thing is done on mantine.dev website?](https://help.mantine.dev/q/how-that-thing-is-done) question
+- [Why is it required to have 10 shades per color?](https://help.mantine.dev/q/ten-shades-per-color) question
+- [Why I see color scheme flickering on page load?](https://help.mantine.dev/q/color-scheme-flickering) question
+- [How can I test Modal/Drawer/Popover components?](https://help.mantine.dev/q/portals-testing) question

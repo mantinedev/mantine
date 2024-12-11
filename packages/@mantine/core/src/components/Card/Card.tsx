@@ -82,7 +82,7 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
       return cloneElement(child, {
         'data-first-section': index === 0 || undefined,
         'data-last-section': index === _children.length - 1 || undefined,
-      });
+      } as any);
     }
 
     return child;

@@ -147,3 +147,13 @@ export const Demo_stripes = {
   name: '⭐ Demo: stripes',
   render: renderDemo(demos.stripes),
 };
+
+export const Demo_overlay = {
+  name: '⭐ Demo: overlay',
+  render: renderDemo(demos.overlay),
+};
+
+export const Demo_getBarColor = {
+  name: '⭐ Demo: getBarColor',
+  render: renderDemo(demos.getBarColor),
+};

@@ -80,6 +80,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.useMediaQuery,
           MDX_DATA.useMouse,
           MDX_DATA.useMove,
+          MDX_DATA.useRadialMove,
           MDX_DATA.useReducedMotion,
           MDX_DATA.useResizeObserver,
           MDX_DATA.useMutationObserver,
@@ -381,6 +382,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   {
     group: 'changelog',
     pages: [
+      MDX_DATA.Changelog7150,
       MDX_DATA.Changelog7140,
       MDX_DATA.Changelog7130,
       MDX_DATA.Changelog7120,

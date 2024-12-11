@@ -72,6 +72,7 @@ export { useThrottledValue } from './use-throttled-value/use-throttled-value';
 export { useIsFirstRender } from './use-is-first-render/use-is-first-render';
 export { useOrientation } from './use-orientation/use-orientation';
 export { useFetch } from './use-fetch/use-fetch';
+export { useRadialMove, normalizeRadialValue } from './use-radial-move/use-radial-move';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';

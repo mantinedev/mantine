@@ -15,13 +15,14 @@ export const RichTextEditorColorControl = forwardRef<
   RichTextEditorColorControlProps
 >((props, ref) => {
   const { color, ...others } = useProps('RichTextEditorColorControl', defaultProps, props);
-  const { editor, labels } = useRichTextEditorContext();
+  const { editor, labels, variant } = useRichTextEditorContext();
   const currentColor = editor?.getAttributes('textStyle').color || null;
   const label = labels.colorControlLabel(color);
 
   return (
     <RichTextEditorControl
       {...others}
+      variant={variant}
       active={currentColor === color}
       aria-label={label}
       title={label}

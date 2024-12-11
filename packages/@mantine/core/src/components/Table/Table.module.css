@@ -1,6 +1,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
+  border-spacing: 0;
   line-height: var(--mantine-line-height);
   font-size: var(--mantine-font-size-sm);
   table-layout: var(--table-layout, auto);
@@ -21,6 +22,22 @@
 
   &:where([data-with-table-border]) {
     border: rem(1px) solid var(--table-border-color);
+  }
+
+  &:where([data-tabular-nums]) {
+    font-variant-numeric: tabular-nums;
+  }
+
+  &:where([data-variant='vertical']) :where(.th) {
+    font-weight: 500;
+
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
   }
 }
 

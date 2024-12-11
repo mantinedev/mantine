@@ -31,6 +31,25 @@ even if there are no variants defined on the library side.
 > Apart from adding new variants, you can also override existing ones, for example, you can change the
 > `filled` variant of the [Input](/core/input) component with `.input[data-variant="filled"]` selector.
 
+## Custom variants types
+
+You can define types for custom variants by creating `mantine.d.ts` file
+in your project and extending `{x}Props` interface with the new variant type.
+
+Example of adding custom variant type to [Button](/core/button) component:
+
+```tsx
+import { ButtonVariant, MantineSize } from '@mantine/core';
+
+type ExtendedButtonVariant = ButtonVariant | 'contrast' | 'radial-gradient';
+
+declare module '@mantine/core' {
+  export interface ButtonProps {
+    variant?: ExtendedButtonVariant;
+  }
+}
+```
+
 ## variantColorResolver
 
 [Button](/core/button), [Badge](/core/badge), [ActionIcon](/core/action-icon) and other

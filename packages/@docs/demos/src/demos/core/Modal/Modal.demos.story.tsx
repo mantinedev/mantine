@@ -87,3 +87,8 @@ export const Demo_stack = {
   name: '⭐ Demo: stack',
   render: renderDemo(demos.stack),
 };
+
+export const Demo_transitionEnd = {
+  name: '⭐ Demo: transitionEnd',
+  render: renderDemo(demos.transitionEnd),
+};

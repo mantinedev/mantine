@@ -59,7 +59,7 @@ export function AsyncAutocomplete() {
   const [data, setData] = useState<string[] | null>(null);
   const [value, setValue] = useState('');
   const [empty, setEmpty] = useState(false);
-  const abortController = useRef<AbortController>();
+  const abortController = useRef<AbortController | undefined>(null);
 
   const fetchOptions = (query: string) => {
     abortController.current?.abort();

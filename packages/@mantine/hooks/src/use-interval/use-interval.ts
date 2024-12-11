@@ -11,12 +11,12 @@ export function useInterval(
   { autoInvoke = false }: UseIntervalOptions = {}
 ) {
   const [active, setActive] = useState(false);
-  const intervalRef = useRef<number>();
-  const fnRef = useRef<() => void>();
+  const intervalRef = useRef<number | null>(null);
+  const fnRef = useRef<() => void>(null);
 
   const start = () => {
     setActive((old) => {
-      if (!old && !intervalRef.current) {
+      if (!old && (!intervalRef.current || intervalRef.current === -1)) {
         intervalRef.current = window.setInterval(fnRef.current!, interval);
       }
       return true;
@@ -25,8 +25,8 @@ export function useInterval(
 
   const stop = () => {
     setActive(false);
-    window.clearInterval(intervalRef.current);
-    intervalRef.current = undefined;
+    window.clearInterval(intervalRef.current || -1);
+    intervalRef.current = -1;
   };
 
   const toggle = () => {

@@ -28,11 +28,12 @@ const defaultProps: Partial<RichTextEditorControlsGroupProps> = {};
 export const RichTextEditorControlsGroup = factory<RichTextEditorControlsGroupFactory>(
   (_props, ref) => {
     const props = useProps('RichTextEditorControlsGroup', defaultProps, _props);
-    const { classNames, className, style, styles, vars, ...others } = props;
+    const { classNames, className, style, styles, vars, variant, ...others } = props;
     const ctx = useRichTextEditorContext();
     return (
       <Box
         ref={ref}
+        variant={variant || ctx.variant}
         {...ctx.getStyles('controlsGroup', { className, style, styles, classNames })}
         {...others}
       />

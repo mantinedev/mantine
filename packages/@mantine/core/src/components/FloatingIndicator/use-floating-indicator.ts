@@ -33,7 +33,7 @@ export function useFloatingIndicator({
   ref,
   displayAfterTransitionEnd,
 }: UseFloatingIndicatorInput) {
-  const transitionTimeout = useRef<number>();
+  const transitionTimeout = useRef<number>(-1);
   const [initialized, setInitialized] = useState(false);
 
   const [hidden, setHidden] = useState(
@@ -75,8 +75,8 @@ export function useFloatingIndicator({
     }, 30);
   };
 
-  const targetResizeObserver = useRef<ResizeObserver>();
-  const parentResizeObserver = useRef<ResizeObserver>();
+  const targetResizeObserver = useRef<ResizeObserver>(null);
+  const parentResizeObserver = useRef<ResizeObserver>(null);
 
   useEffect(() => {
     updatePosition();

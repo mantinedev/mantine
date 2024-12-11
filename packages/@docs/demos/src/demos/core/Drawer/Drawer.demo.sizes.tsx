@@ -11,7 +11,7 @@ function Demo() {
   };
 
   const controls = (['xs', 'sm', 'md', 'lg', 'xl', '100%', '40rem', '25%'] as const).map((s) => (
-    <Button onClick={() => open(s)} key={s}>
+    <Button variant="default" onClick={() => open(s)} key={s}>
       {s}
     </Button>
   ));

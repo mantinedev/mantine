@@ -9,7 +9,7 @@ const MIME_TYPES: Record<string, string> = {
 };
 
 export function useFavicon(url: string) {
-  const link = useRef<HTMLLinkElement>();
+  const link = useRef<HTMLLinkElement>(null);
 
   useIsomorphicEffect(() => {
     if (!url) {

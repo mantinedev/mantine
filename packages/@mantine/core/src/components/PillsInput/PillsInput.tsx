@@ -40,7 +40,7 @@ export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
     ...others
   } = props;
 
-  const fieldRef = useRef<HTMLInputElement>();
+  const fieldRef = useRef<HTMLInputElement>(null);
 
   return (
     <PillsInputProvider value={{ fieldRef, size: size!, disabled, hasError: !!error, variant }}>

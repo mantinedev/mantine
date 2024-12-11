@@ -174,7 +174,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
   });
 
   const formatRef = useRef(format);
-  const valueRef = useRef<string>();
+  const valueRef = useRef<string>('');
   const scrubTimeoutRef = useRef<number>(-1);
   const isScrubbingRef = useRef(false);
   const withAlpha = format === 'hexa' || format === 'rgba' || format === 'hsla';

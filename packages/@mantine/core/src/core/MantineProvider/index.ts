@@ -35,3 +35,4 @@ export type { CSSVariablesResolver } from './MantineCssVariables/default-css-var
 export { virtualColor, getCSSColorVariables, isVirtualColor } from './MantineCssVariables';
 export { useMatches } from './use-matches/use-matches';
 export type { MantineStylesTransform } from './Mantine.context';
+export { mantineHtmlProps } from './mantine-html-props';

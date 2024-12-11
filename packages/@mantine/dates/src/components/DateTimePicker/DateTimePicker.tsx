@@ -127,7 +127,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
 
   const _valueFormat = valueFormat || (withSeconds ? 'DD/MM/YYYY HH:mm:ss' : 'DD/MM/YYYY HH:mm');
 
-  const timeInputRef = useRef<HTMLInputElement>();
+  const timeInputRef = useRef<HTMLInputElement>(null);
   const timeInputRefMerged = useMergedRef(timeInputRef, timeInputProps?.ref);
 
   const {

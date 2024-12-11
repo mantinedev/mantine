@@ -38,6 +38,41 @@ export function Usage() {
   );
 }
 
+export function VerticalVariant() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Table variant="vertical" layout="fixed" withTableBorder>
+        <Table.Tbody>
+          <Table.Tr>
+            <Table.Th w={160}>Epic name</Table.Th>
+            <Table.Td>7.x migration</Table.Td>
+          </Table.Tr>
+
+          <Table.Tr>
+            <Table.Th>Status</Table.Th>
+            <Table.Td>Open</Table.Td>
+          </Table.Tr>
+
+          <Table.Tr>
+            <Table.Th>Total issues</Table.Th>
+            <Table.Td>135</Table.Td>
+          </Table.Tr>
+
+          <Table.Tr>
+            <Table.Th>Total story points</Table.Th>
+            <Table.Td>874</Table.Td>
+          </Table.Tr>
+
+          <Table.Tr>
+            <Table.Th>Last updated at</Table.Th>
+            <Table.Td>September 26, 2024 17:41:26</Table.Td>
+          </Table.Tr>
+        </Table.Tbody>
+      </Table>
+    </div>
+  );
+}
+
 export function Unstyled() {
   return (
     <div style={{ padding: 40 }}>
@@ -124,6 +159,31 @@ export function HighlightOnHover() {
             <Table.Th>Element name</Table.Th>
             <Table.Th>Symbol</Table.Th>
             <Table.Th>Atomic mass</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
+      </Table>
+    </div>
+  );
+}
+
+const nums = [2214411234, 9983812411, 1234567890, 9948811128, 9933771777];
+
+export function TabularNums() {
+  const rows = nums.map((num) => (
+    <Table.Tr key={num}>
+      <Table.Td>Units sold</Table.Td>
+      <Table.Td>{num}</Table.Td>
+    </Table.Tr>
+  ));
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Table tabularNums>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Name</Table.Th>
+            <Table.Th>Units sold</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>

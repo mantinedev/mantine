@@ -327,3 +327,8 @@ export const Demo_useIsFirstRenderUsage = {
   name: '⭐ Demo: useIsFirstRenderUsage',
   render: renderDemo(demos.useIsFirstRenderUsage),
 };
+
+export const Demo_useRadialMoveUsage = {
+  name: '⭐ Demo: useRadialMoveUsage',
+  render: renderDemo(demos.useRadialMoveUsage),
+};

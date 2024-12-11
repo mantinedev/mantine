@@ -58,7 +58,7 @@ export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, File
       ...others
     } = useProps('FileButton', defaultProps, props);
 
-    const inputRef = useRef<HTMLInputElement>();
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const onClick = () => {
       !disabled && inputRef.current?.click();

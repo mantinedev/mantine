@@ -10,6 +10,7 @@ interface RichTextEditorContext {
   withCodeHighlightStyles: boolean | undefined;
   withTypographyStyles: boolean | undefined;
   unstyled: boolean | undefined;
+  variant: string | undefined;
 }
 
 export const [RichTextEditorProvider, useRichTextEditorContext] =
