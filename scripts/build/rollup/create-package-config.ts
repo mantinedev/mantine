@@ -23,7 +23,6 @@ export function createPackageConfig(packagePath: string): RollupOptions {
   const plugins = [
     nodeResolve({ extensions: ['.ts', '.tsx', '.js', '.jsx'] }),
     esbuild({
-      sourceMap: false,
       tsconfig: getPath('tsconfig.json'),
     }),
     alias({ entries: aliasEntries }),
