@@ -1,7 +1,7 @@
 export function isNotEmpty(error?: React.ReactNode) {
   const _error = error || true;
 
-  return (value: unknown) => {
+  return (value: unknown): React.ReactNode => {
     if (typeof value === 'string') {
       return value.trim().length > 0 ? null : _error;
     }

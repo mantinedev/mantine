@@ -6,7 +6,7 @@ interface IsInRangePayload {
 export function isInRange({ min, max }: IsInRangePayload, error?: React.ReactNode) {
   const _error = error || true;
 
-  return (value: unknown) => {
+  return (value: unknown): React.ReactNode => {
     if (typeof value !== 'number') {
       return _error;
     }
