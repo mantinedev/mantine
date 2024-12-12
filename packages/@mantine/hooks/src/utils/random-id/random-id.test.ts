@@ -5,4 +5,8 @@ describe('@mantine/hooks/random-id', () => {
     expect(randomId().includes('mantine-')).toBe(true);
     expect(randomId()).toHaveLength(17);
   });
+
+  it('supports custom prefix', () => {
+    expect(randomId('my-prefix-').includes('my-prefix-')).toBe(true);
+  });
 });
