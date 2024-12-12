@@ -23,7 +23,8 @@ export function MdxGetTemplates({ type }: MdxGetTemplatesProps) {
 
       <MdxParagraph>
         If you are not familiar with GitHub, you can find a detailed instruction on how to bootstrap
-        a project from a template on <MdxLink href="/templates-usage">this page</MdxLink>.
+        a project from a template on{' '}
+        <MdxLink href="https://help.mantine.dev/q/templates-usage">this page</MdxLink>.
       </MdxParagraph>
       <MdxTemplatesList type={type} />
     </>
