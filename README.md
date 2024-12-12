@@ -1,6 +1,7 @@
 # Mantine
 
 [![NPM](https://img.shields.io/npm/l/@mantine/core)](https://github.com/mantinedev/mantine/blob/master/LICENSE)
+[![Backers](https://opencollective.com/mantinedev/backers/badge.svg)](https://opencollective.com/mantinedev)
 [![GitHub contributors](https://img.shields.io/github/contributors/mantinedev/mantine)](https://github.com/mantinedev/mantine/graphs/contributors)
 [![npm](https://img.shields.io/npm/v/@mantine/core)](https://www.npmjs.com/package/@mantine/core)
 [![npm](https://img.shields.io/npm/dm/@mantine/hooks)](https://www.npmjs.com/package/@mantine/hooks)
@@ -46,6 +47,14 @@ Mantine has a very friendly community, we are always happy to help you get start
 </a>
 
 [Become a contributor](https://mantine.dev/contribute)
+
+## Support development
+
+[![Backers](https://opencollective.com/mantinedev/backers/badge.svg)](https://opencollective.com/mantinedev)
+
+Mantine is a MIT-licensed open source project with its ongoing development made possible entirely by the support of these awesome [backers](https://opencollective.com/mantinedev). If you'd like to join them, please consider contributing financially on [OpenCollective](https://opencollective.com/mantinedev).
+
+[![Backers](https://opencollective.com/mantinedev/individuals.svg?width=890)](https://opencollective.com/mantinedev)
 
 ## License
 

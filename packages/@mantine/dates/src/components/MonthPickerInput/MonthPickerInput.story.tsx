@@ -1,4 +1,6 @@
 import dayjs from 'dayjs';
+import { Group } from '@mantine/core';
+import { DateInput } from '../DateInput';
 import { MonthPickerInput } from './MonthPickerInput';
 
 export default { title: 'MonthPickerInput' };
@@ -95,4 +97,13 @@ export function Sizes() {
     <MonthPickerInput size={size} key={size} placeholder={size} label={size} mt="xl" />
   ));
   return <div style={{ padding: 40 }}>{sizes}</div>;
+}
+
+export function FocusReturn() {
+  return (
+    <Group>
+      <DateInput />
+      <MonthPickerInput />
+    </Group>
+  );
 }

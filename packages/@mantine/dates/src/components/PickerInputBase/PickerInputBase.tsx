@@ -157,7 +157,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
           position="bottom-start"
           opened={dropdownOpened}
           trapFocus
-          returnFocus
+          returnFocus={false}
           unstyled={unstyled}
           {...popoverProps}
           disabled={popoverProps?.disabled || dropdownType === 'modal' || readOnly}

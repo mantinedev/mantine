@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   __BaseInputProps,
   __InputStylesNames,
@@ -16,7 +16,7 @@ import {
   StylesApiProps,
   useInputProps,
 } from '@mantine/core';
-import { useDidUpdate } from '@mantine/hooks';
+import { useClickOutside, useDidUpdate } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
 import { CalendarLevel, DateValue } from '../../types';
 import { assignTime } from '../../utils';
@@ -135,6 +135,8 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     ...rest
   } = props;
 
+  const _wrapperRef = useRef<HTMLDivElement>(null);
+  const _dropdownRef = useRef<HTMLDivElement>(null);
   const [dropdownOpened, setDropdownOpened] = useState(false);
   const { calendarProps, others } = pickCalendarProps(rest);
   const ctx = useDatesContext();
@@ -250,9 +252,14 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     _value !== undefined && !dropdownOpened && setInputValue(formatValue(_value!));
   }, [_value]);
 
+  useClickOutside(() => setDropdownOpened(false), undefined, [
+    _wrapperRef.current!,
+    _dropdownRef.current!,
+  ]);
+
   return (
     <>
-      <Input.Wrapper {...wrapperProps} __staticSelector="DateInput">
+      <Input.Wrapper {...wrapperProps} __staticSelector="DateInput" ref={_wrapperRef}>
         <Popover
           opened={dropdownOpened}
           trapFocus={false}
@@ -280,7 +287,11 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
               __staticSelector="DateInput"
             />
           </Popover.Target>
-          <Popover.Dropdown onMouseDown={(event) => event.preventDefault()} data-dates-dropdown>
+          <Popover.Dropdown
+            onMouseDown={(event) => event.preventDefault()}
+            data-dates-dropdown
+            ref={_dropdownRef}
+          >
             <Calendar
               __staticSelector="DateInput"
               __timezoneApplied

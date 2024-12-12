@@ -21,7 +21,10 @@ export type YearPickerStylesNames = DecadeLevelGroupStylesNames;
 export interface YearPickerBaseProps<Type extends DatePickerType = 'default'>
   extends PickerBaseProps<Type>,
     DecadeLevelBaseSettings,
-    Omit<CalendarBaseProps, 'onNextYear' | 'onPreviousYear' | 'onNextMonth' | 'onPreviousMonth'> {}
+    Omit<
+      CalendarBaseProps,
+      'onNextYear' | 'onPreviousYear' | 'onNextMonth' | 'onPreviousMonth' | 'hasNextLevel'
+    > {}
 
 export interface YearPickerProps<Type extends DatePickerType = 'default'>
   extends BoxProps,

@@ -126,6 +126,9 @@ export interface RangeSliderProps
 
   /** Determines whether the selection should be only allowed from the given marks array, `false` by default */
   restrictToMarks?: boolean;
+
+  /** Props passed down to thumb element based on the thumb index */
+  thumbProps?: (index: 0 | 1) => React.ComponentPropsWithoutRef<'div'>;
 }
 
 export type RangeSliderFactory = Factory<{
@@ -195,6 +198,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     vars,
     hiddenInputProps,
     restrictToMarks,
+    thumbProps,
     ...others
   } = props;
 
@@ -518,6 +522,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
             showLabelOnHover={showLabelOnHover}
             isHovered={hovered}
             disabled={disabled}
+            {...thumbProps?.(0)}
           >
             {hasArrayThumbChildren ? thumbChildren[0] : thumbChildren}
           </Thumb>
@@ -541,6 +546,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
             showLabelOnHover={showLabelOnHover}
             isHovered={hovered}
             disabled={disabled}
+            {...thumbProps?.(1)}
           >
             {hasArrayThumbChildren ? thumbChildren[1] : thumbChildren}
           </Thumb>

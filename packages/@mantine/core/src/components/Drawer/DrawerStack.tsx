@@ -14,7 +14,7 @@ const [DrawerStackProvider, useDrawerStackContext] = createOptionalContext<Drawe
 
 export { useDrawerStackContext };
 
-interface DrawerStackProps {
+export interface DrawerStackProps {
   children: React.ReactNode;
 }
 

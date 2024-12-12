@@ -1,6 +1,6 @@
 {
   "name": "@mantinex/mantine-header",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Components used in headers of *.mantine.dev websites",
   "homepage": "https://mantine.dev/",
   "license": "MIT",

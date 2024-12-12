@@ -58,7 +58,6 @@
   width: var(--slider-thumb-size);
   border: 4px solid;
   transform: translate(-50%, -50%);
-  color: var(--slider-color);
   top: 50%;
   cursor: pointer;
   border-radius: var(--slider-radius);
@@ -89,11 +88,13 @@
   }
 
   @mixin where-light {
+    color: var(--slider-color);
     border-color: var(--slider-color);
     background-color: var(--mantine-color-white);
   }
 
   @mixin where-dark {
+    color: var(--mantine-color-white);
     border-color: var(--mantine-color-white);
     background-color: var(--slider-color);
   }

@@ -66,6 +66,7 @@ export const RichTextEditorControl = factory<RichTextEditorControlFactory>((_pro
       aria-hidden={!interactive || undefined}
       ref={ref}
       unstyled={ctx.unstyled}
+      variant={ctx.variant || 'default'}
       onMouseDown={(event) => {
         event.preventDefault();
         onMouseDown?.(event);
@@ -112,7 +113,7 @@ export function createControl({
   isDisabled,
 }: CreateControlProps) {
   const Control = forwardRef<HTMLButtonElement, RichTextEditorControlBaseProps>((props, ref) => {
-    const { editor, labels, variant } = useRichTextEditorContext();
+    const { editor, labels } = useRichTextEditorContext();
     const _label = labels[label] as string;
     return (
       <RichTextEditorControlBase
@@ -124,7 +125,6 @@ export function createControl({
         onClick={() => (editor as any)?.chain().focus()[operation.name](operation.attributes).run()}
         icon={props.icon || icon}
         disabled={isDisabled?.(editor) || false}
-        variant={variant || 'default'}
       />
     );
   });
