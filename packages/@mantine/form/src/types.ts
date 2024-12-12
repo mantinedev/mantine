@@ -209,6 +209,7 @@ export interface UseFormInput<
     form: UseFormReturnType<Values, TransformValues>;
   }) => Record<string, any> | undefined | void;
   onSubmitPreventDefault?: 'always' | 'never' | 'validation-failed';
+  touchTrigger?: 'focus' | 'change';
 }
 
 export interface UseFormReturnType<

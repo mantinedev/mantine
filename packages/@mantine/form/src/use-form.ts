@@ -45,6 +45,7 @@ export function useForm<
   enhanceGetInputProps,
   validate: rules,
   onSubmitPreventDefault = 'always',
+  touchTrigger = 'change',
 }: UseFormInput<Values, TransformValues> = {}): UseFormReturnType<Values, TransformValues> {
   const $errors = useFormErrors<Values>(initialErrors);
   const $values = useFormValues<Values>({ initialValues, onValuesChange, mode });
@@ -98,7 +99,7 @@ export function useForm<
         value instanceof Function ? value(getPath(path, $values.refValues.current) as any) : value;
 
       $status.setCalculatedFieldDirty(path, resolvedValue);
-      $status.setFieldTouched(path, true);
+      touchTrigger === 'change' && $status.setFieldTouched(path, true);
       !shouldValidate && clearInputErrorOnChange && $errors.clearFieldError(path);
 
       $values.setFieldValue({
