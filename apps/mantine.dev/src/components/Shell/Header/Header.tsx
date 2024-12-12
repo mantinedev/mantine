@@ -1,12 +1,7 @@
 import { IconChevronDown, IconExternalLink } from '@tabler/icons-react';
 import cx from 'clsx';
 import { Box, Burger, Code, Group, Menu, RemoveScroll, Text, UnstyledButton } from '@mantine/core';
-import {
-  ColorSchemeControl,
-  HeaderControls,
-  SearchMobileControl,
-  SupportControl,
-} from '@mantinex/mantine-header';
+import { ColorSchemeControl, HeaderControls, SearchMobileControl } from '@mantinex/mantine-header';
 import { majorVersions, meta } from '@mantinex/mantine-meta';
 import { Logo } from '@/components/Logo';
 import { searchHandlers } from '@/components/Search';
@@ -79,7 +74,6 @@ export function Header({ navbarOpened, onNavbarToggle, headerControlsProps }: He
           <Logo />
 
           <Group gap={5}>
-            <SupportControl />
             <SearchMobileControl onSearch={searchHandlers.open} />
             <ColorSchemeControl />
           </Group>
