@@ -1,6 +1,6 @@
 {
   "name": "@mantinex/shiki",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Code highlighing with shiki",
   "homepage": "https://mantine.dev/",
   "license": "MIT",

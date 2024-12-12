@@ -49,7 +49,7 @@ export type MantineComponentStaticProperties<Payload extends FactoryPayload> =
     FactoryComponentWithProps<Payload>;
 
 export type FactoryComponentWithProps<Payload extends FactoryPayload> = {
-  withProps: (props: Payload['props']) => React.ForwardRefExoticComponent<
+  withProps: (props: Partial<Payload['props']>) => React.ForwardRefExoticComponent<
     Payload['props'] &
       React.RefAttributes<Payload['ref']> & {
         component?: any;

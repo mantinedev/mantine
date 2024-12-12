@@ -116,16 +116,16 @@ export const data: TreeNodeData[] = [
             label: 'hooks',
             value: 'node_modules/@mantine/hooks',
             children: [
-              { label: 'index.d.ts', value: 'node_modules/@mantine/core/index.d.ts' },
-              { label: 'package.json', value: 'node_modules/@mantine/core/package.json' },
+              { label: 'index.d.ts', value: 'node_modules/@mantine/hooks/index.d.ts' },
+              { label: 'package.json', value: 'node_modules/@mantine/hooks/package.json' },
             ],
           },
           {
             label: 'form',
             value: 'node_modules/@mantine/form',
             children: [
-              { label: 'index.d.ts', value: 'node_modules/@mantine/core/index.d.ts' },
-              { label: 'package.json', value: 'node_modules/@mantine/core/package.json' },
+              { label: 'index.d.ts', value: 'node_modules/@mantine/form/index.d.ts' },
+              { label: 'package.json', value: 'node_modules/@mantine/form/package.json' },
             ],
           },
         ],

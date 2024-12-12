@@ -47,6 +47,21 @@ function tests(mode: FormMode) {
     expect(hook.result.current.isTouched()).toBe(true);
     expect(hook.result.current.isTouched('a')).toBe(true);
   });
+
+  it('does not set field as touched if touchTrigger is focus and field was changed with form.setFieldValue', () => {
+    const hook = renderHook(() =>
+      useForm({ mode, initialValues: { a: 1 }, touchTrigger: 'focus' })
+    );
+    expect(hook.result.current.isTouched()).toBe(false);
+    expect(hook.result.current.isTouched('a')).toBe(false);
+
+    act(() => hook.result.current.setFieldValue('a', 5));
+    expect(hook.result.current.isTouched()).toBe(false);
+    expect(hook.result.current.isTouched('a')).toBe(false);
+
+    act(() => hook.result.current.getInputProps('a').onFocus());
+    expect(hook.result.current.isTouched()).toBe(true);
+  });
 }
 
 describe('@mantine/form/touched-controlled', () => {

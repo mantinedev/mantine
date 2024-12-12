@@ -96,7 +96,7 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
 
   const ctx = useCheckboxGroupContext();
   const _checked =
-    typeof checked === 'boolean' ? checked : ctx?.value.includes(value || '') || undefined;
+    typeof checked === 'boolean' ? checked : ctx ? ctx.value.includes(value || '') : undefined;
 
   const [_value, setValue] = useUncontrolled({
     value: _checked,

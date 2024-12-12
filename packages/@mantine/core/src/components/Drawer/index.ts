@@ -6,6 +6,7 @@ export { DrawerContent } from './DrawerContent';
 export { DrawerHeader } from './DrawerHeader';
 export { DrawerOverlay } from './DrawerOverlay';
 export { DrawerTitle } from './DrawerTitle';
+export { DrawerStack, useDrawerStackContext } from './DrawerStack';
 
 export type { DrawerCssVariables, DrawerFactory, DrawerProps, DrawerStylesNames } from './Drawer';
 export type { DrawerRootProps } from './DrawerRoot';
@@ -15,3 +16,4 @@ export type { DrawerContentProps } from './DrawerContent';
 export type { DrawerHeaderProps } from './DrawerHeader';
 export type { DrawerOverlayProps } from './DrawerOverlay';
 export type { DrawerTitleProps } from './DrawerTitle';
+export type { DrawerStackProps } from './DrawerStack';

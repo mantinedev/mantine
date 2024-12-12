@@ -1,6 +1,6 @@
 {
   "name": "@mantine/hooks",
-  "version": "7.14.3",
+  "version": "7.15.1",
   "description": "A collection of 50+ hooks for state and UI management",
   "homepage": "https://mantine.dev",
   "license": "MIT",

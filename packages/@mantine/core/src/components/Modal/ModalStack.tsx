@@ -14,7 +14,7 @@ const [ModalStackProvider, useModalStackContext] = createOptionalContext<ModalSt
 
 export { useModalStackContext };
 
-interface ModalStackProps {
+export interface ModalStackProps {
   children: React.ReactNode;
 }
 

@@ -34,6 +34,34 @@ form.isTouched(); // -> was any field in form focused or changed?
 form.isDirty(); // -> was any field in form modified?
 ```
 
+## touchTrigger option
+
+`touchTrigger` option allows customizing events that change touched state.
+It accepts two options:
+
+- `change` (default) – field will be considered touched when its value changes or it has been focused
+- `focus` – field will be considered touched only when it has been focused
+
+Example of using `focus` trigger:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: { a: 1 },
+  touchTrigger: 'focus',
+});
+
+form.isTouched('a'); // -> false
+form.setFieldValue('a', 2);
+form.isTouched('a'); // -> false
+
+// onFocus is called automatically when the user focuses the field
+form.getInputProps('a').onFocus();
+form.isTouched('a'); // -> true
+```
+
 ## Initial values
 
 You can provide initial touched and dirty values with `initialTouched` and `initialDirty` properties.
