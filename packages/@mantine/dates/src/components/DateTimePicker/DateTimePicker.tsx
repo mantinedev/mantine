@@ -151,7 +151,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
 
   const [dropdownOpened, dropdownHandlers] = useDisclosure(false);
   const formattedValue = _value
-    ? dayjs(_value).locale(ctx.getLocale(locale)).format(_valueFormat)
+    ? dayjs(_value).locale(ctx.getLocale(locale)).tz(ctx.getTimezone()).format(_valueFormat)
     : '';
 
   const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
