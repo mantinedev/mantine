@@ -3,7 +3,7 @@ import { Box } from '../../../core';
 import { Transition, TransitionOverride } from '../../Transition';
 import { useSliderContext } from '../Slider.context';
 
-export interface ThumbProps {
+export interface ThumbProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'value'> {
   max: number;
   min: number;
   value: number;
@@ -11,14 +11,10 @@ export interface ThumbProps {
   dragging: boolean;
   label: React.ReactNode;
   onKeyDownCapture?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  onMouseDown?: (
-    event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
-  ) => void;
+  onMouseDown?: (event: any) => void;
   labelTransitionProps: TransitionOverride | undefined;
   labelAlwaysOn: boolean | undefined;
   thumbLabel: string | undefined;
-  onFocus?: () => void;
-  onBlur?: () => void;
   showLabelOnHover: boolean | undefined;
   isHovered?: boolean;
   children?: React.ReactNode;
@@ -68,13 +64,13 @@ export const Thumb = forwardRef<HTMLDivElement, ThumbProps>(
         __vars={{ '--slider-thumb-offset': `${position}%` }}
         {...getStyles('thumb', { focusable: true })}
         mod={{ dragging, disabled }}
-        onFocus={() => {
+        onFocus={(event) => {
           setFocused(true);
-          typeof onFocus === 'function' && onFocus();
+          typeof onFocus === 'function' && onFocus(event);
         }}
-        onBlur={() => {
+        onBlur={(event) => {
           setFocused(false);
-          typeof onBlur === 'function' && onBlur();
+          typeof onBlur === 'function' && onBlur(event);
         }}
         onTouchStart={onMouseDown}
         onMouseDown={onMouseDown}
