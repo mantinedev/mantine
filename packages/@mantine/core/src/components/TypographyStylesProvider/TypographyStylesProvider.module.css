@@ -174,8 +174,8 @@
 
   & :where(ul, ol):not([data-type='taskList']) {
     margin-bottom: var(--mantine-spacing-md);
-    padding-inline-start: var(--mantine-spacing-lg);
-    list-style-position: inside;
+    padding-inline-start: var(--mantine-spacing-xl);
+    list-style-position: outside;
   }
 
   & :where(table) {
