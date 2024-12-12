@@ -21,6 +21,11 @@
   height: var(--docs-main-header-section-height);
 }
 
+.headerMainWrapper {
+  display: flex;
+  gap: var(--mantine-spacing-lg);
+}
+
 .headerMainSection {
   display: flex;
   align-items: flex-end;

@@ -88,19 +88,21 @@ export function DocsHeader({ headerControlsProps, withNav }: DocsHeaderProps) {
     <header className={classes.header} data-without-nav={!withNav || undefined}>
       <Container size={1440}>
         <div className={classes.headerMain}>
-          <Burger
-            opened={ctx.navbarOpened}
-            size={20}
-            lineSize={2}
-            className={classes.burger}
-            onClick={ctx.toggleNavbar}
-          />
+          <div className={classes.headerMainWrapper}>
+            <Burger
+              opened={ctx.navbarOpened}
+              size={20}
+              lineSize={2}
+              className={classes.burger}
+              onClick={ctx.toggleNavbar}
+            />
 
-          <div className={classes.headerMainSection}>
-            <Link href="/" className={classes.logoLink}>
-              <MantineLogo size={32} />
-            </Link>
-            <div className={classes.mainLinks}>{mainLinks}</div>
+            <div className={classes.headerMainSection}>
+              <Link href="/" className={classes.logoLink}>
+                <MantineLogo size={32} />
+              </Link>
+              <div className={classes.mainLinks}>{mainLinks}</div>
+            </div>
           </div>
 
           <div className={classes.desktopHeaderControls}>
