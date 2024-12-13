@@ -37,3 +37,8 @@ export const Demo_tooltip = {
   name: '⭐ Demo: tooltip',
   render: renderDemo(demos.tooltip),
 };
+
+export const Demo_styles = {
+  name: '⭐ Demo: styles',
+  render: renderDemo(demos.styles),
+};

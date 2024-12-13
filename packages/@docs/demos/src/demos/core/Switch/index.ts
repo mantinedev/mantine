@@ -5,3 +5,4 @@ export { iconLabels } from './Switch.demo.iconLabels';
 export { groupConfigurator } from './Switch.demo.groupConfigurator';
 export { stylesApi } from './Switch.demo.stylesApi';
 export { tooltip } from './Switch.demo.tooltip';
+export { styles } from './Switch.demo.styles';
