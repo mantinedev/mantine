@@ -110,6 +110,7 @@ const defaultProps: Partial<TooltipProps> = {
   events: { hover: true, focus: false, touch: false },
   zIndex: getDefaultZIndex('popover'),
   positionDependencies: [],
+  middlewares: { flip: true, shift: true, inline: false },
 };
 
 const varsResolver = createVarsResolver<TooltipFactory>((theme, { radius, color }) => ({
@@ -162,6 +163,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     portalProps,
     mod,
     floatingStrategy,
+    middlewares,
     ...others
   } = useProps('Tooltip', defaultProps, props);
 
@@ -181,6 +183,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     positionDependencies: [...positionDependencies!, children],
     inline,
     strategy: floatingStrategy,
+    middlewares,
   });
 
   const getStyles = useStyles<TooltipFactory>({

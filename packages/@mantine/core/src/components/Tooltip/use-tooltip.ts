@@ -13,6 +13,7 @@ import {
   useHover,
   useInteractions,
   useRole,
+  type Middleware,
 } from '@floating-ui/react';
 import { useDidUpdate, useId } from '@mantine/hooks';
 import {
@@ -21,6 +22,7 @@ import {
   FloatingStrategy,
   useFloatingAutoUpdate,
 } from '../Floating';
+import { type TooltipMiddlewares } from './Tooltip.types';
 import { useTooltipGroupContext } from './TooltipGroup/TooltipGroup.context';
 
 interface UseTooltip {
@@ -37,6 +39,57 @@ interface UseTooltip {
   positionDependencies: any[];
   inline?: boolean;
   strategy?: FloatingStrategy;
+  middlewares?: TooltipMiddlewares;
+}
+
+function getDefaultMiddlewares(middlewares: TooltipMiddlewares | undefined): TooltipMiddlewares {
+  if (middlewares === undefined) {
+    return { shift: true, flip: true };
+  }
+
+  const result = { ...middlewares };
+  if (middlewares.shift === undefined) {
+    result.shift = true;
+  }
+
+  if (middlewares.flip === undefined) {
+    result.flip = true;
+  }
+
+  return result;
+}
+
+function getTooltipMiddlewares(settings: UseTooltip) {
+  const middlewaresOptions = getDefaultMiddlewares(settings.middlewares);
+  const middlewares: Middleware[] = [offset(settings.offset)];
+
+  if (middlewaresOptions.shift) {
+    middlewares.push(
+      shift(
+        typeof middlewaresOptions.shift === 'boolean'
+          ? { padding: 8 }
+          : { padding: 8, ...middlewaresOptions.shift }
+      )
+    );
+  }
+
+  if (middlewaresOptions.flip) {
+    middlewares.push(
+      typeof middlewaresOptions.flip === 'boolean' ? flip() : flip(middlewaresOptions.flip)
+    );
+  }
+
+  middlewares.push(arrow({ element: settings.arrowRef!, padding: settings.arrowOffset }));
+
+  if (middlewaresOptions.inline) {
+    middlewares.push(
+      typeof middlewaresOptions.inline === 'boolean' ? inline() : inline(middlewaresOptions.inline)
+    );
+  } else if (settings.inline) {
+    middlewares.push(inline());
+  }
+
+  return middlewares;
 }
 
 export function useTooltip(settings: UseTooltip) {
@@ -72,13 +125,7 @@ export function useTooltip(settings: UseTooltip) {
     placement: settings.position,
     open: opened,
     onOpenChange: onChange,
-    middleware: [
-      offset(settings.offset),
-      shift({ padding: 8 }),
-      flip(),
-      arrow({ element: settings.arrowRef!, padding: settings.arrowOffset }),
-      ...(settings.inline ? [inline()] : []),
-    ],
+    middleware: getTooltipMiddlewares(settings),
   });
 
   useDelayGroup(context, { id: uid });
