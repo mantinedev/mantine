@@ -194,15 +194,32 @@ export const WithArrowRadius = () => (
 
 export function Inline() {
   return (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae ipsam in quos aperiam magni
-      quas neque{' '}
-      <Tooltip label="Inline tooltip" inline>
-        <span style={{ background: 'pink' }}>aliquid laboriosam dolorum</span>
-      </Tooltip>
-      , eum voluptate, perferendis placeat repudiandae nesciunt explicabo quibusdam deserunt, animi
-      dicta.
-    </div>
+    <>
+      <div style={{ padding: 40, maxWidth: 400 }}>
+        <b>Via inline prop:</b>
+        <div>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae ipsam in quos aperiam
+          magni quas neque{' '}
+          <Tooltip label="Inline tooltip" inline>
+            <span style={{ background: 'pink' }}>aliquid laboriosam dolorum</span>
+          </Tooltip>
+          , eum voluptate, perferendis placeat repudiandae nesciunt explicabo quibusdam deserunt,
+          animi dicta.
+        </div>
+      </div>
+      <div style={{ padding: 40, maxWidth: 400 }}>
+        <b>Via middlewares prop:</b>
+        <div>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae ipsam in quos aperiam
+          magni quas neque{' '}
+          <Tooltip label="Inline tooltip" middlewares={{ inline: true }}>
+            <span style={{ background: 'pink' }}>aliquid laboriosam dolorum</span>
+          </Tooltip>
+          , eum voluptate, perferendis placeat repudiandae nesciunt explicabo quibusdam deserunt,
+          animi dicta.
+        </div>
+      </div>
+    </>
   );
 }
 

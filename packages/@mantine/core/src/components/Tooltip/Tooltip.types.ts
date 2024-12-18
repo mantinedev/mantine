@@ -1,3 +1,4 @@
+import type { FlipOptions, InlineOptions, ShiftOptions, SizeOptions } from '@floating-ui/react';
 import { BoxProps, ElementProps, MantineColor, MantineRadius, StylesApiProps } from '../../core';
 import { FloatingPosition } from '../Floating';
 import { PortalProps } from '../Portal';
@@ -7,6 +8,13 @@ export type TooltipStylesNames = 'tooltip' | 'arrow';
 export type TooltipCssVariables = {
   tooltip: '--tooltip-radius' | '--tooltip-bg' | '--tooltip-color';
 };
+
+export interface TooltipMiddlewares {
+  shift?: boolean | ShiftOptions;
+  flip?: boolean | FlipOptions;
+  inline?: boolean | InlineOptions;
+  size?: boolean | SizeOptions;
+}
 
 export interface TooltipBaseProps
   extends BoxProps,
@@ -44,4 +52,7 @@ export interface TooltipBaseProps
 
   /** Props to pass down to the portal when withinPortal is true */
   portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
+
+  /** Floating ui middlewares to configure position handling, `{ flip: true, shift: true, inline: false }` by default */
+  middlewares?: TooltipMiddlewares;
 }
