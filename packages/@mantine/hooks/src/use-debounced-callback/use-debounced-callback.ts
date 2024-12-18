@@ -15,7 +15,12 @@ export function useDebounceCallback<T extends (...args: any[]) => any>(
   } = useCallback(
     (...args: Parameters<T>) => {
       window.clearTimeout(debounceTimerRef.current);
-      const flush = () => handleCallback(...args);
+      const flush = () => {
+        if(debounceTimerRef.current !== 0) {
+          debounceTimerRef.current = 0
+          handleCallback(...args);
+        }
+      }
       lastCallback.flush = flush;
       debounceTimerRef.current = window.setTimeout(flush, delay);
     },
