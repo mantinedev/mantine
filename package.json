@@ -107,7 +107,7 @@
     "react-imask": "^7.6.1",
     "react-number-format": "^5.4.2",
     "react-remove-scroll": "^2.6.0",
-    "react-textarea-autosize": "8.5.5",
+    "react-textarea-autosize": "8.5.6",
     "react-transition-group": "4.4.5",
     "recharts": "^2.13.3",
     "shiki": "^1.23.1",
