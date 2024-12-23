@@ -219,6 +219,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     maxBarWidth,
     mod,
     getBarColor,
+    gridColor,
     ...others
   } = props;
 
