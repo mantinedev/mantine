@@ -172,7 +172,7 @@ function Demo() {
     </>
   );
 }
-`,centered:!0,component:function(){let[e,{open:n,close:o}]=(0,r.q)(!1),l=Array(100).fill(0).map((e,n)=>(0,t.jsx)("p",{children:"Modal with scroll"},n));return(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(i.u,{opened:e,onClose:o,title:"Header is sticky",children:l}),(0,t.jsx)(a.z,{variant:"default",onClick:n,children:"Open modal"})]})}};var B=o(38405);let D={type:"code",code:`
+`,centered:!0,component:function(){let[e,{open:n,close:o}]=(0,r.q)(!1),l=Array(100).fill(0).map((e,n)=>(0,t.jsx)("p",{children:"Modal with scroll"},n));return(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(i.u,{opened:e,onClose:o,title:"Header is sticky",children:l}),(0,t.jsx)(a.z,{variant:"default",onClick:n,children:"Open modal"})]})}};var B=o(20135);let D={type:"code",code:`
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button, ScrollArea } from '@mantine/core';
 

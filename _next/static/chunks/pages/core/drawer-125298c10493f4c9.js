@@ -84,7 +84,7 @@ function Demo() {
     </>
   );
 }
-`,centered:!0,component:function(){let[e,{open:n,close:r}]=(0,a.q)(!1),t=Array(100).fill(0).map((e,n)=>(0,o.jsx)("p",{children:"Drawer with scroll"},n));return(0,o.jsxs)(o.Fragment,{children:[(0,o.jsx)(s.d,{opened:e,onClose:r,title:"Header is sticky",children:t}),(0,o.jsx)(i.z,{variant:"default",onClick:n,children:"Open Drawer"})]})}};var j=r(38405);let D={type:"code",code:`
+`,centered:!0,component:function(){let[e,{open:n,close:r}]=(0,a.q)(!1),t=Array(100).fill(0).map((e,n)=>(0,o.jsx)("p",{children:"Drawer with scroll"},n));return(0,o.jsxs)(o.Fragment,{children:[(0,o.jsx)(s.d,{opened:e,onClose:r,title:"Header is sticky",children:t}),(0,o.jsx)(i.z,{variant:"default",onClick:n,children:"Open Drawer"})]})}};var j=r(20135);let D={type:"code",code:`
 import { useDisclosure } from '@mantine/hooks';
 import { Drawer, Button, ScrollArea } from '@mantine/core';
 
