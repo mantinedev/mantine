@@ -1,9 +1,13 @@
 .root {
-  & :first-child {
+  &
+    :where(h1, h2, h3, h4, h5, h6, img, p, ul, ol, hr, pre, table, caption, blockquote)
+    :first-child {
     margin-top: 0;
   }
 
-  & :last-child {
+  &
+    :where(h1, h2, h3, h4, h5, h6, img, p, ul, ol, hr, pre, table, caption, blockquote)
+    :last-child {
     margin-bottom: 0;
   }
 
