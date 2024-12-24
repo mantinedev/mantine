@@ -10,15 +10,15 @@ import { Group, Button } from '@mantine/core';
 
 function Demo() {
   const [favicon, setFavicon] = useState('https://mantine.dev/favicon.svg');
-  const setXFavicon = () => setFavicon('https://x.com/favicon.ico');
   const setMantineFavicon = () => setFavicon('https://mantine.dev/favicon.svg');
+  const setMantineUIFavicon = () => setFavicon('https://ui.mantine.dev/favicon.svg');
 
   useFavicon(favicon);
 
   return (
     <Group justify="center">
-      <Button onClick={setXFavicon}>X favicon</Button>
       <Button onClick={setMantineFavicon}>Mantine favicon</Button>
+      <Button onClick={setMantineUIFavicon}>Mantine UI favicon</Button>
     </Group>
   );
 }
@@ -26,15 +26,15 @@ function Demo() {
 
 function Demo() {
   const [favicon, setFavicon] = useState('https://mantine.dev/favicon.svg');
-  const setXFavicon = () => setFavicon('https://x.com/favicon.ico');
   const setMantineFavicon = () => setFavicon('https://mantine.dev/favicon.svg');
+  const setMantineUIFavicon = () => setFavicon('https://ui.mantine.dev/favicon.svg');
 
   useFavicon(favicon);
 
   return (
     <Group justify="center">
-      <Button onClick={setXFavicon}>X favicon</Button>
       <Button onClick={setMantineFavicon}>Mantine favicon</Button>
+      <Button onClick={setMantineUIFavicon}>Mantine UI favicon</Button>
     </Group>
   );
 }
