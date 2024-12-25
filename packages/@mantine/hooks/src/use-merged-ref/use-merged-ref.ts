@@ -1,4 +1,4 @@
-import { Ref, useCallback, type RefCallback, type RefObject } from 'react';
+import { Ref, useCallback, type RefCallback } from 'react';
 
 type PossibleRef<T> = Ref<T> | undefined;
 
@@ -33,6 +33,7 @@ export function mergeRefs<T>(...refs: PossibleRef<T>[]) {
             assignRef(ref, null);
           }
         });
+        cleanupMap.clear();
       };
     }
   };
