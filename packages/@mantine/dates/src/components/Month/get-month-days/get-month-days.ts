@@ -14,10 +14,10 @@ export function getMonthDays({
   firstDayOfWeek = 1,
   consistentWeeks,
 }: GetMonthDaysInput): Date[][] {
-  const day = dayjs(month);
-  const start = day.subtract(day.date() - 1, 'day');
+  const day = dayjs(month).subtract(dayjs(month).date() - 1, 'day');
+  const start = dayjs(day.format('YYYY-M-D'));
   const startOfMonth = start.toDate();
-  const endOfMonth = start.add(+day.daysInMonth() - 1, 'day').toDate();
+  const endOfMonth = start.add(+start.daysInMonth() - 1, 'day').toDate();
   const endDate = getEndOfWeek(endOfMonth, firstDayOfWeek);
   const date = getStartOfWeek(startOfMonth, firstDayOfWeek);
   const weeks: Date[][] = [];
