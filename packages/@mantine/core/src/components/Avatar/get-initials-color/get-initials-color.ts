@@ -1,5 +1,4 @@
 import { MantineColor } from '../../../core';
-import { getInitials } from '../get-initials/get-initials';
 
 function hashCode(input: string) {
   let hash = 0;
