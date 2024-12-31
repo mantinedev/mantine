@@ -26,7 +26,7 @@ const defaultColors: MantineColor[] = [
 ];
 
 export function getInitialsColor(name: string, colors: MantineColor[] = defaultColors) {
-  const hash = hashCode(getInitials(name));
+  const hash = hashCode(name);
   const index = Math.abs(hash) % colors.length;
   return colors[index];
 }
