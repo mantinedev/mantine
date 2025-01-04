@@ -165,6 +165,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
       timeDate.setHours(hours);
       timeDate.setMinutes(minutes);
       timeDate.setSeconds(seconds || 0);
+      timeDate.setMilliseconds(0);
       setValue(assignTime(timeDate, _value || shiftTimezone('add', new Date(), ctx.getTimezone())));
     }
   };
