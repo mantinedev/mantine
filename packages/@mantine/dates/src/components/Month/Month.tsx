@@ -23,7 +23,6 @@ import { getMonthDays } from './get-month-days/get-month-days';
 import { getWeekNumber } from './get-week-number/get-week-number';
 import { isAfterMinDate } from './is-after-min-date/is-after-min-date';
 import { isBeforeMaxDate } from './is-before-max-date/is-before-max-date';
-import { isSameMonth } from './is-same-month/is-same-month';
 import classes from './Month.module.css';
 
 export type MonthStylesNames =
@@ -216,7 +215,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
 
   const rows = dates.map((row, rowIndex) => {
     const cells = row.map((date, cellIndex) => {
-      const outside = !isSameMonth(date, month);
+      const outside = !dayjs(date).isSame(dayjs(month), 'month');
       const ariaLabel =
         getDayAriaLabel?.(date) ||
         dayjs(date)

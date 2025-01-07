@@ -166,11 +166,15 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
       return;
     }
 
-    const isNeitherSelected = _value[0] == null && _value[1] == null;
-    const isBothSelected = _value[0] != null && _value[1] != null;
-    if (isNeitherSelected || isBothSelected) {
-      setPickedDate(null);
-      setHoveredDate(null);
+    if (_value[0] && !_value[1]) {
+      setPickedDate(_value[0]);
+    } else {
+      const isNeitherSelected = _value[0] == null && _value[1] == null;
+      const isBothSelected = _value[0] != null && _value[1] != null;
+      if (isNeitherSelected || isBothSelected) {
+        setPickedDate(null);
+        setHoveredDate(null);
+      }
     }
   }, [_value]);
 

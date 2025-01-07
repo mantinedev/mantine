@@ -18,7 +18,6 @@
 
   & li > p {
     margin: 0;
-    display: inline-block;
   }
 
   & ul li,
