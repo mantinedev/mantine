@@ -18,7 +18,7 @@ interface useMoveHandlers {
   onScrubEnd?: () => void;
 }
 
-export function useMove<T extends HTMLElement = HTMLDivElement>(
+export function useMove<T extends HTMLElement = any>(
   onChange: (value: UseMovePosition) => void,
   handlers?: useMoveHandlers,
   dir: 'ltr' | 'rtl' = 'ltr'

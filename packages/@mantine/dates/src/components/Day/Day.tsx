@@ -139,7 +139,7 @@ export const Day = factory<DayFactory>((_props, ref) => {
       unstyled={unstyled}
       {...others}
     >
-      {renderDay?.(date) || date.getDate()}
+      {renderDay?.(date) || dayjs(date).date()}
     </UnstyledButton>
   );
 });

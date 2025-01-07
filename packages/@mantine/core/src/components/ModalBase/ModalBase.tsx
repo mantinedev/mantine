@@ -51,7 +51,7 @@ export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
   /** Determines whether the modal/drawer should be closed when user clicks on the overlay, `true` by default */
   closeOnClickOutside?: boolean;
 
-  /** Props added to the `Transition` component that used to animate overlay and body, use to configure duration and animation type, `{ duration: 200, transition: 'pop' }` by default */
+  /** Props added to the `Transition` component that used to animate overlay and body, use to configure duration and animation type, `{ duration: 200, transition: 'fade-down' }` by default */
   transitionProps?: TransitionOverride;
 
   /** Called when exit transition ends */

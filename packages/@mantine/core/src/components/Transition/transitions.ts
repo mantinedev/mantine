@@ -1,5 +1,3 @@
-import { rem } from '../../core';
-
 export interface MantineTransitionStyles {
   common?: React.CSSProperties;
   in: React.CSSProperties;
@@ -34,7 +32,7 @@ export type MantineTransition = MantineTransitionName | MantineTransitionStyles;
 
 const popIn = (from: 'top' | 'bottom') => ({
   in: { opacity: 1, transform: 'scale(1)' },
-  out: { opacity: 0, transform: `scale(.9) translateY(${rem(from === 'bottom' ? 10 : -10)})` },
+  out: { opacity: 0, transform: `scale(.9) translateY(${from === 'bottom' ? 10 : -10}px)` },
   transitionProperty: 'transform, opacity',
 });
 
@@ -47,25 +45,25 @@ export const transitions: Record<MantineTransitionName, MantineTransitionStyles>
 
   'fade-up': {
     in: { opacity: 1, transform: 'translateY(0)' },
-    out: { opacity: 0, transform: `translateY(${rem(30)}` },
+    out: { opacity: 0, transform: 'translateY(30px)' },
     transitionProperty: 'opacity, transform',
   },
 
   'fade-down': {
     in: { opacity: 1, transform: 'translateY(0)' },
-    out: { opacity: 0, transform: `translateY(${rem(-30)}` },
+    out: { opacity: 0, transform: 'translateY(-30px)' },
     transitionProperty: 'opacity, transform',
   },
 
   'fade-left': {
     in: { opacity: 1, transform: 'translateX(0)' },
-    out: { opacity: 0, transform: `translateX(${rem(30)}` },
+    out: { opacity: 0, transform: 'translateX(30px)' },
     transitionProperty: 'opacity, transform',
   },
 
   'fade-right': {
     in: { opacity: 1, transform: 'translateX(0)' },
-    out: { opacity: 0, transform: `translateX(${rem(-30)}` },
+    out: { opacity: 0, transform: 'translateX(-30px)' },
     transitionProperty: 'opacity, transform',
   },
 
@@ -92,28 +90,28 @@ export const transitions: Record<MantineTransitionName, MantineTransitionStyles>
 
   'skew-up': {
     in: { opacity: 1, transform: 'translateY(0) skew(0deg, 0deg)' },
-    out: { opacity: 0, transform: `translateY(${rem(-20)}) skew(-10deg, -5deg)` },
+    out: { opacity: 0, transform: 'translateY(-20px) skew(-10deg, -5deg)' },
     common: { transformOrigin: 'top' },
     transitionProperty: 'transform, opacity',
   },
 
   'skew-down': {
     in: { opacity: 1, transform: 'translateY(0) skew(0deg, 0deg)' },
-    out: { opacity: 0, transform: `translateY(${rem(20)}) skew(-10deg, -5deg)` },
+    out: { opacity: 0, transform: 'translateY(20px) skew(-10deg, -5deg)' },
     common: { transformOrigin: 'bottom' },
     transitionProperty: 'transform, opacity',
   },
 
   'rotate-left': {
     in: { opacity: 1, transform: 'translateY(0) rotate(0deg)' },
-    out: { opacity: 0, transform: `translateY(${rem(20)}) rotate(-5deg)` },
+    out: { opacity: 0, transform: 'translateY(20px) rotate(-5deg)' },
     common: { transformOrigin: 'bottom' },
     transitionProperty: 'transform, opacity',
   },
 
   'rotate-right': {
     in: { opacity: 1, transform: 'translateY(0) rotate(0deg)' },
-    out: { opacity: 0, transform: `translateY(${rem(20)}) rotate(5deg)` },
+    out: { opacity: 0, transform: 'translateY(20px) rotate(5deg)' },
     common: { transformOrigin: 'top' },
     transitionProperty: 'transform, opacity',
   },

@@ -35,17 +35,17 @@ interface ScrollIntoViewParams {
 }
 
 interface ScrollIntoViewReturnType<
-  Target extends HTMLElement,
+  Target extends HTMLElement = any,
   Parent extends HTMLElement | null = null,
 > {
-  scrollableRef: React.MutableRefObject<Parent>;
-  targetRef: React.MutableRefObject<Target>;
+  scrollableRef: React.RefObject<Parent>;
+  targetRef: React.RefObject<Target>;
   scrollIntoView: (params?: ScrollIntoViewAnimation) => void;
   cancel: () => void;
 }
 
 export function useScrollIntoView<
-  Target extends HTMLElement,
+  Target extends HTMLElement = any,
   Parent extends HTMLElement | null = null,
 >({
   duration = 1250,

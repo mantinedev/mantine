@@ -15,6 +15,17 @@ export function Usage() {
   );
 }
 
+export function RangedSetPartial() {
+  const [value, setValue] = useState<[Date | null, Date | null]>([new Date(), null]);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <DatePicker type="range" value={value} onChange={setValue} />
+      <Button onClick={() => setValue([new Date(), null])}>Set initial range</Button>
+    </div>
+  );
+}
+
 export function HideOutsideDates() {
   return (
     <div style={{ padding: 40 }}>
