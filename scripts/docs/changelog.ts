@@ -9,6 +9,10 @@ function getPreviousRelease(message: string) {
   return splitted[splitted.length - 1];
 }
 
+function removeIssueReferences(markdown: string) {
+  return markdown.replace(/\(#\d+\)/g, '').trim();
+}
+
 async function getChangelog() {
   const logs = await git.log({ maxCount: 100 });
   const messages = logs.all.map((commit) => commit.message);
@@ -29,8 +33,12 @@ async function getChangelog() {
     .filter((message) => /\[@mantine/.test(message))
     .map((message) => message.replace('[', '- `[').replace(']', ']`'))
     .join('\n');
-
-  process.stdout.write(`${notes || 'No significant changes yet'}\n\n`);
+  if (notes) {
+    process.stdout.write(`${notes}\n\n\n\n\n`);
+    process.stdout.write(removeIssueReferences(notes));
+  } else {
+    process.stdout.write(`No significant changes yet\n\n`);
+  }
 }
 
 getChangelog();
