@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 
-export function useInViewport<T extends HTMLElement>() {
+export function useInViewport<T extends HTMLElement = any>() {
   const observer = useRef<IntersectionObserver | null>(null);
   const [inViewport, setInViewport] = useState(false);
 

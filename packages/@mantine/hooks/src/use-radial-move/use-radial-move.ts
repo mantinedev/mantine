@@ -50,7 +50,7 @@ export interface UseRadialMoveOptions {
   onScrubEnd?: () => void;
 }
 
-export function useRadialMove<T extends HTMLElement = HTMLDivElement>(
+export function useRadialMove<T extends HTMLElement = any>(
   onChange: (value: number) => void,
   { step = 0.01, onChangeEnd, onScrubStart, onScrubEnd }: UseRadialMoveOptions = {}
 ) {

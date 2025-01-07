@@ -15,7 +15,7 @@ import {
 } from '@mantine/core';
 import { useDidUpdate, useDisclosure, useMergedRef } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
-import { DateValue } from '../../types';
+import { CalendarLevel, DateValue } from '../../types';
 import { assignTime, clampDate, shiftTimezone } from '../../utils';
 import {
   CalendarBaseProps,
@@ -48,7 +48,7 @@ export interface DateTimePickerProps
       'classNames' | 'styles' | 'closeOnChange' | 'size' | 'valueFormatter'
     >,
     Omit<CalendarBaseProps, 'defaultDate'>,
-    Omit<CalendarSettings, 'onYearMouseEnter' | 'onMonthMouseEnter'>,
+    Omit<CalendarSettings, 'onYearMouseEnter' | 'onMonthMouseEnter' | 'hasNextLevel'>,
     StylesApiProps<DateTimePickerFactory> {
   /** Dayjs format to display input value, "DD/MM/YYYY HH:mm" by default  */
   valueFormat?: string;
@@ -70,6 +70,9 @@ export interface DateTimePickerProps
 
   /** Determines whether seconds input should be rendered */
   withSeconds?: boolean;
+
+  /** Max level that user can go up to (decade, year, month), defaults to decade */
+  maxLevel?: CalendarLevel;
 }
 
 export type DateTimePickerFactory = Factory<{
@@ -163,6 +166,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
       timeDate.setHours(hours);
       timeDate.setMinutes(minutes);
       timeDate.setSeconds(seconds || 0);
+      timeDate.setMilliseconds(0);
       setValue(assignTime(timeDate, _value || shiftTimezone('add', new Date(), ctx.getTimezone())));
     }
   };
