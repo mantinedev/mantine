@@ -220,6 +220,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     mod,
     getBarColor,
     gridColor,
+    textColor,
     ...others
   } = props;
 
