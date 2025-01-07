@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { DayOfWeek } from '../../../types';
 import { getEndOfWeek } from '../get-end-of-week/get-end-of-week';
 import { getStartOfWeek } from '../get-start-of-week/get-start-of-week';
@@ -13,9 +14,10 @@ export function getMonthDays({
   firstDayOfWeek = 1,
   consistentWeeks,
 }: GetMonthDaysInput): Date[][] {
-  const currentMonth = month.getMonth();
-  const startOfMonth = new Date(month.getFullYear(), currentMonth, 1);
-  const endOfMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0);
+  const day = dayjs(month).subtract(dayjs(month).date() - 1, 'day');
+  const start = dayjs(day.format('YYYY-M-D'));
+  const startOfMonth = start.toDate();
+  const endOfMonth = start.add(+start.daysInMonth() - 1, 'day').toDate();
   const endDate = getEndOfWeek(endOfMonth, firstDayOfWeek);
   const date = getStartOfWeek(startOfMonth, firstDayOfWeek);
   const weeks: Date[][] = [];
