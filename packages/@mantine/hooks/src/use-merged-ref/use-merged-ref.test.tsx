@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { createRef, useRef } from 'react';
 import { render } from '@testing-library/react';
 import { useMergedRef } from './use-merged-ref';
@@ -34,7 +35,17 @@ describe('@mantine/hook/use-merged-ref', () => {
     expect(refCalled).toEqual([expect.any(HTMLButtonElement), null]);
   });
 
-  describe('react 18', () => {
+  describe('React 19', () => {
+    const originalError = console.error;
+
+    beforeAll(() => {
+      console.error = jest.fn();
+    });
+
+    afterAll(() => {
+      console.error = originalError;
+    });
+
     it('when ref callback returns a function, ref callback is called with null on unmount', () => {
       const refCalled: unknown[] = [];
       const cleanupCalled: unknown[] = [];
