@@ -1,5 +1,4 @@
 import { MantineColor } from '../../../core';
-import { getInitials } from '../get-initials/get-initials';
 
 function hashCode(input: string) {
   let hash = 0;
@@ -26,7 +25,7 @@ const defaultColors: MantineColor[] = [
 ];
 
 export function getInitialsColor(name: string, colors: MantineColor[] = defaultColors) {
-  const hash = hashCode(getInitials(name));
+  const hash = hashCode(name);
   const index = Math.abs(hash) % colors.length;
   return colors[index];
 }
