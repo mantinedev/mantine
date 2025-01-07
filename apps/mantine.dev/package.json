@@ -72,7 +72,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-dropzone-esm": "15.2.0",
-    "react-number-format": "^5.4.2",
+    "react-number-format": "^5.4.3",
     "recharts": "^2.13.3",
     "remark-slug": "^7.0.1",
     "shiki": "^1.23.1",
