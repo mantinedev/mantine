@@ -16,6 +16,22 @@ export function Usage() {
   );
 }
 
+export function ReuseDomNode() {
+  return (
+    <div>
+      <Portal reuseTargetNode>
+        <p>First</p>
+      </Portal>
+      <Portal reuseTargetNode>
+        <p>Second</p>
+      </Portal>
+      <Portal reuseTargetNode>
+        <p>Third</p>
+      </Portal>
+    </div>
+  );
+}
+
 export function ElementTarget() {
   const target = document.createElement('div');
   document.body.appendChild(target);
