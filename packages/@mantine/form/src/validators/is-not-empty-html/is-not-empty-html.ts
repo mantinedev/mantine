@@ -10,6 +10,6 @@ export function isNotEmptyHTML(error?: React.ReactNode) {
       return removeHtmlTags(value).trim().length > 0 ? null : _error;
     }
 
-    return null;
+    return _error;
   };
 }
