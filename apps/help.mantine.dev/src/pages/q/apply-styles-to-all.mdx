@@ -1,0 +1,47 @@
+import { Layout } from '@/layout';
+
+export const meta = {
+  title: 'How can I apply styles to all Mantine components?',
+  description: 'Learn how to use attribute selector to apply styles to all Mantine components',
+  slug: 'apply-styles-to-all',
+  category: 'styles',
+  tags: ['selector', 'classnames', 'styles'],
+  created_at: 'December 7, 2024',
+  last_updated_at: 'December 7, 2024',
+};
+
+export default Layout(meta);
+
+## Attribute selector
+
+All Mantine components have static classes that start with `mantine-` prefix.
+Use [attribute selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors)
+in `.css` file to apply styles to all Mantine components:
+
+```scss
+[class^=mantine] {
+  color: red;
+}
+```
+
+Note that if you change `classNamesPrefix` on `MantineProvider`:
+
+```tsx
+import { MantineProvider, Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider classNamesPrefix="app">
+      <Text>Just some text</Text>
+    </MantineProvider>
+  );
+}
+```
+
+You will need to update selector to match new prefix:
+
+```scss
+[class^=app] {
+  color: red;
+}
+```

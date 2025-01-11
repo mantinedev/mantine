@@ -1,4 +1,5 @@
 import { meta as alignInputButton } from './pages/q/align-input-button.mdx';
+import { meta as applyStylesToAll } from './pages/q/apply-styles-to-all.mdx';
 import { meta as areMantineComponentsAccessible } from './pages/q/are-mantine-components-accessible.mdx';
 import { meta as autocompleteValueLabel } from './pages/q/autocomplete-value-label.mdx';
 import { meta as bodyBackground } from './pages/q/body-background.mdx';
@@ -72,6 +73,7 @@ import { meta as whyVscodeCannotAutoimportText } from './pages/q/why-vscode-cann
 
 export const MDX_DATA = [
   alignInputButton,
+  applyStylesToAll,
   areMantineComponentsAccessible,
   autocompleteValueLabel,
   bodyBackground,
