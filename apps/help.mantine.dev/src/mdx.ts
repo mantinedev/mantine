@@ -8,6 +8,7 @@ import { meta as canIUseMantineWithCra } from './pages/q/can-i-use-mantine-with-
 import { meta as carouselMissingStyles } from './pages/q/carousel-missing-styles.mdx';
 import { meta as colorSchemeColor } from './pages/q/color-scheme-color.mdx';
 import { meta as colorSchemeFlickering } from './pages/q/color-scheme-flickering.mdx';
+import { meta as colorSchemeHydrationWarning } from './pages/q/color-scheme-hydration-warning.mdx';
 import { meta as comboboxTesting } from './pages/q/combobox-testing.mdx';
 import { meta as customInputUseForm } from './pages/q/custom-input-use-form.mdx';
 import { meta as dataGridINeed } from './pages/q/data-grid-i-need.mdx';
@@ -80,6 +81,7 @@ export const MDX_DATA = [
   carouselMissingStyles,
   colorSchemeColor,
   colorSchemeFlickering,
+  colorSchemeHydrationWarning,
   comboboxTesting,
   customInputUseForm,
   dataGridINeed,
