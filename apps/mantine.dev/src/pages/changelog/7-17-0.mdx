@@ -51,6 +51,30 @@ function Demo() {
 }
 ```
 
+## isJSONString and isNotEmptyHTML form validators
+
+New `isJSONString` and `isNotEmptyHTML` [form validators](/form/validators):
+
+- `isNotEmptyHTML` checks that form value is not an empty HTML string. Empty string, string with only HTML tags and whitespace are considered to be empty.
+- `isJSONString` checks that form value is a valid JSON string.
+
+```tsx
+import { isJSONString, useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    json: '',
+    html: '',
+  },
+
+  validate: {
+    json: isJSONString('Invalid JSON string'),
+    html: isNotEmptyHTML('HTML cannot be empty'),
+  },
+});
+```
+
 ## Help center updates:
 
 - [I get hydration warning about data-mantine-color-scheme attribute, what does it mean?](https://help.mantine.dev/q/color-scheme-hydration-warning) question
