@@ -4,6 +4,53 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog7160);
 
+## Portal reuseTargetNode prop
+
+[Portal](/core/portal) component now supports `reuseTargetNode` prop which allows to reuse the same target node for all instances.
+This option is more performant than the previous behavior, it is recommended to be enabled.
+This option will be enabled by default in the `8.0` major release.
+
+To enable reuseTargetNode option in all components that depend on Portal, add the following code
+to your [theme](/theming/theme-object):
+
+```tsx
+import { createTheme, Portal } from '@mantine/core';
+
+export const theme = createTheme({
+  components: {
+    Portal: Portal.extend({
+      defaultProps: {
+        reuseTargetNode: true,
+      },
+    }),
+  }
+});
+```
+
+Example usage. In the following example, all three paragraphs will be rendered in the same target node:
+
+```tsx
+import { Portal } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Portal reuseTargetNode>
+        <p>First</p>
+      </Portal>
+
+      <Portal reuseTargetNode>
+        <p>Second</p>
+      </Portal>
+
+      <Portal reuseTargetNode>
+        <p>Third</p>
+      </Portal>
+    </>
+  );
+}
+```
+
 ## Other changes
 
 - [Tooltip](/core/tooltip) now supports customizing `middlewares`

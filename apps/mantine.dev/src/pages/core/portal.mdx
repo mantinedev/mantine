@@ -39,6 +39,34 @@ function Demo() {
 In the example above, the div element is rendered outside of parent main (before closing body tag),
 but still receives `opened` and `onClose` props. The element will not be affected by parent z-index.
 
+## Reuse target node
+
+By default, Portal creates a new target node for each instance. To change this behavior and
+reuse the same target node for all instances, set `reuseTargetNode` prop. In the following
+example, all three paragraphs will be rendered in the same target node:
+
+```tsx
+import { Portal } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Portal reuseTargetNode>
+        <p>First</p>
+      </Portal>
+
+      <Portal reuseTargetNode>
+        <p>Second</p>
+      </Portal>
+
+      <Portal reuseTargetNode>
+        <p>Third</p>
+      </Portal>
+    </>
+  );
+}
+```
+
 ## Specify target DOM node
 
 You can specify dom node where portal will be rendered by passing `target` prop:
