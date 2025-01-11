@@ -1,7 +1,7 @@
-import { forwardRef, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { assignRef, useIsomorphicEffect } from '@mantine/hooks';
-import { useProps } from '../../core';
+import { Factory, factory, useProps } from '../../core';
 
 function createPortalNode(props: React.ComponentPropsWithoutRef<'div'>) {
   const node = document.createElement('div');
@@ -21,9 +21,14 @@ export interface PortalProps extends React.ComponentPropsWithoutRef<'div'> {
   target?: HTMLElement | string;
 }
 
+export type PortalFactory = Factory<{
+  props: PortalProps;
+  ref: HTMLDivElement;
+}>;
+
 const defaultProps: Partial<PortalProps> = {};
 
-export const Portal = forwardRef<HTMLDivElement, PortalProps>((props, ref) => {
+export const Portal = factory<PortalFactory>((props, ref) => {
   const { children, target, ...others } = useProps('Portal', defaultProps, props);
 
   const [mounted, setMounted] = useState(false);
