@@ -167,3 +167,8 @@ export const Demo_submitting = {
   name: '⭐ Demo: submitting',
   render: renderDemo(demos.submitting),
 };
+
+export const Demo_rootRuleObject = {
+  name: '⭐ Demo: rootRuleObject',
+  render: renderDemo(demos.rootRuleObject),
+};
