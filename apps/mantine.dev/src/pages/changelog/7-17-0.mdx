@@ -1,4 +1,4 @@
-import { InputDemos } from '@docs/demos';
+import { FormDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -51,6 +51,19 @@ function Demo() {
 }
 ```
 
+## use-form formRootRule
+
+`formRootRule` is a special rule path that can be used to [validate](/form/validation) objects and arrays
+alongside with their nested fields. For example, it is useful when you want to capture
+a list of values, validate each value individually and then validate the list itself
+to not be empty:
+
+<Demo data={FormDemos.rootRuleArray} />
+
+Another example is to validate an object fields combination:
+
+<Demo data={FormDemos.rootRuleObject} />
+
 ## isJSONString and isNotEmptyHTML form validators
 
 New `isJSONString` and `isNotEmptyHTML` [form validators](/form/validators):
@@ -75,7 +88,7 @@ const form = useForm({
 });
 ```
 
-## Help center updates:
+## Help center updates
 
 - [I get hydration warning about data-mantine-color-scheme attribute, what does it mean?](https://help.mantine.dev/q/color-scheme-hydration-warning) question
 - [How can I apply styles to all Mantine components?](https://help.mantine.dev/q/apply-styles-to-all) question
