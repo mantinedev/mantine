@@ -172,3 +172,8 @@ export const Demo_rootRuleObject = {
   name: '⭐ Demo: rootRuleObject',
   render: renderDemo(demos.rootRuleObject),
 };
+
+export const Demo_rootRuleArray = {
+  name: '⭐ Demo: rootRuleArray',
+  render: renderDemo(demos.rootRuleArray),
+};

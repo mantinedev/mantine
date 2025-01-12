@@ -32,3 +32,4 @@ export { watch } from './Form.demo.watch';
 export { focusError } from './Form.demo.focusError';
 export { submitting } from './Form.demo.submitting';
 export { rootRuleObject } from './Form.demo.rootRuleObject';
+export { rootRuleArray } from './Form.demo.rootRuleArray';
