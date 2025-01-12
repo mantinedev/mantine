@@ -5,6 +5,7 @@ export { Form } from './Form/Form';
 export { FORM_INDEX } from './form-index';
 export * from './validators/index.js';
 export { useField } from './use-field';
+export { formRootRule } from './validate/validate-values';
 
 export { zodResolver } from './resolvers/zod-resolver/zod-resolver';
 export { superstructResolver } from './resolvers/superstruct-resolver/superstruct-resolver';
