@@ -1,3 +1,5 @@
+import type { formRootRule } from './validate/validate-values';
+
 export type GetInputPropsType = 'input' | 'checkbox';
 export type FormMode = 'controlled' | 'uncontrolled';
 
@@ -39,7 +41,7 @@ export type FormRule<Value, Values> =
 
 export type FormRulesRecord<Values, InitValues = Values> = Partial<{
   [Key in keyof Values]: FormRule<Values[Key], InitValues>;
-}>;
+}> & { [formRootRule]?: Rule<Values, InitValues> };
 
 export type FormValidateInput<Values> = FormRulesRecord<Values> | ((values: Values) => FormErrors);
 

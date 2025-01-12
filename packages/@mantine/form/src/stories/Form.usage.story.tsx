@@ -12,6 +12,7 @@ export function Usage() {
     validate: {
       name: (value) => (value.length === 0 ? 'Required' : null),
       nested: {
+        field: (value) => (value === 'test' ? 'Invalid' : null),
         [formRootRule]: (value) => {
           console.log('validate nested', value);
           return 'error';
