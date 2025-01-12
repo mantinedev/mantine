@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState } from 'react';
 import { Button, Checkbox, Group, NativeSelect, Select, Textarea, TextInput } from '@mantine/core';
 import { formRootRule, useForm } from '../index';

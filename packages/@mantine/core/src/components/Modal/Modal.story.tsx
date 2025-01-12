@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
 import { Menu } from '../Menu';

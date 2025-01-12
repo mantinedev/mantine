@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useRef } from 'react';
 import { Button, Group } from '@mantine/core';
 import { Dropzone } from './index';

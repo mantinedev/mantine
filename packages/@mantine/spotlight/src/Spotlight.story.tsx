@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState } from 'react';
 import { IconSearch } from '@tabler/icons-react';
 import { Button } from '@mantine/core';
