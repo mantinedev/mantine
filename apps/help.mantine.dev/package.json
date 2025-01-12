@@ -39,6 +39,6 @@
     "@types/node": "^22.9.1",
     "@types/react": "19.0.1",
     "@types/react-dom": "19.0.1",
-    "typescript": "5.6.3"
+    "typescript": "5.7.3"
   }
 }

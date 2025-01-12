@@ -34,7 +34,6 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "noEmitOnError": true,
-    "noImplicitAny": false,
     "allowJs": true,
     "strict": true,
     "baseUrl": ".",
