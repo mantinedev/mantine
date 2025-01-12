@@ -29,11 +29,13 @@ type SetSubmitting = React.Dispatch<React.SetStateAction<boolean>>;
 export type FormRule<Value, Values> =
   NonNullable<Value> extends Array<infer ListValue>
     ?
-        | Partial<{
-            [Key in keyof ListValue]: ListValue[Key] extends Array<infer NestedListItem>
-              ? FormRulesRecord<NestedListItem, Values> | Rule<ListValue[Key], Values>
-              : FormRulesRecord<ListValue[Key], Values> | Rule<ListValue[Key], Values>;
-          }>
+        | Partial<
+            {
+              [Key in keyof ListValue]: ListValue[Key] extends Array<infer NestedListItem>
+                ? FormRulesRecord<NestedListItem, Values> | Rule<ListValue[Key], Values>
+                : FormRulesRecord<ListValue[Key], Values> | Rule<ListValue[Key], Values>;
+            } & { [formRootRule]?: Rule<Value, Values> }
+          >
         | Rule<Value, Values>
     : NonNullable<Value> extends Record<string, any>
       ? FormRulesRecord<Value, Values> | Rule<Value, Values>

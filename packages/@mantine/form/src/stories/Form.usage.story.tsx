@@ -8,7 +8,14 @@ export default { title: 'Form' };
 export function Usage() {
   const form = useForm({
     mode: 'uncontrolled',
-    initialValues: { name: '', terms: false, area: '', select: '', nested: { field: 'test' } },
+    initialValues: {
+      name: '',
+      terms: false,
+      area: '',
+      select: '',
+      nested: { field: 'test' },
+      nestList: [{ name: 'test', key: 'test' }],
+    },
     validate: {
       name: (value) => (value.length === 0 ? 'Required' : null),
       nested: {
@@ -17,6 +24,10 @@ export function Usage() {
           console.log('validate nested', value);
           return 'error';
         },
+      },
+
+      nestList: {
+        [formRootRule]: (value) => (value.length === 0 ? 'List is required' : null),
       },
     },
   });
