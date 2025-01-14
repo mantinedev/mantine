@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useRef, useState } from 'react';
 import { useForm } from '@mantine/form';
 import { Button } from '../Button';

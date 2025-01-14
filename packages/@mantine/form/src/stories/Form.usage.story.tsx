@@ -1,30 +1,35 @@
-/* eslint-disable no-console */
-
 import { useState } from 'react';
 import { Button, Checkbox, Group, NativeSelect, Select, Textarea, TextInput } from '@mantine/core';
-import { useForm } from '../use-form';
+import { formRootRule, useForm } from '../index';
 import { FormBase } from './_base';
 
 export default { title: 'Form' };
 
 export function Usage() {
-  const [counter, setCounter] = useState(0);
   const form = useForm({
     mode: 'uncontrolled',
-    validateInputOnChange: true,
-    initialValues: { name: '', terms: false, area: '', select: '', nested: { field: 'test' } },
+    initialValues: {
+      name: '',
+      terms: false,
+      area: '',
+      select: '',
+      nested: { field: 'test' },
+      nestList: [{ name: 'test', key: 'test' }],
+    },
     validate: {
       name: (value) => (value.length === 0 ? 'Required' : null),
+      nested: {
+        field: (value) => (value === 'test' ? 'Invalid' : null),
+        [formRootRule]: (value) => {
+          console.log('validate nested', value);
+          return 'error';
+        },
+      },
+
+      nestList: {
+        [formRootRule]: (value) => (value.length === 0 ? 'List is required' : null),
+      },
     },
-  });
-
-  form.watch('name', (value) => {
-    setCounter((c) => c + 1);
-    console.log('name', value, { counter });
-  });
-
-  form.watch('area', (value) => {
-    console.log('area', value, { counter });
   });
 
   return (

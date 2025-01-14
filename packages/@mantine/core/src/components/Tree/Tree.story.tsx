@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { IconChevronDown } from '@tabler/icons-react';
 import { Button } from '../Button';
 import { Group } from '../Group';

@@ -7,6 +7,7 @@
 
 .viewport {
   scrollbar-width: none;
+  overscroll-behavior: var(--scrollarea-over-scroll-behavior);
   -ms-overflow-style: none;
   -webkit-overflow-scrolling: touch;
   width: 100%;

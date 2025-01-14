@@ -2,6 +2,8 @@ import { filterErrors } from '../hooks/use-form-errors/filter-errors/filter-erro
 import { getPath } from '../paths';
 import { FormErrors, FormRule, FormRulesRecord, FormValidateInput } from '../types';
 
+export const formRootRule = Symbol('root-rule');
+
 function getValidationResults(errors: FormErrors) {
   const filteredErrors = filterErrors(errors);
   return { hasErrors: Object.keys(filteredErrors).length > 0, errors: filteredErrors };
@@ -32,11 +34,19 @@ function validateRulesRecord<T>(
       value.forEach((_item, index) =>
         validateRulesRecord(rule, values, `${rulePath}.${index}`, acc)
       );
+
+      if (formRootRule in rule) {
+        acc[rulePath] = (rule as any)[formRootRule](value, values, rulePath);
+      }
     }
 
     if (typeof rule === 'object' && typeof value === 'object' && value !== null) {
       if (!arrayValidation) {
         validateRulesRecord(rule, values, rulePath, acc);
+      }
+
+      if (formRootRule in rule) {
+        acc[rulePath] = (rule as any)[formRootRule](value, values, rulePath);
       }
     }
 

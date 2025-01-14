@@ -63,6 +63,9 @@ export interface ScrollAreaProps
 
   /** Called when scrollarea is scrolled all the way to the top */
   onTopReached?: () => void;
+
+  /** Defines `overscroll-behavior` of the viewport */
+  overscrollBehavior?: React.CSSProperties['overscrollBehavior'];
 }
 
 export interface ScrollAreaAutosizeProps extends ScrollAreaProps {}
@@ -83,11 +86,14 @@ const defaultProps: Partial<ScrollAreaProps> = {
   scrollbars: 'xy',
 };
 
-const varsResolver = createVarsResolver<ScrollAreaFactory>((_, { scrollbarSize }) => ({
-  root: {
-    '--scrollarea-scrollbar-size': rem(scrollbarSize),
-  },
-}));
+const varsResolver = createVarsResolver<ScrollAreaFactory>(
+  (_, { scrollbarSize, overscrollBehavior }) => ({
+    root: {
+      '--scrollarea-scrollbar-size': rem(scrollbarSize),
+      '--scrollarea-over-scroll-behavior': overscrollBehavior,
+    },
+  })
+);
 
 export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
   const props = useProps('ScrollArea', defaultProps, _props);
@@ -109,6 +115,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     scrollbars,
     onBottomReached,
     onTopReached,
+    overscrollBehavior,
     ...others
   } = props;
 

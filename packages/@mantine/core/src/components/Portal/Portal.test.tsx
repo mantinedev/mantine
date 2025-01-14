@@ -2,6 +2,7 @@ import { render, tests } from '@mantine-tests/core';
 import { Portal } from './Portal';
 
 describe('@mantine/core/Portal', () => {
+  tests.itHasExtend({ component: Portal });
   tests.itSupportsRef({
     component: Portal,
     props: { children: 'test' },

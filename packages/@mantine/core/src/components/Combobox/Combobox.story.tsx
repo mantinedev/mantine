@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { useState } from 'react';
 import { Anchor } from '../Anchor';
 import { Button } from '../Button';

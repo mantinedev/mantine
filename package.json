@@ -1,6 +1,6 @@
 {
   "name": "mantine-a91763c0e2",
-  "version": "7.15.3",
+  "version": "7.16.0",
   "description": "Mantine Components Monorepo",
   "packageManager": "yarn@4.6.0",
   "license": "MIT",
@@ -195,7 +195,7 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths-webpack-plugin": "^4.2.0",
     "tsx": "^4.19.2",
-    "typescript": "5.6.3",
+    "typescript": "5.7.3",
     "typescript-eslint": "^8.15.0",
     "version-next": "^1.0.2",
     "webpack": "^5.96.1",

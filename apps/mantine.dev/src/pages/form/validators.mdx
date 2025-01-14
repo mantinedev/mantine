@@ -174,3 +174,41 @@ const form = useForm({
   },
 });
 ```
+
+## isJSONString
+
+`isJSONString` checks whether form value is a valid JSON string.
+
+```tsx
+import { isJSONString, useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    json: '',
+  },
+
+  validate: {
+    json: isJSONString('Invalid JSON string'),
+  },
+});
+```
+
+## isNotEmptyHTML
+
+`isNotEmptyHTML` checks that form value is not an empty HTML string. Empty string, string with only HTML tags and whitespace are considered to be empty.
+
+```tsx
+import { isNotEmptyHTML, useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    html: '',
+  },
+
+  validate: {
+    html: isNotEmptyHTML('HTML cannot be empty'),
+  },
+});
+```

@@ -22,7 +22,6 @@ export function UncontrolledFormValues() {
       style={{ padding: 40, maxWidth: 400 }}
       onSubmit={(event) => {
         event.preventDefault();
-        // eslint-disable-next-line no-console
         console.log(Object.fromEntries(new FormData(event.currentTarget) as any));
       }}
     >
