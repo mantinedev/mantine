@@ -7,7 +7,7 @@ import {
 
 describe('@mantine/core/Slider/get-step-mark-value', () => {
   it('returns first mark value', () => {
-    expect(getFirstMarkValue([{ value: 1 }, { value: 2 }])).toBe(2);
+    expect(getFirstMarkValue([{ value: 1 }, { value: 2 }])).toBe(1);
     expect(getFirstMarkValue([{ value: 1 }])).toBe(1);
     expect(getFirstMarkValue([])).toBe(0);
   });
