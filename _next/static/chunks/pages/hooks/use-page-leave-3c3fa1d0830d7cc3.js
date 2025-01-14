@@ -1,0 +1,10 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[47695],{97046:function(e,t,n){(window.__NEXT_P=window.__NEXT_P||[]).push(["/hooks/use-page-leave",function(){return n(16538)}])},16538:function(e,t,n){"use strict";n.r(t),n.d(t,{default:function(){return f}});var o=n(52322),s=n(45392),u=n(2784),i=n(8582);let r={type:"code",component:function(){var e;let[t,n]=(0,u.useState)(0);return e=()=>n(e=>e+1),(0,u.useEffect)(()=>(document.documentElement.addEventListener("mouseleave",e),()=>document.documentElement.removeEventListener("mouseleave",e)),[]),(0,o.jsxs)(i.x,{ta:"center",children:["Mouse left the page ",t," times"]})},code:`
+import { useState } from 'react';
+import { usePageLeave } from '@mantine/hooks';
+
+function Demo() {
+  const [leftsCount, setLeftsCount] = useState(0);
+  usePageLeave(() => setLeftsCount((p) => p + 1));
+  return <>Mouse left the page {leftsCount} times</>;
+}
+`};var c=n(54078),a=n(15019);let d=(0,c.A)(a.us.usePageLeave);function l(e){let t={code:"code",h2:"h2",p:"p",pre:"pre",...(0,s.a)(),...e.components},{Demo:n}=t;return n||function(e,t){throw Error("Expected "+(t?"component":"object")+" `"+e+"` to be defined: you likely forgot to import, pass, or provide it.")}("Demo",!0),(0,o.jsxs)(o.Fragment,{children:[(0,o.jsx)(t.h2,{id:"usage",children:"Usage"}),"\n",(0,o.jsxs)(t.p,{children:[(0,o.jsx)(t.code,{children:"use-page-leave"})," calls given function when mouse leaves the page:"]}),"\n",(0,o.jsx)(n,{data:r}),"\n",(0,o.jsx)(t.h2,{id:"definition",children:"Definition"}),"\n",(0,o.jsx)(t.pre,{children:(0,o.jsx)(t.code,{className:"language-tsx",children:"function usePageLeave(onPageLeave: () => void): void;\n"})})]})}function f(){let e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return(0,o.jsx)(d,{...e,children:(0,o.jsx)(l,{...e})})}}},function(e){e.O(0,[61177,66748,61639,92888,49774,40179],function(){return e(e.s=97046)}),_N_E=e.O()}]);
