@@ -7,8 +7,8 @@ export function useInViewport<T extends HTMLElement = any>() {
   const ref = useCallback((node: T | null) => {
     if (typeof IntersectionObserver !== 'undefined') {
       if (node && !observer.current) {
-        observer.current = new IntersectionObserver(([entry]) =>
-          setInViewport(entry.isIntersecting)
+        observer.current = new IntersectionObserver((entries) =>
+          setInViewport(entries.some((entry) => entry.isIntersecting))
         );
       } else {
         observer.current?.disconnect();
