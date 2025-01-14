@@ -12271,7 +12271,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fuse.js@npm:7.0.0, fuse.js@npm:^7.0.0":
+"fuse.js@npm:^7.0.0":
   version: 7.0.0
   resolution: "fuse.js@npm:7.0.0"
   checksum: 10c0/3574b7fc2e0ccb047e05dbe5f8f04e8f0754f62fa209669ef426ea1354a32ae7355620788af8f1d29f94e1fdecd513f1f3787f012848a31ec90bb4e0e6092504
@@ -12966,7 +12966,7 @@ __metadata:
     "@types/react": "npm:19.0.1"
     "@types/react-dom": "npm:19.0.1"
     dayjs: "npm:^1.11.13"
-    fuse.js: "npm:7.0.0"
+    fuse.js: "npm:^7.0.0"
     next: "npm:14.2.12"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
