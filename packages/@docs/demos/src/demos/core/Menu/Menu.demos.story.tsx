@@ -38,6 +38,11 @@ export const Demo_disabled = {
   render: renderDemo(demos.disabled),
 };
 
+export const Demo_disabledTooltip = {
+  name: '⭐ Demo: disabledTooltip',
+  render: renderDemo(demos.disabledTooltip),
+};
+
 export const Demo_customControl = {
   name: '⭐ Demo: customControl',
   render: renderDemo(demos.customControl),
