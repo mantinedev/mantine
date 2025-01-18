@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import cx from 'clsx';
 import { NumberFormatValues, NumericFormat, OnValueChange } from 'react-number-format';
 import { assignRef, clamp, useMergedRef, useUncontrolled } from '@mantine/hooks';
@@ -382,6 +382,34 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     }
   };
 
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    let sanitizedValue = _value;
+
+    if (clampBehavior === 'blur' && typeof sanitizedValue === 'number') {
+      const clampedValue = clamp(sanitizedValue, min, max);
+      sanitizedValue = clampedValue;
+    }
+
+    if (
+      trimLeadingZeroesOnBlur &&
+      typeof sanitizedValue === 'string' &&
+      getDecimalPlaces(sanitizedValue) < 15
+    ) {
+      const replaced = sanitizedValue.toString().replace(/^0+/, '');
+      const parsedValue = parseFloat(replaced);
+      sanitizedValue =
+        Number.isNaN(parsedValue) || parsedValue > Number.MAX_SAFE_INTEGER
+          ? replaced
+          : clamp(parsedValue, min, max);
+    }
+
+    if (_value !== sanitizedValue) {
+      setValue(sanitizedValue);
+    }
+
+    onBlur?.(event);
+  };
+
   assignRef(handlersRef, { increment: incrementRef.current, decrement: decrementRef.current });
 
   const onStepHandleChange = (isIncrement: boolean) => {
@@ -485,28 +513,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       rightSectionPointerEvents={rightSectionPointerEvents ?? (disabled ? 'none' : undefined)}
       rightSectionWidth={rightSectionWidth ?? `var(--ni-right-section-width-${size || 'sm'})`}
       allowLeadingZeros={allowLeadingZeros}
-      onBlur={(event) => {
-        onBlur?.(event);
-        if (clampBehavior === 'blur' && typeof _value === 'number') {
-          const clampedValue = clamp(_value, min, max);
-          if (clampedValue !== _value) {
-            setValue(clamp(_value, min, max));
-          }
-        }
-        if (
-          trimLeadingZeroesOnBlur &&
-          typeof _value === 'string' &&
-          getDecimalPlaces(_value) < 15
-        ) {
-          const replaced = _value.replace(/^0+/, '');
-          const parsedValue = parseFloat(replaced);
-          setValue(
-            Number.isNaN(parsedValue) || parsedValue > Number.MAX_SAFE_INTEGER
-              ? replaced
-              : clamp(parsedValue, min, max)
-          );
-        }
-      }}
+      onBlur={handleBlur}
       isAllowed={(val) => {
         if (clampBehavior === 'strict') {
           if (isAllowed) {
