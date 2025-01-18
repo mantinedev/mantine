@@ -5,7 +5,6 @@ export { hover } from './Menu.demo.hover';
 export { stylesApi } from './Menu.demo.stylesApi';
 export { positionConfigurator } from './Menu.demo.positionConfigurator';
 export { disabled } from './Menu.demo.disabled';
-export { disabledTooltip } from './Menu.demo.disabledTooltip';
 export { customControl } from './Menu.demo.customControl';
 export { clickHover } from './Menu.demo.clickHover';
 export { navigation } from './Menu.demo.navigation';
