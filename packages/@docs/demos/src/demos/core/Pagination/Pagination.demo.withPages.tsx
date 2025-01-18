@@ -17,7 +17,7 @@ function Demo() {
   return (
     <Group justify="flex-end">
       <Text size="sm">{message}</Text>
-      <Pagination total={totalPages} value={page} onChange={setPage} />
+      <Pagination total={totalPages} value={page} onChange={setPage} withPages={false} />
     </Group>
   );
 }
