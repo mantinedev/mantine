@@ -18,6 +18,7 @@ interface MenuContext {
   menuItemTabIndex: -1 | 0 | undefined;
   openedViaClick: boolean;
   setOpenedViaClick: (value: boolean) => void;
+  withInitialFocusPlaceholder: boolean | undefined;
 }
 
 export const [MenuContextProvider, useMenuContext] = createSafeContext<MenuContext>(
