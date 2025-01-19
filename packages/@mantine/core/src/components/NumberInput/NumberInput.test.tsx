@@ -25,6 +25,7 @@ const getInput = () => screen.getByRole('textbox');
 const enterText = (text: string) => userEvent.type(getInput(), text);
 const expectValue = (value: string) => expect(getInput()).toHaveValue(value);
 const focusInput = () => fireEvent.focus(getInput());
+const blurInput = () => fireEvent.blur(getInput());
 
 describe('@mantine/core/NumberInput', () => {
   tests.axe([
@@ -189,5 +190,18 @@ describe('@mantine/core/NumberInput', () => {
 
     expectValue('0');
     expect(spy).toHaveBeenLastCalledWith(0);
+  });
+
+  it('does not call onChange when nothing has changed after blur', async () => {
+    const onChangeSpy = jest.fn();
+    const onBlurSpy = jest.fn();
+    render(<NumberInput onChange={onChangeSpy} onBlur={onBlurSpy} value="" />);
+
+    focusInput();
+    blurInput();
+
+    expectValue('');
+    expect(onChangeSpy).toHaveBeenCalledTimes(0);
+    expect(onBlurSpy).toHaveBeenCalledTimes(1);
   });
 });

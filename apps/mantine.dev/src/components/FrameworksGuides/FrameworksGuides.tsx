@@ -23,11 +23,11 @@ export function FrameworksGuides() {
 
       <SimpleGrid type="container" cols={{ base: 1, '580px': 2, '920px': 3 }} mt="lg" spacing="lg">
         <GettingStartedCard
-          title="Remix"
-          logo="remix"
+          title="React Router"
+          logo="react-router"
           type="secondary"
-          link="/guides/remix"
-          description="Get started with Remix"
+          link="/guides/react-router"
+          description="Get started with React Router"
         />
 
         <GettingStartedCard

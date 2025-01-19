@@ -74,7 +74,7 @@
 }
 
 .tbody {
-  & :where(tr) {
+  & > :where(tr) {
     &:where([data-with-row-border]:last-of-type) {
       border-bottom: none;
     }

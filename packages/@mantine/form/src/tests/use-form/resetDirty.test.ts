@@ -34,6 +34,14 @@ function tests(mode: FormMode) {
 
     expect(hook.result.current.isDirty()).toBe(false);
   });
+
+  it('should handle reseting with new values', () => {
+    const hook = renderHook(() => useForm({ mode, initialValues: { a: 1, b: 2 } }));
+    expect(hook.result.current.isDirty()).toBe(false);
+
+    act(() => hook.result.current.resetDirty({ a: 2, b: 2 }));
+    expect(hook.result.current.isDirty()).toBe(true);
+  });
 }
 
 describe('@mantine/form/resetDirty-controlled', () => {

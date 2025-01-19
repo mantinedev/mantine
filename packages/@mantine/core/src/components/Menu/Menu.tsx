@@ -87,11 +87,15 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
 
   /** Set the `tabindex` on all menu items. Defaults to -1 */
   menuItemTabIndex?: -1 | 0;
+
+  /** Determines whether focus placeholder element should be added before items, `true` by default */
+  withInitialFocusPlaceholder?: boolean;
 }
 
 const defaultProps: Partial<MenuProps> = {
   trapFocus: true,
   closeOnItemClick: true,
+  withInitialFocusPlaceholder: true,
   clickOutsideEvents: ['mousedown', 'touchstart', 'keydown'],
   loop: true,
   trigger: 'click',
@@ -123,6 +127,7 @@ export function Menu(_props: MenuProps) {
     vars,
     menuItemTabIndex,
     keepMounted,
+    withInitialFocusPlaceholder,
     ...others
   } = props;
 
@@ -193,6 +198,7 @@ export function Menu(_props: MenuProps) {
         trigger,
         unstyled,
         menuItemTabIndex,
+        withInitialFocusPlaceholder,
       }}
     >
       <Popover

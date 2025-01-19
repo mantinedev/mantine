@@ -169,19 +169,20 @@
   --combobox-chevron-size-xl: 28px;
   --combobox-chevron-size: var(--combobox-chevron-size-sm);
 
-  width: var(--combobox-chevron-size);
-  height: var(--combobox-chevron-size);
-
   @mixin where-light {
-    color: var(--mantine-color-gray-6);
+    --_combobox-chevron-color: var(--combobox-chevron-color, var(--mantine-color-gray-6));
   }
 
   @mixin where-dark {
-    color: var(--mantine-color-dark-3);
+    --_combobox-chevron-color: var(--combobox-chevron-color, var(--mantine-color-dark-3));
   }
 
+  width: var(--combobox-chevron-size);
+  height: var(--combobox-chevron-size);
+  color: var(--_combobox-chevron-color);
+
   &:where([data-error]) {
-    color: var(--mantine-color-error);
+    color: var(--combobox-chevron-color, var(--mantine-color-error));
   }
 }
 

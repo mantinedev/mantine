@@ -37,16 +37,18 @@
   &:where([data-disabled], :disabled) {
     color: var(--mantine-color-dimmed);
     opacity: 0.6;
-    pointer-events: none;
+    cursor: not-allowed;
   }
 
   &:where([data-hovered]) {
-    @mixin where-light {
-      background-color: var(--menu-item-hover, var(--mantine-color-gray-1));
-    }
+    &:where(:not(:disabled, [data-disabled])) {
+      @mixin where-light {
+        background-color: var(--menu-item-hover, var(--mantine-color-gray-1));
+      }
 
-    @mixin where-dark {
-      background-color: var(--menu-item-hover, var(--mantine-color-dark-4));
+      @mixin where-dark {
+        background-color: var(--menu-item-hover, var(--mantine-color-dark-4));
+      }
     }
   }
 }

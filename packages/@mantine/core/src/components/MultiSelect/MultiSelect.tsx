@@ -6,6 +6,7 @@ import {
   extractStyleProps,
   factory,
   Factory,
+  MantineColor,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -101,6 +102,9 @@ export interface MultiSelectProps
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
+
+  /** Controls color of the default chevron, by default depends on the color scheme */
+  chevronColor?: MantineColor;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -191,6 +195,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     onRemove,
     onClear,
     scrollAreaProps,
+    chevronColor,
     ...others
   } = props;
 
@@ -329,7 +334,12 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
             disabled={disabled}
             radius={radius}
             __defaultRightSection={
-              <Combobox.Chevron size={size} error={error} unstyled={unstyled} />
+              <Combobox.Chevron
+                size={size}
+                error={error}
+                unstyled={unstyled}
+                color={chevronColor}
+              />
             }
             __clearSection={clearButton}
             __clearable={clearable && _value.length > 0 && !disabled && !readOnly}

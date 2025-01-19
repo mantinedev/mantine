@@ -6,6 +6,8 @@ import {
   Factory,
   factory,
   getSize,
+  getThemeColor,
+  MantineColor,
   MantineSize,
   StylesApiProps,
   useProps,
@@ -15,7 +17,7 @@ import classes from '../Combobox.module.css';
 
 export type ComboboxChevronStylesNames = 'chevron';
 export type ComboboxChevronCSSVariables = {
-  chevron: '--combobox-chevron-size';
+  chevron: '--combobox-chevron-size' | '--combobox-chevron-color';
 };
 
 export interface ComboboxChevronProps
@@ -24,6 +26,7 @@ export interface ComboboxChevronProps
     ElementProps<'svg', 'opacity' | 'display'> {
   size?: MantineSize | (string & {});
   error?: React.ReactNode;
+  color?: MantineColor;
 }
 
 export type ComboboxChevronFactory = Factory<{
@@ -37,9 +40,10 @@ const defaultProps: Partial<ComboboxChevronProps> = {
   error: null,
 };
 
-const varsResolver = createVarsResolver<ComboboxChevronFactory>((_, { size }) => ({
+const varsResolver = createVarsResolver<ComboboxChevronFactory>((theme, { size, color }) => ({
   chevron: {
     '--combobox-chevron-size': getSize(size, 'combobox-chevron-size'),
+    '--combobox-chevron-color': color ? getThemeColor(color, theme) : undefined,
   },
 }));
 

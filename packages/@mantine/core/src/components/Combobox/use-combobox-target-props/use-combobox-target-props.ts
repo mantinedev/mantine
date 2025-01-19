@@ -76,7 +76,7 @@ export function useComboboxTargetProps({
         }
       }
 
-      if (event.nativeEvent.code === 'Escape') {
+      if (event.key === 'Escape') {
         ctx.store.closeDropdown('keyboard');
       }
 

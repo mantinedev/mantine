@@ -48,7 +48,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
       MDX_DATA.Icons,
       MDX_DATA.NextJs,
       MDX_DATA.Vite,
-      MDX_DATA.Remix,
+      MDX_DATA.ReactRouter,
       MDX_DATA.Gatsby,
       MDX_DATA.Redwood,
       MDX_DATA.Storybook,

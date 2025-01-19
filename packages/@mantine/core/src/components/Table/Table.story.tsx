@@ -1,3 +1,6 @@
+import { Stack } from '../Stack';
+import { Text } from '../Text';
+import { Title } from '../Title';
 import { Table } from './Table';
 
 export default { title: 'Table' };
@@ -189,5 +192,114 @@ export function TabularNums() {
         <Table.Tbody>{rows}</Table.Tbody>
       </Table>
     </div>
+  );
+}
+
+export function NestedTable() {
+  return (
+    <Stack gap="xl">
+      <Stack gap="xs">
+        <Title order={1}>Mantine sandbox</Title>
+        <Text>Vite + TS + React</Text>
+      </Stack>
+
+      <Stack gap="xs">
+        <Title order={2}>Nested tables w/ default style (bug)</Title>
+        <Text>Nested table heading row does not have bottom border and has incorrect striping</Text>
+        <Table withTableBorder striped="odd">
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th>Position</Table.Th>
+              <Table.Th>Name</Table.Th>
+              <Table.Th>Symbol</Table.Th>
+              <Table.Th>Mass</Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>
+            {elements.map((element) => (
+              <Table.Tr key={element.name}>
+                <Table.Td>{element.position}</Table.Td>
+                <Table.Td>{element.name}</Table.Td>
+                <Table.Td>{element.symbol}</Table.Td>
+                <Table.Td>{element.mass}</Table.Td>
+              </Table.Tr>
+            ))}
+            <Table.Tr key="nested">
+              <Table.Td colSpan={4} p="sm">
+                <Table withTableBorder striped="odd">
+                  <Table.Thead>
+                    <Table.Tr>
+                      <Table.Th>Position</Table.Th>
+                      <Table.Th>Name</Table.Th>
+                      <Table.Th>Symbol</Table.Th>
+                      <Table.Th>Mass</Table.Th>
+                    </Table.Tr>
+                  </Table.Thead>
+                  <Table.Tbody>
+                    {elements.map((element) => (
+                      <Table.Tr key={element.name}>
+                        <Table.Td>{element.position}</Table.Td>
+                        <Table.Td>{element.name}</Table.Td>
+                        <Table.Td>{element.symbol}</Table.Td>
+                        <Table.Td>{element.mass}</Table.Td>
+                      </Table.Tr>
+                    ))}
+                  </Table.Tbody>
+                </Table>
+              </Table.Td>
+            </Table.Tr>
+          </Table.Tbody>
+        </Table>
+      </Stack>
+
+      <Stack gap="xs">
+        <Title order={2}>Nested tables w/ custom style (fix)</Title>
+        <Text>Nested table heading row has bottom border and correct striping</Text>
+        <Table withTableBorder className="custom-table-style" striped="odd">
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th>Position</Table.Th>
+              <Table.Th>Name</Table.Th>
+              <Table.Th>Symbol</Table.Th>
+              <Table.Th>Mass</Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>
+            {elements.map((element) => (
+              <Table.Tr key={element.name}>
+                <Table.Td>{element.position}</Table.Td>
+                <Table.Td>{element.name}</Table.Td>
+                <Table.Td>{element.symbol}</Table.Td>
+                <Table.Td>{element.mass}</Table.Td>
+              </Table.Tr>
+            ))}
+            <Table.Tr key="nested">
+              <Table.Td colSpan={4} p="sm">
+                <Table withTableBorder striped="odd">
+                  <Table.Thead>
+                    <Table.Tr>
+                      <Table.Th>Position</Table.Th>
+                      <Table.Th>Name</Table.Th>
+                      <Table.Th>Symbol</Table.Th>
+                      <Table.Th>Mass</Table.Th>
+                    </Table.Tr>
+                  </Table.Thead>
+                  <Table.Tbody>
+                    {elements.map((element) => (
+                      <Table.Tr key={element.name}>
+                        <Table.Td>{element.position}</Table.Td>
+                        <Table.Td>{element.name}</Table.Td>
+                        <Table.Td>{element.symbol}</Table.Td>
+                        <Table.Td>{element.mass}</Table.Td>
+                      </Table.Tr>
+                    ))}
+                  </Table.Tbody>
+                </Table>
+              </Table.Td>
+            </Table.Tr>
+          </Table.Tbody>
+        </Table>
+      </Stack>
+    </Stack>
   );
 }

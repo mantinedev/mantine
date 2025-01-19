@@ -246,6 +246,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
     handleChange,
     {
       onScrubEnd: () =>
+        !disabled &&
         onChangeEnd?.(
           restrictToMarks && marks?.length
             ? findClosestNumber(
