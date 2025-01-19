@@ -22,14 +22,6 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
-  Remix: {
-    title: 'Usage with Remix',
-    slug: '/guides/remix',
-    search: 'Get started with Remix',
-    hideInSearch: true,
-    hideHeader: true,
-  },
-
   ReactRouter: {
     title: 'Usage with React Router',
     slug: '/guides/react-router',

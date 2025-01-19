@@ -52,7 +52,7 @@ body:
       options:
         - 'Next.js'
         - 'Vite'
-        - 'Remix'
+        - 'React Router'
         - 'Gatsby'
         - 'Redwood'
         - 'create-react-app (CRA)'

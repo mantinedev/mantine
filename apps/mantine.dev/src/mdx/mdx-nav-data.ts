@@ -23,7 +23,13 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
 
   {
     category: 'Framework guides',
-    pages: [MDX_DATA.NextJs, MDX_DATA.Vite, MDX_DATA.Remix, MDX_DATA.Gatsby, MDX_DATA.Redwood],
+    pages: [
+      MDX_DATA.NextJs,
+      MDX_DATA.Vite,
+      MDX_DATA.ReactRouter,
+      MDX_DATA.Gatsby,
+      MDX_DATA.Redwood,
+    ],
   },
 
   {

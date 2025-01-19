@@ -53,7 +53,7 @@ import { meta as portalsTesting } from './pages/q/portals-testing.mdx';
 import { meta as postcssFnsInline } from './pages/q/postcss-fns-inline.mdx';
 import { meta as primaryVirtualColor } from './pages/q/primary-virtual-color.mdx';
 import { meta as privateCssVariables } from './pages/q/private-css-variables.mdx';
-import { meta as remixLoadFonts } from './pages/q/remix-load-fonts.mdx';
+import { meta as reactRouterLoadFonts } from './pages/q/react-router-load-fonts.mdx';
 import { meta as roadmap } from './pages/q/roadmap.mdx';
 import { meta as scrollToTheTopOfTheForm } from './pages/q/scroll-to-the-top-of-the-form.mdx';
 import { meta as segmentedControlNoValue } from './pages/q/segmented-control-no-value.mdx';
@@ -127,7 +127,7 @@ export const MDX_DATA = [
   postcssFnsInline,
   primaryVirtualColor,
   privateCssVariables,
-  remixLoadFonts,
+  reactRouterLoadFonts,
   roadmap,
   scrollToTheTopOfTheForm,
   segmentedControlNoValue,

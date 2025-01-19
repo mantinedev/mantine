@@ -13,8 +13,8 @@ export function HomePageGetStarted() {
 
         <HomePageDescription className={classes.description}>
           Mantine can be used with any modern React framework or build tool: get started with
-          Next.js, Vite, Remix and other tools in minutes by following the installation guide or
-          using one of the available templates.
+          Next.js, Vite, React Router and other tools in minutes by following the installation guide
+          or using one of the available templates.
         </HomePageDescription>
 
         <HomePageLearnMore href="/">Get started without a framework</HomePageLearnMore>

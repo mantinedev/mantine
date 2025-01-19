@@ -3,9 +3,9 @@ import { Layout } from '@/layout';
 export const meta = {
   title: 'How can I load fonts in React Router?',
   description: 'A guide to load custom fonts in React Router',
-  slug: 'remix-load-fonts',
+  slug: 'react-router-load-fonts',
   category: 'tooling',
-  tags: ['fonts', 'Google fonts', 'Remix'],
+  tags: ['fonts', 'Google fonts'],
   created_at: 'July 23, 2024',
   last_updated_at: 'July 23, 2024',
 };
@@ -54,12 +54,13 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from '@remix-run/react';
+} from 'react-router';
 import {
   ColorSchemeScript,
   createTheme,
   DEFAULT_THEME,
   MantineProvider,
+  mantineHtmlProps,
 } from '@mantine/core';
 
 const theme = createTheme({
@@ -73,7 +74,7 @@ const theme = createTheme({
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" {...mantineHtmlProps}>
       <head>
         <meta charSet="utf-8" />
         <meta
@@ -130,7 +131,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from '@remix-run/react';
+} from 'react-router';
 import {
   ColorSchemeScript,
   createTheme,
