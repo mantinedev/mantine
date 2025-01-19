@@ -107,7 +107,7 @@ before the component is mounted to avoid flash of inaccurate color scheme. This 
 color scheme value can be different on client and server, as server does not have access
 to local storage and always uses the default value.
 
-If you have server side rendering in your application (for example, if you use [Next.js](/guides/next) or [Remix](/guides/remix)), then you cannot use `colorScheme`
+If you have server side rendering in your application (for example, if you use [Next.js](/guides/next) or [React Router](/guides/react-router)), then you cannot use `colorScheme`
 value in your application to avoid hydration issues. Instead, you can use `dark` and `light`
 mixins from [postcss-preset-mantine](/styles/postcss-preset) to generate styles that will
 hide elements based on color scheme value:

@@ -206,6 +206,8 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     rightYAxisLabel,
     rightYAxisProps,
     withPointLabels,
+    gridColor,
+    textColor,
     ...others
   } = props;
 

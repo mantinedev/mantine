@@ -13,6 +13,7 @@ export function Usage() {
         onChange={console.log}
         allowDeselect={false}
         dropdownOpened
+        chevronColor="violet"
       />
     </div>
   );

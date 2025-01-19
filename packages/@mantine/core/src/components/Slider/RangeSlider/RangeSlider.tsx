@@ -342,7 +342,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
 
   const { ref: container, active } = useMove(
     ({ x }) => handleChange(x),
-    { onScrubEnd: () => onChangeEnd?.(valueRef.current) },
+    { onScrubEnd: () => !disabled && onChangeEnd?.(valueRef.current) },
     dir
   );
 

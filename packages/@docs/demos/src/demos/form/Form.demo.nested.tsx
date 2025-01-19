@@ -34,7 +34,7 @@ function Demo() {
         {...form.getInputProps('user.lastName')}
       />
       <Checkbox
-        label="I accepts terms & conditions"
+        label="I accept terms and conditions"
         mt="sm"
         key={form.key('terms')}
         {...form.getInputProps('terms', { type: 'checkbox' })}
@@ -72,7 +72,7 @@ function Demo() {
         {...form.getInputProps('user.lastName')}
       />
       <Checkbox
-        label="I accepts terms & conditions"
+        label="I accept terms and conditions"
         mt="sm"
         key={form.key('terms')}
         {...form.getInputProps('terms', { type: 'checkbox' })}
