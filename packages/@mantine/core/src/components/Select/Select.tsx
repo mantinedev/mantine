@@ -5,6 +5,7 @@ import {
   ElementProps,
   Factory,
   factory,
+  MantineColor,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -87,6 +88,9 @@ export interface SelectProps
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
+
+  /** Controls color of the default chevron, by default depends on the color scheme */
+  chevronColor?: MantineColor;
 }
 
 export type SelectFactory = Factory<{
@@ -155,6 +159,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     __defaultRightSection,
     __clearSection,
     __clearable,
+    chevronColor,
     ...others
   } = props;
 
@@ -261,7 +266,12 @@ export const Select = factory<SelectFactory>((_props, ref) => {
             id={_id}
             ref={ref}
             __defaultRightSection={
-              <Combobox.Chevron size={size} error={error} unstyled={unstyled} />
+              <Combobox.Chevron
+                size={size}
+                error={error}
+                unstyled={unstyled}
+                color={chevronColor}
+              />
             }
             __clearSection={clearButton}
             __clearable={clearable && !!_value && !disabled && !readOnly}
