@@ -61,7 +61,8 @@
   }
 
   &[data-logo='gatsby'],
-  &[data-logo='redwood'] {
+  &[data-logo='redwood'],
+  &[data-logo='react-router'] {
     justify-content: flex-start;
 
     &[data-breakpoint='xl'] {
@@ -98,8 +99,8 @@
     height: 40px;
   }
 
-  &[data-logo='remix'] {
-    width: 80px;
+  &[data-logo='react-router'] {
+    height: 24px;
   }
 }
 

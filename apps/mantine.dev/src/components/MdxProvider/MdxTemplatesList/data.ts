@@ -2,7 +2,7 @@ export interface Template {
   name: string;
   link: string;
   description: string;
-  type: 'next' | 'gatsby' | 'vite' | 'remix' | 'redwood';
+  type: 'next' | 'gatsby' | 'vite' | 'redwood' | 'react-router';
 }
 
 export const TEMPLATES_DATA: Template[] = [
@@ -56,12 +56,6 @@ export const TEMPLATES_DATA: Template[] = [
     name: 'vite-vanilla-extract-template',
     link: 'https://github.com/mantinedev/vite-vanilla-extract-template',
     description: 'Vite template with Vanilla extract example',
-  },
-  {
-    type: 'remix',
-    name: 'remix-template',
-    link: 'https://github.com/mantinedev/remix-template',
-    description: 'Remix template with basic setup',
   },
   {
     type: 'gatsby',

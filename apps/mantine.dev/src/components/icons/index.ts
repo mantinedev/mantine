@@ -1,8 +1,8 @@
 import type { Template } from '../MdxProvider/MdxTemplatesList/data';
 import { GatsbyIcon } from './GatsbyIcon';
 import { NextIcon } from './NextIcon';
+import { ReactRouterIcon } from './ReactRouterIcon';
 import { RedwoodIcon } from './RedwoodIcon';
-import { RemixIcon } from './RemixIcon';
 import { ViteIcon } from './ViteIcon';
 
 export const frameworkIcons: Record<Template['type'], typeof NextIcon> = {
@@ -10,7 +10,7 @@ export const frameworkIcons: Record<Template['type'], typeof NextIcon> = {
   vite: ViteIcon,
   gatsby: GatsbyIcon,
   redwood: RedwoodIcon,
-  remix: RemixIcon,
+  'react-router': ReactRouterIcon,
 };
 
-export { NextIcon, ViteIcon, GatsbyIcon, RemixIcon, RedwoodIcon };
+export { NextIcon, ViteIcon, GatsbyIcon, ReactRouterIcon, RedwoodIcon };
