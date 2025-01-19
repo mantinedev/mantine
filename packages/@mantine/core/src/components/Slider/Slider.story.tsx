@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { useState } from 'react';
 import { RangeSlider } from './RangeSlider/RangeSlider';
 import { Slider } from './Slider/Slider';
 
@@ -64,7 +65,15 @@ export function SizeSlider() {
 export function Range() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <RangeSlider defaultValue={[25, 65]} marks={marks} size="md" />
+      <RangeSlider
+        defaultValue={[25, 65]}
+        restrictToMarks
+        marks={marks}
+        size="md"
+        onChange={(val) => console.log('change', val)}
+        onChangeEnd={(val) => console.log('end', val)}
+        disabled
+      />
       <RangeSlider defaultValue={[25, 65]} disabled mt={60} />
       <RangeSlider defaultValue={[25, 65]} inverted mt="xl" />
       <RangeSlider defaultValue={[25, 65]} inverted disabled mt="xl" />
@@ -77,6 +86,23 @@ export function Range() {
         styles={{
           label: { background: 'pink' },
         }}
+      />
+    </div>
+  );
+}
+
+export function DynamicDisabled() {
+  const [disabled, setDisabled] = useState(false);
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <button type="button" onClick={() => setDisabled((d) => !d)}>
+        Toggle disabled
+      </button>
+      <Slider
+        size="md"
+        onChange={(val) => console.log('change', val)}
+        onChangeEnd={(val) => console.log('end', val)}
+        disabled={disabled}
       />
     </div>
   );
