@@ -232,19 +232,27 @@ export function FormValidateOnBlur() {
   const form = useForm({
     validateInputOnBlur: true,
     validate: {
-      age: (value) => (value < 18 ? 'Error' : null),
+      age: (value) => {
+        if (typeof value === 'string' && value === '') {
+          return 'Required';
+        }
+        if (typeof value === 'number' && value < 18) {
+          return 'Error';
+        }
+        return null;
+      },
       name: (value) => (value.length < 2 ? 'Error' : null),
     },
     initialValues: {
       name: '',
-      age: 2,
+      age: '' as string | number,
     },
   });
 
   return (
     <div style={{ padding: 40, maxWidth: 340 }}>
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
-        <NumberInput label="Age" {...form.getInputProps('age')} />
+        <NumberInput label="Age" required {...form.getInputProps('age')} />
         <TextInput label="Name" {...form.getInputProps('name')} />
         <Group justify="flex-end" mt="xl">
           <Button type="submit">Submit</Button>
