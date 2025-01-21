@@ -22,7 +22,7 @@ function Demo() {
     <Text>
       You can highlight code inline:{' '}
       <InlineCodeHighlight code='<InlineCodeHighlight code="" language="tsx" />' language="tsx" />.
-      Is not that cool?
+      Is that not cool?
     </Text>
   );
 }
