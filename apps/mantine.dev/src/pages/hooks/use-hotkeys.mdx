@@ -75,6 +75,7 @@ document.body.addEventListener(
 - `alt + shift + L` – you can use whitespace inside hotkey
 - `ArrowLeft` – you can use special keys using [this format](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
 - `shift + [plus]` – you can use `[plus]` to detect `+` key
+- `Digit1` and `Hotkey1` - You can use physical key assignments [defined on MDN](https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_code_values).
 
 ## Types
 
@@ -83,6 +84,7 @@ document.body.addEventListener(
 ```tsx
 interface HotkeyItemOptions {
   preventDefault?: boolean;
+  usePhysicalKeys?: boolean;
 }
 
 type HotkeyItem = [
@@ -91,6 +93,8 @@ type HotkeyItem = [
   HotkeyItemOptions?,
 ];
 ```
+
+`HotkeyItemOptions` provides the `usePhysicalKeys` option to force the physical key assignment. Useful for non-QWERTY keyboard layouts.
 
 `HotkeyItem` type can be used to create hotkey items outside of `use-hotkeys` hook:
 
@@ -105,6 +109,11 @@ const hotkeys: HotkeyItem[] = [
   ],
   ['ctrl+K', () => console.log('Trigger search')],
   ['alt+mod+shift+X', () => console.log('Rick roll')],
+  [
+    'D',
+    () => console.log('Triggers when pressing "E" on Dvorak keyboards!'),
+    { usePhysicalKeys: true }
+  ],
 ];
 
 useHotkeys(hotkeys);
