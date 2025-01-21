@@ -127,6 +127,7 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
       onLevelChange={onLevelChange as any}
       {...others}
       date={shiftTimezone('add', others.date, ctx.getTimezone(), __timezoneApplied)}
+      __timezoneApplied
     />
   );
 }) as any;
