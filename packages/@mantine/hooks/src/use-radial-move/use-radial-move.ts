@@ -63,10 +63,12 @@ export function useRadialMove<T extends HTMLElement = any>(
   }, []);
 
   useEffect(() => {
+    const node = ref.current;
+
     const update = (event: MouseEvent, done = false) => {
-      if (ref.current) {
-        ref.current.style.userSelect = 'none';
-        const deg = getAngle([event.clientX, event.clientY], ref.current);
+      if (node) {
+        node.style.userSelect = 'none';
+        const deg = getAngle([event.clientX, event.clientY], node);
         const newValue = normalizeRadialValue(deg, step || 1);
 
         onChange(newValue);
@@ -122,13 +124,13 @@ export function useRadialMove<T extends HTMLElement = any>(
       update(event.touches[0] as any);
     };
 
-    ref.current?.addEventListener('mousedown', onMouseDown);
-    ref.current?.addEventListener('touchstart', handleTouchStart, { passive: false });
+    node?.addEventListener('mousedown', onMouseDown);
+    node?.addEventListener('touchstart', handleTouchStart, { passive: false });
 
     return () => {
-      if (ref.current) {
-        ref.current.removeEventListener('mousedown', onMouseDown);
-        ref.current.removeEventListener('touchstart', handleTouchStart);
+      if (node) {
+        node.removeEventListener('mousedown', onMouseDown);
+        node.removeEventListener('touchstart', handleTouchStart);
       }
     };
   }, [onChange]);

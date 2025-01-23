@@ -8,9 +8,11 @@ export function useEventListener<K extends keyof HTMLElementEventMap, T extends 
   const ref = useRef<T>(null);
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.addEventListener(type, listener as any, options);
-      return () => ref.current?.removeEventListener(type, listener as any, options);
+    const node = ref.current;
+
+    if (node) {
+      node.addEventListener(type, listener as any, options);
+      return () => node?.removeEventListener(type, listener as any, options);
     }
     return undefined;
   }, [listener, options]);
