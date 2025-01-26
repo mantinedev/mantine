@@ -229,7 +229,7 @@ function Demo() {
     />
   );
 }
-`};var F=n(23522),$=n(8582);let W={type:"code",component:function(){return(0,t.jsxs)($.x,{children:["You can highlight code inline:"," ",(0,t.jsx)(F._,{code:'<InlineCodeHighlight code="" language="tsx" />',language:"tsx"}),". Is not that cool?"]})},code:`
+`};var F=n(23522),$=n(8582);let W={type:"code",component:function(){return(0,t.jsxs)($.x,{children:["You can highlight code inline:"," ",(0,t.jsx)(F._,{code:'<InlineCodeHighlight code="" language="tsx" />',language:"tsx"}),". Is that not cool?"]})},code:`
 import { Text } from '@mantine/core';
 import { InlineCodeHighlight } from '@mantine/code-highlight';
 
@@ -238,7 +238,7 @@ function Demo() {
     <Text>
       You can highlight code inline:{' '}
       <InlineCodeHighlight code='<InlineCodeHighlight code="" language="tsx" />' language="tsx" />.
-      Is not that cool?
+      Is that not cool?
     </Text>
   );
 }
