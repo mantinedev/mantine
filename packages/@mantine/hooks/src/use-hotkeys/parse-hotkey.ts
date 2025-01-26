@@ -38,9 +38,9 @@ export function parseHotkey(hotkey: string): Hotkey {
   };
 }
 
-function isExactHotkey(hotkey: Hotkey, event: KeyboardEvent): boolean {
+function isExactHotkey(hotkey: Hotkey, event: KeyboardEvent, usePhysicalKeys?: boolean): boolean {
   const { alt, ctrl, meta, mod, shift, key } = hotkey;
-  const { altKey, ctrlKey, metaKey, shiftKey, key: pressedKey } = event;
+  const { altKey, ctrlKey, metaKey, shiftKey, key: pressedKey, code: pressedCode } = event;
 
   if (alt !== altKey) {
     return false;
@@ -64,8 +64,8 @@ function isExactHotkey(hotkey: Hotkey, event: KeyboardEvent): boolean {
 
   if (
     key &&
-    (pressedKey.toLowerCase() === key.toLowerCase() ||
-      event.code.replace('Key', '').toLowerCase() === key.toLowerCase())
+    ((!usePhysicalKeys && pressedKey.toLowerCase() === key.toLowerCase()) ||
+      pressedCode.replace('Key', '').toLowerCase() === key.toLowerCase())
   ) {
     return true;
   }
@@ -73,12 +73,13 @@ function isExactHotkey(hotkey: Hotkey, event: KeyboardEvent): boolean {
   return false;
 }
 
-export function getHotkeyMatcher(hotkey: string): CheckHotkeyMatch {
-  return (event) => isExactHotkey(parseHotkey(hotkey), event);
+export function getHotkeyMatcher(hotkey: string, usePhysicalKeys?: boolean): CheckHotkeyMatch {
+  return (event) => isExactHotkey(parseHotkey(hotkey), event, usePhysicalKeys);
 }
 
 export interface HotkeyItemOptions {
   preventDefault?: boolean;
+  usePhysicalKeys?: boolean;
 }
 
 type HotkeyItem = [string, (event: any) => void, HotkeyItemOptions?];
@@ -86,14 +87,16 @@ type HotkeyItem = [string, (event: any) => void, HotkeyItemOptions?];
 export function getHotkeyHandler(hotkeys: HotkeyItem[]) {
   return (event: React.KeyboardEvent<HTMLElement> | KeyboardEvent) => {
     const _event = 'nativeEvent' in event ? event.nativeEvent : event;
-    hotkeys.forEach(([hotkey, handler, options = { preventDefault: true }]) => {
-      if (getHotkeyMatcher(hotkey)(_event)) {
-        if (options.preventDefault) {
-          event.preventDefault();
-        }
+    hotkeys.forEach(
+      ([hotkey, handler, options = { preventDefault: true, usePhysicalKeys: false }]) => {
+        if (getHotkeyMatcher(hotkey, options.usePhysicalKeys)(_event)) {
+          if (options.preventDefault) {
+            event.preventDefault();
+          }
 
-        handler(_event);
+          handler(_event);
+        }
       }
-    });
+    );
   };
 }

@@ -29,18 +29,20 @@ export function useHotkeys(
 ) {
   useEffect(() => {
     const keydownListener = (event: KeyboardEvent) => {
-      hotkeys.forEach(([hotkey, handler, options = { preventDefault: true }]) => {
-        if (
-          getHotkeyMatcher(hotkey)(event) &&
-          shouldFireEvent(event, tagsToIgnore, triggerOnContentEditable)
-        ) {
-          if (options.preventDefault) {
-            event.preventDefault();
-          }
+      hotkeys.forEach(
+        ([hotkey, handler, options = { preventDefault: true, usePhysicalKeys: false }]) => {
+          if (
+            getHotkeyMatcher(hotkey, options.usePhysicalKeys)(event) &&
+            shouldFireEvent(event, tagsToIgnore, triggerOnContentEditable)
+          ) {
+            if (options.preventDefault) {
+              event.preventDefault();
+            }
 
-          handler(event);
+            handler(event);
+          }
         }
-      });
+      );
     };
 
     document.documentElement.addEventListener('keydown', keydownListener);
