@@ -98,7 +98,7 @@ export const TabsTab = factory<TabsTabFactory>((_props, ref) => {
       role="tab"
       id={ctx.getTabId(value)}
       aria-selected={active}
-      tabIndex={tabIndex || active || ctx.value === null ? 0 : -1}
+      tabIndex={tabIndex !== undefined ? tabIndex : active || ctx.value === null ? 0 : -1}
       aria-controls={ctx.getPanelId(value)}
       onClick={activateTab}
       __vars={{ '--tabs-color': color ? getThemeColor(color, theme) : undefined }}
