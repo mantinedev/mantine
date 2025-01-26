@@ -41,13 +41,15 @@ export function useFocusWithin<T extends HTMLElement = any>({
   };
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.addEventListener('focusin', handleFocusIn);
-      ref.current.addEventListener('focusout', handleFocusOut);
+    const node = ref.current;
+
+    if (node) {
+      node.addEventListener('focusin', handleFocusIn);
+      node.addEventListener('focusout', handleFocusOut);
 
       return () => {
-        ref.current?.removeEventListener('focusin', handleFocusIn);
-        ref.current?.removeEventListener('focusout', handleFocusOut);
+        node?.removeEventListener('focusin', handleFocusIn);
+        node?.removeEventListener('focusout', handleFocusOut);
       };
     }
 

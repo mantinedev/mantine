@@ -192,15 +192,15 @@ describe('@mantine/dates/DateTimePicker', () => {
         />
       </DatesProvider>
     );
-    expectValue(container, '01/02/2022 09:00 +00:00');
+    expectValue(container, '01/02/2022 04:00 +00:00');
 
     await clickInput(container);
     await userEvent.click(container.querySelectorAll('table button')[6]);
-    expectValue(container, '06/02/2022 09:00 +00:00');
+    expectValue(container, '06/02/2022 04:00 +00:00');
 
     await userEvent.clear(getTimeInput());
     await userEvent.type(getTimeInput(), '14:45');
-    expectValue(container, '06/02/2022 19:45 +00:00');
+    expectValue(container, '06/02/2022 14:45 +00:00');
   });
 
   it('supports controlled state', async () => {
@@ -229,11 +229,11 @@ describe('@mantine/dates/DateTimePicker', () => {
         />
       </DatesProvider>
     );
-    expectValue(container, '01/02/2022 09:00 +00:00');
+    expectValue(container, '01/02/2022 04:00 +00:00');
 
     await clickInput(container);
     await userEvent.click(container.querySelectorAll('table button')[6]);
-    expectValue(container, '01/02/2022 09:00 +00:00');
+    expectValue(container, '01/02/2022 04:00 +00:00');
     expect(spy).toHaveBeenLastCalledWith(new Date(2022, 1, 5, 23));
   });
 

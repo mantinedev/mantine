@@ -12,7 +12,6 @@ export function Usage() {
         placeholder="Select something"
         onChange={console.log}
         allowDeselect={false}
-        dropdownOpened
         chevronColor="violet"
       />
     </div>
