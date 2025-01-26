@@ -166,7 +166,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
       return;
     }
 
-    if (_value[0] && !_value[1]) {
+    if (_value[0] && !_value[1] && pickedDate?.getTime() !== _value[0].getTime()) {
       setPickedDate(_value[0]);
     } else {
       const isNeitherSelected = _value[0] == null && _value[1] == null;

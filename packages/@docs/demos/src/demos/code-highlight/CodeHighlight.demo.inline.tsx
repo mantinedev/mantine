@@ -15,7 +15,7 @@ function Demo() {
         language="tsx"
         withBorder
       />
-      . Is not that cool?
+      . Is that not cool?
     </Text>
   );
 }
@@ -30,7 +30,7 @@ function Demo() {
         language="tsx"
         withBorder
       />
-      . Is not that cool?
+      . Is that not cool?
     </Text>
   );
 }

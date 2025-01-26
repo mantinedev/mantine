@@ -6,7 +6,6 @@ import {
   offset,
   shift,
   useDelayGroup,
-  useDelayGroupContext,
   useDismiss,
   useFloating,
   useFocus,
@@ -99,8 +98,6 @@ export function useTooltip(settings: UseTooltip) {
   const withinGroup = useTooltipGroupContext();
   const uid = useId();
 
-  const { delay: groupDelay, currentId, setCurrentId } = useDelayGroupContext();
-
   const onChange = useCallback(
     (_opened: boolean) => {
       setUncontrolledOpened(_opened);
@@ -109,7 +106,7 @@ export function useTooltip(settings: UseTooltip) {
         setCurrentId(uid);
       }
     },
-    [setCurrentId, uid]
+    [uid]
   );
 
   const {
@@ -128,7 +125,7 @@ export function useTooltip(settings: UseTooltip) {
     middleware: getTooltipMiddlewares(settings),
   });
 
-  useDelayGroup(context, { id: uid });
+  const { delay: groupDelay, currentId, setCurrentId } = useDelayGroup(context, { id: uid });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useHover(context, {

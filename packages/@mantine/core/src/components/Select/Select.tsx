@@ -235,6 +235,8 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     />
   );
 
+  const _clearable = clearable && !!_value && !disabled && !readOnly;
+
   return (
     <>
       <Combobox
@@ -274,9 +276,9 @@ export const Select = factory<SelectFactory>((_props, ref) => {
               />
             }
             __clearSection={clearButton}
-            __clearable={clearable && !!_value && !disabled && !readOnly}
+            __clearable={_clearable}
             rightSection={rightSection}
-            rightSectionPointerEvents={rightSectionPointerEvents || (clearButton ? 'all' : 'none')}
+            rightSectionPointerEvents={rightSectionPointerEvents || (_clearable ? 'all' : 'none')}
             {...others}
             size={size}
             __staticSelector="Select"

@@ -34,4 +34,25 @@ describe('@mantine/hooks/use-hotkey', () => {
     dispatchEvent({ shiftKey: true, key: '+' });
     expect(handler).toHaveBeenCalled();
   });
+
+  it('correctly handles physical key assignments like Digit1', () => {
+    const handler = jest.fn();
+    renderHook(() => useHotkeys([['Digit1', handler]]));
+    dispatchEvent({ code: 'Digit1' });
+    expect(handler).toHaveBeenCalled();
+  });
+
+  it('correctly ignores unclear numerical assignments when usePhyiscalKeys is true', () => {
+    const handler = jest.fn();
+    renderHook(() => useHotkeys([['1', handler, { usePhysicalKeys: true }]], [], true));
+    dispatchEvent({ code: 'Numpad1' });
+    expect(handler).not.toHaveBeenCalled();
+  });
+
+  it('correctly assumes physical keys when usePhysicalKeys is true', () => {
+    const handler = jest.fn();
+    renderHook(() => useHotkeys([['A', handler, { usePhysicalKeys: true }]], [], true));
+    dispatchEvent({ code: 'KeyA' });
+    expect(handler).toHaveBeenCalled();
+  });
 });
