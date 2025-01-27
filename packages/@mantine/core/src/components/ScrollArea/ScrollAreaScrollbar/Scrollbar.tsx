@@ -102,15 +102,16 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
         })}
         onPointerMove={composeEventHandlers(props.onPointerMove, handleDragScroll)}
         onPointerUp={composeEventHandlers(props.onPointerUp, (event) => {
-          event.preventDefault();
-
           const element = event.target as HTMLElement;
           if (element.hasPointerCapture(event.pointerId)) {
+            event.preventDefault();
             element.releasePointerCapture(event.pointerId);
           }
+        })}
+        onLostPointerCapture={() => {
           document.body.style.webkitUserSelect = prevWebkitUserSelectRef.current;
           rectRef.current = null;
-        })}
+        }}
       />
     </ScrollbarProvider>
   );
