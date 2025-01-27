@@ -13,8 +13,16 @@ export default Layout(MDX_DATA.TimeInput);
 ## TimePicker component
 
 `TimeInput` component is based on the native `input[type="time"]` element and does not support
-most advanced features like choosing time format or custom dropdown with time select. If you need
+most of advanced features like choosing time format or custom dropdown with time select. If you need
 more features, use [TimePicker](/dates/time-picker) component instead.
+
+`TimeInput` features/limitations:
+
+- Native `input[type="time"]` element
+- Native browser controls for time selection on mobile devices
+- Time format depends on the user's locale
+- Only native dropdown with hours/minutes/seconds, does not work in Firefox
+- Mobile Safari does not provide an option to select seconds
 
 ## Controlled
 
