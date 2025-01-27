@@ -12,8 +12,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { shiftTimezone } from '../../utils';
-import { useDatesContext } from '../DatesProvider';
+import { DateStringValue } from '../../types';
 import classes from './Day.module.css';
 
 export type DayStylesNames = 'day';
@@ -27,8 +26,8 @@ export interface DayProps extends BoxProps, StylesApiProps<DayFactory>, ElementP
   /** Determines which element should be used as root, `'button'` by default, `'div'` if static prop is set */
   static?: boolean;
 
-  /** Date that should be displayed */
-  date: Date;
+  /** Date that should be displayed in `YYYY-MM-DD` format */
+  date: DateStringValue;
 
   /** Control width and height of the day, `'sm'` by default */
   size?: MantineSize;
@@ -55,7 +54,7 @@ export interface DayProps extends BoxProps, StylesApiProps<DayFactory>, ElementP
   lastInRange?: boolean;
 
   /** Controls day value rendering */
-  renderDay?: (date: Date) => React.ReactNode;
+  renderDay?: (date: DateStringValue) => React.ReactNode;
 
   /** Determines whether today should be highlighted with a border, `false` by default */
   highlightToday?: boolean;
@@ -115,17 +114,13 @@ export const Day = factory<DayFactory>((_props, ref) => {
     rootSelector: 'day',
   });
 
-  const ctx = useDatesContext();
-
   return (
     <UnstyledButton<any>
       {...getStyles('day', { style: hidden ? { display: 'none' } : undefined })}
       component={isStatic ? 'div' : 'button'}
       ref={ref}
       disabled={disabled}
-      data-today={
-        dayjs(date).isSame(shiftTimezone('add', new Date(), ctx.getTimezone()), 'day') || undefined
-      }
+      data-today={dayjs(date).isSame(new Date(), 'day') || undefined}
       data-hidden={hidden || undefined}
       data-highlight-today={highlightToday || undefined}
       data-disabled={disabled || undefined}

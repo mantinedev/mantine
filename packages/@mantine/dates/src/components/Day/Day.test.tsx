@@ -3,7 +3,7 @@ import { render, screen, tests } from '@mantine-tests/core';
 import { Day, DayProps, DayStylesNames } from './Day';
 
 const defaultProps: DayProps = {
-  date: new Date(2022, 1, 3),
+  date: '2022-02-03',
 };
 
 function validateDataAttribute(prop: string) {
@@ -46,7 +46,9 @@ describe('@mantine/dates/Day', () => {
 
   it('renders given date value', () => {
     render(<Day {...defaultProps} />);
-    expect(screen.getByRole('button')).toHaveTextContent(defaultProps.date.getDate().toString());
+    expect(screen.getByRole('button')).toHaveTextContent(
+      Number(defaultProps.date.split('-')[2]).toString()
+    );
   });
 
   it('adds correct disabled attributes when disabled prop is set', () => {
@@ -66,7 +68,7 @@ describe('@mantine/dates/Day', () => {
   });
 
   it('allows to customize day rendering with renderDay function', () => {
-    render(<Day {...defaultProps} renderDay={(date) => date.getFullYear()} />);
+    render(<Day {...defaultProps} renderDay={(date) => new Date(date).getFullYear()} />);
     expect(screen.getByRole('button')).toHaveTextContent('2022');
   });
 
@@ -93,10 +95,10 @@ describe('@mantine/dates/Day', () => {
   });
 
   it('adds data-today attribute if date is the same as today', () => {
-    const { rerender } = render(<Day {...defaultProps} date={new Date(2021, 11, 1)} />);
+    const { rerender } = render(<Day {...defaultProps} date="2021-11-01" />);
     expect(screen.getByRole('button')).not.toHaveAttribute('data-today');
 
-    rerender(<Day {...defaultProps} date={new Date()} />);
+    rerender(<Day {...defaultProps} date={new Date().toISOString().split('T')[0]} />);
     expect(screen.getByRole('button')).toHaveAttribute('data-today');
   });
 });
