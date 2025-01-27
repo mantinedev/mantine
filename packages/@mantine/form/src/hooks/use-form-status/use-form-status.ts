@@ -35,6 +35,7 @@ export interface $FormStatus<Values extends Record<string, any>> {
   getDirty: () => FormStatus;
   getTouched: () => FormStatus;
   setCalculatedFieldDirty: SetCalculatedFieldDirty<Values>;
+  resetNestedFieldDirty: SetFieldDirty<Values>
 }
 
 interface UseFormStatusInput<Values extends Record<string, any>> {
@@ -105,6 +106,44 @@ export function useFormStatus<Values extends Record<string, any>>({
 
       return { ...currentDirty, [path]: dirty };
     }, forceUpdate);
+  }, []);
+
+  const resetNestedFieldDirty: SetFieldDirty<Values> = useCallback((path, forceUpdate) => {
+    setDirty((currentDirty) => {
+      const dirtyObject = { ...currentDirty };
+
+      for (const key in dirtyObject) {
+        if (key.startsWith(path as string)) {
+          dirtyObject[key] = false;
+        }
+      }
+
+      return dirtyObject;
+    }, forceUpdate);
+
+    const newValues = structuredClone($values.valuesSnapshot.current);
+
+    if (typeof path === 'string') {
+      const keys = path.split('.');
+
+      let stateItemArray: any = newValues;
+      let updatedItemArray: any = $values.refValues.current;
+
+      if (keys.length) {
+        const index = Number(keys.pop());
+
+        keys.forEach((path) => {
+          stateItemArray = stateItemArray[path];
+          updatedItemArray = updatedItemArray[path];
+        });
+
+        stateItemArray[index] = updatedItemArray[index];
+      } else {
+        stateItemArray[path] = updatedItemArray[path];
+      }
+    }
+
+    $values.setValuesSnapshot(newValues);
   }, []);
 
   const setCalculatedFieldDirty: SetCalculatedFieldDirty<Values> = useCallback((path, value) => {
@@ -181,5 +220,6 @@ export function useFormStatus<Values extends Record<string, any>>({
     getDirty,
     getTouched,
     setCalculatedFieldDirty,
+    resetNestedFieldDirty,
   };
 }

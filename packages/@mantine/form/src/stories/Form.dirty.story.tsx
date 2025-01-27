@@ -30,11 +30,22 @@ export function Dirty() {
           </ActionIcon>
           <TextInput {...form.getInputProps(`formArray.${index}.one`)} />
           <TextInput {...form.getInputProps(`formArray.${index}.two`)} />
+
+          <Button onClick={() => form.resetNestedFieldDirty(`formArray.${index}`, false)}>
+            Reset
+          </Button>
         </Group>
       ))}
       <Button onClick={() => form.insertListItem('formArray', { one: '', two: '' })}>
         Add item
       </Button>
+
+      {form.values.formArray.map((_item, index) => (
+        <Text key={index}>
+          item #{index} {form.isDirty(`formArray.${index}`) ? 'Dirty' : 'Not Dirty'}
+        </Text>
+      ))}
+
       <Text>{form.isDirty() ? 'Dirty' : 'Not Dirty'}</Text>
       <Code block>{JSON.stringify(form.values, null, 2)}</Code>
     </>

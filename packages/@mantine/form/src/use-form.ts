@@ -282,6 +282,7 @@ export function useForm<
     isDirty: $status.isDirty,
     getTouched: $status.getTouched,
     getDirty: $status.getDirty,
+    resetNestedFieldDirty: $status.resetNestedFieldDirty,
 
     reorderListItem: $list.reorderListItem,
     insertListItem: $list.insertListItem,
@@ -299,6 +300,7 @@ export function useForm<
     key,
 
     getInputNode,
+
   };
 
   useFormActions(name, form);

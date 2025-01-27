@@ -253,6 +253,7 @@ export interface UseFormReturnType<
   watch: Watch<Values>;
   key: Key<Values>;
   getInputNode: GetInputNode<Values>;
+  resetNestedFieldDirty: SetFieldDirty<Values>
 }
 
 export type UseForm<
