@@ -5,3 +5,119 @@ import { MDX_DATA } from '@/mdx';
 export default Layout(MDX_DATA.SevenToEight);
 
 # 7.x → 8.x migration guide
+
+## Global styles imports
+
+If you used separate styles imports from `@mantine/core/styles/global.css` , you need to update imports to use new files.
+Note that if you previously imported `@mantine/core/styles.css`, no changes are required – all new files are already included in `styles.css`.
+
+7.x version import:
+```tsx
+// ❌ No longer includes all global styles
+import '@mantine/core/styles/global.css';
+```
+
+8.x version import:
+```tsx
+// ✅ Import all global styles separately
+import '@mantine/core/styles/baseline.css';
+import '@mantine/core/styles/default-css-variables.css';
+import '@mantine/core/styles/global.css';
+```
+
+If you used `@mantine/core/styles.css`, no changes are required,
+the import works the same in 7.x and 8.x versions:
+```tsx
+// 👍 No changes needed if you used styles.css
+import '@mantine/core/styles.css';
+```
+
+## DateTimePicker timeInputProps
+
+[DateTimePicker](/dates/date-time-picker) component no longer accepts `timeInputProps` prop,
+as the underlying [TimeInput](/dates/time-input) component was replaced with [TimePicker](/dates/time-picker).
+To pass props down to [TimePicker](/dates/time-picker) component, use `timePickerProps` prop instead.
+
+7.x version:
+
+```tsx
+import { DateTimePicker } from '@mantine/dates';
+import { IconClock } from '@tabler/icons-react';
+
+function Demo() {
+  return (
+    <DateTimePicker
+      // ❌ timeInputProps is no longer available
+      timeInputProps={{
+        leftSection: <IconClock size={16} stroke={1.5} />,
+      }}
+    />
+  );
+}
+```
+
+8.x version:
+
+```tsx
+import { DateTimePicker } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DateTimePicker
+      // ✅ Use timePickerProps instead of timeInputProps
+      timePickerProps={{
+        leftSection: <IconClock size={16} stroke={1.5} />,
+        minutesStep: 5,
+        withDropdown: true,
+      }}
+    />
+  );
+}
+```
+
+## CodeHighlight usage
+
+[@mantine/code-highlight](/x/code-highlight) package no longer depends on [highlight.js](https://highlightjs.org).
+You can follow the [updated documentation](/x/code-highlight/) to set up syntax highlighting with [shiki](https://shiki.matsu.io/).
+
+If you want to continue using [highlight.js](https://highlightjs.org/), in your application,
+install `highlight.js` package:
+
+<InstallScript packages="highlight.js" />
+
+Then wrap your app with `CodeHighlightAdapterProvider` and provide `createHighlightJsAdapter` as `adapter` prop:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+import { CodeHighlightAdapterProvider, createHighlightJsAdapter } from '@mantine/code-highlight';
+import hljs from 'highlight.js/lib/core';
+import tsLang from 'highlight.js/lib/languages/typescript';
+
+hljs.registerLanguage('typescript', tsLang);
+
+const highlightJsAdapter = createHighlightJsAdapter(hljs);
+
+function App() {
+  return (
+    <MantineProvider>
+      <CodeHighlightAdapterProvider adapter={highlightJsAdapter}>
+        {/* Your app here */}
+      </CodeHighlightAdapterProvider>
+    </MantineProvider>
+  );
+}
+```
+
+Then you need to add styles of one of the highlight.js themes to your application.
+You can do that by importing css file from `highlight.js` package or adding it via
+CDN link to the head of your application:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"
+/>
+```
+
+After that, you can use `CodeHighlight` component in your application the same way you did in 7.x version.
+
