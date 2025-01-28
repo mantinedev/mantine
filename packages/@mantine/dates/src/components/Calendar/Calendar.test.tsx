@@ -1,11 +1,10 @@
 import dayjs from 'dayjs';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
-import { DatesProvider } from '../DatesProvider';
 import { Calendar, CalendarProps, CalendarStylesNames } from './Calendar';
 
 const defaultProps: CalendarProps = {
-  defaultDate: new Date(2022, 3, 11),
+  defaultDate: '2022-04-11',
   ariaLabels: {
     monthLevelControl: 'month-level',
     yearLevelControl: 'year-level',
@@ -177,38 +176,8 @@ describe('@mantine/dates/Calendar', () => {
   });
 
   it('renders correct header labels with defaultDate (uncontrolled)', async () => {
-    render(<Calendar {...defaultProps} defaultDate={new Date(2021, 3, 11)} />);
+    render(<Calendar {...defaultProps} defaultDate="2021-04-11" />);
     expectHeaderLevel('month', 'April 2021');
-
-    await userEvent.click(screen.getByLabelText('month-level'));
-    expectHeaderLevel('year', '2021');
-
-    await userEvent.click(screen.getByLabelText('year-level'));
-    expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
-  });
-
-  it('renders correct header labels with defaultDate (uncontrolled) with timezone (UTC)', async () => {
-    render(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <Calendar {...defaultProps} defaultDate={new Date(2021, 0, 31, 23)} />
-      </DatesProvider>
-    );
-    expectHeaderLevel('month', 'February 2021');
-
-    await userEvent.click(screen.getByLabelText('month-level'));
-    expectHeaderLevel('year', '2021');
-
-    await userEvent.click(screen.getByLabelText('year-level'));
-    expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
-  });
-
-  it('renders correct header labels with defaultDate (uncontrolled) with timezone (America/Los_Angeles)', async () => {
-    render(
-      <DatesProvider settings={{ timezone: 'America/Los_Angeles' }}>
-        <Calendar {...defaultProps} defaultDate={new Date(2021, 0, 31, 23)} />
-      </DatesProvider>
-    );
-    expectHeaderLevel('month', 'January 2021');
 
     await userEvent.click(screen.getByLabelText('month-level'));
     expectHeaderLevel('year', '2021');
@@ -218,23 +187,8 @@ describe('@mantine/dates/Calendar', () => {
   });
 
   it('renders correct header labels with date (controlled)', async () => {
-    render(<Calendar {...defaultProps} date={new Date(2021, 3, 11)} />);
+    render(<Calendar {...defaultProps} date="2021-04-11" />);
     expectHeaderLevel('month', 'April 2021');
-
-    await userEvent.click(screen.getByLabelText('month-level'));
-    expectHeaderLevel('year', '2021');
-
-    await userEvent.click(screen.getByLabelText('year-level'));
-    expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
-  });
-
-  it('renders correct header labels with date (controlled) with timezone', async () => {
-    render(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <Calendar {...defaultProps} date={new Date(2021, 0, 31, 23)} />
-      </DatesProvider>
-    );
-    expectHeaderLevel('month', 'February 2021');
 
     await userEvent.click(screen.getByLabelText('month-level'));
     expectHeaderLevel('year', '2021');
@@ -266,144 +220,50 @@ describe('@mantine/dates/Calendar', () => {
     expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
   });
 
-  it('changes displayed date when next/previous controls are clicked with defaultDate prop (uncontrolled) with timezone', async () => {
-    const { rerender } = render(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <Calendar {...defaultProps} defaultDate={new Date(2021, 0, 31, 23)} level="month" />
-      </DatesProvider>
-    );
-    expectHeaderLevel('month', 'February 2021');
-    await clickNext('month');
-    expectHeaderLevel('month', 'March 2021');
-    await clickPrevious('month');
-    expectHeaderLevel('month', 'February 2021');
-
-    rerender(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <Calendar {...defaultProps} defaultDate={new Date(2020, 11, 31, 23)} level="year" />
-      </DatesProvider>
-    );
-    expectHeaderLevel('year', '2021');
-    await clickNext('year');
-    expectHeaderLevel('year', '2022');
-    await clickPrevious('year');
-    expectHeaderLevel('year', '2021');
-  });
-
   it('does not change date when next/previous controls are clicked with date prop (controlled)', async () => {
-    const { rerender } = render(
-      <Calendar {...defaultProps} date={new Date(2022, 3, 11)} level="month" />
-    );
+    const { rerender } = render(<Calendar {...defaultProps} date="2022-04-11" level="month" />);
     expectHeaderLevel('month', 'April 2022');
     await clickNext('month');
     expectHeaderLevel('month', 'April 2022');
 
-    rerender(<Calendar {...defaultProps} date={new Date(2022, 3, 11)} level="year" />);
+    rerender(<Calendar {...defaultProps} date="2022-04-11" level="year" />);
     expectHeaderLevel('year', '2022');
     await clickNext('year');
     expectHeaderLevel('year', '2022');
 
-    rerender(<Calendar {...defaultProps} date={new Date(2022, 3, 11)} level="decade" />);
+    rerender(<Calendar {...defaultProps} date="2022-04-11" level="decade" />);
     expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
     await clickNext('decade');
     expect(screen.getByText('2020 – 2029')).toBeInTheDocument();
-  });
-
-  it('changes displayed date when next/previous controls are clicked with date prop (controlled) with timezone', async () => {
-    const { rerender } = render(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <Calendar {...defaultProps} date={new Date(2021, 0, 31, 23)} level="month" />
-      </DatesProvider>
-    );
-    expectHeaderLevel('month', 'February 2021');
-    await clickNext('month');
-    expectHeaderLevel('month', 'February 2021');
-
-    rerender(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <Calendar {...defaultProps} date={new Date(2020, 11, 31, 23)} level="year" />
-      </DatesProvider>
-    );
-    expectHeaderLevel('year', '2021');
-    await clickNext('year');
-    expectHeaderLevel('year', '2021');
   });
 
   it('calls onDateChange when date changes', async () => {
     const spy = jest.fn();
     const { rerender } = render(
-      <Calendar {...defaultProps} level="month" date={new Date(2022, 3, 11)} onDateChange={spy} />
+      <Calendar {...defaultProps} level="month" date="2022-04-11" onDateChange={spy} />
     );
 
     await clickNext('month');
-    expect(spy).toHaveBeenLastCalledWith(new Date(2022, 4, 11));
+    expect(spy).toHaveBeenLastCalledWith('2022-05-11');
 
     await clickPrevious('month');
-    expect(spy).toHaveBeenLastCalledWith(new Date(2022, 2, 11));
+    expect(spy).toHaveBeenLastCalledWith('2022-03-11');
 
-    rerender(
-      <Calendar {...defaultProps} level="year" date={new Date(2022, 3, 11)} onDateChange={spy} />
-    );
+    rerender(<Calendar {...defaultProps} level="year" date="2022-04-11" onDateChange={spy} />);
 
     await clickNext('year');
-    expect(spy).toHaveBeenLastCalledWith(new Date(2023, 3, 11));
+    expect(spy).toHaveBeenLastCalledWith('2023-04-11');
 
     await clickPrevious('year');
-    expect(spy).toHaveBeenLastCalledWith(new Date(2021, 3, 11));
+    expect(spy).toHaveBeenLastCalledWith('2021-04-11');
 
-    rerender(
-      <Calendar {...defaultProps} level="decade" date={new Date(2022, 3, 11)} onDateChange={spy} />
-    );
+    rerender(<Calendar {...defaultProps} level="decade" date="2022-04-11" onDateChange={spy} />);
 
     await clickNext('decade');
-    expect(spy).toHaveBeenLastCalledWith(new Date(2032, 3, 11));
+    expect(spy).toHaveBeenLastCalledWith('2032-04-11');
 
     await clickPrevious('decade');
-    expect(spy).toHaveBeenLastCalledWith(new Date(2012, 3, 11));
-  });
-
-  it('calls onDateChange when date changes with timezone', async () => {
-    const spy = jest.fn();
-    const { rerender } = render(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <Calendar {...defaultProps} level="month" date={new Date(2022, 7, 11)} onDateChange={spy} />
-      </DatesProvider>
-    );
-
-    await clickNext('month');
-    expect(spy).toHaveBeenLastCalledWith(new Date(2022, 8, 11));
-
-    await clickPrevious('month');
-    expect(spy).toHaveBeenLastCalledWith(new Date(2022, 6, 11));
-
-    rerender(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <Calendar {...defaultProps} level="year" date={new Date(2022, 7, 11)} onDateChange={spy} />
-      </DatesProvider>
-    );
-
-    await clickNext('year');
-    expect(spy).toHaveBeenLastCalledWith(new Date(2023, 7, 11));
-
-    await clickPrevious('year');
-    expect(spy).toHaveBeenLastCalledWith(new Date(2021, 7, 11));
-
-    rerender(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <Calendar
-          {...defaultProps}
-          level="decade"
-          date={new Date(2022, 7, 11)}
-          onDateChange={spy}
-        />
-      </DatesProvider>
-    );
-
-    await clickNext('decade');
-    expect(spy).toHaveBeenLastCalledWith(new Date(2032, 7, 11));
-
-    await clickPrevious('decade');
-    expect(spy).toHaveBeenLastCalledWith(new Date(2012, 7, 11));
+    expect(spy).toHaveBeenLastCalledWith('2012-04-11');
   });
 
   it('supports maxLevel', async () => {
@@ -432,14 +292,14 @@ describe('@mantine/dates/Calendar', () => {
     const spy = jest.fn();
     const { container } = render(<Calendar {...defaultProps} level="decade" onYearSelect={spy} />);
     await userEvent.click(container.querySelector('table button')!);
-    expect(spy).toHaveBeenCalledWith(new Date(2020, 0, 1));
+    expect(spy).toHaveBeenCalledWith('2020-01-01');
   });
 
   it('calls onMonthSelect when month control is clicked', async () => {
     const spy = jest.fn();
     const { container } = render(<Calendar {...defaultProps} level="year" onMonthSelect={spy} />);
     await userEvent.click(container.querySelector('table button')!);
-    expect(spy).toHaveBeenCalledWith(new Date(2022, 0, 1));
+    expect(spy).toHaveBeenCalledWith('2022-01-01');
   });
 
   it('supports changing month label format', () => {
@@ -451,7 +311,7 @@ describe('@mantine/dates/Calendar', () => {
     render(
       <Calendar
         {...defaultProps}
-        monthLabelFormat={(date) => `${date.getMonth()}/${date.getFullYear()}`}
+        monthLabelFormat={(date) => `${dayjs(date).month()}/${dayjs(date).year()}`}
       />
     );
 
@@ -468,7 +328,7 @@ describe('@mantine/dates/Calendar', () => {
       <Calendar
         {...defaultProps}
         level="year"
-        yearLabelFormat={(date) => `${date.getMonth()}/${date.getFullYear()}`}
+        yearLabelFormat={(date) => `${dayjs(date).month()}/${dayjs(date).year()}`}
       />
     );
 
@@ -486,7 +346,7 @@ describe('@mantine/dates/Calendar', () => {
         {...defaultProps}
         level="decade"
         decadeLabelFormat={(startOfDecade, endOfDecade) =>
-          `${startOfDecade.getMonth()}/${startOfDecade.getFullYear()} – ${endOfDecade.getMonth()}/${endOfDecade.getFullYear()}`
+          `${dayjs(startOfDecade).month()}/${dayjs(startOfDecade).year()} – ${dayjs(endOfDecade).month()}/${dayjs(endOfDecade).year()}`
         }
       />
     );
@@ -527,7 +387,7 @@ describe('@mantine/dates/Calendar', () => {
   });
 
   it('only adds current date in month to tab order', async () => {
-    render(<Calendar {...defaultProps} defaultDate={new Date()} />);
+    render(<Calendar {...defaultProps} defaultDate={dayjs(new Date()).format('YYYY-MM-DD')} />);
 
     await userEvent.tab();
     expect(
@@ -553,7 +413,7 @@ describe('@mantine/dates/Calendar', () => {
     render(
       <Calendar
         {...defaultProps}
-        minDate={new Date(2022, 3, 15)}
+        minDate="2022-04-15"
         getDayProps={(date) => ({ disabled: dayjs(new Date(2022, 3, 15)).isSame(date, 'date') })}
       />
     );

@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { renderHook } from '@testing-library/react';
 import { useUncontrolledDates } from './use-uncontrolled-dates';
 
@@ -9,12 +10,17 @@ const hookDefaults: Omit<HookConfig, 'type'> = {
   onChange: () => {},
 };
 
-const defaultTypeValue = new Date();
-const rangeTypeValue = [new Date(), new Date(Date.now() + 86400000)];
+const defaultTypeValue = dayjs(new Date()).format('YYYY-MM-DD');
+
+const rangeTypeValue = [
+  dayjs(new Date()).format('YYYY-MM-DD'),
+  dayjs(new Date(Date.now() + 86400000)).format('YYYY-MM-DD'),
+];
+
 const multipleTypeValue = [
-  new Date(Date.now() - 86400000),
-  new Date(),
-  new Date(Date.now() + 86400000),
+  dayjs(new Date(Date.now() - 86400000)).format('YYYY-MM-DD'),
+  dayjs(new Date()).format('YYYY-MM-DD'),
+  dayjs(new Date(Date.now() + 86400000)).format('YYYY-MM-DD'),
 ];
 
 const setupHook = (config: Pick<HookConfig, 'type'> & Partial<HookConfig>) =>

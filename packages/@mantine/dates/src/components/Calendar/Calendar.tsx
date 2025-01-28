@@ -11,9 +11,7 @@ import {
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
-import { CalendarLevel } from '../../types';
-import { shiftTimezone } from '../../utils';
-import { useDatesContext } from '../DatesProvider';
+import { CalendarLevel, DateStringValue } from '../../types';
 import { DecadeLevelSettings } from '../DecadeLevel';
 import { DecadeLevelGroup, DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
 import { MonthLevelSettings } from '../MonthLevel';
@@ -64,16 +62,16 @@ export interface CalendarSettings
   onLevelChange?: (level: CalendarLevel) => void;
 
   /** Called when user clicks year on decade level */
-  onYearSelect?: (date: Date) => void;
+  onYearSelect?: (date: DateStringValue) => void;
 
   /** Called when user clicks month on year level */
-  onMonthSelect?: (date: Date) => void;
+  onMonthSelect?: (date: DateStringValue) => void;
 
   /** Called when mouse enters year control */
-  onYearMouseEnter?: (event: React.MouseEvent<HTMLButtonElement>, date: Date) => void;
+  onYearMouseEnter?: (event: React.MouseEvent<HTMLButtonElement>, date: DateStringValue) => void;
 
   /** Called when mouse enters month control */
-  onMonthMouseEnter?: (event: React.MouseEvent<HTMLButtonElement>, date: Date) => void;
+  onMonthMouseEnter?: (event: React.MouseEvent<HTMLButtonElement>, date: DateStringValue) => void;
 }
 
 export interface CalendarBaseProps {
@@ -92,13 +90,13 @@ export interface CalendarBaseProps {
   __updateDateOnMonthSelect?: boolean;
 
   /** Initial date that is displayed, used for uncontrolled component */
-  defaultDate?: Date;
+  defaultDate?: DateStringValue;
 
   /** Date that is displayed, used for controlled component */
-  date?: Date;
+  date?: DateStringValue;
 
   /** Called when date changes */
-  onDateChange?: (date: Date) => void;
+  onDateChange?: (date: DateStringValue) => void;
 
   /** Number of columns to render next to each other */
   numberOfColumns?: number;
@@ -116,22 +114,22 @@ export interface CalendarBaseProps {
   previousLabel?: string;
 
   /** Called when next decade button is clicked */
-  onNextDecade?: (date: Date) => void;
+  onNextDecade?: (date: DateStringValue) => void;
 
   /** Called when previous decade button is clicked */
-  onPreviousDecade?: (date: Date) => void;
+  onPreviousDecade?: (date: DateStringValue) => void;
 
   /** Called when next year button is clicked */
-  onNextYear?: (date: Date) => void;
+  onNextYear?: (date: DateStringValue) => void;
 
   /** Called when previous year button is clicked */
-  onPreviousYear?: (date: Date) => void;
+  onPreviousYear?: (date: DateStringValue) => void;
 
   /** Called when next month button is clicked */
-  onNextMonth?: (date: Date) => void;
+  onNextMonth?: (date: DateStringValue) => void;
 
   /** Called when previous month button is clicked */
-  onPreviousMonth?: (date: Date) => void;
+  onPreviousMonth?: (date: DateStringValue) => void;
 }
 
 export interface CalendarProps
@@ -234,7 +232,6 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     onNextMonth,
     onPreviousMonth,
     static: isStatic,
-    __timezoneApplied,
     ...others
   } = props;
 
@@ -256,7 +253,6 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     value: date,
     defaultValue: defaultDate,
     onChange: onDateChange as any,
-    applyTimezone: !__timezoneApplied,
   });
 
   const stylesApiProps = {
@@ -267,34 +263,33 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     size,
   };
 
-  const ctx = useDatesContext();
-
   const _columnsToScroll = columnsToScroll || numberOfColumns || 1;
 
   const now = new Date();
-  const fallbackDate = minDate && minDate > now ? minDate : now;
-  const currentDate = _date || shiftTimezone('add', fallbackDate, ctx.getTimezone());
+  const fallbackDate =
+    minDate && dayjs(now).isAfter(minDate) ? minDate : dayjs(now).format('YYYY-MM-DD');
+  const currentDate = _date || fallbackDate;
 
   const handleNextMonth = () => {
-    const nextDate = dayjs(currentDate).add(_columnsToScroll, 'month').toDate();
+    const nextDate = dayjs(currentDate).add(_columnsToScroll, 'month').format('YYYY-MM-DD');
     onNextMonth?.(nextDate);
     setDate(nextDate);
   };
 
   const handlePreviousMonth = () => {
-    const nextDate = dayjs(currentDate).subtract(_columnsToScroll, 'month').toDate();
+    const nextDate = dayjs(currentDate).subtract(_columnsToScroll, 'month').format('YYYY-MM-DD');
     onPreviousMonth?.(nextDate);
     setDate(nextDate);
   };
 
   const handleNextYear = () => {
-    const nextDate = dayjs(currentDate).add(_columnsToScroll, 'year').toDate();
+    const nextDate = dayjs(currentDate).add(_columnsToScroll, 'year').format('YYYY-MM-DD');
     onNextYear?.(nextDate);
     setDate(nextDate);
   };
 
   const handlePreviousYear = () => {
-    const nextDate = dayjs(currentDate).subtract(_columnsToScroll, 'year').toDate();
+    const nextDate = dayjs(currentDate).subtract(_columnsToScroll, 'year').format('YYYY-MM-DD');
     onPreviousYear?.(nextDate);
     setDate(nextDate);
   };
@@ -302,7 +297,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
   const handleNextDecade = () => {
     const nextDate = dayjs(currentDate)
       .add(10 * _columnsToScroll, 'year')
-      .toDate();
+      .format('YYYY-MM-DD');
     onNextDecade?.(nextDate);
     setDate(nextDate);
   };
@@ -310,7 +305,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
   const handlePreviousDecade = () => {
     const nextDate = dayjs(currentDate)
       .subtract(10 * _columnsToScroll, 'year')
-      .toDate();
+      .format('YYYY-MM-DD');
     onPreviousDecade?.(nextDate);
     setDate(nextDate);
   };
