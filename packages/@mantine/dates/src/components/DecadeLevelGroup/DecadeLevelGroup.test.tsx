@@ -7,7 +7,7 @@ import {
 } from './DecadeLevelGroup';
 
 const defaultProps: DecadeLevelGroupProps = {
-  decade: new Date(2022, 3, 11),
+  decade: '2022-04-11',
   levelControlAriaLabel: () => 'level-control',
   nextLabel: 'next',
   previousLabel: 'prev',
@@ -77,7 +77,9 @@ describe('@mantine/dates/DecadeLevelGroup', () => {
     render(
       <DecadeLevelGroup
         {...defaultProps}
-        levelControlAriaLabel={(date) => `${date.getMonth()}/${date.getFullYear()}`}
+        levelControlAriaLabel={(date) =>
+          `${new Date(date).getMonth()}/${new Date(date).getFullYear()}`
+        }
       />
     );
     expect(screen.getByText('2020 – 2029')).toHaveAttribute('aria-label', '3/2022');
