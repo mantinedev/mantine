@@ -45,14 +45,14 @@ describe('@mantine/dates/MonthPickerInput', () => {
   datesTests.itSupportsDateInputProps({ component: MonthPickerInput, props: defaultProps });
   datesTests.itSupportsClearableProps({
     component: MonthPickerInput,
-    props: { ...defaultProps, defaultValue: new Date() },
+    props: { ...defaultProps, defaultValue: '2022-04-11' },
   });
   datesTests.itSupportsYearsListProps({
     component: MonthPickerInput,
     props: {
       ...defaultProps,
       defaultLevel: 'decade',
-      defaultValue: new Date(2022, 3, 11),
+      defaultValue: '2022-04-11',
       popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
     },
   });
@@ -61,14 +61,14 @@ describe('@mantine/dates/MonthPickerInput', () => {
     component: MonthPickerInput,
     props: {
       ...defaultProps,
-      defaultValue: new Date(2022, 3, 11),
+      defaultValue: '2022-04-11',
       popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
     },
   });
 
   it('supports valueFormat prop', () => {
     const { container, rerender } = render(
-      <MonthPickerInput {...defaultProps} valueFormat="MMMM" value={new Date(2022, 3, 11)} />
+      <MonthPickerInput {...defaultProps} valueFormat="MMMM" value="2022-04-11" />
     );
     expectValue(container, 'April');
 
@@ -77,7 +77,7 @@ describe('@mantine/dates/MonthPickerInput', () => {
         {...defaultProps}
         type="multiple"
         valueFormat="MMMM"
-        value={[new Date(2022, 3, 11), new Date(2022, 4, 11)]}
+        value={['2022-04-11', '2022-05-11']}
       />
     );
     expectValue(container, 'April, May');
@@ -87,7 +87,7 @@ describe('@mantine/dates/MonthPickerInput', () => {
         {...defaultProps}
         type="range"
         valueFormat="MMMM"
-        value={[new Date(2022, 3, 11), new Date(2022, 4, 11)]}
+        value={['2022-04-11', '2022-05-11']}
       />
     );
     expectValue(container, 'April – May');

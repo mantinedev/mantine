@@ -11,7 +11,7 @@ export function Usage() {
       <MonthPickerInput
         label="Month picker input"
         placeholder="Pick month"
-        defaultDate={new Date(1994, 2)}
+        defaultDate="1994-03-01"
       />
     </div>
   );
@@ -49,13 +49,13 @@ export function Multiple() {
         type="multiple"
         label="Month picker input"
         defaultValue={[
-          new Date(2022, 1, 0),
-          new Date(2022, 2, 0),
-          new Date(2022, 3, 0),
-          new Date(2022, 4, 0),
-          new Date(2022, 5, 0),
-          new Date(2022, 6, 0),
-          new Date(2022, 7, 0),
+          '2022-01-31',
+          '2022-02-28',
+          '2022-03-31',
+          '2022-04-30',
+          '2022-05-31',
+          '2022-06-30',
+          '2022-07-31',
         ]}
       />
     </div>
@@ -67,8 +67,8 @@ export function SelectedDisabledMonth() {
     <div style={{ padding: 40 }}>
       <MonthPickerInput
         label="Month picker input"
-        defaultValue={new Date()}
-        getMonthControlProps={(date) => ({ disabled: dayjs(date).isSame(new Date(), 'month') })}
+        defaultValue="2022-04-11"
+        getMonthControlProps={(date) => ({ disabled: dayjs(date).isSame('2022-04-11', 'month') })}
       />
     </div>
   );
@@ -77,7 +77,7 @@ export function SelectedDisabledMonth() {
 export function WithMaxDate() {
   return (
     <div style={{ padding: 40 }}>
-      <MonthPickerInput label="Month picker input" maxDate={new Date()} />
+      <MonthPickerInput label="Month picker input" maxDate="2022-04-11" />
     </div>
   );
 }
