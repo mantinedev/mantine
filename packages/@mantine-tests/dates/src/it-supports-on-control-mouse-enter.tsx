@@ -22,6 +22,6 @@ export function itSupportsOnControlMouseEnter(
     );
 
     await userEvent.hover(container.querySelector('table button')!);
-    expect(spy).toHaveBeenCalledWith(expect.any(Date));
+    expect(spy).toHaveBeenCalledWith(expect.any(String));
   });
 }

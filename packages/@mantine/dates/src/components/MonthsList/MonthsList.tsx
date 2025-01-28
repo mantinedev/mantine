@@ -10,7 +10,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { ControlsGroupSettings } from '../../types';
+import { ControlsGroupSettings, DateStringValue } from '../../types';
 import { useDatesContext } from '../DatesProvider';
 import { PickerControl, PickerControlProps } from '../PickerControl';
 import { getMonthInTabOrder } from './get-month-in-tab-order/get-month-in-tab-order';
@@ -29,7 +29,7 @@ export interface MonthsListSettings extends ControlsGroupSettings {
   monthsListFormat?: string;
 
   /** Adds props to month picker control based on date */
-  getMonthControlProps?: (date: Date) => Partial<PickerControlProps>;
+  getMonthControlProps?: (date: DateStringValue) => Partial<PickerControlProps>;
 
   /** Determines whether propagation for Escape key should be stopped */
   __stopPropagation?: boolean;
@@ -49,7 +49,7 @@ export interface MonthsListProps
   __preventFocus?: boolean;
 
   /** Year for which months list should be displayed */
-  year: Date;
+  year: DateStringValue;
 
   /** Component size */
   size?: MantineSize;

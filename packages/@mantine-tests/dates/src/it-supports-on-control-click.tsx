@@ -19,6 +19,6 @@ export function itSupportsOnControlClick(options: Options, name = 'supports __on
     );
 
     await userEvent.click(container.querySelector('table button')!);
-    expect(spy).toHaveBeenCalledWith(expect.any(Date));
+    expect(spy).toHaveBeenCalledWith(expect.any(String));
   });
 }

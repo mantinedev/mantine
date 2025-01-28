@@ -1,12 +1,13 @@
 import dayjs from 'dayjs';
+import { DateStringValue } from '../../../types';
 import { PickerControlProps } from '../../PickerControl';
 import { isMonthDisabled } from '../is-month-disabled/is-month-disabled';
 
 export function getMonthInTabOrder(
-  months: Date[][],
-  minDate: Date | undefined,
-  maxDate: Date | undefined,
-  getMonthControlProps: ((month: Date) => Partial<PickerControlProps>) | undefined
+  months: DateStringValue[][],
+  minDate: DateStringValue | undefined,
+  maxDate: DateStringValue | undefined,
+  getMonthControlProps: ((month: DateStringValue) => Partial<PickerControlProps>) | undefined
 ) {
   const enabledMonths = months
     .flat()

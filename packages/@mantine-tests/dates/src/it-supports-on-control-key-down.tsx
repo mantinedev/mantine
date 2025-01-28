@@ -19,6 +19,6 @@ export function itSupportsOnControlKeydown(options: Options, name = 'supports __
     );
 
     await userEvent.type(container.querySelector('table button')!, '{space}');
-    expect(spy).toHaveBeenCalledWith({ rowIndex: 0, cellIndex: 0, date: expect.any(Date) });
+    expect(spy).toHaveBeenCalledWith({ rowIndex: 0, cellIndex: 0, date: expect.any(String) });
   });
 }
