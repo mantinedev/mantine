@@ -1,9 +1,10 @@
+import dayjs from 'dayjs';
 import { render, screen, tests } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
 import { DecadeLevel, DecadeLevelProps, DecadeLevelStylesNames } from './DecadeLevel';
 
 const defaultProps: DecadeLevelProps = {
-  decade: new Date(2022, 3, 11),
+  decade: '2022-04-11',
   levelControlAriaLabel: 'level-control',
   nextLabel: 'next',
   previousLabel: 'prev',
@@ -66,7 +67,7 @@ describe('@mantine/dates/DecadeLevel', () => {
       <DecadeLevel
         {...defaultProps}
         decadeLabelFormat={(startOfDecade, endOfDecade) =>
-          `${startOfDecade.getMonth()}/${startOfDecade.getFullYear()} – ${endOfDecade.getMonth()}/${endOfDecade.getFullYear()}`
+          `${dayjs(startOfDecade).month()}/${dayjs(startOfDecade).year()} – ${dayjs(endOfDecade).month()}/${dayjs(endOfDecade).year()}`
         }
       />
     );
@@ -95,12 +96,12 @@ describe('@mantine/dates/DecadeLevel', () => {
   });
 
   it('disables next control if maxDate is before end of month', () => {
-    render(<DecadeLevel {...defaultProps} maxDate={new Date(2022, 3, 11)} />);
+    render(<DecadeLevel {...defaultProps} maxDate="2022-04-11" />);
     expect(screen.getByLabelText('next')).toBeDisabled();
   });
 
   it('disables previous control if minDate is after start of month', () => {
-    render(<DecadeLevel {...defaultProps} minDate={new Date(2022, 3, 11)} />);
+    render(<DecadeLevel {...defaultProps} minDate="2022-04-11" />);
     expect(screen.getByLabelText('prev')).toBeDisabled();
   });
 });

@@ -8,6 +8,7 @@ import {
   StylesApiProps,
   useProps,
 } from '@mantine/core';
+import { DateStringValue } from '../../types';
 import {
   CalendarHeader,
   CalendarHeaderSettings,
@@ -21,7 +22,9 @@ export type DecadeLevelStylesNames = YearsListStylesNames | CalendarHeaderStyles
 
 export interface DecadeLevelBaseSettings extends YearsListSettings {
   /** Dayjs label format to display decade label or a function that returns decade label based on date value, defaults to "YYYY" */
-  decadeLabelFormat?: string | ((startOfDecade: Date, endOfDecade: Date) => React.ReactNode);
+  decadeLabelFormat?:
+    | string
+    | ((startOfDecade: DateStringValue, endOfDecade: DateStringValue) => React.ReactNode);
 }
 
 export interface DecadeLevelSettings
@@ -38,7 +41,7 @@ export interface DecadeLevelProps
   __staticSelector?: string;
 
   /** Decade that is currently displayed */
-  decade: Date;
+  decade: DateStringValue;
 
   /** Aria-label for change level control */
   levelControlAriaLabel?: string;
@@ -120,7 +123,7 @@ export const DecadeLevel = factory<DecadeLevelFactory>((_props, ref) => {
         ? !dayjs(startOfDecade).startOf('year').isAfter(minDate)
         : false;
 
-  const formatDecade = (date: Date, format: string) =>
+  const formatDecade = (date: DateStringValue, format: string) =>
     dayjs(date)
       .locale(locale || ctx.locale)
       .format(format);
