@@ -182,27 +182,6 @@ describe('@mantine/dates/DateTimePicker', () => {
     expectValue(container, '03/04/2022 14:45');
   });
 
-  it('supports uncontrolled state with timezone', async () => {
-    const { container } = render(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <DateTimePicker
-          {...defaultProps}
-          defaultValue={new Date(2022, 0, 31, 23)}
-          valueFormat="DD/MM/YYYY HH:mm Z"
-        />
-      </DatesProvider>
-    );
-    expectValue(container, '01/02/2022 04:00 +00:00');
-
-    await clickInput(container);
-    await userEvent.click(container.querySelectorAll('table button')[6]);
-    expectValue(container, '06/02/2022 04:00 +00:00');
-
-    await userEvent.clear(getTimeInput());
-    await userEvent.type(getTimeInput(), '14:45');
-    expectValue(container, '06/02/2022 14:45 +00:00');
-  });
-
   it('supports controlled state', async () => {
     const spy = jest.fn();
 
@@ -214,27 +193,6 @@ describe('@mantine/dates/DateTimePicker', () => {
     await userEvent.click(container.querySelectorAll('table button')[6]);
     expectValue(container, '11/04/2022 00:00');
     expect(spy).toHaveBeenLastCalledWith(new Date(2022, 3, 3));
-  });
-
-  it('supports controlled state with timezone', async () => {
-    const spy = jest.fn();
-
-    const { container } = render(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <DateTimePicker
-          {...defaultProps}
-          value={new Date(2022, 0, 31, 23)}
-          onChange={spy}
-          valueFormat="DD/MM/YYYY HH:mm Z"
-        />
-      </DatesProvider>
-    );
-    expectValue(container, '01/02/2022 04:00 +00:00');
-
-    await clickInput(container);
-    await userEvent.click(container.querySelectorAll('table button')[6]);
-    expectValue(container, '01/02/2022 04:00 +00:00');
-    expect(spy).toHaveBeenLastCalledWith(new Date(2022, 1, 5, 23));
   });
 
   it('displays correct value when withSeconds is set', () => {

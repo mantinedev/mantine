@@ -1,13 +1,6 @@
 import { __InputStylesNames } from '@mantine/core';
-import {
-  inputDefaultProps,
-  inputStylesApiSelectors,
-  render,
-  tests,
-  userEvent,
-} from '@mantine-tests/core';
-import { clickInput, datesTests, expectValue } from '@mantine-tests/dates';
-import { DatesProvider } from '../DatesProvider';
+import { inputDefaultProps, inputStylesApiSelectors, render, tests } from '@mantine-tests/core';
+import { datesTests, expectValue } from '@mantine-tests/dates';
 import { MonthPickerInput, MonthPickerInputProps } from './MonthPickerInput';
 
 const defaultProps = {
@@ -114,25 +107,5 @@ describe('@mantine/dates/MonthPickerInput', () => {
     expect(container.querySelector('table button')).toHaveClass(
       'mantine-MonthPickerInput-monthsListControl'
     );
-  });
-
-  it('can be controlled (type="default") with timezone', async () => {
-    const spy = jest.fn();
-    const { container } = render(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <MonthPickerInput
-          {...defaultProps}
-          date={new Date(2022, 0, 31, 23)}
-          value={new Date(2022, 0, 31, 23)}
-          onChange={spy}
-        />
-      </DatesProvider>
-    );
-
-    await clickInput(container);
-    expect(container.querySelector('[data-selected]')!.textContent).toBe('Feb');
-
-    await userEvent.click(container.querySelector('table button')!);
-    expect(spy).toHaveBeenCalledWith(new Date(2021, 11, 31, 19));
   });
 });

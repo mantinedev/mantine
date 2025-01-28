@@ -16,7 +16,7 @@ import {
 import { useDidUpdate, useDisclosure, useMergedRef } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
 import { CalendarLevel, DateValue } from '../../types';
-import { assignTime, clampDate, shiftTimezone } from '../../utils';
+import { assignTime, clampDate } from '../../utils';
 import {
   CalendarBaseProps,
   CalendarSettings,
@@ -153,7 +153,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
 
   const [dropdownOpened, dropdownHandlers] = useDisclosure(false);
   const formattedValue = _value
-    ? dayjs(_value).locale(ctx.getLocale(locale)).tz(ctx.getTimezone(), true).format(_valueFormat)
+    ? dayjs(_value).locale(ctx.getLocale(locale)).format(_valueFormat)
     : '';
 
   const handleTimeChange = (timeString: string) => {
@@ -162,12 +162,12 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
 
     if (timeString) {
       const [hours, minutes, seconds] = timeString.split(':').map(Number);
-      const timeDate = shiftTimezone('add', new Date(), ctx.getTimezone());
+      const timeDate = new Date();
       timeDate.setHours(hours);
       timeDate.setMinutes(minutes);
       timeDate.setSeconds(seconds || 0);
       timeDate.setMilliseconds(0);
-      setValue(assignTime(timeDate, _value || shiftTimezone('add', new Date(), ctx.getTimezone())));
+      setValue(assignTime(timeDate, _value || new Date()));
     }
   };
 

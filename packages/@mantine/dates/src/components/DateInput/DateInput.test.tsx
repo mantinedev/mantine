@@ -150,17 +150,6 @@ describe('@mantine/dates/DateInput', () => {
     expectValue(container, 'April 1, 2022');
   });
 
-  it('supports uncontrolled state (dropdown click) with timezone', async () => {
-    const { container } = render(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <DateInput date={new Date(2022, 0, 31, 23)} {...defaultProps} />
-      </DatesProvider>
-    );
-    await userEvent.tab();
-    await clickControl(container, 4);
-    expectValue(container, 'February 4, 2022');
-  });
-
   it('supports controlled state (dropdown click)', async () => {
     const spy = jest.fn();
     const { container } = render(
@@ -175,24 +164,6 @@ describe('@mantine/dates/DateInput', () => {
     await clickControl(container, 4);
     expectValue(container, 'April 11, 2022');
     expect(spy).toHaveBeenCalledWith(new Date(2022, 3, 1));
-  });
-
-  it('supports controlled state (dropdown click) with timezone', async () => {
-    const spy = jest.fn();
-    const { container } = render(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <DateInput
-          {...defaultProps}
-          date={new Date(2022, 0, 31, 23)}
-          value={new Date(2022, 0, 31, 23)}
-          onChange={spy}
-        />
-      </DatesProvider>
-    );
-    await userEvent.tab();
-    await clickControl(container, 4);
-    expectValue(container, 'February 1, 2022');
-    expect(spy).toHaveBeenCalledWith(new Date(2022, 1, 3, 23));
   });
 
   it('supports uncontrolled state (free input)', async () => {
@@ -214,21 +185,6 @@ describe('@mantine/dates/DateInput', () => {
     await userEvent.tab();
     expectValue(container, 'April 11, 2022');
     expect(spy).toHaveBeenLastCalledWith(new Date(2022, 3, 1));
-  });
-
-  it('supports controlled state (free input) with timezone', async () => {
-    const spy = jest.fn();
-    const { container } = render(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <DateInput {...defaultProps} value={new Date(2022, 3, 11)} onChange={spy} />
-      </DatesProvider>
-    );
-    await userEvent.tab();
-    await userEvent.clear(getInput(container));
-    await userEvent.type(getInput(container), 'April 1, 2022');
-    await userEvent.tab();
-    expectValue(container, 'April 11, 2022');
-    expect(spy).toHaveBeenLastCalledWith(new Date(2022, 2, 31, 20));
   });
 
   it('clears input when clear button is clicked (uncontrolled)', async () => {

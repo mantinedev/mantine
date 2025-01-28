@@ -11,9 +11,8 @@ import {
 } from '@mantine/core';
 import { useDatesInput } from '../../hooks';
 import { DatePickerType } from '../../types';
-import { getDefaultClampedDate, shiftTimezone } from '../../utils';
+import { getDefaultClampedDate } from '../../utils';
 import { pickCalendarProps } from '../Calendar';
-import { useDatesContext } from '../DatesProvider';
 import { DateInputSharedProps, PickerInputBase } from '../PickerInputBase';
 import { YearPicker, YearPickerBaseProps, YearPickerStylesNames } from '../YearPicker';
 
@@ -82,7 +81,6 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
     });
 
     const { calendarProps, others } = pickCalendarProps(rest);
-    const ctx = useDatesContext();
 
     const {
       _value,
@@ -145,7 +143,6 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
           __stopPropagation={dropdownType === 'popover'}
           minDate={minDate}
           maxDate={maxDate}
-          date={shiftTimezone('add', calendarProps.date, ctx.getTimezone())}
         />
       </PickerInputBase>
     );

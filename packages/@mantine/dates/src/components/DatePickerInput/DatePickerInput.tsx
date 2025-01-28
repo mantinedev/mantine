@@ -11,10 +11,9 @@ import {
 } from '@mantine/core';
 import { useDatesInput } from '../../hooks';
 import { DatePickerType } from '../../types';
-import { getDefaultClampedDate, shiftTimezone } from '../../utils';
+import { getDefaultClampedDate } from '../../utils';
 import { CalendarStylesNames, pickCalendarProps } from '../Calendar';
 import { DatePicker, DatePickerBaseProps } from '../DatePicker';
-import { useDatesContext } from '../DatesProvider';
 import { DateInputSharedProps, PickerInputBase } from '../PickerInputBase';
 
 export type DatePickerInputStylesNames = __InputStylesNames | 'placeholder' | CalendarStylesNames;
@@ -106,7 +105,6 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
     });
 
     const _defaultDate = Array.isArray(_value) ? _value[0] || defaultDate : _value || defaultDate;
-    const ctx = useDatesContext();
 
     return (
       <PickerInputBase
@@ -133,9 +131,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
           variant={variant}
           type={type}
           value={_value}
-          defaultDate={
-            _defaultDate || getDefaultClampedDate({ maxDate, minDate, timezone: ctx.getTimezone() })
-          }
+          defaultDate={_defaultDate || getDefaultClampedDate({ maxDate, minDate })}
           onChange={setValue}
           locale={locale}
           classNames={resolvedClassNames}
@@ -145,7 +141,6 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
           __stopPropagation={dropdownType === 'popover'}
           minDate={minDate}
           maxDate={maxDate}
-          date={shiftTimezone('add', calendarProps.date, ctx.getTimezone())}
         />
       </PickerInputBase>
     );
