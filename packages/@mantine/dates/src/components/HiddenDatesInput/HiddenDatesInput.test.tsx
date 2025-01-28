@@ -4,12 +4,7 @@ import { HiddenDatesInput } from './HiddenDatesInput';
 describe('@mantine/dates/HiddenDatesInput', () => {
   it('sets name and form on the input', () => {
     const { container } = render(
-      <HiddenDatesInput
-        name="test-name"
-        form="test-form"
-        type="default"
-        value={new Date(2022, 3, 11)}
-      />
+      <HiddenDatesInput name="test-name" form="test-form" type="default" value="2022-04-11" />
     );
 
     expect(container.querySelector('input')).toHaveAttribute('name', 'test-name');
@@ -18,15 +13,10 @@ describe('@mantine/dates/HiddenDatesInput', () => {
 
   it('formats date correctly for type="default"', () => {
     const { container, rerender } = render(
-      <HiddenDatesInput
-        name="test-name"
-        form="test-form"
-        type="default"
-        value={new Date(2022, 3, 11)}
-      />
+      <HiddenDatesInput name="test-name" form="test-form" type="default" value="2022-04-11" />
     );
 
-    expect(container.querySelector('input')).toHaveValue(new Date(2022, 3, 11).toISOString());
+    expect(container.querySelector('input')).toHaveValue('2022-04-11');
     rerender(<HiddenDatesInput name="test-name" form="test-form" type="default" value={null} />);
     expect(container.querySelector('input')).toHaveValue('');
   });
@@ -37,13 +27,11 @@ describe('@mantine/dates/HiddenDatesInput', () => {
         name="test-name"
         form="test-form"
         type="multiple"
-        value={[new Date(2022, 3, 11), new Date(2022, 4, 11)]}
+        value={['2022-04-11', '2022-05-11']}
       />
     );
 
-    expect(container.querySelector('input')).toHaveValue(
-      `${new Date(2022, 3, 11).toISOString()}, ${new Date(2022, 4, 11).toISOString()}`
-    );
+    expect(container.querySelector('input')).toHaveValue('2022-04-11, 2022-05-11');
     rerender(<HiddenDatesInput name="test-name" form="test-form" type="multiple" value={[]} />);
     expect(container.querySelector('input')).toHaveValue('');
   });
@@ -54,24 +42,20 @@ describe('@mantine/dates/HiddenDatesInput', () => {
         name="test-name"
         form="test-form"
         type="range"
-        value={[new Date(2022, 3, 11), new Date(2022, 4, 11)]}
+        value={['2022-04-11', '2022-05-11']}
       />
     );
 
-    expect(container.querySelector('input')).toHaveValue(
-      `${new Date(2022, 3, 11).toISOString()} – ${new Date(2022, 4, 11).toISOString()}`
-    );
+    expect(container.querySelector('input')).toHaveValue('2022-04-11 – 2022-05-11');
     rerender(
       <HiddenDatesInput
         name="test-name"
         form="test-form"
         type="range"
-        value={[new Date(2022, 3, 11), null]}
+        value={['2022-04-11', null]}
       />
     );
-    expect(container.querySelector('input')).toHaveValue(
-      `${new Date(2022, 3, 11).toISOString()} –`
-    );
+    expect(container.querySelector('input')).toHaveValue(`2022-04-11 –`);
 
     rerender(
       <HiddenDatesInput name="test-name" form="test-form" type="range" value={[null, null]} />

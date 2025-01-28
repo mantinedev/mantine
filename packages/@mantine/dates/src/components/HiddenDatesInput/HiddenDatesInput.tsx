@@ -1,6 +1,4 @@
 import { DatePickerType, DatesRangeValue, DateValue } from '../../types';
-import { shiftTimezone } from '../../utils';
-import { useDatesContext } from '../DatesProvider';
 
 export type HiddenDatesInputValue = DatesRangeValue | DateValue | DateValue[];
 
@@ -12,11 +10,6 @@ export interface HiddenDatesInputProps {
 }
 
 function formatValue(value: HiddenDatesInputValue, type: DatePickerType) {
-  const ctx = useDatesContext();
-  const formatDateWithTimezone = (date: Date) => {
-    return shiftTimezone('remove', date, ctx.getTimezone()).toISOString();
-  };
-
   if (type === 'range' && Array.isArray(value)) {
     const [startDate, endDate] = value;
     if (!startDate) {
@@ -24,21 +17,18 @@ function formatValue(value: HiddenDatesInputValue, type: DatePickerType) {
     }
 
     if (!endDate) {
-      return `${formatDateWithTimezone(startDate)} –`;
+      return `${startDate} –`;
     }
 
-    return `${formatDateWithTimezone(startDate)} – ${formatDateWithTimezone(endDate)}`;
+    return `${startDate} – ${endDate}`;
   }
 
   if (type === 'multiple' && Array.isArray(value)) {
-    return value
-      .map((date) => date && formatDateWithTimezone(date))
-      .filter(Boolean)
-      .join(', ');
+    return value.filter(Boolean).join(', ');
   }
 
   if (!Array.isArray(value) && value) {
-    return formatDateWithTimezone(value);
+    return value;
   }
 
   return '';
