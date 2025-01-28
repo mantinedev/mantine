@@ -1,9 +1,10 @@
+import dayjs from 'dayjs';
 import { render, screen, tests } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
 import { YearLevel, YearLevelProps, YearLevelStylesNames } from './YearLevel';
 
 const defaultProps: YearLevelProps = {
-  year: new Date(2022, 3, 11),
+  year: '2022-04-11',
   levelControlAriaLabel: 'level-control',
   nextLabel: 'next',
   previousLabel: 'prev',
@@ -65,13 +66,10 @@ describe('@mantine/dates/YearLevel', () => {
 
   it('supports changing year label with callback', () => {
     render(
-      <YearLevel
-        {...defaultProps}
-        yearLabelFormat={(date) => `${date.getMonth()}/${date.getFullYear()}`}
-      />
+      <YearLevel {...defaultProps} yearLabelFormat={(date) => `${dayjs(date).format('MM/YYYY')}`} />
     );
 
-    expectLabel('3/2022');
+    expectLabel('04/2022');
   });
 
   it('has correct default __staticSelector', () => {
@@ -95,12 +93,12 @@ describe('@mantine/dates/YearLevel', () => {
   });
 
   it('disables next control if maxDate is before end of month', () => {
-    render(<YearLevel {...defaultProps} maxDate={new Date(2022, 3, 11)} />);
+    render(<YearLevel {...defaultProps} maxDate="2022-04-11" />);
     expect(screen.getByLabelText('next')).toBeDisabled();
   });
 
   it('disables previous control if minDate is after start of month', () => {
-    render(<YearLevel {...defaultProps} minDate={new Date(2022, 3, 11)} />);
+    render(<YearLevel {...defaultProps} minDate="2022-04-11" />);
     expect(screen.getByLabelText('prev')).toBeDisabled();
   });
 });

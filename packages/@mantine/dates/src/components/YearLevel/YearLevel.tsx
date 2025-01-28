@@ -8,6 +8,7 @@ import {
   StylesApiProps,
   useProps,
 } from '@mantine/core';
+import { DateStringValue } from '../../types';
 import {
   CalendarHeader,
   CalendarHeaderSettings,
@@ -20,7 +21,7 @@ export type YearLevelStylesNames = MonthsListStylesNames | CalendarHeaderStylesN
 
 export interface YearLevelBaseSettings extends MonthsListSettings {
   /** Dayjs label format to display year label or a function that returns year label based on year value, defaults to "YYYY" */
-  yearLabelFormat?: string | ((year: Date) => React.ReactNode);
+  yearLabelFormat?: string | ((year: DateStringValue) => React.ReactNode);
 }
 
 export interface YearLevelSettings extends YearLevelBaseSettings, CalendarHeaderSettings {}
@@ -34,10 +35,10 @@ export interface YearLevelProps
   styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
 
-  /** Year that is currently displayed */
-  year: Date;
+  /** Year that is currently displayed in `YYYY-MM-DD` format */
+  year: DateStringValue;
 
-  /** Aria-label for change level control */
+  /** `aria-label` for change level control */
   levelControlAriaLabel?: string;
 }
 
