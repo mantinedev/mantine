@@ -3,7 +3,7 @@ import { datesTests } from '@mantine-tests/dates';
 import { DatePicker, DatePickerProps, DatePickerStylesNames } from './DatePicker';
 
 const defaultProps = {
-  defaultDate: new Date(2022, 3, 11),
+  defaultDate: '2022-04-11',
 };
 
 describe('@mantine/dates/DatePicker', () => {
@@ -55,8 +55,8 @@ describe('@mantine/dates/DatePicker', () => {
   });
 
   it('can be uncontrolled (type="default")', async () => {
-    const { container } = render(<DatePicker {...defaultProps} date={new Date(2022, 3, 11)} />);
-    expect(container.querySelector('[data-selected]')!).toBe(null);
+    const { container } = render(<DatePicker {...defaultProps} date="2022-04-11" />);
+    expect(container.querySelector('[data-selected]')).toBe(null);
     await userEvent.click(container.querySelector('table button')!);
     expect(container.querySelector('[data-selected]')!.textContent).toBe('28');
   });
@@ -64,23 +64,18 @@ describe('@mantine/dates/DatePicker', () => {
   it('can be controlled (type="default")', async () => {
     const spy = jest.fn();
     const { container } = render(
-      <DatePicker
-        {...defaultProps}
-        date={new Date(2022, 3, 11)}
-        value={new Date(2022, 3, 11)}
-        onChange={spy}
-      />
+      <DatePicker {...defaultProps} date="2022-04-11" value="2022-04-11" onChange={spy} />
     );
 
     expect(container.querySelector('[data-selected]')!.textContent).toBe('11');
 
     await userEvent.click(container.querySelector('table button')!);
-    expect(spy).toHaveBeenCalledWith(new Date(2022, 2, 28));
+    expect(spy).toHaveBeenCalledWith('2022-03-28');
   });
 
   it('can be uncontrolled (type="multiple")', async () => {
     const { container } = render(
-      <DatePicker {...defaultProps} type="multiple" date={new Date(2022, 3, 11)} />
+      <DatePicker {...defaultProps} type="multiple" date="2022-04-11" />
     );
     expect(container.querySelectorAll('[data-selected]')).toHaveLength(0);
     await userEvent.click(container.querySelectorAll('table button')[0]);
@@ -100,14 +95,14 @@ describe('@mantine/dates/DatePicker', () => {
       <DatePicker
         {...defaultProps}
         type="multiple"
-        date={new Date(2022, 3, 11)}
-        value={[new Date(2022, 3, 11)]}
+        date="2022-04-11"
+        value={['2022-04-11']}
         onChange={spy}
       />
     );
 
     await userEvent.click(container.querySelector('table button')!);
-    expect(spy).toHaveBeenCalledWith([new Date(2022, 3, 11), new Date(2022, 2, 28)]);
+    expect(spy).toHaveBeenCalledWith(['2022-04-11', '2022-03-28']);
   });
 
   it('can be uncontrolled (type="range")', async () => {
@@ -131,7 +126,7 @@ describe('@mantine/dates/DatePicker', () => {
       <DatePicker {...defaultProps} type="range" value={[null, null]} onChange={spy} />
     );
     await userEvent.click(container.querySelector('table button')!);
-    expect(spy).toHaveBeenLastCalledWith([new Date(2022, 2, 28), null]);
+    expect(spy).toHaveBeenLastCalledWith(['2022-03-28', null]);
   });
 
   it('supports onClick handler from getDayProps', async () => {
@@ -149,9 +144,9 @@ describe('@mantine/dates/DatePicker', () => {
       <DatePicker {...defaultProps} type="range" allowSingleDateInRange onChange={spy} />
     );
     await userEvent.click(container.querySelectorAll('table button')[2]);
-    expect(spy).toHaveBeenCalledWith([new Date(2022, 2, 30), null]);
+    expect(spy).toHaveBeenCalledWith(['2022-03-30', null]);
     await userEvent.click(container.querySelectorAll('table button')[2]);
-    expect(spy).toHaveBeenCalledWith([new Date(2022, 2, 30), new Date(2022, 2, 30)]);
+    expect(spy).toHaveBeenCalledWith(['2022-03-30', '2022-03-30']);
   });
 
   it('handles allowSingleDateInRange={false} correctly', async () => {
@@ -160,7 +155,7 @@ describe('@mantine/dates/DatePicker', () => {
       <DatePicker {...defaultProps} type="range" allowSingleDateInRange={false} onChange={spy} />
     );
     await userEvent.click(container.querySelectorAll('table button')[2]);
-    expect(spy).toHaveBeenCalledWith([new Date(2022, 2, 30), null]);
+    expect(spy).toHaveBeenCalledWith(['2022-03-30', null]);
     await userEvent.click(container.querySelectorAll('table button')[2]);
     expect(spy).toHaveBeenCalledWith([null, null]);
   });

@@ -10,9 +10,7 @@ import {
 } from '@mantine/core';
 import { useDatesState } from '../../hooks';
 import { CalendarLevel, DatePickerType, PickerBaseProps } from '../../types';
-import { shiftTimezone } from '../../utils';
 import { Calendar, CalendarBaseProps, CalendarSettings, CalendarStylesNames } from '../Calendar';
-import { useDatesContext } from '../DatesProvider';
 import { DecadeLevelBaseSettings } from '../DecadeLevel';
 import { MonthLevelBaseSettings } from '../MonthLevel';
 import { YearLevelBaseSettings } from '../YearLevel';
@@ -101,7 +99,6 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     styles,
     props,
   });
-  const ctx = useDatesContext();
 
   return (
     <Calendar

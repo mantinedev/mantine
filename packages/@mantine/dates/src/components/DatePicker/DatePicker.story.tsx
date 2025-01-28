@@ -1,8 +1,9 @@
 import 'dayjs/locale/ru';
 
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { Button, Stack } from '@mantine/core';
-import { DatesRangeValue } from '../../types';
+import { DatesRangeValue, DateStringValue } from '../../types';
 import { DatePicker } from './DatePicker';
 
 export default { title: 'DatePicker' };
@@ -16,12 +17,17 @@ export function Usage() {
 }
 
 export function RangedSetPartial() {
-  const [value, setValue] = useState<[Date | null, Date | null]>([new Date(), null]);
+  const [value, setValue] = useState<[DateStringValue | null, DateStringValue | null]>([
+    dayjs(new Date()).format('YYYY-MM-DD'),
+    null,
+  ]);
 
   return (
     <div style={{ padding: 40 }}>
       <DatePicker type="range" value={value} onChange={setValue} />
-      <Button onClick={() => setValue([new Date(), null])}>Set initial range</Button>
+      <Button onClick={() => setValue([dayjs(new Date()).format('YYYY-MM-DD'), null])}>
+        Set initial range
+      </Button>
     </div>
   );
 }
@@ -35,9 +41,12 @@ export function HideOutsideDates() {
 }
 
 export function RangeCancelled() {
-  const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
+  const [value, setValue] = useState<[DateStringValue | null, DateStringValue | null]>([
+    null,
+    null,
+  ]);
 
-  const handleChange = (val: [Date | null, Date | null]) => {
+  const handleChange = (val: [DateStringValue | null, DateStringValue | null]) => {
     setValue(val);
   };
 
@@ -80,7 +89,7 @@ export function Multiple() {
 export function Range() {
   return (
     <div style={{ padding: 40 }}>
-      <DatePicker type="range" defaultValue={[new Date(2022, 3, 11), null]} />
+      <DatePicker type="range" defaultValue={['2022-04-11', null]} />
     </div>
   );
 }
@@ -94,11 +103,11 @@ export function AllowDeselect() {
 }
 
 export function Controlled() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [value, setValue] = useState<DateStringValue | null>(null);
   return (
     <div style={{ padding: 40 }}>
       <DatePicker value={value} onChange={setValue} numberOfColumns={3} columnsToScroll={1} />
-      {value?.toISOString()}
+      {value}
     </div>
   );
 }
@@ -114,13 +123,13 @@ export function ControlledRange() {
         numberOfColumns={3}
         columnsToScroll={1}
       />
-      {value.map((date) => (date ? date.toISOString() : 'ns')).join(' – ')}
+      {value.map((date) => date || 'ns').join(' – ')}
     </div>
   );
 }
 
 export function ControlledMultiple() {
-  const [value, setValue] = useState<Date[]>([]);
+  const [value, setValue] = useState<DateStringValue[]>([]);
   return (
     <div style={{ padding: 40 }}>
       <DatePicker
@@ -130,7 +139,7 @@ export function ControlledMultiple() {
         numberOfColumns={3}
         columnsToScroll={1}
       />
-      {value.map((date) => (date ? date.toISOString() : 'ns')).join(', ')}
+      {value.map((date) => date || 'ns').join(', ')}
     </div>
   );
 }
