@@ -7,7 +7,7 @@ import {
 } from './MonthLevelGroup';
 
 const defaultProps: MonthLevelGroupProps = {
-  month: new Date(2022, 3, 11),
+  month: '2022-04-11',
   levelControlAriaLabel: () => 'level-control',
   nextLabel: 'next',
   previousLabel: 'prev',
@@ -81,7 +81,9 @@ describe('@mantine/dates/MonthLevelGroup', () => {
     render(
       <MonthLevelGroup
         {...defaultProps}
-        levelControlAriaLabel={(date) => `${date.getMonth()}/${date.getFullYear()}`}
+        levelControlAriaLabel={(date) =>
+          `${new Date(date).getMonth()}/${new Date(date).getFullYear()}`
+        }
       />
     );
     expect(screen.getByText('April 2022')).toHaveAttribute('aria-label', '3/2022');

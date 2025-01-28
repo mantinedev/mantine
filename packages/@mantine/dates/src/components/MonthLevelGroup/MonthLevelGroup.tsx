@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { useRef } from 'react';
 import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '@mantine/core';
+import { DateStringValue } from '../../types';
 import { handleControlKeyDown } from '../../utils';
 import { LevelsGroup, LevelsGroupStylesNames } from '../LevelsGroup';
 import { MonthLevel, MonthLevelSettings, MonthLevelStylesNames } from '../MonthLevel';
@@ -20,10 +21,10 @@ export interface MonthLevelGroupProps
   numberOfColumns?: number;
 
   /** Month that is currently displayed */
-  month: Date;
+  month: DateStringValue;
 
   /** Function that returns level control aria-label based on month date */
-  levelControlAriaLabel?: ((month: Date) => string) | string;
+  levelControlAriaLabel?: ((month: DateStringValue) => string) | string;
 
   /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
   static?: boolean;
@@ -95,7 +96,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
   const months = Array(numberOfColumns)
     .fill(0)
     .map((_, monthIndex) => {
-      const currentMonth = dayjs(month).add(monthIndex, 'months').toDate();
+      const currentMonth = dayjs(month).add(monthIndex, 'months').format('YYYY-MM-DD');
 
       return (
         <MonthLevel
