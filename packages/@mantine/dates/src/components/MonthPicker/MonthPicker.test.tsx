@@ -1,10 +1,9 @@
 import { render, tests, userEvent } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
-import { DatesProvider } from '../DatesProvider';
 import { MonthPicker, MonthPickerProps, MonthPickerStylesNames } from './MonthPicker';
 
 const defaultProps = {
-  defaultDate: new Date(2022, 3, 11),
+  defaultDate: '2022-04-11',
 };
 
 describe('@mantine/dates/MonthPicker', () => {
@@ -51,19 +50,8 @@ describe('@mantine/dates/MonthPicker', () => {
   });
 
   it('can be uncontrolled (type="default")', async () => {
-    const { container } = render(<MonthPicker {...defaultProps} date={new Date(2022, 3, 11)} />);
-    expect(container.querySelector('[data-selected]')!).toBe(null);
-    await userEvent.click(container.querySelector('table button')!);
-    expect(container.querySelector('[data-selected]')!.textContent).toBe('Jan');
-  });
-
-  it('can be uncontrolled (type="default") with timezone', async () => {
-    const { container } = render(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <MonthPicker {...defaultProps} date={new Date(2022, 0, 31, 23)} />
-      </DatesProvider>
-    );
-    expect(container.querySelector('[data-selected]')!).toBe(null);
+    const { container } = render(<MonthPicker {...defaultProps} date="2022-04-11" />);
+    expect(container.querySelector('[data-selected]')).toBe(null);
     await userEvent.click(container.querySelector('table button')!);
     expect(container.querySelector('[data-selected]')!.textContent).toBe('Jan');
   });
@@ -71,60 +59,18 @@ describe('@mantine/dates/MonthPicker', () => {
   it('can be controlled (type="default")', async () => {
     const spy = jest.fn();
     const { container } = render(
-      <MonthPicker
-        {...defaultProps}
-        date={new Date(2022, 3, 11)}
-        value={new Date(2022, 3, 11)}
-        onChange={spy}
-      />
+      <MonthPicker {...defaultProps} date="2022-04-11" value="2022-04-11" onChange={spy} />
     );
 
     expect(container.querySelector('[data-selected]')!.textContent).toBe('Apr');
 
     await userEvent.click(container.querySelector('table button')!);
-    expect(spy).toHaveBeenCalledWith(new Date(2022, 0, 1));
-  });
-
-  it('can be controlled (type="default") with timezone', async () => {
-    const spy = jest.fn();
-    const { container } = render(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <MonthPicker
-          {...defaultProps}
-          date={new Date(2022, 0, 31, 23)}
-          value={new Date(2022, 0, 31, 23)}
-          onChange={spy}
-        />
-      </DatesProvider>
-    );
-
-    expect(container.querySelector('[data-selected]')!.textContent).toBe('Feb');
-
-    await userEvent.click(container.querySelector('table button')!);
-    expect(spy).toHaveBeenCalledWith(new Date(2021, 11, 31, 19));
+    expect(spy).toHaveBeenCalledWith('2022-01-01');
   });
 
   it('can be uncontrolled (type="multiple")', async () => {
     const { container } = render(
-      <MonthPicker {...defaultProps} type="multiple" date={new Date(2022, 3, 11)} />
-    );
-    expect(container.querySelectorAll('[data-selected]')).toHaveLength(0);
-    await userEvent.click(container.querySelectorAll('table button')[0]);
-    expect(container.querySelectorAll('[data-selected]')).toHaveLength(1);
-    expect(container.querySelector('[data-selected]')!.textContent).toBe('Jan');
-
-    await userEvent.click(container.querySelectorAll('table button')[1]);
-    expect(container.querySelectorAll('[data-selected]')).toHaveLength(2);
-    expect(
-      Array.from(container.querySelectorAll('[data-selected]')).map((node) => node.textContent)
-    ).toStrictEqual(['Jan', 'Feb']);
-  });
-
-  it('can be uncontrolled (type="multiple") with timezone', async () => {
-    const { container } = render(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <MonthPicker {...defaultProps} type="multiple" date={new Date(2022, 0, 31, 23)} />
-      </DatesProvider>
+      <MonthPicker {...defaultProps} type="multiple" date="2022-04-11" />
     );
     expect(container.querySelectorAll('[data-selected]')).toHaveLength(0);
     await userEvent.click(container.querySelectorAll('table button')[0]);
@@ -144,32 +90,14 @@ describe('@mantine/dates/MonthPicker', () => {
       <MonthPicker
         {...defaultProps}
         type="multiple"
-        date={new Date(2022, 3, 11)}
-        value={[new Date(2022, 3, 11)]}
+        date="2022-04-11"
+        value={['2022-04-11']}
         onChange={spy}
       />
     );
 
     await userEvent.click(container.querySelector('table button')!);
-    expect(spy).toHaveBeenCalledWith([new Date(2022, 3, 11), new Date(2022, 0, 1)]);
-  });
-
-  it('can be controlled (type="multiple") with timezone', async () => {
-    const spy = jest.fn();
-    const { container } = render(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <MonthPicker
-          {...defaultProps}
-          type="multiple"
-          date={new Date(2022, 0, 31, 23)}
-          value={[new Date(2022, 0, 31, 23)]}
-          onChange={spy}
-        />
-      </DatesProvider>
-    );
-
-    await userEvent.click(container.querySelector('table button')!);
-    expect(spy).toHaveBeenCalledWith([new Date(2022, 0, 31, 23), new Date(2021, 11, 31, 19)]);
+    expect(spy).toHaveBeenCalledWith(['2022-04-11', '2022-01-01']);
   });
 
   it('can be uncontrolled (type="range")', async () => {
@@ -193,7 +121,7 @@ describe('@mantine/dates/MonthPicker', () => {
       <MonthPicker {...defaultProps} type="range" value={[null, null]} onChange={spy} />
     );
     await userEvent.click(container.querySelector('table button')!);
-    expect(spy).toHaveBeenLastCalledWith([new Date(2022, 0, 1), null]);
+    expect(spy).toHaveBeenLastCalledWith(['2022-01-01', null]);
   });
 
   it('supports onClick handler from getMonthControlProps', async () => {
@@ -211,9 +139,9 @@ describe('@mantine/dates/MonthPicker', () => {
       <MonthPicker {...defaultProps} type="range" allowSingleDateInRange onChange={spy} />
     );
     await userEvent.click(container.querySelectorAll('table button')[2]);
-    expect(spy).toHaveBeenCalledWith([new Date(2022, 2, 1), null]);
+    expect(spy).toHaveBeenCalledWith(['2022-03-01', null]);
     await userEvent.click(container.querySelectorAll('table button')[2]);
-    expect(spy).toHaveBeenCalledWith([new Date(2022, 2, 1), new Date(2022, 2, 1)]);
+    expect(spy).toHaveBeenCalledWith(['2022-03-01', '2022-03-01']);
   });
 
   it('handles allowSingleDateInRange={false} correctly', async () => {
@@ -222,7 +150,7 @@ describe('@mantine/dates/MonthPicker', () => {
       <MonthPicker {...defaultProps} type="range" allowSingleDateInRange={false} onChange={spy} />
     );
     await userEvent.click(container.querySelectorAll('table button')[2]);
-    expect(spy).toHaveBeenCalledWith([new Date(2022, 2, 1), null]);
+    expect(spy).toHaveBeenCalledWith(['2022-03-01', null]);
     await userEvent.click(container.querySelectorAll('table button')[2]);
     expect(spy).toHaveBeenCalledWith([null, null]);
   });

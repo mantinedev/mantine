@@ -9,10 +9,8 @@ import {
   useResolvedStylesApi,
 } from '@mantine/core';
 import { useDatesState } from '../../hooks';
-import { CalendarLevel, DatePickerType, PickerBaseProps } from '../../types';
-import { shiftTimezone } from '../../utils';
+import { CalendarLevel, DatePickerType, DateStringValue, PickerBaseProps } from '../../types';
 import { Calendar, CalendarBaseProps } from '../Calendar';
-import { useDatesContext } from '../DatesProvider';
 import { DecadeLevelBaseSettings } from '../DecadeLevel';
 import { DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
 import { YearLevelBaseSettings } from '../YearLevel';
@@ -46,7 +44,7 @@ export interface MonthPickerProps<Type extends DatePickerType = 'default'>
     StylesApiProps<MonthPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   /** Called when month is selected */
-  onMonthSelect?: (date: Date) => void;
+  onMonthSelect?: (date: DateStringValue) => void;
 }
 
 export type MonthPickerFactory = Factory<{
@@ -102,7 +100,6 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
     styles,
     props,
   });
-  const ctx = useDatesContext();
 
   return (
     <Calendar

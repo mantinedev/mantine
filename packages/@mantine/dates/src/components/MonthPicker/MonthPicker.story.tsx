@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DatesRangeValue } from '../../types';
+import { DatesRangeValue, DateStringValue } from '../../types';
 import { MonthPicker } from './MonthPicker';
 
 export default { title: 'MonthPicker' };
@@ -37,11 +37,11 @@ export function AllowDeselect() {
 }
 
 export function Controlled() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [value, setValue] = useState<DateStringValue | null>(null);
   return (
     <div style={{ padding: 40 }}>
       <MonthPicker value={value} onChange={setValue} numberOfColumns={3} columnsToScroll={1} />
-      {value?.toISOString()}
+      {value}
     </div>
   );
 }
@@ -57,13 +57,13 @@ export function ControlledRange() {
         numberOfColumns={3}
         columnsToScroll={1}
       />
-      {value.map((date) => (date ? date.toISOString() : 'ns')).join(' – ')}
+      {value.map((date) => date || 'ns').join(' – ')}
     </div>
   );
 }
 
 export function ControlledMultiple() {
-  const [value, setValue] = useState<Date[]>([]);
+  const [value, setValue] = useState<DateStringValue[]>([]);
   return (
     <div style={{ padding: 40 }}>
       <MonthPicker
@@ -73,7 +73,7 @@ export function ControlledMultiple() {
         numberOfColumns={3}
         columnsToScroll={1}
       />
-      {value.map((date) => (date ? date.toISOString() : 'ns')).join(', ')}
+      {value.map((date) => date || 'ns').join(', ')}
     </div>
   );
 }
