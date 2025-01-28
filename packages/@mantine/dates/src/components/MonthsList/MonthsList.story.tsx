@@ -7,7 +7,7 @@ export default { title: 'MonthsList' };
 export function Usage() {
   return (
     <div style={{ padding: 40, width: 320 }}>
-      <MonthsList year={new Date()} />
+      <MonthsList year="2022-01-01" />
     </div>
   );
 }
@@ -15,7 +15,7 @@ export function Usage() {
 export function Unstyled() {
   return (
     <div style={{ padding: 40, width: 320 }}>
-      <MonthsList year={new Date()} unstyled />
+      <MonthsList year="2022-01-01" unstyled />
     </div>
   );
 }
@@ -23,7 +23,7 @@ export function Unstyled() {
 export function MinDate() {
   return (
     <div style={{ padding: 40, width: 320 }}>
-      <MonthsList year={new Date(2022, 1, 1)} minDate={new Date(2022, 4, 1)} />
+      <MonthsList year="2022-01-01" minDate="2022-05-01" />
     </div>
   );
 }
@@ -31,18 +31,18 @@ export function MinDate() {
 export function MaxDate() {
   return (
     <div style={{ padding: 40, width: 320 }}>
-      <MonthsList year={new Date(2022, 1, 1)} maxDate={new Date(2022, 9, 1)} />
+      <MonthsList year="2022-01-01" maxDate="2022-10-01" />
     </div>
   );
 }
 
 export function WithSelection() {
-  const [selected, setSelected] = useState(new Date());
+  const [selected, setSelected] = useState<string>(dayjs().format('YYYY-MM-DD'));
 
   return (
     <div style={{ padding: 40, width: 320 }}>
       <MonthsList
-        year={new Date()}
+        year={dayjs().format('YYYY-MM-DD')}
         getMonthControlProps={(month) => ({
           selected: dayjs(month).isSame(selected, 'month'),
           onClick: () => setSelected(month),
@@ -55,13 +55,13 @@ export function WithSelection() {
 export function WithRange() {
   return (
     <div style={{ padding: 40, width: 320 }}>
-      <MonthsList year={new Date(2022, 1, 1)} getMonthControlProps={() => ({ inRange: true })} />
+      <MonthsList year="2022-01-01" getMonthControlProps={() => ({ inRange: true })} />
       <MonthsList
-        year={new Date(2022, 1, 1)}
+        year="2022-01-01"
         getMonthControlProps={() => ({ firstInRange: true, selected: true })}
       />
       <MonthsList
-        year={new Date(2022, 1, 1)}
+        year="2022-01-01"
         getMonthControlProps={() => ({ lastInRange: true, selected: true })}
       />
     </div>
@@ -71,7 +71,7 @@ export function WithRange() {
 export function Sizes() {
   const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
     <MonthsList
-      year={new Date()}
+      year={dayjs().format('YYYY-MM-DD')}
       size={size}
       key={size}
       getMonthControlProps={() => ({ selected: true })}

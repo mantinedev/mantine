@@ -2,9 +2,9 @@ import 'dayjs/locale/ru';
 
 import { DateFormatter, getFormattedDate } from './get-formatted-date';
 
-const TEST_DATES = [new Date(2021, 8, 13), new Date(2021, 9, 8)];
+const TEST_DATES = ['2021-09-13', '2021-10-08'];
 const customFormatter: DateFormatter = ({ date }) =>
-  date instanceof Date ? date.toISOString() : '';
+  typeof date === 'string' ? new Date(date).toISOString() : '';
 
 describe('@mantine/dates/get-formatted-date', () => {
   it('formats default date type with given format', () => {
@@ -77,6 +77,6 @@ describe('@mantine/dates/get-formatted-date', () => {
         labelSeparator: '–',
         formatter: customFormatter,
       })
-    ).toBe(TEST_DATES[0].toISOString());
+    ).toBe(new Date(TEST_DATES[0]).toISOString());
   });
 });

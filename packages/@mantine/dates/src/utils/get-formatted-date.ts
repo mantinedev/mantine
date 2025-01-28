@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { DatePickerType, DatePickerValue } from '../types';
+import { DatePickerType, DatePickerValue, DateStringValue } from '../types';
 
 interface DateFormatterInput {
   type: DatePickerType;
@@ -18,14 +18,14 @@ export function defaultDateFormatter({
   format,
   labelSeparator,
 }: DateFormatterInput) {
-  const formatDate = (value: Date) => dayjs(value).locale(locale).format(format);
+  const formatDate = (value: DateStringValue) => dayjs(value).locale(locale).format(format);
 
   if (type === 'default') {
-    return date === null ? '' : formatDate(date as Date);
+    return date === null ? '' : formatDate(date as DateStringValue);
   }
 
   if (type === 'multiple') {
-    return (date as Date[]).map(formatDate).join(', ');
+    return (date as DateStringValue[]).map(formatDate).join(', ');
   }
 
   if (type === 'range' && Array.isArray(date)) {
