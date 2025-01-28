@@ -4,34 +4,37 @@ import { Calendar } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { Calendar } from '@mantine/dates';
-import dayjs from 'dayjs';
 
-function getDay(date: Date) {
-  const day = date.getDay();
+function getDay(date: string) {
+  const day = dayjs(date).day();
   return day === 0 ? 6 : day - 1;
 }
 
-function startOfWeek(date: Date) {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate() - getDay(date) - 1);
-}
-
-function endOfWeek(date: Date) {
-  return dayjs(new Date(date.getFullYear(), date.getMonth(), date.getDate() + (6 - getDay(date))))
-    .endOf('date')
+function startOfWeek(date: string) {
+  return dayjs(date)
+    .subtract(getDay(date) + 1, 'day')
     .toDate();
 }
 
-function isInWeekRange(date: Date, value: Date | null) {
+function endOfWeek(date: string) {
+  return dayjs(date)
+    .add(6 - getDay(date), 'day')
+    .endOf('day')
+    .toDate();
+}
+
+function isInWeekRange(date: string, value: string | null) {
   return value
     ? dayjs(date).isBefore(endOfWeek(value)) && dayjs(date).isAfter(startOfWeek(value))
     : false;
 }
 
 function Demo() {
-  const [hovered, setHovered] = useState<Date | null>(null);
-  const [value, setValue] = useState<Date | null>(null);
+  const [hovered, setHovered] = useState<string | null>(null);
+  const [value, setValue] = useState<string | null>(null);
 
   return (
     <Calendar
@@ -44,8 +47,8 @@ function Demo() {
           onMouseEnter: () => setHovered(date),
           onMouseLeave: () => setHovered(null),
           inRange: isInRange,
-          firstInRange: isInRange && date.getDay() === 1,
-          lastInRange: isInRange && date.getDay() === 0,
+          firstInRange: isInRange && new Date(date).getDay() === 1,
+          lastInRange: isInRange && new Date(date).getDay() === 0,
           selected: isSelected,
           onClick: () => setValue(date),
         };
@@ -55,30 +58,33 @@ function Demo() {
 }
 `;
 
-function getDay(date: Date) {
-  const day = date.getDay();
+function getDay(date: string) {
+  const day = dayjs(date).day();
   return day === 0 ? 6 : day - 1;
 }
 
-function startOfWeek(date: Date) {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate() - getDay(date) - 1);
-}
-
-function endOfWeek(date: Date) {
-  return dayjs(new Date(date.getFullYear(), date.getMonth(), date.getDate() + (6 - getDay(date))))
-    .endOf('date')
+function startOfWeek(date: string) {
+  return dayjs(date)
+    .subtract(getDay(date) + 1, 'day')
     .toDate();
 }
 
-function isInWeekRange(date: Date, value: Date | null) {
+function endOfWeek(date: string) {
+  return dayjs(date)
+    .add(6 - getDay(date), 'day')
+    .endOf('day')
+    .toDate();
+}
+
+function isInWeekRange(date: string, value: string | null) {
   return value
     ? dayjs(date).isBefore(endOfWeek(value)) && dayjs(date).isAfter(startOfWeek(value))
     : false;
 }
 
 function Demo() {
-  const [hovered, setHovered] = useState<Date | null>(null);
-  const [value, setValue] = useState<Date | null>(null);
+  const [hovered, setHovered] = useState<string | null>(null);
+  const [value, setValue] = useState<string | null>(null);
 
   return (
     <Calendar
@@ -91,8 +97,8 @@ function Demo() {
           onMouseEnter: () => setHovered(date),
           onMouseLeave: () => setHovered(null),
           inRange: isInRange,
-          firstInRange: isInRange && date.getDay() === 1,
-          lastInRange: isInRange && date.getDay() === 0,
+          firstInRange: isInRange && new Date(date).getDay() === 1,
+          lastInRange: isInRange && new Date(date).getDay() === 0,
           selected: isSelected,
           onClick: () => setValue(date),
         };

@@ -9,8 +9,8 @@ import { useState } from 'react';
 import { Calendar } from '@mantine/dates';
 
 function Demo() {
-  const [selected, setSelected] = useState<Date[]>([]);
-  const handleSelect = (date: Date) => {
+  const [selected, setSelected] = useState<string[]>([]);
+  const handleSelect = (date: string) => {
     const isSelected = selected.some((s) => dayjs(date).isSame(s, 'date'));
     if (isSelected) {
       setSelected((current) => current.filter((d) => !dayjs(d).isSame(date, 'date')));
@@ -31,8 +31,8 @@ function Demo() {
 `;
 
 function Demo() {
-  const [selected, setSelected] = useState<Date[]>([]);
-  const handleSelect = (date: Date) => {
+  const [selected, setSelected] = useState<string[]>([]);
+  const handleSelect = (date: string) => {
     const isSelected = selected.some((s) => dayjs(date).isSame(s, 'date'));
     if (isSelected) {
       setSelected((current) => current.filter((d) => !dayjs(d).isSame(date, 'date')));

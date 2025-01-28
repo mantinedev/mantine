@@ -1,8 +1,10 @@
+import dayjs from 'dayjs';
 import { Indicator } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
+import dayjs from 'dayjs';
 import { Indicator } from '@mantine/core';
 import { Calendar } from '@mantine/dates';
 
@@ -11,7 +13,7 @@ function Demo() {
     <Calendar
       static
       renderDay={(date) => {
-        const day = date.getDate();
+        const day = dayjs(date).date();
         return (
           <Indicator size={6} color="red" offset={-2} disabled={day !== 16}>
             <div>{day}</div>
@@ -28,7 +30,7 @@ function Demo() {
     <Calendar
       static
       renderDay={(date) => {
-        const day = date.getDate();
+        const day = dayjs(date).date();
         return (
           <Indicator size={6} color="red" offset={-2} disabled={day !== 16}>
             <div>{day}</div>
