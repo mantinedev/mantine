@@ -1,17 +1,28 @@
 import dayjs from 'dayjs';
+import { DateStringValue } from '../../../types';
 import { DayProps } from '../../Day/Day';
 import { isAfterMinDate } from '../is-after-min-date/is-after-min-date';
 import { isBeforeMaxDate } from '../is-before-max-date/is-before-max-date';
 
-export function getDateInTabOrder(
-  dates: Date[][],
-  minDate: Date | undefined,
-  maxDate: Date | undefined,
-  getDateControlProps: ((date: Date) => Partial<DayProps>) | undefined,
-  excludeDate: ((date: Date) => boolean) | undefined,
-  hideOutsideDates: boolean | undefined,
-  month: Date
-) {
+interface GetDateInTabOrderInput {
+  dates: DateStringValue[][];
+  minDate: DateStringValue | undefined;
+  maxDate: DateStringValue | undefined;
+  getDayProps: ((date: DateStringValue) => Partial<DayProps>) | undefined;
+  excludeDate: ((date: DateStringValue) => boolean) | undefined;
+  hideOutsideDates: boolean | undefined;
+  month: DateStringValue;
+}
+
+export function getDateInTabOrder({
+  dates,
+  minDate,
+  maxDate,
+  getDayProps,
+  excludeDate,
+  hideOutsideDates,
+  month,
+}: GetDateInTabOrderInput) {
   const enabledDates = dates
     .flat()
     .filter(
@@ -19,11 +30,11 @@ export function getDateInTabOrder(
         isBeforeMaxDate(date, maxDate) &&
         isAfterMinDate(date, minDate) &&
         !excludeDate?.(date) &&
-        !getDateControlProps?.(date)?.disabled &&
+        !getDayProps?.(date)?.disabled &&
         (!hideOutsideDates || dayjs(date).isSame(dayjs(month), 'month'))
     );
 
-  const selectedDate = enabledDates.find((date) => getDateControlProps?.(date)?.selected);
+  const selectedDate = enabledDates.find((date) => getDayProps?.(date)?.selected);
 
   if (selectedDate) {
     return selectedDate;

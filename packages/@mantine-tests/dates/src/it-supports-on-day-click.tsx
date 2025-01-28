@@ -19,6 +19,6 @@ export function itSupportsOnDayClick(options: Options, name = 'supports __onDayC
     );
 
     await userEvent.click(container.querySelector('table button')!);
-    expect(spy).toHaveBeenCalledWith(expect.any(Date));
+    expect(spy).toHaveBeenCalledWith(expect.any(String));
   });
 }

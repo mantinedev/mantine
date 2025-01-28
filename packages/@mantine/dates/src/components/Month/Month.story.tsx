@@ -8,8 +8,8 @@ export default { title: 'Month' };
 function Wrapper(props: Partial<MonthProps>) {
   return (
     <div style={{ padding: 40 }}>
-      <Code>{dayjs(props.month || new Date(2022, 3, 1)).format('MMMM YYYY')}</Code>
-      <Month month={new Date(2022, 3, 1)} mt="xl" {...props} />
+      <Code>{dayjs(props.month || '2022-04-01').format('MMMM YYYY')}</Code>
+      <Month month="2022-04-01" mt="xl" {...props} />
     </div>
   );
 }
@@ -23,11 +23,11 @@ export function CustomWeekendDays() {
 }
 
 export function Selected() {
-  const [selected, setSelected] = useState<Date | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
   return (
     <Wrapper
       getDayProps={(date) => ({
-        selected: dayjs(date).isSame(selected!, 'date'),
+        selected: dayjs(date).isSame(selected, 'date'),
         onClick: () => setSelected(date),
       })}
     />
@@ -39,13 +39,11 @@ export function Range() {
     <Wrapper
       getDayProps={(date) => ({
         selected:
-          dayjs(date).isSame(new Date(2022, 3, 9), 'date') ||
-          dayjs(date).isSame(new Date(2022, 3, 15), 'date'),
-        firstInRange: dayjs(date).isSame(new Date(2022, 3, 9), 'date'),
+          dayjs(date).isSame('2022-04-09', 'date') || dayjs(date).isSame('2022-04-15', 'date'),
+        firstInRange: dayjs(date).isSame('2022-04-09', 'date'),
         inRange:
-          dayjs(date).isAfter(new Date(2022, 3, 9), 'date') &&
-          dayjs(date).isBefore(new Date(2022, 3, 15), 'date'),
-        lastInRange: dayjs(date).isSame(new Date(2022, 3, 15), 'date'),
+          dayjs(date).isAfter('2022-04-09', 'date') && dayjs(date).isBefore('2022-04-15', 'date'),
+        lastInRange: dayjs(date).isSame('2022-04-15', 'date'),
       })}
     />
   );
@@ -56,18 +54,18 @@ export function CustomDayOfWeek() {
 }
 
 export function ExcludeDate() {
-  return <Wrapper excludeDate={(date) => date.getDay() === 0} />;
+  return <Wrapper excludeDate={(date) => dayjs(date).day() === 0} />;
 }
 
 export function MinMaxDate() {
-  return <Wrapper minDate={new Date(2022, 3, 10)} maxDate={new Date(2022, 3, 22)} />;
+  return <Wrapper minDate="2022-04-10" maxDate="2022-04-22" />;
 }
 
 export function RenderDay() {
   return (
     <Wrapper
       renderDay={(date) => {
-        const day = date.getDate();
+        const day = dayjs(date).date();
         return (
           <Indicator size={6} color="red" offset={-3} disabled={day !== 16}>
             <div>{day}</div>

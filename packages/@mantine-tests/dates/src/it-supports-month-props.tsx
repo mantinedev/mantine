@@ -139,8 +139,8 @@ export function itSupportsMonthProps(options: Options, name = 'supports month pr
       const { container } = render(
         <options.component
           {...options.props}
-          getDayProps={(date: Date) => ({
-            selected: dayjs(date).isSame(new Date(2022, 3, 15)),
+          getDayProps={(date: string) => ({
+            selected: dayjs(date).isSame('2022-04-15'),
             onClick: spy,
           })}
         />
@@ -158,7 +158,10 @@ export function itSupportsMonthProps(options: Options, name = 'supports month pr
 
     it('adds disabled prop to Day components based on excludeDate callback', () => {
       const { container } = render(
-        <options.component {...options.props} excludeDate={(date: Date) => date.getDay() === 0} />
+        <options.component
+          {...options.props}
+          excludeDate={(date: string) => dayjs(date).day() === 0}
+        />
       );
       const days = getDays(container);
 
@@ -168,9 +171,7 @@ export function itSupportsMonthProps(options: Options, name = 'supports month pr
     });
 
     it('supports minDate', () => {
-      const { container } = render(
-        <options.component {...options.props} minDate={new Date(2022, 3, 10)} />
-      );
+      const { container } = render(<options.component {...options.props} minDate="2022-04-10" />);
       const days = getDays(container);
 
       expect(days[0]).toHaveAttribute('data-disabled');
@@ -182,9 +183,7 @@ export function itSupportsMonthProps(options: Options, name = 'supports month pr
     });
 
     it('supports maxDate', () => {
-      const { container } = render(
-        <options.component {...options.props} maxDate={new Date(2022, 3, 22)} />
-      );
+      const { container } = render(<options.component {...options.props} maxDate="2022-04-22" />);
       const days = getDays(container);
 
       expect(days[34]).toHaveAttribute('data-disabled');
@@ -198,7 +197,7 @@ export function itSupportsMonthProps(options: Options, name = 'supports month pr
 
     it('supports renderDay', () => {
       const { container } = render(
-        <options.component {...options.props} renderDay={(date: Date) => date.getFullYear()} />
+        <options.component {...options.props} renderDay={(date: string) => dayjs(date).year()} />
       );
       const days = getDays(container);
 
@@ -241,7 +240,7 @@ export function itSupportsMonthProps(options: Options, name = 'supports month pr
       const { container } = render(
         <options.component
           {...options.props}
-          getDayAriaLabel={(date: Date) => dayjs(date).format('DD/MM/YYYY')}
+          getDayAriaLabel={(date: string) => dayjs(date).format('DD/MM/YYYY')}
         />
       );
 

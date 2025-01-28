@@ -17,6 +17,8 @@ import { useDatesContext } from '../DatesProvider';
 import { getWeekdayNames } from './get-weekdays-names/get-weekdays-names';
 import classes from './WeekdaysRow.module.css';
 
+export type WeekdayFormat = string | ((date: DateStringValue) => React.ReactNode);
+
 export type WeekdaysRowStylesNames = 'weekday' | 'weekdaysRow';
 export type WeekdaysRowCssVariables = {
   weekdaysRow: '--wr-fz' | '--wr-spacing';
@@ -34,13 +36,13 @@ export interface WeekdaysRowProps
   /** Dayjs locale, defaults to value defined in DatesProvider */
   locale?: string;
 
-  /** Number 0-6, 0 – Sunday, 6 – Saturday, defaults to 1 – Monday */
+  /** Number 0-6, 0 – Sunday, 6 – Saturday, `1` – Monday by default */
   firstDayOfWeek?: DayOfWeek;
 
-  /** Dayjs format to get weekday name, defaults to "dd" */
-  weekdayFormat?: string | ((date: DateStringValue) => React.ReactNode);
+  /** Dayjs format to get weekday name, `'dd'` by default */
+  weekdayFormat?: WeekdayFormat;
 
-  /** Choose cell type that will be used to render weekdays, defaults to th */
+  /** Choose cell type that will be used to render weekdays, `'th'` by default */
   cellComponent?: 'td' | 'th';
 
   /** Determines whether week numbers should be displayed */

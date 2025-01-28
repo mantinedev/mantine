@@ -84,11 +84,7 @@ export function itSupportsYearsListProps(options: Options, name = 'supports year
 
     it('disables years if they are before minDate', () => {
       const { container } = render(
-        <options.component
-          {...options.props}
-          decade={new Date(2022, 3, 11)}
-          minDate={new Date(2023, 4, 11)}
-        />
+        <options.component {...options.props} decade="2022-04-11" minDate="2023-05-11" />
       );
       const years = container.querySelectorAll('table button');
       expect(years[0]).toBeDisabled();
@@ -100,11 +96,7 @@ export function itSupportsYearsListProps(options: Options, name = 'supports year
 
     it('disables years if they are after minDate', () => {
       const { container } = render(
-        <options.component
-          {...options.props}
-          decade={new Date(2022, 3, 11)}
-          maxDate={new Date(2023, 4, 11)}
-        />
+        <options.component {...options.props} decade="2022-04-11" maxDate="2023-05-11" />
       );
       const years = container.querySelectorAll('[data-picker-control]');
       expect(years[0]).not.toBeDisabled();
@@ -117,8 +109,8 @@ export function itSupportsYearsListProps(options: Options, name = 'supports year
       const { container } = render(
         <options.component
           {...options.props}
-          getYearControlProps={(date: Date) => ({
-            selected: dayjs(date).isSame(new Date(2022, 3, 11), 'year'),
+          getYearControlProps={(date: string) => ({
+            selected: dayjs(date).isSame('2022-04-11', 'year'),
           })}
         />
       );

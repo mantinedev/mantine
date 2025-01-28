@@ -3,125 +3,123 @@ import { getMonthDays } from '../get-month-days/get-month-days';
 import { getDateInTabOrder } from './get-date-in-tab-order';
 
 const defaultDates = getMonthDays({
-  month: new Date(2010, 5, 1),
+  month: '2010-06-01',
   firstDayOfWeek: 1,
   consistentWeeks: false,
 });
-const defaultMinDate = new Date(2000, 0);
-const defaultMaxDate = new Date(2100, 0);
-const defaultSelectedDate = new Date(2010, 5, 5);
+const defaultMinDate = '2000-01-01';
+const defaultMaxDate = '2100-01-01';
+const defaultSelectedDate = '2010-06-05';
 const defaultControlProps = () => ({});
 const defaultExcludeDate = () => false;
 const defaultHideOutsideDates = false;
-const defaultMonth = new Date(2010, 5);
+const defaultMonth = '2010-06-01';
 
 describe('@mantine/dates/get-date-in-tab-order', () => {
   it('returns selected date', () => {
     expect(
-      getDateInTabOrder(
-        defaultDates,
-        defaultMinDate,
-        defaultMaxDate,
-        (date) => ({
+      getDateInTabOrder({
+        dates: defaultDates,
+        minDate: defaultMinDate,
+        maxDate: defaultMaxDate,
+        getDayProps: (date) => ({
           selected: dayjs(date).isSame(defaultSelectedDate, 'date'),
         }),
-        defaultExcludeDate,
-        defaultHideOutsideDates,
-        defaultMonth
-      )
+        excludeDate: defaultExcludeDate,
+        hideOutsideDates: defaultHideOutsideDates,
+        month: defaultMonth,
+      })
     ).toStrictEqual(defaultSelectedDate);
   });
 
   it('returns current day', () => {
     expect(
-      getDateInTabOrder(
-        getMonthDays({
-          month: new Date(),
+      getDateInTabOrder({
+        dates: getMonthDays({
+          month: new Date().toISOString().split('T')[0],
           firstDayOfWeek: 1,
           consistentWeeks: false,
         }),
-        defaultMinDate,
-        defaultMaxDate,
-        defaultControlProps,
-        defaultExcludeDate,
-        defaultHideOutsideDates,
-        defaultMonth
-      )
-    ).toStrictEqual(
-      new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())
-    );
+        minDate: defaultMinDate,
+        maxDate: defaultMaxDate,
+        getDayProps: defaultControlProps,
+        excludeDate: defaultExcludeDate,
+        hideOutsideDates: defaultHideOutsideDates,
+        month: defaultMonth,
+      })
+    ).toStrictEqual(new Date().toISOString().split('T')[0]);
   });
 
   it('returns first non-disabled day in month', () => {
     expect(
-      getDateInTabOrder(
-        getMonthDays({
-          month: new Date(2010, 1, 1),
+      getDateInTabOrder({
+        dates: getMonthDays({
+          month: '2010-02-01',
           firstDayOfWeek: 1,
           consistentWeeks: false,
         }),
-        defaultMinDate,
-        defaultMaxDate,
-        defaultControlProps,
-        defaultExcludeDate,
-        defaultHideOutsideDates,
-        defaultMonth
-      )
-    ).toStrictEqual(new Date(2010, 1, 1));
+        minDate: defaultMinDate,
+        maxDate: defaultMaxDate,
+        getDayProps: defaultControlProps,
+        excludeDate: defaultExcludeDate,
+        hideOutsideDates: defaultHideOutsideDates,
+        month: defaultMonth,
+      })
+    ).toStrictEqual('2010-02-01');
     expect(
-      getDateInTabOrder(
-        defaultDates,
-        new Date(2010, 5, 5),
-        defaultMaxDate,
-        defaultControlProps,
-        defaultExcludeDate,
-        defaultHideOutsideDates,
-        defaultMonth
-      )
-    ).toStrictEqual(new Date(2010, 5, 5));
+      getDateInTabOrder({
+        dates: defaultDates,
+        minDate: '2010-06-05',
+        maxDate: defaultMaxDate,
+        getDayProps: defaultControlProps,
+        excludeDate: defaultExcludeDate,
+        hideOutsideDates: defaultHideOutsideDates,
+        month: defaultMonth,
+      })
+    ).toStrictEqual('2010-06-05');
   });
 
   it('handles excluded date', () => {
     expect(
-      getDateInTabOrder(
-        getMonthDays({
-          month: new Date(2010, 1, 1),
+      getDateInTabOrder({
+        dates: getMonthDays({
+          month: '2010-02-01',
           firstDayOfWeek: 1,
           consistentWeeks: false,
         }),
-        defaultMinDate,
-        defaultMaxDate,
-        defaultControlProps,
-        (date) => dayjs(new Date(2010, 1, 1)).isSame(date, 'date'),
-        defaultHideOutsideDates,
-        defaultMonth
-      )
-    ).toStrictEqual(new Date(2010, 1, 2));
+        minDate: defaultMinDate,
+        maxDate: defaultMaxDate,
+        getDayProps: defaultControlProps,
+        excludeDate: (date) => dayjs('2010-02-01').isSame(date, 'date'),
+        hideOutsideDates: defaultHideOutsideDates,
+        month: defaultMonth,
+      })
+    ).toStrictEqual('2010-02-02');
   });
 
   it('handles hidden outside dates', () => {
     expect(
-      getDateInTabOrder(
-        defaultDates,
-        defaultMinDate,
-        defaultMaxDate,
-        defaultControlProps,
-        defaultExcludeDate,
-        defaultHideOutsideDates,
-        defaultMonth
-      )
-    ).toStrictEqual(new Date(2010, 4, 31));
+      getDateInTabOrder({
+        dates: defaultDates,
+        minDate: defaultMinDate,
+        maxDate: defaultMaxDate,
+        getDayProps: defaultControlProps,
+        excludeDate: defaultExcludeDate,
+        hideOutsideDates: defaultHideOutsideDates,
+        month: defaultMonth,
+      })
+    ).toStrictEqual('2010-05-31');
 
     expect(
-      getDateInTabOrder(
-        defaultDates,
-        defaultMinDate,
-        defaultMaxDate,
-        defaultControlProps,
-        defaultExcludeDate,
-        true,
-        defaultMonth
-      )
-    ).toStrictEqual(new Date(2010, 5, 1));
+      getDateInTabOrder({
+        dates: defaultDates,
+        minDate: defaultMinDate,
+        maxDate: defaultMaxDate,
+        getDayProps: defaultControlProps,
+        excludeDate: defaultExcludeDate,
+        hideOutsideDates: true,
+        month: defaultMonth,
+      })
+    ).toStrictEqual('2010-06-01');
   });
 });

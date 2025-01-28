@@ -88,11 +88,7 @@ export function itSupportsMonthsListProps(options: Options, name = 'supports mon
 
     it('disables months if they are before minDate', () => {
       const { container } = render(
-        <options.component
-          {...options.props}
-          year={new Date(2022, 3, 11)}
-          minDate={new Date(2022, 4, 11)}
-        />
+        <options.component {...options.props} year="2022-04-11" minDate="2022-05-11" />
       );
       const months = container.querySelectorAll('table button');
       expect(months[0]).toBeDisabled();
@@ -104,11 +100,7 @@ export function itSupportsMonthsListProps(options: Options, name = 'supports mon
 
     it('disables months if they are after minDate', () => {
       const { container } = render(
-        <options.component
-          {...options.props}
-          year={new Date(2022, 3, 11)}
-          maxDate={new Date(2022, 4, 11)}
-        />
+        <options.component {...options.props} year="2022-04-11" maxDate="2022-05-11" />
       );
       const months = container.querySelectorAll('table button');
       expect(months[0]).not.toBeDisabled();
@@ -121,8 +113,8 @@ export function itSupportsMonthsListProps(options: Options, name = 'supports mon
       const { container } = render(
         <options.component
           {...options.props}
-          getMonthControlProps={(date: Date) => ({
-            selected: dayjs(date).isSame(new Date(2022, 3, 11), 'month'),
+          getMonthControlProps={(date: string) => ({
+            selected: dayjs(date).isSame('2022-04-11', 'month'),
           })}
         />
       );

@@ -7,5 +7,5 @@ export type CalendarLevel = 'month' | 'year' | 'decade';
 export interface ControlKeydownPayload {
   cellIndex: number;
   rowIndex: number;
-  date: Date;
+  date: DateStringValue;
 }

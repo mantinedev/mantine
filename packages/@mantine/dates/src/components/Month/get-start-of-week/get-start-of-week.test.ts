@@ -2,24 +2,24 @@ import { getStartOfWeek } from './get-start-of-week';
 
 describe('@mantine/dates/get-start-of-week', () => {
   it('returns start of week without first day of week param', () => {
-    expect(getStartOfWeek(new Date(2021, 1, 5))).toStrictEqual(new Date(2021, 1, 1));
+    expect(getStartOfWeek('2021-02-05')).toStrictEqual('2021-02-01');
   });
 
   it('returns start of week with first day param', () => {
-    expect(getStartOfWeek(new Date(2021, 1, 5), 6)).toStrictEqual(new Date(2021, 0, 30));
-    expect(getStartOfWeek(new Date(2021, 1, 5), 5)).toStrictEqual(new Date(2021, 1, 5));
-    expect(getStartOfWeek(new Date(2021, 1, 5), 4)).toStrictEqual(new Date(2021, 1, 4));
-    expect(getStartOfWeek(new Date(2021, 1, 5), 3)).toStrictEqual(new Date(2021, 1, 3));
-    expect(getStartOfWeek(new Date(2021, 1, 5), 2)).toStrictEqual(new Date(2021, 1, 2));
-    expect(getStartOfWeek(new Date(2021, 1, 5), 1)).toStrictEqual(new Date(2021, 1, 1));
-    expect(getStartOfWeek(new Date(2021, 1, 5), 0)).toStrictEqual(new Date(2021, 0, 31));
+    expect(getStartOfWeek('2021-02-05', 6)).toStrictEqual('2021-01-30');
+    expect(getStartOfWeek('2021-02-05', 5)).toStrictEqual('2021-02-05');
+    expect(getStartOfWeek('2021-02-05', 4)).toStrictEqual('2021-02-04');
+    expect(getStartOfWeek('2021-02-05', 3)).toStrictEqual('2021-02-03');
+    expect(getStartOfWeek('2021-02-05', 2)).toStrictEqual('2021-02-02');
+    expect(getStartOfWeek('2021-02-05', 1)).toStrictEqual('2021-02-01');
+    expect(getStartOfWeek('2021-02-05', 0)).toStrictEqual('2021-01-31');
 
-    expect(getStartOfWeek(new Date(2022, 1, 15), 6)).toStrictEqual(new Date(2022, 1, 12));
-    expect(getStartOfWeek(new Date(2022, 1, 15), 5)).toStrictEqual(new Date(2022, 1, 11));
-    expect(getStartOfWeek(new Date(2022, 1, 15), 4)).toStrictEqual(new Date(2022, 1, 10));
-    expect(getStartOfWeek(new Date(2022, 1, 15), 3)).toStrictEqual(new Date(2022, 1, 9));
-    expect(getStartOfWeek(new Date(2022, 1, 15), 2)).toStrictEqual(new Date(2022, 1, 15));
-    expect(getStartOfWeek(new Date(2022, 1, 15), 1)).toStrictEqual(new Date(2022, 1, 14));
-    expect(getStartOfWeek(new Date(2022, 1, 15), 0)).toStrictEqual(new Date(2022, 1, 13));
+    expect(getStartOfWeek('2022-02-15', 6)).toStrictEqual('2022-02-12');
+    expect(getStartOfWeek('2022-02-15', 5)).toStrictEqual('2022-02-11');
+    expect(getStartOfWeek('2022-02-15', 4)).toStrictEqual('2022-02-10');
+    expect(getStartOfWeek('2022-02-15', 3)).toStrictEqual('2022-02-09');
+    expect(getStartOfWeek('2022-02-15', 2)).toStrictEqual('2022-02-15');
+    expect(getStartOfWeek('2022-02-15', 1)).toStrictEqual('2022-02-14');
+    expect(getStartOfWeek('2022-02-15', 0)).toStrictEqual('2022-02-13');
   });
 });

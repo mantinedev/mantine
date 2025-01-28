@@ -15,6 +15,8 @@ import {
 import { DateStringValue } from '../../types';
 import classes from './Day.module.css';
 
+export type RenderDay = (date: DateStringValue) => React.ReactNode;
+
 export type DayStylesNames = 'day';
 export type DayCssVariables = {
   day: '--day-size';
@@ -54,7 +56,7 @@ export interface DayProps extends BoxProps, StylesApiProps<DayFactory>, ElementP
   lastInRange?: boolean;
 
   /** Controls day value rendering */
-  renderDay?: (date: DateStringValue) => React.ReactNode;
+  renderDay?: RenderDay;
 
   /** Determines whether today should be highlighted with a border, `false` by default */
   highlightToday?: boolean;

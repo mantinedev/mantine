@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
-import type { DayOfWeek } from '../../../types';
+import type { DateStringValue, DayOfWeek } from '../../../types';
 
-export function getEndOfWeek(date: Date, firstDayOfWeek: DayOfWeek = 1) {
+export function getEndOfWeek(date: DateStringValue, firstDayOfWeek: DayOfWeek = 1) {
   let value = dayjs(date);
 
   const lastDayOfWeek = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
@@ -9,5 +9,5 @@ export function getEndOfWeek(date: Date, firstDayOfWeek: DayOfWeek = 1) {
     value = value.add(1, 'day');
   }
 
-  return value.toDate();
+  return value.format('YYYY-MM-DD');
 }

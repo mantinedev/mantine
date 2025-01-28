@@ -163,12 +163,7 @@ export function itSupportsDateInputProps(options: Options, name = 'supports date
     it('supports controlled state (type="default")', async () => {
       const spy = jest.fn();
       const { container } = render(
-        <options.component
-          {...options.props}
-          type="default"
-          value={new Date(2022, 3, 11)}
-          onChange={spy}
-        />
+        <options.component {...options.props} type="default" value="2022-04-11" onChange={spy} />
       );
 
       const initialValue = getInputValue(container);
@@ -176,7 +171,7 @@ export function itSupportsDateInputProps(options: Options, name = 'supports date
 
       await clickInput(container);
       await clickControl(container, 0);
-      expect(spy).toHaveBeenCalledWith(expect.any(Date));
+      expect(spy).toHaveBeenCalledWith(expect.any(String));
       expect(getInputValue(container)).toBe(initialValue);
     });
 
@@ -186,7 +181,7 @@ export function itSupportsDateInputProps(options: Options, name = 'supports date
         <options.component
           {...options.props}
           type="range"
-          value={[new Date(2022, 3, 11), null]}
+          value={['2022-04-11', null]}
           onChange={spy}
         />
       );
@@ -196,7 +191,7 @@ export function itSupportsDateInputProps(options: Options, name = 'supports date
 
       await clickInput(container);
       await clickControl(container, 0);
-      expect(spy).toHaveBeenCalledWith(expect.arrayContaining([expect.any(Date)]));
+      expect(spy).toHaveBeenCalledWith(expect.arrayContaining([expect.any(String)]));
       expect(spy).toHaveBeenCalledWith(expect.not.arrayContaining([null]));
       expect(getInputValue(container)).toBe(initialValue);
     });
@@ -207,7 +202,7 @@ export function itSupportsDateInputProps(options: Options, name = 'supports date
         <options.component
           {...options.props}
           type="multiple"
-          value={[new Date(2022, 3, 11)]}
+          value={['2022-04-11']}
           onChange={spy}
         />
       );
@@ -217,7 +212,7 @@ export function itSupportsDateInputProps(options: Options, name = 'supports date
 
       await clickInput(container);
       await clickControl(container, 0);
-      expect(spy).toHaveBeenCalledWith(expect.arrayContaining([expect.any(Date)]));
+      expect(spy).toHaveBeenCalledWith(expect.arrayContaining([expect.any(String)]));
       expect(spy).toHaveBeenCalledWith(expect.not.arrayContaining([null]));
       expect(getInputValue(container)).toBe(initialValue);
     });
@@ -316,7 +311,7 @@ export function itSupportsDateInputProps(options: Options, name = 'supports date
       const { rerender } = render(
         <options.component
           {...options.props}
-          value={new Date(2022, 3, 11)}
+          value="2022-04-11"
           clearable
           readOnly
           clearButtonProps={{ 'aria-label': 'clear-button' }}
@@ -328,7 +323,7 @@ export function itSupportsDateInputProps(options: Options, name = 'supports date
       rerender(
         <options.component
           {...options.props}
-          value={new Date(2022, 3, 11)}
+          value="2022-04-11"
           clearable
           readOnly={false}
           clearButtonProps={{ 'aria-label': 'clear-button' }}
@@ -344,7 +339,7 @@ export function itSupportsDateInputProps(options: Options, name = 'supports date
           {...options.props}
           name="name-hidden"
           form="form-hidden"
-          value={new Date(2022, 3, 11)}
+          value="2022-04-11"
         />
       );
 

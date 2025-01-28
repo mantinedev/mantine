@@ -12,7 +12,7 @@ export function itSupportsOnDayKeydown(options: Options, name = 'supports __onDa
     const { container } = render(
       <options.component
         {...options.props}
-        month={new Date(2022, 3, 11)}
+        month="2022-04-11"
         __onDayKeyDown={(_event: any, payload: any) => {
           spy(payload);
         }}
@@ -20,6 +20,6 @@ export function itSupportsOnDayKeydown(options: Options, name = 'supports __onDa
     );
 
     await userEvent.type(container.querySelector('table button')!, '{space}');
-    expect(spy).toHaveBeenCalledWith({ rowIndex: 0, cellIndex: 0, date: new Date(2022, 2, 28) });
+    expect(spy).toHaveBeenCalledWith({ rowIndex: 0, cellIndex: 0, date: '2022-03-28' });
   });
 }

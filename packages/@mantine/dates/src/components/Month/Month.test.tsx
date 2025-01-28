@@ -3,7 +3,7 @@ import { datesTests } from '@mantine-tests/dates';
 import { Month, MonthProps, MonthStylesNames } from './Month';
 
 const defaultProps: MonthProps = {
-  month: new Date(2022, 3, 2),
+  month: '2022-04-02',
 };
 
 describe('@mantine/dates/Month', () => {
