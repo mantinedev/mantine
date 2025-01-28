@@ -7,28 +7,28 @@ import { useState } from 'react';
 import { MonthPicker } from '@mantine/dates';
 
 function Demo() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [value, setValue] = useState<string | null>(null);
   return (
     <MonthPicker
       value={value}
       onChange={setValue}
-      defaultDate={new Date(2022, 1)}
-      minDate={new Date(2022, 1, 1)}
-      maxDate={new Date(2022, 8, 1)}
+      defaultDate="2022-02-01"
+      minDate="2022-02-01"
+      maxDate="2022-09-01"
     />
   );
 }
 `;
 
 function Demo() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [value, setValue] = useState<string | null>(null);
   return (
     <MonthPicker
       value={value}
       onChange={setValue}
-      defaultDate={new Date(2022, 1)}
-      minDate={new Date(2022, 1, 1)}
-      maxDate={new Date(2022, 8, 1)}
+      defaultDate="2022-02-01"
+      minDate="2022-02-01"
+      maxDate="2022-09-01"
     />
   );
 }

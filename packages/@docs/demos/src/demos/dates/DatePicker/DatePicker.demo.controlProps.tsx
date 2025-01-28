@@ -1,13 +1,17 @@
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { DatePicker, DatePickerProps } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { DatePicker, DatePickerProps } from '@mantine/dates';
 
 const getDayProps: DatePickerProps['getDayProps'] = (date) => {
-  if (date.getDay() === 5 && date.getDate() === 13) {
+  const d = dayjs(date);
+
+  if (d.day() === 5 && d.date() === 13) {
     return {
       style: {
         backgroundColor: 'var(--mantine-color-red-filled)',
@@ -20,7 +24,9 @@ const getDayProps: DatePickerProps['getDayProps'] = (date) => {
 };
 
 const getYearControlProps: DatePickerProps['getYearControlProps'] = (date) => {
-  if (date.getFullYear() === new Date().getFullYear()) {
+  const d = dayjs(date);
+
+  if (d.year() === new Date().getFullYear()) {
     return {
       style: {
         color: 'var(--mantine-color-blue-filled)',
@@ -29,7 +35,7 @@ const getYearControlProps: DatePickerProps['getYearControlProps'] = (date) => {
     };
   }
 
-  if (date.getFullYear() === new Date().getFullYear() + 1) {
+  if (d.year() === new Date().getFullYear() + 1) {
     return { disabled: true };
   }
 
@@ -37,7 +43,8 @@ const getYearControlProps: DatePickerProps['getYearControlProps'] = (date) => {
 };
 
 const getMonthControlProps: DatePickerProps['getMonthControlProps'] = (date) => {
-  if (date.getMonth() === 1) {
+  const d = dayjs(date);
+  if (d.month() === 1) {
     return {
       style: {
         color: 'var(--mantine-color-blue-filled)',
@@ -46,7 +53,7 @@ const getMonthControlProps: DatePickerProps['getMonthControlProps'] = (date) => 
     };
   }
 
-  if (date.getMonth() === 5) {
+  if (d.month() === 5) {
     return { disabled: true };
   }
 
@@ -54,12 +61,12 @@ const getMonthControlProps: DatePickerProps['getMonthControlProps'] = (date) => 
 };
 
 function Demo() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [value, setValue] = useState<string | null>(null);
   return (
     <DatePicker
       value={value}
       onChange={setValue}
-      defaultDate={new Date(2021, 7)}
+      defaultDate="2021-08-01"
       getDayProps={getDayProps}
       getYearControlProps={getYearControlProps}
       getMonthControlProps={getMonthControlProps}
@@ -69,7 +76,9 @@ function Demo() {
 `;
 
 const getDayProps: DatePickerProps['getDayProps'] = (date) => {
-  if (date.getDay() === 5 && date.getDate() === 13) {
+  const d = dayjs(date);
+
+  if (d.day() === 5 && d.date() === 13) {
     return {
       style: {
         backgroundColor: 'var(--mantine-color-red-filled)',
@@ -82,7 +91,9 @@ const getDayProps: DatePickerProps['getDayProps'] = (date) => {
 };
 
 const getYearControlProps: DatePickerProps['getYearControlProps'] = (date) => {
-  if (date.getFullYear() === new Date().getFullYear()) {
+  const d = dayjs(date);
+
+  if (d.year() === new Date().getFullYear()) {
     return {
       style: {
         color: 'var(--mantine-color-blue-filled)',
@@ -91,7 +102,7 @@ const getYearControlProps: DatePickerProps['getYearControlProps'] = (date) => {
     };
   }
 
-  if (date.getFullYear() === new Date().getFullYear() + 1) {
+  if (d.year() === new Date().getFullYear() + 1) {
     return { disabled: true };
   }
 
@@ -99,7 +110,8 @@ const getYearControlProps: DatePickerProps['getYearControlProps'] = (date) => {
 };
 
 const getMonthControlProps: DatePickerProps['getMonthControlProps'] = (date) => {
-  if (date.getMonth() === 1) {
+  const d = dayjs(date);
+  if (d.month() === 1) {
     return {
       style: {
         color: 'var(--mantine-color-blue-filled)',
@@ -108,7 +120,7 @@ const getMonthControlProps: DatePickerProps['getMonthControlProps'] = (date) => 
     };
   }
 
-  if (date.getMonth() === 5) {
+  if (d.month() === 5) {
     return { disabled: true };
   }
 
@@ -116,12 +128,12 @@ const getMonthControlProps: DatePickerProps['getMonthControlProps'] = (date) => 
 };
 
 function Demo() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [value, setValue] = useState<string | null>(null);
   return (
     <DatePicker
       value={value}
       onChange={setValue}
-      defaultDate={new Date(2021, 7)}
+      defaultDate="2021-08-01"
       getDayProps={getDayProps}
       getYearControlProps={getYearControlProps}
       getMonthControlProps={getMonthControlProps}

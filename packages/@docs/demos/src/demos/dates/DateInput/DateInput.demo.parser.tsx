@@ -8,10 +8,10 @@ import { DateInput, DateInputProps } from '@mantine/dates';
 
 const dateParser: DateInputProps['dateParser'] = (input) => {
   if (input === 'WW2') {
-    return new Date(1939, 8, 1);
+    return '1939-09-01';
   }
 
-  return dayjs(input, 'DD/MM/YYYY').toDate();
+  return dayjs(input, 'DD/MM/YYYY').format('YYYY-MM-DD');
 };
 
 function Demo() {
@@ -28,10 +28,10 @@ function Demo() {
 
 const dateParser: DateInputProps['dateParser'] = (input) => {
   if (input === 'WW2') {
-    return new Date(1939, 8, 1);
+    return '1939-09-01';
   }
 
-  return dayjs(input, 'DD/MM/YYYY').toDate();
+  return dayjs(input, 'DD/MM/YYYY').format('YYYY-MM-DD');
 };
 
 function Demo() {

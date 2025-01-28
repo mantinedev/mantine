@@ -9,7 +9,7 @@ import { DatesProvider, MonthPickerInput, DatePickerInput } from '@mantine/dates
 
 function Demo() {
   return (
-    <DatesProvider settings={{ locale: 'ru', firstDayOfWeek: 0, weekendDays: [0], timezone: 'UTC' }}>
+    <DatesProvider settings={{ locale: 'ru', firstDayOfWeek: 0, weekendDays: [0] }}>
       <MonthPickerInput label="Pick month" placeholder="Pick month" />
       <DatePickerInput mt="md" label="Pick date" placeholder="Pick date" />
     </DatesProvider>
@@ -19,9 +19,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <DatesProvider
-      settings={{ locale: 'ru', firstDayOfWeek: 0, weekendDays: [0], timezone: 'UTC' }}
-    >
+    <DatesProvider settings={{ locale: 'ru', firstDayOfWeek: 0, weekendDays: [0] }}>
       <MonthPickerInput label="Pick month" placeholder="Pick month" />
       <DatePickerInput mt="md" label="Pick date" placeholder="Pick date" />
     </DatesProvider>

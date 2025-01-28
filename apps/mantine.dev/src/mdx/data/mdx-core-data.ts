@@ -1103,7 +1103,6 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     styles: ['TableOfContents'],
     description:
       'Renders a list of headings on the page and tracks current heading visible in the viewport',
-    import: "import { TableOfContents } from '@mantine/core';",
     source: '@mantine/core/src/components/TableOfContents/TableOfContents.tsx',
     docs: 'core/table-of-contents.mdx',
   },

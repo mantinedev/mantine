@@ -1,13 +1,15 @@
+import dayjs from 'dayjs';
 import { MantineDemo } from '@mantinex/demo';
 
 const getCode = (name: string) => `
+import dayjs from 'dayjs';
 import { ${name} } from '@mantine/dates';
 
 function Demo() {
   return (
     <${name}
       clearable
-      defaultValue={new Date()}
+      defaultValue={dayjs().format('YYYY-MM-DD')}
       label="Pick date"
       placeholder="Pick date"
     />
@@ -17,7 +19,12 @@ function Demo() {
 
 function getDemo(Component: React.FC<any>) {
   return () => (
-    <Component clearable defaultValue={new Date()} label="Pick date" placeholder="Pick date" />
+    <Component
+      clearable
+      defaultValue={dayjs().format('YYYY-MM-DD')}
+      label="Pick date"
+      placeholder="Pick date"
+    />
   );
 }
 

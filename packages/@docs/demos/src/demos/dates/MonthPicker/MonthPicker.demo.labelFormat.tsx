@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { MonthPicker } from '@mantine/dates';
 
 function Demo() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [value, setValue] = useState<string | null>(null);
   return (
     <MonthPicker
       decadeLabelFormat="YY"
@@ -20,7 +20,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [value, setValue] = useState<string | null>(null);
   return (
     <MonthPicker
       decadeLabelFormat="YY"

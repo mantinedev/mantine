@@ -25,7 +25,7 @@ const formatter: DateFormatter = ({ type, date, locale, format }) => {
 };
 
 function Demo() {
-  const [value, setValue] = useState<Date[]>([]);
+  const [value, setValue] = useState<string[]>([]);
 
   return (
     <${name}
@@ -58,7 +58,7 @@ const formatter: DateFormatter = ({ type, date, locale, format }) => {
 
 function getDemo(Component: React.FC<any>) {
   return () => {
-    const [value, setValue] = useState<Date[]>([]);
+    const [value, setValue] = useState<string[]>([]);
 
     return (
       <Component

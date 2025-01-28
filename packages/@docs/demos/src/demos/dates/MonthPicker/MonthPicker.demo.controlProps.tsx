@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { MonthPicker, MonthPickerProps } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
@@ -54,7 +55,7 @@ function Demo() {
 `;
 
 const getYearControlProps: MonthPickerProps['getYearControlProps'] = (date) => {
-  if (date.getFullYear() === new Date().getFullYear()) {
+  if (dayjs(date).year() === new Date().getFullYear()) {
     return {
       style: {
         color: 'var(--mantine-color-blue-filled)',
@@ -63,7 +64,7 @@ const getYearControlProps: MonthPickerProps['getYearControlProps'] = (date) => {
     };
   }
 
-  if (date.getFullYear() === new Date().getFullYear() + 1) {
+  if (dayjs(date).year() === new Date().getFullYear() + 1) {
     return { disabled: true };
   }
 
@@ -71,7 +72,7 @@ const getYearControlProps: MonthPickerProps['getYearControlProps'] = (date) => {
 };
 
 const getMonthControlProps: MonthPickerProps['getMonthControlProps'] = (date) => {
-  if (date.getMonth() === 1) {
+  if (dayjs(date).month() === 1) {
     return {
       style: {
         color: 'var(--mantine-color-blue-filled)',
@@ -80,7 +81,7 @@ const getMonthControlProps: MonthPickerProps['getMonthControlProps'] = (date) =>
     };
   }
 
-  if (date.getMonth() === 5) {
+  if (dayjs(date).month() === 5) {
     return { disabled: true };
   }
 
@@ -88,7 +89,7 @@ const getMonthControlProps: MonthPickerProps['getMonthControlProps'] = (date) =>
 };
 
 function Demo() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [value, setValue] = useState<string | null>(null);
   return (
     <MonthPicker
       value={value}

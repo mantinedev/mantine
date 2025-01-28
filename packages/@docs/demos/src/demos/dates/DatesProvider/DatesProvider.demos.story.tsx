@@ -8,11 +8,6 @@ export const Demo_usage = {
   render: renderDemo(demos.usage),
 };
 
-export const Demo_timezone = {
-  name: '⭐ Demo: timezone',
-  render: renderDemo(demos.timezone),
-};
-
 export const Demo_consistentWeeks = {
   name: '⭐ Demo: consistentWeeks',
   render: renderDemo(demos.consistentWeeks),

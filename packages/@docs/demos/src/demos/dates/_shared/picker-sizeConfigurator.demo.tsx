@@ -1,15 +1,17 @@
+import dayjs from 'dayjs';
 import { MantineDemo } from '@mantinex/demo';
 
 const getCodeTemplate = (component: string) =>
-  `import { ${component} } from '@mantine/dates';
+  `import dayjs from 'dayjs';
+import { ${component} } from '@mantine/dates';
 
 function Demo() {
-  return <${component} defaultValue={new Date()}{{props}} />;
+  return <${component} defaultValue={dayjs().format('YYYY-MM-DD')}{{props}} />;
 }
 `;
 
 function getDemo(Component: React.FC<any>) {
-  return (props: any) => <Component defaultValue={new Date()} {...props} />;
+  return (props: any) => <Component defaultValue={dayjs().format('YYYY-MM-DD')} {...props} />;
 }
 
 export function getPickerSizeConfiguratorDemo(Component: React.FC<any>): MantineDemo {

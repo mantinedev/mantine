@@ -20,8 +20,8 @@ function RangeCalendarWrapper() {
         <DatePicker
           type="range"
           defaultValue={[
-            dayjs(new Date()).startOf('month').add(3, 'days').toDate(),
-            dayjs(new Date()).startOf('month').add(8, 'days').toDate(),
+            dayjs(new Date()).startOf('month').add(3, 'days').format('YYYY-MM-DD'),
+            dayjs(new Date()).startOf('month').add(8, 'days').format('YYYY-MM-DD'),
           ]}
         />
       </Paper>

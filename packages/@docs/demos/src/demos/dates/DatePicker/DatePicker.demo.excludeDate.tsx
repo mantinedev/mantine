@@ -5,12 +5,12 @@ const code = `
 import { DatePicker } from '@mantine/dates';
 
 function Demo() {
-  return <DatePicker excludeDate={(date) => date.getDay() !== 5} />;
+  return <DatePicker excludeDate={(date) => new Date(date).getDay() !== 5} />;
 }
 `;
 
 function Demo() {
-  return <DatePicker excludeDate={(date) => date.getDay() !== 5} />;
+  return <DatePicker excludeDate={(date) => new Date(date).getDay() !== 5} />;
 }
 
 export const excludeDate: MantineDemo = {

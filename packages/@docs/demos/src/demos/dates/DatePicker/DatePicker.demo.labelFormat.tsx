@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { DatePicker } from '@mantine/dates';
 
 function Demo() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [value, setValue] = useState<string | null>(null);
   return (
     <DatePicker
       defaultLevel="decade"
@@ -22,7 +22,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [value, setValue] = useState<string | null>(null);
   return (
     <DatePicker
       defaultLevel="decade"

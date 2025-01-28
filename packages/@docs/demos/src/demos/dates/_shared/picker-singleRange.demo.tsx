@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { ${name} } from '@mantine/dates';
 
 function Demo() {
-  const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
+  const [value, setValue] = useState<[string | null, string | null]>([null, null]);
   return (
     <${name} type="range" allowSingleDateInRange value={value} onChange={setValue} />
   );
@@ -15,7 +15,7 @@ function Demo() {
 
 function getDemo(Component: React.FC<any>) {
   return () => {
-    const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
+    const [value, setValue] = useState<[string | null, string | null]>([null, null]);
     return <Component type="range" allowSingleDateInRange value={value} onChange={setValue} />;
   };
 }

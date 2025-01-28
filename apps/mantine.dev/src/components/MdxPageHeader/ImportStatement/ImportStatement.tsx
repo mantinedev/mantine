@@ -20,12 +20,7 @@ export function ImportStatement({ code }: ImportStatementProps) {
         disabled={mobile}
       >
         <UnstyledButton className={classes.copy} type="button" onClick={() => clipboard.copy(code)}>
-          <InlineCodeHighlight
-            className={classes.code}
-            language="tsx"
-            styles={{ code: { padding: 0, margin: 0 } }}
-            code={code}
-          />
+          <InlineCodeHighlight className={classes.code} language="tsx" code={code} />
         </UnstyledButton>
       </Tooltip>
     </HeaderItem>

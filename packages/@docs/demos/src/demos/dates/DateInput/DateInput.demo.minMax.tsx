@@ -9,8 +9,8 @@ import { DateInput } from '@mantine/dates';
 function Demo() {
   return (
     <DateInput
-      minDate={new Date()}
-      maxDate={dayjs(new Date()).add(1, 'month').toDate()}
+      minDate={dayjs().format('YYYY-MM-DD')}
+      maxDate={dayjs().add(1, 'month').format('YYYY-MM-DD')}
       label="Date input"
       placeholder="Date input"
     />
@@ -21,8 +21,8 @@ function Demo() {
 function Demo() {
   return (
     <DateInput
-      minDate={new Date()}
-      maxDate={dayjs(new Date()).add(1, 'month').toDate()}
+      minDate={dayjs().format('YYYY-MM-DD')}
+      maxDate={dayjs().add(1, 'month').format('YYYY-MM-DD')}
       label="Date input"
       placeholder="Date input"
     />

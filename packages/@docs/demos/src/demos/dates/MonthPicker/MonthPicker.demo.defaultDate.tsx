@@ -7,14 +7,14 @@ import { useState } from 'react';
 import { MonthPicker } from '@mantine/dates';
 
 function Demo() {
-  const [value, setValue] = useState<Date | null>(null);
-  return <MonthPicker defaultDate={new Date(2015, 1)} value={value} onChange={setValue} />;
+  const [value, setValue] = useState<string | null>(null);
+  return <MonthPicker defaultDate="2015-02-01" value={value} onChange={setValue} />;
 }
 `;
 
 function Demo() {
-  const [value, setValue] = useState<Date | null>(null);
-  return <MonthPicker defaultDate={new Date(2015, 1)} value={value} onChange={setValue} />;
+  const [value, setValue] = useState<string | null>(null);
+  return <MonthPicker defaultDate="2015-02-01" value={value} onChange={setValue} />;
 }
 
 export const defaultDate: MantineDemo = {

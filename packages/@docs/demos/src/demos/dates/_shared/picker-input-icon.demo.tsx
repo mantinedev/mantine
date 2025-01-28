@@ -8,7 +8,7 @@ import { IconCalendar } from '@tabler/icons-react';
 import { ${name} } from '@mantine/dates';
 
 function Demo() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [value, setValue] = useState<string | null>(null);
   const icon = <IconCalendar size={18} stroke={1.5} />;
   return (
     <${name}
@@ -25,7 +25,7 @@ function Demo() {
 
 function getDemo(Component: React.FC<any>) {
   return () => {
-    const [value, setValue] = useState<Date | null>(null);
+    const [value, setValue] = useState<string | null>(null);
     return (
       <Component
         leftSection={<IconCalendar size={18} stroke={1.5} />}
