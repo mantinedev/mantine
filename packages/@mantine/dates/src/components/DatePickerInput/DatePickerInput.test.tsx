@@ -45,14 +45,14 @@ describe('@mantine/dates/DatePickerInput', () => {
   datesTests.itSupportsDateInputProps({ component: DatePickerInput, props: defaultProps });
   datesTests.itSupportsClearableProps({
     component: DatePickerInput,
-    props: { ...defaultProps, defaultValue: new Date() },
+    props: { ...defaultProps, defaultValue: '2022-04-11' },
   });
   datesTests.itSupportsYearsListProps({
     component: DatePickerInput,
     props: {
       ...defaultProps,
       defaultLevel: 'decade',
-      defaultValue: new Date(2022, 3, 11),
+      defaultValue: '2022-04-11',
       popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
     },
   });
@@ -62,14 +62,14 @@ describe('@mantine/dates/DatePickerInput', () => {
     props: {
       ...defaultProps,
       defaultLevel: 'year',
-      defaultValue: new Date(2022, 3, 11),
+      defaultValue: '2022-04-11',
       popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
     },
   });
 
   it('supports valueFormat prop', () => {
     const { container, rerender } = render(
-      <DatePickerInput {...defaultProps} valueFormat="MMMM" value={new Date(2022, 3, 11)} />
+      <DatePickerInput {...defaultProps} valueFormat="MMMM" value="2022-04-11" />
     );
     expectValue(container, 'April');
 
@@ -78,7 +78,7 @@ describe('@mantine/dates/DatePickerInput', () => {
         {...defaultProps}
         type="multiple"
         valueFormat="MMMM"
-        value={[new Date(2022, 3, 11), new Date(2022, 4, 11)]}
+        value={['2022-04-11', '2022-05-11']}
       />
     );
     expectValue(container, 'April, May');
@@ -88,7 +88,7 @@ describe('@mantine/dates/DatePickerInput', () => {
         {...defaultProps}
         type="range"
         valueFormat="MMMM"
-        value={[new Date(2022, 3, 11), new Date(2022, 4, 11)]}
+        value={['2022-04-11', '2022-05-11']}
       />
     );
     expectValue(container, 'April – May');
@@ -111,11 +111,11 @@ describe('@mantine/dates/DatePickerInput', () => {
   it('supports controlled state (dropdown click)', async () => {
     const spy = jest.fn();
     const { container } = render(
-      <DatePickerInput {...defaultProps} value={new Date(2022, 3, 11)} onChange={spy} />
+      <DatePickerInput {...defaultProps} value="2022-04-11" onChange={spy} />
     );
     await clickInput(container);
     await clickControl(container, 4);
     expectValue(container, 'April 11, 2022');
-    expect(spy).toHaveBeenCalledWith(new Date(2022, 3, 1));
+    expect(spy).toHaveBeenCalledWith('2022-04-01');
   });
 });

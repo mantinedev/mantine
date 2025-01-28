@@ -46,11 +46,7 @@ export function Unstyled() {
 export function MaxDateBeforeToday() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DatePickerInput
-        label="Date picker input"
-        placeholder="Pick date"
-        maxDate={new Date(2020, 0, 11)}
-      />
+      <DatePickerInput label="Date picker input" placeholder="Pick date" maxDate="2020-01-11" />
     </div>
   );
 }
@@ -58,18 +54,13 @@ export function MaxDateBeforeToday() {
 export function MinDateBeforeToday() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DatePickerInput
-        label="Date picker input"
-        placeholder="Pick date"
-        minDate={new Date(2028, 0, 11)}
-      />
+      <DatePickerInput label="Date picker input" placeholder="Pick date" minDate="2028-01-11" />
     </div>
   );
 }
 
 export function DisabledCurrentDate() {
-  const nextMonth = new Date();
-  nextMonth.setMonth(nextMonth.getMonth() + 1);
+  const nextMonth = dayjs().add(1, 'month').format('YYYY-MM-DD');
 
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
@@ -77,7 +68,7 @@ export function DisabledCurrentDate() {
         label="Date picker input"
         placeholder="Pick date"
         minDate={nextMonth}
-        defaultValue={new Date()}
+        defaultValue={dayjs().format('YYYY-MM-DD')}
       />
     </div>
   );
@@ -112,8 +103,9 @@ export function LocaleChangesDatesProvider() {
 }
 
 export function ControlledValues() {
-  const [value, setValue] = useState<Date | null>(new Date());
-  const incrementDate = () => setValue((current) => dayjs(current!).subtract(-1, 'month').toDate());
+  const [value, setValue] = useState<string | null>(dayjs().format('YYYY-MM-DD'));
+  const incrementDate = () =>
+    setValue((current) => dayjs(current!).add(1, 'month').format('YYYY-MM-DD'));
 
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
@@ -125,7 +117,7 @@ export function ControlledValues() {
       />
       <Group mt="md">
         <Button onClick={incrementDate}>Increment</Button>
-        <Button onClick={() => setValue(new Date())}>Today</Button>
+        <Button onClick={() => setValue(dayjs().format('YYYY-MM-DD'))}>Today</Button>
       </Group>
     </div>
   );
@@ -139,7 +131,7 @@ export function ReadOnly() {
         mt="md"
         label="Read only with value"
         placeholder="Pick date"
-        defaultValue={new Date(2022, 3, 11)}
+        defaultValue="2022-04-11"
         clearable
         readOnly
       />
@@ -192,8 +184,10 @@ export function SelectedDisabledDate() {
     <div style={{ padding: 40 }}>
       <DatePickerInput
         label="Date picker input"
-        defaultValue={new Date()}
-        getDayProps={(date) => ({ disabled: dayjs(date).isSame(new Date(), 'day') })}
+        defaultValue={dayjs().format('YYYY-MM-DD')}
+        getDayProps={(date) => ({
+          disabled: dayjs(date).isSame(dayjs().format('YYYY-MM-DD'), 'day'),
+        })}
       />
     </div>
   );
@@ -202,7 +196,7 @@ export function SelectedDisabledDate() {
 export function WithMaxDate() {
   return (
     <div style={{ padding: 40 }}>
-      <DatePickerInput label="Date picker input" maxDate={new Date()} />
+      <DatePickerInput label="Date picker input" maxDate={dayjs().format('YYYY-MM-DD')} />
     </div>
   );
 }
@@ -234,8 +228,8 @@ export function Sizes() {
 export function DefaultDate() {
   return (
     <div style={{ padding: 40 }}>
-      <DatePickerInput defaultDate={new Date('1990/01/01')} />
-      <DatePickerInput defaultDate={new Date()} />
+      <DatePickerInput defaultDate="1990-01-01" />
+      <DatePickerInput defaultDate={dayjs().format('YYYY-MM-DD')} />
     </div>
   );
 }
@@ -245,7 +239,7 @@ export function DarkColorSchemeDemo() {
     <SimpleGrid maw={1040} cols={2} p={80} spacing="xl" verticalSpacing="md">
       <DatePickerInput
         type="range"
-        defaultValue={[new Date(2024, 9, 12), new Date(2024, 9, 17)]}
+        defaultValue={['2024-10-12', '2024-10-17']}
         label="Date range picker"
         size="lg"
         radius="md"
