@@ -3,7 +3,7 @@ import { datesTests } from '@mantine-tests/dates';
 import { MonthLevel, MonthLevelProps, MonthLevelStylesNames } from './MonthLevel';
 
 const defaultProps: MonthLevelProps = {
-  month: new Date(2022, 3, 11),
+  month: '2022-04-11',
   levelControlAriaLabel: 'level-control',
   nextLabel: 'next',
   previousLabel: 'prev',
@@ -66,7 +66,7 @@ describe('@mantine/dates/MonthLevel', () => {
     render(
       <MonthLevel
         {...defaultProps}
-        monthLabelFormat={(date) => `${date.getMonth()}/${date.getFullYear()}`}
+        monthLabelFormat={(date) => `${new Date(date).getMonth()}/${new Date(date).getFullYear()}`}
       />
     );
 
@@ -90,12 +90,12 @@ describe('@mantine/dates/MonthLevel', () => {
   });
 
   it('disables next control if maxDate is before end of month', () => {
-    render(<MonthLevel {...defaultProps} maxDate={new Date(2022, 3, 11)} />);
+    render(<MonthLevel {...defaultProps} maxDate="2022-04-11" />);
     expect(screen.getByLabelText('next')).toBeDisabled();
   });
 
   it('disables previous control if minDate is after start of month', () => {
-    render(<MonthLevel {...defaultProps} minDate={new Date(2022, 3, 11)} />);
+    render(<MonthLevel {...defaultProps} minDate="2022-04-11" />);
     expect(screen.getByLabelText('prev')).toBeDisabled();
   });
 });

@@ -7,15 +7,15 @@ import { MonthLevel, MonthLevelProps } from './MonthLevel';
 export default { title: 'MonthLevel' };
 
 function Wrapper(props: Partial<MonthLevelProps>) {
-  const [month, setMonth] = useState(new Date(2022, 3, 11));
+  const [month, setMonth] = useState('2022-04-11');
 
   const onNextMonth = () =>
-    setMonth((current) => dayjs(current.toISOString()).subtract(-1, 'month').toDate());
+    setMonth((current) => dayjs(current).add(1, 'month').format('YYYY-MM-DD'));
   const onPrevMonth = () =>
-    setMonth((current) => dayjs(current.toISOString()).subtract(1, 'month').toDate());
+    setMonth((current) => dayjs(current).subtract(1, 'month').format('YYYY-MM-DD'));
 
   return (
-    <div style={{ padding: 40 }}>
+    <div>
       <MonthLevel month={month} onNext={onNextMonth} onPrevious={onPrevMonth} {...props} />
     </div>
   );
@@ -30,7 +30,7 @@ export function Locale() {
 }
 
 export function RenderMonthLabel() {
-  return <Wrapper monthLabelFormat={(date) => `${date.getMonth()}/${date.getFullYear()}`} />;
+  return <Wrapper monthLabelFormat={(date) => `${dayjs(date).format('MM/YYYY')}`} />;
 }
 
 export function Unstyled() {
@@ -38,11 +38,11 @@ export function Unstyled() {
 }
 
 export function MinDate() {
-  return <Wrapper minDate={new Date(2022, 3, 11)} />;
+  return <Wrapper minDate="2022-04-11" />;
 }
 
 export function MaxDate() {
-  return <Wrapper maxDate={new Date(2022, 3, 11)} />;
+  return <Wrapper maxDate="2022-04-11" />;
 }
 
 export function Sizes() {
