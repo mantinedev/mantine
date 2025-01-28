@@ -7,7 +7,7 @@ export default { title: 'DateTimePicker' };
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DateTimePicker placeholder="Date time picker" clearable withSeconds />
+      <DateTimePicker placeholder="Date time picker" clearable onChange={console.log} />
     </div>
   );
 }
@@ -37,18 +37,14 @@ export function WithSeconds() {
 }
 
 export function MinMaxDate() {
-  const minDate = new Date();
-  minDate.setHours(0, 30, 0, 0);
-
-  const maxDate = new Date();
-  maxDate.setDate(maxDate.getDate() + 5);
-  maxDate.setHours(22, 30, 0, 0);
+  const minDate = new Date().toISOString().split('T')[0];
+  const maxDate = new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
 
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <div style={{ marginBottom: 20 }}>
-        <div>Min date: {minDate.toLocaleString()}</div>
-        <div>Max date: {maxDate.toLocaleString()}</div>
+        <div>Min date: {minDate}</div>
+        <div>Max date: {maxDate}</div>
       </div>
       <DateTimePicker
         placeholder="Date time picker"
@@ -61,7 +57,7 @@ export function MinMaxDate() {
 }
 
 export function Controlled() {
-  const [value, setValue] = useState<Date | null>(new Date(2022, 3, 11));
+  const [value, setValue] = useState<string | null>('2022-04-11');
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateTimePicker
@@ -72,7 +68,7 @@ export function Controlled() {
       />
       <Group mt="xl">
         <Button onClick={() => setValue(null)}>Set null</Button>
-        <Button onClick={() => setValue(new Date())}>Set date</Button>
+        <Button onClick={() => setValue(new Date().toISOString().split('T')[0])}>Set date</Button>
       </Group>
     </div>
   );
@@ -82,7 +78,7 @@ export function Sizes() {
   const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
     <DateTimePicker
       placeholder="Date time picker"
-      defaultValue={new Date(2022, 3, 11)}
+      defaultValue="2022-04-11"
       clearable
       size={size}
       key={size}

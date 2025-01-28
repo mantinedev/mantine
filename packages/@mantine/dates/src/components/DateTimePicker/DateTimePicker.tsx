@@ -15,7 +15,7 @@ import {
 } from '@mantine/core';
 import { useDidUpdate, useDisclosure, useMergedRef } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
-import { CalendarLevel, DateValue } from '../../types';
+import { CalendarLevel, DateStringValue, DateValue } from '../../types';
 import { assignTime, clampDate } from '../../utils';
 import {
   CalendarBaseProps,
@@ -145,7 +145,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     onChange,
   });
 
-  const formatTime = (dateValue: Date) =>
+  const formatTime = (dateValue: DateStringValue) =>
     dateValue ? dayjs(dateValue).format(withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
 
   const [timeValue, setTimeValue] = useState(formatTime(_value!));
@@ -161,19 +161,13 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     setTimeValue(timeString);
 
     if (timeString) {
-      const [hours, minutes, seconds] = timeString.split(':').map(Number);
-      const timeDate = new Date();
-      timeDate.setHours(hours);
-      timeDate.setMinutes(minutes);
-      timeDate.setSeconds(seconds || 0);
-      timeDate.setMilliseconds(0);
-      setValue(assignTime(timeDate, _value || new Date()));
+      setValue(assignTime(_value, timeString));
     }
   };
 
   const handleDateChange = (date: DateValue) => {
     if (date) {
-      setValue(clampDate(minDate, maxDate, assignTime(_value, date)));
+      setValue(clampDate(minDate, maxDate, date));
     }
     timePickerRef.current?.focus();
   };
@@ -201,7 +195,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
 
   const handleDropdownClose = () => {
     const clamped = clampDate(minDate, maxDate, _value);
-    if (_value && _value.toISOString() !== clamped.toISOString()) {
+    if (_value && _value !== clamped) {
       setValue(clampDate(minDate, maxDate, _value));
     }
   };

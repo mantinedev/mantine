@@ -1,6 +1,11 @@
 import dayjs from 'dayjs';
+import { DateStringValue } from '../types';
 
-export function clampDate(minDate: Date | undefined, maxDate: Date | undefined, date: Date) {
+export function clampDate(
+  minDate: DateStringValue | undefined,
+  maxDate: DateStringValue | undefined,
+  date: DateStringValue
+): DateStringValue {
   if (!minDate && !maxDate) {
     return date;
   }
