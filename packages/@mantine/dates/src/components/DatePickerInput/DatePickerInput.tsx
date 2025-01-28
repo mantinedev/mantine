@@ -146,7 +146,6 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
           minDate={minDate}
           maxDate={maxDate}
           date={shiftTimezone('add', calendarProps.date, ctx.getTimezone())}
-          __timezoneApplied
         />
       </PickerInputBase>
     );

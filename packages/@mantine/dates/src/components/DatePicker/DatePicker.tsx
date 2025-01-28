@@ -82,7 +82,6 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     hideOutsideDates,
     __onDayMouseEnter,
     __onDayClick,
-    __timezoneApplied,
     ...others
   } = props;
 
@@ -95,7 +94,6 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     defaultValue,
     onChange: onChange as any,
     onMouseLeave,
-    applyTimezone: !__timezoneApplied,
   });
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<DatePickerFactory>({
@@ -128,8 +126,6 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
         ...getDayProps?.(date),
       })}
       {...others}
-      date={shiftTimezone('add', others.date, ctx.getTimezone(), __timezoneApplied)}
-      __timezoneApplied
     />
   );
 }) as any;

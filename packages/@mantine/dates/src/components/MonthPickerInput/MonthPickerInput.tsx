@@ -150,7 +150,6 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
           __stopPropagation={dropdownType === 'popover'}
           minDate={minDate}
           maxDate={maxDate}
-          __timezoneApplied
         />
       </PickerInputBase>
     );

@@ -248,7 +248,6 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
           setCurrentLevel(_level);
           calendarProps.onLevelChange?.(_level);
         }}
-        __timezoneApplied
       />
 
       {currentLevel === 'month' && (

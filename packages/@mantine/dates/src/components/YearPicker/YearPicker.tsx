@@ -9,10 +9,8 @@ import {
   useResolvedStylesApi,
 } from '@mantine/core';
 import { useDatesState } from '../../hooks';
-import { DatePickerType, PickerBaseProps } from '../../types';
-import { shiftTimezone } from '../../utils';
+import { DatePickerType, DateStringValue, PickerBaseProps } from '../../types';
 import { Calendar, CalendarBaseProps } from '../Calendar';
-import { useDatesContext } from '../DatesProvider';
 import { DecadeLevelBaseSettings } from '../DecadeLevel';
 import { DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
 
@@ -32,7 +30,7 @@ export interface YearPickerProps<Type extends DatePickerType = 'default'>
     StylesApiProps<YearPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   /** Called when year is selected */
-  onYearSelect?: (date: Date) => void;
+  onYearSelect?: (date: DateStringValue) => void;
 }
 
 export type YearPickerFactory = Factory<{
@@ -68,7 +66,6 @@ export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_prop
     onMouseLeave,
     onYearSelect,
     __updateDateOnYearSelect,
-    __timezoneApplied,
     ...others
   } = props;
 
@@ -81,7 +78,6 @@ export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_prop
     defaultValue,
     onChange: onChange as any,
     onMouseLeave,
-    applyTimezone: !__timezoneApplied,
   });
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<YearPickerFactory>({
@@ -89,7 +85,6 @@ export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_prop
     styles,
     props,
   });
-  const ctx = useDatesContext();
 
   return (
     <Calendar
@@ -110,8 +105,6 @@ export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_prop
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       {...others}
-      date={shiftTimezone('add', others.date, ctx.getTimezone(), __timezoneApplied)}
-      __timezoneApplied
     />
   );
 }) as any;

@@ -77,9 +77,6 @@ export interface CalendarSettings
 export interface CalendarBaseProps {
   __staticSelector?: string;
 
-  /** Internal Variable to check if timezones were applied by parent component */
-  __timezoneApplied?: boolean;
-
   /** Prevents focus shift when buttons are clicked */
   __preventFocus?: boolean;
 

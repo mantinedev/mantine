@@ -82,7 +82,6 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
     onMouseLeave,
     onMonthSelect,
     __updateDateOnMonthSelect,
-    __timezoneApplied,
     onLevelChange,
     ...others
   } = props;
@@ -96,7 +95,6 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
     defaultValue,
     onChange: onChange as any,
     onMouseLeave,
-    applyTimezone: !__timezoneApplied,
   });
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<MonthPickerFactory>({
@@ -126,8 +124,6 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
       styles={resolvedStyles}
       onLevelChange={onLevelChange as any}
       {...others}
-      date={shiftTimezone('add', others.date, ctx.getTimezone(), __timezoneApplied)}
-      __timezoneApplied
     />
   );
 }) as any;

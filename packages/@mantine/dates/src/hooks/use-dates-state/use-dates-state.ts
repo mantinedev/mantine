@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { DatePickerType, PickerBaseProps } from '../../types';
+import { DatePickerType, DateStringValue, PickerBaseProps } from '../../types';
 import { useUncontrolledDates } from '../use-uncontrolled-dates/use-uncontrolled-dates';
 import { isInRange } from './is-in-range/is-in-range';
 
@@ -9,7 +9,6 @@ interface UseDatesRangeInput<Type extends DatePickerType = 'default'>
   level: 'year' | 'month' | 'day';
   type: Type;
   onMouseLeave?: (event: React.MouseEvent<HTMLDivElement>) => void;
-  applyTimezone?: boolean;
 }
 
 export function useDatesState<Type extends DatePickerType = 'default'>({
@@ -21,24 +20,22 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
   allowSingleDateInRange,
   allowDeselect,
   onMouseLeave,
-  applyTimezone = true,
 }: UseDatesRangeInput<Type>) {
   const [_value, setValue] = useUncontrolledDates({
     type,
     value,
     defaultValue,
     onChange,
-    applyTimezone,
   });
 
-  const [pickedDate, setPickedDate] = useState<Date | null>(
+  const [pickedDate, setPickedDate] = useState<DateStringValue | null>(
     type === 'range' ? (_value[0] && !_value[1] ? _value[0] : null) : null
   );
-  const [hoveredDate, setHoveredDate] = useState<Date | null>(null);
+  const [hoveredDate, setHoveredDate] = useState<DateStringValue | null>(null);
 
-  const onDateChange = (date: Date) => {
+  const onDateChange = (date: DateStringValue) => {
     if (type === 'range') {
-      if (pickedDate instanceof Date && !_value[1]) {
+      if (pickedDate && !_value[1]) {
         if (dayjs(date).isSame(pickedDate, level) && !allowSingleDateInRange) {
           setPickedDate(null);
           setHoveredDate(null);
@@ -46,8 +43,8 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
           return;
         }
 
-        const result: [Date, Date] = [date, pickedDate];
-        result.sort((a, b) => a.getTime() - b.getTime());
+        const result: [DateStringValue, DateStringValue] = [date, pickedDate];
+        result.sort((a, b) => (dayjs(a).isAfter(dayjs(b)) ? 1 : -1));
         setValue(result);
         setHoveredDate(null);
         setPickedDate(null);
@@ -89,12 +86,12 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
     }
   };
 
-  const isDateInRange = (date: Date) => {
-    if (pickedDate instanceof Date && hoveredDate instanceof Date) {
+  const isDateInRange = (date: DateStringValue) => {
+    if (pickedDate && hoveredDate) {
       return isInRange(date, [hoveredDate, pickedDate]);
     }
 
-    if (_value[0] instanceof Date && _value[1] instanceof Date) {
+    if (_value[0] && _value[1]) {
       return isInRange(date, _value);
     }
 
@@ -109,8 +106,8 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
         }
       : onMouseLeave;
 
-  const isFirstInRange = (date: Date) => {
-    if (!(_value[0] instanceof Date)) {
+  const isFirstInRange = (date: DateStringValue) => {
+    if (_value[0]) {
       return false;
     }
 
@@ -121,23 +118,23 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
     return false;
   };
 
-  const isLastInRange = (date: Date) => {
-    if (_value[1] instanceof Date) {
+  const isLastInRange = (date: DateStringValue) => {
+    if (_value[1]) {
       return dayjs(date).isSame(_value[1], level);
     }
 
-    if (!(_value[0] instanceof Date) || !hoveredDate) {
+    if (_value[0] || !hoveredDate) {
       return false;
     }
 
     return dayjs(hoveredDate).isBefore(_value[0]) && dayjs(date).isSame(_value[0], level);
   };
 
-  const getControlProps = (date: Date) => {
+  const getControlProps = (date: DateStringValue) => {
     if (type === 'range') {
       return {
         selected: _value.some(
-          (selection: Date) => selection && dayjs(selection).isSame(date, level)
+          (selection: DateStringValue) => selection && dayjs(selection).isSame(date, level)
         ),
         inRange: isDateInRange(date),
         firstInRange: isFirstInRange(date),
@@ -149,7 +146,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
     if (type === 'multiple') {
       return {
         selected: _value.some(
-          (selection: Date) => selection && dayjs(selection).isSame(date, level)
+          (selection: DateStringValue) => selection && dayjs(selection).isSame(date, level)
         ),
         'data-autofocus': (!!_value[0] && dayjs(_value[0]).isSame(date, level)) || undefined,
       };
@@ -166,7 +163,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
       return;
     }
 
-    if (_value[0] && !_value[1] && pickedDate?.getTime() !== _value[0].getTime()) {
+    if (_value[0] && !_value[1]) {
       setPickedDate(_value[0]);
     } else {
       const isNeitherSelected = _value[0] == null && _value[1] == null;

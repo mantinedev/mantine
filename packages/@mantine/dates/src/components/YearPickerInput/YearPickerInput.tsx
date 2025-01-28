@@ -147,7 +147,6 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
           minDate={minDate}
           maxDate={maxDate}
           date={shiftTimezone('add', calendarProps.date, ctx.getTimezone())}
-          __timezoneApplied
         />
       </PickerInputBase>
     );

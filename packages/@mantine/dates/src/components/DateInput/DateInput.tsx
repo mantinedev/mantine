@@ -294,7 +294,6 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
           >
             <Calendar
               __staticSelector="DateInput"
-              __timezoneApplied
               {...calendarProps}
               classNames={classNames}
               styles={styles}
