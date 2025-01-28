@@ -1,9 +1,10 @@
 import dayjs from 'dayjs';
+import { DateStringValue } from '../../../types';
 
 interface IsDateValid {
-  date: Date;
-  maxDate: Date | null | undefined;
-  minDate: Date | null | undefined;
+  date: DateStringValue;
+  maxDate: DateStringValue | null | undefined;
+  minDate: DateStringValue | null | undefined;
 }
 
 export function isDateValid({ date, maxDate, minDate }: IsDateValid) {
@@ -11,7 +12,7 @@ export function isDateValid({ date, maxDate, minDate }: IsDateValid) {
     return false;
   }
 
-  if (Number.isNaN(date.getTime())) {
+  if (Number.isNaN(new Date(date).getTime())) {
     return false;
   }
 

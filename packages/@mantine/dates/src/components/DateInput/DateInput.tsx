@@ -18,7 +18,7 @@ import {
 } from '@mantine/core';
 import { useClickOutside, useDidUpdate } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
-import { CalendarLevel, DateValue } from '../../types';
+import { CalendarLevel, DateStringValue, DateValue } from '../../types';
 import { assignTime } from '../../utils';
 import { Calendar, CalendarBaseProps, CalendarStylesNames, pickCalendarProps } from '../Calendar';
 import { useDatesContext } from '../DatesProvider';
@@ -41,7 +41,7 @@ export interface DateInputProps
     StylesApiProps<DateInputFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
   /** Parses user input to convert it to Date object */
-  dateParser?: (value: string) => Date | null;
+  dateParser?: (value: string) => DateStringValue | null;
 
   /** Value for controlled component */
   value?: DateValue;
@@ -96,7 +96,7 @@ export type DateInputFactory = Factory<{
 const defaultProps: Partial<DateInputProps> = {
   valueFormat: 'MMMM D, YYYY',
   fixOnBlur: true,
-  preserveTime: true,
+  preserveTime: false,
 };
 
 export const DateInput = factory<DateInputFactory>((_props, ref) => {
@@ -140,15 +140,17 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
   const [dropdownOpened, setDropdownOpened] = useState(false);
   const { calendarProps, others } = pickCalendarProps(rest);
   const ctx = useDatesContext();
-  const defaultDateParser = (val: string) => {
+  const defaultDateParser = (val: string): DateStringValue | null => {
     const parsedDate = dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
-    return Number.isNaN(parsedDate.getTime()) ? dateStringParser(val) : parsedDate;
+    return Number.isNaN(parsedDate.getTime())
+      ? dateStringParser(val)
+      : dayjs(parsedDate).format('YYYY-MM-DD');
   };
 
   const _dateParser = dateParser || defaultDateParser;
   const _allowDeselect = allowDeselect !== undefined ? allowDeselect : clearable;
 
-  const formatValue = (val: Date) =>
+  const formatValue = (val: DateStringValue) =>
     val ? dayjs(val).locale(ctx.getLocale(locale)).format(valueFormat) : '';
 
   const [_value, setValue, controlled] = useUncontrolledDates({
@@ -209,13 +211,13 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     setDropdownOpened(true);
   };
 
-  const _getDayProps = (day: Date) => ({
+  const _getDayProps = (day: DateStringValue) => ({
     ...getDayProps?.(day),
     selected: dayjs(_value!).isSame(day, 'day'),
     onClick: (event: any) => {
       getDayProps?.(day).onClick?.(event);
 
-      const valueWithTime = preserveTime ? assignTime(_value!, day) : day;
+      const valueWithTime = preserveTime ? assignTime(_value, day) : day;
       const val =
         clearable && _allowDeselect
           ? dayjs(_value!).isSame(day, 'day')

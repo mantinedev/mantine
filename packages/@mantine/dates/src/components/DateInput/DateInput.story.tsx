@@ -5,6 +5,7 @@ import 'dayjs/locale/ru';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { useState } from 'react';
 import { Button, Group, TextInput } from '@mantine/core';
+import { DateStringValue } from '../../types';
 import { DatePickerInput } from '../DatePickerInput';
 import { DatesProvider } from '../DatesProvider';
 import { DateInput } from './DateInput';
@@ -16,20 +17,20 @@ export default { title: 'DateInput' };
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DateInput placeholder="Enter date" defaultDate={new Date(2022, 3, 11)} />
+      <DateInput placeholder="Enter date" defaultDate="2022-04-11" />
     </div>
   );
 }
 
 export function WithDefaultDate() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [value, setValue] = useState<DateStringValue | null>(null);
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput
         placeholder="Enter date"
         value={value}
         onChange={setValue}
-        defaultDate={new Date(1994, 1, 2)}
+        defaultDate="1994-01-02"
       />
     </div>
   );
@@ -38,14 +39,14 @@ export function WithDefaultDate() {
 export function CloseButton() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DateInput placeholder="Enter date" defaultValue={new Date(2022, 3, 11)} clearable />
-      <DatePickerInput placeholder="Enter date" defaultValue={new Date(2022, 3, 11)} clearable />
+      <DateInput placeholder="Enter date" defaultValue="2022-04-11" clearable />
+      <DatePickerInput placeholder="Enter date" defaultValue="2022-04-11" clearable />
     </div>
   );
 }
 
 export function ControlledValue() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [value, setValue] = useState<string | null>(null);
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput placeholder="Enter date" value={value} onChange={setValue} />
@@ -56,7 +57,7 @@ export function ControlledValue() {
 export function Unstyled() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DateInput placeholder="Enter date" defaultDate={new Date(2022, 3, 11)} unstyled />
+      <DateInput placeholder="Enter date" defaultDate="2022-04-11" unstyled />
     </div>
   );
 }
@@ -90,8 +91,9 @@ export function LocaleChangesDatesProvider() {
 }
 
 export function ValueValues() {
-  const [value, setValue] = useState<Date | null>(new Date());
-  const incrementDate = () => setValue((current) => dayjs(current!).subtract(-1, 'month').toDate());
+  const [value, setValue] = useState<string | null>(dayjs().format('YYYY-MM-DD'));
+  const incrementDate = () =>
+    setValue((current) => dayjs(current!).subtract(-1, 'month').format('YYYY-MM-DD'));
 
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
@@ -103,14 +105,14 @@ export function ValueValues() {
       />
       <Group mt="md">
         <Button onClick={incrementDate}>Increment</Button>
-        <Button onClick={() => setValue(new Date())}>Today</Button>
+        <Button onClick={() => setValue(dayjs().format('YYYY-MM-DD'))}>Today</Button>
       </Group>
     </div>
   );
 }
 
 export function WithTime() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [value, setValue] = useState<string | null>(null);
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput
@@ -121,13 +123,13 @@ export function WithTime() {
       />
       {value && (
         <div>
-          D: {value.getDate()}
+          D: {dayjs(value).date()}
           <br />
-          H: {value.getHours()}
+          H: {dayjs(value).hour()}
           <br />
-          M: {value.getMinutes()}
+          M: {dayjs(value).minute()}
           <br />
-          S: {value.getSeconds()}
+          S: {dayjs(value).second()}
           <br />
         </div>
       )}
@@ -136,7 +138,7 @@ export function WithTime() {
 }
 
 export function WithTimeMeridian() {
-  const [value, setValue] = useState<Date | null>(null);
+  const [value, setValue] = useState<string | null>(null);
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput
@@ -147,13 +149,13 @@ export function WithTimeMeridian() {
       />
       {value && (
         <div>
-          D: {value.getDate()}
+          D: {dayjs(value).date()}
           <br />
-          H: {value.getHours()}
+          H: {dayjs(value).hour()}
           <br />
-          M: {value.getMinutes()}
+          M: {dayjs(value).minute()}
           <br />
-          S: {value.getSeconds()}
+          S: {dayjs(value).second()}
           <br />
         </div>
       )}
@@ -183,13 +185,7 @@ export function ReadOnly() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput placeholder="Enter date" readOnly />
-      <DateInput
-        placeholder="Enter date"
-        readOnly
-        defaultValue={new Date(2022, 3, 11)}
-        clearable
-        mt="md"
-      />
+      <DateInput placeholder="Enter date" readOnly defaultValue="2022-04-11" clearable mt="md" />
     </div>
   );
 }
@@ -211,22 +207,22 @@ export function Clearable() {
 }
 
 export function Controlled() {
-  const [value, setValue] = useState<Date | null>(new Date(2022, 3, 11));
+  const [value, setValue] = useState<string | null>('2022-04-11');
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput placeholder="Enter date" value={value} onChange={setValue} clearable />
-      <Button onClick={() => setValue(new Date(2022, 7, 11))}>Set value</Button>
+      <Button onClick={() => setValue('2022-08-11')}>Set value</Button>
       <Button onClick={() => setValue(null)}>Set null</Button>
     </div>
   );
 }
 
 export function ControlledFixedValue() {
-  const [value, setValue] = useState<Date | null>(new Date(2022, 3, 11));
+  const [value, setValue] = useState<string | null>('2022-04-11');
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DateInput placeholder="Enter date" value={value} clearable />
-      <Button onClick={() => setValue(new Date(2022, 7, 11))}>Set value</Button>
+      <Button onClick={() => setValue('2022-08-11')}>Set value</Button>
       <Button onClick={() => setValue(null)}>Set null</Button>
     </div>
   );

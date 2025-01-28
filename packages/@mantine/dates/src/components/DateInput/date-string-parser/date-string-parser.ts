@@ -1,4 +1,7 @@
-export function dateStringParser(dateString: string | null) {
+import dayjs from 'dayjs';
+import { DateStringValue } from '../../../types';
+
+export function dateStringParser(dateString: string | null): DateStringValue | null {
   if (dateString === null) {
     return null;
   }
@@ -9,5 +12,5 @@ export function dateStringParser(dateString: string | null) {
     return null;
   }
 
-  return date;
+  return dayjs(date).format('YYYY-MM-DD');
 }
