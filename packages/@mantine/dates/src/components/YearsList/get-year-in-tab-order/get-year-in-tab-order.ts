@@ -1,12 +1,13 @@
 import dayjs from 'dayjs';
+import { DateStringValue } from '../../../types';
 import { PickerControlProps } from '../../PickerControl';
 import { isYearDisabled } from '../is-year-disabled/is-year-disabled';
 
 export function getYearInTabOrder(
-  years: Date[][],
-  minDate: Date | undefined,
-  maxDate: Date | undefined,
-  getYearControlProps: ((year: Date) => Partial<PickerControlProps>) | undefined
+  years: DateStringValue[][],
+  minDate: DateStringValue | undefined,
+  maxDate: DateStringValue | undefined,
+  getYearControlProps: ((year: DateStringValue) => Partial<PickerControlProps>) | undefined
 ) {
   const enabledYears = years
     .flat()

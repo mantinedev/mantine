@@ -3,7 +3,7 @@ import { datesTests } from '@mantine-tests/dates';
 import { YearsList, YearsListProps, YearsListStylesNames } from './YearsList';
 
 const defaultProps: YearsListProps = {
-  decade: new Date(2022, 3, 11),
+  decade: '2022-04-11',
 };
 
 describe('@mantine/dates/YearsList', () => {

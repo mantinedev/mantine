@@ -7,7 +7,7 @@ export default { title: 'YearsList' };
 export function Usage() {
   return (
     <div style={{ padding: 40, width: 320 }}>
-      <YearsList decade={new Date()} />
+      <YearsList decade="2022-01-01" />
     </div>
   );
 }
@@ -15,7 +15,7 @@ export function Usage() {
 export function Unstyled() {
   return (
     <div style={{ padding: 40, width: 320 }}>
-      <YearsList decade={new Date()} unstyled />
+      <YearsList decade="2022-01-01" unstyled />
     </div>
   );
 }
@@ -23,7 +23,7 @@ export function Unstyled() {
 export function MinDate() {
   return (
     <div style={{ padding: 40, width: 320 }}>
-      <YearsList decade={new Date(2022, 3, 11)} minDate={new Date(2024, 4, 11)} />
+      <YearsList decade="2022-04-11" minDate="2024-05-11" />
     </div>
   );
 }
@@ -31,7 +31,7 @@ export function MinDate() {
 export function MaxDate() {
   return (
     <div style={{ padding: 40, width: 320 }}>
-      <YearsList decade={new Date(2022, 1, 1)} maxDate={new Date(2022, 9, 1)} />
+      <YearsList decade="2022-02-01" maxDate="2022-10-01" />
     </div>
   );
 }
@@ -39,13 +39,13 @@ export function MaxDate() {
 export function WithRange() {
   return (
     <div style={{ padding: 40, width: 320 }}>
-      <YearsList decade={new Date(2022, 1, 1)} getYearControlProps={() => ({ inRange: true })} />
+      <YearsList decade="2022-02-01" getYearControlProps={() => ({ inRange: true })} />
       <YearsList
-        decade={new Date(2022, 1, 1)}
+        decade="2022-02-01"
         getYearControlProps={() => ({ firstInRange: true, selected: true })}
       />
       <YearsList
-        decade={new Date(2022, 1, 1)}
+        decade="2022-02-01"
         getYearControlProps={() => ({ lastInRange: true, selected: true })}
       />
     </div>
@@ -53,12 +53,12 @@ export function WithRange() {
 }
 
 export function WithSelection() {
-  const [selected, setSelected] = useState(new Date());
+  const [selected, setSelected] = useState('2022-01-01');
 
   return (
     <div style={{ padding: 40, width: 320 }}>
       <YearsList
-        decade={new Date()}
+        decade="2022-01-01"
         getYearControlProps={(month) => ({
           selected: dayjs(month).isSame(selected, 'month'),
           onClick: () => setSelected(month),
@@ -71,7 +71,7 @@ export function WithSelection() {
 export function Sizes() {
   const sizes = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
     <YearsList
-      decade={new Date()}
+      decade="2022-01-01"
       size={size}
       key={size}
       getYearControlProps={() => ({ selected: true })}

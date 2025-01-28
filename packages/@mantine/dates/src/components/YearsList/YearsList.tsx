@@ -10,7 +10,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { ControlsGroupSettings } from '../../types';
+import { ControlsGroupSettings, DateStringValue } from '../../types';
 import { useDatesContext } from '../DatesProvider';
 import { PickerControl, PickerControlProps } from '../PickerControl';
 import { getYearInTabOrder } from './get-year-in-tab-order/get-year-in-tab-order';
@@ -35,7 +35,7 @@ export interface YearsListSettings extends ControlsGroupSettings {
   yearsListFormat?: string;
 
   /** Adds props to year picker control based on date */
-  getYearControlProps?: (date: Date) => Partial<PickerControlProps>;
+  getYearControlProps?: (date: DateStringValue) => Partial<PickerControlProps>;
 
   /** Component size */
   size?: MantineSize;
@@ -52,7 +52,7 @@ export interface YearsListProps
   __staticSelector?: string;
 
   /** Decade for which years list should be displayed */
-  decade: Date;
+  decade: DateStringValue;
 }
 
 export type YearsListFactory = Factory<{
