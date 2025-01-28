@@ -1,17 +1,19 @@
 import dayjs from 'dayjs';
-import { shiftTimezone } from './shift-timezone';
+import { DateStringValue } from '../types';
 
 interface GetDefaultClampedDate {
-  minDate: Date | undefined;
-  maxDate: Date | undefined;
-  timezone?: string;
+  minDate: DateStringValue | undefined;
+  maxDate: DateStringValue | undefined;
 }
 
-export function getDefaultClampedDate({ minDate, maxDate, timezone }: GetDefaultClampedDate) {
-  const today = shiftTimezone('add', new Date(), timezone);
+export function getDefaultClampedDate({
+  minDate,
+  maxDate,
+}: GetDefaultClampedDate): DateStringValue {
+  const today = dayjs();
 
   if (!minDate && !maxDate) {
-    return today;
+    return today.format('YYYY-MM-DD');
   }
 
   if (minDate && dayjs(today).isBefore(minDate)) {
@@ -22,5 +24,5 @@ export function getDefaultClampedDate({ minDate, maxDate, timezone }: GetDefault
     return maxDate;
   }
 
-  return today;
+  return today.format('YYYY-MM-DD');
 }

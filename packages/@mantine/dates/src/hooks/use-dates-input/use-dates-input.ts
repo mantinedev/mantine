@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useDisclosure } from '@mantine/hooks';
 import { useDatesContext } from '../../components/DatesProvider';
 import { DatePickerType, DatePickerValue } from '../../types';
@@ -61,7 +62,7 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
     }
 
     if (sortDates && type === 'multiple') {
-      _setValue([...val].sort((a, b) => a.getTime() - b.getTime()));
+      _setValue([...val].sort((a, b) => (dayjs(a).isAfter(dayjs(b)) ? 1 : -1)));
     } else {
       _setValue(val);
     }

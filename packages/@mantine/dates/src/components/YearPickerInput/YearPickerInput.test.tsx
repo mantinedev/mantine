@@ -1,13 +1,6 @@
 import { __InputStylesNames } from '@mantine/core';
-import {
-  inputDefaultProps,
-  inputStylesApiSelectors,
-  render,
-  tests,
-  userEvent,
-} from '@mantine-tests/core';
-import { clickInput, datesTests, expectValue } from '@mantine-tests/dates';
-import { DatesProvider } from '../DatesProvider';
+import { inputDefaultProps, inputStylesApiSelectors, render, tests } from '@mantine-tests/core';
+import { datesTests, expectValue } from '@mantine-tests/dates';
 import { YearPickerInput, YearPickerInputProps } from './YearPickerInput';
 
 const defaultProps = {
@@ -52,20 +45,20 @@ describe('@mantine/dates/YearPickerInput', () => {
   datesTests.itSupportsDateInputProps({ component: YearPickerInput, props: defaultProps });
   datesTests.itSupportsClearableProps({
     component: YearPickerInput,
-    props: { ...defaultProps, defaultValue: new Date() },
+    props: { ...defaultProps, defaultValue: '2022-04-11' },
   });
   datesTests.itSupportsYearsListProps({
     component: YearPickerInput,
     props: {
       ...defaultProps,
-      defaultValue: new Date(),
+      defaultValue: '2022-04-11',
       popoverProps: { opened: true, withinPortal: false, transitionProps: { duration: 0 } },
     },
   });
 
   it('supports valueFormat prop', () => {
     const { container, rerender } = render(
-      <YearPickerInput {...defaultProps} valueFormat="YY" value={new Date(2022, 3, 11)} />
+      <YearPickerInput {...defaultProps} valueFormat="YY" value="2022-04-11" />
     );
     expectValue(container, '22');
 
@@ -74,7 +67,7 @@ describe('@mantine/dates/YearPickerInput', () => {
         {...defaultProps}
         type="multiple"
         valueFormat="YY"
-        value={[new Date(2022, 3, 11), new Date(2024, 3, 11)]}
+        value={['2022-04-11', '2024-04-11']}
       />
     );
     expectValue(container, '22, 24');
@@ -84,7 +77,7 @@ describe('@mantine/dates/YearPickerInput', () => {
         {...defaultProps}
         type="range"
         valueFormat="YY"
-        value={[new Date(2022, 3, 11), new Date(2024, 3, 11)]}
+        value={['2022-04-11', '2024-04-11']}
       />
     );
     expectValue(container, '22 – 24');
@@ -104,45 +97,5 @@ describe('@mantine/dates/YearPickerInput', () => {
     expect(container.querySelector('table button')).toHaveClass(
       'mantine-YearPickerInput-yearsListControl'
     );
-  });
-
-  it('can be controlled (type="default") with timezone (UTC)', async () => {
-    const spy = jest.fn();
-    const { container } = render(
-      <DatesProvider settings={{ timezone: 'UTC' }}>
-        <YearPickerInput
-          {...defaultProps}
-          date={new Date(2022, 3, 11)}
-          value={new Date(2023, 3, 11)}
-          onChange={spy}
-        />
-      </DatesProvider>
-    );
-
-    await clickInput(container);
-    expect(container.querySelector('[data-selected]')!.textContent).toBe('2023');
-
-    await userEvent.click(container.querySelector('table button')!);
-    expect(spy).toHaveBeenCalledWith(new Date(2019, 11, 31, 19));
-  });
-
-  it('can be controlled (type="default") with timezone (America/Los_Angeles)', async () => {
-    const spy = jest.fn();
-    const { container } = render(
-      <DatesProvider settings={{ timezone: 'America/Los_Angeles' }}>
-        <YearPickerInput
-          {...defaultProps}
-          date={new Date(2022, 3, 11)}
-          value={new Date(2023, 3, 11)}
-          onChange={spy}
-        />
-      </DatesProvider>
-    );
-
-    await clickInput(container);
-    expect(container.querySelector('[data-selected]')!.textContent).toBe('2023');
-
-    await userEvent.click(container.querySelector('table button')!);
-    expect(spy).toHaveBeenCalledWith(new Date(2020, 0, 1, 3));
   });
 });

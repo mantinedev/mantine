@@ -133,9 +133,8 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
           defaultDate={
             calendarProps.defaultDate ||
             (Array.isArray(_value)
-              ? _value[0] ||
-                getDefaultClampedDate({ maxDate, minDate, timezone: ctx.getTimezone() })
-              : _value || getDefaultClampedDate({ maxDate, minDate, timezone: ctx.getTimezone() }))
+              ? _value[0] || getDefaultClampedDate({ maxDate, minDate })
+              : _value || getDefaultClampedDate({ maxDate, minDate }))
           }
           onChange={setValue}
           locale={locale}

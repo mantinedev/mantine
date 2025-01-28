@@ -7,11 +7,7 @@ export default { title: 'YearPickerInput' };
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <YearPickerInput
-        label="Year picker input"
-        placeholder="Pick year"
-        defaultDate={new Date(1994, 2)}
-      />
+      <YearPickerInput label="Year picker input" placeholder="Pick year" defaultDate="1994-03-01" />
     </div>
   );
 }
@@ -68,8 +64,8 @@ export function SelectedDisabledYear() {
     <div style={{ padding: 40 }}>
       <YearPickerInput
         label="Year picker input"
-        defaultValue={new Date()}
-        getYearControlProps={(date) => ({ disabled: dayjs(date).isSame(new Date(), 'year') })}
+        defaultValue="2022-04-11"
+        getYearControlProps={(date) => ({ disabled: dayjs(date).isSame('2022-04-11', 'year') })}
       />
     </div>
   );
@@ -78,7 +74,7 @@ export function SelectedDisabledYear() {
 export function WithMaxDate() {
   return (
     <div style={{ padding: 40 }}>
-      <YearPickerInput label="Year picker input" maxDate={new Date()} />
+      <YearPickerInput label="Year picker input" maxDate="2022-04-11" />
     </div>
   );
 }
@@ -91,14 +87,14 @@ export function Clearable() {
       <YearPickerInput label="Range" type="range" clearable />
       <YearPickerInput
         label="Readonly"
-        value={[new Date(), new Date()]}
+        value={['2022-04-11', '2022-04-11']}
         type="range"
         clearable
         readOnly
       />
       <YearPickerInput
         label="Disabled"
-        value={[new Date(), new Date()]}
+        value={['2022-04-11', '2022-04-11']}
         type="range"
         clearable
         disabled
