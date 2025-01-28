@@ -3,7 +3,7 @@ import { datesTests } from '@mantine-tests/dates';
 import { YearLevelGroup, YearLevelGroupProps, YearLevelGroupStylesNames } from './YearLevelGroup';
 
 const defaultProps: YearLevelGroupProps = {
-  year: new Date(2022, 3, 11),
+  year: '2022-04-11',
   levelControlAriaLabel: () => 'level-control',
   nextLabel: 'next',
   previousLabel: 'prev',
@@ -74,7 +74,9 @@ describe('@mantine/dates/YearLevelGroup', () => {
     render(
       <YearLevelGroup
         {...defaultProps}
-        levelControlAriaLabel={(date) => `${date.getMonth()}/${date.getFullYear()}`}
+        levelControlAriaLabel={(date) =>
+          `${new Date(date).getMonth()}/${new Date(date).getFullYear()}`
+        }
       />
     );
     expect(screen.getByText('2022')).toHaveAttribute('aria-label', '3/2022');
