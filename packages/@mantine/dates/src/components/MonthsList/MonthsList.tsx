@@ -110,7 +110,12 @@ export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
 
   const months = getMonthsData(year);
 
-  const monthInTabOrder = getMonthInTabOrder(months, minDate, maxDate, getMonthControlProps);
+  const monthInTabOrder = getMonthInTabOrder({
+    months,
+    minDate,
+    maxDate,
+    getMonthControlProps,
+  });
 
   const rows = months.map((monthsRow, rowIndex) => {
     const cells = monthsRow.map((month, cellIndex) => {
@@ -128,7 +133,7 @@ export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
             unstyled={unstyled}
             __staticSelector={__staticSelector || 'MonthsList'}
             data-mantine-stop-propagation={__stopPropagation || undefined}
-            disabled={isMonthDisabled(month, minDate, maxDate)}
+            disabled={isMonthDisabled({ month, minDate, maxDate })}
             ref={(node) => __getControlRef?.(rowIndex, cellIndex, node!)}
             {...controlProps}
             onKeyDown={(event) => {

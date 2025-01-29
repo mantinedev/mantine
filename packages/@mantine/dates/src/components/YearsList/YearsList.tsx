@@ -110,7 +110,12 @@ export const YearsList = factory<YearsListFactory>((_props, ref) => {
 
   const years = getYearsData(decade);
 
-  const yearInTabOrder = getYearInTabOrder(years, minDate, maxDate, getYearControlProps);
+  const yearInTabOrder = getYearInTabOrder({
+    years,
+    minDate,
+    maxDate,
+    getYearControlProps,
+  });
 
   const rows = years.map((yearsRow, rowIndex) => {
     const cells = yearsRow.map((year, cellIndex) => {
@@ -127,7 +132,7 @@ export const YearsList = factory<YearsListFactory>((_props, ref) => {
             size={size}
             unstyled={unstyled}
             data-mantine-stop-propagation={__stopPropagation || undefined}
-            disabled={isYearDisabled(year, minDate, maxDate)}
+            disabled={isYearDisabled({ year, minDate, maxDate })}
             ref={(node) => __getControlRef?.(rowIndex, cellIndex, node!)}
             {...controlProps}
             onKeyDown={(event) => {

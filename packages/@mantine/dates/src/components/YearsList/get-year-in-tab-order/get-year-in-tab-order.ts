@@ -3,16 +3,24 @@ import { DateStringValue } from '../../../types';
 import { PickerControlProps } from '../../PickerControl';
 import { isYearDisabled } from '../is-year-disabled/is-year-disabled';
 
-export function getYearInTabOrder(
-  years: DateStringValue[][],
-  minDate: DateStringValue | undefined,
-  maxDate: DateStringValue | undefined,
-  getYearControlProps: ((year: DateStringValue) => Partial<PickerControlProps>) | undefined
-) {
+interface GetYearInTabOrderInput {
+  years: DateStringValue[][];
+  minDate: DateStringValue | undefined;
+  maxDate: DateStringValue | undefined;
+  getYearControlProps: ((year: DateStringValue) => Partial<PickerControlProps>) | undefined;
+}
+
+export function getYearInTabOrder({
+  years,
+  minDate,
+  maxDate,
+  getYearControlProps,
+}: GetYearInTabOrderInput) {
   const enabledYears = years
     .flat()
     .filter(
-      (year) => !isYearDisabled(year, minDate, maxDate) && !getYearControlProps?.(year)?.disabled
+      (year) =>
+        !isYearDisabled({ year, minDate, maxDate }) && !getYearControlProps?.(year)?.disabled
     );
 
   const selectedYear = enabledYears.find((year) => getYearControlProps?.(year)?.selected);

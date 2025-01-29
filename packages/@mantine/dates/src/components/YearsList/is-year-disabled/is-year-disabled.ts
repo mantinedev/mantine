@@ -1,11 +1,13 @@
 import dayjs from 'dayjs';
 import { DateStringValue } from '../../../types';
 
-export function isYearDisabled(
-  year: DateStringValue,
-  minDate: DateStringValue | null | undefined,
-  maxDate: DateStringValue | null | undefined
-) {
+interface IsYearDisabledInput {
+  year: DateStringValue;
+  minDate: DateStringValue | undefined;
+  maxDate: DateStringValue | undefined;
+}
+
+export function isYearDisabled({ year, minDate, maxDate }: IsYearDisabledInput): boolean {
   if (!minDate && !maxDate) {
     return false;
   }
