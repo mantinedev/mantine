@@ -107,7 +107,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
       : onMouseLeave;
 
   const isFirstInRange = (date: DateStringValue) => {
-    if (_value[0]) {
+    if (!_value[0]) {
       return false;
     }
 
@@ -123,7 +123,7 @@ export function useDatesState<Type extends DatePickerType = 'default'>({
       return dayjs(date).isSame(_value[1], level);
     }
 
-    if (_value[0] || !hoveredDate) {
+    if (!_value[0] || !hoveredDate) {
       return false;
     }
 
