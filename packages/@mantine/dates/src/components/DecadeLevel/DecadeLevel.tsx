@@ -21,7 +21,7 @@ import { getDecadeRange } from './get-decade-range/get-decade-range';
 export type DecadeLevelStylesNames = YearsListStylesNames | CalendarHeaderStylesNames;
 
 export interface DecadeLevelBaseSettings extends YearsListSettings {
-  /** Dayjs label format to display decade label or a function that returns decade label based on date value, defaults to "YYYY" */
+  /** dayjs format for decade label or a function that returns decade label based on the date value, `"YYYY"` by default */
   decadeLabelFormat?:
     | string
     | ((startOfDecade: DateStringValue, endOfDecade: DateStringValue) => React.ReactNode);
@@ -40,10 +40,10 @@ export interface DecadeLevelProps
   styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
 
-  /** Decade that is currently displayed */
+  /** Displayed decade */
   decade: DateStringValue;
 
-  /** Aria-label for change level control */
+  /** Level control `aria-label` */
   levelControlAriaLabel?: string;
 }
 

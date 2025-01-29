@@ -25,16 +25,16 @@ export type DayCssVariables = {
 export interface DayProps extends BoxProps, StylesApiProps<DayFactory>, ElementProps<'button'> {
   __staticSelector?: string;
 
-  /** Determines which element should be used as root, `'button'` by default, `'div'` if static prop is set */
+  /** Determines which element is used as root, `'button'` by default, `'div'` if static prop is set */
   static?: boolean;
 
-  /** Date that should be displayed in `YYYY-MM-DD` format */
+  /** Date that is displayed in `YYYY-MM-DD` format */
   date: DateStringValue;
 
   /** Control width and height of the day, `'sm'` by default */
   size?: MantineSize;
 
-  /** Determines whether the day should be considered to be a weekend, `false` by default */
+  /** Determines whether the day is considered to be a weekend, `false` by default */
   weekend?: boolean;
 
   /** Determines whether the day is outside of the current month, `false` by default */

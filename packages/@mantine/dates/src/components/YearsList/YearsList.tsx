@@ -31,16 +31,16 @@ export interface YearsListSettings extends ControlsGroupSettings {
   /** Determines whether propagation for Escape key should be stopped */
   __stopPropagation?: boolean;
 
-  /** Dayjs format for years list, `'YYYY'` by default  */
+  /** dayjs format for years list, `'YYYY'` by default  */
   yearsListFormat?: string;
 
-  /** Adds props to year picker control based on date */
+  /** Passes props down to year picker control based on date */
   getYearControlProps?: (date: DateStringValue) => Partial<PickerControlProps>;
 
   /** Component size */
   size?: MantineSize;
 
-  /** Determines whether controls should be separated by spacing, true by default */
+  /** Determines whether controls should be separated, `true` by default */
   withCellSpacing?: boolean;
 }
 
@@ -51,7 +51,7 @@ export interface YearsListProps
     ElementProps<'table'> {
   __staticSelector?: string;
 
-  /** Decade for which years list should be displayed */
+  /** Decade value to display */
   decade: DateStringValue;
 }
 

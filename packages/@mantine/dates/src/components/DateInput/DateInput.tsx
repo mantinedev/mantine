@@ -19,7 +19,6 @@ import {
 import { useClickOutside, useDidUpdate } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
 import { CalendarLevel, DateStringValue, DateValue } from '../../types';
-import { assignTime } from '../../utils';
 import { Calendar, CalendarBaseProps, CalendarStylesNames, pickCalendarProps } from '../Calendar';
 import { useDatesContext } from '../DatesProvider';
 import { DecadeLevelSettings } from '../DecadeLevel';
@@ -40,49 +39,46 @@ export interface DateInputProps
     MonthLevelSettings,
     StylesApiProps<DateInputFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
-  /** Parses user input to convert it to Date object */
+  /** Parses user input to convert it to date string value */
   dateParser?: (value: string) => DateStringValue | null;
 
-  /** Value for controlled component */
+  /** Controlled component value */
   value?: DateValue;
 
-  /** Default value for uncontrolled component */
+  /** Uncontrolled component default value */
   defaultValue?: DateValue;
 
   /** Called when value changes */
   onChange?: (value: DateValue) => void;
 
-  /** Props added to Popover component */
+  /** Props passed down to `Popover` component */
   popoverProps?: Partial<Omit<PopoverProps, 'children'>>;
 
-  /** Determines whether input value can be cleared, adds clear button to right section, false by default */
+  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. `false` by default */
   clearable?: boolean;
 
-  /** Props added to clear button */
+  /** Props passed down to clear button */
   clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
 
-  /** Dayjs format to display input value, "MMMM D, YYYY" by default  */
+  /** dayjs format to display input value, `"MMMM D, YYYY"` by default  */
   valueFormat?: string;
 
-  /** Determines whether input value should be reverted to last known valid value on blur, true by default */
+  /** If set to `false`, invalid user input is preserved and the input value is not corrected on blur */
   fixOnBlur?: boolean;
 
-  /** Determines whether value can be deselected when the user clicks on the selected date in the calendar (only when clearable prop is set), defaults to true if clearable prop is set, false otherwise */
+  /** If set, the value can be deselected by deleting everything from the input or by clicking the selected date in the dropdown. By default, `true` if `clearable` prop is set, `false` otherwise. */
   allowDeselect?: boolean;
 
-  /** Determines whether time (hours, minutes, seconds and milliseconds) should be preserved when new date is picked, true by default */
-  preserveTime?: boolean;
-
-  /** Max level that user can go up to (decade, year, month), defaults to decade */
+  /** Max level that user can go up to, `'decade'` by default */
   maxLevel?: CalendarLevel;
 
-  /** Initial level displayed to the user (decade, year, month), used for uncontrolled component */
+  /** Initial displayed level (uncontrolled) */
   defaultLevel?: CalendarLevel;
 
-  /** Current level displayed to the user (decade, year, month), used for controlled component */
+  /** Current displayed level (controlled) */
   level?: CalendarLevel;
 
-  /** Called when level changes */
+  /** Called when the level changes */
   onLevelChange?: (level: CalendarLevel) => void;
 }
 
@@ -96,7 +92,6 @@ export type DateInputFactory = Factory<{
 const defaultProps: Partial<DateInputProps> = {
   valueFormat: 'MMMM D, YYYY',
   fixOnBlur: true,
-  preserveTime: false,
 };
 
 export const DateInput = factory<DateInputFactory>((_props, ref) => {
@@ -128,7 +123,6 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     classNames,
     styles,
     allowDeselect,
-    preserveTime,
     date,
     defaultDate,
     onDateChange,
@@ -217,13 +211,8 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     onClick: (event: any) => {
       getDayProps?.(day).onClick?.(event);
 
-      const valueWithTime = preserveTime ? assignTime(_value, day) : day;
       const val =
-        clearable && _allowDeselect
-          ? dayjs(_value!).isSame(day, 'day')
-            ? null
-            : valueWithTime
-          : valueWithTime;
+        clearable && _allowDeselect ? (dayjs(_value!).isSame(day, 'day') ? null : day) : day;
       setValue(val);
       !controlled && setInputValue(formatValue(val!));
       setDropdownOpened(false);

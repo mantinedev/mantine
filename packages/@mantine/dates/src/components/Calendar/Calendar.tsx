@@ -52,19 +52,19 @@ export interface CalendarSettings
   extends Omit<DecadeLevelSettings, OmittedSettings>,
     Omit<YearLevelSettings, OmittedSettings>,
     Omit<MonthLevelSettings, OmittedSettings> {
-  /** Initial level displayed to the user (decade, year, month), used for uncontrolled component */
+  /** Initial displayed level in uncontrolled mode */
   defaultLevel?: CalendarLevel;
 
-  /** Current level displayed to the user (decade, year, month), used for controlled component */
+  /** Current displayed level displayed in controlled mode */
   level?: CalendarLevel;
 
   /** Called when level changes */
   onLevelChange?: (level: CalendarLevel) => void;
 
-  /** Called when user clicks year on decade level */
+  /** Called when user selects year */
   onYearSelect?: (date: DateStringValue) => void;
 
-  /** Called when user clicks month on year level */
+  /** Called when user selects month */
   onMonthSelect?: (date: DateStringValue) => void;
 
   /** Called when mouse enters year control */
@@ -86,46 +86,46 @@ export interface CalendarBaseProps {
   /** Determines whether date should be updated when month control is clicked */
   __updateDateOnMonthSelect?: boolean;
 
-  /** Initial date that is displayed, used for uncontrolled component */
+  /** Initial displayed date in uncontrolled mode */
   defaultDate?: DateStringValue;
 
-  /** Date that is displayed, used for controlled component */
+  /** Displayed date in controlled mode */
   date?: DateStringValue;
 
   /** Called when date changes */
   onDateChange?: (date: DateStringValue) => void;
 
-  /** Number of columns to render next to each other */
+  /** Number of columns displayed next to each other, `1` by default */
   numberOfColumns?: number;
 
-  /** Number of columns to scroll when user clicks next/prev buttons, defaults to numberOfColumns */
+  /** Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly */
   columnsToScroll?: number;
 
-  /** Aria-label attributes for controls on different levels */
+  /** `aria-label` attributes for controls on different levels */
   ariaLabels?: CalendarAriaLabels;
 
-  /** Arial-label for next button */
+  /** Next button `aria-label` */
   nextLabel?: string;
 
-  /** Arial-label for previous button */
+  /** Previous button `aria-label` */
   previousLabel?: string;
 
-  /** Called when next decade button is clicked */
+  /** Called when the next decade button is clicked */
   onNextDecade?: (date: DateStringValue) => void;
 
-  /** Called when previous decade button is clicked */
+  /** Called when the previous decade button is clicked */
   onPreviousDecade?: (date: DateStringValue) => void;
 
-  /** Called when next year button is clicked */
+  /** Called when the next year button is clicked */
   onNextYear?: (date: DateStringValue) => void;
 
-  /** Called when previous year button is clicked */
+  /** Called when the previous year button is clicked */
   onPreviousYear?: (date: DateStringValue) => void;
 
-  /** Called when next month button is clicked */
+  /** Called when the next month button is clicked */
   onNextMonth?: (date: DateStringValue) => void;
 
-  /** Called when previous month button is clicked */
+  /** Called when the previous month button is clicked */
   onPreviousMonth?: (date: DateStringValue) => void;
 }
 
@@ -161,7 +161,8 @@ const defaultProps: Partial<CalendarProps> = {
 export const Calendar = factory<CalendarFactory>((_props, ref) => {
   const props = useProps('Calendar', defaultProps, _props);
   const {
-    vars, // CalendarLevel props
+    // CalendarLevel props
+    vars,
     maxLevel,
     minLevel,
     defaultLevel,

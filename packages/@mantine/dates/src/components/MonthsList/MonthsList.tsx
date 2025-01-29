@@ -25,16 +25,13 @@ export type MonthsListStylesNames =
   | 'monthsListControl';
 
 export interface MonthsListSettings extends ControlsGroupSettings {
-  /** Dayjs format for months list  */
+  /** dayjs format for months list */
   monthsListFormat?: string;
 
-  /** Adds props to month picker control based on date */
+  /** Passes props down month picker control */
   getMonthControlProps?: (date: DateStringValue) => Partial<PickerControlProps>;
 
-  /** Determines whether propagation for Escape key should be stopped */
-  __stopPropagation?: boolean;
-
-  /** Determines whether controls should be separated by spacing, true by default */
+  /** Determines whether controls should be separated, `true` by default */
   withCellSpacing?: boolean;
 }
 
@@ -47,6 +44,9 @@ export interface MonthsListProps
 
   /** Prevents focus shift when buttons are clicked */
   __preventFocus?: boolean;
+
+  /** Determines whether propagation for Escape key should be stopped */
+  __stopPropagation?: boolean;
 
   /** Year for which months list should be displayed */
   year: DateStringValue;

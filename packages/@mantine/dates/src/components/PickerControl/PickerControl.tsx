@@ -28,19 +28,19 @@ export interface PickerControlProps
   /** Control children */
   children?: React.ReactNode;
 
-  /** Determines whether control should be disabled */
+  /** Disables control */
   disabled?: boolean;
 
-  /** Determines whether control should have selected styles */
+  /** Assigns selected styles */
   selected?: boolean;
 
-  /** Determines whether control is selected in range */
+  /** Assigns in range styles */
   inRange?: boolean;
 
-  /** Determines whether control is first in range selection */
+  /** Assigns first in range styles */
   firstInRange?: boolean;
 
-  /** Determines whether control is last in range selection */
+  /** Assigns last in range styles */
   lastInRange?: boolean;
 
   /** Component size */

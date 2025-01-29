@@ -18,13 +18,13 @@ export interface TimeInputProps
     __BaseInputProps,
     StylesApiProps<TimeInputFactory>,
     ElementProps<'input', 'size'> {
-  /** Determines whether seconds input should be rendered */
+  /** Determines whether seconds input should be displayed, `false` by default */
   withSeconds?: boolean;
 
-  /** Minimum possible string time, if withSeconds is true, time should be in format HH:mm:ss, otherwise HH:mm */
+  /** Minimum possible string time, if `withSeconds` is true, time should be in format HH:mm:ss, otherwise HH:mm */
   minTime?: string;
 
-  /** Maximum possible string time, if withSeconds is true, time should be in format HH:mm:ss, otherwise HH:mm */
+  /** Maximum possible string time, if `withSeconds` is true, time should be in format HH:mm:ss, otherwise HH:mm */
   maxTime?: string;
 }
 

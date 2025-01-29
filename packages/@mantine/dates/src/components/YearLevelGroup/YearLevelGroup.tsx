@@ -17,13 +17,13 @@ export interface YearLevelGroupProps
   styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
 
-  /** Number of columns to render next to each other */
+  /** Number of columns displayed next to each other */
   numberOfColumns?: number;
 
-  /** Year that is currently displayed */
+  /** Displayed year */
   year: DateStringValue;
 
-  /** Function that returns level control aria-label based on year date */
+  /** Function that returns level control `aria-label` */
   levelControlAriaLabel?: ((year: DateStringValue) => string) | string;
 }
 

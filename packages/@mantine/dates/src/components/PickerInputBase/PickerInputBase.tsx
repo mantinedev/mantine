@@ -27,28 +27,28 @@ export type PickerInputBaseStylesNames = __InputStylesNames;
 export interface DateInputSharedProps
   extends Omit<__BaseInputProps, 'size'>,
     ElementProps<'button', 'defaultValue' | 'value' | 'onChange' | 'type'> {
-  /** Determines whether dropdown should be closed when date is selected, not applicable when type="multiple", true by default */
+  /** Determines whether the dropdown is closed when date is selected, not applicable with `type="multiple"`, `true` by default */
   closeOnChange?: boolean;
 
-  /** Type of dropdown, defaults to popover */
+  /** Type of the dropdown, `'popover'` by default */
   dropdownType?: 'popover' | 'modal';
 
-  /** Props passed down to Popover component */
+  /** Props passed down to `Popover` component */
   popoverProps?: Partial<Omit<PopoverProps, 'children'>>;
 
-  /** Props passed down to Modal component */
+  /** Props passed down to `Modal` component */
   modalProps?: Partial<Omit<ModalProps, 'children'>>;
 
-  /** Determines whether input value can be cleared, adds clear button to right section, false by default */
+  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. `false` by default */
   clearable?: boolean;
 
-  /** Props passed down to clear button */
+  /** Props passed down to the clear button */
   clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
 
-  /** Determines whether the user can modify the value */
+  /** If set, the component value cannot be changed by the user */
   readOnly?: boolean;
 
-  /** Determines whether dates value should be sorted before onChange call, only applicable when type="multiple", true by default */
+  /** Determines whether dates values should be sorted before `onChange` call, only applicable with type="multiple", `true` by default */
   sortDates?: boolean;
 
   /** Separator between range value */

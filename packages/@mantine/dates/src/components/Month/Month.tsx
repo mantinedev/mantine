@@ -59,19 +59,19 @@ export interface MonthSettings {
   /** Assigns ref of every day based on its position in the table, used for arrows navigation */
   __getDayRef?: (rowIndex: number, cellIndex: number, node: HTMLButtonElement) => void;
 
-  /** Dayjs locale, defaults to value defined in DatesProvider */
+  /** dayjs locale, the default value is defined by `DatesProvider` */
   locale?: string;
 
-  /** Number 0-6, 0 – Sunday, 6 – Saturday, defaults to 1 – Monday */
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday. 1 – Monday by default */
   firstDayOfWeek?: DayOfWeek;
 
-  /** Dayjs format for weekdays names, `'dd'` by default */
+  /** dayjs format for weekdays names, `'dd'` by default */
   weekdayFormat?: DateLabelFormat;
 
-  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday, defaults to value defined in DatesProvider */
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider` */
   weekendDays?: DayOfWeek[];
 
-  /** Adds props to Day component based on date */
+  /** Passes props down to `Day` components */
   getDayProps?: (
     date: DateStringValue
   ) => Omit<Partial<DayProps>, 'classNames' | 'styles' | 'vars'>;
@@ -88,25 +88,25 @@ export interface MonthSettings {
   /** Controls day value rendering */
   renderDay?: RenderDay;
 
-  /** Determines whether outside dates should be hidden, defaults to false */
+  /** Determines whether outside dates should be hidden, `false` by default */
   hideOutsideDates?: boolean;
 
-  /** Determines whether weekdays row should be hidden, defaults to false */
+  /** Determines whether weekdays row should be hidden, `false` by default */
   hideWeekdays?: boolean;
 
-  /** Assigns aria-label to days based on date */
+  /** Assigns `aria-label` to `Day` components based on date */
   getDayAriaLabel?: (date: DateStringValue) => string;
 
   /** Controls size */
   size?: MantineSize;
 
-  /** Determines whether controls should be separated by spacing, true by default */
+  /** Determines whether controls should be separated by space, `true` by default */
   withCellSpacing?: boolean;
 
   /** Determines whether today should be highlighted with a border, `false` by default */
   highlightToday?: boolean;
 
-  /** Determines whether week numbers should be displayed */
+  /** Determines whether week numbers should be displayed, `false` by default */
   withWeekNumbers?: boolean;
 }
 

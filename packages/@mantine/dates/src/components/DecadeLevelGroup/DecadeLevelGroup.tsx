@@ -20,13 +20,13 @@ export interface DecadeLevelGroupProps
   styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
 
-  /** Number of columns to render next to each other */
+  /** Number of columns to display next to each other */
   numberOfColumns?: number;
 
-  /** Decade that is currently displayed */
+  /** Displayed decade */
   decade: DateStringValue;
 
-  /** Function that returns level control aria-label based on year date */
+  /** Function that returns level control `aria-label` based on year date */
   levelControlAriaLabel?: ((decade: DateStringValue) => string) | string;
 }
 

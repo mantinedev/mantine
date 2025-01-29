@@ -31,19 +31,19 @@ export interface WeekdaysRowProps
   /** Controls size */
   size?: MantineSize;
 
-  /** Dayjs locale, defaults to value defined in DatesProvider */
+  /** dayjs locale */
   locale?: string;
 
   /** Number 0-6, 0 – Sunday, 6 – Saturday, `1` – Monday by default */
   firstDayOfWeek?: DayOfWeek;
 
-  /** Dayjs format to get weekday name, `'dd'` by default */
+  /** dayjs format to get weekday name, `'dd'` by default */
   weekdayFormat?: DateLabelFormat;
 
-  /** Choose cell type that will be used to render weekdays, `'th'` by default */
+  /** Sets cell type that is used for weekdays, `'th'` by default */
   cellComponent?: 'td' | 'th';
 
-  /** Determines whether week numbers should be displayed */
+  /** If set, heading for week numbers is displayed */
   withWeekNumbers?: boolean;
 }
 

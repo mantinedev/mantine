@@ -20,7 +20,7 @@ import { MonthsList, MonthsListSettings, MonthsListStylesNames } from '../Months
 export type YearLevelStylesNames = MonthsListStylesNames | CalendarHeaderStylesNames;
 
 export interface YearLevelBaseSettings extends MonthsListSettings {
-  /** Dayjs label format to display year label or a function that returns year label based on year value, defaults to "YYYY" */
+  /** dayjs label format to display year label or a function that returns year label based on year value, `"YYYY"` by default */
   yearLabelFormat?: DateLabelFormat;
 }
 
@@ -35,7 +35,7 @@ export interface YearLevelProps
   styles?: Partial<Record<string, React.CSSProperties>>;
   __staticSelector?: string;
 
-  /** Year that is currently displayed in `YYYY-MM-DD` format */
+  /** Displayed year value in `YYYY-MM-DD` format */
   year: DateStringValue;
 
   /** `aria-label` for change level control */

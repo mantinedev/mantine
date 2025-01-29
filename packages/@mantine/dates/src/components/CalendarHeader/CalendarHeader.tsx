@@ -28,7 +28,7 @@ export type CalendarHeaderCssVariables = {
 export interface CalendarHeaderSettings {
   __preventFocus?: boolean;
 
-  /** Determines whether propagation for Escape key should be stopped */
+  /** Determines whether propagation for `Escape` key should be stopped */
   __stopPropagation?: boolean;
 
   /** Change next icon */
@@ -37,34 +37,34 @@ export interface CalendarHeaderSettings {
   /** Change previous icon */
   previousIcon?: React.ReactNode;
 
-  /** Aria-label for next button */
+  /** Next button `aria-label` */
   nextLabel?: string;
 
-  /** Aria-label for previous button */
+  /** Previous button `aria-label` */
   previousLabel?: string;
 
-  /** Called when next button is clicked */
+  /** Called when the next button is clicked */
   onNext?: () => void;
 
-  /** Called when previous button is clicked */
+  /** Called when the previous button is clicked */
   onPrevious?: () => void;
 
-  /** Called when level button is clicked */
+  /** Called when the level button is clicked */
   onLevelClick?: () => void;
 
-  /** Determines whether next control should be disabled, defaults to false */
+  /** Disables next control */
   nextDisabled?: boolean;
 
-  /** Determines whether previous control should be disabled, defaults to false */
+  /** Disables previous control */
   previousDisabled?: boolean;
 
-  /** Determines whether next level button should be enabled, defaults to true */
+  /** Determines whether next level button should be enabled, `true` by default */
   hasNextLevel?: boolean;
 
-  /** Determines whether next control should be rendered, defaults to true */
+  /** Determines whether next control should be rendered, `true` by default */
   withNext?: boolean;
 
-  /** Determines whether previous control should be rendered, defaults to true */
+  /** Determines whether previous control should be rendered, `true` by default */
   withPrevious?: boolean;
 
   /** Component size */
@@ -81,7 +81,7 @@ export interface CalendarHeaderProps
   /** Label displayed between next and previous buttons */
   label: React.ReactNode;
 
-  /** Aria-label for level control */
+  /** Level control `aria-label` */
   levelControlAriaLabel?: string;
 }
 
