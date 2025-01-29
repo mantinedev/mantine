@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { DateStringValue } from '../types';
+import { DateStringValue } from '../../types';
 
 interface GetDefaultClampedDate {
   minDate: DateStringValue | undefined;

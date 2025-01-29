@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { DatePickerType, DatePickerValue, DateStringValue } from '../types';
+import { DatePickerType, DatePickerValue, DateStringValue } from '../../types';
 
 interface DateFormatterInput {
   type: DatePickerType;
