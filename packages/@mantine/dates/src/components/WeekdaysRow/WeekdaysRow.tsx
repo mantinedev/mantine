@@ -12,12 +12,10 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import type { DateStringValue, DayOfWeek } from '../../types';
+import type { DateLabelFormat, DayOfWeek } from '../../types';
 import { useDatesContext } from '../DatesProvider';
 import { getWeekdayNames } from './get-weekdays-names/get-weekdays-names';
 import classes from './WeekdaysRow.module.css';
-
-export type WeekdayFormat = string | ((date: DateStringValue) => React.ReactNode);
 
 export type WeekdaysRowStylesNames = 'weekday' | 'weekdaysRow';
 export type WeekdaysRowCssVariables = {
@@ -40,7 +38,7 @@ export interface WeekdaysRowProps
   firstDayOfWeek?: DayOfWeek;
 
   /** Dayjs format to get weekday name, `'dd'` by default */
-  weekdayFormat?: WeekdayFormat;
+  weekdayFormat?: DateLabelFormat;
 
   /** Choose cell type that will be used to render weekdays, `'th'` by default */
   cellComponent?: 'td' | 'th';

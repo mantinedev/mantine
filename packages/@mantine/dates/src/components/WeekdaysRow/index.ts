@@ -4,5 +4,4 @@ export type {
   WeekdaysRowFactory,
   WeekdaysRowProps,
   WeekdaysRowStylesNames,
-  WeekdayFormat,
 } from './WeekdaysRow';

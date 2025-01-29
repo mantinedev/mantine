@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
-import type { DateStringValue, DayOfWeek } from '../../../types';
+import type { DateLabelFormat, DayOfWeek } from '../../../types';
 
 interface GetWeekdaysNamesInput {
   locale: string;
-  format?: string | ((date: DateStringValue) => React.ReactNode);
+  format?: DateLabelFormat;
   firstDayOfWeek?: DayOfWeek;
 }
 

@@ -9,3 +9,5 @@ export interface ControlKeydownPayload {
   rowIndex: number;
   date: DateStringValue;
 }
+
+export type DateLabelFormat = string | ((date: DateStringValue) => React.ReactNode);

@@ -8,7 +8,7 @@ import {
   StylesApiProps,
   useProps,
 } from '@mantine/core';
-import { DateStringValue } from '../../types';
+import { DateLabelFormat, DateStringValue } from '../../types';
 import {
   CalendarHeader,
   CalendarHeaderSettings,
@@ -21,7 +21,7 @@ export type MonthLevelStylesNames = MonthStylesNames | CalendarHeaderStylesNames
 
 export interface MonthLevelBaseSettings extends MonthSettings {
   /** Dayjs label format to display month label or a function that returns month label based on month value, defaults to "MMMM YYYY" */
-  monthLabelFormat?: string | ((month: DateStringValue) => React.ReactNode);
+  monthLabelFormat?: DateLabelFormat;
 }
 
 export interface MonthLevelSettings extends MonthLevelBaseSettings, CalendarHeaderSettings {}

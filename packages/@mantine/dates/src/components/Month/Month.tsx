@@ -14,10 +14,10 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { ControlKeydownPayload, DateStringValue, DayOfWeek } from '../../types';
+import { ControlKeydownPayload, DateLabelFormat, DateStringValue, DayOfWeek } from '../../types';
 import { useDatesContext } from '../DatesProvider';
 import { Day, DayProps, DayStylesNames, RenderDay } from '../Day';
-import { WeekdayFormat, WeekdaysRow } from '../WeekdaysRow';
+import { WeekdaysRow } from '../WeekdaysRow';
 import { getDateInTabOrder } from './get-date-in-tab-order/get-date-in-tab-order';
 import { getMonthDays } from './get-month-days/get-month-days';
 import { getWeekNumber } from './get-week-number/get-week-number';
@@ -66,7 +66,7 @@ export interface MonthSettings {
   firstDayOfWeek?: DayOfWeek;
 
   /** Dayjs format for weekdays names, `'dd'` by default */
-  weekdayFormat?: WeekdayFormat;
+  weekdayFormat?: DateLabelFormat;
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday, defaults to value defined in DatesProvider */
   weekendDays?: DayOfWeek[];
