@@ -1,7 +1,0 @@
-.wrapper {
-  white-space: nowrap;
-
-  @mixin smaller-than 31em {
-    display: none;
-  }
-}
