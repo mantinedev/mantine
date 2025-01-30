@@ -5,8 +5,8 @@ export const FOOTER_LINKS_DATA: LinksGroupProps[] = [
   {
     title: 'About',
     data: [
+      { type: 'link', label: 'OpenCollective', link: 'https://opencollective.com/mantinedev' },
       { type: 'next', label: 'Contribute', link: '/contribute' },
-      { type: 'next', label: 'About Mantine', link: '/about' },
       { type: 'next', label: 'Changelog', link: '/changelog/previous-versions' },
       { type: 'link', label: 'GitHub Releases', link: meta.gitHubLinks.releases },
     ],
