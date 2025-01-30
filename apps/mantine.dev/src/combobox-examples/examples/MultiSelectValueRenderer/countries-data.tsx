@@ -1,9 +1,7 @@
-import { rem } from '@mantine/core';
-
 const flagProps = {
   xmlns: 'http://www.w3.org/2000/svg',
   viewBox: '0 0 640 480',
-  style: { display: 'block', width: rem(16) },
+  style: { display: 'block', width: 16 },
 };
 
 function UsFlag() {

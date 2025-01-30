@@ -1,4 +1,4 @@
-import { AppShell, Group, rem, Text } from '@mantine/core';
+import { AppShell, Group, Text } from '@mantine/core';
 import { useHeadroom } from '@mantine/hooks';
 import { MantineLogo } from '@mantinex/mantine-logo';
 
@@ -16,7 +16,7 @@ export function Headroom() {
         </Group>
       </AppShell.Header>
 
-      <AppShell.Main pt={`calc(${rem(60)} + var(--mantine-spacing-md))`}>
+      <AppShell.Main pt="60px + var(--mantine-spacing-md))">
         {Array(40)
           .fill(0)
           .map((_, index) => (

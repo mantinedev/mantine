@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { IconPencil } from '@tabler/icons-react';
-import { Box, rem, ScrollArea, Space, Text } from '@mantine/core';
+import { Box, ScrollArea, Space, Text } from '@mantine/core';
 import { useScrollSpy } from '@mantine/hooks';
 import classes from './TableOfContents.module.css';
 
@@ -45,7 +45,7 @@ export function TableOfContents({ withTabs, editPageLink }: TableOfContentsProps
       <div className={classes.inner}>
         <div>
           <Text className={classes.title}>Table of contents</Text>
-          <ScrollArea.Autosize mah={`calc(100vh - ${rem(172)})`} type="never">
+          <ScrollArea.Autosize mah="calc(100vh - 172px)" type="never">
             <div className={classes.items}>{items}</div>
 
             {editPageLink && (

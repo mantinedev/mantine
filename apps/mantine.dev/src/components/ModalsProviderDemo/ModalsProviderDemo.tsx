@@ -1,5 +1,5 @@
 import { IconCheck } from '@tabler/icons-react';
-import { Button, Center, Loader, rem, Stack, Text } from '@mantine/core';
+import { Button, Center, Loader, Stack, Text } from '@mantine/core';
 import { ContextModalProps, ModalsProvider } from '@mantine/modals';
 
 interface ModalsProviderDemoProps {
@@ -31,7 +31,7 @@ const asyncDemonstrationModal = ({
         {innerProps.loading ? (
           <Loader size={32} />
         ) : (
-          <IconCheck style={{ width: rem(32), height: rem(32), color: 'green' }} />
+          <IconCheck style={{ width: 32, height: 32, color: 'green' }} />
         )}
       </Center>
     </Stack>

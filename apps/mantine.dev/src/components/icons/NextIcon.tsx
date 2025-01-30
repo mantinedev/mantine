@@ -1,4 +1,4 @@
-import { Box, rem } from '@mantine/core';
+import { Box } from '@mantine/core';
 import { IconProps } from './types';
 import classes from './icons.module.css';
 
@@ -6,7 +6,7 @@ export function NextIcon({ size = 40, ...others }: IconProps) {
   return (
     <Box
       component="svg"
-      __vars={{ '--icon-size': rem(size) }}
+      __vars={{ '--icon-size': `${size}px` }}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 394 80"
       className={classes.nextIcon}
