@@ -40,16 +40,16 @@ export interface DateInputProps
     StylesApiProps<DateInputFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
   /** Parses user input to convert it to date string value */
-  dateParser?: (value: string) => DateStringValue | null;
+  dateParser?: (value: string) => DateStringValue | Date | null;
 
   /** Controlled component value */
-  value?: DateValue;
+  value?: DateValue | Date;
 
   /** Uncontrolled component default value */
-  defaultValue?: DateValue;
+  defaultValue?: DateValue | Date;
 
   /** Called when value changes */
-  onChange?: (value: DateValue) => void;
+  onChange?: (value: DateStringValue) => void;
 
   /** Props passed down to `Popover` component */
   popoverProps?: Partial<Omit<PopoverProps, 'children'>>;

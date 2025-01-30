@@ -5,8 +5,8 @@ import { isYearDisabled } from '../is-year-disabled/is-year-disabled';
 
 interface GetYearInTabOrderInput {
   years: DateStringValue[][];
-  minDate: DateStringValue | undefined;
-  maxDate: DateStringValue | undefined;
+  minDate: DateStringValue | Date | undefined;
+  maxDate: DateStringValue | Date | undefined;
   getYearControlProps: ((year: DateStringValue) => Partial<PickerControlProps>) | undefined;
 }
 

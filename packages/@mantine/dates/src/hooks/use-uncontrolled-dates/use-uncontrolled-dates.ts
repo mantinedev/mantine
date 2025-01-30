@@ -1,27 +1,35 @@
 import { useRef } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { DatePickerType, DatePickerValue } from '../../types';
+import { DatePickerType, DatePickerValue, DateStringValue } from '../../types';
+import { toDateString, toDateTimeString } from '../../utils';
 
 interface UseUncontrolledDates<Type extends DatePickerType = 'default'> {
   type: Type;
   value: DatePickerValue<Type> | undefined;
   defaultValue: DatePickerValue<Type> | undefined;
-  onChange: ((value: DatePickerValue<Type>) => void) | undefined;
+  onChange: ((value: DatePickerValue<Type, DateStringValue>) => void) | undefined;
+  withTime?: boolean;
 }
 
 const getEmptyValue = <Type extends DatePickerType = 'default'>(type: Type) =>
   type === 'range' ? [null, null] : type === 'multiple' ? [] : null;
+
+export const convertDatesValue = (value: any, withTime: boolean) => {
+  const converter = withTime ? toDateTimeString : toDateString;
+  return Array.isArray(value) ? value.map(converter) : converter(value);
+};
 
 export function useUncontrolledDates<Type extends DatePickerType = 'default'>({
   type,
   value,
   defaultValue,
   onChange,
+  withTime = false,
 }: UseUncontrolledDates<Type>) {
   const storedType = useRef<Type>(type);
   const [_value, _setValue, controlled] = useUncontrolled<any>({
-    value,
-    defaultValue,
+    value: convertDatesValue(value, withTime),
+    defaultValue: convertDatesValue(defaultValue, withTime),
     finalValue: getEmptyValue(type),
     onChange,
   });

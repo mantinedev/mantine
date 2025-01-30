@@ -15,6 +15,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { ControlKeydownPayload, DateLabelFormat, DateStringValue, DayOfWeek } from '../../types';
+import { toDateString } from '../../utils';
 import { useDatesContext } from '../DatesProvider';
 import { Day, DayProps, DayStylesNames, RenderDay } from '../Day';
 import { WeekdaysRow } from '../WeekdaysRow';
@@ -80,10 +81,10 @@ export interface MonthSettings {
   excludeDate?: (date: DateStringValue) => boolean;
 
   /** Minimum possible date, in `YYYY-MM-DD` format */
-  minDate?: DateStringValue;
+  minDate?: DateStringValue | Date;
 
   /** Maximum possible date, in `YYYY-MM-DD` format */
-  maxDate?: DateStringValue;
+  maxDate?: DateStringValue | Date;
 
   /** Controls day value rendering */
   renderDay?: RenderDay;
@@ -201,8 +202,8 @@ export const Month = factory<MonthFactory>((_props, ref) => {
 
   const dateInTabOrder = getDateInTabOrder({
     dates,
-    minDate,
-    maxDate,
+    minDate: toDateString(minDate) as DateStringValue,
+    maxDate: toDateString(maxDate) as DateStringValue,
     getDayProps,
     excludeDate,
     hideOutsideDates,
@@ -249,8 +250,8 @@ export const Month = factory<MonthFactory>((_props, ref) => {
             static={isStatic}
             disabled={
               excludeDate?.(date) ||
-              !isBeforeMaxDate(date, maxDate) ||
-              !isAfterMinDate(date, minDate)
+              !isBeforeMaxDate(date, toDateString(maxDate)!) ||
+              !isAfterMinDate(date, toDateString(minDate)!)
             }
             ref={(node) => __getDayRef?.(rowIndex, cellIndex, node!)}
             {...dayProps}

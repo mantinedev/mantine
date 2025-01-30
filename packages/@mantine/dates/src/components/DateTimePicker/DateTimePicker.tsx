@@ -60,7 +60,7 @@ export interface DateTimePickerProps
   defaultValue?: DateValue;
 
   /** Called when value changes */
-  onChange?: (value: DateValue) => void;
+  onChange?: (value: DateStringValue) => void;
 
   /** Props passed down to `TimePicker` component */
   timePickerProps?: Omit<TimePickerProps, 'defaultValue' | 'value'>;
@@ -143,6 +143,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     value,
     defaultValue,
     onChange,
+    withTime: true,
   });
 
   const formatTime = (dateValue: DateStringValue) =>
@@ -167,7 +168,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
 
   const handleDateChange = (date: DateValue) => {
     if (date) {
-      setValue(clampDate(minDate, maxDate, date));
+      setValue(clampDate(minDate!, maxDate!, date!));
     }
     timePickerRef.current?.focus();
   };
@@ -219,6 +220,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
       type="default"
       __staticSelector="DateTimePicker"
       onDropdownClose={handleDropdownClose}
+      withTime
     >
       <DatePicker
         {...calendarProps}

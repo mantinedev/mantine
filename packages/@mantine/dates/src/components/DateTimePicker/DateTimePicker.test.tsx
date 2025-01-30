@@ -186,7 +186,7 @@ describe('@mantine/dates/DateTimePicker', () => {
     await clickInput(container);
     await userEvent.click(container.querySelectorAll('table button')[6]);
     expectValue(container, '11/04/2022 00:00');
-    expect(spy).toHaveBeenLastCalledWith('2022-04-03');
+    expect(spy).toHaveBeenLastCalledWith('2022-04-03 00:00:00');
   });
 
   it('displays correct value when withSeconds is set', () => {
@@ -300,13 +300,13 @@ describe('@mantine/dates/DateTimePicker', () => {
     const { container } = render(
       <DateTimePicker
         {...defaultProps}
-        value="2022-04-11T14:56:45"
+        value="2022-04-11 14:56:45"
         name="hidden-name"
         form="hidden-form"
       />
     );
     const input = container.querySelector('input[type="hidden"]');
-    expect(input).toHaveValue('2022-04-11T14:56:45');
+    expect(input).toHaveValue('2022-04-11 14:56:45');
     expect(input).toHaveAttribute('name', 'hidden-name');
     expect(input).toHaveAttribute('form', 'hidden-form');
   });

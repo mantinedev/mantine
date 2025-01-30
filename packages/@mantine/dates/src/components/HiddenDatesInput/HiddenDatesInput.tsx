@@ -1,4 +1,5 @@
 import { DatePickerType, DatesRangeValue, DateValue } from '../../types';
+import { toDateString, toDateTimeString } from '../../utils';
 
 export type HiddenDatesInputValue = DatesRangeValue | DateValue | DateValue[];
 
@@ -7,11 +8,22 @@ export interface HiddenDatesInputProps {
   type: DatePickerType;
   name: string | undefined;
   form: string | undefined;
+  withTime?: boolean;
 }
 
-function formatValue(value: HiddenDatesInputValue, type: DatePickerType) {
+interface FormatValueInput {
+  value: HiddenDatesInputValue;
+  type: DatePickerType;
+  withTime: boolean;
+}
+
+function formatValue({ value, type, withTime }: FormatValueInput) {
+  const formatter = withTime ? toDateTimeString : toDateString;
+
   if (type === 'range' && Array.isArray(value)) {
-    const [startDate, endDate] = value;
+    const startDate = formatter(value[0]);
+    const endDate = formatter(value[1]);
+
     if (!startDate) {
       return '';
     }
@@ -28,14 +40,22 @@ function formatValue(value: HiddenDatesInputValue, type: DatePickerType) {
   }
 
   if (!Array.isArray(value) && value) {
-    return value;
+    return formatter(value)!;
   }
 
   return '';
 }
 
-export function HiddenDatesInput({ value, type, name, form }: HiddenDatesInputProps) {
-  return <input type="hidden" value={formatValue(value, type)} name={name} form={form} />;
+export function HiddenDatesInput({
+  value,
+  type,
+  name,
+  form,
+  withTime = false,
+}: HiddenDatesInputProps) {
+  return (
+    <input type="hidden" value={formatValue({ value, type, withTime })} name={name} form={form} />
+  );
 }
 
 HiddenDatesInput.displayName = '@mantine/dates/HiddenDatesInput';

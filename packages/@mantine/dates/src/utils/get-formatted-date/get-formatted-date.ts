@@ -18,7 +18,7 @@ export function defaultDateFormatter({
   format,
   labelSeparator,
 }: DateFormatterInput) {
-  const formatDate = (value: DateStringValue) => dayjs(value).locale(locale).format(format);
+  const formatDate = (value: DateStringValue | Date) => dayjs(value).locale(locale).format(format);
 
   if (type === 'default') {
     return date === null ? '' : formatDate(date as DateStringValue);

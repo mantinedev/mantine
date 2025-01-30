@@ -1,9 +1,10 @@
 import dayjs from 'dayjs';
 import { DateStringValue } from '../../types';
+import { toDateString } from '../to-date-string/to-date-string';
 
 interface GetDefaultClampedDate {
-  minDate: DateStringValue | undefined;
-  maxDate: DateStringValue | undefined;
+  minDate: DateStringValue | Date | undefined;
+  maxDate: DateStringValue | Date | undefined;
 }
 
 export function getDefaultClampedDate({
@@ -13,16 +14,16 @@ export function getDefaultClampedDate({
   const today = dayjs();
 
   if (!minDate && !maxDate) {
-    return today.format('YYYY-MM-DD');
+    return toDateString(today)!;
   }
 
   if (minDate && dayjs(today).isBefore(minDate)) {
-    return minDate;
+    return toDateString(minDate)!;
   }
 
   if (maxDate && dayjs(today).isAfter(maxDate)) {
-    return maxDate;
+    return toDateString(maxDate)!;
   }
 
-  return today.format('YYYY-MM-DD');
+  return toDateString(today)!;
 }

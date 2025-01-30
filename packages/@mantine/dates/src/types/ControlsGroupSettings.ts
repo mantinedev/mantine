@@ -19,11 +19,11 @@ export interface ControlsGroupSettings {
   /** Assigns ref of every control based on its position in the table, used for arrows navigation */
   __getControlRef?: (rowIndex: number, cellIndex: number, node: HTMLButtonElement) => void;
 
-  /** Minimum possible date in `YYYY-MM-DD` format */
-  minDate?: DateStringValue;
+  /** Minimum possible date in `YYYY-MM-DD` format or Date object */
+  minDate?: DateStringValue | Date;
 
-  /** Maximum possible date in `YYYY-MM-DD` format */
-  maxDate?: DateStringValue;
+  /** Maximum possible date in `YYYY-MM-DD` format or Date object */
+  maxDate?: DateStringValue | Date;
 
   /** Dayjs locale, defaults to value defined in DatesProvider */
   locale?: string;

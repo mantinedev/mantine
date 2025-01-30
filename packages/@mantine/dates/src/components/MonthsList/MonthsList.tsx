@@ -11,6 +11,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { ControlsGroupSettings, DateStringValue } from '../../types';
+import { toDateString } from '../../utils';
 import { useDatesContext } from '../DatesProvider';
 import { PickerControl, PickerControlProps } from '../PickerControl';
 import { getMonthInTabOrder } from './get-month-in-tab-order/get-month-in-tab-order';
@@ -112,8 +113,8 @@ export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
 
   const monthInTabOrder = getMonthInTabOrder({
     months,
-    minDate,
-    maxDate,
+    minDate: toDateString(minDate)!,
+    maxDate: toDateString(maxDate)!,
     getMonthControlProps,
   });
 
@@ -133,7 +134,11 @@ export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
             unstyled={unstyled}
             __staticSelector={__staticSelector || 'MonthsList'}
             data-mantine-stop-propagation={__stopPropagation || undefined}
-            disabled={isMonthDisabled({ month, minDate, maxDate })}
+            disabled={isMonthDisabled({
+              month,
+              minDate: toDateString(minDate)!,
+              maxDate: toDateString(maxDate)!,
+            })}
             ref={(node) => __getControlRef?.(rowIndex, cellIndex, node!)}
             {...controlProps}
             onKeyDown={(event) => {

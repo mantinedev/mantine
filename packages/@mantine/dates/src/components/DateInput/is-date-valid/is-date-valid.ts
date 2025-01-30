@@ -2,9 +2,9 @@ import dayjs from 'dayjs';
 import { DateStringValue } from '../../../types';
 
 interface IsDateValid {
-  date: DateStringValue;
-  maxDate: DateStringValue | null | undefined;
-  minDate: DateStringValue | null | undefined;
+  date: DateStringValue | Date;
+  maxDate: DateStringValue | Date | null | undefined;
+  minDate: DateStringValue | Date | null | undefined;
 }
 
 export function isDateValid({ date, maxDate, minDate }: IsDateValid) {

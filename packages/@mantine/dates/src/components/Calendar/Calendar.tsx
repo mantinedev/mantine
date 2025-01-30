@@ -12,6 +12,7 @@ import {
 import { useUncontrolled } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
 import { CalendarLevel, DateStringValue } from '../../types';
+import { toDateString } from '../../utils';
 import { DecadeLevelSettings } from '../DecadeLevel';
 import { DecadeLevelGroup, DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
 import { MonthLevelSettings } from '../MonthLevel';
@@ -87,10 +88,10 @@ export interface CalendarBaseProps {
   __updateDateOnMonthSelect?: boolean;
 
   /** Initial displayed date in uncontrolled mode */
-  defaultDate?: DateStringValue;
+  defaultDate?: DateStringValue | Date;
 
   /** Displayed date in controlled mode */
-  date?: DateStringValue;
+  date?: DateStringValue | Date;
 
   /** Called when date changes */
   onDateChange?: (date: DateStringValue) => void;
@@ -248,8 +249,8 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
 
   const [_date, setDate] = useUncontrolledDates({
     type: 'default',
-    value: date,
-    defaultValue: defaultDate,
+    value: toDateString(date),
+    defaultValue: toDateString(defaultDate),
     onChange: onDateChange as any,
   });
 

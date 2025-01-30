@@ -80,6 +80,7 @@ export interface PickerInputBaseProps
   value: HiddenDatesInputValue;
   type: DatePickerType;
   size?: MantineSize;
+  withTime?: boolean;
 }
 
 export type PickerInputBaseFactory = Factory<{
@@ -119,6 +120,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
     form,
     type,
     onDropdownClose,
+    withTime,
     ...others
   } = useInputProps('PickerInputBase', defaultProps, _props);
 
@@ -204,7 +206,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
           <Popover.Dropdown data-dates-dropdown>{children}</Popover.Dropdown>
         </Popover>
       </Input.Wrapper>
-      <HiddenDatesInput value={value} name={name} form={form} type={type} />
+      <HiddenDatesInput value={value} name={name} form={form} type={type} withTime={withTime} />
     </>
   );
 });

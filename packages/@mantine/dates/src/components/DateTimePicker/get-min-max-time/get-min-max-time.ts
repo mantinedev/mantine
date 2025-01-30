@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { DateStringValue } from '../../../types';
 
 interface GetMinTimeInput {
-  minDate: DateStringValue | undefined;
+  minDate: DateStringValue | Date | undefined;
   value: DateStringValue | null;
 }
 
@@ -16,7 +16,7 @@ export function getMinTime({ minDate, value }: GetMinTimeInput): string | undefi
 }
 
 interface GetMaxTimeInput {
-  maxDate: DateStringValue | undefined;
+  maxDate: DateStringValue | Date | undefined;
   value: DateStringValue | null;
 }
 

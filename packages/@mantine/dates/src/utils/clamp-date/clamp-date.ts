@@ -1,22 +1,23 @@
 import dayjs from 'dayjs';
 import { DateStringValue } from '../../types';
+import { toDateTimeString } from '../to-date-string/to-date-string';
 
 export function clampDate(
-  minDate: DateStringValue | undefined,
-  maxDate: DateStringValue | undefined,
-  date: DateStringValue
+  minDate: DateStringValue | Date | undefined,
+  maxDate: DateStringValue | Date | undefined,
+  date: DateStringValue | Date
 ): DateStringValue {
   if (!minDate && !maxDate) {
-    return date;
+    return toDateTimeString(date)!;
   }
 
   if (minDate && dayjs(date).isBefore(minDate)) {
-    return minDate;
+    return toDateTimeString(minDate)!;
   }
 
   if (maxDate && dayjs(date).isAfter(maxDate)) {
-    return maxDate;
+    return toDateTimeString(maxDate)!;
   }
 
-  return date;
+  return toDateTimeString(date)!;
 }
