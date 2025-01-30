@@ -1,4 +1,5 @@
 import {
+  DatePickerDemos,
   DateTimePickerDemos,
   TimePickerDemos,
   TimeValueDemos,
@@ -40,6 +41,44 @@ import '@mantine/core/styles/global.css';
 
 If you imported `@mantine/core/styles.css`, no changes are required –
 all new files are already included in `styles.css`.
+
+## Date values as strings
+
+All `@mantine/dates` components now use date strings in `YYYY-MM-DD` or `YYYY-MM-DD HH:mm:ss`
+format instead of `Date` objects. This change was made to resolve issues related to timezones
+– now the output of all `@mantine/dates` components does not include any timezone specific information.
+Follow [7.x → 8.x migration guide](/guides/7x-to-8x) to learn how to update the code to use new string values.
+
+Example of using [DatePicker](/dates/date-picker) component with string values:
+
+<Demo data={DatePickerDemos.usage} />
+
+## DatesProvider timezone
+
+`DatesProvider` component no longer supports `timezone` option – all `@mantine/dates`
+components now use strings in `YYYY-MM-DD HH:mm:ss` format as values and do not contain
+timezone information.
+
+If you need to handle timezones in your application, you can use a dedicated dates library
+([dayjs](https://day.js.org/), [luxon](https://moment.github.io/luxon/#/), [date-fns](https://date-fns.org/))
+to update timezone values.
+
+Example of using Mantine components with [dayjs](https://day.js.org/):
+
+```tsx
+import dayjs from 'dayjs';
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  const [value, setValue] = useState<string | null>('2022-08-21');
+
+  // Mantine components use strings as values, you can pass these
+  // strings to a dates library of your choice to assign timezone
+  const dateWithTimeZone = dayjs(value).tz("America/Toronto").toDate();
+
+  return <DatePicker value={value} onChange={setValue} />;
+}
+```
 
 ## TimePicker component
 

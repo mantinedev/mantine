@@ -32,6 +32,77 @@ the import works the same in 7.x and 8.x versions:
 import '@mantine/core/styles.css';
 ```
 
+## Date string values
+
+`@mantine/dates` components now use date string values in `onChange` and other callbacks.
+If you want to continue using `@mantine/dates` components the same way as in 7.x, you need
+to convert callback values to `Date` objects:
+
+```tsx
+import { useState } from 'react';
+import { DatePicker } from '@mantine/dates';
+
+export function Demo7x() {
+  const [value, setValue] = useState<Date | null>(null);
+  // ⛔ 7.x – onChange is called with Date object
+  return <DatePicker value={value} onChange={setValue} />
+}
+
+export function Demo8x() {
+  const [value, setValue] = useState<Date | null>(null);
+  // ✅ 8.x – onChange is called with string date value (for example '1994-08-21')
+  // You can either
+  // 1. Convert it to Date object to preserve old behavior
+  // 2. Update your code to use date string values instead
+  return <DatePicker value={value} onChange={val => setValue(new Date(val))} />
+}
+```
+
+## DatesProvider timezone
+
+`DatesProvider` component no longer supports `timezone` option:
+
+```tsx
+import { DatesProvider } from '@mantine/dates';
+
+function Demo7x() {
+  // ❌ timezone option is no longer supported
+  return (
+    <DatesProvider settings={{ timezone: 'UTC', consistentWeeks: true }}>
+      App
+    </DatesProvider>
+  );
+}
+
+function Demo8x() {
+  // ✅ Remove timezone option
+  return (
+    <DatesProvider settings={{ consistentWeeks: true }}>
+      App
+    </DatesProvider>
+  );
+}
+```
+
+If you need to handle timezones in your application, you can use a dedicated dates library
+([dayjs](https://day.js.org/), [luxon](https://moment.github.io/luxon/#/), [date-fns](https://date-fns.org/))
+to update timezone values. Example of using Mantine components with [dayjs](https://day.js.org/):
+
+```tsx
+import dayjs from 'dayjs';
+import { DatePicker } from '@mantine/dates';
+
+function Demo() {
+  const [value, setValue] = useState<string | null>('2022-08-21');
+
+  // Mantine components use strings as values, you can pass these
+  // strings to a dates library of your choice to assign timezone
+  const dateWithTimeZone = dayjs(value).tz("America/Toronto").toDate();
+
+  return <DatePicker value={value} onChange={setValue} />;
+}
+```
+
 ## DateTimePicker timeInputProps
 
 [DateTimePicker](/dates/date-time-picker) component no longer accepts `timeInputProps` prop,
