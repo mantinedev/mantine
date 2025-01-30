@@ -22,8 +22,12 @@
   opacity: 1;
   cursor: pointer;
 
+  &:where([data-static]) {
+    cursor: default;
+  }
+
   @mixin hover {
-    &:where(:not([data-disabled], :disabled)) {
+    &:where(:not([data-disabled], [data-static], :disabled)) {
       @mixin light {
         background-color: var(--mantine-color-gray-0);
       }
