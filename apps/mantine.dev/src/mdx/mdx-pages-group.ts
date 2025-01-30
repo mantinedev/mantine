@@ -337,7 +337,6 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
     group: 'mantine-dates',
     pages: [
       MDX_DATA.GettingStartedDates,
-      MDX_DATA.DatesProvider,
       MDX_DATA.Calendar,
       MDX_DATA.DateInput,
       MDX_DATA.DateTimePicker,

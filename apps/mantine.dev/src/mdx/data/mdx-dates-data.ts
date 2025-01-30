@@ -55,15 +55,6 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     docs: 'dates/date-picker-input.mdx',
   },
 
-  DatesProvider: {
-    title: 'DatesProvider',
-    package: '@mantine/dates',
-    slug: '/dates/dates-provider',
-    description: 'Settings provider for @mantine/dates components',
-    source: '@mantine/dates/src/components/DatesProvider/DatesProvider.tsx',
-    docs: 'dates/dates-provider.mdx',
-  },
-
   DateTimePicker: {
     title: 'DateTimePicker',
     package: '@mantine/dates',

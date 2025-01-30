@@ -383,12 +383,11 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
     category: 'Dates',
     pages: [
       MDX_DATA.GettingStartedDates,
-      MDX_DATA.DatesProvider,
       MDX_DATA.Calendar,
-      MDX_DATA.DateInput,
       MDX_DATA.DateTimePicker,
       MDX_DATA.DatePicker,
       MDX_DATA.DatePickerInput,
+      MDX_DATA.DateInput,
       MDX_DATA.MonthPicker,
       MDX_DATA.MonthPickerInput,
       MDX_DATA.YearPicker,

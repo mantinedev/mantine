@@ -6,7 +6,6 @@ export const ROLLUP_EXTERNALS = [
   'dayjs/plugin/customParseFormat.js',
   'dayjs/plugin/customParseFormat',
   'dayjs/plugin/utc.js',
-  'dayjs/plugin/timezone.js',
   'dayjs/plugin/isoWeek.js',
   'klona/full',
   'highlight.js/lib/languages/typescript',
