@@ -29,5 +29,11 @@ generateDeclarations({
       'RechartsProps',
     '((time: string) => Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref"> & DataAttributes) | undefined':
       '(time: string) => React.ComponentPropsWithoutRef<"button">',
+    'CalendarLevel | undefined': '"month" | "year" | "decade"',
+    'DayOfWeek | undefined': '0 | 1 | 2 | 3 | 4 | 5 | 6',
+    'DayOfWeek[] | undefined': '(0 | 1 | 2 | 3 | 4 | 5 | 6)[]',
+    'RenderDay | undefined': '(date: string) => React.ReactNode',
+    'DateLabelFormat | undefined': 'string | ((date: string) => string)',
+    'DatePickerType | undefined': '"range" | "multiple" | "default"',
   },
 });
