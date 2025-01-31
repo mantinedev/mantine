@@ -14,39 +14,39 @@ export default Layout(meta);
 
 ## Loading local fonts
 
-Create the following folder structure (the example with GreycliffCF custom font):
+Create the following folder structure (the example with Roboto custom font):
 
 ```plaintext
-GreycliffCF/
-├─ GreycliffCF-Bold.woff2
-├─ GreycliffCF-Heavy.woff2
-├─ GreycliffCF.css
+Roboto/
+├─ Roboto-Bold.woff2
+├─ Roboto-Heavy.woff2
+├─ Roboto.css
 ```
 
-In `GreycliffCF.css` file, add the following code:
+In `Roboto.css` file, add the following code:
 
 ```css
 @font-face {
-  font-family: 'Greycliff CF';
-  src: url('./GreycliffCF-Bold.woff2') format('woff2');
+  font-family: 'Roboto';
+  src: url('./Roboto-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Greycliff CF';
-  src: url('./GreycliffCF-Heavy.woff2') format('woff2');
+  font-family: 'Roboto';
+  src: url('./Roboto-Heavy.woff2') format('woff2');
   font-weight: 900;
   font-style: normal;
 }
 ```
 
-Then import `GreycliffCF.css` file at the root of your application and
+Then import `Roboto.css` file at the root of your application and
 add the font to your [theme](https://mantine.dev/theming/theme-object/):
 
 ```tsx
 import '@mantine/core/styles.css';
-import './GreycliffCF/styles.css';
+import './Roboto/styles.css';
 
 import {
   Links,
@@ -64,11 +64,11 @@ import {
 } from '@mantine/core';
 
 const theme = createTheme({
-  fontFamily: 'Greycliff CF, sans-serif',
+  fontFamily: 'Roboto, sans-serif',
   fontFamilyMonospace: 'Monaco, Courier, monospace',
   headings: {
     // Use default theme if you want to provide default Mantine fonts as a fallback
-    fontFamily: `Greycliff CF, ${DEFAULT_THEME.fontFamily}`,
+    fontFamily: `Roboto, ${DEFAULT_THEME.fontFamily}`,
   },
 });
 
@@ -123,7 +123,7 @@ The code will look something like this:
 
 ```tsx
 import '@mantine/core/styles.css';
-import './GreycliffCF/styles.css';
+import './Roboto/styles.css';
 
 import {
   Links,
