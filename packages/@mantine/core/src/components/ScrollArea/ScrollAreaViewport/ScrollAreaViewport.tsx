@@ -20,7 +20,7 @@ export const ScrollAreaViewport = forwardRef<HTMLDivElement, ScrollAreaViewportP
           ...style,
         }}
       >
-        <div style={{ minWidth: '100%', display: 'table' }} ref={ctx.onContentChange}>
+        <div {...ctx.getStyles('content')} ref={ctx.onContentChange}>
           {children}
         </div>
       </Box>

@@ -1,6 +1,7 @@
 import { forwardRef, useState } from 'react';
 import { useMergedRef } from '@mantine/hooks';
-import { Box, BoxProps, ElementProps, Factory, useProps } from '../../../core';
+import { Box, BoxProps, ElementProps, Factory, GetStylesApi, useProps } from '../../../core';
+import type { ScrollAreaFactory } from '../ScrollArea';
 import { ScrollAreaProvider } from '../ScrollArea.context';
 
 export type ScrollAreaRootStylesNames =
@@ -21,20 +22,9 @@ export interface ScrollAreaRootStylesCtx {
 }
 
 export interface ScrollAreaRootProps extends BoxProps, ElementProps<'div'> {
-  /**
-   * Defines scrollbars behavior, `hover` by default
-   * - `hover` – scrollbars are visible when mouse is over the scroll area
-   * - `scroll` – scrollbars are visible when the scroll area is scrolled
-   * - `always` – scrollbars are always visible
-   * - `never` – scrollbars are always hidden
-   * - `auto` – similar to `overflow: auto` – scrollbars are always visible when the content is overflowing
-   * */
+  getStyles: GetStylesApi<ScrollAreaFactory>;
   type?: 'auto' | 'always' | 'scroll' | 'hover' | 'never';
-
-  /** Axis at which scrollbars must be rendered, `'xy'` by default */
   scrollbars?: 'x' | 'y' | 'xy' | false;
-
-  /** Scroll hide delay in ms, applicable only when type is set to `hover` or `scroll`, `1000` by default */
   scrollHideDelay?: number;
 }
 
@@ -50,8 +40,11 @@ const defaultProps: Partial<ScrollAreaRootProps> = {
 };
 
 export const ScrollAreaRoot = forwardRef<HTMLDivElement, ScrollAreaRootProps>((_props, ref) => {
-  const props = useProps('ScrollAreaRoot', defaultProps, _props);
-  const { type, scrollHideDelay, scrollbars, ...others } = props;
+  const { type, scrollHideDelay, scrollbars, getStyles, ...others } = useProps(
+    'ScrollAreaRoot',
+    defaultProps,
+    _props
+  );
 
   const [scrollArea, setScrollArea] = useState<HTMLDivElement | null>(null);
   const [viewport, setViewport] = useState<HTMLDivElement | null>(null);
@@ -84,6 +77,7 @@ export const ScrollAreaRoot = forwardRef<HTMLDivElement, ScrollAreaRootProps>((_
         onScrollbarYEnabledChange: setScrollbarYEnabled,
         onCornerWidthChange: setCornerWidth,
         onCornerHeightChange: setCornerHeight,
+        getStyles,
       }}
     >
       <Box

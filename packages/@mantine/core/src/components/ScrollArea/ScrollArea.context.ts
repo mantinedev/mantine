@@ -1,4 +1,5 @@
-import { createSafeContext } from '../../core';
+import { createSafeContext, GetStylesApi } from '../../core';
+import type { ScrollAreaFactory } from './ScrollArea';
 
 export interface ScrollAreaContextValue {
   type: 'auto' | 'always' | 'scroll' | 'hover' | 'never';
@@ -18,6 +19,7 @@ export interface ScrollAreaContextValue {
   onScrollbarYEnabledChange: (rendered: boolean) => void;
   onCornerWidthChange: (width: number) => void;
   onCornerHeightChange: (height: number) => void;
+  getStyles: GetStylesApi<ScrollAreaFactory>;
 }
 
 export const [ScrollAreaProvider, useScrollAreaContext] = createSafeContext<ScrollAreaContextValue>(
