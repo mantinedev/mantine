@@ -10,6 +10,7 @@
   letter-spacing: -0.5px;
   line-height: 1;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
 
   @mixin smaller-than $sm {
     font-size: 32px;

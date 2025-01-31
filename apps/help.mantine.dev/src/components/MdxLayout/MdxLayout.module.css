@@ -16,6 +16,7 @@
   line-height: 1.1;
   text-wrap: balance;
   color: var(--mantine-color-bright);
+  font-weight: 500;
 
   @mixin smaller-than $sm {
     font-size: 32px;

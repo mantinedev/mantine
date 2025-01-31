@@ -1,66 +1,34 @@
-import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { IconList } from '@tabler/icons-react';
-import { Box, rem, ScrollArea, Text } from '@mantine/core';
-import { getHeadings, Heading } from './get-headings';
+import { IconPencil } from '@tabler/icons-react';
+import { Box, ScrollArea, Space, Text } from '@mantine/core';
+import { useScrollSpy } from '@mantine/hooks';
 import classes from './TableOfContents.module.css';
 
-function getActiveElement(rects: DOMRect[]) {
-  if (rects.length === 0) {
-    return -1;
-  }
-
-  const closest = rects.reduce(
-    (acc, item, index) => {
-      if (Math.abs(acc.position) < Math.abs(item.y)) {
-        return acc;
-      }
-
-      return {
-        index,
-        position: item.y,
-      };
-    },
-    { index: 0, position: rects[0].y }
-  );
-
-  return closest.index;
+interface TableOfContentsProps {
+  withTabs: boolean;
+  editPageLink?: string;
 }
 
-export function TableOfContents() {
-  const [active, setActive] = useState(0);
-  const [headings, setHeadings] = useState<Heading[]>([]);
-  const headingsRef = useRef<Heading[]>([]);
+export function TableOfContents({ withTabs, editPageLink }: TableOfContentsProps) {
   const router = useRouter();
+  const spy = useScrollSpy({
+    selector: '#mdx [data-heading]',
+    getDepth: (element) => Number(element.getAttribute('data-order')),
+    getValue: (element) => element.getAttribute('data-heading') || '',
+  });
 
-  const filteredHeadings = headings.filter((heading) => heading.depth > 1);
-
-  const handleScroll = () => {
-    setActive(
-      getActiveElement(headingsRef.current.map((d) => d.getNode().getBoundingClientRect()))
-    );
-  };
-
-  useEffect(() => {
-    const _headings = getHeadings();
-    headingsRef.current = _headings;
-    setHeadings(_headings);
-    setActive(getActiveElement(_headings.map((d) => d.getNode().getBoundingClientRect())));
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const filteredHeadings = spy.data.filter((heading) => heading.depth > 1);
 
   if (filteredHeadings.length === 0) {
     return null;
   }
 
   const items = filteredHeadings.map((heading, index) => (
-    <Text<'a'>
+    <Text
       key={heading.id}
       component="a"
-      fz="sm"
       className={classes.link}
-      mod={{ active: active === index }}
+      mod={{ active: spy.active === index }}
       href={`#${heading.id}`}
       __vars={{ '--toc-link-offset': `${heading.depth - 1}` }}
       onClick={(event) => {
@@ -68,20 +36,25 @@ export function TableOfContents() {
         router.replace(`${router.pathname}#${heading.id}`);
       }}
     >
-      {heading.content}
+      {heading.value}
     </Text>
   ));
 
   return (
-    <Box component="nav" className={classes.wrapper}>
+    <Box component="nav" mod={{ 'with-tabs': withTabs }} className={classes.wrapper}>
       <div className={classes.inner}>
         <div>
-          <div className={classes.header}>
-            <IconList style={{ width: rem(20), height: rem(20) }} stroke={1.5} />
-            <Text className={classes.title}>Table of contents</Text>
-          </div>
-          <ScrollArea.Autosize mah={`calc(100vh - ${rem(140)})`} type="never" offsetScrollbars>
+          <Text className={classes.title}>Table of contents</Text>
+          <ScrollArea.Autosize mah="calc(100vh - 172px)" type="never">
             <div className={classes.items}>{items}</div>
+
+            {editPageLink && (
+              <Text component="a" className={classes.editPage} href={editPageLink} target="_blank">
+                <IconPencil className={classes.editPageIcon} size={18} stroke={1.5} />
+                <span>Edit this page</span>
+              </Text>
+            )}
+            <Space h="xl" />
           </ScrollArea.Autosize>
         </div>
       </div>

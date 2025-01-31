@@ -25,7 +25,7 @@ export function Shell({ children }: ShellProps) {
 
   return (
     <AppShell header={{ height: 60 }} className={classes.root}>
-      <AppShell.Header className={RemoveScroll.classNames.zeroRight}>
+      <AppShell.Header className={cx(RemoveScroll.classNames.zeroRight, classes.header)}>
         <Container size="md" className={classes.inner}>
           <Link href="/" className={cx('mantine-focus-auto', classes.logo)}>
             <MantineLogo size={30} />
