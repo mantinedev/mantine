@@ -17,7 +17,7 @@
   }
 
   &[data-active] {
-    background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-8));
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
     color: var(--mantine-color-bright);
   }
 }
