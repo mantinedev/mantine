@@ -45,7 +45,7 @@
   display: inline-block;
   font-size: var(--mantine-font-size-xl);
   color: var(--mantine-color-bright);
-  font-family: 'Greycliff CF', sans-serif;
+  font-family: Outfit, sans-serif;
   text-transform: uppercase;
   font-weight: 700;
 }

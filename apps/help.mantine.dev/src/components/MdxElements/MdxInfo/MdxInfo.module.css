@@ -9,7 +9,7 @@
 
   /* Considered to be a heading of the info */
   & > p > strong:only-child {
-    font-family: 'Greycliff CF', var(--mantine-font-family);
+    font-family: Outfit, sans-serif;
     font-size: var(--mantine-font-size-lg);
 
     @mixin light {

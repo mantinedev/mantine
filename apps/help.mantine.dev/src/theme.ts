@@ -1,11 +1,11 @@
-import { createTheme, virtualColor } from '@mantine/core';
+import { createTheme, DEFAULT_THEME, virtualColor } from '@mantine/core';
 
 export const appTheme = createTheme({
   colors: {
     primary: virtualColor({ name: 'primary', light: 'blue', dark: 'red' }),
   },
   headings: {
-    fontFamily: 'Greycliff CF, var(--mantine-font-family)',
+    fontFamily: `Outfit, ${DEFAULT_THEME.fontFamily}`,
     sizes: {
       h1: {
         fontWeight: '900',

@@ -33,7 +33,7 @@ function Demo() {
 const cssCode = `
 .heading {
   &:is(h1) {
-    font-family: GreycliffCF, sans-serif;
+    font-family: Outfit, sans-serif;
     font-weight: 900;
   }
 

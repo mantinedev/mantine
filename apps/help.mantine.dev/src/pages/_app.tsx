@@ -5,7 +5,6 @@ import '@mantine/code-highlight/styles.css';
 import '@mantinex/demo/styles.css';
 import '@mantinex/mantine-logo/styles.css';
 import '@mantinex/mantine-header/styles.css';
-import '../fonts/GreycliffCF/styles.css';
 
 import Head from 'next/head';
 import { CodeHighlightAdapterProvider, createShikiAdapter } from '@mantine/code-highlight';
