@@ -113,10 +113,8 @@
   flex-direction: var(--tabs-list-direction);
   gap: var(--tabs-list-gap);
 
-  --tab-grow: unset;
-
-  &[data-grow] {
-    --tab-grow: 1;
+  &:where([data-grow]) .tab {
+    flex: 1;
   }
 }
 
@@ -134,11 +132,9 @@
   align-items: center;
   line-height: 1;
   user-select: none;
-  flex-grow: var(--tab-grow);
   justify-content: var(--tab-justify);
 
-  &:disabled,
-  &[data-disabled] {
+  &:where(:disabled, [data-disabled]) {
     opacity: 0.5;
     cursor: not-allowed;
   }
@@ -152,29 +148,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: var(--tab-section-margin-left, 0);
-  margin-right: var(--tab-section-margin-right, 0);
 
-  &[data-position='left'] {
-    &:not(:only-child) {
-      --tab-section-margin-right: var(--mantine-spacing-xs);
-
-      @mixin rtl {
-        --tab-section-margin-right: 0rem;
-        --tab-section-margin-left: var(--mantine-spacing-xs);
-      }
-    }
+  &:where([data-position='left']:not(:only-child)) {
+    margin-inline-end: var(--mantine-spacing-xs);
   }
 
-  &[data-position='right'] {
-    &:not(:only-child) {
-      --tab-section-margin-left: var(--mantine-spacing-xs);
-
-      @mixin rtl {
-        --tab-section-margin-left: 0rem;
-        --tab-section-margin-right: var(--mantine-spacing-xs);
-      }
-    }
+  &:where([data-position='right']:not(:only-child)) {
+    margin-inline-start: var(--mantine-spacing-xs);
   }
 }
 
