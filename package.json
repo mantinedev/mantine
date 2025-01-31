@@ -149,7 +149,7 @@
     "@types/yargs": "^17.0.33",
     "babel-loader": "^9.2.1",
     "chalk": "^5.3.0",
-    "css-loader": "^7.1.2",
+    "css-loader": "^6.8.1",
     "esbuild": "^0.24.0",
     "esbuild-jest": "^0.5.0",
     "eslint": "^9.15.0",
