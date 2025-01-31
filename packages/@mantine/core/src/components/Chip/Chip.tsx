@@ -3,6 +3,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   extractStyleProps,
   factory,
@@ -71,7 +72,7 @@ export interface ChipProps
   id?: string;
 
   /** Props passed down to the root element */
-  wrapperProps?: Record<string, any>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 
   /** Any element or component to replace default icon */
   icon?: React.ReactNode;

@@ -2,6 +2,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   extractStyleProps,
   getFontSize,
   getRadius,
@@ -31,7 +32,7 @@ import classes from './Input.module.css';
 
 export interface __BaseInputProps extends __InputWrapperProps, Omit<__InputProps, 'wrapperProps'> {
   /** Props passed down to the root element */
-  wrapperProps?: Record<string, any>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 }
 
 export type __InputStylesNames = InputStylesNames | InputWrapperStylesNames;
@@ -83,7 +84,7 @@ export interface __InputProps {
   rightSectionPointerEvents?: React.CSSProperties['pointerEvents'];
 
   /** Props passed down to the root element of the `Input` component */
-  wrapperProps?: Record<string, any>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 
   /** Sets `required` attribute on the `input` element */
   required?: boolean;

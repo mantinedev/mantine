@@ -3,6 +3,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   extractStyleProps,
   factory,
@@ -66,7 +67,7 @@ export interface SwitchProps
   radius?: MantineRadius;
 
   /** Props passed down to the root element */
-  wrapperProps?: Record<string, any>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 
   /** Icon inside the thumb of the switch */
   thumbIcon?: React.ReactNode;

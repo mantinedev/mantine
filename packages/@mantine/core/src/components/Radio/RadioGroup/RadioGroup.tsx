@@ -1,5 +1,5 @@
 import { useId, useUncontrolled } from '@mantine/hooks';
-import { factory, Factory, MantineSize, useProps } from '../../../core';
+import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../../core';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
 import { InputsGroupFieldset } from '../../InputsGroupFieldset';
 import { RadioGroupProvider } from '../RadioGroup.context';
@@ -21,7 +21,7 @@ export interface RadioGroupProps
   onChange?: (value: string) => void;
 
   /** Props passed down to the `Input.Wrapper` */
-  wrapperProps?: Record<string, any>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 
   /** Controls size of the `Input.Wrapper`, `'sm'` by default */
   size?: MantineSize;

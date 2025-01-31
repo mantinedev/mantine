@@ -1,4 +1,10 @@
-import { BoxProps, polymorphicFactory, PolymorphicFactory, StylesApiProps } from '../../core';
+import {
+  BoxProps,
+  DataAttributes,
+  polymorphicFactory,
+  PolymorphicFactory,
+  StylesApiProps,
+} from '../../core';
 import { __BaseInputProps, __InputStylesNames, Input, InputVariant, useInputProps } from '../Input';
 
 export interface InputBaseProps
@@ -9,7 +15,7 @@ export interface InputBaseProps
   __stylesApiProps?: Record<string, any>;
 
   /** Props passed down to the root element (`Input.Wrapper` component) */
-  wrapperProps?: Record<string, any>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 
   /** Determines whether the input can have multiple lines, for example when `component="textarea"`, `false` by default */
   multiline?: boolean;

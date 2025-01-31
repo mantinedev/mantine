@@ -3,6 +3,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   extractStyleProps,
   factory,
@@ -56,7 +57,7 @@ export interface RadioProps
   icon?: React.FC<RadioIconProps>;
 
   /** Props passed down to the root element */
-  wrapperProps?: Record<string, any>;
+  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 
   /** Position of the label relative to the input, `'right'` by default */
   labelPosition?: 'left' | 'right';
