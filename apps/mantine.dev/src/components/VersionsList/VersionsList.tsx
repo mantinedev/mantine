@@ -1,5 +1,5 @@
 import { IconFileInvoice } from '@tabler/icons-react';
-import { Button, Code, Group, Text } from '@mantine/core';
+import { ActionIcon, Code, Group, Text } from '@mantine/core';
 import { GithubIcon } from '@mantinex/dev-icons';
 import { allVersions } from '@mantinex/mantine-meta';
 import classes from './VersionsList.module.css';
@@ -38,32 +38,34 @@ export function VersionsList() {
             <Code className={classes.minorVersionBadge}>{minorVersion.version}</Code>
           </a>
 
-          <Group gap="xs">
+          <Group gap={5}>
             {minorVersion.version !== '1.0.0' && (
-              <Button
+              <ActionIcon
                 variant="default"
                 component="a"
                 href={minorVersion.link}
                 radius="md"
-                size="xs"
+                size={30}
                 target="_blank"
-                leftSection={<IconFileInvoice size={14} />}
+                title="Changelog"
+                aria-label="Changelog"
               >
-                Changelog
-              </Button>
+                <IconFileInvoice size={14} />
+              </ActionIcon>
             )}
-            <Button
+            <ActionIcon
               component="a"
               variant="default"
               href={minorVersion.github}
               target="_blank"
               radius="md"
-              size="xs"
+              size={30}
               className={classes.githubControl}
-              leftSection={<GithubIcon size={12} />}
+              title="View on GitHub"
+              aria-label="View on GitHub"
             >
-              GitHub release
-            </Button>
+              <GithubIcon size={12} />
+            </ActionIcon>
           </Group>
 
           <Text className={classes.minorVersionDate}>{minorVersion.date}</Text>

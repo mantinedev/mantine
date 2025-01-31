@@ -2,13 +2,19 @@ import { IconCheck, IconCopy } from '@tabler/icons-react';
 import { ActionIcon, Code, CopyButton, Group } from '@mantine/core';
 import CSS_FILES_LIST from '@/.docgen/css-exports.json';
 import { MdxDataTable } from '../MdxProvider';
+import classes from './CssFilesList.module.css';
 
-export function CssFilesList() {
-  const files = [...CSS_FILES_LIST.global, ...CSS_FILES_LIST.modules].map((file) => [
-    file.replace('.css', ''),
-    <Group wrap="nowrap">
-      <Code style={{ whiteSpace: 'nowrap' }}>{`import '@mantine/core/styles/${file}';`}</Code>
-      <CopyButton value={`import '@mantine/core/styles/${file}';`}>
+const allCssFilesPaths = [...CSS_FILES_LIST.global, ...CSS_FILES_LIST.modules];
+
+interface CssFilePathProps {
+  filePath: string;
+}
+
+function CssFilePath({ filePath }: CssFilePathProps) {
+  const importCode = `import '@mantine/core/styles/${filePath}';`;
+  return (
+    <Group wrap="nowrap" gap={5}>
+      <CopyButton value={importCode}>
         {({ copy, copied }) => (
           <ActionIcon
             variant={copied ? 'filled' : 'default'}
@@ -20,7 +26,15 @@ export function CssFilesList() {
           </ActionIcon>
         )}
       </CopyButton>
-    </Group>,
+      <Code className={classes.fileName}>{importCode}</Code>
+    </Group>
+  );
+}
+
+export function CssFilesList() {
+  const files = allCssFilesPaths.map((filePath) => [
+    filePath.replace('.css', ''),
+    <CssFilePath filePath={filePath} />,
   ]);
 
   return <MdxDataTable data={files} head={['Component', 'Import']} />;

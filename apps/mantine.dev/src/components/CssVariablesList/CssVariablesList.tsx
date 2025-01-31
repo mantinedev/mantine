@@ -1,6 +1,13 @@
-import { Code, DEFAULT_THEME, defaultCssVariablesResolver, keys } from '@mantine/core';
+import { Code, ColorSwatch, DEFAULT_THEME, defaultCssVariablesResolver, keys } from '@mantine/core';
 import { MdxDataTable, MdxTitle } from '../MdxProvider';
-import { CssVariableColorSwatch } from './CssVariableColorSwatch/CssVariableColorSwatch';
+
+export function ColorPreview({ value }: { value: string }) {
+  if (!value || !value.match(/^(var\(--mantine-color[\w-]+\)|#\w+|rgba?\([\w,. ]+\))$/gm)) {
+    return null;
+  }
+
+  return <ColorSwatch size={20} color={value} />;
+}
 
 export function CssVariablesList() {
   const resolvedVariables = defaultCssVariablesResolver(DEFAULT_THEME);
@@ -9,7 +16,7 @@ export function CssVariablesList() {
       {key}
     </Code>,
     resolvedVariables.variables[key],
-    <CssVariableColorSwatch variable={resolvedVariables.variables[key]} key="swatch" />,
+    <ColorPreview value={resolvedVariables.variables[key]} key="swatch" />,
   ]);
 
   const lightVariables = keys(resolvedVariables.light).map((key) => [
@@ -17,7 +24,7 @@ export function CssVariablesList() {
       {key}
     </Code>,
     resolvedVariables.light[key],
-    <CssVariableColorSwatch variable={resolvedVariables.light[key]} key="swatch" />,
+    <ColorPreview value={resolvedVariables.light[key]} key="swatch" />,
   ]);
 
   const darkVariables = keys(resolvedVariables.dark).map((key) => [
@@ -25,7 +32,7 @@ export function CssVariablesList() {
       {key}
     </Code>,
     resolvedVariables.dark[key],
-    <CssVariableColorSwatch variable={resolvedVariables.dark[key]} key="swatch" />,
+    <ColorPreview value={resolvedVariables.dark[key]} key="swatch" />,
   ]);
 
   return (

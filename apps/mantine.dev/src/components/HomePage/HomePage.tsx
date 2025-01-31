@@ -1,6 +1,6 @@
 import { useMantineColorScheme } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
-import { Footer } from '../Footer';
+import { DocsFooter } from '../DocsFooter';
 import { Shell } from '../Shell';
 import { HomePageCombobox } from './HomePageCombobox/HomePageCombobox';
 import { HomePageCommunity } from './HomePageCommunity/HomePageCommunity';
@@ -36,7 +36,7 @@ export function HomePage() {
         <HomePageJoin />
         <HomePageGetStarted />
       </div>
-      <Footer withNavbar={false} />
+      <DocsFooter withNavbar={false} />
     </Shell>
   );
 }

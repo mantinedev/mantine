@@ -1,1 +1,0 @@
-export { CssVariablesTable } from './CssVariablesTable';

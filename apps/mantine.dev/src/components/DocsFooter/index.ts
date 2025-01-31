@@ -1,0 +1,1 @@
+export { DocsFooter } from './DocsFooter';

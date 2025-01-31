@@ -6,7 +6,7 @@ import { Logo } from '../Logo/Logo';
 import { DiscordButton, TwitterButton } from '../SocialButton';
 import { FOOTER_LINKS_DATA } from './data';
 import { LinksGroup } from './LinksGroup/LinksGroup';
-import classes from './Footer.module.css';
+import classes from './DocsFooter.module.css';
 
 interface FooterProps {
   withNavbar?: boolean;
@@ -21,7 +21,7 @@ function getRemainingScrollDistance() {
   return remainingScrollDistance;
 }
 
-export function Footer({ withNavbar }: FooterProps) {
+export function DocsFooter({ withNavbar }: FooterProps) {
   const ref = useRef<HTMLElement>(null);
   const groups = FOOTER_LINKS_DATA.map((group) => (
     <LinksGroup data={group.data} title={group.title} key={group.title} />

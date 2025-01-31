@@ -27,16 +27,12 @@
   padding-left: var(--mantine-spacing-sm);
   padding-right: var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-md);
-  background-color: var(--mantine-color-blue-light);
-  color: var(--mantine-color-blue-light-color);
+  color: var(--mantine-color-blue-text);
 }
 
 .minorVersionDate {
-  font-size: 15px;
-
-  @mixin larger-than $mantine-breakpoint-sm {
-    margin-left: auto;
-  }
+  font-size: 14px;
+  margin-left: auto;
 }
 
 .patchLink {
@@ -55,11 +51,4 @@
   font-weight: 700;
   font-size: 13px;
   color: var(--mantine-color-text);
-}
-
-.versionHeader {
-  @mixin smaller-than $mantine-breakpoint-sm {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 }
