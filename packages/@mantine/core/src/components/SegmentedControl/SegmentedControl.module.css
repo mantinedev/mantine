@@ -1,9 +1,9 @@
 .root {
-  --sc-padding-xs: 3px 6px;
-  --sc-padding-sm: 5px 10px;
-  --sc-padding-md: 7px 14px;
-  --sc-padding-lg: 9px 16px;
-  --sc-padding-xl: 12px 20px;
+  --sc-padding-xs: 2px 6px;
+  --sc-padding-sm: 3px 10px;
+  --sc-padding-md: 4px 14px;
+  --sc-padding-lg: 7px 16px;
+  --sc-padding-xl: 10px 20px;
 
   --sc-transition-duration: 200ms;
   --sc-padding: var(--sc-padding-sm);

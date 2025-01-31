@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineThemeProvider } from '../../core';
 import { Button } from '../Button';
+import { Group } from '../Group';
 import { Modal } from '../Modal';
+import { TextInput } from '../TextInput';
 import { SegmentedControl } from './SegmentedControl';
 
 export default { title: 'SegmentedControl' };
@@ -142,5 +144,18 @@ export function Unselect() {
         Unselect
       </button>
     </div>
+  );
+}
+
+export function NextToInput() {
+  const sizes = ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => (
+    <Group key={size} gap={5}>
+      <SegmentedControl data={['React', 'Angular']} size={size} />
+      <TextInput placeholder="Input" size={size} />
+    </Group>
+  ));
+
+  return (
+    <div style={{ padding: 40, display: 'flex', flexDirection: 'column', gap: 40 }}>{sizes}</div>
   );
 }
