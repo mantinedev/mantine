@@ -4,10 +4,11 @@ import type { StylesApiData } from '../types';
 export const ScrollAreaStylesApi: StylesApiData<ScrollAreaFactory> = {
   selectors: {
     root: 'Root element',
-    viewport: '',
-    scrollbar: '',
-    thumb: '',
-    corner: '',
+    content: 'Wraps component children',
+    viewport: 'Main scrollable area',
+    scrollbar: 'Horizontal or vertical scrollbar root',
+    thumb: 'Scrollbar thumb',
+    corner: 'Corner between horizontal and vertical scrollbars',
   },
 
   vars: {
