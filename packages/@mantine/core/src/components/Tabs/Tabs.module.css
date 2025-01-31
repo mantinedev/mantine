@@ -1,8 +1,15 @@
 .root {
+  @mixin light {
+    --tab-border-color: var(--mantine-color-gray-3);
+  }
+
+  @mixin dark {
+    --tab-border-color: var(--mantine-color-dark-4);
+  }
+
   display: var(--tabs-display);
   flex-direction: var(--tabs-flex-direction);
 
-  --tab-justify: flex-start;
   --tabs-list-direction: row;
   --tabs-panel-grow: unset;
   --tabs-display: block;
@@ -65,18 +72,6 @@
     }
   }
 
-  @mixin light {
-    --tab-border-color: var(--mantine-color-gray-3);
-  }
-
-  @mixin dark {
-    --tab-border-color: var(--mantine-color-dark-4);
-  }
-
-  &[data-orientation='horizontal'] {
-    --tab-justify: center;
-  }
-
   &[data-variant='default'] {
     --tabs-list-border-width: 2px;
 
@@ -132,7 +127,6 @@
   align-items: center;
   line-height: 1;
   user-select: none;
-  justify-content: var(--tab-justify);
 
   &:where(:disabled, [data-disabled]) {
     opacity: 0.5;
@@ -165,9 +159,7 @@
   &::before {
     content: '';
     position: absolute;
-    border-color: var(--tab-border-color);
-    border-width: var(--tabs-list-border-size);
-    border-style: solid;
+    border: 1px solid var(--tab-border-color);
     bottom: var(--tabs-list-line-bottom);
     inset-inline-start: var(--tabs-list-line-start);
     inset-inline-end: var(--tabs-list-line-end);
@@ -180,16 +172,14 @@
   border-width: var(--tab-border-width);
   border-style: solid;
   border-color: transparent;
-  background-color: var(--tab-bg);
-
-  --tab-bg: transparent;
+  background-color: transparent;
 
   &:where([data-active]) {
     border-color: var(--tabs-color);
   }
 
   @mixin hover {
-    --tab-bg: var(--tab-hover-color);
+    background-color: var(--tab-hover-color);
 
     &:where(:not([data-active])) {
       border-color: var(--tab-border-color);
@@ -199,7 +189,7 @@
   &:disabled,
   &[data-disabled] {
     @mixin hover {
-      --tab-bg: transparent;
+      background-color: transparent;
     }
   }
 }

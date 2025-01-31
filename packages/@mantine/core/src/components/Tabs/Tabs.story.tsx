@@ -60,6 +60,16 @@ const verticalBase = (
 
 const Wrapper = (props: TabsProps) => <Tabs maw={500} mx="auto" mt={40} {...props} />;
 
+export function Horizontal() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Tabs defaultValue="react" orientation="horizontal">
+        {base}
+      </Tabs>
+    </div>
+  );
+}
+
 export function DefaultVariant() {
   return (
     <div>
