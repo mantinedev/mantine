@@ -32,6 +32,29 @@ the import works the same in 7.x and 8.x versions:
 import '@mantine/core/styles.css';
 ```
 
+## Portal reuseTargetNode
+
+`reuseTargetNode` prop of [Portal](/core/portal) component is now enabled by default.
+This option improves performance by reusing the target node between portal renders, but
+in some edge cases, it might cause issues with `z-index` stacking context.
+
+If you experience issues with `z-index`, change `reuseTargetNode` prop to `false` in theme:
+
+```tsx
+import { createTheme, Portal } from '@mantine/core';
+
+export const theme = createTheme({
+  components: {
+    Portal: Portal.extends({
+      defaultProps: {
+        // ✅ Disable reuseTargetNode by default if your application has z-index issues
+        reuseTargetNode: false,
+      },
+    }),
+  }
+});
+```
+
 ## Date string values
 
 `@mantine/dates` components now use date string values in `onChange` and other callbacks.

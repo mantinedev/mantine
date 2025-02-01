@@ -20,7 +20,7 @@ export interface PortalProps extends React.ComponentPropsWithoutRef<'div'> {
   /** Element inside which portal should be created, by default a new div element is created and appended to the `document.body` */
   target?: HTMLElement | string;
 
-  /** If set, all portals are rendered in the same DOM node, `false` by default */
+  /** If set, all portals are rendered in the same DOM node, `true` by default */
   reuseTargetNode?: boolean;
 }
 
@@ -58,7 +58,9 @@ export type PortalFactory = Factory<{
   ref: HTMLDivElement;
 }>;
 
-const defaultProps: Partial<PortalProps> = {};
+const defaultProps: Partial<PortalProps> = {
+  reuseTargetNode: true,
+};
 
 export const Portal = factory<PortalFactory>((props, ref) => {
   const { children, target, reuseTargetNode, ...others } = useProps('Portal', defaultProps, props);
