@@ -15,7 +15,7 @@ export function getMonthDays({
   consistentWeeks,
 }: GetMonthDaysInput): Date[][] {
   const day = dayjs(month).subtract(dayjs(month).date() - 1, 'day');
-  const start = dayjs(day.format('YYYY-M-D'));
+  const start = dayjs(day).startOf('day');
   const startOfMonth = start.toDate();
   const endOfMonth = start.add(+start.daysInMonth() - 1, 'day').toDate();
   const endDate = getEndOfWeek(endOfMonth, firstDayOfWeek);
