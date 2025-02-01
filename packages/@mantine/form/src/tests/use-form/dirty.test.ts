@@ -44,7 +44,7 @@ function tests(mode: FormMode) {
 
   it('sets list field as dirty if list item changes', () => {
     const hook = renderHook(() => useForm({ mode, initialValues: { a: [{ b: 1 }, { b: 2 }] } }));
-    act(() => hook.result.current.setFieldValue('a.0', 3));
+    act(() => hook.result.current.setFieldValue('a.0', { b: 3 }));
     expect(hook.result.current.isDirty('a.0')).toBe(true);
     expect(hook.result.current.isDirty('a')).toBe(true);
 

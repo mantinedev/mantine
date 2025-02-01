@@ -1,3 +1,4 @@
+import type { FormPathValue, LooseKeys } from './paths.types';
 import type { formRootRule } from './validate/validate-values';
 
 export type GetInputPropsType = 'input' | 'checkbox';
@@ -47,8 +48,6 @@ export type FormRulesRecord<Values, InitValues = Values> = Partial<{
 
 export type FormValidateInput<Values> = FormRulesRecord<Values> | ((values: Values) => FormErrors);
 
-export type LooseKeys<Values> = keyof Values | (string & {});
-
 export type SetValues<Values> = React.Dispatch<React.SetStateAction<Partial<Values>>>;
 export type SetInitialValues<Values> = (values: Values) => void;
 export type SetErrors = React.Dispatch<React.SetStateAction<FormErrors>>;
@@ -94,19 +93,11 @@ export type GetInputProps<Values> = <Field extends LooseKeys<Values>>(
   options?: GetInputPropsOptions
 ) => GetInputPropsReturnType;
 
-export type PathValue<T, P extends LooseKeys<T>> = P extends `${infer K}.${infer Rest}`
-  ? K extends keyof T
-    ? PathValue<T[K], Rest>
-    : unknown
-  : P extends keyof T
-    ? T[P]
-    : unknown;
-
 export type SetFieldValue<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   value:
-    | PathValue<Values, Field>
-    | ((prevValue: PathValue<Values, Field>) => PathValue<Values, Field>),
+    | FormPathValue<Values, Field>
+    | ((prevValue: FormPathValue<Values, Field>) => FormPathValue<Values, Field>),
   options?: { forceUpdate: boolean }
 ) => void;
 
@@ -137,7 +128,7 @@ export type SetFieldDirty<Values> = <Field extends LooseKeys<Values>>(
 
 export type SetCalculatedFieldDirty<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
-  value: PathValue<Values, Field>
+  value: FormPathValue<Values, Field>
 ) => void;
 
 export type ReorderListItem<Values> = <Field extends LooseKeys<Values>>(
@@ -173,8 +164,8 @@ export type Initialize<Values> = (values: Values) => void;
 export type _TransformValues<Values> = (values: Values) => unknown;
 
 export type FormFieldSubscriber<Values, Field extends LooseKeys<Values>> = (input: {
-  previousValue: PathValue<Values, Field>;
-  value: PathValue<Values, Field>;
+  previousValue: FormPathValue<Values, Field>;
+  value: FormPathValue<Values, Field>;
   touched: boolean;
   dirty: boolean;
 }) => void;
