@@ -13,26 +13,11 @@ const cssCode = `.track {
 
     & > .thumb {
       background-color: var(--mantine-color-black);
-      border-color: var(--mantine-color-black);
+
+      &::before {
+        background-color: var(--mantine-color-lime-5);
+      }
     }
-  }
-}
-
-.thumb {
-  transition:
-    inset-inline-start 200ms ease,
-    background-color 200ms ease,
-    border-color 200ms ease;
-
-  &::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    border-radius: 8px;
-    background-color: var(--mantine-color-lime-5);
-    position: absolute;
-    left: calc(50% - 4px);
-    top: calc(50% - 4px);
   }
 }`;
 

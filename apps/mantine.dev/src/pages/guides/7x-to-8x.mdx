@@ -55,6 +55,27 @@ export const theme = createTheme({
 });
 ```
 
+## Switch withThumbIndicator
+
+[Switch](/core/switch) component default styles were updated, it now
+includes checked state indicator inside the thumb. If you want to use
+old styles without indicator, set `withThumbIndicator` prop to `false` in theme:
+
+```tsx
+import { createTheme, Switch } from '@mantine/core';
+
+export const theme = createTheme({
+  components: {
+    Switch: Switch.extends({
+      defaultProps: {
+        // ✅ Disable withThumbIndicator if you want to use old styles
+        withThumbIndicator: false,
+      },
+    }),
+  }
+});
+```
+
 ## Date string values
 
 `@mantine/dates` components now use date string values in `onChange` and other callbacks.

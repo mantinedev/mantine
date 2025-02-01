@@ -22,6 +22,7 @@ export const configurator: MantineDemo = {
   centered: true,
   controls: [
     { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: 'blue' },
+    { prop: 'withThumbIndicator', type: 'boolean', initialValue: true, libraryValue: true },
     {
       prop: 'labelPosition',
       type: 'segmented',

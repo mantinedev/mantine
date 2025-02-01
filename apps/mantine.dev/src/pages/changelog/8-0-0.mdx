@@ -5,6 +5,7 @@ import {
   TimeValueDemos,
   TimeGridDemos,
   CodeHighlightDemos,
+  SwitchDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -172,6 +173,13 @@ function App() {
 After that, you can use `CodeHighlight` component in your application:
 
 <Demo data={CodeHighlightDemos.usage} />
+
+## Switch withThumbIndicator
+
+[Switch](/core/switch) component styles were updated to include indicator inside the thumb.
+You can change it by setting `withThumbIndicator` prop:
+
+<Demo data={SwitchDemos.configurator} />
 
 ## Other changes
 
