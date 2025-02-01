@@ -18,10 +18,9 @@ import { useShellContext } from '../Shell.context';
 import classes from './DocsHeader.module.css';
 
 const mainLinksData = [
-  { link: '/getting-started', label: 'Docs' },
   { link: 'https://ui.mantine.dev', label: 'Mantine UI' },
   { link: 'https://help.mantine.dev', label: 'FAQ' },
-  { link: 'https://theme.mantine.dev', label: 'Apps' },
+  { link: '/colors-generator', label: 'Colors generator' },
 ];
 
 interface NavigationLinkData {

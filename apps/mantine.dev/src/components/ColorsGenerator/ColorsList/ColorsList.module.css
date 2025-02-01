@@ -1,0 +1,65 @@
+.root {
+  margin-top: 50px;
+}
+
+.item {
+  flex: 1;
+
+  &:first-of-type > .swatch {
+    border-top-left-radius: var(--mantine-radius-md) !important;
+    border-bottom-left-radius: var(--mantine-radius-md) !important;
+  }
+
+  &:last-of-type > .swatch {
+    border-top-right-radius: var(--mantine-radius-md) !important;
+    border-bottom-right-radius: var(--mantine-radius-md) !important;
+  }
+}
+
+.swatch {
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  overflow: hidden;
+  transition:
+    transform 100ms ease,
+    box-shadow 100ms ease,
+    border-radius 100ms ease;
+
+  &[data-base] {
+    transform: scale(1.2) translateY(-5px);
+    z-index: 1;
+    box-shadow: var(--mantine-shadow-md);
+    border-radius: var(--mantine-radius-md);
+
+    @media (max-width: em(600px)) {
+      transform: none;
+      box-shadow: none;
+      border-radius: 0;
+    }
+  }
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 5px;
+
+  @media (max-width: em(600px)) {
+    display: none;
+  }
+}
+
+.hex {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 10px;
+}
+
+.index {
+  font-size: var(--mantine-font-size-lg);
+  font-weight: 700;
+  font-family: var(--docs-font-primary);
+}
