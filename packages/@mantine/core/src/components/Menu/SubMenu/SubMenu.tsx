@@ -1,5 +1,5 @@
 import { useDisclosure, useId } from '@mantine/hooks';
-import { createSafeContext } from '../../../core';
+import { createOptionalContext } from '../../../core';
 import { Popover } from '../../Popover';
 
 interface SubMenuContext {
@@ -7,11 +7,10 @@ interface SubMenuContext {
   close: () => void;
   open: () => void;
   focusFirstItem: () => void;
+  focusParentItem: () => void;
 }
 
-const [SubMenuProvider, useSubMenuContext] = createSafeContext<SubMenuContext>(
-  'Menu.SubMenu component was not found in tree'
-);
+const [SubMenuProvider, useSubMenuContext] = createOptionalContext<SubMenuContext>();
 
 interface SubMenuProps {
   children: React.ReactNode;
@@ -29,9 +28,22 @@ export function SubMenu({ children }: SubMenuProps) {
         ?.focus();
     }, 4);
 
+  const focusParentItem = () =>
+    setTimeout(() => {
+      document.getElementById(`${id}-target`)?.focus();
+    }, 4);
+
   return (
-    <SubMenuProvider value={{ opened, close: handlers.close, open: handlers.open, focusFirstItem }}>
-      <Popover opened={opened} position="right-start" offset={0} id={id}>
+    <SubMenuProvider
+      value={{
+        opened,
+        close: handlers.close,
+        open: handlers.open,
+        focusFirstItem,
+        focusParentItem,
+      }}
+    >
+      <Popover opened={opened} position="right-start" offset={0} id={id} withinPortal={false}>
         {children}
       </Popover>
     </SubMenuProvider>

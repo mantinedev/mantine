@@ -212,7 +212,7 @@ export function WithKeepMounted() {
 export function WithSubMenu() {
   return (
     <div style={{ padding: 40 }}>
-      <Menu width={200} position="bottom-start" opened>
+      <Menu width={200} position="bottom-start">
         <Menu.Target>
           <Button>Toggle menu</Button>
         </Menu.Target>
@@ -225,8 +225,8 @@ export function WithSubMenu() {
             </Menu.SubTarget>
 
             <Menu.SubDropdown>
-              <Menu.Item>Sub 1</Menu.Item>
-              <Menu.Item>Sub 2</Menu.Item>
+              <Menu.Item closeMenuOnClick={false}>Sub 1</Menu.Item>
+              <Menu.Item closeMenuOnClick={false}>Sub 2</Menu.Item>
             </Menu.SubDropdown>
           </Menu.SubMenu>
           <Menu.Item>Item 3</Menu.Item>

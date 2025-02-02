@@ -78,13 +78,14 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
 
   const handleKeydown = createEventHandler<any>(_others.onKeyDown, (event) => {
     if (event.key === 'ArrowRight') {
-      subCtx.open();
-      subCtx.focusFirstItem();
+      subCtx?.open();
+      subCtx?.focusFirstItem();
     }
   });
 
   return (
     <UnstyledButton
+      onMouseDown={(event) => event.preventDefault()}
       {...others}
       unstyled={ctx.unstyled}
       tabIndex={ctx.menuItemTabIndex}
@@ -96,8 +97,8 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
       data-sub-menu-item
       data-disabled={disabled || dataDisabled || undefined}
       data-mantine-stop-propagation
-      onMouseEnter={() => subCtx.open()}
-      onMouseLeave={() => subCtx.close()}
+      onMouseEnter={() => subCtx?.open()}
+      onMouseLeave={() => subCtx?.close()}
       onKeyDown={createScopedKeydownHandler({
         siblingSelector: '[data-menu-item]:not([data-disabled])',
         parentSelector: '[data-menu-dropdown]',
@@ -120,12 +121,12 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
           {leftSection}
         </div>
       )}
+
       {children && <div {...ctx.getStyles('itemLabel', { styles, classNames })}>{children}</div>}
-      {(rightSection && (
-        <div {...ctx.getStyles('itemSection', { styles, classNames })} data-position="right">
-          {rightSection}
-        </div>
-      )) || <AccordionChevron {...ctx.getStyles('chevron')} size={14} />}
+
+      <div {...ctx.getStyles('itemSection', { styles, classNames })} data-position="right">
+        {rightSection || <AccordionChevron {...ctx.getStyles('chevron')} size={14} />}
+      </div>
     </UnstyledButton>
   );
 });
