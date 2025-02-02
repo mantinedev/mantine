@@ -116,7 +116,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
       onKeyDown={createScopedKeydownHandler({
-        siblingSelector: '[data-menu-item]:not([data-disabled])',
+        siblingSelector: '[data-menu-item]:not([data-disabled], [data-sub-menu-item])',
         parentSelector: '[data-menu-dropdown]',
         activateOnFocus: false,
         loop: ctx.loop,

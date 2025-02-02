@@ -221,7 +221,16 @@ export function WithSubMenu() {
         <Menu.Dropdown>
           <Menu.Item>Item 1</Menu.Item>
           <Menu.Item>Item 2</Menu.Item>
-          <Menu.SubItem>Sub Menu item</Menu.SubItem>
+          <Menu.SubMenu>
+            <Menu.SubTarget>
+              <Menu.SubItem>Sub Menu item</Menu.SubItem>
+            </Menu.SubTarget>
+
+            <Menu.SubDropdown>
+              <Menu.Item>Sub 1</Menu.Item>
+              <Menu.Item>Sub 2</Menu.Item>
+            </Menu.SubDropdown>
+          </Menu.SubMenu>
           <Menu.Item>Item 3</Menu.Item>
           <Menu.Item>Item 4</Menu.Item>
         </Menu.Dropdown>
