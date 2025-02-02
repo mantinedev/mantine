@@ -1,6 +1,7 @@
 import { useDisclosure, useId } from '@mantine/hooks';
 import { createOptionalContext } from '../../../core';
-import { Popover } from '../../Popover';
+import { useDelayedHover } from '../../Floating';
+import { __PopoverProps, Popover } from '../../Popover';
 
 interface SubMenuContext {
   opened: boolean;
@@ -8,42 +9,62 @@ interface SubMenuContext {
   open: () => void;
   focusFirstItem: () => void;
   focusParentItem: () => void;
+  parentContext: SubMenuContext | null;
 }
 
 const [SubMenuProvider, useSubMenuContext] = createOptionalContext<SubMenuContext>();
 
-interface SubMenuProps {
+interface SubMenuProps extends __PopoverProps {
   children: React.ReactNode;
+
+  /** Close delay in ms */
+  closeDelay?: number;
 }
 
-export function SubMenu({ children }: SubMenuProps) {
-  const [opened, handlers] = useDisclosure(false);
+export function SubMenu({ children, closeDelay, ...others }: SubMenuProps) {
   const id = useId();
+  const [opened, { open, close }] = useDisclosure(false);
+  const ctx = useSubMenuContext();
+
+  const { openDropdown, closeDropdown } = useDelayedHover({
+    open,
+    close,
+    closeDelay,
+    openDelay: 0,
+  });
 
   const focusFirstItem = () =>
-    setTimeout(() => {
+    window.setTimeout(() => {
       document
         .getElementById(`${id}-dropdown`)
-        ?.querySelectorAll<HTMLButtonElement>('[data-menu-item]')[0]
+        ?.querySelectorAll<HTMLButtonElement>('[data-menu-item]:not([data-disabled])')[0]
         ?.focus();
-    }, 4);
+    }, 16);
 
   const focusParentItem = () =>
-    setTimeout(() => {
+    window.setTimeout(() => {
       document.getElementById(`${id}-target`)?.focus();
-    }, 4);
+    }, 16);
 
   return (
     <SubMenuProvider
       value={{
         opened,
-        close: handlers.close,
-        open: handlers.open,
+        close: closeDropdown,
+        open: openDropdown,
         focusFirstItem,
         focusParentItem,
+        parentContext: ctx,
       }}
     >
-      <Popover opened={opened} position="right-start" offset={0} id={id} withinPortal={false}>
+      <Popover
+        opened={opened}
+        position="right-start"
+        offset={0}
+        withinPortal={false}
+        {...others}
+        id={id}
+      >
         {children}
       </Popover>
     </SubMenuProvider>

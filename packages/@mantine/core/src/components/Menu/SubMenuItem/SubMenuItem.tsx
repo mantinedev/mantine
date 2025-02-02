@@ -85,6 +85,11 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
       subCtx?.open();
       subCtx?.focusFirstItem();
     }
+
+    if (event.key === 'ArrowLeft' && subCtx?.parentContext) {
+      subCtx.parentContext.close();
+      subCtx.parentContext.focusParentItem();
+    }
   });
 
   const handleClick = createEventHandler(_others.onClick, () => {
