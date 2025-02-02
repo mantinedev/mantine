@@ -40,7 +40,7 @@
     cursor: not-allowed;
   }
 
-  &:where([data-hovered]) {
+  &:where(:hover, :focus) {
     &:where(:not(:disabled, [data-disabled])) {
       @mixin where-light {
         background-color: var(--menu-item-hover, var(--mantine-color-gray-1));

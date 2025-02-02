@@ -7,8 +7,6 @@ interface MenuContext {
   closeDropdown: () => void;
   openDropdown: () => void;
   getItemIndex: (node: HTMLButtonElement) => number | null;
-  setHovered: (index: number | null) => void;
-  hovered: number | null;
   closeOnItemClick: boolean | undefined;
   loop: boolean | undefined;
   trigger: 'click' | 'hover' | 'click-hover' | undefined;

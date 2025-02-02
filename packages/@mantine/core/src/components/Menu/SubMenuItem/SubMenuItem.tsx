@@ -3,7 +3,6 @@ import { useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
   CompoundStylesApiProps,
-  createEventHandler,
   createScopedKeydownHandler,
   MantineColor,
   parseThemeColor,
@@ -69,17 +68,7 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
   const theme = useMantineTheme();
   const { dir } = useDirection();
   const itemRef = useRef<HTMLButtonElement>(null);
-  const itemIndex = ctx.getItemIndex(itemRef.current!);
   const _others: any = others;
-
-  const handleMouseLeave = createEventHandler(_others.onMouseLeave, () => ctx.setHovered(-1));
-  const handleMouseEnter = createEventHandler(_others.onMouseEnter, () =>
-    ctx.setHovered(ctx.getItemIndex(itemRef.current!))
-  );
-
-  const handleFocus = createEventHandler(_others.onFocus, () =>
-    ctx.setHovered(ctx.getItemIndex(itemRef.current!))
-  );
 
   const colors = color ? theme.variantColorResolver({ color, theme, variant: 'light' }) : undefined;
   const parsedThemeColor = color ? parseThemeColor({ color, theme }) : null;
@@ -89,7 +78,6 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
       {...others}
       unstyled={ctx.unstyled}
       tabIndex={ctx.menuItemTabIndex}
-      onFocus={handleFocus}
       {...ctx.getStyles('item', { className, style, styles, classNames })}
       ref={useMergedRef(itemRef, ref)}
       role="menuitem"
@@ -97,10 +85,7 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
       data-menu-item
       data-sub-menu-item
       data-disabled={disabled || dataDisabled || undefined}
-      data-hovered={ctx.hovered === itemIndex ? true : undefined}
       data-mantine-stop-propagation
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       onKeyDown={createScopedKeydownHandler({
         siblingSelector: '[data-menu-item]:not([data-disabled])',
         parentSelector: '[data-menu-dropdown]',

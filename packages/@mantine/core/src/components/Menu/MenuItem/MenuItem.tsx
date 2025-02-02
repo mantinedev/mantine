@@ -72,13 +72,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
   const theme = useMantineTheme();
   const { dir } = useDirection();
   const itemRef = useRef<HTMLButtonElement>(null);
-  const itemIndex = ctx.getItemIndex(itemRef.current!);
   const _others: any = others;
-
-  const handleMouseLeave = createEventHandler(_others.onMouseLeave, () => ctx.setHovered(-1));
-  const handleMouseEnter = createEventHandler(_others.onMouseEnter, () =>
-    ctx.setHovered(ctx.getItemIndex(itemRef.current!))
-  );
 
   const handleClick = createEventHandler(_others.onClick, () => {
     if (dataDisabled) {
@@ -91,10 +85,6 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
     }
   });
 
-  const handleFocus = createEventHandler(_others.onFocus, () =>
-    ctx.setHovered(ctx.getItemIndex(itemRef.current!))
-  );
-
   const colors = color ? theme.variantColorResolver({ color, theme, variant: 'light' }) : undefined;
   const parsedThemeColor = color ? parseThemeColor({ color, theme }) : null;
 
@@ -103,17 +93,13 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
       {...others}
       unstyled={ctx.unstyled}
       tabIndex={ctx.menuItemTabIndex}
-      onFocus={handleFocus}
       {...ctx.getStyles('item', { className, style, styles, classNames })}
       ref={useMergedRef(itemRef, ref)}
       role="menuitem"
       disabled={disabled}
       data-menu-item
       data-disabled={disabled || dataDisabled || undefined}
-      data-hovered={ctx.hovered === itemIndex ? true : undefined}
       data-mantine-stop-propagation
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       onClick={handleClick}
       onKeyDown={createScopedKeydownHandler({
         siblingSelector: '[data-menu-item]:not([data-disabled], [data-sub-menu-item])',

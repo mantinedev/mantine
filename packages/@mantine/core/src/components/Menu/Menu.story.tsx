@@ -92,9 +92,7 @@ export function Usage() {
 
         <Menu.Dropdown>
           <Menu.Label>Label 1</Menu.Label>
-          <Menu.Item component="a" href="https://google.com">
-            Link item
-          </Menu.Item>
+          <Menu.Item>Item 1</Menu.Item>
           <Menu.Item closeMenuOnClick={false}>Won&apos;t close on click</Menu.Item>
           <Menu.Item disabled>Disabled</Menu.Item>
 
