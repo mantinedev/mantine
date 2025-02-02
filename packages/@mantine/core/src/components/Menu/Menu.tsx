@@ -18,6 +18,7 @@ import { MenuDropdown } from './MenuDropdown/MenuDropdown';
 import { MenuItem } from './MenuItem/MenuItem';
 import { MenuLabel } from './MenuLabel/MenuLabel';
 import { MenuTarget } from './MenuTarget/MenuTarget';
+import { SubMenuItem } from './SubMenuItem/SubMenuItem';
 import classes from './Menu.module.css';
 
 export type MenuStylesNames =
@@ -26,6 +27,7 @@ export type MenuStylesNames =
   | 'itemSection'
   | 'label'
   | 'divider'
+  | 'chevron'
   | PopoverStylesNames;
 
 export type MenuFactory = Factory<{
@@ -229,3 +231,4 @@ Menu.Label = MenuLabel;
 Menu.Dropdown = MenuDropdown;
 Menu.Target = MenuTarget;
 Menu.Divider = MenuDivider;
+Menu.SubItem = SubMenuItem;

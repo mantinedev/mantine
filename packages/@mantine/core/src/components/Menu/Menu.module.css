@@ -51,6 +51,10 @@
       }
     }
   }
+
+  &:where([data-sub-menu-item]) {
+    padding-inline-end: 5px;
+  }
 }
 
 .itemLabel {
@@ -68,5 +72,13 @@
 
   &:where([data-position='right']) {
     margin-inline-start: var(--mantine-spacing-xs);
+  }
+}
+
+.chevron {
+  transform: rotate(-90deg);
+
+  @mixin where-rtl {
+    transform: rotate(90deg);
   }
 }
