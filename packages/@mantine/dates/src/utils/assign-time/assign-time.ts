@@ -6,6 +6,11 @@ export function assignTime(
   timeString: string // HH:mm:ss format
 ): DateStringValue | null {
   let date = dateValue ? dayjs(dateValue) : dayjs();
+
+  if (timeString === '') {
+    return date.format('YYYY-MM-DD HH:mm:ss');
+  }
+
   const [hours, minutes, seconds] = timeString.split(':').map(Number);
 
   date = date.set('hour', hours);

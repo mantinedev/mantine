@@ -168,7 +168,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
 
   const handleDateChange = (date: DateValue) => {
     if (date) {
-      setValue(clampDate(minDate!, maxDate!, date!));
+      setValue(assignTime(clampDate(minDate!, maxDate!, date!), timeValue));
     }
     timePickerRef.current?.focus();
   };
