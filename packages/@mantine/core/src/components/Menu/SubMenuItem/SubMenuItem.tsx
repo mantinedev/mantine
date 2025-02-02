@@ -38,6 +38,9 @@ export interface SubMenuItemProps extends BoxProps, CompoundStylesApiProps<SubMe
 
   /** Disables item */
   disabled?: boolean;
+
+  /** Determines whether the menu should be closed when the item is clicked, `false` by default */
+  closeMenuOnClick?: boolean;
 }
 
 export type SubMenuItemFactory = PolymorphicFactory<{
@@ -63,6 +66,7 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
     children,
     disabled,
     'data-disabled': dataDisabled,
+    closeMenuOnClick,
     ...others
   } = useProps('SubMenuItem', defaultProps, props);
 
@@ -83,6 +87,15 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
     }
   });
 
+  const handleClick = createEventHandler(_others.onClick, () => {
+    if (!dataDisabled && closeMenuOnClick) {
+      ctx.closeDropdownImmediately();
+    }
+  });
+
+  const handleMouseEnter = createEventHandler(_others.onMouseEnter, subCtx?.open);
+  const handleMouseLeave = createEventHandler(_others.onMouseLeave, subCtx?.close);
+
   return (
     <UnstyledButton
       onMouseDown={(event) => event.preventDefault()}
@@ -97,8 +110,9 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
       data-sub-menu-item
       data-disabled={disabled || dataDisabled || undefined}
       data-mantine-stop-propagation
-      onMouseEnter={() => subCtx?.open()}
-      onMouseLeave={() => subCtx?.close()}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
       onKeyDown={createScopedKeydownHandler({
         siblingSelector: '[data-menu-item]:not([data-disabled])',
         parentSelector: '[data-menu-dropdown]',
