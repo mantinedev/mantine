@@ -16,12 +16,12 @@ import {
 import { AccordionChevron } from '../../Accordion';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useMenuContext } from '../Menu.context';
-import { useSubMenuContext } from '../SubMenu/SubMenu';
+import { useSubMenuContext } from '../MenuSub/MenuSub';
 import classes from '../Menu.module.css';
 
-export type SubMenuItemStylesNames = 'item' | 'itemLabel' | 'itemSection';
+export type MenuSubItemStylesNames = 'item' | 'itemLabel' | 'itemSection';
 
-export interface SubMenuItemProps extends BoxProps, CompoundStylesApiProps<SubMenuItemFactory> {
+export interface MenuSubItemProps extends BoxProps, CompoundStylesApiProps<MenuSubItemFactory> {
   'data-disabled'?: boolean;
 
   /** Item label */
@@ -43,17 +43,17 @@ export interface SubMenuItemProps extends BoxProps, CompoundStylesApiProps<SubMe
   closeMenuOnClick?: boolean;
 }
 
-export type SubMenuItemFactory = PolymorphicFactory<{
-  props: SubMenuItemProps;
+export type MenuSubItemFactory = PolymorphicFactory<{
+  props: MenuSubItemProps;
   defaultRef: HTMLButtonElement;
   defaultComponent: 'button';
-  stylesNames: SubMenuItemStylesNames;
+  stylesNames: MenuSubItemStylesNames;
   compound: true;
 }>;
 
-const defaultProps: Partial<SubMenuItemProps> = {};
+const defaultProps: Partial<MenuSubItemProps> = {};
 
-export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) => {
+export const MenuSubItem = polymorphicFactory<MenuSubItemFactory>((props, ref) => {
   const {
     classNames,
     className,
@@ -68,7 +68,7 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
     'data-disabled': dataDisabled,
     closeMenuOnClick,
     ...others
-  } = useProps('SubMenuItem', defaultProps, props);
+  } = useProps('MenuSubItem', defaultProps, props);
 
   const ctx = useMenuContext();
   const subCtx = useSubMenuContext();
@@ -150,5 +150,5 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
   );
 });
 
-SubMenuItem.classes = classes;
-SubMenuItem.displayName = '@mantine/core/SubMenuItem';
+MenuSubItem.classes = classes;
+MenuSubItem.displayName = '@mantine/core/MenuSubItem';

@@ -16,11 +16,8 @@ import { MenuDivider } from './MenuDivider/MenuDivider';
 import { MenuDropdown } from './MenuDropdown/MenuDropdown';
 import { MenuItem } from './MenuItem/MenuItem';
 import { MenuLabel } from './MenuLabel/MenuLabel';
+import { MenuSub } from './MenuSub/MenuSub';
 import { MenuTarget } from './MenuTarget/MenuTarget';
-import { SubMenu } from './SubMenu/SubMenu';
-import { SubMenuDropdown } from './SubMenuDropdown/SubMenuDropdown';
-import { SubMenuItem } from './SubMenuItem/SubMenuItem';
-import { SubMenuTarget } from './SubMenuTarget/SubMenuTarget';
 import classes from './Menu.module.css';
 
 export type MenuStylesNames =
@@ -34,7 +31,6 @@ export type MenuStylesNames =
 
 export type MenuFactory = Factory<{
   props: MenuProps;
-  ref: HTMLDivElement;
   stylesNames: MenuStylesNames;
 }>;
 
@@ -226,7 +222,4 @@ Menu.Label = MenuLabel;
 Menu.Dropdown = MenuDropdown;
 Menu.Target = MenuTarget;
 Menu.Divider = MenuDivider;
-Menu.SubMenu = SubMenu;
-Menu.SubItem = SubMenuItem;
-Menu.SubDropdown = SubMenuDropdown;
-Menu.SubTarget = SubMenuTarget;
+Menu.Sub = MenuSub;

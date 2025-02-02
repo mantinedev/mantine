@@ -1,7 +1,14 @@
 import { useDisclosure, useId } from '@mantine/hooks';
-import { createOptionalContext } from '../../../core';
+import { createOptionalContext, ExtendComponent, Factory, useProps } from '../../../core';
 import { useDelayedHover } from '../../Floating';
 import { __PopoverProps, Popover } from '../../Popover';
+import { MenuSubDropdown } from '../MenuSubDropdown/MenuSubDropdown';
+import { MenuSubItem } from '../MenuSubItem/MenuSubItem';
+import { MenuSubTarget } from '../MenuSubTarget/MenuSubTarget';
+
+export type MenuSubFactory = Factory<{
+  props: MenuSubProps;
+}>;
 
 interface SubMenuContext {
   opened: boolean;
@@ -13,15 +20,22 @@ interface SubMenuContext {
 }
 
 const [SubMenuProvider, useSubMenuContext] = createOptionalContext<SubMenuContext>();
+export { useSubMenuContext };
 
-interface SubMenuProps extends __PopoverProps {
+interface MenuSubProps extends __PopoverProps {
   children: React.ReactNode;
 
   /** Close delay in ms */
   closeDelay?: number;
 }
 
-export function SubMenu({ children, closeDelay, ...others }: SubMenuProps) {
+const defaultProps: Partial<MenuSubProps> = {
+  offset: 0,
+  position: 'right-start',
+};
+
+export function MenuSub(_props: MenuSubProps) {
+  const { children, closeDelay, ...others } = useProps('MenuSub', _props, defaultProps);
   const id = useId();
   const [opened, { open, close }] = useDisclosure(false);
   const ctx = useSubMenuContext();
@@ -57,18 +71,15 @@ export function SubMenu({ children, closeDelay, ...others }: SubMenuProps) {
         parentContext: ctx,
       }}
     >
-      <Popover
-        opened={opened}
-        position="right-start"
-        offset={0}
-        withinPortal={false}
-        {...others}
-        id={id}
-      >
+      <Popover opened={opened} {...others} withinPortal={false} id={id}>
         {children}
       </Popover>
     </SubMenuProvider>
   );
 }
 
-export { useSubMenuContext };
+MenuSub.extend = (input: ExtendComponent<MenuSubFactory>) => input;
+MenuSub.displayName = '@mantine/core/MenuSub';
+MenuSub.Target = MenuSubTarget;
+MenuSub.Dropdown = MenuSubDropdown;
+MenuSub.Item = MenuSubItem;
