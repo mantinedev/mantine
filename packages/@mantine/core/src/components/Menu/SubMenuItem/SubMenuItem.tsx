@@ -79,6 +79,7 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
   const handleKeydown = createEventHandler<any>(_others.onKeyDown, (event) => {
     if (event.key === 'ArrowRight') {
       subCtx.open();
+      subCtx.focusFirstItem();
     }
   });
 

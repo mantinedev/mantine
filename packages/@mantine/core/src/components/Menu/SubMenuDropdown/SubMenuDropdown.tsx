@@ -14,6 +14,7 @@ export function SubMenuDropdown({ children }: SubMenuDropdownProps) {
     <Popover.Dropdown
       onMouseEnter={() => subCtx.open()}
       onMouseLeave={() => subCtx.close()}
+      data-menu-dropdown
       {...ctx.getStyles('dropdown', {
         // className,
         // style,
