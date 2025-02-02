@@ -17,7 +17,8 @@ interface SubMenuProps {
 }
 
 export function SubMenu({ children }: SubMenuProps) {
-  const [opened, handlers] = useDisclosure(true);
+  const [opened, handlers] = useDisclosure(false);
+
   return (
     <SubMenuProvider value={{ opened, close: handlers.close, open: handlers.open }}>
       <Popover opened={opened} position="right-start" offset={0}>

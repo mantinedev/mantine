@@ -3,6 +3,7 @@ import { useMergedRef } from '@mantine/hooks';
 import {
   BoxProps,
   CompoundStylesApiProps,
+  createEventHandler,
   createScopedKeydownHandler,
   MantineColor,
   parseThemeColor,
@@ -15,6 +16,7 @@ import {
 import { AccordionChevron } from '../../Accordion';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useMenuContext } from '../Menu.context';
+import { useSubMenuContext } from '../SubMenu/SubMenu';
 import classes from '../Menu.module.css';
 
 export type SubMenuItemStylesNames = 'item' | 'itemLabel' | 'itemSection';
@@ -65,6 +67,7 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
   } = useProps('SubMenuItem', defaultProps, props);
 
   const ctx = useMenuContext();
+  const subCtx = useSubMenuContext();
   const theme = useMantineTheme();
   const { dir } = useDirection();
   const itemRef = useRef<HTMLButtonElement>(null);
@@ -72,6 +75,12 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
 
   const colors = color ? theme.variantColorResolver({ color, theme, variant: 'light' }) : undefined;
   const parsedThemeColor = color ? parseThemeColor({ color, theme }) : null;
+
+  const handleKeydown = createEventHandler<any>(_others.onKeyDown, (event) => {
+    if (event.key === 'ArrowRight') {
+      subCtx.open();
+    }
+  });
 
   return (
     <UnstyledButton
@@ -86,6 +95,8 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
       data-sub-menu-item
       data-disabled={disabled || dataDisabled || undefined}
       data-mantine-stop-propagation
+      onMouseEnter={() => subCtx.open()}
+      onMouseLeave={() => subCtx.close()}
       onKeyDown={createScopedKeydownHandler({
         siblingSelector: '[data-menu-item]:not([data-disabled])',
         parentSelector: '[data-menu-dropdown]',
@@ -93,7 +104,7 @@ export const SubMenuItem = polymorphicFactory<SubMenuItemFactory>((props, ref) =
         loop: ctx.loop,
         dir,
         orientation: 'vertical',
-        onKeyDown: _others.onKeyDown,
+        onKeyDown: handleKeydown,
       })}
       __vars={{
         '--menu-item-color':

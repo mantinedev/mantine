@@ -1,5 +1,6 @@
 import { Popover } from '../../Popover';
 import { useMenuContext } from '../Menu.context';
+import { useSubMenuContext } from '../SubMenu/SubMenu';
 
 interface SubMenuDropdownProps {
   children: React.ReactNode;
@@ -7,8 +8,12 @@ interface SubMenuDropdownProps {
 
 export function SubMenuDropdown({ children }: SubMenuDropdownProps) {
   const ctx = useMenuContext();
+  const subCtx = useSubMenuContext();
+
   return (
     <Popover.Dropdown
+      onMouseEnter={() => subCtx.open()}
+      onMouseLeave={() => subCtx.close()}
       {...ctx.getStyles('dropdown', {
         // className,
         // style,

@@ -102,7 +102,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
       data-mantine-stop-propagation
       onClick={handleClick}
       onKeyDown={createScopedKeydownHandler({
-        siblingSelector: '[data-menu-item]:not([data-disabled], [data-sub-menu-item])',
+        siblingSelector: '[data-menu-item]:not([data-disabled])',
         parentSelector: '[data-menu-dropdown]',
         activateOnFocus: false,
         loop: ctx.loop,
