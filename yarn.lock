@@ -2385,7 +2385,7 @@ __metadata:
     "@tiptap/pm": "npm:^2.9.1"
     "@tiptap/react": "npm:^2.9.1"
     dayjs: "npm:^1.11.13"
-    embla-carousel-react: "npm:^7.1.0"
+    embla-carousel-react: "npm:^8.5.2"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     recharts: "npm:^2.13.3"
@@ -2414,7 +2414,7 @@ __metadata:
     "@tiptap/pm": "npm:^2.9.1"
     "@tiptap/react": "npm:^2.9.1"
     dayjs: "npm:^1.11.13"
-    embla-carousel-react: "npm:^7.1.0"
+    embla-carousel-react: "npm:^8.5.2"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     recharts: "npm:^2.13.3"
@@ -10270,9 +10270,9 @@ __metadata:
     "@types/react": "npm:19.0.1"
     chroma-js: "npm:^3.1.2"
     dayjs: "npm:^1.11.13"
-    embla-carousel: "npm:^7.1.0"
-    embla-carousel-autoplay: "npm:^7.1.0"
-    embla-carousel-react: "npm:^7.1.0"
+    embla-carousel: "npm:^8.5.2"
+    embla-carousel-autoplay: "npm:^8.5.2"
+    embla-carousel-react: "npm:^8.5.2"
     github-slugger: "npm:^2.0.0"
     highlight.js: "npm:^11.10.0"
     lowlight: "npm:^3.1.0"
@@ -10524,30 +10524,40 @@ __metadata:
   languageName: node
   linkType: hard
 
-"embla-carousel-autoplay@npm:^7.1.0":
-  version: 7.1.0
-  resolution: "embla-carousel-autoplay@npm:7.1.0"
+"embla-carousel-autoplay@npm:^8.5.2":
+  version: 8.5.2
+  resolution: "embla-carousel-autoplay@npm:8.5.2"
   peerDependencies:
-    embla-carousel: 7.1.0
-  checksum: 10c0/27b80fceee448c6e62144d68cd474f62d388feb93f61adcb00e4a12c80595235cd0e865e3dd305eef28591bfc5ffd40181aa8fa29ce6f85bd3331fecada071bc
+    embla-carousel: 8.5.2
+  checksum: 10c0/e98d83ed1e0ceab0b8adb19b04146eb4b1cda0bd745db1ec76507c16d062b58261e0ba719211fe80c5a9c6e09a00577de7766388c9b1ab9b2f140012151fd085
   languageName: node
   linkType: hard
 
-"embla-carousel-react@npm:^7.1.0":
-  version: 7.1.0
-  resolution: "embla-carousel-react@npm:7.1.0"
+"embla-carousel-react@npm:^8.5.2":
+  version: 8.5.2
+  resolution: "embla-carousel-react@npm:8.5.2"
   dependencies:
-    embla-carousel: "npm:7.1.0"
+    embla-carousel: "npm:8.5.2"
+    embla-carousel-reactive-utils: "npm:8.5.2"
   peerDependencies:
-    react: ^16.8.0 || ^17.0.1 || ^18.0.0
-  checksum: 10c0/05e33fdb1062fde0164a0685163a5212f8e8f343fbe28e9a8e2348c989d8825d80fdcecfed485c7617d27f8f5d72b393612a3dd13ef9cffc02ef0cf21109ba51
+    react: ^16.8.0 || ^17.0.1 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+  checksum: 10c0/8e55a2bc562aed2c55d9debf2523dbd4f2524b0ecea62cf51f8f096ed993af608890084b5f35e1694a8aada087602a12cc4b8a68aeee12b4a33cc8361636c63d
   languageName: node
   linkType: hard
 
-"embla-carousel@npm:7.1.0, embla-carousel@npm:^7.1.0":
-  version: 7.1.0
-  resolution: "embla-carousel@npm:7.1.0"
-  checksum: 10c0/3fcfe5b287c5d09d35dac76b6612567cf6f15abdae0bbf7d10754db9f732dd90cdfdf5bc7405d8fb3f65542bdead09971e93e024a0db9b3f1fcc653a70e733bc
+"embla-carousel-reactive-utils@npm:8.5.2":
+  version: 8.5.2
+  resolution: "embla-carousel-reactive-utils@npm:8.5.2"
+  peerDependencies:
+    embla-carousel: 8.5.2
+  checksum: 10c0/aa4870539d9090f9ac02338c3ca3e1710a6f0e6890cd2f6fbf6afcc1eeac48192406f92bf042fe9429cc61709338124baf1514c75227a7a16b19b83e9f376274
+  languageName: node
+  linkType: hard
+
+"embla-carousel@npm:8.5.2, embla-carousel@npm:^8.5.2":
+  version: 8.5.2
+  resolution: "embla-carousel@npm:8.5.2"
+  checksum: 10c0/4bbb04c08616d560a7b47b1897794a077baa5aa27642420b35b3be58ab7b0dc000ef073b6e47d0029b0791c046e0cd39d295704faecb1957d2c315df51be58e6
   languageName: node
   linkType: hard
 
@@ -15649,9 +15659,9 @@ __metadata:
     clsx: "npm:^2.1.1"
     css-loader: "npm:^6.8.1"
     dayjs: "npm:^1.11.13"
-    embla-carousel: "npm:^7.1.0"
-    embla-carousel-autoplay: "npm:^7.1.0"
-    embla-carousel-react: "npm:^7.1.0"
+    embla-carousel: "npm:^8.5.2"
+    embla-carousel-autoplay: "npm:^8.5.2"
+    embla-carousel-react: "npm:^8.5.2"
     esbuild: "npm:^0.24.0"
     esbuild-jest: "npm:^0.5.0"
     eslint: "npm:^9.15.0"

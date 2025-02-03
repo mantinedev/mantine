@@ -1,4 +1,4 @@
-import type { EmblaCarouselType } from 'embla-carousel-react';
+import type { EmblaCarouselType } from 'embla-carousel';
 
 export type Embla = EmblaCarouselType;
 export { Carousel } from './Carousel';

@@ -1,5 +1,6 @@
 import { Children, useCallback, useEffect, useState } from 'react';
-import useEmblaCarousel, { EmblaCarouselType, EmblaPluginType } from 'embla-carousel-react';
+import type { EmblaCarouselType, EmblaOptionsType, EmblaPluginType } from 'embla-carousel';
+import useEmblaCarousel from 'embla-carousel-react';
 import {
   AccordionChevron,
   Box,
@@ -47,6 +48,9 @@ export interface CarouselProps
   extends BoxProps,
     StylesApiProps<CarouselFactory>,
     ElementProps<'div'> {
+  /** Options passed down to embla carousel */
+  emblaOptions?: EmblaOptionsType;
+
   /** <Carousel.Slide /> components */
   children?: React.ReactNode;
 
@@ -89,32 +93,11 @@ export interface CarouselProps
   /** Slides container `height`, required for vertical orientation */
   height?: React.CSSProperties['height'];
 
-  /** Determines how slides will be aligned relative to the container. Use number between 0-1 to align slides based on percentage, where 0.5 is 50%, `'center'` by default */
-  align?: 'start' | 'center' | 'end' | number;
-
-  /** Number of slides that will be scrolled with next/previous buttons, `1` by default */
-  slidesToScroll?: number | 'auto';
-
   /** Determines whether gap between slides should be treated as part of the slide size, `true` by default */
   includeGapInSize?: boolean;
 
-  /** Determines whether the carousel can be scrolled with mouse and touch interactions, `true` by default */
-  draggable?: boolean;
-
-  /** Determines whether momentum scrolling should be enabled, `false` by default */
-  dragFree?: boolean;
-
-  /** Enables infinite looping. `true` by default, automatically falls back to `false` if slide content isn't enough to loop. */
-  loop?: boolean;
-
-  /** Adjusts scroll speed when triggered by any of the methods. Higher numbers enables faster scrolling. */
-  speed?: number;
-
   /** Index of initial slide */
   initialSlide?: number;
-
-  /** Choose a fraction representing the percentage portion of a slide that needs to be visible in order to be considered in view. For example, 0.5 equals 50%. */
-  inViewThreshold?: number;
 
   /** Determines whether next/previous controls should be displayed, true by default */
   withControls?: boolean;
@@ -130,12 +113,6 @@ export interface CarouselProps
 
   /** Icon of the previous control */
   previousControlIcon?: React.ReactNode;
-
-  /** Allow the carousel to skip scroll snaps if it is dragged vigorously. Note that this option will be ignored if the dragFree option is set to `true`, `false` by default */
-  skipSnaps?: boolean;
-
-  /** Clear leading and trailing empty space that causes excessive scrolling. Use `trimSnaps` to only use snap points that trigger scrolling or keepSnaps to keep them. */
-  containScroll?: 'trimSnaps' | 'keepSnaps' | '';
 
   /** Determines whether arrow key should switch slides, `true` by default */
   withKeyboardEvents?: boolean;
@@ -157,21 +134,22 @@ const defaultProps: Partial<CarouselProps> = {
   slideSize: '100%',
   slideGap: 0,
   orientation: 'horizontal',
-  align: 'center',
-  slidesToScroll: 1,
   includeGapInSize: true,
-  draggable: true,
-  dragFree: false,
-  loop: false,
-  speed: 10,
   initialSlide: 0,
-  inViewThreshold: 0,
   withControls: true,
   withIndicators: false,
-  skipSnaps: false,
-  containScroll: '',
   withKeyboardEvents: true,
   type: 'media',
+};
+
+const defaultEmblaOptions: EmblaOptionsType = {
+  align: 'center',
+  loop: false,
+  slidesToScroll: 1,
+  dragFree: false,
+  inViewThreshold: 0,
+  skipSnaps: false,
+  containScroll: 'trimSnaps',
 };
 
 const varsResolver = createVarsResolver<CarouselFactory>(
@@ -206,25 +184,18 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
     slideGap,
     orientation,
     height,
-    align,
-    slidesToScroll,
     includeGapInSize,
     draggable,
-    dragFree,
-    loop,
-    speed,
     initialSlide,
-    inViewThreshold,
     withControls,
     withIndicators,
     plugins,
     nextControlIcon,
     previousControlIcon,
-    skipSnaps,
-    containScroll,
     withKeyboardEvents,
     mod,
     type,
+    emblaOptions,
     ...others
   } = props;
 
@@ -249,15 +220,8 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
       axis: orientation === 'horizontal' ? 'x' : 'y',
       direction: orientation === 'horizontal' ? dir : undefined,
       startIndex: initialSlide,
-      loop,
-      align,
-      slidesToScroll,
-      draggable,
-      dragFree,
-      speed,
-      inViewThreshold,
-      skipSnaps,
-      containScroll,
+      ...defaultEmblaOptions,
+      ...emblaOptions,
     },
     plugins
   );
@@ -316,7 +280,7 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
     }
 
     return undefined;
-  }, [embla, slidesToScroll, handleSelect]);
+  }, [embla, emblaOptions?.slidesToScroll, handleSelect]);
 
   useEffect(() => {
     if (embla) {
@@ -326,7 +290,7 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
         clamp(currentSelected, 0, Children.toArray(children).length - 1)
       );
     }
-  }, [Children.toArray(children).length, slidesToScroll]);
+  }, [Children.toArray(children).length, emblaOptions?.slidesToScroll]);
 
   const canScrollPrev = embla?.canScrollPrev() || false;
   const canScrollNext = embla?.canScrollNext() || false;

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
+import type { EmblaCarouselType } from 'embla-carousel';
 import Autoplay from 'embla-carousel-autoplay';
-import type { EmblaCarouselType } from 'embla-carousel-react';
 import { Box, Button, Modal } from '@mantine/core';
 import { Carousel } from './Carousel';
 import { useAnimationOffsetEffect } from './use-animation-offset-effect';
@@ -32,7 +32,7 @@ export function Usage() {
         slideSize={{ base: '100%', '400px': '50%', '600px': '33.333333%' }}
         height={200}
         withIndicators
-        align="start"
+        emblaOptions={{ align: 'start' }}
         type="container"
       >
         {slides}
@@ -54,7 +54,13 @@ export function Unstyled() {
 export function InitialSlide() {
   return (
     <div style={{ padding: 40, maxWidth: 500 }}>
-      <Carousel slideSize="70%" slideGap="md" height={200} loop initialSlide={2}>
+      <Carousel
+        slideSize="70%"
+        slideGap="md"
+        height={200}
+        emblaOptions={{ loop: true }}
+        initialSlide={2}
+      >
         {slides}
       </Carousel>
     </div>
@@ -64,7 +70,7 @@ export function InitialSlide() {
 export function SlidesToScroll() {
   return (
     <div style={{ padding: 40, maxWidth: 500 }}>
-      <Carousel slideSize="50%" slideGap="md" height={200} slidesToScroll={2}>
+      <Carousel slideSize="50%" slideGap="md" height={200} emblaOptions={{ slidesToScroll: 2 }}>
         {slides}
       </Carousel>
     </div>
@@ -139,7 +145,7 @@ export function AnimationOffsetEffect() {
         withCloseButton={false}
         onClose={() => setOpened(false)}
       >
-        <Carousel loop getEmblaApi={setEmbla}>
+        <Carousel emblaOptions={{ loop: true }} getEmblaApi={setEmbla}>
           <Carousel.Slide>
             <img
               src="https://cataas.com/cat"

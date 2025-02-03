@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import type { EmblaCarouselType } from 'embla-carousel-react';
+import type { EmblaCarouselType } from 'embla-carousel';
 
 export function useAnimationOffsetEffect(
   embla: EmblaCarouselType | null | undefined,
