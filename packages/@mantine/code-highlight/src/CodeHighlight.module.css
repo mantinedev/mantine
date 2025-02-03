@@ -86,6 +86,8 @@
   font-size: 13px;
   line-height: var(--code-line-height, var(--mantine-line-height));
   font-family: var(--mantine-font-family-monospace);
+  width: fit-content;
+  min-width: 100%;
 
   &:where([data-inline]) {
     display: inline-block;
