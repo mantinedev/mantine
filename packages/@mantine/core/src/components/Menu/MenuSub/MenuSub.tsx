@@ -21,6 +21,7 @@ interface MenuSubProps extends __PopoverProps {
 const defaultProps: Partial<MenuSubProps> = {
   offset: 0,
   position: 'right-start',
+  transitionProps: { duration: 0 },
 };
 
 export function MenuSub(_props: MenuSubProps) {

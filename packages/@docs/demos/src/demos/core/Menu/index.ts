@@ -8,3 +8,4 @@ export { disabled } from './Menu.demo.disabled';
 export { customControl } from './Menu.demo.customControl';
 export { clickHover } from './Menu.demo.clickHover';
 export { navigation } from './Menu.demo.navigation';
+export { sub } from './Menu.demo.sub';

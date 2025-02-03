@@ -52,3 +52,8 @@ export const Demo_navigation = {
   name: '⭐ Demo: navigation',
   render: renderDemo(demos.navigation),
 };
+
+export const Demo_sub = {
+  name: '⭐ Demo: sub',
+  render: renderDemo(demos.sub),
+};

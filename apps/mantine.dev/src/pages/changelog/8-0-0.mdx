@@ -6,6 +6,7 @@ import {
   TimeGridDemos,
   CodeHighlightDemos,
   SwitchDemos,
+  MenuDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -42,6 +43,12 @@ import '@mantine/core/styles/global.css';
 
 If you imported `@mantine/core/styles.css`, no changes are required –
 all new files are already included in `styles.css`.
+
+## Menu with submenus
+
+[Menu](/core/menu) component now supports submenus:
+
+<Demo data={MenuDemos.sub} demoProps={{ defaultExpanded: false }} />
 
 ## Date values as strings
 
