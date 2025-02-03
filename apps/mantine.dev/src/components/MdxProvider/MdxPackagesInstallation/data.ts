@@ -59,6 +59,7 @@ export const PACKAGES_DATA = [
       '@mantine/hooks',
       '@mantine/core',
       '@mantine/carousel',
+      'embla-carousel@^8.5.2',
       'embla-carousel-react@^8.5.2',
     ],
   },
