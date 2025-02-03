@@ -236,3 +236,26 @@ CDN link to the head of your application:
 
 After that, you can use `CodeHighlight` component in your application the same way you did in 7.x version.
 
+## Menu data-hovered attribute
+
+[Menu.Item](/core/menu) no longer uses `data-hovered` attribute to indicate hovered state.
+If you used `data-hovered` in your styles, you need to change it `:hover` and `:focus` selectors
+instead:
+
+```scss
+// ❌ 7.x – styles with `data-hovered`,
+// no longer works in 8.x
+.item {
+  &[data-hovered] {
+    background-color: red;
+  }
+}
+
+// ✅ 8.x – use styles with `:hover` and `:focus`
+.item {
+  &:hover,
+  &:focus {
+    background-color: red;
+  }
+}
+```
