@@ -72,7 +72,9 @@ export function HomePageCommunity() {
                 community-driven project with more than 500 contributors.
               </HomePageDescription>
 
-              <HomePageLearnMore href="/">View all reviews from the community</HomePageLearnMore>
+              <HomePageLearnMore href="https://github.com/orgs/mantinedev/discussions/categories/kind-words">
+                View all reviews from the community
+              </HomePageLearnMore>
 
               <div className={classes.stats}>
                 <Stat value="28,000+" label="Stars on GitHub" link={meta.gitHubLinks.mantine} />
