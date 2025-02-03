@@ -73,16 +73,6 @@ export const Demo_cards = {
   render: renderDemo(demos.cards),
 };
 
-export const Demo_animationOffset = {
-  name: '⭐ Demo: animationOffset',
-  render: renderDemo(demos.animationOffset),
-};
-
-export const Demo_brokenAnimation = {
-  name: '⭐ Demo: brokenAnimation',
-  render: renderDemo(demos.brokenAnimation),
-};
-
 export const Demo_stylesApi = {
   name: '⭐ Demo: stylesApi',
   render: renderDemo(demos.stylesApi),

@@ -12,7 +12,5 @@ export { controlsHover } from './Carousel.demo.controlsHover';
 export { configurator } from './Carousel.demo.configurator';
 export { progress } from './Carousel.demo.progress';
 export { cards } from './Carousel.demo.cards';
-export { animationOffset } from './Carousel.demo.animationOffset';
-export { brokenAnimation } from './Carousel.demo.brokenAnimation';
 export { stylesApi } from './Carousel.demo.stylesApi';
 export { container } from './Carousel.demo.container';

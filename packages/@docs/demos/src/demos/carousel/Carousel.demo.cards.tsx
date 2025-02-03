@@ -120,8 +120,7 @@ function Demo() {
     <Carousel
       slideSize={{ base: '100%', sm: '50%' }}
       slideGap={{ base: 'xl', sm: 2 }}
-      align="start"
-      slidesToScroll={mobile ? 1 : 2}
+      emblaOptions={{ align: 'start', slidesToScroll: mobile ? 1 : 2 }}
     >
       {slides}
     </Carousel>
@@ -211,8 +210,7 @@ export function CarouselCardsDemos(props: CarouselProps) {
     <Carousel
       slideSize={{ base: '100%', sm: '50%' }}
       slideGap={{ base: 'xl', sm: 2 }}
-      align="start"
-      slidesToScroll={mobile ? 1 : 2}
+      emblaOptions={{ align: 'start', slidesToScroll: mobile ? 1 : 2 }}
       {...props}
     >
       {slides}
