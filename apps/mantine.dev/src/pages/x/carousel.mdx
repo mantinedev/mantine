@@ -14,10 +14,26 @@ After installation import package styles at the root of your application:
 import '@mantine/carousel/styles.css';
 ```
 
+## Do not forget to import styles
+
+Followed installation instructions above but something is not working
+(Carousel slides are rendered vertically, no controls or indicators)?
+You've fallen into the trap of not importing carousel styles!
+To fix the issue, import carousel styles at the root of your application:
+
+```tsx
+import '@mantine/carousel/styles.css';
+```
+
+## Documentation demos
+
+Demos presents on this page use blue background color for demonstration purposes. To simply
+demos code, background color and other demo-only styles are not included in the demo code.
+When you copy paste demo code to your project, it will not have blue background color.
+
 ## Usage
 
-`@mantine/carousel` package is based on [embla carousel](https://www.embla-carousel.com/),
-it supports most of its features:
+`@mantine/carousel` package is based on [embla carousel](https://www.embla-carousel.com/):
 
 <Demo data={CarouselDemos.usage} />
 

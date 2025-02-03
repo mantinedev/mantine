@@ -38,6 +38,17 @@ All set! You can now use all notifications system features.
 
 <Demo data={NotificationsDemos.base} />
 
+## Do not forget to import styles
+
+Followed installation instructions above but something is not working
+(`position` prop not working, notifications are stuck at the bottom)?
+You've fallen into the trap of not importing notifications styles!
+To fix the issue, import notifications styles at the root of your application:
+
+```tsx
+import '@mantine/notifications/styles.css';
+```
+
 ## Functions
 
 `@mantine/notifications` package exports `notifications` object with the following functions:
