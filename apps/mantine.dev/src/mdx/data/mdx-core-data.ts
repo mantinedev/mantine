@@ -751,7 +751,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     title: 'Menu',
     package: '@mantine/core',
     slug: '/core/menu',
-    props: ['Menu', 'MenuTarget', 'MenuItem'],
+    props: ['Menu', 'MenuTarget', 'MenuItem', 'MenuSub', 'MenuSubItem', 'MenuSubTarget'],
     styles: ['Menu'],
     componentPrefix: 'Menu',
     description: 'Combine a list of secondary actions into single interactive area',
