@@ -15,14 +15,8 @@ export default Layout(MDX_DATA.Changelog800);
 
 ## Migration guide
 
-Mantine 8.0 is a major release that includes breaking changes. In this release
-breaking changes were kept to a minimum and are mostly related to third-party
-packages updates and improvements in the API of extensions (`@mantine/core`
-and `@mantine/hooks` packages do not have any major breaking changes).
-
-The migration process should be straightforward and not time-consuming,
-follow the [7.x → 8.x migration guide](/guides/7x-to-8x) to update
-your application to Mantine 8.0.
+This changelog covers breaking changes and new features in Mantine 8.0.
+To migrate your application to Mantine 8.0, follow [7.x → 8.x migration guide](/guides/7x-to-8x).
 
 ## Granular global styles exports
 
@@ -180,6 +174,19 @@ function App() {
 After that, you can use `CodeHighlight` component in your application:
 
 <Demo data={CodeHighlightDemos.usage} />
+
+## Carousel changes
+
+[@mantine/carousel](/x/carousel) package was updated to use the latest version of
+`embla-carousel-react` package. This update includes breaking changes:
+
+- `speed` and `draggable` props were removed – they are no longer supported by `embla-carousel-react`
+- It is now required to install both `embla-carousel` and `embla-carousel-react` packages explicitly
+- `useAnimationOffsetEffect` hook was removed – the issue it addressed was fixed in `embla-carousel-react`
+- `Embla` type export was removed, you should use `EmblaCarouselType` from `embla-carousel` instead
+- Props that were previously passed to embla are now grouped under `emblaOptions` prop
+
+Follow the [7.x → 8.x migration guide](/guides/7x-to-8x) to update your application to use the latest version of `@mantine/carousel`.
 
 ## Switch withThumbIndicator
 
