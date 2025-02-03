@@ -10,6 +10,7 @@ export const MenuStylesApi: StylesApiData<MenuFactory> = {
     item: '`Menu.Item` root element',
     itemLabel: 'Label of `Menu.Item`',
     itemSection: 'Left and right sections of `Menu.Item`',
+    chevron: 'Sub menu chevron',
   },
 
   vars: {},

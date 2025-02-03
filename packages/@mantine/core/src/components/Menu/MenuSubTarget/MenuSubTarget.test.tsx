@@ -17,7 +17,7 @@ describe('@mantine/core/MenuSubTarget', () => {
 
   it('throws error if children cannot be processed', () => {
     const error = new Error(
-      'Menu.SubTarget component children should be an element or a component that accepts ref. Fragments, strings, numbers and other primitive values are not supported'
+      'Menu.Sub.Target component children should be an element or a component that accepts ref. Fragments, strings, numbers and other primitive values are not supported'
     );
     patchConsoleError();
     expect(() => render(<TestContainer>Hello</TestContainer>)).toThrow(error);

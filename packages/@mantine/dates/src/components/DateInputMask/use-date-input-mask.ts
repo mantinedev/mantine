@@ -1,3 +1,3 @@
-interface UseDateInputMaskInput {}
+// interface UseDateInputMaskInput {}
 
 export function useDateInputMask() {}

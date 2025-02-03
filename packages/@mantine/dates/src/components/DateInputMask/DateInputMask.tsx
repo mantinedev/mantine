@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import {
   BoxProps,
   CloseButtonProps,
@@ -170,22 +170,22 @@ export const DateInputMask = factory<DateInputMaskFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const hasFocusRef = useRef(false);
+  // const hasFocusRef = useRef(false);
   const [dropdownOpened, setDropdownOpened] = useState(false);
 
-  const handleFocus = (event: React.FocusEvent<any>) => {
-    if (!hasFocusRef.current) {
-      hasFocusRef.current = true;
-      onFocus?.(event);
-    }
-  };
+  // const handleFocus = (event: React.FocusEvent<any>) => {
+  //   if (!hasFocusRef.current) {
+  //     hasFocusRef.current = true;
+  //     onFocus?.(event);
+  //   }
+  // };
 
-  const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
-    if (!event.currentTarget.contains(event.relatedTarget)) {
-      hasFocusRef.current = false;
-      onBlur?.(event);
-    }
-  };
+  // const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
+  //   if (!event.currentTarget.contains(event.relatedTarget)) {
+  //     hasFocusRef.current = false;
+  //     onBlur?.(event);
+  //   }
+  // };
 
   return (
     <Popover

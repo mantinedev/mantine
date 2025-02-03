@@ -11,7 +11,7 @@ export function assignTime(
     return date.format('YYYY-MM-DD HH:mm:ss');
   }
 
-  const [hours, minutes, seconds] = timeString.split(':').map(Number);
+  const [hours, minutes, seconds = 0] = timeString.split(':').map(Number);
 
   date = date.set('hour', hours);
   date = date.set('minute', minutes);

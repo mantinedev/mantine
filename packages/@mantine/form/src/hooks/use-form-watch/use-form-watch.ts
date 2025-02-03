@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { getPath } from '../../paths';
-import { FormFieldSubscriber, LooseKeys, Watch } from '../../types';
+import { LooseKeys } from '../../paths.types';
+import { FormFieldSubscriber, Watch } from '../../types';
 import { $FormStatus } from '../use-form-status/use-form-status';
 import { SetValuesSubscriberPayload } from '../use-form-values/use-form-values';
 

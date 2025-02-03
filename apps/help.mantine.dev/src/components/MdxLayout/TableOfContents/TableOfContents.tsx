@@ -5,11 +5,10 @@ import { useScrollSpy } from '@mantine/hooks';
 import classes from './TableOfContents.module.css';
 
 interface TableOfContentsProps {
-  withTabs: boolean;
   editPageLink?: string;
 }
 
-export function TableOfContents({ withTabs, editPageLink }: TableOfContentsProps) {
+export function TableOfContents({ editPageLink }: TableOfContentsProps) {
   const router = useRouter();
   const spy = useScrollSpy({
     selector: '#mdx [data-heading]',
@@ -41,7 +40,7 @@ export function TableOfContents({ withTabs, editPageLink }: TableOfContentsProps
   ));
 
   return (
-    <Box component="nav" mod={{ 'with-tabs': withTabs }} className={classes.wrapper}>
+    <Box component="nav" className={classes.wrapper}>
       <div className={classes.inner}>
         <div>
           <Text className={classes.title}>Table of contents</Text>
