@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
-import { Carousel, Embla } from '@mantine/carousel';
-import { useDebouncedCallback, useElementSize } from '@mantine/hooks';
+import { Carousel } from '@mantine/carousel';
 import { MantineDemo } from '@mantinex/demo';
 import { Slides } from './_slides';
 
@@ -26,8 +24,7 @@ function Demo() {
         type="container"
         slideSize={{ base: '100%', '300px': '50%', '500px': '33.333333%' }}
         slideGap={{ base: 0, '300px': 'md', '500px': 'lg' }}
-        loop
-        align="start"
+        emblaOptions={{ loop: true, align: 'start' }}
       >
         <Carousel.Slide>1</Carousel.Slide>
         <Carousel.Slide>2</Carousel.Slide>
@@ -40,21 +37,10 @@ function Demo() {
 `;
 
 function Demo() {
-  const [embla, setEmbla] = useState<Embla | null>(null);
-  const resizeObserver = useElementSize();
-  const debounced = useDebouncedCallback(() => embla?.reInit(), 10);
-
-  useEffect(() => {
-    if (embla) {
-      debounced();
-    }
-  }, [debounced, embla, resizeObserver.width]);
-
   return (
     // Wrapper div is added for demonstration purposes only,
     // It is not required in real projects
     <div
-      ref={resizeObserver.ref}
       style={{
         resize: 'horizontal',
         overflow: 'hidden',
@@ -64,14 +50,12 @@ function Demo() {
       }}
     >
       <Carousel
-        getEmblaApi={setEmbla}
         withIndicators
         height={200}
         type="container"
         slideSize={{ base: '100%', '300px': '50%', '500px': '33.333333%' }}
         slideGap={{ base: 0, '300px': 'md', '500px': 'lg' }}
-        loop
-        align="start"
+        emblaOptions={{ loop: true, align: 'start' }}
       >
         <Slides count={6} />
       </Carousel>

@@ -22,7 +22,11 @@ function Demo() {
     </Carousel.Slide>
   ));
 
-  return <Carousel withIndicators>{slides}</Carousel>;
+  return (
+    <Carousel withIndicators height={200}>
+      {slides}
+    </Carousel>
+  );
 }
 `;
 
@@ -33,13 +37,17 @@ function Demo() {
     </Carousel.Slide>
   ));
 
-  return <Carousel withIndicators>{slides}</Carousel>;
+  return (
+    <Carousel withIndicators height={200}>
+      {slides}
+    </Carousel>
+  );
 }
 
 export const images: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
-  maxWidth: 320,
+  maxWidth: 380,
   centered: true,
 };

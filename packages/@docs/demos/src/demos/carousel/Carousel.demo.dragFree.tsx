@@ -7,7 +7,12 @@ import { Carousel } from '@mantine/carousel';
 
 function Demo() {
   return (
-    <Carousel withIndicators height={200} dragFree slideGap="md" align="start">
+    <Carousel
+      withIndicators
+      height={200}
+      emblaOptions={{ dragFree: true, align: 'start' }}
+      slideGap="md"
+    >
       <Carousel.Slide>1</Carousel.Slide>
       <Carousel.Slide>2</Carousel.Slide>
       <Carousel.Slide>3</Carousel.Slide>
@@ -19,7 +24,12 @@ function Demo() {
 
 function Demo() {
   return (
-    <Carousel withIndicators height={200} dragFree slideGap="md" align="start">
+    <Carousel
+      withIndicators
+      height={200}
+      slideGap="md"
+      emblaOptions={{ dragFree: true, align: 'start' }}
+    >
       <Slides count={5} />
     </Carousel>
   );

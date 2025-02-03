@@ -10,26 +10,24 @@ import Autoplay from 'embla-carousel-autoplay';
 import { Carousel } from '@mantine/carousel';
 
 function Demo() {
-  const autoplay = useRef(Autoplay({ delay: 2000 }));
+  const autoplay = useRef(Autoplay({ delay: 1000 }));
+
   return (
     <Carousel
       withIndicators
       height={200}
       plugins={[autoplay.current]}
       onMouseEnter={autoplay.current.stop}
-      onMouseLeave={autoplay.current.reset}
+      onMouseLeave={() => autoplay.current.play()}
     >
-      <Carousel.Slide>1</Carousel.Slide>
-      <Carousel.Slide>2</Carousel.Slide>
-      <Carousel.Slide>3</Carousel.Slide>
-      {/* ...other slides */}
+      <Slides count={5} />
     </Carousel>
   );
 }
 `;
 
 function Demo() {
-  const autoplay = useRef(Autoplay({ delay: 2000 }));
+  const autoplay = useRef(Autoplay({ delay: 1000 }));
 
   return (
     <Carousel
@@ -37,7 +35,7 @@ function Demo() {
       height={200}
       plugins={[autoplay.current]}
       onMouseEnter={autoplay.current.stop}
-      onMouseLeave={autoplay.current.reset}
+      onMouseLeave={() => autoplay.current.play()}
     >
       <Slides count={5} />
     </Carousel>

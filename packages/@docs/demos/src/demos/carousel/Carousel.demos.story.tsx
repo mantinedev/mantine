@@ -82,3 +82,8 @@ export const Demo_container = {
   name: '⭐ Demo: container',
   render: renderDemo(demos.container),
 };
+
+export const Demo_emblaOptions = {
+  name: '⭐ Demo: emblaOptions',
+  render: renderDemo(demos.emblaOptions),
+};

@@ -12,8 +12,7 @@ function Demo() {
       height={200}
       slideSize={{ base: '100%', sm: '50%', md: '33.333333%' }}
       slideGap={{ base: 0, sm: 'md' }}
-      loop
-      align="start"
+      emblaOptions={{ loop: true, align: 'start' }}
     >
       <Carousel.Slide>1</Carousel.Slide>
       <Carousel.Slide>2</Carousel.Slide>
@@ -31,8 +30,7 @@ function Demo() {
       height={200}
       slideSize={{ base: '100%', sm: '50%', md: '33.333333%' }}
       slideGap={{ base: 0, sm: 'md' }}
-      loop
-      align="start"
+      emblaOptions={{ loop: true, align: 'start' }}
     >
       <Slides count={6} />
     </Carousel>

@@ -14,3 +14,4 @@ export { progress } from './Carousel.demo.progress';
 export { cards } from './Carousel.demo.cards';
 export { stylesApi } from './Carousel.demo.stylesApi';
 export { container } from './Carousel.demo.container';
+export { emblaOptions } from './Carousel.demo.emblaOptions';
