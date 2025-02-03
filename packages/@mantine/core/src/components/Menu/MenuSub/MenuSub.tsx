@@ -1,26 +1,15 @@
 import { useDisclosure, useId } from '@mantine/hooks';
-import { createOptionalContext, ExtendComponent, Factory, useProps } from '../../../core';
+import { ExtendComponent, Factory, useProps } from '../../../core';
 import { useDelayedHover } from '../../Floating';
 import { __PopoverProps, Popover } from '../../Popover';
 import { MenuSubDropdown } from '../MenuSubDropdown/MenuSubDropdown';
 import { MenuSubItem } from '../MenuSubItem/MenuSubItem';
 import { MenuSubTarget } from '../MenuSubTarget/MenuSubTarget';
+import { SubMenuProvider, useSubMenuContext } from './MenuSub.context';
 
 export type MenuSubFactory = Factory<{
   props: MenuSubProps;
 }>;
-
-interface SubMenuContext {
-  opened: boolean;
-  close: () => void;
-  open: () => void;
-  focusFirstItem: () => void;
-  focusParentItem: () => void;
-  parentContext: SubMenuContext | null;
-}
-
-const [SubMenuProvider, useSubMenuContext] = createOptionalContext<SubMenuContext>();
-export { useSubMenuContext };
 
 interface MenuSubProps extends __PopoverProps {
   children: React.ReactNode;
