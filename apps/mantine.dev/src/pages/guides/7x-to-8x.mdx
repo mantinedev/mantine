@@ -259,3 +259,82 @@ instead:
   }
 }
 ```
+
+## Carousel changes
+
+Starting from 8.x version, [@mantine/carousel](/x/carousel) package requires
+`embla-carousel` and `embla-carousel-react` packages with version 8.x.
+
+You need to update embla dependencies:
+
+<InstallScript packages="embla-carousel@^8.5.2 embla-carousel-react@^8.5.2" />
+
+Update embla props that were previously passed to `Carousel` component
+to `emblaOptions`. Full list of props:
+
+- `loop`
+- `align`
+- `slidesToScroll`
+- `dragFree`
+- `inViewThreshold`
+- `skipSnaps`
+- `containScroll`
+- `speed` and `draggable` props were removed – they are no longer supported by embla
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+
+// ❌ 7.x – embla options passed as props,
+// no longer works in 8.x
+function Demo7x() {
+  return <Carousel loop dragFree align="start" />
+}
+
+// ✅ 8.x – use emblaOptions to pass options to embla
+function Demo8x() {
+  return <Carousel emblaOptions={{ loop: true, dragFree: true, align: 'start' }} />
+}
+```
+
+`useAnimationOffsetEffect` hook was removed, it is no longer required, you need to
+remove it from your code:
+
+```tsx
+// ❌ 7.x – useAnimationOffsetEffect is no longer available in 8.x
+import { Carousel, Embla, useAnimationOffsetEffect } from '@mantine/carousel';
+
+function Demo7x() {
+  const [embla, setEmbla] = useState<Embla | null>(null);
+  useAnimationOffsetEffect(embla, TRANSITION_DURATION);
+  return <Carousel getEmblaApi={setEmbla} />;
+}
+
+// ✅ 8.x – remove useAnimationOffsetEffect entirely, it is not required
+import { Carousel } from '@mantine/carousel';
+
+function Demo() {
+  return <Carousel />;
+}
+```
+
+`Embla` type is no longer exported from `@mantine/carousel` package,
+you need to change this import to reference `embla-carousel` package instead:
+
+```tsx
+// ❌ 7.x – Embla type is no longer available in 8.x
+import { Carousel, Embla } from '@mantine/carousel';
+
+function Demo7x() {
+  const [embla, setEmbla] = useState<Embla | null>(null);
+  return <Carousel getEmblaApi={setEmbla} />;
+}
+
+// ✅ 8.x – replace Embla type import
+import { Carousel } from '@mantine/carousel';
+import { EmblaCarouselType } from 'embla-carousel';
+
+function Demo7x() {
+  const [embla, setEmbla] = useState<EmblaCarouselType | null>(null);
+  return <Carousel getEmblaApi={setEmbla} />;
+}
+```
