@@ -139,7 +139,7 @@ export function HomePageExtensions() {
               <ExtensionDemo title="Carousel" description="Embla based carousel component">
                 <Carousel
                   withIndicators
-                  loop
+                  emblaOptions={{ loop: true }}
                   classNames={{
                     root: classes.carousel,
                     controls: classes.carouselControls,

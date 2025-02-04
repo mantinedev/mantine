@@ -12,7 +12,6 @@
     "./packages/@mantinex/*/src",
     "./jest.config.ts",
     "./jest.react.ts",
-    "./jest.setup.ts",
     "./jsdom.mocks.ts"
   ],
   "exclude": [

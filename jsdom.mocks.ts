@@ -37,3 +37,11 @@ console.error = (...data) => {
   }
   originalConsoleError(...data);
 };
+
+class IntersectionObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+window.IntersectionObserver = IntersectionObserver as any;

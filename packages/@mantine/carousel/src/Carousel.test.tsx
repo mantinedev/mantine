@@ -33,7 +33,6 @@ describe('@mantine/carousel/Carousel', () => {
       'container',
       'control',
       'controls',
-      'indicator',
       'indicators',
       'slide',
       'viewport',
