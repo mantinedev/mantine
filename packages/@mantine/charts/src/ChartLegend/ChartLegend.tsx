@@ -15,10 +15,12 @@ import classes from './ChartLegend.module.css';
 
 function updateChartLegendPayload(payload: Record<string, any>[]): Record<string, any>[] {
   return payload.map((item) => {
-    const newDataKey = item.dataKey?.split('.').pop();
+    const newDataKey = item.dataKey;
+    const labelName = item.dataKey?.split('.').pop();
+
     return {
       ...item,
-      dataKey: newDataKey,
+      labelName,
       payload: {
         ...item.payload,
         name: newDataKey,
@@ -106,7 +108,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     <div
       key={index}
       {...getStyles('legendItem')}
-      onMouseEnter={() => onHighlight(item.dataKey)}
+      onMouseEnter={() => onHighlight(item.payload.name)}
       onMouseLeave={() => onHighlight(null)}
       data-without-color={showColor === false || undefined}
     >
@@ -116,7 +118,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
         {...getStyles('legendItemColor')}
         withShadow={false}
       />
-      <p {...getStyles('legendItemName')}>{labels[item.dataKey] || item.dataKey}</p>
+      <p {...getStyles('legendItemName')}>{labels[item.labelName] || item.labelName}</p>
     </div>
   ));
 
