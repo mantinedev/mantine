@@ -4051,7 +4051,8 @@ __metadata:
   peerDependencies:
     "@mantine/core": 7.16.2
     "@mantine/hooks": 7.16.2
-    embla-carousel-react: ">=7.0.0"
+    embla-carousel: ">=8.0.0"
+    embla-carousel-react: ">=8.0.0"
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
   languageName: unknown
