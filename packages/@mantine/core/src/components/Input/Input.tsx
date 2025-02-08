@@ -217,6 +217,8 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
     ...others
   } = props;
 
+  console.log({ rightSectionWidth });
+
   const { styleProps, rest } = extractStyleProps(others);
   const ctx = useInputWrapperContext();
   const stylesCtx: InputStylesCtx = { offsetBottom: ctx?.offsetBottom, offsetTop: ctx?.offsetTop };
@@ -261,7 +263,7 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
             pointer,
             disabled,
             multiline,
-            'data-with-right-section': !!rightSection,
+            'data-with-right-section': !!_rightSection,
             'data-with-left-section': !!leftSection,
           },
           mod,
