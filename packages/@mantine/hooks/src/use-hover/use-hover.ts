@@ -1,26 +1,20 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useState, useRef, type RefCallback } from 'react';
 
 export function useHover<T extends HTMLElement = any>() {
   const [hovered, setHovered] = useState(false);
-  const ref = useRef<T>(null);
+  const lastNodeRef = useRef<T>(null);
   const onMouseEnter = useCallback(() => setHovered(true), []);
   const onMouseLeave = useCallback(() => setHovered(false), []);
 
-  useEffect(() => {
-    const node = ref.current;
+  const onRefChange: RefCallback<T> = useCallback((node) => {
+    lastNodeRef.current?.removeEventListener('mouseenter', onMouseEnter);
+    lastNodeRef.current?.removeEventListener('mouseleave', onMouseLeave);
 
-    if (node) {
-      node.addEventListener('mouseenter', onMouseEnter);
-      node.addEventListener('mouseleave', onMouseLeave);
+    node?.addEventListener('mouseenter', onMouseEnter);
+    node?.addEventListener('mouseleave', onMouseLeave);
 
-      return () => {
-        node?.removeEventListener('mouseenter', onMouseEnter);
-        node?.removeEventListener('mouseleave', onMouseLeave);
-      };
-    }
+    lastNodeRef.current = node;
+  }, [])
 
-    return undefined;
-  }, [ref.current]);
-
-  return { ref, hovered };
+  return { ref: onRefChange, hovered };
 }
