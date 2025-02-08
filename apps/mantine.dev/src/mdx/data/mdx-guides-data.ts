@@ -97,6 +97,7 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
     slug: '/guides/7x-to-8x',
     search: 'Migration guide from 7.x to 8.x',
     hideHeader: true,
+    searchTags: '7x, 8x, 7to8, 78',
   },
 
   FunctionsReference: {

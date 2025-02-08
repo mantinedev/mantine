@@ -7,6 +7,7 @@ import {
   CodeHighlightDemos,
   SwitchDemos,
   MenuDemos,
+  PopoverDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -43,6 +44,18 @@ all new files are already included in `styles.css`.
 [Menu](/core/menu) component now supports submenus:
 
 <Demo data={MenuDemos.sub} demoProps={{ defaultExpanded: false }} />
+
+## Popover hideDetached
+
+[Popover](/core/popover) component now supports `hideDetached` prop to configure how the dropdown behaves when the target
+element is hidden with styles (`display: none`, `visibility: hidden`, etc.),
+removed from the DOM, or when the target element is scrolled out of the viewport.
+
+By default, `hideDetached` is enabled – the dropdown is hidden with the target element.
+You can change this behavior with `hideDetached={false}`. To see the difference, try to scroll
+the root element of the following demo:
+
+<Demo data={PopoverDemos.hideDetached} demoProps={{ defaultExpanded: false }} />
 
 ## Date values as strings
 

@@ -10,3 +10,4 @@ export { clickOutsideEvents } from './Popover.demo.clickOutsideEvents';
 export { disabled } from './Popover.demo.disabled';
 export { portalChildren } from './Popover.demo.portalChildren';
 export { overlay } from './Popover.demo.overlay';
+export { hideDetached } from './Popover.demo.hideDetached';

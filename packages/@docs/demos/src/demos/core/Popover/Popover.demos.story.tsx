@@ -62,3 +62,8 @@ export const Demo_overlay = {
   name: '⭐ Demo: overlay',
   render: renderDemo(demos.overlay),
 };
+
+export const Demo_hideDetached = {
+  name: '⭐ Demo: hideDetached',
+  render: renderDemo(demos.hideDetached),
+};

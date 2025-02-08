@@ -1,4 +1,4 @@
-import { ThemingDemos } from '@docs/demos';
+import { PopoverDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -258,6 +258,31 @@ instead:
     background-color: red;
   }
 }
+```
+
+## Popover hideDetached
+
+[Popover](/core/popover) now supports `hideDetached` prop to automatically close popover when target element is removed from the DOM:
+
+<Demo data={PopoverDemos.hideDetached} demoProps={{ defaultExpanded: false }} />
+
+By default, `hideDetached` is enabled – the behavior has changed from 7.x version.
+If you prefer to keep the old behavior, you can disable `hideDetached` for all components:
+
+```tsx
+import { createTheme, Popover } from '@mantine/core';
+
+export const theme = createTheme({
+  components: {
+    Popover: Popover.extends({
+      defaultProps: {
+        // ✅ Disable hideDetached by default
+        // if you want to keep the old behavior
+        hideDetached: false,
+      },
+    }),
+  }
+});
 ```
 
 ## Carousel changes
