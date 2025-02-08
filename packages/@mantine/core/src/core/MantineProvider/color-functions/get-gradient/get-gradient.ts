@@ -5,7 +5,7 @@ export function getGradient(gradient: MantineGradient | undefined, theme: Mantin
   const merged = {
     from: gradient?.from || theme.defaultGradient.from,
     to: gradient?.to || theme.defaultGradient.to,
-    deg: gradient?.deg || theme.defaultGradient.deg || 0,
+    deg: gradient?.deg ?? theme.defaultGradient.deg ?? 0,
   };
 
   const fromColor = getThemeColor(merged.from, theme);

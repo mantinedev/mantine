@@ -1,5 +1,5 @@
 import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '../../core';
-import { __BaseInputProps, __InputStylesNames } from '../Input';
+import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
 import { InputBase } from '../InputBase';
 
 export interface TextInputProps
@@ -10,6 +10,7 @@ export interface TextInputProps
 
 export type TextInputFactory = Factory<{
   props: TextInputProps;
+  variant: InputVariant;
   ref: HTMLInputElement;
   stylesNames: __InputStylesNames;
 }>;
