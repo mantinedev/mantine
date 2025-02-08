@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useState } from 'react';
 import { Box, MantineThemeProvider } from '../../core';
 import { Group } from '../Group';
@@ -353,6 +355,28 @@ export function WithOverlay() {
         </Popover.Target>
         <Popover.Dropdown>Dropdown</Popover.Dropdown>
       </Popover>
+    </div>
+  );
+}
+
+export function ReferenceHidden() {
+  const [opened, setState] = useState(true);
+  return (
+    <div
+      style={{ width: 400, height: 200, margin: 100, border: '1px solid', overflow: 'auto' }}
+      onClick={() => setState((o) => !o)}
+    >
+      <div style={{ padding: 40, width: 1000, height: 1000 }}>
+        <Popover position="top" withArrow opened hideDetached={false}>
+          <Popover.Target>
+            <button type="button" style={{ display: opened ? 'block' : 'none' }}>
+              Toggle popover
+            </button>
+          </Popover.Target>
+
+          <Popover.Dropdown>Dropdown</Popover.Dropdown>
+        </Popover>
+      </div>
     </div>
   );
 }

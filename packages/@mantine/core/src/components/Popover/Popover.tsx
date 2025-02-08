@@ -153,6 +153,9 @@ export interface PopoverProps extends __PopoverProps, StylesApiProps<PopoverFact
 
   /** Determines whether dropdown and target elements should have accessible roles, `true` by default */
   withRoles?: boolean;
+
+  /** If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen, `true` by default */
+  hideDetached?: boolean;
 }
 
 export type PopoverFactory = Factory<{
@@ -178,6 +181,7 @@ const defaultProps: Partial<PopoverProps> = {
   withRoles: true,
   returnFocus: false,
   withOverlay: false,
+  hideDetached: true,
   clickOutsideEvents: ['mousedown', 'touchstart'],
   zIndex: getDefaultZIndex('popover'),
   __staticSelector: 'Popover',
@@ -237,6 +241,7 @@ export function Popover(_props: PopoverProps) {
     floatingStrategy,
     withOverlay,
     overlayProps,
+    hideDetached,
     ...others
   } = props;
 
@@ -352,6 +357,9 @@ export function Popover(_props: PopoverProps) {
         getStyles,
         resolvedStyles,
         floatingStrategy,
+        referenceHidden: hideDetached
+          ? popover.floating.middlewareData.hide?.referenceHidden
+          : false,
       }}
     >
       {children}

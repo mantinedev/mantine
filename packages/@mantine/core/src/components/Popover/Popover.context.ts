@@ -54,6 +54,7 @@ interface PopoverContext {
   getStyles: GetStylesApi<PopoverFactory>;
   resolvedStyles: Record<string, any>;
   floatingStrategy: FloatingStrategy | undefined;
+  referenceHidden: boolean | undefined;
 }
 
 export const [PopoverContextProvider, usePopoverContext] = createSafeContext<PopoverContext>(

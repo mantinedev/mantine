@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import {
   arrow,
   flip,
+  hide,
   inline,
   limitShift,
   Middleware,
@@ -59,7 +60,7 @@ function getPopoverMiddlewares(
   getFloating: () => UseFloatingReturn<Element>
 ) {
   const middlewaresOptions = getDefaultMiddlewares(options.middlewares);
-  const middlewares: Middleware[] = [offset(options.offset)];
+  const middlewares: Middleware[] = [offset(options.offset), hide()];
 
   if (middlewaresOptions.shift) {
     middlewares.push(
