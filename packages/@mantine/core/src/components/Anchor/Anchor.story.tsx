@@ -13,6 +13,10 @@ export function Usage() {
         Mantine website link: hover
       </Anchor>
       <br />
+      <Anchor href="https://mantine.dev" target="blank" underline="not-hover">
+        Mantine website link: not hover
+      </Anchor>
+      <br />
       <Anchor href="https://mantine.dev" target="blank" underline="always">
         Mantine website link: always
       </Anchor>
