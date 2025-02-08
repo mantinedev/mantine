@@ -50,4 +50,17 @@ describe('@mantine/core/get-gradient', () => {
       )
     ).toStrictEqual('linear-gradient(90deg, #FEFEFE 0%, #CDCDCD 100%)');
   });
+
+  it('sets deg to 0', () => {
+    expect(
+      getGradient(
+        {
+          from: '#FEFEFE',
+          to: '#CDCDCD',
+          deg: 0,
+        },
+        DEFAULT_THEME
+      )
+    ).toStrictEqual('linear-gradient(0deg, #FEFEFE 0%, #CDCDCD 100%)');
+  });
 });

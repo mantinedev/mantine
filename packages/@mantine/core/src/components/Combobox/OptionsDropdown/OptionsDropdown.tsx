@@ -151,7 +151,7 @@ export function OptionsDropdown({
   ));
 
   return (
-    <Combobox.Dropdown hidden={hidden || (hiddenWhenEmpty && isEmpty)}>
+    <Combobox.Dropdown hidden={hidden || (hiddenWhenEmpty && isEmpty)} data-composed>
       <Combobox.Options labelledBy={labelId} aria-label={ariaLabel}>
         {withScrollArea ? (
           <ScrollArea.Autosize

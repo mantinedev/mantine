@@ -306,6 +306,7 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
         tabIndex={-1}
         onClick={() => handleScroll(index)}
         data-orientation={orientation}
+        onMouseDown={(event) => event.preventDefault()}
       />
     ));
 

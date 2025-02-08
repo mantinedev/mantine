@@ -9,6 +9,7 @@ export const ROLLUP_EXCLUDE_USE_CLIENT = [
   'core/MantineProvider/create-theme/create-theme',
   'core/MantineProvider/color-functions/darken/darken',
   'core/MantineProvider/color-functions/lighten/lighten',
+  'core/MantineProvider/color-functions/luminance/luminance',
   'core/MantineProvider/color-functions/rgba/rgba',
   'core/MantineProvider/color-functions/to-rgba/to-rgba',
   'core/MantineProvider/default-colors',
