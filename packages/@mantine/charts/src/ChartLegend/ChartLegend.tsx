@@ -16,11 +16,11 @@ import classes from './ChartLegend.module.css';
 function updateChartLegendPayload(payload: Record<string, any>[]): Record<string, any>[] {
   return payload.map((item) => {
     const newDataKey = item.dataKey;
-    const labelName = item.dataKey?.split('.').pop();
+    const label = item.dataKey?.split('.').pop();
 
     return {
       ...item,
-      labelName,
+      label,
       payload: {
         ...item.payload,
         name: newDataKey,
@@ -118,7 +118,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
         {...getStyles('legendItemColor')}
         withShadow={false}
       />
-      <p {...getStyles('legendItemName')}>{labels[item.labelName] || item.labelName}</p>
+      <p {...getStyles('legendItemName')}>{labels[item.label] || item.label}</p>
     </div>
   ));
 
