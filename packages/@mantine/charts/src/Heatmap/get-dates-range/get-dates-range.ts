@@ -18,7 +18,7 @@ function startOfWeek(date: Date, firstDayOfWeek: number): Date {
 function endOfWeek(date: Date, firstDayOfWeek: number): Date {
   const day = date.getDay();
   const diff = (day < firstDayOfWeek ? 7 : 0) + day - firstDayOfWeek;
-  return addDays(date, 6 - (diff - 1));
+  return addDays(date, 6 - diff);
 }
 
 interface HeatmapOptions {
