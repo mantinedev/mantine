@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -7,6 +8,7 @@ import {
   Factory,
   StylesApiProps,
   Tooltip,
+  TooltipFloatingProps,
   useProps,
   useStyles,
 } from '@mantine/core';
@@ -86,6 +88,9 @@ export interface HeatmapProps
 
   /** If set, tooltip is displayed on rect hover, `false` by default */
   withTooltip?: boolean;
+
+  /** Props passed down to the `Tooltip.Floating` component */
+  tooltipProps?: Partial<TooltipFloatingProps>;
 }
 
 export type HeatmapFactory = Factory<{
@@ -148,6 +153,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
     fontSize,
     getTooltipLabel,
     withTooltip,
+    tooltipProps,
     ...others
   } = props;
 
@@ -164,6 +170,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
     varsResolver,
   });
 
+  const [hoveredRect, setHoveredRect] = useState<HeatmapTooltipLabelInput | null>(null);
   const rectSizeWithGap = rectSize + gap;
   const weekdaysOffset = withWeekdayLabels ? weekdaysLabelsWidth! : 0;
   const monthsOffset = withMonthLabels ? monthsLabelsHeight! : 0;
@@ -195,6 +202,9 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
           data-empty={!hasValue || undefined}
           fill={
             hasValue ? getHeatColor({ value: data[date], min, max, colors: colors! }) : undefined
+          }
+          onPointerEnter={
+            withTooltip ? () => setHoveredRect({ date, value: data[date] }) : undefined
           }
           {...getStyles('rect')}
         />
@@ -250,23 +260,36 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
         ))
       : null;
 
+  const label = getTooltipLabel && hoveredRect && withTooltip ? getTooltipLabel(hoveredRect) : null;
+
   return (
-    <Tooltip.Floating label="test" disabled={!withTooltip} position="top">
-      <Box
-        component="svg"
-        ref={ref}
-        width={rectSizeWithGap * datesRange.length + gap + weekdaysOffset}
-        height={rectSizeWithGap * 7 + gap + monthsOffset}
-        {...getStyles('root')}
-        {...others}
+    <Box
+      component="svg"
+      ref={ref}
+      width={rectSizeWithGap * datesRange.length + gap + weekdaysOffset}
+      height={rectSizeWithGap * 7 + gap + monthsOffset}
+      {...getStyles('root')}
+      {...others}
+    >
+      <Tooltip.Floating
+        label={label}
+        disabled={!withTooltip || !label}
+        position="top"
+        {...tooltipProps}
       >
         <g transform={`translate(${weekdaysOffset}, ${monthsOffset})`} data-id="all-weeks">
+          {/* Required for tooltip to remain visible while gaps between rects are hovered */}
+          <rect
+            fill="transparent"
+            width={rectSizeWithGap * datesRange.length + gap}
+            height={rectSizeWithGap * 7 + gap}
+          />
           {weeks}
         </g>
-        {weekdayLabelsNodes}
-        {monthsLabelsNodes}
-      </Box>
-    </Tooltip.Floating>
+      </Tooltip.Floating>
+      {weekdayLabelsNodes}
+      {monthsLabelsNodes}
+    </Box>
   );
 });
 

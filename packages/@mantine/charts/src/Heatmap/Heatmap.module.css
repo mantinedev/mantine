@@ -18,7 +18,6 @@
 }
 
 .rect {
-  stroke: var(--heatmap-stroke-color, transparent);
   stroke-width: 1px;
 
   @mixin where-light {
@@ -32,19 +31,11 @@
   &:where([data-empty]) {
     fill: var(--heatmap-empty-rect-bg);
   }
-
-  @mixin hover {
-    @mixin where-light {
-      --heatmap-stroke-color: var(--mantine-color-gray-5);
-    }
-
-    @mixin where-dark {
-      --heatmap-stroke-color: var(--mantine-color-dark-3);
-    }
-  }
 }
 
 .monthLabel,
 .weekdayLabel {
+  cursor: default;
+  user-select: none;
   fill: var(--mantine-color-dimmed);
 }

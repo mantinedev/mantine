@@ -37,7 +37,15 @@ export function Usage() {
 export function WithTooltip() {
   return (
     <div style={{ margin: 40, border: '1px solid pink', width: 'fit-content' }}>
-      <Heatmap data={convertedRandomValues} rectSize={12} gap={1} withTooltip />
+      <Heatmap
+        data={convertedRandomValues}
+        rectSize={20}
+        gap={3}
+        withTooltip
+        getTooltipLabel={({ date, value }) => `${date} – ${value || 0} contributions`}
+        withWeekdayLabels
+        withMonthLabels
+      />
     </div>
   );
 }
