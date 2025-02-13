@@ -1,0 +1,50 @@
+.root {
+  display: block;
+  width: fit-content;
+
+  @mixin where-light {
+    --heatmap-level-1: rgba(81, 207, 102, 0.3);
+    --heatmap-level-2: rgba(64, 192, 87, 0.45);
+    --heatmap-level-3: rgba(55, 178, 77, 0.75);
+    --heatmap-level-4: rgba(43, 138, 62, 1);
+  }
+
+  @mixin where-dark {
+    --heatmap-level-1: rgba(43, 138, 62, 0.3);
+    --heatmap-level-2: rgba(47, 158, 68, 0.45);
+    --heatmap-level-3: rgba(55, 178, 77, 0.75);
+    --heatmap-level-4: rgba(81, 207, 102, 1);
+  }
+}
+
+.rect {
+  stroke: var(--heatmap-stroke-color, transparent);
+  stroke-width: 1px;
+
+  @mixin where-light {
+    --heatmap-empty-rect-bg: var(--mantine-color-gray-2);
+  }
+
+  @mixin where-dark {
+    --heatmap-empty-rect-bg: var(--mantine-color-dark-5);
+  }
+
+  &:where([data-empty]) {
+    fill: var(--heatmap-empty-rect-bg);
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      --heatmap-stroke-color: var(--mantine-color-gray-5);
+    }
+
+    @mixin where-dark {
+      --heatmap-stroke-color: var(--mantine-color-dark-3);
+    }
+  }
+}
+
+.monthLabel,
+.weekdayLabel {
+  fill: var(--mantine-color-dimmed);
+}
