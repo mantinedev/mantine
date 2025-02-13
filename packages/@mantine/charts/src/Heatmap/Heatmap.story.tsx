@@ -33,3 +33,11 @@ export function Usage() {
     </div>
   );
 }
+
+export function WithTooltip() {
+  return (
+    <div style={{ margin: 40, border: '1px solid pink', width: 'fit-content' }}>
+      <Heatmap data={convertedRandomValues} rectSize={12} gap={1} withTooltip />
+    </div>
+  );
+}

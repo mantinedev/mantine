@@ -6,6 +6,7 @@ import {
   factory,
   Factory,
   StylesApiProps,
+  Tooltip,
   useProps,
   useStyles,
 } from '@mantine/core';
@@ -19,6 +20,11 @@ export type HeatmapStylesNames = 'root' | 'rect' | 'weekdayLabel' | 'monthLabel'
 export type HeatmapCssVariables = {
   root: '--test';
 };
+
+interface HeatmapTooltipLabelInput {
+  date: string;
+  value: number | null;
+}
 
 export interface HeatmapProps
   extends BoxProps,
@@ -74,6 +80,12 @@ export interface HeatmapProps
 
   /** Font size of month and weekday labels, `12` by default */
   fontSize?: number;
+
+  /** A function to generate tooltip label based on the hovered rect date and value, required for the tooltip to be visible */
+  getTooltipLabel?: (input: HeatmapTooltipLabelInput) => React.ReactNode;
+
+  /** If set, tooltip is displayed on rect hover, `false` by default */
+  withTooltip?: boolean;
 }
 
 export type HeatmapFactory = Factory<{
@@ -134,6 +146,8 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
     weekdaysLabelsWidth,
     monthsLabelsHeight,
     fontSize,
+    getTooltipLabel,
+    withTooltip,
     ...others
   } = props;
 
@@ -237,20 +251,22 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
       : null;
 
   return (
-    <Box
-      component="svg"
-      ref={ref}
-      width={rectSizeWithGap * datesRange.length + gap + weekdaysOffset}
-      height={rectSizeWithGap * 7 + gap + monthsOffset}
-      {...getStyles('root')}
-      {...others}
-    >
-      <g transform={`translate(${weekdaysLabelsWidth}, ${monthsOffset})`} data-id="all-weeks">
-        {weeks}
-      </g>
-      {weekdayLabelsNodes}
-      {monthsLabelsNodes}
-    </Box>
+    <Tooltip.Floating label="test" disabled={!withTooltip} position="top">
+      <Box
+        component="svg"
+        ref={ref}
+        width={rectSizeWithGap * datesRange.length + gap + weekdaysOffset}
+        height={rectSizeWithGap * 7 + gap + monthsOffset}
+        {...getStyles('root')}
+        {...others}
+      >
+        <g transform={`translate(${weekdaysOffset}, ${monthsOffset})`} data-id="all-weeks">
+          {weeks}
+        </g>
+        {weekdayLabelsNodes}
+        {monthsLabelsNodes}
+      </Box>
+    </Tooltip.Floating>
   );
 });
 
