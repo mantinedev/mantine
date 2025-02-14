@@ -14,7 +14,7 @@ export default Layout(MDX_DATA.useClickOutside);
 
 - `handler` – function that is called on outside click
 - `events` – optional list of events that trigger outside click, `['mousedown', 'touchstart']` by default
-- `nodes` - optional list of nodes that should not trigger outside click event
+- `excludedNodes` - optional list of nodes that should not trigger outside click event
 
 The hook returns a `ref` object that must be passed to the element
 based on which outside clicks should be captured.
@@ -84,6 +84,6 @@ const ref = useClickOutside<HTMLDivElement>(() =>
 function useClickOutside<T extends HTMLElement = any>(
   handler: () => void,
   events?: string[] | null,
-  nodes?: HTMLElement[]
+  excludedNodes?: HTMLElement[]
 ): React.MutableRefObject<T>;
 ```

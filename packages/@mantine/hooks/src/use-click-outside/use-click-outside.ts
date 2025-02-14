@@ -1,34 +1,44 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const DEFAULT_EVENTS = ['mousedown', 'touchstart'];
 
 export function useClickOutside<T extends HTMLElement = any>(
   handler: () => void,
   events?: string[] | null,
-  nodes?: (HTMLElement | null)[]
+  excludedNodes?: (HTMLElement | null)[]
 ) {
-  const ref = useRef<T>(null);
+  const [node, setNode] = useState<T | null>(null);
+
+  const listener = useCallback((event: Event) => {
+    const { target } = event ?? {};
+
+    if (Array.isArray(excludedNodes)) {
+      const shouldIgnore =
+        (target as Element)?.hasAttribute?.('data-ignore-outside-clicks') ||
+        (!document.body.contains(target as Node) && (target as Element)?.tagName !== 'HTML');
+
+      const shouldTrigger = excludedNodes.every((excludedNode) => (
+        !!excludedNode && !event.composedPath().includes(excludedNode)
+        )
+      );
+
+      shouldTrigger && !shouldIgnore && handler();
+    } else if (node && !node.contains(target as Node)) {
+      handler();
+    }
+  }, [node, handler, excludedNodes]);
 
   useEffect(() => {
-    const listener = (event: any) => {
-      const { target } = event ?? {};
-      if (Array.isArray(nodes)) {
-        const shouldIgnore =
-          target?.hasAttribute('data-ignore-outside-clicks') ||
-          (!document.body.contains(target) && target.tagName !== 'HTML');
-        const shouldTrigger = nodes.every((node) => !!node && !event.composedPath().includes(node));
-        shouldTrigger && !shouldIgnore && handler();
-      } else if (ref.current && !ref.current.contains(target)) {
-        handler();
-      }
-    };
-
-    (events || DEFAULT_EVENTS).forEach((fn) => document.addEventListener(fn, listener));
+    (events || DEFAULT_EVENTS).forEach((eventName) => {
+      document.addEventListener(eventName, listener);
+    });
 
     return () => {
-      (events || DEFAULT_EVENTS).forEach((fn) => document.removeEventListener(fn, listener));
+      (events || DEFAULT_EVENTS).forEach((eventName) => {
+        document.removeEventListener(eventName, listener);
+      });
     };
-  }, [ref, handler, nodes]);
+  }, [listener, events]);
 
-  return ref;
+  return setNode;
 }
