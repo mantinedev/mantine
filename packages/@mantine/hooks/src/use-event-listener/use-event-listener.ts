@@ -1,21 +1,31 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useRef, type RefCallback } from 'react';
 
 export function useEventListener<K extends keyof HTMLElementEventMap, T extends HTMLElement = any>(
   type: K,
-  listener: (this: HTMLDivElement, ev: HTMLElementEventMap[K]) => any,
+  listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any,
   options?: boolean | AddEventListenerOptions
 ) {
-  const ref = useRef<T>(null);
+  const cleanupAbortControllerRef = useRef<AbortController>(null);
 
-  useEffect(() => {
-    const node = ref.current;
+  const onRefChange: RefCallback<T> = useCallback((node) => {
+    cleanupAbortControllerRef.current?.abort();
 
-    if (node) {
-      node.addEventListener(type, listener as any, options);
-      return () => node?.removeEventListener(type, listener as any, options);
+    cleanupAbortControllerRef.current = new AbortController();
+    const {signal, abort} = cleanupAbortControllerRef.current;
+
+    let parsedOptions = {};
+
+    if (options && typeof options === 'object') {
+      options.signal?.addEventListener('abort', abort);
+      parsedOptions = { ...options, signal };
     }
-    return undefined;
-  }, [listener, options]);
+    else if (typeof options === 'boolean') {
+      parsedOptions = { capture: options };
+    }
 
-  return ref;
+
+    node?.addEventListener(type, listener, parsedOptions);
+  }, [type, listener, options]);
+
+  return onRefChange;
 }
