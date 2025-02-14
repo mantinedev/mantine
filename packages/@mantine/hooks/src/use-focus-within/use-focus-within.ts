@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState, type RefCallback } from 'react';
 
 export interface UseFocusWithinOptions {
   onFocus?: (event: FocusEvent) => void;
@@ -16,10 +16,11 @@ function containsRelatedTarget(event: FocusEvent) {
 export function useFocusWithin<T extends HTMLElement = any>({
   onBlur,
   onFocus,
-}: UseFocusWithinOptions = {}): { ref: React.RefObject<T>; focused: boolean } {
-  const ref = useRef<T>(null);
+}: UseFocusWithinOptions = {}) {
   const [focused, setFocused] = useState(false);
   const focusedRef = useRef(false);
+
+  const cleanupAbortControllerRef = useRef<AbortController>(null);
 
   const _setFocused = (value: boolean) => {
     setFocused(value);
@@ -40,21 +41,15 @@ export function useFocusWithin<T extends HTMLElement = any>({
     }
   };
 
-  useEffect(() => {
-    const node = ref.current;
+  const onRefChange: RefCallback<T> = useCallback((node) => {
+    cleanupAbortControllerRef.current?.abort();
 
-    if (node) {
-      node.addEventListener('focusin', handleFocusIn);
-      node.addEventListener('focusout', handleFocusOut);
+    cleanupAbortControllerRef.current = new AbortController();
+    const {signal} = cleanupAbortControllerRef.current;
 
-      return () => {
-        node?.removeEventListener('focusin', handleFocusIn);
-        node?.removeEventListener('focusout', handleFocusOut);
-      };
-    }
-
-    return undefined;
+    node?.addEventListener('focusin', handleFocusIn, { signal });
+    node?.addEventListener('focusout', handleFocusOut, { signal });
   }, [handleFocusIn, handleFocusOut]);
 
-  return { ref: ref as React.RefObject<T>, focused };
+  return { ref: onRefChange, focused };
 }
