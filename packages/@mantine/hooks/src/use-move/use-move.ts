@@ -68,7 +68,7 @@ export function useMove<T extends HTMLElement = any>(
     const startScrubbing = () => {
       if (!isSliding.current) {
         isSliding.current = true;
-        typeof handlers?.onScrubStart === 'function' && handlers.onScrubStart();
+        handlers?.onScrubStart?.();
         setActive(true);
         bindEvents();
       }
@@ -80,7 +80,7 @@ export function useMove<T extends HTMLElement = any>(
         setActive(false);
         unbindEvents();
         setTimeout(() => {
-          typeof handlers?.onScrubEnd === 'function' && handlers.onScrubEnd();
+           handlers?.onScrubEnd?.();
         }, 0);
       }
     };
