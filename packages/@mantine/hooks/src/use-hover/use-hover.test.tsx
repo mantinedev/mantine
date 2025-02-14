@@ -39,8 +39,8 @@ describe('@mantine/hooks/use-hover', () => {
   });
 
   it('changes `hovered` when element was unmounted at first', async () => {
-    const {rerender} = render(<AppearingTarget showDiv={false} />);
-    rerender(<AppearingTarget showDiv />);
+    const {rerender} = render(<AppearingTarget showTarget={false} />);
+    rerender(<AppearingTarget showTarget />);
 
     const target = screen.getByTestId('target');
     expect(target).toHaveTextContent('false');
