@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState, type RefCallback } from 'react';
 import { clamp } from '../utils';
 
 export interface UseMovePosition {
@@ -23,34 +23,30 @@ export function useMove<T extends HTMLElement = any>(
   handlers?: useMoveHandlers,
   dir: 'ltr' | 'rtl' = 'ltr'
 ) {
-  const ref = useRef<T>(null);
-  const mounted = useRef<boolean>(false);
   const isSliding = useRef(false);
   const frame = useRef(0);
   const [active, setActive] = useState(false);
 
-  useEffect(() => {
-    mounted.current = true;
-  }, []);
+  const cleanupAbortControllerRef = useRef<AbortController>(null);
 
-  useEffect(() => {
-    const node = ref.current;
-
+  const onRefChange: RefCallback<T> = useCallback((node) => {
     const onScrub = ({ x, y }: UseMovePosition) => {
       cancelAnimationFrame(frame.current);
 
       frame.current = requestAnimationFrame(() => {
-        if (mounted.current && node) {
-          node.style.userSelect = 'none';
-          const rect = node.getBoundingClientRect();
+        if (!node) {
+          return;
+        }
 
-          if (rect.width && rect.height) {
-            const _x = clamp((x - rect.left) / rect.width, 0, 1);
-            onChange({
-              x: dir === 'ltr' ? _x : 1 - _x,
-              y: clamp((y - rect.top) / rect.height, 0, 1),
-            });
-          }
+        node.style.userSelect = 'none';
+        const rect = node.getBoundingClientRect();
+
+        if (rect.width && rect.height) {
+          const _x = clamp((x - rect.left) / rect.width, 0, 1);
+          onChange({
+            x: dir === 'ltr' ? _x : 1 - _x,
+            y: clamp((y - rect.top) / rect.height, 0, 1),
+          });
         }
       });
     };
@@ -70,7 +66,7 @@ export function useMove<T extends HTMLElement = any>(
     };
 
     const startScrubbing = () => {
-      if (!isSliding.current && mounted.current) {
+      if (!isSliding.current) {
         isSliding.current = true;
         typeof handlers?.onScrubStart === 'function' && handlers.onScrubStart();
         setActive(true);
@@ -79,7 +75,7 @@ export function useMove<T extends HTMLElement = any>(
     };
 
     const stopScrubbing = () => {
-      if (isSliding.current && mounted.current) {
+      if (isSliding.current) {
         isSliding.current = false;
         setActive(false);
         unbindEvents();
@@ -114,16 +110,16 @@ export function useMove<T extends HTMLElement = any>(
       onScrub({ x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY });
     };
 
-    node?.addEventListener('mousedown', onMouseDown);
-    node?.addEventListener('touchstart', onTouchStart, { passive: false });
+    cleanupAbortControllerRef.current?.abort();
 
-    return () => {
-      if (node) {
-        node.removeEventListener('mousedown', onMouseDown);
-        node.removeEventListener('touchstart', onTouchStart);
-      }
-    };
+    const controller = new AbortController();
+    const {signal} = controller;
+
+    node?.addEventListener('mousedown', onMouseDown, { signal });
+    node?.addEventListener('touchstart', onTouchStart, { signal, passive: false });
+
+    cleanupAbortControllerRef.current = controller;
   }, [dir, onChange]);
 
-  return { ref, active };
+  return { ref: onRefChange, active };
 }
