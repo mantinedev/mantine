@@ -88,11 +88,17 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props, ref) => 
               {...accessibleProps}
               {...others}
               variant={variant}
-              onKeyDownCapture={closeOnEscape(ctx.onClose, {
-                active: ctx.closeOnEscape,
-                onTrigger: returnFocus,
-                onKeyDown: onKeyDownCapture,
-              })}
+              onKeyDownCapture={closeOnEscape(
+                () => {
+                  ctx.onClose?.();
+                  ctx.onDismiss?.();
+                },
+                {
+                  active: ctx.closeOnEscape,
+                  onTrigger: returnFocus,
+                  onKeyDown: onKeyDownCapture,
+                }
+              )}
               data-position={ctx.placement}
               data-fixed={ctx.floatingStrategy === 'fixed' || undefined}
               {...ctx.getStyles('dropdown', {

@@ -149,6 +149,34 @@ events, for example, `mouseup` and `touchend`:
 
 <Demo data={PopoverDemos.clickOutsideEvents} />
 
+## onDismiss
+
+If you need to control opened state, but still want to close popover on outside clicks
+and escape key presses, use `onDismiss` prop:
+
+```tsx
+import { useState } from 'react';
+import { Button, Popover } from '@mantine/core';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+  return (
+    <Popover
+      opened={opened}
+      onDismiss={() => setOpened(false)}
+    >
+      <Popover.Target>
+        <Button onClick={() => setOpened((o) => !o)}>
+          Toggle popover
+        </Button>
+      </Popover.Target>
+
+      <Popover.Dropdown>Dropdown</Popover.Dropdown>
+    </Popover>
+  );
+}
+```
+
 ## Initial focus
 
 Popover uses [FocusTrap](/core/focus-trap/) component to manage focus.
