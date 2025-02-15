@@ -13,12 +13,14 @@ function randomNumber(min: number, max: number) {
 function generateRandomValues(count: number, date = new Date()) {
   return Array.from({ length: count }, (_, i) => i).reduce((acc, index) => {
     acc[shiftDate(date, -index).toISOString().split('T')[0]] =
-      Math.random() > 0.45 ? null : randomNumber(1, 4);
+      Math.random() > 0.55 ? null : randomNumber(1, 4);
     return acc;
   }, {} as any);
 }
 
 const convertedRandomValues = generateRandomValues(365);
+
+console.log(convertedRandomValues);
 
 export function Usage() {
   return (

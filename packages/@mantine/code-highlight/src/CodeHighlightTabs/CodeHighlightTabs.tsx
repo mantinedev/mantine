@@ -38,9 +38,6 @@ export type CodeHighlightTabsStylesNames =
   | 'fileIcon'
   | 'filesScrollarea'
   | CodeHighlightStylesNames;
-export type CodeHighlightTabsCssVariables = {
-  root: '--test';
-};
 
 export interface CodeHighlightTabsProps
   extends CodeHighlightSettings,

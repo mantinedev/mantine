@@ -19,6 +19,7 @@
     "value-keyword-case": null,
     "media-feature-range-notation": null,
     "color-hex-length": null,
+    "scss/no-global-function-names": null,
     "selector-pseudo-class-no-unknown": [
       true,
       {

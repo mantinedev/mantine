@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   BoxProps,
   CloseButtonProps,
-  createVarsResolver,
   DataAttributes,
   ElementProps,
   factory,
@@ -19,9 +18,6 @@ import classes from './DateInputMask.module.css';
 
 export type DateInputMaskStylesNames = 'fieldsRoot';
 export type DateInputMaskVariant = string;
-export type DateInputMaskCssVariables = {
-  root: '--test';
-};
 
 export interface DateInputMaskProps
   extends BoxProps,
@@ -101,17 +97,10 @@ export type DateInputMaskFactory = Factory<{
   props: DateInputMaskProps;
   ref: HTMLDivElement;
   stylesNames: DateInputMaskStylesNames;
-  vars: DateInputMaskCssVariables;
   variant: DateInputMaskVariant;
 }>;
 
 const defaultProps: Partial<DateInputMaskProps> = {};
-
-const varsResolver = createVarsResolver<DateInputMaskFactory>(() => ({
-  root: {
-    '--test': 'test',
-  },
-}));
 
 export const DateInputMask = factory<DateInputMaskFactory>((_props, ref) => {
   const props = useProps('DateInputMask', defaultProps, _props);
@@ -167,7 +156,6 @@ export const DateInputMask = factory<DateInputMaskFactory>((_props, ref) => {
     styles,
     unstyled,
     vars,
-    varsResolver,
   });
 
   // const hasFocusRef = useRef(false);

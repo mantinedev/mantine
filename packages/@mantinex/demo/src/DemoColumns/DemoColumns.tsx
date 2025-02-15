@@ -19,6 +19,7 @@ export function DemoColumns({
   controls,
   dimmed,
   striped,
+  overflow,
 }: DemoColumnsProps) {
   return (
     <div className={classes.root}>
@@ -30,6 +31,7 @@ export function DemoColumns({
           centered={centered}
           dimmed={dimmed}
           striped={striped}
+          overflow={overflow}
         >
           {children}
         </DemoArea>

@@ -26,7 +26,6 @@ export type {
   CodeHighlightTabsCode,
   CodeHighlightTabsProps,
   CodeHighlightTabsStylesNames,
-  CodeHighlightTabsCssVariables,
   CodeHighlightTabsFactory,
   CodeHighlightDefaultLanguage,
 } from './CodeHighlightTabs/CodeHighlightTabs';

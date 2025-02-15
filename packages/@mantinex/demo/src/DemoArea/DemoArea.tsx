@@ -9,10 +9,12 @@ export interface DemoAreaProps {
   minHeight?: number | string;
   dimmed?: boolean;
   striped?: boolean;
+  overflow?: 'hidden' | 'auto';
 }
 
 export function DemoArea({
   withPadding = true,
+  overflow,
   centered,
   maxWidth,
   minHeight,
@@ -23,6 +25,7 @@ export function DemoArea({
   return (
     <Box
       className={classes.demo}
+      style={{ overflow }}
       mod={{ 'with-padding': withPadding, centered, dimmed, striped }}
       __vars={{
         '--demo-flex': maxWidth ? '1' : undefined,

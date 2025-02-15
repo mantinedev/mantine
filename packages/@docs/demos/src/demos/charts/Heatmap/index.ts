@@ -1,0 +1,10 @@
+export { usage } from './Heatmap.demo.usage';
+export { labels } from './Heatmap.demo.labels';
+export { labelsText } from './Heatmap.demo.labelsText';
+export { rectSize } from './Heatmap.demo.rectSize';
+export { tooltip } from './Heatmap.demo.tooltip';
+export { withOutsideDates } from './Heatmap.demo.withOutsideDates';
+export { firstDayOfWeek } from './Heatmap.demo.firstDayOfWeek';
+export { getRectProps } from './Heatmap.demo.getRectProps';
+export { colors } from './Heatmap.demo.colors';
+export { cssColors } from './Heatmap.demo.cssColors';

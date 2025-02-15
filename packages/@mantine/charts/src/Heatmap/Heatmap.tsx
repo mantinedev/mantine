@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   Box,
   BoxProps,
-  createVarsResolver,
   ElementProps,
   factory,
   Factory,
@@ -16,14 +15,12 @@ import { getBoundaries } from './get-boundaries/get-boundaries';
 import { getDatesRange } from './get-dates-range/get-dates-range';
 import { getHeatColor } from './get-heat-color/get-heat-color';
 import { getMonthsRange } from './get-months-range/get-months-range';
+import { rotateWeekdaysNames } from './rotate-weekdays-names/rotate-weekdays-names';
 import classes from './Heatmap.module.css';
 
 export type HeatmapStylesNames = 'root' | 'rect' | 'weekdayLabel' | 'monthLabel';
-export type HeatmapCssVariables = {
-  root: '--test';
-};
 
-interface HeatmapTooltipLabelInput {
+interface HeatmapRectData {
   date: string;
   value: number | null;
 }
@@ -84,25 +81,27 @@ export interface HeatmapProps
   fontSize?: number;
 
   /** A function to generate tooltip label based on the hovered rect date and value, required for the tooltip to be visible */
-  getTooltipLabel?: (input: HeatmapTooltipLabelInput) => React.ReactNode;
+  getTooltipLabel?: (input: HeatmapRectData) => React.ReactNode;
 
   /** If set, tooltip is displayed on rect hover, `false` by default */
   withTooltip?: boolean;
 
   /** Props passed down to the `Tooltip.Floating` component */
   tooltipProps?: Partial<TooltipFloatingProps>;
+
+  /** Props passed down to each rect depending on its date and associated value */
+  getRectProps?: (input: HeatmapRectData) => React.ComponentPropsWithoutRef<'rect'>;
 }
 
 export type HeatmapFactory = Factory<{
   props: HeatmapProps;
   ref: SVGSVGElement;
   stylesNames: HeatmapStylesNames;
-  vars: HeatmapCssVariables;
 }>;
 
 const defaultProps: Partial<HeatmapProps> = {
   monthLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-  weekdayLabels: ['Mon', '', 'Wed', '', 'Fri', '', 'Sun'],
+  weekdayLabels: ['Sun', 'Mon', '', 'Wed', '', 'Fri', ''],
   withOutsideDates: true,
   firstDayOfWeek: 1,
   rectSize: 10,
@@ -118,12 +117,6 @@ const defaultProps: Partial<HeatmapProps> = {
     'var(--heatmap-level-4)',
   ],
 };
-
-const varsResolver = createVarsResolver<HeatmapFactory>(() => ({
-  root: {
-    '--test': 'test',
-  },
-}));
 
 export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
   const props = useProps('Heatmap', defaultProps, _props);
@@ -154,6 +147,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
     getTooltipLabel,
     withTooltip,
     tooltipProps,
+    getRectProps,
     ...others
   } = props;
 
@@ -167,14 +161,17 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
     styles,
     unstyled,
     vars,
-    varsResolver,
   });
 
-  const [hoveredRect, setHoveredRect] = useState<HeatmapTooltipLabelInput | null>(null);
+  const [hoveredRect, setHoveredRect] = useState<HeatmapRectData | null>(null);
   const rectSizeWithGap = rectSize + gap;
   const weekdaysOffset = withWeekdayLabels ? weekdaysLabelsWidth! : 0;
   const monthsOffset = withMonthLabels ? monthsLabelsHeight! : 0;
   const [min, max] = getBoundaries({ data, domain });
+  const rotatedWeekdayLabels = useMemo(
+    () => rotateWeekdaysNames(weekdayLabels!, firstDayOfWeek!),
+    [weekdayLabels, firstDayOfWeek]
+  );
 
   const datesRange = getDatesRange({
     startDate,
@@ -190,6 +187,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
       }
 
       const hasValue = date in data && data[date] !== null;
+      const rectValue = hasValue ? data[date] : null;
 
       return (
         <rect
@@ -204,8 +202,9 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
             hasValue ? getHeatColor({ value: data[date], min, max, colors: colors! }) : undefined
           }
           onPointerEnter={
-            withTooltip ? () => setHoveredRect({ date, value: data[date] }) : undefined
+            withTooltip ? () => setHoveredRect({ date, value: rectValue }) : undefined
           }
+          {...getRectProps?.({ date, value: rectValue })}
           {...getStyles('rect')}
         />
       );
@@ -233,7 +232,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
             <text
               key={monthIndex}
               x={month.position * rectSizeWithGap + gap + weekdaysOffset}
-              y={monthsLabelsHeight! - gap - 3}
+              y={monthsLabelsHeight! - 4}
               width={month.size * rectSizeWithGap}
               fontSize={fontSize}
               {...getStyles('monthLabel')}
@@ -246,7 +245,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
 
   const weekdayLabelsNodes =
     withWeekdayLabels && weekdayLabels
-      ? weekdayLabels.map((weekdayLabel, dayIndex) => (
+      ? rotatedWeekdayLabels.map((weekdayLabel, dayIndex) => (
           <text
             key={dayIndex}
             x={0}
@@ -279,11 +278,13 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
       >
         <g transform={`translate(${weekdaysOffset}, ${monthsOffset})`} data-id="all-weeks">
           {/* Required for tooltip to remain visible while gaps between rects are hovered */}
-          <rect
-            fill="transparent"
-            width={rectSizeWithGap * datesRange.length + gap}
-            height={rectSizeWithGap * 7 + gap}
-          />
+          {withTooltip && (
+            <rect
+              fill="transparent"
+              width={rectSizeWithGap * datesRange.length + gap}
+              height={rectSizeWithGap * 7 + gap}
+            />
+          )}
           {weeks}
         </g>
       </Tooltip.Floating>

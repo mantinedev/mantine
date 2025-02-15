@@ -1,0 +1,15 @@
+.root {
+  @mixin light {
+    --heatmap-level-1: var(--mantine-color-blue-2);
+    --heatmap-level-2: var(--mantine-color-blue-4);
+    --heatmap-level-3: var(--mantine-color-blue-6);
+    --heatmap-level-4: var(--mantine-color-blue-9);
+  }
+
+  @mixin dark {
+    --heatmap-level-1: alpha(var(--mantine-color-orange-6), 0.35);
+    --heatmap-level-2: alpha(var(--mantine-color-orange-6), 0.65);
+    --heatmap-level-3: var(--mantine-color-orange-6);
+    --heatmap-level-4: var(--mantine-color-yellow-4);
+  }
+}

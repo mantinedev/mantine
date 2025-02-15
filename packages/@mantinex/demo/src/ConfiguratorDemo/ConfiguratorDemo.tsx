@@ -55,6 +55,7 @@ export function ConfiguratorDemo({
   withPadding,
   dimmed,
   striped,
+  overflow,
 }: ConfiguratorDemoProps) {
   const initialState = controls.reduce<Record<string, any>>((acc, control) => {
     acc[control.prop] = control.initialValue;
@@ -88,6 +89,7 @@ export function ConfiguratorDemo({
         minHeight={minHeight}
         dimmed={dimmed}
         striped={striped}
+        overflow={overflow}
       >
         {cloneElement(children as React.JSX.Element, state)}
       </DemoColumns>
