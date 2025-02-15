@@ -416,6 +416,7 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.BubbleChart,
       MDX_DATA.RadialBarChart,
       MDX_DATA.Sparkline,
+      MDX_DATA.Heatmap,
     ],
   },
 

@@ -142,4 +142,15 @@ export const MDX_CHARTS_DATA: Record<string, Frontmatter> = {
     source: '@mantine/charts/src/RadialBarChart/RadialBarChart.tsx',
     docs: 'charts/radial-bar-chart.mdx',
   },
+
+  Heatmap: {
+    title: 'Heatmap',
+    props: ['Heatmap'],
+    styles: ['Heatmap'],
+    package: '@mantine/charts',
+    slug: '/charts/heatmap',
+    description: 'Heatmap chart component',
+    source: '@mantine/charts/src/Heatmap/Heatmap.tsx',
+    docs: 'charts/heatmap.mdx',
+  },
 };

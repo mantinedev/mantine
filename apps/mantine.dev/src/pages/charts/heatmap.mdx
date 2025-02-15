@@ -1,0 +1,63 @@
+import { HeatmapDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Heatmap);
+
+## Usage
+
+<Demo data={HeatmapDemos.usage} />
+
+## Data format
+
+```tsx
+export const data = {
+  '2025-02-14': 2,
+  '2025-02-11': 3,
+  '2025-02-06': 4,
+  '2025-02-05': 1,
+  '2025-02-03': 2,
+  '2025-02-01': 2,
+  '2025-01-31': 4,
+  '2025-01-30': 2,
+  // ...
+};
+```
+
+## With tooltip
+
+<Demo data={HeatmapDemos.tooltip} />
+
+## Change colors
+
+<Demo data={HeatmapDemos.colors} />
+
+## Colors depending on color scheme
+
+<Demo data={HeatmapDemos.cssColors} />
+
+## Colors domain
+
+## Weekdays and months labels
+
+<Demo data={HeatmapDemos.labels} />
+
+## Change labels text
+
+<Demo data={HeatmapDemos.labelsText} />
+
+## Rect size, gap and radius
+
+<Demo data={HeatmapDemos.rectSize} />
+
+## Pass props to rect
+
+<Demo data={HeatmapDemos.getRectProps} />
+
+## Hide outside dates
+
+<Demo data={HeatmapDemos.withOutsideDates} />
+
+## First day of week
+
+<Demo data={HeatmapDemos.firstDayOfWeek} />

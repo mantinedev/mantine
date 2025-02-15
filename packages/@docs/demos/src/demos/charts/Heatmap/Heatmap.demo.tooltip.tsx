@@ -15,6 +15,8 @@ function Demo() {
       startDate="2024-02-16"
       endDate="2025-02-16"
       withTooltip
+      withWeekdayLabels
+      withMonthLabels
       getTooltipLabel={({ date, value }) =>
         \`\${dayjs(date).format('DD MMM, YYYY')} – \${value === null || value === 0 ? 'No contributions' : \`\${value} contribution\${value > 1 ? 's' : ''}\`}\`
       }
@@ -30,6 +32,8 @@ function Demo() {
       startDate="2024-02-16"
       endDate="2025-02-16"
       withTooltip
+      withWeekdayLabels
+      withMonthLabels
       getTooltipLabel={({ date, value }) =>
         `${dayjs(date).format('DD MMM, YYYY')} – ${value === null || value === 0 ? 'No contributions' : `${value} contribution${value > 1 ? 's' : ''}`}`
       }

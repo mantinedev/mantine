@@ -46,6 +46,7 @@ export * from './data/FloatingIndicator.styles-api';
 export * from './data/FunnelChart.styles-api';
 export * from './data/Grid.styles-api';
 export * from './data/Group.styles-api';
+export * from './data/Heatmap.styles-api';
 export * from './data/Highlight.styles-api';
 export * from './data/HoverCard.styles-api';
 export * from './data/Image.styles-api';
