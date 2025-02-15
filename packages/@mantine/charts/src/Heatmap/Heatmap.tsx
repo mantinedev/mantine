@@ -66,7 +66,7 @@ export interface HeatmapProps
   gap?: number;
 
   /** Rect radius in px, `2` by default */
-  radius?: number;
+  rectRadius?: number;
 
   /** Colors array, used to calculate color for each value, by default 4 shades of green colors are used */
   colors?: string[];
@@ -108,7 +108,7 @@ const defaultProps: Partial<HeatmapProps> = {
   weekdaysLabelsWidth: 30,
   monthsLabelsHeight: 14,
   gap: 1,
-  radius: 2,
+  rectRadius: 2,
   fontSize: 12,
   colors: [
     'var(--heatmap-level-1)',
@@ -138,7 +138,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
     firstDayOfWeek,
     rectSize = 10,
     gap = 1,
-    radius,
+    rectRadius,
     domain,
     colors,
     weekdaysLabelsWidth,
@@ -196,7 +196,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
           height={rectSize}
           x={gap}
           y={dayIndex * rectSizeWithGap + gap}
-          rx={radius}
+          rx={rectRadius}
           data-empty={!hasValue || undefined}
           fill={
             hasValue ? getHeatColor({ value: data[date], min, max, colors: colors! }) : undefined

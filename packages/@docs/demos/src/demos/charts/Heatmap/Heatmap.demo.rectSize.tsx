@@ -43,7 +43,7 @@ export const rectSize: MantineDemo = {
   centered: true,
   controls: [
     { type: 'number', prop: 'rectSize', min: 6, max: 20, initialValue: 10, libraryValue: '__' },
-    { type: 'number', prop: 'radius', min: 0, max: 20, initialValue: 2, libraryValue: '__' },
+    { type: 'number', prop: 'rectRadius', min: 0, max: 20, initialValue: 2, libraryValue: '__' },
     { type: 'number', prop: 'gap', min: 0, max: 5, initialValue: 1, libraryValue: '__' },
   ],
 };

@@ -14,7 +14,7 @@ function Demo() {
       endDate="2025-02-16"
       withMonthLabels
       withWeekdayLabels
-      weekdayLabels={['Пн', '', 'Ср', '', 'Пт', '', 'Вс']}
+      weekdayLabels={['Вс', 'Пн', '', 'Ср', '', 'Пт', '']}
       monthLabels={[
         'Янв',
         'Фев',
@@ -42,7 +42,7 @@ function Demo() {
       endDate="2025-02-16"
       withMonthLabels
       withWeekdayLabels
-      weekdayLabels={['Пн', '', 'Ср', '', 'Пт', '', 'Вс']}
+      weekdayLabels={['Вс', 'Пн', '', 'Ср', '', 'Пт', '']}
       monthLabels={[
         'Янв',
         'Фев',
