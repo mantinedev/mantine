@@ -1,4 +1,4 @@
-import { useCallback, useState, useRef, type RefCallback } from 'react';
+import { useCallback, useRef, useState, type RefCallback } from 'react';
 
 export function useHover<T extends HTMLElement = any>() {
   const [hovered, setHovered] = useState(false);
@@ -11,13 +11,13 @@ export function useHover<T extends HTMLElement = any>() {
     cleanupAbortControllerRef.current?.abort();
 
     const controller = new AbortController();
-    const {signal} = controller;
+    const { signal } = controller;
 
     node?.addEventListener('mouseenter', onMouseEnter, { signal });
     node?.addEventListener('mouseleave', onMouseLeave, { signal });
 
     cleanupAbortControllerRef.current = controller;
-  }, [])
+  }, []);
 
   return { ref: onRefChange, hovered };
 }

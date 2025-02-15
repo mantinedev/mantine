@@ -41,15 +41,18 @@ export function useFocusWithin<T extends HTMLElement = any>({
     }
   };
 
-  const onRefChange: RefCallback<T> = useCallback((node) => {
-    cleanupAbortControllerRef.current?.abort();
+  const onRefChange: RefCallback<T> = useCallback(
+    (node) => {
+      cleanupAbortControllerRef.current?.abort();
 
-    cleanupAbortControllerRef.current = new AbortController();
-    const {signal} = cleanupAbortControllerRef.current;
+      cleanupAbortControllerRef.current = new AbortController();
+      const { signal } = cleanupAbortControllerRef.current;
 
-    node?.addEventListener('focusin', handleFocusIn, { signal });
-    node?.addEventListener('focusout', handleFocusOut, { signal });
-  }, [handleFocusIn, handleFocusOut]);
+      node?.addEventListener('focusin', handleFocusIn, { signal });
+      node?.addEventListener('focusout', handleFocusOut, { signal });
+    },
+    [handleFocusIn, handleFocusOut]
+  );
 
   return { ref: onRefChange, focused };
 }

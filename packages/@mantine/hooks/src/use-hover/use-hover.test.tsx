@@ -1,11 +1,11 @@
+import { useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useHover } from './use-hover';
-import { useState } from 'react';
 
 const Target: React.FunctionComponent<any> = () => {
   const { ref, hovered } = useHover();
 
-  console.log({hovered});
+  console.log({ hovered });
 
   return (
     <div data-testid="target" ref={ref}>
@@ -14,14 +14,16 @@ const Target: React.FunctionComponent<any> = () => {
   );
 };
 
-const AppearingTarget: React.FunctionComponent<any> = ({showTarget}: {showTarget: boolean}) => {
+const AppearingTarget: React.FunctionComponent<any> = ({ showTarget }: { showTarget: boolean }) => {
   const { ref, hovered } = useHover();
 
-  return showTarget && (
+  return (
+    showTarget && (
       <div data-testid="target" ref={ref}>
         {hovered ? 'true' : 'false'}
       </div>
-    );
+    )
+  );
 };
 
 describe('@mantine/hooks/use-hover', () => {
@@ -39,7 +41,7 @@ describe('@mantine/hooks/use-hover', () => {
   });
 
   it('changes `hovered` when element was unmounted at first', async () => {
-    const {rerender} = render(<AppearingTarget showTarget={false} />);
+    const { rerender } = render(<AppearingTarget showTarget={false} />);
     rerender(<AppearingTarget showTarget />);
 
     const target = screen.getByTestId('target');

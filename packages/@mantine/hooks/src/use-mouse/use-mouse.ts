@@ -1,4 +1,4 @@
-import { type MouseEvent, useEffect, useState } from 'react';
+import { useEffect, useState, type MouseEvent } from 'react';
 
 export function useMouse<T extends HTMLElement = any>(
   options: { resetOnExit?: boolean } = { resetOnExit: false }
