@@ -74,7 +74,7 @@
     "react-dropzone-esm": "15.2.0",
     "react-number-format": "^5.4.3",
     "recharts": "^2.13.3",
-    "remark-slug": "^7.0.1",
+    "rehype-slug": "^6.0.0",
     "shiki": "^1.23.1",
     "typescript": "5.7.3"
   },

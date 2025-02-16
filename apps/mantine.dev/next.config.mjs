@@ -1,11 +1,11 @@
-import remarkSlug from 'remark-slug';
 import createMdx from '@next/mdx';
+import rehypeSlug from 'rehype-slug';
 
 const withMDX = createMdx({
   extension: /\.mdx?$/,
   options: {
     providerImportSource: '@mdx-js/react',
-    remarkPlugins: [remarkSlug],
+    rehypePlugins: [rehypeSlug],
   },
 });
 

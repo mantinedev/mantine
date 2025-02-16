@@ -1,16 +1,15 @@
 import createMDX from '@next/mdx';
-import remarkSlug from 'remark-slug';
+import rehypeSlug from 'rehype-slug';
 
 const withMDX = createMDX({
   options: {
-    remarkPlugins: [remarkSlug],
+    rehypePlugins: [rehypeSlug],
   },
 });
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   output: 'export',
   pageExtensions: ['ts', 'tsx', 'mdx'],
   eslint: {
