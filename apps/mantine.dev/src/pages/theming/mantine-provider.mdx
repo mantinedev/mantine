@@ -73,6 +73,9 @@ interface MantineProviderProps {
   /** Determines whether global classes should be added with `<style />` tag. Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work. `true` by default. */
   withGlobalClasses?: boolean;
 
+  /** Environment at which the provider is used, `'test'` environment disables all transitions and portals */
+  env?: 'default' | 'test';
+
   /** Your application */
   children?: React.ReactNode;
 }
@@ -266,7 +269,7 @@ Now [Text](/core/text) component will have the following classes:
 - `m-3nrA4eL` – `classNamesPrefix` does not impact library class – it is static and **cannot be changed**
 - `app-Text-root` – component static class has `classNamesPrefix` instead of `mantine`
 
-## withStaticClasses
+### withStaticClasses
 
 `withStaticClasses` determines whether components should have static classes, for example, `mantine-Button-root`.
 By default, static classes are enabled, to disable them set `withStaticClasses` to `false`:
@@ -283,7 +286,7 @@ function Demo() {
 }
 ```
 
-## withGlobalClasses
+### withGlobalClasses
 
 `withGlobalClasses` determines whether global classes should be added with `<style />` tag.
 Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work.
@@ -310,3 +313,30 @@ function Demo() {
 
 `cssVariablesResolver` is a function to generate CSS variables styles based on the [theme object](/theming/theme-object).
 You can learn more about Mantine CSS variables in the [CSS variables guide](/styles/css-variables#css-variables-resolver).
+
+
+### env
+
+`env` prop can be used in test environment to disable some features that
+might impact tests and/or make it harder to test components:
+
+- transitions that mount/unmount child component with delay
+- portals that render child component in a different part of the DOM
+
+To enable test environment, set `env` to `test`:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider env="test">
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+Note that `env="test"` is indented to be used in test environment only with [Jest](/guides/jest) or [Vitest](/guides/vitest), do not use it in
+the development or production environments. It is also not recommended to be used with
+end-to-end testing tools like [Cypress](/guides/cypress) or [Playwright](/guides/playwright).

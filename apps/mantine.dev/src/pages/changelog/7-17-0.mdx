@@ -116,6 +116,29 @@ function Demo() {
 }
 ```
 
+## MantineProvider env
+
+[MantineProvider](/theming/mantine-provider) component now supports `env` prop.
+It can be used in test environment to disable some features that
+might impact tests and/or make it harder to test components:
+
+- transitions that mount/unmount child component with delay
+- portals that render child component in a different part of the DOM
+
+To enable test environment, set `env` to `test`:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider env="test">
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
 ## Remix deprecation
 
 [Remix](https://remix.run/) is deprecated, the documentation related to Remix integration
