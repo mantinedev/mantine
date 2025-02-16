@@ -91,6 +91,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.useWindowScroll,
           MDX_DATA.useInViewport,
           MDX_DATA.useOrientation,
+          MDX_DATA.useFileDialog,
         ],
       },
 

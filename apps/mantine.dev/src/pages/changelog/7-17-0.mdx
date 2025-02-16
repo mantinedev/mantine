@@ -1,4 +1,4 @@
-import { FormDemos } from '@docs/demos';
+import { FormDemos, HooksDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -138,6 +138,13 @@ function Demo() {
   );
 }
 ```
+
+## use-file-dialog hook
+
+New [use-file-dialog](/hooks/use-file-dialog) allows capturing one or more files from the user
+without file input element:
+
+<Demo data={HooksDemos.useFileDialogUsage} />
 
 ## Remix deprecation
 
