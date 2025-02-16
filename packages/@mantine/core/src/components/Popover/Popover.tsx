@@ -12,6 +12,7 @@ import {
   MantineShadow,
   StylesApiProps,
   useDirection,
+  useMantineEnv,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -122,6 +123,9 @@ export interface __PopoverProps {
 
   /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy), `'absolute'` by default */
   floatingStrategy?: FloatingStrategy;
+
+  /** If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen, `true` by default */
+  hideDetached?: boolean;
 }
 
 export interface PopoverProps extends __PopoverProps, StylesApiProps<PopoverFactory> {
@@ -156,9 +160,6 @@ export interface PopoverProps extends __PopoverProps, StylesApiProps<PopoverFact
 
   /** Determines whether dropdown and target elements should have accessible roles, `true` by default */
   withRoles?: boolean;
-
-  /** If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen, `true` by default */
-  hideDetached?: boolean;
 }
 
 export type PopoverFactory = Factory<{
@@ -267,6 +268,7 @@ export function Popover(_props: PopoverProps) {
   const [targetNode, setTargetNode] = useState<HTMLElement | null>(null);
   const [dropdownNode, setDropdownNode] = useState<HTMLElement | null>(null);
   const { dir } = useDirection();
+  const env = useMantineEnv();
 
   const uid = useId(id);
   const popover = usePopover({
@@ -369,9 +371,10 @@ export function Popover(_props: PopoverProps) {
         getStyles,
         resolvedStyles,
         floatingStrategy,
-        referenceHidden: hideDetached
-          ? popover.floating.middlewareData.hide?.referenceHidden
-          : false,
+        referenceHidden:
+          hideDetached && env !== 'test'
+            ? popover.floating.middlewareData.hide?.referenceHidden
+            : false,
       }}
     >
       {children}

@@ -8,7 +8,7 @@ export function render(
 ) {
   return testingLibraryRender(<>{ui}</>, {
     wrapper: ({ children }: { children: React.ReactNode }) => (
-      <MantineProvider theme={themeOverride} {...providerProps}>
+      <MantineProvider theme={themeOverride} env="test" {...providerProps}>
         {children}
       </MantineProvider>
     ),
