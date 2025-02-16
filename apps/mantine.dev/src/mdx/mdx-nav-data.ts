@@ -150,6 +150,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.useWindowScroll,
       MDX_DATA.useInViewport,
       MDX_DATA.useOrientation,
+      MDX_DATA.useFileDialog,
     ],
   },
 
