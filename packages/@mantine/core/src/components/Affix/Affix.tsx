@@ -6,7 +6,8 @@ import {
   factory,
   Factory,
   getDefaultZIndex,
-  rem,
+  getSpacing,
+  MantineSize,
   StylesApiProps,
   useProps,
   useStyles,
@@ -31,10 +32,10 @@ export interface AffixBaseProps {
 
   /** Affix position on screen, defaults value is `{ bottom: 0, right: 0 }` */
   position?: {
-    top?: string | number;
-    left?: string | number;
-    bottom?: string | number;
-    right?: string | number;
+    top?: MantineSize | (string & {}) | number;
+    left?: MantineSize | (string & {}) | number;
+    bottom?: MantineSize | (string & {}) | number;
+    right?: MantineSize | (string & {}) | number;
   };
 }
 
@@ -60,10 +61,10 @@ const defaultProps: Partial<AffixProps> = {
 const varsResolver = createVarsResolver<AffixFactory>((_, { zIndex, position }) => ({
   root: {
     '--affix-z-index': zIndex?.toString(),
-    '--affix-top': rem(position?.top),
-    '--affix-left': rem(position?.left),
-    '--affix-bottom': rem(position?.bottom),
-    '--affix-right': rem(position?.right),
+    '--affix-top': getSpacing(position?.top),
+    '--affix-left': getSpacing(position?.left),
+    '--affix-bottom': getSpacing(position?.bottom),
+    '--affix-right': getSpacing(position?.right),
   },
 }));
 

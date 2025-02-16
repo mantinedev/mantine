@@ -56,6 +56,9 @@ export interface MantineProviderProps {
 
   /** Your application */
   children?: React.ReactNode;
+
+  /** Environment at which the provider is used, `'test'` environment disables all transitions and portals */
+  env?: 'default' | 'test';
 }
 
 export function MantineProvider({
@@ -74,6 +77,7 @@ export function MantineProvider({
   cssVariablesResolver,
   forceColorScheme,
   stylesTransform,
+  env,
 }: MantineProviderProps) {
   const { colorScheme, setColorScheme, clearColorScheme } = useProviderColorScheme({
     defaultColorScheme,
@@ -100,6 +104,7 @@ export function MantineProvider({
         cssVariablesSelector,
         withStaticClasses,
         stylesTransform,
+        env,
       }}
     >
       <MantineThemeProvider theme={theme}>

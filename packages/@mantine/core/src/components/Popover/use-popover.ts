@@ -30,6 +30,7 @@ interface UsePopoverOptions {
   defaultOpened: boolean | undefined;
   onChange?: (opened: boolean) => void;
   onClose?: () => void;
+  onDismiss?: () => void;
   onOpen?: () => void;
   width: PopoverWidth;
   middlewares: PopoverMiddlewares | undefined;

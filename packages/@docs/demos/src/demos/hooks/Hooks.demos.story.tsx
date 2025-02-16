@@ -337,3 +337,8 @@ export const Demo_useRadialMoveUsage = {
   name: '⭐ Demo: useRadialMoveUsage',
   render: renderDemo(demos.useRadialMoveUsage),
 };
+
+export const Demo_useFileDialogUsage = {
+  name: '⭐ Demo: useFileDialogUsage',
+  render: renderDemo(demos.useFileDialogUsage),
+};

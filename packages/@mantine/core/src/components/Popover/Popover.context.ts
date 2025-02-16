@@ -37,6 +37,7 @@ interface PopoverContext {
   radius?: MantineRadius | undefined;
   shadow?: MantineShadow | undefined;
   onClose?: () => void;
+  onDismiss?: () => void;
   getDropdownId: () => string;
   getTargetId: () => string;
   controlled: boolean;

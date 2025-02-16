@@ -1,4 +1,4 @@
-# Mantine Store
+# Mantine Vanilla Extract
 
 [![npm](https://img.shields.io/npm/dm/@mantine/vanilla-extract)](https://www.npmjs.com/package/@mantine/vanilla-extract)
 

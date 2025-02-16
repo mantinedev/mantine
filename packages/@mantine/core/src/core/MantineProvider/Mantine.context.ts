@@ -19,6 +19,7 @@ interface MantineContextValue {
   withStaticClasses: boolean;
   headless?: boolean;
   stylesTransform?: MantineStylesTransform;
+  env?: 'default' | 'test';
 }
 
 export const MantineContext = createContext<MantineContextValue | null>(null);
@@ -59,4 +60,8 @@ export function useMantineSxTransform() {
 
 export function useMantineStylesTransform() {
   return useMantineContext().stylesTransform?.styles;
+}
+
+export function useMantineEnv() {
+  return useMantineContext().env || 'default';
 }

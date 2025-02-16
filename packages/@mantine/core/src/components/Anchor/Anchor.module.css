@@ -15,6 +15,14 @@
     }
   }
 
+  &:where([data-underline='not-hover']) {
+    text-decoration: underline;
+
+    @mixin hover {
+      text-decoration: none;
+    }
+  }
+
   &:where([data-underline='always']) {
     text-decoration: underline;
   }

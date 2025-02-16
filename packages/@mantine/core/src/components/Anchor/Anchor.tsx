@@ -9,7 +9,7 @@ export type AnchorCssVariables = TextCssVariables;
 
 export interface AnchorProps extends Omit<TextProps, 'span'> {
   /** Determines in which cases link should have `text-decoration: underline` styles, `hover` by default */
-  underline?: 'always' | 'hover' | 'never';
+  underline?: 'always' | 'hover' | 'not-hover' | 'never';
 }
 
 export type AnchorFactory = PolymorphicFactory<{

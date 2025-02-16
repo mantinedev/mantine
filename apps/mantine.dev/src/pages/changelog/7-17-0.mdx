@@ -1,8 +1,8 @@
-import { FormDemos } from '@docs/demos';
+import { FormDemos, HooksDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
-export default Layout(MDX_DATA.Changelog7160);
+export default Layout(MDX_DATA.Changelog7170);
 
 ## Portal reuseTargetNode prop
 
@@ -88,6 +88,70 @@ const form = useForm({
 });
 ```
 
+## Popover onDismiss
+
+[Popover](/core/popover) now supports `onDismiss` prop, which makes it easier
+to subscribe to outside clicks and escape key presses to close popover:
+
+```tsx
+import { useState } from 'react';
+import { Button, Popover } from '@mantine/core';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+  return (
+    <Popover
+      opened={opened}
+      onDismiss={() => setOpened(false)}
+    >
+      <Popover.Target>
+        <Button onClick={() => setOpened((o) => !o)}>
+          Toggle popover
+        </Button>
+      </Popover.Target>
+
+      <Popover.Dropdown>Dropdown</Popover.Dropdown>
+    </Popover>
+  );
+}
+```
+
+## MantineProvider env
+
+[MantineProvider](/theming/mantine-provider) component now supports `env` prop.
+It can be used in test environment to disable some features that
+might impact tests and/or make it harder to test components:
+
+- transitions that mount/unmount child component with delay
+- portals that render child component in a different part of the DOM
+
+To enable test environment, set `env` to `test`:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider env="test">
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+## use-file-dialog hook
+
+New [use-file-dialog](/hooks/use-file-dialog) allows capturing one or more files from the user
+without file input element:
+
+<Demo data={HooksDemos.useFileDialogUsage} />
+
+## Remix deprecation
+
+[Remix](https://remix.run/) is deprecated, the documentation related to Remix integration
+was removed, use [React Router](/guides/react-router) instead. To simplify maintenance,
+Remix/React Router templates were archived and will not be updated.
+
 ## Help center updates
 
 - [I get hydration warning about data-mantine-color-scheme attribute, what does it mean?](https://help.mantine.dev/q/color-scheme-hydration-warning) question
@@ -97,3 +161,5 @@ const form = useForm({
 
 - [Tooltip](/core/tooltip) now supports customizing `middlewares`
 - [ScrollArea](/core/scroll-area) now supports `overscrollBehavior` prop
+- [Affix](/core/affix) now supports `theme.spacing` values for `position` prop
+- [Anchor](/core/anchor) now supports `underline="not-hover"` option to display underline only when the link is not hovered

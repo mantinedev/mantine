@@ -16,6 +16,7 @@ export {
   useMantineIsHeadless,
   useMantineSxTransform,
   useMantineStylesTransform,
+  useMantineEnv,
 } from './Mantine.context';
 export {
   useMantineTheme,
