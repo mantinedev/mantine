@@ -86,13 +86,13 @@ to convert callback values to `Date` objects:
 import { useState } from 'react';
 import { DatePicker } from '@mantine/dates';
 
-export function Demo7x() {
+export function Demo() {
   const [value, setValue] = useState<Date | null>(null);
   // ⛔ 7.x – onChange is called with Date object
   return <DatePicker value={value} onChange={setValue} />
 }
 
-export function Demo8x() {
+export function Demo() {
   const [value, setValue] = useState<Date | null>(null);
   // ✅ 8.x – onChange is called with string date value (for example '1994-08-21')
   // You can either
@@ -109,7 +109,7 @@ export function Demo8x() {
 ```tsx
 import { DatesProvider } from '@mantine/dates';
 
-function Demo7x() {
+function Demo() {
   // ❌ timezone option is no longer supported
   return (
     <DatesProvider settings={{ timezone: 'UTC', consistentWeeks: true }}>
@@ -118,7 +118,7 @@ function Demo7x() {
   );
 }
 
-function Demo8x() {
+function Demo() {
   // ✅ Remove timezone option
   return (
     <DatesProvider settings={{ consistentWeeks: true }}>
@@ -311,12 +311,12 @@ import { Carousel } from '@mantine/carousel';
 
 // ❌ 7.x – embla options passed as props,
 // no longer works in 8.x
-function Demo7x() {
+function Demo() {
   return <Carousel loop dragFree align="start" />
 }
 
 // ✅ 8.x – use emblaOptions to pass options to embla
-function Demo8x() {
+function Demo() {
   return <Carousel emblaOptions={{ loop: true, dragFree: true, align: 'start' }} />
 }
 ```
@@ -328,7 +328,7 @@ remove it from your code:
 // ❌ 7.x – useAnimationOffsetEffect is no longer available in 8.x
 import { Carousel, Embla, useAnimationOffsetEffect } from '@mantine/carousel';
 
-function Demo7x() {
+function Demo() {
   const [embla, setEmbla] = useState<Embla | null>(null);
   useAnimationOffsetEffect(embla, TRANSITION_DURATION);
   return <Carousel getEmblaApi={setEmbla} />;
@@ -349,7 +349,7 @@ you need to change this import to reference `embla-carousel` package instead:
 // ❌ 7.x – Embla type is no longer available in 8.x
 import { Carousel, Embla } from '@mantine/carousel';
 
-function Demo7x() {
+function Demo() {
   const [embla, setEmbla] = useState<Embla | null>(null);
   return <Carousel getEmblaApi={setEmbla} />;
 }
@@ -358,7 +358,7 @@ function Demo7x() {
 import { Carousel } from '@mantine/carousel';
 import { EmblaCarouselType } from 'embla-carousel';
 
-function Demo7x() {
+function Demo() {
   const [embla, setEmbla] = useState<EmblaCarouselType | null>(null);
   return <Carousel getEmblaApi={setEmbla} />;
 }
