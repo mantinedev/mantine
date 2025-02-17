@@ -184,7 +184,7 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
   const currentCode = nodes[value];
 
   const language = currentCode.language != null
-  ? hljs.getLanguage(currentCode.language ?? '') ? currentCode.language : 'plaintext'
+    ? hljs.getLanguage(currentCode.language ?? '') ? currentCode.language : 'plaintext'
     : 'plaintext';
 
   const highlighted = hljs.highlight(currentCode.code.trim(), {
