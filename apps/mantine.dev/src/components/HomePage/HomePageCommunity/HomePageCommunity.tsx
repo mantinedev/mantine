@@ -77,13 +77,13 @@ export function HomePageCommunity() {
               </HomePageLearnMore>
 
               <div className={classes.stats}>
-                <Stat value="28,000+" label="Stars on GitHub" link={meta.gitHubLinks.mantine} />
+                <Stat value="27,000+" label="Stars on GitHub" link={meta.gitHubLinks.mantine} />
                 <Stat
                   value="2.2M+"
                   label="Monthly downloads"
                   link="https://www.npmjs.com/package/@mantine/hooks"
                 />
-                <Stat value="11,000+" label="Discord members" link={meta.discordLink} />
+                <Stat value="12,000+" label="Discord members" link={meta.discordLink} />
               </div>
             </div>
           </div>
