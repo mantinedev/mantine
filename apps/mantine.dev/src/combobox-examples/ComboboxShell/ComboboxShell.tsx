@@ -25,6 +25,7 @@ export function ComboboxShell({ children }: ComboboxShellProps) {
         navbarOpened={opened}
         onNavbarOpenedChange={setNavbarOpened}
         headerControlsProps={{ withDirectionToggle: false }}
+        fluid
       >
         <ComboboxNavbar opened={opened} onClose={() => setNavbarOpened(false)} />
         <main className={classes.main}>{children}</main>

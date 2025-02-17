@@ -1,10 +1,10 @@
 .root {
   --preview-size: 600px;
   padding-bottom: 50px;
-  max-width: calc(100vw - var(--combobox-shell-navbar-width) - var(--mantine-spacing-md) * 2);
+  max-width: calc(100vw - var(--combobox-shell-navbar-width));
 
   @mixin smaller-than $docs-mdx-breakpoint {
-    max-width: calc(100vw - 48px);
+    max-width: calc(100vw - var(--mantine-spacing-md));
   }
 }
 
