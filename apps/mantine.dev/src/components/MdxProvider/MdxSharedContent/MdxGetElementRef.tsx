@@ -32,7 +32,7 @@ export function MdxGetElementRef(props: MdxGetElementRefProps) {
   return (
     <>
       <MdxTitle id="get-element-ref">Get element ref</MdxTitle>
-      <MdxCodeHighlight code={getRefCode(props)} />
+      <MdxCodeHighlight language="tsx" code={getRefCode(props)} />
     </>
   );
 }

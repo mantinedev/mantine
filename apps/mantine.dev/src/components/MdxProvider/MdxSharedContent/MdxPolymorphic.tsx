@@ -51,14 +51,14 @@ export function MdxPolymorphic(props: MdxPolymorphicProps) {
         element or component with <MdxCode>component</MdxCode> prop:
       </MdxParagraph>
 
-      <MdxCodeHighlight code={getElementCode(props)} />
+      <MdxCodeHighlight language="tsx" code={getElementCode(props)} />
       {props.withNext && (
         <>
           <MdxParagraph>
             You can also use components in <MdxCode>component</MdxCode> prop, for example, Next.js{' '}
             <MdxCode>Link</MdxCode>:
           </MdxParagraph>
-          <MdxCodeHighlight code={getNextLinkCode(props)} />
+          <MdxCodeHighlight language="tsx" code={getNextLinkCode(props)} />
         </>
       )}
 
@@ -83,7 +83,7 @@ export function MdxPolymorphic(props: MdxPolymorphicProps) {
           extend HTML element props, for example:{' '}
         </MdxParagraph>
 
-        <MdxCodeHighlight code={getInterfaceCode(props)} />
+        <MdxCodeHighlight language="tsx" code={getInterfaceCode(props)} />
 
         <MdxParagraph>
           If you want your component to remain polymorphic after wrapping, use{' '}
