@@ -3,7 +3,6 @@
 :root {
   --mantine-scale: 1;
   --mantine-cursor-type: default;
-  --mantine-color-scheme: light dark;
   --mantine-webkit-font-smoothing: antialiased;
   --mantine-moz-font-smoothing: grayscale;
   --mantine-color-white: #fff;
@@ -246,6 +245,7 @@
   --mantine-h6-font-weight: 700;
 }
 :root[data-mantine-color-scheme='dark'] {
+  --mantine-color-scheme: dark;
   --mantine-primary-color-contrast: var(--mantine-color-white);
   --mantine-color-bright: var(--mantine-color-white);
   --mantine-color-text: var(--mantine-color-dark-0);
@@ -371,7 +371,9 @@
   --mantine-color-orange-outline: var(--mantine-color-orange-4);
   --mantine-color-orange-outline-hover: rgba(255, 169, 77, 0.05);
 }
+
 :root[data-mantine-color-scheme='light'] {
+  --mantine-color-scheme: light;
   --mantine-primary-color-contrast: var(--mantine-color-white);
   --mantine-color-bright: var(--mantine-color-black);
   --mantine-color-text: #000;

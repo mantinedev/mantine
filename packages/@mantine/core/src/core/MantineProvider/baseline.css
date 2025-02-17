@@ -1,3 +1,7 @@
+:root {
+  color-scheme: var(--mantine-color-scheme);
+}
+
 *,
 *::before,
 *::after {
