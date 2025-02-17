@@ -38,7 +38,11 @@ export function MdxTabs({ children, meta }: MdxTabsProps) {
         keepMounted={false}
         radius="md"
         onChange={(value) => {
-          router.replace(value === 'docs' ? router.pathname : `${router.pathname}?t=${value}`);
+          router.replace(
+            value === 'docs' ? router.pathname : `${router.pathname}?t=${value}`,
+            undefined,
+            { scroll: false }
+          );
           setActiveTab(value!);
         }}
       >
