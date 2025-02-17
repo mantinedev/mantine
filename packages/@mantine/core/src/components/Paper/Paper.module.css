@@ -1,7 +1,6 @@
 .root {
   --paper-radius: var(--mantine-radius-default);
 
-  outline: 0;
   -webkit-tap-highlight-color: transparent;
   display: block;
   touch-action: manipulation;
@@ -9,6 +8,10 @@
   border-radius: var(--paper-radius);
   box-shadow: var(--paper-shadow);
   background-color: var(--mantine-color-body);
+
+  &:not(:focus) {
+    outline: none;
+  }
 
   &:where([data-with-border]) {
     @mixin where-light {
