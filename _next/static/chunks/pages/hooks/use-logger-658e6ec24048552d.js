@@ -1,0 +1,11 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[43437],{34727:(e,o,n)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/hooks/use-logger",function(){return n(58085)}])},58085:(e,o,n)=>{"use strict";n.r(o),n.d(o,{default:()=>g});var t=n(31085),s=n(71184),r=n(14041),c=n(52022),i=n(68323);let u={type:"code",code:`
+import { useState } from 'react';
+import { useLogger } from '@mantine/hooks';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  const [count, setCount] = useState(0);
+  useLogger('Demo', [{ count, hello: 'world' }]);
+  return <Button onClick={() => setCount((c) => c + 1)}>Update state ({count})</Button>;
+}
+`,component:function(){var e,o;let[n,s]=(0,r.useState)(0);return e="Demo",o=[{count:n,hello:"world"}],(0,r.useEffect)(()=>(console.log(`${e} mounted`,...o),()=>console.log(`${e} unmounted`)),[]),(0,i.C)(()=>{console.log(`${e} updated`,...o)},o),(0,t.jsxs)(c.$,{onClick:()=>s(e=>e+1),children:["Update state (",n,")"]})},centered:!0};var l=n(85954),d=n(38215);let a=(0,l.P)(d.XZ.useLogger);function p(e){let o={code:"code",h2:"h2",p:"p",pre:"pre",...(0,s.R)(),...e.components},{Demo:n}=o;return n||function(e,o){throw Error("Expected "+(o?"component":"object")+" `"+e+"` to be defined: you likely forgot to import, pass, or provide it.")}("Demo",!0),(0,t.jsxs)(t.Fragment,{children:[(0,t.jsx)(o.h2,{id:"usage",children:"Usage"}),"\n",(0,t.jsxs)(o.p,{children:[(0,t.jsx)(o.code,{children:"use-logger"})," logs given values to the console each time component renders.\nOpen devtools to see state changes in console:"]}),"\n",(0,t.jsx)(n,{data:u}),"\n",(0,t.jsx)(o.h2,{id:"definition",children:"Definition"}),"\n",(0,t.jsx)(o.pre,{children:(0,t.jsx)(o.code,{className:"language-tsx",children:"function useLogger(componentName: string, props: any[]): any;\n"})})]})}function g(){let e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return(0,t.jsx)(a,{...e,children:(0,t.jsx)(p,{...e})})}}},e=>{var o=o=>e(e.s=o);e.O(0,[67456,39699,68831,90636,46593,38792],()=>o(34727)),_N_E=e.O()}]);

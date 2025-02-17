@@ -1,0 +1,17 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[36863],{19625:(e,n,r)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/core/burger",function(){return r(68851)}])},68851:(e,n,r)=>{"use strict";r.r(n),r.d(n,{default:()=>g});var o=r(31085),i=r(71184),t=r(63211),l=r(92051);let s={type:"configurator",component:function(e){let[n,{toggle:r}]=(0,l.j)();return(0,o.jsx)(t.w,{...e,opened:n,onClick:r,"aria-label":"Toggle navigation"})},code:`
+import { useDisclosure } from '@mantine/hooks';
+import { Burger } from '@mantine/core';
+
+function Demo() {
+  const [opened, { toggle }] = useDisclosure();
+  return <Burger{{props}} opened={opened} onClick={toggle} aria-label="Toggle navigation" />;
+}
+`,centered:!0,controls:[{type:"size",prop:"size",initialValue:"md",libraryValue:"md"}]},a={type:"configurator",component:function(e){let[n,{toggle:r}]=(0,l.j)();return(0,o.jsx)(t.w,{...e,size:"xl",opened:n,onClick:r,"aria-label":"Toggle navigation"})},code:`
+import { useDisclosure } from '@mantine/hooks';
+import { Burger } from '@mantine/core';
+
+function Demo() {
+  const [opened, { toggle }] = useDisclosure();
+  return <Burger{{props}} size="xl" opened={opened} onClick={toggle} aria-label="Toggle navigation" />;
+}
+`,centered:!0,controls:[{type:"number",prop:"lineSize",initialValue:2,libraryValue:null,min:1,max:10,step:1}]};var c=r(85954),u=r(38215);let d=(0,c.P)(u.XZ.Burger);function p(e){let n={a:"a",code:"code",h2:"h2",p:"p",pre:"pre",...(0,i.R)(),...e.components},{Demo:r,GetElementRef:t}=n;return r||m("Demo",!0),t||m("GetElementRef",!0),(0,o.jsxs)(o.Fragment,{children:[(0,o.jsx)(n.h2,{id:"usage",children:"Usage"}),"\n",(0,o.jsxs)(n.p,{children:[(0,o.jsx)(n.code,{children:"Burger"})," component renders open/close menu button.\nSet ",(0,o.jsx)(n.code,{children:"opened"})," and ",(0,o.jsx)(n.code,{children:"onClick"})," props to control component state.\nIf ",(0,o.jsx)(n.code,{children:"opened"})," prop is set, cross will be rendered, otherwise – burger."]}),"\n",(0,o.jsx)(r,{data:s}),"\n",(0,o.jsx)(n.h2,{id:"change-lines-size",children:"Change lines size"}),"\n",(0,o.jsx)(r,{data:a}),"\n",(0,o.jsx)(t,{component:"Burger",refType:"button"}),"\n",(0,o.jsx)(n.h2,{id:"accessibility",children:"Accessibility"}),"\n",(0,o.jsxs)(n.p,{children:["To make ",(0,o.jsx)(n.code,{children:"Burger"})," accessible for screen readers, you need to either set ",(0,o.jsx)(n.code,{children:"aria-label"})," or\nuse ",(0,o.jsx)(n.a,{href:"/core/visually-hidden",children:"VisuallyHidden"})," component:"]}),"\n",(0,o.jsx)(n.pre,{children:(0,o.jsx)(n.code,{className:"language-tsx",children:"import { Burger, VisuallyHidden } from '@mantine/core';\n\nfunction Demo() {\n  return (\n    <>\n      <Burger aria-label=\"Toggle navigation\" />\n\n      <Burger>\n        <VisuallyHidden>Toggle navigation</VisuallyHidden>\n      </Burger>\n    </>\n  );\n}\n"})})]})}function g(){let e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return(0,o.jsx)(d,{...e,children:(0,o.jsx)(p,{...e})})}function m(e,n){throw Error("Expected "+(n?"component":"object")+" `"+e+"` to be defined: you likely forgot to import, pass, or provide it.")}},92051:(e,n,r)=>{"use strict";r.d(n,{j:()=>i});var o=r(14041);function i(e=!1,n){let{onOpen:r,onClose:t}=n||{},[l,s]=(0,o.useState)(e),a=(0,o.useCallback)(()=>{s(e=>e||(r?.(),!0))},[r]),c=(0,o.useCallback)(()=>{s(e=>e?(t?.(),!1):e)},[t]),u=(0,o.useCallback)(()=>{l?c():a()},[c,a,l]);return[l,{open:a,close:c,toggle:u}]}}},e=>{var n=n=>e(e.s=n);e.O(0,[67456,39699,68831,90636,46593,38792],()=>n(19625)),_N_E=e.O()}]);
