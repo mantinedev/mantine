@@ -5,6 +5,7 @@ import classes from './DemoColumns.module.css';
 export interface DemoColumnsProps extends DemoAreaProps {
   title?: React.ReactNode;
   description?: React.ReactNode;
+  withGrid?: boolean;
   controls: React.ReactNode;
 }
 
@@ -20,6 +21,7 @@ export function DemoColumns({
   dimmed,
   striped,
   overflow,
+  withGrid,
 }: DemoColumnsProps) {
   return (
     <div className={classes.root}>
@@ -50,9 +52,13 @@ export function DemoColumns({
             </div>
           )}
 
-          <SimpleGrid type="container" cols={{ base: 1, '480px': 2, '780px': 4 }} p={8}>
-            {controls}
-          </SimpleGrid>
+          {withGrid ? (
+            <SimpleGrid type="container" cols={{ base: 1, '480px': 2, '780px': 4 }} p={8}>
+              {controls}
+            </SimpleGrid>
+          ) : (
+            controls
+          )}
         </div>
       </div>
     </div>

@@ -90,6 +90,7 @@ export function ConfiguratorDemo({
         dimmed={dimmed}
         striped={striped}
         overflow={overflow}
+        withGrid
       >
         {cloneElement(children as React.JSX.Element, state)}
       </DemoColumns>
