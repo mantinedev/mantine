@@ -16,6 +16,9 @@ function Demo() {
       <Anchor href="https://mantine.dev/" target="_blank" underline="never">
         Underline never
       </Anchor>
+      <Anchor href="https://mantine.dev/" target="_blank" underline="not-hover">
+        Underline not-hover
+      </Anchor>
     </Group>
   );
 }
@@ -32,6 +35,9 @@ function Demo() {
       </Anchor>
       <Anchor href="https://mantine.dev/" target="_blank" underline="never">
         Underline never
+      </Anchor>
+      <Anchor href="https://mantine.dev/" target="_blank" underline="not-hover">
+        Underline not-hover
       </Anchor>
     </Group>
   );
