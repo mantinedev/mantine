@@ -17,3 +17,9 @@ export const Demo_blur = {
   name: '⭐ Demo: blur',
   render: renderDemo(demos.blur),
 };
+
+// demo center
+export const Demo_center = {
+  name: '⭐ Demo: center',
+  render: renderDemo(demos.center),
+};
