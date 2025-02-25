@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ForwardedRef, useEffect, useRef, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -47,7 +47,7 @@ export interface ScrollAreaProps
   scrollbars?: 'x' | 'y' | 'xy' | false;
 
   /** Determines whether scrollbars should be offset with padding on given axis, `false` by default */
-  offsetScrollbars?: boolean | 'x' | 'y';
+  offsetScrollbars?: boolean | 'x' | 'y' | 'present';
 
   /** Assigns viewport element (scrollable container) ref */
   viewportRef?: React.ForwardedRef<HTMLDivElement>;
@@ -69,6 +69,23 @@ export interface ScrollAreaProps
 }
 
 export interface ScrollAreaAutosizeProps extends ScrollAreaProps {}
+
+function useCombinedRefs<T>(...refs: (ForwardedRef<T> | undefined)[]): React.RefObject<T> {
+  const targetRef = useRef<T>(null);
+  useEffect(() => {
+    refs.forEach((ref) => {
+      if (!ref) {
+        return;
+      }
+      if (typeof ref === 'function') {
+        ref(targetRef.current);
+      } else {
+        (ref as React.MutableRefObject<T | null>).current = targetRef.current;
+      }
+    });
+  }, [refs]);
+  return targetRef;
+}
 
 export type ScrollAreaFactory = Factory<{
   props: ScrollAreaProps;
@@ -120,6 +137,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
   } = props;
 
   const [scrollbarHovered, setScrollbarHovered] = useState(false);
+  const [thumbVisible, setThumbVisible] = useState(false);
 
   const getStyles = useStyles<ScrollAreaFactory>({
     name: 'ScrollArea',
@@ -134,6 +152,23 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     varsResolver,
   });
 
+  const localViewportRef = useRef<HTMLDivElement>(null);
+  const combinedViewportRef = useCombinedRefs(viewportRef, localViewportRef);
+
+  useEffect(() => {
+    const element = localViewportRef.current;
+    if (!element) {
+      return;
+    }
+
+    const observer = new ResizeObserver(() => {
+      const { scrollHeight, clientHeight } = element;
+      setThumbVisible(scrollHeight > clientHeight);
+    });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [localViewportRef]);
+
   return (
     <ScrollAreaRoot
       type={type === 'never' ? 'always' : type}
@@ -146,9 +181,10 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
       <ScrollAreaViewport
         {...viewportProps}
         {...getStyles('viewport', { style: viewportProps?.style })}
-        ref={viewportRef}
+        ref={combinedViewportRef}
         data-offset-scrollbars={offsetScrollbars === true ? 'xy' : offsetScrollbars || undefined}
         data-scrollbars={scrollbars || undefined}
+        data-hidden={offsetScrollbars === 'present' && !thumbVisible ? 'true' : undefined}
         onScroll={(e) => {
           viewportProps?.onScroll?.(e);
           onScrollPositionChange?.({ x: e.currentTarget.scrollLeft, y: e.currentTarget.scrollTop });
