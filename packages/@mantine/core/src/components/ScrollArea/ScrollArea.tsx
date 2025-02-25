@@ -1,4 +1,5 @@
-import { ForwardedRef, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useMergeRefs } from '@floating-ui/react';
 import {
   Box,
   BoxProps,
@@ -70,23 +71,6 @@ export interface ScrollAreaProps
 
 export interface ScrollAreaAutosizeProps extends ScrollAreaProps {}
 
-function useCombinedRefs<T>(...refs: (ForwardedRef<T> | undefined)[]): React.RefObject<T> {
-  const targetRef = useRef<T>(null);
-  useEffect(() => {
-    refs.forEach((ref) => {
-      if (!ref) {
-        return;
-      }
-      if (typeof ref === 'function') {
-        ref(targetRef.current);
-      } else {
-        (ref as React.MutableRefObject<T | null>).current = targetRef.current;
-      }
-    });
-  }, [refs]);
-  return targetRef;
-}
-
 export type ScrollAreaFactory = Factory<{
   props: ScrollAreaProps;
   ref: HTMLDivElement;
@@ -153,9 +137,13 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
   });
 
   const localViewportRef = useRef<HTMLDivElement>(null);
-  const combinedViewportRef = useCombinedRefs(viewportRef, localViewportRef);
+  const combinedViewportRef = useMergeRefs([viewportRef, localViewportRef]);
 
   useEffect(() => {
+    if (!localViewportRef.current) {
+      return;
+    }
+
     const element = localViewportRef.current;
     if (!element) {
       return;
@@ -167,7 +155,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     });
     observer.observe(element);
     return () => observer.disconnect();
-  }, [localViewportRef]);
+  }, [localViewportRef, offsetScrollbars]);
 
   return (
     <ScrollAreaRoot
