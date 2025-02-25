@@ -5,6 +5,7 @@ export function useDebouncedValue<T = any>(value: T, wait: number, options = { l
   const mountedRef = useRef(false);
   const timeoutRef = useRef<number | null>(null);
   const cooldownRef = useRef(false);
+  const latestValue = useRef(value);
 
   const cancel = () => window.clearTimeout(timeoutRef.current!);
 
@@ -12,12 +13,18 @@ export function useDebouncedValue<T = any>(value: T, wait: number, options = { l
     if (mountedRef.current) {
       if (!cooldownRef.current && options.leading) {
         cooldownRef.current = true;
-        setValue(value);
+        setValue((prev) => {
+          latestValue.current = typeof value === "function" ? value(prev) : value;
+          return latestValue.current;
+        })
       } else {
         cancel();
         timeoutRef.current = window.setTimeout(() => {
           cooldownRef.current = false;
-          setValue(value);
+          setValue((prev) => {
+            latestValue.current = typeof value === "function" ? value(prev) : value;
+            return latestValue.current;
+          })
         }, wait);
       }
     }
