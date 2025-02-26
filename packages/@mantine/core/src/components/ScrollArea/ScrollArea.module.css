@@ -17,9 +17,12 @@
     display: none;
   }
 
-  &:where([data-hidden], [data-state='hidden']) {
-    padding-inline-start: unset;
+  &:where([data-vertical-hidden]) {
     padding-inline-end: 0;
+    padding-inline-start: 0;
+  }
+
+  &:where([data-horizontal-hidden]) {
     padding-bottom: 0;
   }
 
@@ -29,7 +32,7 @@
         [data-offset-scrollbars='y'],
         [data-offset-scrollbars='present']
       ) {
-      &:not([data-hidden], [data-state='hidden']) {
+      &:not([data-vertical-hidden]) {
         padding-inline-end: var(--scrollarea-scrollbar-size);
         padding-inline-start: unset;
       }
@@ -42,7 +45,7 @@
         [data-offset-scrollbars='x'],
         [data-offset-scrollbars='present']
       ) {
-      &:not([data-hidden], [data-state='hidden']) {
+      &:not([data-horizontal-hidden]) {
         padding-bottom: var(--scrollarea-scrollbar-size);
       }
     }

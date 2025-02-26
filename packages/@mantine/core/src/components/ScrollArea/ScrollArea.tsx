@@ -121,7 +121,8 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
   } = props;
 
   const [scrollbarHovered, setScrollbarHovered] = useState(false);
-  const [thumbVisible, setThumbVisible] = useState(false);
+  const [verticalThumbVisible, setVerticalThumbVisible] = useState(false);
+  const [horizontalThumbVisible, setHorizontalThumbVisible] = useState(false);
 
   const getStyles = useStyles<ScrollAreaFactory>({
     name: 'ScrollArea',
@@ -145,15 +146,15 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     }
 
     const element = localViewportRef.current;
-    if (!element) {
-      return;
-    }
 
     const observer = new ResizeObserver(() => {
-      const { scrollHeight, clientHeight } = element;
-      setThumbVisible(scrollHeight > clientHeight);
+      const { scrollHeight, clientHeight, scrollWidth, clientWidth } = element;
+      setVerticalThumbVisible(scrollHeight > clientHeight);
+      setHorizontalThumbVisible(scrollWidth > clientWidth);
     });
+
     observer.observe(element);
+
     return () => observer.disconnect();
   }, [localViewportRef, offsetScrollbars]);
 
@@ -172,7 +173,12 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
         ref={combinedViewportRef}
         data-offset-scrollbars={offsetScrollbars === true ? 'xy' : offsetScrollbars || undefined}
         data-scrollbars={scrollbars || undefined}
-        data-hidden={offsetScrollbars === 'present' && !thumbVisible ? 'true' : undefined}
+        data-horizontal-hidden={
+          offsetScrollbars === 'present' && !horizontalThumbVisible ? 'true' : undefined
+        }
+        data-vertical-hidden={
+          offsetScrollbars === 'present' && !verticalThumbVisible ? 'true' : undefined
+        }
         onScroll={(e) => {
           viewportProps?.onScroll?.(e);
           onScrollPositionChange?.({ x: e.currentTarget.scrollLeft, y: e.currentTarget.scrollTop });
