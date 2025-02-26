@@ -3,7 +3,7 @@ import { modals } from '@mantine/modals';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Button, Text, Stack, Center, Loader } from '@mantine/core';
+import { Button, Text, Stack, Center, Loader, rem } from '@mantine/core';
 import { modals, ContextModalProps, ModalsProvider } from '@mantine/modals';
 import { IconCheck } from '@tabler/icons-react';
 
@@ -19,7 +19,7 @@ const TestModal = ({
         {innerProps.loading ? (
           <Loader size={32}/>
         ): (
-          <IconCheck size={23} color="var(--mantine-color-teal-6)" />
+          <IconCheck style={{ width: rem(32), height: rem(32), color: "green" }} />
         )}
       </Center>
     </Stack>
