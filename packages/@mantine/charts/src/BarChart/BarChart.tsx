@@ -64,50 +64,23 @@ export interface BarChartProps
     GridChartBaseProps,
     StylesApiProps<BarChartFactory>,
     ElementProps<'div'> {
-  /** Data used to display chart. */
   data: Record<string, any>[];
-
-  /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: BarChartSeries[];
-
-  /** Controls how bars are positioned relative to each other, `'default'` by default */
   type?: BarChartType;
-
-  /** Controls fill opacity of all bars, `1` by default */
   fillOpacity?: number;
-
-  /** Fill of hovered bar section, by default value is based on color scheme */
   cursorFill?: MantineColor;
-
-  /** Props passed down to recharts `BarChart` component */
   barChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsBarChart>;
-
-  /** Additional components that are rendered inside recharts `BarChart` component */
   children?: React.ReactNode;
-
-  /** Props passed down to recharts `Bar` component */
   barProps?:
     | ((series: BarChartSeries) => Partial<Omit<BarProps, 'ref'>>)
     | Partial<Omit<BarProps, 'ref'>>;
-
-  /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"`, `false` by default */
   withBarValueLabel?: boolean;
-
-  /** Props passed down to recharts `LabelList` component */
   valueLabelProps?:
     | ((series: BarChartSeries) => Partial<Omit<LabelListProps<Record<string, any>>, 'ref'>>)
     | Partial<LabelListProps<Record<string, any>>>;
-
-  /** Sets minimum height of the bar in px, `0` by default */
   minBarSize?: number;
-
-  /** Maximum bar width in px */
   maxBarWidth?: number;
-
-  /** Controls color of the bar label, by default the value is determined by the chart orientation */
   barLabelColor?: MantineColor;
-
-  /** A function to assign dynamic bar color based on its value */
   getBarColor?: (value: number, series: BarChartSeries) => MantineColor;
 }
 
@@ -168,7 +141,6 @@ function getBarFill(barProps: BarChartProps['barProps'], series: BarChartSeries)
   if (typeof barProps === 'function') {
     return barProps(series).fill;
   }
-
   return barProps?.fill;
 }
 
@@ -328,6 +300,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     allowDecimals: true,
     unit,
     tickFormatter: orientation === 'vertical' ? undefined : tickFormatter,
+    tickMargin: 10, // Added tickMargin to prevent overlap
     ...getStyles('axis'),
   };
 
@@ -347,8 +320,8 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
           layout={orientation}
           maxBarSize={maxBarWidth}
           margin={{
-            bottom: xAxisLabel ? 30 : undefined,
-            left: yAxisLabel ? 10 : undefined,
+            bottom: xAxisLabel ? 40 : undefined, // Increased margin to accommodate rotated labels
+            left: yAxisLabel ? 20 : undefined, // Adjusted for better spacing
             right: yAxisLabel ? 5 : undefined,
           }}
           {...barChartProps}
@@ -372,19 +345,26 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
           )}
 
           <XAxis
+            dataKey={dataKey}
+            tick={{ fontSize: 12, fill: 'currentColor' }}
+            tickLine={withXTickLine}
+            axisLine={withXTickLine}
             hide={!withXAxis}
-            {...(orientation === 'vertical' ? { type: 'number' } : { dataKey })}
-            tick={{ transform: 'translate(0, 10)', fontSize: 12, fill: 'currentColor' }}
-            stroke=""
-            interval="preserveStartEnd"
-            tickLine={withXTickLine ? { stroke: 'currentColor' } : false}
-            minTickGap={5}
-            tickFormatter={orientation === 'vertical' ? tickFormatter : undefined}
-            {...getStyles('axis')}
-            {...xAxisProps}
+            tickMargin={10} // Added to increase space between ticks and labels
+            angle={-45} // Default rotation to prevent overlap
+            textAnchor="end" // Align rotated labels properly
+            interval="preserveStart" // Reduce tick density to avoid overlap
+            {...xAxisProps} // Allow override via props
           >
             {xAxisLabel && (
-              <Label position="insideBottom" offset={-20} fontSize={12} {...getStyles('axisLabel')}>
+              <Label
+                position="insideBottom"
+                textAnchor="middle"
+                fontSize={12}
+                offset={0}
+                dy={30} // Increased offset to avoid overlap with rotated labels
+                {...getStyles('axisLabel')}
+              >
                 {xAxisLabel}
               </Label>
             )}
@@ -403,9 +383,10 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
               <Label
                 position="insideLeft"
                 angle={-90}
-                textAnchor="middle"
+                textAnchor="middle" // Centered y-axis label by default
                 fontSize={12}
-                offset={-5}
+                offset={0} // Adjusted offset for better positioning
+                dx={-20} // Fine-tuned to avoid overlap with ticks
                 {...getStyles('axisLabel')}
               >
                 {yAxisLabel}
@@ -426,15 +407,16 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
               <Label
                 position="insideRight"
                 angle={90}
-                textAnchor="middle"
+                textAnchor="middle" // Centered right y-axis label
                 fontSize={12}
-                offset={-5}
+                offset={0}
+                dx={20}
                 {...getStyles('axisLabel')}
               >
                 {rightYAxisLabel}
               </Label>
             )}
-            {yAxisProps?.children}
+            {rightYAxisProps?.children}
           </YAxis>
 
           <CartesianGrid

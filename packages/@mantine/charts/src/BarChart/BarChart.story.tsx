@@ -1,3 +1,4 @@
+import { Stack } from '@mantine/core';
 import { BarChart } from './BarChart';
 
 export default { title: 'BarChart' };
@@ -29,6 +30,32 @@ const waterfallData = [
   { item: 'Law changes', 'Effective tax rate in %': 2, color: 'red' },
   { item: 'Reven. adj.', 'Effective tax rate in %': 4, color: 'red' },
   { item: 'ETR', 'Effective tax rate in %': 3.5, color: 'blue.3', standalone: true },
+];
+
+const slantedData = [
+  { month: 'January', Smartphones: 1200, Laptops: 900, Tablets: 200 },
+  { month: 'February', Smartphones: 1900, Laptops: 1200, Tablets: 400 },
+  { month: 'March', Smartphones: 400, Laptops: 1000, Tablets: 200 },
+  {
+    month: 'April is the forth month of the year',
+    Smartphones: 1000,
+    Laptops: 200,
+    Tablets: 800,
+  },
+  {
+    month: 'May is the fifth month of the year',
+    Smartphones: 800,
+    Laptops: 1400,
+    Tablets: 1200,
+  },
+  {
+    month: 'June is the sisth month of the year',
+    Smartphones: 750,
+    Laptops: 600,
+    Tablets: 1000,
+  },
+  { month: 'July', Smartphones: 750, Laptops: 600, Tablets: 1000 },
+  { month: 'August', Smartphones: 830, Laptops: 500, Tablets: 1000 },
 ];
 
 export function Usage() {
@@ -96,6 +123,28 @@ export function Waterfall() {
         fillOpacity={0.6}
         withLegend
         series={[{ name: 'Effective tax rate in %', color: 'blue' }]}
+      />
+    </div>
+  );
+}
+
+export function SlantedLabels() {
+  return (
+    <div style={{ padding: 40 }}>
+      <BarChart
+        data={slantedData}
+        dataKey="month"
+        h={500}
+        m="xl"
+        series={[
+          { name: 'Smartphones', color: 'violet.6' },
+          { name: 'Laptops', color: 'blue.6' },
+          { name: 'Tablets', color: 'teal.6' },
+        ]}
+        w={1000}
+        xAxisLabel="Month of the year"
+        xAxisProps={{ interval: 0 }}
+        yAxisLabel="Amount of the specific device"
       />
     </div>
   );
