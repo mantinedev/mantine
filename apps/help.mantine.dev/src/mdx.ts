@@ -1,4 +1,5 @@
 import { meta as alignInputButton } from './pages/q/align-input-button.mdx';
+import { meta as applyStylesToAll } from './pages/q/apply-styles-to-all.mdx';
 import { meta as areMantineComponentsAccessible } from './pages/q/are-mantine-components-accessible.mdx';
 import { meta as autocompleteValueLabel } from './pages/q/autocomplete-value-label.mdx';
 import { meta as bodyBackground } from './pages/q/body-background.mdx';
@@ -8,6 +9,7 @@ import { meta as canIUseMantineWithCra } from './pages/q/can-i-use-mantine-with-
 import { meta as carouselMissingStyles } from './pages/q/carousel-missing-styles.mdx';
 import { meta as colorSchemeColor } from './pages/q/color-scheme-color.mdx';
 import { meta as colorSchemeFlickering } from './pages/q/color-scheme-flickering.mdx';
+import { meta as colorSchemeHydrationWarning } from './pages/q/color-scheme-hydration-warning.mdx';
 import { meta as comboboxTesting } from './pages/q/combobox-testing.mdx';
 import { meta as customInputUseForm } from './pages/q/custom-input-use-form.mdx';
 import { meta as dataGridINeed } from './pages/q/data-grid-i-need.mdx';
@@ -71,6 +73,7 @@ import { meta as whyVscodeCannotAutoimportText } from './pages/q/why-vscode-cann
 
 export const MDX_DATA = [
   alignInputButton,
+  applyStylesToAll,
   areMantineComponentsAccessible,
   autocompleteValueLabel,
   bodyBackground,
@@ -80,6 +83,7 @@ export const MDX_DATA = [
   carouselMissingStyles,
   colorSchemeColor,
   colorSchemeFlickering,
+  colorSchemeHydrationWarning,
   comboboxTesting,
   customInputUseForm,
   dataGridINeed,

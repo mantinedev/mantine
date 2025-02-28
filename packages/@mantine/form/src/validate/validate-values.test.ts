@@ -1,4 +1,4 @@
-import { validateValues } from './validate-values';
+import { formRootRule, validateValues } from './validate-values';
 
 describe('@mantine/form/validate-values', () => {
   it('returns correct results if form does not have any errors', () => {
@@ -191,6 +191,66 @@ describe('@mantine/form/validate-values', () => {
       errors: {
         'a.b.0.c': 'error',
       },
+    });
+  });
+
+  it('supports formRootRule in nested objects', () => {
+    expect(
+      validateValues(
+        { a: { [formRootRule]: (value) => (value.b === 0 ? 'error' : null) } },
+        { a: { b: 0 } }
+      )
+    ).toStrictEqual({
+      hasErrors: true,
+      errors: { a: 'error' },
+    });
+
+    expect(
+      validateValues(
+        {
+          a: {
+            b: {
+              [formRootRule]: (value) => (value.c === 0 ? 'error' : null),
+            },
+          },
+        },
+        { a: { b: { c: 0 } } }
+      )
+    ).toStrictEqual({
+      hasErrors: true,
+      errors: { 'a.b': 'error' },
+    });
+
+    expect(
+      validateValues(
+        { a: { [formRootRule]: (value) => (value.b === 0 ? 'error' : null) } },
+        { a: { b: 1 } }
+      )
+    ).toStrictEqual({
+      hasErrors: false,
+      errors: {},
+    });
+  });
+
+  it('supports formRootRule in nested lists', () => {
+    expect(
+      validateValues(
+        { a: { [formRootRule]: (value) => (value.length === 2 ? 'error' : null) } },
+        { a: [{ b: 0 }, { b: 1 }] }
+      )
+    ).toStrictEqual({
+      hasErrors: true,
+      errors: { a: 'error' },
+    });
+
+    expect(
+      validateValues(
+        { a: { [formRootRule]: (value) => (value.length === 2 ? 'error' : null) } },
+        { a: [{ b: 0 }] }
+      )
+    ).toStrictEqual({
+      hasErrors: false,
+      errors: {},
     });
   });
 });

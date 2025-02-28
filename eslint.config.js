@@ -22,5 +22,9 @@ module.exports = tseslint.config(
       '@typescript-eslint/no-namespace': 'off',
       'no-console': 'error',
     },
+  },
+  {
+    files: ['**/*.story.tsx'],
+    rules: { 'no-console': 'off' },
   }
 );

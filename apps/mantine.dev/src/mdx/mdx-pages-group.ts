@@ -91,6 +91,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
           MDX_DATA.useWindowScroll,
           MDX_DATA.useInViewport,
           MDX_DATA.useOrientation,
+          MDX_DATA.useFileDialog,
         ],
       },
 
@@ -384,6 +385,7 @@ export const MDX_PAGES_GROUPS: MdxPagesGroup[] = [
   {
     group: 'changelog',
     pages: [
+      MDX_DATA.Changelog7170,
       MDX_DATA.Changelog7160,
       MDX_DATA.Changelog7150,
       MDX_DATA.Changelog7140,

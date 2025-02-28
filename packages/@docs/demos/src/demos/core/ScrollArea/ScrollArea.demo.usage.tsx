@@ -49,6 +49,17 @@ export const usage: MantineDemo = {
       initialValue: false,
     },
     {
+      prop: 'overscrollBehavior',
+      type: 'segmented',
+      initialValue: 'auto',
+      libraryValue: 'auto',
+      data: [
+        { value: 'auto', label: 'Auto' },
+        { value: 'contain', label: 'Contain' },
+        { value: 'none', label: 'None' },
+      ],
+    },
+    {
       prop: 'scrollbarSize',
       type: 'number',
       min: 2,

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState } from 'react';
 import { Button, Group, Modal, Text } from '@mantine/core';
 import {

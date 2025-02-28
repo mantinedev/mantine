@@ -1,3 +1,4 @@
+import { factory, Factory, useMantineEnv } from '../../core';
 import { Portal, PortalProps } from './Portal';
 
 export interface OptionalPortalProps extends PortalProps {
@@ -5,12 +6,25 @@ export interface OptionalPortalProps extends PortalProps {
   withinPortal?: boolean;
 }
 
-export function OptionalPortal({ withinPortal = true, children, ...others }: OptionalPortalProps) {
-  if (withinPortal) {
-    return <Portal {...others}>{children}</Portal>;
-  }
+export type OptionalPortalFactory = Factory<{
+  props: OptionalPortalProps;
+  ref: HTMLDivElement;
+}>;
 
-  return <>{children}</>;
-}
+export const OptionalPortal = factory<OptionalPortalFactory>(
+  ({ withinPortal = true, children, ...others }, ref) => {
+    const env = useMantineEnv();
+
+    if (env === 'test' || !withinPortal) {
+      return <>{children}</>;
+    }
+
+    return (
+      <Portal ref={ref} {...others}>
+        {children}
+      </Portal>
+    );
+  }
+);
 
 OptionalPortal.displayName = '@mantine/core/OptionalPortal';

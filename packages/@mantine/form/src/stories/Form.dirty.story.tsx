@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { IconTrash } from '@tabler/icons-react';
 import { ActionIcon, Button, Code, Group, Text, TextInput } from '@mantine/core';
 import { useForm } from '../use-form';

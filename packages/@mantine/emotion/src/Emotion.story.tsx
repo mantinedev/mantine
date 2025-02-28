@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import {

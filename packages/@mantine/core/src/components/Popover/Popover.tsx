@@ -54,6 +54,9 @@ export interface __PopoverProps {
   /** Called when dropdown closes */
   onClose?: () => void;
 
+  /** Called when the popover is dismissed by clicking outside or by pressing escape */
+  onDismiss?: () => void;
+
   /** Called when dropdown opens */
   onOpen?: () => void;
 
@@ -220,6 +223,7 @@ export function Popover(_props: PopoverProps) {
     clickOutsideEvents,
     trapFocus,
     onClose,
+    onDismiss,
     onOpen,
     onChange,
     zIndex,
@@ -274,13 +278,20 @@ export function Popover(_props: PopoverProps) {
     onChange,
     onOpen,
     onClose,
+    onDismiss,
     strategy: floatingStrategy,
   });
 
-  useClickOutside(() => closeOnClickOutside && popover.onClose(), clickOutsideEvents, [
-    targetNode,
-    dropdownNode,
-  ]);
+  useClickOutside(
+    () => {
+      if (closeOnClickOutside) {
+        popover.onClose();
+        onDismiss?.();
+      }
+    },
+    clickOutsideEvents,
+    [targetNode, dropdownNode]
+  );
 
   const reference = useCallback(
     (node: HTMLElement) => {
@@ -337,6 +348,7 @@ export function Popover(_props: PopoverProps) {
         radius,
         shadow,
         closeOnEscape,
+        onDismiss,
         onClose: popover.onClose,
         onToggle: popover.onToggle,
         getTargetId: () => `${uid}-target`,

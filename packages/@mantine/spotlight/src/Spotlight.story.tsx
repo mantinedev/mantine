@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState } from 'react';
 import { IconSearch } from '@tabler/icons-react';
 import { Button } from '@mantine/core';
@@ -42,8 +41,6 @@ export function Compound() {
         onSpotlightClose={() => console.log('close')}
         clearQueryOnClose
         scrollable
-        // FullScreen
-        // MaxHeight="100vh"
       >
         <Spotlight.Search
           placeholder="Search something..."

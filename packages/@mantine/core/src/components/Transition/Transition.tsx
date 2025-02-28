@@ -1,3 +1,4 @@
+import { useMantineEnv } from '../../core';
 import { getTransitionStyles } from './get-transition-styles/get-transition-styles';
 import { MantineTransition } from './transitions';
 import { useTransition } from './use-transition';
@@ -60,6 +61,7 @@ export function Transition({
   enterDelay,
   exitDelay,
 }: TransitionProps) {
+  const env = useMantineEnv();
   const { transitionDuration, transitionStatus, transitionTimingFunction } = useTransition({
     mounted,
     exitDuration,
@@ -73,7 +75,7 @@ export function Transition({
     exitDelay,
   });
 
-  if (transitionDuration === 0) {
+  if (transitionDuration === 0 || env === 'test') {
     return mounted ? <>{children({})}</> : keepMounted ? children({ display: 'none' }) : null;
   }
 

@@ -26,11 +26,11 @@
     "@tabler/icons-react": "^3.3.0",
     "dayjs": "^1.11.13",
     "fuse.js": "^7.0.0",
-    "next": "14.2.12",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "next": "15.1.7",
+    "react": "^19.0.0",
+    "react-dom": "19.0.0",
     "react-imask": "^7.6.1",
-    "remark-slug": "^7.0.1",
+    "rehype-slug": "^6.0.0",
     "shiki": "^1.23.1"
   },
   "devDependencies": {
@@ -39,6 +39,6 @@
     "@types/node": "^22.9.1",
     "@types/react": "19.0.1",
     "@types/react-dom": "19.0.1",
-    "typescript": "5.6.3"
+    "typescript": "5.7.3"
   }
 }

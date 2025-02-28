@@ -36,6 +36,19 @@ const form = useForm({
 });
 ```
 
+## formRootRule
+
+`formRootRule` is a special rule path that can be used to validate objects and arrays
+alongside with their nested fields. For example, it is useful when you want to capture
+a list of values, validate each value individually and then validate the list itself
+to not be empty:
+
+<Demo data={FormDemos.rootRuleArray} />
+
+Another example is to validate an object fields combination:
+
+<Demo data={FormDemos.rootRuleObject} />
+
 ## Validation based on other form values
 
 You can get all form values as a second rule function argument to perform field validation based on other

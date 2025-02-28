@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { RingProgress } from './RingProgress';
 
 export default { title: 'RingProgress' };

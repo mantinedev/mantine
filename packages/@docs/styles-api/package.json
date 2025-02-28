@@ -48,8 +48,8 @@
     "@tiptap/react": "^2.9.1",
     "dayjs": "^1.11.13",
     "embla-carousel-react": "^7.1.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.0.0",
+    "react-dom": "19.0.0",
     "recharts": "^2.13.3",
     "shiki": "^1.23.1"
   }

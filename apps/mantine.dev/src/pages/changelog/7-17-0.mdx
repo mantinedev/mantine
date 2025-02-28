@@ -1,0 +1,165 @@
+import { FormDemos, HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog7170);
+
+## Portal reuseTargetNode prop
+
+[Portal](/core/portal) component now supports `reuseTargetNode` prop which allows to reuse the same target node for all instances.
+This option is more performant than the previous behavior, it is recommended to be enabled.
+This option will be enabled by default in the `8.0` major release.
+
+To enable reuseTargetNode option in all components that depend on Portal, add the following code
+to your [theme](/theming/theme-object):
+
+```tsx
+import { createTheme, Portal } from '@mantine/core';
+
+export const theme = createTheme({
+  components: {
+    Portal: Portal.extend({
+      defaultProps: {
+        reuseTargetNode: true,
+      },
+    }),
+  }
+});
+```
+
+Example usage. In the following example, all three paragraphs will be rendered in the same target node:
+
+```tsx
+import { Portal } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Portal reuseTargetNode>
+        <p>First</p>
+      </Portal>
+
+      <Portal reuseTargetNode>
+        <p>Second</p>
+      </Portal>
+
+      <Portal reuseTargetNode>
+        <p>Third</p>
+      </Portal>
+    </>
+  );
+}
+```
+
+## use-form formRootRule
+
+`formRootRule` is a special rule path that can be used to [validate](/form/validation) objects and arrays
+alongside with their nested fields. For example, it is useful when you want to capture
+a list of values, validate each value individually and then validate the list itself
+to not be empty:
+
+<Demo data={FormDemos.rootRuleArray} />
+
+Another example is to validate an object fields combination:
+
+<Demo data={FormDemos.rootRuleObject} />
+
+## isJSONString and isNotEmptyHTML form validators
+
+New `isJSONString` and `isNotEmptyHTML` [form validators](/form/validators):
+
+- `isNotEmptyHTML` checks that form value is not an empty HTML string. Empty string, string with only HTML tags and whitespace are considered to be empty.
+- `isJSONString` checks that form value is a valid JSON string.
+
+```tsx
+import { isJSONString, useForm } from '@mantine/form';
+
+const form = useForm({
+  mode: 'uncontrolled',
+  initialValues: {
+    json: '',
+    html: '',
+  },
+
+  validate: {
+    json: isJSONString('Invalid JSON string'),
+    html: isNotEmptyHTML('HTML cannot be empty'),
+  },
+});
+```
+
+## Popover onDismiss
+
+[Popover](/core/popover) now supports `onDismiss` prop, which makes it easier
+to subscribe to outside clicks and escape key presses to close popover:
+
+```tsx
+import { useState } from 'react';
+import { Button, Popover } from '@mantine/core';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+  return (
+    <Popover
+      opened={opened}
+      onDismiss={() => setOpened(false)}
+    >
+      <Popover.Target>
+        <Button onClick={() => setOpened((o) => !o)}>
+          Toggle popover
+        </Button>
+      </Popover.Target>
+
+      <Popover.Dropdown>Dropdown</Popover.Dropdown>
+    </Popover>
+  );
+}
+```
+
+## MantineProvider env
+
+[MantineProvider](/theming/mantine-provider) component now supports `env` prop.
+It can be used in test environment to disable some features that
+might impact tests and/or make it harder to test components:
+
+- transitions that mount/unmount child component with delay
+- portals that render child component in a different part of the DOM
+
+To enable test environment, set `env` to `test`:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider env="test">
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+## use-file-dialog hook
+
+New [use-file-dialog](/hooks/use-file-dialog) allows capturing one or more files from the user
+without file input element:
+
+<Demo data={HooksDemos.useFileDialogUsage} />
+
+## Remix deprecation
+
+[Remix](https://remix.run/) is deprecated, the documentation related to Remix integration
+was removed, use [React Router](/guides/react-router) instead. To simplify maintenance,
+Remix/React Router templates were archived and will not be updated.
+
+## Help center updates
+
+- [I get hydration warning about data-mantine-color-scheme attribute, what does it mean?](https://help.mantine.dev/q/color-scheme-hydration-warning) question
+- [How can I apply styles to all Mantine components?](https://help.mantine.dev/q/apply-styles-to-all) question
+
+## Other changes
+
+- [Tooltip](/core/tooltip) now supports customizing `middlewares`
+- [ScrollArea](/core/scroll-area) now supports `overscrollBehavior` prop
+- [Affix](/core/affix) now supports `theme.spacing` values for `position` prop
+- [Anchor](/core/anchor) now supports `underline="not-hover"` option to display underline only when the link is not hovered

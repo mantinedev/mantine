@@ -10,6 +10,7 @@ import { Hooks } from './Hooks/Hooks';
 import { JoinCommunity } from './JoinCommunity/JoinCommunity';
 import { Jumbotron } from './Jumbotron/Jumbotron';
 import { Reviews } from './Reviews/Reviews';
+import { Sponsors } from './Sponsors/Sponsors';
 import { Theming } from './Theming/Theming';
 import { Usage } from './Usage/Usage';
 import { Waves } from './Waves/Waves';
@@ -24,6 +25,7 @@ export function HomePage() {
       <Shell mobileNavbarOnly>
         <div className={classes.root}>
           <Jumbotron />
+          <Sponsors />
           <Waves height={40} width={150} />
           <Components />
           <Waves height={42} width={220} rotate flip alt />
