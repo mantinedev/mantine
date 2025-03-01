@@ -183,6 +183,8 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
     varsResolver,
   });
 
+  const yAxisWidth = label ? undefined : { width: 0 };
+
   return (
     <Box ref={ref} {...getStyles('root')} {...others}>
       <ResponsiveContainer>
@@ -202,7 +204,7 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
             type="number"
             dataKey={dataKey.y}
             height={10}
-            width={label ? undefined : 0}
+            {...yAxisWidth}
             tick={false}
             tickLine={false}
             axisLine={false}
