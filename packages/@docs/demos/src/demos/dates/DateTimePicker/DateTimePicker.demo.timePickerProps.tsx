@@ -5,7 +5,17 @@ const code = `
 import { DateTimePicker } from '@mantine/dates';
 
 function Demo() {
-  return <DateTimePicker label="Pick date and time" placeholder="Pick date and time" />;
+  return (
+    <DateTimePicker
+      label="Pick date and time"
+      placeholder="Pick date and time"
+      timePickerProps={{
+        withDropdown: true,
+        popoverProps: { withinPortal: false },
+        format: '12h',
+      }}
+    />
+  );
 }
 `;
 
