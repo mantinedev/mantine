@@ -24,7 +24,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { ChartTooltip } from '../ChartTooltip/ChartTooltip';
+import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip/ChartTooltip';
 import classes from './DonutChart.module.css';
 
 export interface DonutChartCell {
@@ -33,7 +33,7 @@ export interface DonutChartCell {
   color: MantineColor;
 }
 
-export type DonutChartStylesNames = 'root' | 'label';
+export type DonutChartStylesNames = 'root' | 'label' | ChartTooltipStylesNames;
 export type DonutChartCssVariables = {
   root: '--chart-stroke-color' | '--chart-labels-color' | '--chart-size';
 };

@@ -4,6 +4,14 @@ import type { StylesApiData } from '../types';
 export const PieChartStylesApi: StylesApiData<PieChartFactory> = {
   selectors: {
     root: 'Root element',
+    tooltip: 'Tooltip root element',
+    tooltipBody: 'Tooltip wrapper around all items',
+    tooltipItem: 'Tooltip item representing data series',
+    tooltipItemBody: 'Tooltip item wrapper around item color and name',
+    tooltipItemColor: 'Tooltip item color',
+    tooltipItemName: 'Tooltip item name',
+    tooltipItemData: 'Tooltip item data',
+    tooltipLabel: 'Label of the tooltip',
   },
 
   vars: {

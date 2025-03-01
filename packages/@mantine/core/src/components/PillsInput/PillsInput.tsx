@@ -57,8 +57,11 @@ export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
         }}
         onClick={(event) => {
           event.preventDefault();
-          onClick?.(event);
-          fieldRef.current?.focus();
+          const fieldset = event.currentTarget.closest('fieldset');
+          if (!fieldset?.disabled) {
+            fieldRef.current?.focus();
+            onClick?.(event);
+          }
         }}
         {...others}
         multiline
