@@ -183,8 +183,15 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
   const nodes = Array.isArray(code) ? code : [code];
   const currentCode = nodes[value];
 
+  const language =
+    currentCode.language != null
+      ? hljs.getLanguage(currentCode.language ?? '')
+        ? currentCode.language
+        : 'plaintext'
+      : 'plaintext';
+
   const highlighted = hljs.highlight(currentCode.code.trim(), {
-    language: currentCode.language || 'plaintext',
+    language,
   }).value;
 
   const files = nodes.map((node, index) => (
