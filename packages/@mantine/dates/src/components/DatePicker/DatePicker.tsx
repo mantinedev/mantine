@@ -80,6 +80,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     hideOutsideDates,
     __onDayMouseEnter,
     __onDayClick,
+    defaultDate,
     ...others
   } = props;
 
@@ -122,6 +123,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
         ...getControlProps(date),
         ...getDayProps?.(date),
       })}
+      defaultDate={defaultDate || value || undefined}
       {...others}
     />
   );

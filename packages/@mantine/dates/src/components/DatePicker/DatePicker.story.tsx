@@ -9,9 +9,17 @@ import { DatePicker } from './DatePicker';
 export default { title: 'DatePicker' };
 
 export function Usage() {
+  const [value, setValue] = useState('2025-02-12');
+
   return (
     <div style={{ padding: 40 }}>
-      <DatePicker highlightToday />
+      <DatePicker
+        type="default"
+        minDate={new Date('2020-01-01')}
+        maxDate={new Date()}
+        value={value}
+        onChange={setValue}
+      />
     </div>
   );
 }
