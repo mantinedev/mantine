@@ -20,7 +20,7 @@
     "hc:exports": "tsx scripts/docs/hc-exports",
     "hc:deploy": "npm run hc:build && wrangler pages deploy apps/help.mantine.dev/out --branch master --project-name help-mantine-dev",
     "chmod": "sh scripts/utils/chmod.sh",
-    "setup": "npm run docs:docgen && tsx scripts/docs/generate-css-exports",
+    "setup": "npm run docs:docgen && npm run docs:sponsors && tsx scripts/docs/generate-css-exports",
     "plop": "tsx scripts/plop",
     "format-changelogs": "tsx scripts/docs/format-changelogs",
     "changelog": "tsx scripts/docs/changelog",
