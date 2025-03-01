@@ -12,6 +12,7 @@ import { HomePageGetStarted } from './HomePageGetStarted/HomePageGetStarted';
 import { HomePageHooks } from './HomePageHooks/HomePageHooks';
 import { HomePageJoin } from './HomePageJoin/HomePageJoin';
 import { HomePageJumbotron } from './HomePageJumbotron/HomePageJumbotron';
+import { HomePageSponsors } from './HomePageSponsors/HomePageSponsors';
 import { HomePageStyles } from './HomePageStyles/HomePageStyles';
 import { HomePageUI } from './HomePageUI/HomePageUI';
 import classes from './HomePage.module.css';
@@ -24,6 +25,7 @@ export function HomePage() {
     <Shell withNavbar={false} fluid withNav={false}>
       <div className={classes.root}>
         <HomePageJumbotron />
+        <HomePageSponsors />
         <HomePageComponents />
         <HomePageHooks />
         <HomePageStyles />

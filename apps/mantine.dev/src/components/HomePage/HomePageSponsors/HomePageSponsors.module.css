@@ -1,7 +1,3 @@
-.root {
-  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
-}
-
 .inner {
   position: relative;
   padding-bottom: 80px;
@@ -29,10 +25,10 @@
   text-decoration: none;
   font-size: var(--mantine-font-size-sm);
   color: var(--mantine-color-bright);
-  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
 
   @mixin hover {
-    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-5));
   }
 }
 
