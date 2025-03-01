@@ -26,7 +26,7 @@ export function ColorsGenerator() {
 
   return (
     <div style={{ maxWidth: 'calc(100vw - var(--mantine-spacing-lg) * 2)' }}>
-      <Title fw={500} mb="md" pt="lg">
+      <Title fw={500} mb="md" pt="lg" c="bright">
         Mantine colors generator
       </Title>
       <ColorsInput

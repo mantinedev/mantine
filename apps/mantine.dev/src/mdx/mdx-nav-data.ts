@@ -78,7 +78,7 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
 
 const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
   {
-    category: 'Colors',
+    category: 'Theming',
     pages: [
       MDX_DATA.MantineProvider,
       MDX_DATA.ThemeObject,
@@ -89,16 +89,13 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
     ],
   },
   {
-    category: 'Styles',
+    category: 'Styling',
     pages: [
       MDX_DATA.StylesOverview,
       MDX_DATA.MantineStyles,
       MDX_DATA.CSSFilesList,
       MDX_DATA.CSSModules,
       MDX_DATA.PostCSSPreset,
-      MDX_DATA.Emotion,
-      MDX_DATA.UsageWithSass,
-      MDX_DATA.VanillaExtract,
       MDX_DATA.GlobalStyles,
       MDX_DATA.CssVariables,
       MDX_DATA.CSSVariablesList,
@@ -108,12 +105,18 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.StylesApi,
       MDX_DATA.DataAttributes,
       MDX_DATA.VariantsAndSizes,
-      MDX_DATA.UnstyledComponents,
       MDX_DATA.StyleProps,
       MDX_DATA.ColorFunctions,
       MDX_DATA.Rtl,
-      MDX_DATA.StylesPerformance,
     ],
+  },
+  {
+    category: 'Styles integrations',
+    pages: [MDX_DATA.Emotion, MDX_DATA.UsageWithSass, MDX_DATA.VanillaExtract],
+  },
+  {
+    category: 'Other',
+    pages: [MDX_DATA.Polymorphic, MDX_DATA.StylesPerformance, MDX_DATA.UnstyledComponents],
   },
 ];
 
