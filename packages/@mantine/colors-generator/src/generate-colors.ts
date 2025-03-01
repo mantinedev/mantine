@@ -24,6 +24,8 @@ export function generateColorsMap(color: string) {
         : c.desaturate(saturationDelta * -1);
     });
 
+  colors[baseColorIndex] = chroma(color);
+
   return { baseColorIndex, colors };
 }
 
