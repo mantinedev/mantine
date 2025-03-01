@@ -36,8 +36,9 @@ export function Disabled() {
       <fieldset disabled>
         <MultiSelect
           label="disabled fieldset"
-          defaultValue={['React', 'Angular']}
+          defaultValue={['React']}
           placeholder="Enter tags"
+          data={['React', 'Angular', 'Svelte']}
         />
       </fieldset>
     </div>
