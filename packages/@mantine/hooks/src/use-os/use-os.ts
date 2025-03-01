@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
 
-export type OS = 'undetermined' | 'macos' | 'ios' | 'windows' | 'android' | 'linux';
+export type OS = 'undetermined' | 'macos' | 'ios' | 'windows' | 'android' | 'linux' | 'chromeos';
 
 function isMacOS(userAgent: string): boolean {
   const macosPattern = /(Macintosh)|(MacIntel)|(MacPPC)|(Mac68K)/i;
@@ -33,6 +33,11 @@ function isLinux(userAgent: string): boolean {
   return linuxPattern.test(userAgent);
 }
 
+function isChromeOS(userAgent: string): boolean {
+  const chromePattern = /CrOS/i;
+  return chromePattern.test(userAgent);
+}
+
 function getOS(): OS {
   if (typeof window === 'undefined') {
     return 'undetermined';
@@ -54,6 +59,9 @@ function getOS(): OS {
   }
   if (isLinux(userAgent)) {
     return 'linux';
+  }
+  if (isChromeOS(userAgent)) {
+    return 'chromeos';
   }
 
   return 'undetermined';

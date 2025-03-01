@@ -13,6 +13,9 @@ const platforms = {
   android: [
     'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36',
   ],
+  chromeos: [
+    'Mozilla/5.0 (X11; CrOS x86_64 13310.93.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.133 Safari/537.36',
+  ],
   undetermined: ['UNKNOWN'],
 } as const;
 
