@@ -15,6 +15,7 @@ export function Usage() {
         clearable
         name="time-picker"
         form="my-form"
+        format="12h"
       />
     </div>
   );
@@ -23,7 +24,14 @@ export function Usage() {
 export function WithDropdown() {
   return (
     <div style={{ padding: 40 }}>
-      <TimePicker withSeconds secondsStep={5} clearable defaultValue="12:34:55" withDropdown />
+      <TimePicker
+        withSeconds
+        secondsStep={5}
+        clearable
+        // defaultValue="12:34:55"
+        withDropdown
+        format="12h"
+      />
     </div>
   );
 }

@@ -5,13 +5,29 @@ interface AmPmInputProps
   extends Omit<React.ComponentPropsWithoutRef<'select'>, 'value' | 'onChange'> {
   labels: { am: string; pm: string };
   value: string | null;
+  inputType: 'select' | 'input';
   onChange: (value: string | null) => void;
   readOnly?: boolean;
   onPreviousInput?: () => void;
 }
 
 export const AmPmInput = forwardRef<HTMLSelectElement, AmPmInputProps>(
-  ({ labels, value, onChange, className, style, onPreviousInput, readOnly, ...others }, ref) => {
+  (
+    {
+      labels,
+      value,
+      onChange,
+      className,
+      style,
+      onPreviousInput,
+      readOnly,
+      onMouseDown,
+      onTouchStart,
+      inputType,
+      ...others
+    },
+    ref
+  ) => {
     const ctx = useTimePickerContext();
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLSelectElement>) => {
@@ -59,6 +75,25 @@ export const AmPmInput = forwardRef<HTMLSelectElement, AmPmInputProps>(
       }
     };
 
+    if (inputType === 'input') {
+      return (
+        <input
+          {...ctx.getStyles('field', { className, style })}
+          ref={ref as any}
+          value={value || '--'}
+          onChange={(event) => !readOnly && onChange(event.target.value || null)}
+          onClick={((event: any) => event.stopPropagation()) as any}
+          onKeyDown={handleKeyDown as any}
+          onMouseDown={(event) => {
+            event.stopPropagation();
+            onMouseDown?.(event as any);
+          }}
+          data-am-pm
+          {...(others as any)}
+        />
+      );
+    }
+
     return (
       <select
         {...ctx.getStyles('field', { className, style })}
@@ -67,7 +102,10 @@ export const AmPmInput = forwardRef<HTMLSelectElement, AmPmInputProps>(
         onChange={(event) => !readOnly && onChange(event.target.value || null)}
         onClick={(event) => event.stopPropagation()}
         onKeyDown={handleKeyDown}
-        onMouseDown={(event) => event.stopPropagation()}
+        onMouseDown={(event) => {
+          event.stopPropagation();
+          onMouseDown?.(event);
+        }}
         data-am-pm
         {...others}
       >

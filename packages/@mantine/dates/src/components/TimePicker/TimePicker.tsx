@@ -463,6 +463,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                 {format === '12h' && (
                   <AmPmInput
                     {...amPmSelectProps}
+                    inputType={withDropdown ? 'input' : 'select'}
                     labels={amPmLabels!}
                     value={controller.values.amPm}
                     onChange={controller.setAmPm}
