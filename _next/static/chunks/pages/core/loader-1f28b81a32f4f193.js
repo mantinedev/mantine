@@ -71,7 +71,7 @@ function Demo() {
 import { forwardRef } from 'react';
 import { MantineLoaderComponent } from '@mantine/core';
 
-const RingLoader: MantineLoaderComponent = forwardRef(({ style, ...others }, ref) => (
+export const RingLoader: MantineLoaderComponent = forwardRef(({ style, ...others }, ref) => (
   <svg
     {...others}
     ref={ref}
