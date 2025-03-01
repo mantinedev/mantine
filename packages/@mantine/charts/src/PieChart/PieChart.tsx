@@ -24,7 +24,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { ChartTooltip } from '../ChartTooltip/ChartTooltip';
+import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip/ChartTooltip';
 import classes from './PieChart.module.css';
 
 export interface PieChartCell {
@@ -34,7 +34,7 @@ export interface PieChartCell {
   color: MantineColor;
 }
 
-export type PieChartStylesNames = 'root';
+export type PieChartStylesNames = 'root' | ChartTooltipStylesNames;
 export type PieChartCssVariables = {
   root: '--chart-stroke-color' | '--chart-labels-color' | '--chart-size';
 };
