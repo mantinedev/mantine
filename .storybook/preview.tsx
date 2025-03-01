@@ -67,8 +67,8 @@ function DirectionWrapper({ children }: { children: React.ReactNode }) {
 }
 
 async function loadShiki() {
-  const { getHighlighter } = await import('shiki');
-  const shiki = await getHighlighter({
+  const { createHighlighter } = await import('shiki');
+  const shiki = await createHighlighter({
     langs: ['tsx', 'scss', 'html', 'bash', 'json'],
     themes: [],
   });

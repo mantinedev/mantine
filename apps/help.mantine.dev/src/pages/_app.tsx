@@ -13,8 +13,8 @@ import { Shell } from '../components/Shell';
 import { theme } from '../theme';
 
 async function loadShiki() {
-  const { getHighlighter } = await import('shiki');
-  const shiki = await getHighlighter({
+  const { createHighlighter } = await import('shiki');
+  const shiki = await createHighlighter({
     langs: ['tsx', 'scss', 'html', 'bash', 'json'],
     themes: [],
   });

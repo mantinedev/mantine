@@ -54,8 +54,8 @@ import { CodeHighlightAdapterProvider, createShikiAdapter } from '@mantine/code-
 
 // Shiki requires async code to load the highlighter
 async function loadShiki() {
-  const { getHighlighter } = await import('shiki');
-  const shiki = await getHighlighter({
+  const { createHighlighter } = await import('shiki');
+  const shiki = await createHighlighter({
     langs: ['tsx', 'scss', 'html', 'bash', 'json'],
     themes: [],
   });
@@ -146,8 +146,8 @@ import { transformerNotationDiff, transformerNotationHighlight } from '@shikijs/
 import { darkTheme, lightTheme } from './shiki-themes';
 
 async function loadShiki() {
-  const { getHighlighter } = await import('shiki');
-  const shiki = await getHighlighter({
+  const { createHighlighter } = await import('shiki');
+  const shiki = await createHighlighter({
     langs: ['tsx', 'scss', 'html', 'bash', 'json'],
     themes: [],
   });
@@ -159,12 +159,12 @@ async function loadShiki() {
 export const customShikiAdapter: CodeHighlightAdapter = {
   // loadContext is called on client side to load shiki highlighter
   // It is required to be used if your library requires async initialization
-  // The value returned from loadContext is passed to getHighlighter as ctx argument
+  // The value returned from loadContext is passed to createHighlighter as ctx argument
   loadContext: loadShiki,
 
   // ctx is the value returned from loadContext
   // or null if loadContext is not used or has not resolved yet
-  getHighlighter: (ctx) => {
+  createHighlighter: (ctx) => {
     if (!ctx) {
       return ({ code }) => ({ highlightedCode: code, isHighlighted: false });
     }

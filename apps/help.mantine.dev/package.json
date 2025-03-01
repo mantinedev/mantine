@@ -31,7 +31,7 @@
     "react-dom": "19.0.0",
     "react-imask": "^7.6.1",
     "rehype-slug": "^6.0.0",
-    "shiki": "^1.23.1"
+    "shiki": "^3.1.0"
   },
   "devDependencies": {
     "@mdx-js/loader": "^3.0.0",

@@ -11,6 +11,7 @@ export function HomePageSponsors() {
       rel="noreferrer"
       aria-label={`Mantine is sponsored by ${item.name} 💋`}
       className={classes.sponsor}
+      key={item.name}
     >
       <Image src={item.image} className={classes.image} />
       <span className={classes.name}>{item.name}</span>
