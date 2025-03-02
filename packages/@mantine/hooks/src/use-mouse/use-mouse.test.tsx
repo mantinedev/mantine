@@ -15,7 +15,7 @@ describe('@mantine/hook/use-mouse', () => {
   it('returns correct initial position (0, 0)', () => {
     const { result } = renderHook(() => useMouse());
 
-    expect(result.current).toEqual({ ref: expect.any(Object), x: 0, y: 0 });
+    expect(result.current).toEqual({ ref: expect.any(Function), x: 0, y: 0 });
   });
 
   it('updates the position without a ref', () => {
@@ -23,7 +23,7 @@ describe('@mantine/hook/use-mouse', () => {
 
     fireEvent.mouseMove(document, { clientX: 123, clientY: 456 });
 
-    expect(result.current).toEqual({ ref: expect.any(Object), x: 123, y: 456 });
+    expect(result.current).toEqual({ ref: expect.any(Function), x: 123, y: 456 });
   });
 
   it('updates the position', () => {
@@ -50,10 +50,10 @@ describe('@mantine/hook/use-mouse', () => {
 
     fireEvent.mouseMove(document, { clientX: 123, clientY: 456 });
 
-    expect(result.current).toEqual({ ref: expect.any(Object), x: 123, y: 456 });
+    expect(result.current).toEqual({ ref: expect.any(Function), x: 123, y: 456 });
 
     fireEvent.mouseLeave(document);
 
-    expect(result.current).toEqual({ ref: expect.any(Object), x: 0, y: 0 });
+    expect(result.current).toEqual({ ref: expect.any(Function), x: 0, y: 0 });
   });
 });

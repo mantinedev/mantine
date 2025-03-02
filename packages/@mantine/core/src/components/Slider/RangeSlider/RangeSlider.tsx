@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type RefCallback } from 'react';
 import { useMove, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -340,10 +340,20 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     }
   };
 
-  const { ref: container, active } = useMove(
+  const container = useRef<any>(null);
+
+  const { ref: onMoveRefChange, active } = useMove(
     ({ x }) => handleChange(x),
     { onScrubEnd: () => !disabled && onChangeEnd?.(valueRef.current) },
     dir
+  );
+
+  const onContainerRefChange: RefCallback<any> = useCallback(
+    (containerNode: any) => {
+      onMoveRefChange(containerNode);
+      container.current = containerNode;
+    },
+    [onMoveRefChange]
   );
 
   function handleThumbMouseDown(index: number) {
@@ -489,7 +499,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           value={_value[1]}
           disabled={disabled}
           containerProps={{
-            ref: container as any,
+            ref: onContainerRefChange,
             onMouseEnter: showLabelOnHover ? () => setHovered(true) : undefined,
             onMouseLeave: showLabelOnHover ? () => setHovered(false) : undefined,
             onTouchStartCapture: handleTrackMouseDownCapture,
