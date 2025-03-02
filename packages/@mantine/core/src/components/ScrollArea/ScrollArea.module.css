@@ -27,6 +27,7 @@
         padding-inline-end: 0;
         padding-inline-start: 0;
       }
+
       &:not([data-vertical-hidden]) {
         padding-inline-end: var(--scrollarea-scrollbar-size);
         padding-inline-start: unset;
@@ -43,6 +44,7 @@
       &:where([data-horizontal-hidden]) {
         padding-bottom: 0;
       }
+
       &:not([data-horizontal-hidden]) {
         padding-bottom: var(--scrollarea-scrollbar-size);
       }
