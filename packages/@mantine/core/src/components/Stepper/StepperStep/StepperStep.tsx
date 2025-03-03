@@ -25,6 +25,10 @@ const getStepFragment = (
     return <Fragment step={step || 0} />;
   }
 
+  if (Fragment) {
+    return <span style={{ display: 'flex', alignItems: 'center' }}>{Fragment}</span>;
+  }
+
   return Fragment;
 };
 
