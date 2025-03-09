@@ -77,7 +77,7 @@ export function HomePageCommunity() {
               </HomePageLearnMore>
 
               <div className={classes.stats}>
-                <Stat value="27,000+" label="Stars on GitHub" link={meta.gitHubLinks.mantine} />
+                <Stat value="28,000+" label="Stars on GitHub" link={meta.gitHubLinks.mantine} />
                 <Stat
                   value="2.2M+"
                   label="Monthly downloads"
