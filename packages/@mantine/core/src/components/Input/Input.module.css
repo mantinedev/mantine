@@ -216,13 +216,6 @@
     background-color: var(--input-disabled-bg);
     color: var(--input-disabled-color);
   }
-
-  /* Fixes odd Firefox behavior in Select – https://github.com/mantinedev/mantine/issues/7476 */
-  @supports (-moz-appearance: none) {
-    &[readonly][aria-haspopup] {
-      pointer-events: none;
-    }
-  }
 }
 
 .section {
