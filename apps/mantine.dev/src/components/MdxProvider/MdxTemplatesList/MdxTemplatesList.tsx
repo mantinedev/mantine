@@ -69,7 +69,7 @@ export function MdxTemplatesList({ type, name, community = false }: MdxTemplates
               <Text fz="xs">Create a template with your stack and share it with the community</Text>
             </Table.Td>
             <Table.Td w={146}>
-              <Button component={Link} href="/submit-template/" size="xs">
+              <Button component={Link} href="https://help.mantine.dev/q/submit-template" size="xs">
                 Submit template
               </Button>
             </Table.Td>
