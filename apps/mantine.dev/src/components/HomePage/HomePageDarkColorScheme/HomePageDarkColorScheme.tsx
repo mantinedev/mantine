@@ -4,7 +4,7 @@ import { MdxCodeHighlight } from '@/components/MdxProvider';
 import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer';
 import { HomePageDescription } from '../shared/HomePageDescription/HomePageDescription';
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
-import demo from './images/demo.webp';
+import demo from './images/new.webp';
 import classes from './HomePageDarkColorScheme.module.css';
 
 const code = `import { MantineProvider } from '@mantine/core';
