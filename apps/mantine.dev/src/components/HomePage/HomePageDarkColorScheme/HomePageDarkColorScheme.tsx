@@ -35,7 +35,7 @@ export function HomePageDarkColorScheme() {
               the box.
             </HomePageDescription>
 
-            <MdxCodeHighlight code={code} language="tsx" />
+            <MdxCodeHighlight code={code} language="tsx" className={classes.code} />
 
             <Group justify="center" mt="xl">
               <Button

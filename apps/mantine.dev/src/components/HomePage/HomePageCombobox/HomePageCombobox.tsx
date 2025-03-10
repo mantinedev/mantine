@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { IconArrowUpRight } from '@tabler/icons-react';
-import { Anchor, SimpleGrid, Title } from '@mantine/core';
+import { Anchor, Box, SimpleGrid, Title } from '@mantine/core';
 import { AutocompleteHighlight } from '../../../combobox-examples/examples/AutocompleteHighlight/AutocompleteHighlight';
 import { MaxSelectedItems } from '../../../combobox-examples/examples/MaxSelectedItems/MaxSelectedItems';
 import { MultiSelectCreatable } from '../../../combobox-examples/examples/MultiSelectCreatable/MultiSelectCreatable';
@@ -38,6 +38,7 @@ const comboboxExamples: ComboboxDemoProps[] = [
   {
     title: 'Transfer list with inline options list',
     name: 'TransferList',
+    hiddenOnMobile: true,
     component: TransferList,
   },
 ];
@@ -45,12 +46,13 @@ const comboboxExamples: ComboboxDemoProps[] = [
 interface ComboboxDemoProps {
   title: string;
   name: string;
+  hiddenOnMobile?: boolean;
   component: React.FC;
 }
 
-function ComboboxDemo({ title, name, component: Component }: ComboboxDemoProps) {
+function ComboboxDemo({ title, name, hiddenOnMobile, component: Component }: ComboboxDemoProps) {
   return (
-    <section className={classes.demo}>
+    <Box visibleFrom={hiddenOnMobile ? 'sm' : undefined} className={classes.demo}>
       <header className={classes.demoHeader}>
         <Title order={3} className={classes.demoTitle}>
           {title}
@@ -65,7 +67,7 @@ function ComboboxDemo({ title, name, component: Component }: ComboboxDemoProps) 
       <div className={classes.demoArea}>
         <Component />
       </div>
-    </section>
+    </Box>
   );
 }
 

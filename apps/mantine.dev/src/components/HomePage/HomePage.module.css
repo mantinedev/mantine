@@ -8,7 +8,7 @@
   --hp-block-spacing: 120px;
 
   @mixin smaller-than $mantine-breakpoint-md {
-    --hp-column-max-width: calc(100vw - 50px);
+    --hp-column-max-width: calc(100vw - 48px);
     --hp-block-spacing: 40px;
   }
 

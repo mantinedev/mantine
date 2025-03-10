@@ -37,3 +37,7 @@
 .demo {
   margin-top: var(--mantine-spacing-xl);
 }
+
+.code {
+  max-width: calc(100vw - 42px);
+}

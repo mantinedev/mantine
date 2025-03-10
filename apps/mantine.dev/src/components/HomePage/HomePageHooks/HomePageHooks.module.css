@@ -30,8 +30,17 @@
   color: var(--mantine-color-dimmed);
   font-size: var(--mantine-font-size-lg);
   max-width: 500px;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    font-size: var(--mantine-font-size-sm);
+  }
 }
 
 .header {
   height: 120px;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    height: auto;
+    margin-bottom: var(--mantine-spacing-sm);
+  }
 }

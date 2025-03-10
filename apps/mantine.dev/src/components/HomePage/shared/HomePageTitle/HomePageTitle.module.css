@@ -6,12 +6,13 @@
   padding: 0;
   user-select: none;
   color: var(--mantine-color-bright);
+  text-wrap: balance;
 
   &[data-order='1'] {
     font-size: 72px;
 
     @mixin smaller-than $mantine-breakpoint-md {
-      font-size: 44px;
+      font-size: 36px;
     }
   }
 
