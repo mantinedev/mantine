@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconColorPicker } from '@tabler/icons-react';
+import { IconViewfinder } from '@tabler/icons-react';
 import { ActionIcon, ColorSwatch, Group, Text } from '@mantine/core';
 import { useEyeDropper } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
@@ -31,7 +31,7 @@ function Demo() {
   return (
     <Group>
       <ActionIcon variant="default" onClick={pickColor} size="xl" radius="md">
-        <IconColorPicker size={16} stroke={1.5} />
+        <IconViewfinder size={28} stroke={1.5} />
       </ActionIcon>
       {color ? (
         <Group gap="xs">
@@ -68,7 +68,7 @@ function Demo() {
   return (
     <Group>
       <ActionIcon variant="default" onClick={pickColor} size="xl" radius="md">
-        <IconColorPicker size={16} stroke={1.5} />
+        <IconViewfinder size={28} stroke={1.5} />
       </ActionIcon>
       {color ? (
         <Group gap="xs">
