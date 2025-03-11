@@ -3,22 +3,20 @@
   height: 22px;
 }
 
-.dark {
-  @mixin dark {
-    display: none;
-  }
-
-  @mixin light {
-    display: block;
-  }
+.dark,
+.light,
+.auto {
+  display: none;
 }
 
-.light {
-  @mixin light {
-    display: none;
-  }
+[data-active='dark'] .dark {
+  display: block;
+}
 
-  @mixin dark {
-    display: block;
-  }
+[data-active='light'] .light {
+  display: block;
+}
+
+[data-active='auto'] .auto {
+  display: block;
 }

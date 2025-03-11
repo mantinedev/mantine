@@ -77,7 +77,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
       <FontsStyle />
       <DirectionProvider initialDirection="ltr" detectDirection={false}>
         <MantineEmotionProvider cache={emotionCache}>
-          <MantineProvider theme={theme} defaultColorScheme="light">
+          <MantineProvider theme={theme} defaultColorScheme="auto">
             <ShikiProvider loadShiki={loadShiki}>
               <Search />
               <Notifications />

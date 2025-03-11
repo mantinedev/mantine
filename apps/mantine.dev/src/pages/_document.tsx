@@ -8,7 +8,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <ColorSchemeScript defaultColorScheme="light" />
+        <ColorSchemeScript defaultColorScheme="auto" />
       </Head>
       <body>
         <Main />
