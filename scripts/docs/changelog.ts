@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import chalk from 'chalk';
 import simpleGit from 'simple-git';
 import packageJson from '../../package.json';
@@ -9,8 +10,9 @@ function getPreviousRelease(message: string) {
   return splitted[splitted.length - 1];
 }
 
-function removeIssueReferences(markdown: string) {
-  return markdown.replace(/\(#\d+\)/g, '').trim();
+function formatForDiscord(markdown: string) {
+  const nextVersion = packageJson.version;
+  return `Patch ${nextVersion} is out:\n\n${markdown.replace(/\(#\d+\)/g, '').trim()}\n\nView on GitHub – https://github.com/mantinedev/mantine/releases/tag/${packageJson.version}`;
 }
 
 async function getChangelog() {
@@ -24,9 +26,7 @@ async function getChangelog() {
       !message.includes('alpha')
   );
 
-  process.stdout.write(
-    chalk.cyan(`Previous release: ${getPreviousRelease(messages[lastRelease])}\n\n`)
-  );
+  console.log(chalk.cyan(`Previous release: ${getPreviousRelease(messages[lastRelease])}\n\n`));
 
   const notes = messages
     .slice(0, lastRelease)
@@ -34,10 +34,10 @@ async function getChangelog() {
     .map((message) => message.replace('[', '- `[').replace(']', ']`'))
     .join('\n');
   if (notes) {
-    process.stdout.write(`${notes}\n\n\n\n\n`);
-    process.stdout.write(removeIssueReferences(notes));
+    console.log(`${notes}\n\n\n\n\n`);
+    console.log(formatForDiscord(notes));
   } else {
-    process.stdout.write(`No significant changes yet\n\n`);
+    console.log(`No significant changes yet\n\n`);
   }
 }
 

@@ -5,6 +5,7 @@
   "scripts": {
     "build": "next build && echo 'mantine.dev' > out/CNAME && echo '' > out/.nojekyll",
     "build:alpha": "next build && echo 'alpha.mantine.dev' > out/CNAME && echo '' > out/.nojekyll",
+    "build:v7": "next build && echo 'v7.mantine.dev' > out/CNAME && echo '' > out/.nojekyll",
     "clean": "rm -rf .next",
     "dev": "next dev -p 7545",
     "postbuild": "next-sitemap",
