@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { IconCircleDashed, IconExternalLink } from '@tabler/icons-react';
 import { Button, Table, Text } from '@mantine/core';
 import { frameworkIcons } from '@/components/icons';
