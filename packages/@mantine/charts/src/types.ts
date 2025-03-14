@@ -28,6 +28,7 @@ export type BaseChartStylesNames =
   | 'axis'
   | 'grid'
   | 'referenceLine'
+  | 'referenceArea'
   | 'axisLabel';
 
 export type ChartData = Record<string, any>[];

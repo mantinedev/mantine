@@ -9,6 +9,7 @@ import {
   LabelListProps,
   Legend,
   BarChart as ReChartsBarChart,
+  ReferenceArea,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -109,6 +110,28 @@ export interface BarChartProps
 
   /** A function to assign dynamic bar color based on its value */
   getBarColor?: (value: number, series: BarChartSeries) => MantineColor;
+
+  /** Reference areas to display on the chart */
+  referenceAreas?: Array<
+    Omit<React.ComponentProps<typeof ReferenceArea>, 'ref'> & {
+      color?: MantineColor;
+      label?: string;
+      labelPosition?:
+        | 'top'
+        | 'bottom'
+        | 'left'
+        | 'right'
+        | 'center'
+        | 'insideLeft'
+        | 'insideRight'
+        | 'insideTop'
+        | 'insideBottom'
+        | 'insideTopLeft'
+        | 'insideTopRight'
+        | 'insideBottomLeft'
+        | 'insideBottomRight';
+    }
+  >;
 }
 
 export type BarChartFactory = Factory<{
@@ -221,6 +244,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     getBarColor,
     gridColor,
     textColor,
+    referenceAreas,
     ...others
   } = props;
 
@@ -330,6 +354,31 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     tickFormatter: orientation === 'vertical' ? undefined : tickFormatter,
     ...getStyles('axis'),
   };
+
+  const referenceAreasItems = referenceAreas?.map((area, index) => {
+    const color = getThemeColor(area.color, theme);
+    return (
+      <ReferenceArea
+        key={`area-${index}`}
+        fill={area.color ? `${color}30` : 'var(--chart-grid-color)30'}
+        stroke={area.color ? color : 'var(--chart-grid-color)'}
+        strokeWidth={1}
+        yAxisId={area.yAxisId || 'left'}
+        {...area}
+        label={
+          area.label
+            ? {
+                value: area.label,
+                fill: area.color ? color : 'currentColor',
+                fontSize: 12,
+                position: area.labelPosition ?? 'insideTopLeft',
+              }
+            : undefined
+        }
+        {...getStyles('bar')}
+      />
+    );
+  });
 
   return (
     <Box
@@ -474,6 +523,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
 
           {bars}
           {referenceLinesItems}
+          {referenceAreasItems}
           {children}
         </ReChartsBarChart>
       </ResponsiveContainer>

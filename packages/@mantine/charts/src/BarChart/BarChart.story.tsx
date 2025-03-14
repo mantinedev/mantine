@@ -177,3 +177,64 @@ export function VerticalOrientationValueFormatter() {
     />
   );
 }
+
+export function ReferenceAreas() {
+  return (
+    <div style={{ padding: 40 }}>
+      <BarChart
+        h={300}
+        data={simpleData}
+        dataKey="product"
+        series={[{ name: 'sales', color: 'indigo.6' }]}
+        referenceAreas={[
+          {
+            x1: 'Laptop',
+            x2: 'Tablet',
+            color: 'green.5',
+            label: 'High-value products',
+            labelPosition: 'insideTopLeft',
+            fillOpacity: 0.2,
+          },
+          {
+            y1: 100,
+            y2: 500,
+            color: 'red.5',
+            label: 'Low sales zone',
+            labelPosition: 'insideBottomRight',
+            fillOpacity: 0.2,
+          },
+        ]}
+        withLegend
+      />
+    </div>
+  );
+}
+
+export function VerticalWithReferenceAreas() {
+  return (
+    <div style={{ padding: 40 }}>
+      <BarChart
+        h={300}
+        data={data}
+        dataKey="month"
+        orientation="vertical"
+        series={[
+          { name: 'Smartphones', color: 'indigo.6' },
+          { name: 'Laptops', color: 'blue.6' },
+        ]}
+        referenceAreas={[
+          {
+            x1: 0,
+            x2: 40,
+            color: 'cyan.5',
+            label: 'Focus Period',
+            labelPosition: 'insideTopLeft',
+            fillOpacity: 0.2,
+          },
+        ]}
+        withLegend
+        withBarValueLabel
+      />
+    </div>
+  );
+}

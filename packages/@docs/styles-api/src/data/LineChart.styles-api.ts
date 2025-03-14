@@ -21,6 +21,7 @@ export const LineChartStylesApi: StylesApiData<LineChartFactory> = {
     tooltipItemData: 'Tooltip item data',
     tooltipLabel: 'Label of the tooltip',
     referenceLine: 'Reference line',
+    referenceArea: 'Reference area',
     axisLabel: 'X and Y axis labels',
   },
 
