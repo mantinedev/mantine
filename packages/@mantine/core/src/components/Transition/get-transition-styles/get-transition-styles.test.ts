@@ -8,6 +8,13 @@ const customTransition = {
   transitionProperty: 'color, background-color',
 };
 
+const sharedStyles = {
+  transitionDuration: '625ms',
+  transitionTimingFunction: 'ease',
+  WebkitBackfaceVisibility: 'hidden',
+  willChange: 'transform, opacity',
+};
+
 describe('@mantine/core/Transition/get-transition-styles', () => {
   it('returns predefined transition with string value', () => {
     expect(
@@ -21,8 +28,7 @@ describe('@mantine/core/Transition/get-transition-styles', () => {
       ...transitions['slide-up'].in,
       ...transitions['slide-up'].common,
       transitionProperty: transitions['slide-up'].transitionProperty,
-      transitionDuration: '625ms',
-      transitionTimingFunction: 'ease',
+      ...sharedStyles,
     });
 
     expect(
@@ -36,8 +42,7 @@ describe('@mantine/core/Transition/get-transition-styles', () => {
       ...transitions['slide-up'].out,
       ...transitions['slide-up'].common,
       transitionProperty: transitions['slide-up'].transitionProperty,
-      transitionDuration: '625ms',
-      transitionTimingFunction: 'ease',
+      ...sharedStyles,
     });
   });
 
@@ -53,8 +58,7 @@ describe('@mantine/core/Transition/get-transition-styles', () => {
       ...customTransition.in,
       ...customTransition.common,
       transitionProperty: customTransition.transitionProperty,
-      transitionDuration: '625ms',
-      transitionTimingFunction: 'ease',
+      ...sharedStyles,
     });
 
     expect(
@@ -68,8 +72,7 @@ describe('@mantine/core/Transition/get-transition-styles', () => {
       ...customTransition.out,
       ...customTransition.common,
       transitionProperty: customTransition.transitionProperty,
-      transitionDuration: '625ms',
-      transitionTimingFunction: 'ease',
+      ...sharedStyles,
     });
   });
 });

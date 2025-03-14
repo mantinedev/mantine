@@ -4,6 +4,7 @@ import {
   ExtendComponent,
   Factory,
   getContextItemIndex,
+  getWithProps,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -215,6 +216,7 @@ export function Menu(_props: MenuProps) {
 }
 
 Menu.extend = (input: ExtendComponent<MenuFactory>) => input;
+Menu.withProps = getWithProps<MenuProps, MenuProps>(Menu as any);
 Menu.classes = classes as Record<string, string>;
 Menu.displayName = '@mantine/core/Menu';
 Menu.Item = MenuItem;

@@ -66,7 +66,7 @@ export function MultiSelectCreatable() {
                   setSearch(event.currentTarget.value);
                 }}
                 onKeyDown={(event) => {
-                  if (event.key === 'Backspace' && search.length === 0) {
+                  if (event.key === 'Backspace' && search.length === 0 && value.length > 0) {
                     event.preventDefault();
                     handleValueRemove(value[value.length - 1]);
                   }

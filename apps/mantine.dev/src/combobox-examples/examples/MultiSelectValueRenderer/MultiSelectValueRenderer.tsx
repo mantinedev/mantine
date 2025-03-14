@@ -56,7 +56,7 @@ export function MultiSelectValueRenderer() {
                 type="hidden"
                 onBlur={() => combobox.closeDropdown()}
                 onKeyDown={(event) => {
-                  if (event.key === 'Backspace') {
+                  if (event.key === 'Backspace' && value.length > 0) {
                     event.preventDefault();
                     handleValueRemove(value[value.length - 1]);
                   }

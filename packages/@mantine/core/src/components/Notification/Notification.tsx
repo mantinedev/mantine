@@ -14,7 +14,7 @@ import {
   useStyles,
 } from '../../core';
 import { CloseButton } from '../CloseButton';
-import { Loader } from '../Loader';
+import { Loader, LoaderProps } from '../Loader';
 import classes from './Notification.module.css';
 
 export type NotificationStylesNames =
@@ -64,6 +64,9 @@ export interface NotificationProps
 
   /** Props passed down to the close button */
   closeButtonProps?: Record<string, any>;
+
+  /** Props passed down to `Loader` component */
+  loaderProps?: LoaderProps;
 }
 
 export type NotificationFactory = Factory<{
@@ -105,6 +108,7 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
     variant,
     vars,
     mod,
+    loaderProps,
     ...others
   } = props;
 
@@ -131,7 +135,7 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
       role="alert"
     >
       {icon && !loading && <div {...getStyles('icon')}>{icon}</div>}
-      {loading && <Loader size={28} color={color} {...getStyles('loader')} />}
+      {loading && <Loader size={28} color={color} {...loaderProps} {...getStyles('loader')} />}
 
       <div {...getStyles('body')}>
         {title && <div {...getStyles('title')}>{title}</div>}

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useMergeRefs } from '@floating-ui/react';
 import {
   Box,
   BoxProps,
@@ -54,7 +55,7 @@ export interface ScrollAreaProps
   scrollbars?: 'x' | 'y' | 'xy' | false;
 
   /** Determines whether scrollbars should be offset with padding on given axis, `false` by default */
-  offsetScrollbars?: boolean | 'x' | 'y';
+  offsetScrollbars?: boolean | 'x' | 'y' | 'present';
 
   /** Assigns viewport element (scrollable container) ref */
   viewportRef?: React.ForwardedRef<HTMLDivElement>;
@@ -127,6 +128,8 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
   } = props;
 
   const [scrollbarHovered, setScrollbarHovered] = useState(false);
+  const [verticalThumbVisible, setVerticalThumbVisible] = useState(false);
+  const [horizontalThumbVisible, setHorizontalThumbVisible] = useState(false);
 
   const getStyles = useStyles<ScrollAreaFactory>({
     name: 'ScrollArea',
@@ -141,6 +144,31 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     varsResolver,
   });
 
+  const localViewportRef = useRef<HTMLDivElement>(null);
+  const combinedViewportRef = useMergeRefs([viewportRef, localViewportRef]);
+
+  useEffect(() => {
+    if (!localViewportRef.current) {
+      return;
+    }
+
+    if (offsetScrollbars !== 'present') {
+      return;
+    }
+
+    const element = localViewportRef.current;
+
+    const observer = new ResizeObserver(() => {
+      const { scrollHeight, clientHeight, scrollWidth, clientWidth } = element;
+      setVerticalThumbVisible(scrollHeight > clientHeight);
+      setHorizontalThumbVisible(scrollWidth > clientWidth);
+    });
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [localViewportRef, offsetScrollbars]);
+
   return (
     <ScrollAreaRoot
       getStyles={getStyles}
@@ -154,9 +182,15 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
       <ScrollAreaViewport
         {...viewportProps}
         {...getStyles('viewport', { style: viewportProps?.style })}
-        ref={viewportRef}
+        ref={combinedViewportRef}
         data-offset-scrollbars={offsetScrollbars === true ? 'xy' : offsetScrollbars || undefined}
         data-scrollbars={scrollbars || undefined}
+        data-horizontal-hidden={
+          offsetScrollbars === 'present' && !horizontalThumbVisible ? 'true' : undefined
+        }
+        data-vertical-hidden={
+          offsetScrollbars === 'present' && !verticalThumbVisible ? 'true' : undefined
+        }
         onScroll={(e) => {
           viewportProps?.onScroll?.(e);
           onScrollPositionChange?.({ x: e.currentTarget.scrollLeft, y: e.currentTarget.scrollTop });

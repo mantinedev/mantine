@@ -66,7 +66,7 @@ export function BottomReachedDecimal() {
 export function OffsetScrollbars() {
   return (
     <div style={{ background: 'pink', maxWidth: 300 }}>
-      <ScrollArea h={200} type="always" offsetScrollbars>
+      <ScrollArea h={200} type="always" offsetScrollbars="present">
         <div style={{ background: 'pink' }}>{content}</div>
       </ScrollArea>
     </div>

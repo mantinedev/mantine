@@ -15,7 +15,18 @@ read through [DatePicker](/dates/date-picker/) documentation to learn about all 
 
 ## Value format
 
-Use `valueFormat` prop to change [dayjs format](https://day.js.org/docs/en/display/format) of value label:
+Use `valueFormat` prop to change [dayjs format](https://day.js.org/docs/en/display/format) of value label.
+To use some custom formats, you need to enable [custom parse format](https://day.js.org/docs/en/plugin/custom-parse-format) plugin:
+
+```tsx
+// Do this once in your application root file
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
+```
+
+Example of using DateInput with custom format:
 
 <Demo data={DateInputDemos.format} />
 
