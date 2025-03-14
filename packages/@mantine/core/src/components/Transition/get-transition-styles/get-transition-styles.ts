@@ -20,7 +20,9 @@ export function getTransitionStyles({
   duration: number;
   timingFunction: React.CSSProperties['transitionTimingFunction'];
 }): React.CSSProperties {
-  const shared = {
+  const shared: React.CSSProperties = {
+    WebkitBackfaceVisibility: 'hidden',
+    willChange: 'transform, opacity',
     transitionDuration: `${duration}ms`,
     transitionTimingFunction: timingFunction,
   };
