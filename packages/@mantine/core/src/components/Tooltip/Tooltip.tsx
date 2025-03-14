@@ -265,9 +265,9 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
           onMouseMove: props.onMouseMove,
           onPointerDown: props.onPointerDown,
           onPointerEnter: props.onPointerEnter,
-          [refProp!]: targetRef,
           className: cx(className, _childrenProps.className),
           ..._childrenProps,
+          [refProp!]: targetRef,
         })
       )}
     </>
