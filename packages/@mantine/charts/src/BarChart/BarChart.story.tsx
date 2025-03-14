@@ -1,6 +1,21 @@
+import type { Meta } from '@storybook/react';
+import { ReferenceArea } from 'recharts';
+import { getThemeColor, MantineProvider, useMantineTheme } from '@mantine/core';
 import { BarChart } from './BarChart';
 
-export default { title: 'BarChart' };
+const meta = {
+  title: 'BarChart',
+  component: BarChart,
+  decorators: [
+    (Story) => (
+      <MantineProvider>
+        <Story />
+      </MantineProvider>
+    ),
+  ],
+} satisfies Meta<typeof BarChart>;
+
+export default meta;
 
 const simpleData = [
   { product: 'Laptop', sales: 1203 },
@@ -30,6 +45,28 @@ const waterfallData = [
   { item: 'Reven. adj.', 'Effective tax rate in %': 4, color: 'red' },
   { item: 'ETR', 'Effective tax rate in %': 3.5, color: 'blue.3', standalone: true },
 ];
+
+/**
+ * IMPORTANT NOTES ON USING REFERENCE AREAS:
+ *
+ * For ReferenceArea to display properly, follow these critical requirements:
+ *
+ * REQUIRED:
+ * 1. ALWAYS include yAxisId="left" (this is the most important property)
+ * 2. ALWAYS include both y1 and y2 values
+ * 3. Set fillOpacity to at least 0.3 to ensure visibility
+ * 4. Adding a stroke with strokeWidth improves visibility
+ *
+ * HORIZONTAL ORIENTATION:
+ * - Use categorical values (strings) for x1/x2: <ReferenceArea x1="February" x2="May" ... />
+ * - Use numeric values for y1/y2: <ReferenceArea y1={0} y2={150} ... />
+ * - Example: <ReferenceArea x1="February" x2="May" y1={0} y2={150} yAxisId="left" />
+ *
+ * VERTICAL ORIENTATION:
+ * - Use categorical values (strings) for y1/y2: <ReferenceArea y1="February" y2="May" ... />
+ * - Use numeric values for x1/x2: <ReferenceArea x1={0} x2={150} ... />
+ * - Example: <ReferenceArea y1="February" y2="May" x1={0} x2={150} yAxisId="left" />
+ */
 
 export function Usage() {
   return (
@@ -175,5 +212,125 @@ export function VerticalOrientationValueFormatter() {
         { name: 'Tablets', color: 'teal.6' },
       ]}
     />
+  );
+}
+
+/**
+ * REFERENCE AREA EXAMPLES
+ * Below are the three key examples demonstrating ReferenceArea usage.
+ */
+
+export function SimpleReferenceArea() {
+  return (
+    <div style={{ padding: 40 }}>
+      <BarChart
+        h={300}
+        data={simpleData}
+        dataKey="product"
+        orientation="horizontal"
+        series={[{ name: 'sales', color: 'blue.6' }]}
+      >
+        <ReferenceArea
+          x1="Laptop"
+          x2="Tablet"
+          y1={0}
+          y2={1050}
+          yAxisId="left"
+          fill="rgba(136, 132, 216, 0.5)"
+          stroke="rgba(136, 132, 216, 0.8)"
+          strokeWidth={1}
+          label={{
+            value: 'Key Products',
+            position: 'insideTopRight',
+            fontSize: 12,
+            fill: '#555',
+          }}
+        />
+      </BarChart>
+    </div>
+  );
+}
+
+export function ReferenceAreaVertical() {
+  const theme = useMantineTheme();
+  return (
+    <div style={{ padding: 40 }}>
+      <BarChart
+        h={300}
+        data={data}
+        dataKey="month"
+        orientation="vertical"
+        series={[
+          { name: 'Smartphones', color: 'indigo.6' },
+          { name: 'Laptops', color: 'blue.6' },
+        ]}
+        withLegend
+      >
+        <ReferenceArea
+          y1="February"
+          y2="May"
+          x1={0}
+          x2={150}
+          yAxisId="left"
+          fill={getThemeColor('violet.5', theme)}
+          fillOpacity={0.2}
+          stroke={getThemeColor('violet.5', theme)}
+          label={{
+            value: 'Focus Period (Feb-May)',
+            position: 'insideBottomRight',
+            fontSize: 12,
+            fill: getThemeColor('violet.9', theme),
+          }}
+        />
+      </BarChart>
+    </div>
+  );
+}
+
+export function DebugXYCoordinates() {
+  return (
+    <div style={{ padding: 40 }}>
+      <BarChart
+        h={300}
+        data={data}
+        dataKey="month"
+        orientation="horizontal"
+        series={[{ name: 'Smartphones', color: 'blue.6' }]}
+      >
+        {/* First approach: String values for x axis */}
+        <ReferenceArea
+          x1="January"
+          x2="March"
+          y1={0}
+          y2={90}
+          yAxisId="left"
+          fill="rgba(255, 0, 0, 0.4)"
+          stroke="red"
+          strokeWidth={1}
+          label={{
+            value: 'Test 1',
+            position: 'insideTopRight',
+            fontSize: 12,
+          }}
+        />
+
+        {/* Second approach: Numeric indices */}
+        <ReferenceArea
+          x1="April"
+          x2="June"
+          y1={0}
+          y2={200}
+          yAxisId="left"
+          fill="rgba(0, 0, 255, 0.4)"
+          stroke="blue"
+          strokeWidth={1}
+          label={{
+            value: 'Test 2',
+            position: 'insideBottomRight',
+            fontSize: 12,
+          }}
+        />
+      </BarChart>
+    </div>
   );
 }
