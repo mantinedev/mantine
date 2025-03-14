@@ -26,6 +26,12 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
     description: 'Fullstack boilerplate with Next.js, auth, MongoDB, Turborepo',
   },
   {
+    type: 'next',
+    name: 'next-turborepo-template',
+    link: 'https://github.com/ynssenem/next-mantine-turborepo',
+    description: 'App router + Mantine + Turborepo template',
+  },
+  {
     type: 'vite',
     name: 'nx-vite-monorepo-template',
     link: 'https://github.com/dipiash/nx-vite-react-ts-mantine-boilerplate',
