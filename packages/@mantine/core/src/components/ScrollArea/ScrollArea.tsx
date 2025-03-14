@@ -145,6 +145,10 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
       return;
     }
 
+    if (offsetScrollbars !== 'present') {
+      return;
+    }
+
     const element = localViewportRef.current;
 
     const observer = new ResizeObserver(() => {
