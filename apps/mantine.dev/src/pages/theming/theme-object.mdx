@@ -399,6 +399,36 @@ function Demo() {
 }
 ```
 
+## variantColorResolver
+Sometimes you need to automatically set text color based on the background color for custom HTML.
+
+```tsx
+
+import { Button, useMantineTheme } from '@mantine/core';
+
+ const theme = useMantineTheme();
+ const colors = theme.variantColorResolver({
+    color: theme.colors.primary[9],
+    theme,
+    variant: 'filled',
+    autoContrast: true,
+  });
+
+  // Example 1: for custom HTML 
+    <button
+      type='button'
+      style={{ backgroundColor: colors.background, color: colors.color, hover: colors.hover }}
+      className='py-2 px-4  w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg '>
+      Change
+    </button>
+
+  // Example 2: for Mantine component
+  <Button variant="filled" color="primary.9" autoContrast>
+    Change
+  </Button>
+
+```
+
 ## Default theme
 
 You can import default theme object from `@mantine/core` package. It includes
