@@ -27,6 +27,7 @@
   }
 
   &:where(:disabled, [data-disabled]) {
+    pointer-events: none;
     cursor: not-allowed;
     opacity: 0.4;
   }
