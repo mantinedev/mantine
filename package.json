@@ -35,6 +35,7 @@
     "docs:build:alpha": "npm run docs:docgen && cd apps/mantine.dev && npm run build:alpha",
     "docs:deploy": "npm run docs:sponsors && npm run docs:build && gh-pages -d apps/mantine.dev/out -t true",
     "docs:deploy:alpha": "npm run docs:build:alpha && wrangler pages deploy apps/mantine.dev/out --branch master --project-name alpha-mantine-dev",
+    "docs:deploy:v7": "npm run docs:build:alpha && wrangler pages deploy apps/mantine.dev/out --branch master --project-name v7-mantine-docs",
     "docs:count": "tsx scripts/docs/count",
     "clean": "rimraf --glob packages/*/*/{esm,cjs,lib,dist} packages/*/*/*.tsbuildinfo packages/*/*/styles.css packages/*/*/styles.layer.css packages/@mantine/core/styles",
     "build": "tsx scripts/build",
