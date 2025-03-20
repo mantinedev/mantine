@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { useId } from '@mantine/hooks';
 import {
   Box,
@@ -122,7 +123,7 @@ const varsResolver = createVarsResolver<CheckboxFactory>(
   }
 );
 
-export const Checkbox = factory<CheckboxFactory>((_props, ref) => {
+export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
   const props = useProps('Checkbox', defaultProps, _props);
   const {
     classNames,
@@ -182,6 +183,15 @@ export const Checkbox = factory<CheckboxFactory>((_props, ref) => {
         },
       }
     : {};
+
+  const fallbackRef = useRef<HTMLInputElement>(null);
+  const ref = forwardedRef || fallbackRef;
+
+  useEffect(() => {
+    if (ref && 'current' in ref && ref.current) {
+      ref.current.indeterminate = indeterminate || false;
+    }
+  }, [indeterminate, ref]);
 
   return (
     <InlineInput

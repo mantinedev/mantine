@@ -95,12 +95,21 @@ describe('@mantine/core/Checkbox', () => {
     expect(screen.getByRole('checkbox')).toBeChecked();
   });
 
-  it('sets data-indeterminate attribute based on indeterminate prop', () => {
-    const { rerender } = render(<Checkbox indeterminate />);
+  it('sets data-indeterminate and indeterminate property based on indeterminate prop', () => {
+    const ref = createRef<HTMLInputElement>();
+
+    const { rerender } = render(<Checkbox indeterminate ref={ref} />);
     expect(screen.getByRole('checkbox')).toHaveAttribute('data-indeterminate');
+    expect(screen.getByRole('checkbox')).toBePartiallyChecked();
+    expect(ref.current).toBePartiallyChecked();
+
+    rerender(<Checkbox indeterminate />);
+    expect(screen.getByRole('checkbox')).toHaveAttribute('data-indeterminate');
+    expect(screen.getByRole('checkbox')).toBePartiallyChecked();
 
     rerender(<Checkbox indeterminate={false} />);
     expect(screen.getByRole('checkbox')).not.toHaveAttribute('data-indeterminate');
+    expect(screen.getByRole('checkbox')).not.toBePartiallyChecked();
   });
 
   it('sets data-error attribute based on error prop', () => {
