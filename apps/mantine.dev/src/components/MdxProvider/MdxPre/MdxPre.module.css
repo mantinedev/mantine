@@ -3,7 +3,8 @@
   margin-top: var(--mantine-spacing-md);
   margin-bottom: var(--mantine-spacing-md);
 
-  & pre {
+  & pre,
+  & code {
     border-radius: var(--mantine-radius-md);
   }
 }
