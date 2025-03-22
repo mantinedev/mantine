@@ -35,8 +35,6 @@
   }
 
   &:where([data-with-icon]) {
-    padding-inline-start: var(--mantine-spacing-xs);
-
     &::before {
       display: none;
     }
