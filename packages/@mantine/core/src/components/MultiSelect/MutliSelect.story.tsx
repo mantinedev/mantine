@@ -10,15 +10,20 @@ export function Usage() {
   return (
     <div style={{ padding: 40 }}>
       <MultiSelect
-        placeholder="MultiSelect something"
-        required
-        label="Some label"
-        defaultValue={['1', '2']}
         data={[
-          { value: '1', label: 'React' },
-          { value: '2', label: 'Angular' },
-          { value: '3', label: 'Svelte' },
+          'React',
+          'Angular',
+          'Svelte',
+          'Vue',
+          'Ember',
+          'Backbone',
+          'Preact',
+          'Inferno',
+          'Aurelia',
+          'Meteor',
         ]}
+        placeholder="Select something"
+        searchable
       />
     </div>
   );

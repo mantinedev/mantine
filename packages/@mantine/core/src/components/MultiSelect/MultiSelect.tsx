@@ -232,6 +232,11 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     onChange: onSearchChange,
   });
 
+  const handleSearchChange = (value: string) => {
+    setSearchValue(value);
+    combobox.resetSelectedOption();
+  };
+
   const getStyles = useStyles<MultiSelectFactory>({
     name: 'MultiSelect',
     classes: {} as any,
@@ -289,7 +294,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
       onClear={() => {
         onClear?.();
         setValue([]);
-        setSearchValue('');
+        handleSearchChange('');
       }}
     />
   );
@@ -309,7 +314,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
         __staticSelector="MultiSelect"
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
-          setSearchValue('');
+          handleSearchChange('');
           combobox.updateSelectedOptionIndex('selected');
 
           if (_value.includes(optionsLockup[val].value)) {
@@ -394,12 +399,12 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
                   onBlur={(event) => {
                     onBlur?.(event);
                     combobox.closeDropdown();
-                    setSearchValue('');
+                    handleSearchChange('');
                   }}
                   onKeyDown={handleInputKeydown}
                   value={_searchValue}
                   onChange={(event) => {
-                    setSearchValue(event.currentTarget.value);
+                    handleSearchChange(event.currentTarget.value);
                     searchable && combobox.openDropdown();
                     selectFirstOptionOnChange && combobox.selectFirstOption();
                   }}

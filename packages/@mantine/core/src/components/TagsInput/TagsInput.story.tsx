@@ -7,7 +7,21 @@ export default { title: 'TagsInput' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <TagsInput defaultValue={['React', 'Angular']} placeholder="Enter tags" acceptValueOnBlur />
+      <TagsInput
+        data={[
+          'React',
+          'Angular',
+          'Svelte',
+          'Vue',
+          'Ember',
+          'Backbone',
+          'Preact',
+          'Inferno',
+          'Aurelia',
+          'Meteor',
+        ]}
+        placeholder="Select something"
+      />
     </div>
   );
 }

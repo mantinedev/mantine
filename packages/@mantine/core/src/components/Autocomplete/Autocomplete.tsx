@@ -136,6 +136,11 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     },
   });
 
+  const handleValueChange = (value: string) => {
+    setValue(value);
+    combobox.resetSelectedOption();
+  };
+
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<AutocompleteFactory>({
     props,
     styles,
@@ -152,7 +157,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     <Combobox.ClearButton
       {...clearButtonProps}
       onClear={() => {
-        setValue('');
+        handleValueChange('');
         onClear?.();
       }}
     />
@@ -168,7 +173,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
       readOnly={readOnly}
       onOptionSubmit={(val) => {
         onOptionSubmit?.(val);
-        setValue(optionsLockup[val].label);
+        handleValueChange(optionsLockup[val].label);
         combobox.closeDropdown();
       }}
       size={size}
@@ -188,7 +193,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
           value={_value}
           error={error}
           onChange={(event) => {
-            setValue(event.currentTarget.value);
+            handleValueChange(event.currentTarget.value);
             combobox.openDropdown();
             selectFirstOptionOnChange && combobox.selectFirstOption();
           }}
