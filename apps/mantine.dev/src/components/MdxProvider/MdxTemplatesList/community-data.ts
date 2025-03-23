@@ -32,6 +32,12 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
     description: 'App router + Mantine + Turborepo template',
   },
   {
+    type: 'next',
+    name: 'nextra-documentation-template',
+    link: 'https://github.com/gfazioli/next-app-nextra-template',
+    description: 'Nextra + Mantine template',
+  },
+  {
     type: 'vite',
     name: 'nx-vite-monorepo-template',
     link: 'https://github.com/dipiash/nx-vite-react-ts-mantine-boilerplate',
