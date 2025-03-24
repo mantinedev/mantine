@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   Box,
   BoxProps,
@@ -132,11 +133,17 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
     props,
   });
 
+  useEffect(() => {
+    if (value >= code.length) {
+      setValue(code.length - 1);
+    }
+  }, [value, code]);
+
   if (code.length <= 0) {
     return null;
   }
 
-  const currentCode = code[value] || code[0];
+  const currentCode = code[value] || { code: '', language: 'tsx', fileName: '' };
 
   const files = code.map((node, index) => (
     <UnstyledButton
