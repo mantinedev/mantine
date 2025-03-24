@@ -9,7 +9,7 @@ export {
   updateModal,
   updateContextModal,
   modals,
-} from './events';
+} from './events.js';
 
 export type { ModalsProviderProps } from './ModalsProvider';
 export type {
@@ -17,4 +17,4 @@ export type {
   MantineModalsOverride,
   MantineModals,
   MantineModal,
-} from './context';
+} from './context.js';

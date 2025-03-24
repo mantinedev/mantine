@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { useId, useMergedRef, useMounted, useUncontrolled } from '@mantine/hooks';
+import {
+  randomId,
+  useId,
+  useMergedRef,
+  useMounted,
+  useShallowEffect,
+  useUncontrolled,
+} from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -176,6 +183,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
   );
 
   const initialized = useMounted();
+  const [key, setKey] = useState(randomId());
   const [parent, setParent] = useState<HTMLElement | null>(null);
   const [refs, setRefs] = useState<Record<string, HTMLElement | null>>({});
   const setElementRef = (element: HTMLElement | null, val: string) => {
@@ -236,6 +244,10 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
 
   const mergedRef = useMergedRef(ref, (node) => setParent(node));
 
+  useShallowEffect(() => {
+    setKey(randomId());
+  }, [data]);
+
   if (data.length === 0) {
     return null;
   }
@@ -265,6 +277,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
           parent={parent}
           component="span"
           transitionDuration="var(--sc-transition-duration)"
+          key={key}
           {...getStyles('indicator')}
         />
       )}

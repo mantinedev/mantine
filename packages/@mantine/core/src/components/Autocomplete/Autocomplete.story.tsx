@@ -28,8 +28,22 @@ const options = [
 
 export function Usage() {
   return (
-    <div style={{ padding: 40, maxWidth: 400 }}>
-      <Autocomplete label="Test" placeholder="Test autocomplete" data={options} />
+    <div style={{ padding: 40 }}>
+      <Autocomplete
+        data={[
+          'React',
+          'Angular',
+          'Svelte',
+          'Vue',
+          'Ember',
+          'Backbone',
+          'Preact',
+          'Inferno',
+          'Aurelia',
+          'Meteor',
+        ]}
+        placeholder="Select something"
+      />
     </div>
   );
 }

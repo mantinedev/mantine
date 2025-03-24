@@ -6,6 +6,8 @@
   &[data-disabled] {
     --app-shell-header-offset: 0rem !important;
     --app-shell-navbar-offset: 0rem !important;
+    --app-shell-aside-offset: 0rem !important;
+    --app-shell-footer-offset: 0rem !important;
   }
 
   @mixin light {
