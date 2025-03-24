@@ -132,7 +132,7 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
     props,
   });
 
-  const currentCode = code[value];
+  const currentCode = code[value] || code[0];
 
   const files = code.map((node, index) => (
     <UnstyledButton
