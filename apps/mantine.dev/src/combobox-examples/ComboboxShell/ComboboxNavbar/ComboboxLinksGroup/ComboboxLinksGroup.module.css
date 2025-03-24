@@ -62,12 +62,16 @@
   }
 
   &[data-navbar-link-active] {
-    border-color: var(--mantine-color-blue-5);
-    color: var(--mantine-color-blue-light-color);
+    border-color: var(--mantine-color-blue-6);
+    color: light-dark(var(--mantine-color-blue-7), var(--mantine-color-blue-2));
     background-color: var(--mantine-color-blue-light);
 
     & .linkTitle {
       font-weight: 500;
+    }
+
+    & .linkDescription {
+      color: light-dark(var(--mantine-color-blue-7), var(--mantine-color-blue-2));
     }
   }
 }
@@ -78,7 +82,7 @@
 
 .linkDescription {
   font-size: var(--mantine-font-size-xs);
-  opacity: 0.6;
   margin-top: 4px;
   line-height: 1.4;
+  color: var(--mantine-color-dimmed);
 }
