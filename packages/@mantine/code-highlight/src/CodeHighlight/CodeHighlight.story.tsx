@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { IconBrandCodesandbox } from '@tabler/icons-react';
 import hljs from 'highlight.js';
 import { getCodeFileIcon } from '@mantinex/dev-icons';
@@ -256,6 +257,17 @@ export function ExtraControls() {
 }
 
 export function Tabs() {
+  const code = [
+    { fileName: 'Component.tsx', code: tsxCode, language: 'tsx' },
+    { fileName: 'Component.module.css', code: cssCode, language: 'scss' },
+    {
+      fileName: 'Long-file-name-that-will-break-to-another-line.css',
+      code: cssCode,
+      language: 'scss',
+    },
+  ];
+  const [numberOfTabs, setNumberOfTabs] = useState(code.length);
+
   return (
     <div style={{ padding: 40 }}>
       <CodeHighlightAdapterProvider adapter={shikiAdapter}>
@@ -264,17 +276,12 @@ export function Tabs() {
           defaultExpanded={false}
           radius="md"
           getFileIcon={getCodeFileIcon}
-          code={[
-            { fileName: 'Component.tsx', code: tsxCode, language: 'tsx' },
-            { fileName: 'Component.module.css', code: cssCode, language: 'scss' },
-            {
-              fileName: 'Long-file-name-that-will-break-to-another-line.css',
-              code: cssCode,
-              language: 'scss',
-            },
-          ]}
+          code={code.slice(0, numberOfTabs)}
         />
       </CodeHighlightAdapterProvider>
+
+      <button onClick={() => setNumberOfTabs((val) => val - 1)}>Remove tab</button>
+      <button onClick={() => setNumberOfTabs((val) => val + 1)}>Add tab</button>
     </div>
   );
 }
