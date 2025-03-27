@@ -103,7 +103,7 @@ const defaultProps: Partial<AppShellProps> = {
   padding: 0,
   transitionDuration: 200,
   transitionTimingFunction: 'ease',
-  zIndex: getDefaultZIndex('app'),
+  zIndex: getDefaultZIndex('modal'),
 };
 
 const varsResolver = createVarsResolver<AppShellFactory>(
