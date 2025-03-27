@@ -1,4 +1,4 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[62560],{41701:(e,n,t)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/core/segmented-control",function(){return t(43878)}])},43878:(e,n,t)=>{"use strict";t.r(n),t.d(n,{default:()=>E});var a=t(31085),l=t(71184),o=t(43924);let r={type:"configurator",component:function(e){return(0,a.jsx)(o.I,{data:["React","Angular","Vue"],...e})},code:`
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[62560],{41701:(e,n,t)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/core/segmented-control",function(){return t(43878)}])},43878:(e,n,t)=>{"use strict";t.r(n),t.d(n,{default:()=>E});var a=t(31085),l=t(71184),o=t(63736);let r={type:"configurator",component:function(e){return(0,a.jsx)(o.I,{data:["React","Angular","Vue"],...e})},code:`
 import { SegmentedControl } from '@mantine/core';
 
 function Demo() {
