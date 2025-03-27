@@ -13,7 +13,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { CloseButton } from '../CloseButton';
+import { CloseButton, CloseButtonProps } from '../CloseButton';
 import { usePillsInputContext } from '../PillsInput/PillsInput.context';
 import { usePillGroupContext } from './PillGroup.context';
 import { PillGroup } from './PillGroup/PillGroup';
@@ -36,7 +36,7 @@ export interface PillProps extends BoxProps, StylesApiProps<PillFactory>, Elemen
   onRemove?: () => void;
 
   /** Props passed down to the remove button */
-  removeButtonProps?: React.ComponentPropsWithoutRef<'button'>;
+  removeButtonProps?: CloseButtonProps & React.ComponentPropsWithoutRef<'button'>;
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. `'xl'` by default. */
   radius?: MantineRadius;
