@@ -65,7 +65,7 @@ function isExactHotkey(hotkey: Hotkey, event: KeyboardEvent, usePhysicalKeys?: b
   if (
     key &&
     ((!usePhysicalKeys && pressedKey.toLowerCase() === key.toLowerCase()) ||
-      pressedCode.replace('Key', '').toLowerCase() === key.toLowerCase())
+      (!usePhysicalKeys && pressedCode.replace('Key', '').toLowerCase() === key.toLowerCase()))
   ) {
     return true;
   }
