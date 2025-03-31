@@ -52,7 +52,7 @@
     "clsx": "^2.1.1",
     "react-number-format": "^5.4.3",
     "react-remove-scroll": "^2.6.2",
-    "react-textarea-autosize": "8.5.6",
+    "react-textarea-autosize": "8.5.9",
     "type-fest": "^4.27.0"
   },
   "devDependencies": {
