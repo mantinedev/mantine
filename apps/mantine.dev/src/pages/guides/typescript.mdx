@@ -207,6 +207,34 @@ declare module '@mantine/core' {
 }
 ```
 
+You can also customize size related types for `theme.spacing`, `theme.radius`,
+`theme.breakpoints`, `theme.fontSizes`, `theme.lineHeights`, and `theme.shadows` similarly.
+
+To override `theme.spacing` and `theme.radius`
+
+```tsx
+import {
+  DefaultMantineSize,
+  MantineThemeSizesOverride,
+} from '@mantine/core';
+
+type ExtendedCustomSpacing =
+  | 'myCustomSpacing'
+  | 'anotherCustomSpacing'
+  | DefaultMantineSize;
+
+type ExtendedCustomRadius =
+  | 'myCustomRadius'
+  | DefaultMantineSize;
+
+declare module '@mantine/core' {
+  export interface MantineThemeSizesOverride {
+    spacing: Record<ExtendedCustomSpacing, string>;
+    radius: Record<ExtendedCustomRadius, string>;
+  }
+}
+```
+
 Note that extending theme type is not required, it is only needed if you want to
 make your theme object types more strict and add autocomplete in your editor.
 

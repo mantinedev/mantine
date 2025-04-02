@@ -154,19 +154,64 @@ export interface HeadingStyle {
 }
 
 export type MantineSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export type MantineBreakpointsValues = Record<MantineSize | (string & {}), string>;
-export type MantineFontSizesValues = Record<MantineSize | (string & {}), string>;
-export type MantineRadiusValues = Record<MantineSize | (string & {}), string>;
-export type MantineSpacingValues = Record<MantineSize | (string & {}), string>;
-export type MantineShadowsValues = Record<MantineSize | (string & {}), string>;
-export type MantineLineHeightValues = Record<MantineSize | (string & {}), string>;
+export type DefaultMantineSize = MantineSize;
+export interface MantineThemeSizesOverride {}
 
-export type MantineBreakpoint = keyof MantineBreakpointsValues;
-export type MantineFontSize = keyof MantineFontSizesValues;
-export type MantineRadius = keyof MantineRadiusValues | (string & {}) | number;
-export type MantineSpacing = keyof MantineSpacingValues | (string & {}) | number;
-export type MantineShadow = keyof MantineShadowsValues | (string & {});
-export type MantineLineHeight = keyof MantineLineHeightValues;
+export type MantineBreakpoint =
+  | (MantineThemeSizesOverride extends {
+      breakpoints: Record<infer CustomBreakpoints, string>;
+    }
+      ? CustomBreakpoints
+      : MantineSize)
+  | (string & {});
+export type MantineBreakpointsValues = Record<MantineBreakpoint, string>;
+
+export type MantineFontSize =
+  | (MantineThemeSizesOverride extends {
+      fontSizes: Record<infer CustomFontSizes, string>;
+    }
+      ? CustomFontSizes
+      : MantineSize)
+  | (string & {});
+export type MantineFontSizesValues = Record<MantineFontSize, string>;
+
+type _MantineRadius =
+  | (MantineThemeSizesOverride extends {
+      radius: Record<infer CustomRadius, string>;
+    }
+      ? CustomRadius
+      : MantineSize)
+  | (string & {});
+export type MantineRadius = _MantineRadius | number;
+export type MantineRadiusValues = Record<_MantineRadius, string>;
+
+type _MantineSpacing =
+  | (MantineThemeSizesOverride extends {
+      spacing: Record<infer CustomSpacing, string>;
+    }
+      ? CustomSpacing
+      : MantineSize)
+  | (string & {});
+export type MantineSpacing = _MantineSpacing | number;
+export type MantineSpacingValues = Record<MantineSpacing, string>;
+
+export type MantineShadow =
+  | (MantineThemeSizesOverride extends {
+      shadows: Record<infer CustomShadow, string>;
+    }
+      ? CustomShadow
+      : MantineSize)
+  | (string & {});
+export type MantineShadowsValues = Record<MantineShadow, string>;
+
+export type MantineLineHeight =
+  | (MantineThemeSizesOverride extends {
+      lineHeights: Record<infer CustomLineHeight, string>;
+    }
+      ? CustomLineHeight
+      : MantineSize)
+  | (string & {});
+export type MantineLineHeightValues = Record<MantineLineHeight, string>;
 
 export interface MantineThemeOther {
   [key: string]: any;

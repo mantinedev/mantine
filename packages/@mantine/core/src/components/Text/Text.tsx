@@ -7,8 +7,9 @@ import {
   getLineHeight,
   getThemeColor,
   MantineColor,
+  MantineFontSize,
   MantineGradient,
-  MantineSize,
+  MantineLineHeight,
   polymorphicFactory,
   PolymorphicFactory,
   StylesApiProps,
@@ -41,7 +42,7 @@ export interface TextProps extends BoxProps, StylesApiProps<TextFactory> {
   __staticSelector?: string;
 
   /** Controls `font-size` and `line-height`, `'md'` by default */
-  size?: MantineSize | (string & {});
+  size?: MantineFontSize & MantineLineHeight;
 
   /** Number of lines after which Text will be truncated */
   lineClamp?: number;

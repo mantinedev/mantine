@@ -1,4 +1,4 @@
-import { factory, Factory, MantineSize, useProps } from '../../core';
+import { factory, Factory, MantineSpacing, useProps } from '../../core';
 import { Group } from '../Group/Group';
 import { PaginationIcon } from './Pagination.icons';
 import { PaginationControl } from './PaginationControl/PaginationControl';
@@ -47,7 +47,7 @@ export interface PaginationProps extends PaginationRootProps {
   dotsIcon?: PaginationIcon;
 
   /** Key of `theme.spacing`, gap between controls, `8` by default */
-  gap?: MantineSize | (string & {}) | number;
+  gap?: MantineSpacing;
 
   /** Determines whether the pagination should be hidden when only one page is available (`total={1}`), `false` by default */
   hideWithOnePage?: boolean;
