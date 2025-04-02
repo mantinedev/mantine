@@ -5,7 +5,7 @@ import {
   createVarsResolver,
   getSpacing,
   MantineColor,
-  MantineSize,
+  MantineSpacing,
   polymorphicFactory,
   PolymorphicFactory,
   StylesApiProps,
@@ -70,7 +70,7 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
   disableRightSectionRotation?: boolean;
 
   /** Key of `theme.spacing` or any valid CSS value to set collapsed links `padding-left`, `'lg'` by default */
-  childrenOffset?: MantineSize | (string & {}) | number;
+  childrenOffset?: MantineSpacing;
 
   /** If set, disabled styles will be added to the root element, `false` by default */
   disabled?: boolean;

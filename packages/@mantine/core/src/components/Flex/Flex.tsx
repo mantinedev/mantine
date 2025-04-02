@@ -4,7 +4,7 @@ import {
   ElementProps,
   filterProps,
   InlineStyles,
-  MantineSize,
+  MantineSpacing,
   parseStyleProps,
   polymorphicFactory,
   PolymorphicFactory,
@@ -22,13 +22,13 @@ export type FlexStylesNames = 'root';
 
 export interface FlexProps extends BoxProps, StylesApiProps<FlexFactory>, ElementProps<'div'> {
   /** `gap` CSS property */
-  gap?: StyleProp<MantineSize | (string & {}) | number>;
+  gap?: StyleProp<MantineSpacing | number>;
 
   /** `row-gap` CSS property */
-  rowGap?: StyleProp<MantineSize | (string & {}) | number>;
+  rowGap?: StyleProp<MantineSpacing | number>;
 
   /** `column-gap` CSS property */
-  columnGap?: StyleProp<MantineSize | (string & {}) | number>;
+  columnGap?: StyleProp<MantineSpacing | number>;
 
   /** `align-items` CSS property */
   align?: StyleProp<React.CSSProperties['alignItems']>;
