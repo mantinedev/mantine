@@ -187,9 +187,9 @@ export type MantineRadiusValues = Record<_MantineRadius, string>;
 
 type _MantineSpacing =
   | (MantineThemeSizesOverride extends {
-      spacing: Record<infer CustomRadius, string>;
+      spacing: Record<infer CustomSpacing, string>;
     }
-      ? CustomRadius
+      ? CustomSpacing
       : MantineSize)
   | (string & {});
 export type MantineSpacing = _MantineSpacing | number;
