@@ -49,6 +49,8 @@ export interface MantineStyleProps {
 
   /** Border */
   bd?: StyleProp<React.CSSProperties['border']>;
+  /** BorderRadius, theme key: theme.radius */
+  br?: StyleProp<MantineSpacing>;
   /** Background, theme key: theme.colors */
   bg?: StyleProp<MantineColor>;
   /** Color */
