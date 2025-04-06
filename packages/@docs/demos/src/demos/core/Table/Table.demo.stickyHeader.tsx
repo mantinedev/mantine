@@ -47,10 +47,6 @@ export function Demo() {
       <Table.Td>{element.name}</Table.Td>
       <Table.Td>{element.symbol}</Table.Td>
       <Table.Td>{element.mass}</Table.Td>
-      <Table.Td>{element.mass}</Table.Td>
-      <Table.Td>{element.mass}</Table.Td>
-      <Table.Td>{element.mass}</Table.Td>
-      <Table.Td>{element.mass}</Table.Td>
     </Table.Tr>
   ));
 
@@ -61,10 +57,6 @@ export function Demo() {
           <Table.Th>Element position</Table.Th>
           <Table.Th>Element name</Table.Th>
           <Table.Th>Symbol</Table.Th>
-          <Table.Th>Atomic mass</Table.Th>
-          <Table.Th>Atomic mass</Table.Th>
-          <Table.Th>Atomic mass</Table.Th>
-          <Table.Th>Atomic mass</Table.Th>
           <Table.Th>Atomic mass</Table.Th>
         </Table.Tr>
       </Table.Thead>
