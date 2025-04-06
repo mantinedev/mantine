@@ -230,6 +230,11 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     onChange: onSearchChange,
   });
 
+  const handleSearchChange = (value: string) => {
+    setSearchValue(value);
+    combobox.resetSelectedOption();
+  };
+
   const getStyles = useStyles<TagsInputFactory>({
     name: 'TagsInput',
     classes: {} as any,
@@ -254,7 +259,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
 
     if ((!isDuplicate || (isDuplicate && allowDuplicates)) && _value.length < maxTags!) {
       onOptionSubmit?.(val);
-      setSearchValue('');
+      handleSearchChange('');
       if (val.length > 0) {
         setValue([..._value, val]);
       }
@@ -281,7 +286,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
           currentTags: _value,
         })
       );
-      setSearchValue('');
+      handleSearchChange('');
       event.preventDefault();
     }
 
@@ -325,7 +330,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
           currentTags: _value,
         })
       );
-      setSearchValue('');
+      handleSearchChange('');
     }
   };
 
@@ -358,7 +363,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       {...clearButtonProps}
       onClear={() => {
         setValue([]);
-        setSearchValue('');
+        handleSearchChange('');
         inputRef.current?.focus();
         combobox.openDropdown();
         onClear?.();
@@ -378,7 +383,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
         __staticSelector="TagsInput"
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
-          setSearchValue('');
+          handleSearchChange('');
           _value.length < maxTags! && setValue([..._value, optionsLockup[val].label]);
 
           combobox.resetSelectedOption();
@@ -445,7 +450,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
                   }}
                   onPaste={handlePaste}
                   value={_searchValue}
-                  onChange={(event) => setSearchValue(event.currentTarget.value)}
+                  onChange={(event) => handleSearchChange(event.currentTarget.value)}
                   required={required && _value.length === 0}
                   disabled={disabled}
                   readOnly={readOnly}

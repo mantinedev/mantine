@@ -8,11 +8,20 @@ export function Usage() {
   return (
     <div style={{ padding: 40 }}>
       <Select
-        data={['React', 'Angular', 'Svelte']}
+        data={[
+          'React',
+          'Angular',
+          'Svelte',
+          'Vue',
+          'Ember',
+          'Backbone',
+          'Preact',
+          'Inferno',
+          'Aurelia',
+          'Meteor',
+        ]}
         placeholder="Select something"
-        onChange={console.log}
-        allowDeselect={false}
-        chevronColor="violet"
+        searchable
       />
     </div>
   );

@@ -197,6 +197,11 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     },
   });
 
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    combobox.resetSelectedOption();
+  };
+
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<SelectFactory>({
     props,
     styles,
@@ -211,7 +216,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
 
   useEffect(() => {
     if (value === null) {
-      setSearch('');
+      handleSearchChange('');
     }
 
     if (
@@ -220,7 +225,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
       (previousSelectedOption?.value !== selectedOption.value ||
         previousSelectedOption?.label !== selectedOption.label)
     ) {
-      setSearch(selectedOption.label);
+      handleSearchChange(selectedOption.label);
     }
   }, [value, selectedOption]);
 
@@ -229,7 +234,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
       {...clearButtonProps}
       onClear={() => {
         setValue(null, null);
-        setSearch('');
+        handleSearchChange('');
         onClear?.();
       }}
     />
@@ -257,7 +262,8 @@ export const Select = factory<SelectFactory>((_props, ref) => {
           const nextValue = optionLockup ? optionLockup.value : null;
 
           nextValue !== _value && setValue(nextValue, optionLockup);
-          !controlled && setSearch(typeof nextValue === 'string' ? optionLockup?.label || '' : '');
+          !controlled &&
+            handleSearchChange(typeof nextValue === 'string' ? optionLockup?.label || '' : '');
           combobox.closeDropdown();
         }}
         size={size}
@@ -286,7 +292,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
             readOnly={readOnly || !searchable}
             value={search}
             onChange={(event) => {
-              setSearch(event.currentTarget.value);
+              handleSearchChange(event.currentTarget.value);
               combobox.openDropdown();
               selectFirstOptionOnChange && combobox.selectFirstOption();
             }}
@@ -296,7 +302,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
             }}
             onBlur={(event) => {
               searchable && combobox.closeDropdown();
-              setSearch(_value != null ? optionsLockup[_value]?.label || '' : '');
+              handleSearchChange(_value != null ? optionsLockup[_value]?.label || '' : '');
               onBlur?.(event);
             }}
             onClick={(event) => {
