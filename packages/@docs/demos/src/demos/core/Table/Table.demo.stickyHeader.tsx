@@ -24,7 +24,7 @@ function Demo() {
   ));
 
   return (
-    <Table stickyHeader stickyHeaderOffset={60}>
+    <Table withTableBorder withColumnBorders stickyHeader stickyHeaderOffset={60}>
       <Table.Thead>
         <Table.Tr>
           <Table.Th>Element position</Table.Th>
@@ -51,7 +51,7 @@ export function Demo() {
   ));
 
   return (
-    <Table stickyHeader stickyHeaderOffset={60}>
+    <Table withTableBorder withColumnBorders stickyHeader stickyHeaderOffset={60}>
       <Table.Thead>
         <Table.Tr>
           <Table.Th>Element position</Table.Th>
