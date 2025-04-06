@@ -99,7 +99,16 @@
 
   &:where([data-sticky]) {
     position: sticky;
-    background-color: var(--mantine-color-body);
+
+    & .th {
+      position: sticky;
+      top: var(--table-sticky-header-offset, 0);
+      background-color: var(--mantine-color-body);
+
+      &:after {
+        position: absolute;
+      }
+    }
   }
 }
 

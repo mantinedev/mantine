@@ -24,7 +24,7 @@ function Demo() {
   ));
 
   return (
-    <Table stickyHeader stickyHeaderOffset={60}>
+    <Table withColumnBorders stickyHeader stickyHeaderOffset={60}>
       <Table.Thead>
         <Table.Tr>
           <Table.Th>Element position</Table.Th>
@@ -47,16 +47,20 @@ export function Demo() {
       <Table.Td>{element.name}</Table.Td>
       <Table.Td>{element.symbol}</Table.Td>
       <Table.Td>{element.mass}</Table.Td>
+      <Table.Td>{element.mass}</Table.Td>
+      <Table.Td>{element.mass}</Table.Td>
     </Table.Tr>
   ));
 
   return (
-    <Table stickyHeader stickyHeaderOffset={60}>
+    <Table withTableBorder withColumnBorders stickyHeader stickyHeaderOffset={60}>
       <Table.Thead>
         <Table.Tr>
           <Table.Th>Element position</Table.Th>
           <Table.Th>Element name</Table.Th>
           <Table.Th>Symbol</Table.Th>
+          <Table.Th>Atomic mass</Table.Th>
+          <Table.Th>Atomic mass</Table.Th>
           <Table.Th>Atomic mass</Table.Th>
         </Table.Tr>
       </Table.Thead>
