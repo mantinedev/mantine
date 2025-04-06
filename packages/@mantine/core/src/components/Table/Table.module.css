@@ -104,12 +104,12 @@
       position: sticky;
       top: var(--table-sticky-header-offset, 0);
       background-color: var(--mantine-color-body);
-
-      &:after {
-        position: absolute;
-      }
     }
   }
+}
+
+:where([data-with-table-border]) .thead[data-sticky] .th {
+  top: initial;
 }
 
 .caption {
