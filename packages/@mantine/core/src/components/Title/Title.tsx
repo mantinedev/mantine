@@ -5,7 +5,7 @@ import {
   ElementProps,
   factory,
   Factory,
-  MantineSize,
+  MantineFontSize,
   StylesApiProps,
   useProps,
   useStyles,
@@ -14,7 +14,7 @@ import { getTitleSize } from './get-title-size';
 import classes from './Title.module.css';
 
 export type TitleOrder = 1 | 2 | 3 | 4 | 5 | 6;
-export type TitleSize = `h${TitleOrder}` | React.CSSProperties['fontSize'] | MantineSize;
+export type TitleSize = `h${TitleOrder}` | React.CSSProperties['fontSize'] | MantineFontSize;
 
 export type TitleStylesNames = 'root';
 export type TitleCssVariables = {
