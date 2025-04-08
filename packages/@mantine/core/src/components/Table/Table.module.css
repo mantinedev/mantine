@@ -99,8 +99,17 @@
 
   &:where([data-sticky]) {
     position: sticky;
-    background-color: var(--mantine-color-body);
+
+    & .th {
+      position: sticky;
+      top: var(--table-sticky-header-offset, 0);
+      background-color: var(--mantine-color-body);
+    }
   }
+}
+
+:where([data-with-table-border]) .thead[data-sticky] .th {
+  top: initial;
 }
 
 .caption {

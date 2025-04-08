@@ -210,7 +210,11 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
         <ScrollAreaScrollbar
           {...getStyles('scrollbar')}
           orientation="horizontal"
-          data-hidden={type === 'never' || !horizontalThumbVisible || undefined}
+          data-hidden={
+            type === 'never' || (offsetScrollbars === 'present' && !horizontalThumbVisible)
+              ? true
+              : undefined
+          }
           forceMount
           onMouseEnter={() => setScrollbarHovered(true)}
           onMouseLeave={() => setScrollbarHovered(false)}
@@ -223,7 +227,11 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
         <ScrollAreaScrollbar
           {...getStyles('scrollbar')}
           orientation="vertical"
-          data-hidden={type === 'never' || !verticalThumbVisible || undefined}
+          data-hidden={
+            type === 'never' || (offsetScrollbars === 'present' && !verticalThumbVisible)
+              ? true
+              : undefined
+          }
           forceMount
           onMouseEnter={() => setScrollbarHovered(true)}
           onMouseLeave={() => setScrollbarHovered(false)}

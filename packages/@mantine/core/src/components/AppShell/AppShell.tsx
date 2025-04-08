@@ -70,7 +70,7 @@ export interface AppShellProps
   /** Timing function of all transitions, `ease` by default */
   transitionTimingFunction?: React.CSSProperties['transitionTimingFunction'];
 
-  /** `z-index` of all associated elements, `200` by default */
+  /** `z-index` of all associated elements, `100` by default */
   zIndex?: string | number;
 
   /** Determines how Navbar/Aside are arranged relative to Header/Footer, `default` by default */
