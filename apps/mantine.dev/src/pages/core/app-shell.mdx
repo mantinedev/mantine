@@ -353,16 +353,16 @@ function Demo() {
 ## zIndex prop
 
 `zIndex` prop is available on `AppShell` and associated sections: `AppShell.Header`, `AppShell.Navbar`, `AppShell.Aside` and `AppShell.Footer`.
-By default, all sections `z-index` is `200`.
+By default, all sections `z-index` is `100`.
 
 To change `z-index` of all sections, set `zIndex` prop on the `AppShell`:
 
 ```tsx
 import { AppShell } from '@mantine/core';
 
-// All sections will have z-index of 100
+// All sections will have z-index of 200
 function Demo() {
-  return <AppShell zIndex={100}>{/* AppShell content */}</AppShell>;
+  return <AppShell zIndex={200}>{/* AppShell content */}</AppShell>;
 }
 ```
 
