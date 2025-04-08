@@ -216,7 +216,7 @@ function Demo() {
     </Table>
   );
 }
-`}},89513:(e,t,n)=>{"use strict";n.d(t,{N:()=>c});var r=n(31085),o=n(93065),s=n(37905),a=n(14041),l=n(89571);let c={type:"code",component:function(){let{angle:e,type:t}=function(){let[e,t]=(0,a.useState)({angle:0,type:"landscape-primary"}),n=e=>{let n=e.currentTarget;t({angle:n?.angle||0,type:n?.type||"landscape-primary"})};return(0,l.o)(()=>(window.screen.orientation?.addEventListener("change",n),()=>window.screen.orientation?.removeEventListener("change",n)),[]),e}();return(0,r.jsxs)(r.Fragment,{children:[(0,r.jsxs)(o.E,{children:["Angle: ",(0,r.jsx)(s.C,{children:e})]}),(0,r.jsxs)(o.E,{children:["Type: ",(0,r.jsx)(s.C,{children:t})]})]})},code:`
+`}},89513:(e,t,n)=>{"use strict";n.d(t,{N:()=>c});var r=n(31085),o=n(93065),s=n(37905),a=n(14041),l=n(89571);let c={type:"code",component:function(){let{angle:e,type:t}=function({defaultAngle:e=0,defaultType:t="landscape-primary",getInitialValueInEffect:n=!0}={}){var r;let[o,s]=(0,a.useState)((r={angle:e,type:t},n?r:"undefined"!=typeof window&&"screen"in window?{angle:window.screen.orientation?.angle??r.angle,type:window.screen.orientation?.type??r.type}:r)),c=e=>{let t=e.currentTarget;s({angle:t?.angle||0,type:t?.type||"landscape-primary"})};return(0,l.o)(()=>(window.screen.orientation?.addEventListener("change",c),()=>window.screen.orientation?.removeEventListener("change",c)),[]),o}();return(0,r.jsxs)(r.Fragment,{children:[(0,r.jsxs)(o.E,{children:["Angle: ",(0,r.jsx)(s.C,{children:e})]}),(0,r.jsxs)(o.E,{children:["Type: ",(0,r.jsx)(s.C,{children:t})]})]})},code:`
 import { Code, Text } from '@mantine/core';
 import { useOrientation } from '@mantine/hooks';
 

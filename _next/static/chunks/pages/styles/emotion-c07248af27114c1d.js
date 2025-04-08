@@ -215,7 +215,7 @@ function Demo() {
   const { classes } = useStyles();
   return <div className={classes.container} />;
 }
-`,S=(0,i.rU)((e,n,t)=>({container:{height:100,backgroundColor:e.colors.blue[6],[`@media (max-width: ${(0,v.em)((0,k.r)(e.breakpoints.xl,e.breakpoints)-1)})`]:{backgroundColor:e.colors.pink[6]},[t.smallerThan("lg")]:{backgroundColor:e.colors.yellow[6]},[`@media (max-width: ${(0,v.em)(800)})`]:{backgroundColor:e.colors.orange[6]}}})),C={type:"code",component:function(){let{classes:e}=S();return(0,o.jsx)("div",{className:e.container})},code:w,defaultExpanded:!1};t(50865);var N=t(93135);function P(){for(var e=arguments.length,n=Array(e),t=0;t<e;t++)n[t]=arguments[t];return(0,N.J)(n)}t(24947),t(75985);let E=`
+`,S=(0,i.rU)((e,n,t)=>({container:{height:100,backgroundColor:e.colors.blue[6],[`@media (max-width: ${(0,v.em)((0,k.r)(e.breakpoints.xl,e.breakpoints)-1)})`]:{backgroundColor:e.colors.pink[6]},[t.smallerThan("lg")]:{backgroundColor:e.colors.yellow[6]},[`@media (max-width: ${(0,v.em)(800)})`]:{backgroundColor:e.colors.orange[6]}}})),C={type:"code",component:function(){let{classes:e}=S();return(0,o.jsx)("div",{className:e.container})},code:w,defaultExpanded:!1};t(16558);var N=t(93135);function P(){for(var e=arguments.length,n=Array(e),t=0;t<e;t++)n[t]=arguments[t];return(0,N.J)(n)}t(24947),t(75985);let E=`
 import { createStyles, keyframes } from '@mantine/emotion';
 
 // Export animation to reuse it in other components
