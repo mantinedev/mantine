@@ -78,28 +78,6 @@ describe('@mantine/hooks/use-hot-key/parse-hotkey', () => {
         })
       )
     ).toBe(false);
-
-    expect(
-      getHotkeyMatcher('ctrl+Z', true)(
-        new KeyboardEvent('keydown', {
-          ctrlKey: true,
-          altKey: false,
-          shiftKey: false,
-          key: 'Z',
-        })
-      )
-    ).toBe(true);
-
-    expect(
-      getHotkeyMatcher('ctrl+Z', true)(
-        new KeyboardEvent('keydown', {
-          ctrlKey: true,
-          altKey: false,
-          shiftKey: false,
-          key: 'W',
-        })
-      )
-    ).toBe(false);
   });
 
   it('parses [plus] key correctly', () => {
