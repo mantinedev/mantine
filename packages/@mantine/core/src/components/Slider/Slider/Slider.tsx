@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { clamp, useMergedRef, useMove, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -211,6 +211,12 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
   });
 
   const valueRef = useRef(_value);
+  const onChangeEndRef = useRef(onChangeEnd);
+
+  useEffect(() => {
+    onChangeEndRef.current = onChangeEnd;
+  }, [onChangeEnd]);
+
   const root = useRef<HTMLDivElement>(null);
   const thumb = useRef<HTMLDivElement>(null);
   const position = getPosition({ value: _value, min: min!, max: max! });
@@ -242,21 +248,28 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
     [disabled, min, max, step, precision, setValue, marks, restrictToMarks]
   );
 
-  const { ref: container, active } = useMove(
-    handleChange,
-    {
-      onScrubEnd: () =>
-        !disabled &&
-        onChangeEnd?.(
-          restrictToMarks && marks?.length
-            ? findClosestNumber(
-                valueRef.current,
-                marks.map((mark) => mark.value)
-              )
-            : valueRef.current
-        ),
+  const handleScrubEnd = useCallback(() => {
+    if (!disabled && onChangeEndRef.current) {
+      const finalValue =
+        restrictToMarks && marks?.length
+          ? findClosestNumber(
+              valueRef.current,
+              marks.map((mark) => mark.value)
+            )
+          : valueRef.current;
+      onChangeEndRef.current(finalValue);
+    }
+  }, [disabled, marks, restrictToMarks]);
+
+  const { ref: container, active } = useMove(handleChange, { onScrubEnd: handleScrubEnd }, dir);
+
+  const callOnChangeEnd = useCallback(
+    (value: number) => {
+      if (!disabled && onChangeEndRef.current) {
+        onChangeEndRef.current(value);
+      }
     },
-    dir
+    [disabled]
   );
 
   const handleTrackKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -269,7 +282,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
           if (restrictToMarks && marks) {
             const nextValue = getNextMarkValue(_value, marks);
             setValue(nextValue);
-            onChangeEnd?.(nextValue);
+            callOnChangeEnd(nextValue);
             break;
           }
 
@@ -278,7 +291,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
             precision
           );
           setValue(nextValue);
-          onChangeEnd?.(nextValue);
+          callOnChangeEnd(nextValue);
           break;
         }
 
@@ -290,7 +303,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
             const nextValue =
               dir === 'rtl' ? getPreviousMarkValue(_value, marks) : getNextMarkValue(_value, marks);
             setValue(nextValue);
-            onChangeEnd?.(nextValue);
+            callOnChangeEnd(nextValue);
             break;
           }
 
@@ -299,7 +312,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
             precision
           );
           setValue(nextValue);
-          onChangeEnd?.(nextValue);
+          callOnChangeEnd(nextValue);
           break;
         }
 
@@ -310,7 +323,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
           if (restrictToMarks && marks) {
             const nextValue = getPreviousMarkValue(_value, marks);
             setValue(nextValue);
-            onChangeEnd?.(nextValue);
+            callOnChangeEnd(nextValue);
             break;
           }
 
@@ -319,7 +332,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
             precision
           );
           setValue(nextValue);
-          onChangeEnd?.(nextValue);
+          callOnChangeEnd(nextValue);
           break;
         }
 
@@ -331,7 +344,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
             const nextValue =
               dir === 'rtl' ? getNextMarkValue(_value, marks) : getPreviousMarkValue(_value, marks);
             setValue(nextValue);
-            onChangeEnd?.(nextValue);
+            callOnChangeEnd(nextValue);
             break;
           }
 
@@ -340,7 +353,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
             precision
           );
           setValue(nextValue);
-          onChangeEnd?.(nextValue);
+          callOnChangeEnd(nextValue);
           break;
         }
 
@@ -350,12 +363,12 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
 
           if (restrictToMarks && marks) {
             setValue(getFirstMarkValue(marks));
-            onChangeEnd?.(getFirstMarkValue(marks));
+            callOnChangeEnd(getFirstMarkValue(marks));
             break;
           }
 
           setValue(min!);
-          onChangeEnd?.(min!);
+          callOnChangeEnd(min!);
           break;
         }
 
@@ -365,12 +378,12 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
 
           if (restrictToMarks && marks) {
             setValue(getLastMarkValue(marks));
-            onChangeEnd?.(getLastMarkValue(marks));
+            callOnChangeEnd(getLastMarkValue(marks));
             break;
           }
 
           setValue(max!);
-          onChangeEnd?.(max!);
+          callOnChangeEnd(max!);
           break;
         }
 
@@ -401,7 +414,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
           value={scaledValue}
           disabled={disabled}
           containerProps={{
-            ref: container as any,
+            ref: container,
             onMouseEnter: showLabelOnHover ? () => setHovered(true) : undefined,
             onMouseLeave: showLabelOnHover ? () => setHovered(false) : undefined,
           }}
