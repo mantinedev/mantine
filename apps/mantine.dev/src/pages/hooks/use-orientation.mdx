@@ -13,8 +13,30 @@ export default Layout(MDX_DATA.useOrientation);
 ## Definition
 
 ```tsx
-function useOrientation(): {
+interface UseOrientationOptions {
+  /** Default angle value, used until the real can be retrieved
+   * (during server side rendering and before js executes on the page)
+   * If not provided, the default value is `0`
+   * */
+  defaultAngle?: number;
+
+  /** Default angle value, used until the real can be retrieved
+   * (during server side rendering and before js executes on the page)
+   * If not provided, the default value is `'landscape-primary'`
+   * */
+  defaultType?: OrientationType;
+
+  /** If true, the initial value will be resolved in useEffect (ssr safe)
+   *  If false, the initial value will be resolved in useLayoutEffect (ssr unsafe)
+   *  True by default.
+   */
+  getInitialValueInEffect?: boolean;
+}
+
+interface UseOrientationReturnType {
   angle: number;
-  type: string;
-};
+  type: OrientationType;
+}
+
+function useOrientation(options?: UseOrientationOptions): UseOrientationReturnType
 ```
