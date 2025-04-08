@@ -212,7 +212,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     if (selectFirstOptionOnChange) {
       combobox.selectFirstOption();
     }
-  }, [selectFirstOptionOnChange, _value]);
+  }, [selectFirstOptionOnChange, search]);
 
   useEffect(() => {
     if (value === null) {

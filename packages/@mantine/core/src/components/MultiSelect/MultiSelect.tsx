@@ -286,7 +286,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     if (selectFirstOptionOnChange) {
       combobox.selectFirstOption();
     }
-  }, [selectFirstOptionOnChange, _value]);
+  }, [selectFirstOptionOnChange, _searchValue]);
 
   const clearButton = (
     <Combobox.ClearButton
