@@ -57,10 +57,11 @@ in your `.css` files, you will need `postcss-simple-vars` package:
 
 <InstallScript dev packages="postcss-simple-vars" />
 
-Add it to your [PostCSS config](/styles/postcss-preset) in `postcss.config.cjs`:
+Add it to your [PostCSS config](/styles/postcss-preset) in `postcss.config.mjs`:
 
 ```js
-module.exports = {
+/** @type {import('postcss-load-config').Config} */
+export default {
   plugins: {
     'postcss-preset-mantine': {},
     'postcss-simple-vars': {

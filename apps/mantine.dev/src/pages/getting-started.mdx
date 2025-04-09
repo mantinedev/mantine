@@ -72,10 +72,11 @@ Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
 > you may need to configure PostCSS manually. Please refer to the framework's documentation for specific instructions.
 > For instance, if you are using Webpack, it will be necessary to install and set up [postcss-loader](https://webpack.js.org/loaders/postcss-loader/).
 
-Create `postcss.config.cjs` file at the root of your application with the following content:
+Create `postcss.config.mjs` file at the root of your application with the following content:
 
 ```js
-module.exports = {
+/** @type {import('postcss-load-config').Config} */
+export default {
   plugins: {
     'postcss-preset-mantine': {},
     'postcss-simple-vars': {

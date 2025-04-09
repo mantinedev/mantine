@@ -25,10 +25,11 @@ Install `postcss-preset-mantine` as a dev dependency:
 
 Note that setting up PostCSS may be different depending on your build tool/framework, check
 a [dedicated framework guide](/getting-started) to learn more.
-Add `postcss-preset-mantine` to your `postcss.config.cjs` file (usually it is located in the root of your project):
+Add `postcss-preset-mantine` to your `postcss.config.mjs` file (usually it is located in the root of your project):
 
 ```js
-module.exports = {
+/** @type {import('postcss-load-config').Config} */
+export default {
   plugins: {
     'postcss-preset-mantine': {},
   },
