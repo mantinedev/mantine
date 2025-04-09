@@ -32,10 +32,11 @@ Install PostCSS plugins and [postcss-preset-mantine](/styles/postcss-preset):
   dev
 />
 
-Create `postcss.config.cjs` file at the root of your application with the following content:
+Create `postcss.config.mjs` file at the root of your application with the following content:
 
 ```js
-module.exports = {
+/** @type {import('postcss-load-config').Config} */
+export default {
   plugins: {
     'postcss-preset-mantine': {},
     'postcss-simple-vars': {
