@@ -6,6 +6,7 @@ const DEFAULT_EVENTS: (keyof DocumentEventMap)[] = [
   'touchmove',
   'click',
   'scroll',
+  'wheel',
 ];
 const DEFAULT_OPTIONS = {
   events: DEFAULT_EVENTS,
