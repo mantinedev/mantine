@@ -40,6 +40,9 @@ export interface ModalProps extends ModalRootProps {
   /** Props passed down to the close button */
   closeButtonProps?: ModalBaseCloseButtonProps;
 
+  /** Position of the close button in the header **/
+  closeButtonPosition?: 'left' | 'right';
+
   /** Id of the modal in the `Modal.Stack` */
   stackId?: string;
 }
@@ -63,6 +66,7 @@ export type ModalFactory = Factory<{
 
 const defaultProps: Partial<ModalProps> = {
   closeOnClickOutside: true,
+  closeButtonPosition: 'right',
   withinPortal: true,
   lockScroll: true,
   trapFocus: true,
@@ -82,6 +86,7 @@ export const Modal = factory<ModalFactory>((_props, ref) => {
     overlayProps,
     withCloseButton,
     closeButtonProps,
+    closeButtonPosition,
     children,
     radius,
     opened,
@@ -133,8 +138,13 @@ export const Modal = factory<ModalFactory>((_props, ref) => {
       >
         {hasHeader && (
           <ModalHeader>
+            {withCloseButton && closeButtonPosition === 'left' && (
+              <ModalCloseButton ml={0} mr="md" {...closeButtonProps} />
+            )}
             {title && <ModalTitle>{title}</ModalTitle>}
-            {withCloseButton && <ModalCloseButton {...closeButtonProps} />}
+            {withCloseButton && closeButtonPosition === 'right' && (
+              <ModalCloseButton {...closeButtonProps} />
+            )}
           </ModalHeader>
         )}
 
