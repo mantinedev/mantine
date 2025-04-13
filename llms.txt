@@ -1,0 +1,2460 @@
+# Mantine
+Mantine is a fully featured React components library with a focus on usability, accessibility, and developer experience.
+
+## Overview and Key Links
+
+- **Documentation**: [https://mantine.dev/](https://mantine.dev/)
+- **GitHub Repository**: [https://github.com/mantinedev/mantine](https://github.com/mantinedev/mantine)
+- **Mantine UI**: [https://ui.mantine.dev/](https://ui.mantine.dev/)
+- **Mantine Help Center**: [https://mantine.dev/help-center/](https://mantine.dev/help-center/)
+- **Colors Generator**: [https://mantine.dev/colors-generator/](https://mantine.dev/colors-generator/)
+- **NPM**: [https://www.npmjs.com/org/mantine](https://www.npmjs.com/org/mantine)
+
+
+## Installation & Getting Started
+
+```bash
+# Create a new project with Mantine template
+# For Vite (SPA)
+npm create vite@latest my-app -- --template react-ts
+cd my-app
+npm install @mantine/core @mantine/hooks @emotion/react
+
+# For Next.js (SSR)
+npx create-next-app --typescript my-app
+cd my-app
+npm install @mantine/core @mantine/hooks @emotion/react
+```
+
+Import styles at the root of your application:
+```jsx
+import '@mantine/core/styles.css';
+```
+
+Wrap your application with MantineProvider:
+```jsx
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider>
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+## Core Concepts
+
+### Theme System
+Mantine uses a theme object to control the appearance of all components. The theme is provided through the MantineProvider component and can be customized.
+
+```jsx
+import { MantineProvider, createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  fontFamily: 'Verdana, sans-serif',
+  primaryColor: 'blue',
+  colors: {
+    // Add custom colors
+    'ocean-blue': ['#7AD1DD', '#5FCCDB', '#44CADC', '#2AC9DE', '#1AC2D9', '#11B7CD', '#09ADC3', '#0E99AC', '#128797', '#147885'],
+  },
+});
+
+function App() {
+  return (
+    <MantineProvider theme={theme}>
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+### Color System
+Mantine provides a rich color system with predefined colors and the ability to add custom colors:
+
+- Colors are defined as arrays of 10 shades (0-9), where 0 is lightest and 9 is darkest
+- Default colors: white, black, dark, gray, red, pink, grape, violet, indigo, blue, cyan, teal, green, lime, yellow, orange
+- Primary color is customizable via `theme.primaryColor`
+- Color is accessed via CSS variables: `--mantine-color-{colorName}-{shade}`
+- Primary color shortcuts: `--mantine-primary-color-{shade}`
+
+### CSS Variables
+Mantine uses CSS variables for styling:
+- `--mantine-color-{name}-{shade}`: Color variables
+- `--mantine-primary-color-{shade}`: Primary color variables
+- `--mantine-spacing-{size}`: Spacing variables (xs, sm, md, lg, xl)
+- `--mantine-font-family`: Font family variable
+- `--mantine-font-size-{size}`: Font size variables
+
+### CSS Modules
+Mantine components use CSS modules for styling. You can create your own `.module.css` files to customize components:
+
+```css
+/* Button.module.css */
+.button {
+  padding: 10px 15px;
+  background-color: var(--mantine-primary-color-6);
+}
+```
+
+```jsx
+import classes from './Button.module.css';
+
+function Demo() {
+  return <button className={classes.button}>Custom button</button>;
+}
+```
+
+### Color Schemes
+Mantine supports light and dark color schemes out of the box:
+
+```jsx
+import { MantineProvider } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider defaultColorScheme="dark">
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
+
+## Core Components
+
+### Layout Components
+
+#### AppShell
+A responsive shell for your application with configurable header, navbar and footer.
+```jsx
+import { AppShell, Burger } from '@mantine/core';
+import { useState } from 'react';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+  return (
+    <AppShell
+      header={{ height: 60 }}
+      navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      padding="md"
+    >
+      <AppShell.Header>
+        <Burger opened={opened} onClick={() => setOpened(!opened)} />
+      </AppShell.Header>
+      <AppShell.Navbar>Navbar content</AppShell.Navbar>
+      <AppShell.Main>Main content</AppShell.Main>
+    </AppShell>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/app-shell) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/AppShell)
+
+#### Container
+Center content horizontally with predefined max-width.
+
+```jsx
+import { Container } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Container size="sm">
+      Centered content with sm size
+    </Container>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/container) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Container)
+
+**Available Sizes**:
+- `xs`: 576px
+- `sm`: 768px
+- `md`: 992px
+- `lg`: 1200px
+- `xl`: 1400px
+
+**Best Practices**:
+- Use consistent container sizes throughout your application
+- Combine with responsive props for better mobile experiences
+- Use the `fluid` prop for full-width containers with padding
+
+#### Flex
+Responsive flexbox container.
+```jsx
+import { Flex } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Flex
+      gap="md"
+      justify="flex-start"
+      align="flex-start"
+      direction="row"
+      wrap="wrap"
+    >
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+    </Flex>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/flex) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Flex)
+
+#### Grid
+Responsive grid system with support for flexbox alignments.
+```jsx
+import { Grid } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Grid>
+      <Grid.Col span={6}>1</Grid.Col>
+      <Grid.Col span={6}>2</Grid.Col>
+    </Grid>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/grid) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Grid)
+
+#### Group
+Arrange items with equal spacing in a row.
+```jsx
+import { Group } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Group gap="md" justify="flex-start">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+    </Group>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/group) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Group)
+
+#### SimpleGrid
+Responsive grid where each item takes equal amount of space.
+```jsx
+import { SimpleGrid } from '@mantine/core';
+
+function Demo() {
+  return (
+    <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }}>
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+    </SimpleGrid>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/simple-grid) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/SimpleGrid)
+
+#### Stack
+Vertical flex container.
+```jsx
+import { Stack } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Stack gap="md">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+    </Stack>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/stack) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Stack)
+
+### Input Components
+
+#### TextInput
+Capture text from user.
+```jsx
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <TextInput
+      label="Email"
+      placeholder="your@email.com"
+      required
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/core/text-input) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/TextInput)
+
+#### PasswordInput
+Capture password from user with show/hide toggle button.
+```jsx
+import { PasswordInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <PasswordInput
+      label="Password"
+      placeholder="Your password"
+      required
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/core/password-input) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/PasswordInput)
+
+#### Checkbox
+Capture boolean input from user.
+```jsx
+import { Checkbox } from '@mantine/core';
+import { useState } from 'react';
+
+function Demo() {
+  const [checked, setChecked] = useState(false);
+  return (
+    <Checkbox
+      label="I agree to terms and conditions"
+      checked={checked}
+      onChange={(event) => setChecked(event.currentTarget.checked)}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/core/checkbox) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Checkbox)
+
+#### Switch
+Alternative to Checkbox when you need to toggle between enabled and disabled states.
+```jsx
+import { Switch } from '@mantine/core';
+import { useState } from 'react';
+
+function Demo() {
+  const [checked, setChecked] = useState(false);
+  return (
+    <Switch
+      label="Toggle me"
+      checked={checked}
+      onChange={(event) => setChecked(event.currentTarget.checked)}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/core/switch) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Switch)
+
+#### Radio
+Radio buttons allow users to select a single option from a group.
+```jsx
+import { Radio } from '@mantine/core';
+import { useState } from 'react';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  return (
+    <Radio.Group
+      value={value}
+      onChange={setValue}
+      name="favoriteFramework"
+      label="Select your favorite framework"
+    >
+      <Radio value="react" label="React" />
+      <Radio value="vue" label="Vue" />
+      <Radio value="angular" label="Angular" />
+    </Radio.Group>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/radio) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Radio)
+
+#### Slider
+Capture numeric input within a range.
+```jsx
+import { Slider } from '@mantine/core';
+import { useState } from 'react';
+
+function Demo() {
+  const [value, setValue] = useState(50);
+  return (
+    <Slider
+      value={value}
+      onChange={setValue}
+      marks={[
+        { value: 20, label: '20%' },
+        { value: 50, label: '50%' },
+        { value: 80, label: '80%' },
+      ]}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/core/slider) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Slider)
+
+#### Select
+Select a single value from the given options.
+```jsx
+import { Select } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Select
+      label="Select your favorite framework"
+      placeholder="Pick one"
+      data={['React', 'Vue', 'Angular', 'Svelte']}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/core/select) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Select)
+
+#### MultiSelect
+Select multiple values from the given options.
+```jsx
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MultiSelect
+      label="Select your favorite frameworks"
+      placeholder="Pick all that you like"
+      data={['React', 'Vue', 'Angular', 'Svelte']}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/core/multi-select) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/MultiSelect)
+
+#### Textarea
+Capture multi-line text input from the user.
+```jsx
+import { Textarea } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Textarea
+      label="Your comment"
+      placeholder="Your comment"
+      autosize
+      minRows={2}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/core/textarea) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Textarea)
+
+#### ColorInput
+Color picker input.
+```jsx
+import { ColorInput } from '@mantine/core';
+import { useState } from 'react';
+
+function Demo() {
+  const [value, setValue] = useState('#C5D899');
+  return (
+    <ColorInput
+      label="Pick a color"
+      value={value}
+      onChange={setValue}
+      format="hex"
+      swatches={['#25262b', '#868e96', '#fa5252', '#e64980']}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/core/color-input) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/ColorInput)
+
+### Button Components
+
+#### Button
+UI control that allows users to trigger an action.
+```jsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button color="blue" radius="md" size="md">
+      Click me
+    </Button>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/button) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Button)
+
+#### ActionIcon
+Compact button for icon interactions.
+```jsx
+import { ActionIcon } from '@mantine/core';
+import { IconHeart } from '@tabler/icons-react';
+
+function Demo() {
+  return (
+    <ActionIcon variant="filled" color="red" aria-label="Like">
+      <IconHeart size="1rem" />
+    </ActionIcon>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/action-icon) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/ActionIcon)
+
+#### FileButton
+Hidden input for file upload.
+```jsx
+import { FileButton, Button } from '@mantine/core';
+import { useState } from 'react';
+
+function Demo() {
+  const [file, setFile] = useState<File | null>(null);
+  return (
+    <>
+      <FileButton onChange={setFile} accept="image/png,image/jpeg">
+        {(props) => <Button {...props}>Upload image</Button>}
+      </FileButton>
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/file-button) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/FileButton)
+
+### Navigation Components
+
+#### Tabs
+Organize content into separate views where only one view is visible at a time.
+```jsx
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tabs defaultValue="gallery">
+      <Tabs.List>
+        <Tabs.Tab value="gallery">Gallery</Tabs.Tab>
+        <Tabs.Tab value="messages">Messages</Tabs.Tab>
+        <Tabs.Tab value="settings">Settings</Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="gallery">Gallery panel</Tabs.Panel>
+      <Tabs.Panel value="messages">Messages panel</Tabs.Panel>
+      <Tabs.Panel value="settings">Settings panel</Tabs.Panel>
+    </Tabs>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/tabs) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Tabs)
+
+#### Pagination
+Navigate through content that's divided into pages.
+```jsx
+import { Pagination } from '@mantine/core';
+import { useState } from 'react';
+
+function Demo() {
+  const [activePage, setPage] = useState(1);
+  return (
+    <Pagination
+      total={10}
+      value={activePage}
+      onChange={setPage}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/core/pagination) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Pagination)
+
+#### Stepper
+Display content divided into steps.
+```jsx
+import { Stepper } from '@mantine/core';
+import { useState } from 'react';
+
+function Demo() {
+  const [active, setActive] = useState(1);
+  return (
+    <Stepper active={active} onStepClick={setActive}>
+      <Stepper.Step label="Step 1" description="Create an account">
+        Step 1 content
+      </Stepper.Step>
+      <Stepper.Step label="Step 2" description="Verify email">
+        Step 2 content
+      </Stepper.Step>
+      <Stepper.Step label="Step 3" description="Get full access">
+        Step 3 content
+      </Stepper.Step>
+    </Stepper>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/stepper) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Stepper)
+
+### Feedback Components
+
+#### Alert
+Attract user attention with a predefined alert component.
+```jsx
+import { Alert } from '@mantine/core';
+import { IconAlertCircle } from '@tabler/icons-react';
+
+function Demo() {
+  return (
+    <Alert icon={<IconAlertCircle />} title="Bummer!" color="red">
+      Something terrible happened! You made a mistake and there is no going back, your data was lost forever!
+    </Alert>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/alert) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Alert)
+
+#### Notification
+Show notification to user.
+```jsx
+import { Notification } from '@mantine/core';
+import { IconX, IconCheck } from '@tabler/icons-react';
+
+function Demo() {
+  return (
+    <Notification icon={<IconCheck size="1.1rem" />} color="teal" title="All good!">
+      Everything was submitted correctly
+    </Notification>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/notification) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Notification)
+
+#### Loader
+Display loading state.
+```jsx
+import { Loader } from '@mantine/core';
+
+function Demo() {
+  return <Loader color="blue" size="xl" type="dots" />;
+}
+```
+[Documentation](https://mantine.dev/core/loader) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Loader)
+
+#### Progress
+Give user feedback for loading state or a task completion.
+```jsx
+import { Progress } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Progress
+      value={75}
+      color="blue"
+      size="xl"
+      radius="xl"
+      striped
+      animated
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/core/progress) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Progress)
+
+### Overlay Components
+
+#### Modal
+Display content that requires user interaction.
+```jsx
+import { Modal, Button } from '@mantine/core';
+import { useState } from 'react';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+  return (
+    <>
+      <Button onClick={() => setOpened(true)}>Open Modal</Button>
+      <Modal opened={opened} onClose={() => setOpened(false)} title="Authentication">
+        Modal content
+      </Modal>
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/modal) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Modal)
+
+#### Drawer
+Side panel that slides from the edge of the screen.
+```jsx
+import { Drawer, Button } from '@mantine/core';
+import { useState } from 'react';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+  return (
+    <>
+      <Button onClick={() => setOpened(true)}>Open Drawer</Button>
+      <Drawer opened={opened} onClose={() => setOpened(false)}>
+        Drawer content
+      </Drawer>
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/drawer) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Drawer)
+
+#### Popover
+Show floating content relative to a target element.
+```jsx
+import { Popover, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Popover>
+      <Popover.Target>
+        <Button>Toggle popover</Button>
+      </Popover.Target>
+      <Popover.Dropdown>
+        <div>Popover content</div>
+      </Popover.Dropdown>
+    </Popover>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/popover) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Popover)
+
+#### Tooltip
+Display content when the user hovers over an element.
+```jsx
+import { Tooltip, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tooltip label="Tooltip content">
+      <Button>Hover me</Button>
+    </Tooltip>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/tooltip) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Tooltip)
+
+### Data Display Components
+
+#### Accordion
+Vertically stacked interactive headings that reveal or hide related content.
+```jsx
+import { Accordion } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Accordion>
+      <Accordion.Item value="item-1">
+        <Accordion.Control>Control 1</Accordion.Control>
+        <Accordion.Panel>Panel 1</Accordion.Panel>
+      </Accordion.Item>
+      <Accordion.Item value="item-2">
+        <Accordion.Control>Control 2</Accordion.Control>
+        <Accordion.Panel>Panel 2</Accordion.Panel>
+      </Accordion.Item>
+    </Accordion>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/accordion) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Accordion)
+
+#### Avatar
+Display user profile image, initials or fallback icon.
+```jsx
+import { Avatar, Group } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Group>
+      <Avatar src="avatar.png" alt="User avatar" />
+      <Avatar color="cyan" radius="xl">MK</Avatar>
+      <Avatar color="blue">JD</Avatar>
+    </Group>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/avatar) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Avatar)
+
+#### Badge
+Highlight important information.
+```jsx
+import { Badge, Group } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Group>
+      <Badge color="blue">Blue</Badge>
+      <Badge color="red">Red</Badge>
+      <Badge variant="outline">Outline</Badge>
+      <Badge size="lg">Large</Badge>
+    </Group>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/badge) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Badge)
+
+#### Card
+Display content in a card container.
+```jsx
+import { Card, Image, Text, Button, Group } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Card shadow="sm" padding="lg" radius="md" withBorder>
+      <Card.Section>
+        <Image src="card-image.png" height={160} alt="Card image" />
+      </Card.Section>
+      <Group mt="md" mb="xs">
+        <Text fw={500}>Card title</Text>
+      </Group>
+      <Text size="sm" c="dimmed">Card description</Text>
+      <Button variant="light" color="blue" fullWidth mt="md" radius="md">
+        Button
+      </Button>
+    </Card>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/card) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Card)
+
+#### Table
+Display tabular data.
+```jsx
+import { Table } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Table>
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Name</Table.Th>
+          <Table.Th>Email</Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>
+        <Table.Tr>
+          <Table.Td>John Doe</Table.Td>
+          <Table.Td>john@example.com</Table.Td>
+        </Table.Tr>
+        <Table.Tr>
+          <Table.Td>Jane Doe</Table.Td>
+          <Table.Td>jane@example.com</Table.Td>
+        </Table.Tr>
+      </Table.Tbody>
+    </Table>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/table) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Table)
+
+### Typography Components
+
+#### Text
+Display text with theme styles.
+```jsx
+import { Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Text size="xs">Extra small text</Text>
+      <Text size="sm">Small text</Text>
+      <Text size="md">Default text</Text>
+      <Text size="lg">Large text</Text>
+      <Text size="xl">Extra large text</Text>
+      <Text fw={700}>Bold text</Text>
+      <Text fs="italic">Italic text</Text>
+      <Text td="underline">Underlined text</Text>
+      <Text c="blue">Blue text</Text>
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/text) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Text)
+
+#### Title
+Display section headings with theme styles.
+```jsx
+import { Title } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Title order={1}>This is h1 title</Title>
+      <Title order={2}>This is h2 title</Title>
+      <Title order={3}>This is h3 title</Title>
+      <Title order={4}>This is h4 title</Title>
+      <Title order={5}>This is h5 title</Title>
+      <Title order={6}>This is h6 title</Title>
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/title) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/Title)
+
+#### List
+Display ordered or unordered list.
+```jsx
+import { List } from '@mantine/core';
+
+function Demo() {
+  return (
+    <List>
+      <List.Item>Clone or download repository from GitHub</List.Item>
+      <List.Item>Install dependencies with yarn</List.Item>
+      <List.Item>To start development server run npm start command</List.Item>
+      <List.Item>Run tests to make sure your changes do not break the build</List.Item>
+      <List.Item>Submit a pull request once you are done</List.Item>
+    </List>
+  );
+}
+```
+[Documentation](https://mantine.dev/core/list) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/components/List)
+
+## Mantine Form
+
+`@mantine/form` provides form state management.
+
+```jsx
+import { useForm } from '@mantine/form';
+import { TextInput, Button, Box } from '@mantine/core';
+
+function Demo() {
+  const form = useForm({
+    initialValues: {
+      email: '',
+      name: '',
+    },
+    validate: {
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+      name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+    },
+  });
+
+  return (
+    <Box maw={320} mx="auto">
+      <form onSubmit={form.onSubmit(console.log)}>
+        <TextInput
+          label="Email"
+          placeholder="your@email.com"
+          {...form.getInputProps('email')}
+        />
+        <TextInput
+          label="Name"
+          placeholder="John Doe"
+          mt="md"
+          {...form.getInputProps('name')}
+        />
+        <Button type="submit" mt="md">
+          Submit
+        </Button>
+      </form>
+    </Box>
+  );
+}
+```
+[Form Documentation](https://mantine.dev/form/use-form) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/form/src/use-form)
+
+## Mantine Dates
+
+The `@mantine/dates` package provides date and time related components.
+
+### DatesProvider
+Provides context to dates components.
+```jsx
+import { DatesProvider } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DatesProvider settings={{ locale: 'fr', firstDayOfWeek: 1 }}>
+      {/* Your dates components */}
+    </DatesProvider>
+  );
+}
+```
+[Documentation](https://mantine.dev/dates/getting-started) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/dates/src/DatesProvider)
+
+### Calendar
+Base component for custom date pickers.
+```jsx
+import { Calendar } from '@mantine/dates';
+import { useState } from 'react';
+
+function Demo() {
+  const [value, setValue] = useState<Date | null>(null);
+  return (
+    <Calendar value={value} onChange={setValue} />
+  );
+}
+```
+[Documentation](https://mantine.dev/dates/calendar) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/dates/src/components/Calendar)
+
+### DateInput
+Input to capture date from user.
+```jsx
+import { DateInput } from '@mantine/dates';
+import { useState } from 'react';
+
+function Demo() {
+  const [value, setValue] = useState<Date | null>(null);
+  return (
+    <DateInput
+      label="Date input"
+      placeholder="Date input"
+      value={value}
+      onChange={setValue}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/dates/date-input) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/dates/src/components/DateInput)
+
+### DateTimePicker
+Input to capture date and time from user.
+```jsx
+import { DateTimePicker } from '@mantine/dates';
+import { useState } from 'react';
+
+function Demo() {
+  const [value, setValue] = useState<Date | null>(null);
+  return (
+    <DateTimePicker
+      label="Pick date and time"
+      placeholder="Pick date and time"
+      value={value}
+      onChange={setValue}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/dates/date-time-picker) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/dates/src/components/DateTimePicker)
+
+### DatePicker
+Inline date picker component.
+```jsx
+import { DatePicker } from '@mantine/dates';
+import { useState } from 'react';
+
+function Demo() {
+  const [value, setValue] = useState<Date | null>(null);
+  return (
+    <DatePicker value={value} onChange={setValue} />
+  );
+}
+```
+[Documentation](https://mantine.dev/dates/date-picker) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/dates/src/components/DatePicker)
+
+### DatePickerInput
+Date picker combined with input.
+```jsx
+import { DatePickerInput } from '@mantine/dates';
+import { useState } from 'react';
+
+function Demo() {
+  const [value, setValue] = useState<Date | null>(null);
+  return (
+    <DatePickerInput
+      label="Pick date"
+      placeholder="Pick date"
+      value={value}
+      onChange={setValue}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/dates/date-picker-input) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/dates/src/components/DatePickerInput)
+
+### MonthPicker
+Inline month picker component.
+```jsx
+import { MonthPicker } from '@mantine/dates';
+import { useState } from 'react';
+
+function Demo() {
+  const [value, setValue] = useState<Date | null>(null);
+  return (
+    <MonthPicker value={value} onChange={setValue} />
+  );
+}
+```
+[Documentation](https://mantine.dev/dates/month-picker) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/dates/src/components/MonthPicker)
+
+### MonthPickerInput
+Month picker combined with input.
+```jsx
+import { MonthPickerInput } from '@mantine/dates';
+import { useState } from 'react';
+
+function Demo() {
+  const [value, setValue] = useState<Date | null>(null);
+  return (
+    <MonthPickerInput
+      label="Pick month"
+      placeholder="Pick month"
+      value={value}
+      onChange={setValue}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/dates/month-picker-input) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/dates/src/components/MonthPickerInput)
+
+### YearPicker
+Inline year picker component.
+```jsx
+import { YearPicker } from '@mantine/dates';
+import { useState } from 'react';
+
+function Demo() {
+  const [value, setValue] = useState<Date | null>(null);
+  return (
+    <YearPicker value={value} onChange={setValue} />
+  );
+}
+```
+[Documentation](https://mantine.dev/dates/year-picker) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/dates/src/components/YearPicker)
+
+### YearPickerInput
+Year picker combined with input.
+```jsx
+import { YearPickerInput } from '@mantine/dates';
+import { useState } from 'react';
+
+function Demo() {
+  const [value, setValue] = useState<Date | null>(null);
+  return (
+    <YearPickerInput
+      label="Pick year"
+      placeholder="Pick year"
+      value={value}
+      onChange={setValue}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/dates/year-picker-input) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/dates/src/components/YearPickerInput)
+
+### TimeInput
+Input to capture time from user.
+```jsx
+import { TimeInput } from '@mantine/dates';
+import { useState } from 'react';
+
+function Demo() {
+  const [value, setValue] = useState<Date | null>(null);
+  return (
+    <TimeInput
+      label="Pick time"
+      placeholder="Pick time"
+      value={value}
+      onChange={setValue}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/dates/time-input) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/dates/src/components/TimeInput)
+
+## Mantine Charts
+
+The `@mantine/charts` package provides charts and data visualization components based on recharts.
+
+### AreaChart
+Display area charts.
+```jsx
+import { AreaChart } from '@mantine/charts';
+
+function Demo() {
+  const data = [
+    { month: 'January', value: 400 },
+    { month: 'February', value: 300 },
+    { month: 'March', value: 550 },
+    { month: 'April', value: 600 },
+    { month: 'May', value: 400 },
+    { month: 'June', value: 450 },
+  ];
+
+  return (
+    <AreaChart
+      h={300}
+      data={data}
+      dataKey="month"
+      series={[{ name: 'value', color: 'indigo.6' }]}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/charts/area-chart) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/charts/src/AreaChart)
+
+### BarChart
+Display bar charts.
+```jsx
+import { BarChart } from '@mantine/charts';
+
+function Demo() {
+  const data = [
+    { month: 'January', value: 400 },
+    { month: 'February', value: 300 },
+    { month: 'March', value: 550 },
+    { month: 'April', value: 600 },
+    { month: 'May', value: 400 },
+    { month: 'June', value: 450 },
+  ];
+
+  return (
+    <BarChart
+      h={300}
+      data={data}
+      dataKey="month"
+      series={[{ name: 'value', color: 'teal.6' }]}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/charts/bar-chart) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/charts/src/BarChart)
+
+### LineChart
+Display line charts.
+```jsx
+import { LineChart } from '@mantine/charts';
+
+function Demo() {
+  const data = [
+    { month: 'January', value: 400 },
+    { month: 'February', value: 300 },
+    { month: 'March', value: 550 },
+    { month: 'April', value: 600 },
+    { month: 'May', value: 400 },
+    { month: 'June', value: 450 },
+  ];
+
+  return (
+    <LineChart
+      h={300}
+      data={data}
+      dataKey="month"
+      series={[{ name: 'value', color: 'blue.6' }]}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/charts/line-chart) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/charts/src/LineChart)
+
+### DonutChart
+Display donut charts.
+```jsx
+import { DonutChart } from '@mantine/charts';
+
+function Demo() {
+  const data = [
+    { name: 'USA', value: 600, color: 'indigo.6' },
+    { name: 'UK', value: 400, color: 'cyan.6' },
+    { name: 'Canada', value: 300, color: 'pink.6' },
+  ];
+
+  return (
+    <DonutChart data={data} />
+  );
+}
+```
+[Documentation](https://mantine.dev/charts/donut-chart) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/charts/src/DonutChart)
+
+### PieChart
+Display pie charts.
+```jsx
+import { PieChart } from '@mantine/charts';
+
+function Demo() {
+  const data = [
+    { name: 'USA', value: 600, color: 'indigo.6' },
+    { name: 'UK', value: 400, color: 'cyan.6' },
+    { name: 'Canada', value: 300, color: 'pink.6' },
+  ];
+
+  return (
+    <PieChart data={data} />
+  );
+}
+```
+[Documentation](https://mantine.dev/charts/pie-chart) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/charts/src/PieChart)
+
+### Sparkline
+Display a simple sparkline chart.
+```jsx
+import { Sparkline } from '@mantine/charts';
+
+function Demo() {
+  const data = [10, 20, 40, 20, 40, 10, 50];
+
+  return (
+    <Sparkline
+      h={60}
+      data={data}
+      curveType="linear"
+      color="blue"
+      fillOpacity={0.6}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/charts/sparkline) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/charts/src/Sparkline)
+
+### ScatterChart
+Display a scatter chart.
+```jsx
+import { ScatterChart } from '@mantine/charts';
+
+function Demo() {
+  const data = [
+    { name: 'Point 1', x: 10, y: 10 },
+    { name: 'Point 2', x: 20, y: 20 },
+    { name: 'Point 3', x: 30, y: 10 },
+  ];
+
+  return (
+    <ScatterChart
+      h={300}
+      data={data}
+      dataKey="name"
+      series={[
+        { name: 'x', label: 'X value' },
+        { name: 'y', label: 'Y value' },
+      ]}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/charts/scatter-chart) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/charts/src/ScatterChart)
+
+### BubbleChart
+Display a bubble chart.
+```jsx
+import { BubbleChart } from '@mantine/charts';
+
+function Demo() {
+  const data = [
+    { name: 'Point 1', x: 10, y: 10, size: 10 },
+    { name: 'Point 2', x: 20, y: 20, size: 20 },
+    { name: 'Point 3', x: 30, y: 10, size: 15 },
+  ];
+
+  return (
+    <BubbleChart
+      h={300}
+      data={data}
+      dataKey="name"
+      series={[
+        { name: 'x', label: 'X value' },
+        { name: 'y', label: 'Y value' },
+      ]}
+      sizeName="size"
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/charts/bubble-chart) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/charts/src/BubbleChart)
+
+### FunnelChart
+Display a funnel chart.
+```jsx
+import { FunnelChart } from '@mantine/charts';
+
+function Demo() {
+  const data = [
+    { name: 'Visited', value: 1000 },
+    { name: 'Registered', value: 800 },
+    { name: 'Purchased', value: 600 },
+    { name: 'Subscribed', value: 400 },
+    { name: 'Renewed', value: 200 },
+  ];
+
+  return (
+    <FunnelChart data={data} />
+  );
+}
+```
+[Documentation](https://mantine.dev/charts/funnel-chart) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/charts/src/FunnelChart)
+
+### RadarChart
+Display a radar chart.
+```jsx
+import { RadarChart } from '@mantine/charts';
+
+function Demo() {
+  const data = [
+    { key: 'Group A', metric1: 10, metric2: 20, metric3: 30 },
+    { key: 'Group B', metric1: 20, metric2: 10, metric3: 20 },
+  ];
+
+  return (
+    <RadarChart
+      h={300}
+      data={data}
+      dataKey="key"
+      series={[
+        { name: 'metric1', color: 'blue.6' },
+        { name: 'metric2', color: 'teal.6' },
+        { name: 'metric3', color: 'indigo.6' },
+      ]}
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/charts/radar-chart) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/charts/src/RadarChart)
+
+### RadialBarChart
+Display a radial bar chart.
+```jsx
+import { RadialBarChart } from '@mantine/charts';
+
+function Demo() {
+  const data = [
+    { name: 'Metric 1', value: 40 },
+    { name: 'Metric 2', value: 70 },
+    { name: 'Metric 3', value: 30 },
+    { name: 'Metric 4', value: 60 },
+  ];
+
+  return (
+    <RadialBarChart
+      h={300}
+      data={data}
+      dataKey="name"
+      valueName="value"
+    />
+  );
+}
+```
+[Documentation](https://mantine.dev/charts/radial-bar-chart) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/charts/src/RadialBarChart)
+
+## Mantine Extensions
+
+### Notifications
+Notifications system for Mantine.
+```jsx
+import { Button } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+
+function Demo() {
+  return (
+    <Button
+      onClick={() =>
+        notifications.show({
+          title: 'Default notification',
+          message: 'This is a notification message',
+        })
+      }
+    >
+      Show notification
+    </Button>
+  );
+}
+```
+[Documentation](https://mantine.dev/x/notifications) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/notifications)
+
+### Spotlight
+Command center/search for your application.
+```jsx
+import { Button } from '@mantine/core';
+import { Spotlight, spotlight } from '@mantine/spotlight';
+import { IconSearch } from '@tabler/icons-react';
+
+function Demo() {
+  const actions = [
+    {
+      id: 'home',
+      label: 'Home',
+      description: 'Get to home page',
+      onClick: () => console.log('Home'),
+    },
+    {
+      id: 'settings',
+      label: 'Settings',
+      description: 'Get to settings page',
+      onClick: () => console.log('Settings'),
+    },
+  ];
+
+  return (
+    <>
+      <Button onClick={() => spotlight.open()}>Open spotlight</Button>
+
+      <Spotlight
+        actions={actions}
+        nothingFound="Nothing found..."
+        highlightQuery
+        searchPlaceholder="Search..."
+        shortcut="mod + K"
+        icon={<IconSearch size="1.2rem" />}
+      />
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/x/spotlight) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/spotlight)
+
+### CodeHighlight
+Highlight code syntax.
+```jsx
+import { CodeHighlight } from '@mantine/code-highlight';
+
+function Demo() {
+  return (
+    <CodeHighlight code={`function hello() {\n  console.log('Hello, world!');\n}`} language="typescript" />
+  );
+}
+```
+[Documentation](https://mantine.dev/x/code-highlight) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/code-highlight)
+
+### Carousel
+Image/content carousel based on Embla.
+```jsx
+import { Carousel } from '@mantine/carousel';
+
+function Demo() {
+  return (
+    <Carousel withIndicators height={200}>
+      <Carousel.Slide>1</Carousel.Slide>
+      <Carousel.Slide>2</Carousel.Slide>
+      <Carousel.Slide>3</Carousel.Slide>
+    </Carousel>
+  );
+}
+```
+[Documentation](https://mantine.dev/x/carousel) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/carousel)
+
+### Dropzone
+Capture files from user with drag and drop.
+```jsx
+import { Dropzone } from '@mantine/dropzone';
+
+function Demo() {
+  return (
+    <Dropzone onDrop={(files) => console.log('Accepted files', files)}>
+      <div>Drag files here or click to select files</div>
+    </Dropzone>
+  );
+}
+```
+[Documentation](https://mantine.dev/x/dropzone) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/dropzone)
+
+### Modals Manager
+Manage modals state centrally.
+```jsx
+import { Button } from '@mantine/core';
+import { modals } from '@mantine/modals';
+
+function Demo() {
+  const openConfirmModal = () => modals.openConfirmModal({
+    title: 'Please confirm your action',
+    children: 'This action is so important that you need to confirm it.',
+    labels: { confirm: 'Confirm', cancel: 'Cancel' },
+    onConfirm: () => console.log('Confirmed'),
+  });
+
+  return <Button onClick={openConfirmModal}>Open confirm modal</Button>;
+}
+```
+[Documentation](https://mantine.dev/x/modals) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/modals)
+
+### Rich Text Editor
+Rich text editor based on Tiptap.
+```jsx
+import { RichTextEditor, Link } from '@mantine/tiptap';
+import { useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+
+function Demo() {
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Link,
+    ],
+    content: '<p>Rich text editor content</p>',
+  });
+
+  return (
+    <RichTextEditor editor={editor}>
+      <RichTextEditor.Toolbar sticky stickyOffset={60}>
+        <RichTextEditor.ControlsGroup>
+          <RichTextEditor.Bold />
+          <RichTextEditor.Italic />
+          <RichTextEditor.Underline />
+          <RichTextEditor.Strikethrough />
+          <RichTextEditor.Link />
+        </RichTextEditor.ControlsGroup>
+      </RichTextEditor.Toolbar>
+
+      <RichTextEditor.Content />
+    </RichTextEditor>
+  );
+}
+```
+[Documentation](https://mantine.dev/x/tiptap) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/tiptap)
+
+### NProgress
+Navigation progress component.
+```jsx
+import { NavigationProgress, nprogress } from '@mantine/nprogress';
+
+function Demo() {
+  return (
+    <>
+      <NavigationProgress />
+      <button onClick={() => nprogress.start()}>Start</button>
+      <button onClick={() => nprogress.increment()}>Increment</button>
+      <button onClick={() => nprogress.complete()}>Complete</button>
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/x/nprogress) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/nprogress)
+
+## Mantine UI
+
+Mantine UI is a collection of more than 120 responsive components built with Mantine.
+
+[Mantine UI Website](https://ui.mantine.dev) | [GitHub](https://github.com/mantinedev/ui.mantine.dev)
+
+### Application UI Components
+
+Mantine UI provides ready-to-use application UI components such as:
+- Navbars (9 components)
+- Headers (6 components)
+- Footers (4 components)
+- Grids (3 components)
+- User info and controls (8 components)
+- Inputs (14 components)
+- Buttons (6 components)
+- Sliders (6 components)
+- Application cards (7 components)
+- Stats (9 components)
+- Tables (4 components)
+- And more...
+
+### Page Sections
+
+Components for building page sections:
+- Hero headers (6 components)
+- Features section (5 components)
+- Authentication (4 components)
+- FAQ sections (4 components)
+- Contact sections (3 components)
+- Error pages (5 components)
+- Banners (3 components)
+
+### Blog UI
+
+Blog-related components:
+- Article cards (7 components)
+- Table of contents (2 components)
+- Comments (2 components)
+
+## Best Practices
+
+1. **Use MantineProvider at the root level** to set up your theme and provide it to all components
+2. **Follow the component documentation** for understanding available props and customization options
+3. **Utilize the style props system** for one-off styling needs
+4. **Use CSS modules or style API** for more complex styling scenarios
+5. **Rely on the existing color system** before creating custom colors
+6. **Make your application responsive** by using Mantine's responsive props API
+7. **Use Mantine hooks** to handle common UI patterns and state management
+8. **Combine with Mantine Form** for complex form state management
+9. **Use Typescript** to get the best development experience and type safety
+10. **Check the documentation** for the latest updates and API changes
+
+## Mantine Hooks
+
+The `@mantine/hooks` package provides utility hooks for common UI patterns.
+
+### UI and DOM Hooks
+
+#### useClickOutside
+Detects clicks outside of a specified element.
+```jsx
+import { useClickOutside } from '@mantine/hooks';
+
+function Demo() {
+  const ref = useClickOutside(() => console.log('Clicked outside'));
+  return <div ref={ref}>This element will detect outside clicks</div>;
+}
+```
+[Documentation](https://mantine.dev/hooks/use-click-outside) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-click-outside/use-click-outside.ts)
+
+#### useColorScheme
+Gets user's preferred color scheme using `window.matchMedia`.
+```jsx
+import { useColorScheme } from '@mantine/hooks';
+
+function Demo() {
+  const colorScheme = useColorScheme();
+  return <div>Preferred color scheme: {colorScheme}</div>;
+}
+```
+[Documentation](https://mantine.dev/hooks/use-color-scheme) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-color-scheme/use-color-scheme.ts)
+
+#### useElementSize
+Gets element width and height.
+```jsx
+import { useElementSize } from '@mantine/hooks';
+
+function Demo() {
+  const { ref, width, height } = useElementSize();
+  return <div ref={ref}>Width: {width}, height: {height}</div>;
+}
+```
+[Documentation](https://mantine.dev/hooks/use-element-size) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-element-size/use-element-size.ts)
+
+#### useEventListener
+Adds an event listener to the specified element.
+```jsx
+import { useEventListener } from '@mantine/hooks';
+
+function Demo() {
+  const ref = useEventListener('keydown', (event) => console.log(event.key));
+  return <div ref={ref}>Press any key when this element is focused</div>;
+}
+```
+[Documentation](https://mantine.dev/hooks/use-event-listener) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-event-listener/use-event-listener.ts)
+
+#### useFileDialog
+Opens browser file dialog.
+```jsx
+import { useFileDialog } from '@mantine/hooks';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  const { open, files } = useFileDialog();
+  return (
+    <>
+      <Button onClick={open}>Upload files</Button>
+      {files && <div>Selected {files.length} files</div>}
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/hooks/use-file-dialog) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-file-dialog/use-file-dialog.ts)
+
+#### useFocusTrap
+Traps focus inside given node.
+```jsx
+import { useFocusTrap } from '@mantine/hooks';
+import { useState } from 'react';
+
+function Demo() {
+  const [active, setActive] = useState(false);
+  const focusTrapRef = useFocusTrap(active);
+
+  return (
+    <>
+      <button onClick={() => setActive(true)}>Activate focus trap</button>
+      <div ref={focusTrapRef}>
+        <input placeholder="First input" />
+        <input placeholder="Second input" />
+        <button onClick={() => setActive(false)}>Deactivate focus trap</button>
+      </div>
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/hooks/use-focus-trap) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-focus-trap/use-focus-trap.ts)
+
+#### useHotkeys
+Listens for keyboard shortcuts.
+```jsx
+import { useHotkeys } from '@mantine/hooks';
+
+function Demo() {
+  useHotkeys([
+    ['mod+J', () => console.log('Pressed mod+J')],
+    ['mod+K', () => console.log('Pressed mod+K')],
+    ['alt+mod+Digit1', () => console.log('Pressed alt+mod+1')],
+  ]);
+
+  return <div>Press mod+J, mod+K or alt+mod+1</div>;
+}
+```
+[Documentation](https://mantine.dev/hooks/use-hotkeys) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-hotkeys/use-hotkeys.ts)
+
+#### useHover
+Detects if mouse is hovering over an element.
+```jsx
+import { useHover } from '@mantine/hooks';
+
+function Demo() {
+  const { hovered, ref } = useHover();
+  return <div ref={ref}>Element is {hovered ? 'hovered' : 'not hovered'}</div>;
+}
+```
+[Documentation](https://mantine.dev/hooks/use-hover) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-hover/use-hover.ts)
+
+#### useIntersection
+Wrapper for Intersection Observer API.
+```jsx
+import { useIntersection } from '@mantine/hooks';
+
+function Demo() {
+  const { ref, entry } = useIntersection({ threshold: 0.5 });
+  return (
+    <div ref={ref}>
+      Element is {entry?.isIntersecting ? 'visible' : 'not visible'} in viewport
+    </div>
+  );
+}
+```
+[Documentation](https://mantine.dev/hooks/use-intersection) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-intersection/use-intersection.ts)
+
+#### useMediaQuery
+Subscribes to media queries with `window.matchMedia`.
+```jsx
+import { useMediaQuery } from '@mantine/hooks';
+
+function Demo() {
+  const matches = useMediaQuery('(min-width: 900px)');
+  return <div>Viewport is {matches ? 'larger' : 'smaller'} than 900px</div>;
+}
+```
+[Documentation](https://mantine.dev/hooks/use-media-query) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-media-query/use-media-query.ts)
+
+### State Management Hooks
+
+#### useCounter
+Manages a numeric state.
+```jsx
+import { useCounter } from '@mantine/hooks';
+import { Button, Group, Text } from '@mantine/core';
+
+function Demo() {
+  const [count, { increment, decrement, reset }] = useCounter(0, { min: 0, max: 10 });
+
+  return (
+    <>
+      <Text>Count: {count}</Text>
+      <Group>
+        <Button onClick={increment}>Increment</Button>
+        <Button onClick={decrement}>Decrement</Button>
+        <Button onClick={reset}>Reset</Button>
+      </Group>
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/hooks/use-counter) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-counter/use-counter.ts)
+
+#### useDebouncedState
+Creates a state that only updates after the specified delay.
+```jsx
+import { useDebouncedState } from '@mantine/hooks';
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useDebouncedState('', 200);
+
+  return (
+    <>
+      <TextInput
+        label="Debounced value"
+        value={value}
+        onChange={(event) => setValue(event.currentTarget.value)}
+      />
+      <div>Current value: {value}</div>
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/hooks/use-debounced-state) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-debounced-state/use-debounced-state.ts)
+
+#### useDebouncedValue
+Debounces a value change with useEffect.
+```jsx
+import { useDebouncedValue } from '@mantine/hooks';
+import { TextInput } from '@mantine/core';
+import { useState } from 'react';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  const [debounced] = useDebouncedValue(value, 200);
+
+  return (
+    <>
+      <TextInput
+        label="Value with debounced output"
+        value={value}
+        onChange={(event) => setValue(event.currentTarget.value)}
+      />
+      <div>Current value: {value}</div>
+      <div>Debounced value: {debounced}</div>
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/hooks/use-debounced-value) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-debounced-value/use-debounced-value.ts)
+
+#### useDisclosure
+Manages boolean open/close state.
+```jsx
+import { useDisclosure } from '@mantine/hooks';
+import { Button, Modal } from '@mantine/core';
+
+function Demo() {
+  const [opened, { open, close, toggle }] = useDisclosure(false);
+
+  return (
+    <>
+      <Button onClick={open}>Open Modal</Button>
+      <Button onClick={toggle}>Toggle Modal</Button>
+
+      <Modal opened={opened} onClose={close} title="Modal title">
+        Modal content
+      </Modal>
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/hooks/use-disclosure) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-disclosure/use-disclosure.ts)
+
+#### useInputState
+Creates a controlled input state.
+```jsx
+import { useInputState } from '@mantine/hooks';
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useInputState('');
+
+  return (
+    <>
+      <TextInput
+        label="Input value"
+        value={value}
+        onChange={setValue}
+      />
+      <div>Current value: {value}</div>
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/hooks/use-input-state) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-input-state/use-input-state.ts)
+
+#### useListState
+Manages array state with various operations.
+```jsx
+import { useListState } from '@mantine/hooks';
+import { Button, Group, Stack, TextInput } from '@mantine/core';
+import { useState } from 'react';
+
+function Demo() {
+  const [list, handlers] = useListState([
+    { name: 'John', email: 'john@example.com' },
+    { name: 'Jane', email: 'jane@example.com' },
+  ]);
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const addItem = () => {
+    handlers.append({ name, email });
+    setName('');
+    setEmail('');
+  };
+
+  return (
+    <Stack>
+      <div>
+        {list.map((item, index) => (
+          <div key={index}>
+            <span>{item.name} ({item.email})</span>
+            <Button onClick={() => handlers.remove(index)} size="xs">Remove</Button>
+          </div>
+        ))}
+      </div>
+
+      <div>
+        <TextInput
+          placeholder="Name"
+          value={name}
+          onChange={(event) => setName(event.currentTarget.value)}
+        />
+        <TextInput
+          placeholder="Email"
+          value={email}
+          onChange={(event) => setEmail(event.currentTarget.value)}
+        />
+        <Button onClick={addItem}>Add</Button>
+      </div>
+    </Stack>
+  );
+}
+```
+[Documentation](https://mantine.dev/hooks/use-list-state) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-list-state/use-list-state.ts)
+
+#### useLocalStorage
+Uses localStorage value as React state.
+```jsx
+import { useLocalStorage } from '@mantine/hooks';
+import { Switch, Text } from '@mantine/core';
+
+function Demo() {
+  const [colorScheme, setColorScheme] = useLocalStorage({
+    key: 'color-scheme',
+    defaultValue: 'light',
+  });
+
+  return (
+    <>
+      <Switch
+        label="Toggle color scheme"
+        checked={colorScheme === 'dark'}
+        onChange={(event) => setColorScheme(event.currentTarget.checked ? 'dark' : 'light')}
+      />
+      <Text>Current color scheme: {colorScheme}</Text>
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/hooks/use-local-storage) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-local-storage/use-local-storage.ts)
+
+### Utility Hooks
+
+#### useClipboard
+Provides interface to work with clipboard.
+```jsx
+import { useClipboard } from '@mantine/hooks';
+import { Button, TextInput, Group } from '@mantine/core';
+import { useState } from 'react';
+
+function Demo() {
+  const clipboard = useClipboard({ timeout: 500 });
+  const [value, setValue] = useState('');
+
+  return (
+    <Group>
+      <TextInput
+        value={value}
+        onChange={(event) => setValue(event.currentTarget.value)}
+        placeholder="Enter text to copy"
+      />
+      <Button
+        color={clipboard.copied ? 'teal' : 'blue'}
+        onClick={() => clipboard.copy(value)}
+      >
+        {clipboard.copied ? 'Copied' : 'Copy'}
+      </Button>
+    </Group>
+  );
+}
+```
+[Documentation](https://mantine.dev/hooks/use-clipboard) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-clipboard/use-clipboard.ts)
+
+#### useId
+Generates a random id for form controls binding.
+```jsx
+import { useId } from '@mantine/hooks';
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  const id = useId();
+  return (
+    <>
+      <label htmlFor={id}>Email</label>
+      <TextInput id={id} placeholder="example@mail.com" />
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/hooks/use-id) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-id/use-id.ts)
+
+#### useIdle
+Detects if user is idle.
+```jsx
+import { useIdle } from '@mantine/hooks';
+
+function Demo() {
+  const idle = useIdle(2000);
+  return <div>User is {idle ? 'idle' : 'active'}</div>;
+}
+```
+[Documentation](https://mantine.dev/hooks/use-idle) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-idle/use-idle.ts)
+
+#### useInterval
+Wrapper around window.setInterval.
+```jsx
+import { useInterval } from '@mantine/hooks';
+import { Button, Text } from '@mantine/core';
+import { useState } from 'react';
+
+function Demo() {
+  const [count, setCount] = useState(0);
+  const interval = useInterval(() => setCount((c) => c + 1), 1000);
+
+  return (
+    <>
+      <Text>Count: {count}</Text>
+      <Button onClick={interval.toggle}>
+        {interval.active ? 'Pause' : 'Start'} counter
+      </Button>
+    </>
+  );
+}
+```
+[Documentation](https://mantine.dev/hooks/use-interval) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-interval/use-interval.ts)
+
+#### useLogger
+Console.log values when component renders, mounts and unmounts.
+```jsx
+import { useLogger } from '@mantine/hooks';
+import { useState } from 'react';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  const [count, setCount] = useState(0);
+  useLogger('Demo component', [count]);
+
+  return (
+    <Button onClick={() => setCount(c => c + 1)}>
+      Increment counter
+    </Button>
+  );
+}
+```
+[Documentation](https://mantine.dev/hooks/use-logger) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/hooks/src/use-logger/use-logger.ts)
+
+## Mantine Theming
+
+Mantine provides a powerful theming system that allows you to customize the appearance of all components.
+
+### MantineProvider
+
+The `MantineProvider` component is used to configure the theme for all components within its subtree.
+
+```jsx
+import { MantineProvider, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      theme={{
+        colorScheme: 'dark',
+        primaryColor: 'blue',
+        fontFamily: 'Roboto, sans-serif',
+        components: {
+          Button: {
+            defaultProps: {
+              size: 'lg',
+              variant: 'filled',
+            },
+          },
+        },
+      }}
+    >
+      <Button>Themed button</Button>
+    </MantineProvider>
+  );
+}
+```
+[Documentation](https://mantine.dev/theming/mantine-provider) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/MantineProvider)
+
+### Theme Object
+
+The theme object contains all customizable properties:
+
+```jsx
+const theme = {
+  // Base colors used to generate color schemes
+  colors: { /* Custom colors */ },
+
+  // Color scheme, 'light', 'dark' or 'auto'
+  colorScheme: 'light',
+
+  // Primary color used in all components
+  primaryColor: 'blue',
+
+  // Primary shade, used to determine which shade of primary color will be used
+  primaryShade: { light: 6, dark: 8 },
+
+  // Font sizes in px, used for text, titles, etc.
+  fontSizes: {
+    xs: 12,
+    sm: 14,
+    md: 16,
+    lg: 18,
+    xl: 20,
+  },
+
+  // Spacing used to generate margins and paddings
+  spacing: {
+    xs: 10,
+    sm: 12,
+    md: 16,
+    lg: 20,
+    xl: 24,
+  },
+
+  // Radius used in components like Button, Card, etc.
+  radius: {
+    xs: 2,
+    sm: 4,
+    md: 8,
+    lg: 16,
+    xl: 32,
+  },
+
+  // Font families
+  fontFamily: 'Roboto, sans-serif',
+  headings: {
+    fontFamily: 'Roboto, sans-serif',
+    sizes: {
+      h1: { fontSize: 36, lineHeight: 1.4 },
+      h2: { fontSize: 30, lineHeight: 1.4 },
+      // ...h3 through h6
+    },
+  },
+
+  // Size scales used to determine component sizes
+  breakpoints: {
+    xs: 576,
+    sm: 768,
+    md: 992,
+    lg: 1200,
+    xl: 1400,
+  },
+
+  // Default props and styles for components
+  components: {
+    Button: {
+      defaultProps: { size: 'sm' },
+      styles: (theme) => ({
+        root: { fontWeight: 500 },
+      }),
+    },
+    // ...other components
+  },
+
+  // Other theme options
+  cursorType: 'pointer',
+  defaultGradient: { from: 'blue', to: 'cyan', deg: 45 },
+  defaultRadius: 'sm',
+  focusRingStyles: { styles: { opacity: 0.5 } },
+  loader: 'oval',
+  respectReducedMotion: true,
+  activeClassName: 'active-class',
+  datesLocale: 'en',
+  dir: 'ltr',
+  // ...more options
+};
+```
+[Documentation](https://mantine.dev/theming/theme-object) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/MantineProvider/theme.types.ts)
+
+### CSS Variables
+
+Mantine uses CSS variables for theming. You can access them in your styles:
+
+```css
+/* Accessing Mantine CSS variables */
+.my-class {
+  color: var(--mantine-color-blue-6);
+  background-color: var(--mantine-color-gray-0);
+  font-size: var(--mantine-font-size-md);
+  padding: var(--mantine-spacing-md);
+}
+```
+
+### Styling Components
+
+#### Using `styles` prop
+
+The `styles` prop allows you to override component styles:
+
+```jsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button
+      styles={{
+        root: {
+          backgroundColor: '#4CAF50',
+          border: '1px solid #4CAF50',
+          '&:hover': {
+            backgroundColor: '#3E8E41',
+          },
+        },
+        label: {
+          fontSize: 16,
+          fontWeight: 500,
+        },
+      }}
+    >
+      Custom styled button
+    </Button>
+  );
+}
+```
+
+#### Using `className` prop
+
+You can also use the `className` prop to style components with external CSS:
+
+```jsx
+import { Button } from '@mantine/core';
+import classes from './Button.module.css';
+
+function Demo() {
+  return (
+    <Button className={classes.button}>
+      Custom styled button
+    </Button>
+  );
+}
+```
+
+#### Selectors API
+
+Mantine components export selectors that can be used for styling:
+
+```jsx
+import { Button, createStyles } from '@mantine/core';
+
+// Access component selectors
+const useStyles = createStyles((theme) => ({
+  buttonWrapper: {
+    [`& .${Button.classes.root}`]: {
+      backgroundColor: theme.colors.pink[5],
+    },
+
+    [`& .${Button.classes.label}`]: {
+      fontSize: 18,
+    },
+  },
+}));
+
+function Demo() {
+  const { classes } = useStyles();
+  return (
+    <div className={classes.buttonWrapper}>
+      <Button>Styled with selectors</Button>
+    </div>
+  );
+}
+```
+
+### Color Management
+
+#### Color Schemes
+
+Mantine supports light and dark color schemes:
+
+```jsx
+import { MantineProvider, Button, useMantineColorScheme } from '@mantine/core';
+
+function ThemeToggle() {
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+
+  return (
+    <Button onClick={() => toggleColorScheme()}>
+      Toggle theme ({colorScheme})
+    </Button>
+  );
+}
+
+function App() {
+  return (
+    <MantineProvider theme={{ colorScheme: 'light' }} withGlobalStyles withNormalizeCSS>
+      <ThemeToggle />
+    </MantineProvider>
+  );
+}
+```
+
+#### Custom Colors
+
+You can define custom colors in the theme:
+
+```jsx
+import { MantineProvider, Button } from '@mantine/core';
+
+const myCustomColors = {
+  brand: [
+    '#F0BBDD', '#ED9BCF', '#EC7CC3', '#ED5DB8',
+    '#F13EAF', '#F71FA7', '#FF00A1', '#E00890',
+    '#C50E82', '#AD1374'
+  ],
+};
+
+function App() {
+  return (
+    <MantineProvider
+      theme={{
+        colors: {
+          ...myCustomColors,
+        },
+        primaryColor: 'brand',
+      }}
+    >
+      <Button>Uses brand color</Button>
+    </MantineProvider>
+  );
+}
+```
+
+### Responsive Styles
+
+Mantine provides utilities for responsive styling:
+
+```jsx
+import { createStyles } from '@mantine/core';
+
+const useStyles = createStyles((theme) => ({
+  responsiveBox: {
+    backgroundColor: theme.colors.blue[5],
+
+    // Media queries using Mantine breakpoints
+    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+      backgroundColor: theme.colors.pink[5],
+    },
+
+    // Or use the media function
+    [theme.fn.smallerThan('md')]: {
+      fontSize: theme.fontSizes.sm,
+    },
+
+    [theme.fn.largerThan('lg')]: {
+      padding: theme.spacing.xl,
+    },
+  },
+}));
+```
+
+### Global Styles
+
+You can define global styles with the `globalStyles` api:
+
+```jsx
+import { MantineProvider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
+      theme={{
+        globalStyles: (theme) => ({
+          '*, *::before, *::after': {
+            boxSizing: 'border-box',
+          },
+
+          body: {
+            ...theme.fn.fontStyles(),
+            backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+            color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+            lineHeight: theme.lineHeight,
+          },
+
+          'a': {
+            color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 7],
+            textDecoration: 'none',
+
+            '&:hover': {
+              textDecoration: 'underline',
+            },
+          },
+        }),
+      }}
+    >
+      {/* Your app */}
+    </MantineProvider>
+  );
+}
+```
+[Documentation](https://mantine.dev/styles/global-styles) | [Source](https://github.com/mantinedev/mantine/tree/master/packages/@mantine/core/src/MantineProvider)
