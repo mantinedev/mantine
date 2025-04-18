@@ -45,7 +45,7 @@ import { createTheme, Portal } from '@mantine/core';
 
 export const theme = createTheme({
   components: {
-    Portal: Portal.extends({
+    Portal: Portal.extend({
       defaultProps: {
         // ✅ Disable reuseTargetNode by default if your application has z-index issues
         reuseTargetNode: false,
@@ -66,7 +66,7 @@ import { createTheme, Switch } from '@mantine/core';
 
 export const theme = createTheme({
   components: {
-    Switch: Switch.extends({
+    Switch: Switch.extend({
       defaultProps: {
         // ✅ Disable withThumbIndicator if you want to use old styles
         withThumbIndicator: false,
@@ -274,7 +274,7 @@ import { createTheme, Popover } from '@mantine/core';
 
 export const theme = createTheme({
   components: {
-    Popover: Popover.extends({
+    Popover: Popover.extend({
       defaultProps: {
         // ✅ Disable hideDetached by default
         // if you want to keep the old behavior
