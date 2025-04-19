@@ -15,7 +15,7 @@ import classes from './Table.module.css';
 
 export type TableScrollContainerStylesNames = 'scrollContainer' | 'scrollContainerInner';
 export type TableScrollContainerCssVariables = {
-  scrollContainer: '--table-min-width' | '--table-overflow';
+  scrollContainer: '--table-min-width' | '--table-max-height' | '--table-overflow';
 };
 
 export interface TableScrollContainerProps
@@ -24,6 +24,8 @@ export interface TableScrollContainerProps
     ElementProps<'div'> {
   /** `min-width` of the `Table` at which it should become scrollable */
   minWidth: React.CSSProperties['minWidth'];
+  /** `max-height` of the `Table` at which it should become scrollable */
+  maxHeight?: React.CSSProperties['maxHeight'];
 
   /** Type of the scroll container, `native` to use native scrollbars, `scrollarea` to use `ScrollArea` component, `scrollarea` by default */
   type?: 'native' | 'scrollarea';
@@ -40,12 +42,15 @@ const defaultProps: Partial<TableScrollContainerProps> = {
   type: 'scrollarea',
 };
 
-const varsResolver = createVarsResolver<TableScrollContainerFactory>((_, { minWidth, type }) => ({
-  scrollContainer: {
-    '--table-min-width': rem(minWidth),
-    '--table-overflow': type === 'native' ? 'auto' : undefined,
-  },
-}));
+const varsResolver = createVarsResolver<TableScrollContainerFactory>(
+  (_, { minWidth, maxHeight, type }) => ({
+    scrollContainer: {
+      '--table-min-width': rem(minWidth),
+      '--table-max-height': rem(maxHeight),
+      '--table-overflow': type === 'native' ? 'auto' : undefined,
+    },
+  })
+);
 
 export const TableScrollContainer = factory<TableScrollContainerFactory>((_props, ref) => {
   const props = useProps('TableScrollContainer', defaultProps, _props);
@@ -58,6 +63,7 @@ export const TableScrollContainer = factory<TableScrollContainerFactory>((_props
     vars,
     children,
     minWidth,
+    maxHeight,
     type,
     ...others
   } = props;
@@ -79,7 +85,11 @@ export const TableScrollContainer = factory<TableScrollContainerFactory>((_props
   return (
     <Box<any>
       component={type === 'scrollarea' ? ScrollArea : 'div'}
-      {...(type === 'scrollarea' ? { offsetScrollbars: 'x' } : {})}
+      {...(type === 'scrollarea'
+        ? maxHeight
+          ? { offsetScrollbars: 'xy' }
+          : { offsetScrollbars: 'x' }
+        : {})}
       ref={ref}
       {...getStyles('scrollContainer')}
       {...others}
