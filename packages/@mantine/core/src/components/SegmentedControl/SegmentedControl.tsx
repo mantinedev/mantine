@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import {
   randomId,
   useId,
@@ -9,23 +9,23 @@ import {
 } from '@mantine/hooks';
 import {
   Box,
-  BoxProps,
   createVarsResolver,
-  ElementProps,
-  Factory,
   factory,
   getContrastColor,
   getFontSize,
   getRadius,
   getSize,
   getThemeColor,
-  MantineColor,
-  MantineRadius,
-  MantineSize,
-  StylesApiProps,
   useMantineTheme,
   useProps,
   useStyles,
+  type BoxProps,
+  type ElementProps,
+  type Factory,
+  type MantineColor,
+  type MantineRadius,
+  type MantineSize,
+  type StylesApiProps,
 } from '../../core';
 import { FloatingIndicator } from '../FloatingIndicator';
 import classes from './SegmentedControl.module.css';
@@ -50,7 +50,7 @@ export type SegmentedControlCssVariables = {
 
 export interface SegmentedControlItem {
   value: string;
-  label: React.ReactNode;
+  label: ReactNode;
   disabled?: boolean;
 }
 
@@ -246,7 +246,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
 
   useShallowEffect(() => {
     setKey(randomId());
-  }, [data]);
+  }, [data.length]);
 
   if (data.length === 0) {
     return null;
