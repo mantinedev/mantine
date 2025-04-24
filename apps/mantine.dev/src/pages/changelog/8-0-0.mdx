@@ -234,6 +234,36 @@ You can change it by setting `withThumbIndicator` prop:
 
 <Demo data={SwitchDemos.configurator} />
 
+## Theme types augmentation
+
+You can now augment `spacing`, `radius`, `breakpoints`, `fontSizes`, `lineHeights`,
+and `shadows` types. To learn more about this feature, follow [this guide](/guides/typescript/#theme-object-declarations).
+
+Example of types augmentation for `spacing` and `radius`:
+
+```tsx
+import {
+  DefaultMantineSize,
+  MantineThemeSizesOverride,
+} from '@mantine/core';
+
+type ExtendedCustomSpacing =
+  | 'xxl'
+  | 'xxxs'
+  | DefaultMantineSize;
+
+type ExtendedCustomRadius =
+  | 'xxs'
+  | DefaultMantineSize;
+
+declare module '@mantine/core' {
+  export interface MantineThemeSizesOverride {
+    spacing: Record<ExtendedCustomSpacing, string>;
+    radius: Record<ExtendedCustomRadius, string>;
+  }
+}
+```
+
 ## Other changes
 
 - [Kbd](/core/kbd) component now supports `size` prop
