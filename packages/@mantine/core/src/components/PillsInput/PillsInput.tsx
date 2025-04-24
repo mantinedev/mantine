@@ -12,7 +12,6 @@ export interface PillsInputProps
     ElementProps<'div', 'size'> {
   __stylesApiProps?: Record<string, any>;
   __staticSelector?: string;
-  multiline?: boolean;
 }
 
 export type PillsInputFactory = Factory<{
