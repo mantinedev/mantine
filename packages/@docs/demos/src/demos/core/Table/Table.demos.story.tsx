@@ -28,9 +28,19 @@ export const Demo_scrollContainer = {
   render: renderDemo(demos.scrollContainer),
 };
 
+export const Demo_scrollContainerMaxHeight = {
+  name: '⭐ Demo: scrollContainer maxHeight',
+  render: renderDemo(demos.scrollContainerMaxHeight),
+};
+
 export const Demo_scrollContainerNative = {
   name: '⭐ Demo: scrollContainerNative',
   render: renderDemo(demos.scrollContainerNative),
+};
+
+export const Demo_scrollContainerNativeMaxHeight = {
+  name: '⭐ Demo: scrollContainerNative maxHeight',
+  render: renderDemo(demos.scrollContainerNativeMaxHeight),
 };
 
 export const Demo_scrollRowSelection = {

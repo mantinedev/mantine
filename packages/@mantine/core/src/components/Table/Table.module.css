@@ -130,4 +130,5 @@
 
 .scrollContainerInner {
   min-width: var(--table-min-width);
+  max-height: var(--table-max-height);
 }
