@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 
 const DEFAULT_EVENTS: (keyof DocumentEventMap)[] = [
-  'keypress',
+  'keydown',
   'mousemove',
   'touchmove',
   'click',
   'scroll',
+  'wheel',
 ];
 const DEFAULT_OPTIONS = {
   events: DEFAULT_EVENTS,

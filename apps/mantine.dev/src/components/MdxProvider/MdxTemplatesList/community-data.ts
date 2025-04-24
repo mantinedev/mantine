@@ -62,4 +62,10 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
     link: 'https://github.com/doiska/waku-mantine-starter',
     description: 'Vite + Waku + Mantine template',
   },
+  {
+    type: 'vite',
+    name: 'tanstack-start-cloudflare-template',
+    link: 'https://github.com/tylim88/Tanstack-Start-Mantine-Tailwind-Template',
+    description: 'Tanstack Start + Cloudflare + Mantine template',
+  },
 ];
