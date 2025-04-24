@@ -367,7 +367,6 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
             description={description}
             label={label}
             error={error}
-            multiline
             withErrorStyles={withErrorStyles}
             __stylesApiProps={{
               ...props,

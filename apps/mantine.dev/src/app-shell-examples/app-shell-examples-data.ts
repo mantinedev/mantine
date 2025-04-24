@@ -43,7 +43,7 @@ export const APP_SHELL_EXAMPLES_DATA: AppShellExample[] = [
   {
     id: 'AltLayout',
     name: 'Alt layout',
-    description: 'Navbar and Aside are rendered on top on Header and Footer',
+    description: 'Navbar and Aside are rendered on top of Header and Footer',
   },
   {
     id: 'NoTransitions',
