@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useMove, useUncontrolled } from '@mantine/hooks';
+import { useMergedRef, useMove, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
   createVarsResolver,
@@ -226,6 +226,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
   });
   const valueRef = useRef(_value);
   const thumbs = useRef<HTMLDivElement[]>([]);
+  const root = useRef<HTMLDivElement>(null);
   const thumbIndex = useRef<number | undefined>(undefined);
   const positions = [
     getPosition({ value: _value[0], min: min!, max: max! }),
@@ -477,7 +478,19 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
 
   return (
     <SliderProvider value={{ getStyles }}>
-      <SliderRoot {...others} size={size!} ref={ref} disabled={disabled}>
+      <SliderRoot
+        {...others}
+        size={size!}
+        ref={useMergedRef(ref, root)}
+        disabled={disabled}
+        onMouseDownCapture={() => root.current?.focus()}
+        onKeyDownCapture={() => {
+          if (thumbs.current[0]?.parentElement?.contains(document.activeElement)) {
+            return;
+          }
+          thumbs.current[0]?.focus();
+        }}
+      >
         <Track
           offset={positions[0]}
           marksOffset={_value[0]}
