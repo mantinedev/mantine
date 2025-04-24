@@ -109,6 +109,7 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
     vars,
     mod,
     loaderProps,
+    role,
     ...others
   } = props;
 
@@ -131,8 +132,8 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
       mod={[{ 'data-with-icon': !!icon || loading, 'data-with-border': withBorder }, mod]}
       ref={ref}
       variant={variant}
+      role={role || 'alert'}
       {...others}
-      role="alert"
     >
       {icon && !loading && <div {...getStyles('icon')}>{icon}</div>}
       {loading && <Loader size={28} color={color} {...loaderProps} {...getStyles('loader')} />}
