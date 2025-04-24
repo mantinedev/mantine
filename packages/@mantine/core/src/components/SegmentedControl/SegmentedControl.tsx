@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useState } from 'react';
 import {
   randomId,
   useId,
@@ -9,23 +9,23 @@ import {
 } from '@mantine/hooks';
 import {
   Box,
+  BoxProps,
   createVarsResolver,
+  ElementProps,
   factory,
+  Factory,
   getContrastColor,
   getFontSize,
   getRadius,
   getSize,
   getThemeColor,
+  MantineColor,
+  MantineRadius,
+  MantineSize,
+  StylesApiProps,
   useMantineTheme,
   useProps,
   useStyles,
-  type BoxProps,
-  type ElementProps,
-  type Factory,
-  type MantineColor,
-  type MantineRadius,
-  type MantineSize,
-  type StylesApiProps,
 } from '../../core';
 import { FloatingIndicator } from '../FloatingIndicator';
 import classes from './SegmentedControl.module.css';
@@ -50,7 +50,7 @@ export type SegmentedControlCssVariables = {
 
 export interface SegmentedControlItem {
   value: string;
-  label: ReactNode;
+  label: React.ReactNode;
   disabled?: boolean;
 }
 
