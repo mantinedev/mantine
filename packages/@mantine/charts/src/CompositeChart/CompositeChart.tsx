@@ -114,7 +114,7 @@ export interface CompositeChartProps
   /** Determines whether each point should have associated label, `false` by default */
   withPointLabels?: boolean;
 
-  /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"`, `false` by default */
+  /** Determines whether a label with bar value should be displayed on top of each bar, `false` by default */
   withBarValueLabel?: boolean;
 
   /** Sets minimum height of the bar in px, `0` by default */
