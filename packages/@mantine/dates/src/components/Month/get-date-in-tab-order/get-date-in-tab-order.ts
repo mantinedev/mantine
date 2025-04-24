@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import { DayProps } from '../../Day/Day';
 import { isAfterMinDate } from '../is-after-min-date/is-after-min-date';
 import { isBeforeMaxDate } from '../is-before-max-date/is-before-max-date';
+import { isSameMonth } from '../is-same-month/is-same-month';
 
 export function getDateInTabOrder(
   dates: Date[][],
@@ -20,7 +21,7 @@ export function getDateInTabOrder(
         isAfterMinDate(date, minDate) &&
         !excludeDate?.(date) &&
         !getDateControlProps?.(date)?.disabled &&
-        (!hideOutsideDates || dayjs(date).isSame(dayjs(month), 'month'))
+        (!hideOutsideDates || isSameMonth(date, month))
     );
 
   const selectedDate = enabledDates.find((date) => getDateControlProps?.(date)?.selected);
