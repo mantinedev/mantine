@@ -12,6 +12,8 @@ import {
   RadarProps,
   RadarChart as ReChartsRadarChart,
   ResponsiveContainer,
+  Tooltip,
+  TooltipProps,
 } from 'recharts';
 import {
   Box,
@@ -29,6 +31,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { ChartLegend } from '../ChartLegend';
+import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import classes from './RadarChart.module.css';
 
 export interface RadarChartSeries {
@@ -39,7 +42,7 @@ export interface RadarChartSeries {
   label?: string;
 }
 
-export type RadarChartStylesNames = 'root' | 'container';
+export type RadarChartStylesNames = 'root' | 'container' | ChartTooltipStylesNames;
 export type RadarChartCssVariables = {
   root: '--chart-grid-color' | '--chart-text-color';
 };
@@ -72,6 +75,9 @@ export interface RadarChartProps
   /** Determines whether PolarRadiusAxisProps component should be displayed, `false` by default */
   withPolarRadiusAxis?: boolean;
 
+  /** Determines whether Tooltip component should be displayed, `true` by default */
+  withTooltip?: boolean;
+
   /** Props passed down to recharts Radar component */
   radarProps?:
     | ((series: RadarChartSeries) => Partial<Omit<RadarProps, 'ref'>>)
@@ -92,6 +98,12 @@ export interface RadarChartProps
   /** Props passed down to recharts Legend component */
   legendProps?: Omit<LegendProps, 'ref'>;
 
+  /** Props passed down to recharts Tooltip component */
+  tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
+
+  /** Tooltip position animation duration in ms, `0` by default */
+  tooltipAnimationDuration?: number;
+
   /** Determines whether the legend should be displayed, `false` by default */
   withLegend?: boolean;
 
@@ -110,6 +122,8 @@ const defaultProps: Partial<RadarChartProps> = {
   withPolarGrid: true,
   withPolarAngleAxis: true,
   withPolarRadiusAxis: false,
+  withTooltip: true,
+  tooltipAnimationDuration: 0,
 };
 
 const varsResolver = createVarsResolver<RadarChartFactory>((theme, { gridColor, textColor }) => ({
@@ -138,9 +152,12 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
     polarGridProps,
     polarAngleAxisProps,
     polarRadiusAxisProps,
+    tooltipProps,
     withPolarGrid,
     withPolarAngleAxis,
     withPolarRadiusAxis,
+    withTooltip,
+    tooltipAnimationDuration,
     children,
     withLegend,
     legendProps,
@@ -215,6 +232,22 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
                 />
               )}
               {...legendProps}
+            />
+          )}
+          {withTooltip && (
+            <Tooltip
+              animationDuration={tooltipAnimationDuration}
+              isAnimationActive={tooltipAnimationDuration !== 0}
+              content={({ label, payload }) => (
+                <ChartTooltip
+                  label={label}
+                  payload={payload}
+                  classNames={resolvedClassNames}
+                  styles={resolvedStyles}
+                  series={series}
+                />
+              )}
+              {...tooltipProps}
             />
           )}
           {children}
