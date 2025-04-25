@@ -11,6 +11,7 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
   const flushOnUnmount = typeof options === 'number' ? false : options.flushOnUnmount;
   const handleCallback = useCallbackRef(callback);
   const debounceTimerRef = useRef(0);
+  const flushRef = useRef(noop);
 
   const lastCallback = Object.assign(
     useCallback(
@@ -22,12 +23,13 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
             handleCallback(...args);
           }
         };
+        flushRef.current = flush;
         lastCallback.flush = flush;
         debounceTimerRef.current = window.setTimeout(flush, delay);
       },
       [handleCallback, delay]
     ),
-    { flush: noop }
+    { flush: flushRef.current }
   );
 
   useEffect(

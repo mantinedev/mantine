@@ -9,6 +9,7 @@ export {
   TableThead,
 } from './Table.components';
 export { TableScrollContainer } from './TableScrollContainer';
+
 export type {
   TableProps,
   TableStylesNames,
@@ -26,3 +27,5 @@ export type {
   TableTfootProps,
   TableTheadProps,
 } from './Table.components';
+
+export type { TableScrollContainerProps } from './TableScrollContainer';
