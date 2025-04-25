@@ -23,6 +23,11 @@ export const Demo_parts = {
   render: renderDemo(demos.parts),
 };
 
+export const Demo_customTooltip = {
+  name: '⭐ Demo: customTooltip',
+  render: renderDemo(demos.customTooltip),
+}
+
 export const Demo_rechartsProps = {
   name: '⭐ Demo: rechartsProps',
   render: renderDemo(demos.rechartsProps),
