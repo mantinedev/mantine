@@ -26,7 +26,7 @@ export const Demo_parts = {
 export const Demo_customTooltip = {
   name: '⭐ Demo: customTooltip',
   render: renderDemo(demos.customTooltip),
-}
+};
 
 export const Demo_rechartsProps = {
   name: '⭐ Demo: rechartsProps',

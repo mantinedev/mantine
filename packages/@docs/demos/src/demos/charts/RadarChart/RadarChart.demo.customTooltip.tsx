@@ -1,7 +1,7 @@
 import { RadarChart } from '@mantine/charts';
+import { Paper, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { multiData, multiDataCode } from './_data';
-import { Paper, Text } from '@mantine/core';
 
 const code = `
 import { RadarChart } from '@mantine/charts';
