@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  DotProps,
   Legend,
   LegendProps,
   PolarAngleAxis,
@@ -107,6 +108,15 @@ export interface RadarChartProps
   /** Determines whether the legend should be displayed, `false` by default */
   withLegend?: boolean;
 
+  /** Determines whether dots should be displayed, `true` by default */
+  withDots?: boolean;
+
+  /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
+  dotProps?: Omit<DotProps, 'ref'>;
+
+  /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
+  activeDotProps?: Omit<DotProps, 'ref'>;
+
   /** Additional components that are rendered inside recharts `RadarChart` component */
   children?: React.ReactNode;
 }
@@ -123,6 +133,7 @@ const defaultProps: Partial<RadarChartProps> = {
   withPolarAngleAxis: true,
   withPolarRadiusAxis: false,
   withTooltip: true,
+  withDots: true,
   tooltipAnimationDuration: 0,
 };
 
@@ -160,6 +171,9 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
     tooltipAnimationDuration,
     children,
     withLegend,
+    withDots,
+    dotProps,
+    activeDotProps,
     legendProps,
     ...others
   } = props;
@@ -201,6 +215,27 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
             : 0.05
           : item.opacity || 0.4
       }
+      dot={
+        withDots
+          ? {
+              fillOpacity: 1,
+              strokeOpacity: 0,
+              strokeWidth: 1,
+              fill: getThemeColor(item.color, theme),
+              stroke: getThemeColor(item.color, theme),
+              ...dotProps,
+            }
+          : false
+      }
+      activeDot={
+        withDots
+          ? {
+              fill: getThemeColor(item.color, theme),
+              stroke: getThemeColor(item.color, theme),
+              ...activeDotProps,
+            }
+          : false
+      }
       strokeOpacity={highlightedArea ? (highlightedArea === item.name ? 1 : 0.1) : 1}
       isAnimationActive={false}
       {...(typeof radarProps === 'function' ? radarProps(item) : radarProps)}
@@ -238,6 +273,10 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
             <Tooltip
               animationDuration={tooltipAnimationDuration}
               isAnimationActive={tooltipAnimationDuration !== 0}
+              cursor={{
+                stroke: 'var(--chart-grid-color)',
+                strokeWidth: 1,
+              }}
               content={({ label, payload }) => (
                 <ChartTooltip
                   label={label}
