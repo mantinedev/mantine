@@ -160,10 +160,33 @@ With `modals.open` function you can open a modal with any content:
 
 ## Multiple opened modals
 
-You can open multiple layers of modals. Every opened modal is added as first element in modals queue.
+You can open multiple modals one after another.
+Each modal you open is added to the modals queue, but by default, only the most recently opened modal is visible.
 To close all opened modals call `modals.closeAll()` function:
 
 <Demo data={ModalsDemos.multipleSteps} />
+
+To display all opened modals at once, set the `showAllModals` prop to `true` on `ModalsProvider`.
+All modals will be rendered in the order they were opened, with the most recently opened modal on top:
+
+<Demo data={ModalsDemos.showAllModals} />
+
+By default, when multiple modals are open, only the topmost modal responds to the Escape key press.
+To make all open modals close when Escape is pressed, set the `closeOnEscapeTopOnly` prop to `false` on `ModalsProvider`:
+
+```tsx
+import { ModalsProvider } from '@mantine/modals';
+
+function Demo() {
+  return (
+    <ModalsProvider closeOnEscapeTopOnly={false} showAllModals>
+      {/* Your app here */}
+    </ModalsProvider>
+  );
+}
+```
+
+When `closeOnEscapeTopOnly` is set to `false`, pressing Escape will close all modals at once.
 
 ## Modal props
 

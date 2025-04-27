@@ -23,6 +23,11 @@ export const Demo_multipleSteps = {
   render: renderDemo(demos.multipleSteps),
 };
 
+export const Demo_showAllModals = {
+  name: '⭐ Demo: showAllModals',
+  render: renderDemo(demos.showAllModals),
+};
+
 export const Demo_content = {
   name: '⭐ Demo: content',
   render: renderDemo(demos.content),
