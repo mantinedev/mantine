@@ -68,15 +68,13 @@ function separateConfirmModalProps(props: OpenConfirmModal) {
 }
 
 export function ModalsProvider({ children, modalProps, labels, modals }: ModalsProviderProps) {
-  const [state, dispatch] = useReducer(modalsReducer, { modals: [], current: null });
-  const stateRef = useRef(state);
-  stateRef.current = state;
+  const [state, dispatch] = useReducer(modalsReducer, { modals: [] });
 
   const closeAll = useCallback(
     (canceled?: boolean) => {
       dispatch({ type: 'CLOSE_ALL', canceled });
     },
-    [stateRef, dispatch]
+    [dispatch]
   );
 
   const openModal = useCallback(
@@ -133,7 +131,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     (id: string, canceled?: boolean) => {
       dispatch({ type: 'CLOSE', modalId: id, canceled });
     },
-    [stateRef, dispatch]
+    [dispatch]
   );
 
   const updateModal = useCallback(
@@ -178,16 +176,23 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     updateContextModal,
   };
 
+  const currentModal = state.modals[state.modals.length - 1];
+
   const getCurrentModal = () => {
-    const currentModal = stateRef.current.current;
-    switch (currentModal?.type) {
+    if (!currentModal) {
+      return {
+        modalProps: {},
+        content: null,
+      };
+    }
+    switch (currentModal.type) {
       case 'context': {
         const { innerProps, ...rest } = currentModal.props;
-        const ContextModal = modals![currentModal.ctx];
+        const ContextModal = modals?.[currentModal.ctx];
 
         return {
           modalProps: rest,
-          content: <ContextModal innerProps={innerProps} context={ctx} id={currentModal.id} />,
+          content: ContextModal ? <ContextModal innerProps={innerProps} context={ctx} id={currentModal.id} /> : null,
         };
       }
       case 'confirm': {
@@ -231,7 +236,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
         {...modalProps}
         {...currentModalProps}
         opened={state.modals.length > 0}
-        onClose={() => closeModal(state.current?.id as any)}
+        onClose={() => closeModal(currentModal?.id)}
       >
         {content}
       </Modal>

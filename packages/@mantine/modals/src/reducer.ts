@@ -1,13 +1,14 @@
 import { ModalSettings, ModalState, OpenContextModal } from './context';
 
 interface ModalsState {
-  modals: ModalState[];
-
   /**
-   * Modal that is currently open or was the last open one.
-   * Keeping the last one is necessary for providing a clean exit transition.
+   * The stack of modals.
+   * The order of the array is from bottom to top.
+   * The last modal is the most recently opened and the one currently displayed.
+   *
+   * Note: The `current` property has been removed. Use modals[modals.length - 1] to get the current modal.
    */
-  current: ModalState | null;
+  modals: ModalState[];
 }
 
 interface OpenAction {
@@ -47,7 +48,6 @@ export function modalsReducer(
   switch (action.type) {
     case 'OPEN': {
       return {
-        current: action.modal,
         modals: [...state.modals, action.modal],
       };
     }
@@ -62,7 +62,6 @@ export function modalsReducer(
       const remainingModals = state.modals.filter((m) => m.id !== action.modalId);
 
       return {
-        current: remainingModals[remainingModals.length - 1] || state.current,
         modals: remainingModals,
       };
     }
@@ -80,7 +79,6 @@ export function modalsReducer(
         });
 
       return {
-        current: state.current,
         modals: [],
       };
     }
@@ -119,15 +117,8 @@ export function modalsReducer(
         return modal;
       });
 
-      const currentModal =
-        state.current?.id === modalId
-          ? updatedModals.find((modal) => modal.id === modalId) || state.current
-          : state.current;
-
       return {
-        ...state,
         modals: updatedModals,
-        current: currentModal,
       };
     }
     default: {
