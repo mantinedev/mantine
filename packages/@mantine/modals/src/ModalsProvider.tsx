@@ -1,4 +1,4 @@
-import { useCallback, useReducer, useRef } from 'react';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { getDefaultZIndex, Modal } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
 import { ConfirmModal } from './ConfirmModal';
@@ -8,6 +8,7 @@ import {
   ModalsContext,
   ModalsContextProps,
   ModalSettings,
+  ModalState,
   OpenConfirmModal,
   OpenContextModal,
 } from './context';
@@ -26,6 +27,12 @@ export interface ModalsProviderProps {
 
   /** Confirm modal labels */
   labels?: ConfirmLabels;
+
+  /** Whether to show all modals or only the last one, `false` by default */
+  showAllModals?: boolean;
+
+  /** Determines whether only the top modal should respond to escape key press, `true` by default */
+  closeOnEscapeTopOnly?: boolean;
 }
 
 function separateConfirmModalProps(props: OpenConfirmModal) {
@@ -67,8 +74,27 @@ function separateConfirmModalProps(props: OpenConfirmModal) {
   };
 }
 
-export function ModalsProvider({ children, modalProps, labels, modals }: ModalsProviderProps) {
+export function ModalsProvider({
+  children,
+  modalProps,
+  labels,
+  modals,
+  showAllModals = false,
+  closeOnEscapeTopOnly = true,
+}: ModalsProviderProps) {
   const [state, dispatch] = useReducer(modalsReducer, { modals: [] });
+
+  /**
+   * IMPORTANT: Do NOT replace this with `const topModalIndex = state.modals.length - 1`.
+   * If we use the direct calculation, during modal close on Esc, React's batch updates and multiple renders
+   * can cause lower modals to also get closeOnEscape = true in the same render cycle, resulting in multiple modals closing at once.
+   * useState + useEffect ensures topModalIndex updates "one render late", so only the top modal responds to Esc, preventing this bug
+   */
+  const [topModalIndex, setTopModalIndex] = useState(state.modals.length - 1);
+
+  useEffect(() => {
+    setTopModalIndex(state.modals.length - 1);
+  }, [state.modals.length]);
 
   const closeAll = useCallback(
     (canceled?: boolean) => {
@@ -176,15 +202,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     updateContextModal,
   };
 
-  const currentModal = state.modals[state.modals.length - 1];
-
-  const getCurrentModal = () => {
-    if (!currentModal) {
-      return {
-        modalProps: {},
-        content: null,
-      };
-    }
+  const getModalPropsAndContent = (currentModal: ModalState) => {
     switch (currentModal.type) {
       case 'context': {
         const { innerProps, ...rest } = currentModal.props;
@@ -227,20 +245,37 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     }
   };
 
-  const { modalProps: currentModalProps, content } = getCurrentModal();
+  const renderModals = (modalsToRender: ModalState[]) => {
+    return modalsToRender.map((modal, index) => {
+      const { modalProps: currentModalProps, content } = getModalPropsAndContent(modal);
+      const closeOnEscape = closeOnEscapeTopOnly ? index === topModalIndex : true;
+      return (
+        <Modal
+          key={modal.id}
+          zIndex={getDefaultZIndex('modal') + 1}
+          {...modalProps}
+          {...currentModalProps}
+          opened
+          closeOnEscape={closeOnEscape}
+          onClose={() => closeModal(modal.id)}
+        >
+          {content}
+        </Modal>
+      );
+    });
+  };
+
+  const visibleModals = state.modals.length > 0 ? 
+    (showAllModals 
+      ? state.modals 
+      : state.modals.slice(-1)
+    ) : [];
 
   return (
     <ModalsContext.Provider value={ctx}>
-      <Modal
-        zIndex={getDefaultZIndex('modal') + 1}
-        {...modalProps}
-        {...currentModalProps}
-        opened={state.modals.length > 0}
-        onClose={() => closeModal(currentModal?.id)}
-      >
-        {content}
-      </Modal>
-
+      <>
+        {renderModals(visibleModals)}
+      </>
       {children}
     </ModalsContext.Provider>
   );
