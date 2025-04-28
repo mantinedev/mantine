@@ -76,7 +76,7 @@ export interface RadarChartProps
   /** Determines whether PolarRadiusAxisProps component should be displayed, `false` by default */
   withPolarRadiusAxis?: boolean;
 
-  /** Determines whether Tooltip component should be displayed, `true` by default */
+  /** Determines whether Tooltip component should be displayed, `false` by default */
   withTooltip?: boolean;
 
   /** Props passed down to recharts Radar component */
@@ -108,7 +108,7 @@ export interface RadarChartProps
   /** Determines whether the legend should be displayed, `false` by default */
   withLegend?: boolean;
 
-  /** Determines whether dots should be displayed, `true` by default */
+  /** Determines whether dots should be displayed, `false` by default */
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
@@ -132,8 +132,8 @@ const defaultProps: Partial<RadarChartProps> = {
   withPolarGrid: true,
   withPolarAngleAxis: true,
   withPolarRadiusAxis: false,
-  withTooltip: true,
-  withDots: true,
+  withTooltip: false,
+  withDots: false,
   tooltipAnimationDuration: 0,
 };
 
@@ -251,24 +251,6 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
           {withPolarRadiusAxis && (
             <PolarRadiusAxis stroke="var(--chart-grid-color)" {...polarRadiusAxisProps} />
           )}
-          {radars}
-          {withLegend && (
-            <Legend
-              verticalAlign="bottom"
-              content={(payload) => (
-                <ChartLegend
-                  payload={payload.payload}
-                  onHighlight={setHighlightedArea}
-                  legendPosition={legendProps?.verticalAlign || 'bottom'}
-                  classNames={resolvedClassNames}
-                  styles={resolvedStyles}
-                  series={series}
-                  centered
-                />
-              )}
-              {...legendProps}
-            />
-          )}
           {withTooltip && (
             <Tooltip
               animationDuration={tooltipAnimationDuration}
@@ -289,6 +271,25 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
               {...tooltipProps}
             />
           )}
+          {radars}
+          {withLegend && (
+            <Legend
+              verticalAlign="bottom"
+              content={(payload) => (
+                <ChartLegend
+                  payload={payload.payload}
+                  onHighlight={setHighlightedArea}
+                  legendPosition={legendProps?.verticalAlign || 'bottom'}
+                  classNames={resolvedClassNames}
+                  styles={resolvedStyles}
+                  series={series}
+                  centered
+                />
+              )}
+              {...legendProps}
+            />
+          )}
+
           {children}
         </ReChartsRadarChart>
       </ResponsiveContainer>
