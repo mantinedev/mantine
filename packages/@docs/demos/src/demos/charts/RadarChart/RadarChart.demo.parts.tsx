@@ -50,7 +50,7 @@ export const parts: MantineDemo = {
     { type: 'boolean', prop: 'withPolarGrid', initialValue: true, libraryValue: null },
     { type: 'boolean', prop: 'withPolarAngleAxis', initialValue: true, libraryValue: null },
     { type: 'boolean', prop: 'withPolarRadiusAxis', initialValue: true, libraryValue: null },
-    { type: 'boolean', prop: 'withTooltip', initialValue: true, libraryValue: null },
-    { type: 'boolean', prop: 'withDots', initialValue: true, libraryValue: null },
+    { type: 'boolean', prop: 'withTooltip', initialValue: false, libraryValue: null },
+    { type: 'boolean', prop: 'withDots', initialValue: false, libraryValue: null },
   ],
 };

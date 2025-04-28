@@ -36,6 +36,8 @@ function Demo() {
       data={data}
       dataKey="product"
       withPolarRadiusAxis
+      withTooltip
+      withDots
       tooltipProps={{
         content: ({ label, payload }) => <ChartTooltip label={label} payload={payload} />,
       }}
@@ -79,6 +81,8 @@ function Demo() {
       data={multiData}
       dataKey="product"
       withPolarRadiusAxis
+      withDots
+      withTooltip
       tooltipProps={{
         content: ({ label, payload }) => <ChartTooltip label={label} payload={payload} />,
       }}
