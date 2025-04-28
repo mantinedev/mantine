@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
+import { noop } from 'lodash';
 import { useCallbackRef } from '../use-callback-ref/use-callback-ref';
 
 export function useDebouncedCallback<T extends (...args: any[]) => any>(
@@ -9,48 +10,35 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
   const flushOnUnmount = typeof options === 'number' ? false : options.flushOnUnmount;
   const handleCallback = useCallbackRef(callback);
   const debounceTimerRef = useRef(0);
-  const isPendingRef = useRef(false);
-
-  const lastArgsRef = useRef<Parameters<T> | null>(null);
-
-  const flush = useCallback(() => {
-    if (debounceTimerRef.current !== 0) {
-      window.clearTimeout(debounceTimerRef.current);
-      debounceTimerRef.current = 0;
-
-      if (lastArgsRef.current !== null) {
-        isPendingRef.current = false;
-        handleCallback(...lastArgsRef.current);
-      }
-    }
-  }, [handleCallback]);
+  const flushRef = useRef(noop);
 
   const lastCallback = Object.assign(
     useCallback(
       (...args: Parameters<T>) => {
-        lastArgsRef.current = args;
-        isPendingRef.current = true;
-
         window.clearTimeout(debounceTimerRef.current);
-        debounceTimerRef.current = window.setTimeout(() => {
-          debounceTimerRef.current = 0;
-          isPendingRef.current = false;
-          handleCallback(...args);
-        }, delay);
+        const flush = () => {
+          if (debounceTimerRef.current !== 0) {
+            debounceTimerRef.current = 0;
+            handleCallback(...args);
+          }
+        };
+        flushRef.current = flush;
+        lastCallback.flush = flush;
+        debounceTimerRef.current = window.setTimeout(flush, delay);
       },
-      [handleCallback, delay, flush]
+      [handleCallback, delay]
     ),
-    { flush }
+    { flush: flushRef.current }
   );
 
   useEffect(
     () => () => {
       window.clearTimeout(debounceTimerRef.current);
-      if (flushOnUnmount && isPendingRef.current && lastArgsRef.current !== null) {
-        handleCallback(...lastArgsRef.current);
+      if (flushOnUnmount) {
+        lastCallback.flush();
       }
     },
-    [flushOnUnmount, handleCallback]
+    [lastCallback, flushOnUnmount]
   );
 
   return lastCallback;
