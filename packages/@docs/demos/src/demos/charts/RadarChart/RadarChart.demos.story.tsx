@@ -23,6 +23,11 @@ export const Demo_parts = {
   render: renderDemo(demos.parts),
 };
 
+export const Demo_tooltip = {
+  name: '⭐ Demo: tooltip',
+  render: renderDemo(demos.tooltip),
+};
+
 export const Demo_customTooltip = {
   name: '⭐ Demo: customTooltip',
   render: renderDemo(demos.customTooltip),
