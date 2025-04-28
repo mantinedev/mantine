@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  DotProps,
   Legend,
   LegendProps,
   PolarAngleAxis,
@@ -12,6 +13,8 @@ import {
   RadarProps,
   RadarChart as ReChartsRadarChart,
   ResponsiveContainer,
+  Tooltip,
+  TooltipProps,
 } from 'recharts';
 import {
   Box,
@@ -29,6 +32,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { ChartLegend } from '../ChartLegend';
+import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import classes from './RadarChart.module.css';
 
 export interface RadarChartSeries {
@@ -39,7 +43,7 @@ export interface RadarChartSeries {
   label?: string;
 }
 
-export type RadarChartStylesNames = 'root' | 'container';
+export type RadarChartStylesNames = 'root' | 'container' | ChartTooltipStylesNames;
 export type RadarChartCssVariables = {
   root: '--chart-grid-color' | '--chart-text-color';
 };
@@ -72,6 +76,9 @@ export interface RadarChartProps
   /** Determines whether PolarRadiusAxisProps component should be displayed, `false` by default */
   withPolarRadiusAxis?: boolean;
 
+  /** Determines whether Tooltip component should be displayed, `false` by default */
+  withTooltip?: boolean;
+
   /** Props passed down to recharts Radar component */
   radarProps?:
     | ((series: RadarChartSeries) => Partial<Omit<RadarProps, 'ref'>>)
@@ -92,8 +99,23 @@ export interface RadarChartProps
   /** Props passed down to recharts Legend component */
   legendProps?: Omit<LegendProps, 'ref'>;
 
+  /** Props passed down to recharts Tooltip component */
+  tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
+
+  /** Tooltip position animation duration in ms, `0` by default */
+  tooltipAnimationDuration?: number;
+
   /** Determines whether the legend should be displayed, `false` by default */
   withLegend?: boolean;
+
+  /** Determines whether dots should be displayed, `false` by default */
+  withDots?: boolean;
+
+  /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
+  dotProps?: Omit<DotProps, 'ref'>;
+
+  /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
+  activeDotProps?: Omit<DotProps, 'ref'>;
 
   /** Additional components that are rendered inside recharts `RadarChart` component */
   children?: React.ReactNode;
@@ -110,6 +132,9 @@ const defaultProps: Partial<RadarChartProps> = {
   withPolarGrid: true,
   withPolarAngleAxis: true,
   withPolarRadiusAxis: false,
+  withTooltip: false,
+  withDots: false,
+  tooltipAnimationDuration: 0,
 };
 
 const varsResolver = createVarsResolver<RadarChartFactory>((theme, { gridColor, textColor }) => ({
@@ -138,11 +163,17 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
     polarGridProps,
     polarAngleAxisProps,
     polarRadiusAxisProps,
+    tooltipProps,
     withPolarGrid,
     withPolarAngleAxis,
     withPolarRadiusAxis,
+    withTooltip,
+    tooltipAnimationDuration,
     children,
     withLegend,
+    withDots,
+    dotProps,
+    activeDotProps,
     legendProps,
     ...others
   } = props;
@@ -184,6 +215,27 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
             : 0.05
           : item.opacity || 0.4
       }
+      dot={
+        withDots
+          ? {
+              fillOpacity: 1,
+              strokeOpacity: 0,
+              strokeWidth: 1,
+              fill: getThemeColor(item.color, theme),
+              stroke: getThemeColor(item.color, theme),
+              ...dotProps,
+            }
+          : false
+      }
+      activeDot={
+        withDots
+          ? {
+              fill: getThemeColor(item.color, theme),
+              stroke: getThemeColor(item.color, theme),
+              ...activeDotProps,
+            }
+          : false
+      }
       strokeOpacity={highlightedArea ? (highlightedArea === item.name ? 1 : 0.1) : 1}
       isAnimationActive={false}
       {...(typeof radarProps === 'function' ? radarProps(item) : radarProps)}
@@ -198,6 +250,26 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
           {withPolarAngleAxis && <PolarAngleAxis dataKey={dataKey} {...polarAngleAxisProps} />}
           {withPolarRadiusAxis && (
             <PolarRadiusAxis stroke="var(--chart-grid-color)" {...polarRadiusAxisProps} />
+          )}
+          {withTooltip && (
+            <Tooltip
+              animationDuration={tooltipAnimationDuration}
+              isAnimationActive={tooltipAnimationDuration !== 0}
+              cursor={{
+                stroke: 'var(--chart-grid-color)',
+                strokeWidth: 1,
+              }}
+              content={({ label, payload }) => (
+                <ChartTooltip
+                  label={label}
+                  payload={payload}
+                  classNames={resolvedClassNames}
+                  styles={resolvedStyles}
+                  series={series}
+                />
+              )}
+              {...tooltipProps}
+            />
           )}
           {radars}
           {withLegend && (
@@ -217,6 +289,7 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
               {...legendProps}
             />
           )}
+
           {children}
         </ReChartsRadarChart>
       </ResponsiveContainer>
