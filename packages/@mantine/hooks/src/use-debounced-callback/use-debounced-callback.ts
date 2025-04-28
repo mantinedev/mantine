@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
+import { noop } from 'lodash';
 import { useCallbackRef } from '../use-callback-ref/use-callback-ref';
-
-const noop = () => {};
 
 export function useDebouncedCallback<T extends (...args: any[]) => any>(
   callback: T,

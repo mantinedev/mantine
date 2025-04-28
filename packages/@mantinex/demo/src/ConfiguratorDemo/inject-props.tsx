@@ -26,9 +26,10 @@ export function injectProps(props: any, code: string) {
 
   if (!multiline) {
     const joined = propStrings.join(' ');
+    // Use a regex with the global flag to replace all occurrences
     return joined.length > 0
-      ? replacedChildrenCode.replace('{{props}}', ` ${joined}`)
-      : replacedChildrenCode.replace('{{props}}', '');
+      ? replacedChildrenCode.replace(/{{props}}/g, ` ${joined}`)
+      : replacedChildrenCode.replace(/{{props}}/g, '');
   }
 
   const placeholderRegex = /^(\s*){{props}}(\s*)$/gm;
