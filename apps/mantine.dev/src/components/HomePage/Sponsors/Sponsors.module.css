@@ -23,6 +23,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  text-align: center;
   padding: var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-md);
   border: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
