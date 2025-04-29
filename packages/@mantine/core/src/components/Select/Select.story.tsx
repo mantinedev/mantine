@@ -302,3 +302,31 @@ export function HiddenDropdown() {
     </div>
   );
 }
+
+export function DynamicDataWithDefaultValue() {
+  const [data, setData] = useState<any>([]);
+
+  return (
+    <div>
+      <button
+        onClick={() =>
+          setData([
+            { value: '1', label: 'one' },
+            { value: '2', label: 'two' },
+          ])
+        }
+      >
+        Populate Data
+      </button>
+
+      <h4>Data</h4>
+      <div>{JSON.stringify(data)}</div>
+
+      <h4>Using default value</h4>
+      <Select defaultValue="1" data={data} />
+
+      <h4>Using value</h4>
+      <Select value="1" data={data} />
+    </div>
+  );
+}

@@ -25,6 +25,6 @@ module.exports = tseslint.config(
   },
   {
     files: ['**/*.story.tsx'],
-    rules: { 'no-console': 'off' },
+    rules: { 'no-console': 'off', 'react/button-has-type': 'off' },
   }
 );
