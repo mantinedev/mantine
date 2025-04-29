@@ -12,6 +12,7 @@ import {
   useStyles,
 } from '../../core';
 import { ModalBase, ModalBaseProps, ModalBaseStylesNames } from '../ModalBase';
+import { ScrollArea } from '../ScrollArea';
 import { ModalProvider, ScrollAreaComponent } from './Modal.context';
 import classes from './Modal.module.css';
 
@@ -114,6 +115,7 @@ export const ModalRoot = factory<ModalRootFactory>((_props, ref) => {
         {...getStyles('root')}
         data-full-screen={fullScreen || undefined}
         data-centered={centered || undefined}
+        data-offset-scrollbars={scrollAreaComponent === ScrollArea.Autosize || undefined}
         unstyled={unstyled}
         {...others}
       />
