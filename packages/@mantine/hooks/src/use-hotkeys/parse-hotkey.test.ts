@@ -78,6 +78,32 @@ describe('@mantine/hooks/use-hot-key/parse-hotkey', () => {
         })
       )
     ).toBe(false);
+
+    expect(
+      getHotkeyMatcher(
+        'mod+k',
+        true
+      )(
+        new KeyboardEvent('keydown', {
+          ctrlKey: true,
+          code: 'KeyK',
+          key: 'n',
+        })
+      )
+    ).toBe(true);
+
+    expect(
+      getHotkeyMatcher(
+        'mod+k',
+        false
+      )(
+        new KeyboardEvent('keydown', {
+          ctrlKey: true,
+          code: 'KeyK',
+          key: 'n',
+        })
+      )
+    ).toBe(false);
   });
 
   it('parses [plus] key correctly', () => {

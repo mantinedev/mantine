@@ -12,6 +12,7 @@ import {
   useStyles,
 } from '../../core';
 import { ModalBase, ModalBaseProps, ModalBaseStylesNames } from '../ModalBase';
+import { ScrollArea } from '../ScrollArea';
 import { MantineTransition } from '../Transition';
 import { DrawerProvider, ScrollAreaComponent } from './Drawer.context';
 import classes from './Drawer.module.css';
@@ -147,6 +148,7 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props, ref) => {
         ref={ref}
         {...getStyles('root')}
         transitionProps={{ transition: drawerTransition, ...transitionProps }}
+        data-offset-scrollbars={scrollAreaComponent === ScrollArea.Autosize || undefined}
         unstyled={unstyled}
         {...others}
       />

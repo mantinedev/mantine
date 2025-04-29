@@ -13,6 +13,8 @@ function Demo() {
       h={300}
       data={data}
       dataKey="product"
+      withTooltip
+      withDots
       series={[
         { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
         { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
@@ -29,7 +31,8 @@ function Demo(props: any) {
       h={300}
       data={multiData}
       dataKey="product"
-      withPolarRadiusAxis
+      withTooltip
+      withDots
       series={[
         { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
         { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
@@ -39,18 +42,11 @@ function Demo(props: any) {
   );
 }
 
-export const parts: MantineDemo = {
-  type: 'configurator',
+export const tooltip: MantineDemo = {
+  type: 'code',
   component: Demo,
   code: [
     { code, language: 'tsx', fileName: 'Demo.tsx' },
     { code: multiDataCode, language: 'tsx', fileName: 'data.ts' },
-  ],
-  controls: [
-    { type: 'boolean', prop: 'withPolarGrid', initialValue: true, libraryValue: null },
-    { type: 'boolean', prop: 'withPolarAngleAxis', initialValue: true, libraryValue: null },
-    { type: 'boolean', prop: 'withPolarRadiusAxis', initialValue: true, libraryValue: null },
-    { type: 'boolean', prop: 'withTooltip', initialValue: false, libraryValue: null },
-    { type: 'boolean', prop: 'withDots', initialValue: false, libraryValue: null },
   ],
 };

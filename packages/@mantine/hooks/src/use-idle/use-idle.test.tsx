@@ -16,7 +16,7 @@ describe('@mantine/hooks/use-idle', () => {
     expect(spy).not.toHaveBeenCalled();
 
     const hook = renderHook(() =>
-      useIdle(1000, { initialState: false, events: ['click', 'keypress'] })
+      useIdle(1000, { initialState: false, events: ['click', 'keydown'] })
     );
 
     expect(hook.result.current).toBe(false);
@@ -27,12 +27,12 @@ describe('@mantine/hooks/use-idle', () => {
     }, 1001);
   });
 
-  it('Returns correct value on firing keypress event', () => {
+  it('Returns correct value on firing keydown event', () => {
     const hook = renderHook(() => useIdle(1000));
 
     expect(hook.result.current).toBe(true);
     act(() => {
-      document.dispatchEvent(new KeyboardEvent('keypress'));
+      document.dispatchEvent(new KeyboardEvent('keydown'));
     });
 
     expect(hook.result.current).toBe(false);

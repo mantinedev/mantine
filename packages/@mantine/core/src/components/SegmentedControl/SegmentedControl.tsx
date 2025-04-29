@@ -246,7 +246,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
 
   useShallowEffect(() => {
     setKey(randomId());
-  }, [data]);
+  }, [data.length]);
 
   if (data.length === 0) {
     return null;

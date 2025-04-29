@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Box } from '../../core';
 import { Code } from '../Code';
+import { MultiSelect } from '../MultiSelect';
 import { Paper } from '../Paper';
 import { Stack } from '../Stack';
 import { ScrollArea } from './ScrollArea';
@@ -102,5 +103,26 @@ export function NeverType() {
     <ScrollArea h={200} type="never">
       <div style={{ width: 600 }}>{content}</div>
     </ScrollArea>
+  );
+}
+
+export function OverflowIssue() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Box w={200}>
+        <MultiSelect
+          data={['This is a very long name to demonstrate the bug', 'Option2']}
+          defaultValue={['This is a very long name to demonstrate the bug']}
+          mb={10}
+        />
+
+        <ScrollArea w={200} scrollbars="y">
+          <MultiSelect
+            data={['This is a very long name to demonstrate the bug', 'Option2']}
+            defaultValue={['This is a very long name to demonstrate the bug']}
+          />
+        </ScrollArea>
+      </Box>
+    </div>
   );
 }

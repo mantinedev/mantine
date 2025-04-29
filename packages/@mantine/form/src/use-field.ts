@@ -187,7 +187,7 @@ export function useField<
         _validate();
       }
     },
-    [error, clearErrorOnChange]
+    [error, clearErrorOnChange, onValueChange]
   );
 
   const reset = useCallback(() => {

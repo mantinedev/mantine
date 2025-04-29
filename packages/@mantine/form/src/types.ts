@@ -84,6 +84,7 @@ export interface GetInputPropsReturnType {
   value?: any;
   defaultValue?: any;
   checked?: any;
+  defaultChecked?: any;
   error?: any;
   onFocus?: any;
   onBlur?: any;
@@ -252,6 +253,7 @@ export interface UseFormReturnType<
   isValid: IsValid<Values>;
   getTransformedValues: GetTransformedValues<Values, TransformValues>;
   getValues: () => Values;
+  getInitialValues: () => Values;
   getTouched: GetStatus;
   getDirty: GetStatus;
   watch: Watch<Values>;

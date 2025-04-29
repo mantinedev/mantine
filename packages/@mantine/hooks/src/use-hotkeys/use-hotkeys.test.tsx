@@ -44,7 +44,7 @@ describe('@mantine/hooks/use-hotkey', () => {
 
   it('correctly handles physical key assignments like Digit1', () => {
     const handler = jest.fn();
-    renderHook(() => useHotkeys([['Digit1', handler]]));
+    renderHook(() => useHotkeys([['Digit1', handler, { usePhysicalKeys: true }]]));
     dispatchEvent({ code: 'Digit1' });
     expect(handler).toHaveBeenCalled();
   });

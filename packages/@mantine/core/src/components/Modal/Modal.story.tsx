@@ -1,8 +1,10 @@
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
+import { Card } from '../Card';
 import { Menu } from '../Menu';
 import { ScrollArea } from '../ScrollArea';
 import { Select } from '../Select';
+import { Stack } from '../Stack';
 import { Tabs } from '../Tabs';
 import { Modal } from './Modal';
 import { useModalsStack } from './use-modals-stack';
@@ -44,7 +46,7 @@ export function Usage() {
   );
 }
 
-export function Stack() {
+export function ModalsStack() {
   const stack = useModalsStack(['first', 'second', 'third']);
 
   return (
@@ -295,5 +297,29 @@ export function NestedModals() {
 
       <Button onClick={parentOpen}>Open Parent</Button>
     </div>
+  );
+}
+
+export function WithScrollArea() {
+  const [opened, { open, close }] = useDisclosure(false);
+
+  const content = Array(100)
+    .fill(0)
+    .map((_, index) => <p key={index}>Modal with scroll</p>);
+
+  return (
+    <>
+      <Modal opened={opened} onClose={close} title="Header is sticky">
+        <Stack>
+          <Card>Top</Card>
+          <ScrollArea.Autosize h={200}>{content}</ScrollArea.Autosize>
+          <Card>Bottom</Card>
+        </Stack>
+      </Modal>
+
+      <Button variant="default" onClick={open}>
+        Open modal
+      </Button>
+    </>
   );
 }

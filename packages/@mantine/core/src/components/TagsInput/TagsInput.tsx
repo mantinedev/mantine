@@ -424,7 +424,6 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
             description={description}
             label={label}
             error={error}
-            multiline
             withErrorStyles={withErrorStyles}
             __stylesApiProps={{ ...props, multiline: true }}
             id={_id}
