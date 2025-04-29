@@ -28,6 +28,13 @@ describe('@mantine/hooks/use-hotkey', () => {
     expect(handler).not.toHaveBeenCalled();
   });
 
+  it('correctly handles space key', () => {
+    const handler = jest.fn();
+    renderHook(() => useHotkeys([['shift+space', handler]]));
+    dispatchEvent({ shiftKey: true, key: 'space' });
+    expect(handler).toHaveBeenCalled();
+  });
+
   it('correctly handles [plus] key', () => {
     const handler = jest.fn();
     renderHook(() => useHotkeys([['shift+[plus]', handler]]));

@@ -13,6 +13,34 @@ export type Hotkey = KeyboardModifiers & {
 
 type CheckHotkeyMatch = (event: KeyboardEvent) => boolean;
 
+const keyNameMap: Record<string, string> = {
+  ' ': 'space',
+  ArrowLeft: 'arrowleft',
+  ArrowRight: 'arrowright',
+  ArrowUp: 'arrowup',
+  ArrowDown: 'arrowdown',
+  Escape: 'esc',
+  Esc: 'esc',
+  Enter: 'enter',
+  Tab: 'tab',
+  Backspace: 'backspace',
+  Delete: 'delete',
+  Insert: 'insert',
+  Home: 'home',
+  End: 'end',
+  PageUp: 'pageup',
+  PageDown: 'pagedown',
+  '+': 'plus',
+  '-': 'minus',
+  '*': 'asterisk',
+  '/': 'slash',
+};
+
+function normalizeKey(key: string): string {
+  const lowerKey = key.replace('Key', '').toLowerCase();
+  return keyNameMap[key] || lowerKey;
+}
+
 export function parseHotkey(hotkey: string): Hotkey {
   const keys = hotkey
     .toLowerCase()
@@ -64,8 +92,9 @@ function isExactHotkey(hotkey: Hotkey, event: KeyboardEvent, usePhysicalKeys?: b
 
   if (
     key &&
-    ((!usePhysicalKeys && pressedKey.toLowerCase() === key.toLowerCase()) ||
-      pressedCode.replace('Key', '').toLowerCase() === key.toLowerCase())
+    (usePhysicalKeys
+      ? normalizeKey(pressedCode) === normalizeKey(key)
+      : normalizeKey(pressedKey ?? pressedCode) === normalizeKey(key))
   ) {
     return true;
   }
