@@ -43,6 +43,7 @@
     "publish:package:alpha": "tsx scripts/publish --stage alpha --tag next",
     "publish:package:beta": "tsx scripts/publish --stage beta --tag next",
     "release": "npm test && npm run clean && tsx scripts/release",
+    "release:v7": "npm test && tsx scripts/release patch --tag legacy && npm run docs:deploy:v7",
     "release:alpha:patch": "tsx scripts/release patch --stage alpha --tag next",
     "release:alpha:minor": "tsx scripts/release minor --stage alpha --tag next",
     "release:alpha:major": "tsx scripts/release major --stage alpha --tag next",
