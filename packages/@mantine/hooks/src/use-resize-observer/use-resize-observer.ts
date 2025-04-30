@@ -30,7 +30,31 @@ export function useResizeObserver<T extends HTMLElement = any>(options?: ResizeO
 
               frameID.current = requestAnimationFrame(() => {
                 if (ref.current) {
-                  setRect(entry.contentRect);
+                  const boxSize = entry.borderBoxSize?.[0] || entry.contentBoxSize?.[0];
+                  if (boxSize) {
+                    const style = window.getComputedStyle(ref.current);
+                    const writingMode = style.writingMode || 'horizontal-tb';
+
+                    const width = writingMode.startsWith('horizontal')
+                      ? boxSize.inlineSize
+                      : boxSize.blockSize;
+                    const height = writingMode.startsWith('horizontal')
+                      ? boxSize.blockSize
+                      : boxSize.inlineSize;
+
+                    setRect({
+                      x: 0,
+                      y: 0,
+                      top: 0,
+                      left: 0,
+                      bottom: 0,
+                      right: 0,
+                      width,
+                      height,
+                    });
+                  } else {
+                    setRect(entry.contentRect);
+                  }
                 }
               });
             }
