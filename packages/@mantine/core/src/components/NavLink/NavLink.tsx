@@ -211,15 +211,21 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
             {description}
           </Box>
         </Box>
-        {(withChildren || rightSection) && (
+        {(withChildren || rightSection !== undefined) && (
           <Box
             {...getStyles('section')}
             component="span"
             mod={{ rotate: _opened && !disableRightSectionRotation, position: 'right' }}
           >
-            {withChildren
-              ? rightSection || <AccordionChevron {...getStyles('chevron')} />
-              : rightSection}
+            {withChildren ? (
+              rightSection !== undefined ? (
+                rightSection
+              ) : (
+                <AccordionChevron {...getStyles('chevron')} />
+              )
+            ) : (
+              rightSection
+            )}
           </Box>
         )}
       </UnstyledButton>
