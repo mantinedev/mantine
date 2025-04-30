@@ -22,7 +22,7 @@ export function useResizeObserver<T extends HTMLElement = any>(options?: ResizeO
   const observer = useMemo(
     () =>
       typeof window !== 'undefined'
-        ? new ResizeObserver((entries: any) => {
+        ? new ResizeObserver((entries) => {
             const entry = entries[0];
 
             if (entry) {

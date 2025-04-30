@@ -229,6 +229,12 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     }
   }, [value, selectedOption]);
 
+  useEffect(() => {
+    if (!controlled) {
+      handleSearchChange(typeof _value === 'string' ? optionsLockup[_value]?.label || '' : '');
+    }
+  }, [data, _value]);
+
   const clearButton = (
     <Combobox.ClearButton
       {...clearButtonProps}

@@ -5,6 +5,14 @@ export const RadarChartStylesApi: StylesApiData<RadarChartFactory> = {
   selectors: {
     root: 'Root element',
     container: 'Recharts ResponsiveContainer component',
+    tooltip: 'Tooltip root element',
+    tooltipBody: 'Tooltip wrapper around all items',
+    tooltipItem: 'Tooltip item representing data series',
+    tooltipItemBody: 'Tooltip item wrapper around item color and name',
+    tooltipItemColor: 'Tooltip item color',
+    tooltipItemName: 'Tooltip item name',
+    tooltipItemData: 'Tooltip item data',
+    tooltipLabel: 'Label of the tooltip',
   },
 
   vars: {

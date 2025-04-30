@@ -1,10 +1,10 @@
-import { Slider } from '@mantine/core';
+import { RangeSlider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 function Wrapper(props: any) {
   return (
-    <Slider
-      defaultValue={40}
+    <RangeSlider
+      defaultValue={[20, 60]}
       marks={[
         { value: 20, label: '20%' },
         { value: 50, label: '50%' },
@@ -16,14 +16,14 @@ function Wrapper(props: any) {
 }
 
 const code = `
-import { Slider } from '@mantine/core';
+import { RangeSlider } from '@mantine/core';
 
 
 function Demo() {
   return (
-    <Slider
+    <RangeSlider
       {{props}}
-      defaultValue={40}
+      defaultValue={[20, 60]}
       marks={[
         { value: 20, label: '20%' },
         { value: 50, label: '50%' },
@@ -34,7 +34,7 @@ function Demo() {
 }
 `;
 
-export const configurator: MantineDemo = {
+export const rangeConfigurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
   code,

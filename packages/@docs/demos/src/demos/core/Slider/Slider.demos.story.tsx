@@ -82,3 +82,8 @@ export const Demo_restrictToMarks = {
   name: '⭐ Demo: restrictToMarks',
   render: renderDemo(demos.restrictToMarks),
 };
+
+export const Demo_rangeConfigurator = {
+  name: '⭐ Demo: rangeConfigurator',
+  render: renderDemo(demos.rangeConfigurator),
+};
