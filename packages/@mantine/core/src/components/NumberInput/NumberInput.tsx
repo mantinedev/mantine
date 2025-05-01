@@ -196,6 +196,17 @@ const varsResolver = createVarsResolver<NumberInputFactory>((_, { size }) => ({
   },
 }));
 
+function clampAndSanitizeInput(sanitizedValue: string | number, max?: number, min?: number) {
+  const replaced = sanitizedValue.toString().replace(/^0+/, '');
+  const parsedValue = parseFloat(replaced);
+  if (Number.isNaN(parsedValue)) {
+    return replaced;
+  } else if (parsedValue > Number.MAX_SAFE_INTEGER) {
+    return max !== undefined ? String(max) : replaced;
+  }
+  return clamp(parsedValue, min, max);
+}
+
 export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
   const props = useProps('NumberInput', defaultProps, _props);
   const {
@@ -386,8 +397,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     let sanitizedValue = _value;
 
     if (clampBehavior === 'blur' && typeof sanitizedValue === 'number') {
-      const clampedValue = clamp(sanitizedValue, min, max);
-      sanitizedValue = clampedValue;
+      sanitizedValue = clamp(sanitizedValue, min, max);
     }
 
     if (
@@ -395,12 +405,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       typeof sanitizedValue === 'string' &&
       getDecimalPlaces(sanitizedValue) < 15
     ) {
-      const replaced = sanitizedValue.toString().replace(/^0+/, '');
-      const parsedValue = parseFloat(replaced);
-      sanitizedValue =
-        Number.isNaN(parsedValue) || parsedValue > Number.MAX_SAFE_INTEGER
-          ? replaced
-          : clamp(parsedValue, min, max);
+      sanitizedValue = clampAndSanitizeInput(sanitizedValue, max, min);
     }
 
     if (_value !== sanitizedValue) {

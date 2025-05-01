@@ -204,4 +204,22 @@ describe('@mantine/core/NumberInput', () => {
     expect(onChangeSpy).toHaveBeenCalledTimes(0);
     expect(onBlurSpy).toHaveBeenCalledTimes(1);
   });
+
+  it('sets value to very large min if input is less than min on blur', async () => {
+    const MIN = 5;
+    render(<NumberInput min={MIN} max={100} defaultValue={0} />);
+    focusInput();
+    await enterText('-90071992547409910');
+    blurInput();
+    expectValue(String(MIN));
+  });
+
+  it('sets value to very large max if input is greater than max on blur', async () => {
+    const MAX = 100;
+    render(<NumberInput min={5} max={MAX} defaultValue={0} />);
+    focusInput();
+    await enterText('90071992547409910');
+    blurInput();
+    expectValue(String(MAX));
+  });
 });
