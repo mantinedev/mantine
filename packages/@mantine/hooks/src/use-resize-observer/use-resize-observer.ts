@@ -32,25 +32,18 @@ export function useResizeObserver<T extends HTMLElement = any>(options?: ResizeO
                 if (ref.current) {
                   const boxSize = entry.borderBoxSize?.[0] || entry.contentBoxSize?.[0];
                   if (boxSize) {
-                    const style = window.getComputedStyle(ref.current);
-                    const writingMode = style.writingMode || 'horizontal-tb';
-
-                    const width = writingMode.startsWith('horizontal')
-                      ? boxSize.inlineSize
-                      : boxSize.blockSize;
-                    const height = writingMode.startsWith('horizontal')
-                      ? boxSize.blockSize
-                      : boxSize.inlineSize;
+                    const width = boxSize.inlineSize;
+                    const height = boxSize.blockSize;
 
                     setRect({
-                      x: 0,
-                      y: 0,
-                      top: 0,
-                      left: 0,
-                      bottom: 0,
-                      right: 0,
                       width,
                       height,
+                      x: entry.contentRect.x,
+                      y: entry.contentRect.y,
+                      top: entry.contentRect.top,
+                      left: entry.contentRect.left,
+                      bottom: entry.contentRect.bottom,
+                      right: entry.contentRect.right,
                     });
                   } else {
                     setRect(entry.contentRect);
