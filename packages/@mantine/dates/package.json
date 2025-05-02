@@ -1,6 +1,6 @@
 {
   "name": "@mantine/dates",
-  "version": "7.17.6",
+  "version": "7.17.7",
   "description": "Calendars, date and time pickers based on Mantine components",
   "homepage": "https://mantine.dev/dates/getting-started/",
   "license": "MIT",
@@ -45,8 +45,8 @@
     "directory": "packages/@mantine/dates"
   },
   "peerDependencies": {
-    "@mantine/core": "7.17.6",
-    "@mantine/hooks": "7.17.6",
+    "@mantine/core": "7.17.7",
+    "@mantine/hooks": "7.17.7",
     "dayjs": ">=1.0.0",
     "react": "^18.x || ^19.x",
     "react-dom": "^18.x || ^19.x"
