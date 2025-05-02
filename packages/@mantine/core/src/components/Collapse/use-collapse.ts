@@ -43,7 +43,6 @@ export function useCollapse({
   const el = useRef<HTMLElement | null>(null);
   const collapsedHeight = 0;
   const collapsedStyles = {
-    display: 'none',
     height: 0,
     overflow: 'hidden',
   };
