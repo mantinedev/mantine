@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { noop } from 'lodash';
 import { useCallbackRef } from '../use-callback-ref/use-callback-ref';
 
 export function useDebouncedCallback<T extends (...args: any[]) => any>(
@@ -10,7 +9,7 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
   const flushOnUnmount = typeof options === 'number' ? false : options.flushOnUnmount;
   const handleCallback = useCallbackRef(callback);
   const debounceTimerRef = useRef(0);
-  const flushRef = useRef(noop);
+  const flushRef = useRef(() => {});
 
   const lastCallback = Object.assign(
     useCallback(
