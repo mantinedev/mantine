@@ -41,6 +41,37 @@ export function Usage() {
   );
 }
 
+export function StickyHeader() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Table stickyHeader>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Element position</Table.Th>
+            <Table.Th>Element name</Table.Th>
+            <Table.Th>Symbol</Table.Th>
+            <Table.Th>Atomic mass</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
+          {rows}
+          {rows}
+          {rows}
+          {rows}
+          {rows}
+          {rows}
+          {rows}
+          {rows}
+          {rows}
+          {rows}
+          {rows}
+        </Table.Tbody>
+        <Table.Caption>Test caption</Table.Caption>
+      </Table>
+    </div>
+  );
+}
+
 export function VerticalVariant() {
   return (
     <div style={{ padding: 40 }}>

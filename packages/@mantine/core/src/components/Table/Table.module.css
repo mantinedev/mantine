@@ -100,7 +100,7 @@
   &:where([data-sticky]) {
     position: sticky;
 
-    & .th {
+    & :where(.th) {
       position: sticky;
       top: var(--table-sticky-header-offset, 0);
       background-color: var(--mantine-color-body);
