@@ -36,7 +36,7 @@ export function useDatesInput<Type extends DatePickerType = 'default'>({
 
   const [_value, _setValue] = useUncontrolledDates({
     type,
-    value,
+    value: (value === '' ? null : value) as DatePickerValue<Type>,
     defaultValue,
     onChange,
   });
