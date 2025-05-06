@@ -534,23 +534,23 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
           ) : (
             <div {...getStyles('controlsListGroup')}>
               <TimeControlsList
-                min={format === '12h' ? 1 : 0}
-                max={format === '12h' ? 12 : 23}
+                min={minHours ?? (format === '12h' ? 1 : 0)}
+                max={maxHours ?? (format === '12h' ? 12 : 23)}
                 step={hoursStep!}
                 value={controller.values.hours}
                 onSelect={controller.setHours}
               />
               <TimeControlsList
-                min={0}
-                max={59}
+                min={minMinutes ?? 0}
+                max={maxMinutes ?? 59}
                 step={minutesStep!}
                 value={controller.values.minutes}
                 onSelect={controller.setMinutes}
               />
               {withSeconds && (
                 <TimeControlsList
-                  min={0}
-                  max={59}
+                  min={minSeconds ?? 0}
+                  max={maxSeconds ?? 59}
                   step={secondsStep!}
                   value={controller.values.seconds}
                   onSelect={controller.setSeconds}
