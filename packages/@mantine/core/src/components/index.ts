@@ -50,6 +50,7 @@ export * from './Fieldset';
 export * from './FileButton';
 export * from './FileInput';
 export * from './Floating';
+export * from './FloatingWindow';
 export * from './FocusTrap';
 export * from './Grid';
 export * from './Highlight';
