@@ -75,6 +75,7 @@ export { useFetch } from './use-fetch/use-fetch';
 export { useRadialMove, normalizeRadialValue } from './use-radial-move/use-radial-move';
 export { useScrollSpy } from './use-scroll-spy/use-scroll-spy';
 export { useFileDialog } from './use-file-dialog/use-file-dialog';
+export { useFloatingWindow } from './use-floating-window/use-floating-window';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
@@ -89,3 +90,8 @@ export type {
   UseScrollSpyHeadingData,
   UseScrollSpyReturnType,
 } from './use-scroll-spy/use-scroll-spy';
+export type {
+  SetFloatingWindowPosition,
+  UseFloatingWindowOptions,
+  UseFloatingWindowReturnValue,
+} from './use-floating-window/use-floating-window';
