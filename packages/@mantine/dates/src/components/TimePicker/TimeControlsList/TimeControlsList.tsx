@@ -49,7 +49,7 @@ export function TimeControlsList({ min, max, step, value, onSelect }: TimeContro
   ));
 
   useEffect(() => {
-    if (value) {
+    if (value !== null) {
       const target = ref.current?.querySelector<HTMLButtonElement>(`[data-value="${value}"]`);
       if (!isElementVisibleInScrollContainer(target, ref.current)) {
         target?.scrollIntoView({ block: 'nearest' });
