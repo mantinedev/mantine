@@ -86,6 +86,24 @@ export interface TimePickerProps
   /** Max possible time value in `hh:mm:ss` format */
   max?: string;
 
+  /** Max possible value for hour column */
+  maxHours?: number;
+
+  /** Min possible value for hour column */
+  minHours?: number;
+
+  /** Max possible value for minute column */
+  maxMinutes?: number;
+
+  /** Min possible value for minute column */
+  minMinutes?: number;
+
+  /** Max possible value for seconds column */
+  maxSeconds?: number;
+
+  /** Min possible value for seconds column */
+  minSeconds?: number;
+
   /** Time format, `'24h'` by default */
   format?: TimePickerFormat;
 
@@ -216,6 +234,12 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
     value,
     defaultValue,
     onChange,
+    maxHours,
+    maxMinutes,
+    maxSeconds,
+    minHours,
+    minMinutes,
+    minSeconds,
     hoursStep,
     minutesStep,
     secondsStep,
@@ -386,8 +410,8 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                   value={controller.values.hours}
                   onChange={controller.setHours}
                   onNextInput={() => controller.focus('minutes')}
-                  min={format === '12h' ? 1 : 0}
-                  max={format === '12h' ? 12 : 23}
+                  min={minHours ?? (format === '12h' ? 1 : 0)}
+                  max={maxHours ?? (format === '12h' ? 12 : 23)}
                   focusable
                   step={hoursStep!}
                   ref={_hoursRef}
@@ -409,8 +433,8 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                   })}
                   value={controller.values.minutes}
                   onChange={controller.setMinutes}
-                  min={0}
-                  max={59}
+                  min={minMinutes ?? 0}
+                  max={maxMinutes ?? 59}
                   focusable
                   step={minutesStep!}
                   ref={_minutesRef}
@@ -440,8 +464,8 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                       })}
                       value={controller.values.seconds}
                       onChange={controller.setSeconds}
-                      min={0}
-                      max={59}
+                      min={minSeconds ?? 0}
+                      max={maxSeconds ?? 59}
                       focusable
                       step={secondsStep!}
                       ref={_secondsRef}

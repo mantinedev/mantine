@@ -65,11 +65,13 @@ By default, the dropdown is visible when one of the inputs is focused.
 
 <Demo data={TimePickerDemos.withDropdown} />
 
-## Hours/minutes/seconds step
+## Hours/minutes/seconds step with max/min Hours/minutes/seconds
 
 Use `hoursStep`, `minutesStep` and `secondsStep` props to control step for each input.
 These props are used to control value by which the input is incremented or decremented when
 up/down arrow keys are pressed and to generate corresponding values range in the dropdown.
+
+`maxHours`, `minHours`, `maxMinutes`, `minMinutes`, `maxSeconds` and `minSeconds` props can be used to control the value range of each column.
 
 <Demo data={TimePickerDemos.steps} />
 

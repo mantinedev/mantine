@@ -13,6 +13,8 @@ function Demo() {
       hoursStep={1}
       minutesStep={5}
       secondsStep={10}
+      maxMinutes={55}
+      maxSeconds={50}
     />
   );
 }
@@ -27,6 +29,8 @@ function Demo() {
       hoursStep={1}
       minutesStep={5}
       secondsStep={10}
+      maxMinutes={55}
+      maxSeconds={50}
     />
   );
 }
