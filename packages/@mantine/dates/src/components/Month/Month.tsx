@@ -143,13 +143,6 @@ const varsResolver = createVarsResolver<MonthFactory>((_, { size }) => ({
   },
 }));
 
-function isValidDateString(dateString: string | null): boolean {
-  if (dateString === null || dateString === '') {
-    return false;
-  }
-  return dayjs(dateString, 'YYYY-MM-DD', true).isValid();
-}
-
 export const Month = factory<MonthFactory>((_props, ref) => {
   const props = useProps('Month', defaultProps, _props);
   const {
@@ -187,8 +180,6 @@ export const Month = factory<MonthFactory>((_props, ref) => {
     ...others
   } = props;
 
-  const dateStringIsValid = isValidDateString(month);
-
   const getStyles = useStyles<MonthFactory>({
     name: __staticSelector || 'Month',
     classes,
@@ -205,7 +196,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
 
   const ctx = useDatesContext();
   const dates = getMonthDays({
-    month: dateStringIsValid ? month : dayjs().format('YYYY-MM-DD'),
+    month,
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
     consistentWeeks: ctx.consistentWeeks,
   });
