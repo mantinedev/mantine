@@ -221,4 +221,12 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
     hideInSearch: true,
   },
+
+  Changelog900: {
+    title: 'Version v9.0.0',
+    slug: '/changelog/9-0-0',
+    release: 'https://github.com/mantinedev/mantine/releases/tag/9.0.0',
+    date: 'May 5th, 2025',
+    searchTags: '9-0-0, 900',
+  },
 };

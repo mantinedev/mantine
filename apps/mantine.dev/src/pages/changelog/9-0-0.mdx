@@ -1,0 +1,40 @@
+import { Button } from '@mantine/core';
+import { IconHeartFilled } from '@tabler/icons-react';
+import {
+  HooksDemos,
+  FloatingWindowDemos,
+} from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog900);
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds are used to improve Mantine and create new features and components.
+
+<Button
+  rightSection={<IconHeartFilled size={22} color="var(--mantine-color-red-7)" />}
+  size="lg"
+  miw={300}
+  justify="space-between"
+  children="Sponsor Mantine"
+  variant="default"
+  radius="md"
+  component="a"
+  href="https://opencollective.com/mantinedev"
+/>
+
+## use-floating-window hook
+
+New [use-floating-window](/hooks/use-floating-window) hook allows creating floating draggable
+elements:
+
+<Demo data={HooksDemos.useFloatingWindowUsageDemo} />
+
+## FloatingWindow component
+
+[FloatingWindow](/core/floating-window) provides component API for [use-floating-window](/hooks/use-floating-window) hook:
+
+<Demo data={FloatingWindowDemos.usage} />
