@@ -95,16 +95,33 @@ export function useFloatingWindow<T extends HTMLElement>(
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || initialized.current) {
-      return;
+    if (!initialized.current && el) {
+      initialized.current = true;
+      pos.current = calculateInitialPosition(el, options);
+      el.style.left = `${pos.current.x}px`;
+      el.style.top = `${pos.current.y}px`;
+      el.style.right = 'unset';
+      el.style.bottom = 'unset';
     }
 
-    initialized.current = true;
-    pos.current = calculateInitialPosition(el, options);
-    el.style.left = `${pos.current.x}px`;
-    el.style.top = `${pos.current.y}px`;
-    el.style.right = 'unset';
-    el.style.bottom = 'unset';
+    return () => {
+      initialized.current = false;
+    };
+  }, [
+    element,
+    options.constrainOffset,
+    options.initialPosition?.top,
+    options.initialPosition?.left,
+    options.initialPosition?.right,
+    options.initialPosition?.bottom,
+    options.constrainToViewport,
+  ]);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) {
+      return;
+    }
 
     const controller = new AbortController();
     const signal = controller.signal;
@@ -187,7 +204,6 @@ export function useFloatingWindow<T extends HTMLElement>(
     el.addEventListener('touchstart', onStart, { signal, passive: false });
 
     return () => {
-      initialized.current = false;
       controller.abort();
     };
   }, [
