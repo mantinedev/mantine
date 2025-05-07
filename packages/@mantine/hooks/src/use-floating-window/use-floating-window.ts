@@ -69,6 +69,7 @@ export interface UseFloatingWindowReturnValue<T extends HTMLElement> {
 export function useFloatingWindow<T extends HTMLElement>(
   options: UseFloatingWindowOptions = {}
 ): UseFloatingWindowReturnValue<T> {
+  const [element, setElement] = useState<T | null>(null);
   const ref = useRef<T>(null);
   const pos = useRef({ x: 0, y: 0 });
   const offset = useRef({ x: 0, y: 0 });
@@ -80,6 +81,16 @@ export function useFloatingWindow<T extends HTMLElement>(
   const setDragging = useCallback((value: boolean) => {
     setIsDragging(value);
     isDraggingRef.current = value;
+  }, []);
+
+  const assignRef = useCallback((node: T | null) => {
+    if (node) {
+      ref.current = node;
+      setElement(node);
+    } else {
+      ref.current = null;
+      setElement(null);
+    }
   }, []);
 
   useEffect(() => {
@@ -191,6 +202,7 @@ export function useFloatingWindow<T extends HTMLElement>(
     options.initialPosition?.left,
     options.initialPosition?.right,
     options.initialPosition?.bottom,
+    element,
   ]);
 
   useEffect(() => {
@@ -215,7 +227,7 @@ export function useFloatingWindow<T extends HTMLElement>(
   }, [options.constrainToViewport, options.constrainOffset]);
 
   return {
-    ref: ref as RefObject<T>,
+    ref: assignRef as any,
     setPosition: createSetPosition(ref, pos, options),
     isDragging,
   };

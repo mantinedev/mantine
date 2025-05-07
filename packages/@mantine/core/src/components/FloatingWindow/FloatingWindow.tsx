@@ -15,6 +15,7 @@ import {
   useStyles,
 } from '../../core';
 import { Paper, PaperBaseProps } from '../Paper';
+import { OptionalPortal, PortalProps } from '../Portal';
 import classes from './FloatingWindow.module.css';
 
 export type FloatingWindowStylesNames = 'root';
@@ -27,6 +28,12 @@ export interface FloatingWindowProps
     ElementProps<'div', keyof UseFloatingWindowOptions> {
   /** Assigns ref to set position programmatically */
   setPositionRef?: React.RefObject<SetFloatingWindowPosition>;
+
+  /** Determines whether the window should be rendered inside `<Portal />`, `true` by default */
+  withinPortal?: boolean;
+
+  /** Props passed down to `Portal` component */
+  portalProps?: Omit<PortalProps, 'children'>;
 }
 
 export type FloatingWindowFactory = Factory<{
@@ -60,6 +67,8 @@ export const FloatingWindow = factory<FloatingWindowFactory>((_props, ref) => {
     onDragStart,
     onDragEnd,
     setPositionRef,
+    withinPortal,
+    portalProps,
     ...others
   } = props;
 
@@ -93,12 +102,14 @@ export const FloatingWindow = factory<FloatingWindowFactory>((_props, ref) => {
   ]);
 
   return (
-    <Paper
-      ref={useMergedRef(ref, floatingWindow.ref)}
-      mod={[{ dragging: floatingWindow.isDragging }, mod]}
-      {...getStyles('root')}
-      {...others}
-    />
+    <OptionalPortal withinPortal={withinPortal} {...portalProps}>
+      <Paper
+        ref={useMergedRef(ref, floatingWindow.ref)}
+        mod={[{ dragging: floatingWindow.isDragging }, mod]}
+        {...getStyles('root')}
+        {...others}
+      />
+    </OptionalPortal>
   );
 });
 

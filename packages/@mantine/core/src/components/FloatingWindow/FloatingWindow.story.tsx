@@ -17,6 +17,7 @@ export function Usage() {
         right={40}
         radius="md"
         constrainOffset={20}
+        enabled
       >
         This is a floating window
       </FloatingWindow>
