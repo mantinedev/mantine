@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { RefCallback, RefObject, useCallback, useEffect, useRef, useState } from 'react';
 
 function useRefValue<T>(value: T) {
   const ref = useRef(value);
@@ -57,7 +57,7 @@ export type SetFloatingWindowPosition = (position: FloatingWindowPositionConfig)
 
 export interface UseFloatingWindowReturnValue<T extends HTMLElement> {
   /** Ref to the element that should be draggable */
-  ref: RefObject<T>;
+  ref: RefCallback<T | null>;
 
   /** Function to set the position of the element */
   setPosition: SetFloatingWindowPosition;
@@ -243,7 +243,7 @@ export function useFloatingWindow<T extends HTMLElement>(
   }, [options.constrainToViewport, options.constrainOffset]);
 
   return {
-    ref: assignRef as any,
+    ref: assignRef,
     setPosition: createSetPosition(ref, pos, options),
     isDragging,
   };
