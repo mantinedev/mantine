@@ -1,15 +1,23 @@
 import { useState } from 'react';
-import { Button, Chip, CloseButton, FloatingWindow, Group, Text } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { Button, Chip, CloseButton, Group, Paper, Text } from '@mantine/core';
+import { useDisclosure, useFloatingWindow } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Button, Chip, CloseButton, FloatingWindow, Group, Text } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { useState } from 'react';
+import { Button, Chip, CloseButton, Group, Paper, Text } from '@mantine/core';
+import { useDisclosure, useFloatingWindow } from '@mantine/hooks';
 
 function Demo() {
   const [visible, handlers] = useDisclosure();
   const [enabled, setEnabled] = useState(true);
+  const floatingWindow = useFloatingWindow({
+    enabled,
+    constrainToViewport: true,
+    constrainOffset: 20,
+    excludeDragHandleSelector: 'button',
+    initialPosition: { top: 300, left: 20 },
+  });
 
   return (
     <>
@@ -23,22 +31,22 @@ function Demo() {
       </Group>
 
       {visible && (
-        <FloatingWindow
+        <Paper
           w={280}
           p="md"
           withBorder
           radius="md"
-          excludeDragHandleSelector="button"
-          initialPosition={{ top: 300, left: 20 }}
-          style={{ cursor: 'move' }}
-          enabled={enabled}
+          pos="fixed"
+          style={{ cursor: 'move', transition: 'box-shadow 70ms ease', zIndex: 400 }}
+          shadow={floatingWindow.isDragging ? 'md' : undefined}
+          ref={floatingWindow.ref}
         >
           <Group justify="space-between" mb="md">
             <Text>Enabled demo</Text>
             <CloseButton onClick={handlers.close} />
           </Group>
           <Text fz="sm">This is a floating window. You can drag it around.</Text>
-        </FloatingWindow>
+        </Paper>
       )}
     </>
   );
@@ -48,6 +56,13 @@ function Demo() {
 function Demo() {
   const [visible, handlers] = useDisclosure();
   const [enabled, setEnabled] = useState(true);
+  const floatingWindow = useFloatingWindow({
+    enabled,
+    constrainToViewport: true,
+    constrainOffset: 20,
+    excludeDragHandleSelector: 'button',
+    initialPosition: { top: 300, left: 20 },
+  });
 
   return (
     <>
@@ -61,28 +76,28 @@ function Demo() {
       </Group>
 
       {visible && (
-        <FloatingWindow
+        <Paper
           w={280}
           p="md"
           withBorder
           radius="md"
-          excludeDragHandleSelector="button"
-          initialPosition={{ top: 300, left: 20 }}
-          style={{ cursor: 'move' }}
-          enabled={enabled}
+          pos="fixed"
+          style={{ cursor: 'move', transition: 'box-shadow 70ms ease', zIndex: 400 }}
+          shadow={floatingWindow.isDragging ? 'md' : undefined}
+          ref={floatingWindow.ref}
         >
           <Group justify="space-between" mb="md">
             <Text>Enabled demo</Text>
             <CloseButton onClick={handlers.close} />
           </Group>
           <Text fz="sm">This is a floating window. You can drag it around.</Text>
-        </FloatingWindow>
+        </Paper>
       )}
     </>
   );
 }
 
-export const enabled: MantineDemo = {
+export const useFloatingWindowEnabledDemo: MantineDemo = {
   type: 'code',
   component: Demo,
   code,

@@ -347,3 +347,38 @@ export const Demo_useFileDialogUsage = {
   name: '⭐ Demo: useFileDialogUsage',
   render: renderDemo(demos.useFileDialogUsage),
 };
+
+export const Demo_useFloatingWindowUsageDemo = {
+  name: '⭐ Demo: useFloatingWindowUsageDemo',
+  render: renderDemo(demos.useFloatingWindowUsageDemo),
+};
+
+export const Demo_useFloatingWindowSetPositionDemo = {
+  name: '⭐ Demo: useFloatingWindowSetPositionDemo',
+  render: renderDemo(demos.useFloatingWindowSetPositionDemo),
+};
+
+export const Demo_useFloatingWindowEnabledDemo = {
+  name: '⭐ Demo: useFloatingWindowEnabledDemo',
+  render: renderDemo(demos.useFloatingWindowEnabledDemo),
+};
+
+export const Demo_useFloatingWindowDragHandleSelectorDemo = {
+  name: '⭐ Demo: useFloatingWindowDragHandleSelectorDemo',
+  render: renderDemo(demos.useFloatingWindowDragHandleSelectorDemo),
+};
+
+export const Demo_useFloatingWindowConstrainToViewportDemo = {
+  name: '⭐ Demo: useFloatingWindowConstrainToViewportDemo',
+  render: renderDemo(demos.useFloatingWindowConstrainToViewportDemo),
+};
+
+export const Demo_useFloatingWindowConstrainOffsetDemo = {
+  name: '⭐ Demo: useFloatingWindowConstrainOffsetDemo',
+  render: renderDemo(demos.useFloatingWindowConstrainOffsetDemo),
+};
+
+export const Demo_useFloatingWindowAxisDemo = {
+  name: '⭐ Demo: useFloatingWindowAxisDemo',
+  render: renderDemo(demos.useFloatingWindowAxisDemo),
+};
