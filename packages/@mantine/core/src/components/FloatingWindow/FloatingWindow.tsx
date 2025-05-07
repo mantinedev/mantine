@@ -28,7 +28,7 @@ export interface FloatingWindowProps
     StylesApiProps<FloatingWindowFactory>,
     ElementProps<'div', keyof UseFloatingWindowOptions> {
   /** Assigns ref to set position programmatically */
-  setPositionRef?: React.RefObject<SetFloatingWindowPosition>;
+  setPositionRef?: React.RefObject<SetFloatingWindowPosition | null>;
 
   /** Determines whether the window should be rendered inside `<Portal />`, `true` by default */
   withinPortal?: boolean;
