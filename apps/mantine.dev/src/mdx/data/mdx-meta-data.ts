@@ -201,6 +201,14 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     searchTags: '7-17-0, 7170',
   },
 
+  Changelog800: {
+    title: 'Version v8.0.0',
+    slug: '/changelog/8-0-0',
+    release: 'https://github.com/mantinedev/mantine/releases/tag/8.0.0',
+    date: 'May 5th, 2025',
+    searchTags: '8-0-0, 800',
+  },
+
   PreviousChangelogs: {
     title: 'All releases',
     slug: '/changelog/previous-versions',
@@ -212,13 +220,5 @@ export const MDX_META_DATA: Record<string, Frontmatter> = {
     slug: '/changelog/all-releases',
     hideHeader: true,
     hideInSearch: true,
-  },
-
-  Changelog800: {
-    title: 'Version v8.0.0',
-    slug: '/changelog/8-0-0',
-    release: 'https://github.com/mantinedev/mantine/releases/tag/8.0.0',
-    date: 'May 5th, 2025',
-    searchTags: '8-0-0, 800',
   },
 };
