@@ -2,7 +2,7 @@ import { factory, Factory, useMantineEnv } from '../../core';
 import { Portal, PortalProps } from './Portal';
 
 export interface OptionalPortalProps extends PortalProps {
-  /** Determines whether children should be rendered inside `<Portal />` */
+  /** Determines whether children should be rendered inside `Portal` */
   withinPortal?: boolean;
 }
 

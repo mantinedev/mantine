@@ -1095,6 +1095,17 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     docs: 'core/angle-slider.mdx',
   },
 
+  FloatingWindow: {
+    title: 'FloatingWindow',
+    package: '@mantine/core',
+    slug: '/core/floating-window',
+    props: ['FloatingWindow'],
+    styles: ['FloatingWindow'],
+    description: 'Draggable floating area',
+    source: '@mantine/core/src/components/FloatingWindow/FloatingWindow.tsx',
+    docs: 'core/floating-window.mdx',
+  },
+
   TableOfContents: {
     title: 'TableOfContents',
     package: '@mantine/core',

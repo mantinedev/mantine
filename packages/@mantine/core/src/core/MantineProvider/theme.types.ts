@@ -9,8 +9,8 @@ export interface MantineTheme {
    */
   focusRing: 'auto' | 'always' | 'never';
 
-  /** Rem units scale, change if you customize font-size of `<html />` element
-   *  default value is `1` (for `100%`/`16px` font-size on `<html />`)
+  /** Rem units scale, change if you customize font-size of `html` element
+   *  default value is `1` (for `100%`/`16px` font-size on `html`)
    */
   scale: number;
 

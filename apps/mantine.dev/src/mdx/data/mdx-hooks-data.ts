@@ -187,5 +187,6 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'useScrollSpy',
     'Track scroll position and detect which heading is currently in the viewport, can be used for table of contents'
   ),
+  useFloatingWindow: hDocs('useFloatingWindow', 'Create draggable floating area'),
   useFileDialog: hDocs('useFileDialog', 'Capture one or more files from the user'),
 };

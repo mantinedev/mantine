@@ -143,6 +143,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.useMouse,
       MDX_DATA.useMove,
       MDX_DATA.useRadialMove,
+      MDX_DATA.useFloatingWindow,
       MDX_DATA.useReducedMotion,
       MDX_DATA.useResizeObserver,
       MDX_DATA.useMutationObserver,
@@ -329,6 +330,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.LoadingOverlay,
       MDX_DATA.Dialog,
       MDX_DATA.FloatingIndicator,
+      MDX_DATA.FloatingWindow,
     ],
   },
   {

@@ -1,9 +1,9 @@
-import { Button, CloseButton, Group, Paper, Text } from '@mantine/core';
+import { Button, CloseButton, Group, Paper, Portal, Text } from '@mantine/core';
 import { useDisclosure, useFloatingWindow } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Button, CloseButton, Group, Paper, Text } from '@mantine/core';
+import { Button, CloseButton, Group, Paper, Portal, Text } from '@mantine/core';
 import { useDisclosure, useFloatingWindow } from '@mantine/hooks';
 
 function Demo() {
@@ -23,29 +23,31 @@ function Demo() {
       </Button>
 
       {visible && (
-        <Paper
-          w={280}
-          withBorder
-          radius="md"
-          pos="fixed"
-          style={{ transition: 'box-shadow 70ms ease', zIndex: 400 }}
-          shadow={floatingWindow.isDragging ? 'md' : undefined}
-          ref={floatingWindow.ref}
-        >
-          <Group
-            justify="space-between"
-            px="md"
-            py="sm"
-            className="drag-handle"
-            style={{ cursor: 'move' }}
+        <Portal>
+          <Paper
+            w={280}
+            withBorder
+            radius="md"
+            pos="fixed"
+            style={{ transition: 'box-shadow 70ms ease', zIndex: 400 }}
+            shadow={floatingWindow.isDragging ? 'md' : undefined}
+            ref={floatingWindow.ref}
           >
-            <Text>Drag handle demo</Text>
-            <CloseButton onClick={handlers.close} />
-          </Group>
-          <Text fz="sm" px="md" pb="sm">
-            Drag floating window around with drag handle element.
-          </Text>
-        </Paper>
+            <Group
+              justify="space-between"
+              px="md"
+              py="sm"
+              className="drag-handle"
+              style={{ cursor: 'move' }}
+            >
+              <Text>Drag handle demo</Text>
+              <CloseButton onClick={handlers.close} />
+            </Group>
+            <Text fz="sm" px="md" pb="sm">
+              Drag floating window around with drag handle element.
+            </Text>
+          </Paper>
+        </Portal>
       )}
     </>
   );
@@ -69,29 +71,31 @@ function Demo() {
       </Button>
 
       {visible && (
-        <Paper
-          w={280}
-          withBorder
-          radius="md"
-          pos="fixed"
-          style={{ transition: 'box-shadow 70ms ease', zIndex: 400 }}
-          shadow={floatingWindow.isDragging ? 'md' : undefined}
-          ref={floatingWindow.ref}
-        >
-          <Group
-            justify="space-between"
-            px="md"
-            py="sm"
-            className="drag-handle"
-            style={{ cursor: 'move' }}
+        <Portal>
+          <Paper
+            w={280}
+            withBorder
+            radius="md"
+            pos="fixed"
+            style={{ transition: 'box-shadow 70ms ease', zIndex: 400 }}
+            shadow={floatingWindow.isDragging ? 'md' : undefined}
+            ref={floatingWindow.ref}
           >
-            <Text>Drag handle demo</Text>
-            <CloseButton onClick={handlers.close} />
-          </Group>
-          <Text fz="sm" px="md" pb="sm">
-            Drag floating window around with drag handle element.
-          </Text>
-        </Paper>
+            <Group
+              justify="space-between"
+              px="md"
+              py="sm"
+              className="drag-handle"
+              style={{ cursor: 'move' }}
+            >
+              <Text>Drag handle demo</Text>
+              <CloseButton onClick={handlers.close} />
+            </Group>
+            <Text fz="sm" px="md" pb="sm">
+              Drag floating window around with drag handle element.
+            </Text>
+          </Paper>
+        </Portal>
       )}
     </>
   );

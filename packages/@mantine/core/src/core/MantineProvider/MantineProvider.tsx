@@ -39,7 +39,7 @@ export interface MantineProviderProps {
   /** A prefix for components static classes (for example {selector}-Text-root), `mantine` by default */
   classNamesPrefix?: string;
 
-  /** Function to generate nonce attribute added to all generated `<style />` tags */
+  /** Function to generate nonce attribute added to all generated `style` tags */
   getStyleNonce?: () => string;
 
   /** Function to generate CSS variables based on theme object */
@@ -48,7 +48,7 @@ export interface MantineProviderProps {
   /** Determines whether components should have static classes, for example, `mantine-Button-root`. `true` by default */
   withStaticClasses?: boolean;
 
-  /** Determines whether global classes should be added with `<style />` tag. Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work. `true` by default. */
+  /** Determines whether global classes should be added with `style` tag. Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work. `true` by default. */
   withGlobalClasses?: boolean;
 
   /** An object to transform `styles` and `sx` props into css classes, can be used with CSS-in-JS libraries */

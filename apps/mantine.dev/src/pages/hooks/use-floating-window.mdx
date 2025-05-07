@@ -1,0 +1,135 @@
+import { HooksDemos, FloatingWindowDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useFloatingWindow);
+
+## Usage
+
+`use-floating-window` makes given element draggable:
+
+<Demo data={HooksDemos.useFloatingWindowUsageDemo} />
+
+## Constrain to viewport
+
+Use `constrainToViewport` option to restrict element movement to the viewport boundaries.
+If you do not set `constrainToViewport` option, the element can be dragged outside the viewport:
+
+<Demo data={HooksDemos.useFloatingWindowConstrainToViewportDemo} />
+
+## Constrain offset
+
+Use `constrainOffset` option to set the offset from the viewport edges when constraining the element.
+This option requires `constrainToViewport: true`:
+
+<Demo data={HooksDemos.useFloatingWindowConstrainOffsetDemo} />
+
+## Drag handle selector
+
+`dragHandleSelector` option allows specifying a selector of an element (or a group of elements) that should be used to drag floating window.
+If not specified, the entire root element is used as a drag target.
+
+`excludeDragHandleSelector` option excludes elements within `dragHandleSelector` from the drag event.
+In the following example, the close button is excluded from the drag event:
+
+<Demo data={HooksDemos.useFloatingWindowDragHandleSelectorDemo} />
+
+## Enabled option
+
+Use `enabled` option to enable or disable dragging:
+
+<Demo data={HooksDemos.useFloatingWindowEnabledDemo} />
+
+## Set position
+
+Call `setPosition` function to set the position of the element programmatically.
+This function accepts an object with `top`, `left`, `right` and `bottom` properties,
+from which you should only specify two (for example, `top` and `left`, `bottom` and `right`).
+
+<Demo data={HooksDemos.useFloatingWindowSetPositionDemo} />
+
+## Lock axis
+
+Use `axis` option to restrict movement to the specified axis:
+
+<Demo data={HooksDemos.useFloatingWindowAxisDemo} />
+
+## FloatingWindow component
+
+If you prefer component API, you can use [FloatingWindow](/core/floating-window) component.
+It supports the same options as the hook and provides extra features like portal rendering, basic styles and more.
+
+<Demo data={FloatingWindowDemos.usage} />
+
+## Definition
+
+
+```tsx
+function useFloatingWindow<T extends HTMLElement>(
+  options?: UseFloatingWindowOptions
+): UseFloatingWindowReturnValue<T>
+
+interface FloatingWindowPositionConfig {
+  top?: number;
+  left?: number;
+  right?: number;
+  bottom?: number;
+}
+
+interface FloatingWindowPosition {
+  /** Element offset from the left side of the viewport */
+  x: number;
+
+  /** Element offset from the top side of the viewport */
+  y: number;
+}
+
+interface UseFloatingWindowOptions {
+  /** If `false`, the element can not be dragged. */
+  enabled?: boolean;
+
+  /** If `true`, the element can only move within
+   * the current viewport boundaries. */
+  constrainToViewport?: boolean;
+
+  /** The offset from the viewport edges when constraining the element.
+   * Requires `constrainToViewport: true`. */
+  constrainOffset?: number;
+
+  /** Selector of an element that should be used to drag floating window.
+   * If not specified, the entire root element is used as a drag target. */
+  dragHandleSelector?: string;
+
+  /** Selector of an element within `dragHandleSelector`
+   * that should be excluded from the drag event. */
+  excludeDragHandleSelector?: string;
+
+  /** If set, restricts movement to the specified axis */
+  axis?: 'x' | 'y';
+
+  /** Initial position. If not set, calculated from element styles. */
+  initialPosition?: FloatingWindowPositionConfig;
+
+  /** Called when the element position changes */
+  onPositionChange?: (pos: FloatingWindowPosition) => void;
+
+  /** Called when the drag starts */
+  onDragStart?: () => void;
+
+  /** Called when the drag stops */
+  onDragEnd?: () => void;
+}
+
+type SetFloatingWindowPosition = (position: FloatingWindowPositionConfig) => void;
+
+interface UseFloatingWindowReturnValue<T extends HTMLElement> {
+  /** Ref to the element that should be draggable */
+  ref: RefCallback<T | null>;
+
+  /** Function to set the position of the element */
+  setPosition: SetFloatingWindowPosition;
+
+  /** `true` if the element is currently being dragged */
+  isDragging: boolean;
+}
+```

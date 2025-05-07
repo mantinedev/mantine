@@ -1,9 +1,9 @@
-import { Button, CloseButton, Group, Paper, Text } from '@mantine/core';
+import { Button, CloseButton, Group, Paper, Portal, Text } from '@mantine/core';
 import { useDisclosure, useFloatingWindow } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Button, CloseButton, Group, Paper, Text } from '@mantine/core';
+import { Button, CloseButton, Group, Paper, Portal, Text } from '@mantine/core';
 import { useDisclosure, useFloatingWindow } from '@mantine/hooks';
 
 function Demo() {
@@ -21,24 +21,26 @@ function Demo() {
       </Button>
 
       {visible && (
-        <Paper
-          w={280}
-          p="md"
-          withBorder
-          radius="md"
-          pos="fixed"
-          style={{ cursor: 'move', transition: 'box-shadow 70ms ease', zIndex: 400 }}
-          shadow={floatingWindow.isDragging ? 'md' : undefined}
-          ref={floatingWindow.ref}
-        >
-          <Group justify="space-between" mb="md">
-            <Text>No constrain demo</Text>
-            <CloseButton onClick={handlers.close} />
-          </Group>
-          <Text fz="sm">
-            The floating window is not constrained by the viewport, it can move out of bounds.
-          </Text>
-        </Paper>
+        <Portal>
+          <Paper
+            w={280}
+            p="md"
+            withBorder
+            radius="md"
+            pos="fixed"
+            style={{ cursor: 'move', transition: 'box-shadow 70ms ease', zIndex: 400 }}
+            shadow={floatingWindow.isDragging ? 'md' : undefined}
+            ref={floatingWindow.ref}
+          >
+            <Group justify="space-between" mb="md">
+              <Text>No constrain demo</Text>
+              <CloseButton onClick={handlers.close} />
+            </Group>
+            <Text fz="sm">
+              The floating window is not constrained by the viewport, it can move out of bounds.
+            </Text>
+          </Paper>
+        </Portal>
       )}
     </>
   );
@@ -60,24 +62,26 @@ function Demo() {
       </Button>
 
       {visible && (
-        <Paper
-          w={280}
-          p="md"
-          withBorder
-          radius="md"
-          pos="fixed"
-          style={{ cursor: 'move', transition: 'box-shadow 70ms ease', zIndex: 400 }}
-          shadow={floatingWindow.isDragging ? 'md' : undefined}
-          ref={floatingWindow.ref}
-        >
-          <Group justify="space-between" mb="md">
-            <Text>No constrain demo</Text>
-            <CloseButton onClick={handlers.close} />
-          </Group>
-          <Text fz="sm">
-            The floating window is not constrained by the viewport, it can move out of bounds.
-          </Text>
-        </Paper>
+        <Portal>
+          <Paper
+            w={280}
+            p="md"
+            withBorder
+            radius="md"
+            pos="fixed"
+            style={{ cursor: 'move', transition: 'box-shadow 70ms ease', zIndex: 400 }}
+            shadow={floatingWindow.isDragging ? 'md' : undefined}
+            ref={floatingWindow.ref}
+          >
+            <Group justify="space-between" mb="md">
+              <Text>No constrain demo</Text>
+              <CloseButton onClick={handlers.close} />
+            </Group>
+            <Text fz="sm">
+              The floating window is not constrained by the viewport, it can move out of bounds.
+            </Text>
+          </Paper>
+        </Portal>
       )}
     </>
   );
