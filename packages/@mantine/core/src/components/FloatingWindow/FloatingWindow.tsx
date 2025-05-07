@@ -10,6 +10,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  getDefaultZIndex,
   StylesApiProps,
   useProps,
   useStyles,
@@ -34,6 +35,9 @@ export interface FloatingWindowProps
 
   /** Props passed down to `Portal` component */
   portalProps?: Omit<PortalProps, 'children'>;
+
+  /** `z-index` of the root element, `400` by default */
+  zIndex?: React.CSSProperties['zIndex'];
 }
 
 export type FloatingWindowFactory = Factory<{
@@ -44,6 +48,7 @@ export type FloatingWindowFactory = Factory<{
 
 const defaultProps: Partial<FloatingWindowProps> = {
   constrainToViewport: true,
+  zIndex: getDefaultZIndex('overlay'),
 };
 
 export const FloatingWindow = factory<FloatingWindowFactory>((_props, ref) => {
@@ -69,6 +74,7 @@ export const FloatingWindow = factory<FloatingWindowFactory>((_props, ref) => {
     setPositionRef,
     withinPortal,
     portalProps,
+    zIndex,
     ...others
   } = props;
 
@@ -108,6 +114,7 @@ export const FloatingWindow = factory<FloatingWindowFactory>((_props, ref) => {
         mod={[{ dragging: floatingWindow.isDragging }, mod]}
         {...getStyles('root')}
         {...others}
+        __vars={{ '--floating-window-z-index': zIndex?.toString() }}
       />
     </OptionalPortal>
   );
