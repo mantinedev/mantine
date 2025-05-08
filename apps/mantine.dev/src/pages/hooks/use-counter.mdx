@@ -11,19 +11,29 @@ export default Layout(MDX_DATA.useCounter);
 ## Definition
 
 ```tsx
+export interface UseCounterOptions {
+  min?: number;
+  max?: number;
+}
+
+export interface UseCounterReturnValue {
+  increment: () => void;
+  decrement: () => void;
+  set: (value: number) => void;
+  reset: () => void;
+}
+
 function useCounter(
   initialValue?: number,
-  options?: Partial<{
-    min: number;
-    max: number;
-  }>
-): [
-  number,
-  {
-    increment: () => void;
-    decrement: () => void;
-    set: (value: number) => void;
-    reset: () => void;
-  },
-];
+  options?: UseCounterOptions,
+): [number, UseCounterReturnValue]
+```
+
+## Exported types
+
+`UseCounterOptions` and `UseCounterReturnValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseCounterOptions, UseCounterReturnValue } from '@mantine/hooks';
 ```

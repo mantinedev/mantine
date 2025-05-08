@@ -6,7 +6,22 @@ const DEFAULT_OPTIONS = {
   max: Infinity,
 };
 
-export function useCounter(initialValue = 0, options?: Partial<{ min: number; max: number }>) {
+export interface UseCounterOptions {
+  min?: number;
+  max?: number;
+}
+
+export interface UseCounterReturnValue {
+  increment: () => void;
+  decrement: () => void;
+  set: (value: number) => void;
+  reset: () => void;
+}
+
+export function useCounter(
+  initialValue = 0,
+  options?: UseCounterOptions
+): [number, UseCounterReturnValue] {
   const { min, max } = { ...DEFAULT_OPTIONS, ...options };
   const [count, setCount] = useState<number>(clamp(initialValue, min, max));
 
@@ -27,5 +42,5 @@ export function useCounter(initialValue = 0, options?: Partial<{ min: number; ma
     [initialValue, min, max]
   );
 
-  return [count, { increment, decrement, set, reset }] as const;
+  return [count, { increment, decrement, set, reset }];
 }
