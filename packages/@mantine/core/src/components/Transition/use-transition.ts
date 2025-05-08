@@ -45,12 +45,16 @@ export function useTransition({
   const delayTimeoutRef = useRef<number>(-1);
   const rafRef = useRef(-1);
 
+  function clearAllTimeouts() {
+    window.clearTimeout(transitionTimeoutRef.current);
+    window.clearTimeout(delayTimeoutRef.current);
+    cancelAnimationFrame(rafRef.current);
+  }
+
   const handleStateChange = (shouldMount: boolean) => {
+    clearAllTimeouts();
     const preHandler = shouldMount ? onEnter : onExit;
     const handler = shouldMount ? onEntered : onExited;
-
-    window.clearTimeout(transitionTimeoutRef.current);
-
     const newTransitionDuration = reduceMotion ? 0 : shouldMount ? duration : exitDuration;
     setTransitionDuration(newTransitionDuration);
 
@@ -59,16 +63,13 @@ export function useTransition({
       typeof handler === 'function' && handler();
       setStatus(shouldMount ? 'entered' : 'exited');
     } else {
-      // Make sure new status won't be set within the same frame as this would disrupt animation #3126
       rafRef.current = requestAnimationFrame(() => {
         ReactDOM.flushSync(() => {
           setStatus(shouldMount ? 'pre-entering' : 'pre-exiting');
         });
-
         rafRef.current = requestAnimationFrame(() => {
           typeof preHandler === 'function' && preHandler();
           setStatus(shouldMount ? 'entering' : 'exiting');
-
           transitionTimeoutRef.current = window.setTimeout(() => {
             typeof handler === 'function' && handler();
             setStatus(shouldMount ? 'entered' : 'exited');
@@ -79,14 +80,12 @@ export function useTransition({
   };
 
   const handleTransitionWithDelay = (shouldMount: boolean) => {
-    window.clearTimeout(delayTimeoutRef.current);
+    clearAllTimeouts();
     const delay = shouldMount ? enterDelay : exitDelay;
-
     if (typeof delay !== 'number') {
       handleStateChange(shouldMount);
       return;
     }
-
     delayTimeoutRef.current = window.setTimeout(
       () => {
         handleStateChange(shouldMount);
@@ -101,8 +100,7 @@ export function useTransition({
 
   useEffect(
     () => () => {
-      window.clearTimeout(transitionTimeoutRef.current);
-      cancelAnimationFrame(rafRef.current);
+      clearAllTimeouts();
     },
     []
   );
