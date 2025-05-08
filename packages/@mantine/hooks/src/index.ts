@@ -130,3 +130,4 @@ export type {
   UseFocusWithinReturnValue,
 } from './use-focus-within/use-focus-within';
 export type { UseFullscreenReturnValue } from './use-fullscreen/use-fullscreen';
+export type { UseHashOptions, UseHashReturnValue } from './use-hash/use-hash';

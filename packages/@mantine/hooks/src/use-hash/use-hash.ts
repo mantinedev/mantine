@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
-interface UseHashOptions {
+export interface UseHashOptions {
   getInitialValueInEffect?: boolean;
 }
 
-export function useHash({ getInitialValueInEffect = true }: UseHashOptions = {}) {
+export type UseHashReturnValue = [string, (value: string) => void];
+
+export function useHash({
+  getInitialValueInEffect = true,
+}: UseHashOptions = {}): UseHashReturnValue {
   const [hash, setHash] = useState<string>(
     getInitialValueInEffect ? '' : window.location.hash || ''
   );
@@ -29,5 +33,5 @@ export function useHash({ getInitialValueInEffect = true }: UseHashOptions = {})
     }
   }, []);
 
-  return [hash, setHashHandler] as const;
+  return [hash, setHashHandler];
 }
