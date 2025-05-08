@@ -77,7 +77,13 @@ function createInput(options: UseFileDialogOptions) {
   return input;
 }
 
-export function useFileDialog(input: UseFileDialogOptions = {}) {
+export interface UseFileDialogReturnValue {
+  files: FileList | null;
+  open: () => void;
+  reset: () => void;
+}
+
+export function useFileDialog(input: UseFileDialogOptions = {}): UseFileDialogReturnValue {
   const options: UseFileDialogOptions = { ...defaultOptions, ...input };
   const [files, setFiles] = useState<FileList | null>(getInitialFilesList(options.initialFiles));
   const inputRef = useRef<HTMLInputElement | null>(null);

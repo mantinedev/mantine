@@ -117,3 +117,7 @@ export type {
   UseEyeDropperReturnValue,
 } from './use-eye-dropper/use-eye-dropper';
 export type { UseFetchOptions, UseFetchReturnValue } from './use-fetch/use-fetch';
+export type {
+  UseFileDialogOptions,
+  UseFileDialogReturnValue,
+} from './use-file-dialog/use-file-dialog';
