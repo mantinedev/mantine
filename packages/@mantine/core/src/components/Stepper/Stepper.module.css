@@ -11,6 +11,15 @@
   --stepper-spacing: var(--mantine-spacing-md);
   --stepper-radius: 1000px;
   --stepper-fz: var(--mantine-font-size-md);
+  --stepper-outline-thickness: 2px;
+
+  @mixin light {
+    --stepper-outline-color: var(--mantine-color-gray-2);
+  }
+
+  @mixin dark {
+    --stepper-outline-color: var(--mantine-color-dark-5);
+  }
 }
 
 .steps {
@@ -41,40 +50,14 @@
 }
 
 .separator {
-  --separator-offset: calc(var(--stepper-icon-size) / 2 - rem(1px));
-
   transition: background-color 150ms ease;
   flex: 1;
-
-  @mixin where-light {
-    background-color: var(--mantine-color-gray-2);
-  }
-
-  @mixin where-dark {
-    background-color: var(--mantine-color-dark-2);
-  }
+  height: var(--stepper-outline-thickness);
+  margin-inline: var(--mantine-spacing-md);
+  background-color: var(--stepper-outline-color);
 
   &:where([data-active]) {
     background-color: var(--stepper-color);
-  }
-
-  &:where([data-orientation='horizontal']) {
-    height: 2px;
-    margin-inline: var(--mantine-spacing-md);
-  }
-
-  &:where([data-orientation='vertical']) {
-    width: 2px;
-    margin-top: calc(var(--mantine-spacing-xs) / 2);
-    margin-bottom: calc(var(--mantine-spacing-xs) - rem(2px));
-
-    &:where([data-icon-position='left']) {
-      margin-inline-start: var(--separator-offset);
-    }
-
-    &:where([data-icon-position='right']) {
-      margin-inline-end: var(--separator-offset);
-    }
   }
 }
 
@@ -131,15 +114,7 @@
   inset-inline-start: calc(var(--stepper-icon-size) / 2);
   height: 100vh;
   position: absolute;
-  border-inline-start: 2px solid;
-
-  @mixin where-light {
-    border-color: var(--mantine-color-gray-1);
-  }
-
-  @mixin where-dark {
-    border-color: var(--mantine-color-dark-5);
-  }
+  border-inline-start: var(--stepper-outline-thickness) solid var(--stepper-outline-color);
 
   &:where([data-active]) {
     border-color: var(--stepper-color);
@@ -161,17 +136,14 @@
   transition:
     background-color 150ms ease,
     border-color 150ms ease;
-  border: 2px solid;
+  border: var(--stepper-outline-thickness) solid var(--stepper-outline-color);
+  background-color: var(--stepper-outline-color);
 
   @mixin where-light {
-    background-color: var(--mantine-color-gray-1);
-    border-color: var(--mantine-color-gray-1);
     color: var(--mantine-color-gray-7);
   }
 
   @mixin where-dark {
-    background-color: var(--mantine-color-dark-5);
-    border-color: var(--mantine-color-dark-5);
     color: var(--mantine-color-dark-1);
   }
 
