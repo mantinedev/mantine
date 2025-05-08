@@ -91,14 +91,7 @@
   fieldset:disabled &,
   &:where([data-disabled]) {
     cursor: not-allowed;
-
-    @mixin where-light {
-      color: var(--mantine-color-gray-5);
-    }
-
-    @mixin where-dark {
-      color: var(--mantine-color-dark-3);
-    }
+    color: var(--mantine-color-disabled-color);
   }
 
   &:where([data-active]) {
@@ -146,13 +139,7 @@
 
   fieldset:disabled & {
     @mixin hover {
-      @mixin where-light {
-        color: var(--mantine-color-gray-5) !important;
-      }
-
-      @mixin where-dark {
-        color: var(--mantine-color-dark-3) !important;
-      }
+      color: var(--mantine-color-disabled-color) !important;
     }
   }
 }

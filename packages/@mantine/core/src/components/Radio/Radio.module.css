@@ -80,23 +80,11 @@
 
   &:disabled {
     cursor: not-allowed;
+    background-color: var(--mantine-color-disabled);
+    border-color: var(--mantine-color-disabled-border);
 
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-1);
-      border-color: var(--mantine-color-gray-2);
-
-      & + .icon {
-        --radio-icon-color: var(--mantine-color-gray-3);
-      }
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-5);
-      border-color: var(--mantine-color-dark-4);
-
-      & + .icon {
-        --radio-icon-color: var(--mantine-color-dark-7);
-      }
+    & + .icon {
+      --radio-icon-color: var(--mantine-color-disabled-color);
     }
   }
 
