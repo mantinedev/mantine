@@ -25,13 +25,14 @@ export function useEventListener<K extends keyof HTMLElementEventMap, T extends 
     [type, listener, options]
   );
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       if (previousNode.current && previousListener.current) {
         previousNode.current.removeEventListener(type, previousListener.current as any, options);
       }
-    };
-  }, [type, options]);
+    },
+    [type, options]
+  );
 
   return callbackRef;
 }

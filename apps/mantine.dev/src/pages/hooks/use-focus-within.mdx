@@ -14,11 +14,26 @@ It works the same way as `:focus-within` CSS selector:
 ## Definition
 
 ```tsx
-function useFocusWithin<T extends HTMLElement = any>(handlers?: {
-  onFocus?(event: FocusEvent): void;
-  onBlur?(event: FocusEvent): void;
-}): {
-  ref: React.MutableRefObject<T>;
+interface UseFocusWithinOptions {
+  onFocus?: (event: FocusEvent) => void;
+  onBlur?: (event: FocusEvent) => void;
+}
+
+interface UseFocusWithinReturnValue<T extends HTMLElement = any> {
+  ref: React.RefCallback<T | null>;
   focused: boolean;
-};
+}
+
+function useFocusWithin<T extends HTMLElement = any>(
+  options?: UseFocusWithinOptions,
+): UseFocusWithinReturnValue<T>
+```
+
+## Exported types
+
+`UseFocusWithinOptions` and `UseFocusWithinReturnValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseFocusWithinOptions, UseFocusWithinReturnValue } from '@mantine/hooks';
 ```

@@ -125,3 +125,7 @@ export type {
   UseFocusReturnOptions,
   UseFocusReturnReturnValue,
 } from './use-focus-return/use-focus-return';
+export type {
+  UseFocusWithinOptions,
+  UseFocusWithinReturnValue,
+} from './use-focus-within/use-focus-within';

@@ -1,9 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
-
-export interface UseFocusWithinOptions {
-  onFocus?: (event: FocusEvent) => void;
-  onBlur?: (event: FocusEvent) => void;
-}
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 function containsRelatedTarget(event: FocusEvent) {
   if (event.currentTarget instanceof HTMLElement && event.relatedTarget instanceof HTMLElement) {
@@ -13,48 +8,75 @@ function containsRelatedTarget(event: FocusEvent) {
   return false;
 }
 
+export interface UseFocusWithinOptions {
+  onFocus?: (event: FocusEvent) => void;
+  onBlur?: (event: FocusEvent) => void;
+}
+
+export interface UseFocusWithinReturnValue<T extends HTMLElement = any> {
+  ref: React.RefCallback<T | null>;
+  focused: boolean;
+}
+
 export function useFocusWithin<T extends HTMLElement = any>({
   onBlur,
   onFocus,
-}: UseFocusWithinOptions = {}): { ref: React.RefObject<T>; focused: boolean } {
-  const ref = useRef<T>(null);
+}: UseFocusWithinOptions = {}): UseFocusWithinReturnValue<T> {
   const [focused, setFocused] = useState(false);
   const focusedRef = useRef(false);
+  const previousNode = useRef<T | null>(null);
 
-  const _setFocused = (value: boolean) => {
+  const _setFocused = useCallback((value: boolean) => {
     setFocused(value);
     focusedRef.current = value;
-  };
+  }, []);
 
-  const handleFocusIn = (event: FocusEvent) => {
-    if (!focusedRef.current) {
-      _setFocused(true);
-      onFocus?.(event);
-    }
-  };
+  const handleFocusIn = useCallback(
+    (event: FocusEvent) => {
+      if (!focusedRef.current) {
+        _setFocused(true);
+        onFocus?.(event);
+      }
+    },
+    [onFocus]
+  );
 
-  const handleFocusOut = (event: FocusEvent) => {
-    if (focusedRef.current && !containsRelatedTarget(event)) {
-      _setFocused(false);
-      onBlur?.(event);
-    }
-  };
+  const handleFocusOut = useCallback(
+    (event: FocusEvent) => {
+      if (focusedRef.current && !containsRelatedTarget(event)) {
+        _setFocused(false);
+        onBlur?.(event);
+      }
+    },
+    [onBlur]
+  );
 
-  useEffect(() => {
-    const node = ref.current;
+  const callbackRef: React.RefCallback<T | null> = useCallback(
+    (node) => {
+      if (!node) {
+        return;
+      }
 
-    if (node) {
+      if (previousNode.current) {
+        previousNode.current.removeEventListener('focusin', handleFocusIn);
+        previousNode.current.removeEventListener('focusout', handleFocusOut);
+      }
+
       node.addEventListener('focusin', handleFocusIn);
       node.addEventListener('focusout', handleFocusOut);
+    },
+    [handleFocusIn, handleFocusOut]
+  );
 
-      return () => {
-        node?.removeEventListener('focusin', handleFocusIn);
-        node?.removeEventListener('focusout', handleFocusOut);
-      };
-    }
+  useEffect(
+    () => () => {
+      if (previousNode.current) {
+        previousNode.current.removeEventListener('focusin', handleFocusIn);
+        previousNode.current.removeEventListener('focusout', handleFocusOut);
+      }
+    },
+    []
+  );
 
-    return undefined;
-  }, [handleFocusIn, handleFocusOut]);
-
-  return { ref: ref as React.RefObject<T>, focused };
+  return { ref: callbackRef, focused };
 }
