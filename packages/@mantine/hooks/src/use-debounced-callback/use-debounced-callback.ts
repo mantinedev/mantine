@@ -1,12 +1,21 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useCallbackRef } from '../utils';
 
+export interface UseDebouncedCallbackOptions {
+  delay: number;
+  flushOnUnmount?: boolean;
+}
+
+export type UseDebouncedCallbackReturnValue<T extends (...args: any[]) => any> = ((
+  ...args: Parameters<T>
+) => void) & { flush: () => void };
+
 export function useDebouncedCallback<T extends (...args: any[]) => any>(
   callback: T,
-  options: number | { delay: number; flushOnUnmount?: boolean }
-) {
-  const delay = typeof options === 'number' ? options : options.delay;
-  const flushOnUnmount = typeof options === 'number' ? false : options.flushOnUnmount;
+  delayOrOptions: number | UseDebouncedCallbackOptions
+): UseDebouncedCallbackReturnValue<T> {
+  const delay = typeof delayOrOptions === 'number' ? delayOrOptions : delayOrOptions.delay;
+  const flushOnUnmount = typeof delayOrOptions === 'number' ? false : delayOrOptions.flushOnUnmount;
   const handleCallback = useCallbackRef(callback);
   const debounceTimerRef = useRef(0);
   const flushRef = useRef(() => {});

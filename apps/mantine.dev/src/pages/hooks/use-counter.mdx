@@ -11,12 +11,12 @@ export default Layout(MDX_DATA.useCounter);
 ## Definition
 
 ```tsx
-export interface UseCounterOptions {
+interface UseCounterOptions {
   min?: number;
   max?: number;
 }
 
-export interface UseCounterReturnValue {
+interface UseCounterReturnValue {
   increment: () => void;
   decrement: () => void;
   set: (value: number) => void;

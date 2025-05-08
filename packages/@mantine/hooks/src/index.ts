@@ -92,3 +92,7 @@ export type {
 export type { UseClipboardOptions, UseClipboardReturnValue } from './use-clipboard/use-clipboard';
 export type { UseColorSchemeValue } from './use-color-scheme/use-color-scheme';
 export type { UseCounterOptions, UseCounterReturnValue } from './use-counter/use-counter';
+export type {
+  UseDebouncedCallbackOptions,
+  UseDebouncedCallbackReturnValue,
+} from './use-debounced-callback/use-debounced-callback';

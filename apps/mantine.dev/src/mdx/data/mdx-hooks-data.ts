@@ -176,7 +176,10 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   useThrottledState: hDocs('useThrottledState', 'Throttles state changes'),
   useThrottledValue: hDocs('useThrottledValue', 'Throttles value changes'),
   useThrottledCallback: hDocs('useThrottledCallback', 'Throttles function calls'),
-  useDebouncedCallback: hDocs('useDebouncedCallback', 'Debounces function calls'),
+  useDebouncedCallback: hDocs(
+    'useDebouncedCallback',
+    'Creates debounced version of the given function'
+  ),
   useSet: hDocs('useSet', 'Use Set as React state'),
   useMap: hDocs('useMap', 'Use Map as React state'),
   useRadialMove: hDocs(
