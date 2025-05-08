@@ -121,3 +121,7 @@ export type {
   UseFileDialogOptions,
   UseFileDialogReturnValue,
 } from './use-file-dialog/use-file-dialog';
+export type {
+  UseFocusReturnOptions,
+  UseFocusReturnReturnValue,
+} from './use-focus-return/use-focus-return';
