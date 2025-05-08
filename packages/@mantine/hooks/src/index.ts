@@ -90,3 +90,4 @@ export type {
 } from './use-scroll-spy/use-scroll-spy';
 
 export type { UseClipboardOptions, UseClipboardReturnValue } from './use-clipboard/use-clipboard';
+export type { UseColorSchemeValue } from './use-color-scheme/use-color-scheme';

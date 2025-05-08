@@ -30,7 +30,7 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
 
   useColorScheme: hDocs(
     'useColorScheme',
-    'Detects user system color scheme with window.matchMedia API'
+    'Returns OS color scheme preference and subscribes to changes'
   ),
 
   useCounter: hDocs('useCounter', 'Increments/decrements state within given boundaries'),
