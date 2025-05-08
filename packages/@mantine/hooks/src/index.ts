@@ -129,3 +129,4 @@ export type {
   UseFocusWithinOptions,
   UseFocusWithinReturnValue,
 } from './use-focus-within/use-focus-within';
+export type { UseFullscreenReturnValue } from './use-fullscreen/use-fullscreen';
