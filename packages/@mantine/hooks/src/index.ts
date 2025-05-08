@@ -88,3 +88,5 @@ export type {
   UseScrollSpyHeadingData,
   UseScrollSpyReturnType,
 } from './use-scroll-spy/use-scroll-spy';
+
+export type { UseClipboardOptions, UseClipboardReturnValue } from './use-clipboard/use-clipboard';

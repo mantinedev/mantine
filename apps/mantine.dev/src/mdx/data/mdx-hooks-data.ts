@@ -26,7 +26,7 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'Detects click and touch events outside of given element or elements group'
   ),
 
-  useClipboard: hDocs('useClipboard', 'Wrapper around navigator.clipboard with feedback timeout'),
+  useClipboard: hDocs('useClipboard', 'Copy to clipboard with feedback timeout'),
 
   useColorScheme: hDocs(
     'useColorScheme',
