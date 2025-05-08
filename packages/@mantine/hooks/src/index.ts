@@ -81,7 +81,6 @@ export type { HotkeyItem, HotkeyItemOptions } from './use-hotkeys/use-hotkeys';
 export type { UseListStateHandlers } from './use-list-state/use-list-state';
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
 export type { UseStateHistoryHandlers, StateHistory } from './use-state-history/use-state-history';
-export type { UseFetchOptions } from './use-fetch/use-fetch';
 export type {
   UseScrollSpyOptions,
   UseScrollSpyHeadingData,
@@ -117,3 +116,4 @@ export type {
   EyeDropperOpenReturnType,
   UseEyeDropperReturnValue,
 } from './use-eye-dropper/use-eye-dropper';
+export type { UseFetchOptions, UseFetchReturnValue } from './use-fetch/use-fetch';
