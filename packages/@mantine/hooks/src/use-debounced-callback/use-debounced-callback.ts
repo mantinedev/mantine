@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { useCallbackRef } from '../use-callback-ref/use-callback-ref';
+import { useCallbackRef } from '../utils';
 
 export function useDebouncedCallback<T extends (...args: any[]) => any>(
   callback: T,

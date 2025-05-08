@@ -1,6 +1,5 @@
 export * from './utils/index.js';
 
-export { useCallbackRef } from './use-callback-ref/use-callback-ref';
 export { useDebouncedCallback } from './use-debounced-callback/use-debounced-callback';
 export { useClickOutside } from './use-click-outside/use-click-outside';
 export { useClipboard } from './use-clipboard/use-clipboard';
