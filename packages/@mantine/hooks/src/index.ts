@@ -100,3 +100,7 @@ export type {
   UseDebouncedStateOptions,
   UseDebouncedStateReturnValue,
 } from './use-debounced-state/use-debounced-state';
+export type {
+  UseDebouncedValueOptions,
+  UseDebouncedValueReturnValue,
+} from './use-debounced-value/use-debounced-value';
