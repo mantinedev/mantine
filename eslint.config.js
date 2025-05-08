@@ -24,6 +24,11 @@ module.exports = tseslint.config(
     },
   },
   {
+    rules: {
+      '@typescript-eslint/no-unsafe-function-type': 'off',
+    },
+  },
+  {
     files: ['**/*.story.tsx'],
     rules: {
       'no-console': 'off',
