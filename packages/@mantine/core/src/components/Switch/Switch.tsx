@@ -222,6 +222,7 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
 
       <Box
         aria-hidden="true"
+        component="span"
         mod={{ error, 'label-position': labelPosition, 'without-labels': !onLabel && !offLabel }}
         {...getStyles('track')}
       >

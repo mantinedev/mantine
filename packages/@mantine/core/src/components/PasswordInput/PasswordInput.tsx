@@ -143,6 +143,12 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
 
   const { styleProps, rest } = extractStyleProps(others);
   const VisibilityToggleIcon = visibilityToggleIcon!;
+  const errorId = errorProps?.id || `${uuid}-error`;
+  const descriptionId = descriptionProps?.id || `${uuid}-description`;
+  const hasError = !!error && typeof error !== 'boolean';
+  const hasDescription = !!description;
+  const _describedBy = `${hasError ? errorId : ''} ${hasDescription ? descriptionId : ''}`;
+  const describedBy = _describedBy.trim().length > 0 ? _describedBy.trim() : undefined;
 
   const visibilityToggleButton = (
     <ActionIcon<'button'>
@@ -188,14 +194,14 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       __staticSelector="PasswordInput"
-      errorProps={errorProps}
-      descriptionProps={descriptionProps}
       unstyled={unstyled}
       withAsterisk={withAsterisk}
       inputWrapperOrder={inputWrapperOrder}
       inputContainer={inputContainer}
       variant={variant}
       labelProps={{ ...labelProps, htmlFor: uuid }}
+      descriptionProps={{ ...descriptionProps, id: descriptionId }}
+      errorProps={{ ...errorProps, id: errorId }}
       mod={mod}
       {...getStyles('root')}
       {...styleProps}
@@ -232,6 +238,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
           id={uuid}
           ref={ref}
           {...rest}
+          aria-describedby={describedBy}
           autoComplete={rest.autoComplete || 'off'}
           type={_visible ? 'text' : 'password'}
         />

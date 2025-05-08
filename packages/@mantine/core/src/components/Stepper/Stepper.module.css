@@ -100,8 +100,12 @@
     margin-top: 0;
   }
 
-  &:where(:last-of-type) .verticalSeparator {
-    display: none;
+  &:where(:last-of-type) {
+    min-height: auto;
+
+    & .verticalSeparator {
+      display: none;
+    }
   }
 }
 
