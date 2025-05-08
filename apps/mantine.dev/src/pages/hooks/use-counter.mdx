@@ -16,24 +16,31 @@ interface UseCounterOptions {
   max?: number;
 }
 
-interface UseCounterReturnValue {
+interface UseCounterOptions {
+  min?: number;
+  max?: number;
+}
+
+interface UseCounterHandlers {
   increment: () => void;
   decrement: () => void;
   set: (value: number) => void;
   reset: () => void;
 }
 
+type UseCounterReturnValue = [number, UseCounterHandlers];
+
 function useCounter(
   initialValue?: number,
   options?: UseCounterOptions,
-): [number, UseCounterReturnValue]
+): UseCounterReturnValue
 ```
 
 ## Exported types
 
-`UseCounterOptions` and `UseCounterReturnValue` types are exported from `@mantine/hooks` package,
+`UseCounterOptions`, `UseCounterHandlers` and `UseCounterReturnValue` types are exported from `@mantine/hooks` package,
 you can import them in your application:
 
 ```tsx
-import type { UseCounterOptions, UseCounterReturnValue } from '@mantine/hooks';
+import type { UseCounterOptions, UseCounterHandlers, UseCounterReturnValue } from '@mantine/hooks';
 ```

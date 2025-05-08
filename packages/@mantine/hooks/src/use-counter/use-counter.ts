@@ -11,17 +11,19 @@ export interface UseCounterOptions {
   max?: number;
 }
 
-export interface UseCounterReturnValue {
+export interface UseCounterHandlers {
   increment: () => void;
   decrement: () => void;
   set: (value: number) => void;
   reset: () => void;
 }
 
+export type UseCounterReturnValue = [number, UseCounterHandlers];
+
 export function useCounter(
   initialValue = 0,
   options?: UseCounterOptions
-): [number, UseCounterReturnValue] {
+): [number, UseCounterHandlers] {
   const { min, max } = { ...DEFAULT_OPTIONS, ...options };
   const [count, setCount] = useState<number>(clamp(initialValue, min, max));
 

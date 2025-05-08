@@ -91,7 +91,11 @@ export type {
 
 export type { UseClipboardOptions, UseClipboardReturnValue } from './use-clipboard/use-clipboard';
 export type { UseColorSchemeValue } from './use-color-scheme/use-color-scheme';
-export type { UseCounterOptions, UseCounterReturnValue } from './use-counter/use-counter';
+export type {
+  UseCounterOptions,
+  UseCounterHandlers,
+  UseCounterReturnValue,
+} from './use-counter/use-counter';
 export type {
   UseDebouncedCallbackOptions,
   UseDebouncedCallbackReturnValue,
@@ -104,3 +108,8 @@ export type {
   UseDebouncedValueOptions,
   UseDebouncedValueReturnValue,
 } from './use-debounced-value/use-debounced-value';
+export type {
+  UseDisclosureOptions,
+  UseDisclosureHandlers,
+  UseDisclosureReturnValue,
+} from './use-disclosure/use-disclosure';
