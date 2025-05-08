@@ -28,11 +28,24 @@ You can immediately update value with first call with `{ leading: true }` option
 ## Definition
 
 ```tsx
+interface UseDebouncedStateOptions {
+  leading?: boolean;
+}
+
+type UseDebouncedStateReturnValue<T> = [T, (newValue: SetStateAction<T>) => void];
+
 function useDebouncedState<T = any>(
   defaultValue: T,
   wait: number,
-  options?: {
-    leading: boolean;
-  }
-): readonly [T, (newValue: T) => void];
+  options?: UseDebouncedStateOptions,
+): UseDebouncedStateReturnValue<T>
+```
+
+## Exported types
+
+`UseDebouncedStateOptions` and `UseDebouncedStateReturnValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseDebouncedStateOptions, UseDebouncedStateReturnValue } from '@mantine/hooks';
 ```

@@ -96,3 +96,7 @@ export type {
   UseDebouncedCallbackOptions,
   UseDebouncedCallbackReturnValue,
 } from './use-debounced-callback/use-debounced-callback';
+export type {
+  UseDebouncedStateOptions,
+  UseDebouncedStateReturnValue,
+} from './use-debounced-state/use-debounced-state';
