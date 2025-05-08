@@ -79,7 +79,6 @@ export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
 export type { HotkeyItem, HotkeyItemOptions } from './use-hotkeys/use-hotkeys';
 export type { UseListStateHandlers } from './use-list-state/use-list-state';
-export type { EyeDropperOpenReturnType } from './use-eye-dropper/use-eye-dropper';
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
 export type { UseStateHistoryHandlers, StateHistory } from './use-state-history/use-state-history';
 export type { UseFetchOptions } from './use-fetch/use-fetch';
@@ -113,3 +112,8 @@ export type {
   UseDisclosureHandlers,
   UseDisclosureReturnValue,
 } from './use-disclosure/use-disclosure';
+export type {
+  EyeDropperOpenOptions,
+  EyeDropperOpenReturnType,
+  UseEyeDropperReturnValue,
+} from './use-eye-dropper/use-eye-dropper';
