@@ -43,7 +43,6 @@ export function useCollapse({
   const el = useRef<HTMLElement | null>(null);
   const collapsedHeight = 0;
   const collapsedStyles = {
-    display: 'none',
     height: 0,
     overflow: 'hidden',
   };
@@ -110,6 +109,7 @@ export function useCollapse({
     const theirRef: any = rest[refKey];
     return {
       'aria-hidden': !opened,
+      inert: !opened,
       ...rest,
       [refKey]: mergeRefs(el, theirRef),
       onTransitionEnd: handleTransitionEnd,

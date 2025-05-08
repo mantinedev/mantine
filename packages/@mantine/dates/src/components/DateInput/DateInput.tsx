@@ -49,7 +49,7 @@ export interface DateInputProps
   defaultValue?: DateValue | Date;
 
   /** Called when value changes */
-  onChange?: (value: DateStringValue) => void;
+  onChange?: (value: DateStringValue | null) => void;
 
   /** Props passed down to `Popover` component */
   popoverProps?: Partial<Omit<PopoverProps, 'children'>>;

@@ -20,11 +20,23 @@ export const allVersions = [
     patches: [
       {
         version: '7.17.1',
-        date: 'March 14, 2025',
+        date: 'March 1, 2025',
       },
       {
         version: '7.17.2',
-        date: 'March 1, 2025',
+        date: 'March 14, 2025',
+      },
+      {
+        version: '7.17.4',
+        date: 'April 8, 2025',
+      },
+      {
+        version: '7.17.5',
+        date: 'April 24, 2025',
+      },
+      {
+        version: '7.17.7',
+        date: 'May 2, 2025',
       },
     ],
   },
