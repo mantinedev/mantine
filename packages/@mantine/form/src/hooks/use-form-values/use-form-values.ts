@@ -3,10 +3,10 @@ import { getPath, setPath } from '../../paths';
 import { FormMode } from '../../types';
 
 export interface $FormValues<Values extends Record<PropertyKey, any>> {
-  initialized: React.MutableRefObject<boolean>;
+  initialized: React.RefObject<boolean>;
   stateValues: Values;
-  refValues: React.MutableRefObject<Values>;
-  valuesSnapshot: React.MutableRefObject<Values>;
+  refValues: React.RefObject<Values>;
+  valuesSnapshot: React.RefObject<Values>;
   setValues: (payload: SetValuesInput<Values>) => void;
   setFieldValue: (payload: SetFieldValueInput<Values>) => void;
   resetValues: () => void;
@@ -14,6 +14,7 @@ export interface $FormValues<Values extends Record<PropertyKey, any>> {
   initialize: (values: Values, onInitialize: () => void) => void;
   getValues: () => Values;
   getValuesSnapshot: () => Values;
+  resetField: (path: PropertyKey) => void;
 }
 
 export interface SetValuesSubscriberPayload<Values> {
@@ -67,7 +68,12 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
         ? { ...previousValues, ...resolvedValues }
         : (resolvedValues as Values);
       refValues.current = updatedValues;
-      updateState && setStateValues(updatedValues);
+      if (updateState) {
+        setStateValues(updatedValues);
+        if (mode === 'uncontrolled') {
+          refValues.current = updatedValues;
+        }
+      }
       onValuesChange?.(updatedValues, previousValues);
       subscribers
         ?.filter(Boolean)
@@ -124,6 +130,21 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
   const getValues = useCallback(() => refValues.current, []);
   const getValuesSnapshot = useCallback(() => valuesSnapshot.current, []);
 
+  const resetField = useCallback(
+    (path: PropertyKey) => {
+      const snapshotValue = getPath(path, valuesSnapshot.current);
+      if (typeof snapshotValue === 'undefined') {
+        return;
+      }
+      setFieldValue({
+        path,
+        value: snapshotValue,
+        updateState: mode === 'uncontrolled' || undefined,
+      });
+    },
+    [setFieldValue, mode]
+  );
+
   return {
     initialized,
     stateValues,
@@ -136,5 +157,6 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
     initialize,
     getValues,
     getValuesSnapshot,
+    resetField,
   };
 }
