@@ -42,14 +42,7 @@
     background-color: transparent;
     cursor: not-allowed;
     opacity: 0.6;
-
-    @mixin where-light {
-      color: var(--mantine-color-gray-4);
-    }
-
-    @mixin where-dark {
-      color: var(--mantine-color-dark-3);
-    }
+    color: var(--mantine-color-disabled-color);
   }
 
   .root[data-error] :where(&) {
