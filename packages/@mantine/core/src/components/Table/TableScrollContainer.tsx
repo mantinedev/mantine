@@ -10,7 +10,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { ScrollArea } from '../ScrollArea';
+import { ScrollArea, ScrollAreaProps } from '../ScrollArea';
 import classes from './Table.module.css';
 
 export type TableScrollContainerStylesNames = 'scrollContainer' | 'scrollContainerInner';
@@ -24,11 +24,15 @@ export interface TableScrollContainerProps
     ElementProps<'div'> {
   /** `min-width` of the `Table` at which it should become scrollable */
   minWidth: React.CSSProperties['minWidth'];
+
   /** `max-height` of the `Table` at which it should become scrollable */
   maxHeight?: React.CSSProperties['maxHeight'];
 
   /** Type of the scroll container, `native` to use native scrollbars, `scrollarea` to use `ScrollArea` component, `scrollarea` by default */
   type?: 'native' | 'scrollarea';
+
+  /** Props passed down to `ScrollArea` component, not applicable with `type="native"` */
+  scrollAreaProps?: ScrollAreaProps;
 }
 
 export type TableScrollContainerFactory = Factory<{
@@ -65,6 +69,7 @@ export const TableScrollContainer = factory<TableScrollContainerFactory>((_props
     minWidth,
     maxHeight,
     type,
+    scrollAreaProps,
     ...others
   } = props;
 
@@ -87,8 +92,8 @@ export const TableScrollContainer = factory<TableScrollContainerFactory>((_props
       component={type === 'scrollarea' ? ScrollArea : 'div'}
       {...(type === 'scrollarea'
         ? maxHeight
-          ? { offsetScrollbars: 'xy' }
-          : { offsetScrollbars: 'x' }
+          ? { offsetScrollbars: 'xy', ...scrollAreaProps }
+          : { offsetScrollbars: 'x', ...scrollAreaProps }
         : {})}
       ref={ref}
       {...getStyles('scrollContainer')}
