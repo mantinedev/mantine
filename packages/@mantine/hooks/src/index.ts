@@ -75,7 +75,6 @@ export { useRadialMove, normalizeRadialValue } from './use-radial-move/use-radia
 export { useScrollSpy } from './use-scroll-spy/use-scroll-spy';
 export { useFileDialog } from './use-file-dialog/use-file-dialog';
 
-export type { OS } from './use-os/use-os';
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
 export type { UseStateHistoryHandlers, StateHistory } from './use-state-history/use-state-history';
 export type {
@@ -147,3 +146,4 @@ export type {
   UseOrientationOptions,
   UseOrientationReturnType,
 } from './use-orientation/use-orientation';
+export type { UseOSReturnValue as OS, UseOSReturnValue, UseOsOptions } from './use-os/use-os';
