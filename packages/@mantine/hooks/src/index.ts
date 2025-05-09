@@ -133,3 +133,4 @@ export type { UseHashOptions, UseHashReturnValue } from './use-hash/use-hash';
 export type { UseHeadroomOptions } from './use-headroom/use-headroom';
 export type { HotkeyItemOptions, HotkeyItem } from './use-hotkeys/use-hotkeys';
 export type { UseHoverReturnValue } from './use-hover/use-hover';
+export type { UseIdleOptions } from './use-idle/use-idle';
