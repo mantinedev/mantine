@@ -1,5 +1,7 @@
+
 import { filterProps } from '../../utils';
 import { useMantineTheme } from '../MantineThemeProvider';
+import { merge } from 'lodash';
 
 export function useProps<T extends Record<string, any>, U extends Partial<T> = {}>(
   component: string,
@@ -13,5 +15,6 @@ export function useProps<T extends Record<string, any>, U extends Partial<T> = {
   const contextProps =
     typeof contextPropsPayload === 'function' ? contextPropsPayload(theme) : contextPropsPayload;
 
-  return { ...defaultProps, ...contextProps, ...filterProps(props) };
+    return merge({}, defaultProps, contextProps, filterProps(props));
+
 }
