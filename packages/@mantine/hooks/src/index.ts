@@ -141,3 +141,4 @@ export type {
   UseListStateReturnValue,
   UseListStateHandlers,
 } from './use-list-state/use-list-state';
+export type { UseStorageOptions, UseStorageReturnValue } from './use-local-storage/create-storage';
