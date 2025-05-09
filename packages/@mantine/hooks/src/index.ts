@@ -76,7 +76,6 @@ export { useScrollSpy } from './use-scroll-spy/use-scroll-spy';
 export { useFileDialog } from './use-file-dialog/use-file-dialog';
 
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
-
 export type { UseClipboardOptions, UseClipboardReturnValue } from './use-clipboard/use-clipboard';
 export type { UseColorSchemeValue } from './use-color-scheme/use-color-scheme';
 export type {
@@ -176,3 +175,8 @@ export type {
   UseValidatedStateValue,
   UseValidatedStateReturnValue,
 } from './use-validated-state/use-validated-state';
+export type {
+  UseWindowScrollPosition,
+  UseWindowScrollTo,
+  UseWindowScrollReturnValue,
+} from './use-window-scroll/use-window-scroll';
