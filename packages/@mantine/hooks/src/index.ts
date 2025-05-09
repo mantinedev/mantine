@@ -167,3 +167,4 @@ export type {
   UseStateHistoryReturnValue,
 } from './use-state-history/use-state-history';
 export type { UseTimeoutOptions, UseTimeoutReturnValue } from './use-timeout/use-timeout';
+export type { UseToggleReturnValue } from './use-toggle/use-toggle';
