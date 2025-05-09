@@ -156,3 +156,7 @@ export type {
   UseRadialMoveOptions,
   UseRadialMoveReturnValue,
 } from './use-radial-move/use-radial-move';
+export type {
+  UseScrollIntoViewOptions,
+  UseScrollIntoViewReturnValue,
+} from './use-scroll-into-view/use-scroll-into-view';
