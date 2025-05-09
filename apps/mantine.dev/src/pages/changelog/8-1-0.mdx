@@ -4,6 +4,18 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog810);
 
+## use-form resetField handler
+
+[use-form](/form/use-form) now has a `resetField` method that resets field value to its initial value:
+
+```tsx
+import { useForm } from '@mantine/form'
+
+const form  = useForm({ initialValues: { name: 'John Doe' } });
+
+form.resetField('name'); // resets name field to 'John Doe'
+```
+
 ## Hooks types exports
 
 `@mantine/hooks` package now exports all types used in hooks options and return values.
