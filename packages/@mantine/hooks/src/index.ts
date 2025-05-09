@@ -137,3 +137,4 @@ export type { UseIdleOptions } from './use-idle/use-idle';
 export type { UseInViewportReturnValue } from './use-in-viewport/use-in-viewport';
 export type { UseInputStateReturnValue } from './use-input-state/use-input-state';
 export type { UseIntersectionReturnValue } from './use-intersection/use-intersection';
+export type { UseIntervalOptions, UseIntervalReturnValue } from './use-interval/use-interval';

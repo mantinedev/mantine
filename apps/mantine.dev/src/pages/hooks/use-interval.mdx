@@ -50,14 +50,32 @@ interface UseIntervalOptions {
   autoInvoke?: boolean;
 }
 
+interface UseIntervalReturnValue {
+  /** Starts the interval */
+  start: () => void;
+
+  /** Stops the interval */
+  stop: () => void;
+
+  /** Toggles the interval */
+  toggle: () => void;
+
+  /** Indicates if the interval is active */
+  active: boolean;
+}
+
 function useInterval(
   fn: () => void,
   interval: number,
-  options?: UseIntervalOptions
-): {
-  start: () => void;
-  stop: () => void;
-  toggle: () => void;
-  active: boolean;
-};
+  options?: UseIntervalOptions,
+): UseIntervalReturnValue
+```
+
+## Exported types
+
+`UseIntervalOptions` and `UseIntervalReturnValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseIntervalOptions, UseIntervalReturnValue } from '@mantine/hooks';
 ```
