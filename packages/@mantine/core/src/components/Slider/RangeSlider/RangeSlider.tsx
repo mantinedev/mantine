@@ -215,6 +215,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     unstyled,
   });
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const { dir } = useDirection();
   const [focused, setFocused] = useState(-1);
   const [hovered, setHovered] = useState(false);
@@ -341,7 +342,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     }
   };
 
-  const { ref: container, active } = useMove(
+  const { ref: useMoveRef, active } = useMove(
     ({ x }) => handleChange(x),
     { onScrubEnd: () => !disabled && onChangeEnd?.(valueRef.current) },
     dir
@@ -354,22 +355,24 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
   const handleTrackMouseDownCapture = (
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
   ) => {
-    container.current!.focus();
-    const rect = container.current!.getBoundingClientRect();
-    const changePosition = getClientPosition(event.nativeEvent);
-    const changeValue = getChangeValue({
-      value: changePosition - rect.left,
-      max: max!,
-      min: min!,
-      step: step!,
-      containerWidth: rect.width,
-    });
+    if (containerRef.current) {
+      containerRef.current.focus();
+      const rect = containerRef.current.getBoundingClientRect();
+      const changePosition = getClientPosition(event.nativeEvent);
+      const changeValue = getChangeValue({
+        value: changePosition - rect.left,
+        max: max!,
+        min: min!,
+        step: step!,
+        containerWidth: rect.width,
+      });
 
-    const nearestHandle =
-      Math.abs(_value[0] - changeValue) > Math.abs(_value[1] - changeValue) ? 1 : 0;
-    const _nearestHandle = dir === 'ltr' ? nearestHandle : nearestHandle === 1 ? 0 : 1;
+      const nearestHandle =
+        Math.abs(_value[0] - changeValue) > Math.abs(_value[1] - changeValue) ? 1 : 0;
+      const _nearestHandle = dir === 'ltr' ? nearestHandle : nearestHandle === 1 ? 0 : 1;
 
-    thumbIndex.current = _nearestHandle;
+      thumbIndex.current = _nearestHandle;
+    }
   };
 
   const getFocusedThumbIndex = () => {
@@ -502,7 +505,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           value={_value[1]}
           disabled={disabled}
           containerProps={{
-            ref: container as any,
+            ref: useMergedRef(containerRef, useMoveRef) as any,
             onMouseEnter: showLabelOnHover ? () => setHovered(true) : undefined,
             onMouseLeave: showLabelOnHover ? () => setHovered(false) : undefined,
             onTouchStartCapture: handleTrackMouseDownCapture,
