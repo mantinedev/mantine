@@ -63,16 +63,8 @@
     cursor: not-allowed;
     border: 1px solid transparent;
     transform: none;
-
-    @mixin where-light {
-      color: var(--mantine-color-gray-5);
-      background: var(--mantine-color-gray-1);
-    }
-
-    @mixin where-dark {
-      color: var(--mantine-color-dark-3);
-      background: var(--mantine-color-dark-6);
-    }
+    color: var(--mantine-color-disabled-color);
+    background: var(--mantine-color-disabled);
   }
 
   &::before {
