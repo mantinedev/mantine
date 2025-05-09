@@ -49,7 +49,7 @@ export function useInterval(
     } else {
       start();
     }
-  }, []);
+  }, [active]);
 
   useEffect(() => {
     fnRef.current = fn;
