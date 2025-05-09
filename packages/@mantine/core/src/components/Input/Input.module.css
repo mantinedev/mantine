@@ -26,6 +26,8 @@
   --input-padding-inline-end: var(--input-padding);
   --input-placeholder-color: var(--mantine-color-placeholder);
   --input-color: var(--mantine-color-text);
+  --input-disabled-bg: var(--mantine-color-disabled);
+  --input-disabled-color: var(--mantine-color-disabled-color);
 
   --input-left-section-size: var(--input-left-section-width, calc(var(--input-height) - rem(2px)));
 
@@ -75,9 +77,6 @@
   }
 
   @mixin light {
-    --input-disabled-bg: var(--mantine-color-gray-1);
-    --input-disabled-color: var(--mantine-color-gray-6);
-
     &[data-variant='default'] {
       --input-bd: var(--mantine-color-gray-4);
       --input-bg: var(--mantine-color-white);
@@ -98,9 +97,6 @@
   }
 
   @mixin dark {
-    --input-disabled-bg: var(--mantine-color-dark-6);
-    --input-disabled-color: var(--mantine-color-dark-2);
-
     &[data-variant='default'] {
       --input-bd: var(--mantine-color-dark-4);
       --input-bg: var(--mantine-color-dark-6);

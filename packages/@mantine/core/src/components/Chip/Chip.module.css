@@ -61,16 +61,8 @@
 
   &:where([data-disabled]) {
     cursor: not-allowed;
-
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-2);
-      color: var(--mantine-color-gray-5);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-6);
-      color: var(--mantine-color-dark-3);
-    }
+    background-color: var(--mantine-color-disabled);
+    color: var(--mantine-color-disabled-color);
   }
 }
 
