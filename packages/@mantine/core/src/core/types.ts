@@ -1,3 +1,3 @@
 export interface DataAttributes {
-  [key: `data-${string}`]: string | number | undefined;
+  [key: `data-${string}`]: string | number | boolean | undefined;
 }
