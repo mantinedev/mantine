@@ -177,7 +177,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
   const selectedOption = typeof _value === 'string' ? optionsLockup[_value] : undefined;
   const previousSelectedOption = usePrevious(selectedOption);
 
-  const [search, setSearch] = useUncontrolled({
+  const [search, setSearch, searchControlled] = useUncontrolled({
     value: searchValue,
     defaultValue: defaultSearchValue,
     finalValue: selectedOption ? selectedOption.label : '',
@@ -230,7 +230,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
   }, [value, selectedOption]);
 
   useEffect(() => {
-    if (!controlled) {
+    if (!controlled && !searchControlled) {
       handleSearchChange(typeof _value === 'string' ? optionsLockup[_value]?.label || '' : '');
     }
   }, [data, _value]);
