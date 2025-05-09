@@ -4,6 +4,44 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog810);
 
+## Hooks types exports
+
+`@mantine/hooks` package now exports all types used in hooks options and return values.
+For example, you can now import [use-uncontrolled](/hooks/use-uncontrolled) types like this:
+
+```tsx
+import type { UseUncontrolledOptions, UseUncontrolledReturnValue } from '@mantine/hooks';
+```
+
+Types exported from the library:
+
+```tsx
+interface UseUncontrolledOptions<T> {
+  /** Value for controlled state */
+  value?: T;
+
+  /** Initial value for uncontrolled state */
+  defaultValue?: T;
+
+  /** Final value for uncontrolled state when value and defaultValue are not provided */
+  finalValue?: T;
+
+  /** Controlled state onChange handler */
+  onChange?: (value: T) => void;
+}
+
+type UseUncontrolledReturnValue<T> = [
+  /** Current value */
+  T,
+
+  /** Handler to update the state, passes `value` and `payload` to `onChange` */
+  (value: T, ...payload: any[]) => void,
+
+  /** True if the state is controlled, false if uncontrolled */
+  boolean,
+];
+```
+
 ## Documentation updates
 
 - [use-debounced-callback](/hooks/use-debounced-callback) documentation was updated to include new `flush` and `flushOnUnmount` features
