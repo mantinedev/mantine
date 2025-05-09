@@ -151,3 +151,4 @@ export type {
   UsePaginationOptions,
   UsePaginationReturnValue,
 } from './use-pagination/use-pagination';
+export type { UseQueueOptions, UseQueueReturnValue } from './use-queue/use-queue';
