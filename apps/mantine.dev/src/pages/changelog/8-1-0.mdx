@@ -50,3 +50,4 @@ type UseUncontrolledReturnValue<T> = [
 
 - Handlers returned from [use-counter](/hooks/use-couter) are now memoized
 - Return value of [use-event-listener](/hooks/use-event-listener), [use-focus-within](/hooks/use-focus-within), [use-focus-trap](/hooks/use-focus-trap), [use-hover](/hooks/use-hover), [use-move](/hooks/use-move), [use-radial-move](/hooks/use-radial-move) changed (`React.RefObject` -> `React.RefCallback`), required to fix incorrect ref handling in several cases. For more information, see the issue on GitHub – [#7406](https://github.com/mantinedev/mantine/issues/7406)
+- Deprecated `React.MutableRefObject` type was replaced with `React.RefObject` in all packages to better support React 19 types
