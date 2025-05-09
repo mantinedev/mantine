@@ -7,15 +7,19 @@ export interface UseStateHistoryHandlers<T> {
   reset: () => void;
 }
 
-export interface StateHistory<T> {
+export interface UseStateHistoryValue<T> {
   history: T[];
   current: number;
 }
 
-export function useStateHistory<T>(
-  initialValue: T
-): [T, UseStateHistoryHandlers<T>, StateHistory<T>] {
-  const [state, setState] = useState<StateHistory<T>>({
+export type UseStateHistoryReturnValue<T> = [
+  T,
+  UseStateHistoryHandlers<T>,
+  UseStateHistoryValue<T>,
+];
+
+export function useStateHistory<T>(initialValue: T): UseStateHistoryReturnValue<T> {
+  const [state, setState] = useState<UseStateHistoryValue<T>>({
     history: [initialValue],
     current: 0,
   });
