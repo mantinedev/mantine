@@ -172,3 +172,7 @@ export type {
   UseUncontrolledOptions,
   UseUncontrolledReturnValue,
 } from './use-uncontrolled/use-uncontrolled';
+export type {
+  UseValidatedStateValue,
+  UseValidatedStateReturnValue,
+} from './use-validated-state/use-validated-state';
