@@ -147,3 +147,7 @@ export type {
   UseOrientationReturnType,
 } from './use-orientation/use-orientation';
 export type { UseOSReturnValue as OS, UseOSReturnValue, UseOsOptions } from './use-os/use-os';
+export type {
+  UsePaginationOptions,
+  UsePaginationReturnValue,
+} from './use-pagination/use-pagination';
