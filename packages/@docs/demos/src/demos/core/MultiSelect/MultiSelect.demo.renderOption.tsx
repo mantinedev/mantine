@@ -47,6 +47,8 @@ function Demo() {
       maxDropdownHeight={300}
       label="Employees of the month"
       placeholder="Search for employee"
+      hidePickedOptions
+      searchable
     />
   );
 }
