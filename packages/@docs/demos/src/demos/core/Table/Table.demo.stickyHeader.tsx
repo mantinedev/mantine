@@ -51,7 +51,7 @@ export function Demo() {
   ));
 
   return (
-    <Table stickyHeader style={{ '--table-sticky-header-offset': 'var(--docs-header-height)' }}>
+    <Table stickyHeader stickyHeaderOffset="var(--docs-header-height)">
       <Table.Thead>
         <Table.Tr>
           <Table.Th>Element position</Table.Th>
