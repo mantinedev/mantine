@@ -152,3 +152,7 @@ export type {
   UsePaginationReturnValue,
 } from './use-pagination/use-pagination';
 export type { UseQueueOptions, UseQueueReturnValue } from './use-queue/use-queue';
+export type {
+  UseRadialMoveOptions,
+  UseRadialMoveReturnValue,
+} from './use-radial-move/use-radial-move';

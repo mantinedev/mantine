@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { clamp } from '../utils';
 
 function radiansToDegrees(radians: number) {
@@ -50,11 +50,18 @@ export interface UseRadialMoveOptions {
   onScrubEnd?: () => void;
 }
 
+export interface UseRadialMoveReturnValue<T extends HTMLElement = any> {
+  /** Ref to be passed to the element that should be used for radial move */
+  ref: React.RefCallback<T | null>;
+
+  /** Indicates whether the radial move is active */
+  active: boolean;
+}
+
 export function useRadialMove<T extends HTMLElement = any>(
   onChange: (value: number) => void,
   { step = 0.01, onChangeEnd, onScrubStart, onScrubEnd }: UseRadialMoveOptions = {}
-) {
-  const ref = useRef<T>(null);
+): UseRadialMoveReturnValue<T> {
   const mounted = useRef<boolean>(false);
   const [active, setActive] = useState(false);
 
@@ -62,78 +69,79 @@ export function useRadialMove<T extends HTMLElement = any>(
     mounted.current = true;
   }, []);
 
-  useEffect(() => {
-    const node = ref.current;
+  const refCallback: React.RefCallback<T | null> = useCallback(
+    (node) => {
+      const update = (event: MouseEvent, done = false) => {
+        if (node) {
+          node.style.userSelect = 'none';
+          const deg = getAngle([event.clientX, event.clientY], node);
+          const newValue = normalizeRadialValue(deg, step || 1);
 
-    const update = (event: MouseEvent, done = false) => {
-      if (node) {
-        node.style.userSelect = 'none';
-        const deg = getAngle([event.clientX, event.clientY], node);
-        const newValue = normalizeRadialValue(deg, step || 1);
+          onChange(newValue);
+          done && onChangeEnd?.(newValue);
+        }
+      };
 
-        onChange(newValue);
-        done && onChangeEnd?.(newValue);
-      }
-    };
+      const beginTracking = () => {
+        onScrubStart?.();
+        setActive(true);
+        document.addEventListener('mousemove', handleMouseMove, false);
+        document.addEventListener('mouseup', handleMouseUp, false);
+        document.addEventListener('touchmove', handleTouchMove, { passive: false });
+        document.addEventListener('touchend', handleTouchEnd, false);
+      };
 
-    const beginTracking = () => {
-      onScrubStart?.();
-      setActive(true);
-      document.addEventListener('mousemove', handleMouseMove, false);
-      document.addEventListener('mouseup', handleMouseUp, false);
-      document.addEventListener('touchmove', handleTouchMove, { passive: false });
-      document.addEventListener('touchend', handleTouchEnd, false);
-    };
+      const endTracking = () => {
+        onScrubEnd?.();
+        setActive(false);
+        document.removeEventListener('mousemove', handleMouseMove, false);
+        document.removeEventListener('mouseup', handleMouseUp, false);
+        document.removeEventListener('touchmove', handleTouchMove, false);
+        document.removeEventListener('touchend', handleTouchEnd, false);
+      };
 
-    const endTracking = () => {
-      onScrubEnd?.();
-      setActive(false);
-      document.removeEventListener('mousemove', handleMouseMove, false);
-      document.removeEventListener('mouseup', handleMouseUp, false);
-      document.removeEventListener('touchmove', handleTouchMove, false);
-      document.removeEventListener('touchend', handleTouchEnd, false);
-    };
+      const onMouseDown = (event: MouseEvent) => {
+        beginTracking();
+        update(event);
+      };
 
-    const onMouseDown = (event: MouseEvent) => {
-      beginTracking();
-      update(event);
-    };
+      const handleMouseMove = (event: MouseEvent) => {
+        update(event);
+      };
 
-    const handleMouseMove = (event: MouseEvent) => {
-      update(event);
-    };
+      const handleMouseUp = (event: MouseEvent) => {
+        update(event, true);
+        endTracking();
+      };
 
-    const handleMouseUp = (event: MouseEvent) => {
-      update(event, true);
-      endTracking();
-    };
+      const handleTouchMove = (event: TouchEvent) => {
+        event.preventDefault();
+        update(event.touches[0] as any);
+      };
 
-    const handleTouchMove = (event: TouchEvent) => {
-      event.preventDefault();
-      update(event.touches[0] as any);
-    };
+      const handleTouchEnd = (event: TouchEvent) => {
+        update(event.changedTouches[0] as any, true);
+        endTracking();
+      };
 
-    const handleTouchEnd = (event: TouchEvent) => {
-      update(event.changedTouches[0] as any, true);
-      endTracking();
-    };
+      const handleTouchStart = (event: TouchEvent) => {
+        event.preventDefault();
+        beginTracking();
+        update(event.touches[0] as any);
+      };
 
-    const handleTouchStart = (event: TouchEvent) => {
-      event.preventDefault();
-      beginTracking();
-      update(event.touches[0] as any);
-    };
+      node?.addEventListener('mousedown', onMouseDown);
+      node?.addEventListener('touchstart', handleTouchStart, { passive: false });
 
-    node?.addEventListener('mousedown', onMouseDown);
-    node?.addEventListener('touchstart', handleTouchStart, { passive: false });
+      return () => {
+        if (node) {
+          node.removeEventListener('mousedown', onMouseDown);
+          node.removeEventListener('touchstart', handleTouchStart);
+        }
+      };
+    },
+    [onChange]
+  );
 
-    return () => {
-      if (node) {
-        node.removeEventListener('mousedown', onMouseDown);
-        node.removeEventListener('touchstart', handleTouchStart);
-      }
-    };
-  }, [onChange]);
-
-  return { ref, active };
+  return { ref: refCallback, active };
 }
