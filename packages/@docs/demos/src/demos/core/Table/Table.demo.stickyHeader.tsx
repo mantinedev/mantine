@@ -51,7 +51,7 @@ export function Demo() {
   ));
 
   return (
-    <Table stickyHeader stickyHeaderOffset={60}>
+    <Table stickyHeader stickyHeaderOffset="var(--docs-header-height)">
       <Table.Thead>
         <Table.Tr>
           <Table.Th>Element position</Table.Th>
