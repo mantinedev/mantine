@@ -136,3 +136,4 @@ export type { UseHoverReturnValue } from './use-hover/use-hover';
 export type { UseIdleOptions } from './use-idle/use-idle';
 export type { UseInViewportReturnValue } from './use-in-viewport/use-in-viewport';
 export type { UseInputStateReturnValue } from './use-input-state/use-input-state';
+export type { UseIntersectionReturnValue } from './use-intersection/use-intersection';
