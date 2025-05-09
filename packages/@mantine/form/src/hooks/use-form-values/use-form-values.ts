@@ -3,10 +3,10 @@ import { getPath, setPath } from '../../paths';
 import { FormMode } from '../../types';
 
 export interface $FormValues<Values extends Record<PropertyKey, any>> {
-  initialized: React.MutableRefObject<boolean>;
+  initialized: React.RefObject<boolean>;
   stateValues: Values;
-  refValues: React.MutableRefObject<Values>;
-  valuesSnapshot: React.MutableRefObject<Values>;
+  refValues: React.RefObject<Values>;
+  valuesSnapshot: React.RefObject<Values>;
   setValues: (payload: SetValuesInput<Values>) => void;
   setFieldValue: (payload: SetFieldValueInput<Values>) => void;
   resetValues: () => void;
