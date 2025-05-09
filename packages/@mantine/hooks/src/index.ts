@@ -77,7 +77,6 @@ export { useFileDialog } from './use-file-dialog/use-file-dialog';
 
 export type { UseMovePosition } from './use-move/use-move';
 export type { OS } from './use-os/use-os';
-export type { UseListStateHandlers } from './use-list-state/use-list-state';
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
 export type { UseStateHistoryHandlers, StateHistory } from './use-state-history/use-state-history';
 export type {
@@ -138,3 +137,7 @@ export type { UseInViewportReturnValue } from './use-in-viewport/use-in-viewport
 export type { UseInputStateReturnValue } from './use-input-state/use-input-state';
 export type { UseIntersectionReturnValue } from './use-intersection/use-intersection';
 export type { UseIntervalOptions, UseIntervalReturnValue } from './use-interval/use-interval';
+export type {
+  UseListStateReturnValue,
+  UseListStateHandlers,
+} from './use-list-state/use-list-state';
