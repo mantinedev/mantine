@@ -76,12 +76,6 @@ export { useScrollSpy } from './use-scroll-spy/use-scroll-spy';
 export { useFileDialog } from './use-file-dialog/use-file-dialog';
 
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
-export type {
-  UseStateHistoryHandlers,
-  UseStateHistoryValue as StateHistory,
-  UseStateHistoryValue,
-  UseStateHistoryReturnValue,
-} from './use-state-history/use-state-history';
 
 export type { UseClipboardOptions, UseClipboardReturnValue } from './use-clipboard/use-clipboard';
 export type { UseColorSchemeValue } from './use-color-scheme/use-color-scheme';
@@ -166,3 +160,10 @@ export type {
   UseScrollSpyReturnType,
 } from './use-scroll-spy/use-scroll-spy';
 export type { UseSetStateCallback, UseSetStateReturnValue } from './use-set-state/use-set-state';
+export type {
+  UseStateHistoryHandlers,
+  UseStateHistoryValue as StateHistory,
+  UseStateHistoryValue,
+  UseStateHistoryReturnValue,
+} from './use-state-history/use-state-history';
+export type { UseTimeoutOptions, UseTimeoutReturnValue } from './use-timeout/use-timeout';
