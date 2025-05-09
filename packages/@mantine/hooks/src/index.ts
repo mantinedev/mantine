@@ -142,3 +142,4 @@ export type {
 } from './use-list-state/use-list-state';
 export type { UseStorageOptions, UseStorageReturnValue } from './use-local-storage/create-storage';
 export type { UseMovePosition, UseMoveHandlers, UseMoveReturnValue } from './use-move/use-move';
+export type { UserNetworkReturnValue } from './use-network/use-network';
