@@ -121,7 +121,7 @@ export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
       unstyled={unstyled}
       ref={ref}
       value={value}
-      step={step ?? withSeconds ? 1 : 60}
+      step={step ?? (withSeconds ? 1 : 60)}
       {...others}
       onChange={onChange}
       onBlur={onTimeBlur}
