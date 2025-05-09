@@ -19,8 +19,8 @@ import type { $FormValues } from '../use-form-values/use-form-values';
 export interface $FormStatus<Values extends Record<string, any>> {
   touchedState: FormStatus;
   dirtyState: FormStatus;
-  touchedRef: React.MutableRefObject<FormStatus>;
-  dirtyRef: React.MutableRefObject<FormStatus>;
+  touchedRef: React.RefObject<FormStatus>;
+  dirtyRef: React.RefObject<FormStatus>;
   setTouched: React.Dispatch<React.SetStateAction<FormStatus>>;
   setDirty: React.Dispatch<React.SetStateAction<FormStatus>>;
   resetDirty: ResetStatus;

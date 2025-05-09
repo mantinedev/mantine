@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
 
-interface EyeDropperOpenOptions {
+export interface EyeDropperOpenOptions {
   signal?: AbortSignal;
 }
 
@@ -9,11 +9,12 @@ export interface EyeDropperOpenReturnType {
   sRGBHex: string;
 }
 
-function isOpera() {
-  return navigator.userAgent.includes('OPR');
+export interface UseEyeDropperReturnValue {
+  supported: boolean;
+  open: (options?: EyeDropperOpenOptions) => Promise<EyeDropperOpenReturnType | undefined>;
 }
 
-export function useEyeDropper() {
+export function useEyeDropper(): UseEyeDropperReturnValue {
   const [supported, setSupported] = useState(false);
 
   useIsomorphicEffect(() => {
@@ -33,4 +34,8 @@ export function useEyeDropper() {
   );
 
   return { supported, open };
+}
+
+function isOpera() {
+  return navigator.userAgent.includes('OPR');
 }

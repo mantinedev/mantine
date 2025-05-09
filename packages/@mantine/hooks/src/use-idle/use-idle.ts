@@ -1,25 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 
-const DEFAULT_EVENTS: (keyof DocumentEventMap)[] = [
-  'keydown',
-  'mousemove',
-  'touchmove',
-  'click',
-  'scroll',
-  'wheel',
-];
-const DEFAULT_OPTIONS = {
-  events: DEFAULT_EVENTS,
+export interface UseIdleOptions {
+  events?: (keyof DocumentEventMap)[];
+  initialState?: boolean;
+}
+
+const DEFAULT_OPTIONS: Required<UseIdleOptions> = {
+  events: ['keydown', 'mousemove', 'touchmove', 'click', 'scroll', 'wheel'],
   initialState: true,
 };
 
-export function useIdle(
-  timeout: number,
-  options?: Partial<{ events: (keyof DocumentEventMap)[]; initialState: boolean }>
-) {
+export function useIdle(timeout: number, options?: UseIdleOptions) {
   const { events, initialState } = { ...DEFAULT_OPTIONS, ...options };
-  const [idle, setIdle] = useState<boolean>(initialState);
-  const timer = useRef<number>(-1);
+  const [idle, setIdle] = useState(initialState);
+  const timer = useRef(-1);
 
   useEffect(() => {
     const handleEvents = () => {

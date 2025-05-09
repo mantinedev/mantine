@@ -8,8 +8,8 @@ interface Payload {
   floating: {
     update: () => void;
     refs: {
-      floating: React.MutableRefObject<any>;
-      reference: React.MutableRefObject<any>;
+      floating: React.RefObject<any>;
+      reference: React.RefObject<any>;
     };
   };
   positionDependencies: any[];

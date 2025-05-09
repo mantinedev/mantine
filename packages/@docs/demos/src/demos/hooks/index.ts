@@ -76,3 +76,4 @@ export { useFloatingWindowDragHandleSelectorDemo } from './use-floating-window.d
 export { useFloatingWindowConstrainToViewportDemo } from './use-floating-window.demo.constrainToViewport';
 export { useFloatingWindowConstrainOffsetDemo } from './use-floating-window.demo.constrainOffset';
 export { useFloatingWindowAxisDemo } from './use-floating-window.demo.axis';
+export { useLongPressDemo } from './use-long-press.demo.usage';

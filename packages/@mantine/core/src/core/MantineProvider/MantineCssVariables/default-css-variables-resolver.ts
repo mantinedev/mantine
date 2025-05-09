@@ -61,6 +61,9 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-default-color': 'var(--mantine-color-black)',
       '--mantine-color-default-border': 'var(--mantine-color-gray-4)',
       '--mantine-color-dimmed': 'var(--mantine-color-gray-6)',
+      '--mantine-color-disabled': 'var(--mantine-color-gray-2)',
+      '--mantine-color-disabled-color': 'var(--mantine-color-gray-5)',
+      '--mantine-color-disabled-border': 'var(--mantine-color-gray-3)',
     },
     dark: {
       '--mantine-primary-color-contrast': getPrimaryContrastColor(theme, 'dark'),
@@ -75,6 +78,9 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-default-color': 'var(--mantine-color-white)',
       '--mantine-color-default-border': 'var(--mantine-color-dark-4)',
       '--mantine-color-dimmed': 'var(--mantine-color-dark-2)',
+      '--mantine-color-disabled': 'var(--mantine-color-dark-6)',
+      '--mantine-color-disabled-color': 'var(--mantine-color-dark-3)',
+      '--mantine-color-disabled-border': 'var(--mantine-color-gray-6)',
     },
   };
 

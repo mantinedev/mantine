@@ -382,3 +382,8 @@ export const Demo_useFloatingWindowAxisDemo = {
   name: '⭐ Demo: useFloatingWindowAxisDemo',
   render: renderDemo(demos.useFloatingWindowAxisDemo),
 };
+
+export const Demo_useLongPressDemo = {
+  name: '⭐ Demo: useLongPressDemo',
+  render: renderDemo(demos.useLongPressDemo),
+};

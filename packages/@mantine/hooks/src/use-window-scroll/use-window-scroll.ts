@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
-interface ScrollPosition {
+export interface UseWindowScrollPosition {
   x: number;
   y: number;
 }
 
-function getScrollPosition(): ScrollPosition {
+export type UseWindowScrollTo = (position: Partial<UseWindowScrollPosition>) => void;
+export type UseWindowScrollReturnValue = [UseWindowScrollPosition, UseWindowScrollTo];
+
+function getScrollPosition(): UseWindowScrollPosition {
   return typeof window !== 'undefined'
     ? { x: window.pageXOffset, y: window.pageYOffset }
     : { x: 0, y: 0 };
 }
 
-function scrollTo({ x, y }: Partial<ScrollPosition>) {
+function scrollTo({ x, y }: Partial<UseWindowScrollPosition>) {
   if (typeof window !== 'undefined') {
     const scrollOptions: ScrollToOptions = { behavior: 'smooth' };
 
@@ -28,8 +31,8 @@ function scrollTo({ x, y }: Partial<ScrollPosition>) {
   }
 }
 
-export function useWindowScroll() {
-  const [position, setPosition] = useState<ScrollPosition>({ x: 0, y: 0 });
+export function useWindowScroll(): UseWindowScrollReturnValue {
+  const [position, setPosition] = useState<UseWindowScrollPosition>({ x: 0, y: 0 });
 
   useWindowEvent('scroll', () => setPosition(getScrollPosition()));
   useWindowEvent('resize', () => setPosition(getScrollPosition()));

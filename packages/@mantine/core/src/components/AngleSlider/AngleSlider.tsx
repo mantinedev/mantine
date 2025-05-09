@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { normalizeRadialValue, useMergedRef, useRadialMove, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
@@ -122,6 +123,8 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     ...others
   } = props;
 
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
@@ -143,7 +146,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     }
   };
 
-  const { ref: rootRef } = useRadialMove(update, {
+  const { ref: radialMoveRef } = useRadialMove(update, {
     step,
     onChangeEnd,
     onScrubStart,
@@ -200,7 +203,11 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
   ));
 
   return (
-    <Box ref={useMergedRef(ref, rootRef)} {...getStyles('root', { focusable: true })} {...others}>
+    <Box
+      ref={useMergedRef(ref, rootRef, radialMoveRef)}
+      {...getStyles('root', { focusable: true })}
+      {...others}
+    >
       {marksItems && marksItems.length > 0 && <div {...getStyles('marks')}>{marksItems}</div>}
 
       {withLabel && (

@@ -35,7 +35,7 @@
   user-select: none;
 
   &:where([data-disabled], :disabled) {
-    color: var(--mantine-color-dimmed);
+    color: var(--mantine-color-disabled-color);
     opacity: 0.6;
     cursor: not-allowed;
   }

@@ -75,6 +75,7 @@ export interface GetInputPropsOptions {
   type?: GetInputPropsType;
   withError?: boolean;
   withFocus?: boolean;
+
   [key: string]: any;
 }
 
@@ -250,6 +251,7 @@ export interface UseFormReturnType<
   watch: Watch<Values>;
   key: Key<Values>;
   getInputNode: GetInputNode<Values>;
+  resetField: (path: PropertyKey) => void;
 }
 
 export type UseForm<

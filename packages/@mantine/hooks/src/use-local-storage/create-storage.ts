@@ -4,7 +4,7 @@ import { useWindowEvent } from '../use-window-event/use-window-event';
 
 export type StorageType = 'localStorage' | 'sessionStorage';
 
-export interface StorageProperties<T> {
+export interface UseStorageOptions<T> {
   /** Storage key */
   key: string;
 
@@ -71,6 +71,12 @@ function createStorageHandler(type: StorageType) {
   return { getItem, setItem, removeItem };
 }
 
+export type UseStorageReturnValue<T> = [
+  T, // current value
+  (val: T | ((prevState: T) => T)) => void, // callback to set value in storage
+  () => void, // callback to remove value from storage
+];
+
 export function createStorage<T>(type: StorageType, hookName: string) {
   const eventName = type === 'localStorage' ? 'mantine-local-storage' : 'mantine-session-storage';
   const { getItem, setItem, removeItem } = createStorageHandler(type);
@@ -82,7 +88,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
     sync = true,
     deserialize = deserializeJSON,
     serialize = (value: T) => serializeJSON(value, hookName),
-  }: StorageProperties<T>) {
+  }: UseStorageOptions<T>): UseStorageReturnValue<T> {
     const readStorageValue = useCallback(
       (skipStorage?: boolean): T => {
         let storageBlockedOrSkipped;
@@ -161,11 +167,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
       val !== undefined && setStorageValue(val);
     }, [key]);
 
-    return [value === undefined ? defaultValue : value, setStorageValue, removeStorageValue] as [
-      T,
-      (val: T | ((prevState: T) => T)) => void,
-      () => void,
-    ];
+    return [value === undefined ? (defaultValue as T) : value, setStorageValue, removeStorageValue];
   };
 }
 
@@ -176,7 +178,7 @@ export function readValue(type: StorageType) {
     key,
     defaultValue,
     deserialize = deserializeJSON,
-  }: StorageProperties<T>) {
+  }: UseStorageOptions<T>) {
     let storageBlockedOrSkipped;
 
     try {

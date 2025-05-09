@@ -97,14 +97,39 @@ q.add({ name: 'Bob', id: 1 });
 ## Definition
 
 ```tsx
-function useQueue<T>(configuration: {
+export interface UseQueueOptions<T> {
+  /** Initial values to be added to the queue */
   initialValues?: T[];
+
+  /** Maximum number of items in the state */
   limit: number;
-}): {
-  state: T[];
+}
+
+export interface UseQueueReturnValue<T> {
+  /** Array of items in the queue */
   queue: T[];
+
+  /** Array of items in the state */
+  state: T[];
+
+  /** Function to add items to state or queue */
   add: (...items: T[]) => void;
+
+  /** Function to apply updates to current items */
   update: (fn: (state: T[]) => T[]) => void;
+
+  /** Function to clear the queue */
   cleanQueue: () => void;
-};
+}
+
+function useQueue<T>(options: UseQueueOptions<T>): UseQueueReturnValue<T>
+```
+
+## Exported types
+
+`UseQueueOptions` and `UseQueueReturnValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseQueueOptions, UseQueueReturnValue } from '@mantine/hooks';
 ```

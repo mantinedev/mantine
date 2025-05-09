@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import {
   BoxProps,
   ElementProps,
@@ -12,6 +13,7 @@ import { useDatesState } from '../../hooks';
 import { CalendarLevel, DatePickerType, PickerBaseProps } from '../../types';
 import { Calendar, CalendarBaseProps, CalendarSettings, CalendarStylesNames } from '../Calendar';
 import { DecadeLevelBaseSettings } from '../DecadeLevel';
+import { isSameMonth } from '../Month';
 import { MonthLevelBaseSettings } from '../MonthLevel';
 import { YearLevelBaseSettings } from '../YearLevel';
 
@@ -80,19 +82,22 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     hideOutsideDates,
     __onDayMouseEnter,
     __onDayClick,
+    getYearControlProps,
+    getMonthControlProps,
     ...others
   } = props;
 
-  const { onDateChange, onRootMouseLeave, onHoveredDateChange, getControlProps } = useDatesState({
-    type: type as any,
-    level: 'day',
-    allowDeselect,
-    allowSingleDateInRange,
-    value,
-    defaultValue,
-    onChange: onChange as any,
-    onMouseLeave,
-  });
+  const { onDateChange, onRootMouseLeave, onHoveredDateChange, getControlProps, _value } =
+    useDatesState({
+      type: type as any,
+      level: 'day',
+      allowDeselect,
+      allowSingleDateInRange,
+      value,
+      defaultValue,
+      onChange: onChange as any,
+      onMouseLeave,
+    });
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<DatePickerFactory>({
     classNames,
@@ -121,6 +126,14 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
       getDayProps={(date) => ({
         ...getControlProps(date),
         ...getDayProps?.(date),
+      })}
+      getMonthControlProps={(date) => ({
+        selected: typeof _value === 'string' ? isSameMonth(date, _value) : false,
+        ...getMonthControlProps?.(date),
+      })}
+      getYearControlProps={(date) => ({
+        selected: typeof _value === 'string' ? dayjs(date).isSame(_value, 'year') : false,
+        ...getYearControlProps?.(date),
       })}
       {...others}
     />

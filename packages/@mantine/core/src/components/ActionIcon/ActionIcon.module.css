@@ -51,16 +51,8 @@
   &:where(:disabled:not([data-loading]), [data-disabled]:not([data-loading])) {
     cursor: not-allowed;
     border: 1px solid transparent;
-
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-1);
-      color: var(--mantine-color-gray-5);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-6);
-      color: var(--mantine-color-dark-3);
-    }
+    color: var(--mantine-color-disabled-color);
+    background-color: var(--mantine-color-disabled);
 
     &:active {
       transform: none;

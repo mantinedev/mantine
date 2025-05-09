@@ -4,7 +4,7 @@ import { MantineDemo } from '@mantinex/demo';
 import classes from './use-resize-observer.demo.usage.module.css';
 
 const code = `
-import { Text, Code } from '@mantine/core';
+import { Group, Table } from '@mantine/core';
 import { useResizeObserver } from '@mantine/hooks';
 
 function Demo() {

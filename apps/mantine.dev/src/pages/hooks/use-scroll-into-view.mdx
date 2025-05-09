@@ -67,54 +67,57 @@ useScrollIntoView({
 ## Definition
 
 ```tsx
-interface ScrollIntoViewAnimation {
-  /** target element alignment relatively to parent based on current axis */
+interface UseScrollIntoViewAnimation {
+  /** Target element alignment relatively to parent based on current axis */
   alignment?: 'start' | 'end' | 'center';
 }
 
-interface ScrollIntoViewParams {
-  /** callback fired after scroll */
+interface UseScrollIntoViewOptions {
+  /** Callback fired after scroll */
   onScrollFinish?: () => void;
 
-  /** duration of scroll in milliseconds */
+  /** Duration of scroll in milliseconds */
   duration?: number;
 
-  /** axis of scroll */
+  /** Axis of scroll */
   axis?: 'x' | 'y';
 
-  /** custom mathematical easing function */
+  /** Custom mathematical easing function */
   easing?: (t: number) => number;
 
-  /** additional distance between nearest edge and element */
+  /** Additional distance between nearest edge and element */
   offset?: number;
 
-  /** indicator if animation may be interrupted by user scrolling */
+  /** Indicator if animation may be interrupted by user scrolling */
   cancelable?: boolean;
 
-  /** prevents content jumping in scrolling lists with multiple targets */
+  /** Prevents content jumping in scrolling lists with multiple targets */
   isList?: boolean;
 }
 
-interface ScrollIntoViewReturnType<
-  Target extends HTMLElement,
+export interface UseScrollIntoViewReturnValue<
+  Target extends HTMLElement = any,
   Parent extends HTMLElement | null = null,
 > {
-  scrollableRef: React.MutableRefObject<Parent>;
-  targetRef: React.MutableRefObject<Target>;
-  scrollIntoView: (params?: ScrollIntoViewAnimation) => void;
+  scrollableRef: React.RefObject<Parent | null>;
+  targetRef: React.RefObject<Target | null>;
+  scrollIntoView: (params?: UseScrollIntoViewAnimation) => void;
   cancel: () => void;
 }
 
 function useScrollIntoView<
-  Target extends HTMLElement,
-  Parent extends HTMLElement | null = null,
->({
-  duration,
-  axis,
-  onScrollFinish,
-  easing,
-  offset,
-  cancelable,
-  isList,
-}?: ScrollIntoViewParams): ScrollIntoViewReturnType<Target, Parent>;
+  Target extends HTMLElement = any,
+  Parent extends HTMLElement | null = null
+>(
+  options?: UseScrollIntoViewOptions,
+): UseScrollIntoViewReturnValue<Target, Parent>
+```
+
+## Exported types
+
+`UseScrollIntoViewOptions` and `UseScrollIntoViewReturnValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseScrollIntoViewOptions, UseScrollIntoViewReturnValue } from '@mantine/hooks';
 ```

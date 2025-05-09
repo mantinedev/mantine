@@ -8,6 +8,7 @@
   --slider-size: var(--slider-size-md);
   --slider-radius: 1000px;
   --slider-color: var(--mantine-primary-color-filled);
+  --slider-track-disabled-bg: var(--mantine-color-disabled);
 
   -webkit-tap-highlight-color: transparent;
   outline: none;
@@ -21,12 +22,10 @@
 
   @mixin light {
     --slider-track-bg: var(--mantine-color-gray-2);
-    --slider-track-disabled-bg: var(--mantine-color-gray-4);
   }
 
   @mixin dark {
     --slider-track-bg: var(--mantine-color-dark-4);
-    --slider-track-disabled-bg: var(--mantine-color-dark-3);
   }
 }
 
@@ -155,13 +154,7 @@
 
   fieldset:disabled &:where(:not([data-inverted])),
   &:where([data-disabled]:not([data-inverted])) {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-4);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-3);
-    }
+    background-color: var(--mantine-color-disabled-color);
   }
 }
 
@@ -194,13 +187,7 @@
     border-color: var(--slider-color);
 
     &:where([data-disabled]) {
-      @mixin where-light {
-        border-color: var(--mantine-color-gray-4);
-      }
-
-      @mixin where-dark {
-        border-color: var(--mantine-color-dark-3);
-      }
+      border-color: var(--mantine-color-disabled-border);
     }
   }
 }

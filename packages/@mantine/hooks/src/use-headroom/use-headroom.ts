@@ -10,7 +10,7 @@ export const isReleased = (current: number, previous: number, fixedAt: number) =
 export const isPinnedOrReleased = (
   current: number,
   fixedAt: number,
-  isCurrentlyPinnedRef: React.MutableRefObject<boolean>,
+  isCurrentlyPinnedRef: React.RefObject<boolean>,
   isScrollingUp: boolean,
   onPin?: () => void,
   onRelease?: () => void
@@ -65,7 +65,7 @@ export const useScrollDirection = () => {
   return isScrollingUp;
 };
 
-interface UseHeadroomInput {
+export interface UseHeadroomOptions {
   /** Number in px at which element should be fixed */
   fixedAt?: number;
 
@@ -79,7 +79,7 @@ interface UseHeadroomInput {
   onRelease?: () => void;
 }
 
-export function useHeadroom({ fixedAt = 0, onPin, onFix, onRelease }: UseHeadroomInput = {}) {
+export function useHeadroom({ fixedAt = 0, onPin, onFix, onRelease }: UseHeadroomOptions = {}) {
   const isCurrentlyPinnedRef = useRef(false);
   const isScrollingUp = useScrollDirection();
   const [{ y: scrollPosition }] = useWindowScroll();

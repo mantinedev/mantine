@@ -47,6 +47,7 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
   {
     category: 'Changelog',
     pages: [
+      MDX_DATA.Changelog810,
       MDX_DATA.Changelog800,
       MDX_DATA.Changelog900,
       MDX_DATA.Changelog7170,
@@ -156,6 +157,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.useInViewport,
       MDX_DATA.useOrientation,
       MDX_DATA.useFileDialog,
+      MDX_DATA.useLongPress,
     ],
   },
 
