@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
 
-interface UseOrientationOptions {
+export interface UseOrientationOptions {
   /** Default angle value, used until the real can be retrieved
    * (during server side rendering and before js executes on the page)
    * If not provided, the default value is `0`
@@ -21,7 +21,7 @@ interface UseOrientationOptions {
   getInitialValueInEffect?: boolean;
 }
 
-interface UseOrientationReturnType {
+export interface UseOrientationReturnType {
   angle: number;
   type: OrientationType;
 }

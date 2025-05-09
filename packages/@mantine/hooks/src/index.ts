@@ -143,3 +143,7 @@ export type {
 export type { UseStorageOptions, UseStorageReturnValue } from './use-local-storage/create-storage';
 export type { UseMovePosition, UseMoveHandlers, UseMoveReturnValue } from './use-move/use-move';
 export type { UserNetworkReturnValue } from './use-network/use-network';
+export type {
+  UseOrientationOptions,
+  UseOrientationReturnType,
+} from './use-orientation/use-orientation';
