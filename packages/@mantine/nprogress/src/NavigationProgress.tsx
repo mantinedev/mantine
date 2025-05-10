@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import {
+  BasePortalProps,
   ElementProps,
   getDefaultZIndex,
   MantineColor,
   OptionalPortal,
-  PortalProps,
   Progress,
 } from '@mantine/core';
 import {
@@ -35,7 +35,7 @@ export interface NavigationProgressProps extends ElementProps<'div'> {
   withinPortal?: boolean;
 
   /** Props to pass down to the `Portal` when `withinPortal` is `true` */
-  portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
+  portalProps?: Omit<BasePortalProps, 'withinPortal'>;
 
   /** Progressbar z-index, `9999` by default */
   zIndex?: React.CSSProperties['zIndex'];

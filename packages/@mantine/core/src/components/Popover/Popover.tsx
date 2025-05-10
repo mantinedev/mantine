@@ -25,7 +25,7 @@ import {
   getFloatingPosition,
 } from '../Floating';
 import { Overlay, OverlayProps } from '../Overlay';
-import { OptionalPortal, PortalProps } from '../Portal';
+import { BasePortalProps, OptionalPortal } from '../Portal';
 import { Transition, TransitionOverride } from '../Transition';
 import { PopoverContextProvider } from './Popover.context';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
@@ -104,7 +104,7 @@ export interface __PopoverProps {
   withinPortal?: boolean;
 
   /** Props to pass down to the `Portal` when `withinPortal` is true */
-  portalProps?: Omit<PortalProps, 'children'>;
+  portalProps?: BasePortalProps;
 
   /** Dropdown `z-index`, `300` by default */
   zIndex?: string | number;

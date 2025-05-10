@@ -5,6 +5,7 @@ import {
   TransitionStatus,
 } from 'react-transition-group';
 import {
+  BasePortalProps,
   Box,
   BoxProps,
   createVarsResolver,
@@ -13,7 +14,6 @@ import {
   Factory,
   getDefaultZIndex,
   OptionalPortal,
-  PortalProps,
   rem,
   RemoveScroll,
   StylesApiProps,
@@ -71,7 +71,7 @@ export interface NotificationsProps
   zIndex?: string | number;
 
   /** Props passed down to the `Portal` component */
-  portalProps?: Omit<PortalProps, 'children'>;
+  portalProps?: BasePortalProps;
 
   /** Store for notifications state, can be used to create multiple instances of notifications system in your application */
   store?: NotificationsStore;
