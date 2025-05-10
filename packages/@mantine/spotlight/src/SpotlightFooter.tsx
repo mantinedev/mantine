@@ -24,7 +24,7 @@ export type SpotlightFooterFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<SpotlightFooterProps> = {};
+const defaultProps = {} satisfies Partial<SpotlightFooterProps>;
 
 export const SpotlightFooter = factory<SpotlightFooterFactory>((props, ref) => {
   const { className, style, classNames, styles, ...others } = useProps(

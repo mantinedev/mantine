@@ -95,7 +95,7 @@ export type NotificationsFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<NotificationsProps> = {
+const defaultProps = {
   position: 'bottom-right',
   autoClose: 4000,
   transitionDuration: 250,
@@ -105,7 +105,7 @@ const defaultProps: Partial<NotificationsProps> = {
   zIndex: getDefaultZIndex('overlay'),
   store: notificationsStore,
   withinPortal: true,
-};
+} satisfies Partial<NotificationsProps>;
 
 const varsResolver = createVarsResolver<NotificationsFactory>((_, { zIndex, containerWidth }) => ({
   root: {
@@ -163,7 +163,7 @@ export const Notifications = factory<NotificationsFactory>((_props, ref) => {
     store?.updateState((current) => ({
       ...current,
       limit: limit || 5,
-      defaultPosition: position!,
+      defaultPosition: position,
     }));
   }, [limit, position]);
 
@@ -174,7 +174,7 @@ export const Notifications = factory<NotificationsFactory>((_props, ref) => {
     previousLength.current = data.notifications.length;
   }, [data.notifications]);
 
-  const grouped = getGroupedNotifications(data.notifications, position!);
+  const grouped = getGroupedNotifications(data.notifications, position);
   const groupedComponents = positions.reduce(
     (acc, pos) => {
       acc[pos] = grouped[pos].map(({ style: notificationStyle, ...notification }) => (
@@ -187,18 +187,20 @@ export const Notifications = factory<NotificationsFactory>((_props, ref) => {
           {(state: TransitionStatus) => (
             <NotificationContainer
               ref={(node) => {
-                refs.current[notification.id!] = node!;
+                if (node) {
+                  refs.current[notification.id!] = node;
+                }
               }}
               data={notification}
               onHide={(id) => hideNotification(id, store)}
-              autoClose={autoClose!}
+              autoClose={autoClose}
               {...getStyles('notification', {
                 style: {
                   ...getNotificationStateStyles({
                     state,
                     position: pos,
-                    transitionDuration: duration!,
-                    maxHeight: notificationMaxHeight!,
+                    transitionDuration: duration,
+                    maxHeight: notificationMaxHeight,
                   }),
                   ...notificationStyle,
                 },

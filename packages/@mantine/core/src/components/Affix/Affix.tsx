@@ -52,11 +52,11 @@ export type AffixFactory = Factory<{
   vars: AffixCssVariables;
 }>;
 
-const defaultProps: Partial<AffixProps> = {
+const defaultProps = {
   position: { bottom: 0, right: 0 },
   zIndex: getDefaultZIndex('modal'),
   withinPortal: true,
-};
+} satisfies Partial<AffixProps>;
 
 const varsResolver = createVarsResolver<AffixFactory>((_, { zIndex, position }) => ({
   root: {

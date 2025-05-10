@@ -15,10 +15,10 @@ export interface PopoverTargetProps {
   popupType?: string;
 }
 
-const defaultProps: Partial<PopoverTargetProps> = {
+const defaultProps = {
   refProp: 'ref',
   popupType: 'dialog',
-};
+} satisfies Partial<PopoverTargetProps>;
 
 export type PopoverTargetFactory = Factory<{
   props: PopoverTargetProps;
@@ -61,7 +61,7 @@ export const PopoverTarget = factory<PopoverTargetFactory>((props, ref) => {
       forwardedProps.className,
       (children.props as any).className
     ),
-    [refProp!]: targetRef,
+    [refProp]: targetRef,
     ...(!ctx.controlled ? { onClick: ctx.onToggle } : null),
   });
 });

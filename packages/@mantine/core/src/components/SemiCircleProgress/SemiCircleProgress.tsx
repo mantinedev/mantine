@@ -73,13 +73,13 @@ export type SemiCircleProgressFactory = Factory<{
   vars: SemiCircleProgressCssVariables;
 }>;
 
-const defaultProps: Partial<SemiCircleProgressProps> = {
+const defaultProps = {
   size: 200,
   thickness: 12,
   orientation: 'up',
   fillDirection: 'left-to-right',
   labelPosition: 'bottom',
-};
+} satisfies Partial<SemiCircleProgressProps>;
 
 function getRotation({
   orientation,
@@ -159,8 +159,8 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props, re
     varsResolver,
   });
 
-  const coordinateForCircle = size! / 2;
-  const radius = (size! - 2 * thickness!) / 2;
+  const coordinateForCircle = size / 2;
+  const radius = (size - 2 * thickness) / 2;
   const circumference = Math.PI * radius;
   const semiCirclePercentage = clamp(value, 0, 100) * (circumference / 100);
 
@@ -172,7 +172,7 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props, re
         </p>
       )}
 
-      <svg width={size} height={size! / 2} {...getStyles('svg')}>
+      <svg width={size} height={size / 2} {...getStyles('svg')}>
         <circle
           cx={coordinateForCircle}
           cy={coordinateForCircle}

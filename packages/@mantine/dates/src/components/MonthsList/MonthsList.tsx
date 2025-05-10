@@ -62,10 +62,10 @@ export type MonthsListFactory = Factory<{
   stylesNames: MonthsListStylesNames;
 }>;
 
-const defaultProps: Partial<MonthsListProps> = {
+const defaultProps = {
   monthsListFormat: 'MMM',
   withCellSpacing: true,
-};
+} satisfies Partial<MonthsListProps>;
 
 export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
   const props = useProps('MonthsList', defaultProps, _props);
@@ -139,7 +139,11 @@ export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
               minDate: toDateString(minDate)!,
               maxDate: toDateString(maxDate)!,
             })}
-            ref={(node) => __getControlRef?.(rowIndex, cellIndex, node!)}
+            ref={(node) => {
+              if (node) {
+                __getControlRef?.(rowIndex, cellIndex, node);
+              }
+            }}
             {...controlProps}
             onKeyDown={(event) => {
               controlProps?.onKeyDown?.(event);

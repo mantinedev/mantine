@@ -129,6 +129,9 @@ export interface RangeSliderProps
 
   /** Props passed down to thumb element based on the thumb index */
   thumbProps?: (index: 0 | 1) => React.ComponentPropsWithoutRef<'div'>;
+
+  /** Determines whether the other thumb should be pushed by the current thumb dragging when `minRange`/`maxRange` is reached, `true` by default */
+  pushOnOverlap?: boolean;
 }
 
 export type RangeSliderFactory = Factory<{
@@ -150,7 +153,7 @@ const varsResolver = createVarsResolver<RangeSliderFactory>(
   })
 );
 
-const defaultProps: Partial<RangeSliderProps> = {
+const defaultProps = {
   min: 0,
   max: 100,
   minRange: 10,
@@ -161,8 +164,11 @@ const defaultProps: Partial<RangeSliderProps> = {
   labelAlwaysOn: false,
   showLabelOnHover: true,
   disabled: false,
+  pushOnOverlap: true,
   scale: (v) => v,
-};
+  size: 'md',
+  maxRange: Infinity,
+} satisfies Partial<RangeSliderProps>;
 
 export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
   const props = useProps('RangeSlider', defaultProps, _props);
@@ -199,6 +205,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     hiddenInputProps,
     restrictToMarks,
     thumbProps,
+    pushOnOverlap,
     ...others
   } = props;
 
@@ -222,7 +229,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
   const [_value, setValue] = useUncontrolled<RangeSliderValue>({
     value,
     defaultValue,
-    finalValue: [min!, max!],
+    finalValue: [min, max],
     onChange,
   });
   const valueRef = useRef(_value);
@@ -230,11 +237,11 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
   const root = useRef<HTMLDivElement>(null);
   const thumbIndex = useRef<number | undefined>(undefined);
   const positions = [
-    getPosition({ value: _value[0], min: min!, max: max! }),
-    getPosition({ value: _value[1], min: min!, max: max! }),
+    getPosition({ value: _value[0], min, max }),
+    getPosition({ value: _value[1], min, max }),
   ];
 
-  const precision = _precision ?? getPrecision(step!);
+  const precision = _precision ?? getPrecision(step);
 
   const _setValue = (val: RangeSliderValue) => {
     setValue(val);
@@ -285,30 +292,46 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
       clone[index] = val;
 
       if (index === 0) {
-        if (val > clone[1] - (minRange! - 0.000000001)) {
-          clone[1] = Math.min(val + minRange!, max!);
+        if (val > clone[1] - (minRange - 0.000000001)) {
+          if (pushOnOverlap) {
+            clone[1] = Math.min(val + minRange, max);
+          } else {
+            clone[index] = valueRef.current[index];
+          }
         }
 
-        if (val > (max! - (minRange! - 0.000000001) || min!)) {
+        if (val > (max - (minRange - 0.000000001) || min)) {
           clone[index] = valueRef.current[index];
         }
 
-        if (clone[1] - val > maxRange!) {
-          clone[1] = val + maxRange!;
+        if (clone[1] - val > maxRange) {
+          if (pushOnOverlap) {
+            clone[1] = val + maxRange;
+          } else {
+            clone[index] = valueRef.current[index];
+          }
         }
       }
 
       if (index === 1) {
-        if (val < clone[0] + minRange!) {
-          clone[0] = Math.max(val - minRange!, min!);
+        if (val < clone[0] + minRange) {
+          if (pushOnOverlap) {
+            clone[0] = Math.max(val - minRange, min);
+          } else {
+            clone[index] = valueRef.current[index];
+          }
         }
 
-        if (val < clone[0] + minRange!) {
+        if (val < clone[0] + minRange) {
           clone[index] = valueRef.current[index];
         }
 
-        if (val - clone[0] > maxRange!) {
-          clone[0] = val - maxRange!;
+        if (val - clone[0] > maxRange) {
+          if (pushOnOverlap) {
+            clone[0] = val - maxRange;
+          } else {
+            clone[index] = valueRef.current[index];
+          }
         }
       }
     }
@@ -330,15 +353,15 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
   };
 
   const handleChange = (val: number) => {
-    if (!disabled) {
+    if (!disabled && thumbIndex.current !== undefined) {
       const nextValue = getChangeValue({
         value: val,
-        min: min!,
-        max: max!,
-        step: step!,
+        min,
+        max,
+        step,
         precision,
       });
-      setRangedValue(nextValue, thumbIndex.current!, false);
+      setRangedValue(nextValue, thumbIndex.current, false);
     }
   };
 
@@ -361,9 +384,9 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
       const changePosition = getClientPosition(event.nativeEvent);
       const changeValue = getChangeValue({
         value: changePosition - rect.left,
-        max: max!,
-        min: min!,
-        step: step!,
+        max,
+        min,
+        step,
         containerWidth: rect.width,
       });
 
@@ -394,7 +417,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           const nextValue =
             restrictToMarks && marks
               ? getNextMarkValue(valueRef.current[focusedIndex], marks)
-              : Math.min(Math.max(valueRef.current[focusedIndex] + step!, min!), max!);
+              : Math.min(Math.max(valueRef.current[focusedIndex] + step, min), max);
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
           break;
         }
@@ -413,11 +436,11 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
               : Math.min(
                   Math.max(
                     dir === 'rtl'
-                      ? valueRef.current[focusedIndex] - step!
-                      : valueRef.current[focusedIndex] + step!,
-                    min!
+                      ? valueRef.current[focusedIndex] - step
+                      : valueRef.current[focusedIndex] + step,
+                    min
                   ),
-                  max!
+                  max
                 );
 
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
@@ -431,7 +454,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           const nextValue =
             restrictToMarks && marks
               ? getPreviousMarkValue(valueRef.current[focusedIndex], marks)
-              : Math.min(Math.max(valueRef.current[focusedIndex] - step!, min!), max!);
+              : Math.min(Math.max(valueRef.current[focusedIndex] - step, min), max);
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
           break;
         }
@@ -450,11 +473,11 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
               : Math.min(
                   Math.max(
                     dir === 'rtl'
-                      ? valueRef.current[focusedIndex] + step!
-                      : valueRef.current[focusedIndex] - step!,
-                    min!
+                      ? valueRef.current[focusedIndex] + step
+                      : valueRef.current[focusedIndex] - step,
+                    min
                   ),
-                  max!
+                  max
                 );
 
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
@@ -469,8 +492,8 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
   };
 
   const sharedThumbProps = {
-    max: max!,
-    min: min!,
+    max,
+    min,
     size,
     labelTransitionProps,
     labelAlwaysOn,
@@ -483,7 +506,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     <SliderProvider value={{ getStyles }}>
       <SliderRoot
         {...others}
-        size={size!}
+        size={size}
         ref={useMergedRef(ref, root)}
         disabled={disabled}
         onMouseDownCapture={() => root.current?.focus()}
@@ -500,8 +523,8 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           filled={positions[1] - positions[0]}
           marks={marks}
           inverted={inverted}
-          min={min!}
-          max={max!}
+          min={min}
+          max={max}
           value={_value[1]}
           disabled={disabled}
           containerProps={{
@@ -521,16 +544,18 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
         >
           <Thumb
             {...sharedThumbProps}
-            value={scale!(_value[0])}
+            value={scale(_value[0])}
             position={positions[0]}
             dragging={active}
             label={
               typeof label === 'function'
-                ? label(getFloatingValue(scale!(_value[0]), precision))
+                ? label(getFloatingValue(scale(_value[0]), precision))
                 : label
             }
             ref={(node) => {
-              thumbs.current[0] = node!;
+              if (node) {
+                thumbs.current[0] = node;
+              }
             }}
             thumbLabel={thumbFromLabel}
             onMouseDown={() => handleThumbMouseDown(0)}
@@ -546,16 +571,18 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           <Thumb
             {...sharedThumbProps}
             thumbLabel={thumbToLabel}
-            value={scale!(_value[1])}
+            value={scale(_value[1])}
             position={positions[1]}
             dragging={active}
             label={
               typeof label === 'function'
-                ? label(getFloatingValue(scale!(_value[1]), precision))
+                ? label(getFloatingValue(scale(_value[1]), precision))
                 : label
             }
             ref={(node) => {
-              thumbs.current[1] = node!;
+              if (node) {
+                thumbs.current[1] = node;
+              }
             }}
             onMouseDown={() => handleThumbMouseDown(1)}
             onFocus={() => setFocused(1)}

@@ -23,7 +23,7 @@ export type RichTextEditorControlsGroupFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<RichTextEditorControlsGroupProps> = {};
+const defaultProps = {} satisfies Partial<RichTextEditorControlsGroupProps>;
 
 export const RichTextEditorControlsGroup = factory<RichTextEditorControlsGroupFactory>(
   (_props, ref) => {

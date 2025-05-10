@@ -81,7 +81,7 @@ export type BadgeFactory = PolymorphicFactory<{
   variant: BadgeVariant;
 }>;
 
-const defaultProps: Partial<BadgeProps> = {};
+const defaultProps = {} satisfies Partial<BadgeProps>;
 
 const varsResolver = createVarsResolver<BadgeFactory>(
   (theme, { radius, color, gradient, variant, size, autoContrast }) => {

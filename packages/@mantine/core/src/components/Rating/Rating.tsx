@@ -92,13 +92,13 @@ export type RatingFactory = Factory<{
   vars: RatingCssVariables;
 }>;
 
-const defaultProps: Partial<RatingProps> = {
+const defaultProps = {
   size: 'sm',
   getSymbolLabel: (value) => `${value}`,
   count: 5,
   fractions: 1,
   color: 'yellow',
-};
+} satisfies Partial<RatingProps>;
 
 const varsResolver = createVarsResolver<RatingFactory>((theme, { size, color }) => ({
   root: {
@@ -169,15 +169,19 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
   const [hovered, setHovered] = useState(-1);
   const [isOutside, setOutside] = useState(true);
 
-  const _fractions = Math.floor(fractions!);
-  const _count = Math.floor(count!);
+  const _fractions = Math.floor(fractions);
+  const _count = Math.floor(count);
 
   const decimalUnit = 1 / _fractions;
   const stableValueRounded = roundValueTo(_value, decimalUnit);
   const finalValue = hovered !== -1 ? hovered : stableValueRounded;
 
   const getRatingFromCoordinates = (x: number) => {
-    const { left, right, width } = rootRef.current!.getBoundingClientRect();
+    if (!rootRef.current) {
+      return 0;
+    }
+
+    const { left, right, width } = rootRef.current.getBoundingClientRect();
     const symbolWidth = width / _count;
 
     const hoverPosition = dir === 'rtl' ? right - x : x - left;

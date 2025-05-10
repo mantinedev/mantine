@@ -152,12 +152,12 @@ export type CalendarFactory = Factory<{
   stylesNames: CalendarStylesNames;
 }>;
 
-const defaultProps: Partial<CalendarProps> = {
+const defaultProps = {
   maxLevel: 'decade',
   minLevel: 'month',
   __updateDateOnYearSelect: true,
   __updateDateOnMonthSelect: true,
-};
+} satisfies Partial<CalendarProps>;
 
 export const Calendar = factory<CalendarFactory>((_props, ref) => {
   const props = useProps('Calendar', defaultProps, _props);

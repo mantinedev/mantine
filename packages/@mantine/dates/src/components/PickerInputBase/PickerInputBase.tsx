@@ -90,7 +90,7 @@ export type PickerInputBaseFactory = Factory<{
   variant: InputVariant;
 }>;
 
-const defaultProps: Partial<PickerInputBaseProps> = {};
+const defaultProps = {} satisfies Partial<PickerInputBaseProps>;
 
 export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => {
   const {

@@ -130,7 +130,7 @@ export type AreaChartFactory = Factory<{
   vars: AreaChartCSSVariables;
 }>;
 
-const defaultProps: Partial<AreaChartProps> = {
+const defaultProps = {
   withXAxis: true,
   withYAxis: true,
   withDots: true,
@@ -146,7 +146,7 @@ const defaultProps: Partial<AreaChartProps> = {
   type: 'default',
   splitColors: ['green.7', 'red.7'],
   orientation: 'horizontal',
-};
+} satisfies Partial<AreaChartProps>;
 
 const varsResolver = createVarsResolver<AreaChartFactory>((theme, { textColor, gridColor }) => ({
   root: {
@@ -482,9 +482,9 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           {type === 'split' && (
             <defs>
               <AreaSplit
-                colors={splitColors!}
+                colors={splitColors}
                 id={splitId}
-                offset={splitOffset ?? getDefaultSplitOffset({ data: data!, series })}
+                offset={splitOffset ?? getDefaultSplitOffset({ data, series })}
                 fillOpacity={fillOpacity}
               />
             </defs>

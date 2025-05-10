@@ -34,13 +34,13 @@ export type YearPickerInputFactory = Factory<{
   variant: InputVariant;
 }>;
 
-const defaultProps: Partial<YearPickerInputProps> = {
+const defaultProps = {
   type: 'default',
   valueFormat: 'YYYY',
   closeOnChange: true,
   sortDates: true,
   dropdownType: 'popover',
-};
+} satisfies Partial<YearPickerInputProps>;
 
 type YearPickerInputComponent = (<Type extends DatePickerType = 'default'>(
   props: YearPickerInputProps<Type> & { ref?: React.ForwardedRef<HTMLButtonElement> }
@@ -115,7 +115,7 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
         onClear={onClear}
         shouldClear={shouldClear}
         value={_value}
-        size={size!}
+        size={size}
         variant={variant}
         dropdownType={dropdownType}
         {...others}

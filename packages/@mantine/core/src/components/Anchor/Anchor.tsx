@@ -21,9 +21,9 @@ export type AnchorFactory = PolymorphicFactory<{
   variant: AnchorVariant;
 }>;
 
-const defaultProps: Partial<AnchorProps> = {
+const defaultProps = {
   underline: 'hover',
-};
+} satisfies Partial<AnchorProps>;
 
 export const Anchor = polymorphicFactory<AnchorFactory>((props, ref) => {
   const { underline, className, unstyled, mod, ...others } = useProps(

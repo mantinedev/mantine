@@ -87,14 +87,10 @@ export type IndicatorFactory = Factory<{
   vars: IndicatorCssVariables;
 }>;
 
-const defaultProps: Partial<IndicatorProps> = {
+const defaultProps = {
   position: 'top-end',
   offset: 0,
-  inline: false,
-  withBorder: false,
-  disabled: false,
-  processing: false,
-};
+} satisfies Partial<IndicatorProps>;
 
 const varsResolver = createVarsResolver<IndicatorFactory>(
   (theme, { color, position, offset, size, radius, zIndex, autoContrast }) => ({

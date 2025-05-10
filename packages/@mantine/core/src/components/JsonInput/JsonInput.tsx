@@ -35,10 +35,10 @@ export type JsonInputFactory = Factory<{
   stylesNames: __InputStylesNames;
 }>;
 
-const defaultProps: Partial<JsonInputProps> = {
+const defaultProps = {
   serialize: JSON.stringify,
   deserialize: JSON.parse,
-};
+} satisfies Partial<JsonInputProps>;
 
 export const JsonInput = factory<JsonInputFactory>((props, ref) => {
   const {
@@ -63,7 +63,7 @@ export const JsonInput = factory<JsonInputFactory>((props, ref) => {
     onChange,
   });
 
-  const [valid, setValid] = useState(validateJson(_value, deserialize!));
+  const [valid, setValid] = useState(validateJson(_value, deserialize));
 
   const handleFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
     onFocus?.(event);
@@ -72,12 +72,12 @@ export const JsonInput = factory<JsonInputFactory>((props, ref) => {
 
   const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
     typeof onBlur === 'function' && onBlur(event);
-    const isValid = validateJson(event.currentTarget.value, deserialize!);
+    const isValid = validateJson(event.currentTarget.value, deserialize);
     formatOnBlur &&
       !readOnly &&
       isValid &&
       event.currentTarget.value.trim() !== '' &&
-      setValue(serialize!(deserialize!(event.currentTarget.value), null, 2));
+      setValue(serialize(deserialize(event.currentTarget.value), null, 2));
     setValid(isValid);
   };
 

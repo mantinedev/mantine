@@ -68,9 +68,9 @@ export type CheckboxIndicatorFactory = Factory<{
   variant: CheckboxIndicatorVariant;
 }>;
 
-const defaultProps: Partial<CheckboxIndicatorProps> = {
+const defaultProps = {
   icon: CheckboxIcon,
-};
+} satisfies Partial<CheckboxIndicatorProps>;
 
 const varsResolver = createVarsResolver<CheckboxIndicatorFactory>(
   (theme, { radius, color, size, iconColor, variant, autoContrast }) => {
@@ -104,7 +104,7 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props, ref)
     styles,
     unstyled,
     vars,
-    icon,
+    icon: Icon,
     indeterminate,
     radius,
     color,
@@ -116,7 +116,6 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props, ref)
     disabled,
     ...others
   } = props;
-  const Icon = icon!;
 
   const getStyles = useStyles<CheckboxIndicatorFactory>({
     name: 'CheckboxIndicator',

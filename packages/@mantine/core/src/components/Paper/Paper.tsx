@@ -40,7 +40,7 @@ export type PaperFactory = PolymorphicFactory<{
   vars: PaperCssVariables;
 }>;
 
-const defaultProps: Partial<PaperProps> = {};
+const defaultProps = {} satisfies Partial<PaperProps>;
 
 const varsResolver = createVarsResolver<PaperFactory>((_, { radius, shadow }) => ({
   root: {

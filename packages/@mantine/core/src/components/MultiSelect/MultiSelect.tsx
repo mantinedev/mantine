@@ -113,12 +113,12 @@ export type MultiSelectFactory = Factory<{
   stylesNames: MultiSelectStylesNames;
 }>;
 
-const defaultProps: Partial<MultiSelectProps> = {
+const defaultProps = {
   maxValues: Infinity,
   withCheckIcon: true,
   checkIconPosition: 'left',
   hiddenInputValuesDivider: ',',
-};
+} satisfies Partial<MultiSelectProps>;
 
 export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
   const props = useProps('MultiSelect', defaultProps, _props);
@@ -320,7 +320,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
           if (_value.includes(optionsLockup[val].value)) {
             setValue(_value.filter((v) => v !== optionsLockup[val].value));
             onRemove?.(optionsLockup[val].value);
-          } else if (_value.length < maxValues!) {
+          } else if (_value.length < maxValues) {
             setValue([..._value, optionsLockup[val].value]);
           }
         }}

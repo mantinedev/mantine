@@ -8,7 +8,7 @@ export interface RichTextEditorColorControlProps extends BoxProps, ElementProps<
   color: string;
 }
 
-const defaultProps: Partial<RichTextEditorColorControlProps> = {};
+const defaultProps = {} satisfies Partial<RichTextEditorColorControlProps>;
 
 export const RichTextEditorColorControl = forwardRef<
   HTMLButtonElement,

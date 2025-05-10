@@ -23,7 +23,9 @@ export type PillsInputFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<PillsInputProps> = {};
+const defaultProps = {
+  size: 'sm',
+} satisfies Partial<PillsInputProps>;
 
 export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
   const props = useProps('PillsInput', defaultProps, _props);
@@ -42,7 +44,7 @@ export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
   const fieldRef = useRef<HTMLInputElement>(null);
 
   return (
-    <PillsInputProvider value={{ fieldRef, size: size!, disabled, hasError: !!error, variant }}>
+    <PillsInputProvider value={{ fieldRef, size, disabled, hasError: !!error, variant }}>
       <InputBase
         size={size}
         error={error}

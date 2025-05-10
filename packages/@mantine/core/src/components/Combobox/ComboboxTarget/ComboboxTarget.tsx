@@ -31,14 +31,14 @@ export interface ComboboxTargetProps {
   autoComplete?: string;
 }
 
-const defaultProps: Partial<ComboboxTargetProps> = {
+const defaultProps = {
   refProp: 'ref',
   targetType: 'input',
   withKeyboardNavigation: true,
   withAriaAttributes: true,
   withExpandedAttribute: false,
   autoComplete: 'off',
-};
+} satisfies Partial<ComboboxTargetProps>;
 
 export type ComboboxTargetFactory = Factory<{
   props: ComboboxTargetProps;

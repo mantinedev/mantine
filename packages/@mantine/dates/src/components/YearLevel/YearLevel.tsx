@@ -48,9 +48,9 @@ export type YearLevelFactory = Factory<{
   stylesNames: YearLevelStylesNames;
 }>;
 
-const defaultProps: Partial<YearLevelProps> = {
+const defaultProps = {
   yearLabelFormat: 'YYYY',
-};
+} satisfies Partial<YearLevelProps>;
 
 export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
   const props = useProps('YearLevel', defaultProps, _props);

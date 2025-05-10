@@ -114,13 +114,12 @@ export type TagsInputFactory = Factory<{
   stylesNames: TagsInputStylesNames;
 }>;
 
-const defaultProps: Partial<TagsInputProps> = {
+const defaultProps = {
   maxTags: Infinity,
-  allowDuplicates: false,
   acceptValueOnBlur: true,
   splitChars: [','],
   hiddenInputValuesDivider: ',',
-};
+} satisfies Partial<TagsInputProps>;
 
 export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
   const props = useProps('TagsInput', defaultProps, _props);
@@ -263,7 +262,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       onDuplicate?.(val);
     }
 
-    if ((!isDuplicated || (isDuplicated && allowDuplicates)) && _value.length < maxTags!) {
+    if ((!isDuplicated || (isDuplicated && allowDuplicates)) && _value.length < maxTags) {
       onOptionSubmit?.(val);
       handleSearchChange('');
       if (val.length > 0) {
@@ -282,7 +281,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     const inputValue = _searchValue.trim();
     const { length } = inputValue;
 
-    if (splitChars!.includes(event.key) && length > 0) {
+    if (splitChars.includes(event.key) && length > 0) {
       setValue(
         getSplittedTags({
           splitChars,
@@ -390,7 +389,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
           handleSearchChange('');
-          _value.length < maxTags! && setValue([..._value, optionsLockup[val].label]);
+          _value.length < maxTags && setValue([..._value, optionsLockup[val].label]);
 
           combobox.resetSelectedOption();
         }}

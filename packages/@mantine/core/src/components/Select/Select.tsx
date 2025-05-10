@@ -100,12 +100,11 @@ export type SelectFactory = Factory<{
   variant: InputVariant;
 }>;
 
-const defaultProps: Partial<SelectProps> = {
-  searchable: false,
+const defaultProps = {
   withCheckIcon: true,
   allowDeselect: true,
   checkIconPosition: 'left',
-};
+} satisfies Partial<SelectProps>;
 
 export const Select = factory<SelectFactory>((_props, ref) => {
   const props = useProps('Select', defaultProps, _props);

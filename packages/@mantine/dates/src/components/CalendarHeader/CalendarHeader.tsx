@@ -92,13 +92,11 @@ export type CalendarHeaderFactory = Factory<{
   vars: CalendarHeaderCssVariables;
 }>;
 
-const defaultProps: Partial<CalendarHeaderProps> = {
-  nextDisabled: false,
-  previousDisabled: false,
+const defaultProps = {
   hasNextLevel: true,
   withNext: true,
   withPrevious: true,
-};
+} satisfies Partial<CalendarHeaderProps>;
 
 const varsResolver = createVarsResolver<CalendarHeaderFactory>((_, { size }) => ({
   calendarHeader: {

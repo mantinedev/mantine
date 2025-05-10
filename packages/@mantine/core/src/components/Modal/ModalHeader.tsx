@@ -16,7 +16,7 @@ export type ModalHeaderFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<ModalHeaderProps> = {};
+const defaultProps = {} satisfies Partial<ModalHeaderProps>;
 
 export const ModalHeader = factory<ModalHeaderFactory>((_props, ref) => {
   const props = useProps('ModalHeader', defaultProps, _props);

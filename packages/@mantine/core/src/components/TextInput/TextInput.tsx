@@ -15,7 +15,7 @@ export type TextInputFactory = Factory<{
   stylesNames: __InputStylesNames;
 }>;
 
-const defaultProps: Partial<TextInputProps> = {};
+const defaultProps = {} satisfies Partial<TextInputProps>;
 
 export const TextInput = factory<TextInputFactory>((props, ref) => {
   const _props = useProps('TextInput', defaultProps, props);

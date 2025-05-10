@@ -18,14 +18,14 @@ interface MenuSubProps extends __PopoverProps {
   closeDelay?: number;
 }
 
-const defaultProps: Partial<MenuSubProps> = {
+const defaultProps = {
   offset: 0,
   position: 'right-start',
   transitionProps: { duration: 0 },
-};
+} satisfies Partial<MenuSubProps>;
 
 export function MenuSub(_props: MenuSubProps) {
-  const { children, closeDelay, ...others } = useProps('MenuSub', _props, defaultProps);
+  const { children, closeDelay, ...others } = useProps('MenuSub', defaultProps, _props);
   const id = useId();
   const [opened, { open, close }] = useDisclosure(false);
   const ctx = useSubMenuContext();

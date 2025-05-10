@@ -73,13 +73,13 @@ export type PaginationFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<PaginationProps> = {
+const defaultProps = {
   withControls: true,
   withPages: true,
   siblings: 1,
   boundaries: 1,
   gap: 8,
-};
+} satisfies Partial<PaginationProps>;
 
 export const Pagination = factory<PaginationFactory>((_props, ref) => {
   const props = useProps('Pagination', defaultProps, _props);

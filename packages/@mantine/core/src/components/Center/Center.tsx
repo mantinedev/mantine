@@ -26,7 +26,7 @@ export type CenterFactory = PolymorphicFactory<{
   stylesNames: CenterStylesNames;
 }>;
 
-const defaultProps: Partial<CenterProps> = {};
+const defaultProps = {} satisfies Partial<CenterProps>;
 
 export const Center = polymorphicFactory<CenterFactory>((_props, ref) => {
   const props = useProps('Center', defaultProps, _props);

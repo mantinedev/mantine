@@ -48,9 +48,9 @@ export type RadioCardFactory = Factory<{
   vars: RadioCardCssVariables;
 }>;
 
-const defaultProps: Partial<RadioCardProps> = {
+const defaultProps = {
   withBorder: true,
-};
+} satisfies Partial<RadioCardProps>;
 
 const varsResolver = createVarsResolver<RadioCardFactory>((_, { radius }) => ({
   card: {

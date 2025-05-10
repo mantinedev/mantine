@@ -49,9 +49,9 @@ export type ColorSwatchFactory = PolymorphicFactory<{
   vars: ColorSwatchCssVariables;
 }>;
 
-const defaultProps: Partial<ColorSwatchProps> = {
+const defaultProps = {
   withShadow: true,
-};
+} satisfies Partial<ColorSwatchProps>;
 
 const varsResolver = createVarsResolver<ColorSwatchFactory>((_, { radius, size }) => ({
   root: {

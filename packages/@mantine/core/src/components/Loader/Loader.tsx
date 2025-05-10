@@ -59,10 +59,10 @@ export const defaultLoaders: MantineLoadersRecord = {
   dots: Dots,
 };
 
-const defaultProps: Partial<LoaderProps> = {
+const defaultProps = {
   loaders: defaultLoaders,
   type: 'oval',
-};
+} satisfies Partial<LoaderProps>;
 
 const varsResolver = createVarsResolver<LoaderFactory>((theme, { size, color }) => ({
   root: {
@@ -114,7 +114,7 @@ export const Loader = factory<LoaderFactory>((_props, ref) => {
     <Box
       {...getStyles('root')}
       ref={ref}
-      component={(loaders as any)[type!]}
+      component={loaders[type]}
       variant={variant}
       size={size}
       {...others}

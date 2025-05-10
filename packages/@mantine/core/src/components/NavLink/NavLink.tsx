@@ -94,7 +94,7 @@ export type NavLinkFactory = PolymorphicFactory<{
   variant: NavLinkVariant;
 }>;
 
-const defaultProps: Partial<NavLinkProps> = {};
+const defaultProps = {} satisfies Partial<NavLinkProps>;
 
 const varsResolver = createVarsResolver<NavLinkFactory>(
   (theme, { variant, color, childrenOffset, autoContrast }) => {

@@ -36,9 +36,9 @@ export type DecadeLevelGroupFactory = Factory<{
   stylesNames: DecadeLevelGroupStylesNames;
 }>;
 
-const defaultProps: Partial<DecadeLevelGroupProps> = {
+const defaultProps = {
   numberOfColumns: 1,
-};
+} satisfies Partial<DecadeLevelGroupProps>;
 
 export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props, ref) => {
   const props = useProps('DecadeLevelGroup', defaultProps, _props);
@@ -94,7 +94,7 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props, ref) =
           size={size}
           yearsListFormat={yearsListFormat}
           decade={currentDecade}
-          withNext={decadeIndex === numberOfColumns! - 1}
+          withNext={decadeIndex === numberOfColumns - 1}
           withPrevious={decadeIndex === 0}
           decadeLabelFormat={decadeLabelFormat}
           __onControlClick={__onControlClick}

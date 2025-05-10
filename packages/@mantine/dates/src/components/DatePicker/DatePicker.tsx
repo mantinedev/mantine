@@ -51,11 +51,11 @@ export type DatePickerFactory = Factory<{
   stylesNames: DatePickerStylesNames;
 }>;
 
-const defaultProps: Partial<DatePickerProps> = {
+const defaultProps = {
   type: 'default',
   defaultLevel: 'month',
   numberOfColumns: 1,
-};
+} satisfies Partial<DatePickerProps>;
 
 type DatePickerComponent = (<Type extends DatePickerType = 'default'>(
   props: DatePickerProps<Type> & { ref?: React.ForwardedRef<HTMLDivElement> }

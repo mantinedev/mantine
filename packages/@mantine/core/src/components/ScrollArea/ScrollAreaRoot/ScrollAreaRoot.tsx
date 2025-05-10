@@ -34,10 +34,10 @@ export type ScrollAreaRootFactory = Factory<{
   stylesNames: ScrollAreaRootStylesNames;
 }>;
 
-const defaultProps: Partial<ScrollAreaRootProps> = {
+const defaultProps = {
   scrollHideDelay: 1000,
   type: 'hover',
-};
+} satisfies Partial<ScrollAreaRootProps>;
 
 export const ScrollAreaRoot = forwardRef<HTMLDivElement, ScrollAreaRootProps>((_props, ref) => {
   const { type, scrollHideDelay, scrollbars, getStyles, ...others } = useProps(
@@ -60,8 +60,8 @@ export const ScrollAreaRoot = forwardRef<HTMLDivElement, ScrollAreaRootProps>((_
   return (
     <ScrollAreaProvider
       value={{
-        type: type!,
-        scrollHideDelay: scrollHideDelay!,
+        type,
+        scrollHideDelay,
         scrollArea,
         viewport,
         onViewportChange: setViewport,

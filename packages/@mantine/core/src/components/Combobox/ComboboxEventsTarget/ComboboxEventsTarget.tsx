@@ -30,14 +30,14 @@ export interface ComboboxEventsTargetProps {
   autoComplete?: string;
 }
 
-const defaultProps: Partial<ComboboxEventsTargetProps> = {
+const defaultProps = {
   refProp: 'ref',
   targetType: 'input',
   withKeyboardNavigation: true,
   withAriaAttributes: true,
   withExpandedAttribute: false,
   autoComplete: 'off',
-};
+} satisfies Partial<ComboboxEventsTargetProps>;
 
 export type ComboboxEventsTargetFactory = Factory<{
   props: ComboboxEventsTargetProps;
@@ -76,7 +76,7 @@ export const ComboboxEventsTarget = factory<ComboboxEventsTargetFactory>((props,
   return cloneElement(children, {
     ...targetProps,
     ...others,
-    [refProp!]: useMergedRef(ref, ctx.store.targetRef, getRefProp(children)),
+    [refProp]: useMergedRef(ref, ctx.store.targetRef, getRefProp(children)),
   });
 });
 

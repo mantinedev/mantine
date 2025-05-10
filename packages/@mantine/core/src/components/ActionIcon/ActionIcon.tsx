@@ -88,7 +88,7 @@ export type ActionIconFactory = PolymorphicFactory<{
   };
 }>;
 
-const defaultProps: Partial<ActionIconProps> = {};
+const defaultProps = {} satisfies Partial<ActionIconProps>;
 
 const varsResolver = createVarsResolver<ActionIconFactory>(
   (theme, { size, radius, variant, gradient, color, autoContrast }) => {

@@ -89,11 +89,11 @@ export type TimeGridFactory = Factory<{
   vars: TimeGridCssVariables;
 }>;
 
-const defaultProps: Partial<TimeGridProps> = {
+const defaultProps = {
   simpleGridProps: { cols: 3, spacing: 'xs' },
   format: '24h',
   amPmLabels: { am: 'AM', pm: 'PM' },
-};
+} satisfies Partial<TimeGridProps>;
 
 const varsResolver = createVarsResolver<TimeGridFactory>((_theme, { size, radius }) => ({
   root: {
@@ -170,8 +170,8 @@ export const TimeGrid = factory<TimeGridFactory>((_props, ref) => {
               : time;
           nextValue !== _value && setValue(nextValue);
         }}
-        format={format!}
-        amPmLabels={amPmLabels!}
+        format={format}
+        amPmLabels={amPmLabels}
         disabled={isDisabled}
         data-disabled={isDisabled || undefined}
         withSeconds={withSeconds}

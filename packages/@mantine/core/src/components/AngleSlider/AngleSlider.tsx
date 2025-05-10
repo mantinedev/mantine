@@ -80,10 +80,10 @@ export type AngleSliderFactory = Factory<{
   vars: AngleSliderCssVariables;
 }>;
 
-const defaultProps: Partial<AngleSliderProps> = {
+const defaultProps = {
   step: 1,
   withLabel: true,
-};
+} satisfies Partial<AngleSliderProps>;
 
 const varsResolver = createVarsResolver<AngleSliderFactory>((_, { size, thumbSize }) => ({
   root: {
@@ -172,13 +172,13 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     }
 
     if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
-      const normalized = normalizeRadialValue(_value - step!, step!);
+      const normalized = normalizeRadialValue(_value - step, step);
       setValue(normalized);
       onChangeEnd?.(normalized);
     }
 
     if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
-      const normalized = normalizeRadialValue(_value + step!, step!);
+      const normalized = normalizeRadialValue(_value + step, step);
       setValue(normalized);
       onChangeEnd?.(normalized);
     }

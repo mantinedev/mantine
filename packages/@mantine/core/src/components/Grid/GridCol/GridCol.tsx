@@ -38,9 +38,9 @@ export type GridColFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<GridColProps> = {
+const defaultProps = {
   span: 12,
-};
+} satisfies Partial<GridColProps>;
 
 export const GridCol = factory<GridColFactory>((_props, ref) => {
   const props = useProps('GridCol', defaultProps, _props);

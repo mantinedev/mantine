@@ -25,7 +25,7 @@ export type CodeHighlightControlFactory = PolymorphicFactory<{
   defaultComponent: 'button';
 }>;
 
-const defaultProps: Partial<CodeHighlightControlProps> = {};
+const defaultProps = {} satisfies Partial<CodeHighlightControlProps>;
 
 export const CodeHighlightControl = polymorphicFactory<CodeHighlightControlFactory>(
   (_props, ref) => {

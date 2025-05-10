@@ -38,7 +38,7 @@ export type InputDescriptionFactory = Factory<{
   vars: InputDescriptionCssVariables;
 }>;
 
-const defaultProps: Partial<InputDescriptionProps> = {};
+const defaultProps = {} satisfies Partial<InputDescriptionProps>;
 
 const varsResolver = createVarsResolver<InputDescriptionFactory>((_, { size }) => ({
   description: {

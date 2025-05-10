@@ -99,10 +99,10 @@ export type SwitchFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<SwitchProps> = {
+const defaultProps = {
   labelPosition: 'right',
   withThumbIndicator: true,
-};
+} satisfies Partial<SwitchProps>;
 
 const varsResolver = createVarsResolver<SwitchFactory>((theme, { radius, color, size }) => ({
   root: {

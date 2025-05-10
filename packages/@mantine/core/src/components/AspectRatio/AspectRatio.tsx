@@ -31,7 +31,7 @@ export type AspectRatioFactory = Factory<{
   vars: AspectRatioCssVariables;
 }>;
 
-const defaultProps: Partial<AspectRatioProps> = {};
+const defaultProps = {} satisfies Partial<AspectRatioProps>;
 
 const varsResolver = createVarsResolver<AspectRatioFactory>((_, { ratio }) => ({
   root: {

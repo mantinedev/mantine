@@ -48,11 +48,11 @@ export type LoadingOverlayFactory = Factory<{
   vars: LoadingOverlayCssVariables;
 }>;
 
-const defaultProps: Partial<LoadingOverlayProps> = {
+const defaultProps = {
   transitionProps: { transition: 'fade', duration: 0 },
   overlayProps: { backgroundOpacity: 0.75 },
   zIndex: getDefaultZIndex('overlay'),
-};
+} satisfies Partial<LoadingOverlayProps>;
 
 const varsResolver = createVarsResolver<LoadingOverlayFactory>((_, { zIndex }) => ({
   root: {
