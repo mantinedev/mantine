@@ -1,4 +1,4 @@
-import { HooksDemos } from '@docs/demos';
+import { HooksDemos, TagsInputDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -21,6 +21,16 @@ const form  = useForm({ initialValues: { name: 'John Doe' } });
 
 form.resetField('name'); // resets name field to 'John Doe'
 ```
+
+## TagsInput isDuplicate prop
+
+You can now use `isDuplicate` prop in [TagsInput](/core/tags-input) component
+to control how duplicates are detected. It is a function that receives two arguments:
+tag value and current tags. The function must return `true` if the value is duplicate.
+
+Example of using `isDuplicate` to allow using the same value with different casing:
+
+<Demo data={TagsInputDemos.isDuplicate} />
 
 ## Hooks types exports
 
