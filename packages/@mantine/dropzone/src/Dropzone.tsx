@@ -5,7 +5,7 @@ import {
   FileRejection,
   FileWithPath,
   useDropzone,
-} from 'react-dropzone-esm';
+} from 'react-dropzone';
 import {
   Box,
   BoxProps,

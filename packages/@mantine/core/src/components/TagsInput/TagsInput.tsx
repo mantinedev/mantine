@@ -103,6 +103,9 @@ export interface TagsInputProps
 
   /** Determines whether the value typed in by the user but not submitted should be accepted when the input is blurred, `true` by default */
   acceptValueOnBlur?: boolean;
+
+  /** Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. */
+  isDuplicate?: (value: string, currentValues: string[]) => boolean;
 }
 
 export type TagsInputFactory = Factory<{
@@ -192,6 +195,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     onClear,
     scrollAreaProps,
     acceptValueOnBlur,
+    isDuplicate,
     ...others
   } = props;
 
@@ -251,13 +255,15 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
   });
 
   const handleValueSelect = (val: string) => {
-    const isDuplicate = _value.some((tag) => tag.toLowerCase() === val.toLowerCase());
+    const isDuplicated = isDuplicate
+      ? isDuplicate(val, _value)
+      : _value.some((tag) => tag.toLowerCase() === val.toLowerCase());
 
-    if (isDuplicate) {
+    if (isDuplicated) {
       onDuplicate?.(val);
     }
 
-    if ((!isDuplicate || (isDuplicate && allowDuplicates)) && _value.length < maxTags!) {
+    if ((!isDuplicated || (isDuplicated && allowDuplicates)) && _value.length < maxTags!) {
       onOptionSubmit?.(val);
       handleSearchChange('');
       if (val.length > 0) {
