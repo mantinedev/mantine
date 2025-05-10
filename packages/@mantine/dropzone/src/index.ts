@@ -21,4 +21,4 @@ export type {
   DropzoneFullScreenFactory,
 } from './DropzoneFullScreen';
 export type { DropzoneAcceptProps, DropzoneRejectProps, DropzoneIdleProps } from './DropzoneStatus';
-export type { FileWithPath, FileRejection } from 'react-dropzone-esm';
+export type { FileWithPath, FileRejection } from 'react-dropzone';
