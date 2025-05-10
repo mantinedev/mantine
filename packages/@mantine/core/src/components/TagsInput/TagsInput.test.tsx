@@ -50,7 +50,7 @@ describe('@mantine/core/TagsInput', () => {
     selector: 'input',
   });
 
-  it('isDuplicate test', async () => {
+  it('correctly handles custom isDuplicate', async () => {
     const user = userEvent.setup();
     render(
       <TagsInput
