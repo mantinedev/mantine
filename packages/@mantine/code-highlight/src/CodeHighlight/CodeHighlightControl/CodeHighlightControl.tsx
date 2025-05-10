@@ -56,7 +56,6 @@ export const CodeHighlightControl = polymorphicFactory<CodeHighlightControlFacto
           styles={{ tooltip: tooltipStyles.style }}
           data-code-color-scheme={ctx.codeColorScheme}
           transitionProps={{ duration: 0 }}
-          withinPortal={false}
         >
           {control}
         </Tooltip>

@@ -72,7 +72,7 @@
     "next-sitemap": "^4.2.3",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "react-dropzone-esm": "15.2.0",
+    "react-dropzone": "14.3.8",
     "react-number-format": "^5.4.3",
     "recharts": "^2.13.3",
     "rehype-slug": "^6.0.0",
