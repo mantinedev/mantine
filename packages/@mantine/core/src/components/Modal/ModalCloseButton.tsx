@@ -16,7 +16,7 @@ export type ModalCloseButtonFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<ModalCloseButtonProps> = {};
+const defaultProps = {} satisfies Partial<ModalCloseButtonProps>;
 
 export const ModalCloseButton = factory<ModalCloseButtonFactory>((_props, ref) => {
   const props = useProps('ModalCloseButton', defaultProps, _props);

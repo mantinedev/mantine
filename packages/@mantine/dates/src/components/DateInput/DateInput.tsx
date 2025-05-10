@@ -89,10 +89,10 @@ export type DateInputFactory = Factory<{
   variant: InputVariant;
 }>;
 
-const defaultProps: Partial<DateInputProps> = {
+const defaultProps = {
   valueFormat: 'MMMM D, YYYY',
   fixOnBlur: true,
-};
+} satisfies Partial<DateInputProps>;
 
 export const DateInput = factory<DateInputFactory>((_props, ref) => {
   const props = useInputProps('DateInput', defaultProps, _props);
@@ -163,14 +163,14 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
 
   useEffect(() => {
     if (controlled && value !== null) {
-      setDate(value!);
+      setDate(value);
     }
   }, [controlled, value]);
 
-  const [inputValue, setInputValue] = useState(formatValue(_value!));
+  const [inputValue, setInputValue] = useState(formatValue(_value));
 
   useEffect(() => {
-    setInputValue(formatValue(_value!));
+    setInputValue(formatValue(_value));
   }, [ctx.getLocale(locale)]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -182,7 +182,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
       setValue(null);
     } else {
       const dateValue = _dateParser(val);
-      if (isDateValid({ date: dateValue!, minDate, maxDate })) {
+      if (dateValue && isDateValid({ date: dateValue, minDate, maxDate })) {
         setValue(dateValue);
         setDate(dateValue);
       }
@@ -192,7 +192,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     onBlur?.(event);
     setDropdownOpened(false);
-    fixOnBlur && setInputValue(formatValue(_value!));
+    fixOnBlur && setInputValue(formatValue(_value));
   };
 
   const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -207,14 +207,14 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
 
   const _getDayProps = (day: DateStringValue) => ({
     ...getDayProps?.(day),
-    selected: dayjs(_value!).isSame(day, 'day'),
+    selected: dayjs(_value).isSame(day, 'day'),
     onClick: (event: any) => {
       getDayProps?.(day).onClick?.(event);
 
       const val =
-        clearable && _allowDeselect ? (dayjs(_value!).isSame(day, 'day') ? null : day) : day;
+        clearable && _allowDeselect ? (dayjs(_value).isSame(day, 'day') ? null : day) : day;
       setValue(val);
-      !controlled && setInputValue(formatValue(val!));
+      !controlled && val && setInputValue(formatValue(val));
       setDropdownOpened(false);
     },
   });
@@ -238,12 +238,12 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     ) : null);
 
   useDidUpdate(() => {
-    _value !== undefined && !dropdownOpened && setInputValue(formatValue(_value!));
+    _value !== undefined && !dropdownOpened && setInputValue(formatValue(_value));
   }, [_value]);
 
   useClickOutside(() => setDropdownOpened(false), undefined, [
-    _wrapperRef.current!,
-    _dropdownRef.current!,
+    _wrapperRef.current,
+    _dropdownRef.current,
   ]);
 
   return (

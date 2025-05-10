@@ -112,10 +112,10 @@ export type ChartTooltipFactory = Factory<{
   stylesNames: ChartTooltipStylesNames;
 }>;
 
-const defaultProps: Partial<ChartTooltipProps> = {
+const defaultProps = {
   type: 'area',
   showColor: true,
-};
+} satisfies Partial<ChartTooltipProps>;
 
 export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
   const props = useProps('ChartTooltip', defaultProps, _props);
@@ -179,8 +179,8 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
       </div>
       <div {...getStyles('tooltipItemData')}>
         {typeof valueFormatter === 'function'
-          ? valueFormatter(getData(item, type!))
-          : getData(item, type!)}
+          ? valueFormatter(getData(item, type))
+          : getData(item, type)}
         {unit || item.unit}
       </div>
     </div>

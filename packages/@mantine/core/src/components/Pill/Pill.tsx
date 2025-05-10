@@ -57,9 +57,9 @@ export type PillFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<PillProps> = {
+const defaultProps = {
   variant: 'default',
-};
+} satisfies Partial<PillProps>;
 
 const varsResolver = createVarsResolver<PillFactory>((_, { radius }, { size }) => ({
   root: {

@@ -100,7 +100,7 @@ export type DateInputMaskFactory = Factory<{
   variant: DateInputMaskVariant;
 }>;
 
-const defaultProps: Partial<DateInputMaskProps> = {};
+const defaultProps = {} satisfies Partial<DateInputMaskProps>;
 
 export const DateInputMask = factory<DateInputMaskFactory>((_props, ref) => {
   const props = useProps('DateInputMask', defaultProps, _props);

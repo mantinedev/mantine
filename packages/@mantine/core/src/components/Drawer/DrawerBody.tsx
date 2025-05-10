@@ -16,7 +16,7 @@ export type DrawerBodyFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<DrawerBodyProps> = {};
+const defaultProps = {} satisfies Partial<DrawerBodyProps>;
 
 export const DrawerBody = factory<DrawerBodyFactory>((_props, ref) => {
   const props = useProps('DrawerBody', defaultProps, _props);

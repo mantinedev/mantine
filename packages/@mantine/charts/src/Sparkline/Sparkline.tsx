@@ -67,13 +67,13 @@ export type SparklineFactory = Factory<{
   vars: SparklineCssVariables;
 }>;
 
-const defaultProps: Partial<SparklineProps> = {
+const defaultProps = {
   withGradient: true,
   connectNulls: true,
   fillOpacity: 0.6,
   strokeWidth: 2,
   curveType: 'linear',
-};
+} satisfies Partial<SparklineProps>;
 
 function getTrendColor(data: (number | null)[], trendColors: SparklineTrendColors) {
   const first = data[0];

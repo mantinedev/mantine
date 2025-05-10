@@ -168,7 +168,7 @@ export type PopoverFactory = Factory<{
   vars: PopoverCssVariables;
 }>;
 
-const defaultProps: Partial<PopoverProps> = {
+const defaultProps = {
   position: 'bottom',
   offset: 8,
   positionDependencies: [],
@@ -190,7 +190,7 @@ const defaultProps: Partial<PopoverProps> = {
   zIndex: getDefaultZIndex('popover'),
   __staticSelector: 'Popover',
   width: 'max-content',
-};
+} satisfies Partial<PopoverProps>;
 
 const varsResolver = createVarsResolver<PopoverFactory>((_, { radius, shadow }) => ({
   dropdown: {
@@ -251,7 +251,7 @@ export function Popover(_props: PopoverProps) {
   } = props;
 
   const getStyles = useStyles<PopoverFactory>({
-    name: __staticSelector!,
+    name: __staticSelector,
     props,
     classes,
     classNames,
@@ -274,10 +274,10 @@ export function Popover(_props: PopoverProps) {
   const popover = usePopover({
     middlewares,
     width,
-    position: getFloatingPosition(dir, position!),
-    offset: typeof offset === 'number' ? offset + (withArrow ? arrowSize! / 2 : 0) : offset!,
+    position: getFloatingPosition(dir, position),
+    offset: typeof offset === 'number' ? offset + (withArrow ? arrowSize / 2 : 0) : offset,
     arrowRef,
-    arrowOffset: arrowOffset!,
+    arrowOffset,
     onPositionChange,
     positionDependencies,
     opened,
@@ -334,8 +334,8 @@ export function Popover(_props: PopoverProps) {
         controlled: popover.controlled,
         reference,
         floating,
-        x: popover.floating.x!,
-        y: popover.floating.y!,
+        x: popover.floating.x,
+        y: popover.floating.y,
         arrowX: popover.floating?.middlewareData?.arrow?.x,
         arrowY: popover.floating?.middlewareData?.arrow?.y,
         opened: popover.opened,
@@ -343,10 +343,10 @@ export function Popover(_props: PopoverProps) {
         transitionProps: { ...transitionProps, onExited, onEntered },
         width,
         withArrow,
-        arrowSize: arrowSize!,
-        arrowOffset: arrowOffset!,
-        arrowRadius: arrowRadius!,
-        arrowPosition: arrowPosition!,
+        arrowSize,
+        arrowOffset,
+        arrowRadius,
+        arrowPosition,
         placement: popover.floating.placement,
         trapFocus,
         withinPortal,
@@ -362,7 +362,7 @@ export function Popover(_props: PopoverProps) {
         getDropdownId: () => `${uid}-dropdown`,
         withRoles,
         targetProps: others,
-        __staticSelector: __staticSelector!,
+        __staticSelector,
         classNames,
         styles,
         unstyled,

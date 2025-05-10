@@ -53,9 +53,9 @@ export type DecadeLevelFactory = Factory<{
   stylesNames: DecadeLevelStylesNames;
 }>;
 
-const defaultProps: Partial<DecadeLevelProps> = {
+const defaultProps = {
   decadeLabelFormat: 'YYYY',
-};
+} satisfies Partial<DecadeLevelProps>;
 
 export const DecadeLevel = factory<DecadeLevelFactory>((_props, ref) => {
   const props = useProps('DecadeLevel', defaultProps, _props);
@@ -134,9 +134,9 @@ export const DecadeLevel = factory<DecadeLevelFactory>((_props, ref) => {
         label={
           typeof decadeLabelFormat === 'function'
             ? decadeLabelFormat(startOfDecade, endOfDecade)
-            : `${formatDecade(startOfDecade, decadeLabelFormat!)} – ${formatDecade(
+            : `${formatDecade(startOfDecade, decadeLabelFormat)} – ${formatDecade(
                 endOfDecade,
-                decadeLabelFormat!
+                decadeLabelFormat
               )}`
         }
         __preventFocus={__preventFocus}

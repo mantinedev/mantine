@@ -35,7 +35,7 @@ export type SwitchGroupFactory = Factory<{
   stylesNames: SwitchGroupStylesNames;
 }>;
 
-const defaultProps: Partial<SwitchGroupProps> = {};
+const defaultProps = {} satisfies Partial<SwitchGroupProps>;
 
 export const SwitchGroup = factory<SwitchGroupFactory>((props, ref) => {
   const { value, defaultValue, onChange, size, wrapperProps, children, readOnly, ...others } =

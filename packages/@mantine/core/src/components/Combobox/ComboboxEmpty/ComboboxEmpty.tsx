@@ -24,7 +24,7 @@ export type ComboboxEmptyFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<ComboboxEmptyProps> = {};
+const defaultProps = {} satisfies Partial<ComboboxEmptyProps>;
 
 export const ComboboxEmpty = factory<ComboboxEmptyFactory>((props, ref) => {
   const { classNames, className, style, styles, vars, ...others } = useProps(

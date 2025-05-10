@@ -34,14 +34,13 @@ export type TooltipFloatingFactory = Factory<{
   vars: TooltipCssVariables;
 }>;
 
-const defaultProps: Partial<TooltipFloatingProps> = {
+const defaultProps = {
   refProp: 'ref',
   withinPortal: true,
   offset: 10,
-  defaultOpened: false,
   position: 'right',
   zIndex: getDefaultZIndex('popover'),
-};
+} satisfies Partial<TooltipFloatingProps>;
 
 const varsResolver = createVarsResolver<TooltipFloatingFactory>((theme, { radius, color }) => ({
   tooltip: {
@@ -93,9 +92,9 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => 
   });
 
   const { handleMouseMove, x, y, opened, boundaryRef, floating, setOpened } = useFloatingTooltip({
-    offset: offset!,
-    position: position!,
-    defaultOpened: defaultOpened!,
+    offset,
+    position,
+    defaultOpened,
   });
 
   if (!isElement(children)) {
@@ -142,7 +141,7 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => 
 
       {cloneElement(children, {
         ..._childrenProps,
-        [refProp!]: targetRef,
+        [refProp]: targetRef,
         onMouseEnter,
         onMouseLeave,
       })}

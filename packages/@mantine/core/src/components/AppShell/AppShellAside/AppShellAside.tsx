@@ -29,7 +29,7 @@ export type AppShellAsideFactory = Factory<{
   stylesNames: AppShellAsideStylesNames;
 }>;
 
-const defaultProps: Partial<AppShellAsideProps> = {};
+const defaultProps = {} satisfies Partial<AppShellAsideProps>;
 
 export const AppShellAside = factory<AppShellAsideFactory>((_props, ref) => {
   const props = useProps('AppShellAside', defaultProps, _props);

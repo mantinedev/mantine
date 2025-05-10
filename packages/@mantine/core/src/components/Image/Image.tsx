@@ -43,7 +43,7 @@ export type ImageFactory = PolymorphicFactory<{
   vars: ImageCssVariables;
 }>;
 
-const defaultProps: Partial<ImageProps> = {};
+const defaultProps = {} satisfies Partial<ImageProps>;
 
 const varsResolver = createVarsResolver<ImageFactory>((_, { radius, fit }) => ({
   root: {

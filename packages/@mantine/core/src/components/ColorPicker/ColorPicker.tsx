@@ -111,13 +111,13 @@ export type ColorPickerFactory = Factory<{
   vars: ColorPickerCssVariables;
 }>;
 
-const defaultProps: Partial<ColorPickerProps> = {
+const defaultProps = {
   swatchesPerRow: 7,
   withPicker: true,
   focusable: true,
   size: 'md',
   __staticSelector: 'ColorPicker',
-};
+} satisfies Partial<ColorPickerProps>;
 
 const varsResolver = createVarsResolver<ColorPickerFactory>((_, { size, swatchesPerRow }) => ({
   wrapper: {
@@ -139,7 +139,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
     styles,
     unstyled,
     vars,
-    format,
+    format = 'hex',
     value,
     defaultValue,
     onChange,
@@ -160,7 +160,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
   } = props;
 
   const getStyles = useStyles<ColorPickerFactory>({
-    name: __staticSelector!,
+    name: __staticSelector,
     props,
     classes,
     className,
@@ -173,7 +173,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const formatRef = useRef(format);
+  const formatRef = useRef(format || 'hex');
   const valueRef = useRef<string>('');
   const scrubTimeoutRef = useRef<number>(-1);
   const isScrubbingRef = useRef(false);
@@ -203,22 +203,22 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
   const handleChange = (color: Partial<HsvaColor>) => {
     setParsed((current) => {
       const next = { ...current, ...color };
-      valueRef.current = convertHsvaTo(formatRef.current!, next);
+      valueRef.current = convertHsvaTo(formatRef.current, next);
       return next;
     });
 
-    setValue(valueRef.current!);
+    setValue(valueRef.current);
   };
 
   useDidUpdate(() => {
-    if (isColorValid(value!) && !isScrubbingRef.current) {
-      setParsed(parseColor(value!));
+    if (typeof value === 'string' && isColorValid(value) && !isScrubbingRef.current) {
+      setParsed(parseColor(value));
     }
   }, [value]);
 
   useDidUpdate(() => {
-    formatRef.current = format;
-    setValue(convertHsvaTo(format!, parsed));
+    formatRef.current = format || 'hex';
+    setValue(convertHsvaTo(formatRef.current, parsed));
   }, [format]);
 
   return (
@@ -236,10 +236,10 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
               value={parsed}
               onChange={handleChange}
               onChangeEnd={({ s, v }) =>
-                onChangeEnd?.(convertHsvaTo(formatRef.current!, { ...parsed, s: s!, v: v! }))
+                onChangeEnd?.(convertHsvaTo(formatRef.current, { ...parsed, s: s!, v: v! }))
               }
               color={_value}
-              size={size!}
+              size={size}
               focusable={focusable}
               saturationLabel={saturationLabel}
               onScrubStart={startScrubbing}
@@ -252,7 +252,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
                   value={parsed.h}
                   onChange={(h) => handleChange({ h })}
                   onChangeEnd={(h) =>
-                    onChangeEnd?.(convertHsvaTo(formatRef.current!, { ...parsed, h }))
+                    onChangeEnd?.(convertHsvaTo(formatRef.current, { ...parsed, h }))
                   }
                   size={size}
                   focusable={focusable}
@@ -266,7 +266,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
                     value={parsed.a}
                     onChange={(a) => handleChange({ a })}
                     onChangeEnd={(a) => {
-                      onChangeEnd?.(convertHsvaTo(formatRef.current!, { ...parsed, a }));
+                      onChangeEnd?.(convertHsvaTo(formatRef.current, { ...parsed, a }));
                     }}
                     size={size}
                     color={convertHsvaTo('hex', parsed)}
@@ -297,7 +297,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
             focusable={focusable}
             setValue={setValue}
             onChangeEnd={(color) => {
-              const convertedColor = convertHsvaTo(format!, parseColor(color));
+              const convertedColor = convertHsvaTo(format, parseColor(color));
               onColorSwatchClick?.(convertedColor);
               onChangeEnd?.(convertedColor);
               if (!controlled) {

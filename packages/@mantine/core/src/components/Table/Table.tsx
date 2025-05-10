@@ -128,10 +128,10 @@ export type TableFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<TableProps> = {
+const defaultProps = {
   withRowBorders: true,
   verticalSpacing: 7,
-};
+} satisfies Partial<TableProps>;
 
 const varsResolver = createVarsResolver<TableFactory>(
   (

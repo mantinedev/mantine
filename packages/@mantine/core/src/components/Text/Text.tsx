@@ -75,9 +75,9 @@ export type TextFactory = PolymorphicFactory<{
   variant: TextVariant;
 }>;
 
-const defaultProps: Partial<TextProps> = {
+const defaultProps = {
   inherit: false,
-};
+} satisfies Partial<TextProps>;
 
 const varsResolver = createVarsResolver<TextFactory>(
   (theme, { variant, lineClamp, gradient, size, color }) => ({

@@ -58,9 +58,9 @@ export type PortalFactory = Factory<{
   ref: HTMLDivElement;
 }>;
 
-const defaultProps: Partial<PortalProps> = {
+const defaultProps = {
   reuseTargetNode: true,
-};
+} satisfies Partial<PortalProps>;
 
 export const Portal = factory<PortalFactory>((props, ref) => {
   const { children, target, reuseTargetNode, ...others } = useProps('Portal', defaultProps, props);

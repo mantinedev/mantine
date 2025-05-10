@@ -23,11 +23,10 @@ export interface PaginationEdgeProps extends BoxProps {
 }
 
 export function createEdgeComponent({ icon, name, action, type }: CreateEdgeComponent) {
-  const defaultProps: Partial<PaginationEdgeProps> = { icon };
+  const defaultProps = { icon } satisfies Partial<PaginationEdgeProps>;
 
   const Component = forwardRef<HTMLButtonElement, PaginationEdgeProps>((props, ref) => {
-    const { icon: _icon, ...others } = useProps(name, defaultProps, props);
-    const Icon = _icon!;
+    const { icon: Icon, ...others } = useProps(name, defaultProps, props);
     const ctx = usePaginationContext();
     const disabled = type === 'next' ? ctx.active === ctx.total : ctx.active === 1;
 

@@ -26,7 +26,7 @@ export type AppShellSectionFactory = PolymorphicFactory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<AppShellSectionProps> = {};
+const defaultProps = {} satisfies Partial<AppShellSectionProps>;
 
 export const AppShellSection = polymorphicFactory<AppShellSectionFactory>((_props, ref) => {
   const props = useProps('AppShellSection', defaultProps, _props);

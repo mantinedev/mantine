@@ -34,7 +34,7 @@ export type TimeInputFactory = Factory<{
   stylesNames: __InputStylesNames;
 }>;
 
-const defaultProps: Partial<TimeInputProps> = {};
+const defaultProps = {} satisfies Partial<TimeInputProps>;
 
 export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
   const props = useProps('TimeInput', defaultProps, _props);
@@ -104,10 +104,16 @@ export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
       if (val) {
         const check = checkIfTimeLimitExceeded(val);
         if (check === 1) {
-          event.currentTarget.value = maxTime!;
+          if (maxTime) {
+            event.currentTarget.value = maxTime;
+          }
+
           props.onChange?.(event);
         } else if (check === -1) {
-          event.currentTarget.value = minTime!;
+          if (minTime) {
+            event.currentTarget.value = minTime;
+          }
+
           props.onChange?.(event);
         }
       }

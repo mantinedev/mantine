@@ -49,7 +49,7 @@ export interface AppShellProps
   /** Determines whether associated components should have a border, `true` by default */
   withBorder?: boolean;
 
-  /** Controls padding of the main section, `0` by default. !important!: use `padding` prop instead of `p`. */
+  /** Controls padding of the main section, `0` by default. !important: use `padding` prop instead of `p`. */
   padding?: MantineSpacing | AppShellResponsiveSize;
 
   /** AppShell.Navbar configuration, controls width, breakpoints and collapsed state. Required if you use AppShell.Navbar component. */
@@ -98,13 +98,13 @@ export type AppShellFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<AppShellProps> = {
+const defaultProps = {
   withBorder: true,
   padding: 0,
   transitionDuration: 200,
   transitionTimingFunction: 'ease',
   zIndex: getDefaultZIndex('app'),
-};
+} satisfies Partial<AppShellProps>;
 
 const varsResolver = createVarsResolver<AppShellFactory>(
   (_, { transitionDuration, transitionTimingFunction }) => ({

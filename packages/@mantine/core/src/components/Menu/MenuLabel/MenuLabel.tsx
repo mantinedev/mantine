@@ -24,7 +24,7 @@ export type MenuLabelFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<MenuLabelProps> = {};
+const defaultProps = {} satisfies Partial<MenuLabelProps>;
 
 export const MenuLabel = factory<MenuLabelFactory>((props, ref) => {
   const { classNames, className, style, styles, vars, ...others } = useProps(

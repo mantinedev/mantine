@@ -63,10 +63,10 @@ export type RingProgressFactory = Factory<{
   vars: RingProgressCssVariables;
 }>;
 
-const defaultProps: Partial<RingProgressProps> = {
+const defaultProps = {
   size: 120,
   thickness: 12,
-};
+} satisfies Partial<RingProgressProps>;
 
 const varsResolver = createVarsResolver<RingProgressFactory>(
   (_, { size, thickness, transitionDuration }) => ({
@@ -110,10 +110,10 @@ export const RingProgress = factory<RingProgressFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const clampedThickness = getClampedThickness(thickness!, size!);
+  const clampedThickness = getClampedThickness(thickness, size);
 
   const curves = getCurves({
-    size: size!,
+    size,
     thickness: clampedThickness,
     sections,
     renderRoundedLineCaps: roundCaps,
@@ -122,7 +122,7 @@ export const RingProgress = factory<RingProgressFactory>((_props, ref) => {
     <Curve
       {...data}
       key={index}
-      size={size!}
+      size={size}
       thickness={clampedThickness}
       sum={sum}
       offset={offset}

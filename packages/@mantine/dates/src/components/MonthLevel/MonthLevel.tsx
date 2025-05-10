@@ -51,9 +51,9 @@ export type MonthLevelFactory = Factory<{
   stylesNames: MonthLevelStylesNames;
 }>;
 
-const defaultProps: Partial<MonthLevelProps> = {
+const defaultProps = {
   monthLabelFormat: 'MMMM YYYY',
-};
+} satisfies Partial<MonthLevelProps>;
 
 export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
   const props = useProps('MonthLevel', defaultProps, _props);

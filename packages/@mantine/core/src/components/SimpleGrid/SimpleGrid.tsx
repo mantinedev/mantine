@@ -39,11 +39,11 @@ export type SimpleGridFactory = Factory<{
   stylesNames: SimpleGridStylesNames;
 }>;
 
-const defaultProps: Partial<SimpleGridProps> = {
+const defaultProps = {
   cols: 1,
   spacing: 'md',
   type: 'media',
-};
+} satisfies Partial<SimpleGridProps>;
 
 export const SimpleGrid = factory<SimpleGridFactory>((_props, ref) => {
   const props = useProps('SimpleGrid', defaultProps, _props);

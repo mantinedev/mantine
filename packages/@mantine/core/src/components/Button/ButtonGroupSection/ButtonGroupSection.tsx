@@ -55,7 +55,7 @@ export type ButtonGroupSectionFactory = Factory<{
   variant: ButtonVariant;
 }>;
 
-const defaultProps: Partial<ButtonGroupSectionProps> = {};
+const defaultProps = {} satisfies Partial<ButtonGroupSectionProps>;
 
 const varsResolver = createVarsResolver<ButtonGroupSectionFactory>(
   (theme, { radius, color, gradient, variant, autoContrast, size }) => {

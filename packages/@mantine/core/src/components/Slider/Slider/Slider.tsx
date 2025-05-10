@@ -126,7 +126,7 @@ export type SliderFactory = Factory<{
   vars: SliderCssVariables;
 }>;
 
-const defaultProps: Partial<SliderProps> = {
+const defaultProps = {
   radius: 'xl',
   min: 0,
   max: 100,
@@ -134,12 +134,11 @@ const defaultProps: Partial<SliderProps> = {
   marks: [],
   label: (f) => f,
   labelTransitionProps: { transition: 'fade', duration: 0 },
-  labelAlwaysOn: false,
   thumbLabel: '',
   showLabelOnHover: true,
-  disabled: false,
   scale: (v) => v,
-};
+  size: 'md',
+} satisfies Partial<SliderProps>;
 
 const varsResolver = createVarsResolver<SliderFactory>(
   (theme, { size, color, thumbSize, radius }) => ({
@@ -204,9 +203,9 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
   const { dir } = useDirection();
   const [hovered, setHovered] = useState(false);
   const [_value, setValue] = useUncontrolled({
-    value: typeof value === 'number' ? clamp(value, min!, max!) : value,
-    defaultValue: typeof defaultValue === 'number' ? clamp(defaultValue, min!, max!) : defaultValue,
-    finalValue: clamp(0, min!, max!),
+    value: typeof value === 'number' ? clamp(value, min, max) : value,
+    defaultValue: typeof defaultValue === 'number' ? clamp(defaultValue, min, max) : defaultValue,
+    finalValue: clamp(0, min, max),
     onChange,
   });
 
@@ -219,19 +218,19 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
 
   const root = useRef<HTMLDivElement>(null);
   const thumb = useRef<HTMLDivElement>(null);
-  const position = getPosition({ value: _value, min: min!, max: max! });
-  const scaledValue = scale!(_value);
+  const position = getPosition({ value: _value, min, max });
+  const scaledValue = scale(_value);
   const _label = typeof label === 'function' ? label(scaledValue) : label;
-  const precision = _precision ?? getPrecision(step!);
+  const precision = _precision ?? getPrecision(step);
 
   const handleChange = useCallback(
     ({ x }: { x: number }) => {
       if (!disabled) {
         const nextValue = getChangeValue({
           value: x,
-          min: min!,
-          max: max!,
-          step: step!,
+          min,
+          max,
+          step,
           precision,
         });
         setValue(
@@ -287,7 +286,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
           }
 
           const nextValue = getFloatingValue(
-            Math.min(Math.max(_value + step!, min!), max!),
+            Math.min(Math.max(_value + step, min), max),
             precision
           );
           setValue(nextValue);
@@ -308,7 +307,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
           }
 
           const nextValue = getFloatingValue(
-            Math.min(Math.max(dir === 'rtl' ? _value - step! : _value + step!, min!), max!),
+            Math.min(Math.max(dir === 'rtl' ? _value - step : _value + step, min), max),
             precision
           );
           setValue(nextValue);
@@ -328,7 +327,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
           }
 
           const nextValue = getFloatingValue(
-            Math.min(Math.max(_value - step!, min!), max!),
+            Math.min(Math.max(_value - step, min), max),
             precision
           );
           setValue(nextValue);
@@ -349,7 +348,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
           }
 
           const nextValue = getFloatingValue(
-            Math.min(Math.max(dir === 'rtl' ? _value + step! : _value - step!, min!), max!),
+            Math.min(Math.max(dir === 'rtl' ? _value + step : _value - step, min), max),
             precision
           );
           setValue(nextValue);
@@ -367,8 +366,8 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
             break;
           }
 
-          setValue(min!);
-          callOnChangeEnd(min!);
+          setValue(min);
+          callOnChangeEnd(min);
           break;
         }
 
@@ -382,8 +381,8 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
             break;
           }
 
-          setValue(max!);
-          callOnChangeEnd(max!);
+          setValue(max);
+          callOnChangeEnd(max);
           break;
         }
 
@@ -401,7 +400,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
         ref={useMergedRef(ref, root)}
         onKeyDownCapture={handleTrackKeydownCapture}
         onMouseDownCapture={() => root.current?.focus()}
-        size={size!}
+        size={size}
         disabled={disabled}
       >
         <Track
@@ -409,8 +408,8 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
           offset={0}
           filled={position}
           marks={marks}
-          min={min!}
-          max={max!}
+          min={min}
+          max={max}
           value={scaledValue}
           disabled={disabled}
           containerProps={{
@@ -420,8 +419,8 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
           }}
         >
           <Thumb
-            max={max!}
-            min={min!}
+            max={max}
+            min={min}
             value={scaledValue}
             position={position}
             dragging={active}

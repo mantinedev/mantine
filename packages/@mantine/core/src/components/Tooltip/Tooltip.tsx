@@ -95,12 +95,10 @@ export type TooltipFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<TooltipProps> = {
+const defaultProps = {
   position: 'top',
   refProp: 'ref',
   withinPortal: true,
-  inline: false,
-  defaultOpened: false,
   arrowSize: 4,
   arrowOffset: 5,
   arrowRadius: 0,
@@ -111,7 +109,7 @@ const defaultProps: Partial<TooltipProps> = {
   zIndex: getDefaultZIndex('popover'),
   positionDependencies: [],
   middlewares: { flip: true, shift: true, inline: false },
-};
+} satisfies Partial<TooltipProps>;
 
 const varsResolver = createVarsResolver<TooltipFactory>((theme, { radius, color }) => ({
   tooltip: {
@@ -170,7 +168,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
   const { dir } = useDirection();
   const arrowRef = useRef<HTMLDivElement>(null);
   const tooltip = useTooltip({
-    position: getFloatingPosition(dir, position!),
+    position: getFloatingPosition(dir, position),
     closeDelay,
     openDelay,
     onPositionChange,
@@ -179,8 +177,8 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     events,
     arrowRef,
     arrowOffset,
-    offset: typeof offset === 'number' ? offset! + (withArrow ? arrowSize! / 2 : 0) : offset!,
-    positionDependencies: [...positionDependencies!, children],
+    offset: typeof offset === 'number' ? offset + (withArrow ? arrowSize / 2 : 0) : offset,
+    positionDependencies: [...positionDependencies, children],
     inline,
     strategy: floatingStrategy,
     middlewares,
@@ -241,14 +239,14 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
 
               <FloatingArrow
                 ref={arrowRef}
-                arrowX={tooltip.arrowX!}
-                arrowY={tooltip.arrowY!}
-                visible={withArrow!}
-                position={tooltip.placement!}
-                arrowSize={arrowSize!}
-                arrowOffset={arrowOffset!}
-                arrowRadius={arrowRadius!}
-                arrowPosition={arrowPosition!}
+                arrowX={tooltip.arrowX}
+                arrowY={tooltip.arrowY}
+                visible={withArrow}
+                position={tooltip.placement}
+                arrowSize={arrowSize}
+                arrowOffset={arrowOffset}
+                arrowRadius={arrowRadius}
+                arrowPosition={arrowPosition}
                 {...getStyles('arrow')}
               />
             </Box>
@@ -267,7 +265,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
           onPointerEnter: props.onPointerEnter,
           className: cx(className, _childrenProps.className),
           ..._childrenProps,
-          [refProp!]: targetRef,
+          [refProp]: targetRef,
         })
       )}
     </>

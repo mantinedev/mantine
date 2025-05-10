@@ -119,12 +119,12 @@ export type StepperFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<StepperProps> = {
+const defaultProps = {
   orientation: 'horizontal',
   iconPosition: 'left',
   allowNextStepsSelect: true,
   wrap: true,
-};
+} satisfies Partial<StepperProps>;
 
 const varsResolver = createVarsResolver<StepperFactory>(
   (theme, { color, iconSize, size, contentPadding, radius, autoContrast }) => ({

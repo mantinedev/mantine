@@ -51,7 +51,7 @@ export type ModalRootFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<ModalRootProps> = {
+const defaultProps = {
   __staticSelector: 'Modal',
   closeOnClickOutside: true,
   withinPortal: true,
@@ -63,7 +63,7 @@ const defaultProps: Partial<ModalRootProps> = {
   zIndex: getDefaultZIndex('modal'),
   transitionProps: { duration: 200, transition: 'fade-down' },
   yOffset: '5dvh',
-};
+} satisfies Partial<ModalRootProps>;
 
 const varsResolver = createVarsResolver<ModalRootFactory>(
   (_, { radius, size, yOffset, xOffset }) => ({
@@ -96,7 +96,7 @@ export const ModalRoot = factory<ModalRootFactory>((_props, ref) => {
   } = props;
 
   const getStyles = useStyles<ModalRootFactory>({
-    name: __staticSelector!,
+    name: __staticSelector,
     classes,
     props,
     className,
