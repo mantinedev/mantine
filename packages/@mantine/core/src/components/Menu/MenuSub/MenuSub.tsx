@@ -25,7 +25,7 @@ const defaultProps: Partial<MenuSubProps> = {
 };
 
 export function MenuSub(_props: MenuSubProps) {
-  const { children, closeDelay, ...others } = useProps('MenuSub', _props, defaultProps);
+  const { children, closeDelay, ...others } = useProps('MenuSub', defaultProps, _props);
   const id = useId();
   const [opened, { open, close }] = useDisclosure(false);
   const ctx = useSubMenuContext();
