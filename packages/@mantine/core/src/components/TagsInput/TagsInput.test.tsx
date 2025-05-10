@@ -1,4 +1,6 @@
-import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
+import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { inputDefaultProps, inputStylesApiSelectors, render, tests } from '@mantine-tests/core';
 import { TagsInput, TagsInputProps, TagsInputStylesNames } from './TagsInput';
 
 const defaultProps: TagsInputProps = {
@@ -46,5 +48,23 @@ describe('@mantine/core/TagsInput', () => {
     component: TagsInput,
     props: defaultProps,
     selector: 'input',
+  });
+
+  it('isDuplicate test', async () => {
+    const user = userEvent.setup();
+    render(
+      <TagsInput
+        role="combobox"
+        data={['test-1']}
+        isDuplicate={(value) => value.startsWith('test')}
+      />
+    );
+
+    const input = screen.getByRole('combobox');
+
+    await user.type(input, 'test-2');
+    await user.keyboard('{Enter}');
+
+    expect(screen.queryByText('test-2')).not.toBeInTheDocument();
   });
 });
