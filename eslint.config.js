@@ -13,6 +13,11 @@ module.exports = tseslint.config(
   },
   { ignores: ['**/*.{mjs,cjs,js,d.ts,d.mts}'] },
   {
+    rules: {
+      '@typescript-eslint/no-deprecated': 'warn',
+    },
+  },
+  {
     plugins: { jest },
     rules: {
       ...jest.configs['flat/recommended'].rules,

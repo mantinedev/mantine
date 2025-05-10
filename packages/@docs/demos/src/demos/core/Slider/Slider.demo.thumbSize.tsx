@@ -20,6 +20,6 @@ export const thumbSize: MantineDemo = {
   maxWidth: 400,
   centered: true,
   controls: [
-    { prop: 'thumbSize', type: 'number', min: 14, max: 32, initialValue: 14, libraryValue: null },
+    { prop: 'thumbSize', type: 'number', min: 16, max: 32, initialValue: 14, libraryValue: null },
   ],
 };
