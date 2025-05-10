@@ -82,6 +82,7 @@ export function Range() {
         mt="xl"
         labelAlwaysOn
         color="#fe0d45"
+        pushOnOverlap={false}
         styles={{
           label: { background: 'pink' },
         }}

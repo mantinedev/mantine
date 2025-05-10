@@ -129,6 +129,9 @@ export interface RangeSliderProps
 
   /** Props passed down to thumb element based on the thumb index */
   thumbProps?: (index: 0 | 1) => React.ComponentPropsWithoutRef<'div'>;
+
+  /** Determines whether the other thumb should be pushed by the current thumb dragging when `minRange`/`maxRange` is reached, `true` by default */
+  pushOnOverlap?: boolean;
 }
 
 export type RangeSliderFactory = Factory<{
@@ -161,6 +164,7 @@ const defaultProps: Partial<RangeSliderProps> = {
   labelAlwaysOn: false,
   showLabelOnHover: true,
   disabled: false,
+  pushOnOverlap: true,
   scale: (v) => v,
 };
 
@@ -199,6 +203,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     hiddenInputProps,
     restrictToMarks,
     thumbProps,
+    pushOnOverlap,
     ...others
   } = props;
 
@@ -286,7 +291,11 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
 
       if (index === 0) {
         if (val > clone[1] - (minRange! - 0.000000001)) {
-          clone[1] = Math.min(val + minRange!, max!);
+          if (pushOnOverlap) {
+            clone[1] = Math.min(val + minRange!, max!);
+          } else {
+            clone[index] = valueRef.current[index];
+          }
         }
 
         if (val > (max! - (minRange! - 0.000000001) || min!)) {
@@ -294,13 +303,21 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
         }
 
         if (clone[1] - val > maxRange!) {
-          clone[1] = val + maxRange!;
+          if (pushOnOverlap) {
+            clone[1] = val + maxRange!;
+          } else {
+            clone[index] = valueRef.current[index];
+          }
         }
       }
 
       if (index === 1) {
         if (val < clone[0] + minRange!) {
-          clone[0] = Math.max(val - minRange!, min!);
+          if (pushOnOverlap) {
+            clone[0] = Math.max(val - minRange!, min!);
+          } else {
+            clone[index] = valueRef.current[index];
+          }
         }
 
         if (val < clone[0] + minRange!) {
@@ -308,7 +325,11 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
         }
 
         if (val - clone[0] > maxRange!) {
-          clone[0] = val - maxRange!;
+          if (pushOnOverlap) {
+            clone[0] = val - maxRange!;
+          } else {
+            clone[index] = valueRef.current[index];
+          }
         }
       }
     }
