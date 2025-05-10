@@ -15,3 +15,4 @@ export { decimalRange } from './Slider.demo.decimalRange';
 export { customSlider } from './Slider.demo.customSlider';
 export { restrictToMarks } from './Slider.demo.restrictToMarks';
 export { rangeConfigurator } from './Slider.demo.rangeConfigurator';
+export { pushOnOverlap } from './Slider.demo.pushOnOverlap';
