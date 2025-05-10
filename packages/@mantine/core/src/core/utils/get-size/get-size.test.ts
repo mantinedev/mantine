@@ -5,7 +5,7 @@ describe('@mantine/core/get-size', () => {
     expect(getSize(10)).toBe('calc(0.625rem * var(--mantine-scale))');
     expect(getSize('10')).toBe('calc(0.625rem * var(--mantine-scale))');
     expect(getSize('10px')).toBe('calc(0.625rem * var(--mantine-scale))');
-    expect(getSize('10rem')).toBe('calc(10rem * var(--mantine-scale))');
+    expect(getSize('10rem')).toBe('10rem');
     expect(getSize('10%')).toBe('10%');
     expect(getSize('10vh')).toBe('10vh');
     expect(getSize('10cqw')).toBe('10cqw');
@@ -30,7 +30,7 @@ describe('@mantine/core/get-spacing', () => {
     expect(getSpacing(0)).toBe('0rem');
     expect(getSpacing('10')).toBe('calc(0.625rem * var(--mantine-scale))');
     expect(getSpacing('10px')).toBe('calc(0.625rem * var(--mantine-scale))');
-    expect(getSpacing('10rem')).toBe('calc(10rem * var(--mantine-scale))');
+    expect(getSpacing('10rem')).toBe('10rem');
     expect(getSpacing('10%')).toBe('10%');
     expect(getSpacing('xs')).toBe('var(--mantine-spacing-xs)');
     expect(getSpacing('md')).toBe('var(--mantine-spacing-md)');
@@ -43,7 +43,7 @@ describe('@mantine/core/get-radius', () => {
     expect(getRadius(0)).toBe('0rem');
     expect(getRadius('10')).toBe('calc(0.625rem * var(--mantine-scale))');
     expect(getRadius('10px')).toBe('calc(0.625rem * var(--mantine-scale))');
-    expect(getRadius('10rem')).toBe('calc(10rem * var(--mantine-scale))');
+    expect(getRadius('10rem')).toBe('10rem');
     expect(getRadius('10%')).toBe('10%');
     expect(getRadius('xs')).toBe('var(--mantine-radius-xs)');
     expect(getRadius('md')).toBe('var(--mantine-radius-md)');
@@ -60,7 +60,7 @@ describe('@mantine/core/get-font-size', () => {
     expect(getFontSize(0)).toBe('0rem');
     expect(getFontSize('10')).toBe('calc(0.625rem * var(--mantine-scale))');
     expect(getFontSize('10px')).toBe('calc(0.625rem * var(--mantine-scale))');
-    expect(getFontSize('10rem')).toBe('calc(10rem * var(--mantine-scale))');
+    expect(getFontSize('10rem')).toBe('10rem');
     expect(getFontSize('10%')).toBe('10%');
     expect(getFontSize('xs')).toBe('var(--mantine-font-size-xs)');
     expect(getFontSize('md')).toBe('var(--mantine-font-size-md)');

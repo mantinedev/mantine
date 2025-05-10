@@ -13,7 +13,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
     ).toStrictEqual({
       hasResponsiveStyles: false,
       inlineStyles: {
-        padding: 'calc(1.5rem * var(--mantine-scale))',
+        padding: '1.5rem',
         marginInline: 'calc(2rem * var(--mantine-scale))',
         color: 'var(--mantine-color-red-5)',
         opacity: 0.65,
@@ -39,7 +39,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
       hasResponsiveStyles: true,
       inlineStyles: {},
       styles: {
-        padding: 'calc(1.5rem * var(--mantine-scale))',
+        padding: '1.5rem',
         marginInline: 'calc(2rem * var(--mantine-scale))',
         color: 'var(--mantine-color-red-5)',
         opacity: 0.65,
@@ -48,7 +48,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
         {
           query: `(min-width: ${DEFAULT_THEME.breakpoints.xs})`,
           styles: {
-            padding: 'calc(2rem * var(--mantine-scale))',
+            padding: '2rem',
             marginInline: 'calc(4rem * var(--mantine-scale))',
             color: 'var(--mantine-color-red-6)',
             opacity: 0.85,
@@ -63,7 +63,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
       parseStyleProps({
         data: STYlE_PROPS_DATA,
         styleProps: {
-          p: { base: '1.5rem', xs: '2rem' },
+          p: { base: 24, xs: 32 },
           mx: 64,
           c: 'red.6',
           opacity: { base: 0.65, xs: 0.85 },
@@ -108,7 +108,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
       hasResponsiveStyles: true,
       inlineStyles: {},
       styles: {
-        padding: 'calc(1.5rem * var(--mantine-scale))',
+        padding: '1.5rem',
         marginInline: 'calc(2rem * var(--mantine-scale))',
         color: 'var(--mantine-color-red-5)',
         opacity: 0.65,
@@ -117,7 +117,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
         {
           query: `(min-width: ${DEFAULT_THEME.breakpoints.xs})`,
           styles: {
-            padding: 'calc(2rem * var(--mantine-scale))',
+            padding: '2rem',
             marginInline: 'calc(4rem * var(--mantine-scale))',
             color: 'var(--mantine-color-red-6)',
             opacity: 0.85,
@@ -126,7 +126,7 @@ describe('@mantine/core/Box/parse-style-props', () => {
         {
           query: `(min-width: ${DEFAULT_THEME.breakpoints.md})`,
           styles: {
-            padding: 'calc(3rem * var(--mantine-scale))',
+            padding: '3rem',
             marginInline: 'calc(8rem * var(--mantine-scale))',
             color: 'var(--mantine-color-red-7)',
             opacity: 1,
