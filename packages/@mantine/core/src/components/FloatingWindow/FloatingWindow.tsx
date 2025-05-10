@@ -46,10 +46,10 @@ export type FloatingWindowFactory = Factory<{
   stylesNames: FloatingWindowStylesNames;
 }>;
 
-const defaultProps: Partial<FloatingWindowProps> = {
+const defaultProps = {
   constrainToViewport: true,
   zIndex: getDefaultZIndex('overlay'),
-};
+} satisfies Partial<FloatingWindowProps>;
 
 export const FloatingWindow = factory<FloatingWindowFactory>((_props, ref) => {
   const props = useProps('FloatingWindow', defaultProps, _props);
@@ -114,7 +114,7 @@ export const FloatingWindow = factory<FloatingWindowFactory>((_props, ref) => {
         mod={[{ dragging: floatingWindow.isDragging }, mod]}
         {...getStyles('root')}
         {...others}
-        __vars={{ '--floating-window-z-index': zIndex?.toString() }}
+        __vars={{ '--floating-window-z-index': zIndex.toString() }}
       />
     </OptionalPortal>
   );
