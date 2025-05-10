@@ -15,8 +15,10 @@ function attachMediaListener(query: MediaQueryList, callback: MediaQueryCallback
     query.addEventListener('change', callback);
     return () => query.removeEventListener('change', callback);
   } catch (e) {
+    /* eslint-disable @typescript-eslint/no-deprecated */
     query.addListener(callback);
     return () => query.removeListener(callback);
+    /* eslint-enable @typescript-eslint/no-deprecated */
   }
 }
 

@@ -10,9 +10,7 @@ export type UseWindowScrollTo = (position: Partial<UseWindowScrollPosition>) => 
 export type UseWindowScrollReturnValue = [UseWindowScrollPosition, UseWindowScrollTo];
 
 function getScrollPosition(): UseWindowScrollPosition {
-  return typeof window !== 'undefined'
-    ? { x: window.pageXOffset, y: window.pageYOffset }
-    : { x: 0, y: 0 };
+  return typeof window !== 'undefined' ? { x: window.scrollX, y: window.scrollY } : { x: 0, y: 0 };
 }
 
 function scrollTo({ x, y }: Partial<UseWindowScrollPosition>) {

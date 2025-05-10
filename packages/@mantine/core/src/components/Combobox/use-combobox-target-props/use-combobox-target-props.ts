@@ -61,6 +61,7 @@ export function useComboboxTargetProps({
       if (event.nativeEvent.code === 'Enter' || event.nativeEvent.code === 'NumpadEnter') {
         // This is a workaround for handling differences in behavior of isComposing property in Safari
         // See: https://dninomiya.github.io/form-guide/stop-enter-submit
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         if (event.nativeEvent.keyCode === 229) {
           return;
         }
