@@ -9,7 +9,6 @@ import {
   getDefaultZIndex,
   getRadius,
   getRefProp,
-  getThemeColor,
   isElement,
   useDirection,
   useProps,
@@ -82,6 +81,9 @@ export interface TooltipProps extends TooltipBaseProps {
 
   /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy), `'absolute'` by default */
   floatingStrategy?: FloatingStrategy;
+
+  /** Determines whether tooltip text color should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export type TooltipFactory = Factory<{
@@ -111,13 +113,24 @@ const defaultProps = {
   middlewares: { flip: true, shift: true, inline: false },
 } satisfies Partial<TooltipProps>;
 
-const varsResolver = createVarsResolver<TooltipFactory>((theme, { radius, color }) => ({
-  tooltip: {
-    '--tooltip-radius': radius === undefined ? undefined : getRadius(radius),
-    '--tooltip-bg': color ? getThemeColor(color, theme) : undefined,
-    '--tooltip-color': color ? 'var(--mantine-color-white)' : undefined,
-  },
-}));
+const varsResolver = createVarsResolver<TooltipFactory>(
+  (theme, { radius, color, variant, autoContrast }) => {
+    const colors = theme.variantColorResolver({
+      theme,
+      color: color || theme.primaryColor,
+      autoContrast,
+      variant: variant || 'filled',
+    });
+
+    return {
+      tooltip: {
+        '--tooltip-radius': radius === undefined ? undefined : getRadius(radius),
+        '--tooltip-bg': color ? colors.background : undefined,
+        '--tooltip-color': color ? colors.color : undefined,
+      },
+    };
+  }
+);
 
 export const Tooltip = factory<TooltipFactory>((_props, ref) => {
   const props = useProps('Tooltip', defaultProps, _props);
@@ -162,6 +175,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     mod,
     floatingStrategy,
     middlewares,
+    autoContrast,
     ...others
   } = useProps('Tooltip', defaultProps, props);
 
