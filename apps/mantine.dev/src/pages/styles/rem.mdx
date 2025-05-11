@@ -93,7 +93,7 @@ em(32); // -> 2em
 rem('16px'); // -> calc(1rem * var(--mantine-scale))
 em('16px'); // -> 1em
 
-rem('2rem'); // -> calc(2rem * var(--mantine-scale))
+rem('2rem'); // -> 2rem
 em('2rem'); // -> 2rem
 
 rem('50%'); // -> 50%
@@ -103,7 +103,7 @@ rem('5vh'); // -> 5vh
 em('5vh'); // -> 5vh
 
 // mixed values are converted to rem
-rem('16px 2rem'); // -> calc(1rem * var(--mantine-scale)) calc(2rem * var(--mantine-scale))
+rem('16px 2rem'); // -> calc(1rem * var(--mantine-scale)) 2rem
 ```
 
 ## Convert rem to px
