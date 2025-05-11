@@ -19,8 +19,8 @@ describe('@mantine/units-converters/rem', () => {
     expect(rem('32px')).toBe('calc(2rem * var(--mantine-scale))');
   });
 
-  it('scales rem values', () => {
-    expect(rem('2rem')).toBe('calc(2rem * var(--mantine-scale))');
+  it('does not scale rem values', () => {
+    expect(rem('2rem')).toBe('2rem');
   });
 
   it('does not modify other values', () => {
@@ -43,9 +43,7 @@ describe('@mantine/units-converters/rem', () => {
       'calc(0.625rem * var(--mantine-scale)) calc(0.3125rem * var(--mantine-scale))'
     );
 
-    expect(rem('1rem 0.5rem')).toBe(
-      'calc(1rem * var(--mantine-scale)) calc(0.5rem * var(--mantine-scale))'
-    );
+    expect(rem('16px 0.5rem')).toBe('calc(1rem * var(--mantine-scale)) 0.5rem');
 
     expect(rem('16px solid var(--mantine-color-primary)')).toBe(
       'calc(1rem * var(--mantine-scale)) solid var(--mantine-color-primary)'
@@ -54,7 +52,7 @@ describe('@mantine/units-converters/rem', () => {
 
   it('converts all values in space separated string and leaves non px values untouched', () => {
     expect(rem('10px 5px 1rem 2em')).toBe(
-      'calc(0.625rem * var(--mantine-scale)) calc(0.3125rem * var(--mantine-scale)) calc(1rem * var(--mantine-scale)) 2em'
+      'calc(0.625rem * var(--mantine-scale)) calc(0.3125rem * var(--mantine-scale)) 1rem 2em'
     );
 
     expect(rem('1px solid red')).toBe('calc(0.0625rem * var(--mantine-scale)) solid red');
