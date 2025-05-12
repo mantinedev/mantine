@@ -129,7 +129,8 @@
     background-color: var(--switch-bg);
     position: absolute;
     border-radius: var(--switch-radius);
-    inset: 50%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
   }
 
