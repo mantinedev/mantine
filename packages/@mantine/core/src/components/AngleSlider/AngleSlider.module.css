@@ -72,10 +72,9 @@
 
 .thumb {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: calc(50% - 1.5px);
+  inset-block: 0;
+  inset-inline-start: calc(50% - 1.5px);
+  inset-inline-end: 0;
   height: 100%;
   width: 3px;
   outline: none;
