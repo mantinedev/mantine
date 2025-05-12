@@ -248,45 +248,48 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
-    onDrop: onDropAny,
-    onDropAccepted: onDrop,
-    onDropRejected: onReject,
-    disabled: disabled || loading,
-    accept: Array.isArray(accept) ? accept.reduce((r, key) => ({ ...r, [key]: [] }), {}) : accept,
-    multiple,
-    maxSize,
-    maxFiles,
-    autoFocus,
-    noClick: !activateOnClick,
-    noDrag: !activateOnDrag,
-    noDragEventsBubbling: !dragEventsBubbling,
-    noKeyboard: !activateOnKeyboard,
-    onDragEnter,
-    onDragLeave,
-    onDragOver,
-    onFileDialogCancel,
-    onFileDialogOpen,
-    preventDropOnDocument,
-    useFsAccessApi,
-    validator,
-    ...(getFilesFromEvent ? { getFilesFromEvent } : null),
-  });
+  const { getRootProps, getInputProps, isDragAccept, isDragReject, isDragActive, open } =
+    useDropzone({
+      onDrop: onDropAny,
+      onDropAccepted: onDrop,
+      onDropRejected: onReject,
+      disabled: disabled || loading,
+      accept: Array.isArray(accept) ? accept.reduce((r, key) => ({ ...r, [key]: [] }), {}) : accept,
+      multiple,
+      maxSize,
+      maxFiles,
+      autoFocus,
+      noClick: !activateOnClick,
+      noDrag: !activateOnDrag,
+      noDragEventsBubbling: !dragEventsBubbling,
+      noKeyboard: !activateOnKeyboard,
+      onDragEnter,
+      onDragLeave,
+      onDragOver,
+      onFileDialogCancel,
+      onFileDialogOpen,
+      preventDropOnDocument,
+      useFsAccessApi,
+      validator,
+      ...(getFilesFromEvent ? { getFilesFromEvent } : null),
+    });
 
   assignRef(openRef, open);
 
-  const isIdle = !isDragAccept && !isDragReject;
+  const isAccepted = isDragActive && isDragAccept;
+  const isRejected = isDragActive && isDragReject;
+  const isIdle = !isAccepted && !isRejected;
 
   return (
-    <DropzoneProvider value={{ accept: isDragAccept, reject: isDragReject, idle: isIdle }}>
+    <DropzoneProvider value={{ accept: isAccepted, reject: isRejected, idle: isIdle }}>
       <Box
         {...getRootProps()}
         {...getStyles('root', { focusable: true })}
         {...others}
         mod={[
           {
-            accept: isDragAccept,
-            reject: isDragReject,
+            accept: isAccepted,
+            reject: isRejected,
             idle: isIdle,
             disabled,
             loading,
