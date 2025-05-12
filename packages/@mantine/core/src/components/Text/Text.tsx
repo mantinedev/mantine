@@ -80,6 +80,8 @@ const defaultProps = {
 } satisfies Partial<TextProps>;
 
 const varsResolver = createVarsResolver<TextFactory>(
+  // Will be removed in 9.0
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   (theme, { variant, lineClamp, gradient, size, color }) => ({
     root: {
       '--text-fz': getFontSize(size),

@@ -13,10 +13,7 @@ function createPortalNode(props: React.ComponentPropsWithoutRef<'div'>) {
   return node;
 }
 
-export interface PortalProps extends React.ComponentPropsWithoutRef<'div'> {
-  /** Portal children, for example, custom modal or popover */
-  children: React.ReactNode;
-
+export interface BasePortalProps extends React.ComponentPropsWithoutRef<'div'> {
   /** Element inside which portal should be created, by default a new div element is created and appended to the `document.body` */
   target?: HTMLElement | string;
 
@@ -24,11 +21,12 @@ export interface PortalProps extends React.ComponentPropsWithoutRef<'div'> {
   reuseTargetNode?: boolean;
 }
 
-function getTargetNode({
-  target,
-  reuseTargetNode,
-  ...others
-}: Omit<PortalProps, 'children'>): HTMLElement {
+export interface PortalProps extends BasePortalProps {
+  /** Portal children, for example, custom modal or popover */
+  children: React.ReactNode;
+}
+
+function getTargetNode({ target, reuseTargetNode, ...others }: BasePortalProps): HTMLElement {
   if (target) {
     if (typeof target === 'string') {
       return document.querySelector<HTMLElement>(target) || createPortalNode(others);

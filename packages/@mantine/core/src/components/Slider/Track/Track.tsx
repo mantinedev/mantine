@@ -13,7 +13,7 @@ export interface TrackProps {
   children: React.ReactNode;
   disabled: boolean | undefined;
   inverted: boolean | undefined;
-  containerProps?: React.PropsWithRef<React.ComponentProps<'div'>>;
+  containerProps?: React.ComponentProps<'div'>;
 }
 
 export function Track({
@@ -34,7 +34,7 @@ export function Track({
         <Box
           mod={{ inverted, disabled }}
           __vars={{
-            '--slider-bar-width': `calc(${filled}% + var(--slider-size))`,
+            '--slider-bar-width': `calc(${filled}% + 2 * var(--slider-size))`,
             '--slider-bar-offset': `calc(${offset}% - var(--slider-size))`,
           }}
           {...getStyles('bar')}

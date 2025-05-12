@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
+  BasePortalProps,
   Box,
   BoxProps,
   ElementProps,
@@ -7,7 +8,6 @@ import {
   Factory,
   getDefaultZIndex,
   OptionalPortal,
-  PortalProps,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -34,7 +34,7 @@ export interface DropzoneFullScreenProps
   withinPortal?: boolean;
 
   /** Props to pass down to the portal when withinPortal is true */
-  portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
+  portalProps?: Omit<BasePortalProps, 'withinPortal'>;
 }
 
 export type DropzoneFullScreenFactory = Factory<{

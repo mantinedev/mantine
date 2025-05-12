@@ -48,7 +48,7 @@ export const useScrollDirection = () => {
       if (isResizing) {
         return; // Skip scroll events if resizing is in progress
       }
-      const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
       setIsScrollingUp(currentScrollTop < lastScrollTop);
       setLastScrollTop(currentScrollTop);
     };

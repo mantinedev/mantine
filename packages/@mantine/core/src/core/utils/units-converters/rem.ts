@@ -41,10 +41,6 @@ function createConverter(units: string, { shouldScale = false } = {}) {
           .join(' ');
       }
 
-      if (value.includes(units)) {
-        return shouldScale ? scaleRem(value) : value;
-      }
-
       const replaced = value.replace('px', '');
       if (!Number.isNaN(Number(replaced))) {
         const val = `${Number(replaced) / 16}${units}`;
