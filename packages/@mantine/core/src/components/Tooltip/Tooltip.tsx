@@ -70,7 +70,7 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Determines which events will be used to show tooltip, `{ hover: true, focus: false, touch: false }` by default */
   events?: { hover: boolean; focus: boolean; touch: boolean };
 
-  /** `useEffect` dependencies to force update tooltip position */
+  /** @deprecated: Do not use, will be removed in 9.0 */
   positionDependencies?: any[];
 
   /** Must be set if the tooltip target is an inline element */
@@ -163,6 +163,8 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     events,
     zIndex,
     disabled,
+    // Scheduled for removal in 9.0
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     positionDependencies,
     onClick,
     onMouseEnter,
