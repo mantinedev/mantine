@@ -29,12 +29,7 @@ export function Uncontrolled() {
       }}
     >
       <div style={{ padding: 40 }}>
-        <Popover
-          onClose={() => console.log('closed')}
-          onOpen={() => console.log('opened')}
-          onExitTransitionEnd={() => console.log('exited')}
-          onEnterTransitionEnd={() => console.log('entered')}
-        >
+        <Popover>
           <Popover.Target>
             <button type="button">Toggle popover</button>
           </Popover.Target>

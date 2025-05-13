@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import {
   arrow,
+  autoUpdate,
   flip,
   hide,
   inline,
@@ -13,12 +14,7 @@ import {
   UseFloatingReturn,
 } from '@floating-ui/react';
 import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
-import {
-  FloatingAxesOffsets,
-  FloatingPosition,
-  FloatingStrategy,
-  useFloatingAutoUpdate,
-} from '../Floating';
+import { FloatingAxesOffsets, FloatingPosition, FloatingStrategy } from '../Floating';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
 
 interface UsePopoverOptions {
@@ -37,6 +33,9 @@ interface UsePopoverOptions {
   arrowRef: React.RefObject<HTMLDivElement | null>;
   arrowOffset: number;
   strategy?: FloatingStrategy;
+  dropdownVisible: boolean;
+  setDropdownVisible: (visible: boolean) => void;
+  positionRef: React.RefObject<FloatingPosition>;
 }
 
 function getDefaultMiddlewares(middlewares: PopoverMiddlewares | undefined): PopoverMiddlewares {
@@ -62,6 +61,11 @@ function getPopoverMiddlewares(
 ) {
   const middlewaresOptions = getDefaultMiddlewares(options.middlewares);
   const middlewares: Middleware[] = [offset(options.offset), hide()];
+
+  if (options.dropdownVisible) {
+    middlewaresOptions.flip = false;
+    middlewaresOptions.shift = false;
+  }
 
   if (middlewaresOptions.shift) {
     middlewares.push(
@@ -127,6 +131,7 @@ export function usePopover(options: UsePopoverOptions) {
     finalValue: false,
     onChange: options.onChange,
   });
+
   const previouslyOpened = useRef(_opened);
 
   const onClose = () => {
@@ -139,19 +144,14 @@ export function usePopover(options: UsePopoverOptions) {
 
   const floating: UseFloatingReturn<Element> = useFloating({
     strategy: options.strategy,
-    placement: options.position,
+    placement: options.positionRef.current,
     middleware: getPopoverMiddlewares(options, () => floating),
-  });
-
-  useFloatingAutoUpdate({
-    opened: _opened,
-    position: options.position,
-    positionDependencies: options.positionDependencies || [],
-    floating,
+    whileElementsMounted: autoUpdate,
   });
 
   useDidUpdate(() => {
     options.onPositionChange?.(floating.placement);
+    options.positionRef.current = floating.placement;
   }, [floating.placement]);
 
   useDidUpdate(() => {
@@ -165,6 +165,19 @@ export function usePopover(options: UsePopoverOptions) {
 
     previouslyOpened.current = _opened;
   }, [_opened, options.onClose, options.onOpen]);
+
+  useDidUpdate(() => {
+    let timeout: number = -1;
+
+    if (_opened) {
+      // Required to be in timeout to give floating ui render time to flip/shift popover
+      timeout = window.setTimeout(() => options.setDropdownVisible(true), 4);
+    }
+
+    return () => {
+      window.clearTimeout(timeout);
+    };
+  }, [_opened, options.position]);
 
   return {
     floating,

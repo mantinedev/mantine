@@ -49,7 +49,7 @@ export interface __PopoverProps {
   /** Called when dropdown position changes */
   onPositionChange?: (position: FloatingPosition) => void;
 
-  /** `useEffect` dependencies to force update dropdown position, `[]` by default */
+  /** @deprecated: Do not use, will be removed in 9.0 */
   positionDependencies?: any[];
 
   /** Called when dropdown closes */
@@ -206,6 +206,8 @@ export function Popover(_props: PopoverProps) {
     position,
     offset,
     onPositionChange,
+    // Scheduled for removal in 9.0
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     positionDependencies,
     opened,
     transitionProps,
@@ -264,6 +266,8 @@ export function Popover(_props: PopoverProps) {
 
   const { resolvedStyles } = useResolvedStylesApi<PopoverFactory>({ classNames, styles, props });
 
+  const [dropdownVisible, setDropdownVisible] = useState(opened ?? defaultOpened ?? false);
+  const positionRef = useRef<FloatingPosition>(position);
   const arrowRef = useRef<HTMLDivElement | null>(null);
   const [targetNode, setTargetNode] = useState<HTMLElement | null>(null);
   const [dropdownNode, setDropdownNode] = useState<HTMLElement | null>(null);
@@ -287,6 +291,9 @@ export function Popover(_props: PopoverProps) {
     onClose,
     onDismiss,
     strategy: floatingStrategy,
+    dropdownVisible,
+    setDropdownVisible,
+    positionRef,
   });
 
   useClickOutside(
@@ -319,6 +326,8 @@ export function Popover(_props: PopoverProps) {
   const onExited = useCallback(() => {
     transitionProps?.onExited?.();
     onExitTransitionEnd?.();
+    setDropdownVisible(false);
+    positionRef.current = position;
   }, [transitionProps?.onExited, onExitTransitionEnd]);
 
   const onEntered = useCallback(() => {
