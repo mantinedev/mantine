@@ -7,6 +7,7 @@ export default { title: 'Select' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
+      <div style={{ height: 1000 }} />
       <Select
         data={[
           'React',
@@ -24,6 +25,7 @@ export function Usage() {
         searchable
         selectFirstOptionOnChange
       />
+      <div style={{ height: 1000 }} />
     </div>
   );
 }
