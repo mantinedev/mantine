@@ -8,15 +8,7 @@ export default { title: 'TimePicker' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <TimePicker
-        label="Enter time"
-        withSeconds
-        secondsStep={5}
-        clearable
-        name="time-picker"
-        form="my-form"
-        format="12h"
-      />
+      <TimePicker label="Enter time" withSeconds minutesStep={5} secondsStep={5} withDropdown />
     </div>
   );
 }

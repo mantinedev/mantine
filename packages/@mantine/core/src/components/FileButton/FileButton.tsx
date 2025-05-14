@@ -86,8 +86,6 @@ export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, File
 
     return (
       <>
-        {children({ onClick, ...others })}
-
         <input
           style={{ display: 'none' }}
           type="file"
@@ -100,6 +98,8 @@ export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, File
           capture={capture}
           {...inputProps}
         />
+
+        {children({ onClick, ...others })}
       </>
     );
   }
