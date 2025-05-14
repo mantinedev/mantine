@@ -34,6 +34,7 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
     ref
   ) => {
     const maxDigit = getMaxDigit(max);
+    const arrowsMax = max + 1 - step;
 
     const handleChange = (value: string) => {
       if (readOnly) {
@@ -94,13 +95,13 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
 
       if (event.key === 'ArrowUp') {
         event.preventDefault();
-        const newValue = value === null ? min : clamp(value + step, min, max);
+        const newValue = value === null ? min : clamp(value + step, min, arrowsMax);
         onChange(newValue);
       }
 
       if (event.key === 'ArrowDown') {
         event.preventDefault();
-        const newValue = value === null ? max : clamp(value - step, min, max);
+        const newValue = value === null ? arrowsMax : clamp(value - step, min, arrowsMax);
         onChange(newValue);
       }
     };
