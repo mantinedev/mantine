@@ -152,6 +152,11 @@
   }
 }
 
+.tabLabel {
+  flex: 1;
+  text-align: center;
+}
+
 /*************************************** default variant ***************************************/
 .list--default {
   position: relative;
