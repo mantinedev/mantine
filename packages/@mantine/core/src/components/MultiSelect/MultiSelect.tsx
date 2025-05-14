@@ -154,7 +154,6 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     disabled,
     onFocus,
     onBlur,
-    onPaste,
     radius,
     rightSection,
     rightSectionWidth,

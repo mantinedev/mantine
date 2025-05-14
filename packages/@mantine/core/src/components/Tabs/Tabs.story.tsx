@@ -8,7 +8,7 @@ export default {
 
 const base = (
   <>
-    <Tabs.List>
+    <Tabs.List grow>
       <Tabs.Tab
         value="react"
         leftSection={<IconPackage size={16} />}
