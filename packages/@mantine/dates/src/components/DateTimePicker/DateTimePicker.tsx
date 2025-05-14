@@ -62,6 +62,9 @@ export interface DateTimePickerProps
   /** Called when value changes */
   onChange?: (value: DateStringValue) => void;
 
+  /** Default time value in `HH:mm` or `HH:mm:ss` format. Assigned to time when date is selected. */
+  defaultTimeValue?: string;
+
   /** Props passed down to `TimePicker` component */
   timePickerProps?: Omit<TimePickerProps, 'defaultValue' | 'value'>;
 
@@ -108,6 +111,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     vars,
     minDate,
     maxDate,
+    defaultTimeValue,
     ...rest
   } = props;
 
@@ -149,7 +153,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
   const formatTime = (dateValue: DateStringValue) =>
     dateValue ? dayjs(dateValue).format(withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
 
-  const [timeValue, setTimeValue] = useState(formatTime(_value));
+  const [timeValue, setTimeValue] = useState(defaultTimeValue || formatTime(_value));
   const [currentLevel, setCurrentLevel] = useState(level || defaultLevel || 'month');
 
   const [dropdownOpened, dropdownHandlers] = useDisclosure(false);
@@ -168,7 +172,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
 
   const handleDateChange = (date: DateValue) => {
     if (date) {
-      setValue(assignTime(clampDate(minDate, maxDate, date), timeValue));
+      setValue(assignTime(clampDate(minDate, maxDate, date), timeValue || defaultTimeValue || ''));
     }
     timePickerRef.current?.focus();
   };

@@ -7,7 +7,7 @@ export default { title: 'DateTimePicker' };
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DateTimePicker placeholder="Date time picker" defaultValue="2022-04-11" />
+      <DateTimePicker placeholder="Date time picker" defaultTimeValue="12:45" />
     </div>
   );
 }
