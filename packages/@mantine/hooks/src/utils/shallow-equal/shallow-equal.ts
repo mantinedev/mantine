@@ -3,6 +3,10 @@ export function shallowEqual(a: any, b: any) {
     return true;
   }
 
+  if (Number.isNaN(a) && Number.isNaN(b)) {
+    return true;
+  }
+
   if (!(a instanceof Object) || !(b instanceof Object)) {
     return false;
   }
@@ -21,7 +25,7 @@ export function shallowEqual(a: any, b: any) {
       return false;
     }
 
-    if (a[key] !== b[key]) {
+    if (a[key] !== b[key] && !(Number.isNaN(a[key]) && Number.isNaN(b[key]))) {
       return false;
     }
   }
