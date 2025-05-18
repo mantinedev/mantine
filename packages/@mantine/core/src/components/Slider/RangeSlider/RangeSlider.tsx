@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useMergedRef, useMove, useUncontrolled } from '@mantine/hooks';
+import { clamp, useMergedRef, useMove, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
   createVarsResolver,
@@ -57,6 +57,9 @@ export interface RangeSliderProps
 
   /** Maximum possible value, `100` by default */
   max?: number;
+
+  /** Domain of the slider, defines the full range of possible values, `[min, max]` by default */
+  domain?: [number, number];
 
   /** Number by which value will be incremented/decremented with thumb drag and arrows, `1` by default */
   step?: number;
@@ -175,6 +178,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     size,
     min,
     max,
+    domain,
     minRange,
     maxRange,
     step,
@@ -228,9 +232,10 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
   const thumbs = useRef<HTMLDivElement[]>([]);
   const root = useRef<HTMLDivElement>(null);
   const thumbIndex = useRef<number | undefined>(undefined);
+  const [domainMin, domainMax] = domain || [min!, max!];
   const positions = [
-    getPosition({ value: _value[0], min: min!, max: max! }),
-    getPosition({ value: _value[1], min: min!, max: max! }),
+    getPosition({ value: _value[0], min: domainMin, max: domainMax }),
+    getPosition({ value: _value[1], min: domainMin, max: domainMax }),
   ];
 
   const precision = _precision ?? getPrecision(step!);
@@ -281,33 +286,34 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
         }
       }
     } else {
-      clone[index] = val;
+      const clampedVal = clamp(val, min!, max!);
+      clone[index] = clampedVal;
 
       if (index === 0) {
-        if (val > clone[1] - (minRange! - 0.000000001)) {
-          clone[1] = Math.min(val + minRange!, max!);
+        if (clampedVal > clone[1] - (minRange! - 0.000000001)) {
+          clone[1] = Math.min(clampedVal + minRange!, max!);
         }
 
-        if (val > (max! - (minRange! - 0.000000001) || min!)) {
+        if (clampedVal > (max! - (minRange! - 0.000000001) || min!)) {
           clone[index] = valueRef.current[index];
         }
 
-        if (clone[1] - val > maxRange!) {
-          clone[1] = val + maxRange!;
+        if (clone[1] - clampedVal > maxRange!) {
+          clone[1] = clampedVal + maxRange!;
         }
       }
 
       if (index === 1) {
-        if (val < clone[0] + minRange!) {
-          clone[0] = Math.max(val - minRange!, min!);
+        if (clampedVal < clone[0] + minRange!) {
+          clone[0] = Math.max(clampedVal - minRange!, min!);
         }
 
-        if (val < clone[0] + minRange!) {
+        if (clampedVal < clone[0] + minRange!) {
           clone[index] = valueRef.current[index];
         }
 
-        if (val - clone[0] > maxRange!) {
-          clone[0] = val - maxRange!;
+        if (clampedVal - clone[0] > maxRange!) {
+          clone[0] = clampedVal - maxRange!;
         }
       }
     }
@@ -332,8 +338,8 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     if (!disabled) {
       const nextValue = getChangeValue({
         value: val,
-        min: min!,
-        max: max!,
+        min: domainMin,
+        max: domainMax,
         step: step!,
         precision,
       });
@@ -497,8 +503,8 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           filled={positions[1] - positions[0]}
           marks={marks}
           inverted={inverted}
-          min={min!}
-          max={max!}
+          min={domainMin}
+          max={domainMax}
           value={_value[1]}
           disabled={disabled}
           containerProps={{
