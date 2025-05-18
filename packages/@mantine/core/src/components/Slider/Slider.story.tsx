@@ -61,6 +61,14 @@ export function SizeSlider() {
   );
 }
 
+export function DomainSlider() {
+  return (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <Slider domain={[0, 100]} min={20} max={60} />
+    </div>
+  );
+}
+
 export function Range() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
