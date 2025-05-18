@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useMergedRef, useMove, useUncontrolled } from '@mantine/hooks';
+import { clamp, useMergedRef, useMove, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
   createVarsResolver,
@@ -57,6 +57,9 @@ export interface RangeSliderProps
 
   /** Maximum possible value, `100` by default */
   max?: number;
+
+  /** Domain of the slider, defines the full range of possible values, `[min, max]` by default */
+  domain?: [number, number];
 
   /** Number by which value will be incremented/decremented with thumb drag and arrows, `1` by default */
   step?: number;
@@ -181,6 +184,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     size,
     min,
     max,
+    domain,
     minRange,
     maxRange,
     step,
@@ -236,9 +240,10 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
   const thumbs = useRef<HTMLDivElement[]>([]);
   const root = useRef<HTMLDivElement>(null);
   const thumbIndex = useRef<number | undefined>(undefined);
+  const [domainMin, domainMax] = domain || [min!, max!];
   const positions = [
-    getPosition({ value: _value[0], min, max }),
-    getPosition({ value: _value[1], min, max }),
+    getPosition({ value: _value[0], min: domainMin, max: domainMax }),
+    getPosition({ value: _value[1], min: domainMin, max: domainMax }),
   ];
 
   const precision = _precision ?? getPrecision(step);
@@ -289,10 +294,11 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
         }
       }
     } else {
-      clone[index] = val;
+      const clampedVal = clamp(val, min!, max!);
+      clone[index] = clampedVal;
 
       if (index === 0) {
-        if (val > clone[1] - (minRange - 0.000000001)) {
+        if (clampedVal > clone[1] - (minRange - 0.000000001)) {
           if (pushOnOverlap) {
             clone[1] = Math.min(val + minRange, max);
           } else {
@@ -300,7 +306,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           }
         }
 
-        if (val > (max - (minRange - 0.000000001) || min)) {
+        if (clampedVal > (max - (minRange - 0.000000001) || min)) {
           clone[index] = valueRef.current[index];
         }
 
@@ -314,7 +320,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
       }
 
       if (index === 1) {
-        if (val < clone[0] + minRange) {
+        if (clampedVal < clone[0] + minRange) {
           if (pushOnOverlap) {
             clone[0] = Math.max(val - minRange, min);
           } else {
@@ -322,11 +328,11 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           }
         }
 
-        if (val < clone[0] + minRange) {
+        if (clampedVal < clone[0] + minRange) {
           clone[index] = valueRef.current[index];
         }
 
-        if (val - clone[0] > maxRange) {
+        if (clampedVal - clone[0] > maxRange) {
           if (pushOnOverlap) {
             clone[0] = val - maxRange;
           } else {
@@ -356,8 +362,8 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     if (!disabled && thumbIndex.current !== undefined) {
       const nextValue = getChangeValue({
         value: val,
-        min,
-        max,
+        min: domainMin,
+        max: domainMax,
         step,
         precision,
       });
@@ -523,8 +529,8 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           filled={positions[1] - positions[0]}
           marks={marks}
           inverted={inverted}
-          min={min}
-          max={max}
+          min={domainMin}
+          max={domainMax}
           value={_value[1]}
           disabled={disabled}
           containerProps={{

@@ -55,6 +55,9 @@ export interface SliderProps
   /** Maximum possible value, `100` by default */
   max?: number;
 
+  /** Domain of the slider, defines the full range of possible values, `[min, max]` by default */
+  domain?: [number, number];
+
   /** Number by which value will be incremented/decremented with thumb drag and arrows, `1` by default */
   step?: number;
 
@@ -163,6 +166,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
     size,
     min,
     max,
+    domain,
     step,
     precision: _precision,
     defaultValue,
@@ -218,8 +222,9 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
 
   const root = useRef<HTMLDivElement>(null);
   const thumb = useRef<HTMLDivElement>(null);
-  const position = getPosition({ value: _value, min, max });
-  const scaledValue = scale(_value);
+  const [domainMin, domainMax] = domain || [min, max];
+  const position = getPosition({ value: _value, min: domainMin, max: domainMax });
+  const scaledValue = scale!(_value);
   const _label = typeof label === 'function' ? label(scaledValue) : label;
   const precision = _precision ?? getPrecision(step);
 
@@ -228,23 +233,24 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
       if (!disabled) {
         const nextValue = getChangeValue({
           value: x,
-          min,
-          max,
+          min: domainMin,
+          max: domainMax,
           step,
           precision,
         });
+        const clampedValue = clamp(nextValue, min!, max!);
         setValue(
           restrictToMarks && marks?.length
             ? findClosestNumber(
-                nextValue,
+                clampedValue,
                 marks.map((mark) => mark.value)
               )
-            : nextValue
+            : clampedValue
         );
-        valueRef.current = nextValue;
+        valueRef.current = clampedValue;
       }
     },
-    [disabled, min, max, step, precision, setValue, marks, restrictToMarks]
+    [disabled, min, max, domainMin, domainMax, step, precision, setValue, marks, restrictToMarks]
   );
 
   const handleScrubEnd = useCallback(() => {
@@ -408,8 +414,8 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
           offset={0}
           filled={position}
           marks={marks}
-          min={min}
-          max={max}
+          min={domainMin}
+          max={domainMax}
           value={scaledValue}
           disabled={disabled}
           containerProps={{
@@ -419,8 +425,8 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
           }}
         >
           <Thumb
-            max={max}
-            min={min}
+            max={domainMax}
+            min={domainMin}
             value={scaledValue}
             position={position}
             dragging={active}
