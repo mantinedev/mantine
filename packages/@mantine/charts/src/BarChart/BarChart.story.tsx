@@ -236,14 +236,15 @@ export function SimpleReferenceArea() {
           y1={0}
           y2={1050}
           yAxisId="left"
-          fill="rgba(136, 132, 216, 0.5)"
-          stroke="rgba(136, 132, 216, 0.8)"
+          fillOpacity={0.3}
+          strokeOpacity={0.9}
+          fill="rgb(136, 132, 216)"
+          stroke="rgb(136, 132, 216)"
           strokeWidth={1}
           label={{
             value: 'Key Products',
             position: 'insideTopRight',
             fontSize: 12,
-            fill: '#555',
           }}
         />
       </BarChart>

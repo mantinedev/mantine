@@ -1,10 +1,10 @@
-import { HooksDemos, TagsInputDemos, SliderDemos } from '@docs/demos';
+import { HooksDemos, TagsInputDemos, SliderDemos, BarChartDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog810);
 
-## Popover updates
+## Popover middlewares improvements
 
 [Popover](/core/popover) component now handles `shift` and `flip` Floating UI
 differently. Starting from 8.1.0 version, the popover dropdown position is not
@@ -29,6 +29,14 @@ New behavior:
 New [use-long-press](/hooks/use-long-press) hook:
 
 <Demo data={HooksDemos.useLongPressDemo} />
+
+## Reference area support in charts
+
+[BarChart](/charts/bar-chart), [AreaChart](/charts/area-chart) and [LineChart](/charts/line-chart)
+components now support reference area. Reference area is a rectangular area
+that can be used to highlight a specific region of the chart:
+
+<Demo data={BarChartDemos.referenceArea} />
 
 ## use-form resetField handler
 

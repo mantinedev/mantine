@@ -137,3 +137,8 @@ export const Demo_pointLabels = {
   name: '⭐ Demo: pointLabels',
   render: renderDemo(demos.pointLabels),
 };
+
+export const Demo_referenceArea = {
+  name: '⭐ Demo: referenceArea',
+  render: renderDemo(demos.referenceArea),
+};
