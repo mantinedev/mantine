@@ -120,6 +120,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     onFocus,
     onBlur,
     onClick,
+    onKeyDown,
     readOnly,
     name,
     form,
@@ -211,6 +212,13 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     setDropdownOpened(true);
   };
 
+  const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Escape') {
+      setDropdownOpened(false);
+    }
+    onKeyDown?.(event);
+  };
+
   const _getDayProps = (day: Date) => ({
     ...getDayProps?.(day),
     selected: dayjs(_value!).isSame(day, 'day'),
@@ -280,6 +288,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
               onClick={handleInputClick}
+              onKeyDown={handleInputKeyDown}
               readOnly={readOnly}
               rightSection={_rightSection}
               {...inputProps}
