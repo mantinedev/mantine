@@ -35,5 +35,6 @@ generateDeclarations({
     'RenderDay | undefined': '(date: string) => React.ReactNode',
     'DateLabelFormat | undefined': 'string | ((date: string) => string)',
     'DatePickerType | undefined': '"range" | "multiple" | "default"',
+    'ZIndex | undefined': 'React.CSSProperties["zIndex"]',
   },
 });

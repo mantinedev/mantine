@@ -28,16 +28,16 @@ export interface AffixPosition {
 }
 
 export interface AffixBaseProps {
-  /** Root element `z-index` property, `200` by default */
-  zIndex?: string | number;
+  /** Root element `z-index` property, `200` by default. */
+  zIndex?: React.CSSProperties['zIndex'];
 
-  /** Determines whether component should be rendered within portal, `true` by default */
+  /** Determines whether the component is rendered within `Portal`, `true` by default. */
   withinPortal?: boolean;
 
-  /** Props to pass down to the `Portal` component when `withinPortal` is set */
+  /** Props passed down to the `Portal` component. Ignored when `withinPortal` is `false`. */
   portalProps?: BasePortalProps;
 
-  /** Affix position on screen, default value is `{ bottom: 0, right: 0 }` */
+  /** Affix position on screen, `{ bottom: 0, right: 0 }` by default. */
   position?: AffixPosition;
 }
 
