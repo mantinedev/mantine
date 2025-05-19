@@ -34,7 +34,7 @@ export interface DatePickerPreset<Type extends DatePickerType> {
   label: React.ReactNode;
 }
 
-export type DayCssVariables = {
+export type DatePickerCssVariables = {
   datePickerRoot: '--preset-font-size';
 };
 
