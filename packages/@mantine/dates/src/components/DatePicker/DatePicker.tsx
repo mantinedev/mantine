@@ -1,23 +1,48 @@
 import dayjs from 'dayjs';
 import {
+  Box,
   BoxProps,
+  createVarsResolver,
   ElementProps,
   factory,
   Factory,
+  getFontSize,
   MantineComponentStaticProperties,
   StylesApiProps,
+  UnstyledButton,
   useProps,
   useResolvedStylesApi,
+  useStyles,
 } from '@mantine/core';
 import { useDatesState } from '../../hooks';
-import { CalendarLevel, DatePickerType, PickerBaseProps } from '../../types';
-import { Calendar, CalendarBaseProps, CalendarSettings, CalendarStylesNames } from '../Calendar';
+import { CalendarLevel, DatePickerType, DateStringValue, PickerBaseProps } from '../../types';
+import {
+  Calendar,
+  CalendarBaseProps,
+  CalendarSettings,
+  CalendarStylesNames,
+  pickCalendarProps,
+} from '../Calendar';
 import { DecadeLevelBaseSettings } from '../DecadeLevel';
 import { isSameMonth } from '../Month';
 import { MonthLevelBaseSettings } from '../MonthLevel';
 import { YearLevelBaseSettings } from '../YearLevel';
+import classes from './DatePicker.module.css';
 
-export type DatePickerStylesNames = CalendarStylesNames;
+export interface DatePickerPreset<Type extends DatePickerType> {
+  value: Type extends 'range' ? [DateStringValue | null, DateStringValue | null] : DateStringValue;
+  label: React.ReactNode;
+}
+
+export type DayCssVariables = {
+  datePickerRoot: '--preset-font-size';
+};
+
+export type DatePickerStylesNames =
+  | CalendarStylesNames
+  | 'presetsList'
+  | 'presetButton'
+  | 'datePickerRoot';
 
 export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
   extends PickerBaseProps<Type>,
@@ -37,6 +62,9 @@ export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
 
   /** Called when level changes */
   onLevelChange?: (level: CalendarLevel) => void;
+
+  /** Predefined values to pick from */
+  presets?: DatePickerPreset<Type>[];
 }
 
 export interface DatePickerProps<Type extends DatePickerType = 'default'>
@@ -50,6 +78,12 @@ export type DatePickerFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: DatePickerStylesNames;
 }>;
+
+const varsResolver = createVarsResolver<DatePickerFactory>((_, { size }) => ({
+  datePickerRoot: {
+    '--preset-font-size': getFontSize(size),
+  },
+}));
 
 const defaultProps = {
   type: 'default',
@@ -66,30 +100,45 @@ type DatePickerComponent = (<Type extends DatePickerType = 'default'>(
 export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_props, ref) => {
   const props = useProps('DatePicker', defaultProps, _props);
   const {
+    allowDeselect,
+    allowSingleDateInRange,
+    value,
+    defaultValue,
+    onChange,
+    onMouseLeave,
     classNames,
     styles,
-    vars,
-    type,
-    defaultValue,
-    value,
-    onChange,
     __staticSelector,
-    getDayProps,
-    allowSingleDateInRange,
-    allowDeselect,
-    onMouseLeave,
-    numberOfColumns,
-    hideOutsideDates,
-    __onDayMouseEnter,
     __onDayClick,
-    getYearControlProps,
-    getMonthControlProps,
-    ...others
+    __onDayMouseEnter,
+    presets,
+    className,
+    style,
+    unstyled,
+    size,
+    vars,
+    ...rest
   } = props;
 
-  const { onDateChange, onRootMouseLeave, onHoveredDateChange, getControlProps, _value } =
+  const { calendarProps, others } = pickCalendarProps(rest);
+
+  const getStyles = useStyles<DatePickerFactory>({
+    name: __staticSelector || 'DatePicker',
+    classes,
+    props,
+    className,
+    style,
+    classNames,
+    styles,
+    unstyled,
+    rootSelector: 'datePickerRoot',
+    varsResolver,
+    vars,
+  });
+
+  const { onDateChange, onRootMouseLeave, onHoveredDateChange, getControlProps, _value, setValue } =
     useDatesState({
-      type: type as any,
+      type: others.type as any,
       level: 'day',
       allowDeselect,
       allowSingleDateInRange,
@@ -105,16 +154,15 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     props,
   });
 
-  return (
+  const calendar = (
     <Calendar
       ref={ref}
-      minLevel="month"
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       __staticSelector={__staticSelector || 'DatePicker'}
       onMouseLeave={onRootMouseLeave}
-      numberOfColumns={numberOfColumns}
-      hideOutsideDates={hideOutsideDates ?? numberOfColumns !== 1}
+      {...calendarProps}
+      minLevel={calendarProps.minLevel || 'month'}
       __onDayMouseEnter={(_event, date) => {
         onHoveredDateChange(date);
         __onDayMouseEnter?.(_event, date);
@@ -125,18 +173,69 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
       }}
       getDayProps={(date) => ({
         ...getControlProps(date),
-        ...getDayProps?.(date),
+        ...calendarProps.getDayProps?.(date),
       })}
       getMonthControlProps={(date) => ({
         selected: typeof _value === 'string' ? isSameMonth(date, _value) : false,
-        ...getMonthControlProps?.(date),
+        ...calendarProps.getMonthControlProps?.(date),
       })}
       getYearControlProps={(date) => ({
         selected: typeof _value === 'string' ? dayjs(date).isSame(_value, 'year') : false,
-        ...getYearControlProps?.(date),
+        ...calendarProps.getYearControlProps?.(date),
       })}
-      {...others}
+      hideOutsideDates={calendarProps.hideOutsideDates ?? calendarProps.numberOfColumns !== 1}
     />
+  );
+
+  if (!presets) {
+    return calendar;
+  }
+
+  const presetButtons = presets.map((preset, index) => (
+    <UnstyledButton
+      key={index}
+      {...getStyles('presetButton')}
+      onClick={() => setValue(preset.value)}
+    >
+      {preset.label}
+    </UnstyledButton>
+  ));
+
+  return (
+    <Box {...getStyles('datePickerRoot')} size={size} {...others}>
+      <div {...getStyles('presetsList')}>{presetButtons}</div>
+      <Calendar
+        ref={ref}
+        classNames={resolvedClassNames}
+        styles={resolvedStyles}
+        __staticSelector={__staticSelector || 'DatePicker'}
+        onMouseLeave={onRootMouseLeave}
+        {...calendarProps}
+        minLevel={calendarProps.minLevel || 'month'}
+        __onDayMouseEnter={(_event, date) => {
+          onHoveredDateChange(date);
+          __onDayMouseEnter?.(_event, date);
+        }}
+        __onDayClick={(_event, date) => {
+          onDateChange(date);
+          __onDayClick?.(_event, date);
+        }}
+        getDayProps={(date) => ({
+          ...getControlProps(date),
+          ...calendarProps.getDayProps?.(date),
+        })}
+        getMonthControlProps={(date) => ({
+          selected: typeof _value === 'string' ? isSameMonth(date, _value) : false,
+          ...calendarProps.getMonthControlProps?.(date),
+        })}
+        getYearControlProps={(date) => ({
+          selected: typeof _value === 'string' ? dayjs(date).isSame(_value, 'year') : false,
+          ...calendarProps.getYearControlProps?.(date),
+        })}
+        hideOutsideDates={calendarProps.hideOutsideDates ?? calendarProps.numberOfColumns !== 1}
+        size={size}
+      />
+    </Box>
   );
 }) as any;
 
