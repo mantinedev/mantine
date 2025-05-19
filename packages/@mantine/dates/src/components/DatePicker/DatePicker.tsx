@@ -182,6 +182,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
       onMouseLeave={onRootMouseLeave}
       size={size}
       {...calendarProps}
+      {...(!presets ? others : {})}
       __stopPropagation={__stopPropagation}
       __setDateRef={setDateRef}
       __setLevelRef={setLevelRef}
