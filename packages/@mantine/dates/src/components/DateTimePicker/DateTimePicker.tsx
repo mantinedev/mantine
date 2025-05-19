@@ -23,7 +23,7 @@ import {
   CalendarStylesNames,
   pickCalendarProps,
 } from '../Calendar';
-import { DatePicker } from '../DatePicker';
+import { DatePicker, DatePickerPreset } from '../DatePicker';
 import { useDatesContext } from '../DatesProvider';
 import {
   DateInputSharedProps,
@@ -76,6 +76,9 @@ export interface DateTimePickerProps
 
   /** Max level that user can go up to, `'decade'` by default */
   maxLevel?: CalendarLevel;
+
+  /** Presets values */
+  presets?: DatePickerPreset<'default'>[];
 }
 
 export type DateTimePickerFactory = Factory<{
@@ -112,6 +115,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     minDate,
     maxDate,
     defaultTimeValue,
+    presets,
     ...rest
   } = props;
 
@@ -247,6 +251,11 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
         onLevelChange={(_level) => {
           setCurrentLevel(_level);
           calendarProps.onLevelChange?.(_level);
+        }}
+        presets={presets}
+        __onPresetSelect={(val) => {
+          setValue(val);
+          setTimeValue(formatTime(val));
         }}
       />
 

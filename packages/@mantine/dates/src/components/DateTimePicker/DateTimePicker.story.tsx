@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { Button, Group } from '@mantine/core';
 import { DateTimePicker } from './DateTimePicker';
@@ -7,7 +8,21 @@ export default { title: 'DateTimePicker' };
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DateTimePicker placeholder="Date time picker" defaultTimeValue="12:45" />
+      <DateTimePicker
+        placeholder="Date time picker"
+        presets={[
+          { value: dayjs().subtract(1, 'day').format('YYYY-MM-DD HH:mm:ss'), label: 'Yesterday' },
+          { value: dayjs().format('YYYY-MM-DD HH:mm:ss'), label: 'Today' },
+          { value: dayjs().add(1, 'day').format('YYYY-MM-DD HH:mm:ss'), label: 'Tomorrow' },
+          { value: dayjs().add(1, 'month').format('YYYY-MM-DD HH:mm:ss'), label: 'Next month' },
+          { value: dayjs().add(1, 'year').format('YYYY-MM-DD HH:mm:ss'), label: 'Next year' },
+          {
+            value: dayjs().subtract(1, 'month').format('YYYY-MM-DD HH:mm:ss'),
+            label: 'Last month',
+          },
+          { value: dayjs().subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss'), label: 'Last year' },
+        ]}
+      />
     </div>
   );
 }

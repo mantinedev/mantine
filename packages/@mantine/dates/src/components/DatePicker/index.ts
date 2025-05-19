@@ -4,4 +4,6 @@ export type {
   DatePickerProps,
   DatePickerFactory,
   DatePickerStylesNames,
+  DatePickerPreset,
+  DayCssVariables,
 } from './DatePicker';

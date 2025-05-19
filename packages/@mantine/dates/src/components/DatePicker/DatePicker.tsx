@@ -65,6 +65,13 @@ export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
 
   /** Predefined values to pick from */
   presets?: DatePickerPreset<Type>[];
+
+  /** If defined, called with preset value, suppresses `onChange` call */
+  __onPresetSelect?: (
+    preset: Type extends 'range'
+      ? [DateStringValue | null, DateStringValue | null]
+      : DateStringValue
+  ) => void;
 }
 
 export interface DatePickerProps<Type extends DatePickerType = 'default'>
@@ -112,6 +119,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     __staticSelector,
     __onDayClick,
     __onDayMouseEnter,
+    __onPresetSelect,
     presets,
     className,
     style,
@@ -196,7 +204,8 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     <UnstyledButton
       key={index}
       {...getStyles('presetButton')}
-      onClick={() => setValue(preset.value)}
+      onClick={() => (__onPresetSelect ? __onPresetSelect(preset.value) : setValue(preset.value))}
+      onMouseDown={(event) => event.preventDefault()}
     >
       {preset.label}
     </UnstyledButton>
