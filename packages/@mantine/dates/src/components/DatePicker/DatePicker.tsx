@@ -212,9 +212,14 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     return calendar;
   }
 
-  const handlePresetSelect = (val: DateStringValue) => {
-    setDateRef.current?.(val);
-    __onPresetSelect ? __onPresetSelect(val) : setValue(val);
+  const handlePresetSelect = (
+    val: DateStringValue | [DateStringValue | null, DateStringValue | null]
+  ) => {
+    const _val = Array.isArray(val) ? val[0] : val;
+    if (_val) {
+      setDateRef.current?.(_val);
+      __onPresetSelect ? __onPresetSelect(_val) : setValue(_val);
+    }
   };
 
   const presetButtons = presets.map((preset, index) => (
