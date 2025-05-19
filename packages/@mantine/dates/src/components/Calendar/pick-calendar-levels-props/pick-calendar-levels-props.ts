@@ -30,6 +30,7 @@ export function pickCalendarProps<T extends Record<string, any>>(props: T) {
     __updateDateOnYearSelect,
     __updateDateOnMonthSelect,
     __setDateRef,
+    __setLevelRef,
     withWeekNumbers,
 
     // MonthLevelGroup props

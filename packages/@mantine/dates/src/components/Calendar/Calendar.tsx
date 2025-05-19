@@ -91,6 +91,9 @@ export interface CalendarBaseProps {
   /** Assigns function to set date to the given ref */
   __setDateRef?: React.RefObject<((date: DateStringValue) => void) | null>;
 
+  /** Assigns function to set level to the given ref */
+  __setLevelRef?: React.RefObject<((level: CalendarLevel) => void) | null>;
+
   /** Initial displayed date in uncontrolled mode */
   defaultDate?: DateStringValue | Date;
 
@@ -188,6 +191,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     __updateDateOnYearSelect,
     __updateDateOnMonthSelect,
     __setDateRef,
+    __setLevelRef,
 
     // MonthLevelGroup props
     firstDayOfWeek,
@@ -261,6 +265,10 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
 
   useImperativeHandle(__setDateRef, () => (date: DateStringValue) => {
     setDate(date);
+  });
+
+  useImperativeHandle(__setLevelRef, () => (level: CalendarLevel) => {
+    setLevel(level);
   });
 
   const stylesApiProps = {

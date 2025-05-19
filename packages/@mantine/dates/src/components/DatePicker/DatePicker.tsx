@@ -139,6 +139,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
 
   const { calendarProps, others } = pickCalendarProps(rest);
   const setDateRef = useRef<((date: DateValue) => void) | null>(null);
+  const setLevelRef = useRef<((level: CalendarLevel) => void) | null>(null);
 
   const getStyles = useStyles<DatePickerFactory>({
     name: __staticSelector || 'DatePicker',
@@ -183,6 +184,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
       {...calendarProps}
       __stopPropagation={__stopPropagation}
       __setDateRef={setDateRef}
+      __setLevelRef={setLevelRef}
       minLevel={calendarProps.minLevel || 'month'}
       __onDayMouseEnter={(_event, date) => {
         onHoveredDateChange(date);
@@ -218,7 +220,8 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     const _val = Array.isArray(val) ? val[0] : val;
     if (_val) {
       setDateRef.current?.(_val);
-      __onPresetSelect ? __onPresetSelect(_val) : setValue(_val);
+      setLevelRef.current?.('month');
+      __onPresetSelect ? __onPresetSelect(_val) : setValue(val);
     }
   };
 
