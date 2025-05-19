@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useImperativeHandle } from 'react';
 import {
   Box,
   BoxProps,
@@ -86,6 +87,9 @@ export interface CalendarBaseProps {
 
   /** Determines whether date should be updated when month control is clicked */
   __updateDateOnMonthSelect?: boolean;
+
+  /** Assigns function to set date to the given ref */
+  __setDateRef?: React.RefObject<((date: DateStringValue) => void) | null>;
 
   /** Initial displayed date in uncontrolled mode */
   defaultDate?: DateStringValue | Date;
@@ -183,6 +187,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     onMonthMouseEnter,
     __updateDateOnYearSelect,
     __updateDateOnMonthSelect,
+    __setDateRef,
 
     // MonthLevelGroup props
     firstDayOfWeek,
@@ -252,6 +257,10 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     value: toDateString(date),
     defaultValue: toDateString(defaultDate),
     onChange: onDateChange as any,
+  });
+
+  useImperativeHandle(__setDateRef, () => (date: DateStringValue) => {
+    setDate(date);
   });
 
   const stylesApiProps = {
