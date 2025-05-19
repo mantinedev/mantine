@@ -1,8 +1,16 @@
-import { HooksDemos, TagsInputDemos, SliderDemos, BarChartDemos } from '@docs/demos';
+import { HooksDemos, TagsInputDemos, SliderDemos, BarChartDemos, DatePickerDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog810);
+
+## DatePicker presets
+
+[DatePicker](/dates/date-picker), [DatePickerInput](/dates/date-picker-input)
+and [DateTimePicker](/dates/date-time-picker) now support `presets` prop
+that allows you to add custom date presets. Presets are displayed next to the calendar:
+
+<Demo data={DatePickerDemos.presetsRange} />
 
 ## Popover middlewares improvements
 

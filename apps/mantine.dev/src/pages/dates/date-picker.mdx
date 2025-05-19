@@ -36,6 +36,16 @@ To change this behavior set `allowSingleDateInRange` prop. `allowSingleDateInRan
 
 <Demo data={DatePickerDemos.singleRange} />
 
+## Presets
+
+Use `presets` prop to add custom date presets. Presets are displayed next to the calendar:
+
+<Demo data={DatePickerDemos.presets} />
+
+To use `presets` with `type="range"`, define value a tuple of two dates:
+
+<Demo data={DatePickerDemos.presetsRange} />
+
 ## Default date
 
 Use `defaultDate` prop to set date value that will be used to determine which year should be displayed initially.

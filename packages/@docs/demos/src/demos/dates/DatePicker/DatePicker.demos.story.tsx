@@ -117,3 +117,13 @@ export const Demo_withWeekNumbers = {
   name: '⭐ Demo: withWeekNumbers',
   render: renderDemo(demos.withWeekNumbers),
 };
+
+export const Demo_presets = {
+  name: '⭐ Demo: presets',
+  render: renderDemo(demos.presets),
+};
+
+export const Demo_presetsRange = {
+  name: '⭐ Demo: presetsRange',
+  render: renderDemo(demos.presetsRange),
+};

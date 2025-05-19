@@ -20,3 +20,5 @@ export { hideWeekdays } from './DatePicker.demo.hideWeekdays';
 export { hideOutsideDates } from './DatePicker.demo.hideOutsideDates';
 export { excludeDate } from './DatePicker.demo.excludeDate';
 export { withWeekNumbers } from './DatePicker.demo.withWeekNumbers';
+export { presets } from './DatePicker.demo.presets';
+export { presetsRange } from './DatePicker.demo.presetsRange';
