@@ -13,7 +13,7 @@ export function Usage() {
   return (
     <div style={{ padding: 40 }}>
       <DatePicker
-        size="xs"
+        size="sm"
         value={value}
         onChange={setValue}
         date={value || undefined}

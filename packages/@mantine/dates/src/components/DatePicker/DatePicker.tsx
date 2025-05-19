@@ -179,6 +179,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
       styles={resolvedStyles}
       __staticSelector={__staticSelector || 'DatePicker'}
       onMouseLeave={onRootMouseLeave}
+      size={size}
       {...calendarProps}
       __stopPropagation={__stopPropagation}
       __setDateRef={setDateRef}
