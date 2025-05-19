@@ -165,8 +165,6 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     ? dayjs(_value).locale(ctx.getLocale(locale)).format(_valueFormat)
     : '';
 
-  const setDateRef = useRef<((date: DateValue) => void) | null>(null);
-
   const handleTimeChange = (timeString: string) => {
     timePickerProps?.onChange?.(timeString);
     setTimeValue(timeString);
@@ -255,11 +253,9 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
           calendarProps.onLevelChange?.(_level);
         }}
         presets={presets}
-        __setDateRef={setDateRef}
         __onPresetSelect={(val) => {
           setValue(val);
           setTimeValue(formatTime(val));
-          setDateRef.current?.(val);
         }}
       />
 

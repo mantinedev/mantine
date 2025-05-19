@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -15,7 +16,13 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesState } from '../../hooks';
-import { CalendarLevel, DatePickerType, DateStringValue, PickerBaseProps } from '../../types';
+import {
+  CalendarLevel,
+  DatePickerType,
+  DateStringValue,
+  DateValue,
+  PickerBaseProps,
+} from '../../types';
 import {
   Calendar,
   CalendarBaseProps,
@@ -120,6 +127,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     __onDayClick,
     __onDayMouseEnter,
     __onPresetSelect,
+    __stopPropagation,
     presets,
     className,
     style,
@@ -130,6 +138,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
   } = props;
 
   const { calendarProps, others } = pickCalendarProps(rest);
+  const setDateRef = useRef<((date: DateValue) => void) | null>(null);
 
   const getStyles = useStyles<DatePickerFactory>({
     name: __staticSelector || 'DatePicker',
@@ -171,6 +180,8 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
       __staticSelector={__staticSelector || 'DatePicker'}
       onMouseLeave={onRootMouseLeave}
       {...calendarProps}
+      __stopPropagation={__stopPropagation}
+      __setDateRef={setDateRef}
       minLevel={calendarProps.minLevel || 'month'}
       __onDayMouseEnter={(_event, date) => {
         onHoveredDateChange(date);
@@ -200,12 +211,18 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     return calendar;
   }
 
+  const handlePresetSelect = (val: DateStringValue) => {
+    setDateRef.current?.(val);
+    __onPresetSelect ? __onPresetSelect(val) : setValue(val);
+  };
+
   const presetButtons = presets.map((preset, index) => (
     <UnstyledButton
       key={index}
       {...getStyles('presetButton')}
-      onClick={() => (__onPresetSelect ? __onPresetSelect(preset.value) : setValue(preset.value))}
+      onClick={() => handlePresetSelect(preset.value)}
       onMouseDown={(event) => event.preventDefault()}
+      data-mantine-stop-propagation={__stopPropagation || undefined}
     >
       {preset.label}
     </UnstyledButton>
@@ -214,37 +231,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
   return (
     <Box {...getStyles('datePickerRoot')} size={size} {...others}>
       <div {...getStyles('presetsList')}>{presetButtons}</div>
-      <Calendar
-        ref={ref}
-        classNames={resolvedClassNames}
-        styles={resolvedStyles}
-        __staticSelector={__staticSelector || 'DatePicker'}
-        onMouseLeave={onRootMouseLeave}
-        {...calendarProps}
-        minLevel={calendarProps.minLevel || 'month'}
-        __onDayMouseEnter={(_event, date) => {
-          onHoveredDateChange(date);
-          __onDayMouseEnter?.(_event, date);
-        }}
-        __onDayClick={(_event, date) => {
-          onDateChange(date);
-          __onDayClick?.(_event, date);
-        }}
-        getDayProps={(date) => ({
-          ...getControlProps(date),
-          ...calendarProps.getDayProps?.(date),
-        })}
-        getMonthControlProps={(date) => ({
-          selected: typeof _value === 'string' ? isSameMonth(date, _value) : false,
-          ...calendarProps.getMonthControlProps?.(date),
-        })}
-        getYearControlProps={(date) => ({
-          selected: typeof _value === 'string' ? dayjs(date).isSame(_value, 'year') : false,
-          ...calendarProps.getYearControlProps?.(date),
-        })}
-        hideOutsideDates={calendarProps.hideOutsideDates ?? calendarProps.numberOfColumns !== 1}
-        size={size}
-      />
+      {calendar}
     </Box>
   );
 }) as any;
