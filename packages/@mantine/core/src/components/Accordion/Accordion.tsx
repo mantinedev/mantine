@@ -68,8 +68,11 @@ export interface AccordionProps<Multiple extends boolean = false>
   /** Position of the chevron relative to the item label, `right` by default */
   chevronPosition?: AccordionChevronPosition;
 
-  /** Size of the chevron icon container, `24` by default */
+  /** Size of the chevron icon container, `auto` by default */
   chevronSize?: number | string;
+
+  /** Size of the default chevron icon. Ignored when `chevron` prop is set. `16` by default. */
+  chevronIconSize?: number | string;
 
   /** Heading order, has no effect on visuals */
   order?: AccordionHeadingOrder;
@@ -94,7 +97,8 @@ const defaultProps = {
   disableChevronRotation: false,
   chevronPosition: 'right',
   variant: 'default',
-  chevron: <AccordionChevron />,
+  chevronSize: 'auto',
+  chevronIconSize: 16,
 } satisfies Partial<AccordionProps>;
 
 const varsResolver = createVarsResolver<AccordionFactory>(
@@ -132,6 +136,7 @@ export function Accordion<Multiple extends boolean = false>(_props: AccordionPro
     chevron,
     variant,
     radius,
+    chevronIconSize,
     ...others
   } = props;
 
@@ -184,11 +189,11 @@ export function Accordion<Multiple extends boolean = false>(_props: AccordionPro
           `${uid}-panel`,
           'Accordion.Item component was rendered with invalid value or without value'
         ),
+        chevron: chevron ?? <AccordionChevron size={chevronIconSize} />,
         transitionDuration,
         disableChevronRotation,
         chevronPosition,
         order,
-        chevron,
         loop,
         getStyles,
         variant,
