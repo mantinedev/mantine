@@ -82,7 +82,7 @@ function AccordionLabel({ label, image, description }: AccordionLabelProps) {
 function Demo() {
   const items = charactersList.map((item) => (
     <Accordion.Item value={item.id} key={item.label}>
-      <Accordion.Control>
+      <Accordion.Control aria-label={item.label}>
         <AccordionLabel {...item} />
       </Accordion.Control>
       <Accordion.Panel>
@@ -122,7 +122,7 @@ function AccordionLabel({ label, image, description }: AccordionLabelProps) {
 export function AccordionDemo(props: Partial<AccordionProps>) {
   const items = charactersList.map((item) => (
     <Accordion.Item value={item.id} key={item.label}>
-      <Accordion.Control>
+      <Accordion.Control aria-label={item.label}>
         <AccordionLabel {...item} />
       </Accordion.Control>
       <Accordion.Panel>
