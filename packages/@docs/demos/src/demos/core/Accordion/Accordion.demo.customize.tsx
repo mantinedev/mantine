@@ -1,15 +1,15 @@
 import { Accordion } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { groceries } from './_base';
+import { data, dataCode } from './_base';
 import classes from './Accordion.demo.customize.module.css';
 
 const code = `
 import { Accordion } from '@mantine/core';
+import { data } from './data';
 import classes from './Demo.module.css';
 
 function Demo() {
-  // See groceries data above
-  const items = groceries.map((item) => (
+  const items = data.map((item) => (
     <Accordion.Item key={item.value} value={item.value}>
       <Accordion.Control icon={item.emoji}>{item.value}</Accordion.Control>
       <Accordion.Panel>{item.description}</Accordion.Panel>
@@ -54,7 +54,7 @@ const cssCode = `.root {
 `;
 
 function Demo() {
-  const items = groceries.map((item) => (
+  const items = data.map((item) => (
     <Accordion.Item key={item.value} value={item.value}>
       <Accordion.Control icon={item.emoji}>{item.value}</Accordion.Control>
       <Accordion.Panel>{item.description}</Accordion.Panel>
@@ -74,6 +74,7 @@ export const customize: MantineDemo = {
   code: [
     { fileName: 'Demo.tsx', language: 'tsx', code },
     { fileName: 'Demo.module.css', code: cssCode, language: 'scss' },
+    { fileName: 'data.ts', code: dataCode, language: 'tsx' },
   ],
   centered: true,
   maxWidth: 500,

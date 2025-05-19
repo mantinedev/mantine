@@ -92,7 +92,7 @@ function Demo() {
   ));
 
   return (
-    <Accordion chevronPosition="right" variant="contained">
+    <Accordion chevronPosition="right" variant="contained" radius="md">
       {items}
     </Accordion>
   );
@@ -132,7 +132,7 @@ export function AccordionDemo(props: Partial<AccordionProps>) {
   ));
 
   return (
-    <Accordion chevronPosition="right" variant="contained" {...props}>
+    <Accordion chevronPosition="right" variant="contained" radius="md" {...props}>
       {items}
     </Accordion>
   );
@@ -148,4 +148,5 @@ export const label: MantineDemo = {
   component: Demo,
   maxWidth: 540,
   centered: true,
+  defaultExpanded: false,
 };

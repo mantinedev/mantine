@@ -1,21 +1,19 @@
 import { IconPlus } from '@tabler/icons-react';
 import { Accordion } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { groceries } from './_base';
+import { data, dataCode } from './_base';
 import classes from './Accordion.demo.chevron.module.css';
 
 const code = `
 import { IconPlus } from '@tabler/icons-react';
 import { Accordion } from '@mantine/core';
+import { data } from './data';
 import classes from './Demo.module.css';
 
 function Demo() {
-  // See groceries data above
-  const items = groceries.map((item) => (
+  const items = data.map((item) => (
     <Accordion.Item key={item.value} value={item.value}>
-      <Accordion.Control icon={item.emoji} disabled={item.value === 'Bananas'}>
-        {item.value}
-      </Accordion.Control>
+      <Accordion.Control icon={item.emoji}>{item.value}</Accordion.Control>
       <Accordion.Panel>{item.description}</Accordion.Panel>
     </Accordion.Item>
   ));
@@ -46,7 +44,7 @@ const cssCode = `
 `;
 
 function Demo() {
-  const items = groceries.map((item) => (
+  const items = data.map((item) => (
     <Accordion.Item key={item.value} value={item.value}>
       <Accordion.Control icon={item.emoji}>{item.value}</Accordion.Control>
       <Accordion.Panel>{item.description}</Accordion.Panel>
@@ -58,6 +56,7 @@ function Demo() {
       defaultValue="Apples"
       classNames={{ chevron: classes.chevron }}
       chevron={<IconPlus className={classes.icon} />}
+      mih={270}
     >
       {items}
     </Accordion>
@@ -70,6 +69,7 @@ export const chevron: MantineDemo = {
   code: [
     { fileName: 'Demo.tsx', language: 'tsx', code },
     { fileName: 'Demo.module.css', code: cssCode, language: 'scss' },
+    { fileName: 'data.ts', code: dataCode, language: 'tsx' },
   ],
   centered: true,
   maxWidth: 600,
