@@ -119,6 +119,13 @@ then corresponding control will be disabled.
 
 <Demo data={DatePickerDemos.minMax} />
 
+## Change header controls order
+
+Use `headerControlsOrder` prop to change order of header controls. The prop accepts an array of
+`'next' | 'previous' | 'level`. Note that each control can be used only once in the array.
+
+<Demo data={DatePickerDemos.headerControlsOrder} />
+
 ## Add props to year and month control
 
 You can add props to year, month and day controls with `getYearControlProps`, `getMonthControlProps` and `getDayProps` functions. All functions accept date as single argument,
