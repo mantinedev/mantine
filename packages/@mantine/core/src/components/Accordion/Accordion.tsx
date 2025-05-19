@@ -189,7 +189,7 @@ export function Accordion<Multiple extends boolean = false>(_props: AccordionPro
           `${uid}-panel`,
           'Accordion.Item component was rendered with invalid value or without value'
         ),
-        chevron: chevron ?? <AccordionChevron size={chevronIconSize} />,
+        chevron: chevron === null ? null : chevron || <AccordionChevron size={chevronIconSize} />,
         transitionDuration,
         disableChevronRotation,
         chevronPosition,
