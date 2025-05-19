@@ -7,8 +7,8 @@
   display: flex;
   flex-direction: column;
   border-inline-end: 1px solid;
-  padding-inline-end: 0.4em;
-  margin-inline-end: 0.4em;
+  padding-inline-end: 0.5em;
+  margin-inline-end: 0.5em;
 
   @mixin where-light {
     border-color: var(--mantine-color-gray-2);
@@ -20,7 +20,7 @@
 }
 
 .presetButton {
-  padding: 0.52em 1em;
+  padding: 0.52em 0.8em;
   border-radius: var(--mantine-radius-default);
   font-size: var(--preset-font-size);
   white-space: nowrap;

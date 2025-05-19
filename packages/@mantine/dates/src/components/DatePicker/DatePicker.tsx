@@ -89,6 +89,7 @@ const defaultProps = {
   type: 'default',
   defaultLevel: 'month',
   numberOfColumns: 1,
+  size: 'sm',
 } satisfies Partial<DatePickerProps>;
 
 type DatePickerComponent = (<Type extends DatePickerType = 'default'>(

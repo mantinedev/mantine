@@ -72,6 +72,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
       vars,
       defaultDate,
       valueFormatter,
+      presets,
       ...rest
     } = props;
 
@@ -141,6 +142,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
           __stopPropagation={dropdownType === 'popover'}
           minDate={minDate}
           maxDate={maxDate}
+          presets={presets}
         />
       </PickerInputBase>
     );
