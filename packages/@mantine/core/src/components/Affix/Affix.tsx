@@ -20,6 +20,13 @@ export type AffixCssVariables = {
   root: '--affix-z-index' | '--affix-top' | '--affix-left' | '--affix-bottom' | '--affix-right';
 };
 
+export interface AffixPosition {
+  top?: MantineSize | (string & {}) | number;
+  left?: MantineSize | (string & {}) | number;
+  bottom?: MantineSize | (string & {}) | number;
+  right?: MantineSize | (string & {}) | number;
+}
+
 export interface AffixBaseProps {
   /** Root element `z-index` property, `200` by default */
   zIndex?: string | number;
@@ -30,13 +37,8 @@ export interface AffixBaseProps {
   /** Props to pass down to the `Portal` component when `withinPortal` is set */
   portalProps?: BasePortalProps;
 
-  /** Affix position on screen, defaults value is `{ bottom: 0, right: 0 }` */
-  position?: {
-    top?: MantineSize | (string & {}) | number;
-    left?: MantineSize | (string & {}) | number;
-    bottom?: MantineSize | (string & {}) | number;
-    right?: MantineSize | (string & {}) | number;
-  };
+  /** Affix position on screen, default value is `{ bottom: 0, right: 0 }` */
+  position?: AffixPosition;
 }
 
 export interface AffixProps
