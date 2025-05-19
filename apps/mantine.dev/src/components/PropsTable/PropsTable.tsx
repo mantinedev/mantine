@@ -46,7 +46,13 @@ export function PropsTable({ component, query }: PropsTableProps) {
       return (
         <Table.Tr key={propKey}>
           <Table.Td style={{ whiteSpace: 'nowrap' }}>
-            <Highlight highlight={query} component="span" fz="sm">
+            <Highlight
+              highlight={query}
+              component="span"
+              fz="sm"
+              td={prop.description.includes('@deprecated') ? 'line-through' : undefined}
+              c={prop.description.includes('@deprecated') ? 'dimmed' : undefined}
+            >
               {prop.name}
             </Highlight>
 

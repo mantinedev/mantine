@@ -9,6 +9,7 @@ function replaceMarkdown(str: string): string {
   return str
     .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/!important!/g, '<b>Important</b>')
+    .replace(/@deprecated/g, '<i>Deprecated:</i>')
     .replace(/\[([^\]]+)\]\((.*?)\)/g, '<a href="$2" target="_blank" ref="noreferrer">$1</a>');
 }
 
