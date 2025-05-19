@@ -75,6 +75,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
     nextDisabled,
     previousDisabled,
     hasNextLevel,
+    headerControlsOrder,
 
     // Other settings
     classNames,
@@ -165,6 +166,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
           withCellSpacing={withCellSpacing}
           highlightToday={highlightToday}
           withWeekNumbers={withWeekNumbers}
+          headerControlsOrder={headerControlsOrder}
         />
       );
     });

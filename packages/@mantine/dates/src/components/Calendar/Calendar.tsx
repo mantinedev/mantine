@@ -188,6 +188,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     onMonthSelect,
     onYearMouseEnter,
     onMonthMouseEnter,
+    headerControlsOrder,
     __updateDateOnYearSelect,
     __updateDateOnMonthSelect,
     __setDateRef,
@@ -362,6 +363,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           withCellSpacing={withCellSpacing}
           highlightToday={highlightToday}
           withWeekNumbers={withWeekNumbers}
+          headerControlsOrder={headerControlsOrder}
           {...stylesApiProps}
         />
       )}
@@ -394,6 +396,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           __preventFocus={__preventFocus}
           __stopPropagation={__stopPropagation}
           withCellSpacing={withCellSpacing}
+          headerControlsOrder={headerControlsOrder}
           {...stylesApiProps}
         />
       )}
@@ -423,6 +426,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           __preventFocus={__preventFocus}
           __stopPropagation={__stopPropagation}
           withCellSpacing={withCellSpacing}
+          headerControlsOrder={headerControlsOrder}
           {...stylesApiProps}
         />
       )}

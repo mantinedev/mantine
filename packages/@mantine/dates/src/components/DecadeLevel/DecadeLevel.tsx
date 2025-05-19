@@ -86,6 +86,7 @@ export const DecadeLevel = factory<DecadeLevelFactory>((_props, ref) => {
     levelControlAriaLabel,
     withNext,
     withPrevious,
+    headerControlsOrder,
 
     // Other props
     decadeLabelFormat,
@@ -153,6 +154,7 @@ export const DecadeLevel = factory<DecadeLevelFactory>((_props, ref) => {
         levelControlAriaLabel={levelControlAriaLabel}
         withNext={withNext}
         withPrevious={withPrevious}
+        headerControlsOrder={headerControlsOrder}
         {...stylesApiProps}
       />
 

@@ -17,7 +17,13 @@ export function Usage() {
         value={value}
         onChange={setValue}
         date={value || undefined}
-        numberOfColumns={2}
+        headerControlsOrder={['level', 'previous', 'next']}
+        styles={{
+          calendarHeaderLevel: {
+            justifyContent: 'flex-start',
+            paddingInlineStart: 7,
+          },
+        }}
         presets={[
           { value: dayjs().subtract(1, 'day').format('YYYY-MM-DD'), label: 'Yesterday' },
           { value: dayjs().format('YYYY-MM-DD'), label: 'Today' },

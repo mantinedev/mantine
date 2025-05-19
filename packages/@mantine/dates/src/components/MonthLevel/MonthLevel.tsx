@@ -96,6 +96,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
     levelControlAriaLabel,
     withNext,
     withPrevious,
+    headerControlsOrder,
 
     // Other props
     monthLabelFormat,
@@ -157,6 +158,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
         levelControlAriaLabel={levelControlAriaLabel}
         withNext={withNext}
         withPrevious={withPrevious}
+        headerControlsOrder={headerControlsOrder}
         {...stylesApiProps}
       />
 
