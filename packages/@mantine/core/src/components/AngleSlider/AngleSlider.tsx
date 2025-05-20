@@ -168,27 +168,43 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
       return;
     }
 
+    let newValue = _value;
+
     if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
-      const normalized = normalizeRadialValue(_value - step!, step!);
-      setValue(normalized);
-      onChangeEnd?.(normalized);
+      newValue = normalizeRadialValue(_value - step!, step!);
     }
 
     if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
-      const normalized = normalizeRadialValue(_value + step!, step!);
-      setValue(normalized);
-      onChangeEnd?.(normalized);
+      newValue = normalizeRadialValue(_value + step!, step!);
     }
 
     if (event.key === 'Home') {
-      setValue(0);
-      onChangeEnd?.(0);
+      newValue = 0;
     }
 
     if (event.key === 'End') {
-      setValue(359);
-      onChangeEnd?.(359);
+      newValue = 359;
     }
+
+    if (restrictToMarks && Array.isArray(marks)) {
+      const markValues = marks.map((mark) => mark.value);
+      const currentIndex = markValues.indexOf(_value);
+
+      if (currentIndex !== -1) {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
+          newValue = markValues[Math.max(0, currentIndex - 1)];
+        } else if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
+          newValue = markValues[Math.min(markValues.length - 1, currentIndex + 1)];
+        } else {
+          newValue = findClosestNumber(newValue, markValues);
+        }
+      } else {
+        newValue = findClosestNumber(newValue, markValues);
+      }
+    }
+
+    setValue(newValue);
+    onChangeEnd?.(newValue);
   };
 
   const marksItems = marks?.map((mark, index) => (
