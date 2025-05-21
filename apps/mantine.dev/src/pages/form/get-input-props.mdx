@@ -6,7 +6,7 @@ export default Layout(MDX_DATA.formGetInputProps);
 
 ## getInputProps handler
 
-`form.getInputProps` returns an object with `value`, `onChange`, `onFocus`, `onBlur`, `error`
+`form.getInputProps` returns an object with `value` (`defaultValue` for "uncontrolled" mode), `onChange`, `onFocus`, `onBlur`, `error`
 and all props specified in `enhanceGetInputProps` function. Return value should be spread to the input component.
 
 You can pass the following options to `form.getInputProps` as second argument:
