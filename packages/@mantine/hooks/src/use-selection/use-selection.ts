@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react';
 
-
 interface SelectionHandlers<T> {
   select: (item: T) => void;
   deselect: (item: T) => void;
