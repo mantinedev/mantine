@@ -2,7 +2,6 @@ import { act, renderHook } from '@testing-library/react';
 import { useSelection } from './use-selection'; // Assuming your hook is in use-selection.ts
 
 describe('@mantine/hooks/use-selection', () => {
-
   // Test case for initial state with an empty data array
   it('correctly returns initial state for an empty data array', () => {
     const data: number[] = [];

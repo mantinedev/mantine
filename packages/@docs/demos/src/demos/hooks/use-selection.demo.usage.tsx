@@ -75,8 +75,7 @@ function Demo() {
     </Table>
   );
 }
-`
-
+`;
 
 const elements = [
   { position: 6, mass: 12.011, symbol: 'C', name: 'Carbon' },
@@ -87,24 +86,21 @@ const elements = [
 ];
 
 function Demo() {
-  const [selection, handlers] = useSelection(elements)
+  const [selection, handlers] = useSelection(elements);
 
   const rows = elements.map((element) => {
-    const isSelected = selection.includes(element)
+    const isSelected = selection.includes(element);
     return (
-      <Table.Tr
-        key={element.name}
-        bg={isSelected ? 'var(--mantine-color-blue-light)' : undefined}
-      >
+      <Table.Tr key={element.name} bg={isSelected ? 'var(--mantine-color-blue-light)' : undefined}>
         <Table.Td>
           <Checkbox
             aria-label="Select row"
             checked={isSelected}
             onChange={(event) => {
               if (event.target.checked) {
-                handlers.select(element)
+                handlers.select(element);
               } else {
-                handlers.deselect(element)
+                handlers.deselect(element);
               }
             }}
           />
@@ -114,7 +110,7 @@ function Demo() {
         <Table.Td>{element.symbol}</Table.Td>
         <Table.Td>{element.mass}</Table.Td>
       </Table.Tr>
-    )
+    );
   });
 
   return (
@@ -128,11 +124,11 @@ function Demo() {
               checked={handlers.isAllSelected}
               onChange={(event) => {
                 if (handlers.isSomeSelected) {
-                  handlers.resetSelection()
+                  handlers.resetSelection();
                 } else if (event.target.checked) {
-                  handlers.setSelection(elements)
+                  handlers.setSelection(elements);
                 } else {
-                  handlers.resetSelection()
+                  handlers.resetSelection();
                 }
               }}
             />
@@ -152,4 +148,4 @@ export const useSelectionDemo: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
-}
+};

@@ -90,4 +90,3 @@ export type {
   UseScrollSpyHeadingData,
   UseScrollSpyReturnType,
 } from './use-scroll-spy/use-scroll-spy';
-
