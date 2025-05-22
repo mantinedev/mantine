@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-type SelectionHandlers<T> = {
+interface SelectionHandlers<T> {
   select: (item: T) => void;
   deselect: (item: T) => void;
   toggle: (item: T) => void;
@@ -8,9 +8,9 @@ type SelectionHandlers<T> = {
   isSomeSelected: () => boolean;
   setSelection: (items: T[]) => void;
   resetSelection: () => void;
-};
+}
 
-export const useSelection = <T>(data: T[], initialSelection?: T[]): [T[], SelectionHandlers<T>] => {
+export function useSelection<T>(data: T[], initialSelection?: T[]): [T[], SelectionHandlers<T>] {
   const [selected, setSelected] = useState<Set<T>>(new Set(initialSelection || []));
 
   const select = useCallback((item: T) => {
@@ -57,9 +57,7 @@ export const useSelection = <T>(data: T[], initialSelection?: T[]): [T[], Select
     [data, selected, isAllSelected]
   );
 
-  const setSelection = useCallback((items: T[]) => {
-    setSelected(new Set(items));
-  }, []);
+  const setSelection = useCallback((items: T[]) => setSelected(new Set(items)), []);
 
   const resetSelection = useCallback(() => {
     setSelected((prev) => {
@@ -82,4 +80,4 @@ export const useSelection = <T>(data: T[], initialSelection?: T[]): [T[], Select
       resetSelection,
     },
   ];
-};
+}

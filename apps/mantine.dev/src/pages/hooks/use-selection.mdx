@@ -6,6 +6,79 @@ export default Layout(MDX_DATA.useSelection);
 
 ## Usage
 
-`use-selection` returns current selection:
+The `use-selection` hook manages the selection state of multiple items from a given dataset.
+It returns an array of currently selected items and handler functions to manipulate the selection state.
+
+```tsx
+import { useSelection } from '@mantine/hooks';
+
+interface Item {
+  id: string;
+  value: string;
+}
+
+const initialData: Item[] = [
+  { id: '1', value: 'Item 1' },
+  { id: '2', value: 'Item 2' },
+  { id: '3', value: 'Item 3' },
+];
+
+function Demo() {
+  // data: Array of items to select from
+  // initialSelection: (Optional) Array of items to be selected initially
+  const [selectedItems, handlers] = useSelection<Item>(initialData, [initialData[0]]);
+
+  // selectedItems: Array of currently selected items, e.g., [{ id: '1', value: 'Item 1' }]
+
+  // Select an item
+  handlers.select(initialData[1]);
+
+  // Deselect an item
+  handlers.deselect(initialData[0]);
+
+  // Toggle an item's selection state
+  handlers.toggle(initialData[2]);
+}
+```
+
+## Hook Signature
+
+```ts
+function useSelection<T>(
+  data: T[],
+  initialSelection?: T[]
+): [
+  T[], // Currently selected items
+  {
+    select: (item: T) => void;
+    deselect: (item: T) => void;
+    toggle: (item: T) => void;
+    isAllSelected: () => boolean;
+    isSomeSelected: () => boolean;
+    setSelection: (items: T[]) => void;
+    resetSelection: () => void;
+  }
+];
+```
+
+**Parameters:**
+
+-   `data`: An array of items of type `T` to select from.
+-   `initialSelection` (optional): An array of items of type `T` to be selected initially. Defaults to an empty array.
+
+**Returns (an array):**
+
+1.  `selectedItems`: An array of currently selected items of type `T`.
+2.  `handlers`: An object containing the following functions to manage the selection state:
+
+    -   `select(item: T)`: Adds the given `item` to the selection. If the item is already selected, no changes are made.
+    -   `deselect(item: T)`: Removes the given `item` from the selection. If the item is not selected, no changes are made.
+    -   `toggle(item: T)`: Toggles the selection state of the given `item`. If selected, it becomes deselected, and vice versa.
+    -   `isAllSelected()`: Returns `true` if all items in the `data` array are currently selected, `false` otherwise. Returns `false` if `data` is empty.
+    -   `isSomeSelected()`: Returns `true` if some (but not all) items in the `data` array are selected, `false` otherwise. Returns `false` if `data` is empty, no items are selected, or all items are selected.
+    -   `setSelection(items: T[])`: Sets the selection to the provided `items` array. Any previously selected items not in this array will be deselected.
+    -   `resetSelection()`: Deselects all items, resetting the selection state.
+
+## Demo
 
 <Demo data={HooksDemos.useSelectionDemo} />
