@@ -294,6 +294,7 @@ export function Popover(_props: PopoverProps) {
     dropdownVisible,
     setDropdownVisible,
     positionRef,
+    disabled,
   });
 
   useClickOutside(

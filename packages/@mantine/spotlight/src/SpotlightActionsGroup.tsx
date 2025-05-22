@@ -20,7 +20,7 @@ export interface SpotlightActionsGroupProps
   children?: React.ReactNode;
 
   /** Group label */
-  label?: React.ReactNode;
+  label?: string;
 }
 
 export type SpotlightActionsGroupFactory = Factory<{
@@ -45,7 +45,7 @@ export const SpotlightActionsGroup = factory<SpotlightActionsGroupFactory>((prop
       {...ctx.getStyles('actionsGroup', { className, style, classNames, styles })}
       ref={ref}
       {...others}
-      __vars={{ '--spotlight-label': `'${label}'` }}
+      __vars={{ '--spotlight-label': `'${label?.replace(/'/g, "\\'")}'` }}
     >
       {children}
     </Box>
