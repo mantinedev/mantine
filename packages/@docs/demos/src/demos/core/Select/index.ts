@@ -25,3 +25,4 @@ export { withinPopover } from './Select.demo.withinPopover';
 export { dropdownOffset } from './Select.demo.dropdownOffset';
 export { renderOption } from './Select.demo.renderOption';
 export { dropdownWidth } from './Select.demo.dropdownWidth';
+export { withDescription } from './Select.demo.withDescription';

@@ -8,6 +8,7 @@ export interface ComboboxStringItem {
 
 export interface ComboboxItem extends ComboboxStringItem {
   label: string;
+  description?: string;
 }
 
 export interface ComboboxItemGroup<T = ComboboxItem | string> {

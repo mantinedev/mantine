@@ -48,7 +48,12 @@ function Option({
     const defaultContent = (
       <>
         {checkIconPosition === 'left' && check}
-        <span>{data.label}</span>
+        <div>
+          <div>{data.label}</div>
+          {data.description && (
+            <div className={classes.optionsDropdownDescription}>{data.description}</div>
+          )}
+        </div>
         {checkIconPosition === 'right' && check}
       </>
     );

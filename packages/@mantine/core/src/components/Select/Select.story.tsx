@@ -239,6 +239,36 @@ export function AllowDeselectFalse() {
   );
 }
 
+export function WithDescription() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Select
+        placeholder="Select something"
+        data={[
+          {
+            value: 'React',
+            label: 'React',
+            description:
+              'React is a JavaScript library for building fast, interactive user interfaces using a component-based architecture.',
+          },
+          {
+            value: 'Angular',
+            label: 'Angular',
+            description:
+              'Angular is a TypeScript-based web application framework for building large-scale, single-page applications with a structured, full-featured approach.',
+          },
+          {
+            value: 'Svelte',
+            label: 'Svelte',
+            description:
+              'Svelte is a modern JavaScript framework that compiles components into highly efficient vanilla JavaScript at build time, eliminating the need for a virtual DOM.',
+          },
+        ]}
+      />
+    </div>
+  );
+}
+
 export function ReadOnly() {
   return (
     <div style={{ padding: 40 }}>
