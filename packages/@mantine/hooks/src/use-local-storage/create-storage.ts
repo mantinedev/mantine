@@ -115,9 +115,12 @@ export function createStorage<T>(type: StorageType, hookName: string) {
           setValue((current) => {
             const result = val(current);
             setItem(key, serialize(result));
-            window.dispatchEvent(
-              new CustomEvent(eventName, { detail: { key, value: val(current) } })
-            );
+            // Defer dispatching this event to avoid the handler being called during render.
+            queueMicrotask(() => {
+              window.dispatchEvent(
+                new CustomEvent(eventName, { detail: { key, value: val(current) } })
+              );
+            });
             return result;
           });
         } else {
