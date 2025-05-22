@@ -12,14 +12,14 @@ type SelectionHandlers<T> = {
 
 export const useSelection = <T>(
   data: T[],
-  initialSelection: T[] = [] // Added initialSelection
+  initialSelection: T[] = []
 ): [T[], SelectionHandlers<T>] => {
-  const [selected, setSelected] = useState<Set<T>>(new Set(initialSelection)); // Use initialSelection
+  const [selected, setSelected] = useState<Set<T>>(new Set(initialSelection));
 
   const select = useCallback((item: T) => {
     setSelected((prev) => {
-      if (prev.has(item)) { // If item is already selected
-        return prev; // Return previous Set instance to avoid unnecessary re-render
+      if (prev.has(item)) {
+        return prev;
       }
       const next = new Set(prev);
       next.add(item);
@@ -29,8 +29,8 @@ export const useSelection = <T>(
 
   const deselect = useCallback((item: T) => {
     setSelected((prev) => {
-      if (!prev.has(item)) { // If item is not in the selection
-        return prev; // Return previous Set instance
+      if (!prev.has(item)) {
+        return prev;
       }
       const next = new Set(prev);
       next.delete(item);
@@ -56,8 +56,8 @@ export const useSelection = <T>(
   );
 
   const isSomeSelected = useCallback(
-    () => selected.size > 0 && !isAllSelected(), // Updated logic
-    [selected, isAllSelected] // isAllSelected is a dependency
+    () => data.length > 0 && selected.size > 0 && !isAllSelected(),
+    [data, selected, isAllSelected]
   );
 
   const setSelection = useCallback((items: T[]) => {
@@ -66,8 +66,8 @@ export const useSelection = <T>(
 
   const resetSelection = useCallback(() => {
     setSelected((prev) => {
-      if (prev.size === 0) { // If already empty
-        return prev; // Return previous Set instance
+      if (prev.size === 0) {
+        return prev;
       }
       return new Set();
     });

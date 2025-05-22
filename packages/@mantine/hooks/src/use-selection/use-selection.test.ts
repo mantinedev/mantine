@@ -96,6 +96,15 @@ describe('@mantine/hooks/use-selection', () => {
     expect(result2.current[1].isAllSelected()).toBe(false);
   });
 
+  it('isSomeSelected returns false if data is empty', () => {
+    const { result } = renderHook(() => useSelection([]));
+    expect(result.current[1].isSomeSelected()).toBe(false);
+
+    // Also check if initialSelection is provided but data is empty
+    const { result: result2 } = renderHook(() => useSelection([], [1, 2]));
+    expect(result2.current[1].isSomeSelected()).toBe(false);
+  });
+
   it('checks if some items are selected', () => {
     const { result } = renderHook(() => useSelection(initialData));
     // Initially, no items are selected
