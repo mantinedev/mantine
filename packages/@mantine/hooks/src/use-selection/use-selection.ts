@@ -10,10 +10,7 @@ type SelectionHandlers<T> = {
   resetSelection: () => void;
 };
 
-export const useSelection = <T>(
-  data: T[],
-  initialSelection?: T[]
-): [T[], SelectionHandlers<T>] => {
+export const useSelection = <T>(data: T[], initialSelection?: T[]): [T[], SelectionHandlers<T>] => {
   const [selected, setSelected] = useState<Set<T>>(new Set(initialSelection || []));
 
   const select = useCallback((item: T) => {

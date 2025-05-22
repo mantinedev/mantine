@@ -150,8 +150,8 @@ export const Demo_useLoggerDemo = {
 
 export const Demo_useSelectedDemo = {
   name: '⭐ Demo: useSelectedDemo',
-  render: renderDemo(demos.useSelectionUsage),
-}
+  render: renderDemo(demos.useSelectionDemo),
+};
 
 export const Demo_useMediaQueryDemo = {
   name: '⭐ Demo: useMediaQueryDemo',

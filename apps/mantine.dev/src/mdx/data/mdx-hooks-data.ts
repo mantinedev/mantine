@@ -188,4 +188,5 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'Track scroll position and detect which heading is currently in the viewport, can be used for table of contents'
   ),
   useFileDialog: hDocs('useFileDialog', 'Capture one or more files from the user'),
+  useSelection: hDocs('useSelection', 'returns current selection'),
 };

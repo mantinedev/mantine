@@ -4,6 +4,9 @@ import { useSelection } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
+import { Button, Checkbox, Group, Table, Text } from '@mantine/core';
+import { useSelection } from '@mantine/hooks';
+
 const elements = [
   { id: '1', position: 6, mass: 12.011, symbol: 'C', name: 'Carbon' },
   { id: '2', position: 7, mass: 14.007, symbol: 'N', name: 'Nitrogen' },
@@ -22,8 +25,9 @@ function Demo() {
   const rows = elements.map((item) => {
     // Check if item (by id) is in the selected array
     const isSelected = selected.some((s) => s.id === item.id);
+    const bg = isSelected ? 'var(--mantine-color-blue-light)' : undefined;
     return (
-      <Table.Tr key={item.id} bg={isSelected ? 'var(--mantine-color-blue-light)' : undefined}>
+      <Table.Tr key={item.id} bg={bg}>
         <Table.Td>
           <Checkbox
             checked={isSelected}
@@ -86,7 +90,7 @@ function Demo() {
     </>
   );
 }
-`
+`;
 
 const elements = [
   { id: '1', position: 6, mass: 12.011, symbol: 'C', name: 'Carbon' },
@@ -104,10 +108,13 @@ function Demo() {
   const someSelected = handlers.isSomeSelected();
 
   const rows = elements.map((item) => {
+    const bg = selected.some((s) => s.id === item.id)
+      ? 'var(--mantine-color-blue-light)'
+      : undefined;
     // Check if item (by id) is in the selected array
     const isSelected = selected.some((s) => s.id === item.id);
     return (
-      <Table.Tr key={item.id} bg={isSelected ? 'var(--mantine-color-blue-light)' : undefined}>
+      <Table.Tr key={item.id} bg={bg}>
         <Table.Td>
           <Checkbox
             checked={isSelected}
@@ -146,13 +153,14 @@ function Demo() {
       </Group>
 
       <Text mb="xs" size="sm">
-        Selected items: {selected.map(s => s.name).join(', ') || 'None'} (Total: {selected.length})
+        Selected items: {selected.map((s) => s.name).join(', ') || 'None'} (Total: {selected.length}
+        )
       </Text>
 
-      <Table miw={700} verticalSpacing="sm">
+      <Table miw="auto" verticalSpacing="sm">
         <Table.Thead>
           <Table.Tr>
-            <Table.Th style={{ width: '2rem' }}>
+            <Table.Th>
               <Checkbox
                 checked={allSelected}
                 indeterminate={someSelected && !allSelected}
@@ -172,7 +180,7 @@ function Demo() {
   );
 }
 
-export const useSelectionUsage: MantineDemo = {
+export const useSelectionDemo: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
