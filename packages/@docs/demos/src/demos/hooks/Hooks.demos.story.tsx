@@ -148,6 +148,11 @@ export const Demo_useLoggerDemo = {
   render: renderDemo(demos.useLoggerDemo),
 };
 
+export const Demo_useSelectedDemo = {
+  name: '⭐ Demo: useSelectedDemo',
+  render: renderDemo(demos.useSelectionUsage),
+}
+
 export const Demo_useMediaQueryDemo = {
   name: '⭐ Demo: useMediaQueryDemo',
   render: renderDemo(demos.useMediaQueryDemo),

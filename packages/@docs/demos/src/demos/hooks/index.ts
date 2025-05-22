@@ -68,5 +68,5 @@ export { useIsFirstRenderUsage } from './use-is-first-render.demo.usage';
 export { useRadialMoveUsage } from './use-radial-move.demo.usage';
 export { useScrollSpyUsage } from './use-scroll-spy.demo.usage';
 export { useScrollSpySelector } from './use-scroll-spy.demo.selector';
-export { usage as useSelectionUsage } from './use-selection.demo.usage';
+export { useSelectionUsage } from './use-selection.demo.usage';
 export { useFileDialogUsage } from './use-file-dialog.demo';
