@@ -58,6 +58,11 @@ export const Demo_readOnly = {
   render: renderDemo(demos.readOnly),
 };
 
+export const Demo_withDescription = {
+  name: '⭐ Demo: withDescription',
+  render: renderDemo(demos.withDescription),
+};
+
 export const Demo_scrollArea = {
   name: '⭐ Demo: scrollArea',
   render: renderDemo(demos.scrollArea),

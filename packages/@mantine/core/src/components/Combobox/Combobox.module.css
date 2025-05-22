@@ -209,3 +209,9 @@
     opacity: 1;
   }
 }
+
+.optionsDropdownDescription {
+  font-size: var(--combobox-option-fz, var(--mantine-font-size-xs));
+  color: var(--mantine-color-placeholder);
+  font-weight: 500;
+}
