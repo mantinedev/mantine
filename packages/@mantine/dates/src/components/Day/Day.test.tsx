@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import lodash from 'lodash';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Day, DayProps, DayStylesNames } from './Day';
@@ -98,7 +99,7 @@ describe('@mantine/dates/Day', () => {
     const { rerender } = render(<Day {...defaultProps} date="2021-11-01" />);
     expect(screen.getByRole('button')).not.toHaveAttribute('data-today');
 
-    rerender(<Day {...defaultProps} date={new Date().toISOString().split('T')[0]} />);
+    rerender(<Day {...defaultProps} date={dayjs().format('YYYY-MM-DD')} />);
     expect(screen.getByRole('button')).toHaveAttribute('data-today');
   });
 });
