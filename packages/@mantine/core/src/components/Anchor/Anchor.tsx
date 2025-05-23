@@ -8,7 +8,7 @@ export type AnchorVariant = TextVariant;
 export type AnchorCssVariables = TextCssVariables;
 
 export interface AnchorProps extends Omit<TextProps, 'span'> {
-  /** Determines in which cases link should have `text-decoration: underline` styles, `hover` by default */
+  /** Defines when `text-decoration: underline` styles are applied. `hover` by default. */
   underline?: 'always' | 'hover' | 'not-hover' | 'never';
 }
 
@@ -31,6 +31,7 @@ export const Anchor = polymorphicFactory<AnchorFactory>((props, ref) => {
     defaultProps,
     props
   );
+
   return (
     <Text
       component="a"
