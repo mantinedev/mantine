@@ -17,7 +17,7 @@ export interface AccordionItemProps
   extends BoxProps,
     CompoundStylesApiProps<AccordionItemFactory>,
     ElementProps<'div'> {
-  /** Value that is used to manage accordion state */
+  /** Value that is used to manage the accordion state */
   value: string;
 }
 

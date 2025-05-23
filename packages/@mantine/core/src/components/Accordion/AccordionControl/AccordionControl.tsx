@@ -19,7 +19,7 @@ export interface AccordionControlProps
   extends BoxProps,
     CompoundStylesApiProps<AccordionControlFactory>,
     ElementProps<'button'> {
-  /** Disables control button */
+  /** Sets disabled attribute, prevents interactions */
   disabled?: boolean;
 
   /** Custom chevron icon */

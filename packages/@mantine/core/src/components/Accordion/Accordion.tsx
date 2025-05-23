@@ -44,25 +44,25 @@ export interface AccordionProps<Multiple extends boolean = false>
   extends BoxProps,
     StylesApiProps<AccordionFactory>,
     ElementProps<'div', 'value' | 'defaultValue' | 'onChange'> {
-  /** Determines whether multiple items can be opened at a time, `false` by default */
+  /** If set, multiple items can be opened at the same time */
   multiple?: Multiple;
 
-  /** Value for controlled component */
+  /** Controlled component value */
   value?: AccordionValue<Multiple>;
 
-  /** Default value for uncontrolled component */
+  /** Uncontrolled component default value */
   defaultValue?: AccordionValue<Multiple>;
 
-  /** Called when value changes */
+  /** Called when value changes, payload type depends on `multiple` prop */
   onChange?: (value: AccordionValue<Multiple>) => void;
 
-  /** Determines whether arrow key presses should loop though items (first to last and last to first), `true` by default */
+  /** If set, arrow keys loop though items (first to last and last to first), `true` by default */
   loop?: boolean;
 
   /** Transition duration in ms, `200` by default */
   transitionDuration?: number;
 
-  /** Determines whether chevron rotation should be disabled, `false` by default */
+  /** If set, chevron rotation is disabled */
   disableChevronRotation?: boolean;
 
   /** Position of the chevron relative to the item label, `right` by default */
@@ -77,7 +77,7 @@ export interface AccordionProps<Multiple extends boolean = false>
   /** Heading order, has no effect on visuals */
   order?: AccordionHeadingOrder;
 
-  /** Custom chevron icon that will be used in all items */
+  /** Custom chevron icon */
   chevron?: React.ReactNode;
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. `theme.defaultRadius` by default. */
