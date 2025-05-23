@@ -133,7 +133,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
   });
 
   const update = (val: number) => {
-    if (rootRef.current) {
+    if (rootRef.current && !disabled) {
       const newValue =
         restrictToMarks && Array.isArray(marks)
           ? findClosestNumber(
