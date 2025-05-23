@@ -16,4 +16,6 @@ export const AngleSliderStylesApi: StylesApiData<AngleSliderFactory> = {
       '--thumb-size': 'Controls thumb size',
     },
   },
+
+  modifiers: [{ modifier: 'disabled', selector: 'root', condition: '`disabled` prop is set' }],
 };
