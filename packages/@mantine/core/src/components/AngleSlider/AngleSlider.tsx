@@ -174,10 +174,12 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     let newValue = _value;
 
     if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
+      event.preventDefault();
       newValue = normalizeRadialValue(_value - step, step);
     }
 
     if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
+      event.preventDefault();
       newValue = normalizeRadialValue(_value + step, step);
     }
 
