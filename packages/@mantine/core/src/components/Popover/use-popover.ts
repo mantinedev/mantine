@@ -14,6 +14,7 @@ import {
   UseFloatingReturn,
 } from '@floating-ui/react';
 import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
+import { useMantineEnv } from '../../core';
 import { FloatingAxesOffsets, FloatingPosition, FloatingStrategy } from '../Floating';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
 
@@ -58,12 +59,13 @@ function getDefaultMiddlewares(middlewares: PopoverMiddlewares | undefined): Pop
 
 function getPopoverMiddlewares(
   options: UsePopoverOptions,
-  getFloating: () => UseFloatingReturn<Element>
+  getFloating: () => UseFloatingReturn<Element>,
+  env: 'test' | 'default'
 ) {
   const middlewaresOptions = getDefaultMiddlewares(options.middlewares);
   const middlewares: Middleware[] = [offset(options.offset), hide()];
 
-  if (options.dropdownVisible) {
+  if (options.dropdownVisible && env !== 'test') {
     middlewaresOptions.flip = false;
     middlewaresOptions.shift = false;
   }
@@ -126,6 +128,7 @@ function getPopoverMiddlewares(
 }
 
 export function usePopover(options: UsePopoverOptions) {
+  const env = useMantineEnv();
   const [_opened, setOpened] = useUncontrolled({
     value: options.opened,
     defaultValue: options.defaultOpened,
@@ -146,7 +149,7 @@ export function usePopover(options: UsePopoverOptions) {
   const floating: UseFloatingReturn<Element> = useFloating({
     strategy: options.strategy,
     placement: options.positionRef.current,
-    middleware: getPopoverMiddlewares(options, () => floating),
+    middleware: getPopoverMiddlewares(options, () => floating, env),
     whileElementsMounted: autoUpdate,
   });
 
