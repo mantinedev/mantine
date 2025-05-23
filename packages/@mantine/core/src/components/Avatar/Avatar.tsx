@@ -83,8 +83,6 @@ export type AvatarFactory = PolymorphicFactory<{
   };
 }>;
 
-const defaultProps = {} satisfies Partial<AvatarProps>;
-
 const varsResolver = createVarsResolver<AvatarFactory>(
   (
     theme,
@@ -116,7 +114,7 @@ const varsResolver = createVarsResolver<AvatarFactory>(
 );
 
 export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
-  const props = useProps('Avatar', defaultProps, _props);
+  const props = useProps('Avatar', null, _props);
   const {
     classNames,
     className,

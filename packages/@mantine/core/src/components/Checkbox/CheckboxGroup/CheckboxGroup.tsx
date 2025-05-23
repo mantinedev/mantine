@@ -35,11 +35,9 @@ export type CheckboxGroupFactory = Factory<{
   stylesNames: CheckboxGroupStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<CheckboxGroupProps>;
-
 export const CheckboxGroup = factory<CheckboxGroupFactory>((props, ref) => {
   const { value, defaultValue, onChange, size, wrapperProps, children, readOnly, ...others } =
-    useProps('CheckboxGroup', defaultProps, props);
+    useProps('CheckboxGroup', null, props);
 
   const [_value, setValue] = useUncontrolled({
     value,

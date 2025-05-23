@@ -25,10 +25,8 @@ export type RichTextEditorContentFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<RichTextEditorContentProps>;
-
 export const RichTextEditorContent = factory<RichTextEditorContentFactory>((_props, ref) => {
-  const props = useProps('RichTextEditorContent', defaultProps, _props);
+  const props = useProps('RichTextEditorContent', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
   const ctx = useRichTextEditorContext();
 

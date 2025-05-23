@@ -54,8 +54,6 @@ export type WeekdaysRowFactory = Factory<{
   vars: WeekdaysRowCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<WeekdaysRowProps>;
-
 const varsResolver = createVarsResolver<WeekdaysRowFactory>((_, { size }) => ({
   weekdaysRow: {
     '--wr-fz': getFontSize(size),
@@ -64,7 +62,7 @@ const varsResolver = createVarsResolver<WeekdaysRowFactory>((_, { size }) => ({
 }));
 
 export const WeekdaysRow = factory<WeekdaysRowFactory>((_props, ref) => {
-  const props = useProps('WeekdaysRow', defaultProps, _props);
+  const props = useProps('WeekdaysRow', null, _props);
   const {
     classNames,
     className,

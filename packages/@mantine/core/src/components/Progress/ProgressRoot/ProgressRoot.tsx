@@ -46,8 +46,6 @@ export type ProgressRootFactory = Factory<{
   vars: ProgressRootCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<ProgressRootProps>;
-
 const varsResolver = createVarsResolver<ProgressRootFactory>(
   (_, { size, radius, transitionDuration }) => ({
     root: {
@@ -60,7 +58,7 @@ const varsResolver = createVarsResolver<ProgressRootFactory>(
 );
 
 export const ProgressRoot = factory<ProgressRootFactory>((_props, ref) => {
-  const props = useProps('ProgressRoot', defaultProps, _props);
+  const props = useProps('ProgressRoot', null, _props);
   const {
     classNames,
     className,

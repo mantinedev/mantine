@@ -28,10 +28,8 @@ export type InputPlaceholderFactory = Factory<{
   stylesNames: InputPlaceholderStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<InputPlaceholderProps>;
-
 export const InputPlaceholder = factory<InputPlaceholderFactory>((_props, ref) => {
-  const props = useProps('InputPlaceholder', defaultProps, _props);
+  const props = useProps('InputPlaceholder', null, _props);
   const {
     classNames,
     className,
@@ -44,7 +42,7 @@ export const InputPlaceholder = factory<InputPlaceholderFactory>((_props, ref) =
     error,
     mod,
     ...others
-  } = useProps('InputPlaceholder', defaultProps, props);
+  } = props;
 
   const getStyles = useStyles<InputPlaceholderFactory>({
     name: ['InputPlaceholder', __staticSelector],

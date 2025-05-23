@@ -40,8 +40,6 @@ export type PaperFactory = PolymorphicFactory<{
   vars: PaperCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<PaperProps>;
-
 const varsResolver = createVarsResolver<PaperFactory>((_, { radius, shadow }) => ({
   root: {
     '--paper-radius': radius === undefined ? undefined : getRadius(radius),
@@ -50,7 +48,7 @@ const varsResolver = createVarsResolver<PaperFactory>((_, { radius, shadow }) =>
 }));
 
 export const Paper = polymorphicFactory<PaperFactory>((_props, ref) => {
-  const props = useProps('Paper', defaultProps, _props);
+  const props = useProps('Paper', null, _props);
   const {
     classNames,
     className,

@@ -42,8 +42,6 @@ export type PillGroupFactory = Factory<{
   ctx: { size: MantineSize | (string & {}) | undefined };
 }>;
 
-const defaultProps = {} satisfies Partial<PillGroupProps>;
-
 const varsResolver = createVarsResolver<PillGroupFactory>((_, { gap }, { size }) => ({
   group: {
     '--pg-gap': gap !== undefined ? getSize(gap) : getSize(size, 'pg-gap'),
@@ -51,7 +49,7 @@ const varsResolver = createVarsResolver<PillGroupFactory>((_, { gap }, { size })
 }));
 
 export const PillGroup = factory<PillGroupFactory>((_props, ref) => {
-  const props = useProps('PillGroup', defaultProps, _props);
+  const props = useProps('PillGroup', null, _props);
   const { classNames, className, style, styles, unstyled, vars, size, disabled, ...others } = props;
   const pillsInputCtx = usePillsInputContext();
   const _size = pillsInputCtx?.size || size || undefined;

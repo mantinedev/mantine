@@ -8,13 +8,11 @@ export interface RichTextEditorColorControlProps extends BoxProps, ElementProps<
   color: string;
 }
 
-const defaultProps = {} satisfies Partial<RichTextEditorColorControlProps>;
-
 export const RichTextEditorColorControl = forwardRef<
   HTMLButtonElement,
   RichTextEditorColorControlProps
 >((props, ref) => {
-  const { color, ...others } = useProps('RichTextEditorColorControl', defaultProps, props);
+  const { color, ...others } = useProps('RichTextEditorColorControl', null, props);
   const { editor, labels, variant } = useRichTextEditorContext();
   const currentColor = editor?.getAttributes('textStyle').color || null;
   const label = labels.colorControlLabel(color);

@@ -27,7 +27,7 @@ export type AppShellMainFactory = Factory<{
 export const AppShellMain = factory<AppShellMainFactory>((_props, ref) => {
   const { classNames, className, style, styles, vars, ...others } = useProps(
     'AppShellMain',
-    {},
+    null,
     _props
   );
 

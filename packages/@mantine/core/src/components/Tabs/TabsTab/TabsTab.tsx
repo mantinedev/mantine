@@ -43,10 +43,8 @@ export type TabsTabFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<TabsTabProps>;
-
 export const TabsTab = factory<TabsTabFactory>((_props, ref) => {
-  const props = useProps('TabsTab', defaultProps, _props);
+  const props = useProps('TabsTab', null, _props);
   const {
     className,
     children,

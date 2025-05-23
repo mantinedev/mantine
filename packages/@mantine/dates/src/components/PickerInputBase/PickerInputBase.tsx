@@ -90,8 +90,6 @@ export type PickerInputBaseFactory = Factory<{
   variant: InputVariant;
 }>;
 
-const defaultProps = {} satisfies Partial<PickerInputBaseProps>;
-
 export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => {
   const {
     inputProps,
@@ -122,7 +120,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
     onDropdownClose,
     withTime,
     ...others
-  } = useInputProps('PickerInputBase', defaultProps, _props);
+  } = useInputProps('PickerInputBase', null, _props);
 
   const clearButton = (
     <Input.ClearButton onClick={onClear} unstyled={unstyled} {...clearButtonProps} />

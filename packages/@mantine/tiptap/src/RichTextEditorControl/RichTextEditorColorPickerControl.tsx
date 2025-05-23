@@ -30,15 +30,13 @@ export interface RichTextEditorColorPickerControlProps extends BoxProps, Element
   colors: string[];
 }
 
-const defaultProps = {} satisfies Partial<RichTextEditorColorPickerControlProps>;
-
 export const RichTextEditorColorPickerControl = forwardRef<
   HTMLButtonElement,
   RichTextEditorColorPickerControlProps
 >((props, ref) => {
   const { popoverProps, colors, colorPickerProps, ...others } = useProps(
     'RichTextEditorColorPickerControl',
-    defaultProps,
+    null,
     props
   );
 

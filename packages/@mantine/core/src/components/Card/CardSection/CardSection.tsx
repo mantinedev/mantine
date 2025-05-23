@@ -27,10 +27,8 @@ export type CardSectionFactory = PolymorphicFactory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<CardSectionProps>;
-
 export const CardSection = polymorphicFactory<CardSectionFactory>((_props, ref) => {
-  const props = useProps('CardSection', defaultProps, _props);
+  const props = useProps('CardSection', null, _props);
   const { classNames, className, style, styles, vars, withBorder, inheritPadding, mod, ...others } =
     props;
   const ctx = useCardContext();

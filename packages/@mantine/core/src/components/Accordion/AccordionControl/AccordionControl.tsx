@@ -39,8 +39,6 @@ export type AccordionControlFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<AccordionControlProps>;
-
 export const AccordionControl = factory<AccordionControlFactory>((props, ref) => {
   const {
     classNames,
@@ -56,7 +54,7 @@ export const AccordionControl = factory<AccordionControlFactory>((props, ref) =>
     disabled,
     mod,
     ...others
-  } = useProps('AccordionControl', defaultProps, props);
+  } = useProps('AccordionControl', null, props);
 
   const { value } = useAccordionItemContext();
   const ctx = useAccordionContext();

@@ -38,7 +38,7 @@ export const AppShellNavbar = factory<AppShellNavbarFactory>((_props, ref) => {
     zIndex,
     mod,
     ...others
-  } = useProps('AppShellNavbar', {}, _props);
+  } = useProps('AppShellNavbar', null, _props);
 
   const ctx = useAppShellContext();
 

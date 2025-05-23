@@ -50,8 +50,6 @@ export type MenuItemFactory = PolymorphicFactory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<MenuItemProps>;
-
 export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
   const {
     classNames,
@@ -67,7 +65,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
     disabled,
     'data-disabled': dataDisabled,
     ...others
-  } = useProps('MenuItem', defaultProps, props);
+  } = useProps('MenuItem', null, props);
 
   const ctx = useMenuContext();
   const subCtx = useSubMenuContext();

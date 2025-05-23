@@ -88,8 +88,6 @@ export type ActionIconFactory = PolymorphicFactory<{
   };
 }>;
 
-const defaultProps = {} satisfies Partial<ActionIconProps>;
-
 const varsResolver = createVarsResolver<ActionIconFactory>(
   (theme, { size, radius, variant, gradient, color, autoContrast }) => {
     const colors = theme.variantColorResolver({
@@ -115,7 +113,7 @@ const varsResolver = createVarsResolver<ActionIconFactory>(
 );
 
 export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) => {
-  const props = useProps('ActionIcon', defaultProps, _props);
+  const props = useProps('ActionIcon', null, _props);
   const {
     className,
     unstyled,

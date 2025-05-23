@@ -69,8 +69,6 @@ export type DayFactory = Factory<{
   vars: DayCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<DayProps>;
-
 const varsResolver = createVarsResolver<DayFactory>((_, { size }) => ({
   day: {
     '--day-size': getSize(size, 'day-size'),
@@ -78,7 +76,7 @@ const varsResolver = createVarsResolver<DayFactory>((_, { size }) => ({
 }));
 
 export const Day = factory<DayFactory>((_props, ref) => {
-  const props = useProps('Day', defaultProps, _props);
+  const props = useProps('Day', null, _props);
   const {
     classNames,
     className,

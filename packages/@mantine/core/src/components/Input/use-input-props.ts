@@ -10,12 +10,12 @@ interface BaseProps
   id?: string;
 }
 
-export function useInputProps<T extends BaseProps, U extends Partial<T>>(
+export function useInputProps<T extends BaseProps, U extends Partial<T> | null>(
   component: string,
   defaultProps: U,
   _props: T
 ) {
-  const props = useProps<T>(component, defaultProps, _props);
+  const props = useProps<T, U>(component, defaultProps, _props);
   const {
     label,
     description,

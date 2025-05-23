@@ -62,8 +62,6 @@ export type ThemeIconFactory = Factory<{
   variant: ThemeIconVariant;
 }>;
 
-const defaultProps = {} satisfies Partial<ThemeIconProps>;
-
 const varsResolver = createVarsResolver<ThemeIconFactory>(
   (theme, { size, radius, variant, gradient, color, autoContrast }) => {
     const colors = theme.variantColorResolver({
@@ -87,7 +85,7 @@ const varsResolver = createVarsResolver<ThemeIconFactory>(
 );
 
 export const ThemeIcon = factory<ThemeIconFactory>((_props, ref) => {
-  const props = useProps('ThemeIcon', defaultProps, _props);
+  const props = useProps('ThemeIcon', null, _props);
   const { classNames, className, style, styles, unstyled, vars, autoContrast, ...others } = props;
 
   const getStyles = useStyles<ThemeIconFactory>({

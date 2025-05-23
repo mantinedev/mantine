@@ -23,10 +23,8 @@ export type TypographyStylesProviderFactory = Factory<{
   stylesNames: TypographyStylesProviderStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<TypographyStylesProviderProps>;
-
 export const TypographyStylesProvider = factory<TypographyStylesProviderFactory>((_props, ref) => {
-  const props = useProps('TypographyStylesProvider', defaultProps, _props);
+  const props = useProps('TypographyStylesProvider', null, _props);
   const { classNames, className, style, styles, unstyled, ...others } = props;
 
   const getStyles = useStyles<TypographyStylesProviderFactory>({

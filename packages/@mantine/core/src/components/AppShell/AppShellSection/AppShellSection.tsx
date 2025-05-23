@@ -29,7 +29,7 @@ export type AppShellSectionFactory = PolymorphicFactory<{
 export const AppShellSection = polymorphicFactory<AppShellSectionFactory>((_props, ref) => {
   const { classNames, className, style, styles, vars, grow, mod, ...others } = useProps(
     'AppShellSection',
-    {},
+    null,
     _props
   );
 

@@ -30,14 +30,13 @@ export type SpotlightActionsGroupFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<SpotlightActionsGroupProps>;
-
 export const SpotlightActionsGroup = factory<SpotlightActionsGroupFactory>((props, ref) => {
   const { className, style, styles, classNames, label, children, ...others } = useProps(
     'SpotlightActionsGroup',
-    defaultProps,
+    null,
     props
   );
+
   const ctx = useSpotlightContext();
 
   return (

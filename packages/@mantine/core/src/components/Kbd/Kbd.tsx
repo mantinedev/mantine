@@ -30,14 +30,12 @@ export type KbdFactory = Factory<{
   vars: KbdCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<KbdProps>;
-
 const varsResolver = createVarsResolver<KbdFactory>((_, { size }) => ({
   root: { '--kbd-fz': getSize(size, 'kbd-fz') },
 }));
 
 export const Kbd = factory<KbdFactory>((_props, ref) => {
-  const props = useProps('Kbd', defaultProps, _props);
+  const props = useProps('Kbd', null, _props);
   const { classNames, className, style, styles, unstyled, vars, ...others } = props;
 
   const getStyles = useStyles<KbdFactory>({

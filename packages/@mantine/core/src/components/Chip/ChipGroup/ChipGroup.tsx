@@ -19,20 +19,14 @@ export interface ChipGroupProps<T extends boolean = false> {
   children?: React.ReactNode;
 }
 
-const defaultProps = {} satisfies Partial<ChipGroupProps<any>>;
-
 export function ChipGroup<T extends boolean>(props: ChipGroupProps<T>) {
-  const { value, defaultValue, onChange, multiple, children } = useProps(
-    'ChipGroup',
-    defaultProps as any,
-    props
-  );
+  const { value, defaultValue, onChange, multiple, children } = useProps('ChipGroup', null, props);
 
   const [_value, setValue] = useUncontrolled<string | null | string[]>({
     value,
     defaultValue,
     finalValue: multiple ? ([] as string[]) : null,
-    onChange,
+    onChange: onChange as any,
   });
 
   const isChipSelected = (val: string) =>

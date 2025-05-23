@@ -39,7 +39,7 @@ export const AppShellHeader = factory<AppShellHeaderFactory>((_props, ref) => {
     zIndex,
     mod,
     ...others
-  } = useProps('AppShellHeader', {}, _props);
+  } = useProps('AppShellHeader', null, _props);
 
   const ctx = useAppShellContext();
 

@@ -55,8 +55,6 @@ export type ActionIconGroupSectionFactory = Factory<{
   variant: ActionIconVariant;
 }>;
 
-const defaultProps = {} satisfies Partial<ActionIconGroupSectionProps>;
-
 const varsResolver = createVarsResolver<ActionIconGroupSectionFactory>(
   (theme, { radius, color, gradient, variant, autoContrast, size }) => {
     const colors = theme.variantColorResolver({
@@ -82,7 +80,7 @@ const varsResolver = createVarsResolver<ActionIconGroupSectionFactory>(
 );
 
 export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>((_props, ref) => {
-  const props = useProps('ActionIconGroupSection', defaultProps, _props);
+  const props = useProps('ActionIconGroupSection', null, _props);
   const {
     className,
     style,
@@ -95,7 +93,7 @@ export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>((_p
     radius,
     autoContrast,
     ...others
-  } = useProps('ActionIconGroupSection', defaultProps, _props);
+  } = props;
 
   const getStyles = useStyles<ActionIconGroupSectionFactory>({
     name: 'ActionIconGroupSection',

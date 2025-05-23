@@ -37,7 +37,7 @@ export const AppShellAside = factory<AppShellAsideFactory>((_props, ref) => {
     zIndex,
     mod,
     ...others
-  } = useProps('AppShellAside', {}, _props);
+  } = useProps('AppShellAside', null, _props);
 
   const ctx = useAppShellContext();
 

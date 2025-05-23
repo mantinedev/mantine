@@ -27,10 +27,8 @@ export type LevelsGroupFactory = Factory<{
   stylesNames: LevelsGroupStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<LevelsGroupProps>;
-
 export const LevelsGroup = factory<LevelsGroupFactory>((_props, ref) => {
-  const props = useProps('LevelsGroup', defaultProps, _props);
+  const props = useProps('LevelsGroup', null, _props);
   const { classNames, className, style, styles, unstyled, vars, __staticSelector, ...others } =
     props;
 

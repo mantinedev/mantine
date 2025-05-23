@@ -33,14 +33,12 @@ export type BackgroundImageFactory = PolymorphicFactory<{
   vars: BackgroundImageCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<BackgroundImageProps>;
-
 const varsResolver = createVarsResolver<BackgroundImageFactory>((_, { radius }) => ({
   root: { '--bi-radius': radius === undefined ? undefined : getRadius(radius) },
 }));
 
 export const BackgroundImage = polymorphicFactory<BackgroundImageFactory>((_props, ref) => {
-  const props = useProps('BackgroundImage', defaultProps, _props);
+  const props = useProps('BackgroundImage', null, _props);
   const { classNames, className, style, styles, unstyled, vars, radius, src, variant, ...others } =
     props;
 

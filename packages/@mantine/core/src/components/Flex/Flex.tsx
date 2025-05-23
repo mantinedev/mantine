@@ -50,10 +50,8 @@ export type FlexFactory = PolymorphicFactory<{
   stylesNames: FlexStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<FlexProps>;
-
 export const Flex = polymorphicFactory<FlexFactory>((_props, ref) => {
-  const props = useProps('Flex', defaultProps, _props);
+  const props = useProps('Flex', null, _props);
   const {
     classNames,
     className,

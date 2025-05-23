@@ -39,7 +39,7 @@ export const AppShellFooter = factory<AppShellFooterFactory>((_props, ref) => {
     zIndex,
     mod,
     ...others
-  } = useProps('AppShellFooter', {}, _props);
+  } = useProps('AppShellFooter', null, _props);
 
   const ctx = useAppShellContext();
 

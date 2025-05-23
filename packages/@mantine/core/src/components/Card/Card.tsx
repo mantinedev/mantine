@@ -50,8 +50,6 @@ export type CardFactory = PolymorphicFactory<{
   };
 }>;
 
-const defaultProps = {} satisfies Partial<CardProps>;
-
 const varsResolver = createVarsResolver<CardFactory>((_, { padding }) => ({
   root: {
     '--card-padding': getSpacing(padding),
@@ -59,7 +57,7 @@ const varsResolver = createVarsResolver<CardFactory>((_, { padding }) => ({
 }));
 
 export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
-  const props = useProps('Card', defaultProps, _props);
+  const props = useProps('Card', null, _props);
   const { classNames, className, style, styles, unstyled, vars, children, padding, ...others } =
     props;
 

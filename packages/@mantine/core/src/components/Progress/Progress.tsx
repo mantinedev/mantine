@@ -44,10 +44,8 @@ export type ProgressFactory = Factory<{
   };
 }>;
 
-const defaultProps = {} satisfies Partial<ProgressProps>;
-
 export const Progress = factory<ProgressFactory>((_props, ref) => {
-  const props = useProps('Progress', defaultProps, _props);
+  const props = useProps('Progress', null, _props);
   const {
     value,
     classNames,

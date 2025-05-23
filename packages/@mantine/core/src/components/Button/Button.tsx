@@ -111,8 +111,6 @@ const loaderTransition: MantineTransition = {
   transitionProperty: 'transform, opacity',
 };
 
-const defaultProps = {} satisfies Partial<ButtonProps>;
-
 const varsResolver = createVarsResolver<ButtonFactory>(
   (theme, { radius, color, gradient, variant, size, justify, autoContrast }) => {
     const colors = theme.variantColorResolver({
@@ -143,7 +141,7 @@ const varsResolver = createVarsResolver<ButtonFactory>(
 );
 
 export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
-  const props = useProps('Button', defaultProps, _props);
+  const props = useProps('Button', null, _props);
   const {
     style,
     vars,
