@@ -347,3 +347,8 @@ export const Demo_useFileDialogUsage = {
   name: '⭐ Demo: useFileDialogUsage',
   render: renderDemo(demos.useFileDialogUsage),
 };
+
+export const Demo_useSelectionDemo = {
+  name: '⭐ Demo: useSelectionDemo',
+  render: renderDemo(demos.useSelectionDemo),
+};
