@@ -7,9 +7,9 @@ describe('@mantine/hooks/use-selection', () => {
     const data: number[] = [];
     const { result } = renderHook(() => useSelection(data));
 
-    expect(result.current[0]).toEqual([]); // selection should be empty
-    expect(result.current[1].isAllSelected).toBe(true); // all 0 items selected from 0
-    expect(result.current[1].isSomeSelected).toBe(false); // no items selected
+    expect(result.current[0]).toEqual([]);
+    expect(result.current[1].isAllSelected).toBe(false);
+    expect(result.current[1].isSomeSelected).toBe(false);
   });
 
   // Test case for initial state with a non-empty data array
