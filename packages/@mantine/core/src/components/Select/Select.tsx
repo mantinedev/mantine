@@ -302,11 +302,11 @@ export const Select = factory<SelectFactory>((_props, ref) => {
               selectFirstOptionOnChange && combobox.selectFirstOption();
             }}
             onFocus={(event) => {
-              searchable && combobox.openDropdown();
+              !!searchable && combobox.openDropdown();
               onFocus?.(event);
             }}
             onBlur={(event) => {
-              searchable && combobox.closeDropdown();
+              !!searchable && combobox.closeDropdown();
               handleSearchChange(_value != null ? optionsLockup[_value]?.label || '' : '');
               onBlur?.(event);
             }}
@@ -330,7 +330,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
           hiddenWhenEmpty={!nothingFoundMessage}
           withScrollArea={withScrollArea}
           maxDropdownHeight={maxDropdownHeight}
-          filterOptions={searchable && selectedOption?.label !== search}
+          filterOptions={!!searchable && selectedOption?.label !== search}
           value={_value}
           checkIconPosition={checkIconPosition}
           withCheckIcon={withCheckIcon}
