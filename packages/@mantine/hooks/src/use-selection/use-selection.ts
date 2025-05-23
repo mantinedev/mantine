@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 
-export const useSelection = <T>(data: Readonly<T[]>) => {
-  const [selection, setSelection] = useState<Readonly<T[]>>([]);
+export const useSelection = <T>(data: Readonly<T[]>, defaultSelection: T[] = []) => {
+  const [selection, setSelection] = useState<Readonly<T[]>>(defaultSelection);
 
   const select = useCallback(
     (selected: T) => {

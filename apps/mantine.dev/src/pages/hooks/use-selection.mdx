@@ -7,8 +7,9 @@ export default Layout(MDX_DATA.useSelection);
 ## Usage
 
 `use-selection` hook manages **selection state** for a list of items.
-It provides a flexible API to `select`, `deselect`, or `toggle` individual items,
-and offers convenient flags like `isAllSelected` and `isSomeSelected` to reflect the current selection status.
+It provides a flexible API to `select`, `deselect` or `toggle` individual items,
+and offers `reset` and `setSelection` to manipulate selection state,
+additionally offers convenient flags like `isAllSelected` and `isSomeSelected` to reflect the current selection status.
 This hook is ideal for implementing features like selectable lists, data grid row selection, or multi-select components.
 
 <Demo data={HooksDemos.useSelectionDemo} />
@@ -18,6 +19,7 @@ This hook is ideal for implementing features like selectable lists, data grid ro
 ```tsx
 function useSelection<T>(
   dataset: T[],
+  defaultSelection?: T[]
 ): readonly [T[], {
     select: (selection: T) => void,
     deselect: (selection: T) => void,
