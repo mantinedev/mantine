@@ -47,31 +47,31 @@ export interface ActionIconProps extends BoxProps, StylesApiProps<ActionIconFact
   'data-disabled'?: boolean;
   __staticSelector?: string;
 
-  /** Determines whether `Loader` component should be displayed instead of the `children`, `false` by default */
+  /** If set, `Loader` component is displayed instead of the `children` */
   loading?: boolean;
 
-  /** Props added to the `Loader` component (only visible when `loading` prop is set) */
+  /** Props passed down to the `Loader` component. Ignored when `loading` prop is not set. */
   loaderProps?: LoaderProps;
 
   /** Controls width and height of the button. Numbers are converted to rem. `'md'` by default. */
   size?: MantineSize | `input-${MantineSize}` | (string & {}) | number;
 
-  /** Key of `theme.colors` or any valid CSS color. Default value is `theme.primaryColor`.  */
+  /** Key of `theme.colors` or any valid CSS color. `theme.primaryColor` by default.  */
   color?: MantineColor;
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. `theme.defaultRadius` by default. */
   radius?: MantineRadius;
 
-  /** Gradient data used when `variant="gradient"`, default value is `theme.defaultGradient` */
+  /** Gradient values used with `variant="gradient"`. `theme.defaultGradient` by default. */
   gradient?: MantineGradient;
 
-  /** Sets `disabled` and `data-disabled` attributes on the button element */
+  /** Sets `disabled` attribute, prevents interactions */
   disabled?: boolean;
 
-  /** Icon displayed inside the button */
+  /** Icon element */
   children?: React.ReactNode;
 
-  /** Determines whether button text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** Determines whether the button text color with `filled` variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
   autoContrast?: boolean;
 }
 

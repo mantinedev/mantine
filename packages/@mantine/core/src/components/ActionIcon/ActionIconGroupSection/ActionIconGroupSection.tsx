@@ -37,10 +37,10 @@ export interface ActionIconGroupSectionProps
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
   radius?: MantineRadius;
 
-  /** Gradient configuration used when `variant="gradient"`, default value is `theme.defaultGradient` */
+  /** Gradient values used with `variant="gradient"`. `theme.defaultGradient` by default. */
   gradient?: MantineGradient;
 
-  /** Determines whether section text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** Determines whether the section text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
   autoContrast?: boolean;
 
   /** Controls section `height`, `font-size` and horizontal `padding`, `'sm'` by default */

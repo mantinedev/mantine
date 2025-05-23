@@ -17,13 +17,13 @@ export type ActionIconGroupCssVariables = {
 };
 
 export interface ActionIconGroupProps extends BoxProps, StylesApiProps<ActionIconGroupFactory> {
-  /** `ActionIcon` components only */
+  /** `ActionIcon` and `ActionIcon.GroupSection` components only */
   children?: React.ReactNode;
 
-  /** Controls group orientation, `'horizontal'` by default */
+  /** Group orientation, `'horizontal'` by default */
   orientation?: 'horizontal' | 'vertical';
 
-  /** `border-width` of the child `ActionIcon` components. Default value in `1` */
+  /** `border-width` of the child components. `1` by default */
   borderWidth?: number | string;
 }
 
