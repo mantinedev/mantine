@@ -33,12 +33,7 @@ export function Usage() {
 export function WithAreaLabel() {
   return (
     <div style={{ padding: 40 }}>
-      <Select
-        data={['React', 'Angular', 'Svelte']}
-        aria-label="Library"
-        placeholder="Select something"
-        dropdownOpened
-      />
+      <Select data={['test-1', 'test-2']} value="test-1" />
     </div>
   );
 }
