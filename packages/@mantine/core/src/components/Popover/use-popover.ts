@@ -37,6 +37,7 @@ interface UsePopoverOptions {
   arrowRef: React.RefObject<HTMLDivElement | null>;
   arrowOffset: number;
   strategy?: FloatingStrategy;
+  disabled: boolean | undefined;
 }
 
 function getDefaultMiddlewares(middlewares: PopoverMiddlewares | undefined): PopoverMiddlewares {
@@ -130,12 +131,12 @@ export function usePopover(options: UsePopoverOptions) {
   const previouslyOpened = useRef(_opened);
 
   const onClose = () => {
-    if (_opened) {
+    if (_opened && !options.disabled) {
       setOpened(false);
     }
   };
 
-  const onToggle = () => setOpened(!_opened);
+  const onToggle = () => !options.disabled && setOpened(!_opened);
 
   const floating: UseFloatingReturn<Element> = useFloating({
     strategy: options.strategy,

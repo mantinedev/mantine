@@ -287,6 +287,7 @@ export function Popover(_props: PopoverProps) {
     onClose,
     onDismiss,
     strategy: floatingStrategy,
+    disabled,
   });
 
   useClickOutside(

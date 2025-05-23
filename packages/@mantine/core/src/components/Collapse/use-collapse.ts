@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { mergeRefs, useDidUpdate } from '@mantine/hooks';
 import { CSSProperties } from '../../core';
@@ -107,7 +107,7 @@ export function useCollapse({
 
   function getCollapseProps({ style = {}, refKey = 'ref', ...rest }: GetCollapseProps = {}) {
     const theirRef: any = rest[refKey];
-    return {
+    const props = {
       'aria-hidden': !opened,
       inert: !opened,
       ...rest,
@@ -115,6 +115,12 @@ export function useCollapse({
       onTransitionEnd: handleTransitionEnd,
       style: { boxSizing: 'border-box', ...style, ...styles },
     };
+
+    if (!React.version.startsWith('18')) {
+      props.inert = !opened;
+    }
+
+    return props;
   }
 
   return getCollapseProps;
