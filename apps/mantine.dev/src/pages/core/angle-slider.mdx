@@ -1,4 +1,4 @@
-import { AngleSliderDemos } from '@docs/demos';
+import { AngleSliderDemos, HooksDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -46,6 +46,12 @@ Use it as a debounced callback to prevent frequent updates.
 
 <Demo data={AngleSliderDemos.onChangeEnd} />
 
+## disabled
+
+`disabled` prop disables the component and prevents user interaction:
+
+<Demo data={AngleSliderDemos.disabled} />
+
 ## Accessibility
 
 To make the component accessible for screen readers, set the `aria-label` prop:
@@ -70,3 +76,10 @@ Keyboard interactions when the component is focused:
     { key: 'End', description: 'Sets value to 359' },
   ]}
 />
+
+## Based on use-radial-move
+
+`AngleSlider` is based on the [use-radial-move](/hooks/use-radial-move) hook.
+You can build a custom radial slider using this hook if you need more control over the component's behavior.
+
+<Demo data={HooksDemos.useRadialMoveUsage} />

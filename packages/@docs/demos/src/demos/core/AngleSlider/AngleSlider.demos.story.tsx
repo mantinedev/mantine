@@ -22,3 +22,8 @@ export const Demo_onChangeEnd = {
   name: '⭐ Demo: onChangeEnd',
   render: renderDemo(demos.onChangeEnd),
 };
+
+export const Demo_disabled = {
+  name: '⭐ Demo: disabled',
+  render: renderDemo(demos.disabled),
+};
