@@ -14,7 +14,7 @@ export type AppShellSectionStylesNames = 'section';
 export interface AppShellSectionProps
   extends BoxProps,
     CompoundStylesApiProps<AppShellSectionFactory> {
-  /** Determines whether the section should take all available space, `false` by default */
+  /** If set, the section expands to take all available space */
   grow?: boolean;
 }
 
@@ -26,11 +26,13 @@ export type AppShellSectionFactory = PolymorphicFactory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<AppShellSectionProps>;
-
 export const AppShellSection = polymorphicFactory<AppShellSectionFactory>((_props, ref) => {
-  const props = useProps('AppShellSection', defaultProps, _props);
-  const { classNames, className, style, styles, vars, grow, mod, ...others } = props;
+  const { classNames, className, style, styles, vars, grow, mod, ...others } = useProps(
+    'AppShellSection',
+    {},
+    _props
+  );
+
   const ctx = useAppShellContext();
 
   return (

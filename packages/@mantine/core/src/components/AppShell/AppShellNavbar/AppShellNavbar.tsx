@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Box,
   BoxProps,
@@ -8,20 +9,16 @@ import {
   useProps,
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
+import type { AppShellCompoundProps } from '../AppShell.types';
 import classes from '../AppShell.module.css';
 
 export type AppShellNavbarStylesNames = 'navbar';
 
 export interface AppShellNavbarProps
   extends BoxProps,
+    AppShellCompoundProps,
     StylesApiProps<AppShellNavbarFactory>,
-    ElementProps<'div'> {
-  /** Determines whether component should have a border, overrides `withBorder` prop on `AppShell` component */
-  withBorder?: boolean;
-
-  /** Component `z-index`, by default inherited from the `AppShell` */
-  zIndex?: string | number;
-}
+    ElementProps<'div'> {}
 
 export type AppShellNavbarFactory = Factory<{
   props: AppShellNavbarProps;
@@ -29,10 +26,7 @@ export type AppShellNavbarFactory = Factory<{
   stylesNames: AppShellNavbarStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<AppShellNavbarProps>;
-
 export const AppShellNavbar = factory<AppShellNavbarFactory>((_props, ref) => {
-  const props = useProps('AppShellNavbar', defaultProps, _props);
   const {
     classNames,
     className,
@@ -44,7 +38,8 @@ export const AppShellNavbar = factory<AppShellNavbarFactory>((_props, ref) => {
     zIndex,
     mod,
     ...others
-  } = props;
+  } = useProps('AppShellNavbar', {}, _props);
+
   const ctx = useAppShellContext();
 
   if (ctx.disabled) {
@@ -58,9 +53,7 @@ export const AppShellNavbar = factory<AppShellNavbarFactory>((_props, ref) => {
       mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
       {...ctx.getStyles('navbar', { className, classNames, styles, style })}
       {...others}
-      __vars={{
-        '--app-shell-navbar-z-index': `calc(${zIndex ?? ctx.zIndex} + 1)`,
-      }}
+      __vars={{ '--app-shell-navbar-z-index': `calc(${zIndex ?? ctx.zIndex} + 1)` }}
     />
   );
 });

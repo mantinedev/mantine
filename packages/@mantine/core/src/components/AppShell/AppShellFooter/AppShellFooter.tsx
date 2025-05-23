@@ -10,20 +10,16 @@ import {
   useProps,
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
+import { AppShellCompoundProps } from '../AppShell.types';
 import classes from '../AppShell.module.css';
 
 export type AppShellFooterStylesNames = 'footer';
 
 export interface AppShellFooterProps
   extends BoxProps,
+    AppShellCompoundProps,
     StylesApiProps<AppShellFooterFactory>,
-    ElementProps<'footer'> {
-  /** Determines whether component should have a border, overrides `withBorder` prop on `AppShell` component */
-  withBorder?: boolean;
-
-  /** Component `z-index`, by default inherited from the `AppShell` */
-  zIndex?: string | number;
-}
+    ElementProps<'footer'> {}
 
 export type AppShellFooterFactory = Factory<{
   props: AppShellFooterProps;
@@ -31,10 +27,7 @@ export type AppShellFooterFactory = Factory<{
   stylesNames: AppShellFooterStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<AppShellFooterProps>;
-
 export const AppShellFooter = factory<AppShellFooterFactory>((_props, ref) => {
-  const props = useProps('AppShellFooter', defaultProps, _props);
   const {
     classNames,
     className,
@@ -46,7 +39,8 @@ export const AppShellFooter = factory<AppShellFooterFactory>((_props, ref) => {
     zIndex,
     mod,
     ...others
-  } = props;
+  } = useProps('AppShellFooter', {}, _props);
+
   const ctx = useAppShellContext();
 
   if (ctx.disabled) {

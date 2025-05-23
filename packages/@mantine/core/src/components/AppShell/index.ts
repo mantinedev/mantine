@@ -12,6 +12,7 @@ export type {
   AppShellNavbarConfiguration,
   AppShellFooterConfiguration,
   AppShellResponsiveSize,
+  AppShellCompoundProps,
 } from './AppShell.types';
 
 export type {

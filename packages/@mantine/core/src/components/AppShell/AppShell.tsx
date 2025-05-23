@@ -46,22 +46,22 @@ export interface AppShellProps
   extends BoxProps,
     StylesApiProps<AppShellFactory>,
     ElementProps<'div'> {
-  /** Determines whether associated components should have a border, `true` by default */
+  /** If set, the associated components have a border, `true` by default */
   withBorder?: boolean;
 
-  /** Controls padding of the main section, `0` by default. !important: use `padding` prop instead of `p`. */
+  /** Padding of the main section, `0` by default. Important: use `padding` prop instead of `p`. */
   padding?: MantineSpacing | AppShellResponsiveSize;
 
-  /** AppShell.Navbar configuration, controls width, breakpoints and collapsed state. Required if you use AppShell.Navbar component. */
+  /** `Navbar` configuration, controls width, breakpoints and collapsed state. Required if you use `Navbar` component. */
   navbar?: AppShellNavbarConfiguration;
 
-  /** AppShell.Aside configuration, controls width, breakpoints and collapsed state. Required if you use AppShell.Aside component. */
+  /** `Aside` configuration, controls width, breakpoints and collapsed state. Required if you use `Aside` component. */
   aside?: AppShellAsideConfiguration;
 
-  /** AppShell.Header configuration, controls height, offset and collapsed state. Required if you use AppShell.Header component. */
+  /** `Header` configuration, controls height, offset and collapsed state. Required if you use `Header` component. */
   header?: AppShellHeaderConfiguration;
 
-  /** AppShell.Footer configuration, controls height, offset and collapsed state. Required if you use AppShell.Footer component. */
+  /** `Footer` configuration, controls height, offset and collapsed state. Required if you use `Footer` component. */
   footer?: AppShellFooterConfiguration;
 
   /** Duration of all transitions in ms, `200` by default */
@@ -73,13 +73,13 @@ export interface AppShellProps
   /** `z-index` of all associated elements, `100` by default */
   zIndex?: string | number;
 
-  /** Determines how Navbar/Aside are arranged relative to Header/Footer, `default` by default */
+  /** Determines how `Navbar`/`Aside` are arranged relative to `Header`/`Footer` */
   layout?: 'default' | 'alt';
 
-  /** If set, Navbar, Aside, Header and Footer components be hidden */
+  /** If set, `Navbar`, `Aside`, `Header` and `Footer` components are hidden */
   disabled?: boolean;
 
-  /** Determines whether Header and Footer components should include styles to offset scrollbars. Based on `react-remove-scroll`. `true` by default for `layout="default"`, `false` for `layout="alt"` */
+  /** If set, `Header` and `Footer` components include styles to offset scrollbars. Based on `react-remove-scroll`. `true` by default for `layout="default"`, `false` for `layout="alt"` */
   offsetScrollbars?: boolean;
 }
 
