@@ -1,6 +1,5 @@
-import { AppShell, Burger, Group, Skeleton } from '@mantine/core';
+import { AppShell, Burger, Group, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineLogo } from '@mantinex/mantine-logo';
 
 export function NoTransitions() {
   const [opened, { toggle }] = useDisclosure();
@@ -15,18 +14,16 @@ export function NoTransitions() {
       <AppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <MantineLogo size={30} />
+          Header
         </Group>
       </AppShell.Header>
-      <AppShell.Navbar p="md">
-        Navbar
-        {Array(15)
-          .fill(0)
-          .map((_, index) => (
-            <Skeleton key={index} h={28} mt="sm" animate={false} />
-          ))}
-      </AppShell.Navbar>
-      <AppShell.Main>Main</AppShell.Main>
+      <AppShell.Navbar p="md">Navbar</AppShell.Navbar>
+      <AppShell.Main>
+        <Text>This is the main section, your app content here.</Text>
+        <Text>
+          All AppShell animations are disabled, everything is instant. Try it on a small screen.
+        </Text>
+      </AppShell.Main>
     </AppShell>
   );
 }

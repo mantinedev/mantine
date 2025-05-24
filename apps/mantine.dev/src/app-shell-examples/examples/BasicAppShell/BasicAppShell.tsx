@@ -1,6 +1,5 @@
-import { AppShell, Burger, Group, Skeleton } from '@mantine/core';
+import { AppShell, Burger, Group, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineLogo } from '@mantinex/mantine-logo';
 
 export function BasicAppShell() {
   const [opened, { toggle }] = useDisclosure();
@@ -14,18 +13,17 @@ export function BasicAppShell() {
       <AppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <MantineLogo size={30} />
+          Header has a burger icon below sm breakpoint
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">
-        Navbar
-        {Array(15)
-          .fill(0)
-          .map((_, index) => (
-            <Skeleton key={index} h={28} mt="sm" animate={false} />
-          ))}
+        Navbar is collapsed on mobile at sm breakpoint. At that point it is no longer offset by
+        padding in the main element and it takes the full width of the screen when opened.
       </AppShell.Navbar>
-      <AppShell.Main>Main</AppShell.Main>
+      <AppShell.Main>
+        <Text>This is the main section, your app content here.</Text>
+        <Text>Layout used in most cases – Navbar and Header with fixed position</Text>
+      </AppShell.Main>
     </AppShell>
   );
 }

@@ -1,6 +1,5 @@
-import { AppShell, Burger, Group, Skeleton } from '@mantine/core';
+import { AppShell, Burger, Group, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineLogo } from '@mantinex/mantine-logo';
 
 export function FullLayout() {
   const [opened, { toggle }] = useDisclosure();
@@ -16,19 +15,15 @@ export function FullLayout() {
       <AppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <MantineLogo size={30} />
+          Header
         </Group>
       </AppShell.Header>
-      <AppShell.Navbar p="md">
-        Navbar
-        {Array(15)
-          .fill(0)
-          .map((_, index) => (
-            <Skeleton key={index} h={28} mt="sm" animate={false} />
-          ))}
-      </AppShell.Navbar>
+      <AppShell.Navbar p="md">Navbar</AppShell.Navbar>
       <AppShell.Main>
-        Aside is hidden on on md breakpoint and cannot be opened when it is collapsed
+        <Text>This is the main section, your app content here.</Text>
+        <Text>AppShell example with all elements: Navbar, Header, Aside, Footer.</Text>
+        <Text>All elements except AppShell.Main have fixed position.</Text>
+        <Text>Aside is hidden on on md breakpoint and cannot be opened when it is collapsed</Text>
       </AppShell.Main>
       <AppShell.Aside p="md">Aside</AppShell.Aside>
       <AppShell.Footer p="md">Footer</AppShell.Footer>
