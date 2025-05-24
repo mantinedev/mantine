@@ -1,0 +1,32 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useSelection);
+
+## Usage
+
+The `use-selection` hook manages the selection state of multiple items from a given dataset.
+It returns an array of currently selected items and handler functions to manipulate the selection state.
+
+<Demo data={HooksDemos.useSelectionDemo} />
+
+## Definition
+
+```ts
+function useSelection<T>(
+  data: T[],
+  initialSelection?: T[]
+): [
+  T[], // Currently selected items
+  {
+    select: (item: T) => void;
+    deselect: (item: T) => void;
+    toggle: (item: T) => void;
+    isAllSelected: () => boolean;
+    isSomeSelected: () => boolean;
+    setSelection: (items: T[]) => void;
+    resetSelection: () => void;
+  }
+];
+```
