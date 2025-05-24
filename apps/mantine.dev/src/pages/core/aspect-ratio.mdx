@@ -6,7 +6,7 @@ export default Layout(MDX_DATA.AspectRatio);
 
 ## Usage
 
-`AspectRatio` allows maintaining a consistent width/height ratio.
+`AspectRatio` maintains a consistent width/height ratio.
 It can be used to display images, maps, videos and other media.
 
 <Demo data={AspectRatioDemos.image} />
@@ -22,6 +22,7 @@ It can be used to display images, maps, videos and other media.
 ## Inside flex container
 
 By default, `AspectRatio` does not have fixed width and height, it will take as much space as possible
-in a regular container. To make it work inside flex container, you need to set `width` or `flex` property.
+in a regular container. However, when used inside a flex container, it will not stretch to fill the available space.
+To make it work inside flexbox container, you need to set `width` or `flex` property.
 
 <Demo data={AspectRatioDemos.flex} />

@@ -167,7 +167,7 @@ export interface NumberInputProps
   /** Determines whether up/down keyboard events should be handled to increment/decrement value, `true` by default */
   withKeyboardEvents?: boolean;
 
-  /** Determines whether leading zeros (e.g. `00100` -> `100`) should be removed on blur, `true` by default */
+  /** Determines whether leading zeros (for example, `00100` -> `100`) should be removed on blur, `true` by default */
   trimLeadingZeroesOnBlur?: boolean;
 }
 
