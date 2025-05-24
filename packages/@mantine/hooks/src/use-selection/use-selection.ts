@@ -53,7 +53,11 @@ export function useSelection<T>(data: T[], initialSelection?: T[]): [T[], Select
   );
 
   const isSomeSelected = useCallback(
-    () => data.length > 0 && selected.size > 0 && !isAllSelected(),
+    () =>
+      data.length > 0 &&
+      selected.size > 0 &&
+      data.some((item) => selected.has(item)) &&
+      !isAllSelected(),
     [data, selected, isAllSelected]
   );
 

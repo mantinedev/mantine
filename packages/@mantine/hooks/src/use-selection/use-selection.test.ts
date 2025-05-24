@@ -105,6 +105,27 @@ describe('@mantine/hooks/use-selection', () => {
     expect(result2.current[1].isSomeSelected()).toBe(false);
   });
 
+  it('isSomeSelected returns false when selected items are not in current data', () => {
+    const { result } = renderHook(() => useSelection([1, 2, 3]));
+
+    act(() => {
+      result.current[1].setSelection([4, 5]);
+    });
+
+    expect(result.current[1].isSomeSelected()).toBe(false);
+  });
+
+  it('isSomeSelected returns true when some selected items exist in data', () => {
+    const { result } = renderHook(() => useSelection([1, 2, 3]));
+
+    // Set selection with mix of existing and non-existing items
+    act(() => {
+      result.current[1].setSelection([1, 4, 5]);
+    });
+
+    expect(result.current[1].isSomeSelected()).toBe(true);
+  });
+
   it('checks if some items are selected', () => {
     const { result } = renderHook(() => useSelection(initialData));
     // Initially, no items are selected
