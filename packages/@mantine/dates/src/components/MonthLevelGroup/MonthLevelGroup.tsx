@@ -28,6 +28,12 @@ export interface MonthLevelGroupProps
 
   /** Passed as `isStatic` prop to `Month` component */
   static?: boolean;
+
+  /** Custom first day of the month (1-31) */
+  customFirstDayOfMonth?: number;
+
+  /** Custom number of days in the month (1-31) */
+  customDaysInMonth?: number;
 }
 
 export type MonthLevelGroupFactory = Factory<{
@@ -88,6 +94,8 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
     size,
     static: isStatic,
     vars,
+    customFirstDayOfMonth,
+    customDaysInMonth,
     ...others
   } = props;
 
@@ -165,6 +173,8 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
           withCellSpacing={withCellSpacing}
           highlightToday={highlightToday}
           withWeekNumbers={withWeekNumbers}
+          customFirstDayOfMonth={customFirstDayOfMonth}
+          customDaysInMonth={customDaysInMonth}
         />
       );
     });
