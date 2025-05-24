@@ -43,6 +43,12 @@ export interface MonthLevelProps
 
   /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
   static?: boolean;
+
+  /** Custom first day of the month (1-31) */
+  customFirstDayOfMonth?: number;
+
+  /** Custom number of days in the month (1-31) */
+  customDaysInMonth?: number;
 }
 
 export type MonthLevelFactory = Factory<{
@@ -105,6 +111,8 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
     __staticSelector,
     size,
     static: isStatic,
+    customFirstDayOfMonth,
+    customDaysInMonth,
     ...others
   } = props;
 
@@ -184,6 +192,8 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
         withCellSpacing={withCellSpacing}
         highlightToday={highlightToday}
         withWeekNumbers={withWeekNumbers}
+        customFirstDayOfMonth={customFirstDayOfMonth}
+        customDaysInMonth={customDaysInMonth}
         {...stylesApiProps}
       />
     </Box>
