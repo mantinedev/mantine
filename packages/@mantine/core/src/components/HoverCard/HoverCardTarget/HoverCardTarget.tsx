@@ -2,6 +2,7 @@ import { cloneElement, forwardRef } from 'react';
 import { createEventHandler, isElement, useProps } from '../../../core';
 import { Popover, PopoverTargetProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';
+import { useHoverCardGroupContext } from '../HoverCardGroup/HoverCardGroup.context';
 
 export interface HoverCardTargetProps extends PopoverTargetProps {
   /** Key of the prop that is used to pass event listeners, by default event listeners are passed directly to component */
@@ -26,6 +27,25 @@ export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((pr
   }
 
   const ctx = useHoverCardContext();
+  const withinGroup = useHoverCardGroupContext();
+
+  // Use group-aware event handlers if within a group
+  if (withinGroup && ctx.getReferenceProps && ctx.reference) {
+    const referenceProps = ctx.getReferenceProps();
+
+    return (
+      <Popover.Target refProp={refProp} ref={ref} {...others}>
+        {cloneElement(
+          children as React.ReactElement,
+          eventPropsWrapperName
+            ? { [eventPropsWrapperName]: { ...referenceProps, ref: ctx.reference } }
+            : { ...referenceProps, ref: ctx.reference }
+        )}
+      </Popover.Target>
+    );
+  }
+
+  // Legacy implementation
   const onMouseEnter = createEventHandler((children.props as any).onMouseEnter, ctx.openDropdown);
   const onMouseLeave = createEventHandler((children.props as any).onMouseLeave, ctx.closeDropdown);
 
