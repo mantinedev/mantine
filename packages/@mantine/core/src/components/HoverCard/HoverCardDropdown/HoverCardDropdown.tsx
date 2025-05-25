@@ -20,7 +20,6 @@ export function HoverCardDropdown(props: HoverCardDropdownProps) {
   const ctx = useHoverCardContext();
   const withinGroup = useHoverCardGroupContext();
 
-  // Use group-aware event handlers if within a group
   if (withinGroup && ctx.getFloatingProps && ctx.floating) {
     const floatingProps = ctx.getFloatingProps();
 
@@ -37,7 +36,6 @@ export function HoverCardDropdown(props: HoverCardDropdownProps) {
     );
   }
 
-  // Legacy implementation
   const handleMouseEnter = createEventHandler<any>(onMouseEnter, ctx.openDropdown);
   const handleMouseLeave = createEventHandler<any>(onMouseLeave!, ctx.closeDropdown);
 

@@ -1,14 +1,11 @@
-import { useDisclosure } from '@mantine/hooks';
 import { ExtendComponent, Factory, useProps } from '../../core';
-import { useDelayedHover } from '../Floating';
 import { Popover, PopoverProps, PopoverStylesNames } from '../Popover';
 import { PopoverCssVariables } from '../Popover/Popover';
 import { HoverCardContextProvider } from './HoverCard.context';
 import { HoverCardDropdown } from './HoverCardDropdown/HoverCardDropdown';
-import { HoverCardTarget } from './HoverCardTarget/HoverCardTarget';
 import { HoverCardGroup } from './HoverCardGroup/HoverCardGroup';
+import { HoverCardTarget } from './HoverCardTarget/HoverCardTarget';
 import { useHoverCard } from './use-hover-card';
-import { useHoverCardGroupContext } from './HoverCardGroup/HoverCardGroup.context';
 
 export interface HoverCardProps extends Omit<PopoverProps, 'opened' | 'onChange'> {
   variant?: string;
@@ -48,45 +45,26 @@ export function HoverCard(props: HoverCardProps) {
     props
   );
 
-  const withinGroup = useHoverCardGroupContext();
+  const hoverCard = useHoverCard({
+    openDelay,
+    closeDelay,
+    defaultOpened: initiallyOpened,
+    onOpen,
+    onClose,
+  });
 
-  // Use the new hook if within a group, otherwise use the legacy implementation
-  if (withinGroup) {
-    const hoverCard = useHoverCard({
-      openDelay,
-      closeDelay,
-      defaultOpened: initiallyOpened,
-      onOpen,
-      onClose,
-    });
-
-    // For group mode, we don't need the legacy delayed hover since the group handles delays
-    const openDropdown = () => { };
-    const closeDropdown = () => { };
-
-    return (
-      <HoverCardContextProvider value={{
-        openDropdown,
-        closeDropdown,
+  return (
+    <HoverCardContextProvider
+      value={{
+        openDropdown: hoverCard.openDropdown,
+        closeDropdown: hoverCard.closeDropdown,
         getReferenceProps: hoverCard.getReferenceProps,
         getFloatingProps: hoverCard.getFloatingProps,
         reference: hoverCard.reference,
         floating: hoverCard.floating,
-      }}>
-        <Popover {...others} opened={hoverCard.opened} __staticSelector="HoverCard">
-          {children}
-        </Popover>
-      </HoverCardContextProvider>
-    );
-  }
-
-  // Legacy implementation for backward compatibility
-  const [opened, { open, close }] = useDisclosure(initiallyOpened, { onClose, onOpen });
-  const { openDropdown, closeDropdown } = useDelayedHover({ open, close, openDelay, closeDelay });
-
-  return (
-    <HoverCardContextProvider value={{ openDropdown, closeDropdown }}>
-      <Popover {...others} opened={opened} __staticSelector="HoverCard">
+      }}
+    >
+      <Popover {...others} opened={hoverCard.opened} __staticSelector="HoverCard">
         {children}
       </Popover>
     </HoverCardContextProvider>

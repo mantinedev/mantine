@@ -42,7 +42,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <HoverCard.Group openDelay={500} closeDelay={100}>
+    <HoverCard.Group openDelay={2000} closeDelay={100}>
       <Group justify="center">
         <HoverCard shadow="md">
           <HoverCard.Target>
@@ -79,4 +79,4 @@ export const group: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
-}; 
+};

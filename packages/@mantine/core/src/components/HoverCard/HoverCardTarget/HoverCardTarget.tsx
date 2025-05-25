@@ -29,7 +29,6 @@ export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((pr
   const ctx = useHoverCardContext();
   const withinGroup = useHoverCardGroupContext();
 
-  // Use group-aware event handlers if within a group
   if (withinGroup && ctx.getReferenceProps && ctx.reference) {
     const referenceProps = ctx.getReferenceProps();
 
@@ -45,7 +44,6 @@ export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((pr
     );
   }
 
-  // Legacy implementation
   const onMouseEnter = createEventHandler((children.props as any).onMouseEnter, ctx.openDropdown);
   const onMouseLeave = createEventHandler((children.props as any).onMouseLeave, ctx.closeDropdown);
 
