@@ -90,7 +90,7 @@ export function useHoverCard(settings: UseHoverCard) {
     }
   }, [withinGroup, clearTimeouts, settings.closeDelay, onChange]);
 
-  useEffect(() => clearTimeouts, [clearTimeouts]);
+  useEffect(() => () => clearTimeouts(), [clearTimeouts]);
 
   return {
     opened,
