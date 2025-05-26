@@ -16,6 +16,7 @@ interface JoiSchema {
   validate: (values: Record<string, any>, options: { abortEarly: boolean }) => JoiResults;
 }
 
+/** @deprecated Use https://github.com/mantinedev/mantine-form-joi-resolver */
 export function joiResolver(schema: any, options?: any) {
   const _schema: JoiSchema = schema;
   return (values: Record<string, any>): FormErrors => {

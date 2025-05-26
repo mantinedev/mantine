@@ -20,6 +20,7 @@ interface ZodSchema<T extends Record<string, any>> {
   safeParse: (values: T) => ZodParseSuccess | ZodParseError;
 }
 
+/** @deprecated Use https://github.com/mantinedev/mantine-form-zod-resolver */
 export function zodResolver<T extends Record<string, any>>(schema: ZodSchema<T>) {
   return (values: T): FormErrors => {
     const parsed = schema.safeParse(values);
