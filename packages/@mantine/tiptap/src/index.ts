@@ -17,6 +17,7 @@ export type { RichTextEditorToolbarProps } from './RichTextEditorToolbar/RichTex
 export type { RichTextEditorControlProps } from './RichTextEditorControl/RichTextEditorControl';
 export type { RichTextEditorColorControlProps } from './RichTextEditorControl/RichTextEditorColorControl';
 export type { RichTextEditorLinkControlProps } from './RichTextEditorControl/RichTextEditorLinkControl';
+export type { RichTextEditorSourceCodeControlProps } from './RichTextEditorControl/RichTextEditorSourceCodeControl';
 export type { RichTextEditorContentProps } from './RichTextEditorContent/RichTextEditorContent';
 export type { RichTextEditorControlsGroupProps } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
 export type { RichTextEditorLabels } from './labels';
