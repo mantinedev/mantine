@@ -185,6 +185,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.useStateHistory,
       MDX_DATA.useMap,
       MDX_DATA.useSet,
+      MDX_DATA.useSelection,
     ],
   },
 
