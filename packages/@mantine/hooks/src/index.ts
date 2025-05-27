@@ -183,3 +183,8 @@ export type {
   UseWindowScrollReturnValue,
 } from './use-window-scroll/use-window-scroll';
 export type { UseLongPressOptions, UseLongPressReturnValue } from './use-long-press/use-long-press';
+export type {
+  UseSelectionHandlers,
+  UseSelectionInput,
+  UseSelectionReturnValue,
+} from './use-selection/use-selection';

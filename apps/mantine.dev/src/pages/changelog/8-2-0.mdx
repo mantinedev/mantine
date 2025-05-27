@@ -1,4 +1,4 @@
-import { HoverCardDemos } from '@docs/demos';
+import { HoverCardDemos, HooksDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -9,6 +9,12 @@ export default Layout(MDX_DATA.Changelog820);
 [HoverCard](/core/hover-card) now supports delay synchronization between multiple instances using `HoverCard.Group` component:
 
 <Demo data={HoverCardDemos.group} demoProps={{ defaultExpanded: false }} />
+
+## use-selection hook
+
+New [use-selection](/hooks/use-selection) hook:
+
+<Demo data={HooksDemos.useSelectionDemo} demoProps={{ defaultExpanded: false }} />
 
 ## Other changes
 

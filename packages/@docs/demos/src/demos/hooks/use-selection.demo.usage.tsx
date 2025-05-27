@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Checkbox, Table } from '@mantine/core';
 import { useSelection } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
@@ -11,28 +12,30 @@ const elements = [
   { position: 7, mass: 14.007, symbol: 'N', name: 'Nitrogen' },
   { position: 39, mass: 88.906, symbol: 'Y', name: 'Yttrium' },
   { position: 56, mass: 137.33, symbol: 'Ba', name: 'Barium' },
-  { position: 58, mass: 140.12, symbol: 'Ce', name: 'Cerium' }
+  { position: 58, mass: 140.12, symbol: 'Ce', name: 'Cerium' },
 ];
 
 function Demo() {
-  const [selection, handlers] = useSelection(elements)
+  const positions = useMemo(() => elements.map((element) => element.position), [elements]);
+
+  const [selection, handlers] = useSelection({
+    data: positions,
+    defaultSelection: [39, 56],
+  });
 
   const rows = elements.map((element) => {
-    const isSelected = selection.includes(element)
-      return (
-      <Table.Tr
-        key={element.name}
-        bg={isSelected ? 'var(--mantine-color-blue-light)' : undefined}
-      >
+    const isSelected = selection.includes(element.position);
+    return (
+      <Table.Tr key={element.name} bg={isSelected ? 'var(--mantine-color-blue-light)' : undefined}>
         <Table.Td>
           <Checkbox
             aria-label="Select row"
             checked={isSelected}
             onChange={(event) => {
               if (event.target.checked) {
-                handlers.select(element)
+                handlers.select(element.position);
               } else {
-                handlers.deselect(element)
+                handlers.deselect(element.position);
               }
             }}
           />
@@ -42,7 +45,7 @@ function Demo() {
         <Table.Td>{element.symbol}</Table.Td>
         <Table.Td>{element.mass}</Table.Td>
       </Table.Tr>
-    )
+    );
   });
 
   return (
@@ -52,15 +55,13 @@ function Demo() {
           <Table.Th>
             <Checkbox
               aria-label="Select deselect all rows"
-              indeterminate={handlers.isSomeSelected}
-              checked={handlers.isAllSelected}
-              onChange={(event) => {
-                if (handlers.isSomeSelected) {
-                  handlers.resetSelection()
-                } else if (event.target.checked) {
-                  handlers.setSelection(elements)
+              indeterminate={handlers.isSomeSelected()}
+              checked={handlers.isAllSelected()}
+              onChange={() => {
+                if (handlers.isAllSelected()) {
+                  handlers.resetSelection();
                 } else {
-                  handlers.resetSelection()
+                  handlers.setSelection(elements.map((el) => el.position));
                 }
               }}
             />
@@ -86,10 +87,15 @@ const elements = [
 ];
 
 function Demo() {
-  const [selection, handlers] = useSelection(elements);
+  const positions = useMemo(() => elements.map((element) => element.position), [elements]);
+
+  const [selection, handlers] = useSelection({
+    data: positions,
+    defaultSelection: [39, 56],
+  });
 
   const rows = elements.map((element) => {
-    const isSelected = selection.includes(element);
+    const isSelected = selection.includes(element.position);
     return (
       <Table.Tr key={element.name} bg={isSelected ? 'var(--mantine-color-blue-light)' : undefined}>
         <Table.Td>
@@ -98,9 +104,9 @@ function Demo() {
             checked={isSelected}
             onChange={(event) => {
               if (event.target.checked) {
-                handlers.select(element);
+                handlers.select(element.position);
               } else {
-                handlers.deselect(element);
+                handlers.deselect(element.position);
               }
             }}
           />
@@ -120,15 +126,13 @@ function Demo() {
           <Table.Th>
             <Checkbox
               aria-label="Select deselect all rows"
-              indeterminate={handlers.isSomeSelected}
-              checked={handlers.isAllSelected}
-              onChange={(event) => {
-                if (handlers.isSomeSelected) {
+              indeterminate={handlers.isSomeSelected()}
+              checked={handlers.isAllSelected()}
+              onChange={() => {
+                if (handlers.isAllSelected()) {
                   handlers.resetSelection();
-                } else if (event.target.checked) {
-                  handlers.setSelection(elements);
                 } else {
-                  handlers.resetSelection();
+                  handlers.setSelection(elements.map((el) => el.position));
                 }
               }}
             />
