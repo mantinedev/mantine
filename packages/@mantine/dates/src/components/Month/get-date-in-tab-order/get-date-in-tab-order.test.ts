@@ -33,10 +33,13 @@ describe('@mantine/dates/get-date-in-tab-order', () => {
   });
 
   it('returns current day', () => {
+    const localToday = dayjs().format('YYYY-MM-DD');
+    const localMonth = dayjs().format('YYYY-MM');
+
     expect(
       getDateInTabOrder({
         dates: getMonthDays({
-          month: new Date().toISOString().split('T')[0],
+          month: localToday,
           firstDayOfWeek: 1,
           consistentWeeks: false,
         }),
@@ -45,9 +48,9 @@ describe('@mantine/dates/get-date-in-tab-order', () => {
         getDayProps: defaultControlProps,
         excludeDate: defaultExcludeDate,
         hideOutsideDates: defaultHideOutsideDates,
-        month: defaultMonth,
+        month: localMonth,
       })
-    ).toStrictEqual(new Date().toISOString().split('T')[0]);
+    ).toStrictEqual(localToday);
   });
 
   it('returns first non-disabled day in month', () => {

@@ -15,6 +15,7 @@ type StructValidationError = {
   failures: () => Array<StructFailure>;
 };
 
+/** @deprecated Use https://github.com/mantinedev/mantine-form-superstruct-resolver */
 export function superstructResolver(schema: any) {
   function structValidation(values: Record<string, any>): FormErrors {
     const formErrors: FormErrors = {};

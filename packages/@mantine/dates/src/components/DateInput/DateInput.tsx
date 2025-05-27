@@ -23,6 +23,7 @@ import { Calendar, CalendarBaseProps, CalendarStylesNames, pickCalendarProps } f
 import { useDatesContext } from '../DatesProvider';
 import { DecadeLevelSettings } from '../DecadeLevel';
 import { HiddenDatesInput } from '../HiddenDatesInput';
+import { isSameMonth } from '../Month';
 import { MonthLevelSettings } from '../MonthLevel';
 import { YearLevelSettings } from '../YearLevel';
 import { dateStringParser } from './date-string-parser/date-string-parser';
@@ -127,6 +128,8 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     date,
     defaultDate,
     onDateChange,
+    getMonthControlProps,
+    getYearControlProps,
     ...rest
   } = props;
 
@@ -304,6 +307,14 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
               size={inputProps.size as MantineSize}
               date={_date}
               onDateChange={setDate}
+              getMonthControlProps={(date) => ({
+                selected: typeof _value === 'string' ? isSameMonth(date, _value) : false,
+                ...getMonthControlProps?.(date),
+              })}
+              getYearControlProps={(date) => ({
+                selected: typeof _value === 'string' ? dayjs(date).isSame(_value, 'year') : false,
+                ...getYearControlProps?.(date),
+              })}
             />
           </Popover.Dropdown>
         </Popover>

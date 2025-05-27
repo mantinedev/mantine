@@ -13,6 +13,7 @@ interface YupSchema {
   validateSync: (values: Record<string, any>, options: { abortEarly: boolean }) => void;
 }
 
+/** @deprecated Use https://github.com/mantinedev/mantine-form-yup-resolver */
 export function yupResolver(schema: any) {
   const _schema: YupSchema = schema;
 

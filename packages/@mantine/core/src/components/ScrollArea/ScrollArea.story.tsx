@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import { Box } from '../../core';
 import { Code } from '../Code';
 import { MultiSelect } from '../MultiSelect';
+import { NumberInput } from '../NumberInput';
 import { Paper } from '../Paper';
 import { Stack } from '../Stack';
 import { ScrollArea } from './ScrollArea';
@@ -124,5 +125,65 @@ export function OverflowIssue() {
         </ScrollArea>
       </Box>
     </div>
+  );
+}
+
+export function OnBottomReached() {
+  const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 });
+  const [hasReachedBottom, setHasReachedBottom] = useState(false);
+  const [customReachedBottom, setCustomReachedBottom] = useState(false);
+
+  const [fsize, setFsize] = useState<string | number>(16);
+  const scrollRef = createRef<HTMLDivElement>();
+
+  useEffect(() => {
+    setHasReachedBottom(false);
+    setCustomReachedBottom(false);
+    scrollRef.current?.scrollTo({ top: 0 });
+  }, [fsize]);
+
+  return (
+    <Stack mt={16} w="100%" align="center" justify="center">
+      <Paper withBorder h={100} w={200}>
+        <ScrollArea
+          w="100%"
+          h={100}
+          onScrollPositionChange={onScrollPositionChange}
+          onBottomReached={() => setHasReachedBottom(true)}
+          viewportRef={scrollRef}
+          viewportProps={{
+            onScroll: (e) => {
+              // override viewport onScroll...
+              const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+              // current impl:
+              // if (scrollTop - (scrollHeight - clientHeight) >= 0) {
+              // using math ceiling:
+              // if (Math.ceil(scrollTop) + clientHeight >= scrollHeight) {
+              // using threshold:
+              const threshold = 1; // Allow 1px tolerance
+              if (scrollTop + clientHeight >= scrollHeight - threshold) {
+                setCustomReachedBottom(true);
+              }
+            },
+          }}
+        >
+          {Array.from({ length: 7 }).map((_k, i) => (
+            <Box h={40.5} key={`example-${i}`}>
+              <h1 style={{ fontSize: `${fsize}px` }}>My Example</h1>
+            </Box>
+          ))}
+        </ScrollArea>
+      </Paper>
+      <NumberInput value={fsize} onChange={setFsize} label="Font size (px)" />
+      <div>
+        Scroll position: <Code>{`{ x: ${scrollPosition.x}, y: ${scrollPosition.y} }`}</Code>
+      </div>
+      <div>
+        Has Reached Bottom: <Code>{`{ ${hasReachedBottom} }`}</Code>
+      </div>
+      <div>
+        Custom Has Reached Bottom: <Code>{`{ ${customReachedBottom} }`}</Code>
+      </div>
+    </Stack>
   );
 }
