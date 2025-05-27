@@ -60,7 +60,7 @@ export interface DateTimePickerProps
   defaultValue?: DateValue;
 
   /** Called when value changes */
-  onChange?: (value: DateStringValue) => void;
+  onChange?: (value: DateStringValue | null) => void;
 
   /** Default time value in `HH:mm` or `HH:mm:ss` format. Assigned to time when date is selected. */
   defaultTimeValue?: string;
