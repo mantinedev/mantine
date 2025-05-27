@@ -739,7 +739,7 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     title: 'HoverCard',
     package: '@mantine/core',
     slug: '/core/hover-card',
-    props: ['HoverCard', 'HoverCardTarget'],
+    props: ['HoverCard', 'HoverCardTarget', 'HoverCardGroup'],
     styles: ['HoverCard'],
     componentPrefix: 'HoverCard',
     description: 'Display popover section when target element is hovered',

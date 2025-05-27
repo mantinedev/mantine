@@ -10,7 +10,7 @@ function Demo() {
       <Group justify="center">
         <HoverCard shadow="md">
           <HoverCard.Target>
-            <Button>HoverCard 1</Button>
+            <Button>First</Button>
           </HoverCard.Target>
           <HoverCard.Dropdown>
             <Text size="sm">First hover card content</Text>
@@ -19,7 +19,7 @@ function Demo() {
 
         <HoverCard shadow="md">
           <HoverCard.Target>
-            <Button>HoverCard 2</Button>
+            <Button>Second</Button>
           </HoverCard.Target>
           <HoverCard.Dropdown>
             <Text size="sm">Second hover card content</Text>
@@ -28,7 +28,7 @@ function Demo() {
 
         <HoverCard shadow="md">
           <HoverCard.Target>
-            <Button>HoverCard 3</Button>
+            <Button>Third</Button>
           </HoverCard.Target>
           <HoverCard.Dropdown>
             <Text size="sm">Third hover card content</Text>
@@ -42,11 +42,11 @@ function Demo() {
 
 function Demo() {
   return (
-    <HoverCard.Group openDelay={2000} closeDelay={100}>
+    <HoverCard.Group openDelay={500} closeDelay={100}>
       <Group justify="center">
         <HoverCard shadow="md">
           <HoverCard.Target>
-            <Button>HoverCard 1</Button>
+            <Button>First</Button>
           </HoverCard.Target>
           <HoverCard.Dropdown>
             <Text size="sm">First hover card content</Text>
@@ -55,7 +55,7 @@ function Demo() {
 
         <HoverCard shadow="md">
           <HoverCard.Target>
-            <Button>HoverCard 2</Button>
+            <Button>Second</Button>
           </HoverCard.Target>
           <HoverCard.Dropdown>
             <Text size="sm">Second hover card content</Text>
@@ -64,7 +64,7 @@ function Demo() {
 
         <HoverCard shadow="md">
           <HoverCard.Target>
-            <Button>HoverCard 3</Button>
+            <Button>Third</Button>
           </HoverCard.Target>
           <HoverCard.Dropdown>
             <Text size="sm">Third hover card content</Text>

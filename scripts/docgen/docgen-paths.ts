@@ -78,6 +78,7 @@ const FILES_PATHS = getPaths([
 
   // HoverCard
   'packages/@mantine/core/src/components/HoverCard/HoverCardTarget/HoverCardTarget.tsx',
+  'packages/@mantine/core/src/components/HoverCard/HoverCardGroup/HoverCardGroup.tsx',
 
   // Menu
   'packages/@mantine/core/src/components/Menu/MenuItem/MenuItem.tsx',

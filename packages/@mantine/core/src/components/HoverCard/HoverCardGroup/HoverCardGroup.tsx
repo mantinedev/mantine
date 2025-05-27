@@ -3,20 +3,20 @@ import { ExtendComponent, Factory, MantineThemeComponent, useProps } from '../..
 import { HoverCardGroupProvider } from './HoverCardGroup.context';
 
 export interface HoverCardGroupProps {
-  /** <HoverCard /> components */
+  /** `HoverCard` components */
   children: React.ReactNode;
 
-  /** Open delay in ms */
+  /** Open delay in ms, `0` by default */
   openDelay?: number;
 
-  /** Close delay in ms */
+  /** Close delay in ms, `0` by default */
   closeDelay?: number;
 }
 
-const defaultProps: Partial<HoverCardGroupProps> = {
+const defaultProps = {
   openDelay: 0,
   closeDelay: 0,
-};
+} satisfies Partial<HoverCardGroupProps>;
 
 export function HoverCardGroup(props: HoverCardGroupProps) {
   const { openDelay, closeDelay, children } = useProps('HoverCardGroup', defaultProps, props);
