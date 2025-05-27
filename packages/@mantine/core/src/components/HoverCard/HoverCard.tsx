@@ -1,11 +1,11 @@
-import { useDisclosure } from '@mantine/hooks';
 import { ExtendComponent, Factory, useProps } from '../../core';
-import { useDelayedHover } from '../Floating';
 import { Popover, PopoverProps, PopoverStylesNames } from '../Popover';
 import { PopoverCssVariables } from '../Popover/Popover';
 import { HoverCardContextProvider } from './HoverCard.context';
 import { HoverCardDropdown } from './HoverCardDropdown/HoverCardDropdown';
+import { HoverCardGroup } from './HoverCardGroup/HoverCardGroup';
 import { HoverCardTarget } from './HoverCardTarget/HoverCardTarget';
+import { useHoverCard } from './use-hover-card';
 
 export interface HoverCardProps extends Omit<PopoverProps, 'opened' | 'onChange'> {
   variant?: string;
@@ -44,12 +44,27 @@ export function HoverCard(props: HoverCardProps) {
     defaultProps,
     props
   );
-  const [opened, { open, close }] = useDisclosure(initiallyOpened, { onClose, onOpen });
-  const { openDropdown, closeDropdown } = useDelayedHover({ open, close, openDelay, closeDelay });
+
+  const hoverCard = useHoverCard({
+    openDelay,
+    closeDelay,
+    defaultOpened: initiallyOpened,
+    onOpen,
+    onClose,
+  });
 
   return (
-    <HoverCardContextProvider value={{ openDropdown, closeDropdown }}>
-      <Popover {...others} opened={opened} __staticSelector="HoverCard">
+    <HoverCardContextProvider
+      value={{
+        openDropdown: hoverCard.openDropdown,
+        closeDropdown: hoverCard.closeDropdown,
+        getReferenceProps: hoverCard.getReferenceProps,
+        getFloatingProps: hoverCard.getFloatingProps,
+        reference: hoverCard.reference,
+        floating: hoverCard.floating,
+      }}
+    >
+      <Popover {...others} opened={hoverCard.opened} __staticSelector="HoverCard">
         {children}
       </Popover>
     </HoverCardContextProvider>
@@ -59,4 +74,5 @@ export function HoverCard(props: HoverCardProps) {
 HoverCard.displayName = '@mantine/core/HoverCard';
 HoverCard.Target = HoverCardTarget;
 HoverCard.Dropdown = HoverCardDropdown;
+HoverCard.Group = HoverCardGroup;
 HoverCard.extend = (input: ExtendComponent<HoverCardFactory>) => input;
