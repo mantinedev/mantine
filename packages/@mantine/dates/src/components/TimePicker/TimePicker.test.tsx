@@ -353,7 +353,6 @@ describe('@mantine/dates/TimePicker', () => {
       />
     );
 
-    // Type a valid time within range
     await userEvent.type(screen.getByLabelText('test-hours'), '10');
     await userEvent.type(screen.getByLabelText('test-minutes'), '30');
     await userEvent.type(screen.getByLabelText('test-seconds'), '00');
@@ -362,24 +361,20 @@ describe('@mantine/dates/TimePicker', () => {
     expect(screen.getByLabelText('test-minutes')).toHaveValue('30');
     expect(screen.getByLabelText('test-seconds')).toHaveValue('00');
 
-    // Clear inputs and spy
     await userEvent.clear(screen.getByLabelText('test-hours'));
     await userEvent.clear(screen.getByLabelText('test-minutes'));
     await userEvent.clear(screen.getByLabelText('test-seconds'));
     spy.mockClear();
 
-    // Type another valid time within range
     await userEvent.type(screen.getByLabelText('test-hours'), '12');
     await userEvent.type(screen.getByLabelText('test-minutes'), '45');
     await userEvent.type(screen.getByLabelText('test-seconds'), '30');
 
-    // Verify that the value is accepted and not reset to max
     expect(spy).toHaveBeenCalledWith('12:45:30');
     expect(screen.getByLabelText('test-hours')).toHaveValue('12');
     expect(screen.getByLabelText('test-minutes')).toHaveValue('45');
     expect(screen.getByLabelText('test-seconds')).toHaveValue('30');
 
-    // Type yet another valid time
     await userEvent.clear(screen.getByLabelText('test-hours'));
     await userEvent.clear(screen.getByLabelText('test-minutes'));
     await userEvent.clear(screen.getByLabelText('test-seconds'));
@@ -389,7 +384,6 @@ describe('@mantine/dates/TimePicker', () => {
     await userEvent.type(screen.getByLabelText('test-minutes'), '15');
     await userEvent.type(screen.getByLabelText('test-seconds'), '15');
 
-    // Verify that the value is accepted and not reset to max
     expect(spy).toHaveBeenCalledWith('15:15:15');
     expect(screen.getByLabelText('test-hours')).toHaveValue('15');
     expect(screen.getByLabelText('test-minutes')).toHaveValue('15');

@@ -99,7 +99,6 @@ export function useTimePicker({
         setAmPm(val);
       }
 
-      // Clamp the time for the onChange event
       const clamped = clampTime(timeString.value, min || '00:00:00', max || '23:59:59');
       onChange?.(clamped.timeString);
     } else {
