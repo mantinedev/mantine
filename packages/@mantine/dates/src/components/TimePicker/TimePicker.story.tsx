@@ -13,6 +13,17 @@ export function Usage() {
   );
 }
 
+export function ControlledClear() {
+  const [value, setValue] = useState('');
+
+  return (
+    <div style={{ padding: 40 }}>
+      <TimePicker label="Enter time" withSeconds value={value} onChange={setValue} />
+      <button onClick={() => setValue('')}>Clear</button>
+    </div>
+  );
+}
+
 export function WithDropdown() {
   return (
     <div style={{ padding: 40 }}>
