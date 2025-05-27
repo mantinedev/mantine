@@ -5,7 +5,7 @@ import type {
   TimePickerPasteSplit,
 } from './TimePicker.types';
 import { clampTime } from './utils/clamp-time/clamp-time';
-import { convertTimeTo12HourFormat, getParsedTime } from './utils/get-parsed-time/get-parsed-time';
+import { getParsedTime } from './utils/get-parsed-time/get-parsed-time';
 import { getTimeString } from './utils/get-time-string/get-time-string';
 
 interface UseTimePickerInput {
@@ -86,19 +86,21 @@ export function useTimePicker({
 
     if (timeString.valid) {
       acceptChange.current = false;
+      if (field === 'hours') {
+        setHours(val);
+      }
+      if (field === 'minutes') {
+        setMinutes(val);
+      }
+      if (field === 'seconds') {
+        setSeconds(val);
+      }
+      if (field === 'amPm') {
+        setAmPm(val);
+      }
+
+      // Clamp the time for the onChange event
       const clamped = clampTime(timeString.value, min || '00:00:00', max || '23:59:59');
-      const converted =
-        format === '12h'
-          ? convertTimeTo12HourFormat({
-              hours: clamped.hours,
-              minutes: clamped.minutes,
-              seconds: clamped.seconds,
-              amPmLabels,
-            })
-          : clamped;
-      setHours(converted.hours);
-      setMinutes(converted.minutes);
-      setSeconds(converted.seconds);
       onChange?.(clamped.timeString);
     } else {
       acceptChange.current = false;
