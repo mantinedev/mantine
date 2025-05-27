@@ -15,7 +15,7 @@
     "apps/*"
   ],
   "scripts": {
-    "prepare": "husky",
+    "prepare": "husky && chmod +x .husky/*",
     "hc": "cd apps/help.mantine.dev && npm run dev",
     "hc:build": "cd apps/help.mantine.dev && npm run build",
     "hc:exports": "tsx scripts/docs/hc-exports",
