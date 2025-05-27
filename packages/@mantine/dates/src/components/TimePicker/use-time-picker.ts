@@ -181,6 +181,15 @@ export function useTimePicker({
   });
 
   useEffect(() => {
+    if (value === '') {
+      acceptChange.current = false;
+      setHours(null);
+      setMinutes(null);
+      setSeconds(null);
+      setAmPm(null);
+      return;
+    }
+
     if (acceptChange.current && typeof value === 'string') {
       const parsedTime = getParsedTime({ time: value || '', amPmLabels, format });
       setHours(parsedTime.hours);

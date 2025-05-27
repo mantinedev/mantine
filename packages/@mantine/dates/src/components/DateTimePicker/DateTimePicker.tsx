@@ -60,7 +60,7 @@ export interface DateTimePickerProps
   defaultValue?: DateValue;
 
   /** Called when value changes */
-  onChange?: (value: DateStringValue) => void;
+  onChange?: (value: DateStringValue | null) => void;
 
   /** Props passed down to `TimePicker` component */
   timePickerProps?: Omit<TimePickerProps, 'defaultValue' | 'value'>;
