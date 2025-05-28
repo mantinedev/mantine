@@ -1,4 +1,4 @@
-import { HoverCardDemos, HooksDemos } from '@docs/demos';
+import { HoverCardDemos, HooksDemos, SelectDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -16,8 +16,17 @@ New [use-selection](/hooks/use-selection) hook:
 
 <Demo data={HooksDemos.useSelectionDemo} demoProps={{ defaultExpanded: false }} />
 
+## autoSelectOnBlur prop
+
+[Select](/core/select) and [Autocomplete](/core/autocomplete) components now support `autoSelectOnBlur` prop.
+Use it to automatically select the highlighted option when the input loses focus.
+To see this feature in action: select an option with up/down arrows, then click outside the input:
+
+<Demo data={SelectDemos.autoSelectOnBlur} />
+
 ## Other changes
 
 - [Accordion](/core/accordion) default `chevronSize` prop value was changed to `auto` to allow using dynamic icon sizes
 - [Accordion](/core/accordion) now supports `chevronIconSize` prop to configure size of the default chevron icon
 - [AffixPosition](/core/affix) type is now exported from `@mantine/core` package
+- `errorProps`, `labelProps` and `descriptionProps` props of all inputs now have stricter types and better IDE autocomplete

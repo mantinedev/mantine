@@ -20,3 +20,4 @@ export { withinPopover } from './Autocomplete.demo.withinPopover';
 export { renderOption } from './Autocomplete.demo.renderOption';
 export { clearable } from './Autocomplete.demo.clearable';
 export { selectFirstOptionOnChange } from './Autocomplete.demo.selectFirstOptionOnChange';
+export { autoSelectOnBlur } from './Autocomplete.demo.autoSelectOnBlur';

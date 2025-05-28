@@ -112,3 +112,8 @@ export const Demo_selectFirstOptionOnChange = {
   name: '⭐ Demo: selectFirstOptionOnChange',
   render: renderDemo(demos.selectFirstOptionOnChange),
 };
+
+export const Demo_autoSelectOnBlur = {
+  name: '⭐ Demo: autoSelectOnBlur',
+  render: renderDemo(demos.autoSelectOnBlur),
+};

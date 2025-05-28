@@ -137,3 +137,8 @@ export const Demo_dropdownWidth = {
   name: '⭐ Demo: dropdownWidth',
   render: renderDemo(demos.dropdownWidth),
 };
+
+export const Demo_autoSelectOnBlur = {
+  name: '⭐ Demo: autoSelectOnBlur',
+  render: renderDemo(demos.autoSelectOnBlur),
+};
