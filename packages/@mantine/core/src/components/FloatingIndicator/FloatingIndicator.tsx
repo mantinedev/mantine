@@ -23,16 +23,18 @@ export interface FloatingIndicatorProps
   extends BoxProps,
     StylesApiProps<FloatingIndicatorFactory>,
     ElementProps<'div'> {
-  /** Target element over which indicator should be displayed */
+  /** Target element over which indicator is displayed */
   target: HTMLElement | null | undefined;
 
-  /** Parent element with relative position based on which indicator position should be calculated */
+  /** Parent element with relative position based on which indicator position is calculated */
   parent: HTMLElement | null | undefined;
 
-  /** Transition duration in ms, `150` by default */
+  /** Transition duration in ms @default `150` */
   transitionDuration?: number | string;
 
-  /** Determines whether indicator should be displayed after transition ends, should be set if used inside a container that has `transform: scale(n)` styles */
+  /** If set, the indicator is displayed after transition ends.
+   * Should be set if the component is used inside a container that has `transform: scale(n)` styles.
+   * */
   displayAfterTransitionEnd?: boolean;
 }
 

@@ -4,16 +4,16 @@ import { isElement } from '../../core';
 import { VisuallyHidden } from '../VisuallyHidden';
 
 export interface FocusTrapProps {
-  /** Element at which focus should be trapped, should support ref prop */
+  /** Element to trap focus at, must support ref prop */
   children: any;
 
-  /** Determines whether focus should be trapped within child element */
+  /** If set to `false`, disables focus trap */
   active?: boolean;
 
-  /** Prop that should be used to access component ref */
+  /** Prop that is used to access element ref @default `'ref'` */
   refProp?: string;
 
-  /** Assigns element `ref` */
+  /** Ref to combine with the focus trap ref */
   innerRef?: React.ForwardedRef<any>;
 }
 

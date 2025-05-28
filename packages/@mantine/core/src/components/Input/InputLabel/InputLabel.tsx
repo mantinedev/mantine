@@ -25,13 +25,13 @@ export interface InputLabelProps
     ElementProps<'label'> {
   __staticSelector?: string;
 
-  /** Determines whether the required asterisk should be displayed  */
+  /** If set, the required asterisk is displayed next to the label */
   required?: boolean;
 
-  /** Controls label `font-size`, `'sm'` by default */
+  /** Controls label `font-size` @default `'sm'` */
   size?: MantineFontSize;
 
-  /** Root element of the label, `'label'` by default */
+  /** Root element of the label @default `'label'` */
   labelElement?: 'label' | 'div';
 }
 

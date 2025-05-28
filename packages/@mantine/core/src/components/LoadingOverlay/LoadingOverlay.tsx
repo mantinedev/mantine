@@ -25,7 +25,7 @@ export interface LoadingOverlayProps
   extends BoxProps,
     StylesApiProps<LoadingOverlayFactory>,
     ElementProps<'div'> {
-  /** Props passed down to `Transition` component, `{ transition: 'fade', duration: 0 }` by default */
+  /** Props passed down to `Transition` component @default `{ transition: 'fade', duration: 0 }` */
   transitionProps?: TransitionOverride;
 
   /** Props passed down to `Loader` component */
@@ -34,10 +34,10 @@ export interface LoadingOverlayProps
   /** Props passed down to `Overlay` component */
   overlayProps?: OverlayProps;
 
-  /** Determines whether the overlay should be visible, `false` by default */
+  /** Determines whether the overlay should be visible @default `false` */
   visible?: boolean;
 
-  /** Controls overlay `z-index`, `400` by default */
+  /** Controls overlay `z-index` @default `400` */
   zIndex?: string | number;
 }
 

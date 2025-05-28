@@ -59,22 +59,22 @@ export interface __ColorPickerProps {
   /** Called when value changes */
   onChange?: (value: string) => void;
 
-  /** Called when the user stops dragging one of the sliders or changes the value with arrow keys */
+  /** Called when the user stops dragging one of the sliders or changes the value with keyboard */
   onChangeEnd?: (value: string) => void;
 
-  /** Color format, `'hex'` by default */
+  /** Color format @default `'hex'` */
   format?: ColorFormat;
 
-  /** Determines whether the color picker should be displayed, `true` by default */
+  /** Determines whether the color picker should be displayed @default `true` */
   withPicker?: boolean;
 
-  /** An array of colors in one of the supported formats. Used to render swatches list below the color picker. */
+  /** A list of colors used to display swatches list below the color picker */
   swatches?: string[];
 
-  /** Number of swatches per row, `7` by default */
+  /** Number of swatches per row @default `7` */
   swatchesPerRow?: number;
 
-  /** Controls size of hue, alpha and saturation sliders, `'md'` by default */
+  /** Controls size of hue, alpha and saturation sliders @default `'md'` */
   size?: MantineSize | (string & {});
 }
 
@@ -85,19 +85,19 @@ export interface ColorPickerProps
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   __staticSelector?: string;
 
-  /** Determines whether the component should take 100% width of its container, `false` by default */
+  /** If set, the component takes 100% width of its container @default `false` */
   fullWidth?: boolean;
 
-  /** Determines whether interactive elements (sliders thumbs and swatches) should be focusable, `true` by default */
+  /** If set, interactive elements (sliders thumbs and swatches) are focusable with keyboard @default `true` */
   focusable?: boolean;
 
-  /** Saturation slider `aria-label` prop */
+  /** Saturation slider `aria-label` */
   saturationLabel?: string;
 
-  /** Hue slider `aria-label` prop */
+  /** Hue slider `aria-label` */
   hueLabel?: string;
 
-  /** Alpha slider `aria-label` prop */
+  /** Alpha slider `aria-label` */
   alphaLabel?: string;
 
   /** Called when one of the color swatches is clicked */

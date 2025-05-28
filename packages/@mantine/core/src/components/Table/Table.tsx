@@ -78,10 +78,10 @@ export interface TableProps extends BoxProps, StylesApiProps<TableFactory>, Elem
   /** Determines whether the table should have borders between rows, `true` by default */
   withRowBorders?: boolean;
 
-  /** Horizontal cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem, default value is `xs` */
+  /** Horizontal cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem @default `xs` */
   horizontalSpacing?: MantineSpacing;
 
-  /** Vertical cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem, default value is `xs` */
+  /** Vertical cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem @default `xs` */
   verticalSpacing?: MantineSpacing;
 
   /** Determines whether every odd/even row background should be changed to `strippedColor`, if set to `true`, then `odd` value will be used, `false` by default  */

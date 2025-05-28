@@ -82,7 +82,7 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy), `'absolute'` by default */
   floatingStrategy?: FloatingStrategy;
 
-  /** Determines whether tooltip text color should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 }
 

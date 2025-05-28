@@ -13,10 +13,10 @@ export interface HoverCardProps extends Omit<PopoverProps, 'opened' | 'onChange'
   /** Initial opened state */
   initiallyOpened?: boolean;
 
-  /** Called when dropdown is opened */
+  /** Called when the dropdown is opened */
   onOpen?: () => void;
 
-  /** Called when dropdown is closed */
+  /** Called when the dropdown is closed */
   onClose?: () => void;
 
   /** Open delay in ms */

@@ -20,13 +20,13 @@ export interface ComboboxOptionProps
   /** Option value */
   value: string;
 
-  /** Determines whether the option is selected */
+  /** Current active state */
   active?: boolean;
 
-  /** Determines whether the option can be selected */
+  /** Disabled state */
   disabled?: boolean;
 
-  /** Determines whether item is selected, useful for virtualized comboboxes */
+  /** Current selected state */
   selected?: boolean;
 }
 

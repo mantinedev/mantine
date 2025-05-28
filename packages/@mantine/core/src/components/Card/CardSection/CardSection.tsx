@@ -12,10 +12,10 @@ import classes from '../Card.module.css';
 export type CardSectionStylesNames = 'section';
 
 export interface CardSectionProps extends BoxProps, CompoundStylesApiProps<CardSectionFactory> {
-  /** Determines whether the section should have a border, `false` by default */
+  /** If set, the section has a border */
   withBorder?: boolean;
 
-  /** Determines whether the section should inherit padding from the parent `Card`, `false` by default */
+  /** If set, the section inherits padding from the parent `Card` */
   inheritPadding?: boolean;
 }
 

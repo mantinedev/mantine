@@ -44,13 +44,13 @@ export interface ChipProps
   extends BoxProps,
     StylesApiProps<ChipFactory>,
     ElementProps<'input', 'size' | 'onChange'> {
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `'xl'` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `'xl'` */
   radius?: MantineRadius;
 
-  /** Controls various properties related to component size, `'sm'` by default */
+  /** Controls various properties related to component size @default `'sm'` */
   size?: MantineSize;
 
-  /** Chip input type, `'checkbox'` by default */
+  /** Chip input type @default `'checkbox'` */
   type?: 'radio' | 'checkbox';
 
   /** `label` element associated with the input */
@@ -65,10 +65,10 @@ export interface ChipProps
   /** Calls when checked state changes */
   onChange?: (checked: boolean) => void;
 
-  /** Controls components colors based on `variant` prop. Key of `theme.colors` or any valid CSS color. `theme.primaryColor` by default */
+  /** Controls components colors based on `variant` prop. Key of `theme.colors` or any valid CSS color. @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Static id to connect input with the label, by default `id` is randomly generated */
+  /** Unique input id */
   id?: string;
 
   /** Props passed down to the root element */
@@ -80,7 +80,7 @@ export interface ChipProps
   /** Assigns ref of the root element */
   rootRef?: React.ForwardedRef<HTMLDivElement>;
 
-  /** Determines whether button text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 }
 

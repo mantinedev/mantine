@@ -5,7 +5,7 @@ import { useHoverCardContext } from '../HoverCard.context';
 import { useHoverCardGroupContext } from '../HoverCardGroup/HoverCardGroup.context';
 
 export interface HoverCardTargetProps extends PopoverTargetProps {
-  /** Key of the prop that is used to pass event listeners, by default event listeners are passed directly to component */
+  /** Key of the prop used to pass event listeners, by default event listeners are passed directly to component */
   eventPropsWrapperName?: string;
 }
 

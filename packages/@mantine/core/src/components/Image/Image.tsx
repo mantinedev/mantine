@@ -19,13 +19,13 @@ export type ImageCssVariables = {
 };
 
 export interface ImageProps extends BoxProps, StylesApiProps<ImageFactory> {
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `0` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `0` */
   radius?: MantineRadius;
 
-  /** Controls `object-fit` style, `'cover'` by default */
+  /** Controls `object-fit` style @default `'cover'` */
   fit?: React.CSSProperties['objectFit'];
 
-  /** Image url that will be used as a fallback in case `src` prop is not set or image cannot be loaded */
+  /** Image url used as a fallback if the image cannot be loaded */
   fallbackSrc?: string;
 
   /** Image url */

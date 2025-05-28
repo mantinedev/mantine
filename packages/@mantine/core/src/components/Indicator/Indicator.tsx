@@ -43,40 +43,40 @@ export interface IndicatorProps
   extends BoxProps,
     StylesApiProps<IndicatorFactory>,
     ElementProps<'div'> {
-  /** Indicator position relative to the target element, `'top-end'` by default */
+  /** Indicator position relative to the target element @default `'top-end'` */
   position?: IndicatorPosition;
 
-  /** Indicator offset relative to the target element, usually used for elements with border-radius, equals to `size` by default */
+  /** Indicator offset relative to the target element, usually used for elements with border-radius */
   offset?: number;
 
-  /** Determines whether the indicator container should be an inline element, `false` by default */
+  /** Determines whether the indicator container should be an inline element @default `false` */
   inline?: boolean;
 
-  /** Indicator width and height, `10` by default */
+  /** Indicator width and height @default `10` */
   size?: number | string;
 
-  /** Label rendered inside the indicator, for example, notification count */
+  /** Label displayed inside the indicator, for example, notification count */
   label?: React.ReactNode;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `100` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `100` */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color value, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color value @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Determines whether the indicator should have a border (color of the border is the same as the body element), `false` by default */
+  /** If set, the indicator has a border (color of the border is the same as the body element) @default `false` */
   withBorder?: boolean;
 
-  /** When Indicator is disabled it renders children only */
+  /** If set, the indicator is hidden */
   disabled?: boolean;
 
-  /** Determines whether the indicator should have processing animation, `false` by default */
+  /** If set, the indicator has processing animation @default `false` */
   processing?: boolean;
 
-  /** Indicator z-index, `200` by default */
+  /** Indicator z-index @default `200` */
   zIndex?: string | number;
 
-  /** Determines whether text color should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 }
 

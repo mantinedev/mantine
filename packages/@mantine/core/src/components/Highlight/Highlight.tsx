@@ -10,10 +10,10 @@ import { Text, TextProps, TextStylesNames, TextVariant } from '../Text';
 import { highlighter } from './highlighter/highlighter';
 
 export interface HighlightProps extends Omit<TextProps, 'color'> {
-  /** Substring or an array of substrings to highlight in `children` */
+  /** Substring or a list of substrings to highlight in `children` */
   highlight: string | string[];
 
-  /** Key of `theme.colors` or any valid CSS color, passed to `Mark` component `color` prop, `yellow` by default */
+  /** Key of `theme.colors` or any valid CSS color, passed to `Mark` component `color` prop @default `yellow` */
   color?: MantineColor | string;
 
   /** Styles applied to `mark` elements */

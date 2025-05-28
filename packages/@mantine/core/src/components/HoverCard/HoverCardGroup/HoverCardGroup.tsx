@@ -6,10 +6,10 @@ export interface HoverCardGroupProps {
   /** `HoverCard` components */
   children: React.ReactNode;
 
-  /** Open delay in ms, `0` by default */
+  /** Open delay in ms */
   openDelay?: number;
 
-  /** Close delay in ms, `0` by default */
+  /** Close delay in ms */
   closeDelay?: number;
 }
 

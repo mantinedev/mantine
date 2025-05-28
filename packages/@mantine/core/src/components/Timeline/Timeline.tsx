@@ -54,7 +54,7 @@ export interface TimelineProps
   /** Determines whether the active items direction should be reversed without reversing items order, `false` by default */
   reverseActive?: boolean;
 
-  /** Determines whether icon color should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 }
 

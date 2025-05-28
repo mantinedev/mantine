@@ -18,7 +18,7 @@ export interface ComboboxOptionsProps
   extends BoxProps,
     CompoundStylesApiProps<ComboboxOptionsFactory>,
     ElementProps<'div'> {
-  /** Id of the element that should label the options list */
+  /** Id of the element that labels the options list */
   labelledBy?: string;
 }
 

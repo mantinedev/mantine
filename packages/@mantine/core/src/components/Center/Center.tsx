@@ -12,10 +12,10 @@ import classes from './Center.module.css';
 export type CenterStylesNames = 'root';
 
 export interface CenterProps extends BoxProps, StylesApiProps<CenterFactory> {
-  /** Content that should be centered vertically and horizontally */
+  /** Content to center */
   children?: React.ReactNode;
 
-  /** Determines whether `inline-flex` should be used instead of `flex`, `false` by default */
+  /** If set, `inline-flex` is used instead of `flex` */
   inline?: boolean;
 }
 

@@ -30,16 +30,16 @@ export interface MenuSubItemProps extends BoxProps, CompoundStylesApiProps<MenuS
   /** Key of `theme.colors` or any valid CSS color */
   color?: MantineColor;
 
-  /** Section displayed on the left side of the label */
+  /** Section displayed at the start of the label */
   leftSection?: React.ReactNode;
 
-  /** Section displayed on the right side of the label */
+  /** Section displayed at the end of the label */
   rightSection?: React.ReactNode;
 
-  /** Disables item */
+  /** Sets disabled attribute, applies disabled styles */
   disabled?: boolean;
 
-  /** Determines whether the menu should be closed when the item is clicked, `false` by default */
+  /** If set, the menu is closed when the item is clicked. Overrides `closeOnItemClick` prop on the `Menu` component. */
   closeMenuOnClick?: boolean;
 }
 

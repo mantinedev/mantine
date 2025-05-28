@@ -82,7 +82,7 @@ export interface PaginationRootProps
   /** Additional props passed down to controls */
   getItemProps?: (page: number) => Record<string, any>;
 
-  /** Determines whether active item text color should depend on `background-color` of the indicator. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 }
 

@@ -30,7 +30,7 @@ export interface FileInputProps<Multiple = false>
   /** Uncontrolled component default value */
   defaultValue?: Multiple extends true ? File[] : File | null;
 
-  /** Determines whether user can pick more than one file, `false` by default */
+  /** If set, user can pick more than one file @default `false` */
   multiple?: Multiple;
 
   /** File input accept attribute, for example, `"image/png,image/jpeg"` */
@@ -42,10 +42,10 @@ export interface FileInputProps<Multiple = false>
   /** Input form attribute */
   form?: string;
 
-  /** Value renderer. By default, file name is displayed. */
+  /** Value renderer. By default, displays file name. */
   valueComponent?: React.FC<{ value: null | File | File[] }>;
 
-  /** Determines whether clear button should be displayed in the right section, `false` by default */
+  /** If set, the clear button is displayed in the right section @default `false` */
   clearable?: boolean;
 
   /** Props passed down to the clear button */

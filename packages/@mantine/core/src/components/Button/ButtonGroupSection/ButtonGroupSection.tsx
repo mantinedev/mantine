@@ -34,16 +34,16 @@ export interface ButtonGroupSectionProps
   extends BoxProps,
     StylesApiProps<ButtonGroupSectionFactory>,
     ElementProps<'div'> {
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Gradient configuration used when `variant="gradient"`, default value is `theme.defaultGradient` */
+  /** Gradient configuration used when `variant="gradient"` @default `theme.defaultGradient` */
   gradient?: MantineGradient;
 
-  /** Determines whether section text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 
-  /** Controls section `height`, `font-size` and horizontal `padding`, `'sm'` by default */
+  /** Controls section `height`, `font-size` and horizontal `padding` @default `'sm'` */
   size?: MantineSize | `compact-${MantineSize}` | (string & {});
 }
 

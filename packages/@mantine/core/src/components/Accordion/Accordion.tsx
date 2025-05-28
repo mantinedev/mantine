@@ -56,19 +56,19 @@ export interface AccordionProps<Multiple extends boolean = false>
   /** Called when value changes, payload type depends on `multiple` prop */
   onChange?: (value: AccordionValue<Multiple>) => void;
 
-  /** If set, arrow keys loop though items (first to last and last to first), @default `true` */
+  /** If set, arrow keys loop though items (first to last and last to first) @default `true` */
   loop?: boolean;
 
-  /** Transition duration in ms, @default `200` */
+  /** Transition duration in ms @default `200` */
   transitionDuration?: number;
 
   /** If set, chevron rotation is disabled */
   disableChevronRotation?: boolean;
 
-  /** Position of the chevron relative to the item label, @default `right` */
+  /** Position of the chevron relative to the item label @default `right` */
   chevronPosition?: AccordionChevronPosition;
 
-  /** Size of the chevron icon container, @default `auto` */
+  /** Size of the chevron icon container @default `auto` */
   chevronSize?: number | string;
 
   /** Size of the default chevron icon. Ignored when `chevron` prop is set. @default `16` */

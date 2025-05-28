@@ -60,7 +60,7 @@ export interface TableOfContentsProps
   /** Controls font-size and padding of all elements, `'md'` by default */
   size?: MantineSize | (string & {}) | number;
 
-  /** Determines whether text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 
   /** Options passed down to `use-scroll-spy` hook */

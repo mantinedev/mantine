@@ -9,21 +9,21 @@ export interface ComboboxTargetProps {
   /** Target element */
   children: React.ReactNode;
 
-  /** Key of the prop that should be used to access element ref */
+  /** Key of the prop that is used to access element ref */
   refProp?: string;
 
-  /** Determines whether component should respond to keyboard events, `true` by default */
+  /** If set, the component responds to keyboard events @default `true` */
   withKeyboardNavigation?: boolean;
 
-  /** Determines whether the target should have `aria-` attributes, `true` by default */
+  /** If set, the target has `aria-` attributes @default `true` */
   withAriaAttributes?: boolean;
 
-  /** Determines whether the target should have `aria-expanded` attribute, `false` by default */
+  /** If set, the target has `aria-expanded` attribute @default `false` */
   withExpandedAttribute?: boolean;
 
-  /** Determines which events should be handled by the target element.
+  /** Determines which events is handled by the target element.
    * `button` target type handles `Space` and `Enter` keys to toggle dropdown opened state.
-   * `input` by default.
+   * @default `input`
    * */
   targetType?: 'button' | 'input';
 

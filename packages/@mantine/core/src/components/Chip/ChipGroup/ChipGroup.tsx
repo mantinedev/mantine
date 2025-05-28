@@ -3,7 +3,7 @@ import { useProps } from '../../../core';
 import { ChipGroupProvider } from '../ChipGroup.context';
 
 export interface ChipGroupProps<T extends boolean = false> {
-  /** Determines whether it is allowed to select multiple values, `false` by default */
+  /** If set, multiple values can be selected */
   multiple?: T;
 
   /** Controlled component value */

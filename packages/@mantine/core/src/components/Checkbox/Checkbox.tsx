@@ -40,25 +40,25 @@ export interface CheckboxProps
   extends BoxProps,
     StylesApiProps<CheckboxFactory>,
     ElementProps<'input', 'size' | 'children'> {
-  /** Id used to connect input with the label. If not set, unique id is generated instead. */
+  /** Unique input id */
   id?: string;
 
-  /** Content of the `label` associated with the checkbox */
+  /** `label` associated with the checkbox */
   label?: React.ReactNode;
 
-  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Controls size of the component, `'sm'` by default */
+  /** Controls size of the component @default `'sm'` */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Props passed down to the root element */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 
-  /** Position of the label relative to the input, `'right'` by default */
+  /** Position of the label relative to the input @default `'right'` */
   labelPosition?: 'left' | 'right';
 
   /** Description displayed below the label */
@@ -73,13 +73,13 @@ export interface CheckboxProps
   /** Icon displayed when checkbox is in checked or indeterminate state */
   icon?: React.FC<{ indeterminate: boolean | undefined; className: string }>;
 
-  /** Assigns ref of the root element */
+  /** Root element ref */
   rootRef?: React.ForwardedRef<HTMLDivElement>;
 
-  /** Key of `theme.colors` or any valid CSS color to set icon color, by default value depends on `theme.autoContrast` */
+  /** Key of `theme.colors` or any valid CSS color to set icon color. By default, depends on `theme.autoContrast`. */
   iconColor?: MantineColor;
 
-  /** Determines whether icon color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 }
 

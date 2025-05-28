@@ -19,7 +19,7 @@ export type KbdCssVariables = {
 };
 
 export interface KbdProps extends BoxProps, StylesApiProps<KbdFactory>, ElementProps<'kbd'> {
-  /** Controls `font-size` and `padding`, `'sm'` by default */
+  /** Controls `font-size` and `padding` @default `'sm'` */
   size?: MantineSize | number | (string & {});
 }
 

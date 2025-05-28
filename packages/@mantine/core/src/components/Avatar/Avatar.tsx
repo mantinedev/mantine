@@ -37,16 +37,16 @@ export type AvatarCssVariables = {
 };
 
 export interface AvatarProps extends BoxProps, StylesApiProps<AvatarFactory> {
-  /** Width and height of the avatar, numbers are converted to rem, @default `'md'` */
+  /** Width and height of the avatar, numbers are converted to rem @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, @default `'100%'` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default `'100%'` */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color, @default `'gray'` */
+  /** Key of `theme.colors` or any valid CSS color @default `'gray'` */
   color?: MantineColor | 'initials';
 
-  /** Gradient configuration for `variant="gradient"`, @default `theme.defaultGradient` */
+  /** Gradient configuration for `variant="gradient"` @default `theme.defaultGradient` */
   gradient?: MantineGradient;
 
   /** Image url, if the image cannot be loaded or `src={null}`, then placeholder is displayed instead */
@@ -61,7 +61,7 @@ export interface AvatarProps extends BoxProps, StylesApiProps<AvatarFactory> {
   /** Avatar placeholder, displayed when `src={null}` or when the image cannot be loaded */
   children?: React.ReactNode;
 
-  /** Determines whether text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 
   /** Name of the user. When `src` is not set, used to display initials and to generate color when `color="initials"` is set. */

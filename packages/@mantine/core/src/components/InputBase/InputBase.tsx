@@ -17,10 +17,10 @@ export interface InputBaseProps
   /** Props passed down to the root element (`Input.Wrapper` component) */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 
-  /** Determines whether the input can have multiple lines, for example when `component="textarea"`, `false` by default */
+  /** If set, the input can have multiple lines, for example when `component="textarea"` @default `false` */
   multiline?: boolean;
 
-  /** Determines whether `aria-` and other accessibility attributes should be added to the input, `true` by default */
+  /** If set, `aria-` and other accessibility attributes are added to the input @default `true` */
   withAria?: boolean;
 }
 

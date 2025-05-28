@@ -27,7 +27,7 @@ export interface InputErrorProps
   __staticSelector?: string;
   __inheritStyles?: boolean;
 
-  /** Controls error `font-size`, `'sm'` by default */
+  /** Controls error `font-size` @default `'sm'` */
   size?: MantineFontSize;
 }
 

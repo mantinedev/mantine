@@ -18,7 +18,7 @@ export interface InputPlaceholderProps
     ElementProps<'span'> {
   __staticSelector?: string;
 
-  /** If set, the placeholder will have error styles, `false` by default */
+  /** If set, the placeholder has error styles @default `false` */
   error?: React.ReactNode;
 }
 

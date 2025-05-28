@@ -71,7 +71,7 @@ export interface ActionIconProps extends BoxProps, StylesApiProps<ActionIconFact
   /** Icon element */
   children?: React.ReactNode;
 
-  /** Determines whether the button text color with `filled` variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 }
 

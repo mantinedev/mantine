@@ -77,7 +77,7 @@ export interface RadioProps
   /** Key of `theme.colors` or any valid CSS color to set icon color, by default value depends on `theme.autoContrast` */
   iconColor?: MantineColor;
 
-  /** Determines whether icon color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 }
 
