@@ -46,10 +46,10 @@ export interface AppShellProps
   extends BoxProps,
     StylesApiProps<AppShellFactory>,
     ElementProps<'div'> {
-  /** If set, the associated components have a border, `true` by default */
+  /** If set, the associated components have a border, @default `true` */
   withBorder?: boolean;
 
-  /** Padding of the main section, `0` by default. Important: use `padding` prop instead of `p`. */
+  /** Padding of the main section. Important: use `padding` prop instead of `p`. @default `0` */
   padding?: MantineSpacing | AppShellResponsiveSize;
 
   /** `Navbar` configuration, controls width, breakpoints and collapsed state. Required if you use `Navbar` component. */
@@ -64,13 +64,13 @@ export interface AppShellProps
   /** `Footer` configuration, controls height, offset and collapsed state. Required if you use `Footer` component. */
   footer?: AppShellFooterConfiguration;
 
-  /** Duration of all transitions in ms, `200` by default */
+  /** Duration of all transitions in ms, @default `200` */
   transitionDuration?: number;
 
-  /** Timing function of all transitions, `ease` by default */
+  /** Timing function of all transitions, @default `ease` */
   transitionTimingFunction?: React.CSSProperties['transitionTimingFunction'];
 
-  /** `z-index` of all associated elements, `100` by default */
+  /** `z-index` of all associated elements, @default `100` */
   zIndex?: string | number;
 
   /** Determines how `Navbar`/`Aside` are arranged relative to `Header`/`Footer` */

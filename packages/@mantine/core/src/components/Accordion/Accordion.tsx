@@ -56,22 +56,22 @@ export interface AccordionProps<Multiple extends boolean = false>
   /** Called when value changes, payload type depends on `multiple` prop */
   onChange?: (value: AccordionValue<Multiple>) => void;
 
-  /** If set, arrow keys loop though items (first to last and last to first), `true` by default */
+  /** If set, arrow keys loop though items (first to last and last to first), @default `true` */
   loop?: boolean;
 
-  /** Transition duration in ms, `200` by default */
+  /** Transition duration in ms, @default `200` */
   transitionDuration?: number;
 
   /** If set, chevron rotation is disabled */
   disableChevronRotation?: boolean;
 
-  /** Position of the chevron relative to the item label, `right` by default */
+  /** Position of the chevron relative to the item label, @default `right` */
   chevronPosition?: AccordionChevronPosition;
 
-  /** Size of the chevron icon container, `auto` by default */
+  /** Size of the chevron icon container, @default `auto` */
   chevronSize?: number | string;
 
-  /** Size of the default chevron icon. Ignored when `chevron` prop is set. `16` by default. */
+  /** Size of the default chevron icon. Ignored when `chevron` prop is set. @default `16` */
   chevronIconSize?: number | string;
 
   /** Heading order, has no effect on visuals */
@@ -80,7 +80,7 @@ export interface AccordionProps<Multiple extends boolean = false>
   /** Custom chevron icon */
   chevron?: React.ReactNode;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. `theme.defaultRadius` by default. */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default `theme.defaultRadius` */
   radius?: MantineRadius;
 }
 

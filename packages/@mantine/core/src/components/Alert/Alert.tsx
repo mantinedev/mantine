@@ -34,10 +34,10 @@ export interface AlertProps
   extends BoxProps,
     StylesApiProps<AlertFactory>,
     ElementProps<'div', 'title'> {
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius, @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color, default value is `theme.primaryColor`  */
+  /** Key of `theme.colors` or any valid CSS color, @default `theme.primaryColor`  */
   color?: MantineColor;
 
   /** Alert title */
@@ -46,7 +46,7 @@ export interface AlertProps
   /** Icon displayed next to the title */
   icon?: React.ReactNode;
 
-  /** Determines whether close button should be displayed, `false` by default */
+  /** Determines whether close button should be displayed, @default `false` */
   withCloseButton?: boolean;
 
   /** Called when the close button is clicked */

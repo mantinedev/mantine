@@ -42,7 +42,7 @@ export interface AutocompleteProps
     Omit<ComboboxLikeProps, 'data'>,
     StylesApiProps<AutocompleteFactory>,
     ElementProps<'input', 'onChange' | 'size'> {
-  /** Data used to display options. Values must be unique */
+  /** Data used to display options. Values must be unique. */
   data?: ComboboxStringData;
 
   /** Controlled component value */
@@ -66,10 +66,10 @@ export interface AutocompleteProps
   /** Props passed to the clear button */
   clearButtonProps?: InputClearButtonProps;
 
-  /** If set, the clear button is displayed when the component has a value, `false` by default */
+  /** If set, the clear button is displayed when the component has a value, @default `false` */
   clearable?: boolean;
 
-  /** If set, the highlighted option is selected when the input loses focus, `false` by default */
+  /** If set, the highlighted option is selected when the input loses focus, @default `false` */
   autoSelectOnBlur?: boolean;
 }
 

@@ -34,16 +34,16 @@ export interface ActionIconGroupSectionProps
   extends BoxProps,
     StylesApiProps<ActionIconGroupSectionFactory>,
     ElementProps<'div'> {
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Gradient values used with `variant="gradient"`. `theme.defaultGradient` by default. */
+  /** Gradient values used with `variant="gradient"`. @default `theme.defaultGradient` */
   gradient?: MantineGradient;
 
   /** Determines whether the section text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
   autoContrast?: boolean;
 
-  /** Controls section `height`, `font-size` and horizontal `padding`, `'sm'` by default */
+  /** Controls section `height`, `font-size` and horizontal `padding`, @default `'sm'` */
   size?: MantineSize | (string & {}) | number;
 }
 

@@ -20,7 +20,7 @@ export interface AspectRatioProps
   extends BoxProps,
     StylesApiProps<AspectRatioFactory>,
     ElementProps<'div'> {
-  /** Aspect ratio, for example, `16 / 9`, `4 / 3`, `1920 / 1080`, `1` by default */
+  /** Aspect ratio, for example, `16 / 9`, `4 / 3`, `1920 / 1080`, @default `1` */
   ratio?: number;
 }
 
