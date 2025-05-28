@@ -68,6 +68,9 @@ export interface AutocompleteProps
 
   /** If set, the clear button is displayed when the component has a value, `false` by default */
   clearable?: boolean;
+
+  /** If set, the highlighted option is selected when the input loses focus, `false` by default */
+  autoSelectOnBlur?: boolean;
 }
 
 export type AutocompleteFactory = Factory<{
@@ -114,6 +117,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     error,
     clearable,
     rightSection,
+    autoSelectOnBlur,
     ...others
   } = props;
 
@@ -134,7 +138,8 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     onDropdownOpen,
     onDropdownClose: () => {
       onDropdownClose?.();
-      combobox.resetSelectedOption();
+      // Required for autoSelectOnBlur to work correctly
+      setTimeout(combobox.resetSelectedOption, 0);
     },
   });
 
@@ -204,6 +209,10 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
             onFocus?.(event);
           }}
           onBlur={(event) => {
+            if (autoSelectOnBlur) {
+              combobox.clickSelectedOption();
+            }
+
             combobox.closeDropdown();
             onBlur?.(event);
           }}

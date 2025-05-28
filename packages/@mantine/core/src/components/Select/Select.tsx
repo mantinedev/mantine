@@ -91,6 +91,9 @@ export interface SelectProps
 
   /** Controls color of the default chevron, by default depends on the color scheme */
   chevronColor?: MantineColor;
+
+  /** If set, the highlighted option is selected when the input loses focus, `false` by default */
+  autoSelectOnBlur?: boolean;
 }
 
 export type SelectFactory = Factory<{
@@ -159,6 +162,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     __clearSection,
     __clearable,
     chevronColor,
+    autoSelectOnBlur,
     ...others
   } = props;
 
@@ -192,7 +196,8 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     },
     onDropdownClose: () => {
       onDropdownClose?.();
-      combobox.resetSelectedOption();
+      // Required for autoSelectOnBlur to work correctly
+      setTimeout(combobox.resetSelectedOption, 0);
     },
   });
 
@@ -306,6 +311,10 @@ export const Select = factory<SelectFactory>((_props, ref) => {
               onFocus?.(event);
             }}
             onBlur={(event) => {
+              if (autoSelectOnBlur) {
+                combobox.clickSelectedOption();
+              }
+
               !!searchable && combobox.closeDropdown();
               handleSearchChange(_value != null ? optionsLockup[_value]?.label || '' : '');
               onBlur?.(event);

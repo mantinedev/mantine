@@ -29,21 +29,7 @@ const options = [
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Autocomplete
-        data={[
-          'React',
-          'Angular',
-          'Svelte',
-          'Vue',
-          'Ember',
-          'Backbone',
-          'Preact',
-          'Inferno',
-          'Aurelia',
-          'Meteor',
-        ]}
-        placeholder="Select something"
-      />
+      <Autocomplete data={options} placeholder="Select something" autoSelectOnBlur />
     </div>
   );
 }
