@@ -78,7 +78,7 @@ export interface SelectProps
   clearable?: boolean;
 
   /** Props passed down to the clear button */
-  clearButtonProps?: InputClearButtonProps & ElementProps<'button'>;
+  clearButtonProps?: InputClearButtonProps;
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: Omit<React.ComponentPropsWithoutRef<'input'>, 'value'>;

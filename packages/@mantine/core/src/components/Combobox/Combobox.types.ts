@@ -27,6 +27,7 @@ export type ComboboxStringData =
 export type ComboboxData =
   | Array<string | ComboboxItem | ComboboxItemGroup>
   | ReadonlyArray<string | ComboboxItem | ComboboxItemGroup>;
+
 export type ComboboxParsedItem = ComboboxItem | ComboboxParsedItemGroup;
 
 export type ComboboxLikeStylesNames = Exclude<ComboboxStylesNames, 'header' | 'footer' | 'search'>;
@@ -47,7 +48,7 @@ export interface ComboboxLikeProps {
   /** Called when dropdown closes */
   onDropdownClose?: () => void;
 
-  /** Determines whether the first option should be selected when value changes, `false` by default */
+  /** If set, the first option is selected when value changes, `false` by default */
   selectFirstOptionOnChange?: boolean;
 
   /** Called when option is submitted from dropdown with mouse click or `Enter` key */

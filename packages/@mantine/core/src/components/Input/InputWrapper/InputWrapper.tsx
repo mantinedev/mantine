@@ -4,6 +4,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -17,16 +18,19 @@ import {
 import {
   InputDescription,
   InputDescriptionCssVariables,
+  InputDescriptionProps,
   InputDescriptionStylesNames,
 } from '../InputDescription/InputDescription';
 import {
   InputError,
   InputErrorCssVariables,
+  InputErrorProps,
   InputErrorStylesNames,
 } from '../InputError/InputError';
 import {
   InputLabel,
   InputLabelCssVariables,
+  InputLabelProps,
   InputLabelStylesNames,
 } from '../InputLabel/InputLabel';
 import { InputWrapperProvider } from '../InputWrapper.context';
@@ -44,29 +48,29 @@ export type InputWrapperStylesNames =
   | InputErrorStylesNames;
 
 export interface __InputWrapperProps {
-  /** Contents of `Input.Label` component. If not set, label is not rendered. */
+  /** Contents of `Input.Label` component. If not set, label is not displayed. */
   label?: React.ReactNode;
 
-  /** Contents of `Input.Description` component. If not set, description is not rendered. */
+  /** Contents of `Input.Description` component. If not set, description is not displayed. */
   description?: React.ReactNode;
 
-  /** Contents of `Input.Error` component. If not set, error is not rendered. */
+  /** Contents of `Input.Error` component. If not set, error is not displayed. */
   error?: React.ReactNode;
 
   /** Adds required attribute to the input and a red asterisk on the right side of label, `false` by default */
   required?: boolean;
 
-  /** Determines whether the required asterisk should be displayed. Overrides `required` prop. Does not add required attribute to the input. `false` by default */
+  /** If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. `false` by default */
   withAsterisk?: boolean;
 
   /** Props passed down to the `Input.Label` component */
-  labelProps?: Record<string, any>;
+  labelProps?: InputLabelProps & DataAttributes;
 
   /** Props passed down to the `Input.Description` component */
-  descriptionProps?: Record<string, any>;
+  descriptionProps?: InputDescriptionProps & DataAttributes;
 
   /** Props passed down to the `Input.Error` component */
-  errorProps?: Record<string, any>;
+  errorProps?: InputErrorProps & DataAttributes;
 
   /** Input container component, `React.Fragment` by default */
   inputContainer?: (children: React.ReactNode) => React.ReactNode;

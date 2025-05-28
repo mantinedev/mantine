@@ -6,6 +6,14 @@ export default Layout(MDX_DATA.Autocomplete);
 
 <ComboboxDisclaimer component="Autocomplete" />
 
+## Not a searchable select
+
+`Autocomplete` is not a searchable select, it is a text input with suggestions.
+Values are not enforced to be one of the suggestions, user can type anything.
+If you need a searchable select, use [Select](/core/select) component instead.
+To learn more about the differences between `Autocomplete` and `Select`, check
+[help center article](https://help.mantine.dev/q/select-autocomplete-difference).
+
 ## Usage
 
 `Autocomplete` provides user a list of suggestions based on the input,
@@ -27,6 +35,14 @@ function Demo() {
   return <Autocomplete data={[]} value={value} onChange={setValue} />;
 }
 ```
+
+## Select first option on change
+
+Set the `selectFirstOptionOnChange` prop to automatically select the first option in the dropdown when the input value changes.
+This feature allows users to type a value and immediately press `Enter` to select the first matching option,
+without needing to press the arrow down key first.
+
+<Demo data={AutocompleteDemos.selectFirstOptionOnChange} />
 
 <ComboboxData component="Autocomplete" />
 
@@ -51,6 +67,14 @@ with `filter` function:
 The function must return a React node.
 
 <Demo data={AutocompleteDemos.renderOption} />
+
+## Nothing found message
+
+`Autocomplete` component does not support nothing found message. It is designed to
+accept any string as a value, so it does not make sense to show nothing found message.
+If you want to limit user input to suggestions, you can use searchable [Select](/core/select)
+component instead. To learn more about the differences between `Autocomplete` and `Select`, check
+[help center article](https://help.mantine.dev/q/select-autocomplete-difference).
 
 ## Scrollable dropdown
 

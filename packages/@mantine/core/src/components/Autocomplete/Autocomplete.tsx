@@ -30,39 +30,43 @@ import {
 import { InputBase } from '../InputBase';
 import { ScrollAreaProps } from '../ScrollArea';
 
+export type RenderAutocompleteOption = (
+  input: ComboboxLikeRenderOptionInput<ComboboxStringItem>
+) => React.ReactNode;
+
 export type AutocompleteStylesNames = __InputStylesNames | ComboboxLikeStylesNames;
 
 export interface AutocompleteProps
   extends BoxProps,
-    __BaseInputProps,
+    Omit<__BaseInputProps, 'pointer'>,
     Omit<ComboboxLikeProps, 'data'>,
     StylesApiProps<AutocompleteFactory>,
     ElementProps<'input', 'onChange' | 'size'> {
-  /** Data displayed in the dropdown. Values must be unique, otherwise an error will be thrown and component will not render. */
+  /** Data used to display options. Values must be unique */
   data?: ComboboxStringData;
 
   /** Controlled component value */
   value?: string;
 
-  /** Uncontrolled component default value */
+  /** Default value for uncontrolled component */
   defaultValue?: string;
 
   /** Called when value changes */
   onChange?: (value: string) => void;
 
-  /** A function to render content of the option, replaces the default content of the option */
-  renderOption?: (input: ComboboxLikeRenderOptionInput<ComboboxStringItem>) => React.ReactNode;
+  /** Function to render custom option content */
+  renderOption?: RenderAutocompleteOption;
 
-  /** Props passed down to the underlying `ScrollArea` component in the dropdown */
+  /** Props passed to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
 
   /** Called when the clear button is clicked */
   onClear?: () => void;
 
-  /** Props passed down to the clear button */
-  clearButtonProps?: InputClearButtonProps & ElementProps<'button'>;
+  /** Props passed to the clear button */
+  clearButtonProps?: InputClearButtonProps;
 
-  /** Determines whether the clear button should be displayed in the right section when the component has value, `false` by default */
+  /** If set, the clear button is displayed when the component has a value, `false` by default */
   clearable?: boolean;
 }
 
@@ -169,12 +173,12 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
       styles={resolvedStyles}
       unstyled={unstyled}
       readOnly={readOnly}
+      size={size}
       onOptionSubmit={(val) => {
         onOptionSubmit?.(val);
         handleValueChange(optionsLockup[val].label);
         combobox.closeDropdown();
       }}
-      size={size}
       {...comboboxProps}
     >
       <Combobox.Target autoComplete={autoComplete}>

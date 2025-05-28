@@ -107,3 +107,8 @@ export const Demo_clearable = {
   name: '⭐ Demo: clearable',
   render: renderDemo(demos.clearable),
 };
+
+export const Demo_selectFirstOptionOnChange = {
+  name: '⭐ Demo: selectFirstOptionOnChange',
+  render: renderDemo(demos.selectFirstOptionOnChange),
+};

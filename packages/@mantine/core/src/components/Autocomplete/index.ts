@@ -3,4 +3,5 @@ export type {
   AutocompleteFactory,
   AutocompleteProps,
   AutocompleteStylesNames,
+  RenderAutocompleteOption,
 } from './Autocomplete';
