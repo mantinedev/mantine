@@ -1,6 +1,5 @@
 import { Highlight, Table, Text } from '@mantine/core';
 import docgenData from '@/.docgen/docgen.json';
-import { DocsSection } from '@/components/DocsSection';
 import { HtmlText } from '@/components/HtmlText';
 import { TableError } from '@/components/TableError';
 import { TableInlineCode } from '@/components/TableInlineCode';
@@ -43,7 +42,7 @@ export function PropsTable({ component, query }: PropsTableProps) {
       const prop = PROPS_DATA[component].props[propKey];
 
       return (
-        <Table.Tr key={propKey}>
+        <Table.Tr key={propKey} data-props-table-row>
           <Table.Td style={{ whiteSpace: 'nowrap' }}>
             <Highlight
               className={classes.propName}
@@ -75,31 +74,22 @@ export function PropsTable({ component, query }: PropsTableProps) {
       );
     });
 
-  if (rows.length === 0) {
-    return (
-      <Text c="dimmed" mb="xl" fz="sm">
-        Nothing found
-      </Text>
-    );
-  }
-
   return (
-    <DocsSection>
-      <Table.ScrollContainer
-        minWidth={800}
-        style={{ maxWidth: 'var(--docs-full-mdx-content-width)' }}
-      >
-        <Table layout="fixed">
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th w={210}>Name</Table.Th>
-              <Table.Th w={310}>Type</Table.Th>
-              <Table.Th>Description</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>{rows}</Table.Tbody>
-        </Table>
-      </Table.ScrollContainer>
-    </DocsSection>
+    <Table.ScrollContainer
+      minWidth={800}
+      style={{ maxWidth: 'var(--docs-full-mdx-content-width)' }}
+      data-visible={rows.length > 0 || undefined}
+    >
+      <Table layout="fixed">
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th w={210}>Name</Table.Th>
+            <Table.Th w={310}>Type</Table.Th>
+            <Table.Th>Description</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
+      </Table>
+    </Table.ScrollContainer>
   );
 }

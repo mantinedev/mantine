@@ -5,6 +5,8 @@ import { ReactRouterIcon } from './ReactRouterIcon';
 import { RedwoodIcon } from './RedwoodIcon';
 import { ViteIcon } from './ViteIcon';
 
+export * as PhosphorIcons from './Phosphor';
+
 export const frameworkIcons: Record<Template['type'], typeof NextIcon> = {
   next: NextIcon,
   vite: ViteIcon,
