@@ -5,6 +5,7 @@ import { HtmlText } from '@/components/HtmlText';
 import { TableError } from '@/components/TableError';
 import { TableInlineCode } from '@/components/TableInlineCode';
 import { prepareType } from './replace-types';
+import classes from './PropsTable.module.css';
 
 export interface DocgenProp {
   defaultValue: string | null;
@@ -45,17 +46,16 @@ export function PropsTable({ component, query }: PropsTableProps) {
         <Table.Tr key={propKey}>
           <Table.Td style={{ whiteSpace: 'nowrap' }}>
             <Highlight
+              className={classes.propName}
               highlight={query}
               component="span"
-              fz="sm"
-              td={prop.description.includes('@deprecated') ? 'line-through' : undefined}
-              c={prop.description.includes('@deprecated') ? 'dimmed' : undefined}
+              data-deprecated={prop.description.includes('@deprecated') || undefined}
             >
               {prop.name}
             </Highlight>
 
             {prop.required && (
-              <Text component="sup" c="red" fz="xs">
+              <Text component="sup" c="red" className={classes.propName}>
                 {' '}
                 *
               </Text>

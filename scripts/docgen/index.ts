@@ -36,5 +36,6 @@ generateDeclarations({
     'DateLabelFormat | undefined': 'string | ((date: string) => string)',
     'DatePickerType | undefined': '"range" | "multiple" | "default"',
     'ZIndex | undefined': 'React.CSSProperties["zIndex"]',
+    'AccordionHeadingOrder | undefined': '2 | 3 | 4 | 5 | 6',
   },
 });
