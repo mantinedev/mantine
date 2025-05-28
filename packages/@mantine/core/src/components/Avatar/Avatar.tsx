@@ -43,10 +43,10 @@ export interface AvatarProps extends BoxProps, StylesApiProps<AvatarFactory> {
   /** Key of `theme.radius` or any valid CSS value to set border-radius, `'100%'` by default */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color, default value is `'gray'`  */
+  /** Key of `theme.colors` or any valid CSS color, `'gray'`  by default */
   color?: MantineColor | 'initials';
 
-  /** Gradient configuration used when `variant="gradient"`, default value is `theme.defaultGradient` */
+  /** Gradient configuration for `variant="gradient"`, @default `theme.defaultGradient` */
   gradient?: MantineGradient;
 
   /** Image url, if the image cannot be loaded or `src={null}`, then placeholder is displayed instead */

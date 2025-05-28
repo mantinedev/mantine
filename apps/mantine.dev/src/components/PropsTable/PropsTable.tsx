@@ -7,9 +7,7 @@ import { TableInlineCode } from '@/components/TableInlineCode';
 import { REPLACE_TYPES } from './replace-types';
 
 export interface DocgenProp {
-  defaultValue: {
-    value: string;
-  };
+  defaultValue: string | null;
   description: string;
   name: string;
   required: boolean;
@@ -71,6 +69,9 @@ export function PropsTable({ component, query }: PropsTableProps) {
           </Table.Td>
           <Table.Td>
             <HtmlText fz="sm">{prop.description}</HtmlText>
+            {prop.defaultValue && (
+              <HtmlText fz="sm" display="block">{`Default value: ${prop.defaultValue}`}</HtmlText>
+            )}
           </Table.Td>
         </Table.Tr>
       );
