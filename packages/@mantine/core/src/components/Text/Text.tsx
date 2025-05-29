@@ -41,7 +41,7 @@ export type TextCssVariables = {
 export interface TextProps extends BoxProps, StylesApiProps<TextFactory> {
   __staticSelector?: string;
 
-  /** Controls `font-size` and `line-height`,  @default `'md'` */
+  /** Controls `font-size` and `line-height` @default `'md'` */
   size?: MantineFontSize & MantineLineHeight;
 
   /** Number of lines after which Text will be truncated */
@@ -56,10 +56,10 @@ export interface TextProps extends BoxProps, StylesApiProps<TextFactory> {
   /** Determines whether font properties should be inherited from the parent @default false */
   inherit?: boolean;
 
-  /** Gradient configuration, ignored when `variant` is not `gradient`, `theme.defaultGradient` by default */
+  /** Gradient configuration, ignored when `variant` is not `gradient` @default `theme.defaultGradient` */
   gradient?: MantineGradient;
 
-  /** Shorthand for `component="span"` @default false, default root element is `p` */
+  /** Shorthand for `component="span"` */
   span?: boolean;
 
   /** @deprecated Use `c` prop instead */

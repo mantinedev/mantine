@@ -20,16 +20,16 @@ export interface SimpleGridProps
   extends BoxProps,
     StylesApiProps<SimpleGridFactory>,
     ElementProps<'div'> {
-  /** Number of columns, `1` by default */
+  /** Number of columns @default `1` */
   cols?: StyleProp<number>;
 
-  /** Spacing between columns,  @default `'md'` */
+  /** Spacing between columns @default `'md'` */
   spacing?: StyleProp<MantineSpacing>;
 
-  /** Spacing between rows,  @default `'md'` */
+  /** Spacing between rows @default `'md'` */
   verticalSpacing?: StyleProp<MantineSpacing>;
 
-  /** Determines typeof of queries that are used for responsive styles, `'media'` by default */
+  /** Determines typeof of queries that are used for responsive styles @default `'media'` */
   type?: 'media' | 'container';
 }
 

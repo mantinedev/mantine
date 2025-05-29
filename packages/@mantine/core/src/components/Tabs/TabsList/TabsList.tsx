@@ -22,7 +22,7 @@ export interface TabsListProps
   /** Determines whether tabs should take all available space @default false */
   grow?: boolean;
 
-  /** Tabs alignment, `flex-start` by default */
+  /** Tabs alignment @default `flex-start` */
   justify?: React.CSSProperties['justifyContent'];
 }
 

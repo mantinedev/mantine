@@ -42,7 +42,7 @@ export interface PinInputProps
   /** Hidden input `form` attribute */
   form?: string;
 
-  /** Key of `theme.spacing` or any valid CSS value to set `gap` between inputs, numbers are converted to rem,  @default `'md'` */
+  /** Key of `theme.spacing` or any valid CSS value to set `gap` between inputs, numbers are converted to rem @default `'md'` */
   gap?: MantineSpacing;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */

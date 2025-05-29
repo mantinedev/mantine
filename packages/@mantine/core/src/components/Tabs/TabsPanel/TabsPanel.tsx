@@ -19,7 +19,7 @@ export interface TabsPanelProps
   /** Panel content */
   children: React.ReactNode;
 
-  /** If set to `true`, the content will be kept mounted, even if `keepMounted` is set `false` in the parent `Tabs` component */
+  /** If set, the content is kept mounted, even if `keepMounted` is set `false` in the parent `Tabs` component */
   keepMounted?: boolean;
 
   /** Value of associated control */

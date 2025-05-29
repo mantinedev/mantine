@@ -46,22 +46,22 @@ export interface RangeSliderProps
   /** Key of `theme.colors` or any valid CSS color, controls color of track and thumb @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem,  @default `'xl'` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `'xl'` */
   radius?: MantineRadius;
 
-  /** Controls size of the track,  @default `'md'` */
+  /** Controls size of the track @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
-  /** Minimal possible value, `0` by default */
+  /** Minimal possible value @default `0` */
   min?: number;
 
-  /** Maximum possible value, `100` by default */
+  /** Maximum possible value @default `100` */
   max?: number;
 
-  /** Domain of the slider, defines the full range of possible values, `[min, max]` by default */
+  /** Domain of the slider, defines the full range of possible values @default `[min, max]` */
   domain?: [number, number];
 
-  /** Number by which value will be incremented/decremented with thumb drag and arrows, `1` by default */
+  /** Number by which value will be incremented/decremented with thumb drag and arrows @default `1` */
   step?: number;
 
   /** Number of significant digits after the decimal point */
@@ -88,7 +88,7 @@ export interface RangeSliderProps
   /** Function to generate label or any react node to render instead, set to null to disable label */
   label?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** Props passed down to the `Transition` component, `{ transition: 'fade', duration: 0 }` by default */
+  /** Props passed down to the `Transition` component @default `{ transition: 'fade', duration: 0 }` */
   labelTransitionProps?: TransitionOverride;
 
   /** Determines whether the label should be visible when the slider is not being dragged or hovered @default false */
@@ -112,10 +112,10 @@ export interface RangeSliderProps
   /** Determines whether track values representation should be inverted @default false */
   inverted?: boolean;
 
-  /** Minimal range interval, `10` by default */
+  /** Minimal range interval @default `10` */
   minRange?: number;
 
-  /** Maximum range interval, `Infinity` by default */
+  /** Maximum range interval @default `Infinity` */
   maxRange?: number;
 
   /** First thumb `aria-label` */

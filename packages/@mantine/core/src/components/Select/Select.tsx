@@ -53,13 +53,13 @@ export interface SelectProps
   /** Determines whether the select should be searchable @default false */
   searchable?: boolean;
 
-  /** Determines whether check icon should be displayed near the selected option label @default `true` */
+  /** If set, the check icon is displayed near the selected option label @default `true` */
   withCheckIcon?: boolean;
 
-  /** Position of the check icon relative to the option label, `'left'` by default */
+  /** Position of the check icon relative to the option label @default `'left'` */
   checkIconPosition?: 'left' | 'right';
 
-  /** Message displayed when no option matches the current search query while the `searchable` prop is set or there is no data */
+  /** Message displayed when no option matches the current search query when the `searchable` prop is set or there is no data */
   nothingFoundMessage?: React.ReactNode;
 
   /** Controlled search value */
@@ -71,10 +71,10 @@ export interface SelectProps
   /** Called when search changes */
   onSearchChange?: (value: string) => void;
 
-  /** Determines whether it should be possible to deselect value by clicking on the selected option @default `true` */
+  /** If set, it becomes possible to deselect value by clicking on the selected option @default `true` */
   allowDeselect?: boolean;
 
-  /** Determines whether the clear button should be displayed in the right section when the component has value @default false */
+  /** If set, the clear button is displayed in the right section when the component has value @default false */
   clearable?: boolean;
 
   /** Props passed down to the clear button */

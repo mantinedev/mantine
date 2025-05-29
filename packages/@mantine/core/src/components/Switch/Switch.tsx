@@ -73,7 +73,7 @@ export interface SwitchProps
   /** Icon inside the thumb of the switch */
   thumbIcon?: React.ReactNode;
 
-  /** Position of the label relative to the input, `'right'` by default */
+  /** Position of the label relative to the input @default `'right'` */
   labelPosition?: 'left' | 'right';
 
   /** Description displayed below the label */

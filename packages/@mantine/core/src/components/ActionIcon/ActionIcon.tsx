@@ -59,7 +59,7 @@ export interface ActionIconProps extends BoxProps, StylesApiProps<ActionIconFact
   /** Key of `theme.colors` or any valid CSS color. @default `theme.primaryColor`. */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default `theme.defaultRadius`. */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Gradient values used with `variant="gradient"`. @default `theme.defaultGradient`. */

@@ -57,7 +57,7 @@ export interface TableOfContentsProps
   /** Key of `theme.colors` or any valid CSS color value @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Controls font-size and padding of all elements,  @default `'md'` */
+  /** Controls font-size and padding of all elements @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
   /** If set, adjusts text color based on background color for `filled` variant */
@@ -66,7 +66,7 @@ export interface TableOfContentsProps
   /** Options passed down to `use-scroll-spy` hook */
   scrollSpyOptions?: UseScrollSpyOptions;
 
-  /** Data used to render content until actual values are retrieved from the DOM, empty array by default */
+  /** Data used to render content until actual values are retrieved from the DOM */
   initialData?: InitialTableOfContentsData[];
 
   /** A function to pass props down to controls, accepts values from `use-scroll-spy` hook as an argument and active state. */

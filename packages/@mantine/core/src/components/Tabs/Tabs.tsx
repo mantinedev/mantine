@@ -38,10 +38,10 @@ export interface TabsProps
   extends BoxProps,
     StylesApiProps<TabsFactory>,
     ElementProps<'div', 'defaultValue' | 'value' | 'onChange'> {
-  /** Default value for uncontrolled component */
+  /** Uncontrolled component default value */
   defaultValue?: string | null;
 
-  /** Value for controlled component */
+  /** Controlled component value */
   value?: string | null;
 
   /** Called when value changes */

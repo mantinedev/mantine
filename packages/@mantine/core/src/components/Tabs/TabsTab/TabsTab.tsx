@@ -26,10 +26,10 @@ export interface TabsTabProps
   /** Tab label */
   children?: React.ReactNode;
 
-  /** Content displayed on the right side of the label, for example, icon */
+  /** Content displayed on the right side of the label */
   rightSection?: React.ReactNode;
 
-  /** Content displayed on the left side of the label, for example, icon */
+  /** Content displayed on the left side of the label */
   leftSection?: React.ReactNode;
 
   /** Key of `theme.colors` or any valid CSS color, controls control color based on `variant` */
