@@ -123,6 +123,7 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props, ref) => {
     labels,
     children,
     variant,
+    attributes,
     ...others
   } = props;
 
@@ -135,6 +136,7 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
   });
 

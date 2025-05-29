@@ -94,6 +94,7 @@ export const RingProgress = factory<RingProgressFactory>((_props, ref) => {
     roundCaps,
     rootColor,
     transitionDuration,
+    attributes,
     ...others
   } = props;
 
@@ -106,6 +107,7 @@ export const RingProgress = factory<RingProgressFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

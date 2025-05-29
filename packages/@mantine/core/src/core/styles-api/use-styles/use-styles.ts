@@ -8,7 +8,13 @@ import {
   useMantineWithStaticClasses,
 } from '../../MantineProvider';
 import { PartialVarsResolver, VarsResolver } from '../create-vars-resolver/create-vars-resolver';
-import { ClassNames, ClassNamesArray, GetStylesApiOptions, Styles } from '../styles-api.types';
+import {
+  Attributes,
+  ClassNames,
+  ClassNamesArray,
+  GetStylesApiOptions,
+  Styles,
+} from '../styles-api.types';
 import { getClassName } from './get-class-name/get-class-name';
 import { getStyle } from './get-style/get-style';
 import { useStylesTransform } from './use-transformed-styles';
@@ -26,6 +32,7 @@ export interface UseStylesInput<Payload extends FactoryPayload> {
   styles?: Styles<Payload>;
   vars?: PartialVarsResolver<Payload>;
   varsResolver?: VarsResolver<Payload>;
+  attributes?: Attributes<Payload>;
 }
 
 export type GetStylesApi<Payload extends FactoryPayload> = (
@@ -49,6 +56,7 @@ export function useStyles<Payload extends FactoryPayload>({
   styles,
   vars,
   varsResolver,
+  attributes,
 }: UseStylesInput<Payload>): GetStylesApi<Payload> {
   const theme = useMantineTheme();
   const classNamesPrefix = useMantineClassNamesPrefix();
@@ -95,5 +103,7 @@ export function useStyles<Payload extends FactoryPayload>({
       headless,
       withStylesTransform,
     }),
+
+    ...attributes?.[selector],
   });
 }

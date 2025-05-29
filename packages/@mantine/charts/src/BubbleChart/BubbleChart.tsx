@@ -165,6 +165,7 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
     dataKey,
     range,
     valueFormatter,
+    attributes,
     ...others
   } = props;
 
@@ -179,6 +180,7 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

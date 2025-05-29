@@ -121,6 +121,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     onScrubStart,
     onScrubEnd,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -163,6 +164,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

@@ -106,6 +106,7 @@ export const Timeline = factory<TimelineFactory>((_props, ref) => {
     reverseActive,
     mod,
     autoContrast,
+    attributes,
     ...others
   } = props;
 
@@ -118,6 +119,7 @@ export const Timeline = factory<TimelineFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

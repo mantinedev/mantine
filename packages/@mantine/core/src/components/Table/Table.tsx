@@ -195,6 +195,7 @@ export const Table = factory<TableFactory>((_props, ref) => {
     stickyHeaderOffset,
     mod,
     tabularNums,
+    attributes,
     ...others
   } = props;
 
@@ -207,6 +208,7 @@ export const Table = factory<TableFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     rootSelector: 'table',
     vars,
     varsResolver,

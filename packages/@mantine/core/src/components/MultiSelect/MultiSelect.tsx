@@ -195,6 +195,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     onClear,
     scrollAreaProps,
     chevronColor,
+    attributes,
     ...others
   } = props;
 
@@ -243,6 +244,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
   });
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<MultiSelectFactory>({
@@ -311,6 +313,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
         size={size}
         readOnly={readOnly}
         __staticSelector="MultiSelect"
+        attributes={attributes}
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
           handleSearchChange('');
@@ -378,8 +381,14 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
             id={_id}
             required={required}
             mod={mod}
+            attributes={attributes}
           >
-            <Pill.Group disabled={disabled} unstyled={unstyled} {...getStyles('pillsList')}>
+            <Pill.Group
+              attributes={attributes}
+              disabled={disabled}
+              unstyled={unstyled}
+              {...getStyles('pillsList')}
+            >
               {values}
               <Combobox.EventsTarget autoComplete={autoComplete}>
                 <PillsInput.Field

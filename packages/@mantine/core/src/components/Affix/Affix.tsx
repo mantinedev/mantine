@@ -83,6 +83,7 @@ export const Affix = factory<AffixFactory>((_props, ref) => {
     zIndex,
     withinPortal,
     position,
+    attributes,
     ...others
   } = props;
 
@@ -95,6 +96,7 @@ export const Affix = factory<AffixFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

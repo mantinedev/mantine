@@ -137,6 +137,7 @@ export function Accordion<Multiple extends boolean = false>(_props: AccordionPro
     variant,
     radius,
     chevronIconSize,
+    attributes,
     ...others
   } = props;
 
@@ -172,6 +173,7 @@ export function Accordion<Multiple extends boolean = false>(_props: AccordionPro
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

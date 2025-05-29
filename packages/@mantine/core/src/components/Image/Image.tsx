@@ -65,6 +65,7 @@ export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
     fit,
     fallbackSrc,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -81,6 +82,7 @@ export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

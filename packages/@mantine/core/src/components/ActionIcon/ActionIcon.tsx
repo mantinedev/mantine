@@ -134,6 +134,7 @@ export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) =>
     'data-disabled': dataDisabled,
     autoContrast,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -146,6 +147,7 @@ export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) =>
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

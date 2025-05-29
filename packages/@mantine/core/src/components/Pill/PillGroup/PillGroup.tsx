@@ -50,7 +50,18 @@ const varsResolver = createVarsResolver<PillGroupFactory>((_, { gap }, { size })
 
 export const PillGroup = factory<PillGroupFactory>((_props, ref) => {
   const props = useProps('PillGroup', null, _props);
-  const { classNames, className, style, styles, unstyled, vars, size, disabled, ...others } = props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    size,
+    disabled,
+    attributes,
+    ...others
+  } = props;
   const pillsInputCtx = usePillsInputContext();
   const _size = pillsInputCtx?.size || size || undefined;
 
@@ -63,6 +74,7 @@ export const PillGroup = factory<PillGroupFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     stylesCtx: { size: _size },

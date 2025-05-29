@@ -160,6 +160,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
     autoContrast,
     withItemsBorders,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -172,6 +173,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

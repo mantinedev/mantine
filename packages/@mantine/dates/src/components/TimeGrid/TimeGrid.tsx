@@ -125,6 +125,7 @@ export const TimeGrid = factory<TimeGridFactory>((_props, ref) => {
     maxTime,
     disableTime,
     disabled,
+    attributes,
     ...others
   } = props;
 
@@ -137,6 +138,7 @@ export const TimeGrid = factory<TimeGridFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

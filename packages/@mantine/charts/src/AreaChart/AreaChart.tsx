@@ -208,6 +208,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     withPointLabels,
     gridColor,
     textColor,
+    attributes,
     ...others
   } = props;
 
@@ -241,6 +242,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -374,6 +376,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={series}
+                  attributes={attributes}
                 />
               )}
               {...legendProps}
@@ -473,6 +476,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
                   styles={resolvedStyles}
                   series={series}
                   valueFormatter={valueFormatter}
+                  attributes={attributes}
                 />
               )}
               {...tooltipProps}

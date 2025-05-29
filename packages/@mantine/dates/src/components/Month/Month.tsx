@@ -177,6 +177,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
     size,
     highlightToday,
     withWeekNumbers,
+    attributes,
     ...others
   } = props;
 
@@ -189,6 +190,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'month',

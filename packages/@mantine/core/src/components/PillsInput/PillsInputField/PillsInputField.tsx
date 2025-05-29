@@ -50,6 +50,7 @@ export const PillsInputField = factory<PillsInputFieldFactory>((_props, ref) => 
     id,
     pointer,
     mod,
+    attributes,
     ...others
   } = props;
   const ctx = usePillsInputContext();
@@ -64,6 +65,7 @@ export const PillsInputField = factory<PillsInputFieldFactory>((_props, ref) => 
     classNames,
     styles,
     unstyled,
+    attributes,
     rootSelector: 'field',
   });
 

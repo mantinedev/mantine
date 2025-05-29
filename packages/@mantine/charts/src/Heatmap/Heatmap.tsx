@@ -148,6 +148,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
     withTooltip,
     tooltipProps,
     getRectProps,
+    attributes,
     ...others
   } = props;
 
@@ -160,6 +161,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
   });
 

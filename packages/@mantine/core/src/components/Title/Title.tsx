@@ -77,6 +77,7 @@ export const Title = factory<TitleFactory>((_props, ref) => {
     lineClamp,
     textWrap,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -89,6 +90,7 @@ export const Title = factory<TitleFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

@@ -74,6 +74,7 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props, ref) => {
     overlayProps,
     visible,
     zIndex,
+    attributes,
     ...others
   } = props;
 
@@ -88,6 +89,7 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

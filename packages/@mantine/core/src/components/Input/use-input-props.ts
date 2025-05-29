@@ -40,6 +40,7 @@ export function useInputProps<T extends BaseProps, U extends Partial<T> | null>(
     variant,
     vars,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -67,6 +68,7 @@ export function useInputProps<T extends BaseProps, U extends Partial<T> | null>(
     variant,
     id,
     mod,
+    attributes,
     ..._wrapperProps,
   };
 
@@ -87,6 +89,7 @@ export function useInputProps<T extends BaseProps, U extends Partial<T> | null>(
       error,
       variant,
       id,
+      attributes,
     },
   };
 }

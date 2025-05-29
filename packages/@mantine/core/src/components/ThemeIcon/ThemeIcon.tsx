@@ -86,7 +86,17 @@ const varsResolver = createVarsResolver<ThemeIconFactory>(
 
 export const ThemeIcon = factory<ThemeIconFactory>((_props, ref) => {
   const props = useProps('ThemeIcon', null, _props);
-  const { classNames, className, style, styles, unstyled, vars, autoContrast, ...others } = props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    autoContrast,
+    attributes,
+    ...others
+  } = props;
 
   const getStyles = useStyles<ThemeIconFactory>({
     name: 'ThemeIcon',
@@ -97,6 +107,7 @@ export const ThemeIcon = factory<ThemeIconFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

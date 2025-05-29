@@ -58,6 +58,7 @@ export const SimpleGrid = factory<SimpleGridFactory>((_props, ref) => {
     verticalSpacing,
     spacing,
     type,
+    attributes,
     ...others
   } = props;
 
@@ -70,6 +71,7 @@ export const SimpleGrid = factory<SimpleGridFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
   });
 

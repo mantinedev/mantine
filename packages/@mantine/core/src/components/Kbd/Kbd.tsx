@@ -36,7 +36,7 @@ const varsResolver = createVarsResolver<KbdFactory>((_, { size }) => ({
 
 export const Kbd = factory<KbdFactory>((_props, ref) => {
   const props = useProps('Kbd', null, _props);
-  const { classNames, className, style, styles, unstyled, vars, ...others } = props;
+  const { classNames, className, style, styles, unstyled, vars, attributes, ...others } = props;
 
   const getStyles = useStyles<KbdFactory>({
     name: 'Kbd',
@@ -47,6 +47,7 @@ export const Kbd = factory<KbdFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

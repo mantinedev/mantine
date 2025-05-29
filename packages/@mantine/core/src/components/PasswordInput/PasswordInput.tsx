@@ -108,6 +108,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
     leftSectionPointerEvents,
     withErrorStyles,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -131,6 +132,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -202,11 +204,12 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
       descriptionProps={{ ...descriptionProps, id: descriptionId }}
       errorProps={{ ...errorProps, id: errorId }}
       mod={mod}
+      attributes={attributes}
       {...getStyles('root')}
       {...styleProps}
       {...wrapperProps}
     >
-      <Input<'div'>
+      <Input
         component="div"
         error={error}
         leftSection={leftSection}
@@ -227,6 +230,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
         leftSectionPointerEvents={leftSectionPointerEvents}
         withAria={false}
         withErrorStyles={withErrorStyles}
+        attributes={attributes}
       >
         <input
           required={required}

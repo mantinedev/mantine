@@ -221,6 +221,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     getBarColor,
     gridColor,
     textColor,
+    attributes,
     ...others
   } = props;
 
@@ -253,6 +254,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -365,6 +367,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
                   styles={resolvedStyles}
                   series={series}
                   showColor={type !== 'waterfall'}
+                  attributes={attributes}
                 />
               )}
               {...legendProps}
@@ -466,6 +469,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
                   styles={resolvedStyles}
                   series={series}
                   valueFormatter={valueFormatter}
+                  attributes={attributes}
                 />
               )}
               {...tooltipProps}

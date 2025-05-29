@@ -199,6 +199,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     valueFormatter,
     strokeColor,
     labelsType,
+    attributes,
     ...others
   } = props;
 
@@ -213,6 +214,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -283,6 +285,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
                   type="radial"
                   segmentId={tooltipDataSource === 'segment' ? payload?.[0]?.name : undefined}
                   valueFormatter={valueFormatter}
+                  attributes={attributes}
                 />
               )}
               {...tooltipProps}

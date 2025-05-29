@@ -89,6 +89,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
     size,
     static: isStatic,
     vars,
+    attributes,
     ...others
   } = props;
 
@@ -167,6 +168,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
           highlightToday={highlightToday}
           withWeekNumbers={withWeekNumbers}
           headerControlsOrder={headerControlsOrder}
+          attributes={attributes}
         />
       );
     });
@@ -178,6 +180,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
       __staticSelector={__staticSelector || 'MonthLevelGroup'}
       ref={ref}
       size={size}
+      attributes={attributes}
       {...others}
     >
       {months}

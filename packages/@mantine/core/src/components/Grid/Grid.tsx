@@ -89,6 +89,7 @@ export const Grid = factory<GridFactory>((_props, ref) => {
     children,
     breakpoints,
     type,
+    attributes,
     ...others
   } = props;
 
@@ -101,6 +102,7 @@ export const Grid = factory<GridFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

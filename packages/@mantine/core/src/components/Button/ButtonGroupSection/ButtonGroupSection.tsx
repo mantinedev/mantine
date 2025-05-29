@@ -94,6 +94,7 @@ export const ButtonGroupSection = factory<ButtonGroupSectionFactory>((_props, re
     gradient,
     radius,
     autoContrast,
+    attributes,
     ...others
   } = props;
 
@@ -106,6 +107,7 @@ export const ButtonGroupSection = factory<ButtonGroupSectionFactory>((_props, re
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'groupSection',

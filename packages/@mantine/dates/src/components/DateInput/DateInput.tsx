@@ -315,6 +315,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
                 selected: typeof _value === 'string' ? dayjs(date).isSame(_value, 'year') : false,
                 ...getYearControlProps?.(date),
               })}
+              attributes={wrapperProps.attributes}
             />
           </Popover.Dropdown>
         </Popover>

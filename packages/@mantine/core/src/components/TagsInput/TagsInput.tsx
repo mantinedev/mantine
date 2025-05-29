@@ -195,6 +195,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     scrollAreaProps,
     acceptValueOnBlur,
     isDuplicate,
+    attributes,
     ...others
   } = props;
 
@@ -351,6 +352,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       }}
       unstyled={unstyled}
       disabled={disabled}
+      attributes={attributes}
       {...getStyles('pill')}
     >
       {item}
@@ -386,6 +388,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
         size={size}
         readOnly={readOnly}
         __staticSelector="TagsInput"
+        attributes={attributes}
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
           handleSearchChange('');
@@ -433,6 +436,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
             __stylesApiProps={{ ...props, multiline: true }}
             id={_id}
             mod={mod}
+            attributes={attributes}
           >
             <Pill.Group disabled={disabled} unstyled={unstyled} {...getStyles('pillsList')}>
               {values}

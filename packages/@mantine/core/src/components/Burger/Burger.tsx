@@ -84,6 +84,7 @@ export const Burger = factory<BurgerFactory>((_props, ref) => {
     transitionDuration,
     transitionTimingFunction,
     lineSize,
+    attributes,
     ...others
   } = props;
 
@@ -96,6 +97,7 @@ export const Burger = factory<BurgerFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

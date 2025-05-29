@@ -159,6 +159,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     __withOffset,
     __inline,
     __staticSelector,
+    attributes,
     ...others
   } = props;
 
@@ -171,6 +172,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'codeHighlight',

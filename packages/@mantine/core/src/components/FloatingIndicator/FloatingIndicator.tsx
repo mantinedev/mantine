@@ -68,6 +68,7 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props, ref)
     transitionDuration,
     mod,
     displayAfterTransitionEnd,
+    attributes,
     ...others
   } = props;
 
@@ -80,6 +81,7 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props, ref)
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -91,6 +93,7 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props, ref)
     ref: innerRef as any,
     displayAfterTransitionEnd,
   });
+
   const mergedRef = useMergedRef(ref, innerRef);
 
   if (!target || !parent) {

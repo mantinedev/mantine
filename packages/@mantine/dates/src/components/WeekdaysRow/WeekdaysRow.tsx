@@ -76,6 +76,7 @@ export const WeekdaysRow = factory<WeekdaysRowFactory>((_props, ref) => {
     cellComponent: CellComponent = 'th',
     __staticSelector,
     withWeekNumbers,
+    attributes,
     ...others
   } = props;
 
@@ -88,6 +89,7 @@ export const WeekdaysRow = factory<WeekdaysRowFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'weekdaysRow',

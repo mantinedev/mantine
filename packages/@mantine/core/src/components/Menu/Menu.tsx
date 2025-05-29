@@ -129,6 +129,7 @@ export function Menu(_props: MenuProps) {
     menuItemTabIndex,
     keepMounted,
     withInitialFocusPlaceholder,
+    attributes,
     ...others
   } = props;
 
@@ -139,6 +140,7 @@ export function Menu(_props: MenuProps) {
     classNames,
     styles,
     unstyled,
+    attributes,
   });
 
   const [_opened, setOpened] = useUncontrolled({

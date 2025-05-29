@@ -136,6 +136,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
     onLastPage,
     getItemProps,
     autoContrast,
+    attributes,
     ...others
   } = props;
 
@@ -148,6 +149,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

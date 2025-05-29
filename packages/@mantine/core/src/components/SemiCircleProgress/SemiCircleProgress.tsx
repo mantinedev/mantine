@@ -143,6 +143,7 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props, re
     transitionDuration,
     label,
     labelPosition,
+    attributes,
     ...others
   } = props;
 
@@ -155,6 +156,7 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props, re
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

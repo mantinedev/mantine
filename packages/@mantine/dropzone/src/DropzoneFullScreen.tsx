@@ -21,7 +21,7 @@ export type DropzoneFullScreenStylesNames = DropzoneStylesNames | 'fullScreen';
 
 export interface DropzoneFullScreenProps
   extends BoxProps,
-    Omit<DropzoneProps, 'styles' | 'classNames' | 'vars' | 'variant'>,
+    Omit<DropzoneProps, 'styles' | 'classNames' | 'vars' | 'variant' | 'attributes'>,
     StylesApiProps<DropzoneFullScreenFactory>,
     ElementProps<'div', 'onDragLeave' | 'onDragOver' | 'onDrop' | 'onDragEnter'> {
   /** Determines whether user can drop files to browser window @default `true` */
@@ -69,6 +69,7 @@ export const DropzoneFullScreen = factory<DropzoneFullScreenFactory>((_props, re
     zIndex,
     withinPortal,
     portalProps,
+    attributes,
     ...others
   } = props;
 
@@ -81,6 +82,7 @@ export const DropzoneFullScreen = factory<DropzoneFullScreenFactory>((_props, re
     classNames,
     styles,
     unstyled,
+    attributes,
     rootSelector: 'fullScreen',
   });
 

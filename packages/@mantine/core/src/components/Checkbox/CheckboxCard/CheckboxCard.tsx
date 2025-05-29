@@ -77,6 +77,7 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
     onClick,
     defaultChecked,
     onChange,
+    attributes,
     ...others
   } = props;
 
@@ -89,6 +90,7 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'card',

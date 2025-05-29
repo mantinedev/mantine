@@ -152,6 +152,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
     onChange,
     autoContrast,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -167,6 +168,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

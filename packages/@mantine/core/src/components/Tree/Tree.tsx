@@ -141,6 +141,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     expandOnSpace,
     levelOffset,
     checkOnSpace,
+    attributes,
     ...others
   } = props;
 
@@ -156,6 +157,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

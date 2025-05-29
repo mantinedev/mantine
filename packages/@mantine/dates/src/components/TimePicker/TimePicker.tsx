@@ -255,6 +255,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
     presets,
     maxDropdownContentHeight,
     scrollAreaProps,
+    attributes,
     ...others
   } = props;
 
@@ -273,6 +274,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

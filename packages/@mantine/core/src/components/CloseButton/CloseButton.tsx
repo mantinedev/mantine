@@ -89,6 +89,7 @@ export const CloseButton = polymorphicFactory<CloseButtonFactory>((_props, ref) 
     variant,
     icon,
     mod,
+    attributes,
     __staticSelector,
     ...others
   } = props;
@@ -102,6 +103,7 @@ export const CloseButton = polymorphicFactory<CloseButtonFactory>((_props, ref) 
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

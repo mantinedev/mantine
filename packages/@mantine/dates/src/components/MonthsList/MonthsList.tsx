@@ -91,6 +91,7 @@ export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
     __stopPropagation,
     withCellSpacing,
     size,
+    attributes,
     ...others
   } = props;
 
@@ -103,6 +104,7 @@ export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     rootSelector: 'monthsList',
   });

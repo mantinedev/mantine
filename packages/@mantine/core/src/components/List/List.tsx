@@ -91,6 +91,7 @@ export const List = factory<ListFactory>((_props, ref) => {
     center,
     listStyleType,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -103,6 +104,7 @@ export const List = factory<ListFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

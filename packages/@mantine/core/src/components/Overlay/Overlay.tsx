@@ -95,6 +95,7 @@ export const Overlay = polymorphicFactory<OverlayFactory>((_props, ref) => {
     color,
     backgroundOpacity,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -107,6 +108,7 @@ export const Overlay = polymorphicFactory<OverlayFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

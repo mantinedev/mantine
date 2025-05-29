@@ -26,10 +26,10 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { ChartLegend } from '../ChartLegend';
+import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import classes from './RadialBarChart.module.css';
 
-export type RadialBarChartStylesNames = 'root' | 'tooltip';
+export type RadialBarChartStylesNames = 'root' | 'tooltip' | ChartLegendStylesNames;
 export type RadialBarChartCssVariables = {
   root: '--chart-empty-background';
 };
@@ -128,6 +128,7 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
     tooltipProps,
     startAngle,
     endAngle,
+    attributes,
     ...others
   } = props;
   const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
@@ -141,6 +142,7 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -211,6 +213,7 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   centered
+                  attributes={attributes}
                 />
               )}
               {...legendProps}

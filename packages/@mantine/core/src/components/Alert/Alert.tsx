@@ -107,6 +107,7 @@ export const Alert = factory<AlertFactory>((_props, ref) => {
     closeButtonLabel,
     variant,
     autoContrast,
+    attributes,
     ...others
   } = props;
 
@@ -119,6 +120,7 @@ export const Alert = factory<AlertFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

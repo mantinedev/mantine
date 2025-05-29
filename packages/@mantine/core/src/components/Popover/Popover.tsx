@@ -249,6 +249,7 @@ export function Popover(_props: PopoverProps) {
     withOverlay,
     overlayProps,
     hideDetached,
+    attributes,
     ...others
   } = props;
 
@@ -259,6 +260,7 @@ export function Popover(_props: PopoverProps) {
     classNames,
     styles,
     unstyled,
+    attributes,
     rootSelector: 'dropdown',
     vars,
     varsResolver,

@@ -24,7 +24,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { ChartTooltip } from '../ChartTooltip/ChartTooltip';
+import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip/ChartTooltip';
 import classes from './FunnelChart.module.css';
 
 export interface FunnelChartCell {
@@ -34,7 +34,7 @@ export interface FunnelChartCell {
   color: MantineColor;
 }
 
-export type FunnelChartStylesNames = 'root';
+export type FunnelChartStylesNames = 'root' | ChartTooltipStylesNames;
 export type FunnelChartCssVariables = {
   root: '--chart-stroke-color' | '--chart-labels-color' | '--chart-size';
 };
@@ -137,6 +137,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
     funnelProps,
     labelsPosition,
     tooltipDataSource,
+    attributes,
     ...others
   } = props;
 
@@ -151,6 +152,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -213,6 +215,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
                   type="radial"
                   segmentId={tooltipDataSource === 'segment' ? payload?.[0]?.name : undefined}
                   valueFormatter={valueFormatter}
+                  attributes={attributes}
                 />
               )}
               {...tooltipProps}

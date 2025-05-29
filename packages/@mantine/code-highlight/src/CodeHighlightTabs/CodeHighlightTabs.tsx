@@ -96,6 +96,7 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
     background,
     controls,
     codeColorScheme,
+    attributes,
     ...others
   } = props;
 
@@ -108,6 +109,7 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
   });
 
@@ -189,6 +191,7 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
         __staticSelector="CodeHighlightTabs"
         classNames={resolvedClassNames}
         styles={resolvedStyles}
+        attributes={attributes}
       />
     </Box>
   );

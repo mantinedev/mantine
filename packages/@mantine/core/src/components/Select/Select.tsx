@@ -163,6 +163,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     __clearable,
     chevronColor,
     autoSelectOnBlur,
+    attributes,
     ...others
   } = props;
 
@@ -261,6 +262,8 @@ export const Select = factory<SelectFactory>((_props, ref) => {
         styles={resolvedStyles}
         unstyled={unstyled}
         readOnly={readOnly}
+        size={size}
+        attributes={attributes}
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
           const optionLockup = allowDeselect
@@ -276,7 +279,6 @@ export const Select = factory<SelectFactory>((_props, ref) => {
             handleSearchChange(typeof nextValue === 'string' ? optionLockup?.label || '' : '');
           combobox.closeDropdown();
         }}
-        size={size}
         {...comboboxProps}
       >
         <Combobox.Target targetType={searchable ? 'input' : 'button'} autoComplete={autoComplete}>
@@ -328,6 +330,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
             unstyled={unstyled}
             pointer={!searchable}
             error={error}
+            attributes={attributes}
           />
         </Combobox.Target>
         <OptionsDropdown

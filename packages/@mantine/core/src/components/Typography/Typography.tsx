@@ -25,7 +25,7 @@ export type TypographyFactory = Factory<{
 
 export const Typography = factory<TypographyFactory>((_props, ref) => {
   const props = useProps('Typography', null, _props);
-  const { classNames, className, style, styles, unstyled, ...others } = props;
+  const { classNames, className, style, styles, unstyled, attributes, ...others } = props;
 
   const getStyles = useStyles<TypographyFactory>({
     name: 'Typography',
@@ -36,6 +36,7 @@ export const Typography = factory<TypographyFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
   });
 
   return <Box ref={ref} {...getStyles('root')} {...others} />;

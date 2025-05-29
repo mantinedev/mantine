@@ -41,6 +41,7 @@ export const InputPlaceholder = factory<InputPlaceholderFactory>((_props, ref) =
     variant,
     error,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -53,6 +54,7 @@ export const InputPlaceholder = factory<InputPlaceholderFactory>((_props, ref) =
     classNames,
     styles,
     unstyled,
+    attributes,
     rootSelector: 'placeholder',
   });
 

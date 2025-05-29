@@ -123,6 +123,7 @@ export const Sparkline = factory<SparklineFactory>((_props, ref) => {
     trendColors,
     connectNulls,
     areaProps,
+    attributes,
     ...others
   } = props;
 
@@ -135,6 +136,7 @@ export const Sparkline = factory<SparklineFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

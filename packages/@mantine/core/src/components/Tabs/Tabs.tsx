@@ -145,6 +145,7 @@ export const Tabs = factory<TabsFactory>((_props, ref) => {
     vars,
     autoContrast,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -166,6 +167,7 @@ export const Tabs = factory<TabsFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

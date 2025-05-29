@@ -91,6 +91,7 @@ export const Blockquote = factory<BlockquoteFactory>((_props, ref) => {
     icon,
     iconSize,
     cite,
+    attributes,
     ...others
   } = props;
 
@@ -103,6 +104,7 @@ export const Blockquote = factory<BlockquoteFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

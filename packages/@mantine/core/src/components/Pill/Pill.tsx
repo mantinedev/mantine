@@ -87,6 +87,7 @@ export const Pill = factory<PillFactory>((_props, ref) => {
     size,
     disabled,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -104,6 +105,7 @@ export const Pill = factory<PillFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     stylesCtx: { size: _size },

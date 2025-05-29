@@ -39,6 +39,7 @@ export const UnstyledButton = polymorphicFactory<UnstyledButtonFactory>(
       classNames,
       styles,
       style,
+      attributes,
       ...others
     } = props;
 
@@ -51,6 +52,7 @@ export const UnstyledButton = polymorphicFactory<UnstyledButtonFactory>(
       classNames,
       styles,
       unstyled,
+      attributes,
     });
 
     return (

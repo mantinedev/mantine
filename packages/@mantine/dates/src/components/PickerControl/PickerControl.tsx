@@ -76,6 +76,7 @@ export const PickerControl = factory<PickerControlFactory>((_props, ref) => {
     __staticSelector,
     selected,
     disabled,
+    attributes,
     ...others
   } = props;
 
@@ -88,6 +89,7 @@ export const PickerControl = factory<PickerControlFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'pickerControl',

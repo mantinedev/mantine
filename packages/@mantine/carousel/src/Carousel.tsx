@@ -196,6 +196,7 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
     mod,
     type,
     emblaOptions,
+    attributes,
     ...others
   } = props;
 
@@ -208,6 +209,7 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

@@ -29,8 +29,17 @@ export type LevelsGroupFactory = Factory<{
 
 export const LevelsGroup = factory<LevelsGroupFactory>((_props, ref) => {
   const props = useProps('LevelsGroup', null, _props);
-  const { classNames, className, style, styles, unstyled, vars, __staticSelector, ...others } =
-    props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    __staticSelector,
+    attributes,
+    ...others
+  } = props;
 
   const getStyles = useStyles<LevelsGroupFactory>({
     name: __staticSelector || 'LevelsGroup',
@@ -41,6 +50,7 @@ export const LevelsGroup = factory<LevelsGroupFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     rootSelector: 'levelsGroup',
   });

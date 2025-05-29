@@ -96,6 +96,7 @@ export const DecadeLevel = factory<DecadeLevelFactory>((_props, ref) => {
     __staticSelector,
     __stopPropagation,
     size,
+    attributes,
     ...others
   } = props;
 
@@ -108,6 +109,7 @@ export const DecadeLevel = factory<DecadeLevelFactory>((_props, ref) => {
     styles,
     unstyled,
     size,
+    attributes,
   };
 
   const _nextDisabled =

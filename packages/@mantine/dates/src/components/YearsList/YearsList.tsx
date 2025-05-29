@@ -90,6 +90,7 @@ export const YearsList = factory<YearsListFactory>((_props, ref) => {
     __stopPropagation,
     withCellSpacing,
     size,
+    attributes,
     ...others
   } = props;
 
@@ -102,6 +103,7 @@ export const YearsList = factory<YearsListFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     rootSelector: 'yearsList',
   });

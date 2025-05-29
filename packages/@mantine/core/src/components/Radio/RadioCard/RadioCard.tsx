@@ -74,6 +74,7 @@ export const RadioCard = factory<RadioCardFactory>((_props, ref) => {
     onClick,
     name,
     onKeyDown,
+    attributes,
     ...others
   } = props;
 
@@ -86,6 +87,7 @@ export const RadioCard = factory<RadioCardFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'card',

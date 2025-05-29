@@ -156,6 +156,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
     onColorSwatchClick,
     __staticSelector,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -168,6 +169,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     rootSelector: 'wrapper',
     vars,
     varsResolver,

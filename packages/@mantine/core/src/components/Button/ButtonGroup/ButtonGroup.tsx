@@ -55,6 +55,7 @@ export const ButtonGroup = factory<ButtonGroupFactory>((_props, ref) => {
     borderWidth,
     variant,
     mod,
+    attributes,
     ...others
   } = useProps('ButtonGroup', defaultProps, _props);
 
@@ -67,6 +68,7 @@ export const ButtonGroup = factory<ButtonGroupFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'group',

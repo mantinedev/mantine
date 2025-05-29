@@ -207,6 +207,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
     minBarSize,
     maxBarWidth,
     composedChartProps,
+    attributes,
     ...others
   } = props;
 
@@ -234,6 +235,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -419,6 +421,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={series}
+                  attributes={attributes}
                 />
               )}
               {...legendProps}
@@ -517,6 +520,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
                   styles={resolvedStyles}
                   series={series}
                   valueFormatter={valueFormatter}
+                  attributes={attributes}
                 />
               )}
               {...tooltipProps}

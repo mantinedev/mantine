@@ -241,6 +241,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     onNextMonth,
     onPreviousMonth,
     static: isStatic,
+    attributes,
     ...others
   } = props;
 
@@ -278,6 +279,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     classNames: resolvedClassNames,
     unstyled,
     size,
+    attributes,
   };
 
   const _columnsToScroll = columnsToScroll || numberOfColumns || 1;

@@ -200,6 +200,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     rightYAxisLabel,
     rightYAxisProps,
     withPointLabels,
+    attributes,
     ...others
   } = props;
 
@@ -227,6 +228,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -359,6 +361,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
                   styles={resolvedStyles}
                   series={series}
                   showColor={type !== 'gradient'}
+                  attributes={attributes}
                 />
               )}
               {...legendProps}
@@ -459,6 +462,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
                   series={series}
                   valueFormatter={valueFormatter}
                   showColor={type !== 'gradient'}
+                  attributes={attributes}
                 />
               )}
               {...tooltipProps}

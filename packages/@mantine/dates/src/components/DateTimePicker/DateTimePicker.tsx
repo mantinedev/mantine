@@ -116,6 +116,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     maxDate,
     defaultTimeValue,
     presets,
+    attributes,
     ...rest
   } = props;
 
@@ -126,6 +127,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
   });
 
@@ -229,6 +231,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
       __staticSelector="DateTimePicker"
       onDropdownClose={handleDropdownClose}
       withTime
+      attributes={attributes}
     >
       <DatePicker
         {...calendarProps}
@@ -257,6 +260,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
           setValue(val);
           setTimeValue(formatTime(val));
         }}
+        attributes={attributes}
       />
 
       {currentLevel === 'month' && (
@@ -277,6 +281,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
             size={size}
             data-mantine-stop-propagation={__stopPropagation || undefined}
             hoursRef={timePickerRefMerged}
+            attributes={attributes}
           />
 
           <ActionIcon

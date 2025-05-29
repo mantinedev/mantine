@@ -57,6 +57,7 @@ export const InputDescription = factory<InputDescriptionFactory>((_props, ref) =
     size,
     __staticSelector,
     __inheritStyles = true,
+    attributes,
     variant,
     ...others
   } = useProps('InputDescription', null, props);
@@ -71,6 +72,7 @@ export const InputDescription = factory<InputDescriptionFactory>((_props, ref) =
     classNames,
     styles,
     unstyled,
+    attributes,
     rootSelector: 'description',
     vars,
     varsResolver,

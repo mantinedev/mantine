@@ -66,6 +66,7 @@ export const Flex = polymorphicFactory<FlexFactory>((_props, ref) => {
     justify,
     wrap,
     direction,
+    attributes,
     ...others
   } = props;
 
@@ -78,6 +79,7 @@ export const Flex = polymorphicFactory<FlexFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
   });
 

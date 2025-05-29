@@ -147,6 +147,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
     iconColor,
     onChange,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -159,6 +160,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

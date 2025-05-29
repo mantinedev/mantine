@@ -141,6 +141,7 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
     variant,
     radius,
     reinitializeRef,
+    attributes,
     ...others
   } = props;
 
@@ -153,6 +154,7 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

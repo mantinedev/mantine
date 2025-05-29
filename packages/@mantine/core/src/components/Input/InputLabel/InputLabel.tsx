@@ -71,6 +71,7 @@ export const InputLabel = factory<InputLabelFactory>((_props, ref) => {
     __staticSelector,
     variant,
     mod,
+    attributes,
     ...others
   } = useProps('InputLabel', defaultProps, props);
 
@@ -83,6 +84,7 @@ export const InputLabel = factory<InputLabelFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     rootSelector: 'label',
     vars,
     varsResolver,

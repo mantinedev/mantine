@@ -155,6 +155,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
     required,
     __stylesApiProps,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -167,6 +168,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

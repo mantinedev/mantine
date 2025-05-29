@@ -97,6 +97,7 @@ export const Day = factory<DayFactory>((_props, ref) => {
     hidden,
     static: isStatic,
     highlightToday,
+    attributes,
     ...others
   } = props;
 
@@ -109,6 +110,7 @@ export const Day = factory<DayFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'day',

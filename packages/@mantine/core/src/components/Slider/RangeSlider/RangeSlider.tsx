@@ -210,6 +210,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     restrictToMarks,
     thumbProps,
     pushOnOverlap,
+    attributes,
     ...others
   } = props;
 
@@ -221,6 +222,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     className,
     styles,
     style,
+    attributes,
     vars,
     varsResolver,
     unstyled,

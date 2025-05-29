@@ -93,6 +93,7 @@ export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     ...others
   } = props;
 
@@ -104,6 +105,7 @@ export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
     styles,
     unstyled,
     size,
+    attributes,
   };
 
   const _nextDisabled =

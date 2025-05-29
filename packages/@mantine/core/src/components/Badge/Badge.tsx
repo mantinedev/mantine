@@ -126,6 +126,7 @@ export const Badge = polymorphicFactory<BadgeFactory>((_props, ref) => {
     autoContrast,
     circle,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -138,6 +139,7 @@ export const Badge = polymorphicFactory<BadgeFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

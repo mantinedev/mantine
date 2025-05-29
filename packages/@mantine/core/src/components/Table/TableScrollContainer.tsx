@@ -70,6 +70,7 @@ export const TableScrollContainer = factory<TableScrollContainerFactory>((_props
     maxHeight,
     type,
     scrollAreaProps,
+    attributes,
     ...others
   } = props;
 
@@ -82,6 +83,7 @@ export const TableScrollContainer = factory<TableScrollContainerFactory>((_props
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'scrollContainer',

@@ -43,7 +43,18 @@ const varsResolver = createVarsResolver<MarkFactory>((theme, { color }) => ({
 
 export const Mark = factory<MarkFactory>((_props, ref) => {
   const props = useProps('Mark', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, color, variant, ...others } = props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    color,
+    variant,
+    attributes,
+    ...others
+  } = props;
 
   const getStyles = useStyles<MarkFactory>({
     name: 'Mark',
@@ -54,6 +65,7 @@ export const Mark = factory<MarkFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

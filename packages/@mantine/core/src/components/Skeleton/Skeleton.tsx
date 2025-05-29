@@ -79,6 +79,7 @@ export const Skeleton = factory<SkeletonFactory>((_props, ref) => {
     radius,
     animate,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -91,6 +92,7 @@ export const Skeleton = factory<SkeletonFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

@@ -133,6 +133,7 @@ export const SpotlightRoot = factory<SpotlightRootFactory>((_props, ref) => {
     closeOnActionTrigger,
     maxHeight,
     scrollable,
+    attributes,
     ...others
   } = props;
 
@@ -153,6 +154,7 @@ export const SpotlightRoot = factory<SpotlightRootFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
   });
 
   useHotkeys(getHotkeys(shortcut, store), tagsToIgnore, triggerOnContentEditable);

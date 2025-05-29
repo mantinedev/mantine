@@ -106,6 +106,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
     __staticSelector,
     size,
     static: isStatic,
+    attributes,
     ...others
   } = props;
 
@@ -117,6 +118,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
     styles,
     unstyled,
     size,
+    attributes,
   };
 
   const _nextDisabled =

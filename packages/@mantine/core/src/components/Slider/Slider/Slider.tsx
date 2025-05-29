@@ -188,6 +188,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
     hiddenInputProps,
     restrictToMarks,
     thumbProps,
+    attributes,
     ...others
   } = props;
 
@@ -199,6 +200,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
     className,
     styles,
     style,
+    attributes,
     vars,
     varsResolver,
     unstyled,

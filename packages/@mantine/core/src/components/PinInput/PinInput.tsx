@@ -182,6 +182,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     hiddenInputProps,
     rootRef,
     getInputProps,
+    attributes,
     ...others
   } = useProps('PinInput', defaultProps, props);
 
@@ -196,6 +197,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

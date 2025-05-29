@@ -68,6 +68,7 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
       style,
       vars,
       mod,
+      attributes,
       ...others
     },
     ref
@@ -81,6 +82,7 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
       classNames,
       styles,
       unstyled,
+      attributes,
     });
 
     return (

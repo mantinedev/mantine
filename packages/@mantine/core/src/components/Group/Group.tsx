@@ -97,6 +97,7 @@ export const Group = factory<GroupFactory>((_props, ref) => {
     variant,
     __size,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -119,6 +120,7 @@ export const Group = factory<GroupFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

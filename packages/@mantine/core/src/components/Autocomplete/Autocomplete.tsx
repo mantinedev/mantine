@@ -118,6 +118,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     clearable,
     rightSection,
     autoSelectOnBlur,
+    attributes,
     ...others
   } = props;
 
@@ -179,6 +180,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
       unstyled={unstyled}
       readOnly={readOnly}
       size={size}
+      attributes={attributes}
       onOptionSubmit={(val) => {
         onOptionSubmit?.(val);
         handleValueChange(optionsLockup[val].label);
@@ -223,6 +225,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
           classNames={resolvedClassNames}
           styles={resolvedStyles}
           unstyled={unstyled}
+          attributes={attributes}
           id={_id}
         />
       </Combobox.Target>

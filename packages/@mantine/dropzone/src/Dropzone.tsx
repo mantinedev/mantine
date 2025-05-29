@@ -230,6 +230,7 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
     loaderProps,
     inputProps,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -242,6 +243,7 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

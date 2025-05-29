@@ -137,6 +137,7 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
     emptySymbol,
     fullSymbol,
     highlightSelectedOnly,
+    attributes,
     ...others
   } = props;
 
@@ -149,6 +150,7 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

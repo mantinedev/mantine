@@ -92,6 +92,7 @@ export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>((_p
     gradient,
     radius,
     autoContrast,
+    attributes,
     ...others
   } = props;
 
@@ -104,6 +105,7 @@ export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>((_p
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'groupSection',

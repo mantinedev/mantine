@@ -63,6 +63,7 @@ export const Stack = factory<StackFactory>((_props, ref) => {
     justify,
     gap,
     variant,
+    attributes,
     ...others
   } = props;
 
@@ -75,6 +76,7 @@ export const Stack = factory<StackFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

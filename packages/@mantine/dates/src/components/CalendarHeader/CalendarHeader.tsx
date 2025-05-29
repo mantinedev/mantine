@@ -136,6 +136,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props, ref) => {
     __staticSelector,
     __preventFocus,
     __stopPropagation,
+    attributes,
     ...others
   } = props;
 
@@ -148,6 +149,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'calendarHeader',

@@ -135,6 +135,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
     series,
     valueFormatter,
     showColor,
+    attributes,
     ...others
   } = props;
 
@@ -149,6 +150,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
   });
 
   if (!payload) {

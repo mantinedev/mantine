@@ -86,6 +86,7 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
     id,
     expanded,
     onExpandedChange,
+    attributes,
     ...others
   } = props;
 
@@ -98,6 +99,7 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

@@ -137,6 +137,7 @@ export const AppShell = factory<AppShellFactory>((_props, ref) => {
     footer,
     offsetScrollbars = layout !== 'alt',
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -149,6 +150,7 @@ export const AppShell = factory<AppShellFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

@@ -31,7 +31,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { ChartLegend } from '../ChartLegend';
+import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import classes from './RadarChart.module.css';
 
@@ -43,7 +43,11 @@ export interface RadarChartSeries {
   label?: string;
 }
 
-export type RadarChartStylesNames = 'root' | 'container' | ChartTooltipStylesNames;
+export type RadarChartStylesNames =
+  | 'root'
+  | 'container'
+  | ChartTooltipStylesNames
+  | ChartLegendStylesNames;
 export type RadarChartCssVariables = {
   root: '--chart-grid-color' | '--chart-text-color';
 };
@@ -175,6 +179,7 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
     dotProps,
     activeDotProps,
     legendProps,
+    attributes,
     ...others
   } = props;
 
@@ -189,6 +194,7 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -266,6 +272,7 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={series}
+                  attributes={attributes}
                 />
               )}
               {...tooltipProps}
@@ -284,6 +291,7 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
                   styles={resolvedStyles}
                   series={series}
                   centered
+                  attributes={attributes}
                 />
               )}
               {...legendProps}

@@ -122,6 +122,7 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props, ref) => {
     position,
     transitionProps,
     radius,
+    attributes,
     ...others
   } = props;
 
@@ -136,6 +137,7 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

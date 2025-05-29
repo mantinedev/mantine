@@ -124,6 +124,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     onBottomReached,
     onTopReached,
     overscrollBehavior,
+    attributes,
     ...others
   } = props;
 
@@ -140,6 +141,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

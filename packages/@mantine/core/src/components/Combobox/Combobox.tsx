@@ -132,6 +132,7 @@ export function Combobox(_props: ComboboxProps) {
     resetSelectionOnOptionHover,
     __staticSelector,
     readOnly,
+    attributes,
     ...others
   } = props;
 
@@ -145,6 +146,7 @@ export function Combobox(_props: ComboboxProps) {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

@@ -145,6 +145,7 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
     rootRef,
     mod,
     withThumbIndicator,
+    attributes,
     ...others
   } = props;
 
@@ -160,6 +161,7 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

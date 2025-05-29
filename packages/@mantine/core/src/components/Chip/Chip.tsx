@@ -150,6 +150,7 @@ export const Chip = factory<ChipFactory>((_props, ref) => {
     rootRef,
     autoContrast,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -162,6 +163,7 @@ export const Chip = factory<ChipFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

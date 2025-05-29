@@ -63,6 +63,7 @@ export const Breadcrumbs = factory<BreadcrumbsFactory>((_props, ref) => {
     children,
     separator,
     separatorMargin,
+    attributes,
     ...others
   } = props;
 
@@ -75,6 +76,7 @@ export const Breadcrumbs = factory<BreadcrumbsFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

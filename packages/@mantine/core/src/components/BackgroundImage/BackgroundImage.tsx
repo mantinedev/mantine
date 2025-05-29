@@ -39,8 +39,19 @@ const varsResolver = createVarsResolver<BackgroundImageFactory>((_, { radius }) 
 
 export const BackgroundImage = polymorphicFactory<BackgroundImageFactory>((_props, ref) => {
   const props = useProps('BackgroundImage', null, _props);
-  const { classNames, className, style, styles, unstyled, vars, radius, src, variant, ...others } =
-    props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    radius,
+    src,
+    variant,
+    attributes,
+    ...others
+  } = props;
 
   const getStyles = useStyles<BackgroundImageFactory>({
     name: 'BackgroundImage',
@@ -51,6 +62,7 @@ export const BackgroundImage = polymorphicFactory<BackgroundImageFactory>((_prop
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

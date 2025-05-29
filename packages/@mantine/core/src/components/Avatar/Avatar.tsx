@@ -133,6 +133,7 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
     mod,
     name,
     allowedInitialsColors,
+    attributes,
     ...others
   } = props;
   const ctx = useAvatarGroupContext();
@@ -147,6 +148,7 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

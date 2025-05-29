@@ -79,6 +79,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     series,
     showColor,
     centered,
+    attributes,
     ...others
   } = props;
 
@@ -91,6 +92,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
   });
 
   if (!payload) {

@@ -135,6 +135,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
     childrenOffset,
     autoContrast,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -147,6 +148,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

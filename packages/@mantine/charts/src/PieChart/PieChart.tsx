@@ -217,6 +217,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
     valueFormatter,
     labelsType,
     strokeColor,
+    attributes,
     ...others
   } = props;
 
@@ -231,6 +232,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -295,6 +297,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
                   type="radial"
                   segmentId={tooltipDataSource === 'segment' ? payload?.[0]?.name : undefined}
                   valueFormatter={valueFormatter}
+                  attributes={attributes}
                 />
               )}
               {...tooltipProps}

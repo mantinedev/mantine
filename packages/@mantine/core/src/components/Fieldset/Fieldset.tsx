@@ -60,6 +60,7 @@ export const Fieldset = factory<FieldsetFactory>((_props, ref) => {
     legend,
     variant,
     children,
+    attributes,
     ...others
   } = props;
 
@@ -72,6 +73,7 @@ export const Fieldset = factory<FieldsetFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

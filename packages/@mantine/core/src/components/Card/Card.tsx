@@ -58,8 +58,18 @@ const varsResolver = createVarsResolver<CardFactory>((_, { padding }) => ({
 
 export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
   const props = useProps('Card', null, _props);
-  const { classNames, className, style, styles, unstyled, vars, children, padding, ...others } =
-    props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    children,
+    padding,
+    attributes,
+    ...others
+  } = props;
 
   const getStyles = useStyles<CardFactory>({
     name: 'Card',
@@ -70,6 +80,7 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

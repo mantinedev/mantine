@@ -74,6 +74,7 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => 
     variant,
     vars,
     portalProps,
+    attributes,
     ...others
   } = props;
 
@@ -87,6 +88,7 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => 
     classNames,
     styles,
     unstyled,
+    attributes,
     rootSelector: 'tooltip',
     vars,
     varsResolver,

@@ -110,6 +110,7 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
     mod,
     loaderProps,
     role,
+    attributes,
     ...others
   } = props;
 
@@ -122,6 +123,7 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

@@ -129,6 +129,7 @@ export const Indicator = factory<IndicatorFactory>((_props, ref) => {
     zIndex,
     autoContrast,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -141,6 +142,7 @@ export const Indicator = factory<IndicatorFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

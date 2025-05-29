@@ -112,6 +112,7 @@ export const Text = polymorphicFactory<TextFactory>((_props, ref) => {
     variant,
     mod,
     size,
+    attributes,
     ...others
   } = props;
 
@@ -124,6 +125,7 @@ export const Text = polymorphicFactory<TextFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

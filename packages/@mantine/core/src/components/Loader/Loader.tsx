@@ -86,6 +86,7 @@ export const Loader = factory<LoaderFactory>((_props, ref) => {
     loaders,
     variant,
     children,
+    attributes,
     ...others
   } = props;
 
@@ -98,6 +99,7 @@ export const Loader = factory<LoaderFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

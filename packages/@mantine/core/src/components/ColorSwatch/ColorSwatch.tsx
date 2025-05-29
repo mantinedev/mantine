@@ -75,6 +75,7 @@ export const ColorSwatch = polymorphicFactory<ColorSwatchFactory>((_props, ref) 
     withShadow,
     children,
     variant,
+    attributes,
     ...others
   } = useProps('ColorSwatch', defaultProps, props);
 
@@ -87,6 +88,7 @@ export const ColorSwatch = polymorphicFactory<ColorSwatchFactory>((_props, ref) 
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

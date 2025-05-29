@@ -58,7 +58,7 @@ const varsResolver = createVarsResolver<InlineCodeHighlightFactory>(
 
 export const InlineCodeHighlight = factory<InlineCodeHighlightFactory>((_props, ref) => {
   const props = useProps('InlineCodeHighlight', null, _props);
-  const { classNames, className, style, styles, unstyled, vars, ...others } = props;
+  const { classNames, className, style, styles, unstyled, vars, attributes, ...others } = props;
 
   const getStyles = useStyles<InlineCodeHighlightFactory>({
     name: 'InlineCodeHighlight',
@@ -69,6 +69,7 @@ export const InlineCodeHighlight = factory<InlineCodeHighlightFactory>((_props, 
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'inlineCodeHighlight',

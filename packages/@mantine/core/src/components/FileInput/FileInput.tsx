@@ -109,6 +109,7 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
     resetRef: resetRefProp,
     classNames,
     styles,
+    attributes,
     ...others
   } = props;
 
@@ -174,12 +175,14 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
           size={size}
           classNames={classNames}
           styles={styles}
+          attributes={attributes}
         >
           {!hasValue ? (
             <Input.Placeholder
               __staticSelector="FileInput"
               classNames={resolvedClassNames}
               styles={resolvedStyles}
+              attributes={attributes}
             >
               {placeholder}
             </Input.Placeholder>

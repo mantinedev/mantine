@@ -244,6 +244,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     allowLeadingZeros,
     withKeyboardEvents,
     trimLeadingZeroesOnBlur,
+    attributes,
     ...others
   } = props;
 
@@ -254,6 +255,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -519,6 +521,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       rightSectionWidth={rightSectionWidth ?? `var(--ni-right-section-width-${size || 'sm'})`}
       allowLeadingZeros={allowLeadingZeros}
       onBlur={handleBlur}
+      attributes={attributes}
       isAllowed={(val) => {
         if (clampBehavior === 'strict') {
           if (isAllowed) {

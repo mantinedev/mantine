@@ -178,6 +178,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     floatingStrategy,
     middlewares,
     autoContrast,
+    attributes,
     ...others
   } = useProps('Tooltip', defaultProps, props);
 
@@ -209,6 +210,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     rootSelector: 'tooltip',
     vars,
     varsResolver,

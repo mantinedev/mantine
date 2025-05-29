@@ -92,6 +92,7 @@ export const ModalRoot = factory<ModalRootFactory>((_props, ref) => {
     centered,
     xOffset,
     __staticSelector,
+    attributes,
     ...others
   } = props;
 
@@ -104,6 +105,7 @@ export const ModalRoot = factory<ModalRootFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
