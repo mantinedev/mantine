@@ -36,7 +36,7 @@ export interface TimelineProps
   /** Index of active element */
   active?: number;
 
-  /** Key of `theme.colors` or any valid CSS color to control active item colors, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color to control active item colors @default `theme.primaryColor` */
   color?: MantineColor;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem,  @default `'xl'` */

@@ -42,10 +42,10 @@ export interface RatingProps
   extends BoxProps,
     StylesApiProps<RatingFactory>,
     ElementProps<'div', 'onChange'> {
-  /** Default value for uncontrolled component */
+  /** Uncontrolled component default value */
   defaultValue?: number;
 
-  /** Value for controlled component */
+  /** Controlled component value */
   value?: number;
 
   /** Called when value changes */
@@ -57,13 +57,13 @@ export interface RatingProps
   /** Icon displayed when the symbol is full */
   fullSymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** Number of fractions each item can be divided into, `1` by default */
+  /** Number of fractions each item can be divided into @default `1` */
   fractions?: number;
 
   /** Controls component size @default `'sm'` */
   size?: MantineSize | number | (string & {});
 
-  /** Number of controls, `5` by default */
+  /** Number of controls @default `5` */
   count?: number;
 
   /** Called when one of the controls is hovered */
@@ -81,7 +81,7 @@ export interface RatingProps
   /** If set, only the selected symbol changes to full symbol when selected @default false */
   highlightSelectedOnly?: boolean;
 
-  /** Key of `theme.colors` or any CSS color value, `'yellow'` by default */
+  /** Key of `theme.colors` or any CSS color value @default `'yellow'` */
   color?: MantineColor;
 }
 

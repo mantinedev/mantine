@@ -35,7 +35,7 @@ export interface SparklineProps
   /** Data used to render the chart */
   data: (number | null)[];
 
-  /** Key of `theme.colors` or any valid CSS color, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
   color?: MantineColor;
 
   /** Determines whether the chart fill should be a gradient @default `true` */

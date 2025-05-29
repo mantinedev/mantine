@@ -77,7 +77,7 @@ export interface StepperProps
   /** Step icon displayed when step is in progress, default value is step index + 1 */
   progressIcon?: React.ReactNode | StepFragmentComponent;
 
-  /** Key of `theme.colors` or any valid CSS color, controls colors of active and progress steps, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color, controls colors of active and progress steps @default `theme.primaryColor` */
   color?: MantineColor;
 
   /** Controls size of the step icon, by default icon size is inferred from `size` prop */

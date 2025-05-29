@@ -14,7 +14,7 @@ export interface RadioGroupProps
   /** Controlled component value */
   value?: string | null;
 
-  /** Default value for uncontrolled component */
+  /** Uncontrolled component default value */
   defaultValue?: string | null;
 
   /** Called when value changes */

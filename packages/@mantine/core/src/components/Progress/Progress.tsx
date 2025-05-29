@@ -22,13 +22,13 @@ export interface ProgressProps extends __ProgressRootProps, StylesApiProps<Progr
   /** Value of the progress */
   value: number;
 
-  /** Key of `theme.colors` or any valid CSS value, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS value @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Determines whether the section should have stripes @default false */
+  /** If set, the section has stripes @default false */
   striped?: boolean;
 
-  /** Determines whether the sections stripes should be animated, if set, `striped` prop is ignored @default false */
+  /** If set, the sections stripes are animated, `striped` prop is ignored @default false */
   animated?: boolean;
 }
 

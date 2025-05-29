@@ -34,7 +34,7 @@ export interface SkeletonProps
   /** If set, Skeleton `width` and `border-radius` are equal to its `height` @default false */
   circle?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. `theme.defaultRadius` by default. */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default `theme.defaultRadius`. */
   radius?: React.CSSProperties['borderRadius'];
 
   /** Determines whether Skeleton should be animated @default `true` */

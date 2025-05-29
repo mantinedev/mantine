@@ -43,13 +43,13 @@ export interface DropzoneProps
   extends BoxProps,
     StylesApiProps<DropzoneFactory>,
     ElementProps<'div', 'onDrop'> {
-  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Accept`, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Accept` @default `theme.primaryColor` */
   acceptColor?: MantineColor;
 
   /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Reject`, `'red'` by default */
   rejectColor?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem@default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Determines whether files capturing should be disabled @default false */

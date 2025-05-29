@@ -50,7 +50,7 @@ export interface SemiCircleProgressProps
   /** Direction from which the circle is filled, `'left-to-right'` by default */
   fillDirection?: 'right-to-left' | 'left-to-right';
 
-  /** Key of `theme.colors` or any valid CSS color value, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color value @default `theme.primaryColor` */
   filledSegmentColor?: MantineColor;
 
   /** Key of `theme.colors` or any valid CSS color value, by default the value is determined based on the color scheme value */

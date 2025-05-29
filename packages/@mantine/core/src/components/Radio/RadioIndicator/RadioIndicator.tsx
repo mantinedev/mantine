@@ -37,13 +37,13 @@ export interface RadioIndicatorProps
   extends BoxProps,
     StylesApiProps<RadioIndicatorFactory>,
     ElementProps<'div'> {
-  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default `theme.primaryColor` */
   color?: MantineColor;
 
   /** Controls size of the component @default `'sm'` */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Key of `theme.colors` or any valid CSS color to set icon color, by default value depends on `theme.autoContrast` */
@@ -55,10 +55,10 @@ export interface RadioIndicatorProps
   /** A component that replaces default check icon */
   icon?: React.FC<RadioIconProps>;
 
-  /** Determines whether the component should have checked styles */
+  /** Checked state */
   checked?: boolean;
 
-  /** Determines whether the component should have disabled styles */
+  /** Disabled state */
   disabled?: boolean;
 }
 

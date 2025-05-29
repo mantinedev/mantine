@@ -43,7 +43,7 @@ export interface RangeSliderProps
   extends BoxProps,
     StylesApiProps<RangeSliderFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
-  /** Key of `theme.colors` or any valid CSS color, controls color of track and thumb, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color, controls color of track and thumb @default `theme.primaryColor` */
   color?: MantineColor;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem,  @default `'xl'` */

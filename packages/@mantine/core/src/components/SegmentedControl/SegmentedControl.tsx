@@ -85,19 +85,19 @@ export interface SegmentedControlProps
   /** Controls `font-size`, `padding` and `height` properties @default `'sm'` */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem@default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Indicator `transition-duration` in ms, set `0` to turn off transitions, `200` by default */
+  /** Indicator `transition-duration` in ms, set `0` to turn off transitions @default `200` */
   transitionDuration?: number;
 
-  /** Indicator `transition-timing-function` property, `ease` by default */
+  /** Indicator `transition-timing-function` property @default `ease` */
   transitionTimingFunction?: string;
 
-  /** Determines in which orientation component id displayed, `'horizontal'` by default */
+  /** Component orientation @default `'horizontal'` */
   orientation?: 'vertical' | 'horizontal';
 
-  /** Determines whether the value can be changed */
+  /** If set to `false`, prevents changing the value */
   readOnly?: boolean;
 
   /** If set, adjusts text color based on background color for `filled` variant */

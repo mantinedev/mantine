@@ -54,7 +54,7 @@ export interface TableOfContentsProps
   extends BoxProps,
     StylesApiProps<TableOfContentsFactory>,
     ElementProps<'div'> {
-  /** Key of `theme.colors` or any valid CSS color value, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color value @default `theme.primaryColor` */
   color?: MantineColor;
 
   /** Controls font-size and padding of all elements,  @default `'md'` */

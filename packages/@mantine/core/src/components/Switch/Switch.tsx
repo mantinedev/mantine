@@ -58,13 +58,13 @@ export interface SwitchProps
   /** Inner label when the `Switch` is in checked state */
   onLabel?: React.ReactNode;
 
-  /** Key of `theme.colors` or any valid CSS color to set input color in checked state, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color to set input color in checked state @default `theme.primaryColor` */
   color?: MantineColor;
 
   /** Controls size of all elements */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` "xl" by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` @default `'xl'` */
   radius?: MantineRadius;
 
   /** Props passed down to the root element */

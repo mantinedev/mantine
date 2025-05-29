@@ -22,7 +22,7 @@ export interface NavigationProgressProps extends ElementProps<'div'> {
   /** Initial progress value, `0` by default */
   initialProgress?: number;
 
-  /** Key of `theme.colors` of any other valid CSS color, `theme.primaryColor` by default */
+  /** Key of `theme.colors` of any other valid CSS color @default `theme.primaryColor` */
   color?: MantineColor;
 
   /** Controls height of the progress bar */

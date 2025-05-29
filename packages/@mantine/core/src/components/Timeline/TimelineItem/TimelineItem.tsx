@@ -47,7 +47,7 @@ export interface TimelineItemProps
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem,  @default `'xl'` */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color to control active item colors, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color to control active item colors @default `theme.primaryColor` */
   color?: MantineColor;
 
   /** Controls line border style, `'solid'` by default */
