@@ -24,7 +24,7 @@ interface MenuSubProps extends __PopoverProps {
   /** Offset of the dropdown element @default `0` */
   offset?: number | FloatingAxesOffsets;
 
-  /** Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type, @default `{ duration: 0 }` */
+  /** Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type @default `{ duration: 0 }` */
   transitionProps?: TransitionOverride;
 }
 

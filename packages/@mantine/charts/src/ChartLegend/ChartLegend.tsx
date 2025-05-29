@@ -53,7 +53,7 @@ export interface ChartLegendProps
   /** Determines whether color swatch should be shown next to the label, `true` by default */
   showColor?: boolean;
 
-  /** Determines whether the legend should be centered, `false` by default */
+  /** Determines whether the legend should be centered @default false */
   centered?: boolean;
 }
 

@@ -22,13 +22,13 @@ export type PaginationStylesNames = PaginationRootStylesNames;
 export type PaginationCssVariables = PaginationRootCssVariables;
 
 export interface PaginationProps extends PaginationRootProps {
-  /** Determines whether first/last controls should be rendered, false by default */
+  /** If set, first/last controls are displayed, @default `false` */
   withEdges?: boolean;
 
-  /** Determines whether next/previous controls should be rendered, true by default */
+  /** If set, next/previous controls are displayed, @default `true` */
   withControls?: boolean;
 
-  /** Adds props to next/previous/first/last controls */
+  /** Props passed down to next/previous/first/last controls */
   getControlProps?: (control: 'first' | 'previous' | 'last' | 'next') => Record<string, any>;
 
   /** Next control icon component */
@@ -46,13 +46,13 @@ export interface PaginationProps extends PaginationRootProps {
   /** Dots icon component */
   dotsIcon?: PaginationIcon;
 
-  /** Key of `theme.spacing`, gap between controls, `8` by default */
+  /** Key of `theme.spacing`, gap between controls, @default `8` */
   gap?: MantineSpacing;
 
-  /** Determines whether the pagination should be hidden when only one page is available (`total={1}`), `false` by default */
+  /** If set, the pagination is hidden when only one page is available (`total={1}`), @default `false` */
   hideWithOnePage?: boolean;
 
-  /** Determines whether pages controls should be displayed, `true` by default */
+  /** If set to `false`, pages controls are hidden, @default `true` */
   withPages?: boolean;
 }
 

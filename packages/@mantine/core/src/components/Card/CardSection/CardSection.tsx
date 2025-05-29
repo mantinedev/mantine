@@ -12,7 +12,7 @@ import classes from '../Card.module.css';
 export type CardSectionStylesNames = 'section';
 
 export interface CardSectionProps extends BoxProps, CompoundStylesApiProps<CardSectionFactory> {
-  /** If set, the section has a border */
+  /** Adds border to the root element */
   withBorder?: boolean;
 
   /** If set, the section inherits padding from the parent `Card` */

@@ -33,10 +33,10 @@ export interface InlineCodeHighlightProps
   /** Controls background color of the code. By default, the value depends on color scheme. */
   background?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, `'sm'` by default */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default `'sm'` */
   radius?: MantineRadius;
 
-  /** Determines whether the code should have a border, `false` by default */
+  /** Adds border to the root element @default false */
   withBorder?: boolean;
 }
 

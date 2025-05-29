@@ -45,13 +45,13 @@ export interface PinInputProps
   /** Key of `theme.spacing` or any valid CSS value to set `gap` between inputs, numbers are converted to rem, `'md'` by default */
   gap?: MantineSpacing;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem@default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Controls inputs `width` and `height`, `'sm'` by default */
+  /** Controls inputs `width` and `height` @default `'sm'` */
   size?: MantineSize;
 
-  /** If set, the first input is focused when component is mounted, `false` by default */
+  /** If set, the first input is focused when component is mounted @default false */
   autoFocus?: boolean;
 
   /** Controlled component value */
@@ -87,7 +87,7 @@ export interface PinInputProps
   /** Determines which values can be entered, `'alphanumeric'` by default */
   type?: 'alphanumeric' | 'number' | RegExp;
 
-  /** Changes input type to `"password"`, `false` by default */
+  /** Changes input type to `"password"` @default false */
   mask?: boolean;
 
   /** Number of inputs, `4` by default */

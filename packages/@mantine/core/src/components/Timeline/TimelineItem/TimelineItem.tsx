@@ -44,7 +44,7 @@ export interface TimelineItemProps
   /** React node that should be rendered inside the bullet – icon, image, avatar, etc. By default, large white dot is displayed. */
   bullet?: React.ReactNode;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, `'xl'` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem,  @default `'xl'` */
   radius?: MantineRadius;
 
   /** Key of `theme.colors` or any valid CSS color to control active item colors, `theme.primaryColor` by default */

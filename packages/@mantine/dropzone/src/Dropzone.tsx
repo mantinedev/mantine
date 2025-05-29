@@ -49,10 +49,10 @@ export interface DropzoneProps
   /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Reject`, `'red'` by default */
   rejectColor?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem@default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Determines whether files capturing should be disabled, `false` by default */
+  /** Determines whether files capturing should be disabled @default false */
   disabled?: boolean;
 
   /** Called when any files are dropped to the dropzone */
@@ -64,7 +64,7 @@ export interface DropzoneProps
   /** Called when dropped files do not meet file restrictions */
   onReject?: (fileRejections: FileRejection[]) => void;
 
-  /** Determines whether a loading overlay should be displayed over the dropzone, `false` by default */
+  /** Determines whether a loading overlay should be displayed over the dropzone @default false */
   loading?: boolean;
 
   /** Mime types of the files that dropzone can accepts. By default, dropzone accepts all file types. */
@@ -127,7 +127,7 @@ export interface DropzoneProps
   /** Custom validation function. It must return null if there's no errors. */
   validator?: <T extends File>(file: T) => FileError | FileError[] | null;
 
-  /** Determines whether pointer events should be enabled on the inner element, `false` by default */
+  /** Determines whether pointer events should be enabled on the inner element @default false */
   enablePointerEvents?: boolean;
 
   /** Props passed down to the Loader component */

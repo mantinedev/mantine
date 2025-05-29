@@ -41,13 +41,13 @@ export interface HeatmapProps
   /** Heatmap end date. Current date by default. */
   endDate?: Date | string;
 
-  /** If set, month labels are displayed, `false` by default */
+  /** If set, month labels are displayed @default false */
   withMonthLabels?: boolean;
 
   /** Month labels, array of 12 elements, can be used for localization */
   monthLabels?: string[];
 
-  /** If set, weekday labels are displayed, `false` by default */
+  /** If set, weekday labels are displayed @default false */
   withWeekdayLabels?: boolean;
 
   /** Weekday labels, array of 7 elements, can be used for localization */
@@ -83,7 +83,7 @@ export interface HeatmapProps
   /** A function to generate tooltip label based on the hovered rect date and value, required for the tooltip to be visible */
   getTooltipLabel?: (input: HeatmapRectData) => React.ReactNode;
 
-  /** If set, tooltip is displayed on rect hover, `false` by default */
+  /** If set, tooltip is displayed on rect hover @default false */
   withTooltip?: boolean;
 
   /** Props passed down to the `Tooltip.Floating` component */

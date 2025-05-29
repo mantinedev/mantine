@@ -19,7 +19,7 @@ export interface TabsListProps
   /** `Tabs.Tab` components */
   children: React.ReactNode;
 
-  /** Determines whether tabs should take all available space, `false` by default */
+  /** Determines whether tabs should take all available space @default false */
   grow?: boolean;
 
   /** Tabs alignment, `flex-start` by default */

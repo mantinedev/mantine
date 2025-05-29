@@ -41,7 +41,7 @@ export interface NotificationProps
   /** Controls notification line or icon color, key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Notification icon, replaces color line */
@@ -56,10 +56,10 @@ export interface NotificationProps
   /** If set, the `Loader` component is displayed instead of the icon */
   loading?: boolean;
 
-  /** If set, the notification has a border @default `false` */
+  /** Adds border to the root element */
   withBorder?: boolean;
 
-  /** If set, the close button is visible, @default `true` */
+  /** If set, the close button is visible @default `true` */
   withCloseButton?: boolean;
 
   /** Props passed down to the close button */

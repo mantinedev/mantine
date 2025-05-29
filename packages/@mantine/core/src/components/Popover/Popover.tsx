@@ -79,10 +79,10 @@ export interface __PopoverProps {
   /** Floating ui middlewares to configure position handling, `{ flip: true, shift: true, inline: false }` by default */
   middlewares?: PopoverMiddlewares;
 
-  /** Determines whether component should have an arrow, `false` by default */
+  /** Determines whether component should have an arrow @default false */
   withArrow?: boolean;
 
-  /** Determines whether the overlay should be displayed when the dropdown is opened, `false` by default */
+  /** Determines whether the overlay should be displayed when the dropdown is opened @default false */
   withOverlay?: boolean;
 
   /** Props passed down to `Overlay` component */
@@ -109,7 +109,7 @@ export interface __PopoverProps {
   /** Dropdown `z-index`, `300` by default */
   zIndex?: string | number;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius@default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Key of `theme.shadows` or any other valid CSS `box-shadow` value */
@@ -118,7 +118,7 @@ export interface __PopoverProps {
   /** If set, popover dropdown will not be rendered */
   disabled?: boolean;
 
-  /** Determines whether focus should be automatically returned to control when dropdown closes, `false` by default */
+  /** Determines whether focus should be automatically returned to control when dropdown closes @default false */
   returnFocus?: boolean;
 
   /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy), `'absolute'` by default */
@@ -149,7 +149,7 @@ export interface PopoverProps extends __PopoverProps, StylesApiProps<PopoverFact
   /** Events that trigger outside clicks */
   clickOutsideEvents?: string[];
 
-  /** Determines whether focus should be trapped within dropdown, `false` by default */
+  /** Determines whether focus should be trapped within dropdown @default false */
   trapFocus?: boolean;
 
   /** Determines whether dropdown should be closed when `Escape` key is pressed, `true` by default */

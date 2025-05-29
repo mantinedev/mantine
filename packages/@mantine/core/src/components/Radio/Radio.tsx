@@ -50,7 +50,7 @@ export interface RadioProps
   /** Key of `theme.colors` or any valid CSS color to set input color in checked state, `theme.primaryColor` by default */
   color?: MantineColor;
 
-  /** Controls size of the component, `'sm'` by default */
+  /** Controls size of the component @default `'sm'` */
   size?: MantineSize | (string & {});
 
   /** A component that replaces default check icon */

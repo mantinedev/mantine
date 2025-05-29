@@ -43,7 +43,7 @@ export interface SliderProps
   /** Key of `theme.colors` or any valid CSS color, controls color of track and thumb, `theme.primaryColor` by default */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, `'xl'` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem,  @default `'xl'` */
   radius?: MantineRadius;
 
   /** Controls size of the track, `'md'` by default */
@@ -88,7 +88,7 @@ export interface SliderProps
   /** Props passed down to the `Transition` component, `{ transition: 'fade', duration: 0 }` by default */
   labelTransitionProps?: TransitionOverride;
 
-  /** Determines whether the label should be visible when the slider is not being dragged or hovered, `false` by default */
+  /** Determines whether the label should be visible when the slider is not being dragged or hovered @default false */
   labelAlwaysOn?: boolean;
 
   /** Thumb `aria-label` */
@@ -109,13 +109,13 @@ export interface SliderProps
   /** A transformation function to change the scale of the slider */
   scale?: (value: number) => number;
 
-  /** Determines whether track value representation should be inverted, `false` by default */
+  /** Determines whether track value representation should be inverted @default false */
   inverted?: boolean;
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
 
-  /** Determines whether the selection should be only allowed from the given marks array, `false` by default */
+  /** Determines whether the selection should be only allowed from the given marks array @default false */
   restrictToMarks?: boolean;
 
   /** Props passed down to thumb element */

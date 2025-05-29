@@ -50,7 +50,7 @@ export interface SelectProps
   /** Called when the clear button is clicked */
   onClear?: () => void;
 
-  /** Determines whether the select should be searchable, `false` by default */
+  /** Determines whether the select should be searchable @default false */
   searchable?: boolean;
 
   /** Determines whether check icon should be displayed near the selected option label, `true` by default */
@@ -74,7 +74,7 @@ export interface SelectProps
   /** Determines whether it should be possible to deselect value by clicking on the selected option, `true` by default */
   allowDeselect?: boolean;
 
-  /** Determines whether the clear button should be displayed in the right section when the component has value, `false` by default */
+  /** Determines whether the clear button should be displayed in the right section when the component has value @default false */
   clearable?: boolean;
 
   /** Props passed down to the clear button */
@@ -92,7 +92,7 @@ export interface SelectProps
   /** Controls color of the default chevron, by default depends on the color scheme */
   chevronColor?: MantineColor;
 
-  /** If set, the highlighted option is selected when the input loses focus, `false` by default */
+  /** If set, the highlighted option is selected when the input loses focus @default false */
   autoSelectOnBlur?: boolean;
 }
 

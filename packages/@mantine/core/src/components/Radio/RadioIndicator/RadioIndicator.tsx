@@ -40,7 +40,7 @@ export interface RadioIndicatorProps
   /** Key of `theme.colors` or any valid CSS color to set input background color in checked state, `theme.primaryColor` by default */
   color?: MantineColor;
 
-  /** Controls size of the component, `'sm'` by default */
+  /** Controls size of the component @default `'sm'` */
   size?: MantineSize | (string & {});
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius,` `theme.defaultRadius` by default */

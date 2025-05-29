@@ -70,7 +70,7 @@ export interface FunnelChartProps
   /** Controls width of segments stroke, `1` by default */
   strokeWidth?: number;
 
-  /** Determines whether each segment should have associated label, `false` by default */
+  /** Determines whether each segment should have associated label @default false */
   withLabels?: boolean;
 
   /** Controls labels position relative to the segment, `'right'` by default */

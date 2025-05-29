@@ -31,7 +31,7 @@ export interface SkeletonProps
   /** Skeleton `width`, numbers are converted to rem, `100%` by default, ignored when `circle` prop is set */
   width?: React.CSSProperties['width'];
 
-  /** If set, Skeleton `width` and `border-radius` are equal to its `height`, `false` by default */
+  /** If set, Skeleton `width` and `border-radius` are equal to its `height` @default false */
   circle?: boolean;
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. `theme.defaultRadius` by default. */

@@ -69,10 +69,10 @@ export interface TableProps extends BoxProps, StylesApiProps<TableFactory>, Elem
   /** Color of table borders, key of `theme.colors` or any valid CSS color */
   borderColor?: MantineColor;
 
-  /** Determines whether the table should have outer border, `false` by default */
+  /** Determines whether the table should have outer border @default false */
   withTableBorder?: boolean;
 
-  /** Determines whether the table should have borders between columns, `false` by default */
+  /** Determines whether the table should have borders between columns @default false */
   withColumnBorders?: boolean;
 
   /** Determines whether the table should have borders between rows, `true` by default */
@@ -84,13 +84,13 @@ export interface TableProps extends BoxProps, StylesApiProps<TableFactory>, Elem
   /** Vertical cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem @default `xs` */
   verticalSpacing?: MantineSpacing;
 
-  /** Determines whether every odd/even row background should be changed to `strippedColor`, if set to `true`, then `odd` value will be used, `false` by default  */
+  /** Determines whether every odd/even row background should be changed to `strippedColor`, if set to `true`, then `odd` value will be used @default false  */
   striped?: boolean | 'odd' | 'even';
 
   /** Background color of striped rows, key of `theme.colors` or any valid CSS color */
   stripedColor?: MantineColor;
 
-  /** Determines whether table rows background should change to `highlightOnHoverColor` when hovered, `false` by default */
+  /** Determines whether table rows background should change to `highlightOnHoverColor` when hovered @default false */
   highlightOnHover?: boolean;
 
   /** Background color of table rows when hovered, key of `theme.colors` or any valid CSS color */
@@ -99,13 +99,13 @@ export interface TableProps extends BoxProps, StylesApiProps<TableFactory>, Elem
   /** Data that should be used to generate table, ignored if `children` prop is set */
   data?: TableData;
 
-  /** Determines whether `Table.Thead` should be sticky, `false` by default */
+  /** Determines whether `Table.Thead` should be sticky @default false */
   stickyHeader?: boolean;
 
   /** Offset from top at which `Table.Thead` should become sticky, `0` by default */
   stickyHeaderOffset?: number | string;
 
-  /** Determines whether `font-variant-numeric: tabular-nums` style should be set, `false` by default */
+  /** Determines whether `font-variant-numeric: tabular-nums` style should be set @default false */
   tabularNums?: boolean;
 }
 

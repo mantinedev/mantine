@@ -80,7 +80,7 @@ export interface TableOfContentsProps
   /** Controls padding on the left side of control, multiplied by (`depth` - `minDepthToOffset`), `20px` by default  */
   depthOffset?: number | string;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`@default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** A function to reinitialize headings from `use-scroll-spy` hook */

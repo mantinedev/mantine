@@ -27,10 +27,10 @@ export interface PillGroupProps
   /** Controls spacing between pills, by default controlled by `size` */
   gap?: MantineSize | (string & {}) | number;
 
-  /** Controls size of the child `Pill` components and gap between them, `'sm'` by default */
+  /** Controls size of the child `Pill` components and gap between them @default `'sm'` */
   size?: MantineSize | (string & {});
 
-  /** Determines whether child `Pill` components should be disabled */
+  /** If set, adds disabled to all child `Pill` components */
   disabled?: boolean;
 }
 

@@ -78,7 +78,7 @@ export interface AreaChartProps
   /** Controls how chart areas are positioned relative to each other, `'default'` by default */
   type?: AreaChartType;
 
-  /** Determines whether the chart area should be represented with a gradient instead of the solid color, `false` by default */
+  /** Determines whether the chart area should be represented with a gradient instead of the solid color @default false */
   withGradient?: boolean;
 
   /** Type of the curve, `'monotone'` by default */
@@ -119,7 +119,7 @@ export interface AreaChartProps
     | ((series: AreaChartSeries) => Partial<Omit<AreaProps, 'ref'>>)
     | Partial<Omit<AreaProps, 'ref'>>;
 
-  /** Determines whether each point should have associated label, `false` by default */
+  /** Determines whether each point should have associated label @default false */
   withPointLabels?: boolean;
 }
 

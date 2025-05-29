@@ -90,10 +90,10 @@ export interface MonthSettings {
   /** Controls day value rendering */
   renderDay?: RenderDay;
 
-  /** Determines whether outside dates should be hidden, `false` by default */
+  /** Determines whether outside dates should be hidden @default false */
   hideOutsideDates?: boolean;
 
-  /** Determines whether weekdays row should be hidden, `false` by default */
+  /** Determines whether weekdays row should be hidden @default false */
   hideWeekdays?: boolean;
 
   /** Assigns `aria-label` to `Day` components based on date */
@@ -105,10 +105,10 @@ export interface MonthSettings {
   /** Determines whether controls should be separated by space, `true` by default */
   withCellSpacing?: boolean;
 
-  /** Determines whether today should be highlighted with a border, `false` by default */
+  /** Determines whether today should be highlighted with a border @default false */
   highlightToday?: boolean;
 
-  /** Determines whether week numbers should be displayed, `false` by default */
+  /** Determines whether week numbers should be displayed @default false */
   withWeekNumbers?: boolean;
 }
 

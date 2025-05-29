@@ -74,10 +74,10 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   /** Determines whether tree node with children should be expanded on space key press, `true` by default */
   expandOnSpace?: boolean;
 
-  /** Determines whether tree node should be checked on space key press, `false` by default */
+  /** Determines whether tree node should be checked on space key press @default false */
   checkOnSpace?: boolean;
 
-  /** Determines whether node should be selected on click, `false` by default */
+  /** Determines whether node should be selected on click @default false */
   selectOnClick?: boolean;
 
   /** Use-tree hook instance that can be used to manipulate component state */
@@ -86,7 +86,7 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   /** A function to render tree node label */
   renderNode?: RenderNode;
 
-  /** Determines whether selection should be cleared when user clicks outside of the tree, `false` by default */
+  /** Determines whether selection should be cleared when user clicks outside of the tree @default false */
   clearSelectionOnOutsideClick?: boolean;
 
   /** Determines whether tree nodes range can be selected with click when `Shift` key is pressed, `true` by default */

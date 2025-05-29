@@ -26,10 +26,10 @@ export type PillCssVariables = {
 };
 
 export interface PillProps extends BoxProps, StylesApiProps<PillFactory>, ElementProps<'div'> {
-  /** Controls pill `font-size` and `padding`, `'sm'` by default */
+  /** Controls pill `font-size` and `padding` @default `'sm'` */
   size?: MantineSize;
 
-  /** Determines whether the remove button should be displayed, `false` by default */
+  /** Controls visibility of the remove button @default false */
   withRemoveButton?: boolean;
 
   /** Called when the remove button is clicked */
@@ -38,10 +38,10 @@ export interface PillProps extends BoxProps, StylesApiProps<PillFactory>, Elemen
   /** Props passed down to the remove button */
   removeButtonProps?: CloseButtonProps & React.ComponentPropsWithoutRef<'button'>;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. `'xl'` by default. */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem.  @default `'xl'` */
   radius?: MantineRadius;
 
-  /** If pill is disabled it has higher contrast to be visible on the disabled input background and the remove button is hidden */
+  /** Adds disabled attribute, applies disabled styles */
   disabled?: boolean;
 }
 

@@ -50,16 +50,16 @@ export interface TextProps extends BoxProps, StylesApiProps<TextFactory> {
   /** Side on which Text must be truncated, if `true`, text is truncated from the start */
   truncate?: TextTruncate;
 
-  /** Sets `line-height` to 1 for centering, `false` by default */
+  /** Sets `line-height` to 1 for centering @default false */
   inline?: boolean;
 
-  /** Determines whether font properties should be inherited from the parent, `false` by default */
+  /** Determines whether font properties should be inherited from the parent @default false */
   inherit?: boolean;
 
   /** Gradient configuration, ignored when `variant` is not `gradient`, `theme.defaultGradient` by default */
   gradient?: MantineGradient;
 
-  /** Shorthand for `component="span"`, `false` by default, default root element is `p` */
+  /** Shorthand for `component="span"` @default false, default root element is `p` */
   span?: boolean;
 
   /** @deprecated Use `c` prop instead */

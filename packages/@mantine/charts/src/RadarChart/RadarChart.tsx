@@ -73,10 +73,10 @@ export interface RadarChartProps
   /** Determines whether PolarAngleAxis component should be displayed, `true` by default */
   withPolarAngleAxis?: boolean;
 
-  /** Determines whether PolarRadiusAxisProps component should be displayed, `false` by default */
+  /** Determines whether PolarRadiusAxisProps component should be displayed @default false */
   withPolarRadiusAxis?: boolean;
 
-  /** Determines whether Tooltip component should be displayed, `false` by default */
+  /** Determines whether Tooltip component should be displayed @default false */
   withTooltip?: boolean;
 
   /** Props passed down to recharts Radar component */
@@ -105,10 +105,10 @@ export interface RadarChartProps
   /** Tooltip position animation duration in ms, `0` by default */
   tooltipAnimationDuration?: number;
 
-  /** Determines whether the legend should be displayed, `false` by default */
+  /** Determines whether the legend should be displayed @default false */
   withLegend?: boolean;
 
-  /** Determines whether dots should be displayed, `false` by default */
+  /** Determines whether dots should be displayed @default false */
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */

@@ -37,7 +37,7 @@ export interface PaginationRootProps
   extends BoxProps,
     StylesApiProps<PaginationRootFactory>,
     ElementProps<'div', 'value' | 'onChange'> {
-  /** `height` and `min-width` of controls, `'md'` by default */
+  /** `height` and `min-width` of controls @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
   /** Total number of pages, must be an integer */
@@ -52,19 +52,19 @@ export interface PaginationRootProps
   /** Called when page changes */
   onChange?: (value: number) => void;
 
-  /** Determines whether all controls should be disabled, `false` by default */
+  /** Disables all controls, applies disabled styles */
   disabled?: boolean;
 
-  /** Number of siblings displayed on the left/right side of the selected page, `1` by default */
+  /** Number of siblings displayed on the left/right side of the selected page @default `1` */
   siblings?: number;
 
-  /** Number of elements visible on the left/right edges, `1` by default */
+  /** Number of elements visible on the left/right edges @default `1` */
   boundaries?: number;
 
-  /** Key of `theme.colors`, active item color, `theme.primaryColor` by default */
+  /** Key of `theme.colors`, active item color @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Called when next page control is clicked */

@@ -25,7 +25,7 @@ export interface __ProgressRootProps extends BoxProps, ElementProps<'div'> {
   /** Controls track height, `'md'` by default */
   size?: MantineSize | (string & {}) | number;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`@default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** If set, adjusts text color based on background color for `filled` variant */

@@ -75,7 +75,7 @@ export interface CarouselProps
   /** Controls size of the next and previous controls, `26` by default */
   controlSize?: React.CSSProperties['width'];
 
-  /** Controls position of the next and previous controls, key of `theme.spacing` or any valid CSS value, `'sm'` by default */
+  /** Controls position of the next and previous controls, key of `theme.spacing` or any valid CSS value @default `'sm'` */
   controlsOffset?: MantineSpacing;
 
   /** Controls slide width based on viewport width, `'100%'` by default */
@@ -102,7 +102,7 @@ export interface CarouselProps
   /** Determines whether next/previous controls should be displayed, true by default */
   withControls?: boolean;
 
-  /** Determines whether indicators should be displayed, `false` by default */
+  /** Determines whether indicators should be displayed @default false */
   withIndicators?: boolean;
 
   /** An array of embla plugins */

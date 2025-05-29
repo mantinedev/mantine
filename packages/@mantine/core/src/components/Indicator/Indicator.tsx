@@ -64,7 +64,7 @@ export interface IndicatorProps
   /** Key of `theme.colors` or any valid CSS color value @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** If set, the indicator has a border (color of the border is the same as the body element) @default `false` */
+  /** Adds border to the root element */
   withBorder?: boolean;
 
   /** If set, the indicator is hidden */

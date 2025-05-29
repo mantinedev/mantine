@@ -32,7 +32,7 @@ export interface DateInputMaskProps
   /** Called when the value changes */
   onChange?: (value: Date | null) => void;
 
-  /** Determines whether the clear button should be displayed, `false` by default */
+  /** Determines whether the clear button should be displayed @default false */
   clearable?: boolean;
 
   /** Called once when one of the inputs is focused, not called when focused is shifted between hours, minutes, seconds and am/pm inputs */
@@ -65,7 +65,7 @@ export interface DateInputMaskProps
   /** `aria-label` of years input */
   yearsInputLabel?: string;
 
-  /** Determines whether the dropdown with calendar should be visible when the input has focus, `false` by default */
+  /** Determines whether the dropdown with calendar should be visible when the input has focus @default false */
   withDropdown?: boolean;
 
   /** Props passed down to `Popover` component */

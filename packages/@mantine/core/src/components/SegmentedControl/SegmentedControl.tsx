@@ -76,16 +76,16 @@ export interface SegmentedControlProps
   /** Name of the radio group, by default random name is generated */
   name?: string;
 
-  /** Determines whether the component should take 100% width of its parent, `false` by default */
+  /** Determines whether the component should take 100% width of its parent @default false */
   fullWidth?: boolean;
 
   /** Key of `theme.colors` or any valid CSS color, changes color of indicator, by default color is based on current color scheme */
   color?: MantineColor;
 
-  /** Controls `font-size`, `padding` and `height` properties, `'sm'` by default */
+  /** Controls `font-size`, `padding` and `height` properties @default `'sm'` */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem@default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Indicator `transition-duration` in ms, set `0` to turn off transitions, `200` by default */

@@ -71,7 +71,7 @@ export interface TimePickerProps
   /** Called when the value changes */
   onChange?: (value: string) => void;
 
-  /** Determines whether the clear button should be displayed, `false` by default */
+  /** Determines whether the clear button should be displayed @default false */
   clearable?: boolean;
 
   /** `name` prop passed down to the hidden input */
@@ -98,7 +98,7 @@ export interface TimePickerProps
   /** Number by which seconds are incremented/decremented, `1` by default */
   secondsStep?: number;
 
-  /** Determines whether the seconds input should be displayed, `false` by default */
+  /** Determines whether the seconds input should be displayed @default false */
   withSeconds?: boolean;
 
   /** `aria-label` of hours input */
@@ -116,7 +116,7 @@ export interface TimePickerProps
   /** Labels used for am/pm values, `{ am: 'AM', pm: 'PM' }` by default */
   amPmLabels?: TimePickerAmPmLabels;
 
-  /** Determines whether the dropdown with time controls list should be visible when the input has focus, `false` by default */
+  /** Determines whether the dropdown with time controls list should be visible when the input has focus @default false */
   withDropdown?: boolean;
 
   /** Props passed down to `Popover` component */

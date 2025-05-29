@@ -63,7 +63,7 @@ export interface SpotlightRootProps
   /** A list of tags which when focused will be ignored by shortcut, `['input', 'textarea', 'select']` by default */
   tagsToIgnore?: string[];
 
-  /** Determines whether shortcut should trigger based in contentEditable, `false` by default */
+  /** Determines whether shortcut should trigger based in contentEditable @default false */
   triggerOnContentEditable?: boolean;
 
   /** If set, spotlight will not be rendered */
@@ -84,7 +84,7 @@ export interface SpotlightRootProps
   /** Spotlight content max-height. Ignored unless `scrollable` prop is set. `400` by default */
   maxHeight?: React.CSSProperties['maxHeight'];
 
-  /** Determines whether the actions list should be scrollable. If not set, `maxHeight` is ignored, `false` by default */
+  /** Determines whether the actions list should be scrollable. If not set, `maxHeight` is ignored @default false */
   scrollable?: boolean;
 }
 

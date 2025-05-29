@@ -18,7 +18,7 @@ export interface TextareaProps
     ElementProps<'textarea', 'size'> {
   __staticSelector?: string;
 
-  /** Determines whether the textarea height should grow with its content, `false` by default */
+  /** Determines whether the textarea height should grow with its content @default false */
   autosize?: boolean;
 
   /** Maximum rows for autosize textarea to grow, ignored if `autosize` prop is not set */

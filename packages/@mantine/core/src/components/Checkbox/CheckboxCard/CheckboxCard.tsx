@@ -34,7 +34,7 @@ export interface CheckboxCardProps
   /** Called when value changes */
   onChange?: (checked: boolean) => void;
 
-  /** Determines whether the card should have border @default `true` */
+  /** Adds border to the root element */
   withBorder?: boolean;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */

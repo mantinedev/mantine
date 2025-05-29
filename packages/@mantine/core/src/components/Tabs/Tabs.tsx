@@ -62,7 +62,7 @@ export interface TabsProps
   /** Determines whether tab should be activated with arrow key press, `true` by default */
   activateTabWithKeyboard?: boolean;
 
-  /** Determines whether tab can be deactivated, `false` by default */
+  /** Determines whether tab can be deactivated @default false */
   allowTabDeactivation?: boolean;
 
   /** Tabs content */
@@ -71,10 +71,10 @@ export interface TabsProps
   /** Changes colors of `Tabs.Tab` components when variant is `pills` or `default`, does nothing for other variants */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`@default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Determines whether tabs should have inverted styles, `false` by default */
+  /** Determines whether tabs should have inverted styles @default false */
   inverted?: boolean;
 
   /** If set to `false`, `Tabs.Panel` content will be unmounted when the associated tab is not active, `true` by default */
