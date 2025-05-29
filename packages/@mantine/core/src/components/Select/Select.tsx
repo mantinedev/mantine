@@ -53,7 +53,7 @@ export interface SelectProps
   /** Determines whether the select should be searchable @default false */
   searchable?: boolean;
 
-  /** Determines whether check icon should be displayed near the selected option label, `true` by default */
+  /** Determines whether check icon should be displayed near the selected option label @default `true` */
   withCheckIcon?: boolean;
 
   /** Position of the check icon relative to the option label, `'left'` by default */
@@ -71,7 +71,7 @@ export interface SelectProps
   /** Called when search changes */
   onSearchChange?: (value: string) => void;
 
-  /** Determines whether it should be possible to deselect value by clicking on the selected option, `true` by default */
+  /** Determines whether it should be possible to deselect value by clicking on the selected option @default `true` */
   allowDeselect?: boolean;
 
   /** Determines whether the clear button should be displayed in the right section when the component has value @default false */

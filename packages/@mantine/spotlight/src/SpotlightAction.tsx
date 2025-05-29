@@ -40,7 +40,7 @@ export interface SpotlightActionProps
   /** Children override default action elements, if passed, label, description and sections are hidden */
   children?: React.ReactNode;
 
-  /** Determines whether left and right sections should have dimmed styles, `true` by default */
+  /** Determines whether left and right sections should have dimmed styles @default `true` */
   dimmedSections?: boolean;
 
   /** Determines whether search query should be highlighted in action label @default false */

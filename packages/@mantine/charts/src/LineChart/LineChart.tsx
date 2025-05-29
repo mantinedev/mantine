@@ -88,7 +88,7 @@ export interface LineChartProps
   /** Controls fill opacity of all lines, `1` by default */
   fillOpacity?: number;
 
-  /** Determines whether dots should be displayed, `true` by default */
+  /** Determines whether dots should be displayed @default `true` */
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
@@ -103,7 +103,7 @@ export interface LineChartProps
   /** Props passed down to recharts `LineChart` component */
   lineChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsLineChart>;
 
-  /** Determines whether points with `null` values should be connected, `true` by default */
+  /** Determines whether points with `null` values should be connected @default `true` */
   connectNulls?: boolean;
 
   /** Additional components that are rendered inside recharts `LineChart` component */

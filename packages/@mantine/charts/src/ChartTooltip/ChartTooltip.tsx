@@ -102,7 +102,7 @@ export interface ChartTooltipProps
   /** A function to format values */
   valueFormatter?: (value: number) => string;
 
-  /** Determines whether the color swatch should be visible, `true` by default */
+  /** Determines whether the color swatch should be visible @default `true` */
   showColor?: boolean;
 }
 

@@ -78,7 +78,7 @@ export interface CompositeChartProps
   /** Type of the curve, `'monotone'` by default */
   curveType?: CompositeChartCurveType;
 
-  /** Determines whether dots should be displayed, `true` by default */
+  /** Determines whether dots should be displayed @default `true` */
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
@@ -90,7 +90,7 @@ export interface CompositeChartProps
   /** Stroke width for the chart lines, `2` by default */
   strokeWidth?: number;
 
-  /** Determines whether points with `null` values should be connected, `true` by default */
+  /** Determines whether points with `null` values should be connected @default `true` */
   connectNulls?: boolean;
 
   /** Additional components that are rendered inside recharts `AreaChart` component */

@@ -42,10 +42,10 @@ export interface RichTextEditorProps
   /** Tiptap editor instance */
   editor: Editor | null;
 
-  /** Determines whether code highlight styles should be added, `true` by default */
+  /** Determines whether code highlight styles should be added @default `true` */
   withCodeHighlightStyles?: boolean;
 
-  /** Determines whether typography styles should be added, `true` by default */
+  /** Determines whether typography styles should be added @default `true` */
   withTypographyStyles?: boolean;
 
   /** Labels that are used in controls */

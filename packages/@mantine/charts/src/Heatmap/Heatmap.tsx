@@ -53,7 +53,7 @@ export interface HeatmapProps
   /** Weekday labels, array of 7 elements, can be used for localization */
   weekdayLabels?: string[];
 
-  /** If set, trailing dates that do not fall into the given `startDate` – `endDate` range are displayed to fill empty space. `true` by default */
+  /** If set, trailing dates that do not fall into the given `startDate` – `endDate` range are displayed to fill empty space. @default `true` */
   withOutsideDates?: boolean;
 
   /** First day of week, 0 – Sunday, 1 – Monday. `1` (Monday) by default */

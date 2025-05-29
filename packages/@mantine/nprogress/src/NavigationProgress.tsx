@@ -31,7 +31,7 @@ export interface NavigationProgressProps extends ElementProps<'div'> {
   /** Step interval in ms, `500` by default */
   stepInterval?: number;
 
-  /** Determines whether the progress bar should be rendered within `Portal`, `true` by default */
+  /** Determines whether the progress bar should be rendered within `Portal` @default `true` */
   withinPortal?: boolean;
 
   /** Props to pass down to the `Portal` when `withinPortal` is `true` */

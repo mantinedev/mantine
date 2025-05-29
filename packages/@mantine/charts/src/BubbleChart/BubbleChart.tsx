@@ -118,7 +118,7 @@ export interface BubbleChartProps
   /** Chart label displayed next to the x axis */
   label?: string;
 
-  /** Determines whether the tooltip should be displayed, `true` by default */
+  /** Determines whether the tooltip should be displayed @default `true` */
   withTooltip?: boolean;
 
   /** Function to format z axis values */

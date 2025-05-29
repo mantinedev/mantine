@@ -73,7 +73,7 @@ export interface DropzoneProps
   /** A ref function which when called opens the file system file picker */
   openRef?: React.ForwardedRef<() => void | undefined>;
 
-  /** Determines whether multiple files can be dropped to the dropzone or selected from file system picker, `true` by default */
+  /** Determines whether multiple files can be dropped to the dropzone or selected from file system picker @default `true` */
   multiple?: boolean;
 
   /** Maximum file size in bytes */

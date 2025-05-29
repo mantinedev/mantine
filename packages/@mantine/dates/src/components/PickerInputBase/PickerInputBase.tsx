@@ -27,7 +27,7 @@ export type PickerInputBaseStylesNames = __InputStylesNames;
 export interface DateInputSharedProps
   extends Omit<__BaseInputProps, 'size'>,
     ElementProps<'button', 'defaultValue' | 'value' | 'onChange' | 'type'> {
-  /** Determines whether the dropdown is closed when date is selected, not applicable with `type="multiple"`, `true` by default */
+  /** Determines whether the dropdown is closed when date is selected, not applicable with `type="multiple"` @default `true` */
   closeOnChange?: boolean;
 
   /** Type of the dropdown, `'popover'` by default */
@@ -48,7 +48,7 @@ export interface DateInputSharedProps
   /** If set, the component value cannot be changed by the user */
   readOnly?: boolean;
 
-  /** Determines whether dates values should be sorted before `onChange` call, only applicable with type="multiple", `true` by default */
+  /** Determines whether dates values should be sorted before `onChange` call, only applicable with type="multiple" @default `true` */
   sortDates?: boolean;
 
   /** Separator between range value */

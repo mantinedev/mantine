@@ -57,7 +57,7 @@ export interface TableOfContentsProps
   /** Key of `theme.colors` or any valid CSS color value, `theme.primaryColor` by default */
   color?: MantineColor;
 
-  /** Controls font-size and padding of all elements, `'md'` by default */
+  /** Controls font-size and padding of all elements,  @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
   /** If set, adjusts text color based on background color for `filled` variant */

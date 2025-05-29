@@ -45,7 +45,7 @@ export interface DonutChartProps
   /** Data used to render chart */
   data: DonutChartCell[];
 
-  /** Determines whether the tooltip should be displayed when one of the section is hovered, `true` by default */
+  /** Determines whether the tooltip should be displayed when one of the section is hovered @default `true` */
   withTooltip?: boolean;
 
   /** Tooltip animation duration in ms, `0` by default */
@@ -69,7 +69,7 @@ export interface DonutChartProps
   /** Determines whether each segment should have associated label @default false */
   withLabels?: boolean;
 
-  /** Determines whether segments labels should have lines that connect the segment with the label, `true` by default */
+  /** Determines whether segments labels should have lines that connect the segment with the label @default `true` */
   withLabelsLine?: boolean;
 
   /** Controls thickness of the chart segments, `20` by default */

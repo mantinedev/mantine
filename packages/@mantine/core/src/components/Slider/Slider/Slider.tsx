@@ -46,7 +46,7 @@ export interface SliderProps
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem,  @default `'xl'` */
   radius?: MantineRadius;
 
-  /** Controls size of the track, `'md'` by default */
+  /** Controls size of the track,  @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
   /** Minimal possible value, `0` by default */
@@ -94,7 +94,7 @@ export interface SliderProps
   /** Thumb `aria-label` */
   thumbLabel?: string;
 
-  /** Determines whether the label should be displayed when the slider is hovered, `true` by default */
+  /** Determines whether the label should be displayed when the slider is hovered @default `true` */
   showLabelOnHover?: boolean;
 
   /** Content rendered inside thumb */

@@ -56,10 +56,10 @@ export interface TabsProps
   /** Base id, used to generate ids to connect labels with controls, generated randomly by default */
   id?: string;
 
-  /** Determines whether arrow key presses should loop though items (first to last and last to first), `true` by default */
+  /** Determines whether arrow key presses should loop though items (first to last and last to first) @default `true` */
   loop?: boolean;
 
-  /** Determines whether tab should be activated with arrow key press, `true` by default */
+  /** Determines whether tab should be activated with arrow key press @default `true` */
   activateTabWithKeyboard?: boolean;
 
   /** Determines whether tab can be deactivated @default false */
@@ -77,7 +77,7 @@ export interface TabsProps
   /** Determines whether tabs should have inverted styles @default false */
   inverted?: boolean;
 
-  /** If set to `false`, `Tabs.Panel` content will be unmounted when the associated tab is not active, `true` by default */
+  /** If set to `false`, `Tabs.Panel` content will be unmounted when the associated tab is not active @default `true` */
   keepMounted?: boolean;
 
   /** If set, adjusts text color based on background color for `pills` variant */

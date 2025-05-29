@@ -54,7 +54,7 @@ export interface SpotlightRootProps
   /** Called when query changes */
   onQueryChange?: (query: string) => void;
 
-  /** Determines whether the search query should be cleared when the spotlight is closed, `true` by default */
+  /** Determines whether the search query should be cleared when the spotlight is closed @default `true` */
   clearQueryOnClose?: boolean;
 
   /** Keyboard shortcut or a list of shortcuts to trigger spotlight, `'mod + K'` by default */
@@ -78,7 +78,7 @@ export interface SpotlightRootProps
   /** Forces opened state, useful for tests */
   forceOpened?: boolean;
 
-  /** Determines whether spotlight should be closed when one of the actions is triggered, `true` by default */
+  /** Determines whether spotlight should be closed when one of the actions is triggered @default `true` */
   closeOnActionTrigger?: boolean;
 
   /** Spotlight content max-height. Ignored unless `scrollable` prop is set. `400` by default */

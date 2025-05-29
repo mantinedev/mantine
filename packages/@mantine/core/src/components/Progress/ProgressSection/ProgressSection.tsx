@@ -24,7 +24,7 @@ export interface ProgressSectionProps
   /** Value of the section in 0–100 range  */
   value: number;
 
-  /** Determines whether `aria-*` props should be added to the root element, `true` by default */
+  /** Determines whether `aria-*` props should be added to the root element @default `true` */
   withAria?: boolean;
 
   /** Key of `theme.colors` or any valid CSS value, `theme.primaryColor` by default */

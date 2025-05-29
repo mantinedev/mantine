@@ -76,7 +76,7 @@ export interface NotificationsProps
   /** Store for notifications state, can be used to create multiple instances of notifications system in your application */
   store?: NotificationsStore;
 
-  /** Determines whether notifications container should be rendered inside `Portal`, `true` by default */
+  /** Determines whether notifications container should be rendered inside `Portal` @default `true` */
   withinPortal?: boolean;
 }
 

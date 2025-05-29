@@ -40,7 +40,7 @@ export interface YearsListSettings extends ControlsGroupSettings {
   /** Component size */
   size?: MantineSize;
 
-  /** Determines whether controls should be separated, `true` by default */
+  /** Determines whether controls should be separated @default `true` */
   withCellSpacing?: boolean;
 }
 

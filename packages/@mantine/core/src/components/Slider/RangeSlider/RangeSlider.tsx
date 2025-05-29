@@ -49,7 +49,7 @@ export interface RangeSliderProps
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem,  @default `'xl'` */
   radius?: MantineRadius;
 
-  /** Controls size of the track, `'md'` by default */
+  /** Controls size of the track,  @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
   /** Minimal possible value, `0` by default */
@@ -94,7 +94,7 @@ export interface RangeSliderProps
   /** Determines whether the label should be visible when the slider is not being dragged or hovered @default false */
   labelAlwaysOn?: boolean;
 
-  /** Determines whether the label should be displayed when the slider is hovered, `true` by default */
+  /** Determines whether the label should be displayed when the slider is hovered @default `true` */
   showLabelOnHover?: boolean;
 
   /** Content rendered inside thumb */
@@ -133,7 +133,7 @@ export interface RangeSliderProps
   /** Props passed down to thumb element based on the thumb index */
   thumbProps?: (index: 0 | 1) => React.ComponentPropsWithoutRef<'div'>;
 
-  /** Determines whether the other thumb should be pushed by the current thumb dragging when `minRange`/`maxRange` is reached, `true` by default */
+  /** Determines whether the other thumb should be pushed by the current thumb dragging when `minRange`/`maxRange` is reached @default `true` */
   pushOnOverlap?: boolean;
 }
 

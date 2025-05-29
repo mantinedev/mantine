@@ -75,7 +75,7 @@ export interface TableProps extends BoxProps, StylesApiProps<TableFactory>, Elem
   /** Determines whether the table should have borders between columns @default false */
   withColumnBorders?: boolean;
 
-  /** Determines whether the table should have borders between rows, `true` by default */
+  /** Determines whether the table should have borders between rows @default `true` */
   withRowBorders?: boolean;
 
   /** Horizontal cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem @default `xs` */

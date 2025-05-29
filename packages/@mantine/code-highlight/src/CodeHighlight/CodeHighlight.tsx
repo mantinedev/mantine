@@ -59,7 +59,7 @@ export interface CodeHighlightSettings {
   /** Max height of collapsed state, `180px` by default */
   maxCollapsedHeight?: number | string;
 
-  /** Determines whether the copy button should be displayed, `true` by default  */
+  /** Determines whether the copy button should be displayed @default `true`  */
   withCopyButton?: boolean;
 
   /** Determines whether the expand/collapse button should be displayed @default false */

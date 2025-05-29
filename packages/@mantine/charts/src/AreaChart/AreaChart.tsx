@@ -84,7 +84,7 @@ export interface AreaChartProps
   /** Type of the curve, `'monotone'` by default */
   curveType?: AreaChartCurveType;
 
-  /** Determines whether dots should be displayed, `true` by default */
+  /** Determines whether dots should be displayed @default `true` */
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
@@ -108,7 +108,7 @@ export interface AreaChartProps
   /** Offset for the split gradient. By default, value is inferred from `data` and `series` if possible. Must be generated from the data array with `getSplitOffset` function. */
   splitOffset?: number;
 
-  /** Determines whether points with `null` values should be connected, `true` by default */
+  /** Determines whether points with `null` values should be connected @default `true` */
   connectNulls?: boolean;
 
   /** Additional components that are rendered inside recharts `AreaChart` component */

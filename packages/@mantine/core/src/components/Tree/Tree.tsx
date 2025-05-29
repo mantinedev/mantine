@@ -68,10 +68,10 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   /** Horizontal padding of each subtree level, key of `theme.spacing` or any valid CSS value, `'lg'` by default */
   levelOffset?: MantineSpacing;
 
-  /** Determines whether tree node with children should be expanded on click, `true` by default */
+  /** Determines whether tree node with children should be expanded on click @default `true` */
   expandOnClick?: boolean;
 
-  /** Determines whether tree node with children should be expanded on space key press, `true` by default */
+  /** Determines whether tree node with children should be expanded on space key press @default `true` */
   expandOnSpace?: boolean;
 
   /** Determines whether tree node should be checked on space key press @default false */
@@ -89,7 +89,7 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   /** Determines whether selection should be cleared when user clicks outside of the tree @default false */
   clearSelectionOnOutsideClick?: boolean;
 
-  /** Determines whether tree nodes range can be selected with click when `Shift` key is pressed, `true` by default */
+  /** Determines whether tree nodes range can be selected with click when `Shift` key is pressed @default `true` */
   allowRangeSelection?: boolean;
 }
 

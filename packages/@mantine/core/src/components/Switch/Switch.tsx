@@ -85,7 +85,7 @@ export interface SwitchProps
   /** Assigns ref of the root element */
   rootRef?: React.ForwardedRef<HTMLDivElement>;
 
-  /** If set, the indicator will be displayed inside thumb, `true` by default */
+  /** If set, the indicator will be displayed inside thumb @default `true` */
   withThumbIndicator?: boolean;
 }
 

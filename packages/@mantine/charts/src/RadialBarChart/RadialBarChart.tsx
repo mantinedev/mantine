@@ -47,7 +47,7 @@ export interface RadialBarChartProps
   /** Size of bars in px, `20` by default */
   barSize?: number;
 
-  /** Determines whether empty bars area should be visible, `true` by default */
+  /** Determines whether empty bars area should be visible @default `true` */
   withBackground?: boolean;
 
   /** Determines whether labels should be displayed @default false */
@@ -56,7 +56,7 @@ export interface RadialBarChartProps
   /** Determines whether the legend should be displayed @default false */
   withLegend?: boolean;
 
-  /** Determines whether the tooltip should be displayed when one of the bars is hovered, `true` by default */
+  /** Determines whether the tooltip should be displayed when one of the bars is hovered @default `true` */
   withTooltip?: boolean;
 
   /** Color of the empty background, by default depends on the color scheme */

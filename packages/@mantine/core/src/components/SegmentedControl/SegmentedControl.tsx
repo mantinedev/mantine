@@ -103,7 +103,7 @@ export interface SegmentedControlProps
   /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 
-  /** Determines whether there should be borders between items, `true` by default */
+  /** Determines whether there should be borders between items @default `true` */
   withItemsBorders?: boolean;
 }
 

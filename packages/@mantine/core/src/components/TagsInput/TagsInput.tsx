@@ -101,7 +101,7 @@ export interface TagsInputProps
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** Determines whether the value typed in by the user but not submitted should be accepted when the input is blurred, `true` by default */
+  /** Determines whether the value typed in by the user but not submitted should be accepted when the input is blurred @default `true` */
   acceptValueOnBlur?: boolean;
 
   /** Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. */

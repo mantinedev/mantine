@@ -67,10 +67,10 @@ export interface RadarChartProps
   /** Controls color of all text elements. By default, color depends on the color scheme. */
   textColor?: MantineColor;
 
-  /** Determines whether PolarGrid component should be displayed, `true` by default. */
+  /** Determines whether PolarGrid component should be displayed @default `true`. */
   withPolarGrid?: boolean;
 
-  /** Determines whether PolarAngleAxis component should be displayed, `true` by default */
+  /** Determines whether PolarAngleAxis component should be displayed @default `true` */
   withPolarAngleAxis?: boolean;
 
   /** Determines whether PolarRadiusAxisProps component should be displayed @default false */

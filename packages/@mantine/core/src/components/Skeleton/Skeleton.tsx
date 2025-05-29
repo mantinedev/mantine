@@ -22,7 +22,7 @@ export interface SkeletonProps
   extends BoxProps,
     StylesApiProps<SkeletonFactory>,
     ElementProps<'div'> {
-  /** Determines whether Skeleton overlay should be displayed, `true` by default */
+  /** Determines whether Skeleton overlay should be displayed @default `true` */
   visible?: boolean;
 
   /** Skeleton `height`, numbers are converted to rem, `auto` by default */
@@ -37,7 +37,7 @@ export interface SkeletonProps
   /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. `theme.defaultRadius` by default. */
   radius?: React.CSSProperties['borderRadius'];
 
-  /** Determines whether Skeleton should be animated, `true` by default */
+  /** Determines whether Skeleton should be animated @default `true` */
   animate?: boolean;
 }
 

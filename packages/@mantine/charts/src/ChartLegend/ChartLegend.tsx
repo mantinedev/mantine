@@ -50,7 +50,7 @@ export interface ChartLegendProps
   /** Data used for labels, only applicable for area charts: AreaChart, LineChart, BarChart */
   series?: ChartSeries[];
 
-  /** Determines whether color swatch should be shown next to the label, `true` by default */
+  /** Determines whether color swatch should be shown next to the label @default `true` */
   showColor?: boolean;
 
   /** Determines whether the legend should be centered @default false */

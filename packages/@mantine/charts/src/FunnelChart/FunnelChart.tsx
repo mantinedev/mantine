@@ -46,7 +46,7 @@ export interface FunnelChartProps
   /** Data used to render chart */
   data: FunnelChartCell[];
 
-  /** Determines whether the tooltip should be displayed when a section is hovered, `true` by default */
+  /** Determines whether the tooltip should be displayed when a section is hovered @default `true` */
   withTooltip?: boolean;
 
   /** Tooltip animation duration in ms, `0` by default */

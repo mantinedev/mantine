@@ -22,7 +22,7 @@ export type ProgressRootCssVariables = {
 };
 
 export interface __ProgressRootProps extends BoxProps, ElementProps<'div'> {
-  /** Controls track height, `'md'` by default */
+  /** Controls track height,  @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`@default `theme.defaultRadius` */

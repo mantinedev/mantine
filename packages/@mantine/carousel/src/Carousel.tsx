@@ -93,7 +93,7 @@ export interface CarouselProps
   /** Slides container `height`, required for vertical orientation */
   height?: React.CSSProperties['height'];
 
-  /** Determines whether gap between slides should be treated as part of the slide size, `true` by default */
+  /** Determines whether gap between slides should be treated as part of the slide size @default `true` */
   includeGapInSize?: boolean;
 
   /** Index of initial slide */
@@ -114,7 +114,7 @@ export interface CarouselProps
   /** Icon of the previous control */
   previousControlIcon?: React.ReactNode;
 
-  /** Determines whether arrow key should switch slides, `true` by default */
+  /** Determines whether arrow key should switch slides @default `true` */
   withKeyboardEvents?: boolean;
 }
 

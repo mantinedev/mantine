@@ -102,7 +102,7 @@ export interface MonthSettings {
   /** Controls size */
   size?: MantineSize;
 
-  /** Determines whether controls should be separated by space, `true` by default */
+  /** Determines whether controls should be separated by space @default `true` */
   withCellSpacing?: boolean;
 
   /** Determines whether today should be highlighted with a border @default false */

@@ -98,10 +98,10 @@ export interface StepperProps
   /** Key of `theme.radius` or any valid CSS value to set steps border-radius, `"xl"` by default */
   radius?: MantineRadius;
 
-  /** Determines whether next steps can be selected, `true` by default **/
+  /** Determines whether next steps can be selected @default `true` **/
   allowNextStepsSelect?: boolean;
 
-  /** Determines whether steps should wrap to the next line if no space is available, `true` by default */
+  /** Determines whether steps should wrap to the next line if no space is available @default `true` */
   wrap?: boolean;
 
   /** If set, adjusts text color based on background color for `filled` variant */

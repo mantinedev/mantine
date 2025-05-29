@@ -38,7 +38,7 @@ export interface SparklineProps
   /** Key of `theme.colors` or any valid CSS color, `theme.primaryColor` by default */
   color?: MantineColor;
 
-  /** Determines whether the chart fill should be a gradient, `true` by default */
+  /** Determines whether the chart fill should be a gradient @default `true` */
   withGradient?: boolean;
 
   /** Controls fill opacity of the area, `0.6` by default */
@@ -53,7 +53,7 @@ export interface SparklineProps
   /** If set, `color` prop is ignored and chart color is determined by the difference between first and last value. */
   trendColors?: SparklineTrendColors;
 
-  /** Determines whether null values should be connected with other values, `true` by default */
+  /** Determines whether null values should be connected with other values @default `true` */
   connectNulls?: boolean;
 
   /** Props passed down to the underlying recharts `Area` component */

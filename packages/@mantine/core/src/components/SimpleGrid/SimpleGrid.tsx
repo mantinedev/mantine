@@ -23,10 +23,10 @@ export interface SimpleGridProps
   /** Number of columns, `1` by default */
   cols?: StyleProp<number>;
 
-  /** Spacing between columns, `'md'` by default */
+  /** Spacing between columns,  @default `'md'` */
   spacing?: StyleProp<MantineSpacing>;
 
-  /** Spacing between rows, `'md'` by default */
+  /** Spacing between rows,  @default `'md'` */
   verticalSpacing?: StyleProp<MantineSpacing>;
 
   /** Determines typeof of queries that are used for responsive styles, `'media'` by default */

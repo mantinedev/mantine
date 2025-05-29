@@ -64,7 +64,7 @@ export interface PaginationRootProps
   /** Key of `theme.colors`, active item color @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Called when next page control is clicked */
