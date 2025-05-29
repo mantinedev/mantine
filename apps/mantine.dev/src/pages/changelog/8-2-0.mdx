@@ -4,6 +4,29 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Changelog820);
 
+## Styles API attributes
+
+You now can pass attributes to inner elements of all components that support Styles API with `attributes` prop.
+For example, it can be used to add data attributes for testing purposes:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button
+      attributes={{
+        root: { 'data-test-id': 'root' },
+        label: { 'data-test-id': 'label' },
+        inner: { 'data-test-id': 'inner' },
+      }}
+    >
+      Button
+    </Button>
+  );
+}
+```
+
 ## HoverCard.Group
 
 [HoverCard](/core/hover-card) now supports delay synchronization between multiple instances using `HoverCard.Group` component:

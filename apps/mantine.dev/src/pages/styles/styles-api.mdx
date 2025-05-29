@@ -221,3 +221,26 @@ function Demo() {
   return <button type="button" className={Button.classes.root} />;
 }
 ```
+
+## Attributes
+
+You can pass attributes to inner elements of Mantine components using the `attributes` prop.
+For example, it can be used to add data attributes for testing purposes:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button
+      attributes={{
+        root: { 'data-test-id': 'root' },
+        label: { 'data-test-id': 'label' },
+        inner: { 'data-test-id': 'inner' },
+      }}
+    >
+      Button
+    </Button>
+  );
+}
+```
