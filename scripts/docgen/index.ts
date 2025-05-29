@@ -6,7 +6,7 @@ generateDeclarations({
   tsConfigPath: getPath('tsconfig.json'),
   outputPath: getPath('apps/mantine.dev/src/.docgen'),
   componentsPaths: DOCGEN_PATHS,
-  excludeProps: ['ms', 'me', 'ps', 'pe', 'bdrs'],
+  excludeProps: ['ms', 'me', 'ps', 'pe', 'bdrs', 'attributes'],
   typesReplacement: {
     'Omit<Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref">, "value"> | undefined':
       'React.ComponentPropsWithoutRef<"input">',
