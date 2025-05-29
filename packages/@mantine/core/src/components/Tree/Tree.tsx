@@ -65,19 +65,19 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   /** Data used to render nodes */
   data: TreeNodeData[];
 
-  /** Horizontal padding of each subtree level, key of `theme.spacing` or any valid CSS value, `'lg'` by default */
+  /** Horizontal padding of each subtree level, key of `theme.spacing` or any valid CSS value @default `'lg'` */
   levelOffset?: MantineSpacing;
 
-  /** Determines whether tree node with children should be expanded on click @default `true` */
+  /** If set, tree node with children is expanded on click @default `true` */
   expandOnClick?: boolean;
 
-  /** Determines whether tree node with children should be expanded on space key press @default `true` */
+  /** If set, tree node with children is expanded on space key press @default `true` */
   expandOnSpace?: boolean;
 
-  /** Determines whether tree node should be checked on space key press @default false */
+  /** If set, tree node is checked on space key press @default false */
   checkOnSpace?: boolean;
 
-  /** Determines whether node should be selected on click @default false */
+  /** If set, tree node is selected on click @default false */
   selectOnClick?: boolean;
 
   /** Use-tree hook instance that can be used to manipulate component state */
@@ -86,10 +86,10 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   /** A function to render tree node label */
   renderNode?: RenderNode;
 
-  /** Determines whether selection should be cleared when user clicks outside of the tree @default false */
+  /** If set, selection is cleared when user clicks outside of the tree @default false */
   clearSelectionOnOutsideClick?: boolean;
 
-  /** Determines whether tree nodes range can be selected with click when `Shift` key is pressed @default `true` */
+  /** If set, tree nodes range can be selected with click when `Shift` key is pressed @default `true` */
   allowRangeSelection?: boolean;
 }
 

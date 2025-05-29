@@ -47,22 +47,22 @@ export interface TabsProps
   /** Called when value changes */
   onChange?: (value: string | null) => void;
 
-  /** Tabs orientation, `'horizontal'` by default */
+  /** Tabs orientation @default `'horizontal'` */
   orientation?: 'vertical' | 'horizontal';
 
-  /** `Tabs.List` placement relative to `Tabs.Panel`, applicable only when `orientation="vertical"`, `'left'` by default */
+  /** `Tabs.List` placement relative to `Tabs.Panel`, applicable only when `orientation="vertical"`, @default `'left'` */
   placement?: 'left' | 'right';
 
   /** Base id, used to generate ids to connect labels with controls, generated randomly by default */
   id?: string;
 
-  /** Determines whether arrow key presses should loop though items (first to last and last to first) @default `true` */
+  /** If set, arrow key presses loop though items (first to last and last to first) @default `true` */
   loop?: boolean;
 
-  /** Determines whether tab should be activated with arrow key press @default `true` */
+  /** If set, tab is activated with arrow key press @default `true` */
   activateTabWithKeyboard?: boolean;
 
-  /** Determines whether tab can be deactivated @default false */
+  /** If set, tab can be deactivated @default false */
   allowTabDeactivation?: boolean;
 
   /** Tabs content */
