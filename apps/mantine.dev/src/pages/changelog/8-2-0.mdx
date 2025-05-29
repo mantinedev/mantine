@@ -27,6 +27,16 @@ function Demo() {
 }
 ```
 
+## Tooltip target
+
+New [Tooltip](/core/tooltip) `target` prop is an alternative to `children`. It accepts a string (selector),
+an HTML element or a ref object with HTML element. Use `target` prop when you do
+not render tooltip target as JSX element.
+
+Example of using `target` prop with a string selector:
+
+<Demo data={TooltipDemos.target} />
+
 ## HoverCard.Group
 
 [HoverCard](/core/hover-card) now supports delay synchronization between multiple instances using `HoverCard.Group` component:

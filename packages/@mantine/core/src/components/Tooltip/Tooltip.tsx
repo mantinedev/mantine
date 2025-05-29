@@ -1,4 +1,4 @@
-import { cloneElement, useRef } from 'react';
+import { cloneElement, useEffect, useRef } from 'react';
 import cx from 'clsx';
 import { useMergedRef } from '@mantine/hooks';
 import {
@@ -84,6 +84,9 @@ export interface TooltipProps extends TooltipBaseProps {
 
   /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
+
+  /** Selector, ref of an element or element itself that should be used for positioning */
+  target?: React.RefObject<HTMLElement | null> | HTMLElement | null | string;
 }
 
 export type TooltipFactory = Factory<{
@@ -179,11 +182,13 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     middlewares,
     autoContrast,
     attributes,
+    target,
     ...others
   } = useProps('Tooltip', defaultProps, props);
 
   const { dir } = useDirection();
   const arrowRef = useRef<HTMLDivElement>(null);
+
   const tooltip = useTooltip({
     position: getFloatingPosition(dir, position),
     closeDelay,
@@ -195,11 +200,24 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     arrowRef,
     arrowOffset,
     offset: typeof offset === 'number' ? offset + (withArrow ? arrowSize / 2 : 0) : offset,
-    positionDependencies: [...positionDependencies, children],
+    positionDependencies: [...positionDependencies, target ?? children],
     inline,
     strategy: floatingStrategy,
     middlewares,
   });
+
+  useEffect(() => {
+    const targetNode =
+      target instanceof HTMLElement
+        ? target
+        : typeof target === 'string'
+          ? document.querySelector(target)
+          : target?.current || null;
+
+    if (targetNode) {
+      tooltip.reference(targetNode);
+    }
+  }, [target, tooltip]);
 
   const getStyles = useStyles<TooltipFactory>({
     name: 'Tooltip',
@@ -216,15 +234,65 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     varsResolver,
   });
 
-  if (!isElement(children)) {
-    throw new Error(
-      '[@mantine/core] Tooltip component children should be an element or a component that accepts ref, fragments, strings, numbers and other primitive values are not supported'
+  if (!target && !isElement(children)) {
+    return null;
+  }
+
+  if (target) {
+    const transition = getTransitionProps(transitionProps, { duration: 100, transition: 'fade' });
+    return (
+      <>
+        <OptionalPortal {...portalProps} withinPortal={withinPortal}>
+          <Transition
+            {...transition}
+            keepMounted={keepMounted}
+            mounted={!disabled && !!tooltip.opened}
+            duration={tooltip.isGroupPhase ? 10 : transition.duration}
+          >
+            {(transitionStyles) => (
+              <Box
+                {...others}
+                data-fixed={floatingStrategy === 'fixed' || undefined}
+                variant={variant}
+                mod={[{ multiline }, mod]}
+                {...tooltip.getFloatingProps({
+                  ref: tooltip.floating,
+                  className: getStyles('tooltip').className,
+                  style: {
+                    ...getStyles('tooltip').style,
+                    ...transitionStyles,
+                    zIndex: zIndex as React.CSSProperties['zIndex'],
+                    top: tooltip.y ?? 0,
+                    left: tooltip.x ?? 0,
+                  },
+                })}
+              >
+                {label}
+                <FloatingArrow
+                  ref={arrowRef}
+                  arrowX={tooltip.arrowX}
+                  arrowY={tooltip.arrowY}
+                  visible={withArrow}
+                  position={tooltip.placement}
+                  arrowSize={arrowSize}
+                  arrowOffset={arrowOffset}
+                  arrowRadius={arrowRadius}
+                  arrowPosition={arrowPosition}
+                  {...getStyles('arrow')}
+                />
+              </Box>
+            )}
+          </Transition>
+        </OptionalPortal>
+      </>
     );
   }
 
-  const targetRef = useMergedRef(tooltip.reference, getRefProp(children), ref);
+  // fallback to children-based approach
+  const _children = children as React.ReactElement;
+  const _childrenProps = _children.props as any;
+  const targetRef = useMergedRef(tooltip.reference, getRefProp(_children), ref);
   const transition = getTransitionProps(transitionProps, { duration: 100, transition: 'fade' });
-  const _childrenProps = children.props as any;
 
   return (
     <>
@@ -254,7 +322,6 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
               })}
             >
               {label}
-
               <FloatingArrow
                 ref={arrowRef}
                 arrowX={tooltip.arrowX}
@@ -273,7 +340,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
       </OptionalPortal>
 
       {cloneElement(
-        children,
+        _children,
         tooltip.getReferenceProps({
           onClick,
           onMouseEnter,

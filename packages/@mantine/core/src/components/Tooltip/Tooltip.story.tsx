@@ -4,19 +4,20 @@ import { Tooltip } from './Tooltip';
 export default { title: 'Tooltip' };
 
 export function Usage() {
+  const [ref, setRef] = useState<HTMLButtonElement | null>(null);
   return (
     <div style={{ padding: 40 }}>
       <Tooltip
-        position="right"
+        position="bottom"
         label="Tooltip label"
         withArrow
-        transitionProps={{ duration: 0 }}
-        opened
         color="cyan"
         radius="md"
-      >
-        <button type="button">target</button>
-      </Tooltip>
+        target={ref}
+      />
+      <button type="button" ref={setRef} style={{ position: 'fixed', bottom: 100, left: 100 }}>
+        target
+      </button>
     </div>
   );
 }
