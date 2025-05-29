@@ -91,7 +91,7 @@ export interface RangeSliderProps
   /** Props passed down to the `Transition` component @default `{ transition: 'fade', duration: 0 }` */
   labelTransitionProps?: TransitionOverride;
 
-  /** Determines whether the label should be visible when the slider is not being dragged or hovered @default false */
+  /** Determines whether the label should be visible when the slider is not being dragged or hovered @default `false` */
   labelAlwaysOn?: boolean;
 
   /** Determines whether the label should be displayed when the slider is hovered @default `true` */
@@ -109,7 +109,7 @@ export interface RangeSliderProps
   /** A transformation function to change the scale of the slider */
   scale?: (value: number) => number;
 
-  /** Determines whether track values representation should be inverted @default false */
+  /** Determines whether track values representation should be inverted @default `false` */
   inverted?: boolean;
 
   /** Minimal range interval @default `10` */
@@ -127,7 +127,7 @@ export interface RangeSliderProps
   /** Props passed down to the hidden input */
   hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
 
-  /** Determines whether the selection should be only allowed from the given marks array @default false */
+  /** Determines whether the selection should be only allowed from the given marks array @default `false` */
   restrictToMarks?: boolean;
 
   /** Props passed down to thumb element based on the thumb index */

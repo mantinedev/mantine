@@ -76,7 +76,7 @@ export interface SegmentedControlProps
   /** Name of the radio group, by default random name is generated */
   name?: string;
 
-  /** Determines whether the component should take 100% width of its parent @default false */
+  /** Determines whether the component should take 100% width of its parent @default `false` */
   fullWidth?: boolean;
 
   /** Key of `theme.colors` or any valid CSS color, changes color of indicator, by default color is based on current color scheme */

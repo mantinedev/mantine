@@ -50,10 +50,10 @@ export interface RadialBarChartProps
   /** Determines whether empty bars area should be visible @default `true` */
   withBackground?: boolean;
 
-  /** Determines whether labels should be displayed @default false */
+  /** Determines whether labels should be displayed @default `false` */
   withLabels?: boolean;
 
-  /** Determines whether the legend should be displayed @default false */
+  /** Determines whether the legend should be displayed @default `false` */
   withLegend?: boolean;
 
   /** Determines whether the tooltip should be displayed when one of the bars is hovered @default `true` */

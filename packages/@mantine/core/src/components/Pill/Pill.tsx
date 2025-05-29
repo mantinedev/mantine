@@ -29,7 +29,7 @@ export interface PillProps extends BoxProps, StylesApiProps<PillFactory>, Elemen
   /** Controls pill `font-size` and `padding` @default `'sm'` */
   size?: MantineSize;
 
-  /** Controls visibility of the remove button @default false */
+  /** Controls visibility of the remove button @default `false` */
   withRemoveButton?: boolean;
 
   /** Called when the remove button is clicked */

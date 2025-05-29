@@ -75,10 +75,10 @@ export interface RatingProps
   /** `name` attribute passed down to all inputs. By default, `name` is generated randomly. */
   name?: string;
 
-  /** If set, the user cannot interact with the component @default false */
+  /** If set, the user cannot interact with the component @default `false` */
   readOnly?: boolean;
 
-  /** If set, only the selected symbol changes to full symbol when selected @default false */
+  /** If set, only the selected symbol changes to full symbol when selected @default `false` */
   highlightSelectedOnly?: boolean;
 
   /** Key of `theme.colors` or any CSS color value @default `'yellow'` */

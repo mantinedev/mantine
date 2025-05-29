@@ -45,13 +45,13 @@ export interface TimeGridProps
   /** Called when value changes */
   onChange?: (value: string | null) => void;
 
-  /** Determines whether the value can be deselected when the current active option is clicked or activated with keyboard @default false */
+  /** Determines whether the value can be deselected when the current active option is clicked or activated with keyboard @default `false` */
   allowDeselect?: boolean;
 
   /** Time format displayed in the grid @default `'24h'` */
   format?: TimePickerFormat;
 
-  /** Determines whether the seconds part should be displayed @default false */
+  /** Determines whether the seconds part should be displayed @default `false` */
   withSeconds?: boolean;
 
   /** Labels used for am/pm values @default `{ am: 'AM', pm: 'PM' }` */

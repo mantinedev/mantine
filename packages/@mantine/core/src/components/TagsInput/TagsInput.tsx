@@ -74,7 +74,7 @@ export interface TagsInputProps
   /** Maximum number of tags @default `Infinity` */
   maxTags?: number;
 
-  /** If set, duplicate tags are allowed @default false */
+  /** If set, duplicate tags are allowed @default `false` */
   allowDuplicates?: boolean;
 
   /** Called when user tries to submit a duplicated tag */
@@ -83,7 +83,7 @@ export interface TagsInputProps
   /** Characters that should trigger tags split, `[',']` by default */
   splitChars?: string[];
 
-  /** If set, the clear button is displayed in the right section when the component has value @default false */
+  /** If set, the clear button is displayed in the right section when the component has value @default `false` */
   clearable?: boolean;
 
   /** Props passed down to the clear button */

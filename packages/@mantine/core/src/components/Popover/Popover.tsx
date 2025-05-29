@@ -79,10 +79,10 @@ export interface __PopoverProps {
   /** Floating ui middlewares to configure position handling @default `{ flip: true, shift: true, inline: false }` */
   middlewares?: PopoverMiddlewares;
 
-  /** Determines whether component should have an arrow @default false */
+  /** Determines whether component should have an arrow @default `false` */
   withArrow?: boolean;
 
-  /** Determines whether the overlay should be displayed when the dropdown is opened @default false */
+  /** Determines whether the overlay should be displayed when the dropdown is opened @default `false` */
   withOverlay?: boolean;
 
   /** Props passed down to `Overlay` component */
@@ -118,7 +118,7 @@ export interface __PopoverProps {
   /** If set, popover dropdown will not be rendered */
   disabled?: boolean;
 
-  /** Determines whether focus should be automatically returned to control when dropdown closes @default false */
+  /** Determines whether focus should be automatically returned to control when dropdown closes @default `false` */
   returnFocus?: boolean;
 
   /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) @default `'absolute'` */
@@ -149,7 +149,7 @@ export interface PopoverProps extends __PopoverProps, StylesApiProps<PopoverFact
   /** Events that trigger outside clicks */
   clickOutsideEvents?: string[];
 
-  /** Determines whether focus should be trapped within dropdown @default false */
+  /** Determines whether focus should be trapped within dropdown @default `false` */
   trapFocus?: boolean;
 
   /** Determines whether dropdown should be closed when `Escape` key is pressed @default `true` */

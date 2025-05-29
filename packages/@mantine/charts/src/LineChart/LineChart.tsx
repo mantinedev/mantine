@@ -114,7 +114,7 @@ export interface LineChartProps
     | ((series: LineChartSeries) => Partial<Omit<LineProps, 'ref'>>)
     | Partial<Omit<LineProps, 'ref'>>;
 
-  /** Determines whether each point should have associated label @default false */
+  /** Determines whether each point should have associated label @default `false` */
   withPointLabels?: boolean;
 }
 

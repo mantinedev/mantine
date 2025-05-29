@@ -66,7 +66,7 @@ export interface DonutChartProps
   /** Controls padding between segments @default `0` */
   paddingAngle?: number;
 
-  /** Determines whether each segment should have associated label @default false */
+  /** Determines whether each segment should have associated label @default `false` */
   withLabels?: boolean;
 
   /** Determines whether segments labels should have lines that connect the segment with the label @default `true` */

@@ -62,7 +62,7 @@ export interface CodeHighlightSettings {
   /** Determines whether the copy button should be displayed @default `true`  */
   withCopyButton?: boolean;
 
-  /** Determines whether the expand/collapse button should be displayed @default false */
+  /** Determines whether the expand/collapse button should be displayed @default `false` */
   withExpandButton?: boolean;
 
   /** Label for expand button @default `'Expand code'` */
@@ -77,7 +77,7 @@ export interface CodeHighlightSettings {
   /** Key of `theme.radius` or any valid CSS value to set border-radius @default `0` */
   radius?: MantineRadius;
 
-  /** Adds border to the root element @default false */
+  /** Adds border to the root element @default `false` */
   withBorder?: boolean;
 
   /** Extra controls to display in the controls list */
@@ -95,7 +95,7 @@ export interface CodeHighlightProps
   __withOffset?: boolean;
   __staticSelector?: string;
 
-  /** If set, the code will be rendered as inline element without `<pre>` @default false */
+  /** If set, the code will be rendered as inline element without `<pre>` @default `false` */
   __inline?: boolean;
 
   /** Code to highlight */

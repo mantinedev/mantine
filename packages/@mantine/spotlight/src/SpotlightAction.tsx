@@ -43,7 +43,7 @@ export interface SpotlightActionProps
   /** Determines whether left and right sections should have dimmed styles @default `true` */
   dimmedSections?: boolean;
 
-  /** Determines whether search query should be highlighted in action label @default false */
+  /** Determines whether search query should be highlighted in action label @default `false` */
   highlightQuery?: boolean;
 
   /** Key of `theme.colors` of any valid CSS color that will be used to highlight search query @default `'yellow'` */

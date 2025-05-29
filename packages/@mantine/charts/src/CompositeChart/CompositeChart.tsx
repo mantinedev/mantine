@@ -111,10 +111,10 @@ export interface CompositeChartProps
     | ((series: CompositeChartSeries) => Partial<Omit<BarProps, 'ref'>>)
     | Partial<Omit<BarProps, 'ref'>>;
 
-  /** Determines whether each point should have associated label @default false */
+  /** Determines whether each point should have associated label @default `false` */
   withPointLabels?: boolean;
 
-  /** Determines whether a label with bar value should be displayed on top of each bar @default false */
+  /** Determines whether a label with bar value should be displayed on top of each bar @default `false` */
   withBarValueLabel?: boolean;
 
   /** Sets minimum height of the bar in px @default `0` */

@@ -51,7 +51,7 @@ export interface PinInputProps
   /** Controls inputs `width` and `height` @default `'sm'` */
   size?: MantineSize;
 
-  /** If set, the first input is focused when component is mounted @default false */
+  /** If set, the first input is focused when component is mounted @default `false` */
   autoFocus?: boolean;
 
   /** Controlled component value */
@@ -87,7 +87,7 @@ export interface PinInputProps
   /** Determines which values can be entered @default `'alphanumeric'` */
   type?: 'alphanumeric' | 'number' | RegExp;
 
-  /** Changes input type to `"password"` @default false */
+  /** Changes input type to `"password"` @default `false` */
   mask?: boolean;
 
   /** Number of inputs @default `4` */

@@ -49,7 +49,7 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Space between target element and tooltip in px @default `5` */
   offset?: number | FloatingAxesOffsets;
 
-  /** If set, the tooltip has an arrow @default false */
+  /** If set, the tooltip has an arrow @default `false` */
   withArrow?: boolean;
 
   /** Arrow size in px @default `4` */

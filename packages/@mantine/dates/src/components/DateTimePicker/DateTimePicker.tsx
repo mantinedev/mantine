@@ -71,7 +71,7 @@ export interface DateTimePickerProps
   /** Props passed down to the submit button */
   submitButtonProps?: ActionIconProps & React.ComponentPropsWithoutRef<'button'>;
 
-  /** Determines whether the seconds input should be displayed @default false */
+  /** Determines whether the seconds input should be displayed @default `false` */
   withSeconds?: boolean;
 
   /** Max level that user can go up to @default `'decade'` */

@@ -54,7 +54,7 @@ export interface ScrollAreaProps
   /** Axis at which scrollbars must be rendered @default `'xy'` */
   scrollbars?: 'x' | 'y' | 'xy' | false;
 
-  /** Determines whether scrollbars should be offset with padding on given axis @default false */
+  /** Determines whether scrollbars should be offset with padding on given axis @default `false` */
   offsetScrollbars?: boolean | 'x' | 'y' | 'present';
 
   /** Assigns viewport element (scrollable container) ref */

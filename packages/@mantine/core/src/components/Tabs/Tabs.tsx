@@ -62,7 +62,7 @@ export interface TabsProps
   /** If set, tab is activated with arrow key press @default `true` */
   activateTabWithKeyboard?: boolean;
 
-  /** If set, tab can be deactivated @default false */
+  /** If set, tab can be deactivated @default `false` */
   allowTabDeactivation?: boolean;
 
   /** Tabs content */
@@ -74,7 +74,7 @@ export interface TabsProps
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`@default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Determines whether tabs should have inverted styles @default false */
+  /** Determines whether tabs should have inverted styles @default `false` */
   inverted?: boolean;
 
   /** If set to `false`, `Tabs.Panel` content will be unmounted when the associated tab is not active @default `true` */

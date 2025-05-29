@@ -119,7 +119,7 @@ export interface AreaChartProps
     | ((series: AreaChartSeries) => Partial<Omit<AreaProps, 'ref'>>)
     | Partial<Omit<AreaProps, 'ref'>>;
 
-  /** If set, each point has an associated label @default false */
+  /** If set, each point has an associated label @default `false` */
   withPointLabels?: boolean;
 }
 

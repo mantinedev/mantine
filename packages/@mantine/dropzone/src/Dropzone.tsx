@@ -52,7 +52,7 @@ export interface DropzoneProps
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Determines whether files capturing should be disabled @default false */
+  /** Determines whether files capturing should be disabled @default `false` */
   disabled?: boolean;
 
   /** Called when any files are dropped to the dropzone */
@@ -64,7 +64,7 @@ export interface DropzoneProps
   /** Called when dropped files do not meet file restrictions */
   onReject?: (fileRejections: FileRejection[]) => void;
 
-  /** Determines whether a loading overlay should be displayed over the dropzone @default false */
+  /** Determines whether a loading overlay should be displayed over the dropzone @default `false` */
   loading?: boolean;
 
   /** Mime types of the files that dropzone can accepts. By default, dropzone accepts all file types. */

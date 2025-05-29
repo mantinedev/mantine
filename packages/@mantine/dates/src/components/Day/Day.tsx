@@ -34,31 +34,31 @@ export interface DayProps extends BoxProps, StylesApiProps<DayFactory>, ElementP
   /** Control width and height of the day @default `'sm'` */
   size?: MantineSize;
 
-  /** Determines whether the day is considered to be a weekend @default false */
+  /** Determines whether the day is considered to be a weekend @default `false` */
   weekend?: boolean;
 
-  /** Determines whether the day is outside of the current month @default false */
+  /** Determines whether the day is outside of the current month @default `false` */
   outside?: boolean;
 
-  /** Determines whether the day is selected @default false */
+  /** Determines whether the day is selected @default `false` */
   selected?: boolean;
 
-  /** Determines whether the day should not be displayed @default false */
+  /** Determines whether the day should not be displayed @default `false` */
   hidden?: boolean;
 
-  /** Determines whether the day is selected in range @default false */
+  /** Determines whether the day is selected in range @default `false` */
   inRange?: boolean;
 
-  /** Determines whether the day is first in range selection @default false */
+  /** Determines whether the day is first in range selection @default `false` */
   firstInRange?: boolean;
 
-  /** Determines whether the day is last in range selection @default false */
+  /** Determines whether the day is last in range selection @default `false` */
   lastInRange?: boolean;
 
   /** Controls day value rendering */
   renderDay?: RenderDay;
 
-  /** Determines whether today should be highlighted with a border @default false */
+  /** Determines whether today should be highlighted with a border @default `false` */
   highlightToday?: boolean;
 }
 

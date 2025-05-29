@@ -11,7 +11,7 @@ export interface TimeValueProps {
   /** AM/PM labels @default `{ am: 'AM', pm: 'PM' }` */
   amPmLabels?: TimePickerAmPmLabels;
 
-  /** Determines whether seconds should be displayed @default false */
+  /** Determines whether seconds should be displayed @default `false` */
   withSeconds?: boolean;
 }
 

@@ -90,7 +90,7 @@ export interface BarChartProps
     | ((series: BarChartSeries) => Partial<Omit<BarProps, 'ref'>>)
     | Partial<Omit<BarProps, 'ref'>>;
 
-  /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"` @default false */
+  /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"` @default `false` */
   withBarValueLabel?: boolean;
 
   /** Props passed down to recharts `LabelList` component */

@@ -51,7 +51,7 @@ export interface TimelineProps
   /** Control width of the line */
   lineWidth?: number | string;
 
-  /** If set, the active items direction is reversed without reversing items order @default false */
+  /** If set, the active items direction is reversed without reversing items order @default `false` */
   reverseActive?: boolean;
 
   /** If set, adjusts text color based on background color for `filled` variant */
