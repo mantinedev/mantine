@@ -26,7 +26,7 @@ export type MonthsListStylesNames =
   | 'monthsListControl';
 
 export interface MonthsListSettings extends ControlsGroupSettings {
-  /** dayjs format for months list */
+  /** `dayjs` format for months list */
   monthsListFormat?: string;
 
   /** Passes props down month picker control */

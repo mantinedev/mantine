@@ -70,7 +70,7 @@ export interface CalendarHeaderSettings {
   /** Component size */
   size?: MantineSize;
 
-  /** Controls order, `['previous', 'level', 'next']` by default */
+  /** Controls order @default `['previous', 'level', 'next']` */
   headerControlsOrder?: ('previous' | 'next' | 'level')[];
 }
 

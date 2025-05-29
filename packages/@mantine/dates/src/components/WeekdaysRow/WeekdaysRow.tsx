@@ -34,13 +34,13 @@ export interface WeekdaysRowProps
   /** dayjs locale */
   locale?: string;
 
-  /** Number 0-6, 0 – Sunday, 6 – Saturday, `1` – Monday by default */
+  /** Number 0-6, 0 – Sunday, 6 – Saturday @default `1` – Monday */
   firstDayOfWeek?: DayOfWeek;
 
-  /** dayjs format to get weekday name, `'dd'` by default */
+  /** dayjs format to get weekday name @default `'dd'` */
   weekdayFormat?: DateLabelFormat;
 
-  /** Sets cell type that is used for weekdays, `'th'` by default */
+  /** Sets cell type that is used for weekdays @default `'th'` */
   cellComponent?: 'td' | 'th';
 
   /** If set, heading for week numbers is displayed */

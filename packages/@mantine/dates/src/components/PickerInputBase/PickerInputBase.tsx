@@ -30,7 +30,7 @@ export interface DateInputSharedProps
   /** Determines whether the dropdown is closed when date is selected, not applicable with `type="multiple"` @default `true` */
   closeOnChange?: boolean;
 
-  /** Type of the dropdown, `'popover'` by default */
+  /** Type of the dropdown @default `'popover'` */
   dropdownType?: 'popover' | 'modal';
 
   /** Props passed down to `Popover` component */
@@ -39,7 +39,7 @@ export interface DateInputSharedProps
   /** Props passed down to `Modal` component */
   modalProps?: Partial<Omit<ModalProps, 'children'>>;
 
-  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. `false` by default */
+  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default `false` */
   clearable?: boolean;
 
   /** Props passed down to the clear button */

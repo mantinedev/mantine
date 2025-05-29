@@ -103,7 +103,7 @@ export interface CalendarBaseProps {
   /** Called when date changes */
   onDateChange?: (date: DateStringValue) => void;
 
-  /** Number of columns displayed next to each other, `1` by default */
+  /** Number of columns displayed next to each other @default `1` */
   numberOfColumns?: number;
 
   /** Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly */
@@ -143,10 +143,10 @@ export interface CalendarProps
     CalendarBaseProps,
     StylesApiProps<CalendarFactory>,
     ElementProps<'div'> {
-  /** Max level that user can go up to (decade, year, month), defaults to decade */
+  /** Max level that user can go up to (decade, year, month) @default `'decade'` */
   maxLevel?: CalendarLevel;
 
-  /** Min level that user can go down to (decade, year, month), defaults to month */
+  /** Min level that user can go down to (decade, year, month) @default `'month'` */
   minLevel?: CalendarLevel;
 
   /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */

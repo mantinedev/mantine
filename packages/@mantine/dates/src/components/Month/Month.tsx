@@ -40,7 +40,7 @@ export type MonthStylesNames =
   | DayStylesNames;
 
 export interface MonthSettings {
-  /** Determines whether propagation for Escape key should be stopped */
+  /** Determines whether propagation for `Escape` key should be stopped */
   __stopPropagation?: boolean;
 
   /** Prevents focus shift when buttons are clicked */
@@ -61,16 +61,16 @@ export interface MonthSettings {
   /** Assigns ref of every day based on its position in the table, used for arrows navigation */
   __getDayRef?: (rowIndex: number, cellIndex: number, node: HTMLButtonElement) => void;
 
-  /** dayjs locale, the default value is defined by `DatesProvider` */
+  /** `dayjs` locale, the default value is defined by `DatesProvider` */
   locale?: string;
 
-  /** Number 0-6, where 0 – Sunday and 6 – Saturday. 1 – Monday by default */
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default `1` – Monday */
   firstDayOfWeek?: DayOfWeek;
 
-  /** dayjs format for weekdays names, `'dd'` by default */
+  /** `dayjs` format for weekdays names @default `'dd'` */
   weekdayFormat?: DateLabelFormat;
 
-  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider` */
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
 
   /** Passes props down to `Day` components */

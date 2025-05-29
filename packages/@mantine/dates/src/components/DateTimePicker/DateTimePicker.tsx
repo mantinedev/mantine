@@ -50,7 +50,7 @@ export interface DateTimePickerProps
     Omit<CalendarBaseProps, 'defaultDate'>,
     Omit<CalendarSettings, 'onYearMouseEnter' | 'onMonthMouseEnter' | 'hasNextLevel'>,
     StylesApiProps<DateTimePickerFactory> {
-  /** dayjs format for input value, `"DD/MM/YYYY HH:mm"` by default  */
+  /** `dayjs` format for input value @default `"DD/MM/YYYY HH:mm"  */
   valueFormat?: string;
 
   /** Controlled component value */
@@ -74,7 +74,7 @@ export interface DateTimePickerProps
   /** Determines whether the seconds input should be displayed @default false */
   withSeconds?: boolean;
 
-  /** Max level that user can go up to, `'decade'` by default */
+  /** Max level that user can go up to @default `'decade'` */
   maxLevel?: CalendarLevel;
 
   /** Presets values */
