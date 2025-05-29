@@ -48,7 +48,7 @@ export interface SpotlightProps extends SpotlightRootProps {
   /** Determines whether search query should be highlighted in action label @default false */
   highlightQuery?: boolean;
 
-  /** Maximum number of actions displayed at a time, `Infinity` by default */
+  /** Maximum number of actions displayed at a time @default `Infinity` */
   limit?: number;
 }
 

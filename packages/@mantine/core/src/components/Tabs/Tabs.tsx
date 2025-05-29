@@ -50,7 +50,7 @@ export interface TabsProps
   /** Tabs orientation @default `'horizontal'` */
   orientation?: 'vertical' | 'horizontal';
 
-  /** `Tabs.List` placement relative to `Tabs.Panel`, applicable only when `orientation="vertical"`, @default `'left'` */
+  /** `Tabs.List` placement relative to `Tabs.Panel`, applicable only when `orientation="vertical"` @default `'left'` */
   placement?: 'left' | 'right';
 
   /** Base id, used to generate ids to connect labels with controls, generated randomly by default */

@@ -20,7 +20,7 @@ export interface RichTextEditorToolbarProps
   /** Determines whether `position: sticky` styles should be added to the toolbar @default false */
   sticky?: boolean;
 
-  /** Sets top style to offset elements with fixed position, `0` by default */
+  /** Sets top style to offset elements with fixed position @default `0` */
   stickyOffset?: React.CSSProperties['top'];
 }
 

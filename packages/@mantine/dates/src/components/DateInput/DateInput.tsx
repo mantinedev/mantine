@@ -70,7 +70,7 @@ export interface DateInputProps
   /** If set, the value can be deselected by deleting everything from the input or by clicking the selected date in the dropdown. By default, `true` if `clearable` prop is set, `false` otherwise. */
   allowDeselect?: boolean;
 
-  /** Max level that user can go up to, `'decade'` by default */
+  /** Max level that user can go up to @default `'decade'` */
   maxLevel?: CalendarLevel;
 
   /** Initial displayed level (uncontrolled) */

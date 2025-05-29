@@ -25,7 +25,7 @@ export interface StackProps extends BoxProps, StylesApiProps<StackFactory>, Elem
   /** Controls `align-items` CSS property @default `'stretch'` */
   align?: React.CSSProperties['alignItems'];
 
-  /** Controls `justify-content` CSS property, @default `'flex-start'` */
+  /** Controls `justify-content` CSS property @default `'flex-start'` */
   justify?: React.CSSProperties['justifyContent'];
 }
 

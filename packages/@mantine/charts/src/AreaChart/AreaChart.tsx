@@ -75,13 +75,13 @@ export interface AreaChartProps
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: AreaChartSeries[];
 
-  /** Controls how chart areas are positioned relative to each other, `'default'` by default */
+  /** Controls how chart areas are positioned relative to each other @default `'default'` */
   type?: AreaChartType;
 
-  /** Determines whether the chart area should be represented with a gradient instead of the solid color @default false */
+  /** Determines whether the chart area should be represented with a gradient instead of the solid color @default `false` */
   withGradient?: boolean;
 
-  /** Type of the curve, `'monotone'` by default */
+  /** Type of the curve @default `'monotone'` */
   curveType?: AreaChartCurveType;
 
   /** Determines whether dots should be displayed @default `true` */
@@ -93,22 +93,22 @@ export interface AreaChartProps
   /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
   activeDotProps?: Omit<DotProps, 'ref'>;
 
-  /** Stroke width for the chart areas, `2` by default */
+  /** Stroke width for the chart areas @default `2` */
   strokeWidth?: number;
 
   /** Props passed down to recharts `AreaChart` component */
   areaChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsAreaChart>;
 
-  /** Controls fill opacity of all areas, `0.2` by default */
+  /** Controls fill opacity of all areas @default `0.2` */
   fillOpacity?: number;
 
-  /** A tuple of colors used when `type="split"` is set, ignored in all other cases. A tuple may include theme colors reference or any valid CSS colors `['green.7', 'red.7']` by default. */
+  /** A tuple of colors used when `type="split"` is set, ignored in all other cases. A tuple may include theme colors reference or any valid CSS colors @default `['green.7', 'red.7']` */
   splitColors?: [MantineColor, MantineColor];
 
   /** Offset for the split gradient. By default, value is inferred from `data` and `series` if possible. Must be generated from the data array with `getSplitOffset` function. */
   splitOffset?: number;
 
-  /** Determines whether points with `null` values should be connected @default `true` */
+  /** If set, points with `null` values are connected @default `true` */
   connectNulls?: boolean;
 
   /** Additional components that are rendered inside recharts `AreaChart` component */
@@ -119,7 +119,7 @@ export interface AreaChartProps
     | ((series: AreaChartSeries) => Partial<Omit<AreaProps, 'ref'>>)
     | Partial<Omit<AreaProps, 'ref'>>;
 
-  /** Determines whether each point should have associated label @default false */
+  /** If set, each point has an associated label @default false */
   withPointLabels?: boolean;
 }
 

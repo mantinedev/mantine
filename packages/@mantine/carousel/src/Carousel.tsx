@@ -51,7 +51,7 @@ export interface CarouselProps
   /** Options passed down to embla carousel */
   emblaOptions?: EmblaOptionsType;
 
-  /** <Carousel.Slide /> components */
+  /** `Carousel.Slide` components */
   children?: React.ReactNode;
 
   /** Called when next slide is shown */
@@ -72,22 +72,22 @@ export interface CarouselProps
   /** Props passed down to previous control */
   previousControlProps?: React.ComponentPropsWithoutRef<'button'>;
 
-  /** Controls size of the next and previous controls, `26` by default */
+  /** Controls size of the next and previous controls @default `26` */
   controlSize?: React.CSSProperties['width'];
 
   /** Controls position of the next and previous controls, key of `theme.spacing` or any valid CSS value @default `'sm'` */
   controlsOffset?: MantineSpacing;
 
-  /** Controls slide width based on viewport width, `'100%'` by default */
+  /** Controls slide width based on viewport width @default `'100%'` */
   slideSize?: StyleProp<string | number>;
 
   /** Key of theme.spacing or number to set gap between slides */
   slideGap?: StyleProp<MantineSpacing>;
 
-  /** Carousel orientation, `'horizontal'` by default */
+  /** Carousel orientation @default `'horizontal'` */
   orientation?: 'horizontal' | 'vertical';
 
-  /** Determines type of queries used for responsive styles, `'media'` by default */
+  /** Determines type of queries used for responsive styles @default `'media'` */
   type?: 'media' | 'container';
 
   /** Slides container `height`, required for vertical orientation */
@@ -99,13 +99,13 @@ export interface CarouselProps
   /** Index of initial slide */
   initialSlide?: number;
 
-  /** Determines whether next/previous controls should be displayed, true by default */
+  /** Determines whether next/previous controls should be displayed @default `true` */
   withControls?: boolean;
 
-  /** Determines whether indicators should be displayed @default false */
+  /** Determines whether indicators should be displayed @default `false` */
   withIndicators?: boolean;
 
-  /** An array of embla plugins */
+  /** A list of embla plugins */
   plugins?: EmblaPluginType[];
 
   /** Icon of the next control */

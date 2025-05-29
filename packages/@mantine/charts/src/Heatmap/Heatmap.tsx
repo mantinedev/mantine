@@ -56,28 +56,28 @@ export interface HeatmapProps
   /** If set, trailing dates that do not fall into the given `startDate` – `endDate` range are displayed to fill empty space. @default `true` */
   withOutsideDates?: boolean;
 
-  /** First day of week, 0 – Sunday, 1 – Monday. `1` (Monday) by default */
+  /** First day of week, 0 – Sunday, 1 – Monday. @default 1 – Monday */
   firstDayOfWeek?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
-  /** Size of day rect in px, `10` by default */
+  /** Size of day rect in px @default 10 */
   rectSize?: number;
 
-  /** Gap between rects in px, `1` by default  */
+  /** Gap between rects in px @default 1 */
   gap?: number;
 
-  /** Rect radius in px, `2` by default */
+  /** Rect radius in px @default 2 */
   rectRadius?: number;
 
   /** Colors array, used to calculate color for each value, by default 4 shades of green colors are used */
   colors?: string[];
 
-  /** Width of weekday labels column, `30` by default */
+  /** Width of weekday labels column @default 30 */
   weekdaysLabelsWidth?: number;
 
-  /** Height of month labels row, `30` by default */
+  /** Height of month labels row @default 30 */
   monthsLabelsHeight?: number;
 
-  /** Font size of month and weekday labels, `12` by default */
+  /** Font size of month and weekday labels @default 12 */
   fontSize?: number;
 
   /** A function to generate tooltip label based on the hovered rect date and value, required for the tooltip to be visible */

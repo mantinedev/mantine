@@ -75,7 +75,7 @@ export interface CompositeChartProps
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: CompositeChartSeries[];
 
-  /** Type of the curve, `'monotone'` by default */
+  /** Type of the curve @default `'monotone'` */
   curveType?: CompositeChartCurveType;
 
   /** Determines whether dots should be displayed @default `true` */
@@ -87,7 +87,7 @@ export interface CompositeChartProps
   /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
   activeDotProps?: Omit<DotProps, 'ref'>;
 
-  /** Stroke width for the chart lines, `2` by default */
+  /** Stroke width for the chart lines @default `2` */
   strokeWidth?: number;
 
   /** Determines whether points with `null` values should be connected @default `true` */
@@ -117,7 +117,7 @@ export interface CompositeChartProps
   /** Determines whether a label with bar value should be displayed on top of each bar @default false */
   withBarValueLabel?: boolean;
 
-  /** Sets minimum height of the bar in px, `0` by default */
+  /** Sets minimum height of the bar in px @default `0` */
   minBarSize?: number;
 
   /** Maximum bar width in px */

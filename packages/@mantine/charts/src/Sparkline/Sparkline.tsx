@@ -41,13 +41,13 @@ export interface SparklineProps
   /** Determines whether the chart fill should be a gradient @default `true` */
   withGradient?: boolean;
 
-  /** Controls fill opacity of the area, `0.6` by default */
+  /** Controls fill opacity of the area @default `0.6` */
   fillOpacity?: number;
 
-  /** Type of the curve, `'linear'` by default */
+  /** Type of the curve @default `'linear'` */
   curveType?: AreaChartCurveType;
 
-  /** Area stroke width, `2` by default */
+  /** Area stroke width @default `2` */
   strokeWidth?: number;
 
   /** If set, `color` prop is ignored and chart color is determined by the difference between first and last value. */

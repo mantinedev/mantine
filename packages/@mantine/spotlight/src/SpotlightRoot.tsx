@@ -57,13 +57,13 @@ export interface SpotlightRootProps
   /** Determines whether the search query should be cleared when the spotlight is closed @default `true` */
   clearQueryOnClose?: boolean;
 
-  /** Keyboard shortcut or a list of shortcuts to trigger spotlight, `'mod + K'` by default */
+  /** Keyboard shortcut or a list of shortcuts to trigger spotlight @default `'mod + K'` */
   shortcut?: string | string[] | null;
 
-  /** A list of tags which when focused will be ignored by shortcut, `['input', 'textarea', 'select']` by default */
+  /** A list of tags which when focused will be ignored by shortcut @default `['input', 'textarea', 'select']` */
   tagsToIgnore?: string[];
 
-  /** Determines whether shortcut should trigger based in contentEditable @default false */
+  /** Determines whether shortcut should trigger based in contentEditable @default `false` */
   triggerOnContentEditable?: boolean;
 
   /** If set, spotlight will not be rendered */
@@ -81,10 +81,10 @@ export interface SpotlightRootProps
   /** Determines whether spotlight should be closed when one of the actions is triggered @default `true` */
   closeOnActionTrigger?: boolean;
 
-  /** Spotlight content max-height. Ignored unless `scrollable` prop is set. `400` by default */
+  /** Spotlight content max-height. Ignored unless `scrollable` prop is set. @default `400` */
   maxHeight?: React.CSSProperties['maxHeight'];
 
-  /** Determines whether the actions list should be scrollable. If not set, `maxHeight` is ignored @default false */
+  /** Determines whether the actions list should be scrollable. If not set, `maxHeight` is ignored @default `false` */
   scrollable?: boolean;
 }
 

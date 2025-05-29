@@ -70,10 +70,10 @@ export interface BarChartProps
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: BarChartSeries[];
 
-  /** Controls how bars are positioned relative to each other, `'default'` by default */
+  /** Controls how bars are positioned relative to each other @default `'default'` */
   type?: BarChartType;
 
-  /** Controls fill opacity of all bars, `1` by default */
+  /** Controls fill opacity of all bars @default `1` */
   fillOpacity?: number;
 
   /** Fill of hovered bar section, by default value is based on color scheme */
@@ -98,7 +98,7 @@ export interface BarChartProps
     | ((series: BarChartSeries) => Partial<Omit<LabelListProps<Record<string, any>>, 'ref'>>)
     | Partial<LabelListProps<Record<string, any>>>;
 
-  /** Sets minimum height of the bar in px, `0` by default */
+  /** Sets minimum height of the bar in px @default `0` */
   minBarSize?: number;
 
   /** Maximum bar width in px */

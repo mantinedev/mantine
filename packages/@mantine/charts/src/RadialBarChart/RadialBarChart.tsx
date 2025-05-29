@@ -62,10 +62,10 @@ export interface RadialBarChartProps
   /** Color of the empty background, by default depends on the color scheme */
   emptyBackgroundColor?: string;
 
-  /** Angle at which chart starts, `90` by default */
+  /** Angle at which chart starts @default `90` */
   startAngle?: number;
 
-  /** Angle at which chart ends, `-270` by default */
+  /** Angle at which chart ends @default `-270` */
   endAngle?: number;
 
   /** Props passed down to recharts RadialBar component */

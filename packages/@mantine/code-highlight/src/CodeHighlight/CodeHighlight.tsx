@@ -41,10 +41,10 @@ export type CodeHighlightCssVariables = {
 };
 
 export interface CodeHighlightSettings {
-  /** Label for copy button in default state, `'Copy'` by default */
+  /** Label for copy button in default state @default `'Copy'` */
   copyLabel?: string;
 
-  /** Label for copy button in copied state, `'Copied'` by default */
+  /** Label for copy button in copied state @default `'Copied'` */
   copiedLabel?: string;
 
   /** Uncontrolled expanded default state */
@@ -56,7 +56,7 @@ export interface CodeHighlightSettings {
   /** Called when expanded state changes */
   onExpandedChange?: (expanded: boolean) => void;
 
-  /** Max height of collapsed state, `180px` by default */
+  /** Max height of collapsed state @default `180px` */
   maxCollapsedHeight?: number | string;
 
   /** Determines whether the copy button should be displayed @default `true`  */
@@ -65,16 +65,16 @@ export interface CodeHighlightSettings {
   /** Determines whether the expand/collapse button should be displayed @default false */
   withExpandButton?: boolean;
 
-  /** Label for expand button, `'Expand code'` by default */
+  /** Label for expand button @default `'Expand code'` */
   expandCodeLabel?: string;
 
-  /** Label for collapse button, `'Collapse code'` by default */
+  /** Label for collapse button @default `'Collapse code'` */
   collapseCodeLabel?: string;
 
   /** Controls background color of the code. By default, the value depends on color scheme. */
   background?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, `0` by default */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default `0` */
   radius?: MantineRadius;
 
   /** Adds border to the root element @default false */

@@ -102,7 +102,7 @@ export interface RadarChartProps
   /** Props passed down to recharts Tooltip component */
   tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
 
-  /** Tooltip position animation duration in ms, `0` by default */
+  /** Tooltip position animation duration in ms @default `0` */
   tooltipAnimationDuration?: number;
 
   /** Determines whether the legend should be displayed @default false */

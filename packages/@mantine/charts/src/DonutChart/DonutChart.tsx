@@ -48,7 +48,7 @@ export interface DonutChartProps
   /** Determines whether the tooltip should be displayed when one of the section is hovered @default `true` */
   withTooltip?: boolean;
 
-  /** Tooltip animation duration in ms, `0` by default */
+  /** Tooltip animation duration in ms @default `0` */
   tooltipAnimationDuration?: number;
 
   /** Props passed down to `Tooltip` recharts component */
@@ -63,7 +63,7 @@ export interface DonutChartProps
   /** Controls text color of all labels, by default depends on color scheme */
   labelColor?: MantineColor;
 
-  /** Controls padding between segments, `0` by default */
+  /** Controls padding between segments @default `0` */
   paddingAngle?: number;
 
   /** Determines whether each segment should have associated label @default false */
@@ -72,22 +72,22 @@ export interface DonutChartProps
   /** Determines whether segments labels should have lines that connect the segment with the label @default `true` */
   withLabelsLine?: boolean;
 
-  /** Controls thickness of the chart segments, `20` by default */
+  /** Controls thickness of the chart segments @default `20` */
   thickness?: number;
 
-  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. `80` by default */
+  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. @default `80` */
   size?: number;
 
-  /** Controls width of segments stroke, `1` by default */
+  /** Controls width of segments stroke @default `1` */
   strokeWidth?: number;
 
-  /** Controls angle at which chart starts, `0` by default. Set to `180` to render the chart as semicircle. */
+  /** Controls angle at which chart starts. Set to `180` to render the chart as semicircle. @default `0` */
   startAngle?: number;
 
-  /** Controls angle at which charts ends, `360` by default. Set to `0` to render the chart as semicircle. */
+  /** Controls angle at which charts ends. Set to `0` to render the chart as semicircle. @default `360` */
   endAngle?: number;
 
-  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. `'all'` by default. */
+  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. @default `'all'` */
   tooltipDataSource?: 'segment' | 'all';
 
   /** Chart label, displayed in the center of the chart */

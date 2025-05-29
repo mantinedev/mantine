@@ -35,10 +35,10 @@ export interface RichTextEditorLinkControlProps
   /** Props passed down to Popover component */
   popoverProps?: Partial<PopoverProps>;
 
-  /** Determines whether external link control tooltip should be disabled @default false */
+  /** Determines whether external link control tooltip should be disabled @default `false` */
   disableTooltips?: boolean;
 
-  /** Initial state for determining whether the link should be an external @default false */
+  /** Initial state for determining whether the link should be an external @default `false` */
   initialExternal?: boolean;
 }
 

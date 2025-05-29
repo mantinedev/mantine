@@ -49,7 +49,7 @@ export interface FunnelChartProps
   /** Determines whether the tooltip should be displayed when a section is hovered @default `true` */
   withTooltip?: boolean;
 
-  /** Tooltip animation duration in ms, `0` by default */
+  /** Tooltip animation duration in ms @default `0` */
   tooltipAnimationDuration?: number;
 
   /** Props passed down to `Tooltip` recharts component */
@@ -61,25 +61,25 @@ export interface FunnelChartProps
   /** Controls color of the segments stroke, by default depends on color scheme */
   strokeColor?: MantineColor;
 
-  /** Controls text color of all labels, white by default */
+  /** Controls text color of all labels @default `'white'` */
   labelColor?: MantineColor;
 
-  /** Controls chart width and height, `300` by default */
+  /** Controls chart width and height @default `300` */
   size?: number;
 
-  /** Controls width of segments stroke, `1` by default */
+  /** Controls width of segments stroke @default `1` */
   strokeWidth?: number;
 
   /** Determines whether each segment should have associated label @default false */
   withLabels?: boolean;
 
-  /** Controls labels position relative to the segment, `'right'` by default */
+  /** Controls labels position relative to the segment @default `'right'` */
   labelsPosition?: 'right' | 'left' | 'inside';
 
   /** A function to format values inside the tooltip and labels */
   valueFormatter?: (value: number) => string;
 
-  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. `'all'` by default. */
+  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. @default `'all'` */
   tooltipDataSource?: 'segment' | 'all';
 
   /** Additional elements rendered inside `FunnelChart` component */

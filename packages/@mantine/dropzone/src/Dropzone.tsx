@@ -46,7 +46,7 @@ export interface DropzoneProps
   /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Accept` @default `theme.primaryColor` */
   acceptColor?: MantineColor;
 
-  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Reject`, `'red'` by default */
+  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Reject` @default `'red'` */
   rejectColor?: MantineColor;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
@@ -118,7 +118,7 @@ export interface DropzoneProps
   /** If `false`, allow dropped items to take over the current browser window */
   preventDropOnDocument?: boolean;
 
-  /** Set to true to use the File System Access API to open the file picker instead of using an <input type="file"> click event, defaults to true */
+  /** Set to true to use the File System Access API to open the file picker instead of using an <input type="file"> click event @default `true` */
   useFsAccessApi?: boolean;
 
   /** Use this to provide a custom file aggregator */
@@ -127,7 +127,7 @@ export interface DropzoneProps
   /** Custom validation function. It must return null if there's no errors. */
   validator?: <T extends File>(file: T) => FileError | FileError[] | null;
 
-  /** Determines whether pointer events should be enabled on the inner element @default false */
+  /** Determines whether pointer events should be enabled on the inner element @default `false` */
   enablePointerEvents?: boolean;
 
   /** Props passed down to the Loader component */

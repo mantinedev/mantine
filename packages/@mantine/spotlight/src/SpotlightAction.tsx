@@ -46,7 +46,7 @@ export interface SpotlightActionProps
   /** Determines whether search query should be highlighted in action label @default false */
   highlightQuery?: boolean;
 
-  /** Key of `theme.colors` of any valid CSS color that will be used to highlight search query, `'yellow'` by default */
+  /** Key of `theme.colors` of any valid CSS color that will be used to highlight search query @default `'yellow'` */
   highlightColor?: MantineColor;
 
   /** Determines whether the spotlight should be closed when action is triggered, overrides `closeOnActionTrigger` prop set on `Spotlight` */

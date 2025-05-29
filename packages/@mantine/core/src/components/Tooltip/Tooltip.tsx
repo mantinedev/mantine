@@ -67,7 +67,7 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Props passed down to the `Transition` component that used to animate tooltip presence, use to configure duration and animation type @default `{ duration: 100, transition: 'fade' }` */
   transitionProps?: TransitionOverride;
 
-  /** Determines which events will be used to show tooltip, @default `{ hover: true, focus: false, touch: false }` */
+  /** Determines which events will be used to show tooltip @default `{ hover: true, focus: false, touch: false }` */
   events?: { hover: boolean; focus: boolean; touch: boolean };
 
   /** @deprecated: Do not use, will be removed in 9.0 */
