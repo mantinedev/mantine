@@ -443,13 +443,13 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/Transition/Transition.tsx',
     docs: 'core/transition.mdx',
   },
-  TypographyStylesProvider: {
-    title: 'TypographyStylesProvider',
+  Typography: {
+    title: 'Typography',
     package: '@mantine/core',
-    slug: '/core/typography-styles-provider',
+    slug: '/core/typography',
     description: 'Styles provider for html content',
-    source: '@mantine/core/src/components/TypographyStylesProvider/TypographyStylesProvider.tsx',
-    docs: 'core/typography-styles-provider.mdx',
+    source: '@mantine/core/src/components/Typography/Typography.tsx',
+    docs: 'core/typography.mdx',
   },
   VisuallyHidden: {
     title: 'VisuallyHidden',

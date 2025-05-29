@@ -26,7 +26,7 @@ export type RichTextEditorStylesNames =
   | 'linkEditorDropdown'
   | 'root'
   | 'content'
-  | 'typographyStylesProvider'
+  | 'Typography'
   | 'control'
   | 'controlIcon'
   | 'controlsGroup'

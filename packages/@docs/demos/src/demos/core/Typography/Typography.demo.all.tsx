@@ -1,4 +1,4 @@
-import { TypographyStylesProvider } from '@mantine/core';
+import { Typography } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const html = `<h1>Heading 1</h1>
@@ -44,9 +44,9 @@ export function AvatarDemo() {
 
 function Demo() {
   return (
-    <TypographyStylesProvider>
+    <Typography>
       <div dangerouslySetInnerHTML={{ __html: html }} />
-    </TypographyStylesProvider>
+    </Typography>
   );
 }
 

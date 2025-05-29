@@ -101,7 +101,7 @@ export * as TimelineDemos from './demos/core/Timeline';
 export * as TitleDemos from './demos/core/Title';
 export * as TooltipDemos from './demos/core/Tooltip';
 export * as TransitionDemos from './demos/core/Transition';
-export * as TypographyStylesProviderDemos from './demos/core/TypographyStylesProvider';
+export * as TypographyDemos from './demos/core/Typography';
 export * as UnstyledButtonDemos from './demos/core/UnstyledButton';
 export * as NotificationDemos from './demos/core/Notification';
 export * as NumberInputDemos from './demos/core/NumberInput';

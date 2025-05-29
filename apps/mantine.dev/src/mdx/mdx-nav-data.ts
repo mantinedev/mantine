@@ -363,7 +363,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Table,
       MDX_DATA.Text,
       MDX_DATA.Title,
-      MDX_DATA.TypographyStylesProvider,
+      MDX_DATA.Typography,
       MDX_DATA.List,
     ],
   },

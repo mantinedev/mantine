@@ -112,5 +112,5 @@ export * from './data/TimePicker.styles-api';
 export * from './data/Title.styles-api';
 export * from './data/Tooltip.styles-api';
 export * from './data/Tree.styles-api';
-export * from './data/TypographyStylesProvider.styles-api';
+export * from './data/Typography.styles-api';
 export * from './data/UnstyledButton.styles-api';

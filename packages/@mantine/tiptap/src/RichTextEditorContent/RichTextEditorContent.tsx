@@ -6,7 +6,7 @@ import {
   ElementProps,
   factory,
   Factory,
-  TypographyStylesProvider,
+  Typography,
   useProps,
 } from '@mantine/core';
 import { useRichTextEditorContext } from '../RichTextEditor.context';
@@ -32,8 +32,8 @@ export const RichTextEditorContent = factory<RichTextEditorContentFactory>((_pro
 
   if (ctx.withTypographyStyles) {
     return (
-      <TypographyStylesProvider
-        {...ctx.getStyles('typographyStylesProvider', { className, style, styles, classNames })}
+      <Typography
+        {...ctx.getStyles('Typography', { className, style, styles, classNames })}
         unstyled={ctx.unstyled}
         ref={ref}
       >
@@ -43,7 +43,7 @@ export const RichTextEditorContent = factory<RichTextEditorContentFactory>((_pro
           {...ctx.getStyles('content', { classNames, styles })}
           {...others}
         />
-      </TypographyStylesProvider>
+      </Typography>
     );
   }
 

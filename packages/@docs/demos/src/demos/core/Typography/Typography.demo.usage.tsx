@@ -1,9 +1,9 @@
-import { Box, TypographyStylesProvider } from '@mantine/core';
+import { Box, Typography } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const html = `
 <h1>Example article</h1>
-<p>This is example article from <a href="https://css-tricks.com/your-team-is-not-them/">CSS-Tricks website</a> written by <a href="https://css-tricks.com/author/sdrasner/">Sarah Drasner</a>. It is used as an example to showcase real world styles of TypographyStylesProvider component, please read full article on <a href="https://css-tricks.com/your-team-is-not-them/">CSS-Tricks website</a>.</p>
+<p>This is example article from <a href="https://css-tricks.com/your-team-is-not-them/">CSS-Tricks website</a> written by <a href="https://css-tricks.com/author/sdrasner/">Sarah Drasner</a>. It is used as an example to showcase real world styles of Typography component, please read full article on <a href="https://css-tricks.com/your-team-is-not-them/">CSS-Tricks website</a>.</p>
 <h2>Article itself</h2>
 <p>Let’s talk for a moment about how we talk about our teams. This might not seem like something that needs a whole article dedicated to it, but it’s actually quite crucial. The way that we refer to our teams sends signals: to stakeholders, to your peers, to the team itself, and even to ourselves. In addressing how we speak about our teams, we’ll also talk about accountability.</p>
 <p>I have noticed shared similarities in those folks I consider good managers whose teams deliver well, and those who don’t. It starts with how they communicate about their teams.</p>
@@ -26,15 +26,15 @@ const html = `
 `;
 
 const code = `
-import { TypographyStylesProvider } from '@mantine/core';
+import { Typography } from '@mantine/core';
 
 const html = '...html content here...';
 
 function Demo() {
   return (
-    <TypographyStylesProvider>
+    <Typography>
       <div dangerouslySetInnerHTML={{ __html: html }} />
-    </TypographyStylesProvider>
+    </Typography>
   );
 }
 `;
@@ -42,9 +42,9 @@ function Demo() {
 function Demo() {
   return (
     <Box maw={560} mx="auto">
-      <TypographyStylesProvider>
+      <Typography>
         <div dangerouslySetInnerHTML={{ __html: html }} />
-      </TypographyStylesProvider>
+      </Typography>
     </Box>
   );
 }
