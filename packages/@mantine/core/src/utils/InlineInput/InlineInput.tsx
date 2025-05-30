@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import { Input } from '../../components/Input';
 import {
   Box,
   BoxProps,
@@ -10,7 +11,6 @@ import {
   StylesApiProps,
   useStyles,
 } from '../../core';
-import { Input } from '../Input';
 import classes from './InlineInput.module.css';
 
 export const InlineInputClasses = classes;

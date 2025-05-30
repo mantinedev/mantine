@@ -23,7 +23,7 @@ import {
   FloatingPosition,
   FloatingStrategy,
   getFloatingPosition,
-} from '../Floating';
+} from '../../utils/Floating';
 import { Overlay, OverlayProps } from '../Overlay';
 import { BasePortalProps, OptionalPortal } from '../Portal';
 import { Transition, TransitionOverride } from '../Transition';

@@ -1,6 +1,6 @@
 import { useDisclosure, useId } from '@mantine/hooks';
 import { ExtendComponent, Factory, useProps } from '../../../core';
-import { FloatingAxesOffsets, FloatingPosition, useDelayedHover } from '../../Floating';
+import { FloatingAxesOffsets, FloatingPosition, useDelayedHover } from '../../../utils/Floating';
 import { __PopoverProps, Popover } from '../../Popover';
 import { TransitionOverride } from '../../Transition';
 import { MenuSubDropdown } from '../MenuSubDropdown/MenuSubDropdown';

@@ -15,7 +15,7 @@ import {
 } from '@floating-ui/react';
 import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
 import { useMantineEnv } from '../../core';
-import { FloatingAxesOffsets, FloatingPosition, FloatingStrategy } from '../Floating';
+import { FloatingAxesOffsets, FloatingPosition, FloatingStrategy } from '../../utils/Floating';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
 
 interface UsePopoverOptions {

@@ -21,7 +21,7 @@ import {
   FloatingPosition,
   FloatingStrategy,
   getFloatingPosition,
-} from '../Floating';
+} from '../../utils/Floating';
 import { OptionalPortal } from '../Portal';
 import { getTransitionProps, Transition, TransitionOverride } from '../Transition';
 import { TooltipBaseProps, TooltipCssVariables, TooltipStylesNames } from './Tooltip.types';

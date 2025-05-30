@@ -21,7 +21,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { InlineInput, InlineInputStylesNames } from '../InlineInput';
+import { InlineInput, InlineInputStylesNames } from '../../utils/InlineInput';
 import { RadioCard } from './RadioCard/RadioCard';
 import { useRadioGroupContext } from './RadioGroup.context';
 import { RadioGroup } from './RadioGroup/RadioGroup';

@@ -10,7 +10,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '../../core';
-import { useDelayedHover } from '../Floating';
+import { useDelayedHover } from '../../utils/Floating';
 import { __PopoverProps, Popover, PopoverStylesNames } from '../Popover';
 import { MenuContextProvider } from './Menu.context';
 import { MenuDivider } from './MenuDivider/MenuDivider';

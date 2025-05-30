@@ -1,6 +1,6 @@
 import type { FlipOptions, InlineOptions, ShiftOptions, SizeOptions } from '@floating-ui/react';
 import { BoxProps, ElementProps, MantineColor, MantineRadius, StylesApiProps } from '../../core';
-import { FloatingPosition } from '../Floating';
+import { FloatingPosition } from '../../utils/Floating';
 import { BasePortalProps } from '../Portal';
 import type { TooltipFactory } from './Tooltip';
 

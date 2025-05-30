@@ -22,7 +22,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../InlineInput';
+import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../../utils/InlineInput';
 import { CheckboxCard } from './CheckboxCard/CheckboxCard';
 import { useCheckboxGroupContext } from './CheckboxGroup.context';
 import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';

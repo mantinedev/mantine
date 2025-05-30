@@ -1,4 +1,4 @@
-import { useInputWrapperContext } from '../Input';
+import { useInputWrapperContext } from '../../components/Input';
 
 interface InputsGroupFieldsetProps {
   children: React.ReactNode;
