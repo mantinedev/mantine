@@ -42,7 +42,18 @@ export function Usage() {
           ducimus?
         </div>
         <div data-breakout style={{ background: 'silver' }}>
-          Breakout
+          <div>Breakout</div>
+          <div data-container style={{ background: 'cyan' }}>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo facilis quasi asperiores!
+            Adipisci dolorem cumque sunt maiores ullam alias rerum architecto voluptatibus
+            reiciendis. Nulla, maxime alias? Impedit dolore voluptatibus ducimus? Lorem ipsum dolor
+            sit amet consectetur adipisicing elit. Quo facilis quasi asperiores! Adipisci dolorem
+            cumque sunt maiores ullam alias rerum architecto voluptatibus reiciendis. Nulla, maxime
+            alias? Impedit dolore voluptatibus ducimus? Lorem ipsum dolor sit amet consectetur
+            adipisicing elit. Quo facilis quasi asperiores! Adipisci dolorem cumque sunt maiores
+            ullam alias rerum architecto voluptatibus reiciendis. Nulla, maxime alias? Impedit
+            dolore voluptatibus ducimus?
+          </div>
         </div>
       </Container>
     </MantineThemeProvider>

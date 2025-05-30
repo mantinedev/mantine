@@ -22,3 +22,8 @@ export const Demo_responsive = {
   name: '⭐ Demo: responsive',
   render: renderDemo(demos.responsive),
 };
+
+export const Demo_breakout = {
+  name: '⭐ Demo: breakout',
+  render: renderDemo(demos.breakout),
+};

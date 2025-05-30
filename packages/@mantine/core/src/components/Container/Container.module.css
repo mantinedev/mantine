@@ -27,6 +27,11 @@
 
     & > [data-breakout] {
       grid-column: 1 / -1;
+
+      & > [data-container] {
+        max-width: var(--container-size);
+        margin-inline: auto;
+      }
     }
   }
 }
