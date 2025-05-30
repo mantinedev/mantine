@@ -27,6 +27,9 @@ export interface ContainerProps
 
   /** If set, the container takes 100% width of its parent and `size` prop is ignored. @default `false` */
   fluid?: boolean;
+
+  /** Centering strategy @default `'block'` */
+  strategy?: 'block' | 'grid';
 }
 
 export type ContainerFactory = Factory<{
@@ -54,6 +57,7 @@ export const Container = factory<ContainerFactory>((_props, ref) => {
     fluid,
     mod,
     attributes,
+    strategy,
     ...others
   } = props;
 
@@ -71,7 +75,14 @@ export const Container = factory<ContainerFactory>((_props, ref) => {
     varsResolver,
   });
 
-  return <Box ref={ref} mod={[{ fluid }, mod]} {...getStyles('root')} {...others} />;
+  return (
+    <Box
+      ref={ref}
+      mod={[{ fluid, strategy: strategy || 'block' }, mod]}
+      {...getStyles('root')}
+      {...others}
+    />
+  );
 });
 
 Container.classes = classes;

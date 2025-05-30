@@ -6,11 +6,27 @@
   --container-size-xl: 1320px;
   --container-size: var(--container-size-md);
 
-  max-width: var(--container-size);
-  padding-inline: var(--mantine-spacing-md);
-  margin-inline: auto;
+  &:where([data-strategy='block']) {
+    max-width: var(--container-size);
+    padding-inline: var(--mantine-spacing-md);
+    margin-inline: auto;
 
-  &:where([data-fluid]) {
-    max-width: 100%;
+    &:where([data-fluid]) {
+      max-width: 100%;
+    }
+  }
+
+  &:where([data-strategy='grid']) {
+    display: grid;
+    grid-template-columns: 1fr min(100%, var(--container-size)) 1fr;
+    margin-inline: auto;
+
+    & > * {
+      grid-column: 2;
+    }
+
+    & > [data-breakout] {
+      grid-column: 1 / -1;
+    }
   }
 }
