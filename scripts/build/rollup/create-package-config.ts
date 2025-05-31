@@ -26,7 +26,11 @@ export function createPackageConfig(packagePath: string): RollupOptions {
       tsconfig: getPath('tsconfig.json'),
     }),
     alias({ entries: aliasEntries }),
-    replace({ preventAssignment: true }),
+   replace({
+  preventAssignment: true,
+  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+}),
+
     postcss({
       extract: true,
       modules: { generateScopedName },
