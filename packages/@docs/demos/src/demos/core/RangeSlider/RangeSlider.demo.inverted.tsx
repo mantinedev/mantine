@@ -1,16 +1,16 @@
-import { Slider } from '@mantine/core';
+import { RangeSlider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Slider } from '@mantine/core';
+import { RangeSlider } from '@mantine/core';
 
 function Demo() {
-  return <Slider inverted defaultValue={80} />;
+  return <RangeSlider inverted defaultValue={[20, 60]} />;
 }
 `;
 
 function Demo() {
-  return <Slider inverted defaultValue={80} />;
+  return <RangeSlider inverted defaultValue={[20, 60]} />;
 }
 
 export const inverted: MantineDemo = {

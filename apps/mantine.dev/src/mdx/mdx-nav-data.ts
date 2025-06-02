@@ -253,6 +253,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.NativeSelect,
       MDX_DATA.SegmentedControl,
       MDX_DATA.Slider,
+      MDX_DATA.RangeSlider,
       MDX_DATA.Switch,
       MDX_DATA.TextInput,
       MDX_DATA.Checkbox,

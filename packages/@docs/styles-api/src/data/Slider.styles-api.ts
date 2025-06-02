@@ -1,4 +1,4 @@
-import type { SliderFactory } from '@mantine/core';
+import type { RangeSliderFactory, SliderFactory } from '@mantine/core';
 import type { StylesApiData } from '../types';
 
 export const SliderStylesApi: StylesApiData<SliderFactory> = {
@@ -38,3 +38,5 @@ export const SliderStylesApi: StylesApiData<SliderFactory> = {
     },
   ],
 };
+
+export const RangeSliderStylesApi: StylesApiData<RangeSliderFactory> = SliderStylesApi;

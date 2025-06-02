@@ -5,19 +5,15 @@ const code = `
 import { RangeSlider } from '@mantine/core';
 
 function Demo() {
-  return (
-    <RangeSlider minRange={0.2} min={0} max={1} step={0.0005} defaultValue={[0.1245, 0.5535]} />
-  );
+  return <RangeSlider defaultValue={[20, 60]} disabled />;
 }
 `;
 
 function Demo() {
-  return (
-    <RangeSlider minRange={0.2} min={0} max={1} step={0.0005} defaultValue={[0.1245, 0.5535]} />
-  );
+  return <RangeSlider defaultValue={[20, 60]} disabled />;
 }
 
-export const decimalRange: MantineDemo = {
+export const disabled: MantineDemo = {
   type: 'code',
   component: Demo,
   code,

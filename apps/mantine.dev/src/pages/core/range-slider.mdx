@@ -1,35 +1,28 @@
-import { SliderDemos } from '@docs/demos';
+import { RangeSliderDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
-export default Layout(MDX_DATA.Slider);
+export default Layout(MDX_DATA.RangeSlider);
 
 ## Usage
 
-<Demo data={SliderDemos.configurator} />
+<Demo data={RangeSliderDemos.configurator} />
 
 ## Controlled
 
 ```tsx
 import { useState } from 'react';
-import { Slider } from '@mantine/core';
+import { RangeSlider } from '@mantine/core';
 
 function Demo() {
-  const [value, setValue] = useState(40);
-  return <Slider value={value} onChange={setValue} />;
+  const [value, setValue] = useState<[number, number]>([20, 80]);
+  return <RangeSlider value={value} onChange={setValue} />;
 }
 ```
 
 ## Disabled
 
-<Demo data={SliderDemos.disabled} />
-
-## onChangeEnd
-
-`onChangeEnd` callback is called when user the slider is stopped from being dragged or value is changed with keyboard.
-You can use it as a debounced callback to avoid too frequent updates.
-
-<Demo data={SliderDemos.changeEnd} />
+<Demo data={RangeSliderDemos.disabled} />
 
 ## Control label
 
@@ -39,11 +32,11 @@ To change label behavior and appearance, set the following props:
 - `labelAlwaysOn` – if true – label will always be displayed, by default label is visible only when user is dragging
 - `labelTransitionProps` – props passed down to the [Transition](/core/transition) component, can be used to customize label animation
 
-<Demo data={SliderDemos.label} />
+<Demo data={RangeSliderDemos.label} />
 
 ## Min, max and step
 
-<Demo data={SliderDemos.step} />
+<Demo data={RangeSliderDemos.step} />
 
 ## Domain
 
@@ -51,13 +44,30 @@ By default, `min` and `max` values define the possible range of values.
 `domain` prop allows setting the possible range of values independently of the
 `min` and `max` values:
 
-<Demo data={SliderDemos.domain} />
+<Demo data={RangeSliderDemos.domain} />
 
 ## Decimal values
 
-To use `Slider` with decimal values, set `min`, `max` and `step` props:
+To use `RangeSlider` with decimal values, set `min`, `max` and `step` props:
 
-<Demo data={SliderDemos.decimal} />
+<Demo data={RangeSliderDemos.decimal} />
+
+## minRange
+
+Use `minRange` prop to control minimum range between `from` and `to` values
+in `RangeSlider`. The default value is `10`. The example below shows how to
+use `minRange` prop to capture decimal values from the user:
+
+<Demo data={RangeSliderDemos.decimal} />
+
+## pushOnOverlap
+
+`pushOnOverlap` prop controls whether the thumbs should push each other when they overlap.
+By default, `pushOnOverlap` is `true`, if you want to disable this behavior, set it to `false`.
+
+Example of `pushOnOverlap={false}`:
+
+<Demo data={RangeSliderDemos.pushOnOverlap} />
 
 ## Marks
 
@@ -72,59 +82,24 @@ const marks = [
 
 Note that mark value is relative to slider value, not width:
 
-<Demo data={SliderDemos.marks} />
+<Demo data={RangeSliderDemos.marks} />
 
 ## Restrict selection to marks
 
 Set `restrictToMarks` prop to restrict slider value to marks only. Note that in
 this case `step` prop is ignored:
 
-<Demo data={SliderDemos.restrictToMarks} />
-
-## Thumb size
-
-<Demo data={SliderDemos.thumbSize} />
-
-## Thumb children
-
-<Demo data={SliderDemos.thumbChildren} />
-
-## Scale
-
-You can use the `scale` prop to represent the value on a different scale.
-
-In the following demo, the value `x` represents the value `2^x`. Increasing `x` by one increases the represented value by 2 to the power of `x`.
-
-<Demo data={SliderDemos.scale} />
+<Demo data={RangeSliderDemos.restrictToMarks} />
 
 ## Inverted
 
 You can invert the track with the `inverted` prop:
 
-<Demo data={SliderDemos.inverted} />
-
-<StylesApiSelectors component="Slider" />
-
-<Demo data={SliderDemos.stylesApi} />
-
-Example of using [Styles API](/styles/styles-api/) to change `Slider` styles:
-
-<Demo data={SliderDemos.customize} />
-
-## Vertical slider
-
-`Slider` does not provide vertical orientation as it is very rarely used.
-If you need this feature you can build it yourself with [use-move](/hooks/use-move/) hook.
-
-## Build custom slider
-
-If `Slider` component does not meet your requirements, you can build a custom slider with [use-move](/hooks/use-move/) hook:
-
-<Demo data={SliderDemos.customSlider} />
+<Demo data={RangeSliderDemos.inverted} />
 
 ## Accessibility
 
-`Slider` component is accessible by default:
+`RangeSlider` component is accessible by default:
 
 - Thumbs are focusable
 - When the user uses mouse to interact with the slider, focus is moved to the slider track, when the user presses arrows focus is moved to the thumb
@@ -133,10 +108,15 @@ If `Slider` component does not meet your requirements, you can build a custom sl
 To label component for screen readers, add labels to thumbs:
 
 ```tsx
-import { Slider } from '@mantine/core';
+import { RangeSlider } from '@mantine/core';
 
 function Demo() {
-  return <Slider thumbLabel="Thumb aria-label" />;
+  return (
+    <RangeSlider
+      thumbFromLabel="First thumb aria-label"
+      thumbToLabel="Second thumb aria-label"
+    />
+  );
 }
 ```
 

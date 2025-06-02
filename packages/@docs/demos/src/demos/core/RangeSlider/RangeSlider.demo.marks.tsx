@@ -1,16 +1,21 @@
-import { Slider } from '@mantine/core';
+import { RangeSlider } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Slider } from '@mantine/core';
+import { RangeSlider } from '@mantine/core';
 
 function Demo() {
   return (
     <>
-      <Slider defaultValue={40} marks={[{ value: 10 }, { value: 40 }, { value: 95 }]} mb={32} />
-      <Slider
+      <RangeSlider
+        defaultValue={[20, 60]}
+        marks={[{ value: 10 }, { value: 40 }, { value: 95 }]}
         mb={32}
-        defaultValue={40}
+      />
+
+      <RangeSlider
+        mb={32}
+        defaultValue={[20, 60]}
         marks={[
           { value: 20, label: '20%' },
           { value: 50, label: '50%' },
@@ -25,10 +30,15 @@ function Demo() {
 function Demo() {
   return (
     <>
-      <Slider defaultValue={40} marks={[{ value: 10 }, { value: 40 }, { value: 95 }]} mb={32} />
-      <Slider
+      <RangeSlider
+        defaultValue={[20, 60]}
+        marks={[{ value: 10 }, { value: 40 }, { value: 95 }]}
         mb={32}
-        defaultValue={40}
+      />
+
+      <RangeSlider
+        mb={32}
+        defaultValue={[20, 60]}
         marks={[
           { value: 20, label: '20%' },
           { value: 50, label: '50%' },

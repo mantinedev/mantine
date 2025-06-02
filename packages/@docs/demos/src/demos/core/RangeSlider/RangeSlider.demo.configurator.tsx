@@ -34,7 +34,7 @@ function Demo() {
 }
 `;
 
-export const rangeConfigurator: MantineDemo = {
+export const configurator: MantineDemo = {
   type: 'configurator',
   component: Wrapper,
   code,

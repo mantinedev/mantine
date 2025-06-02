@@ -1,4 +1,4 @@
-import { HooksDemos, TagsInputDemos, SliderDemos, BarChartDemos, DatePickerDemos } from '@docs/demos';
+import { HooksDemos, TagsInputDemos, SliderDemos, RangeSliderDemos, BarChartDemos, DatePickerDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -78,18 +78,17 @@ Example of using `isDuplicate` to allow using the same value with different casi
 
 ## Slider domain prop
 
-[Slider](/core/slider) and [RangeSlider](/core/range-slider) components now support
-`domain` prop that allows setting the possible range of values independently of the
-`min` and `max` values:
+[Slider](/core/slider) component now support `domain` prop that allows setting
+the possible range of values independently of the `min` and `max` values:
 
 <Demo data={SliderDemos.domain} />
 
 ## RangeSlider pushOnOverlap prop
 
-[RangeSlider](/core/slider) component now supports `pushOnOverlap` prop that defines
+[RangeSlider](/core/range-slider) component now supports `pushOnOverlap` prop that defines
 whether the slider should push the overlapping thumb when the user drags it.
 
-<Demo data={SliderDemos.pushOnOverlap} />
+<Demo data={RangeSliderDemos.pushOnOverlap} />
 
 ## Hooks types exports
 
