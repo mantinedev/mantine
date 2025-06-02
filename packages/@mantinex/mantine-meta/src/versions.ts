@@ -38,6 +38,10 @@ export const allVersions = [
         version: '7.17.7',
         date: 'May 2, 2025',
       },
+      {
+        version: '7.17.8',
+        date: 'June 2, 2025',
+      },
     ],
   },
   {
