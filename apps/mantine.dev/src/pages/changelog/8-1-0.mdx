@@ -78,8 +78,8 @@ Example of using `isDuplicate` to allow using the same value with different casi
 
 ## Slider domain prop
 
-[Slider](/core/slider) component now support `domain` prop that allows setting
-the possible range of values independently of the `min` and `max` values:
+[Slider](/core/slider) component now supports `domain` prop that allows
+setting the possible range of values independently of the `min` and `max` values:
 
 <Demo data={SliderDemos.domain} />
 
@@ -172,4 +172,4 @@ const form = useForm({
 - Handlers returned from [use-counter](/hooks/use-couter) are now memoized.
 - Return value of [use-event-listener](/hooks/use-event-listener), [use-focus-within](/hooks/use-focus-within), [use-focus-trap](/hooks/use-focus-trap), [use-hover](/hooks/use-hover), [use-move](/hooks/use-move), [use-radial-move](/hooks/use-radial-move) changed (`React.RefObject` -> `React.RefCallback`), required to fix incorrect ref handling in several cases. For more information, see the issue on GitHub – [#7406](https://github.com/mantinedev/mantine/issues/7406).
 - Deprecated `React.MutableRefObject` type was replaced with `React.RefObject` in all packages to better support React 19 types.
-- `positionDependencies` prop is now deprecated in [Tooltip](/core//tooltip), [Popover](/core/popover) and other components based on Popover. The prop is no longer required and can be safely removed. `positionDependencies` prop will be removed in 9.0 release.
+- `positionDependencies` prop is now deprecated in [Tooltip](/core/tooltip), [Popover](/core/popover) and other components based on Popover. The prop is no longer required and can be safely removed. `positionDependencies` prop will be removed in 9.0 release.
