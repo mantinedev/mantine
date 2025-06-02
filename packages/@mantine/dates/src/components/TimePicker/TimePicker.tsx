@@ -71,7 +71,7 @@ export interface TimePickerProps
   /** Called when the value changes */
   onChange?: (value: string) => void;
 
-  /** Determines whether the clear button should be displayed, `false` by default */
+  /** Determines whether the clear button should be displayed @default `false` */
   clearable?: boolean;
 
   /** `name` prop passed down to the hidden input */
@@ -89,16 +89,16 @@ export interface TimePickerProps
   /** Time format, `'24h'` by default */
   format?: TimePickerFormat;
 
-  /** Number by which hours are incremented/decremented, `1` by default */
+  /** Number by which hours are incremented/decremented @default `1` */
   hoursStep?: number;
 
-  /** Number by which minutes are incremented/decremented, `1` by default */
+  /** Number by which minutes are incremented/decremented @default `1` */
   minutesStep?: number;
 
-  /** Number by which seconds are incremented/decremented, `1` by default */
+  /** Number by which seconds are incremented/decremented @default `1` */
   secondsStep?: number;
 
-  /** Determines whether the seconds input should be displayed, `false` by default */
+  /** Determines whether the seconds input should be displayed @default `false` */
   withSeconds?: boolean;
 
   /** `aria-label` of hours input */
@@ -113,10 +113,10 @@ export interface TimePickerProps
   /** `aria-label` of am/pm input */
   amPmInputLabel?: string;
 
-  /** Labels used for am/pm values, `{ am: 'AM', pm: 'PM' }` by default */
+  /** Labels used for am/pm values @default `{ am: 'AM', pm: 'PM' }` */
   amPmLabels?: TimePickerAmPmLabels;
 
-  /** Determines whether the dropdown with time controls list should be visible when the input has focus, `false` by default */
+  /** Determines whether the dropdown with time controls list should be visible when the input has focus @default `false` */
   withDropdown?: boolean;
 
   /** Props passed down to `Popover` component */
@@ -170,7 +170,7 @@ export interface TimePickerProps
   /** Time presets to display in the dropdown */
   presets?: TimePickerPresets;
 
-  /** Maximum height of the content displayed in the dropdown in px, `200` by default */
+  /** Maximum height of the content displayed in the dropdown in px @default `200` */
   maxDropdownContentHeight?: number;
 
   /** Props passed down to all underlying `ScrollArea` components */
@@ -255,6 +255,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
     presets,
     maxDropdownContentHeight,
     scrollAreaProps,
+    attributes,
     ...others
   } = props;
 
@@ -273,6 +274,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

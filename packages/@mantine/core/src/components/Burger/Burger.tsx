@@ -31,7 +31,7 @@ export interface BurgerProps
   extends BoxProps,
     StylesApiProps<BurgerFactory>,
     ElementProps<'button'> {
-  /** Controls burger `width` and `height`, numbers are converted to rem, `'md'` by default */
+  /** Controls burger `width` and `height`, numbers are converted to rem @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
   /** Controls height of lines, by default calculated based on `size` prop */
@@ -40,13 +40,13 @@ export interface BurgerProps
   /** Key of `theme.colors` of any valid CSS value, by default `theme.white` in dark color scheme and `theme.black` in light */
   color?: MantineColor;
 
-  /** State of the burger, when `true` burger is transformed into X, `false` by default */
+  /** State of the burger, when `true` burger is transformed into X @default `false` */
   opened?: boolean;
 
-  /** `transition-duration` property value in ms, `300` by default */
+  /** `transition-duration` property value in ms @default `300` */
   transitionDuration?: number;
 
-  /** `transition-timing-function` property value, `'ease'` by default  */
+  /** `transition-timing-function` property value @default `'ease'` */
   transitionTimingFunction?: string;
 }
 
@@ -56,8 +56,6 @@ export type BurgerFactory = Factory<{
   stylesNames: BurgerStylesNames;
   vars: BurgerCssVariables;
 }>;
-
-const defaultProps = {} satisfies Partial<BurgerProps>;
 
 const varsResolver = createVarsResolver<BurgerFactory>(
   (theme, { color, size, lineSize, transitionDuration, transitionTimingFunction }) => ({
@@ -73,7 +71,7 @@ const varsResolver = createVarsResolver<BurgerFactory>(
 );
 
 export const Burger = factory<BurgerFactory>((_props, ref) => {
-  const props = useProps('Burger', defaultProps, _props);
+  const props = useProps('Burger', null, _props);
   const {
     classNames,
     className,
@@ -86,6 +84,7 @@ export const Burger = factory<BurgerFactory>((_props, ref) => {
     transitionDuration,
     transitionTimingFunction,
     lineSize,
+    attributes,
     ...others
   } = props;
 
@@ -98,6 +97,7 @@ export const Burger = factory<BurgerFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

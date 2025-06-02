@@ -44,40 +44,43 @@ export interface AccordionProps<Multiple extends boolean = false>
   extends BoxProps,
     StylesApiProps<AccordionFactory>,
     ElementProps<'div', 'value' | 'defaultValue' | 'onChange'> {
-  /** Determines whether multiple items can be opened at a time, `false` by default */
+  /** If set, multiple items can be opened at the same time */
   multiple?: Multiple;
 
-  /** Value for controlled component */
+  /** Controlled component value */
   value?: AccordionValue<Multiple>;
 
-  /** Default value for uncontrolled component */
+  /** Uncontrolled component default value */
   defaultValue?: AccordionValue<Multiple>;
 
-  /** Called when value changes */
+  /** Called when value changes, payload type depends on `multiple` prop */
   onChange?: (value: AccordionValue<Multiple>) => void;
 
-  /** Determines whether arrow key presses should loop though items (first to last and last to first), `true` by default */
+  /** If set, arrow keys loop though items (first to last and last to first) @default `true` */
   loop?: boolean;
 
-  /** Transition duration in ms, `200` by default */
+  /** Transition duration in ms @default `200` */
   transitionDuration?: number;
 
-  /** Determines whether chevron rotation should be disabled, `false` by default */
+  /** If set, chevron rotation is disabled */
   disableChevronRotation?: boolean;
 
-  /** Position of the chevron relative to the item label, `right` by default */
+  /** Position of the chevron relative to the item label @default `right` */
   chevronPosition?: AccordionChevronPosition;
 
-  /** Size of the chevron icon container, `24` by default */
+  /** Size of the chevron icon container @default `auto` */
   chevronSize?: number | string;
+
+  /** Size of the default chevron icon. Ignored when `chevron` prop is set. @default `16` */
+  chevronIconSize?: number | string;
 
   /** Heading order, has no effect on visuals */
   order?: AccordionHeadingOrder;
 
-  /** Custom chevron icon that will be used in all items */
+  /** Custom chevron icon */
   chevron?: React.ReactNode;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. `theme.defaultRadius` by default. */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default `theme.defaultRadius` */
   radius?: MantineRadius;
 }
 
@@ -94,7 +97,8 @@ const defaultProps = {
   disableChevronRotation: false,
   chevronPosition: 'right',
   variant: 'default',
-  chevron: <AccordionChevron />,
+  chevronSize: 'auto',
+  chevronIconSize: 16,
 } satisfies Partial<AccordionProps>;
 
 const varsResolver = createVarsResolver<AccordionFactory>(
@@ -132,6 +136,8 @@ export function Accordion<Multiple extends boolean = false>(_props: AccordionPro
     chevron,
     variant,
     radius,
+    chevronIconSize,
+    attributes,
     ...others
   } = props;
 
@@ -167,6 +173,7 @@ export function Accordion<Multiple extends boolean = false>(_props: AccordionPro
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -184,11 +191,11 @@ export function Accordion<Multiple extends boolean = false>(_props: AccordionPro
           `${uid}-panel`,
           'Accordion.Item component was rendered with invalid value or without value'
         ),
+        chevron: chevron === null ? null : chevron || <AccordionChevron size={chevronIconSize} />,
         transitionDuration,
         disableChevronRotation,
         chevronPosition,
         order,
-        chevron,
         loop,
         getStyles,
         variant,

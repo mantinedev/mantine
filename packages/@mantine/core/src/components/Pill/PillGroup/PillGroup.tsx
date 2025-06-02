@@ -27,10 +27,10 @@ export interface PillGroupProps
   /** Controls spacing between pills, by default controlled by `size` */
   gap?: MantineSize | (string & {}) | number;
 
-  /** Controls size of the child `Pill` components and gap between them, `'sm'` by default */
+  /** Controls size of the child `Pill` components and gap between them @default `'sm'` */
   size?: MantineSize | (string & {});
 
-  /** Determines whether child `Pill` components should be disabled */
+  /** If set, adds disabled to all child `Pill` components */
   disabled?: boolean;
 }
 
@@ -42,8 +42,6 @@ export type PillGroupFactory = Factory<{
   ctx: { size: MantineSize | (string & {}) | undefined };
 }>;
 
-const defaultProps = {} satisfies Partial<PillGroupProps>;
-
 const varsResolver = createVarsResolver<PillGroupFactory>((_, { gap }, { size }) => ({
   group: {
     '--pg-gap': gap !== undefined ? getSize(gap) : getSize(size, 'pg-gap'),
@@ -51,8 +49,19 @@ const varsResolver = createVarsResolver<PillGroupFactory>((_, { gap }, { size })
 }));
 
 export const PillGroup = factory<PillGroupFactory>((_props, ref) => {
-  const props = useProps('PillGroup', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, size, disabled, ...others } = props;
+  const props = useProps('PillGroup', null, _props);
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    size,
+    disabled,
+    attributes,
+    ...others
+  } = props;
   const pillsInputCtx = usePillsInputContext();
   const _size = pillsInputCtx?.size || size || undefined;
 
@@ -65,6 +74,7 @@ export const PillGroup = factory<PillGroupFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     stylesCtx: { size: _size },

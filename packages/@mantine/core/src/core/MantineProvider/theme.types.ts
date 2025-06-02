@@ -67,7 +67,7 @@ export interface MantineTheme {
   /** Monospace font-family, used in code and other similar components, system fonts by default  */
   fontFamilyMonospace: string;
 
-  /** Controls various styles of h1-h6 elements, used in TypographyStylesProvider and Title components */
+  /** Controls various styles of h1-h6 elements, used in Typography and Title components */
   headings: {
     fontFamily: string;
     fontWeight: string;

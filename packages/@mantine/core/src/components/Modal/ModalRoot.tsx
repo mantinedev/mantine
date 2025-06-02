@@ -24,22 +24,22 @@ export type ModalRootCssVariables = {
 export interface ModalRootProps extends StylesApiProps<ModalRootFactory>, ModalBaseProps {
   __staticSelector?: string;
 
-  /** Top/bottom modal offset, `5dvh` by default */
+  /** Top/bottom modal offset @default `5dvh` */
   yOffset?: React.CSSProperties['marginTop'];
 
-  /** Left/right modal offset, `5vw` by default */
+  /** Left/right modal offset @default `5vw` */
   xOffset?: React.CSSProperties['marginLeft'];
 
-  /** Scroll area component, native `div` element by default */
+  /** Scroll area component @default `'div'` */
   scrollAreaComponent?: ScrollAreaComponent;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Determines whether the modal should be centered vertically, `false` by default */
+  /** If set, the modal is centered vertically @default `false` */
   centered?: boolean;
 
-  /** Determines whether the modal should take the entire screen, `false` by default */
+  /** If set, the modal takes the entire screen @default `false` */
   fullScreen?: boolean;
 }
 
@@ -92,6 +92,7 @@ export const ModalRoot = factory<ModalRootFactory>((_props, ref) => {
     centered,
     xOffset,
     __staticSelector,
+    attributes,
     ...others
   } = props;
 
@@ -104,6 +105,7 @@ export const ModalRoot = factory<ModalRootFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

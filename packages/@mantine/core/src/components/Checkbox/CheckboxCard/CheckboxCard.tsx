@@ -34,10 +34,10 @@ export interface CheckboxCardProps
   /** Called when value changes */
   onChange?: (checked: boolean) => void;
 
-  /** Determines whether the card should have border, `true` by default */
+  /** Adds border to the root element */
   withBorder?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Value of the checkbox, used with `Checkbox.Group` */
@@ -77,6 +77,7 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
     onClick,
     defaultChecked,
     onChange,
+    attributes,
     ...others
   } = props;
 
@@ -89,6 +90,7 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'card',

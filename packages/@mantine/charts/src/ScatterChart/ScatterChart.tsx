@@ -148,6 +148,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
     valueFormatter,
     scatterProps,
     pointLabels,
+    attributes,
     ...others
   } = props;
 
@@ -178,6 +179,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -331,6 +333,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={data}
+                  attributes={attributes}
                 />
               )}
               {...tooltipProps}
@@ -351,6 +354,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={data}
+                  attributes={attributes}
                 />
               )}
               height={44}

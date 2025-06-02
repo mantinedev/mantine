@@ -16,10 +16,8 @@ export type DrawerOverlayFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<DrawerOverlayProps>;
-
 export const DrawerOverlay = factory<DrawerOverlayFactory>((_props, ref) => {
-  const props = useProps('DrawerOverlay', defaultProps, _props);
+  const props = useProps('DrawerOverlay', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
   const ctx = useDrawerContext();

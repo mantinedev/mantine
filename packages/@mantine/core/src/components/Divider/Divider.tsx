@@ -28,16 +28,16 @@ export interface DividerProps
   /** Key of `theme.colors` or any valid CSS color value, by default value depends on color scheme */
   color?: MantineColor;
 
-  /** Controls width/height (depends on orientation), `'xs'` by default */
+  /** Controls width/height (depends on orientation) @default `'xs'` */
   size?: MantineSize | number | (string & {});
 
   /** Divider label, visible only when `orientation` is `horizontal` */
   label?: React.ReactNode;
 
-  /** Controls label position, `'center'` by default */
+  /** Controls label position @default `'center'` */
   labelPosition?: 'left' | 'center' | 'right';
 
-  /** Controls orientation, `'horizontal'` by default */
+  /** Controls orientation @default `'horizontal'` */
   orientation?: 'horizontal' | 'vertical';
 }
 
@@ -75,6 +75,7 @@ export const Divider = factory<DividerFactory>((_props, ref) => {
     label,
     labelPosition,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -87,6 +88,7 @@ export const Divider = factory<DividerFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

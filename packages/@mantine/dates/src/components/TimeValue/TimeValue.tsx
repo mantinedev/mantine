@@ -5,13 +5,13 @@ export interface TimeValueProps {
   /** Time to format */
   value: string | Date;
 
-  /** Time format, `'24h'` by default */
+  /** Time format @default `'24h'` */
   format?: TimePickerFormat;
 
-  /** AM/PM labels, `{ am: 'AM', pm: 'PM' }` by default */
+  /** AM/PM labels @default `{ am: 'AM', pm: 'PM' }` */
   amPmLabels?: TimePickerAmPmLabels;
 
-  /** Determines whether seconds should be displayed, `false` by default */
+  /** Determines whether seconds should be displayed @default `false` */
   withSeconds?: boolean;
 }
 

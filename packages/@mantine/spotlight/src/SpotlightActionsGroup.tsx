@@ -20,7 +20,7 @@ export interface SpotlightActionsGroupProps
   children?: React.ReactNode;
 
   /** Group label */
-  label?: React.ReactNode;
+  label?: string;
 }
 
 export type SpotlightActionsGroupFactory = Factory<{
@@ -30,14 +30,13 @@ export type SpotlightActionsGroupFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<SpotlightActionsGroupProps>;
-
 export const SpotlightActionsGroup = factory<SpotlightActionsGroupFactory>((props, ref) => {
   const { className, style, styles, classNames, label, children, ...others } = useProps(
     'SpotlightActionsGroup',
-    defaultProps,
+    null,
     props
   );
+
   const ctx = useSpotlightContext();
 
   return (
@@ -45,7 +44,7 @@ export const SpotlightActionsGroup = factory<SpotlightActionsGroupFactory>((prop
       {...ctx.getStyles('actionsGroup', { className, style, classNames, styles })}
       ref={ref}
       {...others}
-      __vars={{ '--spotlight-label': `'${label}'` }}
+      __vars={{ '--spotlight-label': `'${label?.replace(/'/g, "\\'")}'` }}
     >
       {children}
     </Box>

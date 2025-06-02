@@ -37,7 +37,7 @@
     z-index: 1001;
   }
 
-  [data-offset-scrollbars] &:has([data-mantine-scrollbar][data-state='visible']) .header {
+  [data-offset-scrollbars] &:has([data-mantine-scrollbar]) .header {
     padding-inline-end: calc(var(--mb-padding, var(--mantine-spacing-md)) + rem(5px));
   }
 }

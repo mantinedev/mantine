@@ -24,12 +24,10 @@ export type ComboboxHeaderFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<ComboboxHeaderProps>;
-
 export const ComboboxHeader = factory<ComboboxHeaderFactory>((props, ref) => {
   const { classNames, className, style, styles, vars, ...others } = useProps(
     'ComboboxHeader',
-    defaultProps,
+    null,
     props
   );
 

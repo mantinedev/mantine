@@ -1,6 +1,15 @@
 import { useState } from 'react';
-import { Button, Checkbox, Group, NativeSelect, Select, Textarea, TextInput } from '@mantine/core';
-import { formRootRule, useForm } from '../index';
+import {
+  Button,
+  Checkbox,
+  Group,
+  NativeSelect,
+  Select,
+  Stack,
+  Textarea,
+  TextInput,
+} from '@mantine/core';
+import { formRootRule, isNotEmpty, useForm } from '../index';
 import { FormBase } from './_base';
 
 export default { title: 'Form' };
@@ -218,6 +227,78 @@ export function FocusOnError() {
 
       <Button onClick={() => form.setValues({ name: 'test' })}>Set values</Button>
       <Button type="submit">Submit</Button>
+    </form>
+  );
+}
+
+export function ReorderWithErrors() {
+  const emptyObject = () => ({
+    value1: '',
+    value2: '',
+    key: window.crypto.randomUUID(),
+  });
+
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      sortable: [
+        emptyObject(),
+        {
+          value1: '1',
+          value2: '1',
+          key: window.crypto.randomUUID(),
+        },
+      ],
+    },
+    validate: {
+      sortable: {
+        value1: isNotEmpty('Should not be empty'),
+        value2: isNotEmpty('Should not be empty'),
+      },
+    },
+  });
+
+  const fields = form.getValues().sortable.map((element, i) => (
+    <>
+      <Group key={element.key}>
+        <TextInput
+          placeholder="input"
+          key={form.key(`sortable.${element.key}.value1`)}
+          {...form.getInputProps(`sortable.${i}.value1`)}
+        />
+        <TextInput
+          placeholder="input"
+          key={form.key(`sortable.${element.key}.value2`)}
+          {...form.getInputProps(`sortable.${i}.value2`)}
+        />
+        <Button
+          variant="default"
+          disabled={i === 0}
+          onClick={() => form.reorderListItem('sortable', { from: i, to: i - 1 })}
+        >
+          Up
+        </Button>
+        <Button
+          variant="default"
+          disabled={i === form.getValues().sortable.length - 1}
+          onClick={() => form.reorderListItem('sortable', { from: i, to: i + 1 })}
+        >
+          Down
+        </Button>
+      </Group>
+    </>
+  ));
+
+  return (
+    <form onSubmit={form.onSubmit(() => {})} style={{ padding: 40 }}>
+      <Stack mb="lg">{fields}</Stack>
+
+      <Group>
+        <Button onClick={() => form.insertListItem('sortable', emptyObject())} variant="default">
+          Add
+        </Button>
+        <Button type="submit">Submit</Button>
+      </Group>
     </form>
   );
 }

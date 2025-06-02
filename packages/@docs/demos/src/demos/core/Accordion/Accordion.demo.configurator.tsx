@@ -1,13 +1,13 @@
 import { Accordion, AccordionProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { groceries } from './_base';
+import { data, dataCode } from './_base';
 
 const code = `
 import { Accordion } from '@mantine/core';
+import { data } from './data';
 
 function Demo() {
-  // See groceries data above
-  const items = groceries.map((item) => (
+  const items = data.map((item) => (
     <Accordion.Item key={item.value} value={item.value}>
       <Accordion.Control icon={item.emoji}>{item.value}</Accordion.Control>
       <Accordion.Panel>{item.description}</Accordion.Panel>
@@ -23,7 +23,7 @@ function Demo() {
 `;
 
 function Demo(props: AccordionProps) {
-  const items = groceries.map((item) => (
+  const items = data.map((item) => (
     <Accordion.Item key={item.value} value={item.value}>
       <Accordion.Control icon={item.emoji}>{item.value}</Accordion.Control>
       <Accordion.Panel>{item.description}</Accordion.Panel>
@@ -31,7 +31,7 @@ function Demo(props: AccordionProps) {
   ));
 
   return (
-    <Accordion {...props} defaultValue="Apples">
+    <Accordion {...props} defaultValue="Apples" mih={320}>
       {items}
     </Accordion>
   );
@@ -40,7 +40,10 @@ function Demo(props: AccordionProps) {
 export const configurator: MantineDemo = {
   type: 'configurator',
   component: Demo,
-  code,
+  code: [
+    { fileName: 'Demo.tsx', code, language: 'tsx' },
+    { fileName: 'data.ts', code: dataCode, language: 'tsx' },
+  ],
   controls: [
     {
       prop: 'variant',
@@ -52,6 +55,7 @@ export const configurator: MantineDemo = {
         { label: 'Contained', value: 'contained' },
         { label: 'Filled', value: 'filled' },
         { label: 'Separated', value: 'separated' },
+        { label: 'Unstyled', value: 'unstyled' },
       ],
     },
     { prop: 'radius', type: 'size', libraryValue: 'sm', initialValue: 'sm' },
@@ -64,6 +68,14 @@ export const configurator: MantineDemo = {
       ],
       initialValue: 'right',
       libraryValue: 'right',
+    },
+    {
+      prop: 'chevronIconSize',
+      type: 'number',
+      initialValue: 16,
+      libraryValue: 16,
+      min: 12,
+      max: 25,
     },
     { prop: 'disableChevronRotation', type: 'boolean', initialValue: false, libraryValue: false },
   ],

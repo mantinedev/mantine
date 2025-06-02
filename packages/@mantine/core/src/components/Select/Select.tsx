@@ -50,16 +50,16 @@ export interface SelectProps
   /** Called when the clear button is clicked */
   onClear?: () => void;
 
-  /** Determines whether the select should be searchable, `false` by default */
+  /** Determines whether the select should be searchable @default `false` */
   searchable?: boolean;
 
-  /** Determines whether check icon should be displayed near the selected option label, `true` by default */
+  /** If set, the check icon is displayed near the selected option label @default `true` */
   withCheckIcon?: boolean;
 
-  /** Position of the check icon relative to the option label, `'left'` by default */
+  /** Position of the check icon relative to the option label @default `'left'` */
   checkIconPosition?: 'left' | 'right';
 
-  /** Message displayed when no option matches the current search query while the `searchable` prop is set or there is no data */
+  /** Message displayed when no option matches the current search query when the `searchable` prop is set or there is no data */
   nothingFoundMessage?: React.ReactNode;
 
   /** Controlled search value */
@@ -71,14 +71,14 @@ export interface SelectProps
   /** Called when search changes */
   onSearchChange?: (value: string) => void;
 
-  /** Determines whether it should be possible to deselect value by clicking on the selected option, `true` by default */
+  /** If set, it becomes possible to deselect value by clicking on the selected option @default `true` */
   allowDeselect?: boolean;
 
-  /** Determines whether the clear button should be displayed in the right section when the component has value, `false` by default */
+  /** If set, the clear button is displayed in the right section when the component has value @default `false` */
   clearable?: boolean;
 
   /** Props passed down to the clear button */
-  clearButtonProps?: InputClearButtonProps & ElementProps<'button'>;
+  clearButtonProps?: InputClearButtonProps;
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: Omit<React.ComponentPropsWithoutRef<'input'>, 'value'>;
@@ -91,6 +91,9 @@ export interface SelectProps
 
   /** Controls color of the default chevron, by default depends on the color scheme */
   chevronColor?: MantineColor;
+
+  /** If set, the highlighted option is selected when the input loses focus @default `false` */
+  autoSelectOnBlur?: boolean;
 }
 
 export type SelectFactory = Factory<{
@@ -159,6 +162,8 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     __clearSection,
     __clearable,
     chevronColor,
+    autoSelectOnBlur,
+    attributes,
     ...others
   } = props;
 
@@ -192,7 +197,8 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     },
     onDropdownClose: () => {
       onDropdownClose?.();
-      combobox.resetSelectedOption();
+      // Required for autoSelectOnBlur to work correctly
+      setTimeout(combobox.resetSelectedOption, 0);
     },
   });
 
@@ -256,6 +262,8 @@ export const Select = factory<SelectFactory>((_props, ref) => {
         styles={resolvedStyles}
         unstyled={unstyled}
         readOnly={readOnly}
+        size={size}
+        attributes={attributes}
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
           const optionLockup = allowDeselect
@@ -271,7 +279,6 @@ export const Select = factory<SelectFactory>((_props, ref) => {
             handleSearchChange(typeof nextValue === 'string' ? optionLockup?.label || '' : '');
           combobox.closeDropdown();
         }}
-        size={size}
         {...comboboxProps}
       >
         <Combobox.Target targetType={searchable ? 'input' : 'button'} autoComplete={autoComplete}>
@@ -302,11 +309,15 @@ export const Select = factory<SelectFactory>((_props, ref) => {
               selectFirstOptionOnChange && combobox.selectFirstOption();
             }}
             onFocus={(event) => {
-              searchable && combobox.openDropdown();
+              !!searchable && combobox.openDropdown();
               onFocus?.(event);
             }}
             onBlur={(event) => {
-              searchable && combobox.closeDropdown();
+              if (autoSelectOnBlur) {
+                combobox.clickSelectedOption();
+              }
+
+              !!searchable && combobox.closeDropdown();
               handleSearchChange(_value != null ? optionsLockup[_value]?.label || '' : '');
               onBlur?.(event);
             }}
@@ -319,6 +330,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
             unstyled={unstyled}
             pointer={!searchable}
             error={error}
+            attributes={attributes}
           />
         </Combobox.Target>
         <OptionsDropdown
@@ -330,7 +342,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
           hiddenWhenEmpty={!nothingFoundMessage}
           withScrollArea={withScrollArea}
           maxDropdownHeight={maxDropdownHeight}
-          filterOptions={searchable && selectedOption?.label !== search}
+          filterOptions={!!searchable && selectedOption?.label !== search}
           value={_value}
           checkIconPosition={checkIconPosition}
           withCheckIcon={withCheckIcon}

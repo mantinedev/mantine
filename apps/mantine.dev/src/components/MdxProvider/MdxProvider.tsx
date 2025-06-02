@@ -32,6 +32,7 @@ import {
 import { MdxTemplatesList } from './MdxTemplatesList/MdxTemplatesList';
 import { h } from './MdxTitle/MdxTitle';
 import { MdxCode, MdxLi, MdxParagraph, MdxUl } from './MdxTypography/MdxTypography';
+import { MdxVideo } from './MdxVideo/MdxVideo';
 
 export function MdxProvider({ children }: { children: React.ReactNode }) {
   return (
@@ -63,6 +64,7 @@ export function MdxProvider({ children }: { children: React.ReactNode }) {
         WrapperProps: MdxWrapperProps,
         InputSections: MdxInputSections,
         AutoContrast: MdxAutoContrast,
+        Video: MdxVideo,
         pre: MdxPre,
         h1: h(1),
         h2: h(2),

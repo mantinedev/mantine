@@ -40,6 +40,7 @@ export const Variants = () => (
       mt="xl"
       variant="default"
       radius="md"
+      chevron={null}
     >
       {_items}
     </Accordion>

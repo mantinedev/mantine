@@ -3,7 +3,7 @@ import { ExtendComponent, Factory, MantineThemeComponent, useProps } from '../..
 import { TooltipGroupProvider } from './TooltipGroup.context';
 
 export interface TooltipGroupProps {
-  /** <Tooltip /> components */
+  /** `Tooltip` components */
   children: React.ReactNode;
 
   /** Open delay in ms */

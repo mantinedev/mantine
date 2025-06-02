@@ -1,6 +1,5 @@
-import { AppShell, Group, Text } from '@mantine/core';
+import { AppShell, Text } from '@mantine/core';
 import { useHeadroom } from '@mantine/hooks';
-import { MantineLogo } from '@mantinex/mantine-logo';
 
 const lorem =
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos ullam, ex cum repellat alias ea nemo. Ducimus ex nesciunt hic ad saepe molestiae nobis necessitatibus laboriosam officia, reprehenderit, earum fugiat?';
@@ -10,13 +9,11 @@ export function Headroom() {
 
   return (
     <AppShell header={{ height: 60, collapsed: !pinned, offset: false }} padding="md">
-      <AppShell.Header>
-        <Group h="100%" px="md">
-          <MantineLogo size={30} />
-        </Group>
+      <AppShell.Header p="md">
+        Header is hidden when scrolled down, visible when scrolling up
       </AppShell.Header>
 
-      <AppShell.Main pt="60px + var(--mantine-spacing-md))">
+      <AppShell.Main pt="var(--app-shell-header-height)">
         {Array(40)
           .fill(0)
           .map((_, index) => (

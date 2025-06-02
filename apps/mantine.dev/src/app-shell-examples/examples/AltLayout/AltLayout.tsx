@@ -1,6 +1,5 @@
-import { AppShell, Burger, Group, Skeleton, Text } from '@mantine/core';
+import { AppShell, Burger, Group, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineLogo } from '@mantinex/mantine-logo';
 
 export function AltLayout() {
   const [opened, { toggle }] = useDisclosure();
@@ -17,7 +16,7 @@ export function AltLayout() {
       <AppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <MantineLogo size={30} />
+          Header
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">
@@ -25,14 +24,10 @@ export function AltLayout() {
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
           <Text>Navbar</Text>
         </Group>
-        {Array(15)
-          .fill(0)
-          .map((_, index) => (
-            <Skeleton key={index} h={28} mt="sm" animate={false} />
-          ))}
       </AppShell.Navbar>
       <AppShell.Main>
-        Alt layout – Navbar and Aside are rendered on top on Header and Footer
+        <Text>This is the main section, your app content here.</Text>
+        <Text>Alt layout demo – navbar and aside go all the way from top to bottom.</Text>
       </AppShell.Main>
       <AppShell.Aside p="md">Aside</AppShell.Aside>
       <AppShell.Footer p="md">Footer</AppShell.Footer>

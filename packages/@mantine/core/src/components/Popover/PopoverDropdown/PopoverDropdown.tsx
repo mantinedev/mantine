@@ -10,7 +10,7 @@ import {
   rem,
   useProps,
 } from '../../../core';
-import { FloatingArrow } from '../../Floating';
+import { FloatingArrow } from '../../../utils/Floating';
 import { FocusTrap } from '../../FocusTrap';
 import { OptionalPortal } from '../../Portal';
 import { Transition } from '../../Transition';
@@ -30,10 +30,8 @@ export type PopoverDropdownFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<PopoverDropdownProps>;
-
 export const PopoverDropdown = factory<PopoverDropdownFactory>((_props, ref) => {
-  const props = useProps('PopoverDropdown', defaultProps, _props);
+  const props = useProps('PopoverDropdown', null, _props);
   const {
     className,
     style,

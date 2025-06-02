@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { mergeRefs, useDidUpdate } from '@mantine/hooks';
 import { CSSProperties } from '../../core';
@@ -107,14 +107,27 @@ export function useCollapse({
 
   function getCollapseProps({ style = {}, refKey = 'ref', ...rest }: GetCollapseProps = {}) {
     const theirRef: any = rest[refKey];
-    return {
+    const props: any = {
       'aria-hidden': !opened,
-      inert: !opened,
       ...rest,
       [refKey]: mergeRefs(el, theirRef),
       onTransitionEnd: handleTransitionEnd,
       style: { boxSizing: 'border-box', ...style, ...styles },
     };
+
+    // Handle inert attribute based on React version
+    if (React.version.startsWith('18')) {
+      // React 18: Use empty string for inert=true, undefined for inert=false
+      if (!opened) {
+        props.inert = '';
+      }
+      // Don't set inert property when opened=true (leave it undefined)
+    } else {
+      // React 19+: Use boolean values
+      props.inert = !opened;
+    }
+
+    return props;
   }
 
   return getCollapseProps;

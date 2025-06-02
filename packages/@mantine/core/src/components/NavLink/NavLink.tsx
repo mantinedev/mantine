@@ -45,13 +45,13 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
   /** Section displayed on the right side of the label */
   rightSection?: React.ReactNode;
 
-  /** Determines whether the link should have active styles, `false` by default */
+  /** Determines whether the link should have active styles @default `false` */
   active?: boolean;
 
-  /** Key of `theme.colors` of any valid CSS color to control active styles, `theme.primaryColor` by default */
+  /** Key of `theme.colors` of any valid CSS color to control active styles @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** If set, label and description will not wrap to the next line, `false` by default */
+  /** If set, label and description do not wrap to the next line @default `false` */
   noWrap?: boolean;
 
   /** Child `NavLink` components */
@@ -66,22 +66,16 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
   /** Called when open state changes */
   onChange?: (opened: boolean) => void;
 
-  /** If set, right section will not be rotated when collapse is opened, `false` by default */
+  /** If set, right section will not be rotated when collapse is opened @default `false` */
   disableRightSectionRotation?: boolean;
 
-  /** Key of `theme.spacing` or any valid CSS value to set collapsed links `padding-left`, `'lg'` by default */
+  /** Key of `theme.spacing` or any valid CSS value to set collapsed links `padding-left` @default `'lg'` */
   childrenOffset?: MantineSpacing;
 
-  /** If set, disabled styles will be added to the root element, `false` by default */
+  /** If set, disabled styles will be added to the root element @default `false` */
   disabled?: boolean;
 
-  /** Called when the link is clicked */
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
-
-  /** Link `onkeydown` event */
-  onKeyDown?: (event: React.KeyboardEvent<HTMLAnchorElement>) => void;
-
-  /** Determines whether button text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 }
 
@@ -93,8 +87,6 @@ export type NavLinkFactory = PolymorphicFactory<{
   vars: NavLinkCssVariables;
   variant: NavLinkVariant;
 }>;
-
-const defaultProps = {} satisfies Partial<NavLinkProps>;
 
 const varsResolver = createVarsResolver<NavLinkFactory>(
   (theme, { variant, color, childrenOffset, autoContrast }) => {
@@ -120,7 +112,7 @@ const varsResolver = createVarsResolver<NavLinkFactory>(
 );
 
 export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
-  const props = useProps('NavLink', defaultProps, _props);
+  const props = useProps('NavLink', null, _props);
   const {
     classNames,
     className,
@@ -132,7 +124,6 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
     defaultOpened,
     onChange,
     children,
-    onClick,
     active,
     disabled,
     leftSection,
@@ -142,9 +133,9 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
     disableRightSectionRotation,
     noWrap,
     childrenOffset,
-    onKeyDown,
     autoContrast,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -157,6 +148,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -171,7 +163,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
   const withChildren = !!children;
 
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    onClick?.(event);
+    (others as any).onClick?.(event);
 
     if (withChildren) {
       event.preventDefault();
@@ -187,7 +179,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
         ref={ref}
         onClick={handleClick}
         onKeyDown={(event) => {
-          onKeyDown?.(event);
+          (others as any).onKeyDown?.(event);
 
           if (event.nativeEvent.code === 'Space' && withChildren) {
             event.preventDefault();

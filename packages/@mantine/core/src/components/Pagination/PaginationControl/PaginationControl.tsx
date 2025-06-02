@@ -16,10 +16,10 @@ export interface PaginationControlProps
   extends BoxProps,
     CompoundStylesApiProps<PaginationControlFactory>,
     ElementProps<'button'> {
-  /** Determines whether control should have active styles */
+  /** Applies active styles, adds `data-active` attribute */
   active?: boolean;
 
-  /** Determines whether control should have padding, true by default */
+  /** Applies padding @default `true` */
   withPadding?: boolean;
 }
 

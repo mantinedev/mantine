@@ -3,12 +3,10 @@ import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
 import { YearPicker, YearPickerProps, YearPickerStylesNames } from './YearPicker';
 
-const defaultProps = {};
-
 describe('@mantine/dates/YearPicker', () => {
   tests.itSupportsSystemProps<YearPickerProps, YearPickerStylesNames>({
     component: YearPicker,
-    props: defaultProps,
+    props: {},
     mod: true,
     styleProps: true,
     extend: true,
@@ -32,15 +30,15 @@ describe('@mantine/dates/YearPicker', () => {
     providerStylesApi: false,
   });
 
-  datesTests.itSupportsYearsListProps({ component: YearPicker, props: defaultProps });
+  datesTests.itSupportsYearsListProps({ component: YearPicker, props: {} });
   datesTests.itHandlesControlsKeyboardEvents({
     component: YearPicker,
-    props: defaultProps,
+    props: {},
     listSelector: '.mantine-YearPicker-yearsList',
   });
 
   it('can be uncontrolled (type="default")', async () => {
-    const { container } = render(<YearPicker {...defaultProps} date="2022-04-11" />);
+    const { container } = render(<YearPicker date="2022-04-11" />);
     expect(container.querySelector('[data-selected]')).toBe(null);
     await userEvent.click(container.querySelector('table button')!);
     expect(container.querySelector('[data-selected]')!.textContent).toBe('2020');
@@ -49,7 +47,7 @@ describe('@mantine/dates/YearPicker', () => {
   it('can be controlled (type="default")', async () => {
     const spy = jest.fn();
     const { container } = render(
-      <YearPicker {...defaultProps} date="2022-04-11" value="2023-04-11" onChange={spy} />
+      <YearPicker date="2022-04-11" value="2023-04-11" onChange={spy} />
     );
 
     expect(container.querySelector('[data-selected]')!.textContent).toBe('2023');
@@ -59,9 +57,7 @@ describe('@mantine/dates/YearPicker', () => {
   });
 
   it('can be uncontrolled (type="multiple")', async () => {
-    const { container } = render(
-      <YearPicker {...defaultProps} type="multiple" date="2022-04-11" />
-    );
+    const { container } = render(<YearPicker type="multiple" date="2022-04-11" />);
     expect(container.querySelectorAll('[data-selected]')).toHaveLength(0);
     await userEvent.click(container.querySelectorAll('table button')[0]);
     expect(container.querySelectorAll('[data-selected]')).toHaveLength(1);
@@ -77,13 +73,7 @@ describe('@mantine/dates/YearPicker', () => {
   it('can be controlled (type="multiple")', async () => {
     const spy = jest.fn();
     const { container } = render(
-      <YearPicker
-        {...defaultProps}
-        type="multiple"
-        date="2022-04-11"
-        value={['2023-04-11']}
-        onChange={spy}
-      />
+      <YearPicker type="multiple" date="2022-04-11" value={['2023-04-11']} onChange={spy} />
     );
 
     await userEvent.click(container.querySelector('table button')!);
@@ -91,7 +81,7 @@ describe('@mantine/dates/YearPicker', () => {
   });
 
   it('can be uncontrolled (type="range")', async () => {
-    const { container } = render(<YearPicker {...defaultProps} type="range" />);
+    const { container } = render(<YearPicker type="range" />);
     expect(container.querySelectorAll('[data-selected]')).toHaveLength(0);
 
     await userEvent.click(container.querySelectorAll('table button')[5]);
@@ -107,27 +97,21 @@ describe('@mantine/dates/YearPicker', () => {
 
   it('can be controlled (type="range")', async () => {
     const spy = jest.fn();
-    const { container } = render(
-      <YearPicker {...defaultProps} type="range" value={[null, null]} onChange={spy} />
-    );
+    const { container } = render(<YearPicker type="range" value={[null, null]} onChange={spy} />);
     await userEvent.click(container.querySelector('table button')!);
     expect(spy).toHaveBeenLastCalledWith(['2020-01-01', null]);
   });
 
   it('supports onClick handler from getYearControlProps', async () => {
     const spy = jest.fn();
-    const { container } = render(
-      <YearPicker {...defaultProps} getYearControlProps={() => ({ onClick: spy })} />
-    );
+    const { container } = render(<YearPicker getYearControlProps={() => ({ onClick: spy })} />);
     await userEvent.click(container.querySelector('table button')!);
     expect(spy).toHaveBeenCalled();
   });
 
   it('handles allowSingleDateInRange={true} correctly', async () => {
     const spy = jest.fn();
-    const { container } = render(
-      <YearPicker {...defaultProps} type="range" allowSingleDateInRange onChange={spy} />
-    );
+    const { container } = render(<YearPicker type="range" allowSingleDateInRange onChange={spy} />);
     await userEvent.click(container.querySelectorAll('table button')[2]);
     expect(spy).toHaveBeenCalledWith(['2022-01-01', null]);
     await userEvent.click(container.querySelectorAll('table button')[2]);
@@ -137,7 +121,7 @@ describe('@mantine/dates/YearPicker', () => {
   it('handles allowSingleDateInRange={false} correctly', async () => {
     const spy = jest.fn();
     const { container } = render(
-      <YearPicker {...defaultProps} type="range" allowSingleDateInRange={false} onChange={spy} />
+      <YearPicker type="range" allowSingleDateInRange={false} onChange={spy} />
     );
     await userEvent.click(container.querySelectorAll('table button')[2]);
     expect(spy).toHaveBeenCalledWith(['2022-01-01', null]);
@@ -146,12 +130,12 @@ describe('@mantine/dates/YearPicker', () => {
   });
 
   it('has correct default __staticSelector', () => {
-    const { container } = render(<YearPicker {...defaultProps} />);
+    const { container } = render(<YearPicker />);
     expect(container.querySelector('.mantine-YearPicker-yearsList')).toBeInTheDocument();
   });
 
   it('supports custom __staticSelector', () => {
-    const { container } = render(<YearPicker {...defaultProps} __staticSelector="Calendar" />);
+    const { container } = render(<YearPicker __staticSelector="Calendar" />);
     expect(container.querySelector('.mantine-Calendar-yearsList')).toBeInTheDocument();
   });
 
@@ -163,7 +147,6 @@ describe('@mantine/dates/YearPicker', () => {
   it('only adds selected year of decade to tab order', async () => {
     render(
       <YearPicker
-        {...defaultProps}
         date="2010-01-01"
         getYearControlProps={(date) => ({
           selected: dayjs('2013-01-01').isSame(date, 'year'),
@@ -185,9 +168,7 @@ describe('@mantine/dates/YearPicker', () => {
   });
 
   it('only adds current year of decade to tab order', async () => {
-    render(
-      <YearPicker {...defaultProps} date={dayjs().format('YYYY-MM-DD')} ariaLabels={ariaLabels} />
-    );
+    render(<YearPicker date={dayjs().format('YYYY-MM-DD')} ariaLabels={ariaLabels} />);
     await userEvent.tab();
     expect(screen.getByRole('button', { name: ariaLabels.previousDecade })).toHaveFocus();
 
@@ -204,7 +185,6 @@ describe('@mantine/dates/YearPicker', () => {
   it('only adds first non-disabled year of decade to tab order', async () => {
     render(
       <YearPicker
-        {...defaultProps}
         date="2010-01-01"
         minDate="2014-01-01"
         getYearControlProps={(date) => ({

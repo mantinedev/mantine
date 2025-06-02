@@ -21,13 +21,13 @@ export interface GridColProps
   extends BoxProps,
     CompoundStylesApiProps<GridColFactory>,
     ElementProps<'div'> {
-  /** Column span, `12` by default */
+  /** Column span @default `12` */
   span?: StyleProp<ColSpan>;
 
   /** Column order, can be used to reorder columns at different viewport sizes */
   order?: StyleProp<number>;
 
-  /** Column offset on the left side – number of columns that should be left empty before this column */
+  /** Column offset on the left side – number of columns that are left empty before this column */
   offset?: StyleProp<number>;
 }
 

@@ -21,7 +21,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { InlineInput, InlineInputStylesNames } from '../InlineInput';
+import { InlineInput, InlineInputStylesNames } from '../../utils/InlineInput';
 import { RadioCard } from './RadioCard/RadioCard';
 import { useRadioGroupContext } from './RadioGroup.context';
 import { RadioGroup } from './RadioGroup/RadioGroup';
@@ -47,10 +47,10 @@ export interface RadioProps
   /** Content of the `label` associated with the radio */
   label?: React.ReactNode;
 
-  /** Key of `theme.colors` or any valid CSS color to set input color in checked state, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color to set input color in checked state @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Controls size of the component, `'sm'` by default */
+  /** Controls size of the component @default `'sm'` */
   size?: MantineSize | (string & {});
 
   /** A component that replaces default check icon */
@@ -59,7 +59,7 @@ export interface RadioProps
   /** Props passed down to the root element */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 
-  /** Position of the label relative to the input, `'right'` by default */
+  /** Position of the label relative to the input @default `'right'` */
   labelPosition?: 'left' | 'right';
 
   /** Description displayed below the label */
@@ -68,7 +68,7 @@ export interface RadioProps
   /** Error displayed below the label */
   error?: React.ReactNode;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` "xl" by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` @default `'xl'` */
   radius?: MantineRadius;
 
   /** Assigns ref of the root element */
@@ -77,7 +77,7 @@ export interface RadioProps
   /** Key of `theme.colors` or any valid CSS color to set icon color, by default value depends on `theme.autoContrast` */
   iconColor?: MantineColor;
 
-  /** Determines whether icon color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 }
 
@@ -147,6 +147,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
     iconColor,
     onChange,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -159,6 +160,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

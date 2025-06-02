@@ -19,13 +19,13 @@ export type StackCssVariables = {
 };
 
 export interface StackProps extends BoxProps, StylesApiProps<StackFactory>, ElementProps<'div'> {
-  /** Key of `theme.spacing` or any valid CSS value to set `gap` property, numbers are converted to rem, `'md'` by default */
+  /** Key of `theme.spacing` or any valid CSS value to set `gap` property, numbers are converted to rem @default `'md'` */
   gap?: MantineSpacing;
 
-  /** Controls `align-items` CSS property, `'stretch'` by default */
+  /** Controls `align-items` CSS property @default `'stretch'` */
   align?: React.CSSProperties['alignItems'];
 
-  /** Controls `justify-content` CSS property, `'flex-start'` by default */
+  /** Controls `justify-content` CSS property @default `'flex-start'` */
   justify?: React.CSSProperties['justifyContent'];
 }
 
@@ -63,6 +63,7 @@ export const Stack = factory<StackFactory>((_props, ref) => {
     justify,
     gap,
     variant,
+    attributes,
     ...others
   } = props;
 
@@ -75,6 +76,7 @@ export const Stack = factory<StackFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

@@ -23,16 +23,16 @@ export type CardCssVariables = {
 };
 
 export interface CardProps extends BoxProps, StylesApiProps<CardFactory> {
-  /** Key of `theme.shadows` or any valid CSS value to set `box-shadow`, `none` by default */
+  /** Key of `theme.shadows` or any valid CSS value to set `box-shadow` */
   shadow?: MantineShadow;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Determines whether the card should have border, border color depends on color scheme, `false` by default */
+  /** Adds border to the card */
   withBorder?: boolean;
 
-  /** Controls `padding`, key of `theme.spacing` or any valid CSS value, `'md'` by default */
+  /** Key of `theme.spacing` or any valid CSS value to set padding @default `'md'` */
   padding?: MantineSpacing;
 
   /** Card content */
@@ -50,8 +50,6 @@ export type CardFactory = PolymorphicFactory<{
   };
 }>;
 
-const defaultProps = {} satisfies Partial<CardProps>;
-
 const varsResolver = createVarsResolver<CardFactory>((_, { padding }) => ({
   root: {
     '--card-padding': getSpacing(padding),
@@ -59,9 +57,19 @@ const varsResolver = createVarsResolver<CardFactory>((_, { padding }) => ({
 }));
 
 export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
-  const props = useProps('Card', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, children, padding, ...others } =
-    props;
+  const props = useProps('Card', null, _props);
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    children,
+    padding,
+    attributes,
+    ...others
+  } = props;
 
   const getStyles = useStyles<CardFactory>({
     name: 'Card',
@@ -72,6 +80,7 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

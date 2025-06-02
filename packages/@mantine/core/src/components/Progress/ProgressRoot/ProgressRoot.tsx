@@ -22,16 +22,16 @@ export type ProgressRootCssVariables = {
 };
 
 export interface __ProgressRootProps extends BoxProps, ElementProps<'div'> {
-  /** Controls track height, `'md'` by default */
+  /** Controls track height @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Determines whether label text color should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 
-  /** Controls sections width transition duration, value is specified in ms, `100` by default */
+  /** Controls sections width transition duration, value is specified in ms @default `100` */
   transitionDuration?: number;
 }
 
@@ -46,8 +46,6 @@ export type ProgressRootFactory = Factory<{
   vars: ProgressRootCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<ProgressRootProps>;
-
 const varsResolver = createVarsResolver<ProgressRootFactory>(
   (_, { size, radius, transitionDuration }) => ({
     root: {
@@ -60,7 +58,7 @@ const varsResolver = createVarsResolver<ProgressRootFactory>(
 );
 
 export const ProgressRoot = factory<ProgressRootFactory>((_props, ref) => {
-  const props = useProps('ProgressRoot', defaultProps, _props);
+  const props = useProps('ProgressRoot', null, _props);
   const {
     classNames,
     className,
@@ -70,6 +68,7 @@ export const ProgressRoot = factory<ProgressRootFactory>((_props, ref) => {
     vars,
     autoContrast,
     transitionDuration,
+    attributes,
     ...others
   } = props;
 
@@ -82,6 +81,7 @@ export const ProgressRoot = factory<ProgressRootFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

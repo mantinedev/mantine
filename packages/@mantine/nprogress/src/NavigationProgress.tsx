@@ -19,25 +19,25 @@ export interface NavigationProgressProps extends ElementProps<'div'> {
   /** Component store, controls state */
   store?: NprogressStore;
 
-  /** Initial progress value, `0` by default */
+  /** Initial progress value @default `0` */
   initialProgress?: number;
 
-  /** Key of `theme.colors` of any other valid CSS color, `theme.primaryColor` by default */
+  /** Key of `theme.colors` of any other valid CSS color @default `theme.primaryColor` */
   color?: MantineColor;
 
   /** Controls height of the progress bar */
   size?: number;
 
-  /** Step interval in ms, `500` by default */
+  /** Step interval in ms @default `500` */
   stepInterval?: number;
 
-  /** Determines whether the progress bar should be rendered within `Portal`, `true` by default */
+  /** Determines whether the progress bar should be rendered within `Portal` @default `true` */
   withinPortal?: boolean;
 
   /** Props to pass down to the `Portal` when `withinPortal` is `true` */
   portalProps?: Omit<BasePortalProps, 'withinPortal'>;
 
-  /** Progressbar z-index, `9999` by default */
+  /** Progressbar z-index @default `9999` */
   zIndex?: React.CSSProperties['zIndex'];
 }
 

@@ -1,6 +1,6 @@
 import type { FlipOptions, InlineOptions, ShiftOptions, SizeOptions } from '@floating-ui/react';
 import { BoxProps, ElementProps, MantineColor, MantineRadius, StylesApiProps } from '../../core';
-import { FloatingPosition } from '../Floating';
+import { FloatingPosition } from '../../utils/Floating';
 import { BasePortalProps } from '../Portal';
 import type { TooltipFactory } from './Tooltip';
 
@@ -21,7 +21,7 @@ export interface TooltipBaseProps
     StylesApiProps<TooltipFactory>,
     ElementProps<'div'> {
   /** Target element, must support `ref` prop and `...others` */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 
   /** Tooltip position relative to target element (`Tooltip` component) or mouse (`Tooltip.Floating` component) */
   position?: FloatingPosition;
@@ -35,7 +35,7 @@ export interface TooltipBaseProps
   /** Determines whether tooltip should be rendered within `Portal`, `true` by default */
   withinPortal?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem@default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Key of `theme.colors` or any valid CSS color, controls tooltip background, by default set based on current color scheme */

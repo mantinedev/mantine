@@ -30,19 +30,16 @@ export function Usage() {
   return (
     <div style={{ padding: 40 }}>
       <Autocomplete
-        data={[
-          'React',
-          'Angular',
-          'Svelte',
-          'Vue',
-          'Ember',
-          'Backbone',
-          'Preact',
-          'Inferno',
-          'Aurelia',
-          'Meteor',
-        ]}
+        data={options}
         placeholder="Select something"
+        autoSelectOnBlur
+        error="This field is required"
+        leftSection="$"
+        attributes={{
+          input: { 'data-test-id': 'input' },
+          section: { 'data-test-id': 'section' },
+          error: { 'data-test-id': 'err' },
+        }}
       />
     </div>
   );

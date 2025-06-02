@@ -26,7 +26,7 @@ export interface MonthPickerInputProps<Type extends DatePickerType = 'default'>
     DateInputSharedProps,
     MonthPickerBaseProps<Type>,
     StylesApiProps<MonthPickerInputFactory> {
-  /** dayjs format for input value, `"MMMM YYYY"` by default  */
+  /** `dayjs` format for input value @default `"MMMM YYYY"` */
   valueFormat?: string;
 }
 
@@ -74,6 +74,7 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
       maxDate,
       vars,
       valueFormatter,
+      attributes,
       ...rest
     } = props;
 
@@ -122,6 +123,7 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
         variant={variant}
         dropdownType={dropdownType}
         {...others}
+        attributes={attributes}
         type={type as any}
         __staticSelector="MonthPickerInput"
       >
@@ -146,6 +148,7 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
           __stopPropagation={dropdownType === 'popover'}
           minDate={minDate}
           maxDate={maxDate}
+          attributes={attributes}
         />
       </PickerInputBase>
     );

@@ -42,16 +42,16 @@ export interface PinInputProps
   /** Hidden input `form` attribute */
   form?: string;
 
-  /** Key of `theme.spacing` or any valid CSS value to set `gap` between inputs, numbers are converted to rem, `'md'` by default */
+  /** Key of `theme.spacing` or any valid CSS value to set `gap` between inputs, numbers are converted to rem @default `'md'` */
   gap?: MantineSpacing;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Controls inputs `width` and `height`, `'sm'` by default */
+  /** Controls inputs `width` and `height` @default `'sm'` */
   size?: MantineSize;
 
-  /** If set, the first input is focused when component is mounted, `false` by default */
+  /** If set, the first input is focused when component is mounted @default `false` */
   autoFocus?: boolean;
 
   /** Controlled component value */
@@ -66,31 +66,31 @@ export interface PinInputProps
   /** Called when all inputs have value */
   onComplete?: (value: string) => void;
 
-  /** Inputs placeholder, `'○'` by default */
+  /** Inputs placeholder @default `'○'` */
   placeholder?: string;
 
-  /** Determines whether focus should be moved automatically to the next input once filled, `true` by default */
+  /** Determines whether focus should be moved automatically to the next input once filled @default `true` */
   manageFocus?: boolean;
 
-  /** Determines whether `autocomplete="one-time-code"` attribute should be set on all inputs, `true` by default */
+  /** Determines whether `autocomplete="one-time-code"` attribute should be set on all inputs @default `true` */
   oneTimeCode?: boolean;
 
-  /** Base id used for all inputs. By default, inputs' ids are generated randomly. */
+  /** Base id used to generate unique ids for inputs */
   id?: string;
 
-  /** If set, `disabled` attribute is added to all inputs */
+  /** Adds disabled attribute to all inputs */
   disabled?: boolean;
 
-  /** If set, adds error styles and `aria-invalid` attribute to all inputs */
+  /** Sets `aria-invalid` attribute and applies error styles to all inputs */
   error?: boolean;
 
-  /** Determines which values can be entered, `'alphanumeric'` by default */
+  /** Determines which values can be entered @default `'alphanumeric'` */
   type?: 'alphanumeric' | 'number' | RegExp;
 
-  /** Changes input type to `"password"`, `false` by default */
+  /** Changes input type to `"password"` @default `false` */
   mask?: boolean;
 
-  /** Number of inputs, `4` by default */
+  /** Number of inputs @default `4` */
   length?: number;
 
   /** If set, the user cannot edit the value */
@@ -111,7 +111,7 @@ export interface PinInputProps
     | 'search'
     | undefined;
 
-  /** `aria-label` for the inputs */
+  /** `aria-label` attribute */
   ariaLabel?: string;
 
   /** Props passed down to the hidden input */
@@ -182,6 +182,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     hiddenInputProps,
     rootRef,
     getInputProps,
+    attributes,
     ...others
   } = useProps('PinInput', defaultProps, props);
 
@@ -196,6 +197,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

@@ -18,7 +18,7 @@ export interface RichTextEditorControlProps
   extends BoxProps,
     CompoundStylesApiProps<RichTextEditorControlFactory>,
     ElementProps<'button'> {
-  /** Determines whether the control should have active state, false by default */
+  /** Determines whether the control should have active state @default `false` */
   active?: boolean;
 
   /** Determines whether the control can be interacted with, set `false` to make the control to act as a label */

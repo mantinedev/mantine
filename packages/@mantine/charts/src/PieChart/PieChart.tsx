@@ -46,10 +46,10 @@ export interface PieChartProps
   /** Data used to render chart */
   data: PieChartCell[];
 
-  /** Determines whether the tooltip should be displayed when one of the section is hovered, `true` by default */
+  /** Determines whether the tooltip should be displayed when one of the section is hovered @default `true` */
   withTooltip?: boolean;
 
-  /** Tooltip animation duration in ms, `0` by default */
+  /** Tooltip animation duration in ms @default `0` */
   tooltipAnimationDuration?: number;
 
   /** Props passed down to `Tooltip` recharts component */
@@ -64,28 +64,28 @@ export interface PieChartProps
   /** Controls text color of all labels, white by default */
   labelColor?: MantineColor;
 
-  /** Controls padding between segments, `0` by default */
+  /** Controls padding between segments @default `0` */
   paddingAngle?: number;
 
-  /** Determines whether each segment should have associated label, `false` by default */
+  /** Determines whether each segment should have associated label @default `false` */
   withLabels?: boolean;
 
-  /** Determines whether segments labels should have lines that connect the segment with the label, `true` by default */
+  /** Determines whether segments labels should have lines that connect the segment with the label @default `true` */
   withLabelsLine?: boolean;
 
-  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. `80` by default */
+  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. @default `80` */
   size?: number;
 
-  /** Controls width of segments stroke, `1` by default */
+  /** Controls width of segments stroke @default `1` */
   strokeWidth?: number;
 
-  /** Controls angle at which chart starts, `0` by default. Set to `180` to render the chart as semicircle. */
+  /** Controls angle at which chart starts. Set to `180` to render the chart as semicircle. @default `0` */
   startAngle?: number;
 
-  /** Controls angle at which charts ends, `360` by default. Set to `0` to render the chart as semicircle. */
+  /** Controls angle at which charts ends. Set to `0` to render the chart as semicircle. @default `360` */
   endAngle?: number;
 
-  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. `'all'` by default. */
+  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. @default `'all'` */
   tooltipDataSource?: 'segment' | 'all';
 
   /** Additional elements rendered inside `PieChart` component */
@@ -94,10 +94,10 @@ export interface PieChartProps
   /** Props passed down to recharts `PieChart` component */
   pieChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsPieChart>;
 
-  /** Controls labels position relative to the segment, `'outside'` by default */
+  /** Controls labels position relative to the segment @default `'outside'` */
   labelsPosition?: 'inside' | 'outside';
 
-  /** Type of labels to display, `'value'` by default */
+  /** Type of labels to display @default `'value'` */
   labelsType?: 'value' | 'percent';
 
   /** A function to format values inside the tooltip */
@@ -217,6 +217,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
     valueFormatter,
     labelsType,
     strokeColor,
+    attributes,
     ...others
   } = props;
 
@@ -231,6 +232,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -295,6 +297,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
                   type="radial"
                   segmentId={tooltipDataSource === 'segment' ? payload?.[0]?.name : undefined}
                   valueFormatter={valueFormatter}
+                  attributes={attributes}
                 />
               )}
               {...tooltipProps}

@@ -1,0 +1,89 @@
+import { HoverCardDemos, HooksDemos, SelectDemos, TooltipDemos, ContainerDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog820);
+
+## Styles API attributes
+
+You now can pass attributes to inner elements of all components that support Styles API with `attributes` prop.
+For example, it can be used to add data attributes for testing purposes:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button
+      attributes={{
+        root: { 'data-test-id': 'root' },
+        label: { 'data-test-id': 'label' },
+        inner: { 'data-test-id': 'inner' },
+      }}
+    >
+      Button
+    </Button>
+  );
+}
+```
+
+## Container grid strategy
+
+[Container](/core/container) now supports `strategy="grid"` prop which enables more
+features.
+
+Differences from the default `strategy="block"`:
+- Uses `display: grid` instead of `display: block`
+- Does not include default inline padding
+- Does not set `max-width` on the root element (uses grid template columns instead)
+
+Features supported by `strategy="grid"`:
+- Everything that is supported by `strategy="block"`
+- Children with `data-breakout` attribute take the entire width of the container's parent element
+- Children with `data-container` inside `data-breakout` have the same width as the main grid column
+
+`strategy="grid"` will replace `strategy="block"` in 9.0 release, it is
+recommended to use it in new projects and migrate existing projects to it.
+
+Example of using breakout feature:
+
+<Demo data={ContainerDemos.breakout} />
+
+## Tooltip target
+
+New [Tooltip](/core/tooltip) `target` prop is an alternative to `children`. It accepts a string (selector),
+an HTML element or a ref object with HTML element. Use `target` prop when you do
+not render tooltip target as JSX element.
+
+Example of using `target` prop with a string selector:
+
+<Demo data={TooltipDemos.target} />
+
+## HoverCard.Group
+
+[HoverCard](/core/hover-card) now supports delay synchronization between multiple instances using `HoverCard.Group` component:
+
+<Demo data={HoverCardDemos.group} demoProps={{ defaultExpanded: false }} />
+
+## use-selection hook
+
+New [use-selection](/hooks/use-selection) hook:
+
+<Demo data={HooksDemos.useSelectionDemo} demoProps={{ defaultExpanded: false }} />
+
+## autoSelectOnBlur prop
+
+[Select](/core/select) and [Autocomplete](/core/autocomplete) components now support `autoSelectOnBlur` prop.
+Use it to automatically select the highlighted option when the input loses focus.
+To see this feature in action: select an option with up/down arrows, then click outside the input:
+
+<Demo data={SelectDemos.autoSelectOnBlur} />
+
+## Other changes
+
+- [Accordion](/core/accordion) default `chevronSize` prop value was changed to `auto` to allow using dynamic icon sizes
+- [Accordion](/core/accordion) now supports `chevronIconSize` prop to configure size of the default chevron icon
+- [AffixPosition](/core/affix) type is now exported from `@mantine/core` package
+- `errorProps`, `labelProps` and `descriptionProps` props of all inputs now have stricter types and better IDE autocomplete
+- `TypographyStylesProvider` was renamed to just `Typography` to simplify usage. `TypographyStylesProvider` name is still available but marked as deprecated – it will be removed in `9.0.0` release.
+- [Slider](/core/slider) and [RangeSlider](/core/range-slider) components now have separate documentation pages

@@ -32,19 +32,19 @@ export interface CheckboxIndicatorProps
   extends BoxProps,
     StylesApiProps<CheckboxIndicatorFactory>,
     ElementProps<'div'> {
-  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Controls size of the component, `'sm'` by default */
+  /** Controls size of the component @default `'sm'` */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Key of `theme.colors` or any valid CSS color to set icon color, by default value depends on `theme.autoContrast` */
   iconColor?: MantineColor;
 
-  /** Determines whether icon color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 
   /** Indeterminate state of the checkbox. If set, `checked` prop is ignored. */
@@ -114,6 +114,7 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props, ref)
     mod,
     variant,
     disabled,
+    attributes,
     ...others
   } = props;
 
@@ -126,6 +127,7 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props, ref)
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'indicator',

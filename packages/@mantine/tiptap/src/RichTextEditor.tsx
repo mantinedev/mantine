@@ -26,7 +26,7 @@ export type RichTextEditorStylesNames =
   | 'linkEditorDropdown'
   | 'root'
   | 'content'
-  | 'typographyStylesProvider'
+  | 'Typography'
   | 'control'
   | 'controlIcon'
   | 'controlsGroup'
@@ -42,10 +42,10 @@ export interface RichTextEditorProps
   /** Tiptap editor instance */
   editor: Editor | null;
 
-  /** Determines whether code highlight styles should be added, `true` by default */
+  /** Determines whether code highlight styles should be added @default `true` */
   withCodeHighlightStyles?: boolean;
 
-  /** Determines whether typography styles should be added, `true` by default */
+  /** Determines whether typography styles should be added @default `true` */
   withTypographyStyles?: boolean;
 
   /** Labels that are used in controls */
@@ -123,6 +123,7 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props, ref) => {
     labels,
     children,
     variant,
+    attributes,
     ...others
   } = props;
 
@@ -135,6 +136,7 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
   });
 

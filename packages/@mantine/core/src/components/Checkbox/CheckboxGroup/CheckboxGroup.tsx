@@ -1,7 +1,7 @@
 import { useUncontrolled } from '@mantine/hooks';
 import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../../core';
+import { InputsGroupFieldset } from '../../../utils/InputsGroupFieldset';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
-import { InputsGroupFieldset } from '../../InputsGroupFieldset';
 import { CheckboxGroupProvider } from '../CheckboxGroup.context';
 
 export type CheckboxGroupStylesNames = InputWrapperStylesNames;
@@ -22,7 +22,7 @@ export interface CheckboxGroupProps extends Omit<InputWrapperProps, 'onChange'> 
   /** Props passed down to the root element (`Input.Wrapper` component) */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 
-  /** Controls size of the `Input.Wrapper`, `'sm'` by default */
+  /** Controls size of the `Input.Wrapper` @default `'sm'` */
   size?: MantineSize | (string & {});
 
   /** If set, value cannot be changed */
@@ -35,11 +35,9 @@ export type CheckboxGroupFactory = Factory<{
   stylesNames: CheckboxGroupStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<CheckboxGroupProps>;
-
 export const CheckboxGroup = factory<CheckboxGroupFactory>((props, ref) => {
   const { value, defaultValue, onChange, size, wrapperProps, children, readOnly, ...others } =
-    useProps('CheckboxGroup', defaultProps, props);
+    useProps('CheckboxGroup', null, props);
 
   const [_value, setValue] = useUncontrolled({
     value,

@@ -4,3 +4,11 @@ export const REPLACE_TYPES: Record<string, string> = {
   '((text: string, reviver?: ((this: any, key: string, value: any) => any)) => any) | undefined':
     'typeof JSON.parse',
 };
+
+export function prepareType(type: string): string {
+  if (type in REPLACE_TYPES) {
+    return REPLACE_TYPES[type];
+  }
+
+  return type.replaceAll('DefaultMantineColor', 'MantineColor');
+}

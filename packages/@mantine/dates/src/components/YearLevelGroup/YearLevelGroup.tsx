@@ -63,6 +63,7 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props, ref) => {
     nextDisabled,
     previousDisabled,
     hasNextLevel,
+    headerControlsOrder,
 
     // Other settings
     classNames,
@@ -75,6 +76,7 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props, ref) => {
     yearLabelFormat,
     size,
     vars,
+    attributes,
     ...others
   } = props;
 
@@ -142,6 +144,8 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props, ref) => {
           unstyled={unstyled}
           __staticSelector={__staticSelector || 'YearLevelGroup'}
           withCellSpacing={withCellSpacing}
+          headerControlsOrder={headerControlsOrder}
+          attributes={attributes}
         />
       );
     });
@@ -154,6 +158,7 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props, ref) => {
       ref={ref}
       size={size}
       unstyled={unstyled}
+      attributes={attributes}
       {...others}
     >
       {years}

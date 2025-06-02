@@ -75,10 +75,10 @@ export interface CompositeChartProps
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: CompositeChartSeries[];
 
-  /** Type of the curve, `'monotone'` by default */
+  /** Type of the curve @default `'monotone'` */
   curveType?: CompositeChartCurveType;
 
-  /** Determines whether dots should be displayed, `true` by default */
+  /** Determines whether dots should be displayed @default `true` */
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
@@ -87,10 +87,10 @@ export interface CompositeChartProps
   /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
   activeDotProps?: Omit<DotProps, 'ref'>;
 
-  /** Stroke width for the chart lines, `2` by default */
+  /** Stroke width for the chart lines @default `2` */
   strokeWidth?: number;
 
-  /** Determines whether points with `null` values should be connected, `true` by default */
+  /** Determines whether points with `null` values should be connected @default `true` */
   connectNulls?: boolean;
 
   /** Additional components that are rendered inside recharts `AreaChart` component */
@@ -111,13 +111,13 @@ export interface CompositeChartProps
     | ((series: CompositeChartSeries) => Partial<Omit<BarProps, 'ref'>>)
     | Partial<Omit<BarProps, 'ref'>>;
 
-  /** Determines whether each point should have associated label, `false` by default */
+  /** Determines whether each point should have associated label @default `false` */
   withPointLabels?: boolean;
 
-  /** Determines whether a label with bar value should be displayed on top of each bar, `false` by default */
+  /** Determines whether a label with bar value should be displayed on top of each bar @default `false` */
   withBarValueLabel?: boolean;
 
-  /** Sets minimum height of the bar in px, `0` by default */
+  /** Sets minimum height of the bar in px @default `0` */
   minBarSize?: number;
 
   /** Maximum bar width in px */
@@ -207,6 +207,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
     minBarSize,
     maxBarWidth,
     composedChartProps,
+    attributes,
     ...others
   } = props;
 
@@ -234,6 +235,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -419,6 +421,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={series}
+                  attributes={attributes}
                 />
               )}
               {...legendProps}
@@ -517,6 +520,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
                   styles={resolvedStyles}
                   series={series}
                   valueFormatter={valueFormatter}
+                  attributes={attributes}
                 />
               )}
               {...tooltipProps}

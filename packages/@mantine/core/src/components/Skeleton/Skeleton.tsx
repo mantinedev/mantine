@@ -22,22 +22,22 @@ export interface SkeletonProps
   extends BoxProps,
     StylesApiProps<SkeletonFactory>,
     ElementProps<'div'> {
-  /** Determines whether Skeleton overlay should be displayed, `true` by default */
+  /** Determines whether Skeleton overlay should be displayed @default `true` */
   visible?: boolean;
 
-  /** Skeleton `height`, numbers are converted to rem, `auto` by default */
+  /** Skeleton `height`, numbers are converted to rem @default `auto` */
   height?: React.CSSProperties['height'];
 
-  /** Skeleton `width`, numbers are converted to rem, `100%` by default, ignored when `circle` prop is set */
+  /** Skeleton `width`, numbers are converted to rem, ignored when `circle` prop is set. @default `100%` */
   width?: React.CSSProperties['width'];
 
-  /** If set, Skeleton `width` and `border-radius` are equal to its `height`, `false` by default */
+  /** If set, Skeleton `width` and `border-radius` are equal to its `height` @default `false` */
   circle?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. `theme.defaultRadius` by default. */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default `theme.defaultRadius` */
   radius?: React.CSSProperties['borderRadius'];
 
-  /** Determines whether Skeleton should be animated, `true` by default */
+  /** Enables animation @default `true` */
   animate?: boolean;
 }
 
@@ -79,6 +79,7 @@ export const Skeleton = factory<SkeletonFactory>((_props, ref) => {
     radius,
     animate,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -91,6 +92,7 @@ export const Skeleton = factory<SkeletonFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

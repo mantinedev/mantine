@@ -20,7 +20,7 @@ import { MonthsList, MonthsListSettings, MonthsListStylesNames } from '../Months
 export type YearLevelStylesNames = MonthsListStylesNames | CalendarHeaderStylesNames;
 
 export interface YearLevelBaseSettings extends MonthsListSettings {
-  /** dayjs label format to display year label or a function that returns year label based on year value, `"YYYY"` by default */
+  /** dayjs label format to display year label or a function that returns year label based on year value @default `"YYYY"` */
   yearLabelFormat?: DateLabelFormat;
 }
 
@@ -83,6 +83,7 @@ export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
     levelControlAriaLabel,
     withNext,
     withPrevious,
+    headerControlsOrder,
 
     // Other props
     yearLabelFormat,
@@ -92,6 +93,7 @@ export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     ...others
   } = props;
 
@@ -103,6 +105,7 @@ export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
     styles,
     unstyled,
     size,
+    attributes,
   };
 
   const _nextDisabled =
@@ -144,6 +147,7 @@ export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
         levelControlAriaLabel={levelControlAriaLabel}
         withNext={withNext}
         withPrevious={withPrevious}
+        headerControlsOrder={headerControlsOrder}
         {...stylesApiProps}
       />
 

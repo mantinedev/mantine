@@ -27,16 +27,16 @@ export interface BlockquoteProps
   extends BoxProps,
     StylesApiProps<BlockquoteFactory>,
     ElementProps<'blockquote', 'cite'> {
-  /** Blockquote icon, displayed on the top left */
+  /** Blockquote icon, displayed at the top left side */
   icon?: React.ReactNode;
 
-  /** Controls icon `width` and `height`, numbers are converted to rem, `40` by default */
+  /** Controls icon `width` and `height`, numbers are converted to rem @default `40` */
   iconSize?: number | string;
 
-  /** Key of `theme.colors` or any valid CSS color, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Reference to a cited quote */
@@ -91,6 +91,7 @@ export const Blockquote = factory<BlockquoteFactory>((_props, ref) => {
     icon,
     iconSize,
     cite,
+    attributes,
     ...others
   } = props;
 
@@ -103,6 +104,7 @@ export const Blockquote = factory<BlockquoteFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

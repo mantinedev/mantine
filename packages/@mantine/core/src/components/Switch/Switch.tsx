@@ -18,7 +18,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../InlineInput';
+import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../../utils/InlineInput';
 import { useSwitchGroupContext } from './SwitchGroup.context';
 import { SwitchGroup } from './SwitchGroup/SwitchGroup';
 import classes from './Switch.module.css';
@@ -58,13 +58,13 @@ export interface SwitchProps
   /** Inner label when the `Switch` is in checked state */
   onLabel?: React.ReactNode;
 
-  /** Key of `theme.colors` or any valid CSS color to set input color in checked state, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color to set input color in checked state @default `theme.primaryColor` */
   color?: MantineColor;
 
   /** Controls size of all elements */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` "xl" by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` @default `'xl'` */
   radius?: MantineRadius;
 
   /** Props passed down to the root element */
@@ -73,7 +73,7 @@ export interface SwitchProps
   /** Icon inside the thumb of the switch */
   thumbIcon?: React.ReactNode;
 
-  /** Position of the label relative to the input, `'right'` by default */
+  /** Position of the label relative to the input @default `'right'` */
   labelPosition?: 'left' | 'right';
 
   /** Description displayed below the label */
@@ -85,7 +85,7 @@ export interface SwitchProps
   /** Assigns ref of the root element */
   rootRef?: React.ForwardedRef<HTMLDivElement>;
 
-  /** If set, the indicator will be displayed inside thumb, `true` by default */
+  /** If set, the indicator will be displayed inside thumb @default `true` */
   withThumbIndicator?: boolean;
 }
 
@@ -145,6 +145,7 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
     rootRef,
     mod,
     withThumbIndicator,
+    attributes,
     ...others
   } = props;
 
@@ -160,6 +161,7 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

@@ -4,17 +4,11 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Slider);
 
-## Slider component
+## Usage
 
 <Demo data={SliderDemos.configurator} />
 
-## RangeSlider component
-
-<Demo data={SliderDemos.rangeConfigurator} />
-
 ## Controlled
-
-Controlled `Slider`:
 
 ```tsx
 import { useState } from 'react';
@@ -23,18 +17,6 @@ import { Slider } from '@mantine/core';
 function Demo() {
   const [value, setValue] = useState(40);
   return <Slider value={value} onChange={setValue} />;
-}
-```
-
-Controlled `RangeSlider`:
-
-```tsx
-import { useState } from 'react';
-import { RangeSlider } from '@mantine/core';
-
-function Demo() {
-  const [value, setValue] = useState<[number, number]>([20, 80]);
-  return <RangeSlider value={value} onChange={setValue} />;
 }
 ```
 
@@ -63,28 +45,19 @@ To change label behavior and appearance, set the following props:
 
 <Demo data={SliderDemos.step} />
 
+## Domain
+
+By default, `min` and `max` values define the possible range of values.
+`domain` prop allows setting the possible range of values independently of the
+`min` and `max` values:
+
+<Demo data={SliderDemos.domain} />
+
 ## Decimal values
 
 To use `Slider` with decimal values, set `min`, `max` and `step` props:
 
 <Demo data={SliderDemos.decimal} />
-
-## minRange
-
-Use `minRange` prop to control minimum range between `from` and `to` values
-in `RangeSlider`. The default value is `10`. The example below shows how to
-use `minRange` prop to capture decimal values from the user:
-
-<Demo data={SliderDemos.decimalRange} />
-
-## pushOnOverlap
-
-`pushOnOverlap` prop controls whether the thumbs should push each other when they overlap.
-By default, `pushOnOverlap` is `true`, if you want to disable this behavior, set it to `false`.
-
-Example of `pushOnOverlap={false}`:
-
-<Demo data={SliderDemos.pushOnOverlap} />
 
 ## Marks
 
@@ -140,7 +113,7 @@ Example of using [Styles API](/styles/styles-api/) to change `Slider` styles:
 
 ## Vertical slider
 
-`Slider` and `RangeSlider` do not provide vertical orientation as it is very rarely used.
+`Slider` does not provide vertical orientation as it is very rarely used.
 If you need this feature you can build it yourself with [use-move](/hooks/use-move/) hook.
 
 ## Build custom slider
@@ -151,7 +124,7 @@ If `Slider` component does not meet your requirements, you can build a custom sl
 
 ## Accessibility
 
-`Slider` and `RangeSlider` components are accessible by default:
+`Slider` component is accessible by default:
 
 - Thumbs are focusable
 - When the user uses mouse to interact with the slider, focus is moved to the slider track, when the user presses arrows focus is moved to the thumb
@@ -160,18 +133,10 @@ If `Slider` component does not meet your requirements, you can build a custom sl
 To label component for screen readers, add labels to thumbs:
 
 ```tsx
-import { RangeSlider, Slider } from '@mantine/core';
+import { Slider } from '@mantine/core';
 
 function Demo() {
-  return (
-    <>
-      <Slider thumbLabel="Thumb aria-label" />
-      <RangeSlider
-        thumbFromLabel="First thumb aria-label"
-        thumbToLabel="Second thumb aria-label"
-      />
-    </>
-  );
+  return <Slider thumbLabel="Thumb aria-label" />;
 }
 ```
 

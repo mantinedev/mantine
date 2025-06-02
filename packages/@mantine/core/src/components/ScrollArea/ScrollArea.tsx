@@ -48,13 +48,13 @@ export interface ScrollAreaProps
    * */
   type?: 'auto' | 'always' | 'scroll' | 'hover' | 'never';
 
-  /** Scroll hide delay in ms, applicable only when type is set to `hover` or `scroll`, `1000` by default */
+  /** Scroll hide delay in ms, applicable only when type is set to `hover` or `scroll` @default `1000` */
   scrollHideDelay?: number;
 
-  /** Axis at which scrollbars must be rendered, `'xy'` by default */
+  /** Axis at which scrollbars must be rendered @default `'xy'` */
   scrollbars?: 'x' | 'y' | 'xy' | false;
 
-  /** Determines whether scrollbars should be offset with padding on given axis, `false` by default */
+  /** Determines whether scrollbars should be offset with padding on given axis @default `false` */
   offsetScrollbars?: boolean | 'x' | 'y' | 'present';
 
   /** Assigns viewport element (scrollable container) ref */
@@ -124,6 +124,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     onBottomReached,
     onTopReached,
     overscrollBehavior,
+    attributes,
     ...others
   } = props;
 
@@ -140,6 +141,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -195,7 +197,8 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
           viewportProps?.onScroll?.(e);
           onScrollPositionChange?.({ x: e.currentTarget.scrollLeft, y: e.currentTarget.scrollTop });
           const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-          if (scrollTop - (scrollHeight - clientHeight) >= 0) {
+          // threshold of -0.6 is required for some browsers that use sub-pixel rendering
+          if (scrollTop - (scrollHeight - clientHeight) >= -0.6) {
             onBottomReached?.();
           }
           if (scrollTop === 0) {

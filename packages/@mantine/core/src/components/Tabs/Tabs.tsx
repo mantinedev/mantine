@@ -38,31 +38,31 @@ export interface TabsProps
   extends BoxProps,
     StylesApiProps<TabsFactory>,
     ElementProps<'div', 'defaultValue' | 'value' | 'onChange'> {
-  /** Default value for uncontrolled component */
+  /** Uncontrolled component default value */
   defaultValue?: string | null;
 
-  /** Value for controlled component */
+  /** Controlled component value */
   value?: string | null;
 
   /** Called when value changes */
   onChange?: (value: string | null) => void;
 
-  /** Tabs orientation, `'horizontal'` by default */
+  /** Tabs orientation @default `'horizontal'` */
   orientation?: 'vertical' | 'horizontal';
 
-  /** `Tabs.List` placement relative to `Tabs.Panel`, applicable only when `orientation="vertical"`, `'left'` by default */
+  /** `Tabs.List` placement relative to `Tabs.Panel`, applicable only when `orientation="vertical"` @default `'left'` */
   placement?: 'left' | 'right';
 
   /** Base id, used to generate ids to connect labels with controls, generated randomly by default */
   id?: string;
 
-  /** Determines whether arrow key presses should loop though items (first to last and last to first), `true` by default */
+  /** If set, arrow key presses loop though items (first to last and last to first) @default `true` */
   loop?: boolean;
 
-  /** Determines whether tab should be activated with arrow key press, `true` by default */
+  /** If set, tab is activated with arrow key press @default `true` */
   activateTabWithKeyboard?: boolean;
 
-  /** Determines whether tab can be deactivated, `false` by default */
+  /** If set, tab can be deactivated @default `false` */
   allowTabDeactivation?: boolean;
 
   /** Tabs content */
@@ -71,16 +71,16 @@ export interface TabsProps
   /** Changes colors of `Tabs.Tab` components when variant is `pills` or `default`, does nothing for other variants */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`@default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Determines whether tabs should have inverted styles, `false` by default */
+  /** Determines whether tabs should have inverted styles @default `false` */
   inverted?: boolean;
 
-  /** If set to `false`, `Tabs.Panel` content will be unmounted when the associated tab is not active, `true` by default */
+  /** If set to `false`, `Tabs.Panel` content will be unmounted when the associated tab is not active @default `true` */
   keepMounted?: boolean;
 
-  /** Determines whether active item text color should depend on `background-color` of the indicator. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. Only applicable when `variant="pills"` */
+  /** If set, adjusts text color based on background color for `pills` variant */
   autoContrast?: boolean;
 }
 
@@ -145,6 +145,7 @@ export const Tabs = factory<TabsFactory>((_props, ref) => {
     vars,
     autoContrast,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -166,6 +167,7 @@ export const Tabs = factory<TabsFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

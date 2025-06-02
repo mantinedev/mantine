@@ -48,10 +48,10 @@ function onSameLevel(
 }
 
 interface GetElementsSiblingsInput {
-  /** Selector used to find parent node, e.g. '[role="tablist"]', '.mantine-Text-root' */
+  /** Selector used to find parent node, for example '[role="tablist"]', '.mantine-Text-root' */
   parentSelector: string;
 
-  /** Selector used to find element siblings, e.g. '[data-tab]' */
+  /** Selector used to find element siblings, for example '[data-tab]' */
   siblingSelector: string;
 
   /** Determines whether next/previous indices should loop */

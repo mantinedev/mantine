@@ -64,6 +64,7 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props, ref) =
     onPrevious,
     nextDisabled,
     previousDisabled,
+    headerControlsOrder,
 
     // Other settings
     classNames,
@@ -76,6 +77,7 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props, ref) =
     decadeLabelFormat,
     size,
     vars,
+    attributes,
     ...others
   } = props;
 
@@ -143,6 +145,8 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props, ref) =
           styles={styles}
           unstyled={unstyled}
           withCellSpacing={withCellSpacing}
+          headerControlsOrder={headerControlsOrder}
+          attributes={attributes}
         />
       );
     });
@@ -155,6 +159,7 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props, ref) =
       ref={ref}
       size={size}
       unstyled={unstyled}
+      attributes={attributes}
       {...others}
     >
       {decades}

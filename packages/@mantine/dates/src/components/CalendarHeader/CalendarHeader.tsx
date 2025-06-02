@@ -58,17 +58,20 @@ export interface CalendarHeaderSettings {
   /** Disables previous control */
   previousDisabled?: boolean;
 
-  /** Determines whether next level button should be enabled, `true` by default */
+  /** Determines whether next level button should be enabled @default `true` */
   hasNextLevel?: boolean;
 
-  /** Determines whether next control should be rendered, `true` by default */
+  /** Determines whether next control should be rendered @default `true` */
   withNext?: boolean;
 
-  /** Determines whether previous control should be rendered, `true` by default */
+  /** Determines whether previous control should be rendered @default `true` */
   withPrevious?: boolean;
 
   /** Component size */
   size?: MantineSize;
+
+  /** Controls order @default `['previous', 'level', 'next']` */
+  headerControlsOrder?: ('previous' | 'next' | 'level')[];
 }
 
 export interface CalendarHeaderProps
@@ -96,6 +99,7 @@ const defaultProps = {
   hasNextLevel: true,
   withNext: true,
   withPrevious: true,
+  headerControlsOrder: ['previous', 'level', 'next'],
 } satisfies Partial<CalendarHeaderProps>;
 
 const varsResolver = createVarsResolver<CalendarHeaderFactory>((_, { size }) => ({
@@ -128,9 +132,11 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props, ref) => {
     levelControlAriaLabel,
     withNext,
     withPrevious,
+    headerControlsOrder,
     __staticSelector,
     __preventFocus,
     __stopPropagation,
+    attributes,
     ...others
   } = props;
 
@@ -143,6 +149,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'calendarHeader',
@@ -152,68 +159,88 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props, ref) => {
     ? (event: React.MouseEvent<HTMLElement>) => event.preventDefault()
     : undefined;
 
+  const previousControl = withPrevious && (
+    <UnstyledButton
+      {...getStyles('calendarHeaderControl')}
+      key="previous"
+      data-direction="previous"
+      aria-label={previousLabel}
+      onClick={onPrevious}
+      unstyled={unstyled}
+      onMouseDown={preventFocus}
+      disabled={previousDisabled}
+      data-disabled={previousDisabled || undefined}
+      tabIndex={__preventFocus || previousDisabled ? -1 : 0}
+      data-mantine-stop-propagation={__stopPropagation || undefined}
+    >
+      {previousIcon || (
+        <AccordionChevron
+          {...getStyles('calendarHeaderControlIcon')}
+          data-direction="previous"
+          size="45%"
+        />
+      )}
+    </UnstyledButton>
+  );
+
+  const levelControl = (
+    <UnstyledButton
+      component={hasNextLevel ? 'button' : 'div'}
+      {...getStyles('calendarHeaderLevel')}
+      key="level"
+      onClick={hasNextLevel ? onLevelClick : undefined}
+      unstyled={unstyled}
+      onMouseDown={hasNextLevel ? preventFocus : undefined}
+      disabled={!hasNextLevel}
+      data-static={!hasNextLevel || undefined}
+      aria-label={levelControlAriaLabel}
+      tabIndex={__preventFocus || !hasNextLevel ? -1 : 0}
+      data-mantine-stop-propagation={__stopPropagation || undefined}
+    >
+      {label}
+    </UnstyledButton>
+  );
+
+  const nextControl = withNext && (
+    <UnstyledButton
+      {...getStyles('calendarHeaderControl')}
+      key="next"
+      data-direction="next"
+      aria-label={nextLabel}
+      onClick={onNext}
+      unstyled={unstyled}
+      onMouseDown={preventFocus}
+      disabled={nextDisabled}
+      data-disabled={nextDisabled || undefined}
+      tabIndex={__preventFocus || nextDisabled ? -1 : 0}
+      data-mantine-stop-propagation={__stopPropagation || undefined}
+    >
+      {nextIcon || (
+        <AccordionChevron
+          {...getStyles('calendarHeaderControlIcon')}
+          data-direction="next"
+          size="45%"
+        />
+      )}
+    </UnstyledButton>
+  );
+
+  const controls = headerControlsOrder.map((control) => {
+    if (control === 'previous') {
+      return previousControl;
+    }
+    if (control === 'level') {
+      return levelControl;
+    }
+    if (control === 'next') {
+      return nextControl;
+    }
+    return null;
+  });
+
   return (
     <Box {...getStyles('calendarHeader')} ref={ref} {...others}>
-      {withPrevious && (
-        <UnstyledButton
-          {...getStyles('calendarHeaderControl')}
-          data-direction="previous"
-          aria-label={previousLabel}
-          onClick={onPrevious}
-          unstyled={unstyled}
-          onMouseDown={preventFocus}
-          disabled={previousDisabled}
-          data-disabled={previousDisabled || undefined}
-          tabIndex={__preventFocus || previousDisabled ? -1 : 0}
-          data-mantine-stop-propagation={__stopPropagation || undefined}
-        >
-          {previousIcon || (
-            <AccordionChevron
-              {...getStyles('calendarHeaderControlIcon')}
-              data-direction="previous"
-              size="45%"
-            />
-          )}
-        </UnstyledButton>
-      )}
-
-      <UnstyledButton
-        component={hasNextLevel ? 'button' : 'div'}
-        {...getStyles('calendarHeaderLevel')}
-        onClick={hasNextLevel ? onLevelClick : undefined}
-        unstyled={unstyled}
-        onMouseDown={hasNextLevel ? preventFocus : undefined}
-        disabled={!hasNextLevel}
-        data-static={!hasNextLevel || undefined}
-        aria-label={levelControlAriaLabel}
-        tabIndex={__preventFocus || !hasNextLevel ? -1 : 0}
-        data-mantine-stop-propagation={__stopPropagation || undefined}
-      >
-        {label}
-      </UnstyledButton>
-
-      {withNext && (
-        <UnstyledButton
-          {...getStyles('calendarHeaderControl')}
-          data-direction="next"
-          aria-label={nextLabel}
-          onClick={onNext}
-          unstyled={unstyled}
-          onMouseDown={preventFocus}
-          disabled={nextDisabled}
-          data-disabled={nextDisabled || undefined}
-          tabIndex={__preventFocus || nextDisabled ? -1 : 0}
-          data-mantine-stop-propagation={__stopPropagation || undefined}
-        >
-          {nextIcon || (
-            <AccordionChevron
-              {...getStyles('calendarHeaderControlIcon')}
-              data-direction="next"
-              size="45%"
-            />
-          )}
-        </UnstyledButton>
-      )}
+      {controls}
     </Box>
   );
 });

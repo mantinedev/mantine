@@ -29,3 +29,4 @@ export { stripes } from './BarChart.demo.stripes';
 export { overlay } from './BarChart.demo.overlay';
 export { getBarColor } from './BarChart.demo.getBarColor';
 export { valueLabelProps } from './BarChart.demo.valueLabelProps';
+export { referenceArea } from './BarChart.demo.referenceArea';

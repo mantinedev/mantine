@@ -16,10 +16,8 @@ export type DrawerHeaderFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<DrawerHeaderProps>;
-
 export const DrawerHeader = factory<DrawerHeaderFactory>((_props, ref) => {
-  const props = useProps('DrawerHeader', defaultProps, _props);
+  const props = useProps('DrawerHeader', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
   const ctx = useDrawerContext();

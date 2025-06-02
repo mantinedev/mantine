@@ -18,7 +18,7 @@ export interface TimeInputProps
     __BaseInputProps,
     StylesApiProps<TimeInputFactory>,
     ElementProps<'input', 'size'> {
-  /** Determines whether seconds input should be displayed, `false` by default */
+  /** Determines whether seconds input should be displayed @default `false` */
   withSeconds?: boolean;
 
   /** Minimum possible string time, if `withSeconds` is true, time should be in format HH:mm:ss, otherwise HH:mm */
@@ -34,10 +34,8 @@ export type TimeInputFactory = Factory<{
   stylesNames: __InputStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<TimeInputProps>;
-
 export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
-  const props = useProps('TimeInput', defaultProps, _props);
+  const props = useProps('TimeInput', null, _props);
   const {
     classNames,
     styles,

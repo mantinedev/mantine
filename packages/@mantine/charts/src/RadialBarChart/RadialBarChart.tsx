@@ -26,10 +26,10 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { ChartLegend } from '../ChartLegend';
+import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import classes from './RadialBarChart.module.css';
 
-export type RadialBarChartStylesNames = 'root' | 'tooltip';
+export type RadialBarChartStylesNames = 'root' | 'tooltip' | ChartLegendStylesNames;
 export type RadialBarChartCssVariables = {
   root: '--chart-empty-background';
 };
@@ -47,25 +47,25 @@ export interface RadialBarChartProps
   /** Size of bars in px, `20` by default */
   barSize?: number;
 
-  /** Determines whether empty bars area should be visible, `true` by default */
+  /** Determines whether empty bars area should be visible @default `true` */
   withBackground?: boolean;
 
-  /** Determines whether labels should be displayed, `false` by default */
+  /** Determines whether labels should be displayed @default `false` */
   withLabels?: boolean;
 
-  /** Determines whether the legend should be displayed, `false` by default */
+  /** Determines whether the legend should be displayed @default `false` */
   withLegend?: boolean;
 
-  /** Determines whether the tooltip should be displayed when one of the bars is hovered, `true` by default */
+  /** Determines whether the tooltip should be displayed when one of the bars is hovered @default `true` */
   withTooltip?: boolean;
 
   /** Color of the empty background, by default depends on the color scheme */
   emptyBackgroundColor?: string;
 
-  /** Angle at which chart starts, `90` by default */
+  /** Angle at which chart starts @default `90` */
   startAngle?: number;
 
-  /** Angle at which chart ends, `-270` by default */
+  /** Angle at which chart ends @default `-270` */
   endAngle?: number;
 
   /** Props passed down to recharts RadialBar component */
@@ -128,6 +128,7 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
     tooltipProps,
     startAngle,
     endAngle,
+    attributes,
     ...others
   } = props;
   const [highlightedArea, setHighlightedArea] = useState<string | null>(null);
@@ -141,6 +142,7 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -211,6 +213,7 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   centered
+                  attributes={attributes}
                 />
               )}
               {...legendProps}

@@ -46,40 +46,40 @@ export interface AppShellProps
   extends BoxProps,
     StylesApiProps<AppShellFactory>,
     ElementProps<'div'> {
-  /** Determines whether associated components should have a border, `true` by default */
+  /** If set, the associated components have a border @default `true` */
   withBorder?: boolean;
 
-  /** Controls padding of the main section, `0` by default. !important: use `padding` prop instead of `p`. */
+  /** Padding of the main section. Important: use `padding` prop instead of `p`. @default `0` */
   padding?: MantineSpacing | AppShellResponsiveSize;
 
-  /** AppShell.Navbar configuration, controls width, breakpoints and collapsed state. Required if you use AppShell.Navbar component. */
+  /** `Navbar` configuration, controls width, breakpoints and collapsed state. Required if you use `Navbar` component. */
   navbar?: AppShellNavbarConfiguration;
 
-  /** AppShell.Aside configuration, controls width, breakpoints and collapsed state. Required if you use AppShell.Aside component. */
+  /** `Aside` configuration, controls width, breakpoints and collapsed state. Required if you use `Aside` component. */
   aside?: AppShellAsideConfiguration;
 
-  /** AppShell.Header configuration, controls height, offset and collapsed state. Required if you use AppShell.Header component. */
+  /** `Header` configuration, controls height, offset and collapsed state. Required if you use `Header` component. */
   header?: AppShellHeaderConfiguration;
 
-  /** AppShell.Footer configuration, controls height, offset and collapsed state. Required if you use AppShell.Footer component. */
+  /** `Footer` configuration, controls height, offset and collapsed state. Required if you use `Footer` component. */
   footer?: AppShellFooterConfiguration;
 
-  /** Duration of all transitions in ms, `200` by default */
+  /** Duration of all transitions in ms @default `200` */
   transitionDuration?: number;
 
-  /** Timing function of all transitions, `ease` by default */
+  /** Timing function of all transitions @default `ease` */
   transitionTimingFunction?: React.CSSProperties['transitionTimingFunction'];
 
-  /** `z-index` of all associated elements, `100` by default */
+  /** `z-index` of all associated elements @default `100` */
   zIndex?: string | number;
 
-  /** Determines how Navbar/Aside are arranged relative to Header/Footer, `default` by default */
+  /** Determines how `Navbar`/`Aside` are arranged relative to `Header`/`Footer` */
   layout?: 'default' | 'alt';
 
-  /** If set, Navbar, Aside, Header and Footer components be hidden */
+  /** If set, `Navbar`, `Aside`, `Header` and `Footer` components are hidden */
   disabled?: boolean;
 
-  /** Determines whether Header and Footer components should include styles to offset scrollbars. Based on `react-remove-scroll`. `true` by default for `layout="default"`, `false` for `layout="alt"` */
+  /** If set, `Header` and `Footer` components include styles to offset scrollbars. Based on `react-remove-scroll`. @default `true` for `layout="default"`, `false` for `layout="alt"` */
   offsetScrollbars?: boolean;
 }
 
@@ -137,6 +137,7 @@ export const AppShell = factory<AppShellFactory>((_props, ref) => {
     footer,
     offsetScrollbars = layout !== 'alt',
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -149,6 +150,7 @@ export const AppShell = factory<AppShellFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

@@ -76,6 +76,7 @@ export { useScrollSpy } from './use-scroll-spy/use-scroll-spy';
 export { useFileDialog } from './use-file-dialog/use-file-dialog';
 export { useFloatingWindow } from './use-floating-window/use-floating-window';
 export { useLongPress } from './use-long-press/use-long-press';
+export { useSelection } from './use-selection/use-selection';
 
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
 export type { UseClipboardOptions, UseClipboardReturnValue } from './use-clipboard/use-clipboard';
@@ -188,3 +189,8 @@ export type {
   UseFloatingWindowOptions,
   UseFloatingWindowReturnValue,
 } from './use-floating-window/use-floating-window';
+export type {
+  UseSelectionHandlers,
+  UseSelectionInput,
+  UseSelectionReturnValue,
+} from './use-selection/use-selection';

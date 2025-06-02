@@ -24,11 +24,13 @@ export type AppShellMainFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<AppShellMainProps>;
-
 export const AppShellMain = factory<AppShellMainFactory>((_props, ref) => {
-  const props = useProps('AppShellMain', defaultProps, _props);
-  const { classNames, className, style, styles, vars, ...others } = props;
+  const { classNames, className, style, styles, vars, ...others } = useProps(
+    'AppShellMain',
+    null,
+    _props
+  );
+
   const ctx = useAppShellContext();
 
   return (

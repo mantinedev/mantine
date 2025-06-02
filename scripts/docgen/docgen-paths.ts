@@ -11,6 +11,9 @@ const FILES_PATHS = getPaths([
   // Button
   'packages/@mantine/core/src/components/Button/ButtonGroup/ButtonGroup.tsx',
 
+  // Avatar
+  'packages/@mantine/core/src/components/Avatar/AvatarGroup/AvatarGroup.tsx',
+
   // ActionIcon
   'packages/@mantine/core/src/components/ActionIcon/ActionIconGroup/ActionIconGroup.tsx',
 
@@ -78,6 +81,7 @@ const FILES_PATHS = getPaths([
 
   // HoverCard
   'packages/@mantine/core/src/components/HoverCard/HoverCardTarget/HoverCardTarget.tsx',
+  'packages/@mantine/core/src/components/HoverCard/HoverCardGroup/HoverCardGroup.tsx',
 
   // Menu
   'packages/@mantine/core/src/components/Menu/MenuItem/MenuItem.tsx',

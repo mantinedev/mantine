@@ -27,10 +27,10 @@ export type PickerInputBaseStylesNames = __InputStylesNames;
 export interface DateInputSharedProps
   extends Omit<__BaseInputProps, 'size'>,
     ElementProps<'button', 'defaultValue' | 'value' | 'onChange' | 'type'> {
-  /** Determines whether the dropdown is closed when date is selected, not applicable with `type="multiple"`, `true` by default */
+  /** Determines whether the dropdown is closed when date is selected, not applicable with `type="multiple"` @default `true` */
   closeOnChange?: boolean;
 
-  /** Type of the dropdown, `'popover'` by default */
+  /** Type of the dropdown @default `'popover'` */
   dropdownType?: 'popover' | 'modal';
 
   /** Props passed down to `Popover` component */
@@ -39,7 +39,7 @@ export interface DateInputSharedProps
   /** Props passed down to `Modal` component */
   modalProps?: Partial<Omit<ModalProps, 'children'>>;
 
-  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. `false` by default */
+  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default `false` */
   clearable?: boolean;
 
   /** Props passed down to the clear button */
@@ -48,7 +48,7 @@ export interface DateInputSharedProps
   /** If set, the component value cannot be changed by the user */
   readOnly?: boolean;
 
-  /** Determines whether dates values should be sorted before `onChange` call, only applicable with type="multiple", `true` by default */
+  /** Determines whether dates values should be sorted before `onChange` call, only applicable with type="multiple" @default `true` */
   sortDates?: boolean;
 
   /** Separator between range value */
@@ -90,8 +90,6 @@ export type PickerInputBaseFactory = Factory<{
   variant: InputVariant;
 }>;
 
-const defaultProps = {} satisfies Partial<PickerInputBaseProps>;
-
 export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => {
   const {
     inputProps,
@@ -122,7 +120,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
     onDropdownClose,
     withTime,
     ...others
-  } = useInputProps('PickerInputBase', defaultProps, _props);
+  } = useInputProps('PickerInputBase', null, _props);
 
   const clearButton = (
     <Input.ClearButton onClick={onClear} unstyled={unstyled} {...clearButtonProps} />

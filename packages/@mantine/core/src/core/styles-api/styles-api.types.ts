@@ -39,6 +39,12 @@ export type ClassNamesArray<Payload extends FactoryPayload> = (
   | undefined
 )[];
 
+export type Attributes<Payload extends FactoryPayload> = Payload['stylesNames'] extends string
+  ? Payload['compound'] extends true
+    ? never
+    : { [K in Payload['stylesNames']]?: Record<string, any> }
+  : never;
+
 export type StylesRecord<StylesNames extends string, Payload> = Partial<
   Record<StylesNames, Payload>
 >;
@@ -49,7 +55,8 @@ export interface StylesApiProps<Payload extends FactoryPayload> {
   classNames?: ClassNames<Payload>;
   styles?: Styles<Payload>;
   vars?: PartialVarsResolver<Payload>;
+  attributes?: Attributes<Payload>;
 }
 
 export interface CompoundStylesApiProps<Payload extends FactoryPayload>
-  extends Omit<StylesApiProps<Payload>, 'unstyled'> {}
+  extends Omit<StylesApiProps<Payload>, 'unstyled' | 'attributes'> {}

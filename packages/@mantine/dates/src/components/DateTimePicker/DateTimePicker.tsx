@@ -23,7 +23,7 @@ import {
   CalendarStylesNames,
   pickCalendarProps,
 } from '../Calendar';
-import { DatePicker } from '../DatePicker';
+import { DatePicker, DatePickerPreset } from '../DatePicker';
 import { useDatesContext } from '../DatesProvider';
 import {
   DateInputSharedProps,
@@ -50,7 +50,7 @@ export interface DateTimePickerProps
     Omit<CalendarBaseProps, 'defaultDate'>,
     Omit<CalendarSettings, 'onYearMouseEnter' | 'onMonthMouseEnter' | 'hasNextLevel'>,
     StylesApiProps<DateTimePickerFactory> {
-  /** dayjs format for input value, `"DD/MM/YYYY HH:mm"` by default  */
+  /** `dayjs` format for input value @default `"DD/MM/YYYY HH:mm"  */
   valueFormat?: string;
 
   /** Controlled component value */
@@ -60,7 +60,10 @@ export interface DateTimePickerProps
   defaultValue?: DateValue;
 
   /** Called when value changes */
-  onChange?: (value: DateStringValue) => void;
+  onChange?: (value: DateStringValue | null) => void;
+
+  /** Default time value in `HH:mm` or `HH:mm:ss` format. Assigned to time when date is selected. */
+  defaultTimeValue?: string;
 
   /** Props passed down to `TimePicker` component */
   timePickerProps?: Omit<TimePickerProps, 'defaultValue' | 'value'>;
@@ -68,11 +71,14 @@ export interface DateTimePickerProps
   /** Props passed down to the submit button */
   submitButtonProps?: ActionIconProps & React.ComponentPropsWithoutRef<'button'>;
 
-  /** Determines whether the seconds input should be displayed, `false` by default */
+  /** Determines whether the seconds input should be displayed @default `false` */
   withSeconds?: boolean;
 
-  /** Max level that user can go up to, `'decade'` by default */
+  /** Max level that user can go up to @default `'decade'` */
   maxLevel?: CalendarLevel;
+
+  /** Presets values */
+  presets?: DatePickerPreset<'default'>[];
 }
 
 export type DateTimePickerFactory = Factory<{
@@ -108,6 +114,9 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     vars,
     minDate,
     maxDate,
+    defaultTimeValue,
+    presets,
+    attributes,
     ...rest
   } = props;
 
@@ -118,6 +127,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
   });
 
@@ -149,7 +159,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
   const formatTime = (dateValue: DateStringValue) =>
     dateValue ? dayjs(dateValue).format(withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
 
-  const [timeValue, setTimeValue] = useState(formatTime(_value));
+  const [timeValue, setTimeValue] = useState(defaultTimeValue || formatTime(_value));
   const [currentLevel, setCurrentLevel] = useState(level || defaultLevel || 'month');
 
   const [dropdownOpened, dropdownHandlers] = useDisclosure(false);
@@ -168,7 +178,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
 
   const handleDateChange = (date: DateValue) => {
     if (date) {
-      setValue(assignTime(clampDate(minDate, maxDate, date), timeValue));
+      setValue(assignTime(clampDate(minDate, maxDate, date), timeValue || defaultTimeValue || ''));
     }
     timePickerRef.current?.focus();
   };
@@ -221,6 +231,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
       __staticSelector="DateTimePicker"
       onDropdownClose={handleDropdownClose}
       withTime
+      attributes={attributes}
     >
       <DatePicker
         {...calendarProps}
@@ -244,6 +255,12 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
           setCurrentLevel(_level);
           calendarProps.onLevelChange?.(_level);
         }}
+        presets={presets}
+        __onPresetSelect={(val) => {
+          setValue(val);
+          setTimeValue(formatTime(val));
+        }}
+        attributes={attributes}
       />
 
       {currentLevel === 'month' && (
@@ -264,6 +281,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
             size={size}
             data-mantine-stop-propagation={__stopPropagation || undefined}
             hoursRef={timePickerRefMerged}
+            attributes={attributes}
           />
 
           <ActionIcon

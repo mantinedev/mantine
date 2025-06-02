@@ -4,6 +4,7 @@ import { useCallbackRef } from '../utils';
 export interface UseDebouncedCallbackOptions {
   delay: number;
   flushOnUnmount?: boolean;
+  leading?: boolean;
 }
 
 export type UseDebouncedCallbackReturnValue<T extends (...args: any[]) => any> = ((
@@ -12,29 +13,42 @@ export type UseDebouncedCallbackReturnValue<T extends (...args: any[]) => any> =
 
 export function useDebouncedCallback<T extends (...args: any[]) => any>(
   callback: T,
-  delayOrOptions: number | UseDebouncedCallbackOptions
-): UseDebouncedCallbackReturnValue<T> {
-  const delay = typeof delayOrOptions === 'number' ? delayOrOptions : delayOrOptions.delay;
-  const flushOnUnmount = typeof delayOrOptions === 'number' ? false : delayOrOptions.flushOnUnmount;
+  options: number | UseDebouncedCallbackOptions
+) {
+  const delay = typeof options === 'number' ? options : options.delay;
+  const flushOnUnmount = typeof options === 'number' ? false : options.flushOnUnmount;
+  const leading = typeof options === 'number' ? false : options.leading;
+
   const handleCallback = useCallbackRef(callback);
   const debounceTimerRef = useRef(0);
   const flushRef = useRef(() => {});
+  const leadingRef = useRef(leading);
 
   const lastCallback = Object.assign(
     useCallback(
       (...args: Parameters<T>) => {
         window.clearTimeout(debounceTimerRef.current);
+
+        if (leading && leadingRef.current) {
+          leadingRef.current = false;
+          handleCallback(...args);
+          return;
+        }
+
         const flush = () => {
           if (debounceTimerRef.current !== 0) {
             debounceTimerRef.current = 0;
+            leadingRef.current = true;
             handleCallback(...args);
           }
         };
+
         flushRef.current = flush;
         lastCallback.flush = flush;
         debounceTimerRef.current = window.setTimeout(flush, delay);
+        leadingRef.current = false;
       },
-      [handleCallback, delay]
+      [handleCallback, delay, leading]
     ),
     { flush: flushRef.current }
   );

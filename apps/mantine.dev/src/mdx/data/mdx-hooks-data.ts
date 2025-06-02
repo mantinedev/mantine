@@ -193,4 +193,5 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   useFloatingWindow: hDocs('useFloatingWindow', 'Create draggable floating area'),
   useFileDialog: hDocs('useFileDialog', 'Capture one or more files from the user'),
   useLongPress: hDocs('useLongPress', 'Call function on long press'),
+  useSelection: hDocs('useSelection', 'Manages selection state of given dataset'),
 };

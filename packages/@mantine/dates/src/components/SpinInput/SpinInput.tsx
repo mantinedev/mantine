@@ -34,6 +34,7 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
     ref
   ) => {
     const maxDigit = getMaxDigit(max);
+    const arrowsMax = max + 1 - step;
 
     const handleChange = (value: string) => {
       if (readOnly) {
@@ -44,7 +45,10 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
       if (clearValue !== '') {
         const parsedValue = clamp(parseInt(clearValue, 10), min, max);
         onChange(parsedValue);
-        if (parsedValue > maxDigit) {
+        // If value starts with 00 it means that the user started typing with 0
+        // for example 01 or 02, in this case, next input should be focused
+        // 00 only case is handled separately in handleKeyDown
+        if (parsedValue > maxDigit || value.startsWith('00')) {
           onNextInput?.();
         }
       }
@@ -94,13 +98,13 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
 
       if (event.key === 'ArrowUp') {
         event.preventDefault();
-        const newValue = value === null ? min : clamp(value + step, min, max);
+        const newValue = value === null ? min : clamp(value + step, min, arrowsMax);
         onChange(newValue);
       }
 
       if (event.key === 'ArrowDown') {
         event.preventDefault();
-        const newValue = value === null ? max : clamp(value - step, min, max);
+        const newValue = value === null ? arrowsMax : clamp(value - step, min, arrowsMax);
         onChange(newValue);
       }
     };

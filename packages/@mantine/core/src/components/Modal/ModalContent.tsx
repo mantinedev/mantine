@@ -18,10 +18,8 @@ export type ModalContentFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<ModalContentProps>;
-
 export const ModalContent = factory<ModalContentFactory>((_props, ref) => {
-  const props = useProps('ModalContent', defaultProps, _props);
+  const props = useProps('ModalContent', null, _props);
   const { classNames, className, style, styles, vars, children, __hidden, ...others } = props;
 
   const ctx = useModalContext();

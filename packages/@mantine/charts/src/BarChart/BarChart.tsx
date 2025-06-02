@@ -70,10 +70,10 @@ export interface BarChartProps
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: BarChartSeries[];
 
-  /** Controls how bars are positioned relative to each other, `'default'` by default */
+  /** Controls how bars are positioned relative to each other @default `'default'` */
   type?: BarChartType;
 
-  /** Controls fill opacity of all bars, `1` by default */
+  /** Controls fill opacity of all bars @default `1` */
   fillOpacity?: number;
 
   /** Fill of hovered bar section, by default value is based on color scheme */
@@ -90,7 +90,7 @@ export interface BarChartProps
     | ((series: BarChartSeries) => Partial<Omit<BarProps, 'ref'>>)
     | Partial<Omit<BarProps, 'ref'>>;
 
-  /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"`, `false` by default */
+  /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"` @default `false` */
   withBarValueLabel?: boolean;
 
   /** Props passed down to recharts `LabelList` component */
@@ -98,7 +98,7 @@ export interface BarChartProps
     | ((series: BarChartSeries) => Partial<Omit<LabelListProps<Record<string, any>>, 'ref'>>)
     | Partial<LabelListProps<Record<string, any>>>;
 
-  /** Sets minimum height of the bar in px, `0` by default */
+  /** Sets minimum height of the bar in px @default `0` */
   minBarSize?: number;
 
   /** Maximum bar width in px */
@@ -221,6 +221,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     getBarColor,
     gridColor,
     textColor,
+    attributes,
     ...others
   } = props;
 
@@ -253,6 +254,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -365,6 +367,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
                   styles={resolvedStyles}
                   series={series}
                   showColor={type !== 'waterfall'}
+                  attributes={attributes}
                 />
               )}
               {...legendProps}
@@ -466,6 +469,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
                   styles={resolvedStyles}
                   series={series}
                   valueFormatter={valueFormatter}
+                  attributes={attributes}
                 />
               )}
               {...tooltipProps}

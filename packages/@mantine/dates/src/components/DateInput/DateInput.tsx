@@ -23,6 +23,7 @@ import { Calendar, CalendarBaseProps, CalendarStylesNames, pickCalendarProps } f
 import { useDatesContext } from '../DatesProvider';
 import { DecadeLevelSettings } from '../DecadeLevel';
 import { HiddenDatesInput } from '../HiddenDatesInput';
+import { isSameMonth } from '../Month';
 import { MonthLevelSettings } from '../MonthLevel';
 import { YearLevelSettings } from '../YearLevel';
 import { dateStringParser } from './date-string-parser/date-string-parser';
@@ -39,7 +40,7 @@ export interface DateInputProps
     MonthLevelSettings,
     StylesApiProps<DateInputFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
-  /** Parses user input to convert it to date string value */
+  /** A function to parse user input and convert it to date string value */
   dateParser?: (value: string) => DateStringValue | Date | null;
 
   /** Controlled component value */
@@ -51,25 +52,25 @@ export interface DateInputProps
   /** Called when value changes */
   onChange?: (value: DateStringValue | null) => void;
 
-  /** Props passed down to `Popover` component */
+  /** Props passed down to the `Popover` component */
   popoverProps?: Partial<Omit<PopoverProps, 'children'>>;
 
-  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. `false` by default */
+  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default `false` */
   clearable?: boolean;
 
-  /** Props passed down to clear button */
+  /** Props passed down to the clear button */
   clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
 
-  /** dayjs format to display input value, `"MMMM D, YYYY"` by default  */
+  /** `dayjs` format to display input value, `"MMMM D, YYYY"` by default  */
   valueFormat?: string;
 
-  /** If set to `false`, invalid user input is preserved and the input value is not corrected on blur */
+  /** If set to `false`, invalid user input is preserved and is not corrected on blur */
   fixOnBlur?: boolean;
 
   /** If set, the value can be deselected by deleting everything from the input or by clicking the selected date in the dropdown. By default, `true` if `clearable` prop is set, `false` otherwise. */
   allowDeselect?: boolean;
 
-  /** Max level that user can go up to, `'decade'` by default */
+  /** Max level that user can go up to @default `'decade'` */
   maxLevel?: CalendarLevel;
 
   /** Initial displayed level (uncontrolled) */
@@ -115,6 +116,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     onFocus,
     onBlur,
     onClick,
+    onKeyDown,
     readOnly,
     name,
     form,
@@ -126,6 +128,8 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     date,
     defaultDate,
     onDateChange,
+    getMonthControlProps,
+    getYearControlProps,
     ...rest
   } = props;
 
@@ -205,6 +209,13 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     setDropdownOpened(true);
   };
 
+  const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Escape') {
+      setDropdownOpened(false);
+    }
+    onKeyDown?.(event);
+  };
+
   const _getDayProps = (day: DateStringValue) => ({
     ...getDayProps?.(day),
     selected: dayjs(_value).isSame(day, 'day'),
@@ -269,6 +280,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
               onBlur={handleInputBlur}
               onFocus={handleInputFocus}
               onClick={handleInputClick}
+              onKeyDown={handleInputKeyDown}
               readOnly={readOnly}
               rightSection={_rightSection}
               {...inputProps}
@@ -295,6 +307,15 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
               size={inputProps.size as MantineSize}
               date={_date}
               onDateChange={setDate}
+              getMonthControlProps={(date) => ({
+                selected: typeof _value === 'string' ? isSameMonth(date, _value) : false,
+                ...getMonthControlProps?.(date),
+              })}
+              getYearControlProps={(date) => ({
+                selected: typeof _value === 'string' ? dayjs(date).isSame(_value, 'year') : false,
+                ...getYearControlProps?.(date),
+              })}
+              attributes={wrapperProps.attributes}
             />
           </Popover.Dropdown>
         </Popover>

@@ -23,7 +23,7 @@ export interface AvatarGroupProps
   extends BoxProps,
     StylesApiProps<AvatarGroupFactory>,
     ElementProps<'div'> {
-  /** Negative space between Avatar components, `'sm'` by default */
+  /** Negative space between Avatar components @default `'sm'` */
   spacing?: MantineSpacing;
 }
 
@@ -34,8 +34,6 @@ export type AvatarGroupFactory = Factory<{
   vars: AvatarGroupCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<AvatarGroupProps>;
-
 const varsResolver = createVarsResolver<AvatarGroupFactory>((_, { spacing }) => ({
   group: {
     '--ag-spacing': getSpacing(spacing),
@@ -43,8 +41,9 @@ const varsResolver = createVarsResolver<AvatarGroupFactory>((_, { spacing }) => 
 }));
 
 export const AvatarGroup = factory<AvatarGroupFactory>((_props, ref) => {
-  const props = useProps('AvatarGroup', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, spacing, ...others } = props;
+  const props = useProps('AvatarGroup', null, _props);
+  const { classNames, className, style, styles, unstyled, vars, spacing, attributes, ...others } =
+    props;
 
   const getStyles = useStyles<AvatarGroupFactory>({
     name: 'AvatarGroup',
@@ -55,6 +54,7 @@ export const AvatarGroup = factory<AvatarGroupFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'group',

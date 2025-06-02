@@ -17,3 +17,8 @@ export const Demo_delay = {
   name: '⭐ Demo: delay',
   render: renderDemo(demos.delay),
 };
+
+export const Demo_group = {
+  name: '⭐ Demo: group',
+  render: renderDemo(demos.group),
+};

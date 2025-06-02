@@ -25,11 +25,9 @@ export type CodeHighlightControlFactory = PolymorphicFactory<{
   defaultComponent: 'button';
 }>;
 
-const defaultProps = {} satisfies Partial<CodeHighlightControlProps>;
-
 export const CodeHighlightControl = polymorphicFactory<CodeHighlightControlFactory>(
   (_props, ref) => {
-    const props = useProps('CodeHighlightControl', defaultProps, _props);
+    const props = useProps('CodeHighlightControl', null, _props);
     const { children, vars, tooltipLabel, ...others } = props;
     const ctx = useCodeHighlightContext();
     const tooltipStyles = ctx.getStyles('controlTooltip');

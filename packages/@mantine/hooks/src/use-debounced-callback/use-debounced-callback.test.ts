@@ -126,4 +126,48 @@ describe('@mantine/hooks/use-debounced-callback', () => {
     unmount();
     expect(callback).not.toHaveBeenCalled();
   });
+
+  it('debounces callback with leading=true', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() =>
+      useDebouncedCallback(callback, { delay: 100, leading: true })
+    );
+    result.current(1);
+    expect(callback).toHaveBeenCalledWith(1);
+
+    callback.mockClear();
+    result.current(2);
+    result.current(3);
+    expect(callback).not.toHaveBeenCalled();
+
+    jest.advanceTimersByTime(100);
+    expect(callback).toHaveBeenCalledWith(3);
+  });
+
+  it('resets leading after flush', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() =>
+      useDebouncedCallback(callback, { delay: 100, leading: true })
+    );
+
+    // The first call fires immediately
+    result.current('a');
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith('a');
+
+    // A second call is made. Since "leadingRef" is now false, this call is debounced and schedules a timeout.
+    result.current('b');
+    // The callback has still only been called once (with 'a').
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    // Then we advance the timers to trigger the internal flush of the first call, executing "b"
+    jest.advanceTimersByTime(100);
+    expect(callback).toHaveBeenCalledTimes(2);
+    expect(callback).toHaveBeenNthCalledWith(2, 'b');
+
+    // After the flush from "b", "leadingRef" resets, so the next call fires immediately again
+    result.current('c');
+    expect(callback).toHaveBeenCalledTimes(3);
+    expect(callback).toHaveBeenCalledWith('c');
+  });
 });

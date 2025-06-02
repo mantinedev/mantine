@@ -50,10 +50,10 @@ export interface ChartLegendProps
   /** Data used for labels, only applicable for area charts: AreaChart, LineChart, BarChart */
   series?: ChartSeries[];
 
-  /** Determines whether color swatch should be shown next to the label, `true` by default */
+  /** Determines whether color swatch should be shown next to the label @default `true` */
   showColor?: boolean;
 
-  /** Determines whether the legend should be centered, `false` by default */
+  /** Determines whether the legend should be centered @default `false` */
   centered?: boolean;
 }
 
@@ -63,10 +63,8 @@ export type ChartLegendFactory = Factory<{
   stylesNames: ChartLegendStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<ChartLegendProps>;
-
 export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
-  const props = useProps('ChartLegend', defaultProps, _props);
+  const props = useProps('ChartLegend', null, _props);
   const {
     classNames,
     className,
@@ -81,6 +79,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     series,
     showColor,
     centered,
+    attributes,
     ...others
   } = props;
 
@@ -93,6 +92,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
   });
 
   if (!payload) {

@@ -24,7 +24,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { ChartTooltip } from '../ChartTooltip/ChartTooltip';
+import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip/ChartTooltip';
 import classes from './FunnelChart.module.css';
 
 export interface FunnelChartCell {
@@ -34,7 +34,7 @@ export interface FunnelChartCell {
   color: MantineColor;
 }
 
-export type FunnelChartStylesNames = 'root';
+export type FunnelChartStylesNames = 'root' | ChartTooltipStylesNames;
 export type FunnelChartCssVariables = {
   root: '--chart-stroke-color' | '--chart-labels-color' | '--chart-size';
 };
@@ -46,10 +46,10 @@ export interface FunnelChartProps
   /** Data used to render chart */
   data: FunnelChartCell[];
 
-  /** Determines whether the tooltip should be displayed when a section is hovered, `true` by default */
+  /** Determines whether the tooltip should be displayed when a section is hovered @default `true` */
   withTooltip?: boolean;
 
-  /** Tooltip animation duration in ms, `0` by default */
+  /** Tooltip animation duration in ms @default `0` */
   tooltipAnimationDuration?: number;
 
   /** Props passed down to `Tooltip` recharts component */
@@ -61,25 +61,25 @@ export interface FunnelChartProps
   /** Controls color of the segments stroke, by default depends on color scheme */
   strokeColor?: MantineColor;
 
-  /** Controls text color of all labels, white by default */
+  /** Controls text color of all labels @default `'white'` */
   labelColor?: MantineColor;
 
-  /** Controls chart width and height, `300` by default */
+  /** Controls chart width and height @default `300` */
   size?: number;
 
-  /** Controls width of segments stroke, `1` by default */
+  /** Controls width of segments stroke @default `1` */
   strokeWidth?: number;
 
-  /** Determines whether each segment should have associated label, `false` by default */
+  /** Determines whether each segment should have associated label @default `false` */
   withLabels?: boolean;
 
-  /** Controls labels position relative to the segment, `'right'` by default */
+  /** Controls labels position relative to the segment @default `'right'` */
   labelsPosition?: 'right' | 'left' | 'inside';
 
   /** A function to format values inside the tooltip and labels */
   valueFormatter?: (value: number) => string;
 
-  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. `'all'` by default. */
+  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. @default `'all'` */
   tooltipDataSource?: 'segment' | 'all';
 
   /** Additional elements rendered inside `FunnelChart` component */
@@ -137,6 +137,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
     funnelProps,
     labelsPosition,
     tooltipDataSource,
+    attributes,
     ...others
   } = props;
 
@@ -151,6 +152,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -213,6 +215,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
                   type="radial"
                   segmentId={tooltipDataSource === 'segment' ? payload?.[0]?.name : undefined}
                   valueFormatter={valueFormatter}
+                  attributes={attributes}
                 />
               )}
               {...tooltipProps}

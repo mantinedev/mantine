@@ -19,7 +19,7 @@ export interface AccordionControlProps
   extends BoxProps,
     CompoundStylesApiProps<AccordionControlFactory>,
     ElementProps<'button'> {
-  /** Disables control button */
+  /** Sets `disabled` attribute, prevents interactions */
   disabled?: boolean;
 
   /** Custom chevron icon */
@@ -39,8 +39,6 @@ export type AccordionControlFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<AccordionControlProps>;
-
 export const AccordionControl = factory<AccordionControlFactory>((props, ref) => {
   const {
     classNames,
@@ -56,7 +54,7 @@ export const AccordionControl = factory<AccordionControlFactory>((props, ref) =>
     disabled,
     mod,
     ...others
-  } = useProps('AccordionControl', defaultProps, props);
+  } = useProps('AccordionControl', null, props);
 
   const { value } = useAccordionItemContext();
   const ctx = useAccordionContext();

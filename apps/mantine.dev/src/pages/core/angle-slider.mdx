@@ -1,4 +1,4 @@
-import { AngleSliderDemos } from '@docs/demos';
+import { AngleSliderDemos, HooksDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -12,6 +12,8 @@ Use `AngleSlider` component to pick angle value between 0 and 360:
 
 ## Controlled
 
+`AngleSlider` value is a number between 0 and 360.
+
 ```tsx
 import { useState } from 'react';
 import { AngleSlider } from '@mantine/core';
@@ -24,34 +26,35 @@ function Demo() {
 
 ## formatLabel
 
-To change angle label format use `formatLabel` prop.
-It accepts function that takes the angle value and returns React node:
+Use the `formatLabel` prop to change the angle label format.
+It accepts a function that takes the angle value and returns a React node:
 
 <Demo data={AngleSliderDemos.formatLabel} />
 
 ## Marks
 
-Set `marks` prop to display marks on the slider. In mark object `value` is required,
-`label` is optional. To restrict selection to marks only, set `restrictToMarks` prop:
+Set the `marks` prop to display marks on the slider.
+Mark is an object of value (required, number between 0 and 360) and label (optional, React node).
+To restrict selection to marks only, set the `restrictToMarks` prop:
 
 <Demo data={AngleSliderDemos.marks} />
 
 ## onChangeEnd
 
-`onChangeEnd` callback is called when user the slider is stopped from being dragged or value is changed with keyboard.
-You can use it as a debounced callback to avoid too frequent updates.
+The `onChangeEnd` callback fires when the user stops dragging the slider or changes its value with the keyboard.
+Use it as a debounced callback to prevent frequent updates.
 
 <Demo data={AngleSliderDemos.onChangeEnd} />
 
+## disabled
+
+`disabled` prop disables the component and prevents user interaction:
+
+<Demo data={AngleSliderDemos.disabled} />
+
 ## Accessibility
 
-`AngleSlider` is fully accessible and supports keyboard interactions:
-
-- `ArrowLeft`/`ArrowDown` and `ArrowRight`/`Arrowup` decrease/increase value by `step`
-- `Home` to set value to 0
-- `End` to set value to 359
-
-To make the component visible to screen readers, set `aria-label` prop:
+To make the component accessible for screen readers, set the `aria-label` prop:
 
 ```tsx
 import { AngleSlider } from '@mantine/core';
@@ -60,3 +63,23 @@ function Demo() {
   return <AngleSlider aria-label="Gradient angle" />;
 }
 ```
+
+Keyboard interactions when the component is focused:
+
+<KeyboardEventsTable
+  data={[
+    { key: 'ArrowDown', description: 'Decreases value by step' },
+    { key: 'ArrowLeft', description: 'Decreases value by step' },
+    { key: 'ArrowUp', description: 'Increases value by step' },
+    { key: 'ArrowRight', description: 'Increases value by step' },
+    { key: 'Home', description: 'Sets value to 0' },
+    { key: 'End', description: 'Sets value to 359' },
+  ]}
+/>
+
+## Based on use-radial-move
+
+`AngleSlider` is based on the [use-radial-move](/hooks/use-radial-move) hook.
+You can build a custom radial slider using this hook if you need more control over the component's behavior.
+
+<Demo data={HooksDemos.useRadialMoveUsage} />

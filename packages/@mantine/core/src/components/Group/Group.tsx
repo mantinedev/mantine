@@ -31,22 +31,22 @@ export interface GroupStylesCtx {
 export interface GroupProps extends BoxProps, StylesApiProps<GroupFactory>, ElementProps<'div'> {
   __size?: any;
 
-  /** Controls `justify-content` CSS property, `'flex-start'` by default */
+  /** Controls `justify-content` CSS property @default `'flex-start'` */
   justify?: React.CSSProperties['justifyContent'];
 
-  /** Controls `align-items` CSS property, `'center'` by default */
+  /** Controls `align-items` CSS property @default `'center'` */
   align?: React.CSSProperties['alignItems'];
 
-  /** Controls `flex-wrap` CSS property, `'wrap'` by default */
+  /** Controls `flex-wrap` CSS property @default `'wrap'` */
   wrap?: React.CSSProperties['flexWrap'];
 
-  /** Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem, `'md'` by default */
+  /** Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem @default `'md'` */
   gap?: MantineSpacing;
 
-  /** Determines whether each child element should have `flex-grow: 1` style, `false` by default */
+  /** Determines whether each child element should have `flex-grow: 1` style @default `false` */
   grow?: boolean;
 
-  /** Determines whether children should take only dedicated amount of space (`max-width` style is set based on the number of children), `true` by default */
+  /** Determines whether children should take only dedicated amount of space (`max-width` style is set based on the number of children) @default `true` */
   preventGrowOverflow?: boolean;
 }
 
@@ -97,6 +97,7 @@ export const Group = factory<GroupFactory>((_props, ref) => {
     variant,
     __size,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -119,6 +120,7 @@ export const Group = factory<GroupFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

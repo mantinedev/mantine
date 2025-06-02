@@ -68,4 +68,10 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
     link: 'https://github.com/tylim88/Tanstack-Start-Mantine-Tailwind-Template',
     description: 'Tanstack Start + Cloudflare + Mantine template',
   },
+  {
+    type: 'react-router',
+    name: 'react-router-template',
+    link: 'https://github.com/samui-build/react-router-mantine',
+    description: 'Basic react-router + Mantine template',
+  },
 ];

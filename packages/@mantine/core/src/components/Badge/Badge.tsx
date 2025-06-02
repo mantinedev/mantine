@@ -41,19 +41,19 @@ export type BadgeCssVariables = {
 };
 
 export interface BadgeProps extends BoxProps, StylesApiProps<BadgeFactory> {
-  /** Controls `font-size`, `height` and horizontal `padding`, `'md'` by default */
+  /** Controls `font-size`, `height` and horizontal `padding` @default `'md'` */
   size?: MantineSize | (string & {});
 
   /** If set, badge `min-width` becomes equal to its `height` and horizontal padding is removed */
   circle?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `'xl'` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `'xl'` */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Gradient configuration used when `variant="gradient"`, default value is `theme.defaultGradient` */
+  /** Gradient configuration used when `variant=\"gradient\"` @default `theme.defaultGradient` */
   gradient?: MantineGradient;
 
   /** Content displayed on the left side of the badge label */
@@ -62,13 +62,13 @@ export interface BadgeProps extends BoxProps, StylesApiProps<BadgeFactory> {
   /** Content displayed on the right side of the badge label */
   rightSection?: React.ReactNode;
 
-  /** Determines whether Badge should take 100% of its parent width, `false` by default */
+  /** Determines whether Badge should take 100% of its parent width @default `false` */
   fullWidth?: boolean;
 
   /** Main badge content */
   children?: React.ReactNode;
 
-  /** Determines whether text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 }
 
@@ -80,8 +80,6 @@ export type BadgeFactory = PolymorphicFactory<{
   vars: BadgeCssVariables;
   variant: BadgeVariant;
 }>;
-
-const defaultProps = {} satisfies Partial<BadgeProps>;
 
 const varsResolver = createVarsResolver<BadgeFactory>(
   (theme, { radius, color, gradient, variant, size, autoContrast }) => {
@@ -109,7 +107,7 @@ const varsResolver = createVarsResolver<BadgeFactory>(
 );
 
 export const Badge = polymorphicFactory<BadgeFactory>((_props, ref) => {
-  const props = useProps('Badge', defaultProps, _props);
+  const props = useProps('Badge', null, _props);
   const {
     classNames,
     className,
@@ -128,6 +126,7 @@ export const Badge = polymorphicFactory<BadgeFactory>((_props, ref) => {
     autoContrast,
     circle,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -140,6 +139,7 @@ export const Badge = polymorphicFactory<BadgeFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

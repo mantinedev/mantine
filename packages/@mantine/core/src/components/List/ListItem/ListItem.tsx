@@ -30,10 +30,8 @@ export type ListItemFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<ListItemProps>;
-
 export const ListItem = factory<ListItemFactory>((_props, ref) => {
-  const props = useProps('ListItem', defaultProps, _props);
+  const props = useProps('ListItem', null, _props);
   const { classNames, className, style, styles, vars, icon, children, mod, ...others } = props;
 
   const ctx = useListContext();

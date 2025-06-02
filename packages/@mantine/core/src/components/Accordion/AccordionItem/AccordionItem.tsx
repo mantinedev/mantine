@@ -17,7 +17,7 @@ export interface AccordionItemProps
   extends BoxProps,
     CompoundStylesApiProps<AccordionItemFactory>,
     ElementProps<'div'> {
-  /** Value that is used to manage accordion state */
+  /** Value that is used to manage the accordion state */
   value: string;
 }
 
@@ -28,12 +28,10 @@ export type AccordionItemFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<AccordionItemProps>;
-
 export const AccordionItem = factory<AccordionItemFactory>((props, ref) => {
   const { classNames, className, style, styles, vars, value, mod, ...others } = useProps(
     'AccordionItem',
-    defaultProps,
+    null,
     props
   );
   const ctx = useAccordionContext();

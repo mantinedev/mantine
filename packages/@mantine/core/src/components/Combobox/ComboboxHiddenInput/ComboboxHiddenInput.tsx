@@ -3,7 +3,7 @@ export interface ComboboxHiddenInputProps
   /** Input value */
   value: string | string[] | null;
 
-  /** Divider character that is used to transform array values to string, `','` by default */
+  /** Divider character to join array values into string @default `','` */
   valuesDivider?: string;
 }
 

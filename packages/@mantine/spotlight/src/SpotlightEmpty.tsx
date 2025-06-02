@@ -24,12 +24,10 @@ export type SpotlightEmptyFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<SpotlightEmptyProps>;
-
 export const SpotlightEmpty = factory<SpotlightEmptyFactory>((props, ref) => {
   const { className, style, classNames, styles, ...others } = useProps(
     'SpotlightEmpty',
-    defaultProps,
+    null,
     props
   );
 

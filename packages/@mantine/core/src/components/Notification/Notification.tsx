@@ -35,37 +35,37 @@ export interface NotificationProps
     ElementProps<'div', 'title'> {
   variant?: string;
 
-  /** Called when close button is clicked */
+  /** Called when the close button is clicked */
   onClose?: () => void;
 
-  /** Controls notification line or icon color, key of `theme.colors` or any valid CSS color, `theme.primaryColor` by default */
+  /** Controls notification line or icon color, key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Notification icon, replaces color line */
   icon?: React.ReactNode;
 
-  /** Notification title, displayed before body */
+  /** Notification title, displayed above the message body */
   title?: React.ReactNode;
 
-  /** Notification body, place main text here */
+  /** Main notification message */
   children?: React.ReactNode;
 
-  /** Replaces colored line or icon with Loader component */
+  /** If set, the `Loader` component is displayed instead of the icon */
   loading?: boolean;
 
-  /** Determines whether notification should have a border, `false` by default */
+  /** Adds border to the root element */
   withBorder?: boolean;
 
-  /** Determines whether close button should be visible, `true` by default */
+  /** If set, the close button is visible @default `true` */
   withCloseButton?: boolean;
 
   /** Props passed down to the close button */
   closeButtonProps?: Record<string, any>;
 
-  /** Props passed down to `Loader` component */
+  /** Props passed down to the `Loader` component */
   loaderProps?: LoaderProps;
 }
 
@@ -110,6 +110,7 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
     mod,
     loaderProps,
     role,
+    attributes,
     ...others
   } = props;
 
@@ -122,6 +123,7 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

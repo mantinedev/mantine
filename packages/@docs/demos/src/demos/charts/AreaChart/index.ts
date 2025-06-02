@@ -30,3 +30,4 @@ export { rotateLabels } from './AreaChart.demo.rotateLabels';
 export { axisLabels } from './AreaChart.demo.axisLabels';
 export { rightYAxis } from './AreaChart.demo.rightYAxis';
 export { pointLabels } from './AreaChart.demo.pointLabels';
+export { referenceArea } from './AreaChart.demo.referenceArea';

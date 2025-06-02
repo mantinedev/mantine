@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useMergedRef, useMove, useUncontrolled } from '@mantine/hooks';
+import { clamp, useMergedRef, useMove, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
   createVarsResolver,
@@ -43,22 +43,25 @@ export interface RangeSliderProps
   extends BoxProps,
     StylesApiProps<RangeSliderFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
-  /** Key of `theme.colors` or any valid CSS color, controls color of track and thumb, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color, controls color of track and thumb @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, `'xl'` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `'xl'` */
   radius?: MantineRadius;
 
-  /** Controls size of the track, `'md'` by default */
+  /** Controls size of the track @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
-  /** Minimal possible value, `0` by default */
+  /** Minimal possible value @default `0` */
   min?: number;
 
-  /** Maximum possible value, `100` by default */
+  /** Maximum possible value @default `100` */
   max?: number;
 
-  /** Number by which value will be incremented/decremented with thumb drag and arrows, `1` by default */
+  /** Domain of the slider, defines the full range of possible values @default `[min, max]` */
+  domain?: [number, number];
+
+  /** Number by which value will be incremented/decremented with thumb drag and arrows @default `1` */
   step?: number;
 
   /** Number of significant digits after the decimal point */
@@ -85,13 +88,13 @@ export interface RangeSliderProps
   /** Function to generate label or any react node to render instead, set to null to disable label */
   label?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** Props passed down to the `Transition` component, `{ transition: 'fade', duration: 0 }` by default */
+  /** Props passed down to the `Transition` component @default `{ transition: 'fade', duration: 0 }` */
   labelTransitionProps?: TransitionOverride;
 
-  /** Determines whether the label should be visible when the slider is not being dragged or hovered, `false` by default */
+  /** Determines whether the label should be visible when the slider is not being dragged or hovered @default `false` */
   labelAlwaysOn?: boolean;
 
-  /** Determines whether the label should be displayed when the slider is hovered, `true` by default */
+  /** Determines whether the label should be displayed when the slider is hovered @default `true` */
   showLabelOnHover?: boolean;
 
   /** Content rendered inside thumb */
@@ -106,13 +109,13 @@ export interface RangeSliderProps
   /** A transformation function to change the scale of the slider */
   scale?: (value: number) => number;
 
-  /** Determines whether track values representation should be inverted, `false` by default */
+  /** Determines whether track values representation should be inverted @default `false` */
   inverted?: boolean;
 
-  /** Minimal range interval, `10` by default */
+  /** Minimal range interval @default `10` */
   minRange?: number;
 
-  /** Maximum range interval, `Infinity` by default */
+  /** Maximum range interval @default `Infinity` */
   maxRange?: number;
 
   /** First thumb `aria-label` */
@@ -124,13 +127,13 @@ export interface RangeSliderProps
   /** Props passed down to the hidden input */
   hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
 
-  /** Determines whether the selection should be only allowed from the given marks array, `false` by default */
+  /** Determines whether the selection should be only allowed from the given marks array @default `false` */
   restrictToMarks?: boolean;
 
   /** Props passed down to thumb element based on the thumb index */
   thumbProps?: (index: 0 | 1) => React.ComponentPropsWithoutRef<'div'>;
 
-  /** Determines whether the other thumb should be pushed by the current thumb dragging when `minRange`/`maxRange` is reached, `true` by default */
+  /** Determines whether the other thumb should be pushed by the current thumb dragging when `minRange`/`maxRange` is reached @default `true` */
   pushOnOverlap?: boolean;
 }
 
@@ -181,6 +184,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     size,
     min,
     max,
+    domain,
     minRange,
     maxRange,
     step,
@@ -206,6 +210,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     restrictToMarks,
     thumbProps,
     pushOnOverlap,
+    attributes,
     ...others
   } = props;
 
@@ -217,6 +222,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     className,
     styles,
     style,
+    attributes,
     vars,
     varsResolver,
     unstyled,
@@ -236,9 +242,10 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
   const thumbs = useRef<HTMLDivElement[]>([]);
   const root = useRef<HTMLDivElement>(null);
   const thumbIndex = useRef<number | undefined>(undefined);
+  const [domainMin, domainMax] = domain || [min!, max!];
   const positions = [
-    getPosition({ value: _value[0], min, max }),
-    getPosition({ value: _value[1], min, max }),
+    getPosition({ value: _value[0], min: domainMin, max: domainMax }),
+    getPosition({ value: _value[1], min: domainMin, max: domainMax }),
   ];
 
   const precision = _precision ?? getPrecision(step);
@@ -289,10 +296,11 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
         }
       }
     } else {
-      clone[index] = val;
+      const clampedVal = clamp(val, min!, max!);
+      clone[index] = clampedVal;
 
       if (index === 0) {
-        if (val > clone[1] - (minRange - 0.000000001)) {
+        if (clampedVal > clone[1] - (minRange - 0.000000001)) {
           if (pushOnOverlap) {
             clone[1] = Math.min(val + minRange, max);
           } else {
@@ -300,7 +308,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           }
         }
 
-        if (val > (max - (minRange - 0.000000001) || min)) {
+        if (clampedVal > (max - (minRange - 0.000000001) || min)) {
           clone[index] = valueRef.current[index];
         }
 
@@ -314,7 +322,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
       }
 
       if (index === 1) {
-        if (val < clone[0] + minRange) {
+        if (clampedVal < clone[0] + minRange) {
           if (pushOnOverlap) {
             clone[0] = Math.max(val - minRange, min);
           } else {
@@ -322,11 +330,11 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           }
         }
 
-        if (val < clone[0] + minRange) {
+        if (clampedVal < clone[0] + minRange) {
           clone[index] = valueRef.current[index];
         }
 
-        if (val - clone[0] > maxRange) {
+        if (clampedVal - clone[0] > maxRange) {
           if (pushOnOverlap) {
             clone[0] = val - maxRange;
           } else {
@@ -356,8 +364,8 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     if (!disabled && thumbIndex.current !== undefined) {
       const nextValue = getChangeValue({
         value: val,
-        min,
-        max,
+        min: domainMin,
+        max: domainMax,
         step,
         precision,
       });
@@ -523,8 +531,8 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
           filled={positions[1] - positions[0]}
           marks={marks}
           inverted={inverted}
-          min={min}
-          max={max}
+          min={domainMin}
+          max={domainMax}
           value={_value[1]}
           disabled={disabled}
           containerProps={{

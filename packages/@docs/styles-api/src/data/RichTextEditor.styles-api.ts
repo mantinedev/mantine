@@ -6,7 +6,7 @@ export const RichTextEditorStylesApi: StylesApiData<RichTextEditorFactory> = {
     root: 'Root element',
     toolbar: 'Toolbar element',
     content: 'Content area',
-    typographyStylesProvider: 'TypographyStylesProvider component, wraps content',
+    Typography: 'Typography component, wraps content',
     control: 'RichTextEditor.Control root element, used as a base for all controls',
     controlIcon: 'Control icon element',
     controlsGroup: 'RichTextEditor.ControlsGroup component root',

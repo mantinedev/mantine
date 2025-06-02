@@ -5,4 +5,5 @@ export type {
   AffixProps,
   AffixStylesNames,
   AffixBaseProps,
+  AffixPosition,
 } from './Affix';

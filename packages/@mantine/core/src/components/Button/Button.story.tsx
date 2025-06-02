@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 import { DEFAULT_THEME, rem } from '../../core';
+import { FileButton } from '../FileButton';
 import { Button, ButtonProps } from './Button';
 
 export default { title: 'Button' };
+
+export function Base() {
+  return <Button attributes={{ inner: { 'data-test-id': 1 } }}>Button</Button>;
+}
 
 export function RenderRoot() {
   return <Button renderRoot={(props) => <a {...props} href="#" />}>Some content</Button>;
@@ -379,5 +384,20 @@ export function GroupSection() {
         </Button>
       </Button.Group>
     </div>
+  );
+}
+
+export function WithFileButton() {
+  return (
+    <Button.Group>
+      <Button variant="outline">Button 1</Button>
+      <FileButton onChange={(f) => console.log(f)}>
+        {(props) => (
+          <Button {...props} variant="outline">
+            Files
+          </Button>
+        )}
+      </FileButton>
+    </Button.Group>
   );
 }

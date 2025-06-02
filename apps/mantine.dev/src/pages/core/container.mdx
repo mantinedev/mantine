@@ -4,6 +4,28 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Container);
 
+## Grid strategy
+
+Starting from 8.2.0, `Container` supports `strategy="grid"` prop which enables more
+features.
+
+Differences from the default `strategy="block"`:
+- Uses `display: grid` instead of `display: block`
+- Does not include default inline padding
+- Does not set `max-width` on the root element (uses grid template columns instead)
+
+Features supported by `strategy="grid"`:
+- Everything that is supported by `strategy="block"`
+- Children with `data-breakout` attribute take the entire width of the container's parent element
+- Children with `data-container` inside `data-breakout` have the same width as the main grid column
+
+`strategy="grid"` will replace `strategy="block"` in 9.0 release, it is
+recommended to use it in new projects and migrate existing projects to it.
+
+Example of using breakout feature:
+
+<Demo data={ContainerDemos.breakout} />
+
 ## Usage
 
 `Container` centers content and limits its `max-width` to the value specified in `size` prop.

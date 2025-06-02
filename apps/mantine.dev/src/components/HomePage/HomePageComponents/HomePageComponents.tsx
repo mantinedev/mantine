@@ -15,7 +15,7 @@ export function HomePageComponents() {
 
         <HomePageDescription className={classes.description}>
           Build your next app faster with high-quality, well-tested components. Mantine includes
-          everything you need to create complex we applications with ease: custom select, date
+          everything you need to create complex web applications with ease: custom select, date
           pickers, notifications, modals, and more.
         </HomePageDescription>
 

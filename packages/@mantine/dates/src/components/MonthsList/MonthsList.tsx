@@ -26,13 +26,13 @@ export type MonthsListStylesNames =
   | 'monthsListControl';
 
 export interface MonthsListSettings extends ControlsGroupSettings {
-  /** dayjs format for months list */
+  /** `dayjs` format for months list */
   monthsListFormat?: string;
 
   /** Passes props down month picker control */
   getMonthControlProps?: (date: DateStringValue) => Partial<PickerControlProps>;
 
-  /** Determines whether controls should be separated, `true` by default */
+  /** Determines whether controls should be separated @default `true` */
   withCellSpacing?: boolean;
 }
 
@@ -91,6 +91,7 @@ export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
     __stopPropagation,
     withCellSpacing,
     size,
+    attributes,
     ...others
   } = props;
 
@@ -103,6 +104,7 @@ export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     rootSelector: 'monthsList',
   });

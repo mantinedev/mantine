@@ -31,7 +31,7 @@ export interface YearsListSettings extends ControlsGroupSettings {
   /** Determines whether propagation for Escape key should be stopped */
   __stopPropagation?: boolean;
 
-  /** dayjs format for years list, `'YYYY'` by default  */
+  /** dayjs format for years list @default `'YYYY'` */
   yearsListFormat?: string;
 
   /** Passes props down to year picker control based on date */
@@ -40,7 +40,7 @@ export interface YearsListSettings extends ControlsGroupSettings {
   /** Component size */
   size?: MantineSize;
 
-  /** Determines whether controls should be separated, `true` by default */
+  /** Determines whether controls should be separated @default `true` */
   withCellSpacing?: boolean;
 }
 
@@ -90,6 +90,7 @@ export const YearsList = factory<YearsListFactory>((_props, ref) => {
     __stopPropagation,
     withCellSpacing,
     size,
+    attributes,
     ...others
   } = props;
 
@@ -102,6 +103,7 @@ export const YearsList = factory<YearsListFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     rootSelector: 'yearsList',
   });

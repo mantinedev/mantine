@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useImperativeHandle } from 'react';
 import {
   Box,
   BoxProps,
@@ -87,6 +88,12 @@ export interface CalendarBaseProps {
   /** Determines whether date should be updated when month control is clicked */
   __updateDateOnMonthSelect?: boolean;
 
+  /** Assigns function to set date to the given ref */
+  __setDateRef?: React.RefObject<((date: DateStringValue) => void) | null>;
+
+  /** Assigns function to set level to the given ref */
+  __setLevelRef?: React.RefObject<((level: CalendarLevel) => void) | null>;
+
   /** Initial displayed date in uncontrolled mode */
   defaultDate?: DateStringValue | Date;
 
@@ -96,7 +103,7 @@ export interface CalendarBaseProps {
   /** Called when date changes */
   onDateChange?: (date: DateStringValue) => void;
 
-  /** Number of columns displayed next to each other, `1` by default */
+  /** Number of columns displayed next to each other @default `1` */
   numberOfColumns?: number;
 
   /** Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly */
@@ -136,10 +143,10 @@ export interface CalendarProps
     CalendarBaseProps,
     StylesApiProps<CalendarFactory>,
     ElementProps<'div'> {
-  /** Max level that user can go up to (decade, year, month), defaults to decade */
+  /** Max level that user can go up to (decade, year, month) @default `'decade'` */
   maxLevel?: CalendarLevel;
 
-  /** Min level that user can go down to (decade, year, month), defaults to month */
+  /** Min level that user can go down to (decade, year, month) @default `'month'` */
   minLevel?: CalendarLevel;
 
   /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
@@ -181,8 +188,11 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     onMonthSelect,
     onYearMouseEnter,
     onMonthMouseEnter,
+    headerControlsOrder,
     __updateDateOnYearSelect,
     __updateDateOnMonthSelect,
+    __setDateRef,
+    __setLevelRef,
 
     // MonthLevelGroup props
     firstDayOfWeek,
@@ -231,6 +241,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     onNextMonth,
     onPreviousMonth,
     static: isStatic,
+    attributes,
     ...others
   } = props;
 
@@ -254,12 +265,21 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     onChange: onDateChange as any,
   });
 
+  useImperativeHandle(__setDateRef, () => (date: DateStringValue) => {
+    setDate(date);
+  });
+
+  useImperativeHandle(__setLevelRef, () => (level: CalendarLevel) => {
+    setLevel(level);
+  });
+
   const stylesApiProps = {
     __staticSelector: __staticSelector || 'Calendar',
     styles: resolvedStyles,
     classNames: resolvedClassNames,
     unstyled,
     size,
+    attributes,
   };
 
   const _columnsToScroll = columnsToScroll || numberOfColumns || 1;
@@ -345,6 +365,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           withCellSpacing={withCellSpacing}
           highlightToday={highlightToday}
           withWeekNumbers={withWeekNumbers}
+          headerControlsOrder={headerControlsOrder}
           {...stylesApiProps}
         />
       )}
@@ -377,6 +398,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           __preventFocus={__preventFocus}
           __stopPropagation={__stopPropagation}
           withCellSpacing={withCellSpacing}
+          headerControlsOrder={headerControlsOrder}
           {...stylesApiProps}
         />
       )}
@@ -406,6 +428,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           __preventFocus={__preventFocus}
           __stopPropagation={__stopPropagation}
           withCellSpacing={withCellSpacing}
+          headerControlsOrder={headerControlsOrder}
           {...stylesApiProps}
         />
       )}
