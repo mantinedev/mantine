@@ -56,7 +56,7 @@ function rgbStringToRgba(color: string): RGBA {
     .split(/[/,]/)
     .map(Number);
 
-  return { r, g, b, a: a || 1 };
+  return { r, g, b, a: a === undefined ? 1 : a };
 }
 
 function hslStringToRgba(hslaString: string): RGBA {
