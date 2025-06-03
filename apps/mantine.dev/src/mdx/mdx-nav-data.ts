@@ -76,7 +76,7 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
 
   {
     category: 'Migration guides',
-    pages: [MDX_DATA.SixToSeven, MDX_DATA.SevenToEight],
+    pages: [MDX_DATA.SixToSeven, MDX_DATA.SevenToEight, MDX_DATA.EightToNine],
   },
 ];
 

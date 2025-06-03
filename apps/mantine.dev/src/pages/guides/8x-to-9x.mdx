@@ -1,0 +1,26 @@
+import { PopoverDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.EightToNine);
+
+# 8.x → 9.x migration guide
+
+## Text color prop
+
+`color` prop of [Text](/core/text) and [Anchor](/core/anchor) components was removed.
+Use `c` [style prop](/styles/style-props) instead:
+
+```tsx
+import { Text } from '@mantine/core';
+
+// ❌ No longer works
+function Demo() {
+  return <Text color="red">Text</Text>;
+}
+
+// ✅ Use c style prop
+function Demo() {
+  return <Text c="red">Text</Text>;
+}
+```
