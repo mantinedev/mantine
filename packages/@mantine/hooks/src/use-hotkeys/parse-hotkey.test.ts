@@ -172,4 +172,31 @@ describe('@mantine/hooks/use-hot-key/parse-hotkey', () => {
       )
     ).toBe(true);
   });
+
+  it('ensures compatibility with existing escape key usage', () => {
+    expect(
+      getHotkeyMatcher('esc')(
+        new KeyboardEvent('keydown', {
+          key: 'Escape',
+        })
+      )
+    ).toBe(true);
+
+    expect(
+      getHotkeyMatcher('ESC')(
+        new KeyboardEvent('keydown', {
+          key: 'Escape',
+        })
+      )
+    ).toBe(true);
+
+    expect(
+      getHotkeyMatcher('mod+esc')(
+        new KeyboardEvent('keydown', {
+          ctrlKey: true,
+          key: 'Escape',
+        })
+      )
+    ).toBe(true);
+  });
 });

@@ -21,6 +21,7 @@ const keyNameMap: Record<string, string> = {
   ArrowDown: 'arrowdown',
   Escape: 'escape',
   Esc: 'escape',
+  esc: 'escape',
   Enter: 'enter',
   Tab: 'tab',
   Backspace: 'backspace',
