@@ -125,4 +125,51 @@ describe('@mantine/hooks/use-hot-key/parse-hotkey', () => {
       key: '+',
     });
   });
+
+  it('handles Escape key correctly', () => {
+    const escapeResult = parseHotkey('Escape');
+    expect(escapeResult).toMatchObject({
+      alt: false,
+      ctrl: false,
+      meta: false,
+      mod: false,
+      shift: false,
+      key: 'escape',
+    });
+
+    const escResult = parseHotkey('Esc');
+    expect(escResult).toMatchObject({
+      alt: false,
+      ctrl: false,
+      meta: false,
+      mod: false,
+      shift: false,
+      key: 'esc',
+    });
+
+    expect(
+      getHotkeyMatcher('Escape')(
+        new KeyboardEvent('keydown', {
+          key: 'Escape',
+        })
+      )
+    ).toBe(true);
+
+    expect(
+      getHotkeyMatcher('mod+Escape')(
+        new KeyboardEvent('keydown', {
+          ctrlKey: true,
+          key: 'Escape',
+        })
+      )
+    ).toBe(true);
+
+    expect(
+      getHotkeyMatcher('escape')(
+        new KeyboardEvent('keydown', {
+          key: 'Escape',
+        })
+      )
+    ).toBe(true);
+  });
 });
