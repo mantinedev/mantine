@@ -5,8 +5,6 @@ import {
   getFontSize,
   getGradient,
   getLineHeight,
-  getThemeColor,
-  MantineColor,
   MantineFontSize,
   MantineGradient,
   MantineLineHeight,
@@ -61,9 +59,6 @@ export interface TextProps extends BoxProps, StylesApiProps<TextFactory> {
 
   /** Shorthand for `component="span"` */
   span?: boolean;
-
-  /** @deprecated Use `c` prop instead */
-  color?: MantineColor;
 }
 
 export type TextFactory = PolymorphicFactory<{
@@ -81,14 +76,13 @@ const defaultProps = {
 
 const varsResolver = createVarsResolver<TextFactory>(
   // Will be removed in 9.0
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
-  (theme, { variant, lineClamp, gradient, size, color }) => ({
+
+  (theme, { variant, lineClamp, gradient, size }) => ({
     root: {
       '--text-fz': getFontSize(size),
       '--text-lh': getLineHeight(size),
       '--text-gradient': variant === 'gradient' ? getGradient(gradient, theme) : undefined,
       '--text-line-clamp': typeof lineClamp === 'number' ? lineClamp.toString() : undefined,
-      '--text-color': color ? getThemeColor(color, theme) : undefined,
     },
   })
 );

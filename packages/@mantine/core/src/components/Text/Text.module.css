@@ -6,7 +6,6 @@
   font-weight: normal;
   margin: 0;
   padding: 0;
-  color: var(--text-color);
 
   &:where([data-truncate]) {
     overflow: hidden;
