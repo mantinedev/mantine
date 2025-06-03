@@ -1,4 +1,5 @@
 import cx from 'clsx';
+import { deepMerge } from '../../../core';
 import { CheckIcon } from '../../Checkbox';
 import { ScrollArea, ScrollAreaProps } from '../../ScrollArea/ScrollArea';
 import { Combobox } from '../Combobox';
@@ -106,6 +107,12 @@ export interface OptionsDropdownProps {
   scrollAreaProps: ScrollAreaProps | undefined;
 }
 
+const defaultScrollAreaProps: Partial<ScrollAreaProps> = {
+  viewportProps: {
+    tabIndex: -1,
+  },
+};
+
 export function OptionsDropdown({
   data,
   hidden,
@@ -150,6 +157,7 @@ export function OptionsDropdown({
     />
   ));
 
+  const _scrollAreaProps = deepMerge(defaultScrollAreaProps, scrollAreaProps);
   return (
     <Combobox.Dropdown hidden={hidden || (hiddenWhenEmpty && isEmpty)} data-composed>
       <Combobox.Options labelledBy={labelId} aria-label={ariaLabel}>
@@ -159,7 +167,7 @@ export function OptionsDropdown({
             type="scroll"
             scrollbarSize="var(--combobox-padding)"
             offsetScrollbars="y"
-            {...scrollAreaProps}
+            {..._scrollAreaProps}
           >
             {options}
           </ScrollArea.Autosize>
