@@ -30,13 +30,13 @@ export interface FloatingWindowProps
   /** Assigns ref to set position programmatically */
   setPositionRef?: React.RefObject<SetFloatingWindowPosition | null>;
 
-  /** Determines whether the window should be rendered inside `Portal`, `true` by default */
+  /** Determines whether the window should be rendered inside `Portal` @default `true` */
   withinPortal?: boolean;
 
   /** Props passed down to `Portal` component */
   portalProps?: Omit<PortalProps, 'children'>;
 
-  /** `z-index` of the root element, `400` by default */
+  /** `z-index` of the root element @default `400` */
   zIndex?: React.CSSProperties['zIndex'];
 }
 
