@@ -49,9 +49,6 @@ export interface __PopoverProps {
   /** Called when dropdown position changes */
   onPositionChange?: (position: FloatingPosition) => void;
 
-  /** @deprecated: Do not use, will be removed in 9.0 */
-  positionDependencies?: any[];
-
   /** Called when dropdown closes */
   onClose?: () => void;
 
@@ -171,7 +168,6 @@ export type PopoverFactory = Factory<{
 const defaultProps = {
   position: 'bottom',
   offset: 8,
-  positionDependencies: [],
   transitionProps: { transition: 'fade', duration: 150 },
   middlewares: { flip: true, shift: true, inline: false },
   arrowSize: 7,
@@ -206,9 +202,6 @@ export function Popover(_props: PopoverProps) {
     position,
     offset,
     onPositionChange,
-    // Scheduled for removal in 9.0
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    positionDependencies,
     opened,
     transitionProps,
     onExitTransitionEnd,
@@ -285,7 +278,6 @@ export function Popover(_props: PopoverProps) {
     arrowRef,
     arrowOffset,
     onPositionChange,
-    positionDependencies,
     opened,
     defaultOpened,
     onChange,

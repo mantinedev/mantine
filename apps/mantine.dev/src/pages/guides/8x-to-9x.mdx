@@ -63,3 +63,42 @@ const form = useForm({
   validate: zodResolver(schema),
 });
 ```
+
+## TypographyStylesProvider
+
+- [TypographyStylesProvider](/core/typography) component was renamed to [Typography](/core/typography):
+
+```tsx
+// ❌ No longer works
+import { TypographyStylesProvider } from '@mantine/core';
+
+// ✅ Use Typography component
+import { Typography } from '@mantine/core';
+```
+
+## Popover and Tooltip positionDependencies prop
+
+[Popover](/core/popover) and [Tooltip](/core/tooltip) components no longer accept `positionDependencies` prop, it is no longer required
+– the position is now calculated automatically.
+
+```tsx
+import { Popover } from '@mantine/core';
+
+// ❌ positionDependencies no longer needed
+function Demo(props) {
+  return (
+    <Popover position="top" positionDependencies={[props.a, props.b]}>
+      {/* ... */}
+    </Popover>
+  );
+}
+
+// ✅ position is recalculated automatically
+function Demo(props) {
+  return (
+    <Popover position="top">
+      {/* ... */}
+    </Popover>
+  );
+}
+```

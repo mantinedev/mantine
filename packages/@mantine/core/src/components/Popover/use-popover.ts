@@ -21,7 +21,6 @@ import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
 interface UsePopoverOptions {
   offset: number | FloatingAxesOffsets;
   position: FloatingPosition;
-  positionDependencies: any[] | undefined;
   onPositionChange?: (position: FloatingPosition) => void;
   opened: boolean | undefined;
   defaultOpened: boolean | undefined;

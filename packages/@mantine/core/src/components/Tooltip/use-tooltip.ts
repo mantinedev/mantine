@@ -31,7 +31,6 @@ interface UseTooltip {
   arrowRef?: React.RefObject<HTMLDivElement | null>;
   arrowOffset?: number;
   events?: { hover: boolean; focus: boolean; touch: boolean };
-  positionDependencies: any[];
   inline?: boolean;
   strategy?: FloatingStrategy;
   middlewares?: TooltipMiddlewares;

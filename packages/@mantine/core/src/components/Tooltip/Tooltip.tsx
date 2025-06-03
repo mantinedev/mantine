@@ -70,9 +70,6 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Determines which events will be used to show tooltip @default `{ hover: true, focus: false, touch: false }` */
   events?: { hover: boolean; focus: boolean; touch: boolean };
 
-  /** @deprecated: Do not use, will be removed in 9.0 */
-  positionDependencies?: any[];
-
   /** Must be set if the tooltip target is an inline element */
   inline?: boolean;
 
@@ -112,7 +109,6 @@ const defaultProps = {
   transitionProps: { duration: 100, transition: 'fade' },
   events: { hover: true, focus: false, touch: false },
   zIndex: getDefaultZIndex('popover'),
-  positionDependencies: [],
   middlewares: { flip: true, shift: true, inline: false },
 } satisfies Partial<TooltipProps>;
 
@@ -166,9 +162,6 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     events,
     zIndex,
     disabled,
-    // Scheduled for removal in 9.0
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    positionDependencies,
     onClick,
     onMouseEnter,
     onMouseLeave,
@@ -200,7 +193,6 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     arrowRef,
     arrowOffset,
     offset: typeof offset === 'number' ? offset + (withArrow ? arrowSize / 2 : 0) : offset,
-    positionDependencies: [...positionDependencies, target ?? children],
     inline,
     strategy: floatingStrategy,
     middlewares,
