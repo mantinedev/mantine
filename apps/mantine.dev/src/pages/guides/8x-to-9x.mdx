@@ -24,3 +24,42 @@ function Demo() {
   return <Text c="red">Text</Text>;
 }
 ```
+
+## Form resolvers
+
+`@mantine/form` package no longer exports schema resolvers, use [dedicated packages](/form/schema-validation/) instead:
+
+Example with 8.x:
+
+```tsx
+import { z } from 'zod';
+// ❌ No longer works, zodResolver is not exported from @mantine/form
+import { useForm, zodResolver } from '@mantine/form';
+
+const schema = z.object({
+  email: z.string().email({ message: 'Invalid email' }),
+});
+
+const form = useForm({
+  initialValues: {  email: '' },
+  validate: zodResolver(schema),
+});
+```
+
+Example with 9.x:
+
+```tsx
+import { z } from 'zod';
+import { useForm } from '@mantine/form';
+// ✅ Use dedicated package for zod resolver
+import { zodResolver } from 'mantine-form-zod-resolver';
+
+const schema = z.object({
+  email: z.string().email({ message: 'Invalid email' }),
+});
+
+const form = useForm({
+  initialValues: {  email: '' },
+  validate: zodResolver(schema),
+});
+```
