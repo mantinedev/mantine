@@ -12,7 +12,13 @@ const data = [
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <DonutChart data={data} strokeWidth={1} strokeColor="red" />
+      <DonutChart
+        data={data}
+        strokeWidth={1}
+        strokeColor="red"
+        legendMode="side"
+        legendOrientation="bottom-right"
+      />
     </div>
   );
 }

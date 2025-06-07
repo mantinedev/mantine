@@ -1,5 +1,7 @@
+import React, { useState } from 'react';
 import {
   Cell,
+  Legend,
   Pie,
   PieLabel,
   PieProps,
@@ -75,8 +77,11 @@ export interface DonutChartProps
   /** Controls thickness of the chart segments, `20` by default */
   thickness?: number;
 
-  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. `80` by default */
+  /** Controls chart area size along with side legend */
   size?: number;
+
+  /** Controls chart width and height, height is increased by 40 if `withLabels` prop is set. Cannot be less than `thickness`. `80` by default */
+  pieSize?: number;
 
   /** Controls width of segments stroke, `1` by default */
   strokeWidth?: number;
@@ -104,6 +109,20 @@ export interface DonutChartProps
 
   /** A function to format values inside the tooltip */
   valueFormatter?: (value: number) => string;
+
+  /** Defines the behavior of the legend. Can be 'hover' (hover to highlight segments) or 'side' (static side legend). */
+  legendMode?: 'hover' | 'side';
+
+  /** Specifies the position of the legend on the chart. */
+  legendOrientation?:
+    | 'top'
+    | 'bottom'
+    | 'top-left'
+    | 'top-right'
+    | 'bottom-left'
+    | 'bottom-right'
+    | 'center-left'
+    | 'center-right';
 }
 
 export type DonutChartFactory = Factory<{
@@ -118,7 +137,8 @@ const defaultProps: Partial<DonutChartProps> = {
   withLabelsLine: true,
   paddingAngle: 0,
   thickness: 20,
-  size: 160,
+  size: 240,
+  pieSize: 160,
   strokeWidth: 1,
   startAngle: 0,
   endAngle: 360,
@@ -188,6 +208,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     withLabels,
     withLabelsLine,
     size,
+    pieSize,
     thickness,
     strokeWidth,
     startAngle,
@@ -199,10 +220,13 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
     valueFormatter,
     strokeColor,
     labelsType,
+    legendMode,
+    legendOrientation,
     ...others
   } = props;
 
   const theme = useMantineTheme();
+  const [hoveredSegment, setHoveredSegment] = useState<string | null>(null);
 
   const getStyles = useStyles<DonutChartFactory>({
     name: 'DonutChart',
@@ -229,8 +253,28 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
       fill={getThemeColor(item.color, theme)}
       stroke="var(--chart-stroke-color, var(--mantine-color-body))"
       strokeWidth={strokeWidth}
+      fillOpacity={
+        legendMode === 'side' && hoveredSegment !== null
+          ? hoveredSegment === item.name
+            ? 1
+            : 0.5
+          : 1
+      }
     />
   ));
+
+  const legendPosition = {
+    top: { x: 0, y: -180 },
+    bottom: { x: 0, y: 180 },
+    'top-left': { x: -180, y: -180 },
+    'top-right': { x: 180, y: -180 },
+    'bottom-left': { x: -180, y: 180 },
+    'bottom-right': { x: 180, y: 180 },
+    'center-left': { x: -230, y: 0 },
+    'center-right': { x: 230, y: 0 },
+  };
+
+  const legendOffset = { x: 260, y: legendPosition[legendOrientation || 'center-right'].y };
 
   return (
     <Box ref={ref} size={size} {...getStyles('root')} {...others}>
@@ -238,8 +282,8 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
         <ReChartsPieChart {...pieChartProps}>
           <Pie
             data={data}
-            innerRadius={size! / 2 - thickness!}
-            outerRadius={size! / 2}
+            innerRadius={pieSize! / 2 - thickness!}
+            outerRadius={pieSize! / 2}
             dataKey="value"
             isAnimationActive={false}
             paddingAngle={paddingAngle}
@@ -271,7 +315,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
             </text>
           )}
 
-          {withTooltip && (
+          {legendMode === 'hover' && withTooltip && (
             <Tooltip
               animationDuration={tooltipAnimationDuration}
               isAnimationActive={false}
@@ -285,7 +329,27 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
                   valueFormatter={valueFormatter}
                 />
               )}
+              position={{ x: legendOffset.x, y: legendOffset.y }}
               {...tooltipProps}
+            />
+          )}
+
+          {legendMode === 'side' && (
+            <Legend
+              layout="vertical"
+              verticalAlign="middle"
+              align="right"
+              onMouseEnter={(e: any) => setHoveredSegment(e?.value as string)}
+              onMouseLeave={() => setHoveredSegment(null)}
+              wrapperStyle={{
+                position: 'absolute',
+                left: `${legendOffset.x}px`,
+                top: `${legendOffset.y}px`,
+                fontSize: '14px',
+                fontFamily: 'var(--mantine-font-family)',
+                whiteSpace: 'nowrap',
+                visibility: 'visible',
+              }}
             />
           )}
 
