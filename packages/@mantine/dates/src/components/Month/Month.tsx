@@ -124,6 +124,12 @@ export interface MonthProps
 
   /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
   static?: boolean;
+
+  /** Custom first day of the month (1-31) */
+  customFirstDayOfMonth?: number;
+
+  /** Custom number of days in the month (1-31) */
+  customDaysInMonth?: number;
 }
 
 export type MonthFactory = Factory<{
@@ -177,6 +183,8 @@ export const Month = factory<MonthFactory>((_props, ref) => {
     size,
     highlightToday,
     withWeekNumbers,
+    customFirstDayOfMonth,
+    customDaysInMonth,
     ...others
   } = props;
 
@@ -199,6 +207,8 @@ export const Month = factory<MonthFactory>((_props, ref) => {
     month,
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
     consistentWeeks: ctx.consistentWeeks,
+    customFirstDayOfMonth,
+    customDaysInMonth,
   });
 
   const dateInTabOrder = getDateInTabOrder({
@@ -219,7 +229,22 @@ export const Month = factory<MonthFactory>((_props, ref) => {
 
   const rows = dates.map((row, rowIndex) => {
     const cells = row.map((date, cellIndex) => {
-      const outside = !isSameMonth(date, month);
+      // Check if date is outside the custom month range
+      let outside = !isSameMonth(date, month);
+
+      if (customFirstDayOfMonth || customDaysInMonth) {
+        const monthStart = dayjs(month);
+        const customStart = customFirstDayOfMonth
+          ? monthStart.date(customFirstDayOfMonth)
+          : monthStart.startOf('month');
+        const customEnd = customDaysInMonth
+          ? customStart.add(customDaysInMonth - 1, 'day')
+          : monthStart.endOf('month');
+
+        const currentDate = dayjs(date);
+        outside = currentDate.isBefore(customStart, 'day') || currentDate.isAfter(customEnd, 'day');
+      }
+
       const ariaLabel =
         getDayAriaLabel?.(date) ||
         dayjs(date)

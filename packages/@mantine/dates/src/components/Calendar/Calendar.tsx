@@ -99,6 +99,12 @@ export interface CalendarBaseProps {
   /** Number of columns displayed next to each other, `1` by default */
   numberOfColumns?: number;
 
+  /** Custom first day of the month (1-31) */
+  customFirstDayOfMonth?: number;
+
+  /** Custom number of days in the month (1-31) */
+  customDaysInMonth?: number;
+
   /** Number of columns to scroll with next/prev buttons, same as `numberOfColumns` if not set explicitly */
   columnsToScroll?: number;
 
@@ -173,6 +179,8 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     defaultDate,
     onDateChange,
     numberOfColumns,
+    customFirstDayOfMonth,
+    customDaysInMonth,
     columnsToScroll,
     ariaLabels,
     nextLabel,
@@ -330,6 +338,8 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           hasNextLevel={maxLevel !== 'month'}
           onLevelClick={() => setLevel('year')}
           numberOfColumns={numberOfColumns}
+          customFirstDayOfMonth={customFirstDayOfMonth}
+          customDaysInMonth={customDaysInMonth}
           locale={locale}
           levelControlAriaLabel={ariaLabels?.monthLevelControl}
           nextLabel={ariaLabels?.nextMonth ?? nextLabel}
