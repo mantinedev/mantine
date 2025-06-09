@@ -8,9 +8,9 @@ export interface HoverCardTargetProps extends PopoverTargetProps {
   eventPropsWrapperName?: string;
 }
 
-const defaultProps: Partial<HoverCardTargetProps> = {
+const defaultProps = {
   refProp: 'ref',
-};
+} satisfies Partial<HoverCardTargetProps>;
 
 export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((props, ref) => {
   const { children, refProp, eventPropsWrapperName, ...others } = useProps(

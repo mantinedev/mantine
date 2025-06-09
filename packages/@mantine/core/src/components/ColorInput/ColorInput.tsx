@@ -80,7 +80,7 @@ export type ColorInputFactory = Factory<{
   variant: InputVariant;
 }>;
 
-const defaultProps: Partial<ColorInputProps> = {
+const defaultProps = {
   format: 'hex',
   fixOnBlur: true,
   withPreview: true,
@@ -88,7 +88,7 @@ const defaultProps: Partial<ColorInputProps> = {
   withPicker: true,
   popoverProps: { transitionProps: { transition: 'fade', duration: 0 } },
   withEyeDropper: true,
-};
+} satisfies Partial<ColorInputProps>;
 
 const varsResolver = createVarsResolver<ColorInputFactory>((_, { size }) => ({
   eyeDropperIcon: {
@@ -122,7 +122,7 @@ export const ColorInput = factory<ColorInputFactory>((_props, ref) => {
     onFocus,
     onBlur,
     inputProps,
-    format,
+    format = 'hex',
     wrapperProps,
     readOnly,
     withPicker,
@@ -178,7 +178,7 @@ export const ColorInput = factory<ColorInputFactory>((_props, ref) => {
         openEyeDropper()
           .then((payload) => {
             if (payload?.sRGBHex) {
-              const color = convertHsvaTo(format!, parseColor(payload.sRGBHex));
+              const color = convertHsvaTo(format, parseColor(payload.sRGBHex));
               setValue(color);
               onChangeEnd?.(color);
             }
@@ -214,7 +214,7 @@ export const ColorInput = factory<ColorInputFactory>((_props, ref) => {
 
   useDidUpdate(() => {
     if (isColorValid(_value)) {
-      setValue(convertHsvaTo(format!, parseColor(_value)));
+      setValue(convertHsvaTo(format, parseColor(_value)));
     }
   }, [format]);
 
@@ -258,7 +258,7 @@ export const ColorInput = factory<ColorInputFactory>((_props, ref) => {
               const inputValue = event.currentTarget.value;
               setValue(inputValue);
               if (isColorValid(inputValue)) {
-                onChangeEnd?.(convertHsvaTo(format!, parseColor(inputValue)));
+                onChangeEnd?.(convertHsvaTo(format, parseColor(inputValue)));
               }
             }}
             leftSection={

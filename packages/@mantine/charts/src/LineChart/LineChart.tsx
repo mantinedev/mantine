@@ -125,7 +125,7 @@ export type LineChartFactory = Factory<{
   vars: LineChartCssVariables;
 }>;
 
-const defaultProps: Partial<LineChartProps> = {
+const defaultProps = {
   withXAxis: true,
   withYAxis: true,
   withTooltip: true,
@@ -142,7 +142,7 @@ const defaultProps: Partial<LineChartProps> = {
     { offset: 0, color: 'red' },
     { offset: 100, color: 'blue' },
   ],
-};
+} satisfies Partial<LineChartProps>;
 
 const varsResolver = createVarsResolver<LineChartFactory>((theme, { textColor, gridColor }) => ({
   root: {

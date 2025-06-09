@@ -39,7 +39,7 @@ export type AccordionControlFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<AccordionControlProps> = {};
+const defaultProps = {} satisfies Partial<AccordionControlProps>;
 
 export const AccordionControl = factory<AccordionControlFactory>((props, ref) => {
   const {

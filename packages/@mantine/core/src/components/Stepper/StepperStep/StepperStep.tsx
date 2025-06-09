@@ -99,11 +99,11 @@ export type StepperStepFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<StepperStepProps> = {
+const defaultProps = {
   withIcon: true,
   allowStepClick: true,
   iconPosition: 'left',
-};
+} satisfies Partial<StepperStepProps>;
 
 export const StepperStep = factory<StepperStepFactory>((props, ref) => {
   const {

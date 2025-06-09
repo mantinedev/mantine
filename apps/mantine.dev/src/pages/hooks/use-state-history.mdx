@@ -24,12 +24,25 @@ interface UseStateHistoryHandlers<T> {
   reset: () => void;
 }
 
-interface StateHistory<T> {
+interface UseStateHistoryValue<T> {
   history: T[];
   current: number;
 }
 
-function useStateHistory<T>(
-  initialValue: T
-): [T, UseStateHistoryHandlers<T>, StateHistory<T>];
+type UseStateHistoryReturnValue<T> = [
+  T,
+  UseStateHistoryHandlers<T>,
+  UseStateHistoryValue<T>,
+];
+
+function useStateHistory<T>(initialValue: T): UseStateHistoryReturnValue<T>;
+```
+
+## Exported types
+
+`UseStateHistoryHandlers`, `UseStateHistoryReturnValue` and `UseStateHistoryValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseStateHistoryHandlers, UseStateHistoryReturnValue, UseStateHistoryValue } from '@mantine/hooks';
 ```

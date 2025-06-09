@@ -21,10 +21,10 @@ export type ComboboxSearchFactory = Factory<{
   stylesNames: ComboboxSearchStylesNames;
 }>;
 
-const defaultProps: Partial<ComboboxSearchProps> = {
+const defaultProps = {
   withAriaAttributes: true,
   withKeyboardNavigation: true,
-};
+} satisfies Partial<ComboboxSearchProps>;
 
 export const ComboboxSearch = factory<ComboboxSearchFactory>((_props, ref) => {
   const props = useProps('ComboboxSearch', defaultProps, _props);

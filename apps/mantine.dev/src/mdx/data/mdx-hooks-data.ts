@@ -26,11 +26,11 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'Detects click and touch events outside of given element or elements group'
   ),
 
-  useClipboard: hDocs('useClipboard', 'Wrapper around navigator.clipboard with feedback timeout'),
+  useClipboard: hDocs('useClipboard', 'Copy to clipboard with feedback timeout'),
 
   useColorScheme: hDocs(
     'useColorScheme',
-    'Detects user system color scheme with window.matchMedia API'
+    'Returns OS color scheme preference and subscribes to changes'
   ),
 
   useCounter: hDocs('useCounter', 'Increments/decrements state within given boundaries'),
@@ -176,7 +176,10 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
   useThrottledState: hDocs('useThrottledState', 'Throttles state changes'),
   useThrottledValue: hDocs('useThrottledValue', 'Throttles value changes'),
   useThrottledCallback: hDocs('useThrottledCallback', 'Throttles function calls'),
-  useDebouncedCallback: hDocs('useDebouncedCallback', 'Debounces function calls'),
+  useDebouncedCallback: hDocs(
+    'useDebouncedCallback',
+    'Creates debounced version of the given function'
+  ),
   useSet: hDocs('useSet', 'Use Set as React state'),
   useMap: hDocs('useMap', 'Use Map as React state'),
   useRadialMove: hDocs(
@@ -188,4 +191,5 @@ export const MDX_HOOKS_DATA: Record<string, Frontmatter> = {
     'Track scroll position and detect which heading is currently in the viewport, can be used for table of contents'
   ),
   useFileDialog: hDocs('useFileDialog', 'Capture one or more files from the user'),
+  useLongPress: hDocs('useLongPress', 'Call function on long press'),
 };

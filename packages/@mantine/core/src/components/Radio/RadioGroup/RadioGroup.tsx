@@ -39,7 +39,7 @@ export type RadioGroupFactory = Factory<{
   stylesNames: RadioGroupStylesNames;
 }>;
 
-const defaultProps: Partial<RadioGroupProps> = {};
+const defaultProps = {} satisfies Partial<RadioGroupProps>;
 
 export const RadioGroup = factory<RadioGroupFactory>((props, ref) => {
   const { value, defaultValue, onChange, size, wrapperProps, children, name, readOnly, ...others } =

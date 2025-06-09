@@ -6,3 +6,4 @@ export { clearable } from './DateTimePicker.demo.clearable';
 export { format } from './DateTimePicker.demo.format';
 export { disabled } from './DateTimePicker.demo.disabled';
 export { timePickerProps } from './DateTimePicker.demo.timePickerProps';
+export { presets } from './DateTimePicker.demo.presets';

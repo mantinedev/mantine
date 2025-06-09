@@ -22,10 +22,12 @@ export function getInputOnChange<T>(
   };
 }
 
-export function useInputState<T>(initialState: T) {
+export type UseInputStateReturnValue<T> = [
+  T,
+  (value: null | undefined | T | React.ChangeEvent<any>) => void,
+];
+
+export function useInputState<T>(initialState: T): UseInputStateReturnValue<T> {
   const [value, setValue] = useState<T>(initialState);
-  return [value, getInputOnChange<T>(setValue as any)] as [
-    T,
-    (value: null | undefined | T | React.ChangeEvent<any>) => void,
-  ];
+  return [value, getInputOnChange<T>(setValue as any)];
 }

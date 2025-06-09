@@ -1,10 +1,16 @@
 import { SetStateAction, useCallback, useEffect, useRef, useState } from 'react';
 
+export interface UseDebouncedStateOptions {
+  leading?: boolean;
+}
+
+export type UseDebouncedStateReturnValue<T> = [T, (newValue: SetStateAction<T>) => void];
+
 export function useDebouncedState<T = any>(
   defaultValue: T,
   wait: number,
-  options = { leading: false }
-) {
+  options: UseDebouncedStateOptions = { leading: false }
+): UseDebouncedStateReturnValue<T> {
   const [value, setValue] = useState(defaultValue);
   const timeoutRef = useRef<number | null>(null);
   const leadingRef = useRef(true);

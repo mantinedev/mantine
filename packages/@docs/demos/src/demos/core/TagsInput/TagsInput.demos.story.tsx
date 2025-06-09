@@ -142,3 +142,8 @@ export const Demo_acceptValueOnBlur = {
   name: '⭐ Demo: acceptValueOnBlur',
   render: renderDemo(demos.acceptValueOnBlur),
 };
+
+export const Demo_isDuplicate = {
+  name: '⭐ Demo: isDuplicate',
+  render: renderDemo(demos.isDuplicate),
+};

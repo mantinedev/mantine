@@ -48,9 +48,9 @@ export type YearLevelFactory = Factory<{
   stylesNames: YearLevelStylesNames;
 }>;
 
-const defaultProps: Partial<YearLevelProps> = {
+const defaultProps = {
   yearLabelFormat: 'YYYY',
-};
+} satisfies Partial<YearLevelProps>;
 
 export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
   const props = useProps('YearLevel', defaultProps, _props);
@@ -83,6 +83,7 @@ export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
     levelControlAriaLabel,
     withNext,
     withPrevious,
+    headerControlsOrder,
 
     // Other props
     yearLabelFormat,
@@ -144,6 +145,7 @@ export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
         levelControlAriaLabel={levelControlAriaLabel}
         withNext={withNext}
         withPrevious={withPrevious}
+        headerControlsOrder={headerControlsOrder}
         {...stylesApiProps}
       />
 

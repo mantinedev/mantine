@@ -85,7 +85,7 @@ const rtlTransitions: Record<DrawerPosition, MantineTransition> = {
   left: 'slide-left',
 };
 
-const defaultProps: Partial<DrawerRootProps> = {
+const defaultProps = {
   closeOnClickOutside: true,
   withinPortal: true,
   lockScroll: true,
@@ -95,7 +95,7 @@ const defaultProps: Partial<DrawerRootProps> = {
   keepMounted: false,
   zIndex: getDefaultZIndex('modal'),
   position: 'left',
-};
+} satisfies Partial<DrawerRootProps>;
 
 const varsResolver = createVarsResolver<DrawerRootFactory>((_, { position, size, offset }) => ({
   root: {
@@ -140,7 +140,7 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const drawerTransition = (dir === 'rtl' ? rtlTransitions : transitions)[position!];
+  const drawerTransition = (dir === 'rtl' ? rtlTransitions : transitions)[position];
 
   return (
     <DrawerProvider value={{ scrollAreaComponent, getStyles, radius }}>

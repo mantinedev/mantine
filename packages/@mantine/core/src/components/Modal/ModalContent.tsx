@@ -18,7 +18,7 @@ export type ModalContentFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<ModalContentProps> = {};
+const defaultProps = {} satisfies Partial<ModalContentProps>;
 
 export const ModalContent = factory<ModalContentFactory>((_props, ref) => {
   const props = useProps('ModalContent', defaultProps, _props);

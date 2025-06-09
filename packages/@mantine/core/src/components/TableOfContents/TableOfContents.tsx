@@ -95,11 +95,11 @@ export type TableOfContentsFactory = Factory<{
   variant: TableOfContentsVariant;
 }>;
 
-const defaultProps: Partial<TableOfContentsProps> = {
+const defaultProps = {
   getControlProps: ({ data }) => ({
     children: data.value,
   }),
-};
+} satisfies Partial<TableOfContentsProps>;
 
 const varsResolver = createVarsResolver<TableOfContentsFactory>(
   (theme, { color, size, variant, autoContrast, depthOffset, radius }) => {

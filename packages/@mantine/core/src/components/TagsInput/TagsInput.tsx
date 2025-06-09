@@ -103,6 +103,9 @@ export interface TagsInputProps
 
   /** Determines whether the value typed in by the user but not submitted should be accepted when the input is blurred, `true` by default */
   acceptValueOnBlur?: boolean;
+
+  /** Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. */
+  isDuplicate?: (value: string, currentValues: string[]) => boolean;
 }
 
 export type TagsInputFactory = Factory<{
@@ -111,13 +114,12 @@ export type TagsInputFactory = Factory<{
   stylesNames: TagsInputStylesNames;
 }>;
 
-const defaultProps: Partial<TagsInputProps> = {
+const defaultProps = {
   maxTags: Infinity,
-  allowDuplicates: false,
   acceptValueOnBlur: true,
   splitChars: [','],
   hiddenInputValuesDivider: ',',
-};
+} satisfies Partial<TagsInputProps>;
 
 export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
   const props = useProps('TagsInput', defaultProps, _props);
@@ -192,6 +194,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     onClear,
     scrollAreaProps,
     acceptValueOnBlur,
+    isDuplicate,
     ...others
   } = props;
 
@@ -251,13 +254,15 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
   });
 
   const handleValueSelect = (val: string) => {
-    const isDuplicate = _value.some((tag) => tag.toLowerCase() === val.toLowerCase());
+    const isDuplicated = isDuplicate
+      ? isDuplicate(val, _value)
+      : _value.some((tag) => tag.toLowerCase() === val.toLowerCase());
 
-    if (isDuplicate) {
+    if (isDuplicated) {
       onDuplicate?.(val);
     }
 
-    if ((!isDuplicate || (isDuplicate && allowDuplicates)) && _value.length < maxTags!) {
+    if ((!isDuplicated || (isDuplicated && allowDuplicates)) && _value.length < maxTags) {
       onOptionSubmit?.(val);
       handleSearchChange('');
       if (val.length > 0) {
@@ -276,7 +281,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     const inputValue = _searchValue.trim();
     const { length } = inputValue;
 
-    if (splitChars!.includes(event.key) && length > 0) {
+    if (splitChars.includes(event.key) && length > 0) {
       setValue(
         getSplittedTags({
           splitChars,
@@ -384,7 +389,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
           handleSearchChange('');
-          _value.length < maxTags! && setValue([..._value, optionsLockup[val].label]);
+          _value.length < maxTags && setValue([..._value, optionsLockup[val].label]);
 
           combobox.resetSelectedOption();
         }}

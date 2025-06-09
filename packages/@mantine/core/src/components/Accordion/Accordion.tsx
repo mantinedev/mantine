@@ -89,13 +89,13 @@ export type AccordionFactory = Factory<{
   variant: AccordionVariant;
 }>;
 
-const defaultProps: Partial<AccordionProps> = {
+const defaultProps = {
   multiple: false,
   disableChevronRotation: false,
   chevronPosition: 'right',
   variant: 'default',
   chevron: <AccordionChevron />,
-};
+} satisfies Partial<AccordionProps>;
 
 const varsResolver = createVarsResolver<AccordionFactory>(
   (_, { transitionDuration, chevronSize, radius }) => ({

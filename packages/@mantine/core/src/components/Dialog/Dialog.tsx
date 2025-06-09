@@ -56,7 +56,7 @@ export type DialogFactory = Factory<{
   vars: DialogCssVariables;
 }>;
 
-const defaultProps: Partial<DialogProps> = {
+const defaultProps = {
   shadow: 'md',
   p: 'md',
   withBorder: false,
@@ -65,7 +65,7 @@ const defaultProps: Partial<DialogProps> = {
     bottom: 30,
     right: 30,
   },
-};
+} satisfies Partial<DialogProps>;
 
 const varsResolver = createVarsResolver<DialogFactory>((_, { size }) => ({
   root: {

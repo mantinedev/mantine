@@ -27,7 +27,7 @@ export type MenuDropdownFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<MenuDropdownProps> = {};
+const defaultProps = {} satisfies Partial<MenuDropdownProps>;
 
 export const MenuDropdown = factory<MenuDropdownFactory>((props, ref) => {
   const {

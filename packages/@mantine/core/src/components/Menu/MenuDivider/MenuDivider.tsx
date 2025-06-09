@@ -24,7 +24,7 @@ export type MenuDividerFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<MenuDividerProps> = {};
+const defaultProps = {} satisfies Partial<MenuDividerProps>;
 
 export const MenuDivider = factory<MenuDividerFactory>((props, ref) => {
   const { classNames, className, style, styles, vars, ...others } = useProps(

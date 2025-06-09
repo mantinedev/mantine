@@ -88,11 +88,11 @@ export type ScrollAreaFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<ScrollAreaProps> = {
+const defaultProps = {
   scrollHideDelay: 1000,
   type: 'hover',
   scrollbars: 'xy',
-};
+} satisfies Partial<ScrollAreaProps>;
 
 const varsResolver = createVarsResolver<ScrollAreaFactory>(
   (_, { scrollbarSize, overscrollBehavior }) => ({

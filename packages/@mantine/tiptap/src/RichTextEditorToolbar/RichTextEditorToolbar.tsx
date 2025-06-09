@@ -31,7 +31,7 @@ export type RichTextEditorToolbarFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<RichTextEditorToolbarProps> = {};
+const defaultProps = {} satisfies Partial<RichTextEditorToolbarProps>;
 
 export const RichTextEditorToolbar = factory<RichTextEditorToolbarFactory>((_props, ref) => {
   const props = useProps('RichTextEditorToolbar', defaultProps, _props);

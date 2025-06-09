@@ -29,7 +29,7 @@ export type AppShellNavbarFactory = Factory<{
   stylesNames: AppShellNavbarStylesNames;
 }>;
 
-const defaultProps: Partial<AppShellNavbarProps> = {};
+const defaultProps = {} satisfies Partial<AppShellNavbarProps>;
 
 export const AppShellNavbar = factory<AppShellNavbarFactory>((_props, ref) => {
   const props = useProps('AppShellNavbar', defaultProps, _props);

@@ -34,9 +34,9 @@ export type ButtonGroupFactory = Factory<{
   vars: ButtonGroupCssVariables;
 }>;
 
-const defaultProps: Partial<ButtonGroupProps> = {
+const defaultProps = {
   orientation: 'horizontal',
-};
+} satisfies Partial<ButtonGroupProps>;
 
 const varsResolver = createVarsResolver<ButtonGroupFactory>((_, { borderWidth }) => ({
   group: { '--button-border-width': rem(borderWidth) },

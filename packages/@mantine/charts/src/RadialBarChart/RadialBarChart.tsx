@@ -88,13 +88,13 @@ export type RadialBarChartFactory = Factory<{
   vars: RadialBarChartCssVariables;
 }>;
 
-const defaultProps: Partial<RadialBarChartProps> = {
+const defaultProps = {
   barSize: 20,
   startAngle: 90,
   endAngle: -270,
   withBackground: true,
   withTooltip: true,
-};
+} satisfies Partial<RadialBarChartProps>;
 
 const varsResolver = createVarsResolver<RadialBarChartFactory>(
   (theme, { emptyBackgroundColor }) => ({

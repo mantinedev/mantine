@@ -52,3 +52,13 @@ export const Demo_valueFormatter = {
   name: '⭐ Demo: valueFormatter',
   render: renderDemo(demos.valueFormatter),
 };
+
+export const Demo_presets = {
+  name: '⭐ Demo: presets',
+  render: renderDemo(demos.presets),
+};
+
+export const Demo_presetsRange = {
+  name: '⭐ Demo: presetsRange',
+  render: renderDemo(demos.presetsRange),
+};

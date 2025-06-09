@@ -16,7 +16,7 @@ export type DrawerCloseButtonFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<DrawerCloseButtonProps> = {};
+const defaultProps = {} satisfies Partial<DrawerCloseButtonProps>;
 
 export const DrawerCloseButton = factory<DrawerCloseButtonFactory>((_props, ref) => {
   const props = useProps('DrawerCloseButton', defaultProps, _props);

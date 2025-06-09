@@ -59,7 +59,7 @@ export type DrawerFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<DrawerProps> = {
+const defaultProps = {
   closeOnClickOutside: true,
   withinPortal: true,
   lockScroll: true,
@@ -70,7 +70,7 @@ const defaultProps: Partial<DrawerProps> = {
   zIndex: getDefaultZIndex('modal'),
   withOverlay: true,
   withCloseButton: true,
-};
+} satisfies Partial<DrawerProps>;
 
 export const Drawer = factory<DrawerFactory>((_props, ref) => {
   const {

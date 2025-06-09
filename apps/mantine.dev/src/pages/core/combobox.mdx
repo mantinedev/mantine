@@ -139,13 +139,13 @@ interface ComboboxStore {
   setListId(id: string): void;
 
   /** Ref of `Combobox.Search` input */
-  searchRef: React.MutableRefObject<HTMLInputElement | null>;
+  searchRef: React.RefObject<HTMLInputElement | null>;
 
   /** Moves focus to `Combobox.Search` input */
   focusSearchInput(): void;
 
   /** Ref of the target element */
-  targetRef: React.MutableRefObject<HTMLElement | null>;
+  targetRef: React.RefObject<HTMLElement | null>;
 
   /** Moves focus to the target element */
   focusTarget(): void;

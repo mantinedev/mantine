@@ -70,9 +70,9 @@ export type RadioIndicatorFactory = Factory<{
   variant: RadioIndicatorVariant;
 }>;
 
-const defaultProps: Partial<RadioIndicatorProps> = {
+const defaultProps = {
   icon: RadioIcon,
-};
+} satisfies Partial<RadioIndicatorProps>;
 
 const varsResolver = createVarsResolver<RadioIndicatorFactory>(
   (theme, { radius, color, size, iconColor, variant, autoContrast }) => {
@@ -107,7 +107,7 @@ export const RadioIndicator = factory<RadioIndicatorFactory>((_props, ref) => {
     styles,
     unstyled,
     vars,
-    icon,
+    icon: Icon,
     radius,
     color,
     iconColor,
@@ -118,7 +118,6 @@ export const RadioIndicator = factory<RadioIndicatorFactory>((_props, ref) => {
     disabled,
     ...others
   } = props;
-  const Icon = icon!;
 
   const getStyles = useStyles<RadioIndicatorFactory>({
     name: 'RadioIndicator',

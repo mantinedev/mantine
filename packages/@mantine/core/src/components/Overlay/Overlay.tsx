@@ -57,9 +57,9 @@ export type OverlayFactory = PolymorphicFactory<{
   vars: OverlayCssVariables;
 }>;
 
-const defaultProps: Partial<OverlayProps> = {
+const defaultProps = {
   zIndex: getDefaultZIndex('modal'),
-};
+} satisfies Partial<OverlayProps>;
 
 const varsResolver = createVarsResolver<OverlayFactory>(
   (_, { gradient, color, backgroundOpacity, blur, radius, zIndex }) => ({

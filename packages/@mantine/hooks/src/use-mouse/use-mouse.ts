@@ -13,12 +13,12 @@ export function useMouse<T extends HTMLElement = any>(
 
       const x = Math.max(
         0,
-        Math.round(event.pageX - rect.left - (window.pageXOffset || window.scrollX))
+        Math.round(event.pageX - rect.left - (window.scrollX || window.scrollX))
       );
 
       const y = Math.max(
         0,
-        Math.round(event.pageY - rect.top - (window.pageYOffset || window.scrollY))
+        Math.round(event.pageY - rect.top - (window.scrollY || window.scrollY))
       );
 
       setPosition({ x, y });

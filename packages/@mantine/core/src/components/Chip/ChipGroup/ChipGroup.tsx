@@ -19,7 +19,7 @@ export interface ChipGroupProps<T extends boolean = false> {
   children?: React.ReactNode;
 }
 
-const defaultProps: Partial<ChipGroupProps<false>> = {};
+const defaultProps = {} satisfies Partial<ChipGroupProps<any>>;
 
 export function ChipGroup<T extends boolean>(props: ChipGroupProps<T>) {
   const { value, defaultValue, onChange, multiple, children } = useProps(

@@ -23,7 +23,7 @@ export type VisuallyHiddenFactory = Factory<{
   stylesNames: VisuallyHiddenStylesNames;
 }>;
 
-const defaultProps: Partial<VisuallyHiddenProps> = {};
+const defaultProps = {} satisfies Partial<VisuallyHiddenProps>;
 
 export const VisuallyHidden = factory<VisuallyHiddenFactory>((_props, ref) => {
   const props = useProps('VisuallyHidden', defaultProps, _props);

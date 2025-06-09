@@ -118,7 +118,7 @@ export type BarChartFactory = Factory<{
   vars: BarChartCssVariables;
 }>;
 
-const defaultProps: Partial<BarChartProps> = {
+const defaultProps = {
   withXAxis: true,
   withYAxis: true,
   withTooltip: true,
@@ -128,7 +128,7 @@ const defaultProps: Partial<BarChartProps> = {
   strokeDasharray: '5 5',
   gridAxis: 'x',
   type: 'default',
-};
+} satisfies Partial<BarChartProps>;
 
 const varsResolver = createVarsResolver<BarChartFactory>(
   (theme, { textColor, gridColor, cursorFill, barLabelColor }) => ({

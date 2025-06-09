@@ -36,9 +36,9 @@ export type MonthLevelGroupFactory = Factory<{
   stylesNames: MonthLevelGroupStylesNames;
 }>;
 
-const defaultProps: Partial<MonthLevelGroupProps> = {
+const defaultProps = {
   numberOfColumns: 1,
-};
+} satisfies Partial<MonthLevelGroupProps>;
 
 export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => {
   const props = useProps('MonthLevelGroup', defaultProps, _props);
@@ -75,6 +75,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
     nextDisabled,
     previousDisabled,
     hasNextLevel,
+    headerControlsOrder,
 
     // Other settings
     classNames,
@@ -102,7 +103,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
         <MonthLevel
           key={monthIndex}
           month={currentMonth}
-          withNext={monthIndex === numberOfColumns! - 1}
+          withNext={monthIndex === numberOfColumns - 1}
           withPrevious={monthIndex === 0}
           monthLabelFormat={monthLabelFormat}
           __stopPropagation={__stopPropagation}
@@ -165,6 +166,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
           withCellSpacing={withCellSpacing}
           highlightToday={highlightToday}
           withWeekNumbers={withWeekNumbers}
+          headerControlsOrder={headerControlsOrder}
         />
       );
     });

@@ -61,7 +61,7 @@ export type ModalFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<ModalProps> = {
+const defaultProps = {
   closeOnClickOutside: true,
   withinPortal: true,
   lockScroll: true,
@@ -73,7 +73,7 @@ const defaultProps: Partial<ModalProps> = {
   transitionProps: { duration: 200, transition: 'fade-down' },
   withOverlay: true,
   withCloseButton: true,
-};
+} satisfies Partial<ModalProps>;
 
 export const Modal = factory<ModalFactory>((_props, ref) => {
   const {

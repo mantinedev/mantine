@@ -31,7 +31,7 @@ export type AppShellHeaderFactory = Factory<{
   stylesNames: AppShellHeaderStylesNames;
 }>;
 
-const defaultProps: Partial<AppShellHeaderProps> = {};
+const defaultProps = {} satisfies Partial<AppShellHeaderProps>;
 
 export const AppShellHeader = factory<AppShellHeaderFactory>((_props, ref) => {
   const props = useProps('AppShellHeader', defaultProps, _props);

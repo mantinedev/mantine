@@ -61,10 +61,19 @@ function WithUseState() {
 ## Definition
 
 ```tsx
-function useInputState<T>(
-  initialState: T
-): [
+type UseInputStateReturnValue<T> = [
   T,
   (value: null | undefined | T | React.ChangeEvent<any>) => void,
 ];
+
+function useInputState<T>(initialState: T): UseInputStateReturnValue<T>
+```
+
+## Exported types
+
+`UseInputStateReturnValue` type is exported from `@mantine/hooks` package,
+you can import it in your application:
+
+```tsx
+import type { UseInputStateReturnValue } from '@mantine/hooks';
 ```

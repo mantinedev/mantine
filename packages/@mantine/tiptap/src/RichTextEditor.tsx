@@ -102,11 +102,11 @@ export type RichTextEditorFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<RichTextEditorProps> = {
+const defaultProps = {
   withCodeHighlightStyles: true,
   withTypographyStyles: true,
   variant: 'default',
-};
+} satisfies Partial<RichTextEditorProps>;
 
 export const RichTextEditor = factory<RichTextEditorFactory>((_props, ref) => {
   const props = useProps('RichTextEditor', defaultProps, _props);

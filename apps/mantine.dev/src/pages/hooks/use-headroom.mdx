@@ -16,7 +16,7 @@ after user scrolled up.
 ## Definition
 
 ```tsx
-interface UseHeadroomInput {
+interface UseHeadroomOptions {
   /** Number in px at which element should be fixed */
   fixedAt?: number;
 
@@ -30,5 +30,12 @@ interface UseHeadroomInput {
   onRelease?: () => void;
 }
 
-function useHeadroom(input?: UseHeadroomInput): boolean;
+function useHeadroom(input?: UseHeadroomOptions): boolean;
+```
+
+## Exported types
+`UseHeadroomOptions` type is exported from `@mantine/hooks` package, you can import it in your application:
+
+```tsx
+import { UseHeadroomOptions } from '@mantine/hooks';
 ```

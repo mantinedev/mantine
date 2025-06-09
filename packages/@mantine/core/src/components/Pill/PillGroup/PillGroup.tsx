@@ -42,7 +42,7 @@ export type PillGroupFactory = Factory<{
   ctx: { size: MantineSize | (string & {}) | undefined };
 }>;
 
-const defaultProps: Partial<PillGroupProps> = {};
+const defaultProps = {} satisfies Partial<PillGroupProps>;
 
 const varsResolver = createVarsResolver<PillGroupFactory>((_, { gap }, { size }) => ({
   group: {

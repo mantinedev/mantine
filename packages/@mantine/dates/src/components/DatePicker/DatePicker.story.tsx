@@ -9,9 +9,31 @@ import { DatePicker } from './DatePicker';
 export default { title: 'DatePicker' };
 
 export function Usage() {
+  const [value, setValue] = useState<DateStringValue | null>(null);
   return (
     <div style={{ padding: 40 }}>
-      <DatePicker highlightToday />
+      <DatePicker
+        size="sm"
+        value={value}
+        onChange={setValue}
+        date={value || undefined}
+        headerControlsOrder={['level', 'previous', 'next']}
+        styles={{
+          calendarHeaderLevel: {
+            justifyContent: 'flex-start',
+            paddingInlineStart: 7,
+          },
+        }}
+        presets={[
+          { value: dayjs().subtract(1, 'day').format('YYYY-MM-DD'), label: 'Yesterday' },
+          { value: dayjs().format('YYYY-MM-DD'), label: 'Today' },
+          { value: dayjs().add(1, 'day').format('YYYY-MM-DD'), label: 'Tomorrow' },
+          { value: dayjs().add(1, 'month').format('YYYY-MM-DD'), label: 'Next month' },
+          { value: dayjs().add(1, 'year').format('YYYY-MM-DD'), label: 'Next year' },
+          { value: dayjs().subtract(1, 'month').format('YYYY-MM-DD'), label: 'Last month' },
+          { value: dayjs().subtract(1, 'year').format('YYYY-MM-DD'), label: 'Last year' },
+        ]}
+      />
     </div>
   );
 }

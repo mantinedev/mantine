@@ -51,9 +51,9 @@ export type MonthLevelFactory = Factory<{
   stylesNames: MonthLevelStylesNames;
 }>;
 
-const defaultProps: Partial<MonthLevelProps> = {
+const defaultProps = {
   monthLabelFormat: 'MMMM YYYY',
-};
+} satisfies Partial<MonthLevelProps>;
 
 export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
   const props = useProps('MonthLevel', defaultProps, _props);
@@ -96,6 +96,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
     levelControlAriaLabel,
     withNext,
     withPrevious,
+    headerControlsOrder,
 
     // Other props
     monthLabelFormat,
@@ -157,6 +158,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
         levelControlAriaLabel={levelControlAriaLabel}
         withNext={withNext}
         withPrevious={withPrevious}
+        headerControlsOrder={headerControlsOrder}
         {...stylesApiProps}
       />
 

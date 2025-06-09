@@ -37,7 +37,7 @@ export type ComboboxOptionFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<ComboboxOptionProps> = {};
+const defaultProps = {} satisfies Partial<ComboboxOptionProps>;
 
 export const ComboboxOption = factory<ComboboxOptionFactory>((_props, ref) => {
   const props = useProps('ComboboxOption', defaultProps, _props);
