@@ -64,11 +64,7 @@ describe('@mantine/core/MenuItem', () => {
     const onMouseDown = jest.fn();
 
     render(
-      <Menu
-        opened
-        closeOnItemClick={false}
-        withInitialFocusPlaceholder={false}
-      >
+      <Menu opened closeOnItemClick={false} withInitialFocusPlaceholder={false}>
         <Menu.Target>
           <button type="button">Target</button>
         </Menu.Target>
@@ -94,7 +90,7 @@ describe('@mantine/core/MenuItem', () => {
     const mouseDownEvent = new MouseEvent('mousedown', {
       bubbles: true,
       cancelable: true,
-      button: 0 // left mouse button
+      button: 0, // left mouse button
     });
 
     const preventDefaultSpy = jest.spyOn(mouseDownEvent, 'preventDefault');
@@ -105,6 +101,161 @@ describe('@mantine/core/MenuItem', () => {
 
     expect(onMouseDown).toHaveBeenCalled();
 
+    expect(preventDefaultSpy).not.toHaveBeenCalled();
+  });
+
+  it('should still prevent default mousedown behavior for non-draggable elements', () => {
+    const onMouseDown = jest.fn();
+
+    render(
+      <Menu opened closeOnItemClick={false} withInitialFocusPlaceholder={false}>
+        <Menu.Target>
+          <button type="button">Target</button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item>
+            <div data-testid="regular-element" onMouseDown={onMouseDown} role="button" tabIndex={0}>
+              Regular content
+            </div>
+          </Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    );
+
+    const regularElement = screen.getByTestId('regular-element');
+
+    const mouseDownEvent = new MouseEvent('mousedown', {
+      bubbles: true,
+      cancelable: true,
+      button: 0,
+    });
+
+    const preventDefaultSpy = jest.spyOn(mouseDownEvent, 'preventDefault');
+
+    act(() => {
+      regularElement.dispatchEvent(mouseDownEvent);
+    });
+
+    expect(onMouseDown).toHaveBeenCalled();
+
+    expect(preventDefaultSpy).toHaveBeenCalled();
+  });
+
+  it('should handle nested elements in draggable containers correctly', () => {
+    const onDragStart = jest.fn();
+    const onMouseDown = jest.fn();
+
+    render(
+      <Menu opened closeOnItemClick={false} withInitialFocusPlaceholder={false}>
+        <Menu.Target>
+          <button type="button">Target</button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item>
+            <div
+              data-testid="draggable-container"
+              draggable
+              onDragStart={onDragStart}
+              onMouseDown={onMouseDown}
+              role="button"
+              tabIndex={0}
+            >
+              <span data-testid="nested-element">Nested content</span>
+            </div>
+          </Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    );
+
+    const nestedElement = screen.getByTestId('nested-element');
+
+    const mouseDownEvent = new MouseEvent('mousedown', {
+      bubbles: true,
+      cancelable: true,
+      button: 0,
+    });
+
+    const preventDefaultSpy = jest.spyOn(mouseDownEvent, 'preventDefault');
+
+    act(() => {
+      nestedElement.dispatchEvent(mouseDownEvent);
+    });
+
+    expect(onMouseDown).toHaveBeenCalled();
+
+    expect(preventDefaultSpy).not.toHaveBeenCalled();
+  });
+
+  it('should not prevent default mousedown for form elements', () => {
+    const onMouseDown = jest.fn();
+
+    render(
+      <Menu opened closeOnItemClick={false} withInitialFocusPlaceholder={false}>
+        <Menu.Target>
+          <button type="button">Target</button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item>
+            <input
+              data-testid="input-element"
+              type="text"
+              onMouseDown={onMouseDown}
+              placeholder="Test input"
+            />
+          </Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    );
+
+    const inputElement = screen.getByTestId('input-element');
+    const mouseDownEvent = new MouseEvent('mousedown', {
+      bubbles: true,
+      cancelable: true,
+      button: 0,
+    });
+
+    const preventDefaultSpy = jest.spyOn(mouseDownEvent, 'preventDefault');
+
+    act(() => {
+      inputElement.dispatchEvent(mouseDownEvent);
+    });
+
+    expect(onMouseDown).toHaveBeenCalled();
+    expect(preventDefaultSpy).not.toHaveBeenCalled();
+  });
+
+  it('should not prevent default mousedown for button and link elements', () => {
+    const onMouseDown = jest.fn();
+
+    render(
+      <Menu opened closeOnItemClick={false} withInitialFocusPlaceholder={false}>
+        <Menu.Target>
+          <button type="button">Target</button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item>
+            <button data-testid="button-element" type="button" onMouseDown={onMouseDown}>
+              Button inside menu item
+            </button>
+          </Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    );
+
+    const buttonElement = screen.getByTestId('button-element');
+    const mouseDownEvent = new MouseEvent('mousedown', {
+      bubbles: true,
+      cancelable: true,
+      button: 0,
+    });
+
+    const preventDefaultSpy = jest.spyOn(mouseDownEvent, 'preventDefault');
+
+    act(() => {
+      buttonElement.dispatchEvent(mouseDownEvent);
+    });
+
+    expect(onMouseDown).toHaveBeenCalled();
     expect(preventDefaultSpy).not.toHaveBeenCalled();
   });
 });

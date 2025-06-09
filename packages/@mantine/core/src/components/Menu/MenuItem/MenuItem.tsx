@@ -97,9 +97,26 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
     }
   });
 
+  const handleMouseDown = createEventHandler<any>(_others.onMouseDown, (event) => {
+    let target = event.target as Element;
+    while (target && target !== event.currentTarget) {
+      if (target.getAttribute) {
+        if (
+          target.getAttribute('draggable') === 'true' ||
+          ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON', 'A'].includes(target.tagName) ||
+          target.getAttribute('contenteditable') === 'true'
+        ) {
+          return;
+        }
+      }
+      target = target.parentElement as Element;
+    }
+    event.preventDefault();
+  });
+
   return (
     <UnstyledButton
-      onMouseDown={(event) => event.preventDefault()}
+      onMouseDown={handleMouseDown}
       {...others}
       unstyled={ctx.unstyled}
       tabIndex={ctx.menuItemTabIndex}
