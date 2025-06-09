@@ -1,0 +1,67 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[64166],{99621:(e,t,n)=>{(window.__NEXT_P=window.__NEXT_P||[]).push(["/hooks/use-hotkeys",function(){return n(40451)}])},40451:(e,t,n)=>{"use strict";n.r(t),n.d(t,{default:()=>y});var o=n(31085),s=n(71184),r=n(19687),i=n(14041),l=n(90275),d=n(10996),a=n(48727);let c={type:"code",code:`
+import { useState } from 'react';
+import { getHotkeyHandler } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState("I've just used a hotkey to send a message");
+  const handleSubmit = () => notifications.show({ title: 'Your message', message: value });
+  const handleSave = () => notifications.show({ title: 'You saved', color: 'teal', message: value });
+
+  return (
+    <TextInput
+      placeholder="Your message"
+      label="Press \u2318+Enter or Ctrl+Enter when input has focus to send message"
+      value={value}
+      onChange={(event) => setValue(event.target.value)}
+      onKeyDown={getHotkeyHandler([
+        ['mod+Enter', handleSubmit],
+        ['mod+S', handleSave],
+      ])}
+    />
+  );
+}
+`,component:function(){let[e,t]=(0,i.useState)("I've just used a hotkey to send a message");return(0,o.jsx)(l.k,{placeholder:"Your message",label:"Press ⌘+Enter or Ctrl+Enter when input has focus to send message",value:e,onChange:e=>t(e.target.value),onKeyDown:(0,d.vA)([["mod+Enter",()=>a.$e.show({title:"Your message",message:e})],["mod+S",()=>a.$e.show({title:"You saved",color:"teal",message:e})]])})}};var h=n(18675),p=n(20017);let u=(0,h.P)(p.XZ.useHotkeys);function m(e){let t={a:"a",code:"code",h2:"h2",li:"li",p:"p",pre:"pre",ul:"ul",...(0,s.R)(),...e.components},{Demo:n}=t;return n||function(e,t){throw Error("Expected "+(t?"component":"object")+" `"+e+"` to be defined: you likely forgot to import, pass, or provide it.")}("Demo",!0),(0,o.jsxs)(o.Fragment,{children:[(0,o.jsx)(t.h2,{id:"usage",children:"Usage"}),"\n",(0,o.jsxs)(t.p,{children:[(0,o.jsx)(t.code,{children:"use-hotkeys"})," accepts as its first argument an array of hotkeys and handler tuples:"]}),"\n",(0,o.jsxs)(t.ul,{children:["\n",(0,o.jsxs)(t.li,{children:[(0,o.jsx)(t.code,{children:"hotkey"})," - hotkey string, for example ",(0,o.jsx)(t.code,{children:"ctrl+E"}),", ",(0,o.jsx)(t.code,{children:"shift+alt+L"}),", ",(0,o.jsx)(t.code,{children:"mod+S"})]}),"\n",(0,o.jsxs)(t.li,{children:[(0,o.jsx)(t.code,{children:"handler"})," - event handler called when a given combination was pressed"]}),"\n",(0,o.jsxs)(t.li,{children:[(0,o.jsx)(t.code,{children:"options"})," - object with extra options for hotkey handler"]}),"\n"]}),"\n",(0,o.jsx)(n,{data:r.W}),"\n",(0,o.jsxs)(t.p,{children:["The second argument is a list of HTML tags on which hotkeys should be ignored.\nBy default, hotkeys events are ignored if the focus is in ",(0,o.jsx)(t.code,{children:"input"}),", ",(0,o.jsx)(t.code,{children:"textarea"})," and ",(0,o.jsx)(t.code,{children:"select"})," elements."]}),"\n",(0,o.jsx)(t.pre,{children:(0,o.jsx)(t.code,{className:"language-tsx",children:"import { useHotkeys } from '@mantine/hooks';\n\nfunction Demo() {\n  // Ignore hotkeys events only when focus is in input and textarea elements\n  useHotkeys(\n    [['ctrl+K', () => console.log('Trigger search')]],\n    ['INPUT', 'TEXTAREA']\n  );\n\n  // Empty array – do not ignore hotkeys events on any element\n  useHotkeys([['ctrl+K', () => console.log('Trigger search')]], []);\n}\n"})}),"\n",(0,o.jsx)(t.h2,{id:"targeting-elements",children:"Targeting elements"}),"\n",(0,o.jsxs)(t.p,{children:[(0,o.jsx)(t.code,{children:"use-hotkeys"})," hook can work only with document element, you will need to create your own event listener\nif you need to support other elements. For this purpose, ",(0,o.jsx)(t.code,{children:"@mantine/hooks"})," package exports ",(0,o.jsx)(t.code,{children:"getHotkeyHandler"})," function\nwhich should be used with ",(0,o.jsx)(t.code,{children:"onKeyDown"}),":"]}),"\n",(0,o.jsx)(n,{data:c}),"\n",(0,o.jsxs)(t.p,{children:["With ",(0,o.jsx)(t.code,{children:"getHotkeyHandler"})," you can also add events to any dom node using ",(0,o.jsx)(t.code,{children:".addEventListener"}),":"]}),"\n",(0,o.jsx)(t.pre,{children:(0,o.jsx)(t.code,{className:"language-tsx",children:"import { getHotkeyHandler } from '@mantine/hooks';\n\ndocument.body.addEventListener(\n  'keydown',\n  getHotkeyHandler([\n    ['mod+Enter', () => console.log('Submit')],\n    ['mod+S', () => console.log('Save')],\n  ])\n);\n"})}),"\n",(0,o.jsx)(t.h2,{id:"supported-formats",children:"Supported formats"}),"\n",(0,o.jsxs)(t.ul,{children:["\n",(0,o.jsxs)(t.li,{children:[(0,o.jsx)(t.code,{children:"mod+S"})," – detects ",(0,o.jsx)(t.code,{children:"⌘+S"})," on macOS and ",(0,o.jsx)(t.code,{children:"Ctrl+S"})," on Windows"]}),"\n",(0,o.jsxs)(t.li,{children:[(0,o.jsx)(t.code,{children:"ctrl+shift+X"})," – handles multiple modifiers"]}),"\n",(0,o.jsxs)(t.li,{children:[(0,o.jsx)(t.code,{children:"alt + shift + L"})," – you can use whitespace inside hotkey"]}),"\n",(0,o.jsxs)(t.li,{children:[(0,o.jsx)(t.code,{children:"ArrowLeft"})," – you can use special keys using ",(0,o.jsx)(t.a,{href:"https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values",children:"this format"})]}),"\n",(0,o.jsxs)(t.li,{children:[(0,o.jsx)(t.code,{children:"shift + [plus]"})," – you can use ",(0,o.jsx)(t.code,{children:"[plus]"})," to detect ",(0,o.jsx)(t.code,{children:"+"})," key"]}),"\n",(0,o.jsxs)(t.li,{children:[(0,o.jsx)(t.code,{children:"Digit1"})," and ",(0,o.jsx)(t.code,{children:"Hotkey1"})," - You can use physical key assignments ",(0,o.jsx)(t.a,{href:"https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_code_values",children:"defined on MDN"}),"."]}),"\n"]}),"\n",(0,o.jsx)(t.h2,{id:"types",children:"Types"}),"\n",(0,o.jsxs)(t.p,{children:[(0,o.jsx)(t.code,{children:"@mantine/hooks"})," exports ",(0,o.jsx)(t.code,{children:"HotkeyItemOptions"})," and ",(0,o.jsx)(t.code,{children:"HotkeyItem"})," types:"]}),"\n",(0,o.jsx)(t.pre,{children:(0,o.jsx)(t.code,{className:"language-tsx",children:"interface HotkeyItemOptions {\n  preventDefault?: boolean;\n  usePhysicalKeys?: boolean;\n}\n\ntype HotkeyItem = [\n  string,\n  (event: KeyboardEvent) => void,\n  HotkeyItemOptions?,\n];\n"})}),"\n",(0,o.jsxs)(t.p,{children:[(0,o.jsx)(t.code,{children:"HotkeyItemOptions"})," provides the ",(0,o.jsx)(t.code,{children:"usePhysicalKeys"})," option to force the physical key assignment. Useful for non-QWERTY keyboard layouts."]}),"\n",(0,o.jsxs)(t.p,{children:[(0,o.jsx)(t.code,{children:"HotkeyItem"})," type can be used to create hotkey items outside of ",(0,o.jsx)(t.code,{children:"use-hotkeys"})," hook:"]}),"\n",(0,o.jsx)(t.pre,{children:(0,o.jsx)(t.code,{className:"language-tsx",children:"import { HotkeyItem, useHotkeys } from '@mantine/hooks';\n\nconst hotkeys: HotkeyItem[] = [\n  [\n    'mod+J',\n    () => console.log('Toggle color scheme'),\n    { preventDefault: false },\n  ],\n  ['ctrl+K', () => console.log('Trigger search')],\n  ['alt+mod+shift+X', () => console.log('Rick roll')],\n  [\n    'D',\n    () => console.log('Triggers when pressing \"E\" on Dvorak keyboards!'),\n    { usePhysicalKeys: true }\n  ],\n];\n\nuseHotkeys(hotkeys);\n"})}),"\n",(0,o.jsx)(t.h2,{id:"definition",children:"Definition"}),"\n",(0,o.jsx)(t.pre,{children:(0,o.jsx)(t.code,{className:"language-tsx",children:"interface HotkeyItemOptions {\n  preventDefault?: boolean;\n  usePhysicalKeys?: boolean;\n}\n\ntype HotkeyItem = [string, (event: KeyboardEvent) => void, HotkeyItemOptions?]\n\nfunction useHotkeys(\n  hotkeys: HotkeyItem[],\n  tagsToIgnore?: string[],\n  triggerOnContentEditable?: boolean\n): void;\n"})}),"\n",(0,o.jsx)(t.h2,{id:"exported-types",children:"Exported types"}),"\n",(0,o.jsxs)(t.p,{children:[(0,o.jsx)(t.code,{children:"HotkeyItemOptions"})," and ",(0,o.jsx)(t.code,{children:"HotkeyItem"})," types are exported from ",(0,o.jsx)(t.code,{children:"@mantine/hooks"})," package,\nyou can import them in your application:"]}),"\n",(0,o.jsx)(t.pre,{children:(0,o.jsx)(t.code,{className:"language-tsx",children:"import type { HotkeyItemOptions, HotkeyItem } from '@mantine/hooks';\n"})})]})}function y(){let e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return(0,o.jsx)(u,{...e,children:(0,o.jsx)(m,{...e})})}},87186:(e,t,n)=>{"use strict";n.d(t,{A:()=>o});var o=(0,n(73366).A)("outline","adjustments","IconAdjustments",[["path",{d:"M4 10a2 2 0 1 0 4 0a2 2 0 0 0 -4 0",key:"svg-0"}],["path",{d:"M6 4v4",key:"svg-1"}],["path",{d:"M6 12v8",key:"svg-2"}],["path",{d:"M10 16a2 2 0 1 0 4 0a2 2 0 0 0 -4 0",key:"svg-3"}],["path",{d:"M12 4v10",key:"svg-4"}],["path",{d:"M12 18v2",key:"svg-5"}],["path",{d:"M16 7a2 2 0 1 0 4 0a2 2 0 0 0 -4 0",key:"svg-6"}],["path",{d:"M18 4v1",key:"svg-7"}],["path",{d:"M18 9v11",key:"svg-8"}]])},80502:(e,t,n)=>{"use strict";n.d(t,{A:()=>o});var o=(0,n(73366).A)("outline","arrow-left","IconArrowLeft",[["path",{d:"M5 12l14 0",key:"svg-0"}],["path",{d:"M5 12l6 6",key:"svg-1"}],["path",{d:"M5 12l6 -6",key:"svg-2"}]])},89689:(e,t,n)=>{"use strict";n.d(t,{A:()=>o});var o=(0,n(73366).A)("outline","arrow-right","IconArrowRight",[["path",{d:"M5 12l14 0",key:"svg-0"}],["path",{d:"M13 18l6 -6",key:"svg-1"}],["path",{d:"M13 6l6 6",key:"svg-2"}]])},61584:(e,t,n)=>{"use strict";n.d(t,{A:()=>o});var o=(0,n(73366).A)("outline","calendar","IconCalendar",[["path",{d:"M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z",key:"svg-0"}],["path",{d:"M16 3v4",key:"svg-1"}],["path",{d:"M8 3v4",key:"svg-2"}],["path",{d:"M4 11h16",key:"svg-3"}],["path",{d:"M11 15h1",key:"svg-4"}],["path",{d:"M12 15v3",key:"svg-5"}]])},91133:(e,t,n)=>{"use strict";n.d(t,{A:()=>o});var o=(0,n(73366).A)("outline","code","IconCode",[["path",{d:"M7 8l-4 4l4 4",key:"svg-0"}],["path",{d:"M17 8l4 4l-4 4",key:"svg-1"}],["path",{d:"M14 4l-4 16",key:"svg-2"}]])},11749:(e,t,n)=>{"use strict";n.d(t,{A:()=>o});var o=(0,n(73366).A)("outline","file-text","IconFileText",[["path",{d:"M14 3v4a1 1 0 0 0 1 1h4",key:"svg-0"}],["path",{d:"M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z",key:"svg-1"}],["path",{d:"M9 9l1 0",key:"svg-2"}],["path",{d:"M9 13l6 0",key:"svg-3"}],["path",{d:"M9 17l6 0",key:"svg-4"}]])},89843:(e,t,n)=>{"use strict";n.d(t,{A:()=>o});var o=(0,n(73366).A)("outline","license","IconLicense",[["path",{d:"M15 21h-9a3 3 0 0 1 -3 -3v-1h10v2a2 2 0 0 0 4 0v-14a2 2 0 1 1 2 2h-2m2 -4h-11a3 3 0 0 0 -3 3v11",key:"svg-0"}],["path",{d:"M9 7l4 0",key:"svg-1"}],["path",{d:"M9 11l4 0",key:"svg-2"}]])},9613:(e,t,n)=>{"use strict";n.d(t,{A:()=>o});var o=(0,n(73366).A)("outline","pencil","IconPencil",[["path",{d:"M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4",key:"svg-0"}],["path",{d:"M13.5 6.5l4 4",key:"svg-1"}]])},55764:(e,t,n)=>{"use strict";n.d(t,{A:()=>o});var o=(0,n(73366).A)("outline","switch-2","IconSwitch2",[["path",{d:"M3 17h5l1.67 -2.386m3.66 -5.227l1.67 -2.387h6",key:"svg-0"}],["path",{d:"M18 4l3 3l-3 3",key:"svg-1"}],["path",{d:"M3 7h5l7 10h6",key:"svg-2"}],["path",{d:"M18 20l3 -3l-3 -3",key:"svg-3"}]])},19687:(e,t,n)=>{"use strict";n.d(t,{W:()=>c});var o=n(31085),s=n(56051),r=n(9082),i=n(34056),l=n(12347),d=n(92587);function a({symbol:e,description:t}){return(0,o.jsxs)(s.Y,{gap:7,p:10,children:[(0,o.jsx)(r.u,{fz:{base:16,sm:20},children:"Ctrl"}),(0,o.jsx)(i.a,{fz:22,fw:500,children:"+"}),(0,o.jsx)(r.u,{fz:{base:16,sm:20},w:40,children:e}),(0,o.jsxs)(i.a,{fz:{base:14,sm:18},ms:"sm",children:["– ",t]})]})}let c={type:"code",component:function(){return(0,l.O)([["mod + shift + alt + X",()=>d.jQ.open({withCloseButton:!1,padding:0,size:500,styles:{content:{height:300,overflow:"hidden"}},children:(0,o.jsx)("iframe",{src:"https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",title:"YouTube video player",style:{border:0,margin:0,width:"100%",height:300},allow:"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",allowFullScreen:!0})})]]),(0,o.jsxs)(o.Fragment,{children:[(0,o.jsx)(a,{symbol:"K",description:"Open search"}),(0,o.jsx)(a,{symbol:"J",description:"Toggle color scheme"})]})},code:[{code:`
+import { useHotkeys } from '@mantine/hooks';
+import { spotlight } from '@mantine/spotlight';
+import { useMantineColorScheme } from '@mantine/core';
+import { Shortcut } from './Shortcut';
+
+function Demo() {
+  const { toggleColorScheme } = useMantineColorScheme();
+
+  useHotkeys([
+    ['mod + K', () => spotlight.open()],
+    ['mod + J', () => toggleColorScheme()],
+    ['mod + shift + alt + X', () => secret()],
+  ]);
+
+  return (
+    <>
+      <Shortcut symbol="K" description="Open search" />
+      <Shortcut symbol="J" description="Toggle color scheme" />
+    </>
+  );
+}
+`,language:"tsx",fileName:"Demo.tsx"},{code:`
+import { Box, Group, Kbd } from '@mantine/core';
+
+export function Shortcut({ symbol, description }: { symbol: string; description: string }) {
+  return (
+    <Group gap={7} p={10}>
+      <Kbd size={20}>Ctrl</Kbd>
+      <Box fz={22} fw={500}>
+        +
+      </Box>
+      <Kbd size={20} w={40}>
+        {symbol}
+      </Kbd>
+
+      <Box fz={18} ms="sm">
+        \u2013 {description}
+      </Box>
+    </Group>
+  );
+}
+`,language:"tsx",fileName:"Shortcut.tsx"}],centered:!0,defaultExpanded:!1}}},e=>{var t=t=>e(e.s=t);e.O(0,[18675,90636,46593,38792],()=>t(99621)),_N_E=e.O()}]);
