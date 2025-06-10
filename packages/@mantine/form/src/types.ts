@@ -28,11 +28,11 @@ type Rule<Value, Values> = (value: Value, values: Values, path: string) => React
 type SetSubmitting = React.Dispatch<React.SetStateAction<boolean>>;
 
 export type FormRule<Value, Values> =
-  NonNullable<Value> extends Array<infer ListValue>
+  NonNullable<Value> extends ReadonlyArray<infer ListValue>
     ?
         | Partial<
             {
-              [Key in keyof ListValue]: ListValue[Key] extends Array<infer NestedListItem>
+              [Key in keyof ListValue]: ListValue[Key] extends ReadonlyArray<infer NestedListItem>
                 ? FormRulesRecord<NestedListItem, Values> | Rule<ListValue[Key], Values>
                 : FormRulesRecord<ListValue[Key], Values> | Rule<ListValue[Key], Values>;
             } & { [formRootRule]?: Rule<Value, Values> }
