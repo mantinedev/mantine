@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { findElementAncestor, GetStylesApi } from '../../core';
+import { Box, findElementAncestor, GetStylesApi } from '../../core';
 import type { RenderNode, TreeFactory, TreeNodeData } from './Tree';
 import type { TreeController } from './use-tree';
 
@@ -196,9 +196,9 @@ export function TreeNode({
       )}
 
       {controller.expandedState[node.value] && nested.length > 0 && (
-        <ul role="group" {...getStyles('subtree')} data-level={level}>
+        <Box component="ul" role="group" {...getStyles('subtree')} data-level={level}>
           {nested}
-        </ul>
+        </Box>
       )}
     </li>
   );
