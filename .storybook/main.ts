@@ -1,10 +1,10 @@
+import { createRequire } from 'module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fg from 'fast-glob';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { createRequire } from 'module';
 
 const currentModuleUrl = typeof import.meta !== 'undefined' ? import.meta.url : '';
 const __filename = fileURLToPath(currentModuleUrl);
