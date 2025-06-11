@@ -69,6 +69,16 @@ describe('@mantine/hooks/use-debounced-callback', () => {
     expect(callback).not.toHaveBeenCalled();
   });
 
+  it('doesnt still call after flush if not called since', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() => useDebouncedCallback(callback, 100));
+    result.current(1);
+    result.current.flush();
+    expect(callback).toHaveBeenCalledWith(1);
+    jest.advanceTimersByTime(100);
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+
   it('can flush on unmount', () => {
     const callback = jest.fn();
     const { result, unmount } = renderHook(() =>
@@ -79,6 +89,29 @@ describe('@mantine/hooks/use-debounced-callback', () => {
     result.current(3);
     unmount();
     expect(callback).toHaveBeenCalledWith(3);
+  });
+
+  // Note: this might not be desired but this is what happens
+  it('flushes on option changes', () => {
+    const callback = jest.fn();
+    const { result, rerender } = renderHook(({ delay }: { delay: number } = { delay: 100 }) =>
+      useDebouncedCallback(callback, { flushOnUnmount: true, delay })
+    );
+    result.current(1);
+    rerender({ delay: 200 });
+    expect(callback).toHaveBeenCalledWith(1);
+  });
+
+  // Note: this might not be desired but this is what happens
+  it('cancels on option changes', () => {
+    const callback = jest.fn();
+    const { result, rerender } = renderHook(({ delay }: { delay: number } = { delay: 100 }) =>
+      useDebouncedCallback(callback, { flushOnUnmount: false, delay })
+    );
+    result.current(1);
+    rerender({ delay: 200 });
+    jest.advanceTimersByTime(200);
+    expect(callback).not.toHaveBeenCalled();
   });
 
   it('can flush on unmount after rerender', () => {
@@ -169,5 +202,136 @@ describe('@mantine/hooks/use-debounced-callback', () => {
     result.current('c');
     expect(callback).toHaveBeenCalledTimes(3);
     expect(callback).toHaveBeenCalledWith('c');
+  });
+
+  it('doesnt call on leading edge if leading changes from true to false', () => {
+    const callback = jest.fn();
+    const { result, rerender } = renderHook(
+      ({ leading }: { leading?: boolean } = { leading: true }) =>
+        useDebouncedCallback(callback, { delay: 100, leading })
+    );
+    rerender({ leading: false });
+    result.current(1);
+    result.current(2);
+    expect(callback).not.toHaveBeenCalled();
+    jest.advanceTimersByTime(100);
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+
+  it('does call again on leading edge if options change and it was already called before the change', () => {
+    const callback = jest.fn();
+    const { result, rerender } = renderHook(({ delay }: { delay: number } = { delay: 100 }) =>
+      useDebouncedCallback(callback, { delay, leading: true })
+    );
+    result.current(1);
+    expect(callback).toHaveBeenCalledTimes(1);
+    rerender({ delay: 200 });
+    result.current(2);
+    result.current(3);
+    expect(callback).toHaveBeenCalledTimes(2);
+    jest.advanceTimersByTime(100);
+    expect(callback).toHaveBeenCalledTimes(2);
+    jest.advanceTimersByTime(100);
+    expect(callback).toHaveBeenCalledTimes(3);
+    expect(callback).toHaveBeenCalledWith(3);
+  });
+
+  it('can cancel debounced callback', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() => useDebouncedCallback(callback, 100));
+    result.current(1);
+    result.current(2);
+    result.current(3);
+    result.current.cancel();
+    jest.advanceTimersByTime(100);
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it('can cancel after second render', () => {
+    const callback = jest.fn();
+    const { result, rerender } = renderHook(() => useDebouncedCallback(callback, 100));
+    result.current(1);
+    rerender();
+    result.current.cancel();
+    jest.advanceTimersByTime(100);
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it('can cancel multiple times without error', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() => useDebouncedCallback(callback, 100));
+    result.current(1);
+    result.current.cancel();
+    result.current.cancel();
+    result.current.cancel();
+    jest.advanceTimersByTime(100);
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it('can cancel and then call again', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() => useDebouncedCallback(callback, 100));
+    result.current(1);
+    result.current.cancel();
+    result.current(2);
+    jest.advanceTimersByTime(100);
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(2);
+  });
+
+  it('cancel does not affect already executed callback', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() => useDebouncedCallback(callback, 100));
+    result.current(1);
+    jest.advanceTimersByTime(100);
+    expect(callback).toHaveBeenCalledWith(1);
+    result.current.cancel();
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+
+  it('cancel resets leading flag for leading=true', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() =>
+      useDebouncedCallback(callback, { delay: 100, leading: true })
+    );
+
+    // First call fires immediately
+    result.current('a');
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith('a');
+
+    // Second call is debounced
+    result.current('b');
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    // Cancel the debounced call
+    result.current.cancel();
+    jest.advanceTimersByTime(100);
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    // Next call should fire immediately again since cancel reset the leading flag
+    result.current('c');
+    expect(callback).toHaveBeenCalledTimes(2);
+    expect(callback).toHaveBeenCalledWith('c');
+  });
+
+  it('cancel prevents flush from working after cancel', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() => useDebouncedCallback(callback, 100));
+    result.current(1);
+    result.current.cancel();
+    result.current.flush();
+    expect(callback).not.toHaveBeenCalled();
+  });
+
+  it('flush works after cancel if new call is made', () => {
+    const callback = jest.fn();
+    const { result } = renderHook(() => useDebouncedCallback(callback, 100));
+    result.current(1);
+    result.current.cancel();
+    result.current(2);
+    result.current.flush();
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(2);
   });
 });
