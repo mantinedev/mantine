@@ -1,27 +1,37 @@
 import { DatePicker } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
+import { rem, Stack, Text } from '@mantine/core';
 
 const code = `
 import { DatePicker } from '@mantine/dates';
+import { Stack, Text } from '@mantine/core';
 
 function Demo() {
   return (
-    <DatePicker 
-      label="Pick date with keyboard navigation"
-      placeholder="Use Ctrl/Cmd + Arrow keys"
-      enableKeyboardNavigation
-    />
+    <Stack gap="xs">
+      <Text size="sm" fw={500}>Pick date with keyboard navigation</Text>
+      <DatePicker enableKeyboardNavigation />
+      <Text size="xs" c="dimmed">
+        Use Ctrl/Cmd + Arrow keys for year navigation, 
+        Ctrl/Cmd + Shift + Arrow keys for decade navigation, 
+        or press Y to open year view
+      </Text>
+    </Stack>
   );
 }
 `;
 
 function Demo() {
   return (
-    <DatePicker 
-      label="Pick date with keyboard navigation"
-      placeholder="Use Ctrl/Cmd + Arrow keys"
-      enableKeyboardNavigation
-    />
+    <Stack gap="xs">
+      <Text size="sm" fw={500}>Pick date with keyboard navigation</Text>
+      <DatePicker enableKeyboardNavigation />
+      <Text size="xs" c="dimmed">
+        Use Ctrl/Cmd + Arrow keys for year navigation, 
+        Ctrl/Cmd + Shift + Arrow keys for decade navigation, 
+        or press Y to open year view
+      </Text>
+    </Stack>
   );
 }
 
