@@ -26,6 +26,7 @@ import {
 import {
   Calendar,
   CalendarBaseProps,
+  CalendarProps,
   CalendarSettings,
   CalendarStylesNames,
   pickCalendarProps,
@@ -57,7 +58,8 @@ export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
     YearLevelBaseSettings,
     MonthLevelBaseSettings,
     CalendarBaseProps,
-    Omit<CalendarSettings, 'hasNextLevel'> {
+    Omit<CalendarSettings, 'hasNextLevel'>,
+    Pick<CalendarProps, 'enableKeyboardNavigation'> {
   /** Max level that user can go up to, `'decade'` by default */
   maxLevel?: CalendarLevel;
 
