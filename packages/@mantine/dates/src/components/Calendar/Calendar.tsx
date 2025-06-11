@@ -340,11 +340,15 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
   const calendarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!enableKeyboardNavigation || isStatic) return;
+    if (!enableKeyboardNavigation || isStatic) {
+      return;
+    }
 
     const handleKeyDown = (event: KeyboardEvent) => {
       // Only handle keyboard events when focus is within the calendar
-      if (!calendarRef.current?.contains(document.activeElement)) return;
+      if (!calendarRef.current?.contains(document.activeElement)) {
+        return;
+      }
 
       const isCtrlOrCmd = event.ctrlKey || event.metaKey;
       const isShift = event.shiftKey;

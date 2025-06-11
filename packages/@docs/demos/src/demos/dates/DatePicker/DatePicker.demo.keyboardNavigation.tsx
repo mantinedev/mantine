@@ -1,4 +1,4 @@
-import { rem, Stack, Text } from '@mantine/core';
+import { Stack, Text } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 import { MantineDemo } from '@mantinex/demo';
 
