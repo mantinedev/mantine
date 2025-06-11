@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useImperativeHandle, useEffect, useRef } from 'react';
+import { useEffect, useImperativeHandle, useRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -39,7 +39,7 @@ export interface CalendarAriaLabels {
 
   nextDecade?: string;
   previousDecade?: string;
-  
+
   keyboardNavigationYear?: string;
   keyboardNavigationDecade?: string;
   keyboardOpenYearView?: string;
@@ -155,7 +155,7 @@ export interface CalendarProps
 
   /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
   static?: boolean;
-  
+
   /** Enable enhanced keyboard navigation (Ctrl/Cmd + Arrow keys for year navigation, Ctrl/Cmd + Shift + Arrow keys for decade navigation, Y key to open year view) */
   enableKeyboardNavigation?: boolean;
 }
@@ -338,17 +338,17 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
 
   // Keyboard navigation
   const calendarRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     if (!enableKeyboardNavigation || isStatic) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
       // Only handle keyboard events when focus is within the calendar
       if (!calendarRef.current?.contains(document.activeElement)) return;
-      
+
       const isCtrlOrCmd = event.ctrlKey || event.metaKey;
       const isShift = event.shiftKey;
-      
+
       switch (event.key) {
         case 'ArrowUp':
           if (isCtrlOrCmd && isShift) {
@@ -361,7 +361,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
             handlePreviousYear();
           }
           break;
-          
+
         case 'ArrowDown':
           if (isCtrlOrCmd && isShift) {
             event.preventDefault();
@@ -373,7 +373,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
             handleNextYear();
           }
           break;
-          
+
         case 'y':
         case 'Y':
           if (_level === 'month') {
@@ -384,13 +384,21 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           break;
       }
     };
-    
+
     document.addEventListener('keydown', handleKeyDown);
-    
+
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [enableKeyboardNavigation, isStatic, _level, handleNextYear, handlePreviousYear, handleNextDecade, handlePreviousDecade]);
+  }, [
+    enableKeyboardNavigation,
+    isStatic,
+    _level,
+    handleNextYear,
+    handlePreviousYear,
+    handleNextDecade,
+    handlePreviousDecade,
+  ]);
 
   // Merge refs
   const mergedRef = (node: HTMLDivElement) => {
