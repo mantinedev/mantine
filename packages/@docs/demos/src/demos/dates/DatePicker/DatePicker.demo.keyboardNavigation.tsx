@@ -42,4 +42,3 @@ export const keyboardNavigation: MantineDemo = {
   code,
   centered: true,
 };
-
