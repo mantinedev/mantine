@@ -6,3 +6,5 @@ export const { usage, multiple, range, configurator, modal, icon, clearable, val
 
 export { valueFormat } from './DatePickerInput.demo.valueFormat';
 export { disabled } from './DatePickerInput.demo.disabled';
+export { presets } from './DatePickerInput.demo.presets';
+export { presetsRange } from './DatePickerInput.demo.presetsRange';

@@ -12,9 +12,9 @@ export interface CopyButtonProps {
   timeout?: number;
 }
 
-const defaultProps: Partial<CopyButtonProps> = {
+const defaultProps = {
   timeout: 1000,
-};
+} satisfies Partial<CopyButtonProps>;
 
 export function CopyButton(props: CopyButtonProps) {
   const { children, timeout, value, ...others } = useProps('CopyButton', defaultProps, props);

@@ -93,10 +93,10 @@ export type PaginationRootFactory = Factory<{
   vars: PaginationRootCssVariables;
 }>;
 
-const defaultProps: Partial<PaginationRootProps> = {
+const defaultProps = {
   siblings: 1,
   boundaries: 1,
-};
+} satisfies Partial<PaginationRootProps>;
 
 const varsResolver = createVarsResolver<PaginationRootFactory>(
   (theme, { size, radius, color, autoContrast }) => ({

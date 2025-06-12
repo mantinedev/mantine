@@ -69,7 +69,7 @@ export type DayFactory = Factory<{
   vars: DayCssVariables;
 }>;
 
-const defaultProps: Partial<DayProps> = {};
+const defaultProps = {} satisfies Partial<DayProps>;
 
 const varsResolver = createVarsResolver<DayFactory>((_, { size }) => ({
   day: {

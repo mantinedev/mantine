@@ -24,7 +24,7 @@ export type AppShellMainFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<AppShellMainProps> = {};
+const defaultProps = {} satisfies Partial<AppShellMainProps>;
 
 export const AppShellMain = factory<AppShellMainFactory>((_props, ref) => {
   const props = useProps('AppShellMain', defaultProps, _props);

@@ -16,7 +16,7 @@ export type ModalOverlayFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<ModalOverlayProps> = {};
+const defaultProps = {} satisfies Partial<ModalOverlayProps>;
 
 export const ModalOverlay = factory<ModalOverlayFactory>((_props, ref) => {
   const props = useProps('ModalOverlay', defaultProps, _props);

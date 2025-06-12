@@ -55,10 +55,10 @@ export type SpoilerFactory = Factory<{
   vars: SpoilerCssVariables;
 }>;
 
-const defaultProps: Partial<SpoilerProps> = {
+const defaultProps = {
   maxHeight: 100,
   initialState: false,
-};
+} satisfies Partial<SpoilerProps>;
 
 const varsResolver = createVarsResolver<SpoilerFactory>((_, { transitionDuration }) => ({
   root: {

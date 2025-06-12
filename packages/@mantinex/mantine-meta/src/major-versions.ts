@@ -1,5 +1,5 @@
 export const majorVersions = [
-  { v: '7', name: '7.17.7', link: 'https://v7.mantine.dev/' },
+  { v: '7', name: '7.17.8', link: 'https://v7.mantine.dev/' },
   { v: '6', name: '6.0.21', link: 'https://v6.mantine.dev/' },
   { v: '5', name: '5.10.5', link: 'https://v5.mantine.dev/' },
   { v: '4', name: '4.2.12', link: 'https://v4.mantine.dev/' },

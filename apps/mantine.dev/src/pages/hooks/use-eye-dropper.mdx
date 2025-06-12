@@ -14,10 +14,31 @@ Check [browser support](https://caniuse.com/mdn-api_eyedropper) to learn which b
 ## Definition
 
 ```tsx
-function useEyeDropper(): {
+interface EyeDropperOpenOptions {
+  signal?: AbortSignal;
+}
+
+interface EyeDropperOpenReturnType {
+  sRGBHex: string;
+}
+
+interface UseEyeDropperReturnValue {
   supported: boolean;
-  open: (options?: {
-    signal?: AbortSignal;
-  }) => Promise<{ sRGBHex: string }>;
-};
+  open: (options?: EyeDropperOpenOptions) => Promise<EyeDropperOpenReturnType | undefined>;
+}
+
+function useEyeDropper(): UseEyeDropperReturnValue;
+```
+
+## Exported types
+
+`EyeDropperOpenOptions`, `EyeDropperOpenReturnType` and `UseEyeDropperReturnValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type {
+  EyeDropperOpenOptions,
+  EyeDropperOpenReturnType,
+  UseEyeDropperReturnValue,
+} from '@mantine/hooks';
 ```

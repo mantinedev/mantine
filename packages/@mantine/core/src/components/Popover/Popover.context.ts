@@ -7,7 +7,7 @@ import {
   Styles,
 } from '../../core';
 import { ArrowPosition, FloatingPosition, FloatingStrategy } from '../Floating';
-import { PortalProps } from '../Portal';
+import { BasePortalProps } from '../Portal';
 import { TransitionOverride } from '../Transition';
 import type { PopoverFactory } from './Popover';
 import { PopoverWidth } from './Popover.types';
@@ -31,7 +31,7 @@ interface PopoverContext {
   trapFocus: boolean | undefined;
   placement: FloatingPosition;
   withinPortal: boolean | undefined;
-  portalProps?: Omit<PortalProps, 'children'>;
+  portalProps?: BasePortalProps;
   closeOnEscape: boolean | undefined;
   zIndex: string | number | undefined;
   radius?: MantineRadius | undefined;

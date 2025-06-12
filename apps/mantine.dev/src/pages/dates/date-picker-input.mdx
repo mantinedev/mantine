@@ -25,6 +25,16 @@ Set `type="range"` to allow user to pick dates range:
 
 <Demo data={DatePickerInputDemos.range} />
 
+## Presets
+
+Use `presets` prop to add custom date presets. Presets are displayed next to the calendar:
+
+<Demo data={DatePickerInputDemos.presets} />
+
+To use `presets` with `type="range"`, define value a tuple of two dates:
+
+<Demo data={DatePickerInputDemos.presetsRange} />
+
 ## Open picker in modal
 
 By default, [DatePicker](/dates/date-picker/) is rendered inside [Popover](/core/popover/).

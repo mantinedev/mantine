@@ -1,0 +1,37 @@
+.datePickerRoot {
+  display: flex;
+  font-size: var(--preset-font-size);
+}
+
+.presetsList {
+  display: flex;
+  flex-direction: column;
+  border-inline-end: 1px solid;
+  padding-inline-end: 0.5em;
+  margin-inline-end: 0.5em;
+
+  @mixin where-light {
+    border-color: var(--mantine-color-gray-2);
+  }
+
+  @mixin where-dark {
+    border-color: var(--mantine-color-dark-5);
+  }
+}
+
+.presetButton {
+  padding: 0.52em 0.8em;
+  border-radius: var(--mantine-radius-default);
+  font-size: var(--preset-font-size);
+  white-space: nowrap;
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+  }
+}

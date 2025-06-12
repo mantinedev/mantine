@@ -94,13 +94,14 @@ export type ComboboxFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<ComboboxProps> = {
+const defaultProps = {
   keepMounted: true,
   withinPortal: true,
   resetSelectionOnOptionHover: false,
   width: 'target',
   transitionProps: { transition: 'fade', duration: 0 },
-};
+  size: 'sm',
+} satisfies Partial<ComboboxProps>;
 
 const varsResolver = createVarsResolver<ComboboxFactory>((_, { size, dropdownPadding }) => ({
   options: {
@@ -159,7 +160,7 @@ export function Combobox(_props: ComboboxProps) {
         getStyles,
         store,
         onOptionSubmit,
-        size: size!,
+        size,
         resetSelectionOnOptionHover,
         readOnly,
       }}

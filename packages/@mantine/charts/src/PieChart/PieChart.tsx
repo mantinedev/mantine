@@ -111,7 +111,7 @@ export type PieChartFactory = Factory<{
   vars: PieChartCssVariables;
 }>;
 
-const defaultProps: Partial<PieChartProps> = {
+const defaultProps = {
   withTooltip: false,
   withLabelsLine: true,
   paddingAngle: 0,
@@ -122,14 +122,14 @@ const defaultProps: Partial<PieChartProps> = {
   tooltipDataSource: 'all',
   labelsPosition: 'outside',
   labelsType: 'value',
-};
+} satisfies Partial<PieChartProps>;
 
 const varsResolver = createVarsResolver<PieChartFactory>(
   (theme, { strokeColor, labelColor, withLabels, size, labelsPosition }) => ({
     root: {
       '--chart-stroke-color': strokeColor ? getThemeColor(strokeColor, theme) : undefined,
       '--chart-labels-color': labelColor ? getThemeColor(labelColor, theme) : undefined,
-      '--chart-size': withLabels && labelsPosition === 'outside' ? rem(size! + 80) : rem(size!),
+      '--chart-size': withLabels && labelsPosition === 'outside' ? rem(size! + 80) : rem(size),
     },
   })
 );
@@ -257,7 +257,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
           <Pie
             data={data}
             innerRadius={0}
-            outerRadius={size! / 2}
+            outerRadius={size / 2}
             dataKey="value"
             isAnimationActive={false}
             paddingAngle={paddingAngle}

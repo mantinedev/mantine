@@ -51,7 +51,7 @@ export type RichTextEditorLinkControlFactory = Factory<{
 
 const LinkIcon: RichTextEditorControlBaseProps['icon'] = (props) => <IconLink {...props} />;
 
-const defaultProps: Partial<RichTextEditorLinkControlProps> = {};
+const defaultProps = {} satisfies Partial<RichTextEditorLinkControlProps>;
 
 export const RichTextEditorLinkControl = factory<RichTextEditorLinkControlFactory>(
   (_props, ref) => {

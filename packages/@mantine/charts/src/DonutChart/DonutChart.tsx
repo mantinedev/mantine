@@ -113,7 +113,7 @@ export type DonutChartFactory = Factory<{
   vars: DonutChartCssVariables;
 }>;
 
-const defaultProps: Partial<DonutChartProps> = {
+const defaultProps = {
   withTooltip: true,
   withLabelsLine: true,
   paddingAngle: 0,
@@ -124,14 +124,14 @@ const defaultProps: Partial<DonutChartProps> = {
   endAngle: 360,
   labelsType: 'value',
   tooltipDataSource: 'all',
-};
+} satisfies Partial<DonutChartProps>;
 
 const varsResolver = createVarsResolver<DonutChartFactory>(
   (theme, { strokeColor, labelColor, withLabels, size }) => ({
     root: {
       '--chart-stroke-color': strokeColor ? getThemeColor(strokeColor, theme) : undefined,
       '--chart-labels-color': labelColor ? getThemeColor(labelColor, theme) : undefined,
-      '--chart-size': withLabels ? rem(size! + 80) : rem(size!),
+      '--chart-size': withLabels ? rem(size! + 80) : rem(size),
     },
   })
 );
@@ -238,8 +238,8 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
         <ReChartsPieChart {...pieChartProps}>
           <Pie
             data={data}
-            innerRadius={size! / 2 - thickness!}
-            outerRadius={size! / 2}
+            innerRadius={size / 2 - thickness}
+            outerRadius={size / 2}
             dataKey="value"
             isAnimationActive={false}
             paddingAngle={paddingAngle}

@@ -21,9 +21,20 @@ Be sure to follow best practices to not [confuse or trap the end user](https://d
 ## Definition
 
 ```tsx
-function useFullscreen<T extends HTMLElement = any>(): {
-  readonly ref: (element: T | null) => void;
-  readonly toggle: () => Promise<void>;
-  readonly fullscreen: boolean;
-};
+interface UseFullscreenReturnValue<T extends HTMLElement = any> {
+  ref: React.RefCallback<T | null>;
+  toggle: () => Promise<void>;
+  fullscreen: boolean;
+}
+
+function useFullscreen<T extends HTMLElement = any>(): UseFullscreenReturnValue<T>
+```
+
+## Exported types
+
+`UseFullscreenReturnValue` type is exported from `@mantine/hooks` package,
+you can import it in your application:
+
+```tsx
+import type { UseFullscreenReturnValue } from '@mantine/hooks';
 ```

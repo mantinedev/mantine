@@ -158,7 +158,7 @@ const value = readLocalStorageValue({ key: 'color-scheme' });
 ## Definition
 
 ```tsx
-interface UseLocalStorage<T> {
+interface UseStorageOptions<T> {
   /** Local storage key */
   key: string;
 
@@ -178,9 +178,22 @@ interface UseLocalStorage<T> {
   deserialize?: (value: string) => T;
 }
 
-function useLocalStorage<T = string>(options: UseLocalStorage<T>): readonly [
+type UseStorageReturnValue<T> = [
   T, // current value
   (val: T | ((prevState: T) => T)) => void, // callback to set value in storage
   () => void, // callback to remove value from storage
 ];
+
+function useLocalStorage<T = string>(
+  options: UseStorageOptions<T>,
+): UseStorageReturnValue<T>;
+```
+
+## Exported types
+
+`UseStorageOptions` and `UseStorageReturnValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseStorageOptions, UseStorageReturnValue } from '@mantine/hooks';
 ```

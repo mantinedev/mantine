@@ -61,7 +61,7 @@ export type TimelineItemFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<TimelineItemProps> = {};
+const defaultProps = {} satisfies Partial<TimelineItemProps>;
 
 export const TimelineItem = factory<TimelineItemFactory>((_props, ref) => {
   const props = useProps('TimelineItem', defaultProps, _props);

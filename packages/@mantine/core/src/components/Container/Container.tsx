@@ -36,7 +36,7 @@ export type ContainerFactory = Factory<{
   vars: ContainerCssVariables;
 }>;
 
-const defaultProps: Partial<ContainerProps> = {};
+const defaultProps = {} satisfies Partial<ContainerProps>;
 
 const varsResolver = createVarsResolver<ContainerFactory>((_, { size, fluid }) => ({
   root: {

@@ -80,9 +80,9 @@ const DefaultValue: FileInputProps['valueComponent'] = ({ value }) => (
   </div>
 );
 
-const defaultProps: Partial<FileInputProps> = {
+const defaultProps = {
   valueComponent: DefaultValue,
-};
+} satisfies Partial<FileInputProps>;
 
 const _FileInput = factory<FileInputFactory>((_props, ref) => {
   const props = useProps('FileInput', defaultProps, _props);
@@ -96,7 +96,7 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
     accept,
     name,
     form,
-    valueComponent,
+    valueComponent: ValueComponent,
     clearable,
     clearButtonProps,
     readOnly,
@@ -145,8 +145,6 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
       resetRef.current?.();
     }
   }, [_value]);
-
-  const ValueComponent = valueComponent!;
 
   return (
     <FileButton

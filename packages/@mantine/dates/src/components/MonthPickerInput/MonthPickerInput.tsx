@@ -37,13 +37,13 @@ export type MonthPickerInputFactory = Factory<{
   variant: InputVariant;
 }>;
 
-const defaultProps: Partial<MonthPickerInputProps> = {
+const defaultProps = {
   type: 'default',
   valueFormat: 'MMMM YYYY',
   closeOnChange: true,
   sortDates: true,
   dropdownType: 'popover',
-};
+} satisfies Partial<MonthPickerInputProps>;
 
 type MonthPickerInputComponent = (<Type extends DatePickerType = 'default'>(
   props: MonthPickerInputProps<Type> & { ref?: React.ForwardedRef<HTMLButtonElement> }
@@ -118,7 +118,7 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
         onClear={onClear}
         shouldClear={shouldClear}
         value={_value}
-        size={size!}
+        size={size}
         variant={variant}
         dropdownType={dropdownType}
         {...others}

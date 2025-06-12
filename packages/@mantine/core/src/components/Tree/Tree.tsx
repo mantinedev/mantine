@@ -110,11 +110,11 @@ export type TreeFactory = Factory<{
   vars: TreeCssVariables;
 }>;
 
-const defaultProps: Partial<TreeProps> = {
+const defaultProps = {
   expandOnClick: true,
   allowRangeSelection: true,
   expandOnSpace: true,
-};
+} satisfies Partial<TreeProps>;
 
 const varsResolver = createVarsResolver<TreeFactory>((_theme, { levelOffset }) => ({
   root: {

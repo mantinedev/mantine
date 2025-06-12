@@ -67,7 +67,7 @@ export type AlertFactory = Factory<{
   variant: AlertVariant;
 }>;
 
-const defaultProps: Partial<AlertProps> = {};
+const defaultProps = {} satisfies Partial<AlertProps>;
 
 const varsResolver = createVarsResolver<AlertFactory>(
   (theme, { radius, color, variant, autoContrast }) => {

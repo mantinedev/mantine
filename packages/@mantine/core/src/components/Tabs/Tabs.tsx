@@ -100,17 +100,14 @@ export type TabsFactory = Factory<{
 const VALUE_ERROR =
   'Tabs.Tab or Tabs.Panel component was rendered with invalid value or without value';
 
-const defaultProps: Partial<TabsProps> = {
+const defaultProps = {
   keepMounted: true,
   orientation: 'horizontal',
   loop: true,
   activateTabWithKeyboard: true,
-  allowTabDeactivation: false,
-  unstyled: false,
-  inverted: false,
   variant: 'default',
   placement: 'left',
-};
+} satisfies Partial<TabsProps>;
 
 const varsResolver = createVarsResolver<TabsFactory>((theme, { radius, color, autoContrast }) => ({
   root: {

@@ -23,7 +23,7 @@ import {
   CalendarStylesNames,
   pickCalendarProps,
 } from '../Calendar';
-import { DatePicker } from '../DatePicker';
+import { DatePicker, DatePickerPreset } from '../DatePicker';
 import { useDatesContext } from '../DatesProvider';
 import {
   DateInputSharedProps,
@@ -60,7 +60,10 @@ export interface DateTimePickerProps
   defaultValue?: DateValue;
 
   /** Called when value changes */
-  onChange?: (value: DateStringValue) => void;
+  onChange?: (value: DateStringValue | null) => void;
+
+  /** Default time value in `HH:mm` or `HH:mm:ss` format. Assigned to time when date is selected. */
+  defaultTimeValue?: string;
 
   /** Props passed down to `TimePicker` component */
   timePickerProps?: Omit<TimePickerProps, 'defaultValue' | 'value'>;
@@ -73,6 +76,9 @@ export interface DateTimePickerProps
 
   /** Max level that user can go up to, `'decade'` by default */
   maxLevel?: CalendarLevel;
+
+  /** Presets values */
+  presets?: DatePickerPreset<'default'>[];
 }
 
 export type DateTimePickerFactory = Factory<{
@@ -82,9 +88,9 @@ export type DateTimePickerFactory = Factory<{
   variant: InputVariant;
 }>;
 
-const defaultProps: Partial<DateTimePickerProps> = {
+const defaultProps = {
   dropdownType: 'popover',
-};
+} satisfies Partial<DateTimePickerProps>;
 
 export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
   const props = useProps('DateTimePicker', defaultProps, _props);
@@ -108,6 +114,8 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     vars,
     minDate,
     maxDate,
+    defaultTimeValue,
+    presets,
     ...rest
   } = props;
 
@@ -149,7 +157,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
   const formatTime = (dateValue: DateStringValue) =>
     dateValue ? dayjs(dateValue).format(withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
 
-  const [timeValue, setTimeValue] = useState(formatTime(_value!));
+  const [timeValue, setTimeValue] = useState(defaultTimeValue || formatTime(_value));
   const [currentLevel, setCurrentLevel] = useState(level || defaultLevel || 'month');
 
   const [dropdownOpened, dropdownHandlers] = useDisclosure(false);
@@ -168,7 +176,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
 
   const handleDateChange = (date: DateValue) => {
     if (date) {
-      setValue(assignTime(clampDate(minDate!, maxDate!, date!), timeValue));
+      setValue(assignTime(clampDate(minDate, maxDate, date), timeValue || defaultTimeValue || ''));
     }
     timePickerRef.current?.focus();
   };
@@ -182,7 +190,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
 
   useDidUpdate(() => {
     if (!dropdownOpened) {
-      setTimeValue(formatTime(_value!));
+      setTimeValue(formatTime(_value));
     }
   }, [_value, dropdownOpened]);
 
@@ -213,7 +221,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
       onClear={() => setValue(null)}
       shouldClear={!!_value}
       value={_value}
-      size={size!}
+      size={size}
       variant={variant}
       dropdownType={dropdownType}
       {...others}
@@ -230,7 +238,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
         variant={variant}
         type="default"
         value={_value}
-        defaultDate={_value!}
+        defaultDate={_value}
         onChange={handleDateChange}
         locale={locale}
         classNames={resolvedClassNames}
@@ -243,6 +251,11 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
         onLevelChange={(_level) => {
           setCurrentLevel(_level);
           calendarProps.onLevelChange?.(_level);
+        }}
+        presets={presets}
+        __onPresetSelect={(val) => {
+          setValue(val);
+          setTimeValue(formatTime(val));
         }}
       />
 

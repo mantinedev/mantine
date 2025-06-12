@@ -63,7 +63,7 @@ export type ChartLegendFactory = Factory<{
   stylesNames: ChartLegendStylesNames;
 }>;
 
-const defaultProps: Partial<ChartLegendProps> = {};
+const defaultProps = {} satisfies Partial<ChartLegendProps>;
 
 export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
   const props = useProps('ChartLegend', defaultProps, _props);

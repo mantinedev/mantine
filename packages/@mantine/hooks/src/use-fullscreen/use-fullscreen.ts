@@ -65,7 +65,13 @@ function addEvents(
   };
 }
 
-export function useFullscreen<T extends HTMLElement = any>() {
+export interface UseFullscreenReturnValue<T extends HTMLElement = any> {
+  ref: React.RefCallback<T | null>;
+  toggle: () => Promise<void>;
+  fullscreen: boolean;
+}
+
+export function useFullscreen<T extends HTMLElement = any>(): UseFullscreenReturnValue<T> {
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
   const _ref = useRef<T>(null);

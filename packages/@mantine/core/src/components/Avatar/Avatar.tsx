@@ -83,7 +83,7 @@ export type AvatarFactory = PolymorphicFactory<{
   };
 }>;
 
-const defaultProps: Partial<AvatarProps> = {};
+const defaultProps = {} satisfies Partial<AvatarProps>;
 
 const varsResolver = createVarsResolver<AvatarFactory>(
   (
@@ -162,7 +162,7 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
       ref={ref}
       {...others}
     >
-      {error ? (
+      {error || !src ? (
         <span {...getStyles('placeholder')} title={alt}>
           {children || (typeof name === 'string' && getInitials(name)) || <AvatarPlaceholderIcon />}
         </span>
@@ -170,7 +170,7 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
         <img
           {...imageProps}
           {...getStyles('image')}
-          src={src!}
+          src={src}
           alt={alt}
           onError={(event) => {
             setError(true);

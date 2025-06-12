@@ -38,5 +38,14 @@ interface UseOrientationReturnType {
   type: OrientationType;
 }
 
-function useOrientation(options?: UseOrientationOptions): UseOrientationReturnType
+function useOrientation(options?: UseOrientationOptions): UseOrientationReturnType;
+```
+
+## Exported types
+
+`UseOrientationOptions` and `UseOrientationReturnType` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseOrientationOptions, UseOrientationReturnType } from '@mantine/hooks';
 ```

@@ -20,9 +20,9 @@ export interface UseListStateHandlers<T> {
   filter: (fn: (item: T, i: number) => boolean) => void;
 }
 
-export type UseListState<T> = [T[], UseListStateHandlers<T>];
+export type UseListStateReturnValue<T> = [T[], UseListStateHandlers<T>];
 
-export function useListState<T>(initialValue: T[] = []): UseListState<T> {
+export function useListState<T>(initialValue: T[] = []): UseListStateReturnValue<T> {
   const [state, setState] = useState(initialValue);
 
   const append = (...items: T[]) => setState((current) => [...current, ...items]);

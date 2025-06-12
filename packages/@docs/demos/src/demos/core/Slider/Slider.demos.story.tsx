@@ -87,3 +87,13 @@ export const Demo_rangeConfigurator = {
   name: '⭐ Demo: rangeConfigurator',
   render: renderDemo(demos.rangeConfigurator),
 };
+
+export const Demo_pushOnOverlap = {
+  name: '⭐ Demo: pushOnOverlap',
+  render: renderDemo(demos.pushOnOverlap),
+};
+
+export const Demo_domain = {
+  name: '⭐ Demo: domain',
+  render: renderDemo(demos.domain),
+};

@@ -169,3 +169,12 @@ function useListState<T>(
   initialValue?: T[]
 ): [T[], UseListStateHandlers<T>];
 ```
+
+## Exported types
+
+`UseListStateHandlers` type is exported from `@mantine/hooks` package,
+you can import it in your application:
+
+```tsx
+import type { UseListStateHandlers } from '@mantine/hooks';
+```

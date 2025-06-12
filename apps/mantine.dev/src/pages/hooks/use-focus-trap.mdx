@@ -107,7 +107,5 @@ function Demo() {
 ## Definition
 
 ```tsx
-function useFocusTrap(
-  active?: boolean
-): (instance: HTMLElement) => void;
+function useFocusTrap(active?: boolean): React.RefCallback<HTMLElement | null>
 ```

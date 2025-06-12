@@ -108,9 +108,25 @@ useHotkeys(hotkeys);
 ## Definition
 
 ```tsx
+interface HotkeyItemOptions {
+  preventDefault?: boolean;
+  usePhysicalKeys?: boolean;
+}
+
+type HotkeyItem = [string, (event: KeyboardEvent) => void, HotkeyItemOptions?]
+
 function useHotkeys(
   hotkeys: HotkeyItem[],
   tagsToIgnore?: string[],
   triggerOnContentEditable?: boolean
 ): void;
+```
+
+## Exported types
+
+`HotkeyItemOptions` and `HotkeyItem` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { HotkeyItemOptions, HotkeyItem } from '@mantine/hooks';
 ```

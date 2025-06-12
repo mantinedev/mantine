@@ -175,6 +175,9 @@ export const DatePickerStylesApi: StylesApiData<DatePickerFactory> = {
     ...DecadeLevelGroupStylesApi.selectors,
     ...YearLevelGroupStylesApi.selectors,
     ...MonthLevelGroupStylesApi.selectors,
+    datePickerRoot: 'Date picker root element, contains calendar and presets',
+    presetsList: 'Presets wrapper element',
+    presetButton: 'Preset button',
   },
 
   vars: {},
@@ -215,7 +218,7 @@ export const DatePickerInputStylesApi: StylesApiData<DatePickerInputFactory> = {
 
   vars: {},
 
-  modifiers: DatePickerStylesApi.modifiers,
+  modifiers: DatePickerStylesApi.modifiers as any,
 };
 
 export const DateInputStylesApi: StylesApiData<DateInputFactory> = {
@@ -226,7 +229,7 @@ export const DateInputStylesApi: StylesApiData<DateInputFactory> = {
 
   vars: {},
 
-  modifiers: DatePickerStylesApi.modifiers,
+  modifiers: DatePickerStylesApi.modifiers as any,
 };
 
 export const DateTimePickerStylesApi: StylesApiData<DateTimePickerFactory> = {
@@ -240,7 +243,7 @@ export const DateTimePickerStylesApi: StylesApiData<DateTimePickerFactory> = {
 
   vars: {},
 
-  modifiers: DatePickerStylesApi.modifiers,
+  modifiers: DatePickerStylesApi.modifiers as any,
 };
 
 export const TimeInputStylesApi: StylesApiData<TimeInputFactory> = InputBaseStylesApi;

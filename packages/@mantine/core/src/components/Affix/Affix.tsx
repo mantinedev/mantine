@@ -12,7 +12,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { OptionalPortal, PortalProps } from '../Portal';
+import { BasePortalProps, OptionalPortal } from '../Portal';
 import classes from './Affix.module.css';
 
 export type AffixStylesNames = 'root';
@@ -28,7 +28,7 @@ export interface AffixBaseProps {
   withinPortal?: boolean;
 
   /** Props to pass down to the `Portal` component when `withinPortal` is set */
-  portalProps?: Omit<PortalProps, 'children'>;
+  portalProps?: BasePortalProps;
 
   /** Affix position on screen, defaults value is `{ bottom: 0, right: 0 }` */
   position?: {
@@ -52,11 +52,11 @@ export type AffixFactory = Factory<{
   vars: AffixCssVariables;
 }>;
 
-const defaultProps: Partial<AffixProps> = {
+const defaultProps = {
   position: { bottom: 0, right: 0 },
   zIndex: getDefaultZIndex('modal'),
   withinPortal: true,
-};
+} satisfies Partial<AffixProps>;
 
 const varsResolver = createVarsResolver<AffixFactory>((_, { zIndex, position }) => ({
   root: {

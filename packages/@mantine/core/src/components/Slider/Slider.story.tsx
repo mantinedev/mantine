@@ -61,6 +61,15 @@ export function SizeSlider() {
   );
 }
 
+export function DomainSlider() {
+  return (
+    <div style={{ padding: 40, maxWidth: 300 }}>
+      <Slider domain={[0, 100]} min={20} max={60} />
+      <RangeSlider domain={[0, 100]} min={20} max={60} pushOnOverlap={false} />
+    </div>
+  );
+}
+
 export function Range() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
@@ -82,6 +91,7 @@ export function Range() {
         mt="xl"
         labelAlwaysOn
         color="#fe0d45"
+        pushOnOverlap={false}
         styles={{
           label: { background: 'pink' },
         }}

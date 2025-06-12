@@ -46,7 +46,7 @@ export type ProgressRootFactory = Factory<{
   vars: ProgressRootCssVariables;
 }>;
 
-const defaultProps: Partial<ProgressRootProps> = {};
+const defaultProps = {} satisfies Partial<ProgressRootProps>;
 
 const varsResolver = createVarsResolver<ProgressRootFactory>(
   (_, { size, radius, transitionDuration }) => ({

@@ -13,7 +13,7 @@ export interface TrackProps {
   children: React.ReactNode;
   disabled: boolean | undefined;
   inverted: boolean | undefined;
-  containerProps?: React.PropsWithRef<React.ComponentProps<'div'>>;
+  containerProps?: React.ComponentProps<'div'>;
 }
 
 export function Track({

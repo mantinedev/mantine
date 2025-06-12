@@ -33,16 +33,36 @@ valid; // -> false
 ## Definition
 
 ```tsx
+interface UseValidatedStateValue<T> {
+  /** Current value */
+  value: T;
+
+  /** Last valid value */
+  lastValidValue: T | undefined;
+
+  /** True if the current value is valid, false otherwise */
+  valid: boolean;
+}
+
+type UseValidatedStateReturnValue<T> = [
+  /** Current value */
+  UseValidatedStateValue<T>,
+  /** Handler to update the state, passes `value` and `payload` to `onChange` */
+  (value: T) => void,
+];
+
 function useValidatedState<T>(
   initialValue: T,
-  validation: (value: T) => boolean,
-  initialValidationState?: boolean
-): [
-  {
-    value: T;
-    lastValidValue: T;
-    valid: boolean;
-  },
-  (val: T) => void,
-];
+  validate: (value: T) => boolean,
+  initialValidationState?: boolean,
+): UseValidatedStateReturnValue<T>
+```
+
+## Exported types
+
+`UseValidatedStateValue` and `UseValidatedStateReturnValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseValidatedStateValue, UseValidatedStateReturnValue } from '@mantine/hooks';
 ```

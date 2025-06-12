@@ -32,9 +32,9 @@ export type RichTextEditorControlFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<RichTextEditorControlProps> = {
+const defaultProps = {
   interactive: true,
-};
+} satisfies Partial<RichTextEditorControlProps>;
 
 export const RichTextEditorControl = factory<RichTextEditorControlFactory>((_props, ref) => {
   const props = useProps('RichTextEditorControl', defaultProps, _props);

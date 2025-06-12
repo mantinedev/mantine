@@ -58,11 +58,11 @@ export type GridFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<GridProps> = {
+const defaultProps = {
   gutter: 'md',
   grow: false,
   columns: 12,
-};
+} satisfies Partial<GridProps>;
 
 const varsResolver = createVarsResolver<GridFactory>((_, { justify, align, overflow }) => ({
   root: {
@@ -109,7 +109,7 @@ export const Grid = factory<GridFactory>((_props, ref) => {
 
   if (type === 'container' && breakpoints) {
     return (
-      <GridProvider value={{ getStyles, grow, columns: columns || 12, breakpoints, type }}>
+      <GridProvider value={{ getStyles, grow, columns, breakpoints, type }}>
         <GridVariables selector={`.${responsiveClassName}`} {...props} />
         <div {...getStyles('container')}>
           <Box ref={ref} {...getStyles('root', { className: responsiveClassName })} {...others}>
@@ -121,7 +121,7 @@ export const Grid = factory<GridFactory>((_props, ref) => {
   }
 
   return (
-    <GridProvider value={{ getStyles, grow, columns: columns || 12, breakpoints, type }}>
+    <GridProvider value={{ getStyles, grow, columns, breakpoints, type }}>
       <GridVariables selector={`.${responsiveClassName}`} {...props} />
       <Box ref={ref} {...getStyles('root', { className: responsiveClassName })} {...others}>
         <div {...getStyles('inner')}>{children}</div>

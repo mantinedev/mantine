@@ -41,9 +41,9 @@ export type BreadcrumbsFactory = Factory<{
   vars: BreadcrumbsCssVariables;
 }>;
 
-const defaultProps: Partial<BreadcrumbsProps> = {
+const defaultProps = {
   separator: '/',
-};
+} satisfies Partial<BreadcrumbsProps>;
 
 const varsResolver = createVarsResolver<BreadcrumbsFactory>((_, { separatorMargin }) => ({
   root: {

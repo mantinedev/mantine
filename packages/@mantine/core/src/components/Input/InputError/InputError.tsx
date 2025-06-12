@@ -38,7 +38,7 @@ export type InputErrorFactory = Factory<{
   vars: InputErrorCssVariables;
 }>;
 
-const defaultProps: Partial<InputErrorProps> = {};
+const defaultProps = {} satisfies Partial<InputErrorProps>;
 
 const varsResolver = createVarsResolver<InputErrorFactory>((_, { size }) => ({
   error: {

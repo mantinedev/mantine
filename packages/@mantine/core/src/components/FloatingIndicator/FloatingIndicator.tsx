@@ -43,7 +43,7 @@ export type FloatingIndicatorFactory = Factory<{
   vars: FloatingIndicatorCssVariables;
 }>;
 
-const defaultProps: Partial<FloatingIndicatorProps> = {};
+const defaultProps = {} satisfies Partial<FloatingIndicatorProps>;
 
 const varsResolver = createVarsResolver<FloatingIndicatorFactory>(
   (_theme, { transitionDuration }) => ({

@@ -21,6 +21,40 @@ export function Usage() {
   );
 }
 
+export function AutoContrast() {
+  return (
+    <>
+      <div style={{ padding: 40 }}>
+        <Tooltip
+          position="right"
+          label="Tooltip label"
+          withArrow
+          transitionProps={{ duration: 0 }}
+          opened
+          color="lime.4"
+          radius="md"
+        >
+          <button type="button">target</button>
+        </Tooltip>
+      </div>
+      <div style={{ padding: 40 }}>
+        <Tooltip
+          position="right"
+          label="Tooltip label"
+          withArrow
+          transitionProps={{ duration: 0 }}
+          opened
+          color="lime.4"
+          radius="md"
+          autoContrast
+        >
+          <button type="button">target</button>
+        </Tooltip>
+      </div>
+    </>
+  );
+}
+
 export function Unstyled() {
   return (
     <div style={{ padding: 40 }}>

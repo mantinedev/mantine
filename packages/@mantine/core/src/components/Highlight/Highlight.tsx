@@ -31,7 +31,7 @@ export type HighlightFactory = PolymorphicFactory<{
   variant: TextVariant;
 }>;
 
-const defaultProps: Partial<HighlightProps> = {};
+const defaultProps = {} satisfies Partial<HighlightProps>;
 
 export const Highlight = polymorphicFactory<HighlightFactory>((props, ref) => {
   const { unstyled, children, highlight, highlightStyles, color, ...others } = useProps(

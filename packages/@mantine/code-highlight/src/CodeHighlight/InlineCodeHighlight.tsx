@@ -47,7 +47,7 @@ export type InlineCodeHighlightFactory = Factory<{
   vars: InlineCodeHighlightCssVariables;
 }>;
 
-const defaultProps: Partial<InlineCodeHighlightProps> = {};
+const defaultProps = {} satisfies Partial<InlineCodeHighlightProps>;
 
 const varsResolver = createVarsResolver<InlineCodeHighlightFactory>(
   (theme, { background, radius }) => ({
