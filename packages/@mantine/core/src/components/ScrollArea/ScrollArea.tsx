@@ -77,11 +77,8 @@ export interface ScrollAreaProps
 }
 
 export interface ScrollAreaAutosizeProps extends ScrollAreaProps {
-  /** Called when vertical scrollbar thumb visibility changes */
-  onVerticalThumbVisibilityChange?: (visible: boolean) => void;
-
-  /** Called when horizontal scrollbar thumb visibility changes */
-  onHorizontalThumbVisibilityChange?: (visible: boolean) => void;
+  /** Called when content overflows due to max-height, making the container scrollable */
+  onOverflowChange?: (overflowing: boolean) => void;
 }
 
 export type ScrollAreaFactory = Factory<{
@@ -285,54 +282,37 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
     vars,
     onBottomReached,
     onTopReached,
-    onVerticalThumbVisibilityChange,
-    onHorizontalThumbVisibilityChange,
+    onOverflowChange,
     ...others
   } = useProps('ScrollAreaAutosize', defaultProps, props as ScrollAreaAutosizeProps);
 
-  // Thumb‑visibility detection (Autosize‑only)
+  // Overflow detection (Autosize-only)
   const viewportObserverRef = useRef<HTMLDivElement>(null);
   const combinedViewportRef = useMergeRefs([viewportRef, viewportObserverRef]);
 
-  const [verticalThumbVisible, setVerticalThumbVisible] = useState(false);
-  const [horizontalThumbVisible, setHorizontalThumbVisible] = useState(false);
-
-  const verticalDidMount = useRef(false);
-  const horizontalDidMount = useRef(false);
+  const [overflowing, setOverflowing] = useState(false);
+  const didMount = useRef(false);
 
   useEffect(() => {
     const el = viewportObserverRef.current;
-
     if (!el) {
       return;
     }
 
     const update = () => {
-      const v = el.scrollHeight > el.clientHeight;
-      const h = el.scrollWidth > el.clientWidth;
+      const isOverflowing = el.scrollHeight > el.clientHeight;
 
-      if (v !== verticalThumbVisible) {
-        if (verticalDidMount.current) {
-          onVerticalThumbVisibilityChange?.(v);
+      if (isOverflowing !== overflowing) {
+        if (didMount.current) {
+          onOverflowChange?.(isOverflowing);
         } else {
-          verticalDidMount.current = true;
-          if (v) {
-            onVerticalThumbVisibilityChange?.(true);
+          didMount.current = true;
+          if (isOverflowing) {
+            onOverflowChange?.(true);
           }
         }
-        setVerticalThumbVisible(v);
-      }
 
-      if (h !== horizontalThumbVisible) {
-        if (horizontalDidMount.current) {
-          onHorizontalThumbVisibilityChange?.(h);
-        } else {
-          horizontalDidMount.current = true;
-          if (h) {
-            onHorizontalThumbVisibilityChange?.(true);
-          }
-        }
-        setHorizontalThumbVisible(h);
+        setOverflowing(isOverflowing);
       }
     };
 
@@ -340,12 +320,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
     const ro = new ResizeObserver(update);
     ro.observe(el);
     return () => ro.disconnect();
-  }, [
-    onVerticalThumbVisibilityChange,
-    onHorizontalThumbVisibilityChange,
-    verticalThumbVisible,
-    horizontalThumbVisible,
-  ]);
+  }, [onOverflowChange, overflowing]);
 
   return (
     <Box {...others} ref={ref} style={[{ display: 'flex', overflow: 'auto' }, style]}>
