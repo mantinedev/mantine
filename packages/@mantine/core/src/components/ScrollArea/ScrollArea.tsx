@@ -72,17 +72,17 @@ export interface ScrollAreaProps
   /** Called when scrollarea is scrolled all the way to the top */
   onTopReached?: () => void;
 
+  /** Defines `overscroll-behavior` of the viewport */
+  overscrollBehavior?: React.CSSProperties['overscrollBehavior'];
+}
+
+export interface ScrollAreaAutosizeProps extends ScrollAreaProps {
   /** Called when vertical scrollbar thumb visibility changes */
   onVerticalThumbVisibilityChange?: (visible: boolean) => void;
 
   /** Called when horizontal scrollbar thumb visibility changes */
   onHorizontalThumbVisibilityChange?: (visible: boolean) => void;
-
-  /** Defines `overscroll-behavior` of the viewport */
-  overscrollBehavior?: React.CSSProperties['overscrollBehavior'];
 }
-
-export interface ScrollAreaAutosizeProps extends ScrollAreaProps {}
 
 export type ScrollAreaFactory = Factory<{
   props: ScrollAreaProps;
@@ -92,6 +92,13 @@ export type ScrollAreaFactory = Factory<{
   staticComponents: {
     Autosize: typeof ScrollAreaAutosize;
   };
+}>;
+
+export type ScrollAreaAutosizeFactory = Factory<{
+  props: ScrollAreaAutosizeProps;
+  ref: HTMLDivElement;
+  stylesNames: ScrollAreaStylesNames;
+  vars: ScrollAreaCssVariables;
 }>;
 
 const defaultProps = {
@@ -129,8 +136,6 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     scrollbars,
     onBottomReached,
     onTopReached,
-    onVerticalThumbVisibilityChange,
-    onHorizontalThumbVisibilityChange,
     overscrollBehavior,
     ...others
   } = props;
@@ -138,40 +143,6 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
   const [scrollbarHovered, setScrollbarHovered] = useState(false);
   const [verticalThumbVisible, setVerticalThumbVisible] = useState(false);
   const [horizontalThumbVisible, setHorizontalThumbVisible] = useState(false);
-  const verticalDidMount = useRef(false);
-  const horizontalDidMount = useRef(false);
-
-  const verticalCallbackRef = useRef(onVerticalThumbVisibilityChange);
-  useEffect(() => {
-    verticalCallbackRef.current = onVerticalThumbVisibilityChange;
-  }, [onVerticalThumbVisibilityChange]);
-
-  const horizontalCallbackRef = useRef(onHorizontalThumbVisibilityChange);
-  useEffect(() => {
-    horizontalCallbackRef.current = onHorizontalThumbVisibilityChange;
-  }, [onHorizontalThumbVisibilityChange]);
-
-  useEffect(() => {
-    if (verticalDidMount.current) {
-      verticalCallbackRef.current?.(verticalThumbVisible);
-    } else {
-      verticalDidMount.current = true;
-      if (verticalThumbVisible) {
-        verticalCallbackRef.current?.(verticalThumbVisible);
-      }
-    }
-  }, [verticalThumbVisible]);
-
-  useEffect(() => {
-    if (horizontalDidMount.current) {
-      horizontalCallbackRef.current?.(horizontalThumbVisible);
-    } else {
-      horizontalDidMount.current = true;
-      if (horizontalThumbVisible) {
-        horizontalCallbackRef.current?.(horizontalThumbVisible);
-      }
-    }
-  }, [horizontalThumbVisible]);
 
   const getStyles = useStyles<ScrollAreaFactory>({
     name: 'ScrollArea',
@@ -294,7 +265,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
 
 ScrollArea.displayName = '@mantine/core/ScrollArea';
 
-export const ScrollAreaAutosize = factory<ScrollAreaFactory>((props, ref) => {
+export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref) => {
   const {
     children,
     classNames,
@@ -317,7 +288,64 @@ export const ScrollAreaAutosize = factory<ScrollAreaFactory>((props, ref) => {
     onVerticalThumbVisibilityChange,
     onHorizontalThumbVisibilityChange,
     ...others
-  } = useProps('ScrollAreaAutosize', defaultProps, props);
+  } = useProps('ScrollAreaAutosize', defaultProps, props as ScrollAreaAutosizeProps);
+
+  // Thumb‑visibility detection (Autosize‑only)
+  const viewportObserverRef = useRef<HTMLDivElement>(null);
+  const combinedViewportRef = useMergeRefs([viewportRef, viewportObserverRef]);
+
+  const [verticalThumbVisible, setVerticalThumbVisible] = useState(false);
+  const [horizontalThumbVisible, setHorizontalThumbVisible] = useState(false);
+
+  const verticalDidMount = useRef(false);
+  const horizontalDidMount = useRef(false);
+
+  useEffect(() => {
+    const el = viewportObserverRef.current;
+
+    if (!el) {
+      return;
+    }
+
+    const update = () => {
+      const v = el.scrollHeight > el.clientHeight;
+      const h = el.scrollWidth > el.clientWidth;
+
+      if (v !== verticalThumbVisible) {
+        if (verticalDidMount.current) {
+          onVerticalThumbVisibilityChange?.(v);
+        } else {
+          verticalDidMount.current = true;
+          if (v) {
+            onVerticalThumbVisibilityChange?.(true);
+          }
+        }
+        setVerticalThumbVisible(v);
+      }
+
+      if (h !== horizontalThumbVisible) {
+        if (horizontalDidMount.current) {
+          onHorizontalThumbVisibilityChange?.(h);
+        } else {
+          horizontalDidMount.current = true;
+          if (h) {
+            onHorizontalThumbVisibilityChange?.(true);
+          }
+        }
+        setHorizontalThumbVisible(h);
+      }
+    };
+
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [
+    onVerticalThumbVisibilityChange,
+    onHorizontalThumbVisibilityChange,
+    verticalThumbVisible,
+    horizontalThumbVisible,
+  ]);
 
   return (
     <Box {...others} ref={ref} style={[{ display: 'flex', overflow: 'auto' }, style]}>
@@ -330,7 +358,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaFactory>((props, ref) => {
           type={type}
           dir={dir}
           offsetScrollbars={offsetScrollbars}
-          viewportRef={viewportRef}
+          viewportRef={combinedViewportRef}
           onScrollPositionChange={onScrollPositionChange}
           unstyled={unstyled}
           variant={variant}
@@ -339,8 +367,6 @@ export const ScrollAreaAutosize = factory<ScrollAreaFactory>((props, ref) => {
           scrollbars={scrollbars}
           onBottomReached={onBottomReached}
           onTopReached={onTopReached}
-          onVerticalThumbVisibilityChange={onVerticalThumbVisibilityChange}
-          onHorizontalThumbVisibilityChange={onHorizontalThumbVisibilityChange}
         >
           {children}
         </ScrollArea>
