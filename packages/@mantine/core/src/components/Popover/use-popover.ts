@@ -144,7 +144,11 @@ export function usePopover(options: UsePopoverOptions) {
     }
   };
 
-  const onToggle = () => !options.disabled && setOpened(!_opened);
+  const onToggle = () => {
+    if (!options.disabled) {
+      setOpened(!_opened);
+    }
+  };
 
   const floating: UseFloatingReturn<Element> = useFloating({
     strategy: options.strategy,
