@@ -110,13 +110,13 @@ to update headings data after the parent component has mounted, you can use
 `reinitializeRef` to get reinitialize function from [use-scroll-spy](/hooks/use-scroll-spy) hook:
 
 ```tsx
-import { useRef, useEffect } from 'react';
+import { useRef, useLayoutEffect } from 'react';
 import { TableOfContents } from '@mantine/core';
 
 function Demo({ dependency }) {
   const reinitializeRef = useRef(() => {});
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     reinitializeRef.current();
   }, [dependency]);
 
