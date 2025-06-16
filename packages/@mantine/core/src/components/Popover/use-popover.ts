@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   arrow,
   autoUpdate,
@@ -39,6 +39,7 @@ interface UsePopoverOptions {
   positionRef: React.RefObject<FloatingPosition>;
   disabled: boolean | undefined;
   preventPositionChangeWhenVisible: boolean | undefined;
+  keepMounted: boolean | undefined;
 }
 
 function getDefaultMiddlewares(middlewares: PopoverMiddlewares | undefined): PopoverMiddlewares {
@@ -157,8 +158,37 @@ export function usePopover(options: UsePopoverOptions) {
       ? options.positionRef.current
       : options.position,
     middleware: getPopoverMiddlewares(options, () => floating, env),
-    whileElementsMounted: autoUpdate,
+    // Only use whileElementsMounted when elements are conditionally rendered (not keepMounted)
+    // When keepMounted=true, elements are hidden with CSS and we need manual autoUpdate control
+    whileElementsMounted: options.keepMounted ? undefined : autoUpdate,
   });
+
+  // Manual autoUpdate control for keepMounted scenario
+  // This follows Floating UI's recommendation for CSS-hidden elements
+  useEffect(() => {
+    if (
+      !options.keepMounted ||
+      !floating.refs.reference.current ||
+      !floating.refs.floating.current
+    ) {
+      return;
+    }
+
+    // Only run autoUpdate when the popover is actually opened
+    if (_opened) {
+      return autoUpdate(
+        floating.refs.reference.current,
+        floating.refs.floating.current,
+        floating.update
+      );
+    }
+  }, [
+    options.keepMounted,
+    _opened,
+    floating.refs.reference,
+    floating.refs.floating,
+    floating.update,
+  ]);
 
   useDidUpdate(() => {
     options.onPositionChange?.(floating.placement);
