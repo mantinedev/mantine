@@ -38,6 +38,7 @@ interface UsePopoverOptions {
   setDropdownVisible: (visible: boolean) => void;
   positionRef: React.RefObject<FloatingPosition>;
   disabled: boolean | undefined;
+  preventPositionChangeWhenVisible: boolean | undefined;
 }
 
 function getDefaultMiddlewares(middlewares: PopoverMiddlewares | undefined): PopoverMiddlewares {
@@ -65,7 +66,7 @@ function getPopoverMiddlewares(
   const middlewaresOptions = getDefaultMiddlewares(options.middlewares);
   const middlewares: Middleware[] = [offset(options.offset), hide()];
 
-  if (options.dropdownVisible && env !== 'test') {
+  if (options.dropdownVisible && env !== 'test' && options.preventPositionChangeWhenVisible) {
     middlewaresOptions.flip = false;
     middlewaresOptions.shift = false;
   }
@@ -152,7 +153,9 @@ export function usePopover(options: UsePopoverOptions) {
 
   const floating: UseFloatingReturn<Element> = useFloating({
     strategy: options.strategy,
-    placement: options.positionRef.current,
+    placement: options.preventPositionChangeWhenVisible
+      ? options.positionRef.current
+      : options.position,
     middleware: getPopoverMiddlewares(options, () => floating, env),
     whileElementsMounted: autoUpdate,
   });
