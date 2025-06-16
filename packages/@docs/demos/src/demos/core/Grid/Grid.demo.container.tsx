@@ -14,10 +14,10 @@ function Demo() {
         type="container"
         breakpoints={{ xs: '100px', sm: '200px', md: '300px', lg: '400px', xl: '500px' }}
       >
-        <Col span={{ base: 12, md: 6, lg: 3 }}>1</Col>
-        <Col span={{ base: 12, md: 6, lg: 3 }}>2</Col>
-        <Col span={{ base: 12, md: 6, lg: 3 }}>3</Col>
-        <Col span={{ base: 12, md: 6, lg: 3 }}>4</Col>
+        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>1</Grid.Col>
+        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>2</Grid.Col>
+        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>3</Grid.Col>
+        <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>4</Grid.Col>
       </Grid>
     </div>
   );
