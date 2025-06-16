@@ -11,4 +11,4 @@ export type DatePickerValue<
   ? DatesRangeValue<ValueType>
   : Type extends 'multiple'
     ? ValueType[]
-    : ValueType;
+    : ValueType | null;
