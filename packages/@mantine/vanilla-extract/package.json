@@ -1,6 +1,6 @@
 {
   "name": "@mantine/vanilla-extract",
-  "version": "8.1.0",
+  "version": "8.1.1",
   "description": "Vanilla Extract integration for Mantine theme",
   "homepage": "https://mantine.dev",
   "license": "MIT",
@@ -35,7 +35,7 @@
     "directory": "packages/@mantine/vanilla-extract"
   },
   "peerDependencies": {
-    "@mantine/core": "8.1.0"
+    "@mantine/core": "8.1.1"
   },
   "devDependencies": {
     "react": "19.0.0",

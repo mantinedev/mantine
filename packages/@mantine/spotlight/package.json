@@ -1,6 +1,6 @@
 {
   "name": "@mantine/spotlight",
-  "version": "8.1.0",
+  "version": "8.1.1",
   "description": "Command center components for react and Mantine",
   "homepage": "https://mantine.dev",
   "license": "MIT",
@@ -41,13 +41,13 @@
     "directory": "packages/@mantine/spotlight"
   },
   "peerDependencies": {
-    "@mantine/core": "8.1.0",
-    "@mantine/hooks": "8.1.0",
+    "@mantine/core": "8.1.1",
+    "@mantine/hooks": "8.1.1",
     "react": "^18.x || ^19.x",
     "react-dom": "^18.x || ^19.x"
   },
   "dependencies": {
-    "@mantine/store": "8.1.0"
+    "@mantine/store": "8.1.1"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
