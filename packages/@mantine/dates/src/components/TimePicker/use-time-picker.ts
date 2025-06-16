@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import { useDidUpdate } from '@mantine/hooks';
 import type {
   TimePickerAmPmLabels,
   TimePickerFormat,
@@ -181,7 +182,7 @@ export function useTimePicker({
     amPmLabels: amPmLabels!,
   });
 
-  useEffect(() => {
+  useDidUpdate(() => {
     if (value === '') {
       acceptChange.current = false;
       setHours(null);
