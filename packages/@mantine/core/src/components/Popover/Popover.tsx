@@ -300,6 +300,7 @@ export function Popover(_props: PopoverProps) {
     positionRef,
     disabled,
     preventPositionChangeWhenVisible,
+    keepMounted,
   });
 
   useClickOutside(
