@@ -140,7 +140,6 @@
   display: block;
   width: 100%;
   transition: border-color 100ms ease;
-  overflow: hidden;
 
   text-align: var(--input-text-align);
   color: var(--input-color);
