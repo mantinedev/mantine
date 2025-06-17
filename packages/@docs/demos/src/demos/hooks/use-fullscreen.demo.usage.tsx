@@ -1,13 +1,13 @@
 import { Button } from '@mantine/core';
-import { useFullscreen } from '@mantine/hooks';
+import { useFullscreenDocument } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { useFullscreen } from '@mantine/hooks';
+import { useFullscreenDocument } from '@mantine/hooks';
 import { Button } from '@mantine/core';
 
 function Demo() {
-  const { toggle, fullscreen } = useFullscreen();
+  const { toggle, fullscreen } = useFullscreenDocument();
 
   return (
     <Button onClick={toggle} color={fullscreen ? 'red' : 'blue'}>
@@ -18,7 +18,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const { toggle, fullscreen } = useFullscreen();
+  const { toggle, fullscreen } = useFullscreenDocument();
 
   return (
     <Button onClick={toggle} color={fullscreen ? 'red' : 'blue'}>

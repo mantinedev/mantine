@@ -42,7 +42,7 @@ export { useWindowScroll } from './use-window-scroll/use-window-scroll';
 export { useIntersection } from './use-intersection/use-intersection';
 export { useHash } from './use-hash/use-hash';
 export { useHotkeys, getHotkeyHandler } from './use-hotkeys/use-hotkeys';
-export { useFullscreen } from './use-fullscreen/use-fullscreen';
+export { useFullscreenElement, useFullscreenDocument } from './use-fullscreen/use-fullscreen';
 export { useLogger } from './use-logger/use-logger';
 export { useHover } from './use-hover/use-hover';
 export { useValidatedState } from './use-validated-state/use-validated-state';
@@ -121,7 +121,7 @@ export type {
   UseFocusWithinOptions,
   UseFocusWithinReturnValue,
 } from './use-focus-within/use-focus-within';
-export type { UseFullscreenReturnValue } from './use-fullscreen/use-fullscreen';
+export type { UseFullscreenElementReturnValue } from './use-fullscreen/use-fullscreen';
 export type { UseHashOptions, UseHashReturnValue } from './use-hash/use-hash';
 export type { UseHeadroomOptions } from './use-headroom/use-headroom';
 export type { HotkeyItemOptions, HotkeyItem } from './use-hotkeys/use-hotkeys';
