@@ -1,6 +1,6 @@
 {
   "name": "@mantine/tiptap",
-  "version": "8.1.0",
+  "version": "8.1.1",
   "description": "Rich text editor based on tiptap",
   "homepage": "https://mantine.dev/x/tiptap",
   "license": "MIT",
@@ -44,8 +44,8 @@
     "directory": "packages/@mantine/tiptap"
   },
   "peerDependencies": {
-    "@mantine/core": "8.1.0",
-    "@mantine/hooks": "8.1.0",
+    "@mantine/core": "8.1.1",
+    "@mantine/hooks": "8.1.1",
     "@tiptap/extension-link": ">=2.1.12",
     "@tiptap/react": ">=2.1.12",
     "react": "^18.x || ^19.x",
