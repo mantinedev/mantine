@@ -51,6 +51,7 @@ export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
         variant={variant}
         component="div"
         ref={ref}
+        data-no-overflow
         onMouseDown={(event) => {
           event.preventDefault();
           onMouseDown?.(event);
