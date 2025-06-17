@@ -33,7 +33,7 @@ export type CodeFactory = Factory<{
   vars: CodeCssVariables;
 }>;
 
-const defaultProps: Partial<CodeProps> = {};
+const defaultProps = {} satisfies Partial<CodeProps>;
 
 const varsResolver = createVarsResolver<CodeFactory>((theme, { color }) => ({
   root: {

@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { normalizeRadialValue, useMergedRef, useRadialMove, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
@@ -79,10 +80,10 @@ export type AngleSliderFactory = Factory<{
   vars: AngleSliderCssVariables;
 }>;
 
-const defaultProps: Partial<AngleSliderProps> = {
+const defaultProps = {
   step: 1,
   withLabel: true,
-};
+} satisfies Partial<AngleSliderProps>;
 
 const varsResolver = createVarsResolver<AngleSliderFactory>((_, { size, thumbSize }) => ({
   root: {
@@ -122,6 +123,8 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     ...others
   } = props;
 
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
   const [_value, setValue] = useUncontrolled({
     value,
     defaultValue,
@@ -143,7 +146,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     }
   };
 
-  const { ref: rootRef } = useRadialMove(update, {
+  const { ref: radialMoveRef } = useRadialMove(update, {
     step,
     onChangeEnd,
     onScrubStart,
@@ -171,11 +174,11 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     let newValue = _value;
 
     if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
-      newValue = normalizeRadialValue(_value - step!, step!);
+      newValue = normalizeRadialValue(_value - step, step);
     }
 
     if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
-      newValue = normalizeRadialValue(_value + step!, step!);
+      newValue = normalizeRadialValue(_value + step, step);
     }
 
     if (event.key === 'Home') {
@@ -216,7 +219,11 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
   ));
 
   return (
-    <Box ref={useMergedRef(ref, rootRef)} {...getStyles('root', { focusable: true })} {...others}>
+    <Box
+      ref={useMergedRef(ref, rootRef, radialMoveRef)}
+      {...getStyles('root', { focusable: true })}
+      {...others}
+    >
       {marksItems && marksItems.length > 0 && <div {...getStyles('marks')}>{marksItems}</div>}
 
       {withLabel && (

@@ -95,7 +95,7 @@ export type SpotlightRootFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<SpotlightRootProps> = {
+const defaultProps = {
   size: 600,
   yOffset: 80,
   zIndex: getDefaultZIndex('max'),
@@ -106,8 +106,7 @@ const defaultProps: Partial<SpotlightRootProps> = {
   closeOnActionTrigger: true,
   shortcut: 'mod + K',
   maxHeight: 400,
-  scrollable: false,
-};
+} satisfies Partial<SpotlightRootProps>;
 
 export const SpotlightRoot = factory<SpotlightRootFactory>((_props, ref) => {
   const props = useProps('SpotlightRoot', defaultProps, _props);
@@ -138,11 +137,11 @@ export const SpotlightRoot = factory<SpotlightRootFactory>((_props, ref) => {
   } = props;
 
   const theme = useMantineTheme();
-  const { opened, query: storeQuery } = useSpotlight(store!);
+  const { opened, query: storeQuery } = useSpotlight(store);
   const _query = query || storeQuery;
   const setQuery = (q: string) => {
     onQueryChange?.(q);
-    spotlightActions.setQuery(q, store!);
+    spotlightActions.setQuery(q, store);
   };
 
   const getStyles = useStyles<SpotlightRootFactory>({
@@ -156,7 +155,7 @@ export const SpotlightRoot = factory<SpotlightRootFactory>((_props, ref) => {
     unstyled,
   });
 
-  useHotkeys(getHotkeys(shortcut, store!), tagsToIgnore, triggerOnContentEditable);
+  useHotkeys(getHotkeys(shortcut, store), tagsToIgnore, triggerOnContentEditable);
 
   useDidUpdate(() => {
     opened ? onSpotlightOpen?.() : onSpotlightClose?.();
@@ -172,7 +171,7 @@ export const SpotlightRoot = factory<SpotlightRootFactory>((_props, ref) => {
         getStyles,
         query: _query,
         setQuery,
-        store: store!,
+        store,
         closeOnActionTrigger,
       }}
     >
@@ -182,7 +181,7 @@ export const SpotlightRoot = factory<SpotlightRootFactory>((_props, ref) => {
         withCloseButton={false}
         opened={opened || !!forceOpened}
         padding={0}
-        onClose={() => spotlightActions.close(store!)}
+        onClose={() => spotlightActions.close(store)}
         className={className}
         style={style}
         classNames={resolveClassNames({
@@ -196,7 +195,7 @@ export const SpotlightRoot = factory<SpotlightRootFactory>((_props, ref) => {
           ...transitionProps,
           onExited: () => {
             clearQueryOnClose && setQuery('');
-            spotlightActions.clearSpotlightState({ clearQuery: clearQueryOnClose }, store!);
+            spotlightActions.clearSpotlightState({ clearQuery: clearQueryOnClose }, store);
             transitionProps?.onExited?.();
           },
         }}

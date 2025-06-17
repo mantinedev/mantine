@@ -9,9 +9,9 @@ interface CustomComponentProps {
   children?: React.ReactNode;
 }
 
-const defaultProps: Partial<CustomComponentProps> = {
+const defaultProps = {
   color: 'red',
-};
+} satisfies Partial<CustomComponentProps>;
 
 function CustomComponent(props: CustomComponentProps) {
   const { color, children } = useProps('CustomComponent', defaultProps, props);
@@ -47,9 +47,9 @@ interface CustomComponentProps {
   children?: React.ReactNode;
 }
 
-const defaultProps: Partial<CustomComponentProps> = {
+const defaultProps = {
   color: 'red',
-};
+} satisfies Partial<CustomComponentProps>;
 
 function CustomComponent(props: CustomComponentProps) {
   const { color, children } = useProps('CustomComponent', defaultProps, props);

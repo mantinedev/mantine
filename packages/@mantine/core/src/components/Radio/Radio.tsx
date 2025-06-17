@@ -94,9 +94,9 @@ export type RadioFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<RadioProps> = {
+const defaultProps = {
   labelPosition: 'right',
-};
+} satisfies Partial<RadioProps>;
 
 const varsResolver = createVarsResolver<RadioFactory>(
   (theme, { size, radius, color, iconColor, variant, autoContrast }) => {

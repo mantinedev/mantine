@@ -11,9 +11,9 @@ export interface MenuTargetProps {
   refProp?: string;
 }
 
-const defaultProps: Partial<MenuTargetProps> = {
+const defaultProps = {
   refProp: 'ref',
-};
+} satisfies Partial<MenuTargetProps>;
 
 export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) => {
   const { children, refProp, ...others } = useProps('MenuTarget', defaultProps, props);

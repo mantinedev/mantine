@@ -29,9 +29,9 @@ export type SpotlightSearchFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<SpotlightSearchProps> = {
+const defaultProps = {
   size: 'lg',
-};
+} satisfies Partial<SpotlightSearchProps>;
 
 export const SpotlightSearch = factory<SpotlightSearchFactory>((props, ref) => {
   const { classNames, styles, onKeyDown, onChange, vars, value, ...others } = useProps(

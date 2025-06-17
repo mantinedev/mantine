@@ -42,9 +42,9 @@ export type InputLabelFactory = Factory<{
   vars: InputLabelCssVariables;
 }>;
 
-const defaultProps: Partial<InputLabelProps> = {
+const defaultProps = {
   labelElement: 'label',
-};
+} satisfies Partial<InputLabelProps>;
 
 const varsResolver = createVarsResolver<InputLabelFactory>((_, { size }) => ({
   label: {

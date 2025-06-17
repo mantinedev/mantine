@@ -10,9 +10,9 @@ export interface ComboboxDropdownTargetProps {
   refProp?: string;
 }
 
-const defaultProps: Partial<ComboboxDropdownTargetProps> = {
+const defaultProps = {
   refProp: 'ref',
-};
+} satisfies Partial<ComboboxDropdownTargetProps>;
 
 export type ComboboxDropdownTargetFactory = Factory<{
   props: ComboboxDropdownTargetProps;

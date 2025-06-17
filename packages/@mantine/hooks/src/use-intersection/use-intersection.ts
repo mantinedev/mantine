@@ -1,14 +1,19 @@
 import { useCallback, useRef, useState } from 'react';
 
+export interface UseIntersectionReturnValue<T> {
+  ref: React.RefCallback<T | null>;
+  entry: IntersectionObserverEntry | null;
+}
+
 export function useIntersection<T extends HTMLElement = any>(
-  options?: ConstructorParameters<typeof IntersectionObserver>[1]
-) {
+  options?: IntersectionObserverInit
+): UseIntersectionReturnValue<T> {
   const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
 
   const observer = useRef<IntersectionObserver | null>(null);
 
-  const ref = useCallback(
-    (element: T | null) => {
+  const ref: React.RefCallback<T | null> = useCallback(
+    (element) => {
       if (observer.current) {
         observer.current.disconnect();
         observer.current = null;

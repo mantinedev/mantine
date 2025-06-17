@@ -57,9 +57,9 @@ export type PasswordInputFactory = Factory<{
   variant: InputVariant;
 }>;
 
-const defaultProps: Partial<PasswordInputProps> = {
+const defaultProps = {
   visibilityToggleIcon: PasswordToggleIcon,
-};
+} satisfies Partial<PasswordInputProps>;
 
 const varsResolver = createVarsResolver<PasswordInputFactory>((_, { size }) => ({
   root: {
@@ -101,7 +101,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
     visible,
     defaultVisible,
     onVisibilityChange,
-    visibilityToggleIcon,
+    visibilityToggleIcon: VisibilityToggleIcon,
     visibilityToggleButtonProps,
     rightSectionProps,
     leftSectionProps,
@@ -142,7 +142,6 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
   });
 
   const { styleProps, rest } = extractStyleProps(others);
-  const VisibilityToggleIcon = visibilityToggleIcon!;
   const errorId = errorProps?.id || `${uuid}-error`;
   const descriptionId = descriptionProps?.id || `${uuid}-description`;
   const hasError = !!error && typeof error !== 'boolean';

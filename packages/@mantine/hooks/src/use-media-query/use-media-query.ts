@@ -15,8 +15,10 @@ function attachMediaListener(query: MediaQueryList, callback: MediaQueryCallback
     query.addEventListener('change', callback);
     return () => query.removeEventListener('change', callback);
   } catch (e) {
+    /* eslint-disable @typescript-eslint/no-deprecated */
     query.addListener(callback);
     return () => query.removeListener(callback);
+    /* eslint-enable @typescript-eslint/no-deprecated */
   }
 }
 
@@ -38,7 +40,7 @@ export function useMediaQuery(
   { getInitialValueInEffect }: UseMediaQueryOptions = {
     getInitialValueInEffect: true,
   }
-) {
+): boolean {
   const [matches, setMatches] = useState(
     getInitialValueInEffect ? initialValue : getInitialValue(query)
   );
@@ -54,5 +56,5 @@ export function useMediaQuery(
     return undefined;
   }, [query]);
 
-  return matches;
+  return matches || false;
 }

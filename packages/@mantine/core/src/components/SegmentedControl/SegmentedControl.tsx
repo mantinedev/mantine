@@ -114,9 +114,9 @@ export type SegmentedControlFactory = Factory<{
   vars: SegmentedControlCssVariables;
 }>;
 
-const defaultProps: Partial<SegmentedControlProps> = {
+const defaultProps = {
   withItemsBorders: true,
-};
+} satisfies Partial<SegmentedControlProps>;
 
 const varsResolver = createVarsResolver<SegmentedControlFactory>(
   (theme, { radius, color, transitionDuration, size, transitionTimingFunction }) => ({

@@ -258,10 +258,11 @@ export function useForm<
     watch: $watch.watch,
 
     initialized: $values.initialized.current,
-    values: $values.stateValues,
+    values: mode === 'uncontrolled' ? $values.refValues.current : $values.stateValues,
     getValues: $values.getValues,
     getInitialValues: $values.getValuesSnapshot,
     setInitialValues: $values.setValuesSnapshot,
+    resetField: $values.resetField,
     initialize,
     setValues,
     setFieldValue,

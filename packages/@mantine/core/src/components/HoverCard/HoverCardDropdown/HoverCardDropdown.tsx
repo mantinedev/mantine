@@ -7,7 +7,7 @@ export interface HoverCardDropdownProps extends PopoverDropdownProps {
   children?: React.ReactNode;
 }
 
-const defaultProps: Partial<HoverCardDropdownProps> = {};
+const defaultProps = {} satisfies Partial<HoverCardDropdownProps>;
 
 export function HoverCardDropdown(props: HoverCardDropdownProps) {
   const { children, onMouseEnter, onMouseLeave, ...others } = useProps(

@@ -50,9 +50,9 @@ export type BlockquoteFactory = Factory<{
   vars: BlockquoteCssVariables;
 }>;
 
-const defaultProps: Partial<BlockquoteProps> = {
+const defaultProps = {
   iconSize: 48,
-};
+} satisfies Partial<BlockquoteProps>;
 
 const varsResolver = createVarsResolver<BlockquoteFactory>((theme, { color, iconSize, radius }) => {
   const darkParsed = parseThemeColor({

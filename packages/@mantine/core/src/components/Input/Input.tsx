@@ -154,13 +154,13 @@ export type InputFactory = PolymorphicFactory<{
   };
 }>;
 
-const defaultProps: Partial<InputProps> = {
+const defaultProps = {
   variant: 'default',
   leftSectionPointerEvents: 'none',
   rightSectionPointerEvents: 'none',
   withAria: true,
   withErrorStyles: true,
-};
+} satisfies Partial<InputProps>;
 
 const varsResolver = createVarsResolver<InputFactory>((_, props, ctx) => ({
   wrapper: {

@@ -90,5 +90,14 @@ interface UseScrollSpyReturnType {
   reinitialize: () => void;
 }
 
-function useScrollSpy({ selector, getDepth, getValue, }?: UseScrollSpyOptions): UseScrollSpyReturnType
+function useScrollSpy(options?: UseScrollSpyOptions): UseScrollSpyReturnType
+```
+
+## Exported types
+
+`UseScrollSpyOptions` and `UseScrollSpyReturnType` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseScrollSpyOptions, UseScrollSpyReturnType } from '@mantine/hooks';
 ```

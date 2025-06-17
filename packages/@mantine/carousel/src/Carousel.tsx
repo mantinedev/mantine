@@ -128,7 +128,7 @@ export type CarouselFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<CarouselProps> = {
+const defaultProps = {
   controlSize: 26,
   controlsOffset: 'sm',
   slideSize: '100%',
@@ -140,7 +140,7 @@ const defaultProps: Partial<CarouselProps> = {
   withIndicators: false,
   withKeyboardEvents: true,
   type: 'media',
-};
+} satisfies Partial<CarouselProps>;
 
 const defaultEmblaOptions: EmblaOptionsType = {
   align: 'center',

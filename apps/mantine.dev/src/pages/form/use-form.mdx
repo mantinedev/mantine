@@ -64,6 +64,9 @@ form.setFieldValue('user.firstName', 'Jane');
 // resets touched and dirty state
 form.reset();
 
+// Reset field at `path` to its initial value
+form.resetField('path');
+
 // Sets initial values, used when form is reset
 form.setInitialValues({ values: 'object' });
 ```

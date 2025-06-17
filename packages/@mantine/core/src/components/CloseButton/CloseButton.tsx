@@ -60,9 +60,9 @@ export type CloseButtonFactory = PolymorphicFactory<{
   vars: CloseButtonCssVariables;
 }>;
 
-const defaultProps: Partial<CloseButtonProps> = {
+const defaultProps = {
   variant: 'subtle',
-};
+} satisfies Partial<CloseButtonProps>;
 
 const varsResolver = createVarsResolver<CloseButtonFactory>((_, { size, radius, iconSize }) => ({
   root: {

@@ -15,7 +15,7 @@ export type SpaceFactory = Factory<{
   ref: HTMLDivElement;
 }>;
 
-const defaultProps: Partial<SpaceProps> = {};
+const defaultProps = {} satisfies Partial<SpaceProps>;
 
 export const Space = factory<SpaceFactory>((props, ref) => {
   const { w, h, miw, mih, ...others } = useProps('Space', defaultProps, props);

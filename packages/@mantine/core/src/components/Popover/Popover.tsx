@@ -25,7 +25,7 @@ import {
   getFloatingPosition,
 } from '../Floating';
 import { Overlay, OverlayProps } from '../Overlay';
-import { OptionalPortal, PortalProps } from '../Portal';
+import { BasePortalProps, OptionalPortal } from '../Portal';
 import { Transition, TransitionOverride } from '../Transition';
 import { PopoverContextProvider } from './Popover.context';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
@@ -49,7 +49,7 @@ export interface __PopoverProps {
   /** Called when dropdown position changes */
   onPositionChange?: (position: FloatingPosition) => void;
 
-  /** `useEffect` dependencies to force update dropdown position, `[]` by default */
+  /** @deprecated: Do not use, will be removed in 9.0 */
   positionDependencies?: any[];
 
   /** Called when dropdown closes */
@@ -104,7 +104,7 @@ export interface __PopoverProps {
   withinPortal?: boolean;
 
   /** Props to pass down to the `Portal` when `withinPortal` is true */
-  portalProps?: Omit<PortalProps, 'children'>;
+  portalProps?: BasePortalProps;
 
   /** Dropdown `z-index`, `300` by default */
   zIndex?: string | number;
@@ -126,6 +126,9 @@ export interface __PopoverProps {
 
   /** If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen, `true` by default */
   hideDetached?: boolean;
+
+  /** Prevents popover from flipping/shifting when it the dropdown is visible */
+  preventPositionChangeWhenVisible?: boolean;
 }
 
 export interface PopoverProps extends __PopoverProps, StylesApiProps<PopoverFactory> {
@@ -168,7 +171,7 @@ export type PopoverFactory = Factory<{
   vars: PopoverCssVariables;
 }>;
 
-const defaultProps: Partial<PopoverProps> = {
+const defaultProps = {
   position: 'bottom',
   offset: 8,
   positionDependencies: [],
@@ -190,7 +193,7 @@ const defaultProps: Partial<PopoverProps> = {
   zIndex: getDefaultZIndex('popover'),
   __staticSelector: 'Popover',
   width: 'max-content',
-};
+} satisfies Partial<PopoverProps>;
 
 const varsResolver = createVarsResolver<PopoverFactory>((_, { radius, shadow }) => ({
   dropdown: {
@@ -206,6 +209,8 @@ export function Popover(_props: PopoverProps) {
     position,
     offset,
     onPositionChange,
+    // Scheduled for removal in 9.0
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     positionDependencies,
     opened,
     transitionProps,
@@ -247,11 +252,12 @@ export function Popover(_props: PopoverProps) {
     withOverlay,
     overlayProps,
     hideDetached,
+    preventPositionChangeWhenVisible,
     ...others
   } = props;
 
   const getStyles = useStyles<PopoverFactory>({
-    name: __staticSelector!,
+    name: __staticSelector,
     props,
     classes,
     classNames,
@@ -264,6 +270,8 @@ export function Popover(_props: PopoverProps) {
 
   const { resolvedStyles } = useResolvedStylesApi<PopoverFactory>({ classNames, styles, props });
 
+  const [dropdownVisible, setDropdownVisible] = useState(opened ?? defaultOpened ?? false);
+  const positionRef = useRef<FloatingPosition>(position);
   const arrowRef = useRef<HTMLDivElement | null>(null);
   const [targetNode, setTargetNode] = useState<HTMLElement | null>(null);
   const [dropdownNode, setDropdownNode] = useState<HTMLElement | null>(null);
@@ -274,10 +282,10 @@ export function Popover(_props: PopoverProps) {
   const popover = usePopover({
     middlewares,
     width,
-    position: getFloatingPosition(dir, position!),
-    offset: typeof offset === 'number' ? offset + (withArrow ? arrowSize! / 2 : 0) : offset!,
+    position: getFloatingPosition(dir, position),
+    offset: typeof offset === 'number' ? offset + (withArrow ? arrowSize / 2 : 0) : offset,
     arrowRef,
-    arrowOffset: arrowOffset!,
+    arrowOffset,
     onPositionChange,
     positionDependencies,
     opened,
@@ -287,7 +295,12 @@ export function Popover(_props: PopoverProps) {
     onClose,
     onDismiss,
     strategy: floatingStrategy,
+    dropdownVisible,
+    setDropdownVisible,
+    positionRef,
     disabled,
+    preventPositionChangeWhenVisible,
+    keepMounted,
   });
 
   useClickOutside(
@@ -320,6 +333,8 @@ export function Popover(_props: PopoverProps) {
   const onExited = useCallback(() => {
     transitionProps?.onExited?.();
     onExitTransitionEnd?.();
+    setDropdownVisible(false);
+    positionRef.current = position;
   }, [transitionProps?.onExited, onExitTransitionEnd]);
 
   const onEntered = useCallback(() => {
@@ -335,8 +350,8 @@ export function Popover(_props: PopoverProps) {
         controlled: popover.controlled,
         reference,
         floating,
-        x: popover.floating.x!,
-        y: popover.floating.y!,
+        x: popover.floating.x,
+        y: popover.floating.y,
         arrowX: popover.floating?.middlewareData?.arrow?.x,
         arrowY: popover.floating?.middlewareData?.arrow?.y,
         opened: popover.opened,
@@ -344,10 +359,10 @@ export function Popover(_props: PopoverProps) {
         transitionProps: { ...transitionProps, onExited, onEntered },
         width,
         withArrow,
-        arrowSize: arrowSize!,
-        arrowOffset: arrowOffset!,
-        arrowRadius: arrowRadius!,
-        arrowPosition: arrowPosition!,
+        arrowSize,
+        arrowOffset,
+        arrowRadius,
+        arrowPosition,
         placement: popover.floating.placement,
         trapFocus,
         withinPortal,
@@ -363,7 +378,7 @@ export function Popover(_props: PopoverProps) {
         getDropdownId: () => `${uid}-dropdown`,
         withRoles,
         targetProps: others,
-        __staticSelector: __staticSelector!,
+        __staticSelector,
         classNames,
         styles,
         unstyled,

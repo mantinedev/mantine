@@ -34,11 +34,11 @@ export type CollapseFactory = Factory<{
   ref: HTMLDivElement;
 }>;
 
-const defaultProps: Partial<CollapseProps> = {
+const defaultProps = {
   transitionDuration: 200,
   transitionTimingFunction: 'ease',
   animateOpacity: true,
-};
+} satisfies Partial<CollapseProps>;
 
 export const Collapse = factory<CollapseFactory>((props, ref) => {
   const {

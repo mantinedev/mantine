@@ -99,7 +99,7 @@ export type HeatmapFactory = Factory<{
   stylesNames: HeatmapStylesNames;
 }>;
 
-const defaultProps: Partial<HeatmapProps> = {
+const defaultProps = {
   monthLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
   weekdayLabels: ['Sun', 'Mon', '', 'Wed', '', 'Fri', ''],
   withOutsideDates: true,
@@ -116,7 +116,7 @@ const defaultProps: Partial<HeatmapProps> = {
     'var(--heatmap-level-3)',
     'var(--heatmap-level-4)',
   ],
-};
+} satisfies Partial<HeatmapProps>;
 
 export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
   const props = useProps('Heatmap', defaultProps, _props);
@@ -165,11 +165,11 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
 
   const [hoveredRect, setHoveredRect] = useState<HeatmapRectData | null>(null);
   const rectSizeWithGap = rectSize + gap;
-  const weekdaysOffset = withWeekdayLabels ? weekdaysLabelsWidth! : 0;
-  const monthsOffset = withMonthLabels ? monthsLabelsHeight! : 0;
+  const weekdaysOffset = withWeekdayLabels ? weekdaysLabelsWidth : 0;
+  const monthsOffset = withMonthLabels ? monthsLabelsHeight : 0;
   const [min, max] = getBoundaries({ data, domain });
   const rotatedWeekdayLabels = useMemo(
-    () => rotateWeekdaysNames(weekdayLabels!, firstDayOfWeek!),
+    () => rotateWeekdaysNames(weekdayLabels, firstDayOfWeek),
     [weekdayLabels, firstDayOfWeek]
   );
 
@@ -198,9 +198,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
           y={dayIndex * rectSizeWithGap + gap}
           rx={rectRadius}
           data-empty={!hasValue || undefined}
-          fill={
-            hasValue ? getHeatColor({ value: data[date], min, max, colors: colors! }) : undefined
-          }
+          fill={hasValue ? getHeatColor({ value: data[date], min, max, colors }) : undefined}
           onPointerEnter={
             withTooltip ? () => setHoveredRect({ date, value: rectValue }) : undefined
           }
@@ -232,7 +230,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
             <text
               key={monthIndex}
               x={month.position * rectSizeWithGap + gap + weekdaysOffset}
-              y={monthsLabelsHeight! - 4}
+              y={monthsLabelsHeight - 4}
               width={month.size * rectSizeWithGap}
               fontSize={fontSize}
               {...getStyles('monthLabel')}

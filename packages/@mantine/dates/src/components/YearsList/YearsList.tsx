@@ -61,10 +61,10 @@ export type YearsListFactory = Factory<{
   stylesNames: YearsListStylesNames;
 }>;
 
-const defaultProps: Partial<YearsListProps> = {
+const defaultProps = {
   yearsListFormat: 'YYYY',
   withCellSpacing: true,
-};
+} satisfies Partial<YearsListProps>;
 
 export const YearsList = factory<YearsListFactory>((_props, ref) => {
   const props = useProps('YearsList', defaultProps, _props);
@@ -133,7 +133,11 @@ export const YearsList = factory<YearsListFactory>((_props, ref) => {
             unstyled={unstyled}
             data-mantine-stop-propagation={__stopPropagation || undefined}
             disabled={isYearDisabled({ year, minDate, maxDate })}
-            ref={(node) => __getControlRef?.(rowIndex, cellIndex, node!)}
+            ref={(node) => {
+              if (node) {
+                __getControlRef?.(rowIndex, cellIndex, node);
+              }
+            }}
             {...controlProps}
             onKeyDown={(event) => {
               controlProps?.onKeyDown?.(event);

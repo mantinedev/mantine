@@ -95,9 +95,9 @@ export type ChipFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<ChipProps> = {
+const defaultProps = {
   type: 'checkbox',
-};
+} satisfies Partial<ChipProps>;
 
 const varsResolver = createVarsResolver<ChipFactory>(
   (theme, { size, radius, variant, color, autoContrast }) => {

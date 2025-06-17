@@ -57,7 +57,7 @@ export type BurgerFactory = Factory<{
   vars: BurgerCssVariables;
 }>;
 
-const defaultProps: Partial<BurgerProps> = {};
+const defaultProps = {} satisfies Partial<BurgerProps>;
 
 const varsResolver = createVarsResolver<BurgerFactory>(
   (theme, { color, size, lineSize, transitionDuration, transitionTimingFunction }) => ({

@@ -131,7 +131,7 @@ export type PinInputFactory = Factory<{
   vars: PinInputCssVariables;
 }>;
 
-const defaultProps: Partial<PinInputProps> = {
+const defaultProps = {
   gap: 'sm',
   length: 4,
   manageFocus: true,
@@ -139,11 +139,11 @@ const defaultProps: Partial<PinInputProps> = {
   placeholder: '○',
   type: 'alphanumeric',
   ariaLabel: 'PinInput',
-};
+} satisfies Partial<PinInputProps>;
 
 const varsResolver = createVarsResolver<PinInputFactory>((_, { size }) => ({
   root: {
-    '--pin-input-size': getSize(size ?? defaultProps.size, 'pin-input-size'),
+    '--pin-input-size': getSize(size ?? 'md', 'pin-input-size'),
   },
 }));
 
@@ -413,8 +413,10 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
             variant={variant}
             disabled={disabled}
             ref={(node) => {
-              index === 0 && assignRef(ref, node);
-              inputsRef.current[index] = node!;
+              if (node) {
+                index === 0 && assignRef(ref, node);
+                inputsRef.current[index] = node;
+              }
             }}
             autoComplete={oneTimeCode ? 'one-time-code' : 'off'}
             placeholder={focusedIndex === index ? '' : placeholder}

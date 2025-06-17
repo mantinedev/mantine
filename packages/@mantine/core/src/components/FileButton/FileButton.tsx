@@ -34,9 +34,9 @@ export interface FileButtonProps<Multiple extends boolean = false> {
   inputProps?: React.ComponentPropsWithoutRef<'input'>;
 }
 
-const defaultProps: Partial<FileButtonProps> = {
+const defaultProps = {
   multiple: false,
-};
+} satisfies Partial<FileButtonProps>;
 
 type FileButtonComponent = (<Multiple extends boolean = false>(
   props: FileButtonProps<Multiple>
@@ -65,10 +65,14 @@ export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, File
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.currentTarget.files === null) {
+        return onChange(multiple ? ([] as any) : null);
+      }
+
       if (multiple) {
-        onChange(Array.from(event.currentTarget!.files!) as any);
+        onChange(Array.from(event.currentTarget.files) as any);
       } else {
-        onChange(event.currentTarget!.files![0] || null);
+        onChange(event.currentTarget.files[0] || null);
       }
     };
 
@@ -78,7 +82,7 @@ export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, File
       }
     };
 
-    assignRef(resetRef!, reset);
+    assignRef(resetRef, reset);
 
     return (
       <>

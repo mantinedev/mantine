@@ -1,10 +1,15 @@
 import { useCallback, useRef, useState } from 'react';
 
-export function useInViewport<T extends HTMLElement = any>() {
+export interface UseInViewportReturnValue<T extends HTMLElement = any> {
+  inViewport: boolean;
+  ref: React.RefCallback<T | null>;
+}
+
+export function useInViewport<T extends HTMLElement = any>(): UseInViewportReturnValue<T> {
   const observer = useRef<IntersectionObserver | null>(null);
   const [inViewport, setInViewport] = useState(false);
 
-  const ref = useCallback((node: T | null) => {
+  const ref: React.RefCallback<T | null> = useCallback((node) => {
     if (typeof IntersectionObserver !== 'undefined') {
       if (node && !observer.current) {
         observer.current = new IntersectionObserver((entries) =>

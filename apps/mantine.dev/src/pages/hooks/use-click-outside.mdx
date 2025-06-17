@@ -85,5 +85,5 @@ function useClickOutside<T extends HTMLElement = any>(
   handler: () => void,
   events?: string[] | null,
   nodes?: HTMLElement[]
-): React.MutableRefObject<T>;
+): React.RefObject<T>;
 ```

@@ -28,15 +28,14 @@ export type PaginationDotsFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<PaginationDotsProps> = {
+const defaultProps = {
   icon: PaginationDotsIcon,
-};
+} satisfies Partial<PaginationDotsProps>;
 
 export const PaginationDots = factory<PaginationDotsFactory>((_props, ref) => {
   const props = useProps('PaginationDots', defaultProps, _props);
-  const { classNames, className, style, styles, vars, icon, ...others } = props;
+  const { classNames, className, style, styles, vars, icon: Icon, ...others } = props;
   const ctx = usePaginationContext();
-  const Icon = icon!;
 
   return (
     <Box ref={ref} {...ctx.getStyles('dots', { className, style, styles, classNames })} {...others}>

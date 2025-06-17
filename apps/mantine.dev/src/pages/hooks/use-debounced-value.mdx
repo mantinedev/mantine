@@ -38,11 +38,24 @@ within a second to cancel debounced value change:
 ## Definition
 
 ```tsx
+interface UseDebouncedValueOptions {
+  leading?: boolean;
+}
+
+type UseDebouncedValueReturnValue<T> = [T, () => void];
+
 function useDebouncedValue<T = any>(
   value: T,
   wait: number,
-  options?: {
-    leading: boolean;
-  }
-): readonly [T, () => void];
+  options?: UseDebouncedValueOptions,
+): UseDebouncedValueReturnValue<T>
+```
+
+## Exported types
+
+`UseDebouncedValueOptions` and `UseDebouncedValueReturnValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseDebouncedValueOptions, UseDebouncedValueReturnValue } from '@mantine/hooks';
 ```

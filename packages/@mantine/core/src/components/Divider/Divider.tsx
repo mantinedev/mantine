@@ -49,9 +49,9 @@ export type DividerFactory = Factory<{
   variant: DividerVariant;
 }>;
 
-const defaultProps: Partial<DividerProps> = {
+const defaultProps = {
   orientation: 'horizontal',
-};
+} satisfies Partial<DividerProps>;
 
 const varsResolver = createVarsResolver<DividerFactory>((theme, { color, variant, size }) => ({
   root: {

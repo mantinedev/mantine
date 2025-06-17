@@ -16,7 +16,7 @@ export type ModalTitleFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<ModalTitleProps> = {};
+const defaultProps = {} satisfies Partial<ModalTitleProps>;
 
 export const ModalTitle = factory<ModalTitleFactory>((_props, ref) => {
   const props = useProps('ModalTitle', defaultProps, _props);

@@ -6,12 +6,11 @@ export default Layout(MDX_DATA.useFileDialog);
 
 ## Usage
 
-`use-file-dialog` allows capturing one or more files from the user
-without file input element:
+`use-file-dialog` allows capturing one or more files from the user without file input element:
 
 <Demo data={HooksDemos.useFileDialogUsage} />
 
-## Hook options
+## Definition
 
 ```tsx
 interface UseFileDialogOptions {
@@ -39,14 +38,21 @@ interface UseFileDialogOptions {
   /** Called when file dialog is canceled */
   onCancel?: () => void;
 }
+
+interface UseFileDialogReturnValue {
+  files: FileList | null;
+  open: () => void;
+  reset: () => void;
+}
+
+function useFileDialog(input?: UseFileDialogOptions): UseFileDialogReturnValue;
 ```
 
-## Definition
+## Exported types
+
+`UseFileDialogOptions` and `UseFileDialogReturnValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
 
 ```tsx
-function useFileDialog(input?: UseFileDialogOptions): {
-    files: FileList | null;
-    open: () => void;
-    reset: () => void;
-}
+import type { UseFileDialogOptions, UseFileDialogReturnValue } from '@mantine/hooks';
 ```

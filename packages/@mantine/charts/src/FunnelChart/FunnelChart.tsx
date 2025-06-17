@@ -96,21 +96,21 @@ export type FunnelChartFactory = Factory<{
   vars: FunnelChartCssVariables;
 }>;
 
-const defaultProps: Partial<FunnelChartProps> = {
+const defaultProps = {
   withTooltip: true,
   size: 300,
   strokeWidth: 1,
   withLabels: false,
   labelsPosition: 'right',
   tooltipDataSource: 'all',
-};
+} satisfies Partial<FunnelChartProps>;
 
 const varsResolver = createVarsResolver<FunnelChartFactory>(
   (theme, { strokeColor, labelColor, size }) => ({
     root: {
       '--chart-stroke-color': strokeColor ? getThemeColor(strokeColor, theme) : undefined,
       '--chart-labels-color': labelColor ? getThemeColor(labelColor, theme) : undefined,
-      '--chart-size': rem(size!),
+      '--chart-size': rem(size),
     },
   })
 );

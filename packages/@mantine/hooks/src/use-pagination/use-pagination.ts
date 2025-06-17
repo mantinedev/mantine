@@ -8,7 +8,7 @@ function range(start: number, end: number) {
 
 export const DOTS = 'dots';
 
-export interface PaginationParams {
+export interface UsePaginationOptions {
   /** Page selected on initial render, defaults to 1 */
   initialPage?: number;
 
@@ -28,6 +28,29 @@ export interface PaginationParams {
   onChange?: (page: number) => void;
 }
 
+export interface UsePaginationReturnValue {
+  /** Array of page numbers and dots */
+  range: (number | 'dots')[];
+
+  /** Active page number */
+  active: number;
+
+  /** Function to set active page */
+  setPage: (page: number) => void;
+
+  /** Function to go to next page */
+  next: () => void;
+
+  /** Function to go to previous page */
+  previous: () => void;
+
+  /** Function to go to first page */
+  first: () => void;
+
+  /** Function to go to last page */
+  last: () => void;
+}
+
 export function usePagination({
   total,
   siblings = 1,
@@ -35,7 +58,7 @@ export function usePagination({
   page,
   initialPage = 1,
   onChange,
-}: PaginationParams) {
+}: UsePaginationOptions): UsePaginationReturnValue {
   const _total = Math.max(Math.trunc(total), 0);
   const [activePage, setActivePage] = useUncontrolled({
     value: page,

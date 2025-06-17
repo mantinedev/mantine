@@ -1,17 +1,26 @@
 import { useCallback, useEffect, useRef } from 'react';
 
+export interface UseTimeoutOptions {
+  autoInvoke: boolean;
+}
+
+export interface UseTimeoutReturnValue {
+  start: (...args: any[]) => void;
+  clear: () => void;
+}
+
 export function useTimeout(
-  callback: (...callbackParams: any[]) => void,
+  callback: (...args: any[]) => void,
   delay: number,
-  options: { autoInvoke: boolean } = { autoInvoke: false }
-) {
+  options: UseTimeoutOptions = { autoInvoke: false }
+): UseTimeoutReturnValue {
   const timeoutRef = useRef<number | null>(null);
 
   const start = useCallback(
-    (...callbackParams: any[]) => {
+    (...args: any[]) => {
       if (!timeoutRef.current) {
         timeoutRef.current = window.setTimeout(() => {
-          callback(callbackParams);
+          callback(args);
           timeoutRef.current = null;
         }, delay);
       }

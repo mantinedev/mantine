@@ -33,9 +33,9 @@ export type YearLevelGroupFactory = Factory<{
   stylesNames: YearLevelGroupStylesNames;
 }>;
 
-const defaultProps: Partial<YearLevelGroupProps> = {
+const defaultProps = {
   numberOfColumns: 1,
-};
+} satisfies Partial<YearLevelGroupProps>;
 
 export const YearLevelGroup = factory<YearLevelGroupFactory>((_props, ref) => {
   const props = useProps('YearLevelGroup', defaultProps, _props);
@@ -63,6 +63,7 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props, ref) => {
     nextDisabled,
     previousDisabled,
     hasNextLevel,
+    headerControlsOrder,
 
     // Other settings
     classNames,
@@ -91,7 +92,7 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props, ref) => {
           size={size}
           monthsListFormat={monthsListFormat}
           year={currentYear}
-          withNext={yearIndex === numberOfColumns! - 1}
+          withNext={yearIndex === numberOfColumns - 1}
           withPrevious={yearIndex === 0}
           yearLabelFormat={yearLabelFormat}
           __stopPropagation={__stopPropagation}
@@ -142,6 +143,7 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props, ref) => {
           unstyled={unstyled}
           __staticSelector={__staticSelector || 'YearLevelGroup'}
           withCellSpacing={withCellSpacing}
+          headerControlsOrder={headerControlsOrder}
         />
       );
     });

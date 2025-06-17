@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
-interface NetworkStatus {
+export interface UserNetworkReturnValue {
+  online: boolean;
   downlink?: number;
   downlinkMax?: number;
   effectiveType?: 'slow-2g' | '2g' | '3g' | '4g';
@@ -10,7 +11,7 @@ interface NetworkStatus {
   type?: 'bluetooth' | 'cellular' | 'ethernet' | 'wifi' | 'wimax' | 'none' | 'other' | 'unknown';
 }
 
-function getConnection(): NetworkStatus {
+function getConnection(): Omit<UserNetworkReturnValue, 'online'> {
   if (typeof navigator === 'undefined') {
     return {};
   }
@@ -33,10 +34,9 @@ function getConnection(): NetworkStatus {
   };
 }
 
-export function useNetwork() {
-  const [status, setStatus] = useState<{ online: boolean } & NetworkStatus>({
-    online: true,
-  });
+export function useNetwork(): UserNetworkReturnValue {
+  const [status, setStatus] = useState<UserNetworkReturnValue>({ online: true });
+
   const handleConnectionChange = useCallback(
     () => setStatus((current) => ({ ...current, ...getConnection() })),
     []

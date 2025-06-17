@@ -13,14 +13,10 @@ Example of creating custom radial slider:
 
 <Demo data={HooksDemos.useRadialMoveUsage} />
 
-## Hook options
-
-`use-radial-move` hook accepts 2 arguments:
-- A callback function that is called when the value changes
-- An option object described below
+## Definition
 
 ```tsx
-export interface UseRadialMoveOptions {
+interface UseRadialMoveOptions {
   /** Number by which value is incremented/decremented with mouse and touch events, `0.01` by default */
   step?: number;
 
@@ -33,16 +29,26 @@ export interface UseRadialMoveOptions {
   /** Called in `onMouseUp` and `onTouchEnd` events */
   onScrubEnd?: () => void;
 }
-```
 
-## Definition
+interface UseRadialMoveReturnValue<T extends HTMLElement = any> {
+  /** Ref to be passed to the element that should be used for radial move */
+  ref: React.RefCallback<T | null>;
 
-```tsx
+  /** Indicates whether the radial move is active */
+  active: boolean;
+}
+
 function useRadialMove<T extends HTMLElement = HTMLDivElement>(
   onChange: (value: number) => void,
-  options?: UseRadialMoveOptions
-): {
-  ref: React.RefObject<T>;
-  active: boolean;
-};
+  options?: UseRadialMoveOptions,
+): UseRadialMoveReturnValue<T>;
+```
+
+## Exported types
+
+`UseRadialMoveOptions` and `UseRadialMoveReturnValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseRadialMoveOptions, UseRadialMoveReturnValue } from '@mantine/hooks';
 ```

@@ -93,7 +93,7 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
   withInitialFocusPlaceholder?: boolean;
 }
 
-const defaultProps: Partial<MenuProps> = {
+const defaultProps = {
   trapFocus: true,
   closeOnItemClick: true,
   withInitialFocusPlaceholder: true,
@@ -103,7 +103,7 @@ const defaultProps: Partial<MenuProps> = {
   openDelay: 0,
   closeDelay: 100,
   menuItemTabIndex: -1,
-};
+} satisfies Partial<MenuProps>;
 
 export function Menu(_props: MenuProps) {
   const props = useProps('Menu', defaultProps, _props);

@@ -92,7 +92,7 @@ export type ScatterChartFactory = Factory<{
   vars: ScatterChartCssVariables;
 }>;
 
-const defaultProps: Partial<ScatterChartProps> = {
+const defaultProps = {
   withXAxis: true,
   withYAxis: true,
   withTooltip: true,
@@ -100,7 +100,7 @@ const defaultProps: Partial<ScatterChartProps> = {
   tickLine: 'y',
   strokeDasharray: '5 5',
   gridAxis: 'x',
-};
+} satisfies Partial<ScatterChartProps>;
 
 const varsResolver = createVarsResolver<ScatterChartFactory>((theme, { textColor, gridColor }) => ({
   root: {

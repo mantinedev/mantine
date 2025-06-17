@@ -24,7 +24,7 @@ export type ProgressLabelFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<ProgressLabelProps> = {};
+const defaultProps = {} satisfies Partial<ProgressLabelProps>;
 
 export const ProgressLabel = factory<ProgressLabelFactory>((props, ref) => {
   const { classNames, className, style, styles, vars, ...others } = useProps(

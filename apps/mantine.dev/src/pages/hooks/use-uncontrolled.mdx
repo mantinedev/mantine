@@ -59,7 +59,7 @@ function Demo() {
 ## Definition
 
 ```tsx
-interface UseUncontrolledInput<T> {
+interface UseUncontrolledOptions<T> {
   /** Value for controlled state */
   value?: T;
 
@@ -73,9 +73,25 @@ interface UseUncontrolledInput<T> {
   onChange?: (value: T) => void;
 }
 
-function useUncontrolled<T>(input: UseUncontrolledInput<T>): [
-  T, // current value
-  (value: T) => void, // onChange function
-  boolean, // value that indicates if input is controlled or not
+type UseUncontrolledReturnValue<T> = [
+  /** Current value */
+  T,
+
+  /** Handler to update the state, passes `value` and `payload` to `onChange` */
+  (value: T, ...payload: any[]) => void,
+
+  /** True if the state is controlled, false if uncontrolled */
+  boolean,
 ];
+
+function useUncontrolled<T>(input: UseUncontrolledOptions<T>): UseUncontrolledReturnValue<T>;
+```
+
+## Exported types
+
+`UseUncontrolledOptions` and `UseUncontrolledReturnValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseUncontrolledOptions, UseUncontrolledReturnValue } from '@mantine/hooks';
 ```

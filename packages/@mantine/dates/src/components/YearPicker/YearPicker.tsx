@@ -39,9 +39,9 @@ export type YearPickerFactory = Factory<{
   stylesNames: YearPickerStylesNames;
 }>;
 
-const defaultProps: Partial<YearPickerProps> = {
+const defaultProps = {
   type: 'default',
-};
+} satisfies Partial<YearPickerProps>;
 
 type YearPickerComponent = (<Type extends DatePickerType = 'default'>(
   props: YearPickerProps<Type> & { ref?: React.ForwardedRef<HTMLDivElement> }

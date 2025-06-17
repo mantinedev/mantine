@@ -76,11 +76,20 @@ only when the user presses `Enter` or clicks on a suggestion.
 
 ## Allow duplicates
 
-By default `TagsInput` does not allow to add duplicate values, but you can change this behavior by
+By default, `TagsInput` does not allow to add duplicate values, but you can change this behavior by
 setting `allowDuplicates` prop. Value is considered duplicate if it is already present in the `value` array,
 regardless of the case and trailing whitespace.
 
 <Demo data={TagsInputDemos.allowDuplicates} />
+
+## isDuplicate
+
+You can use `isDuplicate` prop to control how duplicates are detected. It is a function that
+receives two arguments: tag value and current tags. The function must return `true` if the value is duplicate.
+
+Example of using `isDuplicate` to allow using the same value with different casing:
+
+<Demo data={TagsInputDemos.isDuplicate} />
 
 ## Split chars
 

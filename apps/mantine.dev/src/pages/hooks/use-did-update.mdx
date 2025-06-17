@@ -13,7 +13,7 @@ import { useDidUpdate } from '@mantine/hooks';
 
 function Demo() {
   useDidUpdate(
-    () => console.log("Won't be called when mounted"),
+    () => console.log("Will not be called when mounted"),
     [dependency1, dependency2]
   );
 }
@@ -22,5 +22,5 @@ function Demo() {
 ## Definition
 
 ```tsx
-function useDidUpdate(fn: EffectCallback, dependencies?: any[]): void;
+function useDidUpdate(fn: React.EffectCallback, dependencies?: any[]): void;
 ```

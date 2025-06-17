@@ -18,10 +18,9 @@ Use hook to detect if user prefers to reduce motion (`(prefers-reduced-motion: r
 ## Definition
 
 ```tsx
-function useReducedMotion(
-  initialValue?: boolean,
-  options?: {
-    getInitialValueInEffect: boolean;
-  }
-): boolean;
+interface UseMediaQueryOptions {
+  getInitialValueInEffect: boolean;
+}
+
+function useReducedMotion(initialValue?: boolean, options?: UseMediaQueryOptions): boolean;
 ```

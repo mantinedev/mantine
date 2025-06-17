@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import {
   arrow,
+  autoUpdate,
   flip,
   inline,
   offset,
@@ -15,12 +16,7 @@ import {
   type Middleware,
 } from '@floating-ui/react';
 import { useDidUpdate, useId } from '@mantine/hooks';
-import {
-  FloatingAxesOffsets,
-  FloatingPosition,
-  FloatingStrategy,
-  useFloatingAutoUpdate,
-} from '../Floating';
+import { FloatingAxesOffsets, FloatingPosition, FloatingStrategy } from '../Floating';
 import { type TooltipMiddlewares } from './Tooltip.types';
 import { useTooltipGroupContext } from './TooltipGroup/TooltipGroup.context';
 
@@ -114,7 +110,6 @@ export function useTooltip(settings: UseTooltip) {
     y,
     context,
     refs,
-    update,
     placement,
     middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
   } = useFloating({
@@ -123,6 +118,7 @@ export function useTooltip(settings: UseTooltip) {
     open: opened,
     onOpenChange: onChange,
     middleware: getTooltipMiddlewares(settings),
+    whileElementsMounted: autoUpdate,
   });
 
   const { delay: groupDelay, currentId, setCurrentId } = useDelayGroup(context, { id: uid });
@@ -138,13 +134,6 @@ export function useTooltip(settings: UseTooltip) {
     // Cannot be used with controlled tooltip, page jumps
     useDismiss(context, { enabled: typeof settings.opened === 'undefined' }),
   ]);
-
-  useFloatingAutoUpdate({
-    opened,
-    position: settings.position,
-    positionDependencies: settings.positionDependencies,
-    floating: { refs, update },
-  });
 
   useDidUpdate(() => {
     settings.onPositionChange?.(placement);
