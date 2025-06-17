@@ -1,6 +1,6 @@
 {
   "name": "@mantine/core",
-  "version": "8.1.0",
+  "version": "8.1.1",
   "description": "React components library focused on usability, accessibility and developer experience",
   "homepage": "https://mantine.dev/",
   "license": "MIT",
@@ -43,7 +43,7 @@
     "directory": "packages/@mantine/core"
   },
   "peerDependencies": {
-    "@mantine/hooks": "8.1.0",
+    "@mantine/hooks": "8.1.1",
     "react": "^18.x || ^19.x",
     "react-dom": "^18.x || ^19.x"
   },

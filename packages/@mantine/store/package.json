@@ -1,6 +1,6 @@
 {
   "name": "@mantine/store",
-  "version": "8.1.0",
+  "version": "8.1.1",
   "description": "A library to sync external React state updates",
   "homepage": "https://mantine.dev",
   "license": "MIT",

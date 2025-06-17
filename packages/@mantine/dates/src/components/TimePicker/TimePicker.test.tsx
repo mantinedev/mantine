@@ -340,6 +340,56 @@ describe('@mantine/dates/TimePicker', () => {
     expect(spy).toHaveBeenCalledWith('18:30:00');
   });
 
+  it('allows typing multiple valid values within min/max range without resetting to max', async () => {
+    const spy = jest.fn();
+    render(
+      <TimePicker
+        {...defaultProps}
+        withSeconds
+        format="24h"
+        min="08:00:00"
+        max="18:00:00"
+        onChange={spy}
+      />
+    );
+
+    await userEvent.type(screen.getByLabelText('test-hours'), '10');
+    await userEvent.type(screen.getByLabelText('test-minutes'), '30');
+    await userEvent.type(screen.getByLabelText('test-seconds'), '00');
+    expect(spy).toHaveBeenCalledWith('10:30:00');
+    expect(screen.getByLabelText('test-hours')).toHaveValue('10');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('30');
+    expect(screen.getByLabelText('test-seconds')).toHaveValue('00');
+
+    await userEvent.clear(screen.getByLabelText('test-hours'));
+    await userEvent.clear(screen.getByLabelText('test-minutes'));
+    await userEvent.clear(screen.getByLabelText('test-seconds'));
+    spy.mockClear();
+
+    await userEvent.type(screen.getByLabelText('test-hours'), '12');
+    await userEvent.type(screen.getByLabelText('test-minutes'), '45');
+    await userEvent.type(screen.getByLabelText('test-seconds'), '30');
+
+    expect(spy).toHaveBeenCalledWith('12:45:30');
+    expect(screen.getByLabelText('test-hours')).toHaveValue('12');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('45');
+    expect(screen.getByLabelText('test-seconds')).toHaveValue('30');
+
+    await userEvent.clear(screen.getByLabelText('test-hours'));
+    await userEvent.clear(screen.getByLabelText('test-minutes'));
+    await userEvent.clear(screen.getByLabelText('test-seconds'));
+    spy.mockClear();
+
+    await userEvent.type(screen.getByLabelText('test-hours'), '15');
+    await userEvent.type(screen.getByLabelText('test-minutes'), '15');
+    await userEvent.type(screen.getByLabelText('test-seconds'), '15');
+
+    expect(spy).toHaveBeenCalledWith('15:15:15');
+    expect(screen.getByLabelText('test-hours')).toHaveValue('15');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('15');
+    expect(screen.getByLabelText('test-seconds')).toHaveValue('15');
+  });
+
   it('handles default value correctly', async () => {
     render(<TimePicker {...defaultProps} withSeconds defaultValue="12:34:55" />);
     expect(screen.getByLabelText('test-hours')).toHaveValue('12');
