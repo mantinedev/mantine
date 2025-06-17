@@ -59,7 +59,10 @@ get viewport element ref with `viewportRef` prop and call `scrollTo` method:
 
 ## ScrollArea.Autosize
 
-`ScrollArea.Autosize` component allows to create scrollable containers when given max-height is reached:
+`ScrollArea.Autosize` component allows to create scrollable containers when given max-height is reached.
+It also supports a callback for detecting when vertical overflow occurs:
+
+- onOverflowChange – triggered when content exceeds max-height, making the container scrollable or not
 
 <Demo data={ScrollAreaDemos.maxHeight} />
 
