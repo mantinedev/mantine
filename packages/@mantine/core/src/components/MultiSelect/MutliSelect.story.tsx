@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Box } from '../../core';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { TextInput } from '../TextInput';
@@ -245,5 +246,17 @@ export function SearchableHidePicked() {
         nothingFoundMessage="Nothing found..."
       />
     </div>
+  );
+}
+
+export function PlaceholderOverflow() {
+  return (
+    <Box w="50%">
+      <MultiSelect
+        maw={80}
+        data={['Option 1', 'Option2']}
+        placeholder="This is the placeholder label"
+      />
+    </Box>
   );
 }

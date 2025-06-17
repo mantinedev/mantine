@@ -209,3 +209,26 @@ export function ControlledDropdown() {
     />
   );
 }
+
+export function ControlledEmptyString() {
+  const [timeEmptyString, setTimeEmptyString] = useState('');
+  const [timeNull, setTimeNull] = useState<string | null>(null);
+
+  return (
+    <div className="App">
+      <TimePicker label="Empty string" value={timeEmptyString} onChange={setTimeEmptyString} />
+
+      <TimePicker label="null" value={timeNull as string} onChange={setTimeNull} />
+
+      <button
+        type="button"
+        onClick={() => {
+          setTimeNull('02:00');
+          setTimeEmptyString('02:00');
+        }}
+      >
+        Set time to 02:00
+      </button>
+    </div>
+  );
+}

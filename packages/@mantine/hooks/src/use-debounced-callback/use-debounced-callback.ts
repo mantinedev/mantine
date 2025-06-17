@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useCallbackRef } from '../utils';
 
 export interface UseDebouncedCallbackOptions {
@@ -9,55 +9,65 @@ export interface UseDebouncedCallbackOptions {
 
 export type UseDebouncedCallbackReturnValue<T extends (...args: any[]) => any> = ((
   ...args: Parameters<T>
-) => void) & { flush: () => void };
+) => void) & { flush: () => void; cancel: () => void };
 
 export function useDebouncedCallback<T extends (...args: any[]) => any>(
   callback: T,
   options: number | UseDebouncedCallbackOptions
 ) {
-  const delay = typeof options === 'number' ? options : options.delay;
-  const flushOnUnmount = typeof options === 'number' ? false : options.flushOnUnmount;
-  const leading = typeof options === 'number' ? false : options.leading;
+  const { delay, flushOnUnmount, leading } =
+    typeof options === 'number'
+      ? { delay: options, flushOnUnmount: false, leading: false }
+      : options;
 
   const handleCallback = useCallbackRef(callback);
   const debounceTimerRef = useRef(0);
-  const flushRef = useRef(() => {});
-  const leadingRef = useRef(leading);
 
-  const lastCallback = Object.assign(
-    useCallback(
+  const lastCallback = useMemo(() => {
+    const currentCallback = Object.assign(
       (...args: Parameters<T>) => {
         window.clearTimeout(debounceTimerRef.current);
 
-        if (leading && leadingRef.current) {
-          leadingRef.current = false;
+        const isFirstCall = currentCallback._isFirstCall;
+        currentCallback._isFirstCall = false;
+
+        if (leading && isFirstCall) {
           handleCallback(...args);
           return;
         }
 
+        function clearTimeoutAndLeadingRef() {
+          window.clearTimeout(debounceTimerRef.current);
+          debounceTimerRef.current = 0;
+          currentCallback._isFirstCall = true;
+        }
+
         const flush = () => {
           if (debounceTimerRef.current !== 0) {
-            debounceTimerRef.current = 0;
-            leadingRef.current = true;
+            clearTimeoutAndLeadingRef();
             handleCallback(...args);
           }
         };
 
-        flushRef.current = flush;
-        lastCallback.flush = flush;
+        const cancel = () => {
+          clearTimeoutAndLeadingRef();
+        };
+
+        currentCallback.flush = flush;
+        currentCallback.cancel = cancel;
         debounceTimerRef.current = window.setTimeout(flush, delay);
-        leadingRef.current = false;
       },
-      [handleCallback, delay, leading]
-    ),
-    { flush: flushRef.current }
-  );
+      { flush: () => {}, cancel: () => {}, _isFirstCall: true }
+    );
+    return currentCallback;
+  }, [handleCallback, delay, leading]);
 
   useEffect(
     () => () => {
-      window.clearTimeout(debounceTimerRef.current);
       if (flushOnUnmount) {
         lastCallback.flush();
+      } else {
+        lastCallback.cancel();
       }
     },
     [lastCallback, flushOnUnmount]

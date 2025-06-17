@@ -29,4 +29,16 @@ describe('@mantine/hooks/use-set', () => {
     expect(hook.result.current.has(1)).toBe(false);
     expect(hook.result.current.has(2)).toBe(false);
   });
+
+  it('unions with another set and does not mutate the original set', () => {
+    const hook = renderHook(() => useSet([1, 2]));
+    const otherSet = new Set([2, 3, 4]);
+    const unionResult = (hook.result.current as any).union(otherSet);
+
+    expect(unionResult.has(1)).toBe(true);
+    expect(unionResult.has(2)).toBe(true);
+    expect(unionResult.has(3)).toBe(true);
+    expect(unionResult.has(4)).toBe(true);
+    expect(unionResult.size).toBe(4);
+  });
 });

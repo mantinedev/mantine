@@ -126,6 +126,9 @@ export interface __PopoverProps {
 
   /** If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen @default `true` */
   hideDetached?: boolean;
+
+  /** Prevents popover from flipping/shifting when it the dropdown is visible */
+  preventPositionChangeWhenVisible?: boolean;
 }
 
 export interface PopoverProps extends __PopoverProps, StylesApiProps<PopoverFactory> {
@@ -250,6 +253,7 @@ export function Popover(_props: PopoverProps) {
     overlayProps,
     hideDetached,
     attributes,
+    preventPositionChangeWhenVisible,
     ...others
   } = props;
 
@@ -297,6 +301,8 @@ export function Popover(_props: PopoverProps) {
     setDropdownVisible,
     positionRef,
     disabled,
+    preventPositionChangeWhenVisible,
+    keepMounted,
   });
 
   useClickOutside(

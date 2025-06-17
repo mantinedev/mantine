@@ -116,7 +116,7 @@ export const YearLevelGroupStylesApi: StylesApiData<YearLevelGroupFactory> = {
     levelsGroup: 'Group of years levels',
     monthsList: 'Months list table element',
     monthsListRow: 'Months list row element',
-    monthsListCell: 'Monthss list cell element',
+    monthsListCell: 'Months list cell element',
     monthsListControl: 'Button used to pick months and years',
   },
 
