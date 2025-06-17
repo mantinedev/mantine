@@ -23,3 +23,4 @@ export { withWeekNumbers } from './DatePicker.demo.withWeekNumbers';
 export { presets } from './DatePicker.demo.presets';
 export { presetsRange } from './DatePicker.demo.presetsRange';
 export { headerControlsOrder } from './DatePicker.demo.headerControlsOrder';
+export { keyboardNavigation } from './DatePicker.demo.keyboardNavigation';
