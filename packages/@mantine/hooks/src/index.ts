@@ -142,7 +142,7 @@ export type {
   UseOrientationOptions,
   UseOrientationReturnType,
 } from './use-orientation/use-orientation';
-export type { UseOSReturnValue as OS, UseOSReturnValue, UseOsOptions } from './use-os/use-os';
+export type { UseOSReturnValue, UseOsOptions } from './use-os/use-os';
 export type {
   UsePaginationOptions,
   UsePaginationReturnValue,
