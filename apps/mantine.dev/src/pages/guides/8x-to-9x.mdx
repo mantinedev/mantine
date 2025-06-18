@@ -1,4 +1,4 @@
-import { PopoverDemos } from '@docs/demos';
+import { PopoverDemos, HooksDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -102,3 +102,16 @@ function Demo(props) {
   );
 }
 ```
+
+## use-fullscreen hook changes
+
+[use-fullscreen](/hooks/use-fullscreen) hook was split into two hooks: `useFullscreenElement` and `useFullscreenDocument`.
+This change was required to fix stale ref issue in the previous implementation.
+
+New usage with `document` element:
+
+<Demo data={HooksDemos.useFullscreenDemo} />
+
+New usage with custom target element:
+
+<Demo data={HooksDemos.useFullscreenRefDemo} />
