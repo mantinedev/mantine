@@ -129,9 +129,12 @@ export interface HeadlessMantineProviderProps {
 
   /** Your application */
   children?: React.ReactNode;
+
+  /** Environment at which the provider is used, `'test'` environment disables all transitions and portals */
+  env?: 'default' | 'test';
 }
 
-export function HeadlessMantineProvider({ children, theme }: HeadlessMantineProviderProps) {
+export function HeadlessMantineProvider({ children, theme, env }: HeadlessMantineProviderProps) {
   return (
     <MantineContext.Provider
       value={{
@@ -143,6 +146,7 @@ export function HeadlessMantineProvider({ children, theme }: HeadlessMantineProv
         cssVariablesSelector: ':root',
         withStaticClasses: false,
         headless: true,
+        env,
       }}
     >
       <MantineThemeProvider theme={theme}>{children}</MantineThemeProvider>
