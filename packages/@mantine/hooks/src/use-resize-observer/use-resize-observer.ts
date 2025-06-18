@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
-type ObserverRect = Omit<DOMRectReadOnly, 'toJSON'>;
+export type ObserverRect = Omit<DOMRectReadOnly, 'toJSON'>;
 
 const defaultState: ObserverRect = {
   x: 0,
@@ -13,67 +13,75 @@ const defaultState: ObserverRect = {
   right: 0,
 };
 
-export function useResizeObserver<T extends HTMLElement = any>(options?: ResizeObserverOptions) {
+export type UseResizeObserverReturnValue<T extends HTMLElement = any> = [
+  React.RefCallback<T | null>,
+  ObserverRect,
+];
+
+export function useResizeObserver<T extends HTMLElement = any>(
+  options?: ResizeObserverOptions
+): UseResizeObserverReturnValue<T> {
   const frameID = useRef(0);
-  const ref = useRef<T>(null);
-
   const [rect, setRect] = useState<ObserverRect>(defaultState);
+  const observerRef = useRef<ResizeObserver | null>(null);
 
-  const observer = useMemo(
-    () =>
-      typeof window !== 'undefined'
-        ? new ResizeObserver((entries) => {
-            const entry = entries[0];
-
-            if (entry) {
-              cancelAnimationFrame(frameID.current);
-
-              frameID.current = requestAnimationFrame(() => {
-                if (ref.current) {
-                  const boxSize = entry.borderBoxSize?.[0] || entry.contentBoxSize?.[0];
-                  if (boxSize) {
-                    const width = boxSize.inlineSize;
-                    const height = boxSize.blockSize;
-
-                    setRect({
-                      width,
-                      height,
-                      x: entry.contentRect.x,
-                      y: entry.contentRect.y,
-                      top: entry.contentRect.top,
-                      left: entry.contentRect.left,
-                      bottom: entry.contentRect.bottom,
-                      right: entry.contentRect.right,
-                    });
-                  } else {
-                    setRect(entry.contentRect);
-                  }
-                }
-              });
-            }
-          })
-        : null,
-    []
-  );
-
-  useEffect(() => {
-    if (ref.current) {
-      observer?.observe(ref.current, options);
-    }
-
-    return () => {
-      observer?.disconnect();
+  const refCallback: React.RefCallback<T | null> = useCallback(
+    (node) => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
 
       if (frameID.current) {
         cancelAnimationFrame(frameID.current);
       }
-    };
-  }, [ref.current]);
 
-  return [ref, rect] as const;
+      if (!node) {
+        return;
+      }
+
+      observerRef.current = new ResizeObserver((entries) => {
+        const entry = entries[0];
+        if (entry) {
+          cancelAnimationFrame(frameID.current);
+          frameID.current = requestAnimationFrame(() => {
+            const boxSize = entry.borderBoxSize?.[0] || entry.contentBoxSize?.[0];
+            if (boxSize) {
+              const width = boxSize.inlineSize;
+              const height = boxSize.blockSize;
+              setRect({
+                width,
+                height,
+                x: entry.contentRect.x,
+                y: entry.contentRect.y,
+                top: entry.contentRect.top,
+                left: entry.contentRect.left,
+                bottom: entry.contentRect.bottom,
+                right: entry.contentRect.right,
+              });
+            } else {
+              setRect(entry.contentRect);
+            }
+          });
+        }
+      });
+      observerRef.current.observe(node, options);
+    },
+    [options]
+  );
+
+  return [refCallback, rect] as const;
 }
 
-export function useElementSize<T extends HTMLElement = any>(options?: ResizeObserverOptions) {
+export interface UseElementSizeReturnValue<T extends HTMLElement = any> {
+  ref: React.RefCallback<T | null>;
+  width: number;
+  height: number;
+}
+
+export function useElementSize<T extends HTMLElement = any>(
+  options?: ResizeObserverOptions
+): { ref: React.RefCallback<T | null>; width: number; height: number } {
   const [ref, { width, height }] = useResizeObserver<T>(options);
   return { ref, width, height };
 }

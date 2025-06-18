@@ -64,6 +64,7 @@ elements:
 - [TypographyStylesProvider](/core/typography) component was renamed to [Typography](/core/typography)
 - [use-fullscreen](/hooks/use-fullscreen) hook was split into two hooks: `useFullscreenElement` and `useFullscreenDocument`
 - [use-media-query](/hooks/use-media-query) hook no longer includes fallback for old Safari versions (iOS 13 and earlier, released before 2019)
+- [use-resize-observer](/hooks/use-resize-observer) now uses the new callback ref approach. The new approach makes hook usable with dynamic node changes. This change might be breaking, validate hook usage in your application.
 - `@mantine/hooks` types were renamed for consistency:
   - `UseScrollSpyReturnType` → `UseScrollSpyReturnValue`
   - `StateHistory` → `UseStateHistoryValue`

@@ -194,3 +194,8 @@ export type {
   UseSelectionInput,
   UseSelectionReturnValue,
 } from './use-selection/use-selection';
+export type {
+  UseElementSizeReturnValue,
+  UseResizeObserverReturnValue,
+  ObserverRect,
+} from './use-resize-observer/use-resize-observer';
