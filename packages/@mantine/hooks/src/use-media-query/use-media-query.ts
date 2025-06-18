@@ -4,24 +4,6 @@ export interface UseMediaQueryOptions {
   getInitialValueInEffect: boolean;
 }
 
-type MediaQueryCallback = (event: { matches: boolean; media: string }) => void;
-
-/**
- * Older versions of Safari (shipped withCatalina and before) do not support addEventListener on matchMedia
- * https://stackoverflow.com/questions/56466261/matchmedia-addlistener-marked-as-deprecated-addeventlistener-equivalent
- * */
-function attachMediaListener(query: MediaQueryList, callback: MediaQueryCallback) {
-  try {
-    query.addEventListener('change', callback);
-    return () => query.removeEventListener('change', callback);
-  } catch (e) {
-    /* eslint-disable @typescript-eslint/no-deprecated */
-    query.addListener(callback);
-    return () => query.removeListener(callback);
-    /* eslint-enable @typescript-eslint/no-deprecated */
-  }
-}
-
 function getInitialValue(query: string, initialValue?: boolean) {
   if (typeof initialValue === 'boolean') {
     return initialValue;
@@ -50,7 +32,11 @@ export function useMediaQuery(
     if ('matchMedia' in window) {
       queryRef.current = window.matchMedia(query);
       setMatches(queryRef.current.matches);
-      return attachMediaListener(queryRef.current, (event) => setMatches(event.matches));
+      const callback = (event: MediaQueryListEvent) => setMatches(event.matches);
+      queryRef.current.addEventListener('change', callback);
+      return () => {
+        queryRef.current?.removeEventListener('change', callback);
+      };
     }
 
     return undefined;
