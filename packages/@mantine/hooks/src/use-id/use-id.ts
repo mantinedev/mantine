@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useId as useReactId, useState } from 'react';
 import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
 import { randomId } from '../utils';
-import { useReactId } from './use-react-id';
 
 export function useId(staticId?: string) {
   const reactId = useReactId();
-  const [uuid, setUuid] = useState(reactId);
+  const [uuid, setUuid] = useState(`mantine-${reactId.replace(/:/g, '')}`);
 
   useIsomorphicEffect(() => {
     setUuid(randomId());
