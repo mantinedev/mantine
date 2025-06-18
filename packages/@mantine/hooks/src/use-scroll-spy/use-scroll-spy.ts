@@ -76,7 +76,7 @@ export interface UseScrollSpyOptions {
   getValue?: (element: HTMLElement) => string;
 }
 
-export interface UseScrollSpyReturnType {
+export interface UseScrollSpyReturnValue {
   /** Index of the active heading in the `data` array */
   active: number;
 
@@ -94,7 +94,7 @@ export function useScrollSpy({
   selector = 'h1, h2, h3, h4, h5, h6',
   getDepth = getDefaultDepth,
   getValue = getDefaultValue,
-}: UseScrollSpyOptions = {}): UseScrollSpyReturnType {
+}: UseScrollSpyOptions = {}): UseScrollSpyReturnValue {
   const [active, setActive] = useState(-1);
   const [initialized, setInitialized] = useState(false);
   const [data, setData] = useState<UseScrollSpyHeadingData[]>([]);

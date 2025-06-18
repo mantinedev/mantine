@@ -159,7 +159,7 @@ export type {
 export type {
   UseScrollSpyOptions,
   UseScrollSpyHeadingData,
-  UseScrollSpyReturnType,
+  UseScrollSpyReturnValue,
 } from './use-scroll-spy/use-scroll-spy';
 export type { UseSetStateCallback, UseSetStateReturnValue } from './use-set-state/use-set-state';
 export type {

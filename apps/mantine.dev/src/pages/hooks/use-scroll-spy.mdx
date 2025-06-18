@@ -76,7 +76,7 @@ interface UseScrollSpyOptions {
   getValue?: (element: HTMLElement) => string;
 }
 
-interface UseScrollSpyReturnType {
+interface UseScrollSpyReturnValue {
   /** Index of the active heading in the `data` array */
   active: number;
 
@@ -90,14 +90,14 @@ interface UseScrollSpyReturnType {
   reinitialize: () => void;
 }
 
-function useScrollSpy(options?: UseScrollSpyOptions): UseScrollSpyReturnType
+function useScrollSpy(options?: UseScrollSpyOptions): UseScrollSpyReturnValue
 ```
 
 ## Exported types
 
-`UseScrollSpyOptions` and `UseScrollSpyReturnType` types are exported from `@mantine/hooks` package,
+`UseScrollSpyOptions` and `UseScrollSpyReturnValue` types are exported from `@mantine/hooks` package,
 you can import them in your application:
 
 ```tsx
-import type { UseScrollSpyOptions, UseScrollSpyReturnType } from '@mantine/hooks';
+import type { UseScrollSpyOptions, UseScrollSpyReturnValue } from '@mantine/hooks';
 ```
