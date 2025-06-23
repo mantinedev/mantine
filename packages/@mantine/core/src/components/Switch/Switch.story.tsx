@@ -12,8 +12,8 @@ export function WithinDisabledFieldset() {
       <legend>Disabled fieldset</legend>
       <Switch label="Disabled by fieldset (unchecked)" />
       <Switch label="Disabled by prop (unchecked)" disabled mt="md" />
-      <Switch label="Disabled by fieldset (checked)" checked mt="md"/>
-      <Switch label="Disabled by prop (checked)" disabled mt="md" checked/>
+      <Switch label="Disabled by fieldset (checked)" checked mt="md" />
+      <Switch label="Disabled by prop (checked)" disabled mt="md" checked />
     </fieldset>
   );
 }
