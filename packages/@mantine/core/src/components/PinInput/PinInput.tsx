@@ -139,11 +139,12 @@ const defaultProps = {
   placeholder: '○',
   type: 'alphanumeric',
   ariaLabel: 'PinInput',
+  size: 'sm',
 } satisfies Partial<PinInputProps>;
 
 const varsResolver = createVarsResolver<PinInputFactory>((_, { size }) => ({
   root: {
-    '--pin-input-size': getSize(size ?? 'md', 'pin-input-size'),
+    '--pin-input-size': getSize(size ?? 'sm', 'pin-input-size'),
   },
 }));
 
