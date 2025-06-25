@@ -74,6 +74,9 @@ interface UseScrollSpyOptions {
 
   /** A function to retrieve heading value, by default `element.textContent` is used */
   getValue?: (element: HTMLElement) => string;
+
+  /** Host element to attach scroll event listener, if not provided, `window` is used */
+  scrollHost?: HTMLElement;
 }
 
 interface UseScrollSpyReturnType {
