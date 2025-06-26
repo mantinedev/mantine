@@ -322,6 +322,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
         transitionProps={{ duration: 0 }}
         position="bottom-start"
         withRoles={false}
+        disabled={disabled || readOnly}
         {...popoverProps}
       >
         <Popover.Target>
