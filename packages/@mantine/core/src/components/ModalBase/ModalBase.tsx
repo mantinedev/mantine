@@ -11,7 +11,7 @@ import {
   MantineSize,
   MantineSpacing,
 } from '../../core';
-import { OptionalPortal, PortalProps } from '../Portal';
+import { BasePortalProps, OptionalPortal } from '../Portal';
 import { TransitionOverride } from '../Transition';
 import { ModalBaseProvider } from './ModalBase.context';
 import { useModal } from './use-modal';
@@ -43,7 +43,7 @@ export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
   withinPortal?: boolean;
 
   /** Props passed down to the Portal component when `withinPortal` is set */
-  portalProps?: Omit<PortalProps, 'children'>;
+  portalProps?: BasePortalProps;
 
   /** Modal/drawer content */
   children?: React.ReactNode;

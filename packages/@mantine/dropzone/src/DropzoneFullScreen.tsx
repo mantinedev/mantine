@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
+  BasePortalProps,
   Box,
   BoxProps,
   ElementProps,
@@ -7,7 +8,6 @@ import {
   Factory,
   getDefaultZIndex,
   OptionalPortal,
-  PortalProps,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -34,7 +34,7 @@ export interface DropzoneFullScreenProps
   withinPortal?: boolean;
 
   /** Props to pass down to the portal when withinPortal is true */
-  portalProps?: Omit<PortalProps, 'children' | 'withinPortal'>;
+  portalProps?: Omit<BasePortalProps, 'withinPortal'>;
 }
 
 export type DropzoneFullScreenFactory = Factory<{
@@ -44,17 +44,15 @@ export type DropzoneFullScreenFactory = Factory<{
   variant: DropzoneVariant;
 }>;
 
-const defaultProps: Partial<DropzoneFullScreenProps> = {
-  loading: false,
+const defaultProps = {
   maxSize: Infinity,
-  activateOnClick: false,
   activateOnDrag: true,
   dragEventsBubbling: true,
   activateOnKeyboard: true,
   active: true,
   zIndex: getDefaultZIndex('max'),
   withinPortal: true,
-};
+} satisfies Partial<DropzoneFullScreenProps>;
 
 export const DropzoneFullScreen = factory<DropzoneFullScreenFactory>((_props, ref) => {
   const props = useProps('DropzoneFullScreen', defaultProps, _props);
@@ -127,12 +125,13 @@ export const DropzoneFullScreen = factory<DropzoneFullScreenFactory>((_props, re
   return (
     <OptionalPortal {...portalProps} withinPortal={withinPortal}>
       <Box
+        ref={ref}
         {...getStyles('fullScreen', {
           style: { opacity: visible ? 1 : 0, pointerEvents: visible ? 'all' : 'none', zIndex },
         })}
-        ref={ref}
       >
         <Dropzone
+          activateOnClick={false}
           {...others}
           classNames={resolvedClassNames}
           styles={resolvedStyles}

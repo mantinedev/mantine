@@ -4,17 +4,24 @@ export interface UseFetchOptions extends RequestInit {
   autoInvoke?: boolean;
 }
 
-export function useFetch<T>(url: string, { autoInvoke = true, ...options }: UseFetchOptions = {}) {
+export interface UseFetchReturnValue<T> {
+  data: T | null;
+  loading: boolean;
+  error: Error | null;
+  refetch: () => Promise<any>;
+  abort: () => void;
+}
+
+export function useFetch<T>(
+  url: string,
+  { autoInvoke = true, ...options }: UseFetchOptions = {}
+): UseFetchReturnValue<T> {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const controller = useRef<AbortController | null>(null);
 
   const refetch = useCallback(() => {
-    if (!url) {
-      return;
-    }
-
     if (controller.current) {
       controller.current.abort();
     }

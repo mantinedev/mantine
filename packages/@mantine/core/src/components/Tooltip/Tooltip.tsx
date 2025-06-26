@@ -9,7 +9,6 @@ import {
   getDefaultZIndex,
   getRadius,
   getRefProp,
-  getThemeColor,
   isElement,
   useDirection,
   useProps,
@@ -71,7 +70,7 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Determines which events will be used to show tooltip, `{ hover: true, focus: false, touch: false }` by default */
   events?: { hover: boolean; focus: boolean; touch: boolean };
 
-  /** `useEffect` dependencies to force update tooltip position */
+  /** @deprecated: Do not use, will be removed in 9.0 */
   positionDependencies?: any[];
 
   /** Must be set if the tooltip target is an inline element */
@@ -82,6 +81,9 @@ export interface TooltipProps extends TooltipBaseProps {
 
   /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy), `'absolute'` by default */
   floatingStrategy?: FloatingStrategy;
+
+  /** Determines whether tooltip text color should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  autoContrast?: boolean;
 }
 
 export type TooltipFactory = Factory<{
@@ -95,12 +97,10 @@ export type TooltipFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<TooltipProps> = {
+const defaultProps = {
   position: 'top',
   refProp: 'ref',
   withinPortal: true,
-  inline: false,
-  defaultOpened: false,
   arrowSize: 4,
   arrowOffset: 5,
   arrowRadius: 0,
@@ -111,15 +111,26 @@ const defaultProps: Partial<TooltipProps> = {
   zIndex: getDefaultZIndex('popover'),
   positionDependencies: [],
   middlewares: { flip: true, shift: true, inline: false },
-};
+} satisfies Partial<TooltipProps>;
 
-const varsResolver = createVarsResolver<TooltipFactory>((theme, { radius, color }) => ({
-  tooltip: {
-    '--tooltip-radius': radius === undefined ? undefined : getRadius(radius),
-    '--tooltip-bg': color ? getThemeColor(color, theme) : undefined,
-    '--tooltip-color': color ? 'var(--mantine-color-white)' : undefined,
-  },
-}));
+const varsResolver = createVarsResolver<TooltipFactory>(
+  (theme, { radius, color, variant, autoContrast }) => {
+    const colors = theme.variantColorResolver({
+      theme,
+      color: color || theme.primaryColor,
+      autoContrast,
+      variant: variant || 'filled',
+    });
+
+    return {
+      tooltip: {
+        '--tooltip-radius': radius === undefined ? undefined : getRadius(radius),
+        '--tooltip-bg': color ? colors.background : undefined,
+        '--tooltip-color': color ? colors.color : undefined,
+      },
+    };
+  }
+);
 
 export const Tooltip = factory<TooltipFactory>((_props, ref) => {
   const props = useProps('Tooltip', defaultProps, _props);
@@ -152,6 +163,8 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     events,
     zIndex,
     disabled,
+    // Scheduled for removal in 9.0
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     positionDependencies,
     onClick,
     onMouseEnter,
@@ -164,13 +177,14 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     mod,
     floatingStrategy,
     middlewares,
+    autoContrast,
     ...others
   } = useProps('Tooltip', defaultProps, props);
 
   const { dir } = useDirection();
   const arrowRef = useRef<HTMLDivElement>(null);
   const tooltip = useTooltip({
-    position: getFloatingPosition(dir, position!),
+    position: getFloatingPosition(dir, position),
     closeDelay,
     openDelay,
     onPositionChange,
@@ -179,8 +193,8 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     events,
     arrowRef,
     arrowOffset,
-    offset: typeof offset === 'number' ? offset! + (withArrow ? arrowSize! / 2 : 0) : offset!,
-    positionDependencies: [...positionDependencies!, children],
+    offset: typeof offset === 'number' ? offset + (withArrow ? arrowSize / 2 : 0) : offset,
+    positionDependencies: [...positionDependencies, children],
     inline,
     strategy: floatingStrategy,
     middlewares,
@@ -241,14 +255,14 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
 
               <FloatingArrow
                 ref={arrowRef}
-                arrowX={tooltip.arrowX!}
-                arrowY={tooltip.arrowY!}
-                visible={withArrow!}
-                position={tooltip.placement!}
-                arrowSize={arrowSize!}
-                arrowOffset={arrowOffset!}
-                arrowRadius={arrowRadius!}
-                arrowPosition={arrowPosition!}
+                arrowX={tooltip.arrowX}
+                arrowY={tooltip.arrowY}
+                visible={withArrow}
+                position={tooltip.placement}
+                arrowSize={arrowSize}
+                arrowOffset={arrowOffset}
+                arrowRadius={arrowRadius}
+                arrowPosition={arrowPosition}
                 {...getStyles('arrow')}
               />
             </Box>
@@ -267,7 +281,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
           onPointerEnter: props.onPointerEnter,
           className: cx(className, _childrenProps.className),
           ..._childrenProps,
-          [refProp!]: targetRef,
+          [refProp]: targetRef,
         })
       )}
     </>

@@ -38,9 +38,9 @@ export type FieldsetFactory = Factory<{
   variant: FieldsetVariant;
 }>;
 
-const defaultProps: Partial<FieldsetProps> = {
+const defaultProps = {
   variant: 'default',
-};
+} satisfies Partial<FieldsetProps>;
 
 const varsResolver = createVarsResolver<FieldsetFactory>((_, { radius }) => ({
   root: {

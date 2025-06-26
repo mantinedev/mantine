@@ -95,6 +95,7 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
             const element = event.target as HTMLElement;
             element.setPointerCapture(event.pointerId);
             rectRef.current = scrollbar!.getBoundingClientRect();
+            /* eslint-disable @typescript-eslint/no-deprecated */
             prevWebkitUserSelectRef.current = document.body.style.webkitUserSelect;
             document.body.style.webkitUserSelect = 'none';
             handleDragScroll(event);
@@ -110,6 +111,7 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
         })}
         onLostPointerCapture={() => {
           document.body.style.webkitUserSelect = prevWebkitUserSelectRef.current;
+          /* eslint-enable @typescript-eslint/no-deprecated */
           rectRef.current = null;
         }}
       />

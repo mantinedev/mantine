@@ -138,9 +138,9 @@ export type MonthFactory = Factory<{
   stylesNames: MonthStylesNames;
 }>;
 
-const defaultProps: Partial<MonthProps> = {
+const defaultProps = {
   withCellSpacing: true,
-};
+} satisfies Partial<MonthProps>;
 
 const varsResolver = createVarsResolver<MonthFactory>((_, { size }) => ({
   weekNumber: {
@@ -279,7 +279,11 @@ export const Month = factory<MonthFactory>((_props, ref) => {
               !isBeforeMaxDate(date, toDateString(maxDate)!) ||
               !isAfterMinDate(date, toDateString(minDate)!)
             }
-            ref={(node) => __getDayRef?.(rowIndex, cellIndex, node!)}
+            ref={(node) => {
+              if (node) {
+                __getDayRef?.(rowIndex, cellIndex, node!);
+              }
+            }}
             {...dayProps}
             onKeyDown={(event) => {
               dayProps?.onKeyDown?.(event);

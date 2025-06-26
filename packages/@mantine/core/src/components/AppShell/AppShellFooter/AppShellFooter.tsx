@@ -31,7 +31,7 @@ export type AppShellFooterFactory = Factory<{
   stylesNames: AppShellFooterStylesNames;
 }>;
 
-const defaultProps: Partial<AppShellFooterProps> = {};
+const defaultProps = {} satisfies Partial<AppShellFooterProps>;
 
 export const AppShellFooter = factory<AppShellFooterFactory>((_props, ref) => {
   const props = useProps('AppShellFooter', defaultProps, _props);

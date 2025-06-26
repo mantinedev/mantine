@@ -52,10 +52,21 @@ function Demo() {
 ## Definition
 
 ```tsx
+interface UseIntersectionReturnValue<T> {
+  ref: React.RefCallback<T | null>;
+  entry: IntersectionObserverEntry | null;
+}
+
 function useIntersection<T extends HTMLElement = any>(
-  options?: ConstructorParameters<typeof IntersectionObserver>[1]
-): {
-  ref: (element: T | null) => void;
-  entry: IntersectionObserverEntry;
-};
+  options?: IntersectionObserverInit,
+): UseIntersectionReturnValue<T>
+```
+
+## Exported types
+
+`UseIntersectionReturnValue` type is exported from `@mantine/hooks` package,
+you can import it in your application:
+
+```tsx
+import type { UseIntersectionReturnValue } from '@mantine/hooks';
 ```

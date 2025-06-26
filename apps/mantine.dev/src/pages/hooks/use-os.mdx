@@ -11,22 +11,10 @@ If the OS cannot be identified, for example, during server side rendering `undet
 
 <Demo data={HooksDemos.useOsDemo} />
 
-## OS type
-
-You can import `OS` union type from `@mantine/hooks`:
-
-```tsx
-import type { OS } from '@mantine/hooks';
-
-// OS type is 'undetermined' | 'macos' | 'ios' | 'windows' | 'android' | 'linux' | 'chromeos'
-```
-
 ## Definition
 
 ```tsx
-function getOS(options?: {
-  getValueInEffect: boolean;
-}):
+type UseOSReturnValue =
   | 'undetermined'
   | 'macos'
   | 'ios'
@@ -34,4 +22,19 @@ function getOS(options?: {
   | 'android'
   | 'linux'
   | 'chromeos';
+
+interface UseOsOptions {
+  getValueInEffect: boolean;
+}
+
+function getOS(options?: UseOsOptions): UseOSReturnValue;
+```
+
+## Exported types
+
+`UseOsOptions` and `UseOSReturnValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseOsOptions, UseOSReturnValue } from '@mantine/hooks';
 ```

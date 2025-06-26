@@ -96,10 +96,10 @@ export type CheckboxFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<CheckboxProps> = {
+const defaultProps = {
   labelPosition: 'right',
   icon: CheckboxIcon,
-};
+} satisfies Partial<CheckboxProps>;
 
 const varsResolver = createVarsResolver<CheckboxFactory>(
   (theme, { radius, color, size, iconColor, variant, autoContrast }) => {
@@ -146,7 +146,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
     disabled,
     variant,
     indeterminate,
-    icon,
+    icon: Icon,
     rootRef,
     iconColor,
     onChange,
@@ -157,7 +157,6 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
 
   const ctx = useCheckboxGroupContext();
   const _size = size || ctx?.size;
-  const Icon = icon!;
 
   const getStyles = useStyles<CheckboxFactory>({
     name: 'Checkbox',

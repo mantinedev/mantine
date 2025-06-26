@@ -34,13 +34,13 @@ export type DatePickerInputFactory = Factory<{
   variant: InputVariant;
 }>;
 
-const defaultProps: Partial<DatePickerInputProps> = {
+const defaultProps = {
   type: 'default',
   valueFormat: 'MMMM D, YYYY',
   closeOnChange: true,
   sortDates: true,
   dropdownType: 'popover',
-};
+} satisfies Partial<DatePickerInputProps>;
 
 type DatePickerInputComponent = (<Type extends DatePickerType = 'default'>(
   props: DatePickerInputProps<Type> & { ref?: React.ForwardedRef<HTMLButtonElement> }
@@ -72,6 +72,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
       vars,
       defaultDate,
       valueFormatter,
+      presets,
       ...rest
     } = props;
 
@@ -118,7 +119,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
         onClear={onClear}
         shouldClear={shouldClear}
         value={_value}
-        size={size!}
+        size={size}
         variant={variant}
         dropdownType={dropdownType}
         {...others}
@@ -141,6 +142,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
           __stopPropagation={dropdownType === 'popover'}
           minDate={minDate}
           maxDate={maxDate}
+          presets={presets}
         />
       </PickerInputBase>
     );

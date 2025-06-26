@@ -54,7 +54,7 @@ export type WeekdaysRowFactory = Factory<{
   vars: WeekdaysRowCssVariables;
 }>;
 
-const defaultProps: Partial<WeekdaysRowProps> = {};
+const defaultProps = {} satisfies Partial<WeekdaysRowProps>;
 
 const varsResolver = createVarsResolver<WeekdaysRowFactory>((_, { size }) => ({
   weekdaysRow: {

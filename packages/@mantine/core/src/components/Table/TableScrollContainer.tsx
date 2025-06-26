@@ -42,9 +42,9 @@ export type TableScrollContainerFactory = Factory<{
   vars: TableScrollContainerCssVariables;
 }>;
 
-const defaultProps: Partial<TableScrollContainerProps> = {
+const defaultProps = {
   type: 'scrollarea',
-};
+} satisfies Partial<TableScrollContainerProps>;
 
 const varsResolver = createVarsResolver<TableScrollContainerFactory>(
   (_, { minWidth, maxHeight, type }) => ({

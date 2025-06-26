@@ -26,7 +26,7 @@ export type SpotlightActionsListFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<SpotlightActionsListProps> = {};
+const defaultProps = {} satisfies Partial<SpotlightActionsListProps>;
 
 export const SpotlightActionsList = factory<SpotlightActionsListFactory>((props, ref) => {
   const { className, style, id, children, vars, classNames, styles, ...others } = useProps(

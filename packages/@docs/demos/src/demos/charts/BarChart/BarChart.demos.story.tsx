@@ -157,3 +157,8 @@ export const Demo_getBarColor = {
   name: '⭐ Demo: getBarColor',
   render: renderDemo(demos.getBarColor),
 };
+
+export const Demo_referenceArea = {
+  name: '⭐ Demo: referenceArea',
+  render: renderDemo(demos.referenceArea),
+};

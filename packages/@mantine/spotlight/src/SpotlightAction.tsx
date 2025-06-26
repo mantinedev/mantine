@@ -63,10 +63,10 @@ export type SpotlightActionFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<SpotlightActionProps> = {
+const defaultProps = {
   dimmedSections: true,
   highlightQuery: false,
-};
+} satisfies Partial<SpotlightActionProps>;
 
 export const SpotlightAction = factory<SpotlightActionFactory>((_props, ref) => {
   const props = useProps('SpotlightAction', defaultProps, _props);

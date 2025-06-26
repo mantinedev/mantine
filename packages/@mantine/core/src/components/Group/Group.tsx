@@ -58,13 +58,13 @@ export type GroupFactory = Factory<{
   ctx: GroupStylesCtx;
 }>;
 
-const defaultProps: Partial<GroupProps> = {
+const defaultProps = {
   preventGrowOverflow: true,
   gap: 'md',
   align: 'center',
   justify: 'flex-start',
   wrap: 'wrap',
-};
+} satisfies Partial<GroupProps>;
 
 const varsResolver = createVarsResolver<GroupFactory>(
   (_, { grow, preventGrowOverflow, gap, align, justify, wrap }, { childWidth }) => ({

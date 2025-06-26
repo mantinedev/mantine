@@ -132,10 +132,10 @@ export type BubbleChartFactory = Factory<{
   vars: BubbleChartCssVariables;
 }>;
 
-const defaultProps: Partial<BubbleChartProps> = {
+const defaultProps = {
   color: 'blue.6',
   withTooltip: true,
-};
+} satisfies Partial<BubbleChartProps>;
 
 const varsResolver = createVarsResolver<BubbleChartFactory>((theme, { textColor, gridColor }) => ({
   root: {

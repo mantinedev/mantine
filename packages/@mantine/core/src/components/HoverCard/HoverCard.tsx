@@ -32,11 +32,11 @@ export type HoverCardFactory = Factory<{
   vars: PopoverCssVariables;
 }>;
 
-const defaultProps: Partial<HoverCardProps> = {
+const defaultProps = {
   openDelay: 0,
   closeDelay: 150,
   initiallyOpened: false,
-};
+} satisfies Partial<HoverCardProps>;
 
 export function HoverCard(props: HoverCardProps) {
   const { children, onOpen, onClose, openDelay, closeDelay, initiallyOpened, ...others } = useProps(

@@ -38,12 +38,20 @@ useSetState({ skills: ['JavaScript', 'TypeScript'] }); // -> works fine
 ## Definition
 
 ```tsx
-function useSetState<T extends Record<string, any>>(
-  initialState: T
-): readonly [
-  T,
-  (
-    statePartial: Partial<T> | ((currentState: T) => Partial<T>)
-  ) => void,
-];
+type UseSetStateCallback<T> = (
+  state: Partial<T> | ((currentState: T) => Partial<T>)
+) => void;
+
+type UseSetStateReturnValue<T> = [T, UseSetStateCallback<T>];
+
+function useSetState<T extends Record<string, any>>(initialState: T): UseSetStateReturnValue<T>
+```
+
+## Exported types
+
+`UseSetStateCallback` and `UseSetStateReturnValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseSetStateCallback, UseSetStateReturnValue } from '@mantine/hooks';
 ```

@@ -179,7 +179,7 @@ export type NumberInputFactory = Factory<{
   variant: InputVariant;
 }>;
 
-const defaultProps: Partial<NumberInputProps> = {
+const defaultProps = {
   step: 1,
   clampBehavior: 'blur',
   allowDecimal: true,
@@ -188,7 +188,7 @@ const defaultProps: Partial<NumberInputProps> = {
   allowLeadingZeros: true,
   trimLeadingZeroesOnBlur: true,
   startValue: 0,
-};
+} satisfies Partial<NumberInputProps>;
 
 const varsResolver = createVarsResolver<NumberInputFactory>((_, { size }) => ({
   controls: {
@@ -311,18 +311,18 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
 
     let val: number;
     const currentValuePrecision = getDecimalPlaces(_value);
-    const stepPrecision = getDecimalPlaces(step!);
+    const stepPrecision = getDecimalPlaces(step);
     const maxPrecision = Math.max(currentValuePrecision, stepPrecision);
     const factor = 10 ** maxPrecision;
 
     if (!isNumberString(_value) && (typeof _value !== 'number' || Number.isNaN(_value))) {
-      val = clamp(startValue!, min, max);
+      val = clamp(startValue, min, max);
     } else if (max !== undefined) {
       const incrementedValue =
-        (Math.round(Number(_value) * factor) + Math.round(step! * factor)) / factor;
+        (Math.round(Number(_value) * factor) + Math.round(step * factor)) / factor;
       val = incrementedValue <= max ? incrementedValue : max;
     } else {
-      val = (Math.round(Number(_value) * factor) + Math.round(step! * factor)) / factor;
+      val = (Math.round(Number(_value) * factor) + Math.round(step * factor)) / factor;
     }
 
     const formattedValue = val.toFixed(maxPrecision);
@@ -343,15 +343,15 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     let val: number;
     const minValue = min !== undefined ? min : !allowNegative ? 0 : Number.MIN_SAFE_INTEGER;
     const currentValuePrecision = getDecimalPlaces(_value);
-    const stepPrecision = getDecimalPlaces(step!);
+    const stepPrecision = getDecimalPlaces(step);
     const maxPrecision = Math.max(currentValuePrecision, stepPrecision);
     const factor = 10 ** maxPrecision;
 
     if ((!isNumberString(_value) && typeof _value !== 'number') || Number.isNaN(_value)) {
-      val = clamp(startValue!, minValue, max);
+      val = clamp(startValue, minValue, max);
     } else {
       const decrementedValue =
-        (Math.round(Number(_value) * factor) - Math.round(step! * factor)) / factor;
+        (Math.round(Number(_value) * factor) - Math.round(step * factor)) / factor;
       val = minValue !== undefined && decrementedValue < minValue ? minValue : decrementedValue;
     }
 
@@ -373,20 +373,20 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
 
     if (event.key === 'ArrowUp') {
       event.preventDefault();
-      incrementRef.current!();
+      incrementRef.current?.();
     }
 
     if (event.key === 'ArrowDown') {
       event.preventDefault();
-      decrementRef.current!();
+      decrementRef.current?.();
     }
   };
 
   const handleKeyDownCapture = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDownCapture?.(event);
     if (event.key === 'Backspace') {
-      const input = inputRef.current!;
-      if (input.selectionStart === 0 && input.selectionStart === input.selectionEnd) {
+      const input = inputRef.current;
+      if (input && input.selectionStart === 0 && input.selectionStart === input.selectionEnd) {
         event.preventDefault();
         window.setTimeout(() => adjustCursor(0), 0);
       }
@@ -419,9 +419,9 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
 
   const onStepHandleChange = (isIncrement: boolean) => {
     if (isIncrement) {
-      incrementRef.current!();
+      incrementRef.current?.();
     } else {
-      decrementRef.current!();
+      decrementRef.current?.();
     }
     stepCountRef.current += 1;
   };

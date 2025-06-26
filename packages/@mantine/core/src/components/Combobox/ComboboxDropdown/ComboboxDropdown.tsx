@@ -17,7 +17,7 @@ export type ComboboxDropdownFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<ComboboxDropdownProps> = {};
+const defaultProps = {} satisfies Partial<ComboboxDropdownProps>;
 
 export const ComboboxDropdown = factory<ComboboxDropdownFactory>((props, ref) => {
   const { classNames, styles, className, style, hidden, ...others } = useProps(

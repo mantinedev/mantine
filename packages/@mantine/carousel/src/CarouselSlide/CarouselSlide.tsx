@@ -24,7 +24,7 @@ export type CarouselSlideFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<CarouselSlideProps> = {};
+const defaultProps = {} satisfies Partial<CarouselSlideProps>;
 
 export const CarouselSlide = factory<CarouselSlideFactory>((props, ref) => {
   const { classNames, className, style, styles, vars, mod, ...others } = useProps(

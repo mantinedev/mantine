@@ -10,6 +10,14 @@ export function Usage() {
   );
 }
 
+export function headerControlsOrder() {
+  return (
+    <div style={{ padding: 40, width: 300 }}>
+      <CalendarHeader label="March 2022" headerControlsOrder={['level', 'previous', 'next']} />
+    </div>
+  );
+}
+
 export function DisabledControls() {
   return (
     <div style={{ padding: 40, width: 300 }}>

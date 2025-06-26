@@ -1,7 +1,14 @@
 import { useState } from 'react';
 import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
 
-export type OS = 'undetermined' | 'macos' | 'ios' | 'windows' | 'android' | 'linux' | 'chromeos';
+export type UseOSReturnValue =
+  | 'undetermined'
+  | 'macos'
+  | 'ios'
+  | 'windows'
+  | 'android'
+  | 'linux'
+  | 'chromeos';
 
 function isMacOS(userAgent: string): boolean {
   const macosPattern = /(Macintosh)|(MacIntel)|(MacPPC)|(Mac68K)/i;
@@ -38,7 +45,7 @@ function isChromeOS(userAgent: string): boolean {
   return chromePattern.test(userAgent);
 }
 
-function getOS(): OS {
+function getOS(): UseOSReturnValue {
   if (typeof window === 'undefined') {
     return 'undetermined';
   }
@@ -67,12 +74,14 @@ function getOS(): OS {
   return 'undetermined';
 }
 
-interface UseOsOptions {
+export interface UseOsOptions {
   getValueInEffect: boolean;
 }
 
-export function useOs(options: UseOsOptions = { getValueInEffect: true }): OS {
-  const [value, setValue] = useState<OS>(options.getValueInEffect ? 'undetermined' : getOS());
+export function useOs(options: UseOsOptions = { getValueInEffect: true }): UseOSReturnValue {
+  const [value, setValue] = useState<UseOSReturnValue>(
+    options.getValueInEffect ? 'undetermined' : getOS()
+  );
 
   useIsomorphicEffect(() => {
     if (options.getValueInEffect) {

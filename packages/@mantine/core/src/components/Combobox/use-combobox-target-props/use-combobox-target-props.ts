@@ -61,6 +61,7 @@ export function useComboboxTargetProps({
       if (event.nativeEvent.code === 'Enter' || event.nativeEvent.code === 'NumpadEnter') {
         // This is a workaround for handling differences in behavior of isComposing property in Safari
         // See: https://dninomiya.github.io/form-guide/stop-enter-submit
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         if (event.nativeEvent.keyCode === 229) {
           return;
         }
@@ -91,10 +92,11 @@ export function useComboboxTargetProps({
 
   const ariaAttributes = withAriaAttributes
     ? {
-        'aria-haspopup': 'listbox',
+        'aria-haspopup': 'listbox' as const,
         'aria-expanded':
           (withExpandedAttribute && !!(ctx.store.listId && ctx.store.dropdownOpened)) || undefined,
-        'aria-controls': ctx.store.dropdownOpened ? ctx.store.listId : undefined,
+        'aria-controls':
+          ctx.store.dropdownOpened && ctx.store.listId ? ctx.store.listId : undefined,
         'aria-activedescendant': ctx.store.dropdownOpened
           ? selectedOptionId || undefined
           : undefined,

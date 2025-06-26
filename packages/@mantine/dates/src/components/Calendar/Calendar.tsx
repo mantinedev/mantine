@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useImperativeHandle } from 'react';
 import {
   Box,
   BoxProps,
@@ -87,6 +88,12 @@ export interface CalendarBaseProps {
   /** Determines whether date should be updated when month control is clicked */
   __updateDateOnMonthSelect?: boolean;
 
+  /** Assigns function to set date to the given ref */
+  __setDateRef?: React.RefObject<((date: DateStringValue) => void) | null>;
+
+  /** Assigns function to set level to the given ref */
+  __setLevelRef?: React.RefObject<((level: CalendarLevel) => void) | null>;
+
   /** Initial displayed date in uncontrolled mode */
   defaultDate?: DateStringValue | Date;
 
@@ -158,12 +165,12 @@ export type CalendarFactory = Factory<{
   stylesNames: CalendarStylesNames;
 }>;
 
-const defaultProps: Partial<CalendarProps> = {
+const defaultProps = {
   maxLevel: 'decade',
   minLevel: 'month',
   __updateDateOnYearSelect: true,
   __updateDateOnMonthSelect: true,
-};
+} satisfies Partial<CalendarProps>;
 
 export const Calendar = factory<CalendarFactory>((_props, ref) => {
   const props = useProps('Calendar', defaultProps, _props);
@@ -189,8 +196,11 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     onMonthSelect,
     onYearMouseEnter,
     onMonthMouseEnter,
+    headerControlsOrder,
     __updateDateOnYearSelect,
     __updateDateOnMonthSelect,
+    __setDateRef,
+    __setLevelRef,
 
     // MonthLevelGroup props
     firstDayOfWeek,
@@ -260,6 +270,14 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     value: toDateString(date),
     defaultValue: toDateString(defaultDate),
     onChange: onDateChange as any,
+  });
+
+  useImperativeHandle(__setDateRef, () => (date: DateStringValue) => {
+    setDate(date);
+  });
+
+  useImperativeHandle(__setLevelRef, () => (level: CalendarLevel) => {
+    setLevel(level);
   });
 
   const stylesApiProps = {
@@ -355,6 +373,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           withCellSpacing={withCellSpacing}
           highlightToday={highlightToday}
           withWeekNumbers={withWeekNumbers}
+          headerControlsOrder={headerControlsOrder}
           {...stylesApiProps}
         />
       )}
@@ -387,6 +406,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           __preventFocus={__preventFocus}
           __stopPropagation={__stopPropagation}
           withCellSpacing={withCellSpacing}
+          headerControlsOrder={headerControlsOrder}
           {...stylesApiProps}
         />
       )}
@@ -416,6 +436,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
           __preventFocus={__preventFocus}
           __stopPropagation={__stopPropagation}
           withCellSpacing={withCellSpacing}
+          headerControlsOrder={headerControlsOrder}
           {...stylesApiProps}
         />
       )}

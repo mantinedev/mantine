@@ -44,6 +44,6 @@ function useMouse<T extends HTMLElement = any>(options?: {
 }): {
   x: number;
   y: number;
-  ref: React.MutableRefObject<T>;
+  ref: React.RefObject<T>;
 };
 ```

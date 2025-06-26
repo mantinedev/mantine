@@ -128,14 +128,14 @@ export type RadarChartFactory = Factory<{
   vars: RadarChartCssVariables;
 }>;
 
-const defaultProps: Partial<RadarChartProps> = {
+const defaultProps = {
   withPolarGrid: true,
   withPolarAngleAxis: true,
   withPolarRadiusAxis: false,
   withTooltip: false,
   withDots: false,
   tooltipAnimationDuration: 0,
-};
+} satisfies Partial<RadarChartProps>;
 
 const varsResolver = createVarsResolver<RadarChartFactory>((theme, { gridColor, textColor }) => ({
   root: {

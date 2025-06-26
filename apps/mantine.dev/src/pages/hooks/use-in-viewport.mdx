@@ -10,3 +10,23 @@ export default Layout(MDX_DATA.useInViewport);
 is visible in the viewport:
 
 <Demo data={HooksDemos.useInViewportDemo} />
+
+## Definition
+
+```tsx
+interface UseInViewportReturnValue<T extends HTMLElement = any> {
+  inViewport: boolean;
+  ref: React.RefCallback<T | null>;
+}
+
+function useInViewport<T extends HTMLElement = any>(): UseInViewportReturnValue<T>
+```
+
+## Exported types
+
+`UseInViewportReturnValue` type is exported from `@mantine/hooks` package,
+you can import it in your application:
+
+```tsx
+import type { UseInViewportReturnValue } from '@mantine/hooks';
+```

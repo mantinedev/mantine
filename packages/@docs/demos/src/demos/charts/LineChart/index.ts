@@ -25,3 +25,4 @@ export { axisLabels } from './LineChart.demo.axisLabels';
 export { gradient } from './LineChart.demo.gradient';
 export { rightYAxis } from './LineChart.demo.rightYAxis';
 export { pointLabels } from './LineChart.demo.pointLabels';
+export { referenceArea } from './LineChart.demo.referenceArea';

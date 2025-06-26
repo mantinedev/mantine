@@ -1,13 +1,17 @@
 import { useRef } from 'react';
 import { useDidUpdate } from '../use-did-update/use-did-update';
 
-interface UseFocusReturn {
+export interface UseFocusReturnOptions {
   opened: boolean;
   shouldReturnFocus?: boolean;
 }
 
-/** Returns focus to last active element, used in Modal and Drawer */
-export function useFocusReturn({ opened, shouldReturnFocus = true }: UseFocusReturn) {
+export type UseFocusReturnReturnValue = () => void;
+
+export function useFocusReturn({
+  opened,
+  shouldReturnFocus = true,
+}: UseFocusReturnOptions): UseFocusReturnReturnValue {
   const lastActiveElement = useRef<HTMLElement>(null);
   const returnFocus = () => {
     if (

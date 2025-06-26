@@ -53,7 +53,7 @@ export type ColorSliderFactory = Factory<{
   stylesNames: ColorSliderStylesNames;
 }>;
 
-const defaultProps: Partial<ColorSliderProps> = {};
+const defaultProps = {} satisfies Partial<ColorSliderProps>;
 
 export const ColorSlider = factory<ColorSliderFactory>((_props, ref) => {
   const props = useProps('ColorSlider', defaultProps, _props);

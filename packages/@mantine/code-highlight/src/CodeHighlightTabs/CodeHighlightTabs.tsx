@@ -67,7 +67,7 @@ export type CodeHighlightTabsFactory = Factory<{
   stylesNames: CodeHighlightTabsStylesNames;
 }>;
 
-const defaultProps: Partial<CodeHighlightTabsProps> = {};
+const defaultProps = {} satisfies Partial<CodeHighlightTabsProps>;
 
 export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref) => {
   const props = useProps('CodeHighlightTabs', defaultProps, _props);

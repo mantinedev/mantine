@@ -134,7 +134,7 @@ export type CompositeChartFactory = Factory<{
   vars: CompositeChartCssVariables;
 }>;
 
-const defaultProps: Partial<CompositeChartProps> = {
+const defaultProps = {
   withXAxis: true,
   withYAxis: true,
   withTooltip: true,
@@ -146,7 +146,7 @@ const defaultProps: Partial<CompositeChartProps> = {
   connectNulls: true,
   strokeWidth: 2,
   curveType: 'monotone',
-};
+} satisfies Partial<CompositeChartProps>;
 
 const varsResolver = createVarsResolver<CompositeChartFactory>(
   (theme, { textColor, gridColor }) => ({

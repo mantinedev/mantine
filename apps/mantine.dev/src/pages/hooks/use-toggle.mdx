@@ -53,7 +53,17 @@ useToggle<'dark' | 'light'>(['light', 'dark']); // same as above
 ## Definition
 
 ```tsx
-function useToggle<T = boolean>(
-  options?: readonly T[]
-): readonly [T, (value?: React.SetStateAction<T>) => void];
+type UseToggleAction<T> = (value?: React.SetStateAction<T>) => void;
+type UseToggleReturnValue<T> = [T, UseToggleAction<T>];
+
+function useToggle<T = boolean>(options?: T[]): UseToggleReturnValue<T>;
+```
+
+## Exported types
+
+`UseToggleReturnValue` type is exported from `@mantine/hooks` package,
+you can import it in your application:
+
+```tsx
+import type { UseToggleReturnValue } from '@mantine/hooks';
 ```

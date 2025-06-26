@@ -30,7 +30,7 @@ export type ListItemFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<ListItemProps> = {};
+const defaultProps = {} satisfies Partial<ListItemProps>;
 
 export const ListItem = factory<ListItemFactory>((_props, ref) => {
   const props = useProps('ListItem', defaultProps, _props);

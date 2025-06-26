@@ -32,14 +32,27 @@ Return object:
 ## Definition
 
 ```tsx
-function useTimeout(
-  callback: (...callbackParams: any[]) => void,
-  delay: number,
-  options?: {
-    autoInvoke: boolean;
-  }
-): {
-  start: (...callbackParams: any[]) => void;
+interface UseTimeoutOptions {
+  autoInvoke: boolean;
+}
+
+interface UseTimeoutReturnValue {
+  start: (...args: any[]) => void;
   clear: () => void;
-};
+}
+
+function useTimeout(
+  callback: (...args: any[]) => void,
+  delay: number,
+  options?: UseTimeoutOptions,
+): UseTimeoutReturnValue
+```
+
+## Exported types
+
+`UseTimeoutOptions` and `UseTimeoutReturnValue` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseTimeoutOptions, UseTimeoutReturnValue } from '@mantine/hooks';
 ```

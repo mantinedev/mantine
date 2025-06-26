@@ -42,3 +42,8 @@ export const Demo_timePickerProps = {
   name: '⭐ Demo: timePickerProps',
   render: renderDemo(demos.timePickerProps),
 };
+
+export const Demo_presets = {
+  name: '⭐ Demo: presets',
+  render: renderDemo(demos.presets),
+};

@@ -111,7 +111,7 @@ const loaderTransition: MantineTransition = {
   transitionProperty: 'transform, opacity',
 };
 
-const defaultProps: Partial<ButtonProps> = {};
+const defaultProps = {} satisfies Partial<ButtonProps>;
 
 const varsResolver = createVarsResolver<ButtonFactory>(
   (theme, { radius, color, gradient, variant, size, justify, autoContrast }) => {

@@ -87,17 +87,28 @@ interface UseMovePosition {
   y: number;
 }
 
-interface useMoveHandlers {
+interface UseMoveHandlers {
   onScrubStart?: () => void;
   onScrubEnd?: () => void;
 }
 
-function useMove<T extends HTMLElement = HTMLDivElement>(
-  onChange: (value: UseMovePosition) => void,
-  handlers?: useMoveHandlers,
-  dir?: 'ltr' | 'rtl'
-): {
-  ref: React.RefObject<T>;
+interface UseMoveReturnValue<T extends HTMLElement = any> {
+  ref: React.RefCallback<T | null>;
   active: boolean;
-};
+}
+
+function useMove<T extends HTMLElement = any>(
+  onChange: (value: UseMovePosition) => void,
+  handlers?: UseMoveHandlers,
+  dir?: "ltr" | "rtl",
+): UseMoveReturnValue<T>
+```
+
+## Exported types
+
+`UseMovePosition`, `UseMoveReturnValue` and `UseMoveHandlers` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { UseMovePosition, UseMoveHandlers, UseMoveReturnValue } from '@mantine/hooks';
 ```

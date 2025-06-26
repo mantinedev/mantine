@@ -30,7 +30,7 @@ export type PopoverDropdownFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps: Partial<PopoverDropdownProps> = {};
+const defaultProps = {} satisfies Partial<PopoverDropdownProps>;
 
 export const PopoverDropdown = factory<PopoverDropdownFactory>((_props, ref) => {
   const props = useProps('PopoverDropdown', defaultProps, _props);

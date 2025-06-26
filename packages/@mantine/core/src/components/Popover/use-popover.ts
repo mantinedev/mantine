@@ -1,6 +1,7 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   arrow,
+  autoUpdate,
   flip,
   hide,
   inline,
@@ -13,12 +14,8 @@ import {
   UseFloatingReturn,
 } from '@floating-ui/react';
 import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
-import {
-  FloatingAxesOffsets,
-  FloatingPosition,
-  FloatingStrategy,
-  useFloatingAutoUpdate,
-} from '../Floating';
+import { useMantineEnv } from '../../core';
+import { FloatingAxesOffsets, FloatingPosition, FloatingStrategy } from '../Floating';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
 
 interface UsePopoverOptions {
@@ -37,7 +34,12 @@ interface UsePopoverOptions {
   arrowRef: React.RefObject<HTMLDivElement | null>;
   arrowOffset: number;
   strategy?: FloatingStrategy;
+  dropdownVisible: boolean;
+  setDropdownVisible: (visible: boolean) => void;
+  positionRef: React.RefObject<FloatingPosition>;
   disabled: boolean | undefined;
+  preventPositionChangeWhenVisible: boolean | undefined;
+  keepMounted: boolean | undefined;
 }
 
 function getDefaultMiddlewares(middlewares: PopoverMiddlewares | undefined): PopoverMiddlewares {
@@ -59,10 +61,16 @@ function getDefaultMiddlewares(middlewares: PopoverMiddlewares | undefined): Pop
 
 function getPopoverMiddlewares(
   options: UsePopoverOptions,
-  getFloating: () => UseFloatingReturn<Element>
+  getFloating: () => UseFloatingReturn<Element>,
+  env: 'test' | 'default'
 ) {
   const middlewaresOptions = getDefaultMiddlewares(options.middlewares);
   const middlewares: Middleware[] = [offset(options.offset), hide()];
+
+  if (options.dropdownVisible && env !== 'test' && options.preventPositionChangeWhenVisible) {
+    middlewaresOptions.flip = false;
+    middlewaresOptions.shift = false;
+  }
 
   if (middlewaresOptions.shift) {
     middlewares.push(
@@ -122,12 +130,14 @@ function getPopoverMiddlewares(
 }
 
 export function usePopover(options: UsePopoverOptions) {
+  const env = useMantineEnv();
   const [_opened, setOpened] = useUncontrolled({
     value: options.opened,
     defaultValue: options.defaultOpened,
     finalValue: false,
     onChange: options.onChange,
   });
+
   const previouslyOpened = useRef(_opened);
 
   const onClose = () => {
@@ -136,23 +146,53 @@ export function usePopover(options: UsePopoverOptions) {
     }
   };
 
-  const onToggle = () => !options.disabled && setOpened(!_opened);
+  const onToggle = () => {
+    if (!options.disabled) {
+      setOpened(!_opened);
+    }
+  };
 
   const floating: UseFloatingReturn<Element> = useFloating({
     strategy: options.strategy,
-    placement: options.position,
-    middleware: getPopoverMiddlewares(options, () => floating),
+    placement: options.preventPositionChangeWhenVisible
+      ? options.positionRef.current
+      : options.position,
+    middleware: getPopoverMiddlewares(options, () => floating, env),
+    // Only use whileElementsMounted when elements are conditionally rendered (not keepMounted)
+    // When keepMounted=true, elements are hidden with CSS and we need manual autoUpdate control
+    whileElementsMounted: options.keepMounted ? undefined : autoUpdate,
   });
 
-  useFloatingAutoUpdate({
-    opened: _opened,
-    position: options.position,
-    positionDependencies: options.positionDependencies || [],
-    floating,
-  });
+  // Manual autoUpdate control for keepMounted scenario
+  // This follows Floating UI's recommendation for CSS-hidden elements
+  useEffect(() => {
+    if (
+      !options.keepMounted ||
+      !floating.refs.reference.current ||
+      !floating.refs.floating.current
+    ) {
+      return;
+    }
+
+    // Only run autoUpdate when the popover is actually opened
+    if (_opened) {
+      return autoUpdate(
+        floating.refs.reference.current,
+        floating.refs.floating.current,
+        floating.update
+      );
+    }
+  }, [
+    options.keepMounted,
+    _opened,
+    floating.refs.reference,
+    floating.refs.floating,
+    floating.update,
+  ]);
 
   useDidUpdate(() => {
     options.onPositionChange?.(floating.placement);
+    options.positionRef.current = floating.placement;
   }, [floating.placement]);
 
   useDidUpdate(() => {
@@ -166,6 +206,19 @@ export function usePopover(options: UsePopoverOptions) {
 
     previouslyOpened.current = _opened;
   }, [_opened, options.onClose, options.onOpen]);
+
+  useDidUpdate(() => {
+    let timeout: number = -1;
+
+    if (_opened) {
+      // Required to be in timeout to give floating ui render time to flip/shift popover
+      timeout = window.setTimeout(() => options.setDropdownVisible(true), 4);
+    }
+
+    return () => {
+      window.clearTimeout(timeout);
+    };
+  }, [_opened, options.position]);
 
   return {
     floating,

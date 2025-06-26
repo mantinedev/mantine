@@ -1,15 +1,15 @@
-import { render, tests, userEvent } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
 import { DatePicker, DatePickerProps, DatePickerStylesNames } from './DatePicker';
 
 const defaultProps = {
   defaultDate: '2022-04-11',
-};
+} satisfies Partial<DatePickerProps<'default' | 'multiple' | 'range'>>;
 
 describe('@mantine/dates/DatePicker', () => {
   tests.itSupportsSystemProps<DatePickerProps, DatePickerStylesNames>({
     component: DatePicker,
-    props: defaultProps,
+    props: { ...defaultProps, presets: [{ label: 'Today', value: '2022-04-11' }] },
     mod: true,
     styleProps: true,
     extend: true,
@@ -29,6 +29,9 @@ describe('@mantine/dates/DatePicker', () => {
       'monthThead',
       'weekday',
       'weekdaysRow',
+      'presetsList',
+      'presetButton',
+      'datePickerRoot',
     ],
     providerStylesApi: false,
   });
@@ -158,6 +161,23 @@ describe('@mantine/dates/DatePicker', () => {
     expect(spy).toHaveBeenCalledWith(['2022-03-30', null]);
     await userEvent.click(container.querySelectorAll('table button')[2]);
     expect(spy).toHaveBeenCalledWith([null, null]);
+  });
+
+  it('correctly handles presets', () => {
+    const spy = jest.fn();
+    render(
+      <DatePicker
+        {...defaultProps}
+        onChange={spy}
+        presets={[
+          { label: 'Today', value: '2022-04-11' },
+          { label: 'Tomorrow', value: '2022-04-12' },
+        ]}
+      />
+    );
+
+    expect(screen.getByText('Today')).toBeInTheDocument();
+    expect(screen.getByText('Tomorrow')).toBeInTheDocument();
   });
 
   it('has correct default __staticSelector', () => {

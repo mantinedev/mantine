@@ -45,7 +45,10 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
       if (clearValue !== '') {
         const parsedValue = clamp(parseInt(clearValue, 10), min, max);
         onChange(parsedValue);
-        if (parsedValue > maxDigit) {
+        // If value starts with 00 it means that the user started typing with 0
+        // for example 01 or 02, in this case, next input should be focused
+        // 00 only case is handled separately in handleKeyDown
+        if (parsedValue > maxDigit || value.startsWith('00')) {
           onNextInput?.();
         }
       }

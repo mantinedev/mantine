@@ -102,11 +102,11 @@ export type InputWrapperFactory = Factory<{
   vars: InputWrapperCssVariables;
 }>;
 
-const defaultProps: Partial<InputWrapperProps> = {
+const defaultProps = {
   labelElement: 'label',
   inputContainer: (children) => children,
   inputWrapperOrder: ['label', 'description', 'input', 'error'],
-};
+} satisfies Partial<InputWrapperProps>;
 
 const varsResolver = createVarsResolver<InputWrapperFactory>((_, { size }) => ({
   label: {
@@ -210,7 +210,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
     </InputDescription>
   );
 
-  const _input = <Fragment key="input">{inputContainer!(children)}</Fragment>;
+  const _input = <Fragment key="input">{inputContainer(children)}</Fragment>;
 
   const _error = hasError && (
     <InputError
@@ -224,7 +224,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
     </InputError>
   );
 
-  const content = inputWrapperOrder!.map((part) => {
+  const content = inputWrapperOrder.map((part) => {
     switch (part) {
       case 'label':
         return _label;
@@ -246,7 +246,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
         describedBy,
         inputId,
         labelId,
-        ...getInputOffsets(inputWrapperOrder!, { hasDescription, hasError }),
+        ...getInputOffsets(inputWrapperOrder, { hasDescription, hasError }),
       }}
     >
       <Box

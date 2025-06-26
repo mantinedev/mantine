@@ -73,7 +73,7 @@ export type AutocompleteFactory = Factory<{
   variant: InputVariant;
 }>;
 
-const defaultProps: Partial<AutocompleteProps> = {};
+const defaultProps = {} satisfies Partial<AutocompleteProps>;
 
 export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
   const props = useProps('Autocomplete', defaultProps, _props);

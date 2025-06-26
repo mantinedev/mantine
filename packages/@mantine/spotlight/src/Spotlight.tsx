@@ -70,7 +70,7 @@ export type SpotlightFactory = Factory<{
   };
 }>;
 
-const defaultProps: Partial<SpotlightProps> = {
+const defaultProps = {
   size: 600,
   yOffset: 80,
   limit: Infinity,
@@ -82,8 +82,7 @@ const defaultProps: Partial<SpotlightProps> = {
   clearQueryOnClose: true,
   closeOnActionTrigger: true,
   shortcut: 'mod + K',
-  highlightQuery: false,
-};
+} satisfies Partial<SpotlightProps>;
 
 export const Spotlight = factory<SpotlightFactory>((_props, ref) => {
   const props = useProps('Spotlight', defaultProps, _props);
@@ -106,7 +105,7 @@ export const Spotlight = factory<SpotlightFactory>((_props, ref) => {
     onChange: onQueryChange,
   });
 
-  const filteredActions = limitActions(filter!(_query, actions), limit!).map((item) => {
+  const filteredActions = limitActions(filter(_query, actions), limit).map((item) => {
     if (isActionsGroup(item)) {
       const items = item.actions.map(({ id, ...actionData }) => (
         <SpotlightAction key={id} highlightQuery={highlightQuery} {...actionData} />

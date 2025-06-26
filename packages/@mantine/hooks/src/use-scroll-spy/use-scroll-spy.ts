@@ -74,6 +74,9 @@ export interface UseScrollSpyOptions {
 
   /** A function to retrieve heading value, by default `element.textContent` is used */
   getValue?: (element: HTMLElement) => string;
+
+  /** Host element to attach scroll event listener, if not provided, `window` is used */
+  scrollHost?: HTMLElement;
 }
 
 export interface UseScrollSpyReturnType {
@@ -94,6 +97,7 @@ export function useScrollSpy({
   selector = 'h1, h2, h3, h4, h5, h6',
   getDepth = getDefaultDepth,
   getValue = getDefaultValue,
+  scrollHost,
 }: UseScrollSpyOptions = {}): UseScrollSpyReturnType {
   const [active, setActive] = useState(-1);
   const [initialized, setInitialized] = useState(false);
@@ -120,8 +124,9 @@ export function useScrollSpy({
 
   useEffect(() => {
     initialize();
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const _scrollHost = scrollHost || window;
+    _scrollHost.addEventListener('scroll', handleScroll);
+    return () => _scrollHost.removeEventListener('scroll', handleScroll);
   }, []);
 
   return {

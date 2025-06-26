@@ -45,12 +45,12 @@ export type TitleFactory = Factory<{
   vars: TitleCssVariables;
 }>;
 
-const defaultProps: Partial<TitleProps> = {
+const defaultProps = {
   order: 1,
-};
+} satisfies Partial<TitleProps>;
 
 const varsResolver = createVarsResolver<TitleFactory>((_, { order, size, lineClamp, textWrap }) => {
-  const sizeVariables = getTitleSize(order!, size);
+  const sizeVariables = getTitleSize(order || 1, size);
   return {
     root: {
       '--title-fw': sizeVariables.fontWeight,
@@ -93,14 +93,14 @@ export const Title = factory<TitleFactory>((_props, ref) => {
     varsResolver,
   });
 
-  if (![1, 2, 3, 4, 5, 6].includes(order!)) {
+  if (![1, 2, 3, 4, 5, 6].includes(order)) {
     return null;
   }
 
   return (
     <Box
       {...getStyles('root')}
-      component={`h${order!}`}
+      component={`h${order}`}
       variant={variant}
       ref={ref}
       mod={[{ order, 'data-line-clamp': typeof lineClamp === 'number' }, mod]}

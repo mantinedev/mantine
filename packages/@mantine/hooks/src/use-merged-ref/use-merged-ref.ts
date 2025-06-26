@@ -12,7 +12,7 @@ export function assignRef<T>(ref: PossibleRef<T>, value: T): RefCleanup<T> {
   }
 }
 
-export function mergeRefs<T>(...refs: PossibleRef<T>[]) {
+export function mergeRefs<T>(...refs: PossibleRef<T>[]): RefCallback<T> {
   const cleanupMap = new Map<PossibleRef<T>, Exclude<RefCleanup<T>, void>>();
 
   return (node: T | null) => {
