@@ -255,7 +255,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
         presets={presets}
         __onPresetSelect={(val) => {
           setValue(val);
-          setTimeValue(formatTime(val));
+          val && setTimeValue(formatTime(val));
         }}
       />
 
