@@ -37,7 +37,9 @@ import { YearLevelBaseSettings } from '../YearLevel';
 import classes from './DatePicker.module.css';
 
 export interface DatePickerPreset<Type extends DatePickerType> {
-  value: Type extends 'range' ? [DateStringValue | null, DateStringValue | null] : DateStringValue;
+  value: Type extends 'range'
+    ? [DateStringValue | null, DateStringValue | null]
+    : DateStringValue | null;
   label: React.ReactNode;
 }
 
@@ -77,7 +79,7 @@ export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
   __onPresetSelect?: (
     preset: Type extends 'range'
       ? [DateStringValue | null, DateStringValue | null]
-      : DateStringValue
+      : DateStringValue | null
   ) => void;
 }
 
@@ -217,10 +219,10 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
   }
 
   const handlePresetSelect = (
-    val: DateStringValue | [DateStringValue | null, DateStringValue | null]
+    val: DateStringValue | null | [DateStringValue | null, DateStringValue | null]
   ) => {
     const _val = Array.isArray(val) ? val[0] : val;
-    if (_val) {
+    if (_val !== undefined) {
       setDateRef.current?.(_val);
       setLevelRef.current?.('month');
       __onPresetSelect ? __onPresetSelect(_val) : setValue(val);
