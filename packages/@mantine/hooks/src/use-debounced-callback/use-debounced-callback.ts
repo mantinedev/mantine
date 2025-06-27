@@ -31,17 +31,63 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
         const isFirstCall = currentCallback._isFirstCall;
         currentCallback._isFirstCall = false;
 
-        if (leading && isFirstCall) {
-          handleCallback(...args);
-          return;
-        }
-
         function clearTimeoutAndLeadingRef() {
           window.clearTimeout(debounceTimerRef.current);
           debounceTimerRef.current = 0;
           currentCallback._isFirstCall = true;
         }
 
+        if (leading && isFirstCall) {
+          handleCallback(...args);
+
+          // For leading=true, set timeout only to reset state, not to execute callback
+          const resetLeadingState = () => {
+            clearTimeoutAndLeadingRef();
+          };
+
+          const flush = () => {
+            // For leading edge, flush should still work if called manually
+            if (debounceTimerRef.current !== 0) {
+              clearTimeoutAndLeadingRef();
+              handleCallback(...args);
+            }
+          };
+
+          const cancel = () => {
+            clearTimeoutAndLeadingRef();
+          };
+
+          currentCallback.flush = flush;
+          currentCallback.cancel = cancel;
+          debounceTimerRef.current = window.setTimeout(resetLeadingState, delay);
+          return;
+        }
+
+        if (leading && !isFirstCall) {
+          // For leading=true and subsequent calls, ignore but allow manual flush
+          const flush = () => {
+            if (debounceTimerRef.current !== 0) {
+              clearTimeoutAndLeadingRef();
+              handleCallback(...args);
+            }
+          };
+
+          const cancel = () => {
+            clearTimeoutAndLeadingRef();
+          };
+
+          currentCallback.flush = flush;
+          currentCallback.cancel = cancel;
+
+          // Set timeout for potential manual flush, but reset state only
+          const resetLeadingState = () => {
+            clearTimeoutAndLeadingRef();
+          };
+          debounceTimerRef.current = window.setTimeout(resetLeadingState, delay);
+          return;
+        }
+
+        // Normal debounce behavior (leading=false)
         const flush = () => {
           if (debounceTimerRef.current !== 0) {
             clearTimeoutAndLeadingRef();
@@ -57,7 +103,11 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
         currentCallback.cancel = cancel;
         debounceTimerRef.current = window.setTimeout(flush, delay);
       },
-      { flush: () => {}, cancel: () => {}, _isFirstCall: true }
+      {
+        flush: () => {},
+        cancel: () => {},
+        _isFirstCall: true,
+      }
     );
     return currentCallback;
   }, [handleCallback, delay, leading]);
