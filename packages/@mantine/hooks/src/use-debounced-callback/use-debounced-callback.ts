@@ -40,13 +40,11 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
         if (leading && isFirstCall) {
           handleCallback(...args);
 
-          // For leading=true, set timeout only to reset state, not to execute callback
           const resetLeadingState = () => {
             clearTimeoutAndLeadingRef();
           };
 
           const flush = () => {
-            // For leading edge, flush should still work if called manually
             if (debounceTimerRef.current !== 0) {
               clearTimeoutAndLeadingRef();
               handleCallback(...args);
@@ -64,7 +62,6 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
         }
 
         if (leading && !isFirstCall) {
-          // For leading=true and subsequent calls, ignore but allow manual flush
           const flush = () => {
             if (debounceTimerRef.current !== 0) {
               clearTimeoutAndLeadingRef();
@@ -79,7 +76,6 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
           currentCallback.flush = flush;
           currentCallback.cancel = cancel;
 
-          // Set timeout for potential manual flush, but reset state only
           const resetLeadingState = () => {
             clearTimeoutAndLeadingRef();
           };
@@ -87,7 +83,6 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
           return;
         }
 
-        // Normal debounce behavior (leading=false)
         const flush = () => {
           if (debounceTimerRef.current !== 0) {
             clearTimeoutAndLeadingRef();
