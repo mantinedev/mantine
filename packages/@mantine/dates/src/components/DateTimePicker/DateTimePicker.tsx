@@ -47,6 +47,7 @@ export interface DateTimePickerProps
       DateInputSharedProps,
       'classNames' | 'styles' | 'closeOnChange' | 'size' | 'valueFormatter'
     >,
+    CalendarBaseProps,
     Omit<CalendarSettings, 'onYearMouseEnter' | 'onMonthMouseEnter' | 'hasNextLevel'>,
     StylesApiProps<DateTimePickerFactory> {
   /** dayjs format for input value, `"DD/MM/YYYY HH:mm"` by default  */
