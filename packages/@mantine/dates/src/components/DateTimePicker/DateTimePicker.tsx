@@ -16,7 +16,7 @@ import {
 import { useDidUpdate, useDisclosure, useMergedRef } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
 import { CalendarLevel, DateStringValue, DateValue } from '../../types';
-import { assignTime, clampDate } from '../../utils';
+import { assignTime, clampDate, getDefaultClampedDate } from '../../utils';
 import {
   CalendarBaseProps,
   CalendarSettings,
@@ -114,6 +114,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     vars,
     minDate,
     maxDate,
+    defaultDate,
     defaultTimeValue,
     presets,
     ...rest
@@ -153,6 +154,8 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     onChange,
     withTime: true,
   });
+
+  const _defaultDate = Array.isArray(_value) ? _value[0] || defaultDate : _value || defaultDate;
 
   const formatTime = (dateValue: DateStringValue) =>
     dateValue ? dayjs(dateValue).format(withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
@@ -238,7 +241,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
         variant={variant}
         type="default"
         value={_value}
-        defaultDate={_value}
+        defaultDate={_defaultDate || getDefaultClampedDate({ maxDate, minDate })}
         onChange={handleDateChange}
         locale={locale}
         classNames={resolvedClassNames}
