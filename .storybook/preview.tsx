@@ -18,6 +18,12 @@ import { theme } from '../apps/mantine.dev/theme';
 
 export const parameters = {
   layout: 'fullscreen',
+  options: {
+    showPanel: false,
+    storySort: (a, b) => {
+      return a.title.localeCompare(b.title, undefined, { numeric: true });
+    },
+  },
 };
 
 const channel = addons.getChannel();
