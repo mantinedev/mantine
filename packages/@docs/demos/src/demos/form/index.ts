@@ -33,3 +33,4 @@ export { focusError } from './Form.demo.focusError';
 export { submitting } from './Form.demo.submitting';
 export { rootRuleObject } from './Form.demo.rootRuleObject';
 export { rootRuleArray } from './Form.demo.rootRuleArray';
+export { cascadeUpdates } from './Form.demo.cascadeUpdates';

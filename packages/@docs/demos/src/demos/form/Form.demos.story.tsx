@@ -177,3 +177,8 @@ export const Demo_rootRuleArray = {
   name: '⭐ Demo: rootRuleArray',
   render: renderDemo(demos.rootRuleArray),
 };
+
+export const Demo_cascadeUpdates = {
+  name: '⭐ Demo: cascadeUpdates',
+  render: renderDemo(demos.cascadeUpdates),
+};

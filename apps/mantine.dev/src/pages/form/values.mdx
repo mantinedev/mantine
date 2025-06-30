@@ -203,6 +203,15 @@ function Demo() {
 }
 ```
 
+## form.watch cascade
+
+To loosely subscribe to changes, you can set `cascadeUpdates: true`.
+This allows for parent objects to be written to directly, while still having
+subscribers to nested keys updated. Additionally, writes to nested keys
+will bubble up triggering parent key subscriptions as well.
+
+<Demo data={FormDemos.cascadeUpdates} />
+
 ## Get values type
 
 ```tsx
