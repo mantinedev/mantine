@@ -27,14 +27,7 @@ export function ControlledClear() {
 export function WithDropdown() {
   return (
     <div style={{ padding: 40 }}>
-      <TimePicker
-        withSeconds
-        secondsStep={5}
-        clearable
-        // defaultValue="12:34:55"
-        withDropdown
-        format="12h"
-      />
+      <TimePicker withSeconds secondsStep={5} clearable withDropdown format="12h" />
     </div>
   );
 }
