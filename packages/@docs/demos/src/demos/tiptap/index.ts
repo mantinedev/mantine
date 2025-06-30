@@ -9,3 +9,4 @@ export { placeholder } from './TipTap.demo.placeholder';
 export { tasks } from './TipTap.demo.tasks';
 export { typographyStyles } from './TipTap.demo.typographyStyles';
 export { subtleVariant } from './TipTap.demo.subtleVariant';
+export { sourceCodeSwitcher } from './TipTap.demo.sourceCodeSwitcher';
