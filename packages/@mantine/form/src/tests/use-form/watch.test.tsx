@@ -88,20 +88,20 @@ describe('@mantine/form/watch', () => {
       useForm({
         mode: 'uncontrolled',
         cascadeUpdates: true,
-        initialValues: { person: { name: '' } }
+        initialValues: { person: { name: '' } },
       })
     );
 
     const personSpy = jest.fn();
 
     act(() => renderHook(() => hook.result.current.watch('person', personSpy)));
-    act(() => hook.result.current.setFieldValue('person.name', 'jane doe'))
+    act(() => hook.result.current.setFieldValue('person.name', 'jane doe'));
     expect(personSpy).toHaveBeenCalledWith({
       previousValue: { name: '' },
       value: { name: 'jane doe' },
       touched: true,
-      dirty: true
-   });
+      dirty: true,
+    });
 
     const nameSpy = jest.fn();
     act(() => renderHook(() => hook.result.current.watch('person.name', nameSpy)));
@@ -110,7 +110,7 @@ describe('@mantine/form/watch', () => {
       previousValue: 'jane doe',
       value: 'john doe',
       touched: true,
-      dirty: true
-   });
+      dirty: true,
+    });
   });
 });
