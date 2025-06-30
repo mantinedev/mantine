@@ -15,6 +15,7 @@ import {
   SimpleGrid,
   Slider,
   Stack,
+  TextInput,
 } from '@mantine/core';
 import { DatesProvider } from '../DatesProvider';
 import { DatePickerInput } from './DatePickerInput';
@@ -39,6 +40,15 @@ export function Usage() {
         ]}
       />
     </div>
+  );
+}
+
+export function XsSize() {
+  return (
+    <Group p={40} align="flex-start">
+      <DatePickerInput size="xs" placeholder="Pick date" />
+      <TextInput size="xs" placeholder="Text input" />
+    </Group>
   );
 }
 
