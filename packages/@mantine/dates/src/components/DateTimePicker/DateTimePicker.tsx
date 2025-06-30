@@ -155,7 +155,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     withTime: true,
   });
 
-  const _defaultDate = Array.isArray(_value) ? _value[0] || defaultDate : _value || defaultDate;
+  const _defaultDate = defaultDate || _value;
 
   const formatTime = (dateValue: DateStringValue) =>
     dateValue ? dayjs(dateValue).format(withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
