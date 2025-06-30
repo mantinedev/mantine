@@ -116,6 +116,32 @@ New usage with custom target element:
 
 <Demo data={HooksDemos.useFullscreenRefDemo} />
 
+## use-mouse hook changes
+
+[use-mouse](/hooks/use-mouse) hook was split into two hooks: `useMouse` and `useMousePosition`.
+This change was required to fix stale ref issue in the previous implementation.
+
+Previous usage with `document` element:
+
+```tsx
+import { Text, Code } from '@mantine/core';
+import { useMouse } from '@mantine/hooks';
+
+function Demo() {
+  const { x, y } = useMouse();
+
+  return (
+    <Text ta="center">
+      Mouse coordinates <Code>{`{ x: ${x}, y: ${y} }`}</Code>
+    </Text>
+  );
+}
+```
+
+New usage with `document`:
+
+<Demo data={HooksDemos.useMouseUsage} />
+
 ## Rename hooks types
 
 `@mantine/hooks` types were renamed for consistency, rename them in your codebase:

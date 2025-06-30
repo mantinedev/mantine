@@ -37,10 +37,12 @@ Starting from Mantine 9.0.0, React 19 is required. Most components continue
 working with React 18 or work with warnings. It is not recommended to use Mantine
 9.x if you cannot update React to version 19 in your project.
 
-Components impacted by this change:
+Components and hooks impacted by this change:
 
 - [Accordion](/core/accordion)
 - [Collapse](/core/collapse)
+- [use-mouse](/hooks/use-mouse)
+- [use-move](/hooks/use-move)
 
 ## use-floating-window hook
 
@@ -65,6 +67,7 @@ elements:
 - [use-fullscreen](/hooks/use-fullscreen) hook was split into two hooks: `useFullscreenElement` and `useFullscreenDocument`
 - [use-media-query](/hooks/use-media-query) hook no longer includes fallback for old Safari versions (iOS 13 and earlier, released before 2019)
 - [use-resize-observer](/hooks/use-resize-observer) now uses the new callback ref approach. The new approach makes hook usable with dynamic node changes. This change might be breaking, validate hook usage in your application.
+- [use-mouse](/hooks/use-mouse) hook now uses the new callback ref approach to resolve the issue with stale refs. The previous hook functionality was split into two hooks: `use-mouse` (for ref) and `use-mouse-position` (for document).
 - `@mantine/hooks` types were renamed for consistency:
   - `UseScrollSpyReturnType` → `UseScrollSpyReturnValue`
   - `StateHistory` → `UseStateHistoryValue`
