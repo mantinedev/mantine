@@ -62,7 +62,14 @@ export const PopoverTarget = factory<PopoverTargetFactory>((props, ref) => {
       (children.props as any).className
     ),
     [refProp]: targetRef,
-    ...(!ctx.controlled ? { onClick: ctx.onToggle } : null),
+    ...(!ctx.controlled
+      ? {
+          onClick: () => {
+            ctx.onToggle();
+            (children.props as any).onClick?.();
+          },
+        }
+      : null),
   });
 });
 
