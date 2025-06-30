@@ -31,15 +31,56 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
         const isFirstCall = currentCallback._isFirstCall;
         currentCallback._isFirstCall = false;
 
-        if (leading && isFirstCall) {
-          handleCallback(...args);
-          return;
-        }
-
         function clearTimeoutAndLeadingRef() {
           window.clearTimeout(debounceTimerRef.current);
           debounceTimerRef.current = 0;
           currentCallback._isFirstCall = true;
+        }
+
+        if (leading && isFirstCall) {
+          handleCallback(...args);
+
+          const resetLeadingState = () => {
+            clearTimeoutAndLeadingRef();
+          };
+
+          const flush = () => {
+            if (debounceTimerRef.current !== 0) {
+              clearTimeoutAndLeadingRef();
+              handleCallback(...args);
+            }
+          };
+
+          const cancel = () => {
+            clearTimeoutAndLeadingRef();
+          };
+
+          currentCallback.flush = flush;
+          currentCallback.cancel = cancel;
+          debounceTimerRef.current = window.setTimeout(resetLeadingState, delay);
+          return;
+        }
+
+        if (leading && !isFirstCall) {
+          const flush = () => {
+            if (debounceTimerRef.current !== 0) {
+              clearTimeoutAndLeadingRef();
+              handleCallback(...args);
+            }
+          };
+
+          const cancel = () => {
+            clearTimeoutAndLeadingRef();
+          };
+
+          currentCallback.flush = flush;
+          currentCallback.cancel = cancel;
+
+          const resetLeadingState = () => {
+            clearTimeoutAndLeadingRef();
+          };
+          debounceTimerRef.current = window.setTimeout(resetLeadingState, delay);
+          return;
         }
 
         const flush = () => {
@@ -57,7 +98,11 @@ export function useDebouncedCallback<T extends (...args: any[]) => any>(
         currentCallback.cancel = cancel;
         debounceTimerRef.current = window.setTimeout(flush, delay);
       },
-      { flush: () => {}, cancel: () => {}, _isFirstCall: true }
+      {
+        flush: () => {},
+        cancel: () => {},
+        _isFirstCall: true,
+      }
     );
     return currentCallback;
   }, [handleCallback, delay, leading]);
