@@ -142,6 +142,38 @@ New usage with `document`:
 
 <Demo data={HooksDemos.useMouseUsage} />
 
+## use-mutation-observer hook changes
+
+[use-mutation-observer](/hooks/use-mutation-observer) hook now uses the new callback ref approach.
+This change was required to fix stale ref issues and improve compatibility with dynamic node changes.
+
+Previous usage (8.x):
+
+```tsx
+import { useMutationObserver } from '@mantine/hooks';
+
+useMutationObserver(
+  (mutations) => console.log(mutations),
+  { childList: true },
+  // ❌ Third argument is no longer supported, use `useMutationObserverTarget` instead
+  document.getElementById('external-element')
+);
+```
+
+New usage (9.x):
+
+```tsx
+import { useMutationObserverTarget } from '@mantine/hooks';
+
+// ✅ Rename hook to `useMutationObserverTarget`
+useMutationObserverTarget(
+  (mutations) => console.log(mutations),
+  { childList: true },
+  // ✅ Pass target element as the third argument
+  document.getElementById('external-element')
+);
+```
+
 ## Rename hooks types
 
 `@mantine/hooks` types were renamed for consistency, rename them in your codebase:

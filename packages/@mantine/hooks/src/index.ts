@@ -60,7 +60,10 @@ export { useFavicon } from './use-favicon/use-favicon';
 export { useHeadroom } from './use-headroom/use-headroom';
 export { useEyeDropper } from './use-eye-dropper/use-eye-dropper';
 export { useInViewport } from './use-in-viewport/use-in-viewport';
-export { useMutationObserver } from './use-mutation-observer/use-mutation-observer';
+export {
+  useMutationObserver,
+  useMutationObserverTarget,
+} from './use-mutation-observer/use-mutation-observer';
 export { useMounted } from './use-mounted/use-mounted';
 export { useStateHistory } from './use-state-history/use-state-history';
 export { useMap } from './use-map/use-map';

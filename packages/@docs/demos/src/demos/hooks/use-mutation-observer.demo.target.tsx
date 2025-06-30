@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { Kbd, Text } from '@mantine/core';
-import { useMutationObserver } from '@mantine/hooks';
+import { useMutationObserverTarget } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
 import { Kbd, Text } from '@mantine/core';
-import { useMutationObserver } from '@mantine/hooks';
+import { useMutationObserverTarget } from '@mantine/hooks';
 
 function Demo() {
   const [lastMutation, setLastMutation] = useState('');
 
-  useMutationObserver(
+  useMutationObserverTarget(
     (mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'attributes' && mutation.attributeName === 'dir') {
@@ -42,7 +42,7 @@ function Demo() {
 function Demo() {
   const [lastMutation, setLastMutation] = useState('');
 
-  useMutationObserver(
+  useMutationObserverTarget(
     (mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'attributes' && mutation.attributeName === 'dir') {
@@ -69,7 +69,7 @@ function Demo() {
   );
 }
 
-export const useMutationObserverTarget: MantineDemo = {
+export const useMutationObserverTargetDemo: MantineDemo = {
   type: 'code',
   component: Demo,
   code,

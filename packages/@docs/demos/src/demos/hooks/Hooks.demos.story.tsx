@@ -280,7 +280,7 @@ export const Demo_useMutationObserverUsage = {
 
 export const Demo_useMutationObserverTarget = {
   name: '⭐ Demo: useMutationObserverTarget',
-  render: renderDemo(demos.useMutationObserverTarget),
+  render: renderDemo(demos.useMutationObserverTargetDemo),
 };
 
 export const Demo_useStateHistoryUsage = {

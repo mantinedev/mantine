@@ -53,7 +53,7 @@ export { useFaviconUsage } from './use-favicon.demo.usage';
 export { useEyeDropperUsage } from './use-eye-dropper.demo.usage';
 export { useInViewportDemo } from './use-in-viewport.demo.usage';
 export { useMutationObserverUsage } from './use-mutation-observer.demo.usage';
-export { useMutationObserverTarget } from './use-mutation-observer.demo.target';
+export { useMutationObserverTargetDemo } from './use-mutation-observer.demo.target';
 export { useStateHistoryUsage } from './use-state-history.demo.usage';
 export { useFetchUsage } from './use-fetch.demo.usage';
 export { useMapUsage } from './use-map.demo.usage';

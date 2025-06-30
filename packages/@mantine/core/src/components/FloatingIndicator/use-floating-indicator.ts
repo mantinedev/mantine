@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type RefObject } from 'react';
-import { useMutationObserver, useTimeout } from '@mantine/hooks';
+import { useMutationObserverTarget, useTimeout } from '@mantine/hooks';
 import { getEnv } from '../../core';
 import { toInt } from '../ScrollArea/utils';
 
@@ -135,7 +135,7 @@ export function useFloatingIndicator({
     { autoInvoke: true }
   );
 
-  useMutationObserver(
+  useMutationObserverTarget(
     (mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'attributes' && mutation.attributeName === 'dir') {
