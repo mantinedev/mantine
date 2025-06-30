@@ -138,7 +138,7 @@ export const SpotlightRoot = factory<SpotlightRootFactory>((_props, ref) => {
 
   const theme = useMantineTheme();
   const { opened, query: storeQuery } = useSpotlight(store);
-  const _query = query || storeQuery;
+  const _query = typeof query === 'string' ? query : storeQuery;
   const setQuery = (q: string) => {
     onQueryChange?.(q);
     spotlightActions.setQuery(q, store);
