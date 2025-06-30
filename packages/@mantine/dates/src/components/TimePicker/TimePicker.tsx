@@ -320,10 +320,11 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
   return (
     <TimePickerProvider value={{ getStyles, scrollAreaProps, maxDropdownContentHeight }}>
       <Popover
-        opened={withDropdown && !readOnly && dropdownOpened}
+        opened={dropdownOpened}
         transitionProps={{ duration: 0 }}
         position="bottom-start"
         withRoles={false}
+        disabled={disabled || readOnly || !withDropdown}
         {...popoverProps}
       >
         <Popover.Target>
