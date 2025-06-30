@@ -50,7 +50,7 @@ function Demo() {
   const ref = useMutationObserver<HTMLButtonElement>(
     (mutations) => {
       mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'dir') {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-mutation') {
           mutation.target instanceof HTMLElement &&
             setLastMutation(mutation.target.dataset.mutation || '');
         }
