@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useUncontrolled } from '../use-uncontrolled/use-uncontrolled';
 
 function range(start: number, end: number) {
@@ -67,20 +67,23 @@ export function usePagination({
     finalValue: initialPage,
   });
 
-  const setPage = (pageNumber: number) => {
-    if (pageNumber <= 0) {
-      setActivePage(1);
-    } else if (pageNumber > _total) {
-      setActivePage(_total);
-    } else {
-      setActivePage(pageNumber);
-    }
-  };
+  const setPage = useCallback(
+    (pageNumber: number) => {
+      if (pageNumber <= 0) {
+        setActivePage(1);
+      } else if (pageNumber > _total) {
+        setActivePage(_total);
+      } else {
+        setActivePage(pageNumber);
+      }
+    },
+    [_total, setActivePage]
+  );
 
-  const next = () => setPage(activePage + 1);
-  const previous = () => setPage(activePage - 1);
-  const first = () => setPage(1);
-  const last = () => setPage(_total);
+  const next = useCallback(() => setPage(activePage + 1), [activePage, setPage]);
+  const previous = useCallback(() => setPage(activePage - 1), [activePage, setPage]);
+  const first = useCallback(() => setPage(1), [setPage]);
+  const last = useCallback(() => setPage(_total), [_total, setPage]);
 
   const paginationRange = useMemo((): (number | 'dots')[] => {
     const totalPageNumbers = siblings * 2 + 3 + boundaries * 2;
