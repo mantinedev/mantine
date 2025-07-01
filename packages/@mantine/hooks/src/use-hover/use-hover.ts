@@ -30,6 +30,10 @@ export function useHover<T extends HTMLElement = any>(): UseHoverReturnValue<T> 
       }
 
       previousNode.current = node;
+
+      return () => {
+        previousNode.current = null;
+      };
     },
     [handleMouseEnter, handleMouseLeave]
   );
