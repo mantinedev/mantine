@@ -139,9 +139,9 @@ import { z } from 'zod/v4';
 import { zod4Resolver } from 'mantine-form-zod-resolver';
 
 const schema = z.object({
-  name: z.string().min(2, { message: 'Name should have at least 2 letters' }),
-  email: z.email({ message: 'Invalid email' }),
-  age: z.number().min(18, { message: 'You must be at least 18 to create an account' }),
+  name: z.string().min(2, { error: 'Name should have at least 2 letters' }),
+  email: z.email({ error: 'Invalid email' }),
+  age: z.number().min(18, { error: 'You must be at least 18 to create an account' }),
 });
 
 const form = useForm({
