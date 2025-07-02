@@ -9,7 +9,7 @@ import { Paper, Text } from '@mantine/core';
 import { data } from './data';
 
 interface ChartTooltipProps {
-  label: string;
+  label: React.ReactNode;
   payload: Record<string, any>[] | undefined;
 }
 
@@ -51,7 +51,7 @@ function Demo() {
 `;
 
 interface ChartTooltipProps {
-  label: string;
+  label: React.ReactNode;
   payload: Record<string, any>[] | undefined;
 }
 

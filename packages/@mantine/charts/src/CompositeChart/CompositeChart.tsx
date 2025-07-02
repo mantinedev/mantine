@@ -5,7 +5,6 @@ import {
   Bar,
   BarProps,
   CartesianGrid,
-  DotProps,
   Label,
   LabelList,
   Legend,
@@ -35,7 +34,12 @@ import {
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { PointLabel } from '../PointLabel/PointLabel';
-import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
+import type {
+  BaseChartStylesNames,
+  ChartSeries,
+  GridChartBaseProps,
+  MantineChartDotProps,
+} from '../types';
 import classes from '../grid-chart.module.css';
 
 export type CompositeChartCurveType =
@@ -82,10 +86,10 @@ export interface CompositeChartProps
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
-  dotProps?: Omit<DotProps, 'ref'>;
+  dotProps?: MantineChartDotProps;
 
   /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
-  activeDotProps?: Omit<DotProps, 'ref'>;
+  activeDotProps?: MantineChartDotProps;
 
   /** Stroke width for the chart lines @default `2` */
   strokeWidth?: number;
@@ -351,7 +355,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
               position="top"
               fontSize={12}
               fill="var(--chart-bar-label-color, var(--mantine-color-dimmed))"
-              formatter={valueFormatter}
+              formatter={(val: any) => valueFormatter?.(val as any)}
             />
           )}
         </Bar>

@@ -1,5 +1,6 @@
 import type {
   CartesianGridProps,
+  DotProps,
   LabelProps,
   LegendProps,
   ReferenceLineProps,
@@ -111,3 +112,5 @@ export interface GridChartBaseProps {
   /** Determines whether additional y-axis should be displayed on the right side of the chart, `false` by default */
   withRightYAxis?: boolean;
 }
+
+export type MantineChartDotProps = Omit<DotProps, 'ref'> & { strokeWidth?: number };

@@ -28,7 +28,7 @@ function updateChartLegendPayload(payload: Record<string, any>[]): Record<string
   });
 }
 
-export function getFilteredChartLegendPayload(payload: Record<string, any>[]) {
+export function getFilteredChartLegendPayload(payload: readonly Record<string, any>[]) {
   return updateChartLegendPayload(payload.filter((item) => item.color !== 'none'));
 }
 
@@ -39,7 +39,7 @@ export interface ChartLegendProps
     StylesApiProps<ChartLegendFactory>,
     ElementProps<'div'> {
   /** Chart data provided by recharts */
-  payload: Record<string, any>[] | undefined;
+  payload: readonly Record<string, any>[] | undefined;
 
   /** Function called when mouse enters/leaves one of the legend items */
   onHighlight: (area: string | null) => void;

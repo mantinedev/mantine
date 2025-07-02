@@ -68,11 +68,6 @@ export const Demo_decimal = {
   render: renderDemo(demos.decimal),
 };
 
-export const Demo_decimalRange = {
-  name: '⭐ Demo: decimalRange',
-  render: renderDemo(demos.decimalRange),
-};
-
 export const Demo_customSlider = {
   name: '⭐ Demo: customSlider',
   render: renderDemo(demos.customSlider),
@@ -81,16 +76,6 @@ export const Demo_customSlider = {
 export const Demo_restrictToMarks = {
   name: '⭐ Demo: restrictToMarks',
   render: renderDemo(demos.restrictToMarks),
-};
-
-export const Demo_rangeConfigurator = {
-  name: '⭐ Demo: rangeConfigurator',
-  render: renderDemo(demos.rangeConfigurator),
-};
-
-export const Demo_pushOnOverlap = {
-  name: '⭐ Demo: pushOnOverlap',
-  render: renderDemo(demos.pushOnOverlap),
 };
 
 export const Demo_domain = {
