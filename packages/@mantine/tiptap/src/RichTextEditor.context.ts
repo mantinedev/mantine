@@ -11,6 +11,7 @@ interface RichTextEditorContext {
   withTypographyStyles: boolean | undefined;
   unstyled: boolean | undefined;
   variant: string | undefined;
+  onSourceCodeTextSwitch?: (isSourceCodeModeActive: boolean) => void;
 }
 
 export const [RichTextEditorProvider, useRichTextEditorContext] =

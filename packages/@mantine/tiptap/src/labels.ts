@@ -92,6 +92,9 @@ export interface RichTextEditorLabels {
   /** A function go get RichTextEditor.Color control aria-label based on color that control applies */
   colorControlLabel: (color: string) => string;
 
+  /** RichTextEditor.SourceCode control aria-label */
+  sourceCodeControlLabel: string;
+
   /** Aria-label for link editor url input */
   linkEditorInputLabel: string;
 
@@ -149,6 +152,7 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   unlinkControlLabel: 'Remove link',
   bulletListControlLabel: 'Bullet list',
   orderedListControlLabel: 'Ordered list',
+  sourceCodeControlLabel: 'Switch between text/source code',
   h1ControlLabel: 'Heading 1',
   h2ControlLabel: 'Heading 2',
   h3ControlLabel: 'Heading 3',
