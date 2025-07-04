@@ -39,5 +39,46 @@ export function useSet<T>(values?: T[]): Set<T> {
     return result;
   };
 
+  setRef.current.intersection = <U>(other: ReadonlySetLike<U>): Set<T & U> => {
+    const result = new Set<T & U>();
+    const otherSet = readonlySetLikeToSet(other);
+    setRef.current.forEach((item) => {
+      if (otherSet.has(item as any)) {
+        result.add(item as T & U);
+      }
+    });
+    return result;
+  };
+
+  setRef.current.difference = <U>(other: ReadonlySetLike<U>): Set<T> => {
+    const result = new Set<T>();
+    const otherSet = readonlySetLikeToSet(other);
+    setRef.current.forEach((item) => {
+      if (!otherSet.has(item as any)) {
+        result.add(item);
+      }
+    });
+    return result;
+  };
+
+  setRef.current.symmetricDifference = <U>(other: ReadonlySetLike<U>): Set<T | U> => {
+    const result = new Set<T | U>();
+    const otherSet = readonlySetLikeToSet(other);
+
+    setRef.current.forEach((item) => {
+      if (!otherSet.has(item as any)) {
+        result.add(item);
+      }
+    });
+
+    otherSet.forEach((item) => {
+      if (!setRef.current.has(item as any)) {
+        result.add(item);
+      }
+    });
+
+    return result;
+  };
+
   return setRef.current;
 }

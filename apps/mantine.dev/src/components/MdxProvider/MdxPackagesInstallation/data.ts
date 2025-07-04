@@ -22,7 +22,7 @@ export const PACKAGES_DATA = [
   {
     package: '@mantine/charts',
     description: 'Recharts based charts library',
-    dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/charts', 'recharts@2'],
+    dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/charts', 'recharts'],
   },
   {
     package: '@mantine/notifications',

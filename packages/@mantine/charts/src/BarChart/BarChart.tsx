@@ -293,7 +293,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
             position={orientation === 'vertical' ? 'right' : 'top'}
             fontSize={12}
             fill="var(--chart-bar-label-color, var(--mantine-color-dimmed))"
-            formatter={tickFormatter}
+            formatter={(val: any) => tickFormatter?.(val as any)}
             {...(typeof valueLabelProps === 'function' ? valueLabelProps(item) : valueLabelProps)}
           />
         )}
