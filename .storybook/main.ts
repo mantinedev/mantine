@@ -1,8 +1,16 @@
-import path from 'path';
+import { createRequire } from 'node:module';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import fg from 'fast-glob';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+
+const currentModuleUrl = typeof import.meta !== 'undefined' ? import.meta.url : '';
+const __filename = fileURLToPath(currentModuleUrl);
+const __dirname = path.dirname(__filename);
+
+const nodeRequire = createRequire(currentModuleUrl);
 
 const { argv } = yargs(hideBin(process.argv));
 
@@ -15,7 +23,7 @@ const getGlobPaths = (paths: string[]) =>
   paths.reduce<string[]>((acc, path) => [...acc, ...fg.sync(path)], []);
 
 function getAbsolutePath(value: string) {
-  return path.dirname(require.resolve(path.join(value, 'package.json')));
+  return path.dirname(nodeRequire.resolve(path.join(value, 'package.json')));
 }
 
 function getStoryPaths(fileName: string | number = '*') {
