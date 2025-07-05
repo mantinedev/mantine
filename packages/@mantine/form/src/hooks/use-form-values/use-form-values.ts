@@ -14,7 +14,7 @@ export interface $FormValues<Values extends Record<PropertyKey, any>> {
   initialize: (values: Values, onInitialize: () => void) => void;
   getValues: () => Values;
   getValuesSnapshot: () => Values;
-  resetField: (path: PropertyKey) => void;
+  resetField: (path: PropertyKey, subscribers?: (SetFieldValueSubscriber<Values> | null | undefined)[]) => void;
 }
 
 export interface SetValuesSubscriberPayload<Values> {
@@ -131,7 +131,7 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
   const getValuesSnapshot = useCallback(() => valuesSnapshot.current, []);
 
   const resetField = useCallback(
-    (path: PropertyKey) => {
+    (path: PropertyKey, subscribers?: (SetFieldValueSubscriber<Values> | null | undefined)[]) => {
       const snapshotValue = getPath(path, valuesSnapshot.current);
       if (typeof snapshotValue === 'undefined') {
         return;
@@ -139,7 +139,8 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
       setFieldValue({
         path,
         value: snapshotValue,
-        updateState: mode === 'uncontrolled' || undefined,
+        updateState: mode === 'controlled',
+        subscribers,
       });
     },
     [setFieldValue, mode]
