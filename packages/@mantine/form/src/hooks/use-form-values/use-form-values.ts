@@ -14,7 +14,10 @@ export interface $FormValues<Values extends Record<PropertyKey, any>> {
   initialize: (values: Values, onInitialize: () => void) => void;
   getValues: () => Values;
   getValuesSnapshot: () => Values;
-  resetField: (path: PropertyKey, subscribers?: (SetFieldValueSubscriber<Values> | null | undefined)[]) => void;
+  resetField: (
+    path: PropertyKey,
+    subscribers?: (SetFieldValueSubscriber<Values> | null | undefined)[]
+  ) => void;
 }
 
 export interface SetValuesSubscriberPayload<Values> {
