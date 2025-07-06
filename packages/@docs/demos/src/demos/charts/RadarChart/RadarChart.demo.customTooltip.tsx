@@ -8,7 +8,7 @@ import { RadarChart } from '@mantine/charts';
 import { data } from './data';
 
 interface ChartTooltipProps {
-  label: string;
+  label: React.ReactNode;
   payload: Record<string, any>[] | undefined;
 }
 
@@ -51,7 +51,7 @@ function Demo() {
 `;
 
 interface ChartTooltipProps {
-  label: string;
+  label: React.ReactNode;
   payload: Record<string, any>[] | undefined;
 }
 

@@ -3,7 +3,6 @@ import {
   Area,
   AreaProps,
   CartesianGrid,
-  DotProps,
   Label,
   Legend,
   AreaChart as ReChartsAreaChart,
@@ -31,7 +30,12 @@ import {
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { PointLabel } from '../PointLabel/PointLabel';
-import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
+import type {
+  BaseChartStylesNames,
+  ChartSeries,
+  GridChartBaseProps,
+  MantineChartDotProps,
+} from '../types';
 import { AreaGradient } from './AreaGradient';
 import { AreaSplit } from './AreaSplit';
 import { getDefaultSplitOffset } from './get-split-offset';
@@ -88,10 +92,10 @@ export interface AreaChartProps
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
-  dotProps?: Omit<DotProps, 'ref'>;
+  dotProps?: MantineChartDotProps;
 
   /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
-  activeDotProps?: Omit<DotProps, 'ref'>;
+  activeDotProps?: MantineChartDotProps;
 
   /** Stroke width for the chart areas @default `2` */
   strokeWidth?: number;

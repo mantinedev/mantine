@@ -138,16 +138,16 @@ const varsResolver = createVarsResolver<DonutChartFactory>(
 
 const getLabelValue = (
   labelsType: DonutChartProps['labelsType'],
-  value: number,
-  percent: number,
+  value: number | undefined,
+  percent: number | undefined,
   valueFormatter?: DonutChartProps['valueFormatter']
 ) => {
   if (labelsType === 'percent') {
-    return `${(percent * 100).toFixed(0)}%`;
+    return `${((percent || 0) * 100).toFixed(0)}%`;
   }
 
   if (typeof valueFormatter === 'function') {
-    return valueFormatter(value);
+    return valueFormatter(value || 0);
   }
 
   return value;

@@ -136,15 +136,15 @@ const varsResolver = createVarsResolver<PieChartFactory>(
 
 const getLabelValue = (
   labelsType: PieChartProps['labelsType'],
-  value: number,
-  percent: number,
+  value: number | undefined,
+  percent: number | undefined,
   valueFormatter?: PieChartProps['valueFormatter']
 ) => {
-  if (labelsType === 'percent') {
+  if (labelsType === 'percent' && typeof percent === 'number') {
     return `${(percent * 100).toFixed(0)}%`;
   }
 
-  if (typeof valueFormatter === 'function') {
+  if (typeof valueFormatter === 'function' && typeof value === 'number') {
     return valueFormatter(value);
   }
 
@@ -156,8 +156,8 @@ const getInsideLabel =
   ({ cx, cy, midAngle, innerRadius, outerRadius, value, percent }) => {
     const RADIAN = Math.PI / 180;
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+    const x = cx + radius * Math.cos(-(midAngle || 0) * RADIAN);
+    const y = cy + radius * Math.sin(-(midAngle || 0) * RADIAN);
 
     return (
       <text

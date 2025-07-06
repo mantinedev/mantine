@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import {
-  DotProps,
   Legend,
   LegendProps,
   PolarAngleAxis,
@@ -33,6 +32,7 @@ import {
 } from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
+import { MantineChartDotProps } from '../types';
 import classes from './RadarChart.module.css';
 
 export interface RadarChartSeries {
@@ -116,10 +116,10 @@ export interface RadarChartProps
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
-  dotProps?: Omit<DotProps, 'ref'>;
+  dotProps?: MantineChartDotProps;
 
   /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
-  activeDotProps?: Omit<DotProps, 'ref'>;
+  activeDotProps?: MantineChartDotProps;
 
   /** Additional components that are rendered inside recharts `RadarChart` component */
   children?: React.ReactNode;

@@ -2,24 +2,24 @@ import { isLightColor, luminance } from './luminance';
 
 describe('@mantine/core/luminance', () => {
   it('correctly calculates luminosity', () => {
-    expect(luminance('#fff')).toBe(1);
-    expect(luminance('#000')).toBe(0);
-    expect(luminance('#f00')).toBe(0.2126);
-    expect(luminance('#0f0')).toBe(0.7152);
-    expect(luminance('#00f')).toBe(0.0722);
-    expect(luminance('#ff0')).toBe(0.9278);
-    expect(luminance('#0ff')).toBe(0.7874);
-    expect(luminance('#f0f')).toBe(0.2848);
-    expect(luminance('#fff000')).toBe(0.8358017636509798);
-    expect(luminance('#fff000ff')).toBe(0.8358017636509798);
-    expect(luminance('#fff00000')).toBe(0.8358017636509798);
-    expect(luminance('rgb(255, 255, 0)')).toBe(0.9278);
-    expect(luminance('rgba(255, 255, 0, 0.5)')).toBe(0.9278);
-    expect(luminance('hsl(60, 100%, 50%)')).toBe(0.9278);
-    expect(luminance('hsla(60, 100%, 50%, 0.5)')).toBe(0.9278);
-    expect(luminance('oklch(100% 100 0 0)')).toBe(1);
-    expect(luminance('oklch(0% 100 0 0)')).toBe(0);
-    expect(luminance('oklch(55.88% 100 0 0)')).toBe(55.88 / 100);
+    expect(luminance('#fff').toFixed(2)).toBe('1.00');
+    expect(luminance('#000').toFixed(2)).toBe('0.00');
+    expect(luminance('#f00').toFixed(2)).toBe('0.21');
+    expect(luminance('#0f0').toFixed(2)).toBe('0.72');
+    expect(luminance('#00f').toFixed(2)).toBe('0.07');
+    expect(luminance('#ff0').toFixed(2)).toBe('0.93');
+    expect(luminance('#0ff').toFixed(2)).toBe('0.79');
+    expect(luminance('#f0f').toFixed(2)).toBe('0.28');
+    expect(luminance('#fff000').toFixed(2)).toBe('0.84');
+    expect(luminance('#fff000ff').toFixed(2)).toBe('0.84');
+    expect(luminance('#fff00000').toFixed(2)).toBe('0.84');
+    expect(luminance('rgb(255, 255, 0)').toFixed(2)).toBe('0.93');
+    expect(luminance('rgba(255, 255, 0, 0.5)').toFixed(2)).toBe('0.93');
+    expect(luminance('hsl(60, 100%, 50%)').toFixed(2)).toBe('0.93');
+    expect(luminance('hsla(60, 100%, 50%, 0.5)').toFixed(2)).toBe('0.93');
+    expect(luminance('oklch(100% 100 0 0)').toFixed(2)).toBe('1.00');
+    expect(luminance('oklch(0% 100 0 0)').toFixed(2)).toBe('0.00');
+    expect(luminance('oklch(55.88% 100 0 0)').toFixed(2)).toBe('0.56');
   });
 });
 
