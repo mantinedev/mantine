@@ -29,6 +29,7 @@ import {
   MdxTargetComponent,
   MdxWrapperProps,
 } from './MdxSharedContent';
+import { MdxSponsorButton } from './MdxSponsorButton/MdxSponsorButton';
 import { MdxTemplatesList } from './MdxTemplatesList/MdxTemplatesList';
 import { h } from './MdxTitle/MdxTitle';
 import { MdxCode, MdxLi, MdxParagraph, MdxUl } from './MdxTypography/MdxTypography';
@@ -64,6 +65,7 @@ export function MdxProvider({ children }: { children: React.ReactNode }) {
         WrapperProps: MdxWrapperProps,
         InputSections: MdxInputSections,
         AutoContrast: MdxAutoContrast,
+        SponsorButton: MdxSponsorButton,
         Video: MdxVideo,
         pre: MdxPre,
         h1: h(1),
