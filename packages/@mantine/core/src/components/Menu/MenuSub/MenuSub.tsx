@@ -71,7 +71,7 @@ export function MenuSub(_props: MenuSubProps) {
         parentContext: ctx,
       }}
     >
-      <Popover opened={opened} {...others} withinPortal={false} id={id}>
+      <Popover opened={opened} {...others} withinPortal={false} withArrow={false} id={id}>
         {children}
       </Popover>
     </SubMenuProvider>
