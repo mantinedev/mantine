@@ -100,7 +100,7 @@ export function parseStyleProps({
         const breakpoints = getBreakpointKeys(styleProps[styleProp]);
 
         properties.forEach((property) => {
-          if (baseValue) {
+          if (baseValue != null) {
             acc.styles[property] = resolvers[propertyData.type](baseValue, theme);
           }
 

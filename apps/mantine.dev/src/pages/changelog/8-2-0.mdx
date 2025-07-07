@@ -1,6 +1,6 @@
 import { Button } from '@mantine/core';
 import { IconHeartFilled } from '@tabler/icons-react';
-import { HoverCardDemos, HooksDemos, SelectDemos, TooltipDemos, ContainerDemos } from '@docs/demos';
+import { TipTapDemos, HoverCardDemos, HooksDemos, SelectDemos, TooltipDemos, ContainerDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -87,6 +87,12 @@ Use it to automatically select the highlighted option when the input loses focus
 To see this feature in action: select an option with up/down arrows, then click outside the input:
 
 <Demo data={SelectDemos.autoSelectOnBlur} />
+
+## Source edit mode in RichTextEditor
+
+[RichTextEditor](/x/tiptap) now supports source edit mode:
+
+<Demo data={TipTapDemos.sourceCodeSwitcher} />
 
 ## Recharts 3 support
 
