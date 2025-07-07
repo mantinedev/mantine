@@ -77,6 +77,47 @@ function tests(mode: FormMode) {
 
     expect(hook.result.current.errors).toStrictEqual({});
   });
+
+  it('allows readonly array types', () => {
+    interface Person {
+      readonly name: string;
+      readonly age: number;
+    }
+
+    interface TestValues {
+      readonly people: readonly Person[];
+    }
+
+    const hook = renderHook(() =>
+      useForm<TestValues>({
+        mode,
+        clearInputErrorOnChange: false,
+        initialValues: {
+          people: [{ name: 'Foo', age: 100 }],
+        },
+        validate: {
+          people: {
+            name: (v) => (v.startsWith('B') ? null : 'error-name'),
+            age: (v) => (v < 100 ? null : 'error-age'),
+          },
+        },
+      })
+    );
+
+    expect(hook.result.current.errors).toStrictEqual({});
+
+    act(() => {
+      expect(hook.result.current.validate()).toStrictEqual({
+        hasErrors: true,
+        errors: { 'people.0.age': 'error-age', 'people.0.name': 'error-name' },
+      });
+    });
+
+    expect(hook.result.current.errors).toStrictEqual({
+      'people.0.age': 'error-age',
+      'people.0.name': 'error-name',
+    });
+  });
 }
 
 describe('@mantine/form/validate with nested rules controlled', () => {
