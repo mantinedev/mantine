@@ -10,3 +10,4 @@ export { MdxParagraph, MdxUl, MdxLi } from './MdxTypography/MdxTypography';
 export { MdxCodeHighlight } from './MdxPre/MdxPre';
 export { MdxInstallScript } from './MdxInstallScript/MdxInstallScript';
 export { MdxPackagesInstallation } from './MdxPackagesInstallation/MdxPackagesInstallation';
+export { MdxSponsorButton } from './MdxSponsorButton/MdxSponsorButton';
