@@ -29,7 +29,7 @@ export default { title: 'Container' };
 export function Usage() {
   return (
     <MantineThemeProvider theme={theme}>
-      <Container size="xxs" h={50} bg="blue">
+      <Container size="xxs" h={50} bg="blue" px={{ base: 0, md: 0 }}>
         Container
       </Container>
     </MantineThemeProvider>
