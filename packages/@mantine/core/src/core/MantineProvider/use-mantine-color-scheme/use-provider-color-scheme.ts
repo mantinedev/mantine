@@ -82,8 +82,20 @@ export function useProviderColorScheme({
       }
     };
 
-    media.current?.addEventListener('change', listener);
-    return () => media.current?.removeEventListener('change', listener);
+    if(typeof media.current?.addEventListener === 'function') {
+      media.current.addEventListener('change', listener);
+    } else {
+      media.current?.addListener?.(listener);
+    }
+
+    return () => {
+      if(typeof media.current?.removeEventListener === 'function') {
+        media.current.removeEventListener('change', listener);
+        return;
+      }
+
+      media.current?.removeListener?.(listener);
+    };
   }, [value, forceColorScheme]);
 
   return { colorScheme: colorSchemeValue, setColorScheme, clearColorScheme };
