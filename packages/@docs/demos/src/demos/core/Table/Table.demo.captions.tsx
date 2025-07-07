@@ -56,7 +56,7 @@ export function Demo() {
 
   return (
     <Table captionSide="bottom">
-      <Table.Caption>Some elements from periodic table</Table.Caption>
+      <Table.Caption>Some elements from the periodic table</Table.Caption>
       <Table.Thead>{ths}</Table.Thead>
       <Table.Tbody>{rows}</Table.Tbody>
       <Table.Tfoot>{ths}</Table.Tfoot>

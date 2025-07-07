@@ -247,12 +247,26 @@ export function useForm<
     [rules]
   );
 
-  const key: Key<Values> = (path) =>
-    `${formKey}-${path as string}-${fieldKeys[path as string] || 0}`;
+  const key: Key<Values> = (path) => `${formKey}-${String(path)}-${fieldKeys[String(path)] || 0}`;
 
   const getInputNode: GetInputNode<Values> = useCallback(
     (path) => document.querySelector(`[data-path="${getDataPath(name, path)}"]`),
     []
+  );
+
+  const resetField = useCallback(
+    (path: PropertyKey) => {
+      $values.resetField(path, [
+        mode !== 'controlled'
+          ? () =>
+              setFieldKeys((keys) => ({
+                ...keys,
+                [path as string]: (keys[path as string] || 0) + 1,
+              }))
+          : null,
+      ]);
+    },
+    [$values.resetField, mode, setFieldKeys]
   );
 
   const form: UseFormReturnType<Values, TransformValues> = {
@@ -263,7 +277,7 @@ export function useForm<
     getValues: $values.getValues,
     getInitialValues: $values.getValuesSnapshot,
     setInitialValues: $values.setValuesSnapshot,
-    resetField: $values.resetField,
+    resetField,
     initialize,
     setValues,
     setFieldValue,

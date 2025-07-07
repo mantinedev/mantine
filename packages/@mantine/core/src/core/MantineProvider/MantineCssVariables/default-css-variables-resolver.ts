@@ -80,7 +80,7 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-dimmed': 'var(--mantine-color-dark-2)',
       '--mantine-color-disabled': 'var(--mantine-color-dark-6)',
       '--mantine-color-disabled-color': 'var(--mantine-color-dark-3)',
-      '--mantine-color-disabled-border': 'var(--mantine-color-gray-6)',
+      '--mantine-color-disabled-border': 'var(--mantine-color-dark-4)',
     },
   };
 

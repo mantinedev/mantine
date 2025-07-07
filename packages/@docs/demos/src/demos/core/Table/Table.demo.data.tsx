@@ -22,7 +22,7 @@ function Demo() {
 `;
 
 const tableData: TableData = {
-  caption: 'Some elements from periodic table',
+  caption: 'Some elements from the periodic table',
   head: ['Element position', 'Atomic mass', 'Symbol', 'Element name'],
   body: [
     [6, 12.011, 'C', 'Carbon'],
