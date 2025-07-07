@@ -4,7 +4,7 @@ import { NumberFormatter } from '@mantine/core';
 function Demo() {
   return <NumberFormatter prefix="$ " value={1000000} thousandSeparator />;
 }
-`,centered:!0}},49750:(e,o,s)=>{"use strict";s.d(o,{p:()=>a});var n=s(31085),i=s(75447);let t={caption:"Some elements from periodic table",head:["Element position","Atomic mass","Symbol","Element name"],body:[[6,12.011,"C","Carbon"],[7,14.007,"N","Nitrogen"],[39,88.906,"Y","Yttrium"],[56,137.33,"Ba","Barium"],[58,140.12,"Ce","Cerium"]]},a={type:"code",component:function(){return(0,n.jsx)(i.X,{data:t})},code:`
+`,centered:!0}},49750:(e,o,s)=>{"use strict";s.d(o,{p:()=>a});var n=s(31085),i=s(75447);let t={caption:"Some elements from the periodic table",head:["Element position","Atomic mass","Symbol","Element name"],body:[[6,12.011,"C","Carbon"],[7,14.007,"N","Nitrogen"],[39,88.906,"Y","Yttrium"],[56,137.33,"Ba","Barium"],[58,140.12,"Ce","Cerium"]]},a={type:"code",component:function(){return(0,n.jsx)(i.X,{data:t})},code:`
 import { Table, TableData } from '@mantine/core';
 
 const tableData: TableData = {

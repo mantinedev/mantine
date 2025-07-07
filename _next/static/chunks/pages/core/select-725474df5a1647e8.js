@@ -77,7 +77,7 @@ function Demo() {
     />
   );
 }
-`,maxWidth:340,centered:!0},u={type:"configurator",component:function(e){return(0,l.jsx)(a.l,{...e,data:["React","Angular","Svelte","Vue"],dropdownOpened:!0,pb:150,label:"Control check icon",placeholder:"Pick value",defaultValue:"React"})},code:`
+`,maxWidth:340,centered:!0},u={type:"configurator",component:function(e){return(0,l.jsx)(a.l,{...e,data:["React","Angular","Svelte","Vue"],dropdownOpened:!0,pb:150,label:"Control check icon",placeholder:"Pick value",defaultValue:"React",comboboxProps:{hideDetached:!1}})},code:`
 import { Select } from '@mantine/core';
 
 
