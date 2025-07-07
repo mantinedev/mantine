@@ -450,3 +450,18 @@ export function IconIndentDecrease(props: IconProps) {
     </IconBase>
   );
 }
+
+export function IconBraces(props: IconProps) {
+  return (
+    <IconBase {...props}>
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path
+        d="M19 3v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914
+           a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18
+           a1 1 0 0 1 1 1Z"
+      />
+      <path d="M10 11l-2 2 2 2" />
+      <path d="M14 11l2 2-2 2" />
+    </IconBase>
+  );
+}

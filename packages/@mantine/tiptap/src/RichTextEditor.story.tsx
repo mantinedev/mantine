@@ -1,4 +1,5 @@
 // import { IconColorPicker } from '@tabler/icons-react';
+import { useState } from 'react';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { Color } from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
@@ -66,6 +67,9 @@ function BasicEditor({
     <div style={{ padding: 40 }}>
       <RichTextEditor editor={editor} {...editorProps}>
         <RichTextEditor.Toolbar {...toolbarProps}>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.SourceCode />
+          </RichTextEditor.ControlsGroup>
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.Blockquote />
             <RichTextEditor.Bold />
@@ -228,6 +232,50 @@ export function CodeHighlight() {
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.CodeBlock />
           </RichTextEditor.ControlsGroup>
+        </RichTextEditor.Toolbar>
+
+        <RichTextEditor.Content />
+      </RichTextEditor>
+    </div>
+  );
+}
+
+export function SourceCodeTextMode() {
+  const [isSourceCodeModeActive, onSourceCodeTextSwitch] = useState(false);
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      CodeBlockLowlight.configure({
+        lowlight,
+      }),
+    ],
+    content: `<p>
+    That’s a boring paragraph followed by a fenced code block:
+  </p>
+  <pre><code>${code}</code></pre>
+  <p>
+    Press Command/Ctrl + Enter to leave the fenced code block and continue typing in boring paragraphs.
+  </p>`,
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <RichTextEditor editor={editor} onSourceCodeTextSwitch={onSourceCodeTextSwitch}>
+        <RichTextEditor.Toolbar>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.SourceCode />
+          </RichTextEditor.ControlsGroup>
+          {!isSourceCodeModeActive && (
+            <RichTextEditor.ControlsGroup>
+              <RichTextEditor.Blockquote />
+              <RichTextEditor.Bold />
+              <RichTextEditor.Italic />
+              <RichTextEditor.Underline />
+              <RichTextEditor.Strikethrough />
+              <RichTextEditor.ClearFormatting />
+              <RichTextEditor.Highlight />
+            </RichTextEditor.ControlsGroup>
+          )}
         </RichTextEditor.Toolbar>
 
         <RichTextEditor.Content />
