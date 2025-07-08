@@ -212,6 +212,10 @@
     background-color: var(--input-disabled-bg);
     color: var(--input-disabled-color);
   }
+
+  &:read-only {
+    caret-color: transparent;
+  }
 }
 
 .section {
