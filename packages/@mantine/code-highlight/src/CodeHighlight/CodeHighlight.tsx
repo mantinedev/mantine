@@ -118,6 +118,7 @@ export type CodeHighlightFactory = Factory<{
 const defaultProps = {
   withCopyButton: true,
   expandCodeLabel: 'Expand code',
+  collapseCodeLabel: 'Collapse code',
 } satisfies Partial<CodeHighlightProps>;
 
 const varsResolver = createVarsResolver<CodeHighlightFactory>(
