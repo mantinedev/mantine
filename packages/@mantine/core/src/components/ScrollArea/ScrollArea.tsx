@@ -294,7 +294,12 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
   const didMount = useRef(false);
 
   useEffect(() => {
+    if (!onOverflowChange) {
+      return;
+    }
+
     const el = viewportObserverRef.current;
+
     if (!el) {
       return;
     }
