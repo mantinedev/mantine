@@ -290,8 +290,8 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
   // Overflow detection (Autosize-only)
   const [resizeObserverRef, rect] = useResizeObserver<HTMLDivElement>();
   const combinedViewportRef = useMergeRefs([viewportRef, resizeObserverRef]);
-  const didMountRef = useRef(false);
-  const lastOverflowRef = useRef(false);
+  const [overflowing, setOverflowing] = useState(false);
+  const didMount = useRef(false);
 
   useEffect(() => {
     if (!onOverflowChange) {
@@ -306,17 +306,18 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
 
     const isOverflowing = el.scrollHeight > el.clientHeight;
 
-    if (!didMountRef.current) {
-      didMountRef.current = true;
-      if (isOverflowing) {
-        onOverflowChange(true);
-        lastOverflowRef.current = true;
+    if (isOverflowing !== overflowing) {
+      if (didMount.current) {
+        onOverflowChange(isOverflowing);
+      } else {
+        didMount.current = true;
+        if (isOverflowing) {
+          onOverflowChange(true);
+        }
       }
-    } else if (isOverflowing !== lastOverflowRef.current) {
-      onOverflowChange(isOverflowing);
-      lastOverflowRef.current = isOverflowing;
+      setOverflowing(isOverflowing);
     }
-  }, [rect.height, onOverflowChange]);
+  }, [rect.height, onOverflowChange, overflowing]);
 
   return (
     <Box {...others} ref={ref} style={[{ display: 'flex', overflow: 'auto' }, style]}>
