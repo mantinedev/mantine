@@ -95,6 +95,8 @@
 }
 
 .item {
+  overflow: hidden;
+
   @mixin where-light {
     --item-border-color: var(--mantine-color-gray-3);
     --item-filled-color: var(--mantine-color-gray-0);
