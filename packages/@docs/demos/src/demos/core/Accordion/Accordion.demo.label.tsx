@@ -1,4 +1,4 @@
-import { Accordion, AccordionProps, Avatar, Group, Text } from '@mantine/core';
+import { Accordion, AccordionProps, Avatar, Flex, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const charactersList = [
@@ -31,7 +31,7 @@ const charactersList = [
 ];
 
 const code = `
-import { Group, Avatar, Text, Accordion } from '@mantine/core';
+import { Flex, Avatar, Text, Accordion } from '@mantine/core';
 
 const charactersList = [
   {
@@ -67,15 +67,15 @@ interface AccordionLabelProps {
 
 function AccordionLabel({ label, image, description }: AccordionLabelProps) {
   return (
-    <Group wrap="nowrap">
+    <Flex component="span" gap="md" align="center" wrap="nowrap">
       <Avatar src={image} radius="xl" size="lg" />
       <div>
-        <Text>{label}</Text>
-        <Text size="sm" c="dimmed" fw={400}>
+        <Text span>{label}</Text>
+        <Text span display="block" size="sm" c="dimmed" fw={400}>
           {description}
         </Text>
       </div>
-    </Group>
+    </Flex>
   );
 }
 
@@ -107,15 +107,15 @@ interface AccordionLabelProps {
 
 function AccordionLabel({ label, image, description }: AccordionLabelProps) {
   return (
-    <Group wrap="nowrap">
+    <Flex component="span" gap="md" align="center" wrap="nowrap">
       <Avatar src={image} radius="xl" size="lg" />
       <div>
-        <Text>{label}</Text>
-        <Text size="sm" c="dimmed" fw={400}>
+        <Text span>{label}</Text>
+        <Text span display="block" size="sm" c="dimmed" fw={400}>
           {description}
         </Text>
       </div>
-    </Group>
+    </Flex>
   );
 }
 
@@ -132,7 +132,7 @@ export function AccordionDemo(props: Partial<AccordionProps>) {
   ));
 
   return (
-    <Accordion chevronPosition="right" variant="contained" radius="md" {...props}>
+    <Accordion chevronPosition="right" variant="contained" radius="md" order={3} {...props}>
       {items}
     </Accordion>
   );

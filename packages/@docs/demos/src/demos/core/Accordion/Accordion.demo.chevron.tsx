@@ -23,6 +23,7 @@ function Demo() {
       defaultValue="Apples"
       classNames={{ chevron: classes.chevron }}
       chevron={<IconPlus className={classes.icon} />}
+      order={3}
     >
       {items}
     </Accordion>
@@ -56,6 +57,7 @@ function Demo() {
       defaultValue="Apples"
       classNames={{ chevron: classes.chevron }}
       chevron={<IconPlus className={classes.icon} />}
+      order={3}
       mih={270}
     >
       {items}

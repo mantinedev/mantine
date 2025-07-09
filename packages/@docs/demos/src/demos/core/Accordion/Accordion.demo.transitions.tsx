@@ -6,7 +6,7 @@ import { Accordion } from '@mantine/core';
 
 function Demo() {
   return (
-    <Accordion ${prop}>
+    <Accordion order={3} ${prop}>
       {/* ...content */}
     </Accordion>
   )

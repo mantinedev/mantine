@@ -16,7 +16,7 @@ function Demo() {
   ));
 
   return (
-    <Accordion value="Apples" order={2}{{props}}>
+    <Accordion value="Apples" order={3}{{props}}>
       {items}
     </Accordion>
   );
@@ -32,7 +32,7 @@ function Demo(props: AccordionProps) {
   ));
 
   return (
-    <Accordion value="Apples" order={2} {...props}>
+    <Accordion value="Apples" order={3} {...props}>
       {items}
     </Accordion>
   );

@@ -8,7 +8,7 @@ import { Accordion } from '@mantine/core';
 
 function Demo() {
   return (
-    <Accordion variant="filled" radius="md" defaultValue="photos">
+    <Accordion variant="filled" radius="md" defaultValue="photos" order={3}>
       <Accordion.Item value="photos">
         <Accordion.Control
           icon={<IconPhoto size={22} stroke={1.5} color="var(--mantine-color-dimmed)" />}
@@ -42,7 +42,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Accordion variant="filled" radius="md" defaultValue="photos" mih={200}>
+    <Accordion variant="filled" radius="md" defaultValue="photos" order={3} mih={200}>
       <Accordion.Item value="photos">
         <Accordion.Control
           icon={<IconPhoto size={22} stroke={1.5} color="var(--mantine-color-dimmed)" />}
