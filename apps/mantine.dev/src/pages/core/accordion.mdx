@@ -209,20 +209,9 @@ type DefaultAccordionProps = AccordionProps<false>;
 
 ## Accessibility
 
-Accordion component implement [WAI-ARIA accessibility recommendations](https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html).
+Accordion component implement [WAI-ARIA accessibility pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
 
-Set `order` on `Accordion` component to wrap accordion controls with `h2`-`h6` headings.
-The following example wraps controls with `h3` tags:
-
-```tsx
-import { Accordion } from '@mantine/core';
-
-function Demo() {
-  return <Accordion order={3}>{/* ...items */}</Accordion>;
-}
-```
-
-Keyboard interactions:
+## Keyboard interactions
 
 <KeyboardEventsTable
   data={[
