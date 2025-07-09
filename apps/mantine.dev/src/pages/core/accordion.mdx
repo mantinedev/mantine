@@ -17,6 +17,18 @@ Accordion is commonly used for:
 
 <Demo data={AccordionDemos.configurator} />
 
+## order prop
+
+`order` prop (used in all demos on this page) sets the heading level for `Accordion.Control` root element.
+According to [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html),
+it is required to use `h2`-`h6` heading level to fit correctly within the outline of the page.
+
+All examples on this page use `order={3}`, which means that all `button` elements of
+`Accordion.Control` are wrapped with `h3` tag (`h2` tags are used for the documentation sections).
+
+`order` prop is not enforced by the library but required if your application
+must meet accessibility standards.
+
 ## Change chevron
 
 Use the `chevron` prop to change the chevron icon. When `chevron` is set,
