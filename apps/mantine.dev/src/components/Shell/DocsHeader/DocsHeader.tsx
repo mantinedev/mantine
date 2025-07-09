@@ -97,7 +97,7 @@ export function DocsHeader({ headerControlsProps, withNav }: DocsHeaderProps) {
             />
 
             <div className={classes.headerMainSection}>
-              <Link href="/" className={classes.logoLink}>
+              <Link href="/" className={classes.logoLink} aria-label="Mantine home page">
                 <MantineLogo size={32} />
               </Link>
               <div className={classes.mainLinks}>{mainLinks}</div>

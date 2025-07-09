@@ -10,7 +10,7 @@ function AccordionControl(props: AccordionControlProps) {
   return (
     <Center>
       <Accordion.Control {...props} />
-      <ActionIcon size="lg" variant="subtle" color="gray">
+      <ActionIcon size="lg" variant="subtle" color="gray" aria-label="More options">
         <IconDots size={20} />
       </ActionIcon>
     </Center>
@@ -43,7 +43,7 @@ function AccordionControl(props: AccordionControlProps) {
   return (
     <Center>
       <Accordion.Control {...props} />
-      <ActionIcon size="lg" variant="subtle" color="gray">
+      <ActionIcon size="lg" variant="subtle" color="gray" aria-label="More options">
         <IconDots size={20} />
       </ActionIcon>
     </Center>

@@ -68,7 +68,7 @@ interface AccordionLabelProps {
 function AccordionLabel({ label, image, description }: AccordionLabelProps) {
   return (
     <Flex component="span" gap="md" align="center" wrap="nowrap">
-      <Avatar src={image} radius="xl" size="lg" />
+      <Avatar src={image} radius="xl" size="lg" alt={label} />
       <div>
         <Text span>{label}</Text>
         <Text span display="block" size="sm" c="dimmed" fw={400}>
@@ -108,7 +108,7 @@ interface AccordionLabelProps {
 function AccordionLabel({ label, image, description }: AccordionLabelProps) {
   return (
     <Flex component="span" gap="md" align="center" wrap="nowrap">
-      <Avatar src={image} radius="xl" size="lg" />
+      <Avatar src={image} radius="xl" size="lg" alt={label} />
       <div>
         <Text span>{label}</Text>
         <Text span display="block" size="sm" c="dimmed" fw={400}>
