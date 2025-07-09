@@ -67,16 +67,16 @@ function Demo() {
   return (
     <MantineProvider theme={{ variantColorResolver }}>
       <Group>
-        <ActionIcon color="lime.4" variant="filled">
-          <IconPhoto size={20} />
+        <ActionIcon color="lime.4" variant="filled" size="lg" aria-label="Photo">
+          <IconPhoto size={20} stroke={1.5} />
         </ActionIcon>
 
-        <ActionIcon color="orange" variant="light">
-          <IconFingerprint size={20} />
+        <ActionIcon color="orange" variant="light" size="lg" aria-label="Fingerprint">
+          <IconFingerprint size={20} stroke={1.5} />
         </ActionIcon>
 
-        <ActionIcon variant="danger">
-          <IconError404 size={20} />
+        <ActionIcon variant="danger" size="lg" aria-label="Error 404">
+          <IconError404 size={20} stroke={1.5} />
         </ActionIcon>
       </Group>
     </MantineProvider>
@@ -127,15 +127,15 @@ function Demo() {
   return (
     <MantineThemeProvider theme={{ variantColorResolver }}>
       <Group>
-        <ActionIcon color="lime.4" variant="filled" size="lg">
+        <ActionIcon color="lime.4" variant="filled" size="lg" aria-label="Photo">
           <IconPhoto size={20} stroke={1.5} />
         </ActionIcon>
 
-        <ActionIcon color="orange" variant="light" size="lg">
+        <ActionIcon color="orange" variant="light" size="lg" aria-label="Fingerprint">
           <IconFingerprint size={20} stroke={1.5} />
         </ActionIcon>
 
-        <ActionIcon variant="danger" size="lg">
+        <ActionIcon variant="danger" size="lg" aria-label="Error 404">
           <IconError404 size={20} stroke={1.5} />
         </ActionIcon>
       </Group>

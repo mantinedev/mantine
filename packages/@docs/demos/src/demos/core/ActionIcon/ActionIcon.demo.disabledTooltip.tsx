@@ -9,7 +9,12 @@ import { IconHeart } from '@tabler/icons-react';
 function Demo() {
   return (
     <Tooltip label="Tooltip for disabled button">
-      <ActionIcon size="xl" data-disabled onClick={(event) => event.preventDefault()}>
+      <ActionIcon
+        aria-label="Hover to see tooltip"
+        size="xl"
+        data-disabled
+        onClick={(event) => event.preventDefault()}
+      >
         <IconHeart />
       </ActionIcon>
     </Tooltip>
@@ -20,7 +25,12 @@ function Demo() {
 function Demo() {
   return (
     <Tooltip label="Tooltip for disabled button">
-      <ActionIcon size="xl" data-disabled onClick={(event) => event.preventDefault()}>
+      <ActionIcon
+        aria-label="Hover to see tooltip"
+        size="xl"
+        data-disabled
+        onClick={(event) => event.preventDefault()}
+      >
         <IconHeart />
       </ActionIcon>
     </Tooltip>

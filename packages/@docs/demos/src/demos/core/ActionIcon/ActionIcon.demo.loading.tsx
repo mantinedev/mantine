@@ -13,13 +13,13 @@ function Demo() {
   return (
     <>
       <Group>
-        <ActionIcon loading={loading}>
+        <ActionIcon loading={loading} aria-label="Like">
           <IconHeart size={18} stroke={1.5} />
         </ActionIcon>
-        <ActionIcon variant="light" loading={loading}>
+        <ActionIcon variant="light" loading={loading} aria-label="Like">
           <IconHeart size={18} stroke={1.5} />
         </ActionIcon>
-        <ActionIcon variant="outline" loading={loading}>
+        <ActionIcon variant="outline" loading={loading} aria-label="Like">
           <IconHeart size={18} stroke={1.5} />
         </ActionIcon>
       </Group>
@@ -35,13 +35,13 @@ function Demo() {
   return (
     <>
       <Group>
-        <ActionIcon loading={loading}>
+        <ActionIcon loading={loading} aria-label="Like">
           <IconHeart size={18} stroke={1.5} />
         </ActionIcon>
-        <ActionIcon variant="light" loading={loading}>
+        <ActionIcon variant="light" loading={loading} aria-label="Like">
           <IconHeart size={18} stroke={1.5} />
         </ActionIcon>
-        <ActionIcon variant="outline" loading={loading}>
+        <ActionIcon variant="outline" loading={loading} aria-label="Like">
           <IconHeart size={18} stroke={1.5} />
         </ActionIcon>
       </Group>

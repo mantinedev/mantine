@@ -13,13 +13,25 @@ function Demo() {
 
   return (
     <ActionIcon.Group>
-      <ActionIcon variant="default" size="lg" radius="md" onClick={decrement}>
+      <ActionIcon
+        variant="default"
+        size="lg"
+        radius="md"
+        onClick={decrement}
+        aria-label="Decrement value"
+      >
         <IconChevronDown color="var(--mantine-color-red-text)" />
       </ActionIcon>
       <ActionIcon.GroupSection variant="default" size="lg" bg="var(--mantine-color-body)" miw={60}>
         {value}
       </ActionIcon.GroupSection>
-      <ActionIcon variant="default" size="lg" radius="md" onClick={increment}>
+      <ActionIcon
+        variant="default"
+        size="lg"
+        radius="md"
+        onClick={increment}
+        aria-label="Increment value"
+      >
         <IconChevronUp color="var(--mantine-color-teal-text)" />
       </ActionIcon>
     </ActionIcon.Group>
@@ -32,13 +44,25 @@ function Demo() {
 
   return (
     <ActionIcon.Group>
-      <ActionIcon variant="default" size="lg" radius="md" onClick={decrement}>
+      <ActionIcon
+        variant="default"
+        size="lg"
+        radius="md"
+        onClick={decrement}
+        aria-label="Decrement value"
+      >
         <IconChevronDown color="var(--mantine-color-red-text)" />
       </ActionIcon>
       <ActionIcon.GroupSection variant="default" size="lg" bg="var(--mantine-color-body)" miw={60}>
         {value}
       </ActionIcon.GroupSection>
-      <ActionIcon variant="default" size="lg" radius="md" onClick={increment}>
+      <ActionIcon
+        variant="default"
+        size="lg"
+        radius="md"
+        onClick={increment}
+        aria-label="Increment value"
+      >
         <IconChevronUp color="var(--mantine-color-teal-text)" />
       </ActionIcon>
     </ActionIcon.Group>
