@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { useMergeRefs } from '@floating-ui/react';
-import { useResizeObserver } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -288,36 +287,40 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
   } = useProps('ScrollAreaAutosize', defaultProps, props as ScrollAreaAutosizeProps);
 
   // Overflow detection (Autosize-only)
-  const [resizeObserverRef, rect] = useResizeObserver<HTMLDivElement>();
-  const combinedViewportRef = useMergeRefs([viewportRef, resizeObserverRef]);
+  const viewportObserverRef = useRef<HTMLDivElement>(null);
+  const combinedViewportRef = useMergeRefs([viewportRef, viewportObserverRef]);
+
   const [overflowing, setOverflowing] = useState(false);
   const didMount = useRef(false);
 
   useEffect(() => {
-    if (!onOverflowChange) {
-      return;
-    }
-
-    const el = resizeObserverRef.current;
-
+    const el = viewportObserverRef.current;
     if (!el) {
       return;
     }
 
-    const isOverflowing = el.scrollHeight > el.clientHeight;
+    const update = () => {
+      const isOverflowing = el.scrollHeight > el.clientHeight;
 
-    if (isOverflowing !== overflowing) {
-      if (didMount.current) {
-        onOverflowChange(isOverflowing);
-      } else {
-        didMount.current = true;
-        if (isOverflowing) {
-          onOverflowChange(true);
+      if (isOverflowing !== overflowing) {
+        if (didMount.current) {
+          onOverflowChange?.(isOverflowing);
+        } else {
+          didMount.current = true;
+          if (isOverflowing) {
+            onOverflowChange?.(true);
+          }
         }
+
+        setOverflowing(isOverflowing);
       }
-      setOverflowing(isOverflowing);
-    }
-  }, [rect.height, onOverflowChange, overflowing]);
+    };
+
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [onOverflowChange, overflowing]);
 
   return (
     <Box {...others} ref={ref} style={[{ display: 'flex', overflow: 'auto' }, style]}>
