@@ -14,29 +14,29 @@ export default Layout(MDX_DATA.ActionIcon);
 
 ## Size
 
-You can use any valid CSS value in `size` prop, it is used to set `width`, `min-width`, `min-height` and `height`
-properties. Note that `size` prop does not control child [icon](/guides/icons) size, you need to
-set it manually on icon component. When `size` is a number, the value is treated as `px` units and
+You can use any valid CSS value in the `size` prop, which is used to set the `width`, `min-width`, `min-height` and `height`
+properties. Note that the `size` prop does not control the child [icon](/guides/icons) size – you need to
+set it manually on the icon component. When `size` is a number, the value is treated as `px` units and
 converted to [rem](/styles/rem) units.
 
 <Demo data={ActionIconDemos.size} />
 
-If you want `ActionIcon` to have the same size as Mantine inputs, use `size="input-sm"` prop:
+If you want `ActionIcon` to have the same size as Mantine inputs, use the `size="input-sm"` prop:
 
 <Demo data={ActionIconDemos.inputSize} />
 
 ## Disabled state
 
-To make `ActionIcon` disabled set `disabled` prop, this will prevent any interactions with the button
+To make `ActionIcon` disabled, set the `disabled` prop. This will prevent any interactions with the button
 and add disabled styles. If you want the button to just look disabled but still be interactive,
-set `data-disabled` prop instead. Note that disabled styles are the same for all variants.
+set the `data-disabled` prop instead. Note that disabled styles are the same for all variants.
 
 <Demo data={ActionIconDemos.disabled} />
 
 ## Disabled state when ActionIcon is link
 
-`<a />` element does not support `disabled` attribute. To make `ActionIcon` disabled when it is
-rendered as a link, set `data-disabled` attribute instead and prevent default behavior in
+The `<a />` element does not support the `disabled` attribute. To make `ActionIcon` disabled when it is
+rendered as a link, set the `data-disabled` attribute instead and prevent default behavior in the
 `onClick` event handler.
 
 <Demo data={ActionIconDemos.disabledLink} />
@@ -46,43 +46,43 @@ rendered as a link, set `data-disabled` attribute instead and prevent default be
 To customize disabled styles, it is recommended to use both `&:disabled` and `&[data-disabled]`
 selectors:
 
-- `&:disabled` is used to style the button when `disabled` prop is set and
-  also when the button is disabled by the parent component (for example, when `disabled` prop is set on a
+- `&:disabled` is used to style the button when the `disabled` prop is set and
+  also when the button is disabled by the parent component (for example, when the `disabled` prop is set on a
   `<fieldset />` element which contains `ActionIcon`).
 - `&[data-disabled]` is used to style the button when it is not actually disabled but should look like
-  it is (for example, `data-disabled` should be used if you need to use [Tooltip](/core/tooltip) with disabled `ActionIcon`
+  it is (for example, `data-disabled` should be used if you need to use [Tooltip](/core/tooltip) with a disabled `ActionIcon`
   or when `ActionIcon` is used as a link)
 
 <Demo data={ActionIconDemos.disabledStyles} />
 
 ## Disabled button with Tooltip
 
-`onMouseLeave` event [is not triggered](https://github.com/facebook/react/issues/18753) when `ActionIcon` is disabled, so if you need to use
-[Tooltip](/core/tooltip) with disabled `ActionIcon` you need to set `data-disabled` prop on `ActionIcon`
-instead of `disabled`. Note that it is also required to change `onClick` event handler to
+The `onMouseLeave` event [is not triggered](https://github.com/facebook/react/issues/18753) when `ActionIcon` is disabled, so if you need to use
+[Tooltip](/core/tooltip) with a disabled `ActionIcon`, you need to set the `data-disabled` prop on `ActionIcon`
+instead of `disabled`. Note that it is also required to change the `onClick` event handler to
 `(event) => event.preventDefault()` as `ActionIcon` is not actually disabled and will still trigger
-`onClick` event.
+the `onClick` event.
 
 <Demo data={ActionIconDemos.disabledTooltip} />
 
 ## Loading state
 
-When `loading` prop is set, `ActionIcon` will be disabled and [Loader](/core/loader) with overlay will be rendered
-in the center of the button. [Loader](/core/loader) color depends on `ActionIcon` variant.
+When the `loading` prop is set, `ActionIcon` will be disabled and a [Loader](/core/loader) with overlay will be rendered
+in the center of the button. The [Loader](/core/loader) color depends on the `ActionIcon` variant.
 
 <Demo data={ActionIconDemos.loading} />
 
 ## Loader props
 
-You can customize [Loader](/core/loader) with `loaderProps` prop, it accepts all props that
+You can customize the [Loader](/core/loader) with the `loaderProps` prop, which accepts all props that the
 [Loader](/core/loader) component has:
 
 <Demo data={ActionIconDemos.loaderProps} />
 
 ## Add custom variants
 
-To add new `ActionIcon` variants, use [data-variant](/styles/variants-sizes) attribute.
-Usually new variants are added on [theme](/theming/theme-object), this way they are
+To add new `ActionIcon` variants, use the [data-variant](/styles/variants-sizes) attribute.
+Usually new variants are added to the [theme](/theming/theme-object). This way they are
 available in all `ActionIcon` components in your application.
 
 <Demo data={ActionIconDemos.customVariant} />
@@ -129,7 +129,7 @@ function Demo() {
 
 ## ActionIcon.GroupSection
 
-Use `ActionIcon.GroupSection` component to render sections that are not `ActionIcon` inside `ActionIcon.Group`:
+Use the `ActionIcon.GroupSection` component to render sections that are not `ActionIcon` inside `ActionIcon.Group`:
 
 <Demo data={ActionIconDemos.groupSection} />
 
@@ -145,7 +145,7 @@ Use `ActionIcon.GroupSection` component to render sections that are not `ActionI
 ## Accessibility
 
 To make `ActionIcon` accessible for screen readers, you need to either set `aria-label` or
-use [VisuallyHidden](/core/visually-hidden) component:
+use the [VisuallyHidden](/core/visually-hidden) component:
 
 ```tsx
 import { IconHeart } from '@tabler/icons-react';

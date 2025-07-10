@@ -6,13 +6,13 @@ export default Layout(MDX_DATA.AngleSlider);
 
 ## Usage
 
-Use `AngleSlider` component to pick angle value between 0 and 360:
+Use the `AngleSlider` component to pick an angle value between 0 and 360:
 
 <Demo data={AngleSliderDemos.usage} />
 
 ## Controlled
 
-`AngleSlider` value is a number between 0 and 360.
+The `AngleSlider` value is a number between 0 and 360.
 
 ```tsx
 import { useState } from 'react';
@@ -34,7 +34,7 @@ It accepts a function that takes the angle value and returns a React node:
 ## Marks
 
 Set the `marks` prop to display marks on the slider.
-Mark is an object of value (required, number between 0 and 360) and label (optional, React node).
+A mark is an object with a value (required, number between 0 and 360) and label (optional, React node).
 To restrict selection to marks only, set the `restrictToMarks` prop:
 
 <Demo data={AngleSliderDemos.marks} />
@@ -48,7 +48,7 @@ Use it as a debounced callback to prevent frequent updates.
 
 ## disabled
 
-`disabled` prop disables the component and prevents user interaction:
+The `disabled` prop disables the component and prevents user interaction:
 
 <Demo data={AngleSliderDemos.disabled} />
 
