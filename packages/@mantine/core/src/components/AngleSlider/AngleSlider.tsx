@@ -51,7 +51,7 @@ export interface AngleSliderProps
   /** Array of marks displayed on the slider */
   marks?: { value: number; label?: string }[];
 
-  /** Slider size in px @default `60px` */
+  /** Slider size in px @default `60` */
   size?: number;
 
   /** Size of the thumb in px. Calculated based on the `size` value by default. */
