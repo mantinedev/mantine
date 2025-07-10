@@ -67,4 +67,139 @@ describe('@mantine/core/TagsInput', () => {
 
     expect(screen.queryByText('test-2')).not.toBeInTheDocument();
   });
+
+  describe('readOnly behavior', () => {
+    it('prevents tag removal via backspace when readOnly is true', async () => {
+      const user = userEvent.setup();
+      const onRemove = jest.fn();
+      render(
+        <TagsInput
+          role="combobox"
+          data={['test-1', 'test-2']}
+          defaultValue={['existing-tag']}
+          readOnly
+          onRemove={onRemove}
+        />
+      );
+
+      const input = screen.getByRole('combobox');
+
+      // Focus the input and press backspace
+      await user.click(input);
+      await user.keyboard('{Backspace}');
+
+      // Tag should still be present and onRemove should not be called
+      expect(screen.getByText('existing-tag')).toBeInTheDocument();
+      expect(onRemove).not.toHaveBeenCalled();
+    });
+
+    it('prevents tag addition via Enter key when readOnly is true', async () => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      render(
+        <TagsInput
+          role="combobox"
+          data={['test-1', 'test-2']}
+          defaultValue={['existing-tag']}
+          readOnly
+          onChange={onChange}
+        />
+      );
+
+      const input = screen.getByRole('combobox');
+
+      await user.type(input, 'new-tag');
+      await user.keyboard('{Enter}');
+
+      // New tag should not be added
+      expect(screen.queryByText('new-tag')).not.toBeInTheDocument();
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('prevents tag addition via split characters when readOnly is true', async () => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      render(
+        <TagsInput
+          role="combobox"
+          data={['test-1', 'test-2']}
+          defaultValue={['existing-tag']}
+          readOnly
+          onChange={onChange}
+          splitChars={[',']}
+        />
+      );
+
+      const input = screen.getByRole('combobox');
+
+      await user.type(input, 'new-tag,');
+
+      // New tag should not be added
+      expect(screen.queryByText('new-tag')).not.toBeInTheDocument();
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('prevents tag addition via paste when readOnly is true', async () => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      render(
+        <TagsInput
+          role="combobox"
+          data={['test-1', 'test-2']}
+          defaultValue={['existing-tag']}
+          readOnly
+          onChange={onChange}
+        />
+      );
+
+      const input = screen.getByRole('combobox');
+
+      await user.click(input);
+      await user.paste('new-tag,another-tag');
+
+      // New tags should not be added
+      expect(screen.queryByText('new-tag')).not.toBeInTheDocument();
+      expect(screen.queryByText('another-tag')).not.toBeInTheDocument();
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('prevents tag addition via blur with acceptValueOnBlur when readOnly is true', async () => {
+      const user = userEvent.setup();
+      const onChange = jest.fn();
+      render(
+        <TagsInput
+          role="combobox"
+          data={['test-1', 'test-2']}
+          defaultValue={['existing-tag']}
+          readOnly
+          onChange={onChange}
+          acceptValueOnBlur
+        />
+      );
+
+      const input = screen.getByRole('combobox');
+
+      await user.type(input, 'new-tag');
+      await user.click(document.body); // Blur the input
+
+      // New tag should not be added even with acceptValueOnBlur
+      expect(screen.queryByText('new-tag')).not.toBeInTheDocument();
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
+    it('does not show remove buttons on pills when readOnly is true', () => {
+      render(
+        <TagsInput
+          role="combobox"
+          data={['test-1', 'test-2']}
+          defaultValue={['tag1', 'tag2']}
+          readOnly
+        />
+      );
+
+      // Remove buttons should not be present
+      const removeButtons = screen.queryAllByRole('button');
+      expect(removeButtons).toHaveLength(0);
+    });
+  });
 });
