@@ -14,9 +14,5 @@ export function useId(staticId?: string) {
     return staticId;
   }
 
-  if (typeof window === 'undefined') {
-    return reactId;
-  }
-
   return uuid;
 }
