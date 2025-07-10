@@ -11,8 +11,8 @@
   }
 
   &[data-active] {
-    color: var(--mantine-color-blue-light-color);
-    background-color: var(--mantine-color-blue-light);
+    color: var(--mantine-color-white);
+    background-color: var(--mantine-color-blue-filled);
   }
 }
 
