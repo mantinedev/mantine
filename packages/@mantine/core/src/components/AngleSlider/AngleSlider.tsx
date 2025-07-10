@@ -178,12 +178,20 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
 
     if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
       event.preventDefault();
-      newValue = normalizeRadialValue(_value - step, step);
+      if (_value === 0) {
+        newValue = 359;
+      } else {
+        newValue = normalizeRadialValue(_value - step, step);
+      }
     }
 
     if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
       event.preventDefault();
-      newValue = normalizeRadialValue(_value + step, step);
+      if (_value === 359) {
+        newValue = 0;
+      } else {
+        newValue = normalizeRadialValue(_value + step, step);
+      }
     }
 
     if (event.key === 'Home') {
@@ -200,9 +208,9 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
 
       if (currentIndex !== -1) {
         if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
-          newValue = markValues[Math.max(0, currentIndex - 1)];
+          newValue = markValues[currentIndex === 0 ? markValues.length - 1 : currentIndex - 1];
         } else if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
-          newValue = markValues[Math.min(markValues.length - 1, currentIndex + 1)];
+          newValue = markValues[currentIndex === markValues.length - 1 ? 0 : currentIndex + 1];
         } else {
           newValue = findClosestNumber(newValue, markValues);
         }
