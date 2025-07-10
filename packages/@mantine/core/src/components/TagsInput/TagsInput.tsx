@@ -256,7 +256,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
   const handleValueSelect = (val: string) => {
     const isDuplicated = isDuplicate
       ? isDuplicate(val, _value)
-      : _value.some((tag) => tag.toLowerCase() === val.toLowerCase());
+      : _value.some((tag: string) => tag.toLowerCase() === val.toLowerCase());
 
     if (isDuplicated) {
       onDuplicate?.(val);
@@ -281,7 +281,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     const inputValue = _searchValue.trim();
     const { length } = inputValue;
 
-    if (splitChars.includes(event.key) && length > 0) {
+    if (splitChars.includes(event.key) && length > 0 && !readOnly) {
       setValue(
         getSplittedTags({
           splitChars,
@@ -295,7 +295,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       event.preventDefault();
     }
 
-    if (event.key === 'Enter' && length > 0 && !event.nativeEvent.isComposing) {
+    if (event.key === 'Enter' && length > 0 && !event.nativeEvent.isComposing && !readOnly) {
       event.preventDefault();
 
       const hasActiveSelection = !!document.querySelector<HTMLDivElement>(
@@ -313,7 +313,8 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       event.key === 'Backspace' &&
       length === 0 &&
       _value.length > 0 &&
-      !event.nativeEvent.isComposing
+      !event.nativeEvent.isComposing &&
+      !readOnly
     ) {
       onRemove?.(_value[_value.length - 1]);
       setValue(_value.slice(0, _value.length - 1));
@@ -322,6 +323,11 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
 
   const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
     onPaste?.(event);
+
+    if (readOnly) {
+      return;
+    }
+
     event.preventDefault();
 
     if (event.clipboardData) {
@@ -339,7 +345,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     }
   };
 
-  const values = _value.map((item, index) => (
+  const values = _value.map((item: string, index: number) => (
     <Pill
       key={`${item}-${index}`}
       withRemoveButton={!readOnly}
@@ -389,7 +395,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
           handleSearchChange('');
-          _value.length < maxTags && setValue([..._value, optionsLockup[val].label]);
+          !readOnly && _value.length < maxTags && setValue([..._value, optionsLockup[val].label]);
 
           combobox.resetSelectedOption();
         }}
@@ -449,7 +455,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
                   }}
                   onBlur={(event) => {
                     onBlur?.(event);
-                    acceptValueOnBlur && handleValueSelect(_searchValue);
+                    acceptValueOnBlur && !readOnly && handleValueSelect(_searchValue);
                     combobox.closeDropdown();
                   }}
                   onPaste={handlePaste}
