@@ -10,5 +10,8 @@ generateDeclarations({
   typesReplacement: {
     'AccordionHeadingOrder | undefined': '2 | 3 | 4 | 5 | 6',
     'AccordionChevronPosition | undefined': '"left" | "right"',
+    '((value: number) => void) | undefined': '(value: number) => void',
+    '(() => void) | undefined': '() => void',
+    '((value: number) => ReactNode) | undefined': '(value: number) => React.ReactNode',
   },
 });
