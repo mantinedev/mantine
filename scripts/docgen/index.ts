@@ -13,5 +13,13 @@ generateDeclarations({
     '((value: number) => void) | undefined': '(value: number) => void',
     '(() => void) | undefined': '() => void',
     '((value: number) => ReactNode) | undefined': '(value: number) => React.ReactNode',
+    '(InputDescriptionProps & DataAttributes) | undefined': 'InputDescriptionProps',
+    '(InputErrorProps & DataAttributes) | undefined': 'InputErrorProps',
+    '((children: ReactNode) => ReactNode) | undefined':
+      '(children: React.ReactNode) => React.ReactNode',
+    '(InputLabelProps & DataAttributes) | undefined': 'InputLabelProps',
+    '((value: string) => void) | undefined': '(value: string) => void',
+    'MantineSize | (string & {}) | undefined': 'MantineSize',
+    'number | MantineSize | (string & {}) | undefined': 'MantineSize | number',
   },
 });

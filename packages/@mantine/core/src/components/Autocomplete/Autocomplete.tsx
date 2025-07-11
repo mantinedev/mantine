@@ -63,7 +63,7 @@ export interface AutocompleteProps
   /** Called when the clear button is clicked */
   onClear?: () => void;
 
-  /** Props passed to the clear button */
+  /** Props passed down to the clear button */
   clearButtonProps?: InputClearButtonProps;
 
   /** If set, the clear button is displayed when the component has a value @default `false` */

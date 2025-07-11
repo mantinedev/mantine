@@ -10,25 +10,25 @@ export default Layout(MDX_DATA.Avatar);
 
 ## Initials
 
-To display initials instead of the default placeholder, set `name` prop
+To display initials instead of the default placeholder, set the `name` prop
 to the name of the person, for example, `name="John Doe"`. If the name
-is set, you can use `color="initials"` to generate color based on the name:
+is set, you can use `color="initials"` to generate a color based on the name:
 
 <Demo data={AvatarDemos.initials} />
 
 ## Allowed initials colors
 
-By default, all colors from the default theme are allowed for initials, you can restrict them
-by providing `allowedInitialsColors` prop with an array of colors. Note that the default colors
-array does not include custom colors defined in the theme, you need to provide them manually
+By default, all colors from the default theme are allowed for initials. You can restrict them
+by providing the `allowedInitialsColors` prop with an array of colors. Note that the default colors
+array does not include custom colors defined in the theme – you need to provide them manually
 if needed.
 
 <Demo data={AvatarDemos.allowedColors} />
 
 ## Placeholder
 
-If the image cannot be loaded or not provided, `Avatar` will display a placeholder instead. By default,
-placeholder is an icon, but it can be changed to any React node:
+If the image cannot be loaded or is not provided, `Avatar` will display a placeholder instead. By default,
+the placeholder is an icon, but it can be changed to any React node:
 
 <Demo data={AvatarDemos.placeholders} />
 
@@ -38,12 +38,12 @@ placeholder is an icon, but it can be changed to any React node:
 
 ## Avatar.Group
 
-`Avatar.Group` component combines multiple avatars into a stack:
+The `Avatar.Group` component combines multiple avatars into a stack:
 
 <Demo data={AvatarDemos.group} />
 
 Note that you must not wrap child `Avatar` components with any additional elements,
-but you can use wrap `Avatar` with components that do not render any HTML elements
+but you can wrap `Avatar` with components that do not render any HTML elements
 in the current tree, for example [Tooltip](/core/tooltip).
 
 ```tsx
@@ -75,34 +75,28 @@ Example of usage with [Tooltip](/core/tooltip/):
   withNext
 />
 
-Example using `Avatar` as a link:
+Example of using `Avatar` as a link:
 
 <Demo data={AvatarDemos.link} />
 
 ## Accessibility
 
-Avatar renders `<img />` HTML element. Set `alt` prop to describe image,
-it is also used as `title` attribute for avatar placeholder when the image cannot be loaded.
+Avatar renders an `<img />` HTML element. Set the `alt` prop to describe the image –
+it is also used as the `title` attribute for the avatar placeholder when the image cannot be loaded.
 
 ```tsx
 import { Avatar } from '@mantine/core';
 
-function NotOk() {
+function Demo() {
   // ❌ No alt for image
   return <Avatar src="./image.png" />;
-}
 
-function Ok() {
   // ✅ alt is set
   return <Avatar src="./image.png" alt="Rob Johnson" />;
-}
 
-function Ehh() {
   // ✅ title is not required, but still recommended
   return <Avatar>RJ</Avatar>;
-}
 
-function OkPlaceholder() {
   // ✅ title is set on placeholder
   return <Avatar alt="Rob Johnson">RJ</Avatar>;
 }
