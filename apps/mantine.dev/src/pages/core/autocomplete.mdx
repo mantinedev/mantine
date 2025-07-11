@@ -9,22 +9,22 @@ export default Layout(MDX_DATA.Autocomplete);
 ## Not a searchable select
 
 `Autocomplete` is not a searchable select, it is a text input with suggestions.
-Values are not enforced to be one of the suggestions, user can type anything.
-If you need a searchable select, use [Select](/core/select) component instead.
-To learn more about the differences between `Autocomplete` and `Select`, check
+Values are not enforced to be one of the suggestions – users can type anything.
+If you need a searchable select, use the [Select](/core/select) component instead.
+To learn more about the differences between `Autocomplete` and `Select`, check the
 [help center article](https://help.mantine.dev/q/select-autocomplete-difference).
 
 ## Usage
 
-`Autocomplete` provides user a list of suggestions based on the input,
-however user is not limited to suggestions and can type anything.
+`Autocomplete` provides users with a list of suggestions based on the input,
+however users are not limited to suggestions and can type anything.
 
 <Demo data={AutocompleteDemos.usage} />
 
 ## Controlled
 
-`Autocomplete` value must be a string, other types are not supported.
-`onChange` function is called with a string value as a single argument.
+The `Autocomplete` value must be a string; other types are not supported.
+The `onChange` function is called with a string value as a single argument.
 
 ```tsx
 import { useState } from 'react';
@@ -46,8 +46,8 @@ without needing to press the arrow down key first.
 
 ## autoSelectOnBlur
 
-Set `autoSelectOnBlur` prop to automatically select the highlighted option when the input loses focus.
-To see this feature in action: select an option with up/down arrows, then click outside the input:
+Set the `autoSelectOnBlur` prop to automatically select the highlighted option when the input loses focus.
+To see this feature in action: select an option with the up/down arrows, then click outside the input:
 
 <Demo data={AutocompleteDemos.autoSelectOnBlur} />
 
@@ -60,7 +60,7 @@ To see this feature in action: select an option with up/down arrows, then click 
 ## Sort options
 
 By default, options are sorted by their position in the data array. You can change this behavior
-with `filter` function:
+with the `filter` function:
 
 <Demo data={AutocompleteDemos.sort} />
 
@@ -70,26 +70,26 @@ with `filter` function:
 
 ## renderOption
 
-`renderOption` callback allows you to customize option rendering. It is called with option object.
+The `renderOption` callback allows you to customize option rendering. It is called with an option object.
 The function must return a React node.
 
 <Demo data={AutocompleteDemos.renderOption} />
 
 ## Nothing found message
 
-`Autocomplete` component does not support nothing found message. It is designed to
-accept any string as a value, so it does not make sense to show nothing found message.
-If you want to limit user input to suggestions, you can use searchable [Select](/core/select)
-component instead. To learn more about the differences between `Autocomplete` and `Select`, check
+The `Autocomplete` component does not support a nothing found message. It is designed to
+accept any string as a value, so it does not make sense to show a nothing found message.
+If you want to limit user input to suggestions, you can use a searchable [Select](/core/select)
+component instead. To learn more about the differences between `Autocomplete` and `Select`, check the
 [help center article](https://help.mantine.dev/q/select-autocomplete-difference).
 
 ## Scrollable dropdown
 
 By default, the options list is wrapped with [ScrollArea.Autosize](/core/scroll-area).
-You can control dropdown max-height with `maxDropdownHeight` prop if you do not change the default settings.
+You can control the dropdown max-height with the `maxDropdownHeight` prop if you do not change the default settings.
 
 If you want to use native scrollbars, set `withScrollArea={false}`. Note that in this case,
-you will need to change dropdown styles with [Styles API](/styles/styles-api).
+you will need to change the dropdown styles with [Styles API](/styles/styles-api).
 
 <Demo data={AutocompleteDemos.scrollArea} />
 
@@ -99,7 +99,7 @@ you will need to change dropdown styles with [Styles API](/styles/styles-api).
 
 ## Disabled options
 
-When option is disabled, it cannot be selected and is ignored in keyboard navigation.
+When an option is disabled, it cannot be selected and is ignored in keyboard navigation.
 
 <Demo data={AutocompleteDemos.disabledOptions} />
 
@@ -113,7 +113,7 @@ To use `Autocomplete` inside popover, you need to set `withinPortal: false`:
 
 ## Clearable
 
-Set `clearable` prop to display the clear button in the right section. The button is not displayed
+Set the `clearable` prop to display the clear button in the right section. The button is not displayed
 when:
 
 - The component does not have a value
@@ -124,7 +124,7 @@ when:
 
 ## Control dropdown opened state
 
-You can control dropdown opened state with `dropdownOpened` prop. Additionally,
+You can control the dropdown opened state with the `dropdownOpened` prop. Additionally,
 you can use `onDropdownClose` and `onDropdownOpen` to listen to dropdown opened state changes.
 
 <Demo data={AutocompleteDemos.dropdownOpened} />
@@ -132,7 +132,7 @@ you can use `onDropdownClose` and `onDropdownOpen` to listen to dropdown opened 
 ## Dropdown position
 
 By default, the dropdown is displayed below the input if there is enough space; otherwise it is displayed above the input.
-You can change this behavior by setting `position` and `middlewares` props, which are passed down to the
+You can change this behavior by setting the `position` and `middlewares` props, which are passed down to the
 underlying [Popover](/core/popover) component.
 
 Example of dropdown that is always displayed above the input:
@@ -167,14 +167,14 @@ which will be passed down to the underlying [Transition](/core/transition) compo
 ## Read only
 
 Set `readOnly` to make the input read only. When `readOnly` is set,
-`Autocomplete` will not show suggestions and will not call `onChange` function.
+`Autocomplete` will not show suggestions and will not call the `onChange` function.
 
 <Demo data={AutocompleteDemos.readOnly} />
 
 ## Disabled
 
 Set `disabled` to disable the input. When `disabled` is set,
-user cannot interact with the input and `Autocomplete` will not show suggestions.
+users cannot interact with the input and `Autocomplete` will not show suggestions.
 
 <Demo data={AutocompleteDemos.disabled} />
 
