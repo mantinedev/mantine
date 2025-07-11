@@ -6,8 +6,8 @@ export default Layout(MDX_DATA.DateInput);
 
 ## DatePicker props
 
-`DateInput` supports most of the [DatePicker](/dates/date-picker/) props,
-read through [DatePicker](/dates/date-picker/) documentation to learn about all component features that are not listed on this page.
+`DateInput` supports most of the [DatePicker](/dates/date-picker/) props.
+Read through the [DatePicker](/dates/date-picker/) documentation to learn about all component features that are not listed on this page.
 
 ## Usage
 
@@ -15,8 +15,8 @@ read through [DatePicker](/dates/date-picker/) documentation to learn about all 
 
 ## Value format
 
-Use `valueFormat` prop to change [dayjs format](https://day.js.org/docs/en/display/format) of value label.
-To use some custom formats, you need to enable [custom parse format](https://day.js.org/docs/en/plugin/custom-parse-format) plugin:
+Use the `valueFormat` prop to change the [dayjs format](https://day.js.org/docs/en/display/format) of the value label.
+To use some custom formats, you need to enable the [custom parse format](https://day.js.org/docs/en/plugin/custom-parse-format) plugin:
 
 ```tsx
 // Do this once in your application root file
@@ -26,30 +26,30 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 ```
 
-Example of using DateInput with custom format:
+Example of using DateInput with a custom format:
 
 <Demo data={DateInputDemos.format} />
 
 
 ## Date parser
 
-Use `dateParser` prop to replace default date parser. Parser function accepts user input (string)
-and must return `Date` object:
+Use the `dateParser` prop to replace the default date parser. The parser function accepts user input (string)
+and must return a `Date` object:
 
 <Demo data={DateInputDemos.parser} />
 
 ## Allow clear
 
-Set `clearable` prop to allow removing value from the input. Input will be cleared if
-user selects the same date in dropdown or clears input value:
+Set the `clearable` prop to allow removing the value from the input. The input will be cleared if the
+user selects the same date in the dropdown or clears the input value:
 
 <Demo data={DateInputDemos.clearable} />
 
 ## Min and max date
 
-Set `minDate` and `maxDate` props to define min and max dates. If date that is after `maxDate`
-or before `minDate` is entered, then it will be considered invalid and input value will be reverted
-to last known valid date value.
+Set the `minDate` and `maxDate` props to define minimum and maximum dates. If a date that is after `maxDate`
+or before `minDate` is entered, it will be considered invalid and the input value will be reverted
+to the last known valid date value.
 
 <Demo data={DateInputDemos.minMax} />
 

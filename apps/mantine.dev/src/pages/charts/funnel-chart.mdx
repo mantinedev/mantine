@@ -6,21 +6,21 @@ export default Layout(MDX_DATA.FunnelChart);
 
 ## Usage
 
-`FunnelChart` is based on [FunnelChart recharts component](https://recharts.org/en-US/api/FunnelChart):
+`FunnelChart` is based on the [FunnelChart recharts component](https://recharts.org/en-US/api/FunnelChart):
 
 <Demo data={FunnelChartDemos.usage} />
 
 ## Segments labels
 
-Set `withLabels` prop to display labels next to each segment.
-Use `labelPosition` prop to control the position of labels relative to the corresponding segment.
+Set the `withLabels` prop to display labels next to each segment.
+Use the `labelPosition` prop to control the position of labels relative to the corresponding segment.
 
 <Demo data={FunnelChartDemos.withLabels} />
 
 ## Size and thickness
 
-Set `size` prop to control width and height of the chart.
-You can override this behavior by setting `h` [style prop](/styles/style-props).
+Set the `size` prop to control the width and height of the chart.
+You can override this behavior by setting the `h` [style prop](/styles/style-props).
 
 <Demo data={FunnelChartDemos.size} />
 
@@ -47,11 +47,11 @@ To remove the tooltip, set `withTooltip={false}`:
 
 ## Segments stroke
 
-Use `strokeWidth` prop to control the width of the stroke around each segment:
+Use the `strokeWidth` prop to control the width of the stroke around each segment:
 
 <Demo data={FunnelChartDemos.strokeWidth} />
 
-To change color of the stroke, use `strokeColor` prop. You can reference colors from [theme](/theming/theme-object) the same way as in
+To change the color of the stroke, use the `strokeColor` prop. You can reference colors from the [theme](/theming/theme-object) the same way as in
 other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
 color value is also accepted.
 
@@ -63,8 +63,8 @@ function Demo() {
 }
 ```
 
-By default, segments stroke color is the same as the background color of the body element
+By default, the segments stroke color is the same as the background color of the body element
 (`--mantine-color-body` CSS variable). If you want to change it depending on the color scheme,
-define CSS variable and pass it to the `strokeColor` prop:
+define a CSS variable and pass it to the `strokeColor` prop:
 
 <Demo data={FunnelChartDemos.strokeColor} />

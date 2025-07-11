@@ -6,8 +6,8 @@ export default Layout(MDX_DATA.useFullscreen);
 
 ## Usage
 
-`use-fullscreen` allows to enter/exit fullscreen for given element using the [Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API).
-By default, if you don't provide `ref`, the hook will target `document.documentElement`:
+The `use-fullscreen` hook allows you to enter/exit fullscreen for a given element using the [Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API).
+By default, if you don't provide a `ref`, the hook will target `document.documentElement`:
 
 <Demo data={HooksDemos.useFullscreenDemo} />
 
@@ -32,7 +32,7 @@ function useFullscreen<T extends HTMLElement = any>(): UseFullscreenReturnValue<
 
 ## Exported types
 
-`UseFullscreenReturnValue` type is exported from `@mantine/hooks` package,
+The `UseFullscreenReturnValue` type is exported from the `@mantine/hooks` package;
 you can import it in your application:
 
 ```tsx

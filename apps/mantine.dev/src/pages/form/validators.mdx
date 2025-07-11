@@ -6,21 +6,21 @@ export default Layout(MDX_DATA.formValidators);
 
 ## Usage
 
-`@mantine/form` package exports several functions that can be used in [validation rules object](/form/validation/#validation-with-rules-object).
-Validation functions are tiny in size and provide basic validation, if you have complex validation requirements, use other types of [validation](/form/validation/).
+The `@mantine/form` package exports several functions that can be used in [validation rules object](/form/validation/#validation-with-rules-object).
+Validation functions are tiny in size and provide basic validation. If you have complex validation requirements, use other types of [validation](/form/validation/).
 
 <Demo data={FormDemos.validators} />
 
 ## Optional error
 
-Last argument of all validator functions below is optional. If error is not set, then fields with failed validation will
-only have invalid styles without error message:
+The last argument of all validator functions below is optional. If the error is not set, then fields with failed validation will
+only have invalid styles without an error message:
 
 <Demo data={FormDemos.validatorsEmpty} />
 
 ## isNotEmpty
 
-`isNotEmpty` checks that form value is not empty. Empty string, empty array, `false`, `null` and `undefined`
+`isNotEmpty` checks that the form value is not empty. Empty string, empty array, `false`, `null` and `undefined`
 values are considered to be empty. Strings are trimmed before validation.
 
 ```tsx
@@ -53,7 +53,7 @@ const form = useForm({
 
 ## isEmail
 
-`isEmail` uses `/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/` regexp to determine whether form value is an email:
+`isEmail` uses `/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/` regexp to determine whether the form value is an email:
 
 ```tsx
 import { isEmail, useForm } from '@mantine/form';
@@ -72,7 +72,7 @@ const form = useForm({
 
 ## matches
 
-`matches` checks whether form value matches given regexp. If form value is not a string, validation will be failed.
+`matches` checks whether the form value matches the given regexp. If the form value is not a string, validation will fail.
 
 ```tsx
 import { matches, useForm } from '@mantine/form';
@@ -91,7 +91,7 @@ const form = useForm({
 
 ## isInRange
 
-`isInRange` checks whether form value is within given `min`-`max` range. If form value is not a number, validation will be failed.
+`isInRange` checks whether the form value is within the given `min`-`max` range. If the form value is not a number, validation will fail.
 
 ```tsx
 import { isInRange, useForm } from '@mantine/form';
@@ -117,8 +117,8 @@ const form = useForm({
 
 ## hasLength
 
-`hasLength` check whether form value length is within given `min`-`max` range.
-`hasLength` will work correctly with strings, arrays and any other objects that have `length` property.
+`hasLength` checks whether the form value length is within the given `min`-`max` range.
+`hasLength` will work correctly with strings, arrays and any other objects that have a `length` property.
 Strings are trimmed before validation.
 
 ```tsx
@@ -153,7 +153,7 @@ const form = useForm({
 
 ## matchesField
 
-`matchesField` checks whether form value is the same as value in other form field.
+`matchesField` checks whether the form value is the same as the value in another form field.
 Note that `matchesField` can only work with primitive values (arrays and objects cannot be compared).
 
 ```tsx
@@ -177,7 +177,7 @@ const form = useForm({
 
 ## isJSONString
 
-`isJSONString` checks whether form value is a valid JSON string.
+`isJSONString` checks whether the form value is a valid JSON string.
 
 ```tsx
 import { isJSONString, useForm } from '@mantine/form';
@@ -196,7 +196,7 @@ const form = useForm({
 
 ## isNotEmptyHTML
 
-`isNotEmptyHTML` checks that form value is not an empty HTML string. Empty string, string with only HTML tags and whitespace are considered to be empty.
+`isNotEmptyHTML` checks that the form value is not an empty HTML string. Empty string, string with only HTML tags and whitespace are considered to be empty.
 
 ```tsx
 import { isNotEmptyHTML, useForm } from '@mantine/form';

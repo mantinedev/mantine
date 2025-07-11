@@ -10,14 +10,14 @@ export default Layout(MDX_DATA.Stepper);
 
 ## Allow step select
 
-To disable step selection, set `allowStepSelect` prop on `Stepper.Step` component.
-It can be used to prevent the user from reaching next steps while letting them go back and forth between steps they've already reached before:
+To disable step selection, set the `allowStepSelect` prop on the `Stepper.Step` component.
+It can be used to prevent the user from reaching the next steps while letting them go back and forth between steps they've already reached before:
 
 <Demo data={StepperDemos.allowStepSelect} />
 
 ## Disable next steps selection
 
-Another way to disable selection of upcoming steps is to use the `allowNextStepsSelect` directly on the `Stepper` component.
+Another way to disable the selection of upcoming steps is to use the `allowNextStepsSelect` directly on the `Stepper` component.
 This is useful when you don't need to control the behavior specifically for each step.
 
 <Demo data={StepperDemos.allowNextStepsSelect} />
@@ -27,25 +27,25 @@ This is useful when you don't need to control the behavior specifically for each
 <Demo data={StepperDemos.configurator} />
 
 Component size is controlled by two props: `size` and `iconSize`.
-`size` prop controls icon size, label and description font size.
-`iconSize` allows to overwrite icon size separately from other size values:
+The `size` prop controls icon size, label and description font size.
+`iconSize` allows you to overwrite the icon size separately from other size values:
 
 <Demo data={StepperDemos.iconSizeConfigurator} />
 
 ## With custom icons
 
-You can replace the step icon by setting `icon` prop on `Stepper.Step` component.
-To change completed check icon set `completedIcon` on `Stepper` component.
+You can replace the step icon by setting the `icon` prop on the `Stepper.Step` component.
+To change the completed check icon, set `completedIcon` on the `Stepper` component.
 You can use any React node as an icon: component, string, number:
 
 <Demo data={StepperDemos.icons} />
 
 You can use `Stepper` with icons only. Note that in this case, you will have to
-set `aria-label` or `title` on `Stepper.Step` component to make it accessible:
+set `aria-label` or `title` on the `Stepper.Step` component to make it accessible:
 
 <Demo data={StepperDemos.iconsOnly} />
 
-You can also change the completed icon for each step, for example, to indicate error state:
+You can also change the completed icon for each step, for example, to indicate an error state:
 
 <Demo data={StepperDemos.stepColor} />
 
@@ -55,13 +55,13 @@ You can also change the completed icon for each step, for example, to indicate e
 
 ## Icon position
 
-To change step icon and body arrangement, set `iconPosition="right"`:
+To change the step icon and body arrangement, set `iconPosition="right"`:
 
 <Demo data={StepperDemos.iconPosition} />
 
 ## Loading state
 
-To indicate loading state set `loading` prop on Step component, `Loader` will replace step icon.
+To indicate the loading state, set the `loading` prop on the Step component; the `Loader` will replace the step icon.
 You can configure the default loader in the [theme](/theming/theme-object/).
 
 <Demo data={StepperDemos.loading} />
@@ -80,7 +80,7 @@ Examples of styles customization with Styles API:
 
 ## Get step ref
 
-You can get refs of step button and stepper root element (div):
+You can get refs of the step button and stepper root element (div):
 
 ```tsx
 import { useRef } from 'react';
@@ -101,8 +101,8 @@ function MyStepper() {
 
 ## Wrap Stepper.Step
 
-`Stepper` component relies on `Stepper.Step` order. Wrapping `Stepper.Step` is not supported,
-Instead you will need to use different approaches:
+`Stepper` component relies on `Stepper.Step` order. Wrapping `Stepper.Step` is not supported.
+Instead, you will need to use different approaches:
 
 ```tsx
 import { Stepper } from '@mantine/core';
@@ -138,8 +138,8 @@ function Demo() {
 
 ## Accessibility
 
-`<Stepper.Step />` components render button element, set `aria-label` or `title` props
-to make component visible for screen readers in case you do not specify `label` or `description`:
+`<Stepper.Step />` components render a button element; set `aria-label` or `title` props
+to make the component visible for screen readers in case you do not specify `label` or `description`:
 
 ```tsx
 import { Stepper } from '@mantine/core';

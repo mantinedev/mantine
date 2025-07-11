@@ -26,11 +26,11 @@ function Demo() {
 
 ## Control label
 
-To change label behavior and appearance, set the following props:
+To change the label behavior and appearance, set the following props:
 
-- `label` – formatter function, accepts value as an argument, set null to disable label, defaults to `f => f`
-- `labelAlwaysOn` – if true – label will always be displayed, by default label is visible only when user is dragging
-- `labelTransitionProps` – props passed down to the [Transition](/core/transition) component, can be used to customize label animation
+- `label` – formatter function, accepts value as an argument, set to null to disable the label, defaults to `f => f`
+- `labelAlwaysOn` – if true, the label will always be displayed; by default the label is visible only when the user is dragging
+- `labelTransitionProps` – props passed down to the [Transition](/core/transition) component, can be used to customize the label animation
 
 <Demo data={RangeSliderDemos.label} />
 
@@ -41,29 +41,29 @@ To change label behavior and appearance, set the following props:
 ## Domain
 
 By default, `min` and `max` values define the possible range of values.
-`domain` prop allows setting the possible range of values independently of the
+The `domain` prop allows setting the possible range of values independently of the
 `min` and `max` values:
 
 <Demo data={RangeSliderDemos.domain} />
 
 ## Decimal values
 
-To use `RangeSlider` with decimal values, set `min`, `max` and `step` props:
+To use `RangeSlider` with decimal values, set the `min`, `max`, and `step` props:
 
 <Demo data={RangeSliderDemos.decimal} />
 
 ## minRange
 
-Use `minRange` prop to control minimum range between `from` and `to` values
+Use the `minRange` prop to control the minimum range between `from` and `to` values
 in `RangeSlider`. The default value is `10`. The example below shows how to
-use `minRange` prop to capture decimal values from the user:
+use the `minRange` prop to capture decimal values from the user:
 
 <Demo data={RangeSliderDemos.decimal} />
 
 ## pushOnOverlap
 
-`pushOnOverlap` prop controls whether the thumbs should push each other when they overlap.
-By default, `pushOnOverlap` is `true`, if you want to disable this behavior, set it to `false`.
+The `pushOnOverlap` prop controls whether the thumbs should push each other when they overlap.
+By default, `pushOnOverlap` is `true`. If you want to disable this behavior, set it to `false`.
 
 Example of `pushOnOverlap={false}`:
 
@@ -71,7 +71,7 @@ Example of `pushOnOverlap={false}`:
 
 ## Marks
 
-Add any number of marks to slider by setting `marks` prop to an array of objects:
+Add any number of marks to the slider by setting the `marks` prop to an array of objects:
 
 ```tsx
 const marks = [

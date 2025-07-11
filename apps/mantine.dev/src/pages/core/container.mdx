@@ -6,7 +6,7 @@ export default Layout(MDX_DATA.Container);
 
 ## Grid strategy
 
-Starting from 8.2.0, `Container` supports `strategy="grid"` prop which enables more
+Starting from 8.2.0, `Container` supports the `strategy="grid"` prop which enables more
 features.
 
 Differences from the default `strategy="block"`:
@@ -19,7 +19,7 @@ Features supported by `strategy="grid"`:
 - Children with `data-breakout` attribute take the entire width of the container's parent element
 - Children with `data-container` inside `data-breakout` have the same width as the main grid column
 
-`strategy="grid"` will replace `strategy="block"` in 9.0 release, it is
+`strategy="grid"` will replace `strategy="block"` in the 9.0 release, it is
 recommended to use it in new projects and migrate existing projects to it.
 
 Example of using breakout feature:
@@ -28,16 +28,16 @@ Example of using breakout feature:
 
 ## Usage
 
-`Container` centers content and limits its `max-width` to the value specified in `size` prop.
-Note that the `size` prop does not make `max-width` responsive, for example,
-when it set to `lg` it will always be `lg` regardless of screen size.
+`Container` centers content and limits its `max-width` to the value specified in the `size` prop.
+Note that the `size` prop does not make `max-width` responsive. For example,
+when it is set to `lg` it will always be `lg` regardless of screen size.
 
 <Demo data={ContainerDemos.usage} />
 
 ## Fluid
 
-Set `fluid` prop to make container fluid, it will take 100% of available width,
-it is the same as setting `size="100%"`.
+Set the `fluid` prop to make the container fluid. It will take 100% of available width,
+which is the same as setting `size="100%"`.
 
 <Demo data={ContainerDemos.fluid} />
 
@@ -51,7 +51,7 @@ on [theme](/theming/theme-object):
 ## Responsive max-width
 
 To make `Container` `max-width` responsive, use [Styles API](/styles/styles-api) to set
-`classNames`. For example, you can add `responsive` size that will make `Container`
+`classNames`. For example, you can add a `responsive` size that will make the `Container`
 `max-width` different depending on screen size:
 
 <Demo data={ContainerDemos.responsive} />

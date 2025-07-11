@@ -22,8 +22,8 @@ const elements = [
 
 ## data prop
 
-You can use `data` prop to automatically generate table rows from array of React nodes.
-`data` prop accepts an object with the following properties:
+You can use the `data` prop to automatically generate table rows from an array of React nodes.
+The `data` prop accepts an object with the following properties:
 
 - `head` – an array of React nodes (`React.ReactNode[]`) to render `Table.Th` in `Table.Thead`
 - `foot` – an array of React nodes (`React.ReactNode[]`) to render `Table.Th` in `Table.Tfoot`
@@ -34,21 +34,21 @@ You can use `data` prop to automatically generate table rows from array of React
 
 ## Sticky header
 
-Set `stickyHeader` to make table header sticky. To customize top position of the header use `stickyHeaderOffset` prop:
-it is useful when you have a fixed header in your application. For example, Mantine documentation website has a fixed
+Set `stickyHeader` to make the table header sticky. To customize the top position of the header, use the `stickyHeaderOffset` prop:
+it is useful when you have a fixed header in your application. For example, the Mantine documentation website has a fixed
 header with 60px height:
 
 <Demo data={TableDemos.stickyHeader} />
 
 ## Spacing
 
-To control spacing use `horizontalSpacing` and `verticalSpacing` props. Both props support spacing from `theme.spacing` and any valid CSS value to set cell padding:
+To control spacing, use the `horizontalSpacing` and `verticalSpacing` props. Both props support spacing from `theme.spacing` and any valid CSS value to set cell padding:
 
 <Demo data={TableDemos.spacingConfigurator} />
 
 ## Caption and tfoot
 
-Table support tfoot and caption elements. Set `captionSide` prop (top or bottom) to change caption position.
+Table supports tfoot and caption elements. Set the `captionSide` prop (top or bottom) to change the caption position.
 
 <Demo data={TableDemos.captions} />
 
@@ -58,8 +58,8 @@ Table support tfoot and caption elements. Set `captionSide` prop (top or bottom)
 
 ## Scroll container
 
-To prevent viewport overflow wrap `Table` with `Table.ScrollContainer`.
-The component accepts `minWidth` prop which sets minimum width below which table will be scrollable.
+To prevent viewport overflow, wrap `Table` with `Table.ScrollContainer`.
+The component accepts a `minWidth` prop which sets the minimum width below which the table will be scrollable.
 
 <Demo data={TableDemos.scrollContainer} />
 
@@ -68,20 +68,20 @@ to native scrollbars by setting `type="native"`:
 
 <Demo data={TableDemos.scrollContainerNative} />
 
-You can also set `maxHeight` prop on `Table.ScrollContainer` to limit table height:
+You can also set the `maxHeight` prop on `Table.ScrollContainer` to limit the table height:
 
 <Demo data={TableDemos.scrollContainerMaxHeight} />
 
 ## Vertical variant
 
-Set `variant="vertical"` to render table with vertical layout:
+Set `variant="vertical"` to render the table with a vertical layout:
 
 <Demo data={TableDemos.vertical} />
 
 ## Tabular numbers
 
-Set `tabularNums` prop to render numbers in tabular style. It sets
-`font-variant-numeric: tabular-nums` which makes numbers to have equal width.
+Set the `tabularNums` prop to render numbers in tabular style. It sets
+`font-variant-numeric: tabular-nums` which makes numbers have equal width.
 This is useful when you have columns with numbers and you want them to be aligned:
 
 <Demo data={TableDemos.tabularNums} />

@@ -8,15 +8,15 @@ export default Layout(MDX_DATA.Select);
 
 ## Usage
 
-`Select` allows capturing user input based on suggestions from the list.
+`Select` allows capturing user input based on suggestions from a list.
 Unlike [Autocomplete](/core/autocomplete/), `Select` does not allow entering custom values.
 
 <Demo data={SelectDemos.usage} />
 
 ## Controlled
 
-`Select` value must be a string, other types are not supported.
-`onChange` function is called with a string value as a single argument.
+The `Select` value must be a string, other types are not supported.
+The `onChange` function is called with a string value as a single argument.
 
 ```tsx
 import { useState } from 'react';
@@ -35,7 +35,7 @@ function Demo() {
 - `value` - string value of the selected option
 - `option` – selected option object
 
-If you prefer object format in state, use second argument of onChange handler:
+If you prefer the object format in state, use the second argument of the onChange handler:
 
 ```tsx
 import { useState } from 'react';
@@ -55,14 +55,14 @@ function Demo() {
 
 ## autoSelectOnBlur
 
-Set `autoSelectOnBlur` prop to automatically select the highlighted option when the input loses focus.
-To see this feature in action: select an option with up/down arrows, then click outside the input:
+Set the `autoSelectOnBlur` prop to automatically select the highlighted option when the input loses focus.
+To see this feature in action: select an option with the up/down arrows, then click outside the input:
 
 <Demo data={SelectDemos.autoSelectOnBlur} />
 
 ## Clearable
 
-Set `clearable` prop to display the clear button in the right section. The button is not displayed
+Set the `clearable` prop to display the clear button in the right section. The button is not displayed
 when:
 
 - The component does not have a value
@@ -73,20 +73,20 @@ when:
 
 ## Allow deselect
 
-`allowDeselect` prop determines whether the value should be deselected when user clicks on the selected option.
+The `allowDeselect` prop determines whether the value should be deselected when the user clicks on the selected option.
 By default, `allowDeselect` is `true`:
 
 <Demo data={SelectDemos.allowDeselect} />
 
 ## Searchable
 
-Set `searchable` prop to allow filtering options by user input:
+Set the `searchable` prop to allow filtering options by user input:
 
 <Demo data={SelectDemos.searchable} />
 
 ## Controlled search value
 
-You can control search value with `searchValue` and `onSearchChange` props:
+You can control the search value with `searchValue` and `onSearchChange` props:
 
 ```tsx
 import { useState } from 'react';
@@ -114,7 +114,7 @@ or there is no data available. If the `nothingFoundMessage` prop is not set, the
 
 ## Checked option icon
 
-Set `checkIconPosition` prop to `left` or `right` to control position of check icon in active option.
+Set the `checkIconPosition` prop to `left` or `right` to control the position of the check icon in the active option.
 To remove the check icon, set `withCheckIcon={false}`.
 
 <Demo data={SelectDemos.checkIcon} />
@@ -128,7 +128,7 @@ To remove the check icon, set `withCheckIcon={false}`.
 ## Sort options
 
 By default, options are sorted by their position in the data array. You can change this behavior
-with `filter` function:
+with the `filter` function:
 
 <Demo data={SelectDemos.sort} />
 
@@ -138,7 +138,7 @@ with `filter` function:
 
 ## renderOption
 
-`renderOption` callback allows you to customize option rendering. It is called with option object and
+The `renderOption` callback allows you to customize option rendering. It is called with an option object and
 checked state. The function must return a React node.
 
 <Demo data={SelectDemos.renderOption} />
@@ -146,10 +146,10 @@ checked state. The function must return a React node.
 ## Scrollable dropdown
 
 By default, the options list is wrapped with [ScrollArea.Autosize](/core/scroll-area).
-You can control dropdown max-height with `maxDropdownHeight` prop if you do not change the default settings.
+You can control the dropdown max-height with the `maxDropdownHeight` prop if you do not change the default settings.
 
 If you want to use native scrollbars, set `withScrollArea={false}`. Note that in this case,
-you will need to change dropdown styles with [Styles API](/styles/styles-api).
+you will need to change the dropdown styles with [Styles API](/styles/styles-api).
 
 <Demo data={SelectDemos.scrollArea} />
 
@@ -159,7 +159,7 @@ you will need to change dropdown styles with [Styles API](/styles/styles-api).
 
 ## Disabled options
 
-When option is disabled, it cannot be selected and is ignored in keyboard navigation.
+When an option is disabled, it cannot be selected and is ignored in keyboard navigation.
 
 <Demo data={SelectDemos.disabledOptions} />
 
@@ -173,7 +173,7 @@ To use `Select` inside popover, you need to set `withinPortal: false`:
 
 ## Control dropdown opened state
 
-You can control dropdown opened state with `dropdownOpened` prop. Additionally,
+You can control the dropdown opened state with the `dropdownOpened` prop. Additionally,
 you can use `onDropdownClose` and `onDropdownOpen` to listen to dropdown opened state changes.
 
 <Demo data={SelectDemos.dropdownOpened} />
@@ -181,23 +181,23 @@ you can use `onDropdownClose` and `onDropdownOpen` to listen to dropdown opened 
 ## Dropdown position
 
 By default, the dropdown is displayed below the input if there is enough space; otherwise it is displayed above the input.
-You can change this behavior by setting `position` and `middlewares` props, which are passed down to the
+You can change this behavior by setting the `position` and `middlewares` props, which are passed down to the
 underlying [Popover](/core/popover) component.
 
-Example of dropdown that is always displayed above the input:
+Example of a dropdown that is always displayed above the input:
 
 <Demo data={SelectDemos.dropdownPosition} />
 
 ## Dropdown width
 
-To change dropdown width, set `width` prop in `comboboxProps`. By default,
-dropdown width is equal to the input width.
+To change the dropdown width, set the `width` prop in `comboboxProps`. By default,
+the dropdown width is equal to the input width.
 
 <Demo data={SelectDemos.dropdownWidth} />
 
 ## Dropdown offset
 
-To change dropdown offset, set `offset` prop in `comboboxProps`:
+To change the dropdown offset, set the `offset` prop in `comboboxProps`:
 
 <Demo data={SelectDemos.dropdownOffset} />
 
@@ -229,14 +229,14 @@ which will be passed down to the underlying [Transition](/core/transition) compo
 ## Read only
 
 Set `readOnly` to make the input read only. When `readOnly` is set,
-`Select` will not show suggestions and will not call `onChange` function.
+`Select` will not show suggestions and will not call the `onChange` function.
 
 <Demo data={SelectDemos.readOnly} />
 
 ## Disabled
 
 Set `disabled` to disable the input. When `disabled` is set,
-user cannot interact with the input and `Select` will not show suggestions.
+the user cannot interact with the input and `Select` will not show suggestions.
 
 <Demo data={SelectDemos.disabled} />
 
@@ -252,7 +252,7 @@ user cannot interact with the input and `Select` will not show suggestions.
 
 <InputAccessibility component="Select" />
 
-To set `aria-label` on the clear button, use `clearButtonProps`. Note that it is required
+To set `aria-label` on the clear button, use `clearButtonProps`. Note that this is required
 only when `clearable` is set.
 
 ```tsx

@@ -6,8 +6,8 @@ export default Layout(MDX_DATA.DateTimePicker);
 
 ## DatePicker props
 
-`DateTimePicker` supports most of the [DatePicker](/dates/date-picker/) props,
-read through [DatePicker](/dates/date-picker/) documentation to learn about all component features that are not listed on this page.
+`DateTimePicker` supports most of the [DatePicker](/dates/date-picker/) props.
+Read through the [DatePicker](/dates/date-picker/) documentation to learn about all component features that are not listed on this page.
 
 ## Usage
 
@@ -19,21 +19,21 @@ read through [DatePicker](/dates/date-picker/) documentation to learn about all 
 
 ## Presets
 
-Use `presets` prop to add custom date presets. Presets are displayed next to the calendar:
+Use the `presets` prop to add custom date presets. Presets are displayed next to the calendar:
 
 <Demo data={DateTimePickerDemos.presets} />
 
 ## TimePicker props
 
 You can pass props down to the underlying [TimePicker](/dates/time-picker/) component
-with `timePickerProps` prop. Example of enabling dropdown and setting `12h` format
-for time picker:
+with the `timePickerProps` prop. Example of enabling dropdown and setting `12h` format
+for the time picker:
 
 <Demo data={DateTimePickerDemos.timePickerProps} />
 
 ## Value format
 
-Use `valueFormat` prop to change [dayjs format](https://day.js.org/docs/en/display/format) of value label:
+Use the `valueFormat` prop to change the [dayjs format](https://day.js.org/docs/en/display/format) of the value label:
 
 <Demo data={DateTimePickerDemos.format} />
 
@@ -49,14 +49,14 @@ Use `valueFormat` prop to change [dayjs format](https://day.js.org/docs/en/displ
 
 ## Clearable
 
-Set `clearable` prop to display clear button in the right section. Note that if you set `rightSection`
-prop, clear button will not be displayed.
+Set the `clearable` prop to display a clear button in the right section. Note that if you set the `rightSection`
+prop, the clear button will not be displayed.
 
 <Demo data={DateTimePickerDemos.clearable} />
 
 ## Open picker in modal
 
-By default, picker is rendered inside [Popover](/core/popover/).
+By default, the picker is rendered inside [Popover](/core/popover/).
 You can change that to [Modal](/core/modal/) by setting `dropdownType="modal"`:
 
 <Demo data={DateTimePickerDemos.modal} />

@@ -6,23 +6,23 @@ export default Layout(MDX_DATA.Overlay);
 
 ## Usage
 
-`Overlay` takes 100% of width and height of parent container or viewport if `fixed` prop is set.
-Set `color` and `backgroundOpacity` props to change `Overlay` background-color. Note that `backgroundOpacity` prop
-does not change CSS opacity property, it changes background-color. For example, if you set
-`color="#000"` and `backgroundOpacity={0.85}` background-color will be `rgba(0, 0, 0, 0.85)`:
+`Overlay` takes 100% of the width and height of the parent container or viewport if the `fixed` prop is set.
+Set the `color` and `backgroundOpacity` props to change the `Overlay` background-color. Note that the `backgroundOpacity` prop
+does not change the CSS opacity property; it changes the background-color. For example, if you set
+`color="#000"` and `backgroundOpacity={0.85}`, the background-color will be `rgba(0, 0, 0, 0.85)`:
 
 <Demo data={OverlayDemos.usage} />
 
 ## Gradient
 
-Set `gradient` prop to use background-image instead of background-color. When `gradient` prop is set,
-`color` and `backgroundOpacity` props are ignored.
+Set the `gradient` prop to use background-image instead of background-color. When the `gradient` prop is set,
+the `color` and `backgroundOpacity` props are ignored.
 
 <Demo data={OverlayDemos.gradient} />
 
 ## Blur
 
-Set `blur` prop to add `backdrop-filter: blur({value})` styles.
+Set the `blur` prop to add `backdrop-filter: blur({value})` styles.
 Note that `backdrop-filter` [is not supported in all browsers](https://caniuse.com/css-backdrop-filter).
 
 <Demo data={OverlayDemos.blur} />

@@ -6,7 +6,7 @@ export default Layout(MDX_DATA.useUncontrolled);
 
 ## Usage
 
-`use-uncontrolled` manages state for both controlled and uncontrolled components:
+The `use-uncontrolled` hook manages state for both controlled and uncontrolled components:
 
 ```tsx
 import { useUncontrolled } from '@mantine/hooks';
@@ -41,7 +41,7 @@ function CustomInput({
 
 ## Set value type
 
-By default, the hook will set type automatically, but you can provide your own type:
+By default, the hook will set the type automatically, but you can provide your own type:
 
 ```tsx
 import { useUncontrolled } from '@mantine/hooks';
@@ -80,7 +80,7 @@ type UseUncontrolledReturnValue<T> = [
   /** Handler to update the state, passes `value` and `payload` to `onChange` */
   (value: T, ...payload: any[]) => void,
 
-  /** True if the state is controlled, false if uncontrolled */
+  /** True if the state is controlled; false if uncontrolled */
   boolean,
 ];
 
@@ -89,8 +89,7 @@ function useUncontrolled<T>(input: UseUncontrolledOptions<T>): UseUncontrolledRe
 
 ## Exported types
 
-`UseUncontrolledOptions` and `UseUncontrolledReturnValue` types are exported from `@mantine/hooks` package,
-you can import them in your application:
+The `UseUncontrolledOptions` and `UseUncontrolledReturnValue` types are exported from `@mantine/hooks`;
 
 ```tsx
 import type { UseUncontrolledOptions, UseUncontrolledReturnValue } from '@mantine/hooks';

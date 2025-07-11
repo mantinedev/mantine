@@ -10,69 +10,69 @@ export default Layout(MDX_DATA.YearPicker);
 
 ## Allow deselect
 
-Set `allowDeselect` to allow user to deselect current selected date by clicking on it.
-`allowDeselect` is disregarded when `type` prop is `range` or `multiple`. When date is
-deselected `onChange` is called with `null`.
+Set `allowDeselect` to allow users to deselect the currently selected date by clicking on it.
+`allowDeselect` is disregarded when the `type` prop is `range` or `multiple`. When a date is
+deselected, `onChange` is called with `null`.
 
 <Demo data={YearPickerDemos.deselect} />
 
 ## Multiple dates
 
-Set `type="multiple"` to allow user to pick multiple dates:
+Set `type="multiple"` to allow users to pick multiple dates:
 
 <Demo data={YearPickerDemos.multiple} />
 
 ## Dates range
 
-Set `type="range"` to allow user to pick dates range:
+Set `type="range"` to allow users to pick a date range:
 
 <Demo data={YearPickerDemos.range} />
 
 ## Single date in range
 
-By default, it is not allowed to select single date as range – when user clicks the same date second time it is deselected.
-To change this behavior set `allowSingleDateInRange` prop. `allowSingleDateInRange` is ignored when
+By default, it is not allowed to select a single date as a range – when the user clicks the same date a second time, it is deselected.
+To change this behavior, set the `allowSingleDateInRange` prop. `allowSingleDateInRange` is ignored when the
 `type` prop is not `range`.
 
 <Demo data={YearPickerDemos.singleRange} />
 
 ## Default date
 
-Use `defaultDate` prop to set date value that will be used to determine which decade should be displayed initially.
-For example to display `2040 – 2049` decade set `defaultDate={new Date(2040, 1)}`. If value is not specified,
-then `defaultDate` will use `new Date()`. Month, day, minutes and seconds are ignored in provided date object, only year is used –
+Use the `defaultDate` prop to set the date value that will be used to determine which decade should be displayed initially.
+For example, to display the `2040 – 2049` decade, set `defaultDate={new Date(2040, 1)}`. If the value is not specified,
+then `defaultDate` will use `new Date()`. Month, day, minutes and seconds are ignored in the provided date object, only the year is used –
 you can specify any date value.
 
-Note that if you set `date` prop, then `defaultDate` value will be ignored.
+Note that if you set the `date` prop, then the `defaultDate` value will be ignored.
 
 <Demo data={YearPickerDemos.defaultDate} />
 
 ## Controlled date
 
-Set `date`, and `onDateChange` props to make currently displayed decade controlled.
-By doing so, you can customize date picking experience, for example, when user selects first date in range,
-you can add 20 years to current date value:
+Set the `date` and `onDateChange` props to make the currently displayed decade controlled.
+By doing so, you can customize the date picking experience. For example, when the user selects the first date in a range,
+you can add 20 years to the current date value:
 
 <Demo data={YearPickerDemos.controlledDate} />
 
 ## Min and max date
 
-Set `minDate` and `maxDate` props to define min and max dates. If previous/next page is not available
-then corresponding control will be disabled.
+Set the `minDate` and `maxDate` props to define minimum and maximum dates. If the previous/next page is not available,
+then the corresponding control will be disabled.
 
 <Demo data={YearPickerDemos.minMax} />
 
 ## Add props to year control
 
-You can add props to year controls with `getYearControlProps` function. It accepts year date as single argument,
-props returned from the function will be added to year control. For example, it can be used to disable specific
+You can add props to year controls with the `getYearControlProps` function. It accepts a year date as a single argument,
+and props returned from the function will be added to the year control. For example, it can be used to disable a specific
 control or add styles:
 
 <Demo data={YearPickerDemos.controlProps} />
 
 ## Number of columns
 
-Set `numberOfColumns` prop to define number of pickers that will be rendered side by side:
+Set the `numberOfColumns` prop to define the number of pickers that will be rendered side by side:
 
 <Demo data={YearPickerDemos.numberOfColumns} />
 
@@ -82,13 +82,13 @@ Set `numberOfColumns` prop to define number of pickers that will be rendered sid
 
 ## Change year controls format
 
-Use `yearsListFormat` to change [dayjs format](https://day.js.org/docs/en/display/format) of year control:
+Use `yearsListFormat` to change the [dayjs format](https://day.js.org/docs/en/display/format) of the year control:
 
 <Demo data={YearPickerDemos.yearsListFormat} />
 
 ## Change decade label format
 
-Use `decadeLabelFormat` to change [dayjs format](https://day.js.org/docs/en/display/format) of decade label:
+Use `decadeLabelFormat` to change the [dayjs format](https://day.js.org/docs/en/display/format) of the decade label:
 
 <Demo data={YearPickerDemos.decadeLabelFormat} />
 
@@ -96,7 +96,7 @@ Use `decadeLabelFormat` to change [dayjs format](https://day.js.org/docs/en/disp
 
 ### Aria labels
 
-Set `ariaLabels` prop to specify `aria-label` attributes for next/previous controls:
+Set the `ariaLabels` prop to specify `aria-label` attributes for next/previous controls:
 
 ```tsx
 import { YearPicker } from '@mantine/dates';
@@ -115,7 +115,7 @@ function Demo() {
 
 ### Year control aria-label
 
-Use `getYearControlProps` to customize `aria-label` attribute:
+Use `getYearControlProps` to customize the `aria-label` attribute:
 
 ```tsx
 import { YearPicker } from '@mantine/dates';
@@ -133,7 +133,7 @@ function Demo() {
 
 ### Keyboard interactions
 
-Note that the following events will only trigger if focus is on year control.
+Note that the following events will only trigger if focus is on a year control.
 
 <KeyboardEventsTable
   data={[

@@ -6,8 +6,8 @@ export default Layout(MDX_DATA.formValidation);
 
 ## Validation with rules object
 
-To validate form with rules object, provide an object of functions which take field value as an argument
-and return error message (any React node) or null if field is valid:
+To validate a form with a rules object, provide an object of functions which take the field value as an argument
+and return an error message (any React node) or null if the field is valid:
 
 <Demo data={FormDemos.rulesValidation} />
 
@@ -15,12 +15,12 @@ and return error message (any React node) or null if field is valid:
 
 Each form rule receives the following arguments:
 
-- `value` – value of field
+- `value` – value of the field
 - `values` – all form values
 - `path` – field path, for example `user.email` or `cart.0.price`
 
-`path` argument can be used to get information about field location relative to other fields,
-for example you can get index of array element:
+The `path` argument can be used to get information about the field location relative to other fields.
+For example, you can get the index of an array element:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -39,35 +39,35 @@ const form = useForm({
 ## formRootRule
 
 `formRootRule` is a special rule path that can be used to validate objects and arrays
-alongside with their nested fields. For example, it is useful when you want to capture
-a list of values, validate each value individually and then validate the list itself
+alongside their nested fields. For example, it is useful when you want to capture
+a list of values, validate each value individually, and then validate the list itself
 to not be empty:
 
 <Demo data={FormDemos.rootRuleArray} />
 
-Another example is to validate an object fields combination:
+Another example is to validate an object's field combination:
 
 <Demo data={FormDemos.rootRuleObject} />
 
 ## Validation based on other form values
 
-You can get all form values as a second rule function argument to perform field validation based on other
-form values. For example, you can validate that password confirmation is the same as password:
+You can get all form values as the second rule function argument to perform field validation based on other
+form values. For example, you can validate that the password confirmation is the same as the password:
 
 <Demo data={FormDemos.password} />
 
-## Function based validation
+## Function-based validation
 
 Another approach to handle validation is to provide a function to `validate`.
-Function takes form values as single argument and should return object that contains
-errors of corresponding fields. If field is valid or field validation is not required, you can either return null or simply omit it
+The function takes form values as a single argument and should return an object that contains
+errors of corresponding fields. If a field is valid or field validation is not required, you can either return null or simply omit it
 from the validation results.
 
 <Demo data={FormDemos.validateFunction} />
 
 ## Validate fields on change
 
-To validate all fields on change set `validateInputOnChange` option to `true`:
+To validate all fields on change, set the `validateInputOnChange` option to `true`:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -80,7 +80,7 @@ const form = useForm({
 
 <Demo data={FormDemos.liveValidation} demoProps={{ toggle: true }} />
 
-You can also provide an array of fields paths to validate only those values:
+You can also provide an array of field paths to validate only those values:
 
 ```tsx
 import { FORM_INDEX, useForm } from '@mantine/form';
@@ -102,7 +102,7 @@ const form = useForm({
 
 ## Validate fields on blur
 
-To validate all fields on blur set `validateInputOnBlur` option to `true`:
+To validate all fields on blur, set the `validateInputOnBlur` option to `true`:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -115,7 +115,7 @@ const form = useForm({
 
 <Demo data={FormDemos.blurValidation} demoProps={{ toggle: true }} />
 
-You can also provide an array of fields paths to validate only those values:
+You can also provide an array of field paths to validate only those values:
 
 ```tsx
 import { FORM_INDEX, useForm } from '@mantine/form';
@@ -133,7 +133,7 @@ const form = useForm({
 
 ## Clear field error on change
 
-By default, field error is cleared when value changes. To change this, set `clearInputErrorOnChange` to `false`:
+By default, the field error is cleared when the value changes. To change this, set `clearInputErrorOnChange` to `false`:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -151,18 +151,18 @@ const form = useForm({
 
 ## Validation in onSubmit handler
 
-`form.onSubmit` accepts two arguments: first argument is `handleSubmit` function that will be called with form values, when validation
-was completed without errors, second argument is `handleErrors` function, it is called with errors object when validation was completed with errors.
+`form.onSubmit` accepts two arguments: the first argument is the `handleSubmit` function that will be called with form values when validation
+was completed without errors. The second argument is the `handleErrors` function, which is called with the errors object when validation was completed with errors.
 
-You can use `handleErrors` function to perform certain actions when user tries to submit form without values,
-for example, you can show a notification:
+You can use the `handleErrors` function to perform certain actions when the user tries to submit the form without values.
+For example, you can show a notification:
 
 <Demo data={FormDemos.onSubmitErrors} />
 
 ## isValid handler
 
-`form.isValid` performs form validation with given validation functions, rules object or schema, but unlike
-`form.validate` it does not set `form.errors` and just returns boolean value that indicates whether form is valid.
+`form.isValid` performs form validation with the given validation functions, rules object, or schema, but unlike
+`form.validate`, it does not set `form.errors` and just returns a boolean value that indicates whether the form is valid.
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -176,14 +176,14 @@ const form = useForm({
   },
 });
 
-// get validation status of all values
+// get the validation status of all values
 form.isValid(); // -> false
 
-// get validation status of field
+// get the validation status of a field
 form.isValid('name'); // -> false
 ```
 
-## Focus first invalid field
+## Focus the first invalid field
 
 The second argument of the `form.onSubmit` function is a callback function that is called
 with the [errors object](/form/errors) when form validation fails.

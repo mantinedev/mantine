@@ -35,14 +35,14 @@ function Demo() {
 
 ## Change icon color
 
-Use `iconColor` prop to change icon color. You can reference colors from `theme.colors` or use any valid CSS color:
+Use the `iconColor` prop to change the icon color. You can reference colors from `theme.colors` or use any valid CSS color:
 
 <Demo data={CheckboxDemos.iconColor} />
 
 ## Indeterminate state
 
-`Checkbox` supports indeterminate state. When `indeterminate` prop is set,
-`checked` prop is ignored (checkbox always has checked styles):
+`Checkbox` supports indeterminate state. When the `indeterminate` prop is set,
+the `checked` prop is ignored (checkbox always has checked styles):
 
 <Demo
   data={CheckboxDemos.indeterminate}
@@ -55,7 +55,7 @@ Use `iconColor` prop to change icon color. You can reference colors from `theme.
 
 ## Checkbox with tooltip
 
-You can change target element to which tooltip is attached with `refProp`:
+You can change the target element to which the tooltip is attached with `refProp`:
 
 - If `refProp` is not set, the tooltip is attached to the checkbox input
 - If `refProp="rootRef"` is set, the tooltip is attached to the root element (contains label, input and other elements)
@@ -65,7 +65,7 @@ You can change target element to which tooltip is attached with `refProp`:
 ## Pointer cursor
 
 By default, checkbox input and label have `cursor: default` (same as native `input[type="checkbox"]`).
-To change cursor to pointer, set `cursorType` on [theme](/theming/theme-object/):
+To change the cursor to pointer, set `cursorType` on [theme](/theming/theme-object/):
 
 <Demo data={ThemingDemos.cursorType} />
 
@@ -101,13 +101,13 @@ function Demo() {
 
 ## Checkbox.Indicator
 
-`Checkbox.Indicator` looks exactly the same as `Checkbox` component, but it does not
+`Checkbox.Indicator` looks exactly the same as the `Checkbox` component, but it does not
 have any semantic meaning, it's just a visual representation of checkbox state. You
 can use it in any place where you need to display checkbox state without any interaction
 related to the indicator. For example, it is useful in cards based on buttons, trees, etc.
 
 Note that `Checkbox.Indicator` cannot be focused or selected with keyboard. It is not
-accessible and should not be used as a replacement for `Checkbox` component.
+accessible and should not be used as a replacement for the `Checkbox` component.
 
 <Demo data={CheckboxDemos.indicator} />
 
@@ -120,7 +120,7 @@ keyboard interactions as `input[type="checkbox"]`.
 
 <Demo data={CheckboxDemos.card} />
 
-You can use `Checkbox.Card` with `Checkbox.Group` the same way as `Checkbox` component:
+You can use `Checkbox.Card` with `Checkbox.Group` the same way as the `Checkbox` component:
 
 <Demo data={CheckboxDemos.cardGroup} />
 

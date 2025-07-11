@@ -6,8 +6,8 @@ export default Layout(MDX_DATA.useSetState);
 
 ## Usage
 
-`use-set-state` works similar to how `this.setState` works in class components – it shallow merges state partial
-into current state.
+The `use-set-state` hook works similarly to how `this.setState` works in class components – it shallow merges the state partial
+into the current state.
 
 ```tsx
 import { useSetState } from '@mantine/hooks';
@@ -25,7 +25,7 @@ setState({ age: 25, job: 'Manager' }); // -> { name: 'Jane', age: 25, job: 'Mana
 setState((current) => ({ age: current.age + 7 })); // -> { name: 'Jane', age: 32, job: 'Manager' }
 ```
 
-Note that it can work only with objects: primitive values and arrays are not supported:
+Note that it can work only with objects; primitive values and arrays are not supported:
 
 ```tsx
 import { useSetState } from '@mantine/hooks';
@@ -49,7 +49,7 @@ function useSetState<T extends Record<string, any>>(initialState: T): UseSetStat
 
 ## Exported types
 
-`UseSetStateCallback` and `UseSetStateReturnValue` types are exported from `@mantine/hooks` package,
+`UseSetStateCallback` and `UseSetStateReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

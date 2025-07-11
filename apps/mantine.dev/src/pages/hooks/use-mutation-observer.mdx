@@ -6,15 +6,15 @@ export default Layout(MDX_DATA.useMutationObserver);
 
 ## Usage
 
-`use-mutation-observer` is a wrapper for the [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver).
-It allows subscribing changes being made to the DOM tree.
+The `use-mutation-observer` hook is a wrapper for the [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver).
+It allows you to subscribe to changes being made to the DOM tree.
 
 <Demo data={HooksDemos.useMutationObserverUsage} />
 
 ## Target element
 
-If you cannot pass `ref` to the target element, you can pass a function to resolve
-the target element as a third argument.
+If you cannot pass a `ref` to the target element, you can pass a function to resolve
+the target element as the third argument.
 
 <Demo data={HooksDemos.useMutationObserverTargetDemo} />
 

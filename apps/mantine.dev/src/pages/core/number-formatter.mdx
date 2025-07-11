@@ -6,26 +6,26 @@ export default Layout(MDX_DATA.NumberFormatter);
 
 ## Usage
 
-Use `NumberFormatter` to format numbers. It supports the same formatting related props
-as [NumberInput](/core/number-input/) component.
+Use `NumberFormatter` to format numbers. It supports the same formatting-related props
+as the [NumberInput](/core/number-input/) component.
 
 <Demo data={NumberFormatterDemos.usage} />
 
 ## Prefix and suffix
 
-Set `prefix` and `suffix` props to add given string to the start or end of the value:
+Set the `prefix` and `suffix` props to add a given string to the start or end of the value:
 
 <Demo data={NumberFormatterDemos.prefixSuffix} />
 
 ## Thousands separator
 
-Set `thousandSeparator` prop to separate thousands with a character. You can control
-grouping logic with `thousandsGroupStyle`, it accepts: `thousand`, `lakh`, `wan`, `none` values.
+Set the `thousandSeparator` prop to separate thousands with a character. You can control
+the grouping logic with `thousandsGroupStyle`, which accepts: `thousand`, `lakh`, `wan`, `none` values.
 
 <Demo data={NumberFormatterDemos.thousandsSeparator} />
 
 ## Decimal scale
 
-`decimalScale` prop controls the number of allowed decimal places:
+The `decimalScale` prop controls the number of allowed decimal places:
 
 <Demo data={NumberFormatterDemos.decimalScale} />

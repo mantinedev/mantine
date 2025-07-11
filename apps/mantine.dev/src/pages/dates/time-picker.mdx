@@ -6,20 +6,20 @@ export default Layout(MDX_DATA.TimePicker);
 
 ## Usage
 
-`TimePicker` component is an alternative to [TimeInput](/dates/time-input) that offers more
-features, it supports 24-hour and 12-hour formats, dropdown with hours, minutes and seconds, and
+The `TimePicker` component is an alternative to [TimeInput](/dates/time-input) that offers more
+features. It supports 24-hour and 12-hour formats, a dropdown with hours, minutes and seconds, and
 more.
 
 <Demo data={TimePickerDemos.usage} />
 
 ## Controlled
 
-`TimePicker` component value is a string in `hh:mm:ss` 24-hour format (for example `18:34:55`).
-Empty string is used to represent no value. `onChange` function is called only when the entered value is valid.
+The `TimePicker` component value is a string in `hh:mm:ss` 24-hour format (for example `18:34:55`).
+An empty string is used to represent no value. The `onChange` function is called only when the entered value is valid.
 The input value is considered valid in the following cases:
 
-- All inputs are empty. In this case `onChange` is called with an empty string.
-- All inputs are filled. For example if `withSeconds` prop is set and the user entered `12:34:56`, `onChange` will be called with `12:34:56`. But if the user entered `12:34`, `onChange` will not be called because seconds value is missing.
+- All inputs are empty. In this case, `onChange` is called with an empty string.
+- All inputs are filled. For example, if the `withSeconds` prop is set and the user entered `12:34:56`, `onChange` will be called with `12:34:56`. But if the user entered `12:34`, `onChange` will not be called because the seconds value is missing.
 
 ```tsx
 import { useState } from 'react';
@@ -33,7 +33,7 @@ function Demo() {
 
 ## With seconds
 
-Set `withSeconds` prop to enable seconds input. Note that if this prop is used,
+Set the `withSeconds` prop to enable seconds input. Note that if this prop is used,
 `onChange` is not called until all inputs are filled – it is not possible
 to enter only hours and minutes.
 
@@ -41,26 +41,26 @@ to enter only hours and minutes.
 
 ## 12-hour format
 
-Set `format="12h"` to use 12-hour format. Note that `onChange` is called only when all inputs are filled
-including am/pm input.
+Set `format="12h"` to use 12-hour format. Note that `onChange` is called only when all inputs are filled,
+including the am/pm input.
 
 <Demo data={TimePickerDemos.format12h} />
 
 ## Change am/pm labels
 
-To change am/pm labels use `amPmLabels` prop. Example of changing labels to Hindi:
+To change am/pm labels, use the `amPmLabels` prop. Example of changing labels to Hindi:
 
 <Demo data={TimePickerDemos.amPmLabels} />
 
 ## Min and max values
 
-Set `min` and `max` props to limit available time range:
+Set the `min` and `max` props to limit the available time range:
 
 <Demo data={TimePickerDemos.minMax} />
 
 ## With dropdown
 
-Set `withDropdown` prop to display the dropdown with hours, minutes, seconds and am/pm selects.
+Set the `withDropdown` prop to display a dropdown with hours, minutes, seconds and am/pm selects.
 By default, the dropdown is visible when one of the inputs is focused.
 
 <Demo data={TimePickerDemos.withDropdown} />

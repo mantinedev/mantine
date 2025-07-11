@@ -38,20 +38,20 @@ function Demo() {
 
 ## Multiple
 
-Set `multiple` to allow user to pick more than one file:
+Set `multiple` to allow the user to pick more than one file:
 
 <Demo data={FileInputDemos.multiple} />
 
 ## Accept
 
-Set `accept` prop to restrict files selection to specific mime types:
+Set the `accept` prop to restrict file selection to specific mime types:
 
 <Demo data={FileInputDemos.accept} />
 
 ## Clearable
 
-Set `clearable` prop to display clear button in the right section of the input
-when file is selected. Note that if you define custom right section, clear button
+Set the `clearable` prop to display a clear button in the right section of the input
+when a file is selected. Note that if you define a custom right section, the clear button
 will not be rendered.
 
 <Demo data={FileInputDemos.clearable} />
@@ -83,7 +83,7 @@ will not be rendered.
 ## FileInputProps type
 
 `FileInputProps` type is a generic interface which accepts a single type argument:
-`multiple` value.
+the `multiple` value.
 
 ```tsx
 import type { FileInputProps } from '@mantine/core';

@@ -6,9 +6,9 @@ export default Layout(MDX_DATA.PillsInput);
 
 ## Usage
 
-`PillsInput` is a utility component that can be used to create custom tag inputs, multi selects and
-other similar components. By itself it does not include any logic, it only renders given children.
-Usually, `PillsInput` is used in combination with [Pill](/core/pill) component.
+`PillsInput` is a utility component that can be used to create custom tag inputs, multi-selects, and
+other similar components. By itself it does not include any logic; it only renders given children.
+Usually, `PillsInput` is used in combination with the [Pill](/core/pill) component.
 
 <Demo data={PillsInputDemos.usage} />
 
@@ -20,18 +20,18 @@ Usually, `PillsInput` is used in combination with [Pill](/core/pill) component.
 
 ## Searchable select example
 
-Combine `PillsInput` with [Combobox](/core/combobox) to create searchable multiselect:
+Combine `PillsInput` with [Combobox](/core/combobox) to create a searchable multiselect:
 
 <Demo data={ComboboxDemos.searchableMultiselect} />
 
 ## Accessibility
 
-If `PillsInput` is used without label prop, it will not be announced properly by screen reader:
+If `PillsInput` is used without the label prop, it will not be announced properly by screen readers:
 
 ```tsx
 import { PillsInput } from '@mantine/core';
 
-// Inaccessible input – screen reader will not announce it properly
+// Inaccessible input – screen readers will not announce it properly
 function Demo() {
   return (
     <PillsInput>
@@ -42,7 +42,7 @@ function Demo() {
 ```
 
 Set `aria-label` on the `PillsInput.Field` component to make the input accessible.
-In this case label will not be visible, but screen reader will announce it:
+In this case the label will not be visible, but screen readers will announce it:
 
 ```tsx
 import { PillsInput } from '@mantine/core';
@@ -57,7 +57,7 @@ function Demo() {
 }
 ```
 
-If `label` prop is set, the input will be accessible it is not required to set `aria-label`:
+If the `label` prop is set, the input will be accessible and it is not required to set `aria-label`:
 
 ```tsx
 import { PillsInput } from '@mantine/core';

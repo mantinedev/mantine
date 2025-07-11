@@ -10,8 +10,8 @@ export default Layout(MDX_DATA.Grid);
 
 ## Columns span
 
-`Grid.Col` `span` prop controls the ratio of column width to the total width of the row.
-By default, grid uses 12 columns layout, so `span` prop can be any number from 1 to 12.
+The `Grid.Col` `span` prop controls the ratio of column width to the total width of the row.
+By default, grid uses a 12 columns layout, so the `span` prop can be any number from 1 to 12.
 
 Examples:
 
@@ -20,8 +20,8 @@ Examples:
 - `<Grid.Col span={6} />` – 6 / 12 = 50% of row width
 - `<Grid.Col span={12} />` – 12 / 12 = 100% of row width
 
-`span` prop also supports object syntax to change column width based on viewport width,
-it accepts `xs`, `sm`, `md`, `lg` and `xl` keys and values from 1 to 12. The syntax
+The `span` prop also supports object syntax to change column width based on viewport width.
+It accepts `xs`, `sm`, `md`, `lg` and `xl` keys and values from 1 to 12. The syntax
 is the same as in [style props](/styles/style-props).
 
 In the following example `span={{ base: 12, md: 6, lg: 3 }}`:
@@ -34,7 +34,7 @@ In the following example `span={{ base: 12, md: 6, lg: 3 }}`:
 
 ## Gutter
 
-Set `gutter` prop to control spacing between columns. The prop works the same
+Set the `gutter` prop to control spacing between columns. The prop works the same
 way as [style props](/styles/style-props) – you can reference `theme.spacing` values
 with `xs`, `sm`, `md`, `lg` and `xl` strings and use object syntax to change gutter
 based on viewport width:
@@ -43,34 +43,34 @@ based on viewport width:
 
 ## Grow
 
-If `grow` prop is set, column will grow to fill the remaining space in the row:
+If the `grow` prop is set, the column will grow to fill the remaining space in the row:
 
 <Demo data={GridDemos.growConfigurator} />
 
 ## Column offset
 
-Set `offset` prop on `Grid.Col` component to add gaps to the grid. `offset` prop
-supports the same syntax as `span` prop: a number from 1 to 12 or an object with `xs`, `sm`, `md`, `lg` and `xl` keys and values from 1 to 12.
+Set the `offset` prop on the `Grid.Col` component to add gaps to the grid. The `offset` prop
+supports the same syntax as the `span` prop: a number from 1 to 12 or an object with `xs`, `sm`, `md`, `lg` and `xl` keys and values from 1 to 12.
 
 <Demo data={GridDemos.offset} />
 
 ## Order
 
-Set the `order` prop on `Grid.Col` component to change the order of columns. `order` prop
-supports the same syntax as `span` prop: a number from 1 to 12 or an object with `xs`, `sm`, `md`, `lg` and `xl` keys and values from 1 to 12.
+Set the `order` prop on the `Grid.Col` component to change the order of columns. The `order` prop
+supports the same syntax as the `span` prop: a number from 1 to 12 or an object with `xs`, `sm`, `md`, `lg` and `xl` keys and values from 1 to 12.
 
 <Demo data={GridDemos.order} />
 
 ## Multiple rows
 
-Once columns `span` and `offset` sum exceeds `columns` prop (12 by default),
+Once the columns' `span` and `offset` sum exceeds the `columns` prop (12 by default),
 columns are moved to the next row:
 
 <Demo data={GridDemos.rows} />
 
 ## Justify and align
 
-You can control `justify-content` and `align-items` CSS properties with `justify` and `align` props on `Grid` component:
+You can control the `justify-content` and `align-items` CSS properties with the `justify` and `align` props on the `Grid` component:
 
 <Demo data={GridDemos.flexConfigurator} />
 
@@ -89,10 +89,10 @@ If you set `span="content"`, the column's size will automatically adjust to matc
 
 ## Change columns count
 
-By default, grid uses 12 columns layout, you can change it by setting `columns` prop on `Grid` component.
+By default, grid uses a 12 columns layout. You can change it by setting the `columns` prop on the `Grid` component.
 Note that in this case, columns span and offset will be calculated relative to this value.
 
-In the following example, first column takes 50% with 12 span (12/24), second and third take 25% (6/24):
+In the following example, the first column takes 50% with 12 span (12/24), second and third take 25% (6/24):
 
 <Demo data={GridDemos.columns} />
 

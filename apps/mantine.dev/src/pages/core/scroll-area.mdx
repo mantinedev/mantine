@@ -6,7 +6,7 @@ export default Layout(MDX_DATA.ScrollArea);
 
 ## Usage
 
-`ScrollArea` component supports the following props:
+The `ScrollArea` component supports the following props:
 
 - `type` defines scrollbars behavior:
   - `hover` – scrollbars are visible on hover
@@ -31,21 +31,21 @@ export default Layout(MDX_DATA.ScrollArea);
 
 ## Disable horizontal scrollbars
 
-To disable horizontal scrollbars set `scrollbars="y"` prop:
+To disable horizontal scrollbars, set the `scrollbars="y"` prop:
 
 <Demo data={ScrollAreaDemos.scrollbars} />
 
 ## Subscribe to scroll position changes
 
-Set `onScrollPositionChange` function to subscribe to scroll position changes,
-it will be called each time user scrolls with x and y coordinates:
+Set the `onScrollPositionChange` function to subscribe to scroll position changes.
+It will be called each time the user scrolls with x and y coordinates:
 
 <Demo data={ScrollAreaDemos.scrollPosition} />
 
 ## Scroll to position
 
 To programmatically scroll to any position,
-get viewport element ref with `viewportRef` prop and call `scrollTo` method:
+get the viewport element ref with the `viewportRef` prop and call the `scrollTo` method:
 
 <Demo data={ScrollAreaDemos.scrollTo} />
 
@@ -59,7 +59,7 @@ get viewport element ref with `viewportRef` prop and call `scrollTo` method:
 
 ## ScrollArea.Autosize
 
-`ScrollArea.Autosize` component allows to create scrollable containers when given max-height is reached:
+The `ScrollArea.Autosize` component allows you to create scrollable containers when a given max-height is reached:
 
 <Demo data={ScrollAreaDemos.maxHeight} />
 

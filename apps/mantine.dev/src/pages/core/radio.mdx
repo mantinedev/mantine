@@ -43,8 +43,8 @@ function Demo() {
 
 ## Pointer cursor
 
-By default, radio input and label have `cursor: default` (same as native `input[type="radio"]`).
-To change cursor to pointer, set `cursorType` on [theme](/theming/theme-object/):
+By default, the radio input and label have `cursor: default` (same as native `input[type="radio"]`).
+To change the cursor to pointer, set `cursorType` on the [theme](/theming/theme-object/):
 
 ```tsx
 import { createTheme, MantineProvider, Radio } from '@mantine/core';
@@ -64,10 +64,10 @@ function Demo() {
 
 ## Radio with tooltip
 
-You can change target element to which tooltip is attached with `refProp`:
+You can change the target element to which the tooltip is attached with `refProp`:
 
 - If `refProp` is not set, the tooltip is attached to the checkbox input
-- If `refProp="rootRef"` is set, the tooltip is attached to the root element (contains label, input and other elements)
+- If `refProp="rootRef"` is set, the tooltip is attached to the root element (contains label, input, and other elements)
 
 <Demo data={RadioDemos.tooltip} />
 
@@ -106,13 +106,13 @@ function Demo() {
 
 ## Radio.Indicator
 
-`Radio.Indicator` looks exactly the same as `Radio` component, but it does not
-have any semantic meaning, it's just a visual representation of radio state. You
-can use it in any place where you need to display radio state without any interaction
+`Radio.Indicator` looks exactly the same as the `Radio` component, but it does not
+have any semantic meaning; it's just a visual representation of the radio state. You
+can use it in any place where you need to display the radio state without any interaction
 related to the indicator. For example, it is useful in cards based on buttons, trees, etc.
 
-Note that `Radio.Indicator` cannot be focused or selected with keyboard. It is not
-accessible and should not be used as a replacement for `Radio` component.
+Note that `Radio.Indicator` cannot be focused or selected with the keyboard. It is not
+accessible and should not be used as a replacement for the `Radio` component.
 
 <Demo data={RadioDemos.indicator} />
 
@@ -120,12 +120,12 @@ accessible and should not be used as a replacement for `Radio` component.
 
 `Radio.Card` component can be used as a replacement for `Radio` to build custom
 cards/buttons/other things that work as radios. The root element of the component
-has `role="radio"` attribute, it is accessible by default and supports the same
+has the `role="radio"` attribute; it is accessible by default and supports the same
 keyboard interactions as `input[type="radio"]`.
 
 <Demo data={RadioDemos.card} />
 
-You can use `Radio.Card` with `Radio.Group` the same way as `Radio` component:
+You can use `Radio.Card` with `Radio.Group` the same way as the `Radio` component:
 
 <Demo data={RadioDemos.cardGroup} />
 
@@ -137,7 +137,7 @@ You can use `Radio.Card` with `Radio.Group` the same way as `Radio` component:
 
 ## Accessibility
 
-Set `aria-label` or `label` prop to make the radio accessible:
+Set the `aria-label` or `label` prop to make the radio accessible:
 
 ```tsx
 import { Radio } from '@mantine/core';
@@ -147,12 +147,12 @@ function Bad() {
   return <Radio />;
 }
 
-// Ok, input is labelled by aria-label
+// Ok, input is labeled by aria-label
 function GoodAriaLabel() {
   return <Radio aria-label="My radio" />;
 }
 
-// Ok, input is labelled by label element
+// Ok, input is labeled by label element
 function GoodLabel() {
   return <Radio label="My radio" />;
 }

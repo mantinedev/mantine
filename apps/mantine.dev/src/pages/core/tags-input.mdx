@@ -15,8 +15,8 @@ export default Layout(MDX_DATA.TagsInput);
 
 ## Controlled
 
-`TagsInput` value must be an array of strings, other types are not supported.
-`onChange` function is called with an array of strings as a single argument.
+The `TagsInput` value must be an array of strings; other types are not supported.
+The `onChange` function is called with an array of strings as a single argument.
 
 ```tsx
 import { useState } from 'react';
@@ -30,7 +30,7 @@ function Demo() {
 
 ## Controlled search value
 
-You can control search value with `searchValue` and `onSearchChange` props:
+You can control the search value with `searchValue` and `onSearchChange` props:
 
 ```tsx
 import { useState } from 'react';
@@ -50,7 +50,7 @@ function Demo() {
 
 ## Clearable
 
-Set `clearable` prop to display the clear button in the right section. The button is not displayed
+Set the `clearable` prop to display the clear button in the right section. The button is not displayed
 when:
 
 - The component does not have a value
@@ -61,7 +61,7 @@ when:
 
 ## Max selected values
 
-You can limit the number of selected values with `maxTags` prop. This will not allow adding more values
+You can limit the number of selected values with the `maxTags` prop. This will not allow adding more values
 once the limit is reached.
 
 <Demo data={TagsInputDemos.maxTags} />
@@ -76,16 +76,16 @@ only when the user presses `Enter` or clicks on a suggestion.
 
 ## Allow duplicates
 
-By default, `TagsInput` does not allow to add duplicate values, but you can change this behavior by
-setting `allowDuplicates` prop. Value is considered duplicate if it is already present in the `value` array,
+By default, `TagsInput` does not allow adding duplicate values, but you can change this behavior by
+setting the `allowDuplicates` prop. A value is considered duplicate if it is already present in the `value` array,
 regardless of the case and trailing whitespace.
 
 <Demo data={TagsInputDemos.allowDuplicates} />
 
 ## isDuplicate
 
-You can use `isDuplicate` prop to control how duplicates are detected. It is a function that
-receives two arguments: tag value and current tags. The function must return `true` if the value is duplicate.
+You can use the `isDuplicate` prop to control how duplicates are detected. It is a function that
+receives two arguments: tag value and current tags. The function must return `true` if the value is a duplicate.
 
 Example of using `isDuplicate` to allow using the same value with different casing:
 

@@ -34,7 +34,7 @@ function Demo() {
 
 ## Data prop
 
-`SegmentedControl` support two different data formats:
+`SegmentedControl` supports two different data formats:
 
 1. An array of strings – used when `value` and `label` are the same
 2. An array of objects – used when `value` and `label` are different
@@ -64,21 +64,21 @@ function ArrayOfObjects() {
 
 ## Disabled
 
-To disable `SegmentedControl` item, use array of objects `data` format and set `disabled: true`
-on the item that you want to disable. To disable the entire component, use `disabled` prop.
+To disable a `SegmentedControl` item, use the array of objects `data` format and set `disabled: true`
+on the item that you want to disable. To disable the entire component, use the `disabled` prop.
 
 <Demo data={SegmentedControlDemos.disabled} />
 
 ## React node as label
 
-You can use any React node as label:
+You can use any React node as a label:
 
 <Demo data={SegmentedControlDemos.labels} />
 
 ## Color
 
-By default, `SegmentedControl` uses `theme.white` with shadow in light color scheme and `var(--mantine-color-dark-6)` background color for indicator.
-Set `color` prop to change indicator `background-color`:
+By default, `SegmentedControl` uses `theme.white` with shadow in the light color scheme and `var(--mantine-color-dark-6)` background color for the indicator.
+Set the `color` prop to change the indicator `background-color`:
 
 <Demo data={SegmentedControlDemos.configurator} />
 
@@ -93,7 +93,7 @@ Change transition properties with:
 
 ## readOnly
 
-Set `readOnly` prop to prevent value from being changed:
+Set the `readOnly` prop to prevent the value from being changed:
 
 <Demo data={SegmentedControlDemos.readOnly} />
 
@@ -103,10 +103,10 @@ Set `readOnly` prop to prevent value from being changed:
 
 ## Accessibility and usability
 
-`SegmentedControl` uses radio inputs under the hood, it is accessible by default with no extra steps required if you have text in labels.
-Component support the same keyboard events as a regular radio group.
+`SegmentedControl` uses radio inputs under the hood, so it is accessible by default with no extra steps required if you have text in labels.
+The component supports the same keyboard events as a regular radio group.
 
-In case you do not have text in labels (for example, when you want to use `SegmentedControl` with icons only),
-use [VisuallyHidden](/core/visually-hidden) to make component accessible:
+If you do not have text in labels (for example, when you want to use `SegmentedControl` with icons only),
+use [VisuallyHidden](/core/visually-hidden) to make the component accessible:
 
 <Demo data={SegmentedControlDemos.iconsOnly} />

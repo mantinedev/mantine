@@ -3,7 +3,7 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.formSchemaValidation);
 
-## Schema based validation
+## Schema-based validation
 
 `@mantine/form` supports schema validation with:
 
@@ -13,8 +13,8 @@ export default Layout(MDX_DATA.formSchemaValidation);
 - [superstruct](https://www.npmjs.com/package/superstruct)
 - [valibot](https://www.npmjs.com/package/valibot)
 
-You need to install one of the libraries yourself, `@mantine/form` package does not depend on any of them.
-If you do not know what schema validation library to choose, use [zod](https://www.npmjs.com/package/zod),
+You need to install one of the libraries yourself. The `@mantine/form` package does not depend on any of them.
+If you do not know which schema validation library to choose, use [zod](https://www.npmjs.com/package/zod) –
 it is the most modern and developer-friendly library.
 
 ## zod
@@ -23,7 +23,7 @@ Installation:
 
 <InstallScript packages="zod mantine-form-zod-resolver" />
 
-Basic fields validation with zod v3:
+Basic field validation with zod v3:
 
 ```tsx
 import { zodResolver } from 'mantine-form-zod-resolver';
@@ -59,7 +59,7 @@ form.errors;
 // }
 ```
 
-Nested fields validation
+Nested field validation
 
 ```tsx
 import { zodResolver } from 'mantine-form-zod-resolver';
@@ -91,7 +91,7 @@ form.errors;
 // }
 ```
 
-List fields validation:
+List field validation:
 
 ```tsx
 import { zodResolver } from 'mantine-form-zod-resolver';
@@ -160,7 +160,7 @@ Installation:
 
 <InstallScript packages="yup mantine-form-yup-resolver" />
 
-Basic fields validation:
+Basic field validation:
 
 ```tsx
 import { yupResolver } from 'mantine-form-yup-resolver';
@@ -197,7 +197,7 @@ form.errors;
 // }
 ```
 
-Nested fields validation:
+Nested field validation:
 
 ```tsx
 import { yupResolver } from 'mantine-form-yup-resolver';
@@ -229,7 +229,7 @@ form.errors;
 // }
 ```
 
-List fields validation:
+List field validation:
 
 ```tsx
 import { yupResolver } from 'mantine-form-yup-resolver';
@@ -267,7 +267,7 @@ Installation:
 
 <InstallScript packages="joi mantine-form-joi-resolver" />
 
-Basic fields validation:
+Basic field validation:
 
 ```tsx
 import Joi from 'joi';
@@ -309,7 +309,7 @@ form.errors;
 // }
 ```
 
-Nested fields validation:
+Nested field validation:
 
 ```tsx
 import Joi from 'joi';
@@ -341,7 +341,7 @@ form.errors;
 // }
 ```
 
-List fields validation:
+List field validation:
 
 ```tsx
 import Joi from 'joi';
@@ -380,7 +380,7 @@ Installation:
 
 <InstallScript packages="superstruct mantine-form-superstruct-resolver" />
 
-Basic fields validation:
+Basic field validation:
 
 ```tsx
 import isEmail from 'is-email';
@@ -414,7 +414,7 @@ form.errors;
 // }
 ```
 
-Nested fields validation:
+Nested field validation:
 
 ```tsx
 import { superstructResolver } from 'mantine-form-superstruct-resolver';
@@ -444,7 +444,7 @@ form.errors;
 // }
 ```
 
-List fields validation:
+List field validation:
 
 ```tsx
 import { superstructResolver } from 'mantine-form-superstruct-resolver';
@@ -480,7 +480,7 @@ Installation:
 
 <InstallScript packages="valibot mantine-form-valibot-resolver" />
 
-Basic fields validation:
+Basic field validation:
 
 ```tsx
 import { valibotResolver } from 'mantine-form-valibot-resolver';
@@ -517,7 +517,7 @@ form.errors;
 // }
 ```
 
-Nested fields validation:
+Nested field validation:
 
 ```tsx
 import { valibotResolver } from 'mantine-form-valibot-resolver';
@@ -549,7 +549,7 @@ form.errors;
 // }
 ```
 
-List fields validation:
+List field validation:
 
 ```tsx
 import { valibotResolver } from 'mantine-form-valibot-resolver';

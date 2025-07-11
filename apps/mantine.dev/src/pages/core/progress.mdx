@@ -18,7 +18,7 @@ export default Layout(MDX_DATA.Progress);
 
 ## Section width transition
 
-Set `transitionDuration` to a number of ms to enable width transition:
+Set `transitionDuration` to a number of milliseconds to enable width transition:
 
 <Demo data={ProgressDemos.transition} />
 
@@ -32,11 +32,11 @@ Set `transitionDuration` to a number of ms to enable width transition:
 
 ## Accessibility
 
-- Progress section has `role="progressbar"` attribute
-- Progress section has `aria-valuenow` attribute with current value
-- `aria-valuemin` and `aria-valuemax` attributes are always set to `0` and `100` as component does not support other values
+- Progress section has the `role="progressbar"` attribute
+- Progress section has the `aria-valuenow` attribute with the current value
+- `aria-valuemin` and `aria-valuemax` attributes are always set to `0` and `100` as the component does not support other values
 
-Set `aria-label` attribute to label progress:
+Set the `aria-label` attribute to label the progress:
 
 ```tsx
 import { Progress } from '@mantine/core';

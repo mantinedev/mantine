@@ -6,42 +6,42 @@ export default Layout(MDX_DATA.FloatingWindow);
 
 ## Usage
 
-`FloatingWindow` creates a draggable element with fixed position:
+`FloatingWindow` creates a draggable element with a fixed position:
 
 <Demo data={FloatingWindowDemos.usage} />
 
 ## Constrain to viewport
 
-Use `constrainToViewport` prop to restrict element movement to the viewport boundaries.
-If you do not set `constrainToViewport` prop, the element can be dragged outside the viewport:
+Use the `constrainToViewport` prop to restrict element movement to the viewport boundaries.
+If you do not set the `constrainToViewport` prop, the element can be dragged outside the viewport:
 
 <Demo data={FloatingWindowDemos.constrainToViewport} />
 
 ## Constrain offset
 
-Use `constrainOffset` prop to set the offset from the viewport edges when constraining the element:
+Use the `constrainOffset` prop to set the offset from the viewport edges when constraining the element:
 
 <Demo data={FloatingWindowDemos.constrainOffset} />
 
 ## Drag handle selector
 
-`dragHandleSelector` prop allows specifying a selector of an element (or a group of elements) that should be used to drag floating window.
+The `dragHandleSelector` prop allows specifying a selector of an element (or a group of elements) that should be used to drag the floating window.
 If not specified, the entire root element is used as a drag target.
 
-`excludeDragHandleSelector` prop excludes elements within `dragHandleSelector` from the drag event.
+The `excludeDragHandleSelector` prop excludes elements within `dragHandleSelector` from the drag event.
 In the following example, the close button is excluded from the drag event:
 
 <Demo data={FloatingWindowDemos.dragHandleSelector} />
 
 ## Enabled prop
 
-Use `enabled` option to enable or disable dragging:
+Use the `enabled` option to enable or disable dragging:
 
 <Demo data={FloatingWindowDemos.enabled} />
 
 ## Set position
 
-Call `setPosition` function to set the position of the element programmatically.
+Call the `setPosition` function to set the position of the element programmatically.
 This function accepts an object with `top`, `left`, `right` and `bottom` properties,
 from which you should only specify two (for example, `top` and `left`, `bottom` and `right`).
 
@@ -49,13 +49,13 @@ from which you should only specify two (for example, `top` and `left`, `bottom` 
 
 ## Lock axis
 
-Use `axis` option to restrict movement to the specified axis:
+Use the `axis` option to restrict movement to the specified axis:
 
 <Demo data={FloatingWindowDemos.axis} />
 
 ## use-floating-window hook
 
-If you prefer hook API, you can use [useFloatingWindow](/hooks/use-floating-window) hook.
-It supports most of `FloatingWindow` features:
+If you prefer the hook API, you can use the [useFloatingWindow](/hooks/use-floating-window) hook.
+It supports most of the `FloatingWindow` features:
 
 <Demo data={HooksDemos.useFloatingWindowUsageDemo} />

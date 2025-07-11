@@ -10,7 +10,7 @@ export default Layout(MDX_DATA.PinInput);
 
 ## Regex type
 
-You can use regular expression to validate user input. Characters that do not match given expression
+You can use a regular expression to validate user input. Characters that do not match the given expression
 will be disregarded. For example, to create a `PinInput` that will accept only numbers from `0` to `3`,
 set `type={/^[0-3]+/}`:
 
@@ -19,8 +19,8 @@ set `type={/^[0-3]+/}`:
 ## One time code
 
 Some operating systems expose the last received SMS code to be used by applications like your keyboard.
-If the current form input asks for this code, your keyboard adapts and proposes the code as keyboard-suggestion.
-Prop `oneTimeCode` makes your input setting `autocomplete="one-time-code"` which allows using that feature.
+If the current form input asks for this code, your keyboard adapts and proposes the code as a keyboard suggestion.
+The `oneTimeCode` prop makes your input set `autocomplete="one-time-code"` which allows using that feature.
 
 ```tsx
 import { PinInput } from '@mantine/core';
@@ -36,7 +36,7 @@ function OneTimeCodeInput() {
 
 ## Accessibility
 
-Inputs do not have associated labels, set `aria-label` to make component visible to the screen reader:
+Inputs do not have associated labels. Set `aria-label` to make the component visible to screen readers:
 
 ```tsx
 import { PinInput } from '@mantine/core';

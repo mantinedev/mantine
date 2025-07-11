@@ -6,13 +6,13 @@ export default Layout(MDX_DATA.useNetwork);
 
 ## Usage
 
-`use-network` hook returns an object with current connection status:
+The `use-network` hook returns an object with the current connection status:
 
 <Demo data={HooksDemos.useNetworkDemo} />
 
 ## Browser support
 
-`use-network` uses experimental `navigator.connection`, see [browser compatibility table](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/connection#browser_compatibility).
+`use-network` uses the experimental `navigator.connection` API. See the [browser compatibility table](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/connection#browser_compatibility).
 
 ## Definition
 
@@ -33,7 +33,7 @@ function useNetwork(): UserNetworkReturnValue;
 
 ## Exported types
 
-`UserNetworkReturnValue` type is exported from `@mantine/hooks` package,
+The `UserNetworkReturnValue` type is exported from the `@mantine/hooks` package;
 you can import it in your application:
 
 ```tsx

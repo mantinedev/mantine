@@ -4,9 +4,9 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Icons);
 
-# Icons libraries with Mantine
+# Icon libraries with Mantine
 
-You can use any icons library with Mantine components, most popular options are:
+You can use any icon library with Mantine components. The most popular options are:
 
 - [Tabler icons](https://tabler-icons.io/)
 - [Feather icons](https://feathericons.com/)
@@ -16,30 +16,30 @@ You can use any icons library with Mantine components, most popular options are:
 
 ## Tabler icons
 
-[Tabler icons](https://tabler-icons.io/) are used in Mantine demos, documentation
-and some `@mantine/` packages depend on them. If you do not know which icons library
+[Tabler icons](https://tabler-icons.io/) are used in Mantine demos, documentation,
+and some `@mantine/` packages depend on them. If you don't know which icon library
 to use, we recommend [Tabler icons](https://tabler-icons.io/).
 
-## Icons size
+## Icon size
 
-Most of the icons libraries support `size` prop (or similar `width` and `height` props) which allows changing
-icon width and height. Usually, it is a number in pixels.
+Most icon libraries support a `size` prop (or similar `width` and `height` props) that allows you to change the
+icon width and height. Usually, it's a number in pixels.
 
 <Demo data={GuidesDemos.icon} />
 
 > **rem units in size prop**
 >
-> Icons `size` prop is usually converted to `width` and `height` props under the hood.
+> The icon `size` prop is usually converted to `width` and `height` props under the hood.
 > If you set `size={16}` it will be converted to `width="16"` and `height="16"` attributes
-> on svg element.
+> on the svg element.
 >
-> You can use rem units in `size` prop: `size="1rem"` will be converted to `width="1rem"` and `height="1rem"`,
-> but it is not recommended as it is prohibited by SVG standard – some browsers (Firefox) will show a warning in the console.
+> You can use rem units in the `size` prop: `size="1rem"` will be converted to `width="1rem"` and `height="1rem"`,
+> but it's not recommended as it's prohibited by the SVG standard – some browsers (Firefox) will show a warning in the console.
 
 ## Custom icons
 
-It is recommended to use icons as React components. In this case, you will be able to use
-`currentColor` in the `fill` and `stroke` prop. This will change icon color based on the context
-it is used in.
+We recommend using icons as React components. In this case, you'll be able to use
+`currentColor` in the `fill` and `stroke` props. This will change the icon color based on the context
+it's used in.
 
 <Demo data={GuidesDemos.customIcon} />

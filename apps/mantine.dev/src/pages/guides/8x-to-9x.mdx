@@ -8,8 +8,8 @@ export default Layout(MDX_DATA.EightToNine);
 
 ## Text color prop
 
-`color` prop of [Text](/core/text) and [Anchor](/core/anchor) components was removed.
-Use `c` [style prop](/styles/style-props) instead:
+The `color` prop of the [Text](/core/text) and [Anchor](/core/anchor) components was removed.
+Use the `c` [style prop](/styles/style-props) instead:
 
 ```tsx
 import { Text } from '@mantine/core';
@@ -19,7 +19,7 @@ function Demo() {
   return <Text color="red">Text</Text>;
 }
 
-// ✅ Use c style prop
+// ✅ Use the c style prop
 function Demo() {
   return <Text c="red">Text</Text>;
 }
@@ -27,13 +27,13 @@ function Demo() {
 
 ## Form resolvers
 
-`@mantine/form` package no longer exports schema resolvers, use [dedicated packages](/form/schema-validation/) instead:
+The `@mantine/form` package no longer exports schema resolvers; use [dedicated packages](/form/schema-validation/) instead:
 
 Example with 8.x:
 
 ```tsx
 import { z } from 'zod';
-// ❌ No longer works, zodResolver is not exported from @mantine/form
+// ❌ No longer works; zodResolver is not exported from @mantine/form
 import { useForm, zodResolver } from '@mantine/form';
 
 const schema = z.object({
@@ -51,7 +51,7 @@ Example with 9.x:
 ```tsx
 import { z } from 'zod';
 import { useForm } from '@mantine/form';
-// ✅ Use dedicated package for zod resolver
+// ✅ Use a dedicated package for the zod resolver
 import { zodResolver } from 'mantine-form-zod-resolver';
 
 const schema = z.object({
@@ -66,25 +66,25 @@ const form = useForm({
 
 ## TypographyStylesProvider
 
-- [TypographyStylesProvider](/core/typography) component was renamed to [Typography](/core/typography):
+- The [TypographyStylesProvider](/core/typography) component was renamed to [Typography](/core/typography):
 
 ```tsx
 // ❌ No longer works
 import { TypographyStylesProvider } from '@mantine/core';
 
-// ✅ Use Typography component
+// ✅ Use the Typography component
 import { Typography } from '@mantine/core';
 ```
 
 ## Popover and Tooltip positionDependencies prop
 
-[Popover](/core/popover) and [Tooltip](/core/tooltip) components no longer accept `positionDependencies` prop, it is no longer required
+The [Popover](/core/popover) and [Tooltip](/core/tooltip) components no longer accept the `positionDependencies` prop; it is no longer required
 – the position is now calculated automatically.
 
 ```tsx
 import { Popover } from '@mantine/core';
 
-// ❌ positionDependencies no longer needed
+// ❌ positionDependencies is no longer needed
 function Demo(props) {
   return (
     <Popover position="top" positionDependencies={[props.a, props.b]}>
@@ -93,7 +93,7 @@ function Demo(props) {
   );
 }
 
-// ✅ position is recalculated automatically
+// ✅ The position is recalculated automatically
 function Demo(props) {
   return (
     <Popover position="top">
@@ -105,23 +105,23 @@ function Demo(props) {
 
 ## use-fullscreen hook changes
 
-[use-fullscreen](/hooks/use-fullscreen) hook was split into two hooks: `useFullscreenElement` and `useFullscreenDocument`.
-This change was required to fix stale ref issue in the previous implementation.
+The [use-fullscreen](/hooks/use-fullscreen) hook was split into two hooks: `useFullscreenElement` and `useFullscreenDocument`.
+This change was required to fix a stale ref issue in the previous implementation.
 
-New usage with `document` element:
+New usage with the `document` element:
 
 <Demo data={HooksDemos.useFullscreenDemo} />
 
-New usage with custom target element:
+New usage with a custom target element:
 
 <Demo data={HooksDemos.useFullscreenRefDemo} />
 
 ## use-mouse hook changes
 
-[use-mouse](/hooks/use-mouse) hook was split into two hooks: `useMouse` and `useMousePosition`.
-This change was required to fix stale ref issue in the previous implementation.
+The [use-mouse](/hooks/use-mouse) hook was split into two hooks: `useMouse` and `useMousePosition`.
+This change was required to fix a stale ref issue in the previous implementation.
 
-Previous usage with `document` element:
+Previous usage with the `document` element:
 
 ```tsx
 import { Text, Code } from '@mantine/core';
@@ -144,7 +144,7 @@ New usage with `document`:
 
 ## use-mutation-observer hook changes
 
-[use-mutation-observer](/hooks/use-mutation-observer) hook now uses the new callback ref approach.
+The [use-mutation-observer](/hooks/use-mutation-observer) hook now uses the new callback ref approach.
 This change was required to fix stale ref issues and improve compatibility with dynamic node changes.
 
 Previous usage (8.x):
@@ -155,7 +155,7 @@ import { useMutationObserver } from '@mantine/hooks';
 useMutationObserver(
   (mutations) => console.log(mutations),
   { childList: true },
-  // ❌ Third argument is no longer supported, use `useMutationObserverTarget` instead
+  // ❌ The third argument is no longer supported; use `useMutationObserverTarget` instead
   document.getElementById('external-element')
 );
 ```
@@ -165,18 +165,18 @@ New usage (9.x):
 ```tsx
 import { useMutationObserverTarget } from '@mantine/hooks';
 
-// ✅ Rename hook to `useMutationObserverTarget`
+// ✅ Rename the hook to `useMutationObserverTarget`
 useMutationObserverTarget(
   (mutations) => console.log(mutations),
   { childList: true },
-  // ✅ Pass target element as the third argument
+  // ✅ Pass the target element as the third argument
   document.getElementById('external-element')
 );
 ```
 
 ## Rename hooks types
 
-`@mantine/hooks` types were renamed for consistency, rename them in your codebase:
+`@mantine/hooks` types were renamed for consistency; rename them in your codebase:
 - `UseScrollSpyReturnType` → `UseScrollSpyReturnValue`
 - `StateHistory` → `UseStateHistoryValue`
 - `OS` → `UseOSReturnValue`

@@ -18,24 +18,24 @@ color value is also accepted.
 
 ## Change area color depending on color scheme
 
-You can use CSS variables in `color` property. To define a CSS variable that
+You can use CSS variables in the `color` property. To define a CSS variable that
 changes depending on the color scheme, use [light/dark mixins](/styles/postcss-preset/#dark-and-light-mixins)
-or [light-dark function](/styles/postcss-preset/#light-dark-function). Example
-of area that is dark orange in light mode and lime in dark mode:
+or the [light-dark function](/styles/postcss-preset/#light-dark-function). Example
+of an area that is dark orange in light mode and lime in dark mode:
 
 <Demo data={BubbleChartDemos.colorSchemeColor} />
 
 ## Remove tooltip
 
-To remove tooltip, set `withTooltip={false}`. It also removes the cursor line
+To remove the tooltip, set `withTooltip={false}`. This also removes the cursor line
 and disables interactions with the chart.
 
 <Demo data={BubbleChartDemos.noTooltip} />
 
 ## Value formatter
 
-To format values in the tooltip, use `valueFormat` prop. It accepts
-a function that takes number value as an argument and returns formatted value:
+To format values in the tooltip, use the `valueFormat` prop. It accepts
+a function that takes a number value as an argument and returns a formatted value:
 
 <Demo data={BubbleChartDemos.valueFormatter} />
 
@@ -47,7 +47,7 @@ depending on color scheme:
 
 <Demo data={BubbleChartDemos.gridColor} />
 
-If your application has only one color scheme, you can use `gridColor` and `textColor`
+If your application has only one color scheme, you can use the `gridColor` and `textColor`
 props instead of CSS variables:
 
 ```tsx

@@ -14,7 +14,7 @@ export default Layout(MDX_DATA.Pagination);
 
 ## Controlled
 
-To control component state provide `value` and `onChange` props:
+To control the component state, provide `value` and `onChange` props:
 
 ```tsx
 import { useState } from 'react';
@@ -30,19 +30,19 @@ function Demo() {
 
 ## Siblings
 
-Control number of active item siblings with `siblings` prop:
+Control the number of active item siblings with the `siblings` prop:
 
 <Demo data={PaginationDemos.siblings} />
 
 ## Boundaries
 
-Control number of items displayed after previous and before next buttons with `boundaries` prop:
+Control the number of items displayed after previous and before next buttons with the `boundaries` prop:
 
 <Demo data={PaginationDemos.boundaries} />
 
 ## Hide pages controls
 
-Set `withPages={false}` to hide pages controls:
+Set `withPages={false}` to hide the pages controls:
 
 <Demo data={PaginationDemos.withPages} />
 
@@ -77,5 +77,5 @@ You can use the following compound components to have full control over the `Pag
 
 ## use-pagination hook
 
-If you need more flexibility `@mantine/hooks` package exports [use-pagination](/hooks/use-pagination/) hook,
-you can use it to create custom pagination components.
+If you need more flexibility, the `@mantine/hooks` package exports the [use-pagination](/hooks/use-pagination/) hook.
+You can use it to create custom pagination components.

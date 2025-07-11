@@ -6,8 +6,8 @@ export default Layout(MDX_DATA.Tree);
 
 ## Usage
 
-`Tree` component is used to display hierarchical data. `Tree` component
-has minimal styling by default, you can customize styles with [Styles API](/styles/styles-api).
+The `Tree` component is used to display hierarchical data. The `Tree` component
+has minimal styling by default; you can customize styles with [Styles API](/styles/styles-api).
 
 <Demo data={TreeDemos.usage} />
 
@@ -18,7 +18,7 @@ Data passed to the `data` prop should follow these rules:
 - Data must be an array
 - Each item in the array represents a node in the tree
 - Each node must be an object with `value` and `label` keys
-- Each node can have `children` key with an array of child nodes
+- Each node can have a `children` key with an array of child nodes
 - The `value` of each node must be unique
 
 Valid data example:
@@ -54,7 +54,7 @@ const data = [
 
 ## Data type
 
-You can import `TreeNodeData` type to define data type for your tree:
+You can import the `TreeNodeData` type to define the data type for your tree:
 
 ```tsx
 import { TreeNodeData } from '@mantine/core';
@@ -74,8 +74,8 @@ const data: TreeNodeData[] = [
 
 ## renderNode
 
-Use `renderNode` prop to customize node rendering.
-`renderNode` function receives an object with the following properties as a single argument:
+Use the `renderNode` prop to customize node rendering.
+The `renderNode` function receives an object with the following properties as a single argument:
 
 ```tsx
 export interface RenderTreeNodePayload {

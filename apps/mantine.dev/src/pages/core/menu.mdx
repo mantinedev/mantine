@@ -14,7 +14,7 @@ export default Layout(MDX_DATA.Menu);
 
 ## Controlled
 
-Dropdown opened state can be controlled with `opened` and `onChange` props:
+The dropdown's opened state can be controlled with the `opened` and `onChange` props:
 
 ```tsx
 import { useState } from 'react';
@@ -32,16 +32,16 @@ function Demo() {
 
 ## Show menu on hover
 
-Set `trigger="hover"` to reveal dropdown when hovers over menu target and dropdown.
-`closeDelay` and `openDelay` props can be used to control open and close delay in ms.
+Set `trigger="hover"` to reveal the dropdown when hovering over the menu target and dropdown.
+The `closeDelay` and `openDelay` props can be used to control open and close delay in ms.
 Note that:
 
-- If you set `closeDelay={0}` then menu will close before user will reach dropdown, set `offset={0}` to remove space between target element and dropdown.
-- Menu with `trigger="hover"` is not accessible – users that navigate with keyboard will not be able to use it. If you need click-hover hover and click triggers, use `trigger="click-hover"`.
+- If you set `closeDelay={0}` then the menu will close before the user reaches the dropdown, so set `offset={0}` to remove space between the target element and dropdown.
+- Menu with `trigger="hover"` is not accessible – users that navigate with the keyboard will not be able to use it. If you need both hover and click triggers, use `trigger="click-hover"`.
 
 <Demo data={MenuDemos.hover} />
 
-To make `Menu` that is revealed on hover accessible on all devices, use `trigger="click-hover"` instead.
+To make a `Menu` that is revealed on hover accessible on all devices, use `trigger="click-hover"` instead.
 The dropdown will be revealed on hover on desktop and on click on mobile devices.
 
 <Demo data={MenuDemos.clickHover} />
@@ -56,17 +56,17 @@ The dropdown will be revealed on hover on desktop and on click on mobile devices
 
 ## Transitions
 
-Menu dropdown can be animated with any of premade transitions from [Transition](/core/transition/) component:
+The Menu dropdown can be animated with any of the premade transitions from the [Transition](/core/transition/) component:
 
 <Demo data={MenuDemos.transitions} />
 
 ## Custom component as Menu.Item
 
-By default, `Menu.Item` renders as button element, to change that set `component` prop:
+By default, `Menu.Item` renders as a button element. To change that, set the `component` prop:
 
 <Demo data={MenuDemos.component} />
 
-Note that the component you pass to `component` prop should allow spreading props to its root element:
+Note that the component you pass to the `component` prop should allow spreading props to its root element:
 
 ```tsx
 import { Menu } from '@mantine/core';
@@ -115,16 +115,16 @@ Menu follows [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/patterns
 
 ### Supported target elements
 
-Uncontrolled Menu with `trigger="click"` (default) will be accessible only when used with `button` element or component that renders it ([Button](/core/button/), [ActionIcon](/core/action-icon/), etc.).
+An uncontrolled Menu with `trigger="click"` (default) will be accessible only when used with a `button` element or component that renders it ([Button](/core/button/), [ActionIcon](/core/action-icon/), etc.).
 Other elements will not support `Space` and `Enter` key presses.
 
 ### Hover menu
 
-Menu with `trigger="hover"` is not accessible – it cannot be accessed with keyboard, use it only if you do not care about accessibility. If you need click-hover hover and click triggers, use `trigger="click-hover"`.
+Menu with `trigger="hover"` is not accessible – it cannot be accessed with the keyboard. Use it only if you do not care about accessibility. If you need both hover and click triggers, use `trigger="click-hover"`.
 
 ### Navigation
 
-If you are using the Menu to build a Navigation, you can use the options from the demo below to follow the [WAI-ARIA recommendations for navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/).
+If you are using the Menu to build navigation, you can use the options from the demo below to follow the [WAI-ARIA recommendations for navigation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/).
 
 <Demo data={MenuDemos.navigation} />
 

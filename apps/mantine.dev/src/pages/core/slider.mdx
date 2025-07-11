@@ -26,7 +26,7 @@ function Demo() {
 
 ## onChangeEnd
 
-`onChangeEnd` callback is called when user the slider is stopped from being dragged or value is changed with keyboard.
+`onChangeEnd` callback is called when the user stops dragging the slider or when the value is changed with the keyboard.
 You can use it as a debounced callback to avoid too frequent updates.
 
 <Demo data={SliderDemos.changeEnd} />
@@ -36,7 +36,7 @@ You can use it as a debounced callback to avoid too frequent updates.
 To change label behavior and appearance, set the following props:
 
 - `label` – formatter function, accepts value as an argument, set null to disable label, defaults to `f => f`
-- `labelAlwaysOn` – if true – label will always be displayed, by default label is visible only when user is dragging
+- `labelAlwaysOn` – if true, the label will always be displayed; by default the label is visible only when the user is dragging
 - `labelTransitionProps` – props passed down to the [Transition](/core/transition) component, can be used to customize label animation
 
 <Demo data={SliderDemos.label} />
@@ -48,7 +48,7 @@ To change label behavior and appearance, set the following props:
 ## Domain
 
 By default, `min` and `max` values define the possible range of values.
-`domain` prop allows setting the possible range of values independently of the
+The `domain` prop allows setting the possible range of values independently of the
 `min` and `max` values:
 
 <Demo data={SliderDemos.domain} />
@@ -61,7 +61,7 @@ To use `Slider` with decimal values, set `min`, `max` and `step` props:
 
 ## Marks
 
-Add any number of marks to slider by setting `marks` prop to an array of objects:
+Add any number of marks to the slider by setting the `marks` prop to an array of objects:
 
 ```tsx
 const marks = [
@@ -70,14 +70,14 @@ const marks = [
 ];
 ```
 
-Note that mark value is relative to slider value, not width:
+Note that the mark value is relative to the slider value, not width:
 
 <Demo data={SliderDemos.marks} />
 
 ## Restrict selection to marks
 
-Set `restrictToMarks` prop to restrict slider value to marks only. Note that in
-this case `step` prop is ignored:
+Set the `restrictToMarks` prop to restrict the slider value to marks only. Note that in
+this case the `step` prop is ignored:
 
 <Demo data={SliderDemos.restrictToMarks} />
 
@@ -118,7 +118,7 @@ If you need this feature you can build it yourself with [use-move](/hooks/use-mo
 
 ## Build custom slider
 
-If `Slider` component does not meet your requirements, you can build a custom slider with [use-move](/hooks/use-move/) hook:
+If the `Slider` component does not meet your requirements, you can build a custom slider with the [use-move](/hooks/use-move/) hook:
 
 <Demo data={SliderDemos.customSlider} />
 
@@ -127,10 +127,10 @@ If `Slider` component does not meet your requirements, you can build a custom sl
 `Slider` component is accessible by default:
 
 - Thumbs are focusable
-- When the user uses mouse to interact with the slider, focus is moved to the slider track, when the user presses arrows focus is moved to the thumb
-- Value can be changed with arrows with step increment/decrement
+- When the user uses the mouse to interact with the slider, focus is moved to the slider track; when the user presses arrows, focus is moved to the thumb
+- The value can be changed with arrows with step increment/decrement
 
-To label component for screen readers, add labels to thumbs:
+To label the component for screen readers, add labels to thumbs:
 
 ```tsx
 import { Slider } from '@mantine/core';
@@ -146,13 +146,13 @@ function Demo() {
   data={[
     {
       key: 'ArrowRight/ArrowUp',
-      description: 'Increases slider value by one step',
+      description: 'Increases the slider value by one step',
     },
     {
       key: 'ArrowLeft/ArrowDown',
-      description: 'Decreases slider value by one step',
+      description: 'Decreases the slider value by one step',
     },
-    { key: 'Home', description: 'Sets slider value to min value' },
-    { key: 'End', description: 'Sets slider value to max value' },
+    { key: 'Home', description: 'Sets the slider value to min value' },
+    { key: 'End', description: 'Sets the slider value to max value' },
   ]}
 />

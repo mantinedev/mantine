@@ -6,8 +6,8 @@ export default Layout(MDX_DATA.YearPickerInput);
 
 ## YearPicker props
 
-`YearPickerInput` supports most of the [YearPicker](/dates/year-picker/) props,
-read through [YearPicker](/dates/year-picker/) documentation to learn about all component features that are not listed on this page.
+`YearPickerInput` supports most of the [YearPicker](/dates/year-picker/) props.
+Read through the [YearPicker](/dates/year-picker/) documentation to learn about all component features that are not listed on this page.
 
 ## Usage
 
@@ -15,13 +15,13 @@ read through [YearPicker](/dates/year-picker/) documentation to learn about all 
 
 ## Multiple dates
 
-Set `type="multiple"` to allow user to pick multiple dates:
+Set `type="multiple"` to allow users to pick multiple dates:
 
 <Demo data={YearPickerInputDemos.multiple} />
 
 ## Dates range
 
-Set `type="range"` to allow user to pick dates range:
+Set `type="range"` to allow users to pick a date range:
 
 <Demo data={YearPickerInputDemos.range} />
 
@@ -34,14 +34,14 @@ You can change that to [Modal](/core/modal/) by setting `dropdownType="modal"`:
 
 ## Value format
 
-Use `valueFormat` prop to change [dayjs format](https://day.js.org/docs/en/display/format) of value label:
+Use the `valueFormat` prop to change the [dayjs format](https://day.js.org/docs/en/display/format) of the value label:
 
 <Demo data={YearPickerInputDemos.valueFormat} />
 
 ## Value formatter
 
-`valueFormatter` is a more powerful alternative to `valueFormat` prop.
-It allows formatting value label with a custom function.
+`valueFormatter` is a more powerful alternative to the `valueFormat` prop.
+It allows formatting the value label with a custom function.
 The function is the same for all component types (`default`, `multiple` and `range`)
 – you need to perform additional checks inside the function to handle different types.
 
@@ -51,8 +51,8 @@ Example of using a custom formatter function with `type="multiple"`:
 
 ## Clearable
 
-Set `clearable` prop to display clear button in the right section. Note that if you set `rightSection`
-prop, clear button will not be displayed.
+Set the `clearable` prop to display a clear button in the right section. Note that if you set the `rightSection`
+prop, the clear button will not be displayed.
 
 <Demo data={YearPickerInputDemos.clearable} />
 

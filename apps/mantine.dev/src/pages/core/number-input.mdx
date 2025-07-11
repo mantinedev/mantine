@@ -27,10 +27,10 @@ function Demo() {
 
 ## Value type
 
-`value`, `defaultValue` and `onChange` props can be either string or number. In all cases
-when `NumberInput` value can be represented as a number, `onChange` function is called
+The `value`, `defaultValue`, and `onChange` props can be either string or number. In all cases
+when the `NumberInput` value can be represented as a number, the `onChange` function is called
 with a number (for example `55`, `1.28`, `-100`, etc.). But there are several cases when
-it is not possible to represent value as a number:
+it is not possible to represent the value as a number:
 
 - Empty state is represented as an empty string – `''`
 - Numbers that are larger than `Number.MAX_SAFE_INTEGER` or smaller than `Number.MIN_SAFE_INTEGER` are represented as strings – `'90071992547409910'`
@@ -38,14 +38,14 @@ it is not possible to represent value as a number:
 
 ## min and max
 
-Set `min` and `max` props to limit the input value:
+Set the `min` and `max` props to limit the input value:
 
 <Demo data={NumberInputDemos.minMax} />
 
 ## Clamp behavior
 
 By default, the value is clamped when the input is blurred. If you set `clampBehavior="strict"`,
-it will not be possible to enter value outside of min/max range. Note that this option
+it will not be possible to enter a value outside of the min/max range. Note that this option
 may cause issues if you have tight `min` and `max`, for example `min={10}` and `max={20}`.
 If you need to disable value clamping entirely, set `clampBehavior="none"`.
 
@@ -53,7 +53,7 @@ If you need to disable value clamping entirely, set `clampBehavior="none"`.
 
 ## Prefix and suffix
 
-Set `prefix` and `suffix` props to add given string to the start or end of the input value:
+Set the `prefix` and `suffix` props to add a given string to the start or end of the input value:
 
 <Demo data={NumberInputDemos.prefixSuffix} />
 
@@ -71,26 +71,26 @@ By default, decimal numbers are allowed. Set `allowDecimal={false}` to allow onl
 
 ## Decimal scale
 
-`decimalScale` controls how many decimal places are allowed:
+The `decimalScale` controls how many decimal places are allowed:
 
 <Demo data={NumberInputDemos.decimalScale} />
 
 ## Fixed decimal scale
 
-Set `fixedDecimalScale` to always display fixed number of decimal places:
+Set `fixedDecimalScale` to always display a fixed number of decimal places:
 
 <Demo data={NumberInputDemos.fixedDecimalScale} />
 
 ## Decimal separator
 
-Set `decimalSeparator` to change decimal separator character:
+Set `decimalSeparator` to change the decimal separator character:
 
 <Demo data={NumberInputDemos.decimalSeparator} />
 
 ## Thousand separator
 
-Set `thousandSeparator` prop to separate thousands with a character. You can control
-grouping logic with `thousandsGroupStyle`, it accepts: `thousand`, `lakh`, `wan`, `none` values.
+Set the `thousandSeparator` prop to separate thousands with a character. You can control
+the grouping logic with `thousandsGroupStyle`, which accepts: `thousand`, `lakh`, `wan`, `none` values.
 
 <Demo data={NumberInputDemos.thousandsSeparator} />
 
@@ -101,14 +101,14 @@ grouping logic with `thousandsGroupStyle`, it accepts: `thousand`, `lakh`, `wan`
 ## Increment/decrement controls
 
 By default, the right section is occupied by increment and decrement buttons.
-To hide them, set `hideControls` prop. You can also use `rightSection` prop to render anything
+To hide them, set the `hideControls` prop. You can also use the `rightSection` prop to render anything
 in the right section to replace the default controls.
 
 <Demo data={NumberInputDemos.rightSection} />
 
 ## Increment/decrement on hold
 
-Set `stepHoldDelay` and `stepHoldInterval` props to define behavior when increment/decrement controls are clicked and hold:
+Set the `stepHoldDelay` and `stepHoldInterval` props to define behavior when increment/decrement controls are clicked and held:
 
 <Demo data={NumberInputDemos.hold} />
 

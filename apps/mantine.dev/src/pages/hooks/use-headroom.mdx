@@ -6,10 +6,10 @@ export default Layout(MDX_DATA.useHeadroom);
 
 ## Usage
 
-Use `use-headroom` hook to create headers that are hidden after user scrolls past the given distance in px.
+The `use-headroom` hook creates headers that are hidden after the user scrolls past a given distance in pixels.
 The hook returns a boolean value that determines whether the element should be pinned or hidden.
-Hook returns `true` when the current scroll position is less than the specified `fixedAt` value and
-after user scrolled up.
+It returns `true` when the current scroll position is less than the specified `fixedAt` value and
+after the user has scrolled up.
 
 <Demo data={HooksDemos.useHeadroomDemo} />
 
@@ -34,7 +34,8 @@ function useHeadroom(input?: UseHeadroomOptions): boolean;
 ```
 
 ## Exported types
-`UseHeadroomOptions` type is exported from `@mantine/hooks` package, you can import it in your application:
+
+The `UseHeadroomOptions` type is exported from `@mantine/hooks`;
 
 ```tsx
 import { UseHeadroomOptions } from '@mantine/hooks';

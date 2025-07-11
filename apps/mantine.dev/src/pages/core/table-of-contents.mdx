@@ -6,16 +6,16 @@ export default Layout(MDX_DATA.TableOfContents);
 
 ## Usage
 
-Use `TableOfContents` component to display table of contents like
+Use the `TableOfContents` component to display a table of contents like
 in the sidebar of mantine.dev documentation. The component tracks
-scroll position and highlights current heading in the list.
+the scroll position and highlights the current heading in the list.
 
 <Demo data={TableOfContentsDemos.usage} />
 
 ## use-scroll-spy options
 
-`TableOfContents` in based on [use-scroll-spy](/hooks/use-scroll-spy) hook.
-You can pass options down to `use-scroll-spy` hook using `scrollSpyOptions` prop.
+`TableOfContents` is based on the [use-scroll-spy](/hooks/use-scroll-spy) hook.
+You can pass options down to the `use-scroll-spy` hook using the `scrollSpyOptions` prop.
 
 Example of customizing selector, depth and value retrieval:
 
@@ -37,9 +37,9 @@ function Demo() {
 
 ## Pass props to controls
 
-You can pass props down to controls rendered by `TableOfContents` component
-with `getControlProps` function. It accepts an object with `active` and `data`
-properties and should return props object.
+You can pass props down to controls rendered by the `TableOfContents` component
+with the `getControlProps` function. It accepts an object with `active` and `data`
+properties and should return a props object.
 
 Example of changing controls to links:
 
@@ -63,8 +63,8 @@ function Demo() {
 ## Initial data
 
 `TableOfContents` retrieves data on mount. If you want to render headings
-before `TableOfContents` component is mounted (for example during server-side rendering),
-you can pass `initialData` prop with array of headings data. `initialData` is replaced
+before the `TableOfContents` component is mounted (for example during server-side rendering),
+you can pass the `initialData` prop with an array of headings data. `initialData` is replaced
 with actual data on mount.
 
 ```tsx
@@ -85,11 +85,11 @@ function Demo() {
 
 ## Depth offset
 
-Use `minDepthToOffset` prop to set minimum depth at which offset should be applied.
+Use the `minDepthToOffset` prop to set the minimum depth at which offset should be applied.
 By default, `minDepthToOffset` is `1`, which means that first and second level headings
 will not be offset. Set it to `0` to apply offset to all headings.
 
-To control offset value in px, set `depthOffset` prop:
+To control the offset value in px, set the `depthOffset` prop:
 
 <Demo data={TableOfContentsDemos.depthOffset} />
 
@@ -107,7 +107,7 @@ Example of customizing `TableOfContents` with [Styles API](/styles/styles-api) a
 
 By default, `TableOfContents` does not track changes in the DOM. If you want
 to update headings data after the parent component has mounted, you can use
-`reinitializeRef` to get reinitialize function from [use-scroll-spy](/hooks/use-scroll-spy) hook:
+`reinitializeRef` to get the reinitialize function from the [use-scroll-spy](/hooks/use-scroll-spy) hook:
 
 ```tsx
 import { useRef, useLayoutEffect } from 'react';

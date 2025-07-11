@@ -11,21 +11,21 @@ export default Layout(MDX_DATA.ColorPicker);
 ## Color format
 
 `ColorPicker` supports hex, hexa, rgb, rgba, hsl and hsla color formats.
-Slider to change opacity and color preview are displayed only for hexa, rgba and hsla formats:
+The slider to change opacity and color preview are displayed only for hexa, rgba and hsla formats:
 
 <Demo data={ColorPickerDemos.formatsConfigurator} />
 
 ## With swatches
 
-You can add predefined color swatches with `swatches` prop:
+You can add predefined color swatches with the `swatches` prop:
 
 <Demo data={ColorPickerDemos.swatches} />
 
-By default, `ColorPicker` will display 7 swatches per row, you can configure it with `swatchesPerRow` prop:
+By default, `ColorPicker` will display 7 swatches per row. You can configure it with the `swatchesPerRow` prop:
 
 <Demo data={ColorPickerDemos.swatchesConfigurator} />
 
-To display swatches without picker set `withPicker={false}` and `fullWidth` props:
+To display swatches without picker, set `withPicker={false}` and `fullWidth` props:
 
 <Demo data={ColorPickerDemos.swatchesOnly} />
 
@@ -37,8 +37,8 @@ To display swatches without picker set `withPicker={false}` and `fullWidth` prop
 
 ## fullWidth
 
-Set `fullWidth` prop to stretch component to 100% of parent width. In this case the picker will not
-have fixed width, but you can still use `size` prop to control sizes of sliders.
+Set the `fullWidth` prop to stretch the component to 100% of parent width. In this case the picker will not
+have a fixed width, but you can still use the `size` prop to control the sizes of sliders.
 
 <Demo data={ColorPickerDemos.fullWidth} />
 
@@ -56,13 +56,13 @@ have fixed width, but you can still use `size` prop to control sizes of sliders.
 
 ## Accessibility
 
-ColorPicker component is accessible by default:
+The ColorPicker component is accessible by default:
 
 - Saturation, hue and alpha sliders are focusable
-- When moused is used to interact with the slider, focus is moved to the slider
+- When the mouse is used to interact with the slider, focus is moved to the slider
 - All values can be changed with arrows
 
-To make component accessible for screen readers, set `saturationLabel`, `hueLabel` and `alphaLabel`:
+To make the component accessible for screen readers, set `saturationLabel`, `hueLabel` and `alphaLabel`:
 
 ```tsx
 import { ColorPicker } from '@mantine/core';

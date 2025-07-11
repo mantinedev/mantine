@@ -10,7 +10,7 @@ export default Layout(MDX_DATA.Tabs);
 
 ## Controlled Tabs
 
-To control Tabs state, use `value` and `onChange` props:
+To control the Tabs state, use `value` and `onChange` props:
 
 ```tsx
 import { useState } from 'react';
@@ -57,7 +57,7 @@ function Demo() {
 
 ## Change colors
 
-To change colors of all tabs, set `color` on `Tabs` component, to change color of the individual tab,
+To change the colors of all tabs, set `color` on the `Tabs` component; to change the color of an individual tab,
 set `color` on `Tabs.Tab`.
 
 <Demo data={TabsDemos.colors} />
@@ -66,19 +66,19 @@ set `color` on `Tabs.Tab`.
 
 <Demo data={TabsDemos.position} />
 
-To display tab on the opposite side, set `margin-left: auto` with `ml="auto"` prop or with `className`:
+To display a tab on the opposite side, set `margin-left: auto` with the `ml="auto"` prop or with `className`:
 
 <Demo data={TabsDemos.pull} />
 
 ## Inverted tabs
 
-To make tabs inverted, place `Tabs.Panel` components before `Tabs.List` and add `inverted` prop to `Tabs` component:
+To make tabs inverted, place `Tabs.Panel` components before `Tabs.List` and add the `inverted` prop to the `Tabs` component:
 
 <Demo data={TabsDemos.inverted} />
 
 ## Vertical tabs placement
 
-To change placement of `Tabs.List` in vertical orientation set `placement` prop:
+To change the placement of `Tabs.List` in vertical orientation, set the `placement` prop:
 
 <Demo data={TabsDemos.placement} />
 
@@ -90,34 +90,34 @@ Example of custom variant with [FloatingIndicator](/core/floating-indicator):
 
 ## Disabled tabs
 
-Set `disabled` prop on `Tabs.Tab` component to disable tab.
-Disabled tab cannot be activated with mouse or keyboard, and they will be skipped when user navigates with arrow keys:
+Set the `disabled` prop on the `Tabs.Tab` component to disable a tab.
+Disabled tabs cannot be activated with the mouse or keyboard, and they will be skipped when the user navigates with arrow keys:
 
 <Demo data={TabsDemos.disabled} />
 
 ## Activation mode
 
-By default, tabs are activated when user presses arrows keys or Home/End keys.
-To disable that set `activateTabWithKeyboard={false}` on `Tabs` component:
+By default, tabs are activated when the user presses arrow keys or Home/End keys.
+To disable that, set `activateTabWithKeyboard={false}` on the `Tabs` component:
 
 <Demo data={TabsDemos.keyboardActivation} />
 
 ## Tab deactivation
 
-By default, active tab cannot be deactivated. To allow that set `allowTabDeactivation` on `Tabs` component:
+By default, the active tab cannot be deactivated. To allow that, set `allowTabDeactivation` on the `Tabs` component:
 
 <Demo data={TabsDemos.deactivate} />
 
 ## Unmount inactive tabs
 
-By default, inactive `Tabs.Panel` will stay mounted, to unmount inactive tabs, set `keepMounted={false}` on Tabs.
+By default, inactive `Tabs.Panel` will stay mounted; to unmount inactive tabs, set `keepMounted={false}` on Tabs.
 This is useful when you want to render components that impact performance inside `Tabs.Panel`. Note that
 components that are rendered inside `Tabs.Panel` will reset their state on each mount (tab change).
 
 ```tsx
 import { Tabs } from '@mantine/core';
 
-// Second tab panel will be mounted only when user activates second tab
+// Second tab panel will be mounted only when the user activates the second tab
 function Demo() {
   return (
     <Tabs keepMounted={false} defaultValue="first">
@@ -218,10 +218,10 @@ Example of Styles API usage to customize tab styles:
 
 ## Accessibility
 
-Tabs component follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html) on accessibility.
+The Tabs component follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-2/tabs.html) on accessibility.
 
-If you use `Tabs.Tab` without text content, for example, only with icon, then set `aria-label`
-or use [VisuallyHidden](/core/visually-hidden) component:
+If you use `Tabs.Tab` without text content, for example, only with an icon, then set `aria-label`
+or use the [VisuallyHidden](/core/visually-hidden) component:
 
 ```tsx
 import { IconCoin } from '@tabler/icons-react';
@@ -251,7 +251,7 @@ function Demo() {
 }
 ```
 
-To set tabs list label, set `aria-label` on `Tabs.List` component, it will be announced by screen reader:
+To set the tabs list label, set `aria-label` on the `Tabs.List` component; it will be announced by screen reader:
 
 ```tsx
 import { Tabs } from '@mantine/core';

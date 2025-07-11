@@ -16,15 +16,15 @@ You can find all 50+ examples on a [separate page](/combobox?e=BasicSelect).
 
 ## Usage
 
-`Combobox` provides a set of components and hooks to custom select, multiselect or autocomplete components.
+`Combobox` provides a set of components and hooks to create custom select, multiselect or autocomplete components.
 The component is very flexible – you have full control of the rendering and logic.
 
 <Demo data={ComboboxDemos.select} />
 
 ## useCombobox hook
 
-`useCombobox` hook provides combobox store. The store contains the current state of the component
-and handlers to update it. Created store must be passed to the `store` prop of `Combobox`:
+`useCombobox` hook provides a combobox store. The store contains the current state of the component
+and handlers to update it. The created store must be passed to the `store` prop of `Combobox`:
 
 ```tsx
 import { Combobox, useCombobox } from '@mantine/core';
@@ -39,7 +39,7 @@ function Demo() {
 
 ## useCombobox options
 
-`useCombobox` hooks accepts an options object with the following properties:
+The `useCombobox` hook accepts an options object with the following properties:
 
 ```tsx
 interface UseComboboxOptions {
@@ -66,7 +66,7 @@ interface UseComboboxOptions {
 }
 ```
 
-You can import `UseComboboxOptions` type from `@mantine/core` package:
+You can import the `UseComboboxOptions` type from the `@mantine/core` package:
 
 ```tsx
 import type { UseComboboxOptions } from '@mantine/core';
@@ -74,7 +74,7 @@ import type { UseComboboxOptions } from '@mantine/core';
 
 ## Combobox store
 
-Combobox store is an object with the following properties:
+The Combobox store is an object with the following properties:
 
 ```tsx
 interface ComboboxStore {

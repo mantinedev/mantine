@@ -11,38 +11,38 @@ export default Layout(MDX_DATA.LineChart);
 ## Gradient type
 
 Set `type="gradient"` to render a line chart with gradient fill. To customize
-gradient colors, use `gradientStops` prop. It accepts an array of objects with
+gradient colors, use the `gradientStops` prop. It accepts an array of objects with
 `offset` and `color` properties. `offset` is a number between 0 and 100 that
-defines the position of the color in the gradient, `color` is a reference to `theme.colors`
+defines the position of the color in the gradient; `color` is a reference to `theme.colors`
 or any valid CSS color.
 
 <Demo data={LineChartDemos.gradient} />
 
 ## Legend
 
-To display chart legend, set `withLegend` prop. When one of the items in the legend
+To display the chart legend, set the `withLegend` prop. When one of the items in the legend
 is hovered, the corresponding data series is highlighted in the chart.
 
 <Demo data={LineChartDemos.legend} />
 
 ## Legend position
 
-You can pass props down to recharts [Legend](https://recharts.org/en-US/api/Legend)
-component with `legendProps` prop. For example, setting `legendProps={{ verticalAlign: 'bottom', height: 50 }}`
+You can pass props down to the recharts [Legend](https://recharts.org/en-US/api/Legend)
+component with the `legendProps` prop. For example, setting `legendProps={{ verticalAlign: 'bottom', height: 50 }}`
 will render the legend at the bottom of the chart and set its height to 50px.
 
 <Demo data={LineChartDemos.legendPosition} />
 
 ## Series labels
 
-By default, series `name` is used as a label. To change it, set `label`
-property in `series` object:
+By default, the series `name` is used as a label. To change it, set the `label`
+property in the `series` object:
 
 <Demo data={LineChartDemos.seriesLabels} />
 
 ## Connect nulls
 
-Use `connectNulls` prop to specify whether to connect a data point across null
+Use the `connectNulls` prop to specify whether to connect a data point across null
 points. By default, `connectNulls` is `true`.
 
 <Demo data={LineChartDemos.connectNulls} />
@@ -55,9 +55,9 @@ To display labels on data points, set `withPointLabels`:
 
 ## X and Y axis props
 
-Use `xAxisProps` and `yAxisProps` to pass props down to recharts [XAxis](https://recharts.org/en-US/api/XAxis)
+Use `xAxisProps` and `yAxisProps` to pass props down to the recharts [XAxis](https://recharts.org/en-US/api/XAxis)
 and [YAxis](https://recharts.org/en-US/api/YAxis) components. For example, these props
-can be used to change orientation of axis:
+can be used to change the orientation of the axis:
 
 <Demo data={LineChartDemos.axisProps} />
 
@@ -69,31 +69,31 @@ Use `xAxisLabel` and `yAxisLabel` props to display axis labels:
 
 ## X axis offset
 
-Use `xAxisProps` to set padding between the charts ends and the x-axis:
+Use `xAxisProps` to set padding between the chart ends and the x-axis:
 
 <Demo data={LineChartDemos.xAxisOffset} />
 
 ## Y axis scale
 
-Use `yAxisProps` to change domain of the Y axis. For example, if you know that
-your data will always be in the range of 0 to 100, you can set domain to `[0, 100]`:
+Use `yAxisProps` to change the domain of the Y axis. For example, if you know that
+your data will always be in the range of 0 to 100, you can set the domain to `[0, 100]`:
 
 <Demo data={LineChartDemos.yScale} />
 
 ## Right Y axis
 
-To display additional Y axis on the right side of the chart, set `withRightYAxis` prop.
-You can pass props down to recharts [YAxis](https://recharts.org/en-US/api/YAxis)
-component with `rightYAxisProps` prop and assign a label to the right Y axis with
-`rightYAxisLabel` prop. Note that you need to bind data series to the right Y axis
+To display an additional Y axis on the right side of the chart, set the `withRightYAxis` prop.
+You can pass props down to the recharts [YAxis](https://recharts.org/en-US/api/YAxis)
+component with the `rightYAxisProps` prop and assign a label to the right Y axis with
+the `rightYAxisLabel` prop. Note that you need to bind data series to the right Y axis
 by setting `yAxisId` in the `series` object.
 
 <Demo data={LineChartDemos.rightYAxis} />
 
 ## Value formatter
 
-To format values in the tooltip and axis ticks, use `valueFormat` prop. It accepts
-a function that takes number value as an argument and returns formatted value:
+To format values in the tooltip and axis ticks, use the `valueFormat` prop. It accepts
+a function that takes a number value as an argument and returns a formatted value:
 
 <Demo data={LineChartDemos.valueFormatter} />
 
@@ -107,17 +107,17 @@ color value is also accepted.
 
 ## Change line color depending on color scheme
 
-You can use CSS variables in `color` property. To define a CSS variable that
+You can use CSS variables in the `color` property. To define a CSS variable that
 changes depending on the color scheme, use [light/dark mixins](/styles/postcss-preset/#dark-and-light-mixins)
-or [light-dark function](/styles/postcss-preset/#light-dark-function). Example
-of line that is dark orange in light mode and lime in dark mode:
+or the [light-dark function](/styles/postcss-preset/#light-dark-function). Example
+of a line that is dark orange in light mode and lime in dark mode:
 
 <Demo data={LineChartDemos.colorSchemeColor} />
 
 ## Stroke dash array
 
-Set `strokeDasharray` prop to control the stroke dash array of the grid and cursor
-lines. The value represent the lengths of alternating dashes and gaps. For example,
+Set the `strokeDasharray` prop to control the stroke dash array of the grid and cursor
+lines. The value represents the lengths of alternating dashes and gaps. For example,
 `strokeDasharray="10 5"` will render a dashed line with 10px dashes and 5px gaps.
 
 <Demo data={LineChartDemos.strokeDasharray} />
@@ -130,7 +130,7 @@ depending on color scheme:
 
 <Demo data={LineChartDemos.gridColor} />
 
-If your application has only one color scheme, you can use `gridColor` and `textColor`
+If your application has only one color scheme, you can use the `gridColor` and `textColor`
 props instead of CSS variables:
 
 ```tsx
@@ -157,50 +157,50 @@ function Demo() {
 
 ## Tooltip animation
 
-By default, tooltip animation is disabled. To enable it, set `tooltipAnimationDuration`
+By default, tooltip animation is disabled. To enable it, set the `tooltipAnimationDuration`
 prop to a number of milliseconds to animate the tooltip position change.
 
 <Demo data={LineChartDemos.tooltipAnimation} />
 
 ## Units
 
-Set `unit` prop to render a unit label next to the y-axis ticks and tooltip values:
+Set the `unit` prop to render a unit label next to the y-axis ticks and tooltip values:
 
 <Demo data={LineChartDemos.unit} />
 
 ## Custom tooltip
 
-Use `tooltipProps.content` to pass custom tooltip renderer to recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)
-component. Note that it is required to filter recharts payload with `getFilteredChartTooltipPayload`
+Use `tooltipProps.content` to pass a custom tooltip renderer to the recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)
+component. Note that it is required to filter the recharts payload with the `getFilteredChartTooltipPayload`
 function to remove empty values that are used for styling purposes only.
 
 <Demo data={LineChartDemos.customTooltip} />
 
 ## Remove tooltip
 
-To remove tooltip, set `withTooltip={false}`. It also removes the cursor line
+To remove the tooltip, set `withTooltip={false}`. This also removes the cursor line
 and disables interactions with the chart.
 
 <Demo data={LineChartDemos.noTooltip} />
 
 ## Customize dots
 
-Use `dotProps` to pass props down to recharts dot in regular state and `activeDotProps`
-to pass props down to recharts dot in active state (when cursor is over the current series).
+Use `dotProps` to pass props down to the recharts dot in regular state and `activeDotProps`
+to pass props down to the recharts dot in active state (when the cursor is over the current series).
 
 <Demo data={LineChartDemos.dotProps} />
 
 ## Stroke width
 
-Use `strokeWidth` prop to control the stroke width of all lines:
+Use the `strokeWidth` prop to control the stroke width of all lines:
 
 <Demo data={LineChartDemos.strokeWidth} />
 
 ## Sync multiple LineCharts
 
-You can pass props down to recharts [LineChart](https://recharts.org/en-US/api/LineChart)
-component with `lineChartProps` prop. For example, setting `lineChartProps={{ syncId: 'any-id' }}`
-will sync tooltip of multiple `LineChart` components with the same `syncId` prop.
+You can pass props down to the recharts [LineChart](https://recharts.org/en-US/api/LineChart)
+component with the `lineChartProps` prop. For example, setting `lineChartProps={{ syncId: 'any-id' }}`
+will sync the tooltip of multiple `LineChart` components with the same `syncId` prop.
 
 <Demo data={LineChartDemos.sync} />
 
@@ -210,21 +210,21 @@ Set `orientation="vertical"` to render a vertical line chart:
 
 <Demo data={LineChartDemos.vertical} />
 
-## Dashed line line
+## Dashed line
 
-Set `strokeDasharray` property in `series` to change line style to dashed:
+Set the `strokeDasharray` property in `series` to change the line style to dashed:
 
 <Demo data={LineChartDemos.lineDasharray} />
 
 ## Reference lines
 
-Use `referenceLines` prop to render reference lines. Reference lines are always
+Use the `referenceLines` prop to render reference lines. Reference lines are always
 rendered behind the chart.
 
 <Demo data={LineChartDemos.referenceLines} />
 
 ## Reference area
 
-Use `ReferenceArea` component from recharts to display a reference area:
+Use the `ReferenceArea` component from recharts to display a reference area:
 
 <Demo data={LineChartDemos.referenceArea} />

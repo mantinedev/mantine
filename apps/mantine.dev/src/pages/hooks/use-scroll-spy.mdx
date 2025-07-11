@@ -6,30 +6,30 @@ export default Layout(MDX_DATA.useScrollSpy);
 
 ## Usage
 
-`use-scroll-spy` hook tracks scroll position and returns index of the
+The `use-scroll-spy` hook tracks the scroll position and returns the index of the
 element that is currently in the viewport. It is useful for creating
-table of contents components (like in mantine.dev sidebar on the right side)
+table of contents components (like in the mantine.dev sidebar on the right side)
 and similar features.
 
 <Demo data={HooksDemos.useScrollSpyUsage} />
 
 ## Hook options
 
-`use-scroll-spy` accepts an object with options:
+The `use-scroll-spy` hook accepts an object with options:
 
-- `selector` - selector to get headings, by default it is `'h1, h2, h3, h4, h5, h6'`
-- `getDepth` - a function to retrieve depth of heading, by default depth is calculated based on tag name
-- `getValue` - a function to retrieve heading value, by default `element.textContent` is used
+- `selector` - selector to get headings; by default it is `'h1, h2, h3, h4, h5, h6'`
+- `getDepth` - a function to retrieve the depth of a heading; by default depth is calculated based on the tag name
+- `getValue` - a function to retrieve the heading value; by default `element.textContent` is used
 
-Example of using custom options to get headings with `data-heading` attribute:
+Example of using custom options to get headings with the `data-heading` attribute:
 
 <Demo data={HooksDemos.useScrollSpySelector} />
 
 ## Reinitializing hook data
 
 By default, `use-scroll-spy` does not track changes in the DOM. If you want
-to update headings data after the parent component has mounted, you can use
-`reinitialize` function:
+to update the headings data after the parent component has mounted, you can use
+the `reinitialize` function:
 
 ```tsx
 import { useEffect } from 'react';
@@ -98,7 +98,7 @@ function useScrollSpy(options?: UseScrollSpyOptions): UseScrollSpyReturnValue
 
 ## Exported types
 
-`UseScrollSpyOptions` and `UseScrollSpyReturnValue` types are exported from `@mantine/hooks` package,
+`UseScrollSpyOptions` and `UseScrollSpyReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

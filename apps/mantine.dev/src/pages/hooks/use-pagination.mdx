@@ -6,7 +6,7 @@ export default Layout(MDX_DATA.usePagination);
 
 ## Usage
 
-`use-pagination` is a state management hook for [Pagination](/core/pagination/) component,
+The `use-pagination` hook is a state management hook for the [Pagination](/core/pagination/) component;
 it manages pagination with controlled and uncontrolled state:
 
 <Demo data={PaginationDemos.usage} />
@@ -36,7 +36,7 @@ pagination.range; // -> [1, 2, 3, 4, 5, 'dots', 10];
 
 ## Controlled
 
-The hook supports controlled mode, provide `page` and `onChange` props to manage state from outside:
+The hook supports controlled mode; provide `page` and `onChange` props to manage state from outside:
 
 ```tsx
 import { useState } from 'react';
@@ -130,7 +130,7 @@ function usePagination(settings: UsePaginationOptions): UsePaginationReturnValue
 
 ## Exported types
 
-`UsePaginationOptions` and `UsePaginationReturnValue` types are exported from `@mantine/hooks` package,
+`UsePaginationOptions` and `UsePaginationReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx

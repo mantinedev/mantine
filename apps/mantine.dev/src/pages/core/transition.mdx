@@ -10,7 +10,7 @@ Mantine includes several premade transitions:
 
 <Demo data={TooltipDemos.transitions} />
 
-To use one of them set `transition` property to one of these values:
+To use one of them, set the `transition` property to one of these values:
 
 ```tsx
 import { Transition } from '@mantine/core';
@@ -36,12 +36,12 @@ You can create your own transition. `transition` is an object with 4 properties:
 - `in` – styles for mounted state
 - `out` – styles for unmounted state
 - `common` (optional) – styles for both mounted and unmounted states
-- `transitionProperty` – properties which participate in transition
+- `transitionProperty` – properties which participate in the transition
 
 <Demo data={TransitionDemos.custom} />
 
 ## Enter and exit delay
 
-Use `enterDelay` and `exitDelay` props to delay transition start. Values are in milliseconds:
+Use the `enterDelay` and `exitDelay` props to delay the transition start. Values are in milliseconds:
 
 <Demo data={TransitionDemos.delay} />

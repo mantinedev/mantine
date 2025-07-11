@@ -6,28 +6,28 @@ export default Layout(MDX_DATA.RingProgress);
 
 ## Usage
 
-Set `sections` prop to an array of:
+Set the `sections` prop to an array of:
 
-- `value` – number between 0 and 100 – amount of space filled by segment
-- `color` – segment color from theme or any other css color value
+- `value` – number between 0 and 100 – amount of space filled by the segment
+- `color` – segment color from the theme or any other CSS color value
 
 <Demo data={RingProgressDemos.usage} />
 
 ## Size, thickness & rounded caps
 
-Use `size`, `thickness` & `roundCaps` props to configure RingProgress, size and thickness values:
+Use the `size`, `thickness` & `roundCaps` props to configure the RingProgress size and thickness values:
 
 <Demo data={RingProgressDemos.configurator} />
 
 ## Sections tooltips
 
-Add `tooltip` property to section to display floating [Tooltip](/core/tooltip/) when user hovers over it:
+Add a `tooltip` property to a section to display a floating [Tooltip](/core/tooltip/) when the user hovers over it:
 
 <Demo data={RingProgressDemos.tooltip} />
 
 ## Root color
 
-Use `rootColor` property to change the root color:
+Use the `rootColor` property to change the root color:
 
 <Demo data={RingProgressDemos.rootColor} />
 
@@ -39,14 +39,14 @@ You can add any additional props to sections:
 
 ## Customize label
 
-You can add any React node as label, for example [Text](/core/text/) component with some additional styles
-or [ThemeIcon](/core/theme-icon/):
+You can add any React node as a label, for example a [Text](/core/text/) component with some additional styles
+or a [ThemeIcon](/core/theme-icon/):
 
 <Demo data={RingProgressDemos.label} />
 
 ## Filled segment transition
 
-By default, transitions are disabled, to enable them, set `transitionDuration` prop
+By default, transitions are disabled. To enable them, set the `transitionDuration` prop
 to a number of milliseconds:
 
 <Demo data={RingProgressDemos.transitions} />

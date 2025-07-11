@@ -7,10 +7,10 @@ export default Layout(MDX_DATA.Heatmap);
 ## Usage
 
 `Heatmap` is used to display data in a table where each column represents a week.
-The only required prop is `data` – object where keys are dates in `YYYY-MM-DD` format and values are numbers.
+The only required prop is `data` – an object where keys are dates in `YYYY-MM-DD` format and values are numbers.
 
-`startDate` and `endDate` props are optional, they are used to define heatmap range.
-If not set, heatmap will display data for the last year.
+The `startDate` and `endDate` props are optional; they are used to define the heatmap range.
+If not set, the heatmap will display data for the last year.
 
 <Demo data={HeatmapDemos.usage} />
 
@@ -34,15 +34,15 @@ export const data = {
 
 ## With tooltip
 
-Set `withTooltip` and `getTooltipLabel` props to display tooltip when
+Set the `withTooltip` and `getTooltipLabel` props to display a tooltip when
 `Heatmap` cells are hovered. `getTooltipLabel` is called with date and value
-and must return string to display in tooltip.
+and must return a string to display in the tooltip.
 
 <Demo data={HeatmapDemos.tooltip} />
 
 ## Change colors
 
-`Heatmap` colors can be changed with `colors` prop. It should be an array of any
+`Heatmap` colors can be changed with the `colors` prop. It should be an array of any
 valid CSS color values (hex, rgba, CSS variables, etc.). By default, `Heatmap`
 uses 4 colors to indicate heat level, but you can pass any number of colors.
 
@@ -55,7 +55,7 @@ you should define those colors in `.css` file:
 
 <Demo data={HeatmapDemos.cssColors} />
 
-Note that in this case, you can only use 4 colors without passing `colors` prop.
+Note that in this case, you can only use 4 colors without passing the `colors` prop.
 If you need more colors, you should pass them manually to the component:
 
 ```tsx
@@ -98,10 +98,10 @@ const data = {
 ```
 
 Based on the domain, `Heatmap` calculates colors for each rect: 1 – min heat level,
-4 – max heat level. To specify domain manually, use `domain` prop. It is useful
+4 – max heat level. To specify the domain manually, use the `domain` prop. It is useful
 when your data does not cover the whole range of possible values. For example,
 the subset of data passed to the heatmap has values from 1 to 4, but the actual
-range is from 1 to 10. In this case, you can pass `[1, 10]` to `domain` prop:
+range is from 1 to 10. In this case, you can pass `[1, 10]` to the `domain` prop:
 
 ```tsx
 import { Heatmap } from '@mantine/charts';
@@ -120,15 +120,15 @@ function Demo() {
 
 ## Weekdays and months labels
 
-Set `withMonthLabels` and `withWeekdayLabels` props to display chart labels:
+Set the `withMonthLabels` and `withWeekdayLabels` props to display chart labels:
 
 <Demo data={HeatmapDemos.labels} />
 
 ## Change labels text
 
-To change labels, use `weekdayLabels` and `monthLabels` props.
-`weekdayLabels` prop must be an array of 7 strings with weekday names starting from Sunday.
-`monthLabels` prop must be an array of 12 strings with month names starting from January.
+To change labels, use the `weekdayLabels` and `monthLabels` props.
+The `weekdayLabels` prop must be an array of 7 strings with weekday names starting from Sunday.
+The `monthLabels` prop must be an array of 12 strings with month names starting from January.
 
 <Demo data={HeatmapDemos.labelsText} />
 
@@ -139,7 +139,7 @@ To change labels, use `weekdayLabels` and `monthLabels` props.
 ## Pass props to rect
 
 Use `getRectProps` to pass props to each rect. For example,
-it can be used to add onClick handler to each rect:
+it can be used to add an onClick handler to each rect:
 
 <Demo data={HeatmapDemos.getRectProps} />
 
@@ -149,6 +149,6 @@ it can be used to add onClick handler to each rect:
 
 ## First day of week
 
-The default first day of the week is Monday, you can change it with `firstDayOfWeek` prop:
+The default first day of the week is Monday; you can change it with the `firstDayOfWeek` prop:
 
 <Demo data={HeatmapDemos.firstDayOfWeek} />

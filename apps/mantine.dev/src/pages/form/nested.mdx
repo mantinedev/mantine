@@ -4,10 +4,10 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.formNested);
 
-## Properties paths
+## Property paths
 
-Most of `form` handlers accept property path as the first argument.
-Property path includes keys/indices of objects/arrays at which target property is contained:
+Most `form` handlers accept a property path as the first argument.
+Property path includes keys/indices of objects/arrays in which the target property is contained:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -33,10 +33,10 @@ const form = useForm({
   },
 });
 
-// Props for input that is controlled by user object firstName field
+// Props for input that is controlled by the user object's firstName field
 form.getInputProps('user.firstName');
 
-// Set value of `name` field that is contained in object at second position of fruits array:
+// Set value of `name` field that is contained in the object at the second position of fruits array:
 form.setFieldValue('fruits.1.name', 'Carrot');
 
 // Validate deeply nested field
@@ -70,7 +70,7 @@ form.setFieldValue('user.occupation', 'Engineer');
 form.setFieldValue('user', { name: 'Jane', occupation: 'Architect' });
 ```
 
-## Nested object values validation
+## Nested object value validation
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -104,14 +104,14 @@ form.errors; // -> { 'user.name': 'Name is too short', 'user.occupation': 'Occup
 
 ## List handlers
 
-`useForm` hook provides the following handlers to manage list state:
+The `useForm` hook provides the following handlers to manage list state:
 
-- `removeListItem` – removes list item at given index
-- `insertListItem` – inserts list item at given index (appends item to the end of the list if index is not specified)
-- `reorderListItem` – reorders list item with given position at specified field
-- `replaceListItem` – replaces list item at given index with new value
+- `removeListItem` – removes a list item at the given index
+- `insertListItem` – inserts a list item at the given index (appends item to the end of the list if index is not specified)
+- `reorderListItem` – reorders a list item with the given position at the specified field
+- `replaceListItem` – replaces a list item at the given index with a new value
 
-## List values validation
+## List value validation
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -137,10 +137,10 @@ const form = useForm({
   },
 });
 
-// Validate list item field
+// Validate a list item field
 form.validateField('users.1.name');
 
-// Or with all other fields
+// Or validate with all other fields
 form.validate();
 console.log(form.errors);
 // {

@@ -6,19 +6,19 @@ export default Layout(MDX_DATA.Spoiler);
 
 ## Usage
 
-Use `Spoiler` to hide long section of content.
-Set `maxHeight` prop to control point at which content will be hidden under spoiler and show/hide control appears.
+Use `Spoiler` to hide a long section of content.
+Set the `maxHeight` prop to control the point at which content will be hidden under the spoiler and the show/hide control appears.
 If the content height is less than `maxHeight`, the spoiler will just render children.
 
-`hideLabel` and `showLabel` props are required – they are used as spoiler toggle button label in corresponding state.
+`hideLabel` and `showLabel` props are required – they are used as the spoiler toggle button label in the corresponding state.
 
 <Demo data={SpoilerDemos.usage} />
 
 ## Control expanded state
 
-To control expanded state use `expanded` and `onExpandedChange` props. Note that
+To control the expanded state, use `expanded` and `onExpandedChange` props. Note that the
 `expanded` prop does not have any effect on spoiler visuals if the content height
-is less than given `maxHeight`.
+is less than the given `maxHeight`.
 
 ```tsx
 import { useState } from 'react';
@@ -62,7 +62,7 @@ function Demo() {
 
 ## Transition duration
 
-Control transition duration by setting `transitionDuration` prop (transition-duration CSS property in ms).
+Control the transition duration by setting the `transitionDuration` prop (transition-duration CSS property in ms).
 To disable animations, set `transitionDuration={0}`:
 
 <Demo data={SpoilerDemos.transitions} />

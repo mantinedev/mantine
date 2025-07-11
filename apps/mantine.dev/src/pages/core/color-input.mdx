@@ -24,28 +24,28 @@ function Demo() {
 
 ## Formats
 
-Component supports hex, hexa, rgb, rgba, hsl and hsla color formats.
-Slider to change opacity is displayed only for hexa, rgba and hsla formats:
+The component supports hex, hexa, rgb, rgba, hsl and hsla color formats.
+The slider to change opacity is displayed only for hexa, rgba and hsla formats:
 
 <Demo data={ColorInputDemos.formatsConfigurator} />
 
 ## Preserve invalid input
 
 By default, `ColorInput` will revert the value on blur to the last known valid value.
-To change this behavior and keep invalid value, set `fixOnBlur={false}`:
+To change this behavior and keep the invalid value, set `fixOnBlur={false}`:
 
 <Demo data={ColorInputDemos.fixOnBlur} />
 
 ## onChangeEnd
 
-`onChangeEnd` is called when user stops dragging slider or changes input value.
-It is useful when you need to update color only when user finished interaction with the component:
+`onChangeEnd` is called when the user stops dragging the slider or changes the input value.
+It is useful when you need to update the color only when the user has finished interacting with the component:
 
 <Demo data={ColorInputDemos.onChangeEnd} />
 
 ## Disable free input
 
-To disable free input set `disallowInput` prop:
+To disable free input, set the `disallowInput` prop:
 
 <Demo data={ColorInputDemos.disallowInput} />
 
@@ -55,45 +55,45 @@ You can add any amount of predefined color swatches:
 
 <Demo data={ColorInputDemos.swatches} />
 
-By default, there will be 7 swatches per row, you can change this with `swatchesPerRow` prop,
-like in [ColorPicker](/core/color-picker/) component:
+By default, there will be 7 swatches per row. You can change this with the `swatchesPerRow` prop,
+like in the [ColorPicker](/core/color-picker/) component:
 
 <Demo data={ColorPickerDemos.swatchesConfigurator} />
 
-If you need to restrict color picking to certain colors – disable color picker and disallow free input:
+If you need to restrict color picking to certain colors – disable the color picker and disallow free input:
 
 <Demo data={ColorInputDemos.swatchesOnly} />
 
 ## Close dropdown on color swatch click
 
-To close the dropdown when one of the color swatches is clicked, set `closeOnColorSwatchClick` prop:
+To close the dropdown when one of the color swatches is clicked, set the `closeOnColorSwatchClick` prop:
 
 <Demo data={ColorInputDemos.closeOnColorSwatchClick} />
 
 ## Hide dropdown
 
-To hide dropdown, set `withPicker={false}`:
+To hide the dropdown, set `withPicker={false}`:
 
 <Demo data={ColorInputDemos.withPicker} />
 
 ## Eye dropper
 
-By default, if [EyeDropper API](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper_API)
-is available, eye dropper icon will be displayed at the right section of the input.
+By default, if the [EyeDropper API](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper_API)
+is available, the eye dropper icon will be displayed at the right section of the input.
 To disable it, set `withEyeDropper={false}`:
 
 <Demo data={ColorInputDemos.noEyeDropper} />
 
 ## Change eye dropper icon
 
-You can replace eye dropper icon with any React node using `eyeDropperIcon` prop:
+You can replace the eye dropper icon with any React node using the `eyeDropperIcon` prop:
 
 <Demo data={ColorInputDemos.eyeDropperIcon} />
 
 <InputSections component="ColorInput" />
 
-Note that by default, `ColorPicker` has color preview in the left section and eye dropper button
-in the right section. You can replace these elements with any React node using `leftSection`
+Note that by default, `ColorPicker` has a color preview in the left section and an eye dropper button
+in the right section. You can replace these elements with any React node using the `leftSection`
 and `rightSection` props:
 
 <Demo data={ColorInputDemos.sections} />

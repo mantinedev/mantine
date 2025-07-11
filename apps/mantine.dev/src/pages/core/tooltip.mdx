@@ -11,8 +11,8 @@ export default Layout(MDX_DATA.Tooltip);
 ## Tooltip children
 
 Tooltip requires an element or a component as a single child –
-strings, fragments, numbers and multiple elements/components are not supported and **will throw error**.
-Custom components must provide a prop to get root element ref,
+strings, fragments, numbers and multiple elements/components are not supported and **will throw an error**.
+Custom components must provide a prop to get the root element ref;
 all Mantine components support ref out of the box.
 
 ```tsx
@@ -30,19 +30,19 @@ function Demo() {
       </Tooltip>
 
       <Tooltip label="Throws">
-        Raw string, NOT OK – will throw error
+        Raw string, NOT OK – will throw an error
       </Tooltip>
 
-      {/* Number, NOT OK – will throw error */}
+      {/* Number, NOT OK – will throw an error */}
       <Tooltip label="Throws">{2}</Tooltip>
 
       <Tooltip label="Throws">
-        <>Fragment, NOT OK, will throw error</>
+        <>Fragment, NOT OK, will throw an error</>
       </Tooltip>
 
       <Tooltip label="Throws">
-        <div>More that one node</div>
-        <div>NOT OK, will throw error</div>
+        <div>More than one node</div>
+        <div>NOT OK, will throw an error</div>
       </Tooltip>
     </>
   );
@@ -51,11 +51,11 @@ function Demo() {
 
 ## Tooltip target
 
-`target` prop is an alternative to `children`. It accepts a string (selector),
-an HTML element or a ref object with HTML element. Use `target` prop when you do
-not render tooltip target as JSX element.
+The `target` prop is an alternative to `children`. It accepts a string (selector),
+an HTML element or a ref object with an HTML element. Use the `target` prop when you do
+not render the tooltip target as a JSX element.
 
-Example of using `target` prop with a string selector:
+Example of using the `target` prop with a string selector:
 
 <Demo data={TooltipDemos.target} />
 
@@ -81,7 +81,7 @@ function Demo() {
 }
 ```
 
-Use `forwardRef` function to forward ref to root element:
+Use the `forwardRef` function to forward ref to the root element:
 
 ```tsx
 // Example of code that will work
@@ -110,25 +110,25 @@ function Demo() {
 
 ## Offset
 
-Set `offset` prop to a number to change tooltip position relative to the target element.
-This way you can control tooltip offset on main axis only.
+Set the `offset` prop to a number to change the tooltip position relative to the target element.
+This way you can control the tooltip offset on the main axis only.
 
 <Demo data={TooltipDemos.offset} />
 
-To control offset on both axis, pass object with `mainAxis` and `crossAxis` properties:
+To control the offset on both axes, pass an object with `mainAxis` and `crossAxis` properties:
 
 <Demo data={TooltipDemos.offsetAxis} />
 
 ## Arrow
 
-Set `withArrow` prop to add an arrow to the tooltip. Arrow is a `div` element rotated with `transform: rotate(45deg)`.
+Set the `withArrow` prop to add an arrow to the tooltip. The arrow is a `div` element rotated with `transform: rotate(45deg)`.
 
-`arrowPosition` prop determines how arrow is position relative to the target element when `position` is set to `*-start` and `*-end` values on `Popover` component.
+The `arrowPosition` prop determines how the arrow is positioned relative to the target element when `position` is set to `*-start` and `*-end` values on the `Popover` component.
 By default, the value is `center` – the arrow is positioned in the center of the target element if it is possible.
 
 If you change `arrowPosition` to `side`, then the arrow will be positioned on the side of the target element,
-and you will be able to control arrow offset with `arrowOffset` prop. Note that when `arrowPosition` is set to `center`,
-`arrowOffset` prop is ignored.
+and you will be able to control the arrow offset with the `arrowOffset` prop. Note that when `arrowPosition` is set to `center`,
+the `arrowOffset` prop is ignored.
 
 <Demo data={TooltipDemos.arrow} />
 
@@ -138,8 +138,8 @@ and you will be able to control arrow offset with `arrowOffset` prop. Note that 
 
 ## Change events
 
-Events that trigger tooltip can be changed with `events` prop, it accepts an object
-with the following properties that determine which events will trigger tooltip:
+Events that trigger the tooltip can be changed with the `events` prop; it accepts an object
+with the following properties that determine which events will trigger the tooltip:
 
 - `hover` – mouse hover event, `true` by default
 - `focus` – focus/blur events excluding clicks on the target element, `false` by default
@@ -162,19 +162,19 @@ function Demo() {
 
 ## Multiline
 
-To enable multiline mode, set `multiline` prop to enable line breaks and `w` [style prop](/styles/style-props) to set tooltip width:
+To enable multiline mode, set the `multiline` prop to enable line breaks and the `w` [style prop](/styles/style-props) to set the tooltip width:
 
 <Demo data={TooltipDemos.multiline} />
 
 ## Inline
 
-Set `inline` prop to use `Tooltip` with inline elements:
+Set the `inline` prop to use `Tooltip` with inline elements:
 
 <Demo data={TooltipDemos.inline} />
 
 ## Change transition
 
-Tooltip is built with [Transition](/core/transition/) component, it supports `transitionProps` props:
+Tooltip is built with the [Transition](/core/transition/) component; it supports `transitionProps` props:
 
 ```tsx
 import { Button, Tooltip } from '@mantine/core';
@@ -197,26 +197,26 @@ All available premade transitions:
 
 ## Close and open delay
 
-You can delay tooltip open/close events by setting `openDelay` and `closeDelay` props in ms:
+You can delay tooltip open/close events by setting the `openDelay` and `closeDelay` props in ms:
 
 <Demo data={TooltipDemos.delay} />
 
 ## Tooltip delay group
 
-`Tooltip.Group` component can be used to sync open and close delays for multiple tooltips:
+The `Tooltip.Group` component can be used to sync open and close delays for multiple tooltips:
 
 <Demo data={TooltipDemos.group} />
 
 ## Floating tooltip
 
-`Tooltip.Floating` component has the same API as Tooltip component but tooltip will follow mouse:
+`Tooltip.Floating` component has the same API as the Tooltip component but the tooltip will follow the mouse:
 
 <Demo data={TooltipDemos.floating} />
 
 ## Custom components with Tooltip
 
-If you want to build a component that can be used with Tooltip use
-[forwardRef](https://reactjs.org/docs/forwarding-refs.html) or other prop that will allow to get root element ref.
+If you want to build a component that can be used with Tooltip, use
+[forwardRef](https://reactjs.org/docs/forwarding-refs.html) or another prop that will allow getting the root element ref.
 This logic is applied to Tooltip and Tooltip.Floating components:
 
 ```tsx
@@ -266,12 +266,12 @@ function Demo() {
 
 Tooltip follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices/#tooltip):
 
-- Tooltip body has `role="tooltip"` attribute
-- Target element has `aria-describedby` attribute
+- The tooltip body has `role="tooltip"` attribute
+- The target element has `aria-describedby` attribute
 - `Tooltip.Floating` is ignored by screen readers
 
 By default, Tooltip is not triggered by focus events and thus users who use a screen reader
-or navigate with keyboard will not be able to get tooltip content. Set `events` prop to enable
+or navigate with the keyboard will not be able to get tooltip content. Set the `events` prop to enable
 focus/blur tooltip events:
 
 ```tsx

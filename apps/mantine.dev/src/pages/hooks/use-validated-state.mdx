@@ -6,8 +6,8 @@ export default Layout(MDX_DATA.useValidatedState);
 
 ## Usage
 
-`use-validated-state` validates state with a given rule each time state is set.
-It returns an object with current validation state, last valid value and current value:
+The `use-validated-state` hook validates state with a given rule each time the state is set.
+It returns an object with the current validation state, last valid value, and current value:
 
 ```tsx
 import { useValidatedState } from '@mantine/hooks';
@@ -40,7 +40,7 @@ interface UseValidatedStateValue<T> {
   /** Last valid value */
   lastValidValue: T | undefined;
 
-  /** True if the current value is valid, false otherwise */
+  /** True if the current value is valid; false otherwise */
   valid: boolean;
 }
 
@@ -60,8 +60,7 @@ function useValidatedState<T>(
 
 ## Exported types
 
-`UseValidatedStateValue` and `UseValidatedStateReturnValue` types are exported from `@mantine/hooks` package,
-you can import them in your application:
+The `UseValidatedStateValue` and `UseValidatedStateReturnValue` types are exported from `@mantine/hooks`;
 
 ```tsx
 import type { UseValidatedStateValue, UseValidatedStateReturnValue } from '@mantine/hooks';

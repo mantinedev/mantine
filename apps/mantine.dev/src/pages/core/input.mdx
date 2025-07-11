@@ -8,8 +8,8 @@ export default Layout(MDX_DATA.Input);
 
 **!important:** In most cases, you should not use `Input` in your application.
 `Input` is a base for other inputs and was not designed to be used directly.
-Use `Input` to create custom inputs, for other cases prefer [TextInput](/core/text-input/)
-or other component.
+Use `Input` to create custom inputs. For other cases, prefer [TextInput](/core/text-input/)
+or another component.
 
 ```tsx
 import { Input, TextInput } from '@mantine/core';
@@ -34,7 +34,7 @@ function Correct() {
 
 ## Usage
 
-`Input` component is used as base for some other inputs ([NativeSelect](/core/native-select/), [TextInput](/core/text-input/), [Textarea](/core/textarea/), etc.).
+The `Input` component is used as a base for some other inputs ([NativeSelect](/core/native-select/), [TextInput](/core/text-input/), [Textarea](/core/textarea/), etc.).
 The purpose of the `Input` is to provide shared styles and features to other inputs.
 
 <Demo data={InputDemos.usage} />
@@ -58,9 +58,9 @@ Example of using [react-imask](https://github.com/uNmAnNeR/imaskjs/tree/master/p
 
 ## Input.Wrapper component
 
-`Input.Wrapper` component is used in all other inputs
+The `Input.Wrapper` component is used in all other inputs
 ([TextInput](/core/text-input/), [NativeSelect](/core/native-select/), [Textarea](/core/textarea/), etc.)
-under the hood, you _do not need to wrap your inputs with it, as it is already included in all of them_.
+under the hood. You _do not need to wrap your inputs with it, as it is already included in all of them_.
 Use `Input.Wrapper` only when you want to create custom inputs.
 
 <Demo data={InputDemos.wrapper} />
@@ -69,15 +69,15 @@ Use `Input.Wrapper` only when you want to create custom inputs.
 
 `inputWrapperOrder` allows configuring the order of `Input.Wrapper` parts.
 It accepts an array of four elements: `label`, `input`, `error` and `description`.
-Note that it is not required to include all of them, you can use only those that you need
-– parts that are not included will not be rendered.
+Note that it is not required to include all of them – you can use only those that you need.
+Parts that are not included will not be rendered.
 
 <Demo data={InputDemos.inputWrapperOrder} />
 
 ## inputContainer
 
-With `inputContainer` prop, you can enhance inputs that use `Input.Wrapper` under the hood,
-for example, you can add [Tooltip](/core/tooltip/) to the [TextInput](/core/text-input/) when
+With the `inputContainer` prop, you can enhance inputs that use `Input.Wrapper` under the hood.
+For example, you can add a [Tooltip](/core/tooltip/) to the [TextInput](/core/text-input/) when
 the input is focused:
 
 <Demo data={InputDemos.inputContainer} />
@@ -86,8 +86,8 @@ the input is focused:
 
 All components that are based on `Input.Wrapper` support `required` and `withAsterisk` props.
 When set to true, both of these props will add a red asterisk to the end of the label.
-The only difference is whether input element will have `required` attribute, example with
-[TextInput](/core/text-input/) component:
+The only difference is whether the input element will have the `required` attribute. Example with
+the [TextInput](/core/text-input/) component:
 
 ```tsx
 import { TextInput } from '@mantine/core';
@@ -105,10 +105,10 @@ function AsteriskDemo() {
 
 ## error prop
 
-All inputs that use `Input.Wrapper` under the hood support `error` prop.
+All inputs that use `Input.Wrapper` under the hood support the `error` prop.
 When set to `true`, it will add a red border to the input. You can also pass a React node to display
-an error message below the input. To only display error message without a red border, set `error` prop
-to React node and `withErrorStyles={false}`:
+an error message below the input. To only display an error message without a red border, set the `error` prop
+to a React node and `withErrorStyles={false}`:
 
 <Demo data={InputDemos.error} />
 
@@ -121,22 +121,22 @@ form layouts if the default `Input.Wrapper` layout does not meet your requiremen
 
 ## Input.Placeholder component
 
-`Input.Placeholder` component can be used to add placeholder to `Input` and `InputBase` components that are based on `button` element
-or do not support placeholder property natively:
+`Input.Placeholder` component can be used to add a placeholder to `Input` and `InputBase` components that are based on the `button` element
+or do not support the placeholder property natively:
 
 <Demo data={InputDemos.placeholder} />
 
 ## Input.ClearButton component
 
-Use `Input.ClearButton` component to add clear button to custom inputs
-based on `Input` component. `size` of the clear button is automatically
+Use the `Input.ClearButton` component to add a clear button to custom inputs
+based on the `Input` component. The `size` of the clear button is automatically
 inherited from the input:
 
 <Demo data={InputDemos.clearButton} />
 
 ## Default props on theme
 
-You can add [default props](/theming/default-props/) on [theme](/theming/theme-object/)
+You can add [default props](/theming/default-props/) on the [theme](/theming/theme-object/)
 to `Input` and `Input.Wrapper` components. These default props will be inherited by all inputs
 that use `Input` and `Input.Wrapper` under the hood ([TextInput](/core/text-input/), [NativeSelect](/core/native-select/), [Textarea](/core/textarea/), etc.):
 
@@ -145,7 +145,7 @@ that use `Input` and `Input.Wrapper` under the hood ([TextInput](/core/text-inpu
 ## Styles on theme
 
 Same as with default props, you can use `Input` and `Input.Wrapper` [Styles API](/styles/styles-api/)
-on [theme](/theming/theme-object/) to add styles to all inputs:
+on the [theme](/theming/theme-object/) to add styles to all inputs:
 
 <Demo data={InputDemos.sharedStyles} />
 
