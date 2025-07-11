@@ -37,11 +37,11 @@ export const usage: MantineDemo = {
     {
       type: 'number',
       prop: 'iconSize',
-      initialValue: 48,
+      initialValue: 38,
       min: 30,
       max: 60,
       step: 1,
-      libraryValue: 48,
+      libraryValue: '__',
     },
   ],
 };
