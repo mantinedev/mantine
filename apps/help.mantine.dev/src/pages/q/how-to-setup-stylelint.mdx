@@ -3,7 +3,7 @@ import { Layout } from '@/layout';
 export const meta = {
   title: 'How can I lint CSS files?',
   description:
-    'Learn how to setup Stylelint for Mantine postcss syntax',
+    'Learn how to set up Stylelint for Mantine postcss syntax',
   slug: 'how-to-setup-stylelint',
   category: 'tooling',
   tags: ['stylelint', 'lint', 'postcss'],
@@ -15,14 +15,14 @@ export default Layout(meta);
 
 ## Installation
 
-[Stylelint](https://stylelint.io/) is a tool to lint CSS and CSS like files.
-To get started install `stylelint` and `stylelint-config-standard-scss` packages:
+[Stylelint](https://stylelint.io/) is a tool to lint CSS and CSS-like files.
+To get started, install the `stylelint` and `stylelint-config-standard-scss` packages:
 
 <InstallScript packages="stylelint stylelint-config-standard-scss" />
 
 ## Configuration
 
-Create `.stylelintrc.json` file at your project root with the following content:
+Create a `.stylelintrc.json` file at your project root with the following content:
 
 ```json
 {
@@ -45,7 +45,7 @@ The rules above are required to make Stylelint work with Mantine components.
 
 ## Mantine Stylelint config
 
-If you want to have the same Stylelint configuration as Mantine, change `.stylelintrc.json` content to the following:
+If you want to have the same Stylelint configuration as Mantine, change the `.stylelintrc.json` content to the following:
 
 ```json
 {
@@ -80,7 +80,7 @@ If you want to have the same Stylelint configuration as Mantine, change `.stylel
 
 ## Additional tools
 
-Add npm script to your `package.json` to lint all css files in your project:
+Add an npm script to your `package.json` to lint all css files in your project:
 
 ```json
 {
@@ -90,4 +90,4 @@ Add npm script to your `package.json` to lint all css files in your project:
 }
 ```
 
-To enable linting in your editor, install [stylelint VSCode extension](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint).
+To enable linting in your editor, install the [stylelint VSCode extension](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint).

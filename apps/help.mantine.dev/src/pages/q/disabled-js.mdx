@@ -14,27 +14,27 @@ export default Layout(meta);
 
 ## data-mantine-color-scheme attribute
 
-Most of Mantine styles rely on `data-mantine-color-scheme`
-attribute to be present on the root element of the application.
+Most Mantine styles rely on the `data-mantine-color-scheme`
+attribute being present on the root element of the application.
 If it is not there, your application will look broken and it may
-seem that styles are not applied at all. It is not the case, styles
+seem that styles are not applied at all. This is not the case – styles
 are applied, but there is no `data-mantine-color-scheme` attribute
-to match selectors.
+to match the selectors.
 
-By default, `data-mantine-color-scheme` attribute is added automatically
-by `ColorSchemeScript` and `MantineProvider` components. Both of them
+By default, the `data-mantine-color-scheme` attribute is added automatically
+by the `ColorSchemeScript` and `MantineProvider` components. Both of them
 are JavaScript components and require JavaScript to work.
 
 ## Adding support for disabled JavaScript
 
 If you are planning to support users with disabled JavaScript, you
-need to defined `data-mantine-color-scheme` attribute manually on
-the root element of your application (usually it is `html`).
+need to define the `data-mantine-color-scheme` attribute manually on
+the root element of your application (usually the `html` element).
 
 ```html
 <html data-mantine-color-scheme="light">
 <!-- ... rest of your application -->
 ```
 
-Note that you can only used `light` or `dark` values for `data-mantine-color-scheme`
-in this case. `auto` value is not supported without JavaScript.
+Note that you can only use `light` or `dark` values for `data-mantine-color-scheme`
+in this case. The `auto` value is not supported without JavaScript.

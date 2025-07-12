@@ -15,7 +15,7 @@ export default Layout(meta);
 
 ## Get input DOM node with use-form
 
-You can use `form.getInputNode` function to get input DOM node at the given path.
+You can use the `form.getInputNode` function to get the input DOM node at the given path.
 For example:
 
 ```tsx
@@ -29,18 +29,18 @@ const form = useForm({
   },
 });
 
-// Returns input DOM node for order_id input
+// Returns the input DOM node for order_id input
 form.getInputNode('order_id');
 
-// Returns input DOM node for user.email input
+// Returns the input DOM node for user.email input
 form.getInputNode('user.email');
 ```
 
 ## Focus first input with error on form submit
 
-`form.onSubmit` handler accepts two functions: the first function is called
+The `form.onSubmit` handler accepts two functions: the first function is called
 with valid form values when validation passes, the second function is called
 with form errors when validation fails. You can use the second function and
-`form.getInputNode` to focus the first input with error:
+`form.getInputNode` to focus the first input with an error:
 
 <Demo data={FocusFirstInputWithError} />

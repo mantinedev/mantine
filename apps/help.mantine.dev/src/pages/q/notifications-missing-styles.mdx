@@ -3,7 +3,7 @@ import image from '@/images/notifications-missing-styles.png';
 import { Layout } from '@/layout';
 
 export const meta = {
-  title: 'Why my notifications are displayed at a wrong position?',
+  title: 'Why are my notifications displayed at the wrong position?',
   description: 'Because you did not import styles',
   slug: 'notifications-missing-styles',
   category: 'styles',
@@ -18,11 +18,11 @@ If your notifications have incorrect position on the screen and look like this:
 
 <Image src={image.src} maw={800} />
 
-It means that you did not import styles for `@mantine/notifications` package like
-it is described in [installation](https://mantine.dev/x/notifications/#installation)
+It means that you did not import styles for the `@mantine/notifications` package as
+described in the [installation](https://mantine.dev/x/notifications/#installation)
 instructions.
 
-Add styles import to your application:
+Add the styles import to your application:
 
 ```bash
 import '@mantine/core/styles.css';

@@ -17,9 +17,9 @@ export default Layout(meta);
 [use-form](https://mantine.dev/form/use-form) supports nested values in array format.
 There are handlers available to add, remove, and reorder items in the list:
 
-- `form.removeListItem` – removes list item at given index
-- `form.insertListItem` – inserts list item at given index (appends item to the end of the list if index is not specified)
-- `form.reorderListItem` – reorders list item with given position at specified field
+- `form.removeListItem` – removes a list item at the given index
+- `form.insertListItem` – inserts a list item at the given index (appends the item to the end of the list if index is not specified)
+- `form.reorderListItem` – reorders a list item with the given position at the specified field
 
 Example of using form lists:
 
@@ -109,6 +109,6 @@ function Demo() {
 
 ## Form lists limitation
 
-`use-form` lists are designed to work with objects, any other values are not supported.
+`use-form` lists are designed to work with objects; any other values are not supported.
 This limitation is implemented on purpose to avoid confusing form lists with arrays of
 other types of values.
