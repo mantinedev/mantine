@@ -1,6 +1,7 @@
 import {
   ActionIconDemos,
-  StylesDemos,
+  Apart from adding new variants, you can also override existing ones. For example, you can change the
+`filled` variant of the [Input](/core/input) component with the `.input[data-variant="filled"]` selector.ylesDemos,
   ThemingDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
@@ -12,18 +13,18 @@ export default Layout(MDX_DATA.VariantsAndSizes);
 
 ## Adding custom variants
 
-Most of Mantine components support `variant` prop, it can be used in CSS variables resolver,
-and it is also exposed as `data-variant="{value}"` attribute on the root element of the component.
+Most Mantine components support the `variant` prop. It can be used in CSS variables resolver,
+and it is also exposed as a `data-variant="{value}"` attribute on the root element of the component.
 The easiest way to add custom variants is to add styles that use `[data-variant="{value}"]`.
 
 Example of adding a new variant to the [Input](/core/input) component:
 
 - `underline` variant styles are added
-- `filled` variant is a default variant – you do not need to define any additional styles for it
+- `filled` variant is the default variant – you do not need to define any additional styles for it
 
 <Demo data={StylesDemos.customVariant} />
 
-Note that you can add custom variants to every Mantine component that supports [Styles API](/styles/styles-api)
+Note that you can add custom variants to every Mantine component that supports the [Styles API](/styles/styles-api),
 even if there are no variants defined on the library side.
 
 > **Overriding existing variants styles**
@@ -33,10 +34,10 @@ even if there are no variants defined on the library side.
 
 ## Custom variants types
 
-You can define types for custom variants by creating `mantine.d.ts` file
-in your project and extending `{x}Props` interface with the new variant type.
+You can define types for custom variants by creating a `mantine.d.ts` file
+in your project and extending the `{x}Props` interface with the new variant type.
 
-Example of adding custom variant type to [Button](/core/button) component:
+Example of adding a custom variant type to the [Button](/core/button) component:
 
 ```tsx
 import { ButtonVariant, MantineSize } from '@mantine/core';
@@ -55,28 +56,28 @@ declare module '@mantine/core' {
 [Button](/core/button), [Badge](/core/badge), [ActionIcon](/core/action-icon) and other
 components support custom variants with [variantColorResolver](/theming/colors#colors-variant-resolver)
 – it supports both changing colors and adding new variants. Note that `theme.variantColorResolver` is
-responsible only for colors, if you need to change other properties, use `data-variant` attribute.
+responsible only for colors. If you need to change other properties, use the `data-variant` attribute.
 
 <Demo data={ThemingDemos.variantColorsResolver} />
 
 ## Sizes with components CSS variables
 
-You can add custom sizes to any component that supports `size` prop by providing a custom
-CSS variables resolver, usually it is done in `theme.components`:
+You can add custom sizes to any component that supports the `size` prop by providing a custom
+CSS variables resolver. Usually this is done in `theme.components`:
 
 <Demo data={StylesDemos.vars} />
 
 ## Sizes with data-size attribute
 
-Every component that supports `size` prop exposes it as `data-size="{value}"` attribute on the root element.
+Every component that supports the `size` prop exposes it as a `data-size="{value}"` attribute on the root element.
 You can use it to add custom sizes:
 
 <Demo data={StylesDemos.dataSize} />
 
 ## Sizes with static CSS variables
 
-Mantine components sizes are defined with CSS variables (usually on root element), for example,
-[ActionIcon](/core/action-icon) component has the following CSS variables:
+Mantine component sizes are defined with CSS variables (usually on the root element). For example,
+the [ActionIcon](/core/action-icon) component has the following CSS variables:
 
 ```css
 .root {
@@ -88,11 +89,11 @@ Mantine components sizes are defined with CSS variables (usually on root element
 }
 ```
 
-You can override these values with [Styles API](/styles/styles-api) or add new sizes values:
+You can override these values with the [Styles API](/styles/styles-api) or add new size values:
 
 <Demo data={ActionIconDemos.customSize} />
 
-Note that some components have more than one CSS variable for size, for example,
+Note that some components have more than one CSS variable for size. For example,
 the [Button](/core/button) component has the following CSS variables:
 
 ```css
@@ -123,5 +124,5 @@ the [Button](/core/button) component has the following CSS variables:
 }
 ```
 
-Usually, it is more convenient to use `data-size` attribute or `vars` on [theme](/theming/theme-object)
+Usually, it is more convenient to use the `data-size` attribute or `vars` on the [theme](/theming/theme-object)
 to customize sizes in this case.

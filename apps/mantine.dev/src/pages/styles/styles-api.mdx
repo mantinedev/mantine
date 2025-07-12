@@ -14,18 +14,18 @@ export default Layout(MDX_DATA.StylesApi);
 
 ## What is Styles API
 
-The styles API is a set of props and techniques that allows you to customize the style of any element
+The Styles API is a set of props and techniques that allows you to customize the style of any element
 inside a Mantine component – inline or using the [theme object](/theming/theme-object). All Mantine components that
-have styles support Styles API.
+have styles support the Styles API.
 
 ## Styles API selectors
 
-Every Mantine component that supports the styles API has a set of element names that can be used to
-apply styles to inner elements inside the component. For simplicity, these elements names are called
-selectors in Mantine documentation. You can find selectors information under the `Styles API` tab
+Every Mantine component that supports the Styles API has a set of element names that can be used to
+apply styles to inner elements inside the component. For simplicity, these element names are called
+selectors in the Mantine documentation. You can find selector information under the `Styles API` tab
 in a component's documentation.
 
-Example of [Button](/core/button) component selectors:
+Example of the [Button](/core/button) component selectors:
 
 <SelectorsTable
   data={ButtonStylesApi}
@@ -34,7 +34,7 @@ Example of [Button](/core/button) component selectors:
   fixedLayout={false}
 />
 
-You can use these selectors in `classNames` and `styles` in, both, component props and `theme.components`:
+You can use these selectors in `classNames` and `styles` in both component props and `theme.components`:
 
 ```tsx
 import { Button, createTheme, MantineProvider } from '@mantine/core';

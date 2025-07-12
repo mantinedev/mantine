@@ -10,22 +10,22 @@ This guide will help you understand how to apply styles to Mantine and custom co
 
 ## Component specific props
 
-Most of the components provide props that allow you to customize their styles. For example,
-[Button](/core/button/) component has `color`, `variant`, `size` and `radius` props that control its
+Most components provide props that allow you to customize their styles. For example,
+the [Button](/core/button/) component has `color`, `variant`, `size` and `radius` props that control its
 appearance:
 
 <Demo data={ButtonDemos.configurator} />
 
-These props usually control multiple CSS properties, for example `color` and variant props control `color`,
-`background-color` and `border` properties. In most cases, changing components props is the most optimal way to customize Mantine components.
+These props usually control multiple CSS properties. For example, the `color` and `variant` props control `color`,
+`background-color` and `border` properties. In most cases, changing component props is the most optimal way to customize Mantine components.
 
 ## Style props
 
-[Style props](/styles/style-props/) work similar to component specific props, but with several differences:
+[Style props](/styles/style-props/) work similarly to component-specific props, but with several differences:
 
-- Style props are not component specific, they can be used with any component.
-- Style props always control a single CSS property. For example, `c` prop controls CSS `color` property, while `color` prop controls a set of properties: `color`, `background-color` and `border-color`.
-- Style props are set in `style` attribute. It is not possible to override them with CSS without using `!important`.
+- Style props are not component-specific; they can be used with any component.
+- Style props always control a single CSS property. For example, the `c` prop controls the CSS `color` property, while the `color` prop controls a set of properties: `color`, `background-color` and `border-color`.
+- Style props are set in the `style` attribute. It is not possible to override them with CSS without using `!important`.
 
 [Style props](/styles/style-props/) are useful when you need to change a single CSS property without creating a separate file for styles.
 Some of the most common use cases are:

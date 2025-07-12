@@ -19,7 +19,7 @@ import '@mantine/code-highlight/styles.css';
 ## Example
 
 `CodeHighlight` component is used to display code snippets with syntax highlighting.
-It provides a flexible adapter system that allows using any code highlighting library
+It provides a flexible adapter system that allows you to use any code highlighting library
 of your choice.
 
 Example of code highlighting with [shiki](https://shiki.matsu.io/):
@@ -35,20 +35,20 @@ Default adapters:
 
 - `createShikiAdapter` – creates [shiki](https://shiki.matsu.io/) adapter
 - `createHighlightJsAdapter` – creates [highlight.js](https://highlightjs.org/) adapter
-- `plainTextAdapter` – does not highlight code, just displays it as plain text (used by default if no adapter provided)
+- `plainTextAdapter` – does not highlight code, just displays it as plain text (used by default if no adapter is provided)
 
 ## Usage with shiki
 
 [Shiki](https://shiki.matsu.io/) library provides the most advanced syntax highlighting
 for TypeScript and CSS/Sass code. It uses textmate grammars to highlight code (same as in VSCode).
-Shiki adapter is recommended if you need to highlight advanced TypeScript (generics, jsx nested in props) or CSS code (custom syntaxes, newest features).
-Shiki adapter is used for all code highlighting in Mantine documentation.
+The Shiki adapter is recommended if you need to highlight advanced TypeScript (generics, jsx nested in props) or CSS code (custom syntaxes, newest features).
+The Shiki adapter is used for all code highlighting in Mantine documentation.
 
-To use shiki adapter you need to install `shiki` package:
+To use the shiki adapter, you need to install the `shiki` package:
 
 <InstallScript packages="shiki" />
 
-Then wrap your app with `CodeHighlightAdapterProvider` and provide `createShikiAdapter` as `adapter` prop:
+Then wrap your app with `CodeHighlightAdapterProvider` and provide `createShikiAdapter` as the `adapter` prop:
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -78,23 +78,23 @@ function App() {
 }
 ```
 
-After that, you can use `CodeHighlight` component in your application:
+After that, you can use the `CodeHighlight` component in your application:
 
 <Demo data={CodeHighlightDemos.usage} />
 
-All further code highlighting examples on this page are using shiki adapter.
+All further code highlighting examples on this page use the shiki adapter.
 
 ## Usage with highlight.js
 
 [Highlight.js](https://highlightjs.org/) provides less accurate highlighting compared to shiki,
-but it has smaller bundle size and better performance. Choose highlight.js adapter if you need
+but it has a smaller bundle size and better performance. Choose the highlight.js adapter if you need
 to highlight basic JavaScript, HTML, and CSS code.
 
-To use highlight.js adapter you need to install `highlight.js` package:
+To use the highlight.js adapter, you need to install the `highlight.js` package:
 
 <InstallScript packages="highlight.js" />
 
-Then wrap your app with `CodeHighlightAdapterProvider` and provide `createHighlightJsAdapter` as `adapter` prop:
+Then wrap your app with `CodeHighlightAdapterProvider` and provide `createHighlightJsAdapter` as the `adapter` prop:
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -117,9 +117,9 @@ function App() {
 }
 ```
 
-Then you need to add styles of one of the highlight.js themes to your application.
-You can do that by importing css file from `highlight.js` package or adding it via
-CDN link to the head of your application:
+Then you need to add styles from one of the highlight.js themes to your application.
+You can do that by importing a css file from the `highlight.js` package or adding it via
+a CDN link to the head of your application:
 
 ```html
 <link
@@ -128,11 +128,11 @@ CDN link to the head of your application:
 />
 ```
 
-After that, you can use `CodeHighlight` component in your application.
+After that, you can use the `CodeHighlight` component in your application.
 
 ## Create custom adapter
 
-You can create a custom adapter if you want to enhance the default behavior of the code highlighting
+You can create a custom adapter if you want to enhance the default behavior of code highlighting
 or use a different library.
 
 Example of creating a custom shiki adapter with custom themes and logic:
@@ -159,9 +159,9 @@ async function loadShiki() {
 
 // Pass this adapter to CodeHighlightAdapterProvider component
 export const customShikiAdapter: CodeHighlightAdapter = {
-  // loadContext is called on client side to load shiki highlighter
+  // loadContext is called on the client side to load the shiki highlighter
   // It is required to be used if your library requires async initialization
-  // The value returned from loadContext is passed to createHighlighter as ctx argument
+  // The value returned from loadContext is passed to createHighlighter as the ctx argument
   loadContext: loadShiki,
 
   // ctx is the value returned from loadContext
@@ -195,7 +195,7 @@ In case you need to remove the copy button, set `withCopyButton={false}`.
 
 ## With tabs
 
-`CodeHighlightTabs` component allows organizing multiple code blocks into tabs:
+`CodeHighlightTabs` component allows you to organize multiple code blocks into tabs:
 
 <Demo data={CodeHighlightDemos.tabs} />
 
@@ -209,8 +209,8 @@ icons:
 
 ## Tabs icons based on file name
 
-As an alternative to providing icons manually for each tab, you can use `getFileIcon` prop
-to assign icons based on file name. `getFileIcon` accepts file name and must React node
+As an alternative to providing icons manually for each tab, you can use the `getFileIcon` prop
+to assign icons based on file name. `getFileIcon` accepts a file name and must return a React node
 or `null`.
 
 <Demo data={CodeHighlightDemos.tabsGetIcons} />
@@ -218,20 +218,20 @@ or `null`.
 ## Expandable code
 
 If the code snippet is too long, you can make it expandable with `withExpandButton`
-and `defaultExpanded={false}` props. To change label of the expand/collapse control
+and `defaultExpanded={false}` props. To change the label of the expand/collapse control
 tooltip, use `expandCodeLabel` and `collapseCodeLabel`.
 
 <Demo data={CodeHighlightDemos.expand} />
 
 ## Custom controls
 
-Use `controls` prop with `CodeHighlightControl` component to add custom controls
+Use the `controls` prop with the `CodeHighlightControl` component to add custom controls
 to the code block:
 
 <Demo data={CodeHighlightDemos.customControl} />
 
 ## Inline code
 
-`InlineCodeHighlight` component allows highlighting inline code snippets:
+`InlineCodeHighlight` component allows you to highlight inline code snippets:
 
 <Demo data={CodeHighlightDemos.inline} />

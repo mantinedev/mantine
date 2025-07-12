@@ -7,7 +7,7 @@ export default Layout(MDX_DATA.MantineProvider);
 # MantineProvider
 
 `MantineProvider` provides a [theme object](/theming/theme-object) context value, manages color scheme
-changes and injects [CSS variables](/styles/css-variables/). It must be rendered at the root of your
+changes, and injects [CSS variables](/styles/css-variables/). It must be rendered at the root of your
 application and should be used only once.
 
 ## Usage
@@ -37,28 +37,28 @@ interface MantineProviderProps {
   /** Theme override object */
   theme?: MantineThemeOverride;
 
-  /** Used to retrieve/set color scheme value in external storage, by default uses `window.localStorage` */
+  /** Used to retrieve/set color scheme value in external storage; by default uses `window.localStorage` */
   colorSchemeManager?: MantineColorSchemeManager;
 
-  /** Default color scheme value used when `colorSchemeManager` cannot retrieve value from external storage, `light` by default */
+  /** Default color scheme value used when `colorSchemeManager` cannot retrieve value from external storage; `light` by default */
   defaultColorScheme?: MantineColorScheme;
 
-  /** Forces color scheme value, if set, MantineProvider ignores `colorSchemeManager` and `defaultColorScheme` */
+  /** Forces color scheme value; if set, MantineProvider ignores `colorSchemeManager` and `defaultColorScheme` */
   forceColorScheme?: 'light' | 'dark';
 
-  /** CSS selector to which CSS variables should be added, `:root` by default */
+  /** CSS selector to which CSS variables should be added; `:root` by default */
   cssVariablesSelector?: string;
 
-  /** Determines whether theme CSS variables should be added to given `cssVariablesSelector`, `true` by default */
+  /** Determines whether theme CSS variables should be added to given `cssVariablesSelector`; `true` by default */
   withCssVariables?: boolean;
 
-  /** Determines whether CSS variables should be deduplicated: if CSS variable has the same value as in default theme, it is not added in the runtime. `true` by default. */
+  /** Determines whether CSS variables should be deduplicated: if CSS variable has the same value as in default theme, it is not added in the runtime; `true` by default. */
   deduplicateCssVariables?: boolean;
 
-  /** Function to resolve root element to set `data-mantine-color-scheme` attribute, must return undefined on server, `() => document.documentElement` by default */
+  /** Function to resolve root element to set `data-mantine-color-scheme` attribute; must return undefined on server, `() => document.documentElement` by default */
   getRootElement?: () => HTMLElement | undefined;
 
-  /** A prefix for components static classes (for example {selector}-Text-root), `mantine` by default */
+  /** A prefix for components' static classes (for example {selector}-Text-root); `mantine` by default */
   classNamesPrefix?: string;
 
   /** Function to generate nonce attribute added to all generated `<style />` tags */
@@ -67,13 +67,13 @@ interface MantineProviderProps {
   /** Function to generate CSS variables based on theme object */
   cssVariablesResolver?: CSSVariablesResolver;
 
-  /** Determines whether components should have static classes, for example, `mantine-Button-root`. `true` by default */
+  /** Determines whether components should have static classes, for example, `mantine-Button-root`; `true` by default */
   withStaticClasses?: boolean;
 
-  /** Determines whether global classes should be added with `<style />` tag. Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work. `true` by default. */
+  /** Determines whether global classes should be added with `<style />` tag. Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work; `true` by default. */
   withGlobalClasses?: boolean;
 
-  /** Environment at which the provider is used, `'test'` environment disables all transitions and portals */
+  /** Environment in which the provider is used; `'test'` environment disables all transitions and portals */
   env?: 'default' | 'test';
 
   /** Your application */
@@ -83,7 +83,7 @@ interface MantineProviderProps {
 
 ### theme
 
-Pass [theme object](/theming/theme-object) override to `theme` prop. It will be merged with the default
+Pass a [theme object](/theming/theme-object) override to the `theme` prop. It will be merged with the default
 theme and used in all components.
 
 ```tsx
@@ -105,9 +105,9 @@ function Demo() {
 
 ### colorSchemeManager
 
-`colorSchemeManager` is used to retrieve and set color scheme value in external storage. By default,
-`MantineProvider` uses `window.localStorage` to store color scheme value, but you can pass your own
-implementation to `colorSchemeManager` prop. You can learn more about color scheme management in the
+`colorSchemeManager` is used to retrieve and set the color scheme value in external storage. By default,
+`MantineProvider` uses `window.localStorage` to store the color scheme value, but you can pass your own
+implementation to the `colorSchemeManager` prop. You can learn more about color scheme management in the
 [color schemes guide](/theming/color-schemes).
 
 ```tsx
@@ -131,9 +131,9 @@ function Demo() {
 
 ### defaultColorScheme
 
-`defaultColorScheme` value is used when `colorSchemeManager` cannot retrieve the value from external
-storage, for example during server side rendering or when the user hasn't selected a preferred color scheme.
-Possible values are `light`, `dark` and `auto`. By default, color scheme value is `light`.
+The `defaultColorScheme` value is used when `colorSchemeManager` cannot retrieve the value from external
+storage, for example during server-side rendering or when the user hasn't selected a preferred color scheme.
+Possible values are `light`, `dark`, and `auto`. By default, the color scheme value is `light`.
 You can learn more about color scheme management in the [color schemes guide](/theming/color-schemes).
 
 ```tsx
@@ -151,8 +151,8 @@ function Demo() {
 ### cssVariablesSelector
 
 `cssVariablesSelector` is a CSS selector to which [CSS variables](/styles/css-variables/) should be added.
-By default, it is `:root`. `MantineProvider` generates CSS variables based on given [theme override](/theming/theme-object/)
-and `cssVariablesResolver`, then these variables are rendered into `<style />` tag next to your application.
+By default, it is `:root`. `MantineProvider` generates CSS variables based on the given [theme override](/theming/theme-object/)
+and `cssVariablesResolver`, then these variables are rendered into a `<style />` tag next to your application.
 You can learn more about Mantine CSS variables in the [CSS variables guide](/styles/css-variables/).
 
 ```tsx
@@ -169,10 +169,10 @@ function Demo() {
 
 ### withCssVariables
 
-`withCssVariables` determines whether theme CSS variables should be added to given `cssVariablesSelector`.
-By default, it is set to `true`, you should not change it unless you want to manage CSS variables
-via `.css` file (Note that in this case you will need to generate all theme tokens
-that are not a part of the default theme on your side).
+`withCssVariables` determines whether theme CSS variables should be added to the given `cssVariablesSelector`.
+By default, it is set to `true`. You should not change it unless you want to manage CSS variables
+via a `.css` file (note that in this case you will need to generate all theme tokens
+that are not part of the default theme on your side).
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -188,8 +188,8 @@ function Demo() {
 
 ### deduplicateCssVariables
 
-`deduplicateCssVariables` determines whether CSS variables should be deduplicated: if CSS variable has the same value as in default theme, it is not added in the runtime.
-By default, it is set to `true`. If set to `false`, all Mantine CSS variables will be added in `<style />` tag
+`deduplicateCssVariables` determines whether CSS variables should be deduplicated: if a CSS variable has the same value as in the default theme, it is not added in the runtime.
+By default, it is set to `true`. If set to `false`, all Mantine CSS variables will be added in a `<style />` tag
 even if they have the same value as in the default theme.
 
 ```tsx
@@ -206,9 +206,9 @@ function Demo() {
 
 ### getRootElement
 
-`getRootElement` is a function that returns the root application (usually `html`) element to set `data-mantine-color-scheme` attribute.
-Default value is `() => document.documentElement` which means that `data-mantine-color-scheme`
-attribute will be added to `<html />` tag. You can learn more about color scheme management in the
+`getRootElement` is a function that returns the root application element (usually `html`) to set the `data-mantine-color-scheme` attribute.
+The default value is `() => document.documentElement` which means that the `data-mantine-color-scheme`
+attribute will be added to the `<html />` tag. You can learn more about color scheme management in the
 [color schemes guide](/theming/color-schemes).
 
 ```tsx
@@ -228,8 +228,8 @@ function Demo() {
 
 ### classNamesPrefix
 
-`classNamesPrefix` is a prefix for components static classes (for example `{selector}-Text-root`).
-Default value is `mantine` – all components will have `mantine-` prefix in their **static classes**.
+`classNamesPrefix` is a prefix for components' static classes (for example `{selector}-Text-root`).
+The default value is `mantine` – all components will have a `mantine-` prefix in their **static classes**.
 
 ```tsx
 import { MantineProvider, Text } from '@mantine/core';
@@ -243,13 +243,13 @@ function Demo() {
 }
 ```
 
-In this case (default `classNamesPrefix`), [Text](/core/text) component will have the following classes:
+In this case (default `classNamesPrefix`), the [Text](/core/text) component will have the following classes:
 
 - `mantine-focus-auto` – global utility class
-- `m-3nrA4eL` – component class, usually a random string, with this class library styles are applied
-- `mantine-Text-root` – component static class, part of [Styles API](/styles/styles-api)
+- `m-3nrA4eL` – component class, usually a random string; with this class library styles are applied
+- `mantine-Text-root` – component static class, part of the [Styles API](/styles/styles-api)
 
-With `classNamesPrefix` you can change only **static class**:
+With `classNamesPrefix` you can change only the **static class**:
 
 ```tsx
 import { MantineProvider, Text } from '@mantine/core';
@@ -263,16 +263,16 @@ function Demo() {
 }
 ```
 
-Now [Text](/core/text) component will have the following classes:
+Now the [Text](/core/text) component will have the following classes:
 
-- `mantine-focus-auto` – `classNamesPrefix` does not impact global utility classes – it is static and **cannot be changed**
-- `m-3nrA4eL` – `classNamesPrefix` does not impact library class – it is static and **cannot be changed**
+- `mantine-focus-auto` – `classNamesPrefix` does not impact global utility classes – they are static and **cannot be changed**
+- `m-3nrA4eL` – `classNamesPrefix` does not impact library classes – they are static and **cannot be changed**
 - `app-Text-root` – component static class has `classNamesPrefix` instead of `mantine`
 
 ### withStaticClasses
 
 `withStaticClasses` determines whether components should have static classes, for example, `mantine-Button-root`.
-By default, static classes are enabled, to disable them set `withStaticClasses` to `false`:
+By default, static classes are enabled. To disable them, set `withStaticClasses` to `false`:
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -288,9 +288,9 @@ function Demo() {
 
 ### withGlobalClasses
 
-`withGlobalClasses` determines whether global classes should be added with `<style />` tag.
+`withGlobalClasses` determines whether global classes should be added with a `<style />` tag.
 Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work.
-By default, global classes are enabled, to disable them set `withGlobalClasses` to `false`. Note that
+By default, global classes are enabled. To disable them, set `withGlobalClasses` to `false`. Note that
 disabling global classes may break styles of some components.
 
 ```tsx
@@ -307,7 +307,7 @@ function Demo() {
 
 ### getStyleNonce
 
-`getStyleNonce` is a function to generate [nonce](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) attribute added to dynamic generated `<style />` tags.
+`getStyleNonce` is a function to generate a [nonce](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) attribute added to dynamically generated `<style />` tags.
 
 ### cssVariablesResolver
 
@@ -317,13 +317,13 @@ You can learn more about Mantine CSS variables in the [CSS variables guide](/sty
 
 ### env
 
-`env` prop can be used in test environment to disable some features that
+The `env` prop can be used in a test environment to disable some features that
 might impact tests and/or make it harder to test components:
 
-- transitions that mount/unmount child component with delay
-- portals that render child component in a different part of the DOM
+- transitions that mount/unmount a child component with delay
+- portals that render a child component in a different part of the DOM
 
-To enable test environment, set `env` to `test`:
+To enable the test environment, set `env` to `test`:
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -337,6 +337,6 @@ function Demo() {
 }
 ```
 
-Note that `env="test"` is indented to be used in test environment only with [Jest](/guides/jest) or [Vitest](/guides/vitest), do not use it in
-the development or production environments. It is also not recommended to be used with
+Note that `env="test"` is intended to be used in test environments only with [Jest](/guides/jest) or [Vitest](/guides/vitest). Do not use it in
+development or production environments. It is also not recommended to be used with
 end-to-end testing tools like [Cypress](/guides/cypress) or [Playwright](/guides/playwright).

@@ -18,7 +18,7 @@ import '@mantine/carousel/styles.css';
 
 ## Do not forget to import styles
 
-Followed installation instructions above but something is not working
+Have you followed the installation instructions above but something is not working
 (Carousel slides are rendered vertically, no controls or indicators)?
 You've fallen into the trap of not importing carousel styles!
 To fix the issue, import carousel styles at the root of your application:
@@ -29,9 +29,9 @@ import '@mantine/carousel/styles.css';
 
 ## Documentation demos
 
-Demos presents on this page use blue background color for demonstration purposes. To simply
-demos code, background color and other demo-only styles are not included in the demo code.
-When you copy paste demo code to your project, it will not have blue background color.
+The demos presented on this page use blue background color for demonstration purposes. To simplify
+demo code, background color and other demo-only styles are not included in the demo code.
+When you copy and paste demo code to your project, it will not have blue background color.
 
 ## Usage
 
@@ -45,8 +45,8 @@ When you copy paste demo code to your project, it will not have blue background 
 
 ## Embla options
 
-You can pass configuration options directly to embla carousel with `emblaOptions` prop.
-You can find embla options description in [embla options reference](https://www.embla-carousel.com/api/options/).
+You can pass configuration options directly to embla carousel with the `emblaOptions` prop.
+You can find embla options description in the [embla options reference](https://www.embla-carousel.com/api/options/).
 
 Example of passing `loop`, `dragFree` and `align` options:
 
@@ -54,7 +54,7 @@ Example of passing `loop`, `dragFree` and `align` options:
 
 ## Size and gap
 
-Set `slideSize` and `slideGap` on `Carousel` component to control size and gap of every slide:
+Set `slideSize` and `slideGap` on the `Carousel` component to control the size and gap of every slide:
 
 <Demo data={CarouselDemos.multiple} />
 
@@ -68,26 +68,26 @@ you can pass an object with values for different breakpoints:
 ## Container queries
 
 To use [container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries)
-instead of media queries, set `type="container"`. With container queries, slides size and gap
+instead of media queries, set `type="container"`. With container queries, slide size and gap
 will be adjusted based on the container width, not the viewport width.
 
-Note that, when using container queries, `slideSize` and `slideGap` props cannot
-reference `theme.breakpoints` values in keys. It is required to use exact px or em values.
+Note that when using container queries, `slideSize` and `slideGap` props cannot
+reference `theme.breakpoints` values in keys. You are required to use exact px or em values.
 
-To see how the slides size and gap changes, resize the root element of the demo
+To see how the slide size and gap changes, resize the root element of the demo
 with the resize handle located at the bottom right corner of the demo:
 
 <Demo data={CarouselDemos.container} />
 
 ## Drag free
 
-`dragFree` will disable slides snap points – user will be able to stop dragging at any position:
+`dragFree` will disable slide snap points – users will be able to stop dragging at any position:
 
 <Demo data={CarouselDemos.dragFree} />
 
 ## Vertical orientation
 
-Carousel with `orientation="vertical"` requires `height` prop to be set:
+A carousel with `orientation="vertical"` requires the `height` prop to be set:
 
 <Demo data={CarouselDemos.vertical} />
 
@@ -99,11 +99,11 @@ You can replace default next/previous controls icons with any React nodes:
 
 ## 100% height
 
-Set `height="100%"` to make Carousel take 100% height of the container. Note that in this case:
+Set `height="100%"` to make the Carousel take 100% height of the container. Note that in this case:
 
-- container element must have `display: flex` styles
-- carousel root element must have `flex: 1` styles
-- container element must have fixed height
+- the container element must have `display: flex` styles
+- the carousel root element must have `flex: 1` styles
+- the container element must have fixed height
 
 ```tsx
 import { Carousel } from '@mantine/carousel';
@@ -123,16 +123,16 @@ export function PercentageHeight() {
 
 ## Get embla instance
 
-You can get [embla instance](https://www.embla-carousel.com/api/methods/) with `getEmblaApi` prop.
-You will be able enhance carousel with additional logic after that using embla api methods:
+You can get the [embla instance](https://www.embla-carousel.com/api/methods/) with the `getEmblaApi` prop.
+You will be able to enhance the carousel with additional logic after that using embla api methods:
 
 <Demo data={CarouselDemos.progress} />
 
 ## Embla plugins
 
-Set `plugins` prop to enhance carousel with [embla plugins](https://www.embla-carousel.com/plugins/).
-Note that plugins are not installed with `@mantine/carousel` package and you will need to
-install them on your side.
+Set the `plugins` prop to enhance the carousel with [embla plugins](https://www.embla-carousel.com/plugins/).
+Note that plugins are not installed with the `@mantine/carousel` package and you will need to
+install them separately.
 
 Example with [autoplay plugin](https://www.embla-carousel.com/plugins/autoplay/):
 

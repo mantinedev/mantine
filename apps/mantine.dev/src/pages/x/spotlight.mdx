@@ -18,15 +18,15 @@ import '@mantine/spotlight/styles.css';
 
 ## Usage
 
-`Spotlight` component can be used as a search or as a command center of your application.
-It is used as a search on mantine.dev website, you can trigger it with `Ctrl + K` shortcut.
-`Spotlight` is based on [Modal](/core/modal) component and supports most of its props.
+The `Spotlight` component can be used as a search or as a command center for your application.
+It is used as a search on the mantine.dev website; you can trigger it with the `Ctrl + K` shortcut.
+`Spotlight` is based on the [Modal](/core/modal) component and supports most of its props.
 
 <Demo data={SpotlightDemos.usage} />
 
 ## Actions
 
-`@mantine/spotlight` package exports an object with actions that can be used to control the spotlight:
+The `@mantine/spotlight` package exports an object with actions that can be used to control the spotlight:
 
 ```tsx
 import { spotlight } from '@mantine/spotlight';
@@ -48,7 +48,7 @@ function Demo() {
 }
 ```
 
-You can also import actions directly from the `@mantine/spotlight` package, if you prefer this syntax:
+You can also import actions directly from the `@mantine/spotlight` package if you prefer this syntax:
 
 ```tsx
 import {
@@ -64,7 +64,7 @@ toggleSpotlight(); // same as spotlight.toggle()
 
 ## Spotlight store
 
-`spotlight` object documented above uses the default store, it works fine if you have only one spotlight
+The `spotlight` object documented above uses the default store; it works fine if you have only one spotlight
 in your application. In case you need multiple spotlights, you need to create your own store for each of them:
 
 ```tsx
@@ -96,9 +96,9 @@ function Demo() {
 
 ## Keyboard shortcuts
 
-`Spotlight` uses [use-hotkeys](/hooks/use-hotkeys) hook to handle keyboard shortcuts.
-By default, `Ctrl + K` and `Cmd + K` shortcuts are used to open spotlight, you can change them
-with `shortcut` prop:
+`Spotlight` uses the [use-hotkeys](/hooks/use-hotkeys) hook to handle keyboard shortcuts.
+By default, `Ctrl + K` and `Cmd + K` shortcuts are used to open spotlight; you can change them
+with the `shortcut` prop:
 
 ```tsx
 import { Spotlight } from '@mantine/spotlight';
@@ -122,9 +122,9 @@ function NoShortcut() {
 
 ## Limit prop
 
-Use `limit` prop to limit the maximum number of actions that can be displayed at a time.
-Usually, 5–7 actions is a good number. `limit` prop is crucial for performance in case
-you have a lot of actions, it will prevent the spotlight from rendering all of them at once.
+Use the `limit` prop to limit the maximum number of actions that can be displayed at a time.
+Usually, 5–7 actions is a good number. The `limit` prop is crucial for performance in case
+you have a lot of actions; it will prevent the spotlight from rendering all of them at once.
 
 The example below renders 3000 actions, but only 7 of them are displayed at a time:
 
@@ -132,27 +132,27 @@ The example below renders 3000 actions, but only 7 of them are displayed at a ti
 
 ## Scrollable actions list
 
-By default, `Spotlight` actions list is not scrollable. If you have a lot of actions that
-you need to display at a time, set `scrollable` and `maxHeight` props. Note that there are
+By default, the `Spotlight` actions list is not scrollable. If you have a lot of actions that
+you need to display at a time, set the `scrollable` and `maxHeight` props. Note that there are
 caveats with both approaches:
 
-- When the `scrollable` prop is not set, actions list height is not limited and the spotlight
+- When the `scrollable` prop is not set, the actions list height is not limited and the spotlight
   body will grow to fit all actions. This can result in a very long spotlight body that will
-  overflow the viewport. To prevent this, use `limit` prop to define the maximum number of actions
+  overflow the viewport. To prevent this, use the `limit` prop to define the maximum number of actions
   that can be displayed at a time. Usually, 5–7 actions is a good number.
-- When the `scrollable` prop is set, actions list height will always equal to the value of `maxHeight` prop
+- When the `scrollable` prop is set, the actions list height will always equal the value of the `maxHeight` prop
   (it will not shrink if there are not enough actions to fill the space). When there are more
   actions than can fit into the list, it will become scrollable. Scrolling logic is handled
-  by [ScrollArea](/core/scroll-area) component.
+  by the [ScrollArea](/core/scroll-area) component.
 
-In other words, if you want the actions list to shrink, do not set `scrollable` prop and use `limit`
-prop. If you want the actions list to always have a fixed height, set `scrollable` and `maxHeight` props.
+In other words, if you want the actions list to shrink, do not set the `scrollable` prop and use the `limit`
+prop. If you want the actions list to always have a fixed height, set the `scrollable` and `maxHeight` props.
 
 <Demo data={SpotlightDemos.scrollable} />
 
 ## Actions groups
 
-`Spotlight` supports actions groups, you can use them to group actions by category:
+`Spotlight` supports action groups; you can use them to group actions by category:
 
 <Demo data={SpotlightDemos.groups} />
 
@@ -170,14 +170,14 @@ Available components:
 
 <Demo data={SpotlightDemos.compound} />
 
-For example, with compound components pattern you can customize actions contents:
+For example, with the compound components pattern, you can customize action contents:
 
 <Demo data={SpotlightDemos.customAction} />
 
 ## Fixed elements offset
 
-`Spotlight` component uses [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
-package to lock scroll. To properly size these `elements` add a `className` to them ([documentation](https://github.com/theKashey/react-remove-scroll#positionfixed-elements)):
+The `Spotlight` component uses the [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
+package to lock scroll. To properly size these `elements`, add a `className` to them ([documentation](https://github.com/theKashey/react-remove-scroll#positionfixed-elements)):
 
 ```tsx
 import { RemoveScroll } from '@mantine/core';

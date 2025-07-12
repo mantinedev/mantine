@@ -9,7 +9,7 @@ export default Layout(MDX_DATA.DataAttributes);
 # data attributes
 
 Mantine components use `data-*` attributes to apply styles. These attributes are used as
-a modifier to apply styles based on component state. General rule of Mantine components
+modifiers to apply styles based on component state. The general rule of Mantine component
 styles: one class with shared styles and any number of `data-*` attributes as modifiers.
 
 Example of applying styles with `data-*` attributes:
@@ -18,7 +18,7 @@ Example of applying styles with `data-*` attributes:
 
 ## data attributes values
 
-Most of the `data-*` attributes do not have associated values, they represent boolean
+Most of the `data-*` attributes do not have associated values. They represent boolean
 state or a feature. For example, when the `disabled` prop on [Button](/core/button) is set,
 the `data-disabled` attribute is added to the `<button />` element:
 
@@ -52,14 +52,14 @@ You can then use this attribute to apply styles to the disabled button:
 }
 ```
 
-When the `disabled` prop is not set, then the `data-disabled` attribute is not added to the
+When the `disabled` prop is not set, the `data-disabled` attribute is not added to the
 button:
 
 ```html
 <button class="my-button">Not disabled button</button>
 ```
 
-In some cases, `data-*` attributes have associated values, for example, a [Button](/core/button)
+In some cases, `data-*` attributes have associated values. For example, a [Button](/core/button)
 component's `section` element has an associated `data-position` attribute which can be
 `left` or `right`. The following example will render two `section` elements, one with
 `data-position="left"` and another with `data-position="right"`:
@@ -109,7 +109,7 @@ You can then use this attribute to apply styles to the left and right sections:
 
 Every component that uses `data-*` attributes has a dedicated section under the `Styles API` tab.
 
-[Button](/core/button) component `data-*` attributes table:
+The [Button](/core/button) component `data-*` attributes table:
 
 <ModifiersTable
   data={ButtonStylesApi}
@@ -127,7 +127,7 @@ How to read the table:
 
 ## mod prop
 
-All components support `mod` prop, which allows adding data attributes to
+All components support the `mod` prop, which allows adding data attributes to
 the root element:
 
 ```tsx

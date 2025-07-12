@@ -11,8 +11,8 @@ export function MdxInputSections({ component }: MdxInputSectionsProps) {
       <MdxTitle id="left-and-right-sections">Left and right sections</MdxTitle>
       <MdxParagraph>
         <MdxCode>{component}</MdxCode> supports <MdxCode>leftSection</MdxCode> and{' '}
-        <MdxCode>rightSection</MdxCode> props. These sections are rendered with absolute position
-        inside the input wrapper. You can use them to display icons, input controls or any other
+        <MdxCode>rightSection</MdxCode> props. These sections are rendered with absolute positioning
+        inside the input wrapper. You can use them to display icons, input controls, or any other
         elements.
       </MdxParagraph>
 
@@ -26,16 +26,16 @@ export function MdxInputSections({ component }: MdxInputSectionsProps) {
         </MdxLi>
 
         <MdxLi>
-          <MdxCode>rightSectionWidth</MdxCode>/<MdxCode>leftSectionWidth</MdxCode> – controls width
-          of the right section and padding on the corresponding side of the input. By default, it is
-          controlled by component <MdxCode>size</MdxCode> prop.
+          <MdxCode>rightSectionWidth</MdxCode>/<MdxCode>leftSectionWidth</MdxCode> – controls the
+          width of the right section and padding on the corresponding side of the input. By default,
+          it is controlled by the component <MdxCode>size</MdxCode> prop.
         </MdxLi>
 
         <MdxLi>
           <MdxCode>rightSectionPointerEvents</MdxCode>/<MdxCode>leftSectionPointerEvents</MdxCode> –
-          controls <MdxCode>pointer-events</MdxCode> property of the section. If you want to render
-          a non-interactive element, set it to <MdxCode>none</MdxCode> to pass clicks through to the
-          input.
+          controls the <MdxCode>pointer-events</MdxCode> property of the section. If you want to
+          render a non-interactive element, set it to <MdxCode>none</MdxCode> to pass clicks through
+          to the input.
         </MdxLi>
       </MdxUl>
     </>

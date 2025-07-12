@@ -6,9 +6,9 @@ export default Layout(MDX_DATA.ColorSchemes);
 
 # Color schemes
 
-[MantineProvider](/theming/mantine-provider/) manages color scheme context in your application.
-You can configure the default color scheme value with `defaultColorScheme` prop, possible values are `light`,
-`dark` and `auto` (system color scheme is used). The default value is `light`.
+[MantineProvider](/theming/mantine-provider/) manages the color scheme context in your application.
+You can configure the default color scheme value with the `defaultColorScheme` prop; possible values are `light`,
+`dark`, and `auto` (system color scheme is used). The default value is `light`.
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -24,13 +24,13 @@ function Demo() {
 
 ## data-mantine-color-scheme attribute
 
-When the [MantineProvider](/theming/mantine-provider/) is mounted, it sets a `data-mantine-color-scheme`
-attribute on the `<html />` element to the value that the user has selected previously or to the value of `defaultColorScheme` prop.
-The `data-mantine-color-scheme` attribute is used in all components' styles to determine which colors the component should use.
+When [MantineProvider](/theming/mantine-provider/) is mounted, it sets a `data-mantine-color-scheme`
+attribute on the `<html />` element to the value that the user has previously selected or to the value of the `defaultColorScheme` prop.
+The `data-mantine-color-scheme` attribute is used in all component styles to determine which colors each component should use.
 
 ## use-mantine-color-scheme hook
 
-`useMantineColorScheme` hook can be used to get and set current color scheme value:
+The `useMantineColorScheme` hook can be used to get and set the current color scheme value:
 
 ```tsx
 function useMantineColorScheme(): {
@@ -40,10 +40,10 @@ function useMantineColorScheme(): {
   /** Sets colors scheme to given value */
   setColorScheme: (colorScheme: 'dark' | 'light' | 'auto') => void;
 
-  /** Toggle color scheme to the opposite value, if value is 'auto', color scheme is inferred from the OS settings */
+  /** Toggles color scheme to the opposite value; if value is 'auto', color scheme is inferred from the OS settings */
   toggleColorScheme: () => void;
 
-  /** Clears color scheme value from storage and sets it to `defaultColorScheme` */
+  /** Clears the color scheme value from storage and sets it to `defaultColorScheme` */
   clearColorScheme: () => void;
 };
 ```
@@ -52,7 +52,7 @@ function useMantineColorScheme(): {
 
 ## use-computed-color-scheme hook
 
-`useComputedColorScheme` returns a computed color scheme value, it returns either `light` or `dark`.
+`useComputedColorScheme` returns a computed color scheme value—it returns either `light` or `dark`.
 It can be used to implement color scheme toggle logic:
 
 ```tsx
@@ -86,9 +86,9 @@ function Demo() {
 
 ## Transitions during color scheme change
 
-By default, transitions on all elements are disabled when color scheme changes to avoid
-inconsistent animations. To enable transitions during color scheme change, set `keepTransitions: true`
-option on `useMantineColorScheme` hook:
+By default, transitions on all elements are disabled when the color scheme changes to avoid
+inconsistent animations. To enable transitions during color scheme changes, set the `keepTransitions: true`
+option on the `useMantineColorScheme` hook:
 
 ```tsx
 import { useMantineColorScheme } from '@mantine/core';
@@ -103,32 +103,32 @@ function Demo() {
 ## Color scheme value caveats
 
 By default, the color scheme value is stored in local storage, and its value is saved in state
-before the component is mounted to avoid flash of inaccurate color scheme. This means that
-color scheme value can be different on client and server, as server does not have access
+before the component is mounted to avoid a flash of inaccurate color scheme. This means that the
+color scheme value can be different on the client and server, as the server does not have access
 to local storage and always uses the default value.
 
-If you have server side rendering in your application (for example, if you use [Next.js](/guides/next) or [React Router](/guides/react-router)), then you cannot use `colorScheme`
-value in your application to avoid hydration issues. Instead, you can use `dark` and `light`
+If you have server-side rendering in your application (for example, if you use [Next.js](/guides/next) or [React Router](/guides/react-router)), then you cannot use the `colorScheme`
+value in your application to avoid hydration issues. Instead, you can use the `dark` and `light`
 mixins from [postcss-preset-mantine](/styles/postcss-preset) to generate styles that will
-hide elements based on color scheme value:
+hide elements based on the color scheme value:
 
 <Demo data={ThemingDemos.colorSchemeControl} />
 
-> **colorScheme for client only applications**
+> **colorScheme for client-only applications**
 >
-> You can safely use `colorScheme` value in client only applications (for example, Vite or create-react-app applications).
-> In this case, there is no hydration, and thus hydration error cannot occur.
+> You can safely use the `colorScheme` value in client-only applications (for example, Vite or create-react-app applications).
+> In this case, there is no hydration, and thus no hydration error can occur.
 
 ## ColorSchemeScript
 
-`ColorSchemeScript` component renders script tag that sets `data-mantine-color-scheme` attribute
-on `<html />` element to user selected value or to `defaultColorScheme` prop value before
-hydration. It is used to avoid flash of inaccurate color scheme in server side rendered applications,
-for example [Next.js](/guides/next) or [React Router](/guides/react-router). Follows framework specific guides
-to learn where to render `ColorSchemeScript` component.
+The `ColorSchemeScript` component renders a script tag that sets the `data-mantine-color-scheme` attribute
+on the `<html />` element to the user's selected value or to the `defaultColorScheme` prop value before
+hydration. It is used to avoid a flash of inaccurate color scheme in server-side rendered applications,
+for example [Next.js](/guides/next) or [React Router](/guides/react-router). Follow the framework-specific guides
+to learn where to render the `ColorSchemeScript` component.
 
-You can add any additional props to the `<script />` tag generated by `ColorSchemeScript` component,
-for example, you can add [nonce](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) attribute:
+You can add any additional props to the `<script />` tag generated by the `ColorSchemeScript` component,
+for example, you can add a [nonce](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) attribute:
 
 ```tsx
 import { ColorSchemeScript } from '@mantine/core';
@@ -145,8 +145,8 @@ function Demo() {
 
 ## Auto color scheme
 
-Set `defaultColorScheme="auto"` on `MantineProvider` and `ColorSchemeScript` to use system color scheme.
-In this case color scheme value will be controlled by the user OS:
+Set `defaultColorScheme="auto"` on `MantineProvider` and `ColorSchemeScript` to use the system color scheme.
+In this case, the color scheme value will be controlled by the user's OS:
 
 ```tsx
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
@@ -165,10 +165,10 @@ function Demo() {
 
 ## Color scheme manager
 
-By default, color scheme value is stored in local storage, but you can implement your own
+By default, the color scheme value is stored in local storage, but you can implement your own
 color scheme manager to store the value in any other external storage.
 
-Color scheme manager must have the following methods:
+A color scheme manager must have the following methods:
 
 ```tsx
 interface MantineColorSchemeManager {
@@ -191,8 +191,8 @@ interface MantineColorSchemeManager {
 }
 ```
 
-Usually, it is better to wrap color scheme manager in a creator function to provide a way to
-configure it. Default local storage based color scheme manager example:
+Usually, it's better to wrap the color scheme manager in a creator function to provide a way to
+configure it. Default local storage-based color scheme manager example:
 
 ```tsx
 import {
@@ -264,7 +264,7 @@ export function localStorageColorSchemeManager({
 }
 ```
 
-Then custom color scheme manager can be passed to [MantineProvider](/theming/mantine-provider):
+Then the custom color scheme manager can be passed to [MantineProvider](/theming/mantine-provider):
 
 ```tsx
 import { MantineProvider } from '@mantine/core';
@@ -309,7 +309,7 @@ function Demo() {
 You can force the color scheme value to be either `light` or `dark` with `forceColorScheme` prop.
 It is required to be set both on [MantineProvider](/theming/mantine-provider/) and
 `ColorSchemeScript`. If `forceColorScheme` is set, then `defaultColorScheme` and `colorSchemeManager` are ignored.
-When `forceColorScheme` is set, it is not possible to change color scheme value with `setColorScheme` function.
+When `forceColorScheme` is set, it's not possible to change the color scheme value with the `setColorScheme` function.
 
 ```tsx
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
@@ -329,13 +329,13 @@ function Demo() {
 ## lightHidden and darkHidden props
 
 All Mantine components support `lightHidden` and `darkHidden` props that can be used to hide
-component in specific color scheme:
+a component in a specific color scheme:
 
 <Demo data={StylesDemos.lightDarkHidden} />
 
 ## With disabled JavaScript
 
-If you need to support users with disabled JavaScript, you need to set `data-mantine-color-scheme`
+If you need to support users with disabled JavaScript, you need to set the `data-mantine-color-scheme`
 attribute on the `<html />` element manually.
 
 Example with Next.js app router that supports disabled JavaScript:

@@ -20,15 +20,15 @@ import '@mantine/tiptap/styles.css';
 
 ## TipTap editor
 
-`@mantine/tiptap` provides a UI for [Tiptap](https://tiptap.dev/). `RichTextEditor` component
-works with [Editor](https://tiptap.dev/api/editor) instance of tiptap.
+The `@mantine/tiptap` package provides a UI for [Tiptap](https://tiptap.dev/). The `RichTextEditor` component
+works with the [Editor](https://tiptap.dev/api/editor) instance of tiptap.
 This means that you have full control over the editor [state and configuration](https://tiptap.dev/guide/configuration)
-with [useEditor hook](https://tiptap.dev/installation/react).
+with the [useEditor hook](https://tiptap.dev/installation/react).
 
-In other words, `RichTextEditor` component does not manage state for you,
+In other words, the `RichTextEditor` component does not manage state for you;
 controls just execute operations on the `Editor` instance. If you want to
 implement something that is related to state or component value (for example, controlled mode, value transforms to HTML/Markdown),
-you should look for documentation on [tiptap.dev](https://tiptap.dev/) website.
+you should look for documentation on the [tiptap.dev](https://tiptap.dev/) website.
 
 ## Usage
 
@@ -36,15 +36,15 @@ you should look for documentation on [tiptap.dev](https://tiptap.dev/) website.
 
 ## Subtle variant
 
-`variant="subtle"` removes borders from the controls groups, makes controls
-larger and reduces spacing of the toolbar:
+`variant="subtle"` removes borders from the control groups, makes controls
+larger, and reduces spacing of the toolbar:
 
 <Demo data={TipTapDemos.subtleVariant} />
 
 ## Controlled
 
-To control editor state, create a wrapper component and pass `onChange` handler
-to `useEditor` hook:
+To control the editor state, create a wrapper component and pass the `onChange` handler
+to the `useEditor` hook:
 
 ```tsx
 import { useEditor } from '@tiptap/react';
@@ -85,8 +85,8 @@ export function RichTextEditor({
 
 ## Controls and extensions
 
-Some controls require installation of additional [Tiptap extensions](https://tiptap.dev/extensions).
-For example, if you want to use `RichTextEditor.Underline` control, you will need to install `@tiptap/extension-underline` package:
+Some controls require the installation of additional [Tiptap extensions](https://tiptap.dev/extensions).
+For example, if you want to use the `RichTextEditor.Underline` control, you will need to install the `@tiptap/extension-underline` package:
 
 <InstallScript packages="@tiptap/extension-underline" />
 
@@ -138,7 +138,7 @@ Other controls with required extensions:
 
 ## Placeholder
 
-To use placeholder you will need to install [@tiptap/extension-placeholder](https://www.npmjs.com/package/@tiptap/extension-placeholder) package:
+To use a placeholder, you will need to install the [@tiptap/extension-placeholder](https://www.npmjs.com/package/@tiptap/extension-placeholder) package:
 
 <InstallScript packages="@tiptap/extension-placeholder" />
 
@@ -146,8 +146,8 @@ To use placeholder you will need to install [@tiptap/extension-placeholder](http
 
 ## Link extension
 
-`@mantine/tiptap` provides custom `Link` extension that is required to be used instead of
-`@tiptap/extension-link` in order for `Ctrl + K` keyboard shortcut to work:
+The `@mantine/tiptap` package provides a custom `Link` extension that is required to be used instead of
+`@tiptap/extension-link` in order for the `Ctrl + K` keyboard shortcut to work:
 
 ```tsx
 // Use Link extension exported from the @mantine/tiptap package
@@ -172,21 +172,21 @@ function Demo() {
 
 ## Text color
 
-To use text color you will need to install additional packages:
+To use text color, you will need to install additional packages:
 
 <InstallScript packages="@tiptap/extension-color @tiptap/extension-text-style" />
 
 You can use the following controls to change text color:
 
-- `RichTextEditor.ColorPicker` – allows to pick colors from given predefined color swatches and with [ColorPicker](/core/color-picker/) component
-- `RichTextEditor.Color` – allows to apply given color with one click
+- `RichTextEditor.ColorPicker` – allows you to pick colors from given predefined color swatches and with the [ColorPicker](/core/color-picker/) component
+- `RichTextEditor.Color` – allows you to apply a given color with one click
 - `RichTextEditor.UnsetColor` – clears color styles
 
 <Demo data={TipTapDemos.colors} />
 
 ## Code highlight
 
-To use code highlight you will need to install additional packages:
+To use code highlighting, you will need to install additional packages:
 
 <InstallScript packages="lowlight @tiptap/extension-code-block-lowlight" />
 
@@ -194,14 +194,14 @@ To use code highlight you will need to install additional packages:
 
 ## Source code mode
 
-You can use the following control to see and edit source code of editor content:
+You can use the following control to see and edit the source code of editor content:
 - `RichTextEditor.SourceCode` – allows switching on/off source code mode
 
 <Demo data={TipTapDemos.sourceCodeSwitcher} />
 
 ## Tasks
 
-To use tasks you will need to install additional packages:
+To use tasks, you will need to install additional packages:
 
 <InstallScript packages="@tiptap/extension-task-item @tiptap/extension-task-list" />
 
@@ -238,31 +238,31 @@ or with [Styles API](/styles/styles-api/):
 
 ## Bubble menu
 
-You can use [BubbleMenu](https://tiptap.dev/api/extensions/bubble-menu) component
-with any `RichTextEditor` controls. Bubble menu will appear near a selection of text:
+You can use the [BubbleMenu](https://tiptap.dev/api/extensions/bubble-menu) component
+with any `RichTextEditor` controls. The bubble menu will appear near a selection of text:
 
 <Demo data={TipTapDemos.bubbleMenu} />
 
 ## Floating menu
 
-You can use [FloatingMenu](https://tiptap.dev/api/extensions/floating-menu) component
-with any `RichTextEditor` controls. Floating menu will appear in an empty line:
+You can use the [FloatingMenu](https://tiptap.dev/api/extensions/floating-menu) component
+with any `RichTextEditor` controls. The floating menu will appear in an empty line:
 
 <Demo data={TipTapDemos.floatingMenu} />
 
 ## Sticky toolbar
 
-Set `sticky` prop on `RichTextEditor.Toolbar` component to make toolbar sticky,
-control `top` property with `stickyOffset`. For example, on mantine.dev documentation
-website there is a header with `var(--docs-header-height)` height, in this case we will need to
-set `stickyOffset="var(--docs-header-height)"` to make sticky position correctly with fixed positioned element.
+Set the `sticky` prop on the `RichTextEditor.Toolbar` component to make the toolbar sticky;
+control the `top` property with `stickyOffset`. For example, on the mantine.dev documentation
+website there is a header with `var(--docs-header-height)` height. In this case, we will need to
+set `stickyOffset="var(--docs-header-height)"` to make the sticky position work correctly with the fixed positioned element.
 
 <Demo data={TipTapDemos.usage} demoProps={{ toggle: true }} />
 
 ## Editor context
 
-Use `useRichTextEditorContext` hook to get [Editor](https://tiptap.dev/api/editor) from
-the context. This hook can be used to create custom control or run any operations supported
+Use the `useRichTextEditorContext` hook to get the [Editor](https://tiptap.dev/api/editor) from
+the context. This hook can be used to create a custom control or run any operations supported
 by the Tiptap [editor API](https://tiptap.dev/api/editor).
 
 ```tsx
@@ -283,22 +283,22 @@ function Demo() {
 
 ## Custom controls
 
-Use `RichTextEditor.Control` component to create custom controls. It supports all
-props supported by `button` element and has `active` prop to indicate active state.
-Note that you will need to set `aria-label` attribute to make control visible for screen readers.
+Use the `RichTextEditor.Control` component to create custom controls. It supports all
+props supported by the `button` element and has an `active` prop to indicate active state.
+Note that you will need to set the `aria-label` attribute to make the control visible for screen readers.
 
 <Demo data={TipTapDemos.customControl} />
 
 ## Change icons
 
-You can change icon of control by setting `icon` prop. It accepts a component
-that must handle `size` prop:
+You can change the icon of a control by setting the `icon` prop. It accepts a component
+that must handle the `size` prop:
 
 <Demo data={TipTapDemos.icons} />
 
 ## Labels and localization
 
-`RichTextEditor` supports changing labels for all controls with `labels` prop:
+`RichTextEditor` supports changing labels for all controls with the `labels` prop:
 
 ```tsx
 import { useEditor } from '@tiptap/react';
@@ -326,8 +326,8 @@ function Demo() {
 }
 ```
 
-Most labels are used to add `aria-label` and `title` attributes to controls, some of the labels
-can be a function that returns string. If you do not provide all labels, then they will be merged with
+Most labels are used to add `aria-label` and `title` attributes to controls; some of the labels
+can be a function that returns a string. If you do not provide all labels, they will be merged with
 the default labels.
 
 All available labels:

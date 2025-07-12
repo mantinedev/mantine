@@ -76,7 +76,7 @@ export function MdxComboboxData({ component }: MdxComboboxDataProps) {
       {stringDataFormat && (
         <>
           <MdxParagraph>
-            Array of object with <MdxCode>value</MdxCode>, <MdxCode>label</MdxCode> and optional{' '}
+            Array of objects with <MdxCode>value</MdxCode>, <MdxCode>label</MdxCode> and optional{' '}
             <MdxCode>disabled</MdxCode> keys:
           </MdxParagraph>
           <MdxCodeHighlight language="tsx" code={getArrayCode(component)} />

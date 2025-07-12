@@ -12,33 +12,33 @@ in case you do not have a way to control the order of stylesheets in your applic
 ## Mantine components styles
 
 All Mantine components are built with CSS modules, but all styles are bundled before publishing to npm.
-To include these styles, you need to import `@mantine/{package}/styles.css` file in your application.
-Example with `@mantine/core` package:
+To include these styles, you need to import the `@mantine/{package}/styles.css` file in your application.
+Example with the `@mantine/core` package:
 
 ```tsx
 import '@mantine/core/styles.css';
 ```
 
-By adding this import, you will have all styles of `@mantine/core` components in your application.
+By adding this import, you will have all styles of the `@mantine/core` components in your application.
 
 ## Import styles per component
 
 If you want to reduce CSS bundle size, you can import styles per component. Note that some components
-have dependencies, for example, [Button](/core/button) component uses [UnstyledButton](/core/unstyled-button)
+have dependencies. For example, the [Button](/core/button) component uses the [UnstyledButton](/core/unstyled-button)
 component internally, so you need to import styles for both components. You can find a full list of
-exported styles from `@mantine/core` package and additional instructions on [this page](/styles/css-files-list).
+exported styles from the `@mantine/core` package and additional instructions on [this page](/styles/css-files-list).
 
 ```tsx
 import '@mantine/core/styles/UnstyledButton.css';
 import '@mantine/core/styles/Button.css';
 ```
 
-Note that individual component styles are available only for `@mantine/core` package.
-Other packages have minimal styles that can be imported with `@mantine/{package}/styles.css` import.
+Note that individual component styles are available only for the `@mantine/core` package.
+Other packages have minimal styles that can be imported with the `@mantine/{package}/styles.css` import.
 
 ## Styles import order
 
-It is important to keep the correct styles import order. `@mantine/core` package
+It is important to maintain the correct styles import order. The `@mantine/core` package
 styles must always be imported before any other Mantine package styles:
 
 ```tsx
@@ -71,7 +71,7 @@ For example, Next.js does not guarantee [styles import order](https://github.com
 In this case, you can use [CSS layers](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer) to ensure
 that your styles will always override Mantine styles.
 
-All `@mantine/*` packages that export styles have an additional file in which all styles are wrapped in
+All `@mantine/*` packages that export styles have an additional file in which all styles are wrapped in the
 `@layer mantine` directive.
 
 ```tsx
@@ -81,7 +81,7 @@ import '@mantine/dates/styles.layer.css';
 // ... other styles
 ```
 
-These files contain the same styles as `styles.css` files, but wrapped in `@layer mantine` directive.
+These files contain the same styles as the `styles.css` files, but wrapped in the `@layer mantine` directive.
 Make sure that you do not import both `styles.css` and `styles.layer.css` files in your application.
 
 ```tsx
@@ -90,7 +90,7 @@ import '@mantine/core/styles.css';
 import '@mantine/core/styles.layer.css';
 ```
 
-Similar to package styles, you can import individual component styles with `@layer mantine` directive:
+Similar to package styles, you can import individual component styles with the `@layer mantine` directive:
 
 ```tsx
 import '@mantine/core/styles/UnstyledButton.layer.css';
@@ -102,19 +102,19 @@ import '@mantine/core/styles/Button.layer.css';
 ## How CSS layers work
 
 CSS rules within a layer are grouped together and applied before rules without a layer. This means that
-even if you do not have control over styles import order, you can still override Mantine styles with
+even if you do not have control over the styles import order, you can still override Mantine styles with
 regular styles.
 
 ```tsx
-// ✅ If your styles are not wrapped in @layer directive,
+// ✅ If your styles are not wrapped in the @layer directive,
 // they will be applied after Mantine styles
 import classes from './Demo.module.css';
 
 import '@mantine/core/styles.layer.css';
 ```
 
-CSS layers are also useful if you want to combine Mantine components with other libraries which also
-provide styles. You can use `@layer` directive to control the order of styles:
+CSS layers are also useful if you want to combine Mantine components with other libraries that also
+provide styles. You can use the `@layer` directive to control the order of styles:
 
 ```scss
 @layer base, mantine, components;
@@ -127,8 +127,8 @@ As of September 2023, CSS layers are supported in all modern browsers and have [
 
 ## Loading styles from CDN
 
-You can also load Mantine styles from unpkg CDN. Note that in this case it is
-recommended to specify exact version of `@mantine/*` packages both in your
+You can also load Mantine styles from the unpkg CDN. Note that in this case it is
+recommended to specify the exact version of `@mantine/*` packages both in your
 `package.json` and in CDN links.
 
 ```html
@@ -145,4 +145,4 @@ recommended to specify exact version of `@mantine/*` packages both in your
 />
 ```
 
-Styles on unpkg CDN are available for all Mantine packages that export styles.
+Styles on the unpkg CDN are available for all Mantine packages that export styles.

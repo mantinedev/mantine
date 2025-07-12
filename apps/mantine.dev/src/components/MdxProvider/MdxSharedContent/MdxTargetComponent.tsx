@@ -88,23 +88,23 @@ export function MdxTargetComponent({ component }: MdxTargetComponentProps) {
       <MdxTitle id="target-children">{`${component}.Target children`}</MdxTitle>
       <MdxParagraph>
         <MdxCode>{component}.Target</MdxCode> requires an element or a component as a single child –
-        strings, fragments, numbers and multiple elements/components are not supported and{' '}
-        <b>will throw error</b>. Custom components must provide a prop to get root element ref, all
-        Mantine components support ref out of the box.
+        strings, fragments, numbers, and multiple elements/components are not supported and{' '}
+        <b>will throw an error</b>. Custom components must provide a prop to get the root element
+        ref; all Mantine components support ref out of the box.
       </MdxParagraph>
 
       <MdxCodeHighlight code={getTargetCode(component)} language="tsx" />
 
       <MdxTitle id="required-ref-prop">Required ref prop</MdxTitle>
       <MdxParagraph>
-        Custom components that are rendered inside {component}.Target are required to support{' '}
+        Custom components that are rendered inside {component}.Target are required to support the{' '}
         <MdxCode>ref</MdxCode> prop:
       </MdxParagraph>
 
       <MdxCodeHighlight code={getNoRefCode(component)} language="tsx" />
 
       <MdxParagraph>
-        Use <MdxCode>forwardRef</MdxCode> function to forward ref to root element:
+        Use the <MdxCode>forwardRef</MdxCode> function to forward ref to the root element:
       </MdxParagraph>
 
       <MdxCodeHighlight code={getForwardRefCode(component)} language="tsx" />
