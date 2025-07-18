@@ -18,9 +18,10 @@ export function StylesApiTablesList({ components, componentPrefix }: StylesApiTa
   return (
     <>
       <div className={classes.groupsHeader}>
-        <Title order={2} className={classes.title}>
+        <Title order={2} className={classes.mainTitle}>
           Styles API
         </Title>
+
         <MdxParagraph style={{ marginTop: 0 }}>
           <Code>{components[0]}</Code> component supports{' '}
           <MdxLink href="/styles/styles-api">Styles API</MdxLink>. With Styles API, you can

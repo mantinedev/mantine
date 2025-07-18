@@ -1,7 +1,3 @@
-.groupsHeader {
-  margin-bottom: 30px;
-}
-
 .group {
   --group-spacing: 40px;
 
@@ -12,6 +8,7 @@
   }
 }
 
+.mainTitle,
 .title {
   font-family: var(--docs-font-primary);
   font-weight: 500;
@@ -19,8 +16,18 @@
   color: var(--mantine-color-bright);
 }
 
-.section {
-  & + & {
-    margin-top: 40px;
+.title {
+  margin-top: var(--mantine-spacing-md);
+}
+
+.panel {
+  padding-top: var(--mantine-spacing-md);
+}
+
+.tab {
+  &[data-active] {
+    background-color: light-dark(var(--mantine-color-black), var(--mantine-color-gray-1));
+    color: light-dark(var(--mantine-color-white), var(--mantine-color-gray-9));
+    font-weight: 500;
   }
 }
