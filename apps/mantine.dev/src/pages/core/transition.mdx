@@ -4,6 +4,33 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.Transition);
 
+## Usage
+
+The Transition component is designed to animate the presence of elements with
+fixed or absolute positioning, such as dropdowns, modals, or tooltips. Other Mantine
+components (like [Modal](/core/modal) and [Tooltip](/core/tooltip)) use Transition internally
+for their animations.
+
+Note that the Transition component is not intended to be a comprehensive solution for all
+animations. It is a simple utility for animating the presence of elements
+with fixed or absolute positioning. If you need to implement more complex animations,
+consider using [Motion](https://motion.dev/), [React Spring](https://www.react-spring.dev/),
+or other dedicated animation libraries.
+
+Example usage of the Transition component:
+
+```tsx
+import { Transition } from '@mantine/core';
+
+function Demo({ opened }: { opened: boolean }) {
+  return (
+    <Transition mounted={opened} transition="fade">
+      {(styles) => <div style={styles}>Your modal</div>}
+    </Transition>
+  );
+}
+```
+
 ## Premade transitions
 
 Mantine includes several premade transitions:
