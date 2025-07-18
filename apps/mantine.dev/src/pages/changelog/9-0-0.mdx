@@ -3,6 +3,7 @@ import { IconHeartFilled } from '@tabler/icons-react';
 import {
   HooksDemos,
   FloatingWindowDemos,
+  CardDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -60,6 +61,12 @@ elements:
 [FloatingWindow](/core/floating-window) provides component API for [use-floating-window](/hooks/use-floating-window) hook:
 
 <Demo data={FloatingWindowDemos.usage} />
+
+## Card horizontal orientation
+
+[Card](/core/card) component now supports horizontal orientation:
+
+<Demo data={CardDemos.horizontal} demoProps={{ defaultExpanded: false }} />
 
 ## Other changes
 
