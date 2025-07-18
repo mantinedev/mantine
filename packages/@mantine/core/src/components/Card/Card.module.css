@@ -4,9 +4,16 @@
   position: relative;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
   padding: var(--card-padding);
   color: var(--mantine-color-text);
+
+  &:where([data-orientation='horizontal']) {
+    flex-direction: row;
+  }
+
+  &:where([data-orientation='vertical']) {
+    flex-direction: column;
+  }
 
   @mixin where-light {
     background-color: var(--mantine-color-white);
@@ -21,25 +28,6 @@
   display: block;
   margin-inline: calc(var(--card-padding) * -1);
 
-  &:where(:first-child) {
-    margin-top: calc(var(--card-padding) * -1);
-    border-top: none !important;
-  }
-
-  &:where(:last-child) {
-    margin-bottom: calc(var(--card-padding) * -1);
-    border-bottom: none !important;
-  }
-
-  &:where([data-inherit-padding]) {
-    padding-inline: var(--card-padding);
-  }
-
-  &:where([data-with-border]) {
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-  }
-
   @mixin where-light {
     border-color: var(--mantine-color-gray-3);
   }
@@ -48,7 +36,56 @@
     border-color: var(--mantine-color-dark-4);
   }
 
-  & + & {
-    border-top: none !important;
+  &:where([data-orientation='vertical']) {
+    &:first-child {
+      margin-top: calc(var(--card-padding) * -1);
+      border-top: none !important;
+    }
+
+    &:last-child {
+      margin-bottom: calc(var(--card-padding) * -1);
+      border-bottom: none !important;
+    }
+
+    &[data-inherit-padding] {
+      padding-inline: var(--card-padding);
+    }
+
+    &[data-with-border] {
+      border-top: 1px solid;
+      border-bottom: 1px solid;
+    }
+
+    & + & {
+      border-top: none !important;
+    }
+  }
+
+  &:where([data-orientation='horizontal']) {
+    margin-block: calc(var(--card-padding) * -1);
+    margin-inline: 0;
+
+    &:first-child {
+      margin-inline-start: calc(var(--card-padding) * -1);
+      border-inline-start: none !important;
+    }
+
+    &:last-child {
+      margin-inline-end: calc(var(--card-padding) * -1);
+      border-inline-end: none !important;
+    }
+
+    &[data-inherit-padding] {
+      padding-block: var(--card-padding);
+    }
+
+    &[data-with-border] {
+      border-inline-start: 1px solid;
+      border-inline-end: 1px solid;
+    }
+
+    & + & {
+      border-inline-start: none !important;
+    }
   }
 }

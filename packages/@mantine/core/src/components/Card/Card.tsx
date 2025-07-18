@@ -37,6 +37,9 @@ export interface CardProps extends BoxProps, StylesApiProps<CardFactory> {
 
   /** Card content */
   children?: React.ReactNode;
+
+  /** Card orientation @default `'vertical'` */
+  orientation?: 'horizontal' | 'vertical';
 }
 
 export type CardFactory = PolymorphicFactory<{
@@ -56,8 +59,12 @@ const varsResolver = createVarsResolver<CardFactory>((_, { padding }) => ({
   },
 }));
 
+const defaultProps = {
+  orientation: 'vertical',
+} satisfies Partial<CardProps>;
+
 export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
-  const props = useProps('Card', null, _props);
+  const props = useProps('Card', defaultProps, _props);
   const {
     classNames,
     className,
@@ -68,6 +75,7 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
     children,
     padding,
     attributes,
+    orientation,
     ...others
   } = props;
 
@@ -89,6 +97,7 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
   const content = _children.map((child, index) => {
     if (typeof child === 'object' && child && 'type' in child && child.type === CardSection) {
       return cloneElement(child, {
+        'data-orientation': orientation,
         'data-first-section': index === 0 || undefined,
         'data-last-section': index === _children.length - 1 || undefined,
       } as any);
@@ -99,7 +108,13 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
 
   return (
     <CardProvider value={{ getStyles }}>
-      <Paper ref={ref} unstyled={unstyled} {...getStyles('root')} {...others}>
+      <Paper
+        ref={ref}
+        unstyled={unstyled}
+        data-orientation={orientation}
+        {...getStyles('root')}
+        {...others}
+      >
         {content}
       </Paper>
     </CardProvider>
