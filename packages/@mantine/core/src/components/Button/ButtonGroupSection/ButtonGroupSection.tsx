@@ -10,12 +10,11 @@ import {
   getSize,
   MantineGradient,
   MantineRadius,
-  MantineSize,
   StylesApiProps,
   useProps,
   useStyles,
 } from '../../../core';
-import type { ButtonVariant } from '../Button';
+import type { ButtonSize, ButtonVariant } from '../Button';
 import classes from '../Button.module.css';
 
 export type ButtonGroupSectionStylesNames = 'groupSection';
@@ -44,7 +43,7 @@ export interface ButtonGroupSectionProps
   autoContrast?: boolean;
 
   /** Controls section `height`, `font-size` and horizontal `padding` @default `'sm'` */
-  size?: MantineSize | `compact-${MantineSize}` | (string & {});
+  size?: ButtonSize;
 }
 
 export type ButtonGroupSectionFactory = Factory<{

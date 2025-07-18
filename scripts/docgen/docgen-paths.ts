@@ -10,6 +10,7 @@ const FILES_PATHS = getPaths([
 
   // Button
   'packages/@mantine/core/src/components/Button/ButtonGroup/ButtonGroup.tsx',
+  'packages/@mantine/core/src/components/Button/ButtonGroupSection/ButtonGroupSection.tsx',
 
   // Avatar
   'packages/@mantine/core/src/components/Avatar/AvatarGroup/AvatarGroup.tsx',

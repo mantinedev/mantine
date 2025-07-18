@@ -7,6 +7,7 @@ export type {
   ButtonFactory,
   ButtonCssVariables,
   ButtonVariant,
+  ButtonSize,
 } from './Button';
 export type {
   ButtonGroupProps,

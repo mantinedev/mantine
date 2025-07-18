@@ -23,6 +23,8 @@ import { ButtonGroup } from './ButtonGroup/ButtonGroup';
 import { ButtonGroupSection } from './ButtonGroupSection/ButtonGroupSection';
 import classes from './Button.module.css';
 
+export type ButtonSize = MantineSize | `compact-${MantineSize}` | (string & {});
+
 export type ButtonStylesNames = 'root' | 'inner' | 'loader' | 'section' | 'label';
 export type ButtonVariant =
   | 'filled'
@@ -52,7 +54,7 @@ export interface ButtonProps extends BoxProps, StylesApiProps<ButtonFactory> {
   'data-disabled'?: boolean;
 
   /** Controls button `height`, `font-size` and horizontal `padding` @default `'sm'` */
-  size?: MantineSize | `compact-${MantineSize}` | (string & {});
+  size?: ButtonSize;
 
   /** Key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
   color?: MantineColor;
@@ -60,19 +62,19 @@ export interface ButtonProps extends BoxProps, StylesApiProps<ButtonFactory> {
   /** Sets `justify-content` of `inner` element, can be used to change distribution of sections and label @default `'center'` */
   justify?: React.CSSProperties['justifyContent'];
 
-  /** Content displayed on the left side of the button label */
+  /** Content on the left side of the button label */
   leftSection?: React.ReactNode;
 
-  /** Content displayed on the right side of the button label */
+  /** Content on the right side of the button label */
   rightSection?: React.ReactNode;
 
-  /** If set, the button takes 100% width of its parent container @default `false` */
+  /** Sets `width: 100%` @default `false` */
   fullWidth?: boolean;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Gradient configuration used when `variant="gradient"` @default `theme.defaultGradient` */
+  /** Gradient configuration used for `variant="gradient"` @default `theme.defaultGradient` */
   gradient?: MantineGradient;
 
   /** Sets `disabled` attribute, applies disabled styles */
