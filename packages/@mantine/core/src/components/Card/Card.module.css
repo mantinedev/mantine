@@ -29,11 +29,11 @@
   margin-inline: calc(var(--card-padding) * -1);
 
   @mixin where-light {
-    border-color: var(--mantine-color-gray-3);
+    --border-color: var(--mantine-color-gray-3);
   }
 
   @mixin where-dark {
-    border-color: var(--mantine-color-dark-4);
+    --border-color: var(--mantine-color-dark-4);
   }
 
   &:where([data-orientation='vertical']) {
@@ -52,8 +52,8 @@
     }
 
     &[data-with-border] {
-      border-top: 1px solid;
-      border-bottom: 1px solid;
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
     }
 
     & + & {
@@ -80,8 +80,8 @@
     }
 
     &[data-with-border] {
-      border-inline-start: 1px solid;
-      border-inline-end: 1px solid;
+      border-inline-start: 1px solid var(--border-color);
+      border-inline-end: 1px solid var(--border-color);
     }
 
     & + & {
