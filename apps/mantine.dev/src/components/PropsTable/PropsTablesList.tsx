@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Text, TextInput, Title } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import { PhosphorIcons } from '../icons';
 import { getComponentName } from './getComponentName';
 import { PropsTable } from './PropsTable';
@@ -12,6 +13,9 @@ export interface PropsTablesListProps {
 
 export function PropsTablesList({ components, componentPrefix }: PropsTablesListProps) {
   const [query, setQuery] = useState('');
+  const isNonTouchDevice = useMediaQuery('(hover: hover) and (pointer: fine)', false, {
+    getInitialValueInEffect: false,
+  });
 
   const tables = components.map((component) => (
     <div key={component} className={classes.section} data-props-table-section>
@@ -32,7 +36,7 @@ export function PropsTablesList({ components, componentPrefix }: PropsTablesList
         placeholder="Search props"
         radius="md"
         size="lg"
-        autoFocus
+        autoFocus={isNonTouchDevice}
         pt={7}
       />
       {tables}
