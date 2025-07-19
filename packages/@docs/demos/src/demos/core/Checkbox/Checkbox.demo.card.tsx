@@ -24,15 +24,14 @@ const cssCode = `.root {
 }
 
 .label {
-  font-family: var(--mantine-font-family-monospace);
-  font-weight: bold;
-  font-size: var(--mantine-font-size-md);
+  font-weight: 500;
+  font-size: var(--mantine-font-size-sm);
   line-height: 1.3;
   color: var(--mantine-color-bright);
 }
 
 .description {
-  margin-top: 8px;
+  margin-top: 4px;
   color: var(--mantine-color-dimmed);
   font-size: var(--mantine-font-size-xs);
 }
@@ -55,8 +54,9 @@ function Demo() {
     >
       <Group wrap="nowrap" align="flex-start">
         <Checkbox.Indicator />
+
         <div>
-          <Text className={classes.label}>@mantine/core</Text>
+          <Text className={classes.label}>mantine/core</Text>
           <Text className={classes.description}>
             Core components library: inputs, buttons, overlays, etc.
           </Text>
@@ -79,8 +79,9 @@ function Demo() {
     >
       <Group wrap="nowrap" align="flex-start">
         <Checkbox.Indicator />
+
         <div>
-          <Text className={classes.label}>@mantine/core</Text>
+          <Text className={classes.label}>mantine/core</Text>
           <Text className={classes.description}>
             Core components library: inputs, buttons, overlays, etc.
           </Text>

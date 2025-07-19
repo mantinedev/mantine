@@ -24,15 +24,14 @@ const cssCode = `.root {
 }
 
 .label {
-  font-family: var(--mantine-font-family-monospace);
-  font-weight: bold;
-  font-size: var(--mantine-font-size-md);
+  font-weight: 500;
+  font-size: var(--mantine-font-size-sm);
   line-height: 1.3;
   color: var(--mantine-color-bright);
 }
 
 .description {
-  margin-top: 8px;
+  margin-top: 4px;
   color: var(--mantine-color-dimmed);
   font-size: var(--mantine-font-size-xs);
 }
@@ -45,11 +44,11 @@ import classes from './Demo.module.css';
 
 const data = [
   {
-    name: '@mantine/core',
+    name: 'mantine/core',
     description: 'Core components library: inputs, buttons, overlays, etc.',
   },
-  { name: '@mantine/hooks', description: 'Collection of reusable hooks for React applications.' },
-  { name: '@mantine/notifications', description: 'Notifications system' },
+  { name: 'mantine/hooks', description: 'Collection of reusable hooks for React applications.' },
+  { name: 'mantine/notifications', description: 'Notifications system' },
 ];
 
 function Demo() {
@@ -90,11 +89,11 @@ function Demo() {
 
 const data = [
   {
-    name: '@mantine/core',
+    name: 'mantine/core',
     description: 'Core components library: inputs, buttons, overlays, etc.',
   },
-  { name: '@mantine/hooks', description: 'Collection of reusable hooks for React applications.' },
-  { name: '@mantine/notifications', description: 'Notifications system' },
+  { name: 'mantine/hooks', description: 'Collection of reusable hooks for React applications.' },
+  { name: 'mantine/notifications', description: 'Notifications system' },
 ];
 
 function Demo() {
