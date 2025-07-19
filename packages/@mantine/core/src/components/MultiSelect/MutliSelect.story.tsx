@@ -223,6 +223,20 @@ export function Searchable() {
   );
 }
 
+export function SearchableNoClearOnChange() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MultiSelect
+        data={['React', 'Angular', 'Svelte']}
+        placeholder="MultiSelect something"
+        searchable
+        nothingFoundMessage="Nothing found..."
+        clearSearchOnChange={false}
+      />
+    </div>
+  );
+}
+
 export function NoDataProvidedMessage() {
   return (
     <div style={{ padding: 40 }}>
