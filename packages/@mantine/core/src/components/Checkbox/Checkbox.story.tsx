@@ -6,6 +6,7 @@ export function Usage() {
   return (
     <div style={{ padding: 40 }}>
       <Checkbox label="Default" value="hello" />
+      <Checkbox label="Read only" value="hello" readOnly mt="sm" />
       <Checkbox label="Disabled" checked disabled mt="sm" />
       <Checkbox label="Indeterminate" indeterminate mt="sm" />
     </div>

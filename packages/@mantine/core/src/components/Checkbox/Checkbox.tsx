@@ -158,6 +158,8 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
     autoContrast,
     mod,
     attributes,
+    readOnly,
+    onClick,
     ...others
   } = props;
 
@@ -235,6 +237,13 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
           {...rest}
           {...contextProps}
           type="checkbox"
+          onClick={(event) => {
+            if (readOnly) {
+              event.preventDefault();
+            }
+
+            onClick?.(event);
+          }}
         />
 
         <Icon indeterminate={indeterminate} {...getStyles('icon')} />
