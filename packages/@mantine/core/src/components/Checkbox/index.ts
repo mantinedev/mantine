@@ -15,6 +15,7 @@ export type {
   CheckboxProps,
   CheckboxStylesNames,
   CheckboxVariant,
+  CheckboxIconComponent,
 } from './Checkbox';
 
 export type {

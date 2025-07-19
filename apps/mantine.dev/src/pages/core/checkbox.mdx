@@ -79,9 +79,9 @@ You can add any number of custom sizes with [data-size](/styles/data-attributes/
 
 ## Checkbox.Group
 
-<Demo data={CheckboxDemos.groupConfigurator} />
-
-## Controlled Checkbox.Group
+`Checkbox.Group` manages the state of multiple checkboxes, it accepts `value` and `onChange`
+props, which are used to control the state of checkboxes inside the group. The `value` prop should be an array of strings, where each string is the value of a checkbox.
+The `onChange` prop should be a function that receives the new value as an array of strings.
 
 ```tsx
 import { useState } from 'react';
@@ -98,6 +98,13 @@ function Demo() {
   );
 }
 ```
+
+## Checkbox.Group props
+
+`Checkbox.Group` component supports all [Input.Wrapper](/core/input/#inputwrapper-component)
+props.
+
+<Demo data={CheckboxDemos.groupConfigurator} />
 
 ## Checkbox.Indicator
 
@@ -126,6 +133,19 @@ You can use `Checkbox.Card` with `Checkbox.Group` the same way as the `Checkbox`
 
 <GetElementRef component="Checkbox" refType="input" />
 
+The example above shows how to get ref of the checkbox input element.
+To get ref of the root element, use `rootRef` prop:
+
+```tsx
+import { useRef } from 'react';
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLDivElement>(null);
+  return <Checkbox rootRef={ref} />;
+}
+```
+
 <StylesApiSelectors component="Checkbox" />
 
 <Demo data={CheckboxDemos.stylesApi} />
@@ -140,7 +160,9 @@ You can use `Checkbox.Card` with `Checkbox.Group` the same way as the `Checkbox`
 
 ## Accessibility
 
-Set `aria-label` or `label` prop to make the checkbox accessible:
+Checkbox component is based on the native `input[type="checkbox"]` element, so it is accessible by default.
+
+Set `aria-label` or `label` prop to make the checkbox accessible for screen readers:
 
 ```tsx
 import { Checkbox } from '@mantine/core';

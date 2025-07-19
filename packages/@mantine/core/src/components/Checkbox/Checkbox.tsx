@@ -36,6 +36,11 @@ export type CheckboxCssVariables = {
   root: '--checkbox-size' | '--checkbox-radius' | '--checkbox-color' | '--checkbox-icon-color';
 };
 
+export type CheckboxIconComponent = React.FC<{
+  indeterminate: boolean | undefined;
+  className: string;
+}>;
+
 export interface CheckboxProps
   extends BoxProps,
     StylesApiProps<CheckboxFactory>,
@@ -61,17 +66,17 @@ export interface CheckboxProps
   /** Position of the label relative to the input @default `'right'` */
   labelPosition?: 'left' | 'right';
 
-  /** Description displayed below the label */
+  /** Description below the label */
   description?: React.ReactNode;
 
-  /** Error message displayed below the label */
+  /** Error message below the label */
   error?: React.ReactNode;
 
-  /** Indeterminate state of the checkbox. If set, `checked` prop is ignored. */
+  /** Indeterminate state of the checkbox. If set, `checked` prop is dismissed. */
   indeterminate?: boolean;
 
-  /** Icon displayed when checkbox is in checked or indeterminate state */
-  icon?: React.FC<{ indeterminate: boolean | undefined; className: string }>;
+  /** Icon for checked or indeterminate state */
+  icon?: CheckboxIconComponent;
 
   /** Root element ref */
   rootRef?: React.ForwardedRef<HTMLDivElement>;
@@ -79,7 +84,7 @@ export interface CheckboxProps
   /** Key of `theme.colors` or any valid CSS color to set icon color. By default, depends on `theme.autoContrast`. */
   iconColor?: MantineColor;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts icon color based on background color for `filled` variant */
   autoContrast?: boolean;
 }
 
