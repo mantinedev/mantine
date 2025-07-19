@@ -72,3 +72,8 @@ export const Demo_indicator = {
   name: '⭐ Demo: indicator',
   render: renderDemo(demos.indicator),
 };
+
+export const Demo_autoContrast = {
+  name: '⭐ Demo: autoContrast',
+  render: renderDemo(demos.autoContrast),
+};
