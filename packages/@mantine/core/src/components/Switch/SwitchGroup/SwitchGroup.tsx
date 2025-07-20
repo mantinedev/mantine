@@ -28,6 +28,15 @@ export interface SwitchGroupProps extends Omit<InputWrapperProps, 'onChange'> {
   /** If set, value cannot be changed */
   readOnly?: boolean;
 
+  /** `name` attribute of the hidden input for uncontrolled forms */
+  name?: string;
+
+  /** Props passed down to the hidden input for uncontrolled forms */
+  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'> & DataAttributes;
+
+  /** Separator for values in the hidden input for uncontrolled forms @default `','` */
+  hiddenInputValuesSeparator?: string;
+
   /** Maximum number of switches that can be selected. When the limit is reached, unselected switches will be disabled */
   maxSelectedValues?: number;
 }
@@ -38,6 +47,10 @@ export type SwitchGroupFactory = Factory<{
   stylesNames: SwitchGroupStylesNames;
 }>;
 
+const defaultProps = {
+  hiddenInputValuesSeparator: ',',
+} satisfies Partial<SwitchGroupProps>;
+
 export const SwitchGroup = factory<SwitchGroupFactory>((props, ref) => {
   const {
     value,
@@ -47,9 +60,12 @@ export const SwitchGroup = factory<SwitchGroupFactory>((props, ref) => {
     wrapperProps,
     children,
     readOnly,
+    name,
+    hiddenInputValuesSeparator,
+    hiddenInputProps,
     maxSelectedValues,
     ...others
-  } = useProps('SwitchGroup', null, props);
+  } = useProps('SwitchGroup', defaultProps, props);
 
   const [_value, setValue] = useUncontrolled({
     value,
@@ -86,6 +102,8 @@ export const SwitchGroup = factory<SwitchGroupFactory>((props, ref) => {
     return !isCurrentlySelected && hasReachedLimit;
   };
 
+  const hiddenInputValue = _value.join(hiddenInputValuesSeparator);
+
   return (
     <SwitchGroupProvider value={{ value: _value, onChange: handleChange, size, isDisabled }}>
       <Input.Wrapper
@@ -97,6 +115,7 @@ export const SwitchGroup = factory<SwitchGroupFactory>((props, ref) => {
         __staticSelector="SwitchGroup"
       >
         <InputsGroupFieldset role="group">{children}</InputsGroupFieldset>
+        <input type="hidden" name={name} value={hiddenInputValue} {...hiddenInputProps} />
       </Input.Wrapper>
     </SwitchGroupProvider>
   );

@@ -70,6 +70,36 @@ function Demo() {
 
 <Demo data={SwitchDemos.groupConfigurator} />
 
+## Switch.Group with FormData
+
+`Switch.Group` can be used with uncontrolled forms, it renders a hidden input
+which joins all checked values into a single string using `hiddenInputValuesSeparator` prop.
+
+Props for usage with uncontrolled forms:
+- `name` – name attribute passed to the hidden input
+- `hiddenInputValuesSeparator` – string used to join checked values into a single string, `','` by default
+- `hiddenInputProps` – additional props passed to the hidden input
+
+```tsx
+export function UncontrolledForm() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Switch group value:', formData.get('frameworks'));
+      }}
+    >
+      <Switch.Group label="Frameworks" name="frameworks" hiddenInputValuesSeparator="|">
+        <Switch label="React" value="react" />
+        <Switch label="Angular" value="ng" />
+      </Switch.Group>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
 ## maxSelectedValues
 
 Use `maxSelectedValues` prop to limit the number of selected values in `Switch.Group`.
