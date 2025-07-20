@@ -162,6 +162,38 @@ function Demo() {
 
 <Demo data={CheckboxDemos.customize} />
 
+## wrapperProps
+
+Most of the `Checkbox` props are passed down to the `input` element.
+If you want to pass props to the root element instead, use `wrapperProps` prop.
+
+```tsx
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Checkbox
+      label="My checkbox"
+      wrapperProps={{ 'data-root-element': true }}
+    />
+  );
+}
+```
+
+## id attribute
+
+By default, `Checkbox` generates a random `id` attribute for the input element
+to associate it with the label. You can supply your own `id` attribute with `id` prop.
+It will be used in `id` attribute of the input element and `htmlFor` attribute of the label element.
+
+```tsx
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  return <Checkbox id="my-checkbox" label="My checkbox" />;
+}
+```
+
 ## Accessibility
 
 Checkbox component is based on the native `input[type="checkbox"]` element, so it is accessible by default.
