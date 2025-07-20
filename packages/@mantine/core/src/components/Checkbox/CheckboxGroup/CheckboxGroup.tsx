@@ -36,6 +36,9 @@ export interface CheckboxGroupProps extends Omit<InputWrapperProps, 'onChange'> 
 
   /** Separator for values in the hidden input for uncontrolled forms @default `','` */
   hiddenInputValuesSeparator?: string;
+
+  /** Maximum number of checkboxes that can be selected. When the limit is reached, unselected checkboxes will be disabled */
+  maxSelectedValues?: number;
 }
 
 export type CheckboxGroupFactory = Factory<{
@@ -60,6 +63,7 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((props, ref) => {
     name,
     hiddenInputValuesSeparator,
     hiddenInputProps,
+    maxSelectedValues,
     ...others
   } = useProps('CheckboxGroup', defaultProps, props);
 
@@ -72,18 +76,36 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((props, ref) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement> | string) => {
     const itemValue = typeof event === 'string' ? event : event.currentTarget.value;
-    !readOnly &&
-      setValue(
-        _value.includes(itemValue)
-          ? _value.filter((item) => item !== itemValue)
-          : [..._value, itemValue]
-      );
+
+    if (readOnly) {
+      return;
+    }
+
+    const isCurrentlySelected = _value.includes(itemValue);
+
+    if (!isCurrentlySelected && maxSelectedValues && _value.length >= maxSelectedValues) {
+      return;
+    }
+
+    setValue(
+      isCurrentlySelected ? _value.filter((item) => item !== itemValue) : [..._value, itemValue]
+    );
+  };
+
+  const isDisabled = (checkboxValue: string) => {
+    if (!maxSelectedValues) {
+      return false;
+    }
+
+    const isCurrentlySelected = _value.includes(checkboxValue);
+    const hasReachedLimit = _value.length >= maxSelectedValues;
+    return !isCurrentlySelected && hasReachedLimit;
   };
 
   const hiddenInputValue = _value.join(hiddenInputValuesSeparator);
 
   return (
-    <CheckboxGroupProvider value={{ value: _value, onChange: handleChange, size }}>
+    <CheckboxGroupProvider value={{ value: _value, onChange: handleChange, size, isDisabled }}>
       <Input.Wrapper
         size={size}
         ref={ref}

@@ -53,4 +53,30 @@ describe('@mantine/core/CheckboxGroup', () => {
     expect(screen.getAllByRole('checkbox')[0]).not.toBeChecked();
     expect(spy).toHaveBeenCalledWith(['test-value-2', 'test-value-1']);
   });
+
+  it('supports maxSelectedValues prop', async () => {
+    const spy = jest.fn();
+    render(<CheckboxGroup {...defaultProps} maxSelectedValues={2} onChange={spy} />);
+
+    // Click first checkbox
+    await userEvent.click(screen.getAllByRole('checkbox')[0]);
+    expect(screen.getAllByRole('checkbox')[0]).toBeChecked();
+    expect(screen.getAllByRole('checkbox')[2]).not.toBeDisabled();
+
+    // Click second checkbox
+    await userEvent.click(screen.getAllByRole('checkbox')[1]);
+    expect(screen.getAllByRole('checkbox')[1]).toBeChecked();
+
+    // Third checkbox should now be disabled
+    expect(screen.getAllByRole('checkbox')[2]).toBeDisabled();
+
+    // Clicking disabled checkbox should not change anything
+    await userEvent.click(screen.getAllByRole('checkbox')[2]);
+    expect(screen.getAllByRole('checkbox')[2]).not.toBeChecked();
+
+    // Unchecking first checkbox should enable third checkbox
+    await userEvent.click(screen.getAllByRole('checkbox')[0]);
+    expect(screen.getAllByRole('checkbox')[0]).not.toBeChecked();
+    expect(screen.getAllByRole('checkbox')[2]).not.toBeDisabled();
+  });
 });

@@ -16,3 +16,4 @@ export { autoContrast } from './Checkbox.demo.autoContrast';
 export { error } from './Checkbox.demo.error';
 export { withUseForm } from './Checkbox.demo.withUseForm';
 export { groupWithUseForm } from './Checkbox.demo.groupWithUseForm';
+export { maxSelectedValues } from './Checkbox.demo.maxSelectedValues';

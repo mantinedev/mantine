@@ -2,6 +2,7 @@ import {
   HooksDemos,
   FloatingWindowDemos,
   CardDemos,
+  CheckboxDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -55,6 +56,13 @@ elements:
 [Card](/core/card) component now supports horizontal orientation:
 
 <Demo data={CardDemos.horizontal} demoProps={{ defaultExpanded: false }} />
+
+## Checkbox.Group maxSelectedValues
+
+[Checkbox.Group](/core/checkbox) now supports `maxSelectedValues` prop to limit the number of selected values.
+When the limit is reached, the remaining checkboxes are disabled and cannot be selected.
+
+<Demo data={CheckboxDemos.maxSelectedValues} />
 
 ## Other changes
 

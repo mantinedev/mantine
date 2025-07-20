@@ -198,6 +198,9 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
       }
     : {};
 
+  const isDisabledByGroup = ctx?.isDisabled?.(rest.value as string) ?? false;
+  const finalDisabled = disabled || isDisabledByGroup;
+
   const fallbackRef = useRef<HTMLInputElement>(null);
   const ref = forwardedRef || fallbackRef;
 
@@ -218,7 +221,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
       label={label}
       description={description}
       error={error}
-      disabled={disabled}
+      disabled={finalDisabled}
       classNames={classNames}
       styles={styles}
       unstyled={unstyled}
@@ -235,7 +238,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
           id={uuid}
           ref={ref}
           checked={checked}
-          disabled={disabled}
+          disabled={finalDisabled}
           mod={{ error: !!error, indeterminate, 'with-error-styles': withErrorStyles }}
           {...getStyles('input', { focusable: true, variant })}
           onChange={onChange}

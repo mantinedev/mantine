@@ -92,3 +92,8 @@ export const Demo_groupWithUseForm = {
   name: '⭐ Demo: groupWithUseForm',
   render: renderDemo(demos.groupWithUseForm),
 };
+
+export const Demo_maxSelectedValues = {
+  name: '⭐ Demo: maxSelectedValues',
+  render: renderDemo(demos.maxSelectedValues),
+};
