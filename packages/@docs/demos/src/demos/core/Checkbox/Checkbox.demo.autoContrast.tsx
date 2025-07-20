@@ -17,8 +17,15 @@ function Demo() {
 function Demo() {
   return (
     <Stack>
-      <Checkbox checked label="regular checkbox" size="lg" color="lime.4" />
-      <Checkbox autoContrast checked label="autoContrast checkbox" size="lg" color="lime.4" />
+      <Checkbox checked label="regular checkbox" size="lg" color="lime.4" onChange={() => {}} />
+      <Checkbox
+        autoContrast
+        checked
+        label="autoContrast checkbox"
+        size="lg"
+        color="lime.4"
+        onChange={() => {}}
+      />
     </Stack>
   );
 }

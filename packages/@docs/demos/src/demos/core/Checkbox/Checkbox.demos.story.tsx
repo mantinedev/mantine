@@ -82,3 +82,13 @@ export const Demo_error = {
   name: '⭐ Demo: error',
   render: renderDemo(demos.error),
 };
+
+export const Demo_withUseForm = {
+  name: '⭐ Demo: withUseForm',
+  render: renderDemo(demos.withUseForm),
+};
+
+export const Demo_groupWithUseForm = {
+  name: '⭐ Demo: groupWithUseForm',
+  render: renderDemo(demos.groupWithUseForm),
+};
