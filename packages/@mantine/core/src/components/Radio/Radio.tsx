@@ -79,6 +79,9 @@ export interface RadioProps
 
   /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
+
+  /** If set, applies error styles to the radio when `error` prop is set @default true */
+  withErrorStyles?: boolean;
 }
 
 export type RadioFactory = Factory<{
@@ -96,6 +99,7 @@ export type RadioFactory = Factory<{
 
 const defaultProps = {
   labelPosition: 'right',
+  withErrorStyles: true,
 } satisfies Partial<RadioProps>;
 
 const varsResolver = createVarsResolver<RadioFactory>(
@@ -148,6 +152,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
     onChange,
     mod,
     attributes,
+    withErrorStyles,
     ...others
   } = props;
 
@@ -213,7 +218,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
           {...rest}
           {...contextProps}
           component="input"
-          mod={{ error: !!error }}
+          mod={{ error: !!error, 'with-error-styles': withErrorStyles }}
           ref={ref}
           id={uuid}
           disabled={disabled}
