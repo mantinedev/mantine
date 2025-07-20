@@ -13,3 +13,4 @@ export { customSize } from './Checkbox.demo.customSize';
 export { cardGroup } from './Checkbox.demo.cardGroup';
 export { indicator } from './Checkbox.demo.indicator';
 export { autoContrast } from './Checkbox.demo.autoContrast';
+export { error } from './Checkbox.demo.error';

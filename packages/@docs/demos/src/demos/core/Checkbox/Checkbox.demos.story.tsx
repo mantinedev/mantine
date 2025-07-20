@@ -77,3 +77,8 @@ export const Demo_autoContrast = {
   name: '⭐ Demo: autoContrast',
   render: renderDemo(demos.autoContrast),
 };
+
+export const Demo_error = {
+  name: '⭐ Demo: error',
+  render: renderDemo(demos.error),
+};
