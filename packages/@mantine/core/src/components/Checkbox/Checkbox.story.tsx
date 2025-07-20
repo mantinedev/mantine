@@ -9,6 +9,14 @@ export function Usage() {
       <Checkbox label="Read only" value="hello" readOnly mt="sm" />
       <Checkbox label="Disabled" checked disabled mt="sm" />
       <Checkbox label="Indeterminate" indeterminate mt="sm" />
+      <Checkbox
+        label="With error message"
+        error="Error message"
+        value="hello"
+        mt="sm"
+        withErrorStyles={false}
+      />
+      <Checkbox label="With boolean error" error value="hello" mt="sm" />
     </div>
   );
 }

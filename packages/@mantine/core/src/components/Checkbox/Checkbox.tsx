@@ -86,6 +86,9 @@ export interface CheckboxProps
 
   /** If set, adjusts icon color based on background color for `filled` variant */
   autoContrast?: boolean;
+
+  /** If set, applies error styles to the checkbox when `error` prop is set @default true */
+  withErrorStyles?: boolean;
 }
 
 export type CheckboxFactory = Factory<{
@@ -104,6 +107,7 @@ export type CheckboxFactory = Factory<{
 const defaultProps = {
   labelPosition: 'right',
   icon: CheckboxIcon,
+  withErrorStyles: true,
 } satisfies Partial<CheckboxProps>;
 
 const varsResolver = createVarsResolver<CheckboxFactory>(
@@ -160,6 +164,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
     attributes,
     readOnly,
     onClick,
+    withErrorStyles,
     ...others
   } = props;
 
@@ -231,7 +236,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
           ref={ref}
           checked={checked}
           disabled={disabled}
-          mod={{ error: !!error, indeterminate }}
+          mod={{ error: !!error, indeterminate, 'with-error-styles': withErrorStyles }}
           {...getStyles('input', { focusable: true, variant })}
           onChange={onChange}
           {...rest}
