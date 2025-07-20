@@ -27,6 +27,9 @@ export interface SwitchGroupProps extends Omit<InputWrapperProps, 'onChange'> {
 
   /** If set, value cannot be changed */
   readOnly?: boolean;
+
+  /** Maximum number of switches that can be selected. When the limit is reached, unselected switches will be disabled */
+  maxSelectedValues?: number;
 }
 
 export type SwitchGroupFactory = Factory<{
@@ -36,8 +39,17 @@ export type SwitchGroupFactory = Factory<{
 }>;
 
 export const SwitchGroup = factory<SwitchGroupFactory>((props, ref) => {
-  const { value, defaultValue, onChange, size, wrapperProps, children, readOnly, ...others } =
-    useProps('SwitchGroup', null, props);
+  const {
+    value,
+    defaultValue,
+    onChange,
+    size,
+    wrapperProps,
+    children,
+    readOnly,
+    maxSelectedValues,
+    ...others
+  } = useProps('SwitchGroup', null, props);
 
   const [_value, setValue] = useUncontrolled({
     value,
@@ -48,16 +60,34 @@ export const SwitchGroup = factory<SwitchGroupFactory>((props, ref) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const itemValue = event.currentTarget.value;
-    !readOnly &&
-      setValue(
-        _value.includes(itemValue)
-          ? _value.filter((item) => item !== itemValue)
-          : [..._value, itemValue]
-      );
+
+    if (readOnly) {
+      return;
+    }
+
+    const isCurrentlySelected = _value.includes(itemValue);
+
+    if (!isCurrentlySelected && maxSelectedValues && _value.length >= maxSelectedValues) {
+      return;
+    }
+
+    setValue(
+      isCurrentlySelected ? _value.filter((item) => item !== itemValue) : [..._value, itemValue]
+    );
+  };
+
+  const isDisabled = (switchValue: string) => {
+    if (!maxSelectedValues) {
+      return false;
+    }
+
+    const isCurrentlySelected = _value.includes(switchValue);
+    const hasReachedLimit = _value.length >= maxSelectedValues;
+    return !isCurrentlySelected && hasReachedLimit;
   };
 
   return (
-    <SwitchGroupProvider value={{ value: _value, onChange: handleChange, size }}>
+    <SwitchGroupProvider value={{ value: _value, onChange: handleChange, size, isDisabled }}>
       <Input.Wrapper
         size={size}
         ref={ref}

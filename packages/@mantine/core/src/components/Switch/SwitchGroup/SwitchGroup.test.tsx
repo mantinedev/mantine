@@ -53,4 +53,30 @@ describe('@mantine/core/SwitchGroup', () => {
     expect(screen.getAllByRole('switch')[0]).not.toBeChecked();
     expect(spy).toHaveBeenCalledWith(['test-value-2', 'test-value-1']);
   });
+
+  it('supports maxSelectedValues prop', async () => {
+    const spy = jest.fn();
+    render(<SwitchGroup {...defaultProps} maxSelectedValues={2} onChange={spy} />);
+
+    // Click first switch
+    await userEvent.click(screen.getAllByRole('switch')[0]);
+    expect(screen.getAllByRole('switch')[0]).toBeChecked();
+    expect(screen.getAllByRole('switch')[2]).not.toBeDisabled();
+
+    // Click second switch
+    await userEvent.click(screen.getAllByRole('switch')[1]);
+    expect(screen.getAllByRole('switch')[1]).toBeChecked();
+
+    // Third switch should now be disabled
+    expect(screen.getAllByRole('switch')[2]).toBeDisabled();
+
+    // Clicking disabled switch should not change anything
+    await userEvent.click(screen.getAllByRole('switch')[2]);
+    expect(screen.getAllByRole('switch')[2]).not.toBeChecked();
+
+    // Unchecking first switch should enable third switch
+    await userEvent.click(screen.getAllByRole('switch')[0]);
+    expect(screen.getAllByRole('switch')[0]).not.toBeChecked();
+    expect(screen.getAllByRole('switch')[2]).not.toBeDisabled();
+  });
 });

@@ -42,3 +42,8 @@ export const Demo_styles = {
   name: '⭐ Demo: styles',
   render: renderDemo(demos.styles),
 };
+
+export const Demo_maxSelectedValues = {
+  name: '⭐ Demo: maxSelectedValues',
+  render: renderDemo(demos.maxSelectedValues),
+};

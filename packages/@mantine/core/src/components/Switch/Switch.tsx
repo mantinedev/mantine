@@ -176,6 +176,8 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
       }
     : {};
 
+  const _disabled = disabled || ctx?.isDisabled?.(rest.value as string);
+
   const [_checked, handleChange] = useUncontrolled({
     value: contextProps.checked ?? checked,
     defaultValue: defaultChecked,
@@ -193,7 +195,7 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
       label={label}
       description={description}
       error={error}
-      disabled={disabled}
+      disabled={_disabled}
       bodyElement="label"
       labelElement="span"
       classNames={classNames}
@@ -208,7 +210,7 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
     >
       <input
         {...rest}
-        disabled={disabled}
+        disabled={_disabled}
         checked={_checked}
         data-checked={contextProps.checked || checked || undefined}
         onChange={(event) => {

@@ -5,6 +5,7 @@ interface SwitchGroupContextValue {
   value: string[];
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   size: MantineSize | (string & {}) | undefined;
+  isDisabled?: (value: string) => boolean;
 }
 
 const SwitchGroupContext = createContext<SwitchGroupContextValue | null>(null);
