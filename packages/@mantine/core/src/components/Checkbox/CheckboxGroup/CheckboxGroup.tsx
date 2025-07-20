@@ -27,6 +27,15 @@ export interface CheckboxGroupProps extends Omit<InputWrapperProps, 'onChange'> 
 
   /** If set, value cannot be changed */
   readOnly?: boolean;
+
+  /** `name` attribute of the hidden input for uncontrolled forms */
+  name?: string;
+
+  /** Props passed down to the hidden input for uncontrolled forms */
+  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'> & DataAttributes;
+
+  /** Separator for values in the hidden input for uncontrolled forms @default `','` */
+  hiddenInputValuesSeparator?: string;
 }
 
 export type CheckboxGroupFactory = Factory<{
@@ -35,9 +44,24 @@ export type CheckboxGroupFactory = Factory<{
   stylesNames: CheckboxGroupStylesNames;
 }>;
 
+const defaultProps = {
+  hiddenInputValuesSeparator: ',',
+} satisfies Partial<CheckboxGroupProps>;
+
 export const CheckboxGroup = factory<CheckboxGroupFactory>((props, ref) => {
-  const { value, defaultValue, onChange, size, wrapperProps, children, readOnly, ...others } =
-    useProps('CheckboxGroup', null, props);
+  const {
+    value,
+    defaultValue,
+    onChange,
+    size,
+    wrapperProps,
+    children,
+    readOnly,
+    name,
+    hiddenInputValuesSeparator,
+    hiddenInputProps,
+    ...others
+  } = useProps('CheckboxGroup', defaultProps, props);
 
   const [_value, setValue] = useUncontrolled({
     value,
@@ -56,6 +80,8 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((props, ref) => {
       );
   };
 
+  const hiddenInputValue = _value.join(hiddenInputValuesSeparator);
+
   return (
     <CheckboxGroupProvider value={{ value: _value, onChange: handleChange, size }}>
       <Input.Wrapper
@@ -67,6 +93,7 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((props, ref) => {
         __staticSelector="CheckboxGroup"
       >
         <InputsGroupFieldset role="group">{children}</InputsGroupFieldset>
+        <input type="hidden" name={name} value={hiddenInputValue} {...hiddenInputProps} />
       </Input.Wrapper>
     </CheckboxGroupProvider>
   );

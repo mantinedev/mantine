@@ -157,6 +157,36 @@ Example of using `Checkbox.Group` with [@mantine/form](/form/use-form):
 
 <Demo data={CheckboxDemos.groupWithUseForm} />
 
+## Checkbox.Group with FormData
+
+`Checkbox.Group` can be used with uncontrolled forms, it renders a hidden input
+which joins all checked values into a single string using `hiddenInputValuesSeparator` prop.
+
+Props for usage with uncontrolled forms:
+- `name` – name attribute passed to the hidden input
+- `hiddenInputValuesSeparator` – string used to join checked values into a single string, `','` by default
+- `hiddenInputProps` – additional props passed to the hidden input
+
+```tsx
+export function UncontrolledForm() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Checkbox group value:', formData.get('frameworks'));
+      }}
+    >
+      <Checkbox.Group label="Frameworks" name="frameworks" hiddenInputValuesSeparator="|">
+        <Checkbox label="React" value="react" />
+        <Checkbox label="Angular" value="ng" />
+      </Checkbox.Group>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
 ## Checkbox.Indicator
 
 `Checkbox.Indicator` looks exactly the same as the `Checkbox` component, but it does not

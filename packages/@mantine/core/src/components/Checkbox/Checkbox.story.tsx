@@ -38,10 +38,13 @@ export function UncontrolledForm() {
       onSubmit={(event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
-        console.log('Checkbox value:', !!formData.get('agreement'));
+        console.log('Checkbox group value:', formData.get('frameworks'));
       }}
     >
-      <Checkbox label="Uncontrolled" name="agreement" />
+      <Checkbox.Group label="Frameworks" name="frameworks" hiddenInputValuesSeparator="|">
+        <Checkbox label="React" value="react" />
+        <Checkbox label="Angular" value="ng" />
+      </Checkbox.Group>
       <button type="submit">Submit</button>
     </form>
   );
