@@ -31,3 +31,18 @@ export function CheckboxGroup() {
     </div>
   );
 }
+
+export function UncontrolledForm() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Checkbox value:', !!formData.get('agreement'));
+      }}
+    >
+      <Checkbox label="Uncontrolled" name="agreement" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}

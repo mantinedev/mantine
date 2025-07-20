@@ -8,7 +8,9 @@ export default Layout(MDX_DATA.Checkbox);
 
 <Demo data={CheckboxDemos.configurator} />
 
-## Controlled
+## Controlled state
+
+Use `checked` and `onChange` props to control `Checkbox` state:
 
 ```tsx
 import { useState } from 'react';
@@ -21,6 +23,33 @@ function Demo() {
       checked={checked}
       onChange={(event) => setChecked(event.currentTarget.checked)}
     />
+  );
+}
+```
+
+## Checkbox with FormData
+
+`Checkbox` can be used with uncontrolled forms the same way as native `input[type="checkbox"]`.
+Set the `name` attribute to include checkbox value in `FormData` object on form submission.
+To control initial checked state in uncontrolled forms, use `defaultChecked` prop.
+
+Example of uncontrolled checkbox with `FormData`:
+
+```tsx
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Checkbox value:', !!formData.get('terms'));
+      }}
+    >
+      <Checkbox label="Accept terms and conditions" name="terms" defaultChecked />
+      <button type="submit">Submit</button>
+    </form>
   );
 }
 ```
@@ -110,8 +139,6 @@ function Demo() {
   );
 }
 ```
-
-## Checkbox.Group props
 
 `Checkbox.Group` component supports all [Input.Wrapper](/core/input/#inputwrapper-component)
 props.
