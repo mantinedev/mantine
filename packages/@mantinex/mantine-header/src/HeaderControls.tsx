@@ -1,5 +1,5 @@
 import { BoxProps, Group, Tooltip } from '@mantine/core';
-import { ColorSchemeControl } from './ColorSchemeControl';
+import { DarkModeSegmentedControl } from './DarkModeSegmentedControl';
 import { DirectionControl } from './DirectionControl';
 import { DiscordControl } from './DiscordControl';
 import { GithubControl } from './GithubControl';
@@ -38,7 +38,7 @@ export function HeaderControls({
         {withSupport && <SupportControl />}
         {withGithub && <GithubControl link={githubLink!} />}
         {withDirectionToggle && <DirectionControl />}
-        {withColorScheme && <ColorSchemeControl />}
+        {withColorScheme && <DarkModeSegmentedControl size="xs" iconSizeInRem="1.5rem" />}
       </Group>
     </Tooltip.Group>
   );

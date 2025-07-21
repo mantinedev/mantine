@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { IconChevronDown, IconExternalLink } from '@tabler/icons-react';
 import { Burger, Container, Group, Menu, Text, UnstyledButton } from '@mantine/core';
 import {
-  ColorSchemeControl,
+  DarkModeSegmentedControl,
   HeaderControls,
   SearchMobileControl,
   SupportControl,
@@ -133,7 +133,7 @@ export function DocsHeader({ headerControlsProps, withNav }: DocsHeaderProps) {
 
           <Group gap={5} className={classes.mobileHeaderControls}>
             <SearchMobileControl onSearch={searchHandlers.open} />
-            <ColorSchemeControl />
+            <DarkModeSegmentedControl size="xs" iconSizeInRem="1.5rem" />
             <SupportControl />
           </Group>
         </div>

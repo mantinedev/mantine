@@ -1,0 +1,32 @@
+.root-background {
+  @mixin dark {
+    background-color: var(--mantine-color-dark-5);
+    border-color: var(--mantine-color-dark-5);
+  }
+}
+
+.indicator-background {
+  @mixin dark {
+    background-color: var(--mantine-color-dark-3);
+  }
+}
+
+.dark {
+  @mixin dark {
+    display: none;
+  }
+
+  @mixin light {
+    display: block;
+  }
+}
+
+.light {
+  @mixin light {
+    display: none;
+  }
+
+  @mixin dark {
+    display: block;
+  }
+}

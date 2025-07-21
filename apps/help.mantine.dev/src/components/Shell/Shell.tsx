@@ -10,7 +10,7 @@ import {
   useMantineColorScheme,
 } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
-import { ColorSchemeControl, HeaderControls } from '@mantinex/mantine-header';
+import { DarkModeSegmentedControl, HeaderControls } from '@mantinex/mantine-header';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import { meta } from '@mantinex/mantine-meta';
 import classes from './Shell.module.css';
@@ -40,7 +40,7 @@ export function Shell({ children }: ShellProps) {
           />
 
           <Group hiddenFrom="sm">
-            <ColorSchemeControl />
+            <DarkModeSegmentedControl size="xs" iconSizeInRem="1.5rem" />
           </Group>
         </Container>
       </AppShell.Header>

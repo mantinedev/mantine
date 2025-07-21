@@ -7,3 +7,4 @@ export { HeaderControls } from './HeaderControls';
 export { SearchMobileControl } from './SearchMobileControl';
 export { SearchControl } from './SearchControl';
 export { SupportControl } from './SupportControl';
+export { DarkModeSegmentedControl } from './DarkModeSegmentedControl';
