@@ -1,4 +1,5 @@
-import { BubbleMenu, useEditor } from '@tiptap/react';
+import { useEditor } from '@tiptap/react';
+import { BubbleMenu } from '@tiptap/react/menus';
 import StarterKit from '@tiptap/starter-kit';
 import { Link, RichTextEditor } from '@mantine/tiptap';
 import { MantineDemo } from '@mantinex/demo';
