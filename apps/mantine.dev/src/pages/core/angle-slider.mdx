@@ -24,6 +24,37 @@ function Demo() {
 }
 ```
 
+## AngleSlider with FormData
+
+`AngleSlider` can be used with uncontrolled forms.
+Set the `name` attribute to include slider value in `FormData` object on form submission.
+To control initial value in uncontrolled forms, use `defaultValue` prop.
+
+Props for usage with uncontrolled forms:
+- `name` – name attribute passed to the hidden input
+- `hiddenInputProps` – additional props passed to the hidden input
+
+Example of uncontrolled `AngleSlider` with `FormData`:
+
+```tsx
+import { AngleSlider } from '@mantine/core';
+
+export function WithFormData() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Checkbox group value:', formData.get('angle'));
+      }}
+    >
+      <AngleSlider name="angle" defaultValue={120} />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
 ## formatLabel
 
 Use the `formatLabel` prop to change the angle label format.
