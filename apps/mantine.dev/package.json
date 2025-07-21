@@ -40,7 +40,7 @@
     "@mdx-js/loader": "^3.0.0",
     "@mdx-js/react": "^3.0.0",
     "@next/mdx": "^14.0.2",
-    "@tabler/icons-react": "^3.3.0",
+    "@tabler/icons-react": "^3.34.1",
     "@tiptap/core": "^2.9.1",
     "@tiptap/extension-code-block": "^2.9.1",
     "@tiptap/extension-code-block-lowlight": "^2.9.1",

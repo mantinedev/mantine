@@ -5652,21 +5652,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tabler/icons-react@npm:^3.3.0":
-  version: 3.3.0
-  resolution: "@tabler/icons-react@npm:3.3.0"
+"@tabler/icons-react@npm:^3.34.1":
+  version: 3.34.1
+  resolution: "@tabler/icons-react@npm:3.34.1"
   dependencies:
-    "@tabler/icons": "npm:3.3.0"
+    "@tabler/icons": "npm:3.34.1"
   peerDependencies:
     react: ">= 16"
-  checksum: 10c0/c5debd4afe94179759662e31a54d9bc7be5ffd081a87b2d5d220b15f2ad92220e016577f61b3df611ae8d42df57bfbca9c5b1ffa404f38e17678cccac42e8ddc
+  checksum: 10c0/35b6943156ee72a1362c34dec1d85f64d2f7dca5c6d19911850fa54e902b0807760b6f3f5b0e3007cbba0ea78b6330403e38d8129259b10e1d6ac5fd64a98589
   languageName: node
   linkType: hard
 
-"@tabler/icons@npm:3.3.0":
-  version: 3.3.0
-  resolution: "@tabler/icons@npm:3.3.0"
-  checksum: 10c0/8151654fcdd58c948c5594ae6ff297e32b5ca82eaba950c7b00e002f13f2b856ba7867f9a898df8df63425b6c8aff0000534317dd9b6d1ab9efd9abb67c57f6d
+"@tabler/icons@npm:3.34.1":
+  version: 3.34.1
+  resolution: "@tabler/icons@npm:3.34.1"
+  checksum: 10c0/e5568f1f8a2446f71e6b027a7f844f263086a73c033b6e8bb1011e6662aa23eb6420f693b7a220fc4f7376867b5f1b2190ac2597c0dd3b9adcf1166875e12439
   languageName: node
   linkType: hard
 
@@ -8238,6 +8238,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"babel-plugin-direct-import@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "babel-plugin-direct-import@npm:1.0.0"
+  dependencies:
+    resolve: "npm:^1.20.0"
+  checksum: 10c0/3489c2e1c3ace1fa51e4878952c0f66759d21b7b469394e02435b2d4cf681d067668927001ff0d636a43d034661933e13dc2d400a16c11ee170b4dbc3912a426
+  languageName: node
+  linkType: hard
+
 "babel-plugin-dynamic-import-node@npm:^2.3.3":
   version: 2.3.3
   resolution: "babel-plugin-dynamic-import-node@npm:2.3.3"
@@ -10385,7 +10394,7 @@ __metadata:
     "@mdx-js/loader": "npm:^3.0.0"
     "@mdx-js/react": "npm:^3.0.0"
     "@next/mdx": "npm:^14.0.2"
-    "@tabler/icons-react": "npm:^3.3.0"
+    "@tabler/icons-react": "npm:^3.34.1"
     "@tiptap/core": "npm:^2.9.1"
     "@tiptap/extension-code-block": "npm:^2.9.1"
     "@tiptap/extension-code-block-lowlight": "npm:^2.9.1"
@@ -10407,6 +10416,7 @@ __metadata:
     "@types/github-slugger": "npm:^2.0.0"
     "@types/node": "npm:^22.9.1"
     "@types/react": "npm:19.0.1"
+    babel-plugin-direct-import: "npm:^1.0.0"
     chroma-js: "npm:^3.1.2"
     dayjs: "npm:^1.11.13"
     embla-carousel: "npm:^8.5.2"
@@ -13139,7 +13149,7 @@ __metadata:
     "@mdx-js/loader": "npm:^3.0.0"
     "@mdx-js/react": "npm:^3.0.0"
     "@next/mdx": "npm:^14.0.2"
-    "@tabler/icons-react": "npm:^3.3.0"
+    "@tabler/icons-react": "npm:^3.34.1"
     "@types/mdx": "npm:2.0.10"
     "@types/node": "npm:^22.9.1"
     "@types/react": "npm:19.0.1"
@@ -15767,7 +15777,7 @@ __metadata:
     "@storybook/addon-styling-webpack": "npm:^1.0.1"
     "@storybook/nextjs": "npm:^8.4.4"
     "@storybook/react": "npm:^8.4.4"
-    "@tabler/icons-react": "npm:^3.3.0"
+    "@tabler/icons-react": "npm:^3.34.1"
     "@testing-library/dom": "npm:10.4.0"
     "@testing-library/jest-dom": "npm:6.6.3"
     "@testing-library/react": "npm:16.0.1"
