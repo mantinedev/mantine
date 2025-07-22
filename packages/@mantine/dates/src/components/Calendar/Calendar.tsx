@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useImperativeHandle } from 'react';
+import { useEffect, useImperativeHandle, useRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -39,6 +39,10 @@ export interface CalendarAriaLabels {
 
   nextDecade?: string;
   previousDecade?: string;
+
+  keyboardNavigationYear?: string;
+  keyboardNavigationDecade?: string;
+  keyboardOpenYearView?: string;
 }
 
 type OmittedSettings =
@@ -151,6 +155,9 @@ export interface CalendarProps
 
   /** Determines whether days should be static, static days can be used to display month if it is not expected that user will interact with the component in any way  */
   static?: boolean;
+
+  /** Enable enhanced keyboard navigation (Ctrl/Cmd + Arrow keys for year navigation, Ctrl/Cmd + Shift + Arrow keys for decade navigation, Y key to open year view) */
+  enableKeyboardNavigation?: boolean;
 }
 
 export type CalendarFactory = Factory<{
@@ -164,6 +171,7 @@ const defaultProps = {
   minLevel: 'month',
   __updateDateOnYearSelect: true,
   __updateDateOnMonthSelect: true,
+  enableKeyboardNavigation: true,
 } satisfies Partial<CalendarProps>;
 
 export const Calendar = factory<CalendarFactory>((_props, ref) => {
@@ -241,6 +249,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     onNextMonth,
     onPreviousMonth,
     static: isStatic,
+    enableKeyboardNavigation,
     attributes,
     ...others
   } = props;
@@ -329,8 +338,86 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     setDate(nextDate);
   };
 
+  // Keyboard navigation
+  const calendarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!enableKeyboardNavigation || isStatic) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Only handle keyboard events when focus is within the calendar
+      if (!calendarRef.current?.contains(document.activeElement)) {
+        return;
+      }
+
+      const isCtrlOrCmd = event.ctrlKey || event.metaKey;
+      const isShift = event.shiftKey;
+
+      switch (event.key) {
+        case 'ArrowUp':
+          if (isCtrlOrCmd && isShift) {
+            event.preventDefault();
+            // Navigate by decade (10 years back)
+            handlePreviousDecade();
+          } else if (isCtrlOrCmd) {
+            event.preventDefault();
+            // Navigate by year
+            handlePreviousYear();
+          }
+          break;
+
+        case 'ArrowDown':
+          if (isCtrlOrCmd && isShift) {
+            event.preventDefault();
+            // Navigate by decade (10 years forward)
+            handleNextDecade();
+          } else if (isCtrlOrCmd) {
+            event.preventDefault();
+            // Navigate by year
+            handleNextYear();
+          }
+          break;
+
+        case 'y':
+        case 'Y':
+          if (_level === 'month') {
+            event.preventDefault();
+            // Open year selection view
+            setLevel('year');
+          }
+          break;
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [
+    enableKeyboardNavigation,
+    isStatic,
+    _level,
+    handleNextYear,
+    handlePreviousYear,
+    handleNextDecade,
+    handlePreviousDecade,
+  ]);
+
+  // Merge refs
+  const mergedRef = (node: HTMLDivElement) => {
+    calendarRef.current = node;
+    if (typeof ref === 'function') {
+      ref(node);
+    } else if (ref) {
+      ref.current = node;
+    }
+  };
+
   return (
-    <Box ref={ref} size={size} data-calendar {...others}>
+    <Box ref={mergedRef} size={size} data-calendar {...others}>
       {_level === 'month' && (
         <MonthLevelGroup
           month={currentDate}
