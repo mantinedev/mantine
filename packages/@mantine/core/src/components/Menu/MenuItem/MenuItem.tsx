@@ -29,16 +29,16 @@ export interface MenuItemProps extends BoxProps, CompoundStylesApiProps<MenuItem
   /** Key of `theme.colors` or any valid CSS color */
   color?: MantineColor;
 
-  /** Determines whether the menu should be closed when the item is clicked, overrides `closeOnItemClick` prop on the `Menu` component */
+  /** If set, the menu is closed when the item is clicked. Overrides `closeOnItemClick` prop on the `Menu` component. */
   closeMenuOnClick?: boolean;
 
-  /** Section displayed on the left side of the label */
+  /** Section displayed at the start of the label */
   leftSection?: React.ReactNode;
 
-  /** Section displayed on the right side of the label */
+  /** Section displayed at the end of the label */
   rightSection?: React.ReactNode;
 
-  /** Disables item */
+  /** Sets disabled attribute, applies disabled styles */
   disabled?: boolean;
 }
 
@@ -49,8 +49,6 @@ export type MenuItemFactory = PolymorphicFactory<{
   stylesNames: MenuItemStylesNames;
   compound: true;
 }>;
-
-const defaultProps = {} satisfies Partial<MenuItemProps>;
 
 export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
   const {
@@ -67,7 +65,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
     disabled,
     'data-disabled': dataDisabled,
     ...others
-  } = useProps('MenuItem', defaultProps, props);
+  } = useProps('MenuItem', null, props);
 
   const ctx = useMenuContext();
   const subCtx = useSubMenuContext();

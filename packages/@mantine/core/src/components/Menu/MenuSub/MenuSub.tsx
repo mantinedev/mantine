@@ -1,6 +1,6 @@
 import { useDisclosure, useId } from '@mantine/hooks';
 import { ExtendComponent, Factory, useProps } from '../../../core';
-import { FloatingAxesOffsets, FloatingPosition, useDelayedHover } from '../../Floating';
+import { FloatingAxesOffsets, FloatingPosition, useDelayedHover } from '../../../utils/Floating';
 import { __PopoverProps, Popover } from '../../Popover';
 import { TransitionOverride } from '../../Transition';
 import { MenuSubDropdown } from '../MenuSubDropdown/MenuSubDropdown';
@@ -18,13 +18,13 @@ interface MenuSubProps extends __PopoverProps {
   /** Close delay in ms */
   closeDelay?: number;
 
-  /** Dropdown position relative to the target element, `'right-start'` by default */
+  /** Dropdown position relative to the target element @default `'right-start'` */
   position?: FloatingPosition;
 
-  /** Offset of the dropdown element, `0` by default */
+  /** Offset of the dropdown element @default `0` */
   offset?: number | FloatingAxesOffsets;
 
-  /** Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type, `{ duration: 150, transition: 'fade' }` by default */
+  /** Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type @default `{ duration: 0 }` */
   transitionProps?: TransitionOverride;
 }
 
@@ -71,7 +71,7 @@ export function MenuSub(_props: MenuSubProps) {
         parentContext: ctx,
       }}
     >
-      <Popover opened={opened} {...others} withinPortal={false} id={id}>
+      <Popover opened={opened} {...others} withinPortal={false} withArrow={false} id={id}>
         {children}
       </Popover>
     </SubMenuProvider>

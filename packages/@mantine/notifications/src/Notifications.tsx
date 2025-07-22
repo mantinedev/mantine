@@ -49,25 +49,25 @@ export interface NotificationsProps
   extends BoxProps,
     StylesApiProps<NotificationsFactory>,
     ElementProps<'div'> {
-  /** Notifications default position, `'bottom-right'` by default */
+  /** Notifications default position @default `'bottom-right'` */
   position?: NotificationPosition;
 
-  /** Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function, `4000` by default */
+  /** Auto close timeout for all notifications in ms, `false` to disable auto close, can be overwritten for individual notifications in `notifications.show` function @default `4000` */
   autoClose?: number | false;
 
-  /** Notification transition duration in ms, `250` by default */
+  /** Notification transition duration in ms @default `250` */
   transitionDuration?: number;
 
-  /** Notification width, cannot exceed 100%, `440` by default */
+  /** Notification width, cannot exceed 100% @default `440` */
   containerWidth?: number | string;
 
-  /** Notification `max-height`, used for transitions, `200` by default */
+  /** Notification `max-height`, used for transitions @default `200` */
   notificationMaxHeight?: number | string;
 
-  /** Maximum number of notifications displayed at a time, other new notifications will be added to queue, `5` by default */
+  /** Maximum number of notifications displayed at a time, other new notifications will be added to queue @default `5` */
   limit?: number;
 
-  /** Notifications container z-index, `400` by default */
+  /** Notifications container z-index @default `400` */
   zIndex?: string | number;
 
   /** Props passed down to the `Portal` component */
@@ -76,7 +76,7 @@ export interface NotificationsProps
   /** Store for notifications state, can be used to create multiple instances of notifications system in your application */
   store?: NotificationsStore;
 
-  /** Determines whether notifications container should be rendered inside `Portal`, `true` by default */
+  /** Determines whether notifications container should be rendered inside `Portal` @default `true` */
   withinPortal?: boolean;
 }
 

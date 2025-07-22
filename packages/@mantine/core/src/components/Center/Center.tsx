@@ -12,10 +12,10 @@ import classes from './Center.module.css';
 export type CenterStylesNames = 'root';
 
 export interface CenterProps extends BoxProps, StylesApiProps<CenterFactory> {
-  /** Content that should be centered vertically and horizontally */
+  /** Content to center */
   children?: React.ReactNode;
 
-  /** Determines whether `inline-flex` should be used instead of `flex`, `false` by default */
+  /** If set, `inline-flex` is used instead of `flex` */
   inline?: boolean;
 }
 
@@ -26,11 +26,20 @@ export type CenterFactory = PolymorphicFactory<{
   stylesNames: CenterStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<CenterProps>;
-
 export const Center = polymorphicFactory<CenterFactory>((_props, ref) => {
-  const props = useProps('Center', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, inline, mod, ...others } = props;
+  const props = useProps('Center', null, _props);
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    inline,
+    mod,
+    attributes,
+    ...others
+  } = props;
 
   const getStyles = useStyles<CenterFactory>({
     name: 'Center',
@@ -41,6 +50,7 @@ export const Center = polymorphicFactory<CenterFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
   });
 

@@ -46,7 +46,7 @@ export interface MultiSelectProps
   /** Controlled component value */
   value?: string[];
 
-  /** Default value for uncontrolled component */
+  /** Uncontrolled component default value */
   defaultValue?: string[];
 
   /** Called when value changes */
@@ -67,34 +67,34 @@ export interface MultiSelectProps
   /** Called when search changes */
   onSearchChange?: (value: string) => void;
 
-  /** Maximum number of values, `Infinity` by default */
+  /** Maximum number of values, no limit if not set */
   maxValues?: number;
 
-  /** Determines whether the select should be searchable, `false` by default */
+  /** Allows searching @default `false` */
   searchable?: boolean;
 
   /** Message displayed when no option matches the current search query while the `searchable` prop is set or there is no data */
   nothingFoundMessage?: React.ReactNode;
 
-  /** Determines whether check icon should be displayed near the selected option label, `true` by default */
+  /** If set, the check icon is displayed near the selected option label @default `true` */
   withCheckIcon?: boolean;
 
-  /** Position of the check icon relative to the option label, `'left'` by default */
+  /** Position of the check icon relative to the option label @default `'left'` */
   checkIconPosition?: 'left' | 'right';
 
-  /** Determines whether picked options should be removed from the options list, `false` by default */
+  /** If set, picked options are removed from the options list @default `false` */
   hidePickedOptions?: boolean;
 
-  /** Determines whether the clear button should be displayed in the right section when the component has value, `false` by default */
+  /** If set, the clear button is displayed in the right section when the component has value @default `false` */
   clearable?: boolean;
 
   /** Props passed down to the clear button */
-  clearButtonProps?: InputClearButtonProps & ElementProps<'button'>;
+  clearButtonProps?: InputClearButtonProps;
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: Omit<React.ComponentPropsWithoutRef<'input'>, 'value'>;
 
-  /** Divider used to separate values in the hidden input `value` attribute, `','` by default */
+  /** Divider used to separate values in the hidden input `value` attribute @default `','` */
   hiddenInputValuesDivider?: string;
 
   /** A function to render content of the option, replaces the default content of the option */
@@ -103,8 +103,11 @@ export interface MultiSelectProps
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** Controls color of the default chevron, by default depends on the color scheme */
+  /** Controls color of the default chevron */
   chevronColor?: MantineColor;
+
+  /** Clear search value when item is selected */
+  clearSearchOnChange?: boolean;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -118,6 +121,7 @@ const defaultProps = {
   withCheckIcon: true,
   checkIconPosition: 'left',
   hiddenInputValuesDivider: ',',
+  clearSearchOnChange: true,
 } satisfies Partial<MultiSelectProps>;
 
 export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
@@ -195,6 +199,8 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     onClear,
     scrollAreaProps,
     chevronColor,
+    attributes,
+    clearSearchOnChange,
     ...others
   } = props;
 
@@ -243,6 +249,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
   });
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<MultiSelectFactory>({
@@ -311,9 +318,12 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
         size={size}
         readOnly={readOnly}
         __staticSelector="MultiSelect"
+        attributes={attributes}
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
-          handleSearchChange('');
+          if (clearSearchOnChange) {
+            handleSearchChange('');
+          }
           combobox.updateSelectedOptionIndex('selected');
 
           if (_value.includes(optionsLockup[val].value)) {
@@ -378,8 +388,14 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
             id={_id}
             required={required}
             mod={mod}
+            attributes={attributes}
           >
-            <Pill.Group disabled={disabled} unstyled={unstyled} {...getStyles('pillsList')}>
+            <Pill.Group
+              attributes={attributes}
+              disabled={disabled}
+              unstyled={unstyled}
+              {...getStyles('pillsList')}
+            >
               {values}
               <Combobox.EventsTarget autoComplete={autoComplete}>
                 <PillsInput.Field

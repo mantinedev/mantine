@@ -31,34 +31,34 @@ export interface DayProps extends BoxProps, StylesApiProps<DayFactory>, ElementP
   /** Date that is displayed in `YYYY-MM-DD` format */
   date: DateStringValue;
 
-  /** Control width and height of the day, `'sm'` by default */
+  /** Control width and height of the day @default `'sm'` */
   size?: MantineSize;
 
-  /** Determines whether the day is considered to be a weekend, `false` by default */
+  /** Determines whether the day is considered to be a weekend @default `false` */
   weekend?: boolean;
 
-  /** Determines whether the day is outside of the current month, `false` by default */
+  /** Determines whether the day is outside of the current month @default `false` */
   outside?: boolean;
 
-  /** Determines whether the day is selected, `false` by default */
+  /** Determines whether the day is selected @default `false` */
   selected?: boolean;
 
-  /** Determines whether the day should not be displayed, `false` by default */
+  /** Determines whether the day should not be displayed @default `false` */
   hidden?: boolean;
 
-  /** Determines whether the day is selected in range, `false` by default */
+  /** Determines whether the day is selected in range @default `false` */
   inRange?: boolean;
 
-  /** Determines whether the day is first in range selection, `false` by default */
+  /** Determines whether the day is first in range selection @default `false` */
   firstInRange?: boolean;
 
-  /** Determines whether the day is last in range selection, `false` by default */
+  /** Determines whether the day is last in range selection @default `false` */
   lastInRange?: boolean;
 
   /** Controls day value rendering */
   renderDay?: RenderDay;
 
-  /** Determines whether today should be highlighted with a border, `false` by default */
+  /** Determines whether today should be highlighted with a border @default `false` */
   highlightToday?: boolean;
 }
 
@@ -69,8 +69,6 @@ export type DayFactory = Factory<{
   vars: DayCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<DayProps>;
-
 const varsResolver = createVarsResolver<DayFactory>((_, { size }) => ({
   day: {
     '--day-size': getSize(size, 'day-size'),
@@ -78,7 +76,7 @@ const varsResolver = createVarsResolver<DayFactory>((_, { size }) => ({
 }));
 
 export const Day = factory<DayFactory>((_props, ref) => {
-  const props = useProps('Day', defaultProps, _props);
+  const props = useProps('Day', null, _props);
   const {
     classNames,
     className,
@@ -99,6 +97,7 @@ export const Day = factory<DayFactory>((_props, ref) => {
     hidden,
     static: isStatic,
     highlightToday,
+    attributes,
     ...others
   } = props;
 
@@ -111,6 +110,7 @@ export const Day = factory<DayFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'day',

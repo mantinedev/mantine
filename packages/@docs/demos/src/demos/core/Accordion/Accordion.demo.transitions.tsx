@@ -15,12 +15,16 @@ function Demo() {
 
 export const disableTransitions: MantineDemo = {
   type: 'code',
-  component: () => <BaseDemo transitionDuration={0} maw={380} mx="auto" />,
+  component: () => <BaseDemo transitionDuration={0} />,
   code: getCode('transitionDuration={0}'),
+  maxWidth: 380,
+  centered: true,
 };
 
 export const customTransitions: MantineDemo = {
   type: 'code',
-  component: () => <BaseDemo transitionDuration={1000} maw={380} mx="auto" />,
+  component: () => <BaseDemo transitionDuration={1000} />,
   code: getCode('transitionDuration={1000}'),
+  maxWidth: 380,
+  centered: true,
 };

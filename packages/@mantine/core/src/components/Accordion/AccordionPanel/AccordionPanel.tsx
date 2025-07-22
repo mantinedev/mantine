@@ -28,12 +28,10 @@ export type AccordionPanelFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<AccordionPanelProps>;
-
 export const AccordionPanel = factory<AccordionPanelFactory>((props, ref) => {
   const { classNames, className, style, styles, vars, children, ...others } = useProps(
     'AccordionPanel',
-    defaultProps,
+    null,
     props
   );
 

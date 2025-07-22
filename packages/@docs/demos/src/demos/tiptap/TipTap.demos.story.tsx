@@ -57,3 +57,8 @@ export const Demo_subtleVariant = {
   name: '⭐ Demo: subtleVariant',
   render: renderDemo(demos.subtleVariant),
 };
+
+export const Demo_sourceCodeSwitcher = {
+  name: '⭐ Demo: sourceCodeSwitcher',
+  render: renderDemo(demos.sourceCodeSwitcher),
+};

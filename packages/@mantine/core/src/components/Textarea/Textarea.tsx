@@ -18,7 +18,7 @@ export interface TextareaProps
     ElementProps<'textarea', 'size'> {
   __staticSelector?: string;
 
-  /** Determines whether the textarea height should grow with its content, `false` by default */
+  /** If set, enables textarea height growing with its content @default `false` */
   autosize?: boolean;
 
   /** Maximum rows for autosize textarea to grow, ignored if `autosize` prop is not set */
@@ -27,7 +27,7 @@ export interface TextareaProps
   /** Minimum rows of autosize textarea, ignored if `autosize` prop is not set */
   minRows?: number;
 
-  /** Controls `resize` CSS property, `'none'` by default */
+  /** Controls `resize` CSS property @default `'none'` */
   resize?: React.CSSProperties['resize'];
 }
 
@@ -37,12 +37,10 @@ export type TextareaFactory = Factory<{
   stylesNames: __InputStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<TextareaProps>;
-
 export const Textarea = factory<TextareaFactory>((props, ref) => {
   const { autosize, maxRows, minRows, __staticSelector, resize, ...others } = useProps(
     'Textarea',
-    defaultProps,
+    null,
     props
   );
 

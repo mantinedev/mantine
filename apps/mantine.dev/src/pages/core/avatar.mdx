@@ -75,11 +75,9 @@ Example of usage with [Tooltip](/core/tooltip/):
   withNext
 />
 
+Example using `Avatar` as a link:
+
 <Demo data={AvatarDemos.link} />
-
-You can combine it with [Tooltip](/core/tooltip/) or [Popover](/core/popover/) to show additional information on hover
-
-<Demo data={AvatarDemos.groupTooltip} />
 
 ## Accessibility
 
@@ -90,22 +88,22 @@ it is also used as `title` attribute for avatar placeholder when the image canno
 import { Avatar } from '@mantine/core';
 
 function NotOk() {
-  // Not ok, no alt for image
+  // ❌ No alt for image
   return <Avatar src="./image.png" />;
 }
 
 function Ok() {
-  // Ok, alt is set on <img /> tag
+  // ✅ alt is set
   return <Avatar src="./image.png" alt="Rob Johnson" />;
 }
 
 function Ehh() {
-  // Ehh, title is not required, but still recommended
+  // ✅ title is not required, but still recommended
   return <Avatar>RJ</Avatar>;
 }
 
 function OkPlaceholder() {
-  // Ok, title is set on placeholder
+  // ✅ title is set on placeholder
   return <Avatar alt="Rob Johnson">RJ</Avatar>;
 }
 ```

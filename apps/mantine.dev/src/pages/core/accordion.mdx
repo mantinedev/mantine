@@ -6,42 +6,41 @@ export default Layout(MDX_DATA.Accordion);
 
 ## Usage
 
-Data used in Accordion examples:
+Accordion allows users to expand and collapse sections of content.
+It helps manage large amounts of information in a limited space
+by showing only the section headers initially and revealing content on interaction.
 
-```tsx
-const groceries = [
-  {
-    emoji: '🍎',
-    value: 'Apples',
-    description:
-      'Crisp and refreshing fruit. Apples are known for their versatility and nutritional benefits. They come in a variety of flavors and are great for snacking, baking, or adding to salads.',
-  },
-  {
-    emoji: '🍌',
-    value: 'Bananas',
-    description:
-      'Naturally sweet and potassium-rich fruit. Bananas are a popular choice for their energy-boosting properties and can be enjoyed as a quick snack, added to smoothies, or used in baking.',
-  },
-  {
-    emoji: '🥦',
-    value: 'Broccoli',
-    description:
-      'Nutrient-packed green vegetable. Broccoli is packed with vitamins, minerals, and fiber. It has a distinct flavor and can be enjoyed steamed, roasted, or added to stir-fries.',
-  },
-];
-```
+Accordion is commonly used for:
+- FAQ sections: displaying questions as headers with answers revealed on click
+- Forms: organizing long forms into sections, for example, personal info, shipping, and payment
+- Menus: nested navigation in sidebars or mobile views
 
 <Demo data={AccordionDemos.configurator} />
 
-## Custom control label
-
-<Demo data={AccordionDemos.label} />
-
 ## Change chevron
+
+Use the `chevron` prop to change the chevron icon. When `chevron` is set,
+`chevronIconSize` prop is ignored. To remove the chevron icon, use `chevron={null}`.
+
+To customize chevron styles, use [Styles API](/styles/styles-api/) with
+[data-rotate](/styles/data-attributes/) attribute. It is set when the item
+is opened if the `disableChevronRotation` prop is not set.
+
+Example of a custom chevron icon with rotation styles:
 
 <Demo data={AccordionDemos.chevron} />
 
+## Custom control label
+
+You can use any React node as a label for `Accordion.Control` component.
+When you use nested elements in `Accordion.Control`, it is recommended to
+set `aria-label` attribute to make the control accessible for screen readers.
+
+<Demo data={AccordionDemos.label} />
+
 ## With icons
+
+Use `icon` prop to display any element on the left section of the `Accordion.Control`:
 
 <Demo data={AccordionDemos.icons} />
 
@@ -57,7 +56,7 @@ To disable transitions, set `transitionDuration` to 0:
 
 ## Default opened items
 
-When `multiple={false}`, set `defaultValue` as string:
+For `multiple={false}`, set `defaultValue` as string:
 
 ```tsx
 import { Accordion } from '@mantine/core';
@@ -66,46 +65,32 @@ function Demo() {
   // Second item will be opened by default
   return (
     <Accordion defaultValue="item-2">
-      <Accordion.Item value="item-1">
-        <Accordion.Control>control-1</Accordion.Control>
-        <Accordion.Panel>panel-1</Accordion.Panel>
-      </Accordion.Item>
-
-      <Accordion.Item value="item-2">
-        <Accordion.Control>control-2</Accordion.Control>
-        <Accordion.Panel>panel-2</Accordion.Panel>
-      </Accordion.Item>
+      <Accordion.Item value="item-1">{/* item-1 */}</Accordion.Item>
+      <Accordion.Item value="item-2">{/* item-2 */}</Accordion.Item>
     </Accordion>
   );
 }
 ```
 
-When `multiple={true}`, set `defaultValue` as an array of strings:
+For `multiple={true}`, set `defaultValue` as an array of strings:
 
 ```tsx
 import { Accordion } from '@mantine/core';
 
 function Demo() {
-  // Both items will be opened by default
+  // Both items are opened by default
   return (
     <Accordion multiple defaultValue={['item-1', 'item-2']}>
-      <Accordion.Item value="item-1">
-        <Accordion.Control>control-1</Accordion.Control>
-        <Accordion.Panel>panel-1</Accordion.Panel>
-      </Accordion.Item>
-
-      <Accordion.Item value="item-2">
-        <Accordion.Control>control-2</Accordion.Control>
-        <Accordion.Panel>panel-2</Accordion.Panel>
-      </Accordion.Item>
+      <Accordion.Item value="item-1">{/* item-1 */}</Accordion.Item>
+      <Accordion.Item value="item-2">{/* item-2 */}</Accordion.Item>
     </Accordion>
   );
 }
 ```
 
-## Control state
+## Control opened state
 
-When `multiple={false}`, set `value` as string:
+For `multiple={false}`, set `value` as string:
 
 ```tsx
 import { useState } from 'react';
@@ -116,21 +101,14 @@ function Demo() {
 
   return (
     <Accordion value={value} onChange={setValue}>
-      <Accordion.Item value="item-1">
-        <Accordion.Control>control-1</Accordion.Control>
-        <Accordion.Panel>panel-1</Accordion.Panel>
-      </Accordion.Item>
-
-      <Accordion.Item value="item-2">
-        <Accordion.Control>control-2</Accordion.Control>
-        <Accordion.Panel>panel-2</Accordion.Panel>
-      </Accordion.Item>
+      <Accordion.Item value="item-1">{/* item-1 */}</Accordion.Item>
+      <Accordion.Item value="item-2">{/* item-2 */}</Accordion.Item>
     </Accordion>
   );
 }
 ```
 
-When `multiple={true}`, set `value` as an array of strings:
+For `multiple={true}`, set `value` as an array of strings:
 
 ```tsx
 import { useState } from 'react';
@@ -141,15 +119,8 @@ function Demo() {
 
   return (
     <Accordion multiple value={value} onChange={setValue}>
-      <Accordion.Item value="item-1">
-        <Accordion.Control>control-1</Accordion.Control>
-        <Accordion.Panel>panel-1</Accordion.Panel>
-      </Accordion.Item>
-
-      <Accordion.Item value="item-2">
-        <Accordion.Control>control-2</Accordion.Control>
-        <Accordion.Panel>panel-2</Accordion.Panel>
-      </Accordion.Item>
+      <Accordion.Item value="item-2">{/* item-2 */}</Accordion.Item>
+      <Accordion.Item value="item-2">{/* item-2 */}</Accordion.Item>
     </Accordion>
   );
 }
@@ -157,32 +128,58 @@ function Demo() {
 
 ## Compose controls
 
-You can add any additional elements that will be displayed next to `Accordion.Control`,
-for example, you can add [ActionIcon](/core/action-icon/) or [Menu](/core/menu/):
+Putting a button or a link inside `Accordion.Control` is a common mistake when
+using Accordion. `Accordion.Control` root element is `button`. Putting interactive
+elements inside other interactive elements is forbidden – you will receive a DOM
+validation error from React if you try to implement the following component:
+
+```tsx
+import { Accordion } from '@mantine/core';
+
+// ❌ Incorrect usage: do not do this
+function Demo() {
+  return (
+    <Accordion.Item value="item-1">
+      <Accordion.Control>
+        <Group>
+          <span>Control 1</span>
+          <button>My action</button>
+        </Group>
+      </Accordion.Control>
+      <Accordion.Panel>Panel 1</Accordion.Panel>
+    </Accordion.Item>
+  );
+}
+```
+
+Instead of putting interactive elements inside the `Accordion.Control`, render them
+next to it. For example, you can add [ActionIcon](/core/action-icon/) or [Menu](/core/menu/)
+on the right side of the original control. If you need to display an interactive element
+over the `Accordion.Control`, use `position: absolute` instead.
 
 <Demo data={AccordionDemos.sideControls} />
 
 ## Disabled items
 
-Set `disabled` prop on `Accordion.Control` component to disable it.
-Disabled items cannot be activated with mouse or keyboard, will be skipped when user navigates with arrow keys:
+Set the `disabled` prop on the `Accordion.Control` component to disable it.
+When you disable items, users cannot activate them with mouse or keyboard,
+and arrow key navigation will skip them:
 
 <Demo data={AccordionDemos.disabled} />
 
 ## Unstyled Accordion
 
-Set `unstyled` prop on Accordion component to remove all non-essential library styles.
-It can be used to style component with [Styles API](/styles/styles-api/) without overriding any styles.
+Set the `unstyled` prop on the Accordion component to remove all non-essential
+library styles. Use `unstyled` prop to style the component with
+[Styles API](/styles/styles-api/) without overriding any styles.
 
 <Demo data={AccordionDemos.unstyled} />
 
 <StylesApiSelectors component="Accordion" />
 
-Use [Styles API](/styles/styles-api/) to customize Accordion styles:
-
 <Demo data={AccordionDemos.stylesApi} />
 
-Use [Styles API](/styles/styles-api/) to customize Accordion styles:
+Example of using [Styles API](/styles/styles-api/) to customize Accordion styles:
 
 <Demo data={AccordionDemos.customize} />
 
@@ -200,10 +197,10 @@ type DefaultAccordionProps = AccordionProps<false>;
 
 ## Accessibility
 
-Accordion component follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html) on accessibility.
+Accordion component implement [WAI-ARIA accessibility recommendations](https://www.w3.org/TR/wai-aria-practices-1.1/examples/accordion/accordion.html).
 
-Set `order` on `Accordion` component to wrap accordion controls with h2-h6 heading.
-The following example will wrap controls with h3 tag:
+Set `order` on `Accordion` component to wrap accordion controls with `h2`-`h6` headings.
+The following example wraps controls with `h3` tags:
 
 ```tsx
 import { Accordion } from '@mantine/core';

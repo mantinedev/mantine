@@ -55,19 +55,19 @@ export interface ComboboxProps extends __PopoverProps, StylesApiProps<ComboboxFa
   /** Combobox store, can be used to control combobox state */
   store?: ComboboxStore;
 
-  /** Called when item is selected with `Enter` key or by clicking it */
+  /** Called when item is selected with the `Enter` key or by clicking it */
   onOptionSubmit?: (value: string, optionProps: ComboboxOptionProps) => void;
 
-  /** Controls items `font-size` and `padding`, `'sm'` by default */
+  /** Controls items `font-size` and `padding` @default `'sm'` */
   size?: MantineSize | (string & {});
 
-  /** Controls `padding` of the dropdown, `4` by default */
+  /** Controls `padding` of the dropdown @default `4` */
   dropdownPadding?: React.CSSProperties['padding'];
 
-  /** Determines whether selection should be reset when option is hovered, `false` by default */
+  /** Determines whether selection should be reset when option is hovered @default `false` */
   resetSelectionOnOptionHover?: boolean;
 
-  /** Determines whether Combobox value can be changed */
+  /** Determines whether the `Combobox` value can be changed */
   readOnly?: boolean;
 }
 
@@ -132,6 +132,7 @@ export function Combobox(_props: ComboboxProps) {
     resetSelectionOnOptionHover,
     __staticSelector,
     readOnly,
+    attributes,
     ...others
   } = props;
 
@@ -145,6 +146,7 @@ export function Combobox(_props: ComboboxProps) {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -167,6 +169,7 @@ export function Combobox(_props: ComboboxProps) {
     >
       <Popover
         opened={store.dropdownOpened}
+        preventPositionChangeWhenVisible
         {...others}
         onChange={(_opened) => !_opened && onDropdownClose()}
         withRoles={false}

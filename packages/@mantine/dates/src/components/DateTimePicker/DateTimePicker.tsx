@@ -16,7 +16,7 @@ import {
 import { useDidUpdate, useDisclosure, useMergedRef } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
 import { CalendarLevel, DateStringValue, DateValue } from '../../types';
-import { assignTime, clampDate } from '../../utils';
+import { assignTime, clampDate, getDefaultClampedDate } from '../../utils';
 import {
   CalendarBaseProps,
   CalendarSettings,
@@ -47,10 +47,10 @@ export interface DateTimePickerProps
       DateInputSharedProps,
       'classNames' | 'styles' | 'closeOnChange' | 'size' | 'valueFormatter'
     >,
-    Omit<CalendarBaseProps, 'defaultDate'>,
+    CalendarBaseProps,
     Omit<CalendarSettings, 'onYearMouseEnter' | 'onMonthMouseEnter' | 'hasNextLevel'>,
     StylesApiProps<DateTimePickerFactory> {
-  /** dayjs format for input value, `"DD/MM/YYYY HH:mm"` by default  */
+  /** `dayjs` format for input value @default `"DD/MM/YYYY HH:mm"  */
   valueFormat?: string;
 
   /** Controlled component value */
@@ -71,10 +71,10 @@ export interface DateTimePickerProps
   /** Props passed down to the submit button */
   submitButtonProps?: ActionIconProps & React.ComponentPropsWithoutRef<'button'>;
 
-  /** Determines whether the seconds input should be displayed, `false` by default */
+  /** Determines whether the seconds input should be displayed @default `false` */
   withSeconds?: boolean;
 
-  /** Max level that user can go up to, `'decade'` by default */
+  /** Max level that user can go up to @default `'decade'` */
   maxLevel?: CalendarLevel;
 
   /** Presets values */
@@ -114,8 +114,10 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     vars,
     minDate,
     maxDate,
+    defaultDate,
     defaultTimeValue,
     presets,
+    attributes,
     ...rest
   } = props;
 
@@ -126,6 +128,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
   });
 
@@ -153,6 +156,8 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     onChange,
     withTime: true,
   });
+
+  const _defaultDate = defaultDate || _value;
 
   const formatTime = (dateValue: DateStringValue) =>
     dateValue ? dayjs(dateValue).format(withSeconds ? 'HH:mm:ss' : 'HH:mm') : '';
@@ -229,6 +234,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
       __staticSelector="DateTimePicker"
       onDropdownClose={handleDropdownClose}
       withTime
+      attributes={attributes}
     >
       <DatePicker
         {...calendarProps}
@@ -238,7 +244,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
         variant={variant}
         type="default"
         value={_value}
-        defaultDate={_value}
+        defaultDate={_defaultDate || getDefaultClampedDate({ maxDate, minDate })}
         onChange={handleDateChange}
         locale={locale}
         classNames={resolvedClassNames}
@@ -255,8 +261,9 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
         presets={presets}
         __onPresetSelect={(val) => {
           setValue(val);
-          setTimeValue(formatTime(val));
+          val && setTimeValue(formatTime(val));
         }}
+        attributes={attributes}
       />
 
       {currentLevel === 'month' && (
@@ -277,6 +284,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
             size={size}
             data-mantine-stop-propagation={__stopPropagation || undefined}
             hoursRef={timePickerRefMerged}
+            attributes={attributes}
           />
 
           <ActionIcon

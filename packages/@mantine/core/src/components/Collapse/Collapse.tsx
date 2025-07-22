@@ -19,14 +19,17 @@ export interface CollapseProps
   /** Called each time transition ends */
   onTransitionEnd?: () => void;
 
-  /** Transition duration in ms, `200` by default */
+  /** Transition duration in ms @default `200` */
   transitionDuration?: number;
 
-  /** Transition timing function, default value is `ease` */
+  /** Transition timing function @default `ease` */
   transitionTimingFunction?: string;
 
-  /** Determines whether opacity should be animated, `true` by default */
+  /** Determines whether opacity should be animated @default `true` */
   animateOpacity?: boolean;
+
+  /** Keep element in DOM when collapsed, useful for nested collapses */
+  keepMounted?: boolean;
 }
 
 export type CollapseFactory = Factory<{
@@ -49,6 +52,7 @@ export const Collapse = factory<CollapseFactory>((props, ref) => {
     style,
     onTransitionEnd,
     animateOpacity,
+    keepMounted,
     ...others
   } = useProps('Collapse', defaultProps, props);
 
@@ -62,6 +66,7 @@ export const Collapse = factory<CollapseFactory>((props, ref) => {
     transitionDuration: duration,
     transitionTimingFunction,
     onTransitionEnd,
+    keepMounted,
   });
 
   if (duration === 0) {

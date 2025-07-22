@@ -11,7 +11,7 @@ function AccordionControl(props: AccordionControlProps) {
     <Center>
       <Accordion.Control {...props} />
       <ActionIcon size="lg" variant="subtle" color="gray">
-        <IconDots size={16} />
+        <IconDots size={20} />
       </ActionIcon>
     </Center>
   );
@@ -19,7 +19,7 @@ function AccordionControl(props: AccordionControlProps) {
 
 function Demo() {
   return (
-    <Accordion chevronPosition="left" maw={400} mx="auto">
+    <Accordion chevronPosition="left">
       <Accordion.Item value="item-1">
         <AccordionControl>Control 1</AccordionControl>
         <Accordion.Panel>Panel 1</Accordion.Panel>
@@ -44,7 +44,7 @@ function AccordionControl(props: AccordionControlProps) {
     <Center>
       <Accordion.Control {...props} />
       <ActionIcon size="lg" variant="subtle" color="gray">
-        <IconDots size={16} />
+        <IconDots size={20} />
       </ActionIcon>
     </Center>
   );
@@ -52,7 +52,7 @@ function AccordionControl(props: AccordionControlProps) {
 
 function Demo() {
   return (
-    <Accordion chevronPosition="left" maw={400} mx="auto">
+    <Accordion chevronPosition="left">
       <Accordion.Item value="item-1">
         <AccordionControl>Control 1</AccordionControl>
         <Accordion.Panel>Panel 1</Accordion.Panel>
@@ -75,4 +75,6 @@ export const sideControls: MantineDemo = {
   type: 'code',
   component: Demo,
   code,
+  centered: true,
+  maxWidth: 400,
 };

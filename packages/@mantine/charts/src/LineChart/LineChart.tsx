@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   CartesianGrid,
-  DotProps,
   Label,
   Legend,
   Line,
@@ -32,7 +31,12 @@ import { useId } from '@mantine/hooks';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { PointLabel } from '../PointLabel/PointLabel';
-import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
+import type {
+  BaseChartStylesNames,
+  ChartSeries,
+  GridChartBaseProps,
+  MantineChartDotProps,
+} from '../types';
 import classes from '../grid-chart.module.css';
 
 export type LineChartType = 'default' | 'gradient';
@@ -76,34 +80,34 @@ export interface LineChartProps
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: LineChartSeries[];
 
-  /** Controls styles of the line, `'default'` by default */
+  /** Controls styles of the line @default `'default'` */
   type?: LineChartType;
 
-  /** Data used to generate gradient stops, `[{ offset: 0, color: 'red' }, { offset: 100, color: 'blue' }]` by default */
+  /** Data used to generate gradient stops @default `[{ offset: 0, color: 'red' }, { offset: 100, color: 'blue' }]` */
   gradientStops?: LineChartGradientStop[];
 
-  /** Type of the curve, `'monotone'` by default */
+  /** Type of the curve @default `'monotone'` */
   curveType?: LineChartCurveType;
 
-  /** Controls fill opacity of all lines, `1` by default */
+  /** Controls fill opacity of all lines @default `1` */
   fillOpacity?: number;
 
-  /** Determines whether dots should be displayed, `true` by default */
+  /** Determines whether dots should be displayed @default `true` */
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
-  dotProps?: Omit<DotProps, 'ref'>;
+  dotProps?: MantineChartDotProps;
 
   /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
-  activeDotProps?: Omit<DotProps, 'ref'>;
+  activeDotProps?: MantineChartDotProps;
 
-  /** Stroke width for the chart lines, `2` by default */
+  /** Stroke width for the chart lines @default `2` */
   strokeWidth?: number;
 
   /** Props passed down to recharts `LineChart` component */
   lineChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsLineChart>;
 
-  /** Determines whether points with `null` values should be connected, `true` by default */
+  /** Determines whether points with `null` values should be connected @default `true` */
   connectNulls?: boolean;
 
   /** Additional components that are rendered inside recharts `LineChart` component */
@@ -114,7 +118,7 @@ export interface LineChartProps
     | ((series: LineChartSeries) => Partial<Omit<LineProps, 'ref'>>)
     | Partial<Omit<LineProps, 'ref'>>;
 
-  /** Determines whether each point should have associated label, `false` by default */
+  /** Determines whether each point should have associated label @default `false` */
   withPointLabels?: boolean;
 }
 
@@ -200,6 +204,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     rightYAxisLabel,
     rightYAxisProps,
     withPointLabels,
+    attributes,
     ...others
   } = props;
 
@@ -227,6 +232,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -359,6 +365,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
                   styles={resolvedStyles}
                   series={series}
                   showColor={type !== 'gradient'}
+                  attributes={attributes}
                 />
               )}
               {...legendProps}
@@ -459,6 +466,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
                   series={series}
                   valueFormatter={valueFormatter}
                   showColor={type !== 'gradient'}
+                  attributes={attributes}
                 />
               )}
               {...tooltipProps}

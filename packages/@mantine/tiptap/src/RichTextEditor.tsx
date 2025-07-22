@@ -15,6 +15,7 @@ import { RichTextEditorProvider } from './RichTextEditor.context';
 import { RichTextEditorContent } from './RichTextEditorContent/RichTextEditorContent';
 import * as controls from './RichTextEditorControl';
 import { RichTextEditorControl } from './RichTextEditorControl/RichTextEditorControl';
+import { RichTextEditorSourceCodeControl } from './RichTextEditorControl/RichTextEditorSourceCodeControl';
 import { RichTextEditorControlsGroup } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
 import { RichTextEditorToolbar } from './RichTextEditorToolbar/RichTextEditorToolbar';
 import classes from './RichTextEditor.module.css';
@@ -26,7 +27,7 @@ export type RichTextEditorStylesNames =
   | 'linkEditorDropdown'
   | 'root'
   | 'content'
-  | 'typographyStylesProvider'
+  | 'Typography'
   | 'control'
   | 'controlIcon'
   | 'controlsGroup'
@@ -42,11 +43,14 @@ export interface RichTextEditorProps
   /** Tiptap editor instance */
   editor: Editor | null;
 
-  /** Determines whether code highlight styles should be added, `true` by default */
+  /** Determines whether code highlight styles should be added @default `true` */
   withCodeHighlightStyles?: boolean;
 
-  /** Determines whether typography styles should be added, `true` by default */
+  /** Determines whether typography styles should be added @default `true` */
   withTypographyStyles?: boolean;
+
+  /** Called if `RichTextEditor.SourceCode` clicked.  */
+  onSourceCodeTextSwitch?: (isSourceCodeModeActive: boolean) => void;
 
   /** Labels that are used in controls */
   labels?: Partial<RichTextEditorLabels>;
@@ -99,6 +103,7 @@ export type RichTextEditorFactory = Factory<{
     TaskList: typeof controls.TaskListControl;
     TaskListSink: typeof controls.TaskListSinkControl;
     TaskListLift: typeof controls.TaskListLiftControl;
+    SourceCode: typeof RichTextEditorSourceCodeControl;
   };
 }>;
 
@@ -120,9 +125,11 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props, ref) => {
     editor,
     withCodeHighlightStyles,
     withTypographyStyles,
+    onSourceCodeTextSwitch,
     labels,
     children,
     variant,
+    attributes,
     ...others
   } = props;
 
@@ -135,6 +142,7 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
   });
 
@@ -148,6 +156,7 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props, ref) => {
         labels: mergedLabels,
         withCodeHighlightStyles,
         withTypographyStyles,
+        onSourceCodeTextSwitch,
         unstyled,
         variant,
       }}
@@ -203,3 +212,4 @@ RichTextEditor.Redo = controls.RedoControl;
 RichTextEditor.TaskList = controls.TaskListControl;
 RichTextEditor.TaskListSink = controls.TaskListSinkControl;
 RichTextEditor.TaskListLift = controls.TaskListLiftControl;
+RichTextEditor.SourceCode = RichTextEditorSourceCodeControl;

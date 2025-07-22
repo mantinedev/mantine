@@ -47,25 +47,25 @@ export interface ColorInputProps
     __ColorPickerProps,
     StylesApiProps<ColorInputFactory>,
     ElementProps<'input', 'size' | 'onChange' | 'value' | 'defaultValue'> {
-  /** If input is not allowed, the user can only pick value with color picker and swatches, `false` by default */
+  /** If input is not allowed, the user can only pick value with color picker and swatches */
   disallowInput?: boolean;
 
-  /** Determines whether the input value should be reset to the last known valid value when the input loses focus, `true` by default */
+  /** If set, the input value resets to the last known valid value when the input loses focus @default `true` */
   fixOnBlur?: boolean;
 
   /** Props passed down to the `Popover` component */
   popoverProps?: PopoverProps;
 
-  /** Determines whether the preview color swatch should be displayed in the left section of the input, `true` by default */
+  /** If set, the preview color swatch is displayed in the left section of the input @default `true` */
   withPreview?: boolean;
 
-  /** Determines whether eye dropper button should be displayed in the right section, `true` by default */
+  /** If set, the eye dropper button is displayed in the right section @default `true` */
   withEyeDropper?: boolean;
 
   /** An icon to replace the default eye dropper icon */
   eyeDropperIcon?: React.ReactNode;
 
-  /** Determines whether the dropdown should be closed when one of the color swatches is clicked, `false` by default */
+  /** If set, the dropdown is closed when one of the color swatches is clicked @default `false` */
   closeOnColorSwatchClick?: boolean;
 
   /** Props passed down to the eye dropper button */
@@ -300,6 +300,7 @@ export const ColorInput = factory<ColorInputFactory>((_props, ref) => {
             styles={resolvedStyles}
             classNames={resolvedClassNames}
             onColorSwatchClick={() => closeOnColorSwatchClick && setDropdownOpened(false)}
+            attributes={wrapperProps.attributes}
           />
         </Popover.Dropdown>
       </Popover>

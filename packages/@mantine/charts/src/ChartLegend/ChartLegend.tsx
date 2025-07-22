@@ -28,7 +28,7 @@ function updateChartLegendPayload(payload: Record<string, any>[]): Record<string
   });
 }
 
-export function getFilteredChartLegendPayload(payload: Record<string, any>[]) {
+export function getFilteredChartLegendPayload(payload: readonly Record<string, any>[]) {
   return updateChartLegendPayload(payload.filter((item) => item.color !== 'none'));
 }
 
@@ -39,7 +39,7 @@ export interface ChartLegendProps
     StylesApiProps<ChartLegendFactory>,
     ElementProps<'div'> {
   /** Chart data provided by recharts */
-  payload: Record<string, any>[] | undefined;
+  payload: readonly Record<string, any>[] | undefined;
 
   /** Function called when mouse enters/leaves one of the legend items */
   onHighlight: (area: string | null) => void;
@@ -50,10 +50,10 @@ export interface ChartLegendProps
   /** Data used for labels, only applicable for area charts: AreaChart, LineChart, BarChart */
   series?: ChartSeries[];
 
-  /** Determines whether color swatch should be shown next to the label, `true` by default */
+  /** Determines whether color swatch should be shown next to the label @default `true` */
   showColor?: boolean;
 
-  /** Determines whether the legend should be centered, `false` by default */
+  /** Determines whether the legend should be centered @default `false` */
   centered?: boolean;
 }
 
@@ -63,10 +63,8 @@ export type ChartLegendFactory = Factory<{
   stylesNames: ChartLegendStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<ChartLegendProps>;
-
 export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
-  const props = useProps('ChartLegend', defaultProps, _props);
+  const props = useProps('ChartLegend', null, _props);
   const {
     classNames,
     className,
@@ -81,6 +79,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     series,
     showColor,
     centered,
+    attributes,
     ...others
   } = props;
 
@@ -93,6 +92,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
   });
 
   if (!payload) {

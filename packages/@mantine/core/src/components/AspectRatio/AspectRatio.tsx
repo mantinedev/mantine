@@ -20,7 +20,7 @@ export interface AspectRatioProps
   extends BoxProps,
     StylesApiProps<AspectRatioFactory>,
     ElementProps<'div'> {
-  /** Aspect ratio, e.g. `16 / 9`, `4 / 3`, `1920 / 1080`, `1` by default */
+  /** Aspect ratio, for example, `16 / 9`, `4 / 3`, `1920 / 1080` @default `1` */
   ratio?: number;
 }
 
@@ -31,8 +31,6 @@ export type AspectRatioFactory = Factory<{
   vars: AspectRatioCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<AspectRatioProps>;
-
 const varsResolver = createVarsResolver<AspectRatioFactory>((_, { ratio }) => ({
   root: {
     '--ar-ratio': ratio?.toString(),
@@ -40,8 +38,9 @@ const varsResolver = createVarsResolver<AspectRatioFactory>((_, { ratio }) => ({
 }));
 
 export const AspectRatio = factory<AspectRatioFactory>((_props, ref) => {
-  const props = useProps('AspectRatio', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, ratio, ...others } = props;
+  const props = useProps('AspectRatio', null, _props);
+  const { classNames, className, style, styles, unstyled, vars, ratio, attributes, ...others } =
+    props;
 
   const getStyles = useStyles<AspectRatioFactory>({
     name: 'AspectRatio',
@@ -52,6 +51,7 @@ export const AspectRatio = factory<AspectRatioFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

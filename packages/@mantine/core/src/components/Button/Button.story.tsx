@@ -6,6 +6,10 @@ import { Button, ButtonProps } from './Button';
 
 export default { title: 'Button' };
 
+export function Base() {
+  return <Button attributes={{ inner: { 'data-test-id': 1 } }}>Button</Button>;
+}
+
 export function RenderRoot() {
   return <Button renderRoot={(props) => <a {...props} href="#" />}>Some content</Button>;
 }

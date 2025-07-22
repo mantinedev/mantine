@@ -23,7 +23,7 @@ export interface DatePickerInputProps<Type extends DatePickerType = 'default'>
     DateInputSharedProps,
     DatePickerBaseProps<Type>,
     StylesApiProps<DatePickerInputFactory> {
-  /** dayjs format for input value, `"MMMM D, YYYY"` by default  */
+  /** `dayjs` format for input value @default `"MMMM D, YYYY"` */
   valueFormat?: string;
 }
 
@@ -73,6 +73,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
       defaultDate,
       valueFormatter,
       presets,
+      attributes,
       ...rest
     } = props;
 
@@ -125,6 +126,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
         {...others}
         type={type as any}
         __staticSelector="DatePickerInput"
+        attributes={attributes}
       >
         <DatePicker
           {...calendarProps}
@@ -143,6 +145,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
           minDate={minDate}
           maxDate={maxDate}
           presets={presets}
+          attributes={attributes}
         />
       </PickerInputBase>
     );

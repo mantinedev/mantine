@@ -58,19 +58,19 @@ export interface CalendarHeaderSettings {
   /** Disables previous control */
   previousDisabled?: boolean;
 
-  /** Determines whether next level button should be enabled, `true` by default */
+  /** Determines whether next level button should be enabled @default `true` */
   hasNextLevel?: boolean;
 
-  /** Determines whether next control should be rendered, `true` by default */
+  /** Determines whether next control should be rendered @default `true` */
   withNext?: boolean;
 
-  /** Determines whether previous control should be rendered, `true` by default */
+  /** Determines whether previous control should be rendered @default `true` */
   withPrevious?: boolean;
 
   /** Component size */
   size?: MantineSize;
 
-  /** Controls order, `['previous', 'level', 'next']` by default */
+  /** Controls order @default `['previous', 'level', 'next']` */
   headerControlsOrder?: ('previous' | 'next' | 'level')[];
 }
 
@@ -136,6 +136,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props, ref) => {
     __staticSelector,
     __preventFocus,
     __stopPropagation,
+    attributes,
     ...others
   } = props;
 
@@ -148,6 +149,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'calendarHeader',

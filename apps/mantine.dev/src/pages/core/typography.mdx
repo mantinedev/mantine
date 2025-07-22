@@ -1,0 +1,45 @@
+import { TypographyDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Typography);
+
+## Usage
+
+Mantine does not include typography global styles.
+Use `Typography` to add typography styles to your html content:
+
+```tsx
+import { Typography } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Typography>
+      <div
+        dangerouslySetInnerHTML={{ __html: '<p>Your html here</p>' }}
+      />
+    </Typography>
+  );
+}
+```
+
+## Example
+
+<Demo data={TypographyDemos.usage} />
+
+## All styles demo
+
+`Typography` includes styles for:
+
+- paragraphs
+- headings
+- lists
+- blockquotes
+- tables
+- links
+- images
+- hr
+- kbd
+- code and pre
+
+<Demo data={TypographyDemos.all} />

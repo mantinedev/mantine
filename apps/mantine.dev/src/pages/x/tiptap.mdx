@@ -13,6 +13,8 @@ Install with yarn:
 After installation import package styles at the root of your application:
 
 ```tsx
+import '@mantine/core/styles.css';
+// ‼️ import tiptap styles after core package styles
 import '@mantine/tiptap/styles.css';
 ```
 
@@ -25,7 +27,7 @@ with [useEditor hook](https://tiptap.dev/installation/react).
 
 In other words, `RichTextEditor` component does not manage state for you,
 controls just execute operations on the `Editor` instance. If you want to
-implement something that is related to state or component value (e.g. controlled mode, value transforms to HTML/Markdown),
+implement something that is related to state or component value (for example, controlled mode, value transforms to HTML/Markdown),
 you should look for documentation on [tiptap.dev](https://tiptap.dev/) website.
 
 ## Usage
@@ -190,6 +192,13 @@ To use code highlight you will need to install additional packages:
 
 <Demo data={TipTapDemos.codeHighlight} />
 
+## Source code mode
+
+You can use the following control to see and edit source code of editor content:
+- `RichTextEditor.SourceCode` – allows switching on/off source code mode
+
+<Demo data={TipTapDemos.sourceCodeSwitcher} />
+
 ## Tasks
 
 To use tasks you will need to install additional packages:
@@ -200,7 +209,7 @@ To use tasks you will need to install additional packages:
 
 ## Typography styles
 
-By default, `RichTextEditor` renders content with [TypographyStylesProvider](/core/typography-styles-provider/) and some additional styles.
+By default, `RichTextEditor` renders content with [Typography](/core/typography/) and some additional styles.
 You can disable these styles by setting `withTypographyStyles={false}`:
 
 ```tsx

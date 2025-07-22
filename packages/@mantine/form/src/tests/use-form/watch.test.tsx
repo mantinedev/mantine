@@ -82,4 +82,35 @@ describe('@mantine/form/watch', () => {
 
     expect(spy).not.toHaveBeenCalled();
   });
+
+  it('cascades updates when cascadeUpdate is set to true', () => {
+    const hook = renderHook(() =>
+      useForm({
+        mode: 'uncontrolled',
+        cascadeUpdates: true,
+        initialValues: { person: { name: '' } },
+      })
+    );
+
+    const personSpy = jest.fn();
+
+    act(() => renderHook(() => hook.result.current.watch('person', personSpy)));
+    act(() => hook.result.current.setFieldValue('person.name', 'jane doe'));
+    expect(personSpy).toHaveBeenCalledWith({
+      previousValue: { name: '' },
+      value: { name: 'jane doe' },
+      touched: true,
+      dirty: true,
+    });
+
+    const nameSpy = jest.fn();
+    act(() => renderHook(() => hook.result.current.watch('person.name', nameSpy)));
+    act(() => hook.result.current.setFieldValue('person', { name: 'john doe' }));
+    expect(nameSpy).toHaveBeenCalledWith({
+      previousValue: 'jane doe',
+      value: 'john doe',
+      touched: true,
+      dirty: true,
+    });
+  });
 });

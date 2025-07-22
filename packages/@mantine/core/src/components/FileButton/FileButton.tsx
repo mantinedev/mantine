@@ -9,7 +9,7 @@ export interface FileButtonProps<Multiple extends boolean = false> {
   /** Function that receives button props and returns react node that should be rendered */
   children: (props: { onClick: () => void }) => React.ReactNode;
 
-  /** Determines whether user can pick more than one file */
+  /** If set, user can pick more than one file */
   multiple?: Multiple;
 
   /** File input accept attribute, for example, `"image/png,image/jpeg"` */

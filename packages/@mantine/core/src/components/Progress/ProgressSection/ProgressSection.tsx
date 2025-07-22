@@ -21,19 +21,19 @@ export interface ProgressSectionProps
   extends BoxProps,
     CompoundStylesApiProps<ProgressSectionFactory>,
     ElementProps<'div'> {
-  /** Value of the section in 0–100 range  */
+  /** Value of the section in 0–100 range */
   value: number;
 
-  /** Determines whether `aria-*` props should be added to the root element, `true` by default */
+  /** Determines whether `aria-*` props should be added to the root element @default `true` */
   withAria?: boolean;
 
-  /** Key of `theme.colors` or any valid CSS value, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS value @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Determines whether the section should have stripes, `false` by default */
+  /** If set, the section has stripes @default `false` */
   striped?: boolean;
 
-  /** Determines whether the sections stripes should be animated, if set, `striped` prop is ignored, `false` by default */
+  /** If set, the sections stripes are animated, `striped` prop is ignored @default `false` */
   animated?: boolean;
 }
 

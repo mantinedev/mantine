@@ -20,23 +20,25 @@ export type AffixCssVariables = {
   root: '--affix-z-index' | '--affix-top' | '--affix-left' | '--affix-bottom' | '--affix-right';
 };
 
-export interface AffixBaseProps {
-  /** Root element `z-index` property, `200` by default */
-  zIndex?: string | number;
+export interface AffixPosition {
+  top?: MantineSize | (string & {}) | number;
+  left?: MantineSize | (string & {}) | number;
+  bottom?: MantineSize | (string & {}) | number;
+  right?: MantineSize | (string & {}) | number;
+}
 
-  /** Determines whether component should be rendered within portal, `true` by default */
+export interface AffixBaseProps {
+  /** Root element `z-index` property @default `200`  */
+  zIndex?: React.CSSProperties['zIndex'];
+
+  /** Determines whether the component is rendered within `Portal` @default `true` */
   withinPortal?: boolean;
 
-  /** Props to pass down to the `Portal` component when `withinPortal` is set */
+  /** Props passed down to the `Portal` component. Ignored when `withinPortal` is `false`. */
   portalProps?: BasePortalProps;
 
-  /** Affix position on screen, defaults value is `{ bottom: 0, right: 0 }` */
-  position?: {
-    top?: MantineSize | (string & {}) | number;
-    left?: MantineSize | (string & {}) | number;
-    bottom?: MantineSize | (string & {}) | number;
-    right?: MantineSize | (string & {}) | number;
-  };
+  /** Affix position on screen @default `{ bottom: 0, right: 0 }` */
+  position?: AffixPosition;
 }
 
 export interface AffixProps
@@ -81,6 +83,7 @@ export const Affix = factory<AffixFactory>((_props, ref) => {
     zIndex,
     withinPortal,
     position,
+    attributes,
     ...others
   } = props;
 
@@ -93,6 +96,7 @@ export const Affix = factory<AffixFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

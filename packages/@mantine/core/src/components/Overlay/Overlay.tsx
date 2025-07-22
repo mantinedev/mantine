@@ -21,31 +21,31 @@ export type OverlayCssVariables = {
 };
 
 export interface OverlayProps extends BoxProps, StylesApiProps<OverlayFactory> {
-  /** Controls overlay `background-color` opacity 0–1, disregarded when `gradient` prop is set, `0.6` by default */
+  /** Overlay `background-color` opacity 0–1, ignored when `gradient` prop is set @default `0.6` */
   backgroundOpacity?: number;
 
-  /** Overlay `background-color`, `#000` by default */
+  /** Overlay `background-color` @default `#000` */
   color?: React.CSSProperties['backgroundColor'];
 
-  /** Overlay background blur, `0` by default */
+  /** Overlay background blur @default `0` */
   blur?: number | string;
 
-  /** Changes overlay to gradient. If set, `color` prop is ignored */
+  /** Changes overlay to gradient. If set, `color` prop is ignored. */
   gradient?: string;
 
-  /** Overlay z-index, `200` by default */
+  /** Overlay z-index @default `200` */
   zIndex?: string | number;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, `0` by default */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default `0` */
   radius?: MantineRadius;
 
   /** Content inside overlay */
   children?: React.ReactNode;
 
-  /** Determines whether content inside overlay should be vertically and horizontally centered, `false` by default */
+  /** Centers content inside the overlay @default `false` */
   center?: boolean;
 
-  /** Determines whether overlay should have fixed position instead of absolute, `false` by default */
+  /** Changes position to `fixed` @default `false` */
   fixed?: boolean;
 }
 
@@ -95,6 +95,7 @@ export const Overlay = polymorphicFactory<OverlayFactory>((_props, ref) => {
     color,
     backgroundOpacity,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -107,6 +108,7 @@ export const Overlay = polymorphicFactory<OverlayFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

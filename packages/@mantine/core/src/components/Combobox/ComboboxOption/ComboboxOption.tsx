@@ -20,13 +20,13 @@ export interface ComboboxOptionProps
   /** Option value */
   value: string;
 
-  /** Determines whether the option is selected */
+  /** Current active state */
   active?: boolean;
 
-  /** Determines whether the option can be selected */
+  /** Disabled state */
   disabled?: boolean;
 
-  /** Determines whether item is selected, useful for virtualized comboboxes */
+  /** Current selected state */
   selected?: boolean;
 }
 
@@ -37,10 +37,8 @@ export type ComboboxOptionFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<ComboboxOptionProps>;
-
 export const ComboboxOption = factory<ComboboxOptionFactory>((_props, ref) => {
-  const props = useProps('ComboboxOption', defaultProps, _props);
+  const props = useProps('ComboboxOption', null, _props);
   const {
     classNames,
     className,

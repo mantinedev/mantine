@@ -75,6 +75,7 @@ export { useRadialMove, normalizeRadialValue } from './use-radial-move/use-radia
 export { useScrollSpy } from './use-scroll-spy/use-scroll-spy';
 export { useFileDialog } from './use-file-dialog/use-file-dialog';
 export { useLongPress } from './use-long-press/use-long-press';
+export { useSelection } from './use-selection/use-selection';
 
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
 export type { UseClipboardOptions, UseClipboardReturnValue } from './use-clipboard/use-clipboard';
@@ -182,3 +183,8 @@ export type {
   UseWindowScrollReturnValue,
 } from './use-window-scroll/use-window-scroll';
 export type { UseLongPressOptions, UseLongPressReturnValue } from './use-long-press/use-long-press';
+export type {
+  UseSelectionHandlers,
+  UseSelectionInput,
+  UseSelectionReturnValue,
+} from './use-selection/use-selection';

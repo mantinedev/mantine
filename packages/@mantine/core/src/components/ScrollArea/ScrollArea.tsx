@@ -48,13 +48,13 @@ export interface ScrollAreaProps
    * */
   type?: 'auto' | 'always' | 'scroll' | 'hover' | 'never';
 
-  /** Scroll hide delay in ms, applicable only when type is set to `hover` or `scroll`, `1000` by default */
+  /** Scroll hide delay in ms, applicable only when type is set to `hover` or `scroll` @default `1000` */
   scrollHideDelay?: number;
 
-  /** Axis at which scrollbars must be rendered, `'xy'` by default */
+  /** Axis at which scrollbars must be rendered @default `'xy'` */
   scrollbars?: 'x' | 'y' | 'xy' | false;
 
-  /** Determines whether scrollbars should be offset with padding on given axis, `false` by default */
+  /** Determines whether scrollbars should be offset with padding on given axis @default `false` */
   offsetScrollbars?: boolean | 'x' | 'y' | 'present';
 
   /** Assigns viewport element (scrollable container) ref */
@@ -76,7 +76,10 @@ export interface ScrollAreaProps
   overscrollBehavior?: React.CSSProperties['overscrollBehavior'];
 }
 
-export interface ScrollAreaAutosizeProps extends ScrollAreaProps {}
+export interface ScrollAreaAutosizeProps extends ScrollAreaProps {
+  /** Called when content overflows due to max-height, making the container scrollable */
+  onOverflowChange?: (overflowing: boolean) => void;
+}
 
 export type ScrollAreaFactory = Factory<{
   props: ScrollAreaProps;
@@ -86,6 +89,13 @@ export type ScrollAreaFactory = Factory<{
   staticComponents: {
     Autosize: typeof ScrollAreaAutosize;
   };
+}>;
+
+export type ScrollAreaAutosizeFactory = Factory<{
+  props: ScrollAreaAutosizeProps;
+  ref: HTMLDivElement;
+  stylesNames: ScrollAreaStylesNames;
+  vars: ScrollAreaCssVariables;
 }>;
 
 const defaultProps = {
@@ -124,6 +134,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     onBottomReached,
     onTopReached,
     overscrollBehavior,
+    attributes,
     ...others
   } = props;
 
@@ -140,6 +151,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -252,7 +264,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
 
 ScrollArea.displayName = '@mantine/core/ScrollArea';
 
-export const ScrollAreaAutosize = factory<ScrollAreaFactory>((props, ref) => {
+export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref) => {
   const {
     children,
     classNames,
@@ -272,8 +284,50 @@ export const ScrollAreaAutosize = factory<ScrollAreaFactory>((props, ref) => {
     vars,
     onBottomReached,
     onTopReached,
+    onOverflowChange,
     ...others
-  } = useProps('ScrollAreaAutosize', defaultProps, props);
+  } = useProps('ScrollAreaAutosize', defaultProps, props as ScrollAreaAutosizeProps);
+
+  // Overflow detection (Autosize-only)
+  const viewportObserverRef = useRef<HTMLDivElement>(null);
+  const combinedViewportRef = useMergeRefs([viewportRef, viewportObserverRef]);
+
+  const [overflowing, setOverflowing] = useState(false);
+  const didMount = useRef(false);
+
+  useEffect(() => {
+    if (!onOverflowChange) {
+      return;
+    }
+
+    const el = viewportObserverRef.current;
+
+    if (!el) {
+      return;
+    }
+
+    const update = () => {
+      const isOverflowing = el.scrollHeight > el.clientHeight;
+
+      if (isOverflowing !== overflowing) {
+        if (didMount.current) {
+          onOverflowChange?.(isOverflowing);
+        } else {
+          didMount.current = true;
+          if (isOverflowing) {
+            onOverflowChange?.(true);
+          }
+        }
+
+        setOverflowing(isOverflowing);
+      }
+    };
+
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [onOverflowChange, overflowing]);
 
   return (
     <Box {...others} ref={ref} style={[{ display: 'flex', overflow: 'auto' }, style]}>
@@ -286,7 +340,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaFactory>((props, ref) => {
           type={type}
           dir={dir}
           offsetScrollbars={offsetScrollbars}
-          viewportRef={viewportRef}
+          viewportRef={combinedViewportRef}
           onScrollPositionChange={onScrollPositionChange}
           unstyled={unstyled}
           variant={variant}

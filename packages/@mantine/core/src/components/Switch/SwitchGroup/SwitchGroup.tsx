@@ -1,7 +1,7 @@
 import { useUncontrolled } from '@mantine/hooks';
 import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../../core';
+import { InputsGroupFieldset } from '../../../utils/InputsGroupFieldset';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
-import { InputsGroupFieldset } from '../../InputsGroupFieldset';
 import { SwitchGroupProvider } from '../SwitchGroup.context';
 
 export type SwitchGroupStylesNames = InputWrapperStylesNames;
@@ -22,7 +22,7 @@ export interface SwitchGroupProps extends Omit<InputWrapperProps, 'onChange'> {
   /** Props passed down to the `Input.Wrapper` */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 
-  /** Controls size of the `Input.Wrapper`, `'sm'` by default */
+  /** Controls size of the `Input.Wrapper` @default `'sm'` */
   size?: MantineSize | (string & {});
 
   /** If set, value cannot be changed */
@@ -35,11 +35,9 @@ export type SwitchGroupFactory = Factory<{
   stylesNames: SwitchGroupStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<SwitchGroupProps>;
-
 export const SwitchGroup = factory<SwitchGroupFactory>((props, ref) => {
   const { value, defaultValue, onChange, size, wrapperProps, children, readOnly, ...others } =
-    useProps('SwitchGroup', defaultProps, props);
+    useProps('SwitchGroup', null, props);
 
   const [_value, setValue] = useUncontrolled({
     value,

@@ -8,20 +8,16 @@ import {
   useProps,
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
+import { AppShellCompoundProps } from '../AppShell.types';
 import classes from '../AppShell.module.css';
 
 export type AppShellAsideStylesNames = 'aside';
 
 export interface AppShellAsideProps
   extends BoxProps,
+    AppShellCompoundProps,
     StylesApiProps<AppShellAsideFactory>,
-    ElementProps<'aside'> {
-  /** Determines whether component should have a border, overrides `withBorder` prop on `AppShell` component */
-  withBorder?: boolean;
-
-  /** Component `z-index`, by default inherited from the `AppShell` */
-  zIndex?: string | number;
-}
+    ElementProps<'aside'> {}
 
 export type AppShellAsideFactory = Factory<{
   props: AppShellAsideProps;
@@ -29,10 +25,7 @@ export type AppShellAsideFactory = Factory<{
   stylesNames: AppShellAsideStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<AppShellAsideProps>;
-
 export const AppShellAside = factory<AppShellAsideFactory>((_props, ref) => {
-  const props = useProps('AppShellAside', defaultProps, _props);
   const {
     classNames,
     className,
@@ -44,7 +37,8 @@ export const AppShellAside = factory<AppShellAsideFactory>((_props, ref) => {
     zIndex,
     mod,
     ...others
-  } = props;
+  } = useProps('AppShellAside', null, _props);
+
   const ctx = useAppShellContext();
 
   if (ctx.disabled) {
@@ -58,9 +52,7 @@ export const AppShellAside = factory<AppShellAsideFactory>((_props, ref) => {
       mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
       {...ctx.getStyles('aside', { className, classNames, styles, style })}
       {...others}
-      __vars={{
-        '--app-shell-aside-z-index': `calc(${zIndex ?? ctx.zIndex} + 1)`,
-      }}
+      __vars={{ '--app-shell-aside-z-index': `calc(${zIndex ?? ctx.zIndex} + 1)` }}
     />
   );
 });

@@ -34,10 +34,10 @@ export interface AlertProps
   extends BoxProps,
     StylesApiProps<AlertFactory>,
     ElementProps<'div', 'title'> {
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color, default value is `theme.primaryColor`  */
+  /** Key of `theme.colors` or any valid CSS color @default `theme.primaryColor`  */
   color?: MantineColor;
 
   /** Alert title */
@@ -46,7 +46,7 @@ export interface AlertProps
   /** Icon displayed next to the title */
   icon?: React.ReactNode;
 
-  /** Determines whether close button should be displayed, `false` by default */
+  /** Determines whether close button should be displayed @default `false` */
   withCloseButton?: boolean;
 
   /** Called when the close button is clicked */
@@ -55,7 +55,7 @@ export interface AlertProps
   /** Close button `aria-label` */
   closeButtonLabel?: string;
 
-  /** Determines whether text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 }
 
@@ -66,8 +66,6 @@ export type AlertFactory = Factory<{
   vars: AlertCssVariables;
   variant: AlertVariant;
 }>;
-
-const defaultProps = {} satisfies Partial<AlertProps>;
 
 const varsResolver = createVarsResolver<AlertFactory>(
   (theme, { radius, color, variant, autoContrast }) => {
@@ -90,7 +88,7 @@ const varsResolver = createVarsResolver<AlertFactory>(
 );
 
 export const Alert = factory<AlertFactory>((_props, ref) => {
-  const props = useProps('Alert', defaultProps, _props);
+  const props = useProps('Alert', null, _props);
   const {
     classNames,
     className,
@@ -109,6 +107,7 @@ export const Alert = factory<AlertFactory>((_props, ref) => {
     closeButtonLabel,
     variant,
     autoContrast,
+    attributes,
     ...others
   } = props;
 
@@ -121,6 +120,7 @@ export const Alert = factory<AlertFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

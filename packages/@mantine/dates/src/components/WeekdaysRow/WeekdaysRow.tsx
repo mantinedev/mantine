@@ -34,13 +34,13 @@ export interface WeekdaysRowProps
   /** dayjs locale */
   locale?: string;
 
-  /** Number 0-6, 0 – Sunday, 6 – Saturday, `1` – Monday by default */
+  /** Number 0-6, 0 – Sunday, 6 – Saturday @default `1` – Monday */
   firstDayOfWeek?: DayOfWeek;
 
-  /** dayjs format to get weekday name, `'dd'` by default */
+  /** dayjs format to get weekday name @default `'dd'` */
   weekdayFormat?: DateLabelFormat;
 
-  /** Sets cell type that is used for weekdays, `'th'` by default */
+  /** Sets cell type that is used for weekdays @default `'th'` */
   cellComponent?: 'td' | 'th';
 
   /** If set, heading for week numbers is displayed */
@@ -54,8 +54,6 @@ export type WeekdaysRowFactory = Factory<{
   vars: WeekdaysRowCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<WeekdaysRowProps>;
-
 const varsResolver = createVarsResolver<WeekdaysRowFactory>((_, { size }) => ({
   weekdaysRow: {
     '--wr-fz': getFontSize(size),
@@ -64,7 +62,7 @@ const varsResolver = createVarsResolver<WeekdaysRowFactory>((_, { size }) => ({
 }));
 
 export const WeekdaysRow = factory<WeekdaysRowFactory>((_props, ref) => {
-  const props = useProps('WeekdaysRow', defaultProps, _props);
+  const props = useProps('WeekdaysRow', null, _props);
   const {
     classNames,
     className,
@@ -78,6 +76,7 @@ export const WeekdaysRow = factory<WeekdaysRowFactory>((_props, ref) => {
     cellComponent: CellComponent = 'th',
     __staticSelector,
     withWeekNumbers,
+    attributes,
     ...others
   } = props;
 
@@ -90,6 +89,7 @@ export const WeekdaysRow = factory<WeekdaysRowFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'weekdaysRow',

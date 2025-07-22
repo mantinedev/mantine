@@ -26,7 +26,7 @@ export interface FieldsetProps
   /** Fieldset legend */
   legend?: React.ReactNode;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 }
 
@@ -60,6 +60,7 @@ export const Fieldset = factory<FieldsetFactory>((_props, ref) => {
     legend,
     variant,
     children,
+    attributes,
     ...others
   } = props;
 
@@ -72,6 +73,7 @@ export const Fieldset = factory<FieldsetFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

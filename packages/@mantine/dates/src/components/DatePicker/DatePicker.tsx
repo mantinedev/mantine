@@ -38,7 +38,9 @@ import { YearLevelBaseSettings } from '../YearLevel';
 import classes from './DatePicker.module.css';
 
 export interface DatePickerPreset<Type extends DatePickerType> {
-  value: Type extends 'range' ? [DateStringValue | null, DateStringValue | null] : DateStringValue;
+  value: Type extends 'range'
+    ? [DateStringValue | null, DateStringValue | null]
+    : DateStringValue | null;
   label: React.ReactNode;
 }
 
@@ -60,7 +62,6 @@ export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
     CalendarBaseProps,
     Omit<CalendarSettings, 'hasNextLevel'>,
     Pick<CalendarProps, 'enableKeyboardNavigation'> {
-  /** Max level that user can go up to, `'decade'` by default */
   maxLevel?: CalendarLevel;
 
   /** Initial displayed level (uncontrolled) */
@@ -79,7 +80,7 @@ export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
   __onPresetSelect?: (
     preset: Type extends 'range'
       ? [DateStringValue | null, DateStringValue | null]
-      : DateStringValue
+      : DateStringValue | null
   ) => void;
 }
 
@@ -136,6 +137,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     unstyled,
     size,
     vars,
+    attributes,
     ...rest
   } = props;
 
@@ -152,7 +154,8 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     classNames,
     styles,
     unstyled,
-    rootSelector: 'datePickerRoot',
+    attributes,
+    rootSelector: presets ? 'datePickerRoot' : undefined,
     varsResolver,
     vars,
   });
@@ -210,6 +213,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
         ...calendarProps.getYearControlProps?.(date),
       })}
       hideOutsideDates={calendarProps.hideOutsideDates ?? calendarProps.numberOfColumns !== 1}
+      {...(!presets ? { className, style, attributes } : {})}
     />
   );
 
@@ -218,10 +222,10 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
   }
 
   const handlePresetSelect = (
-    val: DateStringValue | [DateStringValue | null, DateStringValue | null]
+    val: DateStringValue | null | [DateStringValue | null, DateStringValue | null]
   ) => {
     const _val = Array.isArray(val) ? val[0] : val;
-    if (_val) {
+    if (_val !== undefined) {
       setDateRef.current?.(_val);
       setLevelRef.current?.('month');
       __onPresetSelect ? __onPresetSelect(_val) : setValue(val);

@@ -8,14 +8,8 @@ export interface AlphaSliderProps
   color: string;
 }
 
-const defaultProps = {} satisfies Partial<AlphaSliderProps>;
-
 export const AlphaSlider = forwardRef<HTMLDivElement, AlphaSliderProps>((props, ref) => {
-  const { value, onChange, onChangeEnd, color, ...others } = useProps(
-    'AlphaSlider',
-    defaultProps,
-    props
-  );
+  const { value, onChange, onChangeEnd, color, ...others } = useProps('AlphaSlider', null, props);
 
   return (
     <ColorSlider

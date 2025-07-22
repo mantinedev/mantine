@@ -59,7 +59,7 @@ export interface StepperProps
   extends BoxProps,
     StylesApiProps<StepperFactory>,
     ElementProps<'div'> {
-  /** <Stepper.Step /> components */
+  /** `Stepper.Step` components */
   children: React.ReactNode;
 
   /** Called when step is clicked */
@@ -68,16 +68,16 @@ export interface StepperProps
   /** Index of the active step */
   active: number;
 
-  /** Step icon, default value is step index + 1 */
+  /** Step icon, default value is `step index + 1` */
   icon?: React.ReactNode | StepFragmentComponent;
 
   /** Step icon displayed when step is completed, check icon by default */
   completedIcon?: React.ReactNode | StepFragmentComponent;
 
-  /** Step icon displayed when step is in progress, default value is step index + 1 */
+  /** Step icon displayed when step is in progress, default value is `step index + 1` */
   progressIcon?: React.ReactNode | StepFragmentComponent;
 
-  /** Key of `theme.colors` or any valid CSS color, controls colors of active and progress steps, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color, controls colors of active and progress steps @default `theme.primaryColor` */
   color?: MantineColor;
 
   /** Controls size of the step icon, by default icon size is inferred from `size` prop */
@@ -86,25 +86,25 @@ export interface StepperProps
   /** Key of `theme.spacing` or any valid CSS value to set `padding-top` of the content */
   contentPadding?: MantineSpacing;
 
-  /** Stepper orientation, `'horizontal'` by default */
+  /** Stepper orientation @default `'horizontal'` */
   orientation?: 'vertical' | 'horizontal';
 
-  /** Icon position relative to the step body, `'left'` by default */
+  /** Icon position relative to the step body @default `'left'` */
   iconPosition?: 'right' | 'left';
 
   /** Controls size of various Stepper elements */
   size?: MantineSize;
 
-  /** Key of `theme.radius` or any valid CSS value to set steps border-radius, `"xl"` by default */
+  /** Key of `theme.radius` or any valid CSS value to set steps border-radius @default `"xl"` */
   radius?: MantineRadius;
 
-  /** Determines whether next steps can be selected, `true` by default **/
+  /** If set, next steps can be selected @default `true` */
   allowNextStepsSelect?: boolean;
 
-  /** Determines whether steps should wrap to the next line if no space is available, `true` by default */
+  /** Determines whether steps should wrap to the next line if no space is available @default `true` */
   wrap?: boolean;
 
-  /** Determines whether icon color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 }
 
@@ -168,6 +168,7 @@ export const Stepper = factory<StepperFactory>((_props, ref) => {
     allowNextStepsSelect,
     wrap,
     autoContrast,
+    attributes,
     ...others
   } = props;
 
@@ -180,6 +181,7 @@ export const Stepper = factory<StepperFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

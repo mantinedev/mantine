@@ -37,7 +37,7 @@ export interface PaginationRootProps
   extends BoxProps,
     StylesApiProps<PaginationRootFactory>,
     ElementProps<'div', 'value' | 'onChange'> {
-  /** `height` and `min-width` of controls, `'md'` by default */
+  /** `height` and `min-width` of controls @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
   /** Total number of pages, must be an integer */
@@ -52,19 +52,19 @@ export interface PaginationRootProps
   /** Called when page changes */
   onChange?: (value: number) => void;
 
-  /** Determines whether all controls should be disabled, `false` by default */
+  /** Disables all controls, applies disabled styles */
   disabled?: boolean;
 
-  /** Number of siblings displayed on the left/right side of the selected page, `1` by default */
+  /** Number of siblings displayed on the left/right side of the selected page @default `1` */
   siblings?: number;
 
-  /** Number of elements visible on the left/right edges, `1` by default */
+  /** Number of elements visible on the left/right edges @default `1` */
   boundaries?: number;
 
-  /** Key of `theme.colors`, active item color, `theme.primaryColor` by default */
+  /** Key of `theme.colors`, active item color @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Called when next page control is clicked */
@@ -82,7 +82,7 @@ export interface PaginationRootProps
   /** Additional props passed down to controls */
   getItemProps?: (page: number) => Record<string, any>;
 
-  /** Determines whether active item text color should depend on `background-color` of the indicator. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 }
 
@@ -136,6 +136,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
     onLastPage,
     getItemProps,
     autoContrast,
+    attributes,
     ...others
   } = props;
 
@@ -148,6 +149,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

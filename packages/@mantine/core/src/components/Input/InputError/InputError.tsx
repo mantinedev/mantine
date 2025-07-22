@@ -27,7 +27,7 @@ export interface InputErrorProps
   __staticSelector?: string;
   __inheritStyles?: boolean;
 
-  /** Controls error `font-size`, `'sm'` by default */
+  /** Controls error `font-size` @default `'sm'` */
   size?: MantineFontSize;
 }
 
@@ -38,8 +38,6 @@ export type InputErrorFactory = Factory<{
   vars: InputErrorCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<InputErrorProps>;
-
 const varsResolver = createVarsResolver<InputErrorFactory>((_, { size }) => ({
   error: {
     '--input-error-size': size === undefined ? undefined : `calc(${getFontSize(size)} - ${rem(2)})`,
@@ -47,7 +45,7 @@ const varsResolver = createVarsResolver<InputErrorFactory>((_, { size }) => ({
 }));
 
 export const InputError = factory<InputErrorFactory>((_props, ref) => {
-  const props = useProps('InputError', defaultProps, _props);
+  const props = useProps('InputError', null, _props);
   const {
     classNames,
     className,
@@ -56,6 +54,7 @@ export const InputError = factory<InputErrorFactory>((_props, ref) => {
     unstyled,
     vars,
     size,
+    attributes,
     __staticSelector,
     __inheritStyles = true,
     variant,
@@ -71,6 +70,7 @@ export const InputError = factory<InputErrorFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     rootSelector: 'error',
     vars,
     varsResolver,

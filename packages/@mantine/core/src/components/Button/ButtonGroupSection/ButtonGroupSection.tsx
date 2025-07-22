@@ -34,16 +34,16 @@ export interface ButtonGroupSectionProps
   extends BoxProps,
     StylesApiProps<ButtonGroupSectionFactory>,
     ElementProps<'div'> {
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Gradient configuration used when `variant="gradient"`, default value is `theme.defaultGradient` */
+  /** Gradient configuration used when `variant="gradient"` @default `theme.defaultGradient` */
   gradient?: MantineGradient;
 
-  /** Determines whether section text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 
-  /** Controls section `height`, `font-size` and horizontal `padding`, `'sm'` by default */
+  /** Controls section `height`, `font-size` and horizontal `padding` @default `'sm'` */
   size?: MantineSize | `compact-${MantineSize}` | (string & {});
 }
 
@@ -54,8 +54,6 @@ export type ButtonGroupSectionFactory = Factory<{
   vars: ButtonGroupSectionCssVariables;
   variant: ButtonVariant;
 }>;
-
-const defaultProps = {} satisfies Partial<ButtonGroupSectionProps>;
 
 const varsResolver = createVarsResolver<ButtonGroupSectionFactory>(
   (theme, { radius, color, gradient, variant, autoContrast, size }) => {
@@ -84,7 +82,7 @@ const varsResolver = createVarsResolver<ButtonGroupSectionFactory>(
 );
 
 export const ButtonGroupSection = factory<ButtonGroupSectionFactory>((_props, ref) => {
-  const props = useProps('ButtonGroupSection', defaultProps, _props);
+  const props = useProps('ButtonGroupSection', null, _props);
   const {
     className,
     style,
@@ -96,8 +94,9 @@ export const ButtonGroupSection = factory<ButtonGroupSectionFactory>((_props, re
     gradient,
     radius,
     autoContrast,
+    attributes,
     ...others
-  } = useProps('ButtonGroupSection', defaultProps, _props);
+  } = props;
 
   const getStyles = useStyles<ButtonGroupSectionFactory>({
     name: 'ButtonGroupSection',
@@ -108,6 +107,7 @@ export const ButtonGroupSection = factory<ButtonGroupSectionFactory>((_props, re
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'groupSection',

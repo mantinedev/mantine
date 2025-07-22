@@ -21,19 +21,19 @@ export type DropzoneFullScreenStylesNames = DropzoneStylesNames | 'fullScreen';
 
 export interface DropzoneFullScreenProps
   extends BoxProps,
-    Omit<DropzoneProps, 'styles' | 'classNames' | 'vars' | 'variant'>,
+    Omit<DropzoneProps, 'styles' | 'classNames' | 'vars' | 'variant' | 'attributes'>,
     StylesApiProps<DropzoneFullScreenFactory>,
     ElementProps<'div', 'onDragLeave' | 'onDragOver' | 'onDrop' | 'onDragEnter'> {
-  /** Determines whether user can drop files to browser window, true by default */
+  /** Determines whether user can drop files to browser window @default `true` */
   active?: boolean;
 
-  /** Z-index value, 9999 by default */
+  /** Z-index value @default `9999` */
   zIndex?: React.CSSProperties['zIndex'];
 
-  /** Determines whether component should be rendered within Portal, true by default */
+  /** Determines whether component should be rendered within `Portal` @default `true` */
   withinPortal?: boolean;
 
-  /** Props to pass down to the portal when withinPortal is true */
+  /** Props to pass down to the portal when withinPortal is `true` */
   portalProps?: Omit<BasePortalProps, 'withinPortal'>;
 }
 
@@ -69,6 +69,7 @@ export const DropzoneFullScreen = factory<DropzoneFullScreenFactory>((_props, re
     zIndex,
     withinPortal,
     portalProps,
+    attributes,
     ...others
   } = props;
 
@@ -81,6 +82,7 @@ export const DropzoneFullScreen = factory<DropzoneFullScreenFactory>((_props, re
     classNames,
     styles,
     unstyled,
+    attributes,
     rootSelector: 'fullScreen',
   });
 

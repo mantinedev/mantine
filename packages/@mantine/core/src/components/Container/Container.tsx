@@ -22,11 +22,14 @@ export interface ContainerProps
   extends BoxProps,
     StylesApiProps<ContainerFactory>,
     ElementProps<'div'> {
-  /** Sets `max-width` of the container, value is not responsive – it is the same for all screen sizes. Numbers are converted to rem. Ignored when `fluid` prop is set. `'md'` by default */
+  /** `max-width` of the container, value is not responsive – it is the same for all screen sizes. Numbers are converted to rem. Ignored when `fluid` prop is set. @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
-  /** Determines whether the container should take 100% of its parent width. If set, `size` prop is ignored. `false` by default. */
+  /** If set, the container takes 100% width of its parent and `size` prop is ignored. @default `false` */
   fluid?: boolean;
+
+  /** Centering strategy @default `'block'` */
+  strategy?: 'block' | 'grid';
 }
 
 export type ContainerFactory = Factory<{
@@ -36,8 +39,6 @@ export type ContainerFactory = Factory<{
   vars: ContainerCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<ContainerProps>;
-
 const varsResolver = createVarsResolver<ContainerFactory>((_, { size, fluid }) => ({
   root: {
     '--container-size': fluid ? undefined : getSize(size, 'container-size'),
@@ -45,8 +46,20 @@ const varsResolver = createVarsResolver<ContainerFactory>((_, { size, fluid }) =
 }));
 
 export const Container = factory<ContainerFactory>((_props, ref) => {
-  const props = useProps('Container', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, fluid, mod, ...others } = props;
+  const props = useProps('Container', null, _props);
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    fluid,
+    mod,
+    attributes,
+    strategy,
+    ...others
+  } = props;
 
   const getStyles = useStyles<ContainerFactory>({
     name: 'Container',
@@ -57,11 +70,19 @@ export const Container = factory<ContainerFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
 
-  return <Box ref={ref} mod={[{ fluid }, mod]} {...getStyles('root')} {...others} />;
+  return (
+    <Box
+      ref={ref}
+      mod={[{ fluid, strategy: strategy || 'block' }, mod]}
+      {...getStyles('root')}
+      {...others}
+    />
+  );
 });
 
 Container.classes = classes;

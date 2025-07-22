@@ -352,3 +352,8 @@ export const Demo_useLongPressDemo = {
   name: '⭐ Demo: useLongPressDemo',
   render: renderDemo(demos.useLongPressDemo),
 };
+
+export const Demo_useSelectionDemo = {
+  name: '⭐ Demo: useSelectionDemo',
+  render: renderDemo(demos.useSelectionDemo),
+};

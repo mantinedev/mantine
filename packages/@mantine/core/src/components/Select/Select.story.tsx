@@ -7,7 +7,6 @@ export default { title: 'Select' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <div style={{ height: 1000 }} />
       <Select
         data={[
           'React',
@@ -23,9 +22,8 @@ export function Usage() {
         ]}
         placeholder="Select something"
         searchable
-        selectFirstOptionOnChange
+        autoSelectOnBlur
       />
-      <div style={{ height: 1000 }} />
     </div>
   );
 }

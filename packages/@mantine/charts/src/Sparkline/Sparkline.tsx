@@ -35,25 +35,25 @@ export interface SparklineProps
   /** Data used to render the chart */
   data: (number | null)[];
 
-  /** Key of `theme.colors` or any valid CSS color, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Determines whether the chart fill should be a gradient, `true` by default */
+  /** Determines whether the chart fill should be a gradient @default `true` */
   withGradient?: boolean;
 
-  /** Controls fill opacity of the area, `0.6` by default */
+  /** Controls fill opacity of the area @default `0.6` */
   fillOpacity?: number;
 
-  /** Type of the curve, `'linear'` by default */
+  /** Type of the curve @default `'linear'` */
   curveType?: AreaChartCurveType;
 
-  /** Area stroke width, `2` by default */
+  /** Area stroke width @default `2` */
   strokeWidth?: number;
 
   /** If set, `color` prop is ignored and chart color is determined by the difference between first and last value. */
   trendColors?: SparklineTrendColors;
 
-  /** Determines whether null values should be connected with other values, `true` by default */
+  /** Determines whether null values should be connected with other values @default `true` */
   connectNulls?: boolean;
 
   /** Props passed down to the underlying recharts `Area` component */
@@ -123,6 +123,7 @@ export const Sparkline = factory<SparklineFactory>((_props, ref) => {
     trendColors,
     connectNulls,
     areaProps,
+    attributes,
     ...others
   } = props;
 
@@ -135,6 +136,7 @@ export const Sparkline = factory<SparklineFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

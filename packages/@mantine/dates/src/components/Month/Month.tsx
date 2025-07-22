@@ -40,7 +40,7 @@ export type MonthStylesNames =
   | DayStylesNames;
 
 export interface MonthSettings {
-  /** Determines whether propagation for Escape key should be stopped */
+  /** Determines whether propagation for `Escape` key should be stopped */
   __stopPropagation?: boolean;
 
   /** Prevents focus shift when buttons are clicked */
@@ -61,16 +61,16 @@ export interface MonthSettings {
   /** Assigns ref of every day based on its position in the table, used for arrows navigation */
   __getDayRef?: (rowIndex: number, cellIndex: number, node: HTMLButtonElement) => void;
 
-  /** dayjs locale, the default value is defined by `DatesProvider` */
+  /** `dayjs` locale, the default value is defined by `DatesProvider` */
   locale?: string;
 
-  /** Number 0-6, where 0 – Sunday and 6 – Saturday. 1 – Monday by default */
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default `1` – Monday */
   firstDayOfWeek?: DayOfWeek;
 
-  /** dayjs format for weekdays names, `'dd'` by default */
+  /** `dayjs` format for weekdays names @default `'dd'` */
   weekdayFormat?: DateLabelFormat;
 
-  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider` */
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
 
   /** Passes props down to `Day` components */
@@ -90,10 +90,10 @@ export interface MonthSettings {
   /** Controls day value rendering */
   renderDay?: RenderDay;
 
-  /** Determines whether outside dates should be hidden, `false` by default */
+  /** Determines whether outside dates should be hidden @default `false` */
   hideOutsideDates?: boolean;
 
-  /** Determines whether weekdays row should be hidden, `false` by default */
+  /** Determines whether weekdays row should be hidden @default `false` */
   hideWeekdays?: boolean;
 
   /** Assigns `aria-label` to `Day` components based on date */
@@ -102,13 +102,13 @@ export interface MonthSettings {
   /** Controls size */
   size?: MantineSize;
 
-  /** Determines whether controls should be separated by space, `true` by default */
+  /** Determines whether controls should be separated by space @default `true` */
   withCellSpacing?: boolean;
 
-  /** Determines whether today should be highlighted with a border, `false` by default */
+  /** Determines whether today should be highlighted with a border @default `false` */
   highlightToday?: boolean;
 
-  /** Determines whether week numbers should be displayed, `false` by default */
+  /** Determines whether week numbers should be displayed @default `false` */
   withWeekNumbers?: boolean;
 }
 
@@ -177,6 +177,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
     size,
     highlightToday,
     withWeekNumbers,
+    attributes,
     ...others
   } = props;
 
@@ -189,6 +190,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'month',

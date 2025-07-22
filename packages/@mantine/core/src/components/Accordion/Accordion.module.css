@@ -25,18 +25,11 @@
   opacity: 1;
   cursor: pointer;
   background-color: transparent;
+  color: var(--mantine-color-bright);
 
   &:where([data-chevron-position='left']) {
     flex-direction: row;
     padding-inline-start: 0;
-  }
-
-  @mixin where-light {
-    color: var(--mantine-color-black);
-  }
-
-  @mixin where-dark {
-    color: var(--mantine-color-dark-0);
   }
 
   &:where(:disabled, [data-disabled]) {

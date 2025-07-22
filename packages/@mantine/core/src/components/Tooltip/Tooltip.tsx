@@ -1,4 +1,4 @@
-import { cloneElement, useRef } from 'react';
+import { cloneElement, useEffect, useRef } from 'react';
 import cx from 'clsx';
 import { useMergedRef } from '@mantine/hooks';
 import {
@@ -21,7 +21,7 @@ import {
   FloatingPosition,
   FloatingStrategy,
   getFloatingPosition,
-} from '../Floating';
+} from '../../utils/Floating';
 import { OptionalPortal } from '../Portal';
 import { getTransitionProps, Transition, TransitionOverride } from '../Transition';
 import { TooltipBaseProps, TooltipCssVariables, TooltipStylesNames } from './Tooltip.types';
@@ -37,7 +37,7 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Open delay in ms */
   openDelay?: number;
 
-  /** Close delay in ms, `0` by default */
+  /** Close delay in ms @default `0` */
   closeDelay?: number;
 
   /** Controlled opened state */
@@ -46,28 +46,28 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Uncontrolled tooltip initial opened state */
   defaultOpened?: boolean;
 
-  /** Space between target element and tooltip in px, `5` by default */
+  /** Space between target element and tooltip in px @default `5` */
   offset?: number | FloatingAxesOffsets;
 
-  /** Determines whether the tooltip should have an arrow, `false` by default */
+  /** If set, the tooltip has an arrow @default `false` */
   withArrow?: boolean;
 
-  /** Arrow size in px, `4` by default */
+  /** Arrow size in px @default `4` */
   arrowSize?: number;
 
-  /** Arrow offset in px, `5` by default */
+  /** Arrow offset in px @default `5` */
   arrowOffset?: number;
 
-  /** Arrow `border-radius` in px, `0` by default */
+  /** Arrow `border-radius` in px @default `0` */
   arrowRadius?: number;
 
-  /** Arrow position relative to the tooltip, `side` by default */
+  /** Arrow position relative to the tooltip @default `side` */
   arrowPosition?: ArrowPosition;
 
-  /** Props passed down to the `Transition` component that used to animate tooltip presence, use to configure duration and animation type, `{ duration: 100, transition: 'fade' }` by default */
+  /** Props passed down to the `Transition` component that used to animate tooltip presence, use to configure duration and animation type @default `{ duration: 100, transition: 'fade' }` */
   transitionProps?: TransitionOverride;
 
-  /** Determines which events will be used to show tooltip, `{ hover: true, focus: false, touch: false }` by default */
+  /** Determines which events will be used to show tooltip @default `{ hover: true, focus: false, touch: false }` */
   events?: { hover: boolean; focus: boolean; touch: boolean };
 
   /** @deprecated: Do not use, will be removed in 9.0 */
@@ -76,14 +76,17 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Must be set if the tooltip target is an inline element */
   inline?: boolean;
 
-  /** If set, the tooltip will not be unmounted from the DOM when it is hidden, `display: none` styles will be applied instead */
+  /** If set, the tooltip is not unmounted from the DOM when hidden, `display: none` styles are applied instead */
   keepMounted?: boolean;
 
-  /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy), `'absolute'` by default */
+  /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) @default `'absolute'` */
   floatingStrategy?: FloatingStrategy;
 
-  /** Determines whether tooltip text color should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
+
+  /** Selector, ref of an element or element itself that should be used for positioning */
+  target?: React.RefObject<HTMLElement | null> | HTMLElement | null | string;
 }
 
 export type TooltipFactory = Factory<{
@@ -178,11 +181,14 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     floatingStrategy,
     middlewares,
     autoContrast,
+    attributes,
+    target,
     ...others
   } = useProps('Tooltip', defaultProps, props);
 
   const { dir } = useDirection();
   const arrowRef = useRef<HTMLDivElement>(null);
+
   const tooltip = useTooltip({
     position: getFloatingPosition(dir, position),
     closeDelay,
@@ -194,11 +200,24 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     arrowRef,
     arrowOffset,
     offset: typeof offset === 'number' ? offset + (withArrow ? arrowSize / 2 : 0) : offset,
-    positionDependencies: [...positionDependencies, children],
+    positionDependencies: [...positionDependencies, target ?? children],
     inline,
     strategy: floatingStrategy,
     middlewares,
   });
+
+  useEffect(() => {
+    const targetNode =
+      target instanceof HTMLElement
+        ? target
+        : typeof target === 'string'
+          ? document.querySelector(target)
+          : target?.current || null;
+
+    if (targetNode) {
+      tooltip.reference(targetNode);
+    }
+  }, [target, tooltip]);
 
   const getStyles = useStyles<TooltipFactory>({
     name: 'Tooltip',
@@ -209,20 +228,71 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     rootSelector: 'tooltip',
     vars,
     varsResolver,
   });
 
-  if (!isElement(children)) {
-    throw new Error(
-      '[@mantine/core] Tooltip component children should be an element or a component that accepts ref, fragments, strings, numbers and other primitive values are not supported'
+  if (!target && !isElement(children)) {
+    return null;
+  }
+
+  if (target) {
+    const transition = getTransitionProps(transitionProps, { duration: 100, transition: 'fade' });
+    return (
+      <>
+        <OptionalPortal {...portalProps} withinPortal={withinPortal}>
+          <Transition
+            {...transition}
+            keepMounted={keepMounted}
+            mounted={!disabled && !!tooltip.opened}
+            duration={tooltip.isGroupPhase ? 10 : transition.duration}
+          >
+            {(transitionStyles) => (
+              <Box
+                {...others}
+                data-fixed={floatingStrategy === 'fixed' || undefined}
+                variant={variant}
+                mod={[{ multiline }, mod]}
+                {...tooltip.getFloatingProps({
+                  ref: tooltip.floating,
+                  className: getStyles('tooltip').className,
+                  style: {
+                    ...getStyles('tooltip').style,
+                    ...transitionStyles,
+                    zIndex: zIndex as React.CSSProperties['zIndex'],
+                    top: tooltip.y ?? 0,
+                    left: tooltip.x ?? 0,
+                  },
+                })}
+              >
+                {label}
+                <FloatingArrow
+                  ref={arrowRef}
+                  arrowX={tooltip.arrowX}
+                  arrowY={tooltip.arrowY}
+                  visible={withArrow}
+                  position={tooltip.placement}
+                  arrowSize={arrowSize}
+                  arrowOffset={arrowOffset}
+                  arrowRadius={arrowRadius}
+                  arrowPosition={arrowPosition}
+                  {...getStyles('arrow')}
+                />
+              </Box>
+            )}
+          </Transition>
+        </OptionalPortal>
+      </>
     );
   }
 
-  const targetRef = useMergedRef(tooltip.reference, getRefProp(children), ref);
+  // fallback to children-based approach
+  const _children = children as React.ReactElement;
+  const _childrenProps = _children.props as any;
+  const targetRef = useMergedRef(tooltip.reference, getRefProp(_children), ref);
   const transition = getTransitionProps(transitionProps, { duration: 100, transition: 'fade' });
-  const _childrenProps = children.props as any;
 
   return (
     <>
@@ -252,7 +322,6 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
               })}
             >
               {label}
-
               <FloatingArrow
                 ref={arrowRef}
                 arrowX={tooltip.arrowX}
@@ -271,7 +340,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
       </OptionalPortal>
 
       {cloneElement(
-        children,
+        _children,
         tooltip.getReferenceProps({
           onClick,
           onMouseEnter,

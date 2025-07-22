@@ -16,10 +16,8 @@ export type ModalBodyFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<ModalBodyProps>;
-
 export const ModalBody = factory<ModalBodyFactory>((_props, ref) => {
-  const props = useProps('ModalBody', defaultProps, _props);
+  const props = useProps('ModalBody', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
   const ctx = useModalContext();

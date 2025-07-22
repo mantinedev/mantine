@@ -4,19 +4,19 @@ import { MantineTransition } from './transitions';
 import { useTransition } from './use-transition';
 
 export interface TransitionProps {
-  /** If set element will not be unmounted from the DOM when it is hidden, `display: none` styles will be applied instead */
+  /** If set, the element is not unmounted from the DOM when hidden, `display: none` styles are applied instead */
   keepMounted?: boolean;
 
   /** Transition name or object */
   transition?: MantineTransition;
 
-  /** Transition duration in ms, `250` by default */
+  /** Transition duration in ms @default `250` */
   duration?: number;
 
-  /** Exit transition duration in ms, `250` by default */
+  /** Exit transition duration in ms @default `250` */
   exitDuration?: number;
 
-  /** Transition timing function, `theme.transitionTimingFunction` by default */
+  /** Transition timing function @default `theme.transitionTimingFunction` */
   timingFunction?: string;
 
   /** Determines whether component should be mounted to the DOM */

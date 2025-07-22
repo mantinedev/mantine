@@ -23,28 +23,28 @@ export type GridCssVariables = {
 };
 
 export interface GridProps extends BoxProps, StylesApiProps<GridFactory>, ElementProps<'div'> {
-  /** Gutter between columns, key of `theme.spacing` or any valid CSS value, `'md'` by default */
+  /** Gutter between columns, key of `theme.spacing` or any valid CSS value @default `'md'` */
   gutter?: StyleProp<MantineSpacing>;
 
-  /** Determines whether columns in the last row should expand to fill all available space, `false` by default */
+  /** If set, columns in the last row expand to fill all available space @default `false` */
   grow?: boolean;
 
-  /** Sets `justify-content`, `flex-start` by default */
+  /** Sets `justify-content` @default `flex-start` */
   justify?: React.CSSProperties['justifyContent'];
 
-  /** Sets `align-items`, `stretch` by default */
+  /** Sets `align-items` @default `stretch` */
   align?: React.CSSProperties['alignItems'];
 
-  /** Number of columns in each row, `12` by default */
+  /** Number of columns in each row @default `12` */
   columns?: number;
 
-  /** Sets `overflow` CSS property on the root element, `'visible'` by default */
+  /** Sets `overflow` CSS property on the root element @default `'visible'` */
   overflow?: React.CSSProperties['overflow'];
 
-  /** Determines typeof of queries that are used for responsive styles, `'media'` by default */
+  /** Type of queries used for responsive styles @default `'media'` */
   type?: 'media' | 'container';
 
-  /** Breakpoints values, only applicable when `type="container"` is set, ignored when `type` is not set or `type="media"` is set. */
+  /** Breakpoints values, only used with `type="container"` */
   breakpoints?: GridBreakpoints;
 }
 
@@ -89,6 +89,7 @@ export const Grid = factory<GridFactory>((_props, ref) => {
     children,
     breakpoints,
     type,
+    attributes,
     ...others
   } = props;
 
@@ -101,6 +102,7 @@ export const Grid = factory<GridFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

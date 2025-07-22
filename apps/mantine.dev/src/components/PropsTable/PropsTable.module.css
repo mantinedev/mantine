@@ -1,0 +1,9 @@
+.propName {
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 12px;
+
+  &[data-deprecated] {
+    color: var(--mantine-color-dimmed);
+    text-decoration: line-through;
+  }
+}

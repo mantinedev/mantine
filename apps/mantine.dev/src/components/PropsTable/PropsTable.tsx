@@ -1,15 +1,13 @@
 import { Highlight, Table, Text } from '@mantine/core';
 import docgenData from '@/.docgen/docgen.json';
-import { DocsSection } from '@/components/DocsSection';
 import { HtmlText } from '@/components/HtmlText';
 import { TableError } from '@/components/TableError';
 import { TableInlineCode } from '@/components/TableInlineCode';
-import { REPLACE_TYPES } from './replace-types';
+import { prepareType } from './replace-types';
+import classes from './PropsTable.module.css';
 
 export interface DocgenProp {
-  defaultValue: {
-    value: string;
-  };
+  defaultValue: string | null;
   description: string;
   name: string;
   required: boolean;
@@ -44,14 +42,19 @@ export function PropsTable({ component, query }: PropsTableProps) {
       const prop = PROPS_DATA[component].props[propKey];
 
       return (
-        <Table.Tr key={propKey}>
+        <Table.Tr key={propKey} data-props-table-row>
           <Table.Td style={{ whiteSpace: 'nowrap' }}>
-            <Highlight highlight={query} component="span" fz="sm">
+            <Highlight
+              className={classes.propName}
+              highlight={query}
+              component="span"
+              data-deprecated={prop.description.includes('@deprecated') || undefined}
+            >
               {prop.name}
             </Highlight>
 
             {prop.required && (
-              <Text component="sup" c="red" fz="xs">
+              <Text component="sup" c="red" className={classes.propName}>
                 {' '}
                 *
               </Text>
@@ -59,42 +62,34 @@ export function PropsTable({ component, query }: PropsTableProps) {
           </Table.Td>
 
           <Table.Td>
-            <TableInlineCode>
-              {prop.type.name in REPLACE_TYPES ? REPLACE_TYPES[prop.type.name] : prop.type.name}
-            </TableInlineCode>
+            <TableInlineCode>{prepareType(prop.type.name)}</TableInlineCode>
           </Table.Td>
           <Table.Td>
             <HtmlText fz="sm">{prop.description}</HtmlText>
+            {prop.defaultValue && (
+              <HtmlText fz="sm" display="block">{`Default value: ${prop.defaultValue}`}</HtmlText>
+            )}
           </Table.Td>
         </Table.Tr>
       );
     });
 
-  if (rows.length === 0) {
-    return (
-      <Text c="dimmed" mb="xl" fz="sm">
-        Nothing found
-      </Text>
-    );
-  }
-
   return (
-    <DocsSection>
-      <Table.ScrollContainer
-        minWidth={800}
-        style={{ maxWidth: 'var(--docs-full-mdx-content-width)' }}
-      >
-        <Table layout="fixed">
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th w={210}>Name</Table.Th>
-              <Table.Th w={310}>Type</Table.Th>
-              <Table.Th>Description</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>{rows}</Table.Tbody>
-        </Table>
-      </Table.ScrollContainer>
-    </DocsSection>
+    <Table.ScrollContainer
+      minWidth={800}
+      style={{ maxWidth: 'var(--docs-full-mdx-content-width)' }}
+      data-visible={rows.length > 0 || undefined}
+    >
+      <Table layout="fixed">
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th w={210}>Name</Table.Th>
+            <Table.Th w={310}>Type</Table.Th>
+            <Table.Th>Description</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>{rows}</Table.Tbody>
+      </Table>
+    </Table.ScrollContainer>
   );
 }

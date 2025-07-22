@@ -43,7 +43,7 @@ export interface StepperStepProps
   extends BoxProps,
     CompoundStylesApiProps<StepperStepFactory>,
     ElementProps<'button'> {
-  /** Step index, controlled by Stepper component **/
+  /** Step index, controlled by Stepper component */
   step?: number;
 
   /** Step state, controlled by Stepper component */
@@ -55,7 +55,7 @@ export interface StepperStepProps
   /** Determines whether the icon should be displayed */
   withIcon?: boolean;
 
-  /** Step icon, defaults to step index + 1 when rendered within Stepper */
+  /** Step icon, defaults to `step index + 1` when rendered within Stepper */
   icon?: React.ReactNode | StepFragmentComponent;
 
   /** Step icon displayed when step is completed */

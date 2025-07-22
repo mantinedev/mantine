@@ -12,10 +12,10 @@ import classes from '../Card.module.css';
 export type CardSectionStylesNames = 'section';
 
 export interface CardSectionProps extends BoxProps, CompoundStylesApiProps<CardSectionFactory> {
-  /** Determines whether the section should have a border, `false` by default */
+  /** Adds border to the root element */
   withBorder?: boolean;
 
-  /** Determines whether the section should inherit padding from the parent `Card`, `false` by default */
+  /** If set, the section inherits padding from the parent `Card` */
   inheritPadding?: boolean;
 }
 
@@ -27,10 +27,8 @@ export type CardSectionFactory = PolymorphicFactory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<CardSectionProps>;
-
 export const CardSection = polymorphicFactory<CardSectionFactory>((_props, ref) => {
-  const props = useProps('CardSection', defaultProps, _props);
+  const props = useProps('CardSection', null, _props);
   const { classNames, className, style, styles, vars, withBorder, inheritPadding, mod, ...others } =
     props;
   const ctx = useCardContext();

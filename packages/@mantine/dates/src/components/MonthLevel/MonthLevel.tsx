@@ -20,7 +20,7 @@ import { Month, MonthSettings, MonthStylesNames } from '../Month';
 export type MonthLevelStylesNames = MonthStylesNames | CalendarHeaderStylesNames;
 
 export interface MonthLevelBaseSettings extends MonthSettings {
-  /** dayjs label format to display month label or a function that returns month label based on month value, `"MMMM YYYY"` */
+  /** dayjs label format to display month label or a function that returns month label based on month value @default `"MMMM YYYY"` */
   monthLabelFormat?: DateLabelFormat;
 }
 
@@ -106,6 +106,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
     __staticSelector,
     size,
     static: isStatic,
+    attributes,
     ...others
   } = props;
 
@@ -117,6 +118,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
     styles,
     unstyled,
     size,
+    attributes,
   };
 
   const _nextDisabled =

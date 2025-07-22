@@ -18,7 +18,7 @@ export interface ComboboxOptionsProps
   extends BoxProps,
     CompoundStylesApiProps<ComboboxOptionsFactory>,
     ElementProps<'div'> {
-  /** Id of the element that should label the options list */
+  /** Id of the element that labels the options list */
   labelledBy?: string;
 }
 
@@ -29,10 +29,8 @@ export type ComboboxOptionsFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<ComboboxOptionsProps>;
-
 export const ComboboxOptions = factory<ComboboxOptionsFactory>((_props, ref) => {
-  const props = useProps('ComboboxOptions', defaultProps, _props);
+  const props = useProps('ComboboxOptions', null, _props);
   const { classNames, className, style, styles, id, onMouseDown, labelledBy, ...others } = props;
   const ctx = useComboboxContext();
   const _id = useId(id);

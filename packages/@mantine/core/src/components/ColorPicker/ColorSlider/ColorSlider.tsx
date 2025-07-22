@@ -53,10 +53,8 @@ export type ColorSliderFactory = Factory<{
   stylesNames: ColorSliderStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<ColorSliderProps>;
-
 export const ColorSlider = factory<ColorSliderFactory>((_props, ref) => {
-  const props = useProps('ColorSlider', defaultProps, _props);
+  const props = useProps('ColorSlider', null, _props);
   const {
     classNames,
     className,
@@ -76,6 +74,7 @@ export const ColorSlider = factory<ColorSliderFactory>((_props, ref) => {
     onScrubStart,
     onScrubEnd,
     __staticSelector = 'ColorPicker',
+    attributes,
     ...others
   } = props;
 
@@ -88,6 +87,7 @@ export const ColorSlider = factory<ColorSliderFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
   });
 
   const ctxGetStyles = useColorPickerContext()?.getStyles;

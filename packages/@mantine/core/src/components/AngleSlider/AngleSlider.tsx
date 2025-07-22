@@ -24,13 +24,13 @@ export interface AngleSliderProps
   extends BoxProps,
     StylesApiProps<AngleSliderFactory>,
     ElementProps<'div', 'onChange'> {
-  /** Step between values, used when the component is controlled with keyboard, `1` by default */
+  /** Step between values @default `1` */
   step?: number;
 
-  /** Value of the controlled component */
+  /** Controlled component value */
   value?: number;
 
-  /** Default value for uncontrolled component */
+  /** Uncontrolled component default value */
   defaultValue?: number;
 
   /** Called on value change */
@@ -39,31 +39,31 @@ export interface AngleSliderProps
   /** Called after the selection is finished */
   onChangeEnd?: (value: number) => void;
 
-  /** Called in `onMouseDown` and `onTouchStart` events */
+  /** Called in `onMouseDown` and `onTouchStart` */
   onScrubStart?: () => void;
 
-  /** Called in `onMouseUp` and `onTouchEnd` events */
+  /** Called in `onMouseUp` and `onTouchEnd` */
   onScrubEnd?: () => void;
 
-  /** Determines whether the label should be displayed inside the slider, `true` by default */
+  /** If set, the label is displayed inside the slider @default `true` */
   withLabel?: boolean;
 
-  /** Array of marks that are displayed on the slider */
+  /** Array of marks displayed on the slider */
   marks?: { value: number; label?: string }[];
 
-  /** Slider size in px, `60px` */
+  /** Slider size in px @default `60px` */
   size?: number;
 
-  /** Size of the thumb in px, by default is calculated based on the `size` value */
+  /** Size of the thumb in px. Calculated based on the `size` value by default. */
   thumbSize?: number;
 
-  /** Formats label based on the current value */
+  /** A function to format label based on the current value */
   formatLabel?: (value: number) => React.ReactNode;
 
-  /** Disables interactions */
+  /** Sets `data-disabled` attribute, disables interactions */
   disabled?: boolean;
 
-  /** Determines whether the selection should be only allowed from the given marks array, `false` by default */
+  /** If set, the selection is allowed only from the given marks array @default `false` */
   restrictToMarks?: boolean;
 
   /** Props passed down to the hidden input */
@@ -120,6 +120,8 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     tabIndex,
     onScrubStart,
     onScrubEnd,
+    mod,
+    attributes,
     ...others
   } = props;
 
@@ -133,7 +135,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
   });
 
   const update = (val: number) => {
-    if (rootRef.current) {
+    if (rootRef.current && !disabled) {
       const newValue =
         restrictToMarks && Array.isArray(marks)
           ? findClosestNumber(
@@ -162,6 +164,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -174,10 +177,12 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     let newValue = _value;
 
     if (event.key === 'ArrowLeft' || event.key === 'ArrowDown') {
+      event.preventDefault();
       newValue = normalizeRadialValue(_value - step, step);
     }
 
     if (event.key === 'ArrowRight' || event.key === 'ArrowUp') {
+      event.preventDefault();
       newValue = normalizeRadialValue(_value + step, step);
     }
 
@@ -222,6 +227,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     <Box
       ref={useMergedRef(ref, rootRef, radialMoveRef)}
       {...getStyles('root', { focusable: true })}
+      mod={[{ disabled }, mod]}
       {...others}
     >
       {marksItems && marksItems.length > 0 && <div {...getStyles('marks')}>{marksItems}</div>}

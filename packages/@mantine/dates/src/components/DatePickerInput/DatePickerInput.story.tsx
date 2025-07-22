@@ -15,6 +15,7 @@ import {
   SimpleGrid,
   Slider,
   Stack,
+  TextInput,
 } from '@mantine/core';
 import { DatesProvider } from '../DatesProvider';
 import { DatePickerInput } from './DatePickerInput';
@@ -26,7 +27,9 @@ export function Usage() {
     <div style={{ padding: 40, maxWidth: 400 }}>
       <DatePickerInput
         placeholder="Date picker input"
+        onDropdownClose={() => console.log('Dropdown closed')}
         presets={[
+          { value: null, label: 'Clear' },
           { value: dayjs().subtract(1, 'day').format('YYYY-MM-DD'), label: 'Yesterday' },
           { value: dayjs().format('YYYY-MM-DD'), label: 'Today' },
           { value: dayjs().add(1, 'day').format('YYYY-MM-DD'), label: 'Tomorrow' },
@@ -37,6 +40,15 @@ export function Usage() {
         ]}
       />
     </div>
+  );
+}
+
+export function XsSize() {
+  return (
+    <Group p={40} align="flex-start">
+      <DatePickerInput size="xs" placeholder="Pick date" />
+      <TextInput size="xs" placeholder="Text input" />
+    </Group>
   );
 }
 

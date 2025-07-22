@@ -82,7 +82,7 @@ function AccordionLabel({ label, image, description }: AccordionLabelProps) {
 function Demo() {
   const items = charactersList.map((item) => (
     <Accordion.Item value={item.id} key={item.label}>
-      <Accordion.Control>
+      <Accordion.Control aria-label={item.label}>
         <AccordionLabel {...item} />
       </Accordion.Control>
       <Accordion.Panel>
@@ -92,7 +92,7 @@ function Demo() {
   ));
 
   return (
-    <Accordion chevronPosition="right" variant="contained">
+    <Accordion chevronPosition="right" variant="contained" radius="md">
       {items}
     </Accordion>
   );
@@ -122,7 +122,7 @@ function AccordionLabel({ label, image, description }: AccordionLabelProps) {
 export function AccordionDemo(props: Partial<AccordionProps>) {
   const items = charactersList.map((item) => (
     <Accordion.Item value={item.id} key={item.label}>
-      <Accordion.Control>
+      <Accordion.Control aria-label={item.label}>
         <AccordionLabel {...item} />
       </Accordion.Control>
       <Accordion.Panel>
@@ -132,7 +132,7 @@ export function AccordionDemo(props: Partial<AccordionProps>) {
   ));
 
   return (
-    <Accordion chevronPosition="right" variant="contained" {...props}>
+    <Accordion chevronPosition="right" variant="contained" radius="md" {...props}>
       {items}
     </Accordion>
   );
@@ -148,4 +148,5 @@ export const label: MantineDemo = {
   component: Demo,
   maxWidth: 540,
   centered: true,
+  defaultExpanded: false,
 };

@@ -35,22 +35,22 @@ export interface ThemeIconProps
   extends BoxProps,
     StylesApiProps<ThemeIconFactory>,
     ElementProps<'div'> {
-  /** Controls width and height of the button. Numbers are converted to rem. `'md'` by default. */
+  /** Controls width and height of the button. Numbers are converted to rem. @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
-  /** Key of `theme.colors` or any valid CSS color. Default value is `theme.primaryColor`.  */
+  /** Key of `theme.colors` or any valid CSS color. @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. `theme.defaultRadius` by default. */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Gradient data used when `variant="gradient"`, default value is `theme.defaultGradient` */
+  /** Gradient data used when `variant="gradient"` @default `theme.defaultGradient` */
   gradient?: MantineGradient;
 
   /** Icon displayed inside the component */
   children?: React.ReactNode;
 
-  /** Determines whether button text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 }
 
@@ -61,8 +61,6 @@ export type ThemeIconFactory = Factory<{
   vars: ThemeIconCssVariables;
   variant: ThemeIconVariant;
 }>;
-
-const defaultProps = {} satisfies Partial<ThemeIconProps>;
 
 const varsResolver = createVarsResolver<ThemeIconFactory>(
   (theme, { size, radius, variant, gradient, color, autoContrast }) => {
@@ -87,8 +85,18 @@ const varsResolver = createVarsResolver<ThemeIconFactory>(
 );
 
 export const ThemeIcon = factory<ThemeIconFactory>((_props, ref) => {
-  const props = useProps('ThemeIcon', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, autoContrast, ...others } = props;
+  const props = useProps('ThemeIcon', null, _props);
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    autoContrast,
+    attributes,
+    ...others
+  } = props;
 
   const getStyles = useStyles<ThemeIconFactory>({
     name: 'ThemeIcon',
@@ -99,6 +107,7 @@ export const ThemeIcon = factory<ThemeIconFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

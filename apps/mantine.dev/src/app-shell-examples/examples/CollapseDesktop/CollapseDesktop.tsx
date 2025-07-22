@@ -1,6 +1,5 @@
-import { AppShell, Burger, Group, Skeleton } from '@mantine/core';
+import { AppShell, Burger, Group, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineLogo } from '@mantinex/mantine-logo';
 
 export function CollapseDesktop() {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
@@ -8,30 +7,31 @@ export function CollapseDesktop() {
 
   return (
     <AppShell
+      padding="md"
       header={{ height: 60 }}
       navbar={{
         width: 300,
         breakpoint: 'sm',
         collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
       }}
-      padding="md"
     >
       <AppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom="sm" size="sm" />
           <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom="sm" size="sm" />
-          <MantineLogo size={30} />
+          The burger icon is always visible
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">
-        Navbar
-        {Array(15)
-          .fill(0)
-          .map((_, index) => (
-            <Skeleton key={index} h={28} mt="sm" animate={false} />
-          ))}
+        You can collapse the Navbar both on desktop and mobile. After sm breakpoint, the navbar is
+        no longer offset by padding in the main element and it takes the full width of the screen
+        when opened.
       </AppShell.Navbar>
-      <AppShell.Main>Main</AppShell.Main>
+      <AppShell.Main>
+        <Text>This is the main section, your app content here.</Text>
+        <Text>The navbar is collapsible both on mobile and desktop. Nice!</Text>
+        <Text>Mobile and desktop opened state can be managed separately.</Text>
+      </AppShell.Main>
     </AppShell>
   );
 }

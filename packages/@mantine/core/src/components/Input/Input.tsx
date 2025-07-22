@@ -30,9 +30,12 @@ import {
 } from './InputWrapper/InputWrapper';
 import classes from './Input.module.css';
 
-export interface __BaseInputProps extends __InputWrapperProps, Omit<__InputProps, 'wrapperProps'> {
+// Required to be a separate type for docgen script
+type WrapperProps = React.ComponentPropsWithoutRef<'div'> & DataAttributes;
+
+export interface __BaseInputProps extends __InputWrapperProps, __InputProps {
   /** Props passed down to the root element */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
+  wrapperProps?: WrapperProps;
 }
 
 export type __InputStylesNames = InputStylesNames | InputWrapperStylesNames;
@@ -59,7 +62,7 @@ export interface InputStylesCtx {
 }
 
 export interface __InputProps {
-  /** Content section rendered on the left side of the input */
+  /** Content section displayed on the left side of the input */
   leftSection?: React.ReactNode;
 
   /** Left section width, used to set `width` of the section and input `padding-left`, by default equals to the input height */
@@ -68,10 +71,10 @@ export interface __InputProps {
   /** Props passed down to the `leftSection` element */
   leftSectionProps?: React.ComponentPropsWithoutRef<'div'>;
 
-  /** Sets `pointer-events` styles on the `leftSection` element, `'none'` by default */
+  /** Sets `pointer-events` styles on the `leftSection` element @default `'none'` */
   leftSectionPointerEvents?: React.CSSProperties['pointerEvents'];
 
-  /** Content section rendered on the right side of the input */
+  /** Content section displayed on the right side of the input */
   rightSection?: React.ReactNode;
 
   /** Right section width, used to set `width` of the section and input `padding-right`, by default equals to the input height */
@@ -80,31 +83,28 @@ export interface __InputProps {
   /** Props passed down to the `rightSection` element */
   rightSectionProps?: React.ComponentPropsWithoutRef<'div'>;
 
-  /** Sets `pointer-events` styles on the `rightSection` element, `'none'` by default */
+  /** Sets `pointer-events` styles on the `rightSection` element @default `'none'` */
   rightSectionPointerEvents?: React.CSSProperties['pointerEvents'];
-
-  /** Props passed down to the root element of the `Input` component */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 
   /** Sets `required` attribute on the `input` element */
   required?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Sets `disabled` attribute on the `input` element */
   disabled?: boolean;
 
-  /** Controls input `height` and horizontal `padding`, `'sm'` by default */
+  /** Controls input `height` and horizontal `padding` @default `'sm'` */
   size?: MantineSize | (string & {});
 
-  /** Determines whether the input should have `cursor: pointer` style, `false` by default */
+  /** Determines whether the input should have `cursor: pointer` style @default `false` */
   pointer?: boolean;
 
-  /** Determines whether the input should have red border and red text color when the `error` prop is set, `true` by default */
+  /** Determines whether the input should have red border and red text color when the `error` prop is set @default `true` */
   withErrorStyles?: boolean;
 
-  /** `size` prop added to the input element */
+  /** `size` attribute passed down to the input element */
   inputSize?: string;
 
   /** Section to be displayed when the input is `__clearable` and `rightSection` is not defined */
@@ -126,14 +126,17 @@ export interface InputProps extends BoxProps, __InputProps, StylesApiProps<Input
   /** Determines whether the input should have error styles and `aria-invalid` attribute */
   error?: React.ReactNode;
 
-  /** Determines whether the input can have multiple lines, for example when `component="textarea"`, `false` by default */
+  /** Determines whether the input can have multiple lines, for example when `component="textarea"` @default `false` */
   multiline?: boolean;
 
   /** Input element id */
   id?: string;
 
-  /** Determines whether `aria-` and other accessibility attributes should be added to the input, `true` by default */
+  /** Determines whether `aria-` and other accessibility attributes should be added to the input @default `true` */
   withAria?: boolean;
+
+  /** Props passed down to the root element of the `Input` component */
+  wrapperProps?: WrapperProps;
 }
 
 export type InputFactory = PolymorphicFactory<{
@@ -212,6 +215,7 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
     withErrorStyles,
     mod,
     inputSize,
+    attributes,
     __clearSection,
     __clearable,
     __defaultRightSection,
@@ -231,6 +235,7 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     stylesCtx,
     rootSelector: 'wrapper',
     vars,

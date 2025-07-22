@@ -27,7 +27,7 @@ export interface InputDescriptionProps
   __staticSelector?: string;
   __inheritStyles?: boolean;
 
-  /** Controls description `font-size`, `'sm'` by default */
+  /** Controls description `font-size` @default `'sm'` */
   size?: MantineFontSize;
 }
 
@@ -38,8 +38,6 @@ export type InputDescriptionFactory = Factory<{
   vars: InputDescriptionCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<InputDescriptionProps>;
-
 const varsResolver = createVarsResolver<InputDescriptionFactory>((_, { size }) => ({
   description: {
     '--input-description-size':
@@ -48,7 +46,7 @@ const varsResolver = createVarsResolver<InputDescriptionFactory>((_, { size }) =
 }));
 
 export const InputDescription = factory<InputDescriptionFactory>((_props, ref) => {
-  const props = useProps('InputDescription', defaultProps, _props);
+  const props = useProps('InputDescription', null, _props);
   const {
     classNames,
     className,
@@ -59,9 +57,10 @@ export const InputDescription = factory<InputDescriptionFactory>((_props, ref) =
     size,
     __staticSelector,
     __inheritStyles = true,
+    attributes,
     variant,
     ...others
-  } = useProps('InputDescription', defaultProps, props);
+  } = useProps('InputDescription', null, props);
   const ctx = useInputWrapperContext();
 
   const _getStyles = useStyles<InputDescriptionFactory>({
@@ -73,6 +72,7 @@ export const InputDescription = factory<InputDescriptionFactory>((_props, ref) =
     classNames,
     styles,
     unstyled,
+    attributes,
     rootSelector: 'description',
     vars,
     varsResolver,

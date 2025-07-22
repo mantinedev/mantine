@@ -13,6 +13,7 @@ function Demo() {
   return (
     <Box maw={400} mx="auto">
       <Slider value={value} onChange={setValue} onChangeEnd={setEndValue} />
+
       <Text mt="md" size="sm">
         onChange value: <b>{value}</b>
       </Text>
@@ -31,6 +32,7 @@ function Demo() {
   return (
     <Box maw={400} mx="auto">
       <Slider value={value} onChange={setValue} onChangeEnd={setEndValue} />
+
       <Text mt="md" size="sm">
         onChange value: <b>{value}</b>
       </Text>

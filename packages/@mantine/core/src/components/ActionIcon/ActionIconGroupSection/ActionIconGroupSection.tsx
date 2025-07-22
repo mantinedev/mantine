@@ -34,16 +34,16 @@ export interface ActionIconGroupSectionProps
   extends BoxProps,
     StylesApiProps<ActionIconGroupSectionFactory>,
     ElementProps<'div'> {
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Gradient configuration used when `variant="gradient"`, default value is `theme.defaultGradient` */
+  /** Gradient values used with `variant="gradient"`. @default `theme.defaultGradient` */
   gradient?: MantineGradient;
 
-  /** Determines whether section text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 
-  /** Controls section `height`, `font-size` and horizontal `padding`, `'sm'` by default */
+  /** Controls section `height`, `font-size` and horizontal `padding` @default `'sm'` */
   size?: MantineSize | (string & {}) | number;
 }
 
@@ -54,8 +54,6 @@ export type ActionIconGroupSectionFactory = Factory<{
   vars: ActionIconGroupSectionCssVariables;
   variant: ActionIconVariant;
 }>;
-
-const defaultProps = {} satisfies Partial<ActionIconGroupSectionProps>;
 
 const varsResolver = createVarsResolver<ActionIconGroupSectionFactory>(
   (theme, { radius, color, gradient, variant, autoContrast, size }) => {
@@ -82,7 +80,7 @@ const varsResolver = createVarsResolver<ActionIconGroupSectionFactory>(
 );
 
 export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>((_props, ref) => {
-  const props = useProps('ActionIconGroupSection', defaultProps, _props);
+  const props = useProps('ActionIconGroupSection', null, _props);
   const {
     className,
     style,
@@ -94,8 +92,9 @@ export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>((_p
     gradient,
     radius,
     autoContrast,
+    attributes,
     ...others
-  } = useProps('ActionIconGroupSection', defaultProps, _props);
+  } = props;
 
   const getStyles = useStyles<ActionIconGroupSectionFactory>({
     name: 'ActionIconGroupSection',
@@ -106,6 +105,7 @@ export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>((_p
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'groupSection',

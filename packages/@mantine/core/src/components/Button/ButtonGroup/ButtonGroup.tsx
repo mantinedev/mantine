@@ -20,10 +20,10 @@ export interface ButtonGroupProps extends BoxProps, StylesApiProps<ButtonGroupFa
   /** `Button` components */
   children?: React.ReactNode;
 
-  /** Orientation of the group, `horizontal` by default */
+  /** Orientation of the group @default `horizontal` */
   orientation?: 'horizontal' | 'vertical';
 
-  /** `border-width` of the child `Button` components. Numbers are converted to rem. Default value in `1`. */
+  /** `border-width` of the child `Button` components. Numbers are converted to rem. @default `1` */
   borderWidth?: number | string;
 }
 
@@ -55,6 +55,7 @@ export const ButtonGroup = factory<ButtonGroupFactory>((_props, ref) => {
     borderWidth,
     variant,
     mod,
+    attributes,
     ...others
   } = useProps('ButtonGroup', defaultProps, _props);
 
@@ -67,6 +68,7 @@ export const ButtonGroup = factory<ButtonGroupFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'group',

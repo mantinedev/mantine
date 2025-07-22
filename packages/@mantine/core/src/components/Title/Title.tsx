@@ -25,16 +25,16 @@ export interface TitleProps
   extends BoxProps,
     StylesApiProps<TitleFactory>,
     ElementProps<'h1', 'color'> {
-  /** Determines which tag will be used (h1-h6), controls `font-size` style if `size` prop is not set, `1` by default */
+  /** Heading order (1-6), controls `font-size` style if `size` prop is not set @default `1` */
   order?: TitleOrder;
 
   /** Changes title size, if not set, then size is controlled by `order` prop */
   size?: TitleSize;
 
-  /** Number of lines after which Text will be truncated */
+  /** Number of lines after which heading will be truncated */
   lineClamp?: number;
 
-  /** Controls `text-wrap` property, `'wrap'` by default */
+  /** Heading `text-wrap` CSS property @default `'wrap'` */
   textWrap?: 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable';
 }
 
@@ -77,6 +77,7 @@ export const Title = factory<TitleFactory>((_props, ref) => {
     lineClamp,
     textWrap,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -89,6 +90,7 @@ export const Title = factory<TitleFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

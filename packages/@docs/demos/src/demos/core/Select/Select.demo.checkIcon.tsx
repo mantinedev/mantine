@@ -30,6 +30,7 @@ function Wrapper(props: any) {
       label="Control check icon"
       placeholder="Pick value"
       defaultValue="React"
+      comboboxProps={{ hideDetached: false }}
     />
   );
 }

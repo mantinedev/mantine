@@ -25,13 +25,13 @@ export interface InputLabelProps
     ElementProps<'label'> {
   __staticSelector?: string;
 
-  /** Determines whether the required asterisk should be displayed  */
+  /** If set, the required asterisk is displayed next to the label */
   required?: boolean;
 
-  /** Controls label `font-size`, `'sm'` by default */
+  /** Controls label `font-size` @default `'sm'` */
   size?: MantineFontSize;
 
-  /** Root element of the label, `'label'` by default */
+  /** Root element of the label @default `'label'` */
   labelElement?: 'label' | 'div';
 }
 
@@ -71,6 +71,7 @@ export const InputLabel = factory<InputLabelFactory>((_props, ref) => {
     __staticSelector,
     variant,
     mod,
+    attributes,
     ...others
   } = useProps('InputLabel', defaultProps, props);
 
@@ -83,6 +84,7 @@ export const InputLabel = factory<InputLabelFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     rootSelector: 'label',
     vars,
     varsResolver,

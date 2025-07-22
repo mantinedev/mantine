@@ -6,7 +6,7 @@ import {
   MantineShadow,
   Styles,
 } from '../../core';
-import { ArrowPosition, FloatingPosition, FloatingStrategy } from '../Floating';
+import { ArrowPosition, FloatingPosition, FloatingStrategy } from '../../utils/Floating';
 import { BasePortalProps } from '../Portal';
 import { TransitionOverride } from '../Transition';
 import type { PopoverFactory } from './Popover';

@@ -16,7 +16,7 @@ import {
   type Middleware,
 } from '@floating-ui/react';
 import { useDidUpdate, useId } from '@mantine/hooks';
-import { FloatingAxesOffsets, FloatingPosition, FloatingStrategy } from '../Floating';
+import { FloatingAxesOffsets, FloatingPosition, FloatingStrategy } from '../../utils/Floating';
 import { type TooltipMiddlewares } from './Tooltip.types';
 import { useTooltipGroupContext } from './TooltipGroup/TooltipGroup.context';
 

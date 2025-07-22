@@ -33,16 +33,16 @@ export interface PasswordInputProps
     __BaseInputProps,
     StylesApiProps<PasswordInputFactory>,
     ElementProps<'input', 'size'> {
-  /** A component to replace visibility toggle icon */
+  /** A component to replace the visibility toggle icon */
   visibilityToggleIcon?: React.FC<{ reveal: boolean }>;
 
   /** Props passed down to the visibility toggle button */
   visibilityToggleButtonProps?: Record<string, any>;
 
-  /** Determines whether input content should be visible */
+  /** If set, the input value is visible visible */
   visible?: boolean;
 
-  /** Determines whether input content should be visible by default */
+  /** If set, the input value is visible by default */
   defaultVisible?: boolean;
 
   /** Called when visibility changes */
@@ -108,6 +108,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
     leftSectionPointerEvents,
     withErrorStyles,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -131,6 +132,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -202,11 +204,12 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
       descriptionProps={{ ...descriptionProps, id: descriptionId }}
       errorProps={{ ...errorProps, id: errorId }}
       mod={mod}
+      attributes={attributes}
       {...getStyles('root')}
       {...styleProps}
       {...wrapperProps}
     >
-      <Input<'div'>
+      <Input
         component="div"
         error={error}
         leftSection={leftSection}
@@ -227,6 +230,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
         leftSectionPointerEvents={leftSectionPointerEvents}
         withAria={false}
         withErrorStyles={withErrorStyles}
+        attributes={attributes}
       >
         <input
           required={required}

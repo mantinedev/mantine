@@ -95,22 +95,22 @@ export interface NumberInputProps
   /** Called when value changes with `react-number-format` payload */
   onValueChange?: OnValueChange;
 
-  /** Determines whether leading zeros are allowed. If set to `false`, leading zeros are removed when the input value becomes a valid number. `true` by default */
+  /** Determines whether leading zeros are allowed. If set to `false`, leading zeros are removed when the input value becomes a valid number. @default `true` */
   allowLeadingZeros?: boolean;
 
-  /** Determines whether negative values are allowed, `true` by default */
+  /** If set, negative values are allowed @default `true` */
   allowNegative?: boolean;
 
-  /** Characters which when pressed result in a decimal separator, `['.']` by default */
+  /** Characters which when pressed result in a decimal separator @default `['.']` */
   allowedDecimalSeparators?: string[];
 
-  /** Limits the number of digits that can be entered after the decimal point */
+  /** Limits the number of digits that can be entered after the decimal point @default `Infinity` */
   decimalScale?: number;
 
-  /** Character used as a decimal separator, `'.'` by default */
+  /** Character used as a decimal separator @default `'.'` */
   decimalSeparator?: string;
 
-  /** If set, 0s are added after `decimalSeparator` to match given `decimalScale`. `false` by default */
+  /** If set, 0s are added after `decimalSeparator` to match given `decimalScale`. @default `false` */
   fixedDecimalScale?: boolean;
 
   /** Prefix added before the input value */
@@ -125,10 +125,10 @@ export interface NumberInputProps
   /** A function to validate the input value. If this function returns `false`, the `onChange` will not be called and the input value will not change. */
   isAllowed?: (values: NumberFormatValues) => boolean;
 
-  /** If value is passed as string representation of numbers (unformatted) and number is used in any format props like in prefix or suffix in numeric format and format prop in pattern format then this should be passed as `true`. `false` by default. */
+  /** If value is passed as string representation of numbers (unformatted) and number is used in any format props like in prefix or suffix in numeric format and format prop in pattern format then this should be passed as `true`. @default `false` */
   valueIsNumericString?: boolean;
 
-  /** Controls input `type` attribute, `'text'` by default */
+  /** Controls input `type` attribute @default `'text'` */
   type?: 'text' | 'tel' | 'password';
 
   /** A character used to separate thousands */
@@ -140,22 +140,22 @@ export interface NumberInputProps
   /** Maximum possible value */
   max?: number;
 
-  /** Number by which value will be incremented/decremented with up/down controls and keyboard arrows, `1` by default */
+  /** Number by which value will be incremented/decremented with up/down controls and keyboard arrows @default `1` */
   step?: number;
 
-  /** Determines whether the up/down controls should be hidden, `false` by default */
+  /** If set, the up/down controls are hidden @default `false` */
   hideControls?: boolean;
 
   /** Controls how value is clamped, `strict` – user is not allowed to enter values that are not in `[min, max]` range, `blur` – user is allowed to enter any values, but the value is clamped when the input loses focus (default behavior), `none` – lifts all restrictions, `[min, max]` range is applied only for controls and up/down keys */
   clampBehavior?: 'strict' | 'blur' | 'none';
 
-  /** Determines whether decimal values are allowed, `true` by default */
+  /** If set, decimal values are allowed @default `true` */
   allowDecimal?: boolean;
 
   /** Increment/decrement handlers */
   handlersRef?: React.ForwardedRef<NumberInputHandlers | undefined>;
 
-  /** Value set to the input when increment/decrement buttons are clicked or up/down arrows pressed if the input is empty, `0` by default */
+  /** Value set to the input when increment/decrement buttons are clicked or up/down arrows pressed if the input is empty @default `0` */
   startValue?: number;
 
   /** Delay before stepping the value. Can be a number of milliseconds or a function that receives the current step count and returns the delay in milliseconds. */
@@ -164,10 +164,10 @@ export interface NumberInputProps
   /** Initial delay in milliseconds before stepping the value. */
   stepHoldDelay?: number;
 
-  /** Determines whether up/down keyboard events should be handled to increment/decrement value, `true` by default */
+  /** If set, up/down keyboard events increment/decrement value @default `true` */
   withKeyboardEvents?: boolean;
 
-  /** Determines whether leading zeros (e.g. `00100` -> `100`) should be removed on blur, `true` by default */
+  /** If set, leading zeros are removed on blur. For example, `00100` -> `100` @default `true` */
   trimLeadingZeroesOnBlur?: boolean;
 }
 
@@ -244,6 +244,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     allowLeadingZeros,
     withKeyboardEvents,
     trimLeadingZeroesOnBlur,
+    attributes,
     ...others
   } = props;
 
@@ -254,6 +255,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });
@@ -519,6 +521,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       rightSectionWidth={rightSectionWidth ?? `var(--ni-right-section-width-${size || 'sm'})`}
       allowLeadingZeros={allowLeadingZeros}
       onBlur={handleBlur}
+      attributes={attributes}
       isAllowed={(val) => {
         if (clampBehavior === 'strict') {
           if (isAllowed) {

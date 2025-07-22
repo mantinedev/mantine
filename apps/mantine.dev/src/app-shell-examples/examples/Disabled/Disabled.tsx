@@ -1,6 +1,5 @@
-import { AppShell, Burger, Button, Group, Skeleton } from '@mantine/core';
+import { AppShell, Burger, Button, Group, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineLogo } from '@mantinex/mantine-logo';
 
 export function Disabled() {
   const [opened, { toggle }] = useDisclosure();
@@ -16,19 +15,19 @@ export function Disabled() {
       <AppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <MantineLogo size={30} />
+          Header is hidden when disabled
         </Group>
       </AppShell.Header>
-      <AppShell.Navbar p="md">
-        Navbar
-        {Array(15)
-          .fill(0)
-          .map((_, index) => (
-            <Skeleton key={index} h={28} mt="sm" animate={false} />
-          ))}
-      </AppShell.Navbar>
+      <AppShell.Navbar p="md">Navbar is hidden when disabled</AppShell.Navbar>
       <AppShell.Main>
-        <Button onClick={toggleDisabled}>Toggle disabled</Button>
+        <Text>This is the main section, your app content here.</Text>
+        <Text>
+          When you set disabled prop on AppShell, all elements except AppShell.Main are hidden. Try
+          it out:
+        </Text>
+        <Button onClick={toggleDisabled} mt="md">
+          Toggle disabled
+        </Button>
       </AppShell.Main>
     </AppShell>
   );

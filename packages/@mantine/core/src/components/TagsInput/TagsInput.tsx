@@ -44,13 +44,13 @@ export interface TagsInputProps
     Omit<ComboboxLikeProps, 'data'>,
     StylesApiProps<TagsInputFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
-  /** Data displayed in the dropdown. Values must be unique, otherwise an error will be thrown and component will not render. */
+  /** Data displayed in the dropdown. Values must be unique. */
   data?: ComboboxStringData;
 
   /** Controlled component value */
   value?: string[];
 
-  /** Default value for uncontrolled component */
+  /** Uncontrolled component default value */
   defaultValue?: string[];
 
   /** Called when value changes */
@@ -71,10 +71,10 @@ export interface TagsInputProps
   /** Called when search changes */
   onSearchChange?: (value: string) => void;
 
-  /** Maximum number of tags, `Infinity` by default */
+  /** Maximum number of tags @default `Infinity` */
   maxTags?: number;
 
-  /** Determines whether duplicate tags are allowed, `false` by default */
+  /** If set, duplicate tags are allowed @default `false` */
   allowDuplicates?: boolean;
 
   /** Called when user tries to submit a duplicated tag */
@@ -83,16 +83,16 @@ export interface TagsInputProps
   /** Characters that should trigger tags split, `[',']` by default */
   splitChars?: string[];
 
-  /** Determines whether the clear button should be displayed in the right section when the component has value, `false` by default */
+  /** If set, the clear button is displayed in the right section when the component has value @default `false` */
   clearable?: boolean;
 
   /** Props passed down to the clear button */
-  clearButtonProps?: InputClearButtonProps & ElementProps<'button'>;
+  clearButtonProps?: InputClearButtonProps;
 
   /** Props passed down to the hidden input */
   hiddenInputProps?: Omit<React.ComponentPropsWithoutRef<'input'>, 'value'>;
 
-  /** Divider used to separate values in the hidden input `value` attribute, `','` by default */
+  /** Divider used to separate values in the hidden input `value` attribute @default `','` */
   hiddenInputValuesDivider?: string;
 
   /** A function to render content of the option, replaces the default content of the option */
@@ -101,7 +101,7 @@ export interface TagsInputProps
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** Determines whether the value typed in by the user but not submitted should be accepted when the input is blurred, `true` by default */
+  /** If set, the value typed in by the user but not submitted is accepted when the input is blurred @default `true` */
   acceptValueOnBlur?: boolean;
 
   /** Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. */
@@ -195,6 +195,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     scrollAreaProps,
     acceptValueOnBlur,
     isDuplicate,
+    attributes,
     ...others
   } = props;
 
@@ -351,6 +352,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       }}
       unstyled={unstyled}
       disabled={disabled}
+      attributes={attributes}
       {...getStyles('pill')}
     >
       {item}
@@ -386,6 +388,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
         size={size}
         readOnly={readOnly}
         __staticSelector="TagsInput"
+        attributes={attributes}
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
           handleSearchChange('');
@@ -433,6 +436,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
             __stylesApiProps={{ ...props, multiline: true }}
             id={_id}
             mod={mod}
+            attributes={attributes}
           >
             <Pill.Group disabled={disabled} unstyled={unstyled} {...getStyles('pillsList')}>
               {values}

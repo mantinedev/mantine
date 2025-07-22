@@ -41,8 +41,8 @@ export type TextCssVariables = {
 export interface TextProps extends BoxProps, StylesApiProps<TextFactory> {
   __staticSelector?: string;
 
-  /** Controls `font-size` and `line-height`, `'md'` by default */
-  size?: MantineFontSize & MantineLineHeight;
+  /** Controls `font-size` and `line-height` @default `'md'` */
+  size?: MantineFontSize | MantineLineHeight;
 
   /** Number of lines after which Text will be truncated */
   lineClamp?: number;
@@ -50,16 +50,16 @@ export interface TextProps extends BoxProps, StylesApiProps<TextFactory> {
   /** Side on which Text must be truncated, if `true`, text is truncated from the start */
   truncate?: TextTruncate;
 
-  /** Sets `line-height` to 1 for centering, `false` by default */
+  /** Sets `line-height` to 1 for centering @default `false` */
   inline?: boolean;
 
-  /** Determines whether font properties should be inherited from the parent, `false` by default */
+  /** Determines whether font properties should be inherited from the parent @default `false` */
   inherit?: boolean;
 
-  /** Gradient configuration, ignored when `variant` is not `gradient`, `theme.defaultGradient` by default */
+  /** Gradient configuration, ignored when `variant` is not `gradient` @default `theme.defaultGradient` */
   gradient?: MantineGradient;
 
-  /** Shorthand for `component="span"`, `false` by default, default root element is `p` */
+  /** Shorthand for `component="span"` */
   span?: boolean;
 
   /** @deprecated Use `c` prop instead */
@@ -112,6 +112,7 @@ export const Text = polymorphicFactory<TextFactory>((_props, ref) => {
     variant,
     mod,
     size,
+    attributes,
     ...others
   } = props;
 
@@ -124,6 +125,7 @@ export const Text = polymorphicFactory<TextFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

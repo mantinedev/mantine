@@ -67,3 +67,8 @@ export const Demo_offsetAxis = {
   name: '⭐ Demo: offsetAxis',
   render: renderDemo(demos.offsetAxis),
 };
+
+export const Demo_target = {
+  name: '⭐ Demo: target',
+  render: renderDemo(demos.target),
+};

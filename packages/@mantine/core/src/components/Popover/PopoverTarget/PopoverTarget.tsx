@@ -11,7 +11,7 @@ export interface PopoverTargetProps {
   /** Key of the prop that should be used to access element ref */
   refProp?: string;
 
-  /** Popup accessible type, `'dialog'` by default */
+  /** Popup accessible type @default `'dialog'` */
   popupType?: string;
 }
 
@@ -62,7 +62,14 @@ export const PopoverTarget = factory<PopoverTargetFactory>((props, ref) => {
       (children.props as any).className
     ),
     [refProp]: targetRef,
-    ...(!ctx.controlled ? { onClick: ctx.onToggle } : null),
+    ...(!ctx.controlled
+      ? {
+          onClick: () => {
+            ctx.onToggle();
+            (children.props as any).onClick?.();
+          },
+        }
+      : null),
   });
 });
 

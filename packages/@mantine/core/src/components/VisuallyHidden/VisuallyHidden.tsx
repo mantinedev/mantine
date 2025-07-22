@@ -23,11 +23,9 @@ export type VisuallyHiddenFactory = Factory<{
   stylesNames: VisuallyHiddenStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<VisuallyHiddenProps>;
-
 export const VisuallyHidden = factory<VisuallyHiddenFactory>((_props, ref) => {
-  const props = useProps('VisuallyHidden', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, ...others } = props;
+  const props = useProps('VisuallyHidden', null, _props);
+  const { classNames, className, style, styles, unstyled, vars, attributes, ...others } = props;
 
   const getStyles = useStyles<VisuallyHiddenFactory>({
     name: 'VisuallyHidden',
@@ -38,6 +36,7 @@ export const VisuallyHidden = factory<VisuallyHiddenFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
   });
 
   return <Box component="span" ref={ref} {...getStyles('root')} {...others} />;

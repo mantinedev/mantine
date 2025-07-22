@@ -27,10 +27,10 @@ export interface MantineProviderProps {
   /** CSS selector to which CSS variables should be added, `:root` by default */
   cssVariablesSelector?: string;
 
-  /** Determines whether theme CSS variables should be added to given `cssVariablesSelector`, `true` by default */
+  /** Determines whether theme CSS variables should be added to given `cssVariablesSelector` @default `true` */
   withCssVariables?: boolean;
 
-  /** Determines whether CSS variables should be deduplicated: if CSS variable has the same value as in default theme, it is not added in the runtime. `true` by default. */
+  /** Determines whether CSS variables should be deduplicated: if CSS variable has the same value as in default theme, it is not added in the runtime. @default `true`. */
   deduplicateCssVariables?: boolean;
 
   /** Function to resolve root element to set `data-mantine-color-scheme` attribute, must return undefined on server, `() => document.documentElement` by default */
@@ -45,10 +45,10 @@ export interface MantineProviderProps {
   /** Function to generate CSS variables based on theme object */
   cssVariablesResolver?: CSSVariablesResolver;
 
-  /** Determines whether components should have static classes, for example, `mantine-Button-root`. `true` by default */
+  /** Determines whether components should have static classes, for example, `mantine-Button-root`. @default `true` */
   withStaticClasses?: boolean;
 
-  /** Determines whether global classes should be added with `<style />` tag. Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work. `true` by default. */
+  /** Determines whether global classes should be added with `<style />` tag. Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work. @default `true`. */
   withGlobalClasses?: boolean;
 
   /** An object to transform `styles` and `sx` props into css classes, can be used with CSS-in-JS libraries */
@@ -129,9 +129,12 @@ export interface HeadlessMantineProviderProps {
 
   /** Your application */
   children?: React.ReactNode;
+
+  /** Environment at which the provider is used, `'test'` environment disables all transitions and portals */
+  env?: 'default' | 'test';
 }
 
-export function HeadlessMantineProvider({ children, theme }: HeadlessMantineProviderProps) {
+export function HeadlessMantineProvider({ children, theme, env }: HeadlessMantineProviderProps) {
   return (
     <MantineContext.Provider
       value={{
@@ -143,6 +146,7 @@ export function HeadlessMantineProvider({ children, theme }: HeadlessMantineProv
         cssVariablesSelector: ':root',
         withStaticClasses: false,
         headless: true,
+        env,
       }}
     >
       <MantineThemeProvider theme={theme}>{children}</MantineThemeProvider>

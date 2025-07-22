@@ -54,19 +54,19 @@ export interface TableOfContentsProps
   extends BoxProps,
     StylesApiProps<TableOfContentsFactory>,
     ElementProps<'div'> {
-  /** Key of `theme.colors` or any valid CSS color value, `theme.primaryColor` by default */
+  /** Key of `theme.colors` or any valid CSS color value @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Controls font-size and padding of all elements, `'md'` by default */
+  /** Controls font-size and padding of all elements @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
-  /** Determines whether text color with filled variant should depend on `background-color`. If luminosity of the `color` prop is less than `theme.luminosityThreshold`, then `theme.white` will be used for text color, otherwise `theme.black`. Overrides `theme.autoContrast`. */
+  /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 
   /** Options passed down to `use-scroll-spy` hook */
   scrollSpyOptions?: UseScrollSpyOptions;
 
-  /** Data used to render content until actual values are retrieved from the DOM, empty array by default */
+  /** Data used to render content until actual values are retrieved from the DOM */
   initialData?: InitialTableOfContentsData[];
 
   /** A function to pass props down to controls, accepts values from `use-scroll-spy` hook as an argument and active state. */
@@ -80,7 +80,7 @@ export interface TableOfContentsProps
   /** Controls padding on the left side of control, multiplied by (`depth` - `minDepthToOffset`), `20px` by default  */
   depthOffset?: number | string;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`@default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** A function to reinitialize headings from `use-scroll-spy` hook */
@@ -141,6 +141,7 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
     variant,
     radius,
     reinitializeRef,
+    attributes,
     ...others
   } = props;
 
@@ -153,6 +154,7 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

@@ -24,12 +24,10 @@ export type ComboboxFooterFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<ComboboxFooterProps>;
-
 export const ComboboxFooter = factory<ComboboxFooterFactory>((props, ref) => {
   const { classNames, className, style, styles, vars, ...others } = useProps(
     'ComboboxFooter',
-    defaultProps,
+    null,
     props
   );
 

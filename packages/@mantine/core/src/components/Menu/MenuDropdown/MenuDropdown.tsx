@@ -27,8 +27,6 @@ export type MenuDropdownFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<MenuDropdownProps>;
-
 export const MenuDropdown = factory<MenuDropdownFactory>((props, ref) => {
   const {
     classNames,
@@ -41,7 +39,7 @@ export const MenuDropdown = factory<MenuDropdownFactory>((props, ref) => {
     onKeyDown,
     children,
     ...others
-  } = useProps('MenuDropdown', defaultProps, props);
+  } = useProps('MenuDropdown', null, props);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const ctx = useMenuContext();

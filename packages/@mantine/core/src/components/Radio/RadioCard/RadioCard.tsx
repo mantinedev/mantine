@@ -28,10 +28,10 @@ export interface RadioCardProps
   /** Checked state */
   checked?: boolean;
 
-  /** Determines whether the card should have border, `true` by default */
+  /** Adds border to the root element */
   withBorder?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** Value of the checkbox, used with `Radio.Group` */
@@ -74,6 +74,7 @@ export const RadioCard = factory<RadioCardFactory>((_props, ref) => {
     onClick,
     name,
     onKeyDown,
+    attributes,
     ...others
   } = props;
 
@@ -86,6 +87,7 @@ export const RadioCard = factory<RadioCardFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
     rootSelector: 'card',

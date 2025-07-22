@@ -20,13 +20,13 @@ export type PaperCssVariables = {
 };
 
 export interface PaperBaseProps {
-  /** Key of `theme.shadows` or any valid CSS value to set `box-shadow`, `none` by default */
+  /** Key of `theme.shadows` or any valid CSS value to set `box-shadow` */
   shadow?: MantineShadow;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem, `theme.defaultRadius` by default */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** Determines whether the paper should have border, border color depends on color scheme, `false` by default */
+  /** Adds border to the root element */
   withBorder?: boolean;
 }
 
@@ -40,8 +40,6 @@ export type PaperFactory = PolymorphicFactory<{
   vars: PaperCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<PaperProps>;
-
 const varsResolver = createVarsResolver<PaperFactory>((_, { radius, shadow }) => ({
   root: {
     '--paper-radius': radius === undefined ? undefined : getRadius(radius),
@@ -50,7 +48,7 @@ const varsResolver = createVarsResolver<PaperFactory>((_, { radius, shadow }) =>
 }));
 
 export const Paper = polymorphicFactory<PaperFactory>((_props, ref) => {
-  const props = useProps('Paper', defaultProps, _props);
+  const props = useProps('Paper', null, _props);
   const {
     classNames,
     className,
@@ -63,6 +61,7 @@ export const Paper = polymorphicFactory<PaperFactory>((_props, ref) => {
     shadow,
     variant,
     mod,
+    attributes,
     ...others
   } = props;
 
@@ -75,6 +74,7 @@ export const Paper = polymorphicFactory<PaperFactory>((_props, ref) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

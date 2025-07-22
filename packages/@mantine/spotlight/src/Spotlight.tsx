@@ -45,10 +45,10 @@ export interface SpotlightProps extends SpotlightRootProps {
   /** Message displayed when none of the actions match given `filter` */
   nothingFound?: React.ReactNode;
 
-  /** Determines whether search query should be highlighted in action label, `false` by default */
+  /** Determines whether search query should be highlighted in action label @default `false` */
   highlightQuery?: boolean;
 
-  /** Maximum number of actions displayed at a time, `Infinity` by default */
+  /** Maximum number of actions displayed at a time @default `Infinity` */
   limit?: number;
 }
 

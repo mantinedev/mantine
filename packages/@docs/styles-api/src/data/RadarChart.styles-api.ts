@@ -13,6 +13,10 @@ export const RadarChartStylesApi: StylesApiData<RadarChartFactory> = {
     tooltipItemName: 'Tooltip item name',
     tooltipItemData: 'Tooltip item data',
     tooltipLabel: 'Label of the tooltip',
+    legend: 'Legend root element',
+    legendItem: 'Legend item representing data series',
+    legendItemColor: 'Legend item color',
+    legendItemName: 'Legend item name',
   },
 
   vars: {

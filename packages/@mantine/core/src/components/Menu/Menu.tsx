@@ -10,7 +10,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '../../core';
-import { useDelayedHover } from '../Floating';
+import { useDelayedHover } from '../../utils/Floating';
 import { __PopoverProps, Popover, PopoverStylesNames } from '../Popover';
 import { MenuContextProvider } from './Menu.context';
 import { MenuDivider } from './MenuDivider/MenuDivider';
@@ -38,7 +38,7 @@ export type MenuFactory = Factory<{
 export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
   variant?: string;
 
-  /** Menu content */
+  /** Menu children */
   children?: React.ReactNode;
 
   /** Controlled menu opened state */
@@ -47,7 +47,7 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
   /** Uncontrolled menu initial opened state */
   defaultOpened?: boolean;
 
-  /** Determines whether dropdown should trap focus of keyboard events */
+  /** If set, focus is trapped within the menu dropdown when it is opened */
   trapFocus?: boolean;
 
   /** Called when menu opened state changes */
@@ -59,37 +59,37 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
   /** Called when Menu is closed */
   onClose?: () => void;
 
-  /** Determines whether Menu should be closed when item is clicked */
+  /** If set, the Menu is closed when one of the items is clicked */
   closeOnItemClick?: boolean;
 
-  /** Determines whether arrow key presses should loop though items (first to last and last to first) */
+  /** If set, arrow key presses loop though items (first to last and last to first) */
   loop?: boolean;
 
-  /** Determines whether dropdown should be closed when Escape key is pressed */
+  /** If set, the dropdown is closed when the `Escape` key is pressed @default `true` */
   closeOnEscape?: boolean;
 
-  /** Event which should open menu */
+  /** Event trigger to open menu */
   trigger?: 'click' | 'hover' | 'click-hover';
 
-  /** Open delay in ms, applicable only to trigger="hover" variant */
+  /** Open delay in ms, applicable only to `trigger="hover"` variant */
   openDelay?: number;
 
-  /** Close delay in ms, applicable only to trigger="hover" variant */
+  /** Close delay in ms, applicable only to `trigger="hover"` variant */
   closeDelay?: number;
 
-  /** Determines whether dropdown should be closed on outside clicks */
+  /** If set, the dropdown is closed on outside clicks */
   closeOnClickOutside?: boolean;
 
-  /** Events that trigger outside clicks */
+  /** Events that trigger outside clicks @default `['mousedown', 'touchstart', 'keydown']` */
   clickOutsideEvents?: string[];
 
   /** Id base to create accessibility connections */
   id?: string;
 
-  /** Set the `tabindex` on all menu items. Defaults to -1 */
+  /** Set the `tabindex` on all menu items @default `-1` */
   menuItemTabIndex?: -1 | 0;
 
-  /** Determines whether focus placeholder element should be added before items, `true` by default */
+  /** If set, focus placeholder element is added before items @default `true` */
   withInitialFocusPlaceholder?: boolean;
 }
 
@@ -129,6 +129,7 @@ export function Menu(_props: MenuProps) {
     menuItemTabIndex,
     keepMounted,
     withInitialFocusPlaceholder,
+    attributes,
     ...others
   } = props;
 
@@ -139,6 +140,7 @@ export function Menu(_props: MenuProps) {
     classNames,
     styles,
     unstyled,
+    attributes,
   });
 
   const [_opened, setOpened] = useUncontrolled({

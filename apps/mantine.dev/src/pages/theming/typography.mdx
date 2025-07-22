@@ -13,7 +13,7 @@ You can change fonts and other text styles for headings, code and all other comp
 
 - `theme.fontFamily` – controls font-family in all components except [Title](/core/title/), [Code](/core/code/) and [Kbd](/core/kbd/)
 - `theme.fontFamilyMonospace` – controls font-family of components that require monospace font: [Code](/core/code/), [Kbd](/core/kbd/) and [CodeHighlight](/x/code-highlight/)
-- `theme.headings.fontFamily` – controls font-family of h1-h6 tags in [Title](/core/title/) and [TypographyStylesProvider](/core/typography-styles-provider/) components, fallbacks to `theme.fontFamily` if not defined
+- `theme.headings.fontFamily` – controls font-family of h1-h6 tags in [Title](/core/title/) and [Typography](/core/typography/) components, fallbacks to `theme.fontFamily` if not defined
 
 <Demo data={ThemingDemos.fonts} />
 
@@ -110,7 +110,7 @@ Default `theme.lineHeights` values:
 
 ## h1-h6 styles
 
-To customize headings styles in [Title](/core/title/) and [TypographyStylesProvider](/core/typography-styles-provider/) components
+To customize headings styles in [Title](/core/title/) and [Typography](/core/typography/) components
 set `theme.headings`:
 
 ```tsx

@@ -15,6 +15,7 @@ export * from './Input';
 export * from './InputBase';
 export * from './Flex';
 export * from './FloatingIndicator';
+export * from '../utils/Floating';
 
 // Regular components
 export * from './Accordion';
@@ -49,7 +50,6 @@ export * from './Drawer';
 export * from './Fieldset';
 export * from './FileButton';
 export * from './FileInput';
-export * from './Floating';
 export * from './FocusTrap';
 export * from './Grid';
 export * from './Highlight';
@@ -103,4 +103,4 @@ export * from './Title';
 export * from './Tooltip';
 export * from './Transition';
 export * from './Tree';
-export * from './TypographyStylesProvider';
+export * from './Typography';

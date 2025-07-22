@@ -70,3 +70,4 @@ export { useScrollSpyUsage } from './use-scroll-spy.demo.usage';
 export { useScrollSpySelector } from './use-scroll-spy.demo.selector';
 export { useFileDialogUsage } from './use-file-dialog.demo';
 export { useLongPressDemo } from './use-long-press.demo.usage';
+export { useSelectionDemo } from './use-selection.demo.usage';

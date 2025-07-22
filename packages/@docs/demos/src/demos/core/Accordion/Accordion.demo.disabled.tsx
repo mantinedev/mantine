@@ -1,13 +1,13 @@
 import { Accordion } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { groceries } from './_base';
+import { data, dataCode } from './_base';
 
 const code = `
 import { Accordion } from '@mantine/core';
+import { data } from './data';
 
 function Demo() {
-  // See groceries data above
-  const items = groceries.map((item) => (
+  const items = data.map((item) => (
     <Accordion.Item key={item.value} value={item.value}>
       <Accordion.Control icon={item.emoji} disabled={item.value === 'Bananas'}>
         {item.value}
@@ -25,7 +25,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const items = groceries.map((item) => (
+  const items = data.map((item) => (
     <Accordion.Item key={item.value} value={item.value}>
       <Accordion.Control icon={item.emoji} disabled={item.value === 'Bananas'}>
         {item.value}
@@ -34,13 +34,20 @@ function Demo() {
     </Accordion.Item>
   ));
 
-  return <Accordion defaultValue="Apples">{items}</Accordion>;
+  return (
+    <Accordion defaultValue="Apples" mih={270}>
+      {items}
+    </Accordion>
+  );
 }
 
 export const disabled: MantineDemo = {
   type: 'code',
   component: Demo,
-  code,
+  code: [
+    { fileName: 'Demo.tsx', code, language: 'tsx' },
+    { fileName: 'data.ts', code: dataCode, language: 'tsx' },
+  ],
   centered: true,
   maxWidth: 600,
 };

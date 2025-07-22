@@ -1,7 +1,7 @@
 import { useId, useUncontrolled } from '@mantine/hooks';
 import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../../core';
+import { InputsGroupFieldset } from '../../../utils/InputsGroupFieldset';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
-import { InputsGroupFieldset } from '../../InputsGroupFieldset';
 import { RadioGroupProvider } from '../RadioGroup.context';
 
 export type RadioGroupStylesNames = InputWrapperStylesNames;
@@ -14,7 +14,7 @@ export interface RadioGroupProps
   /** Controlled component value */
   value?: string | null;
 
-  /** Default value for uncontrolled component */
+  /** Uncontrolled component default value */
   defaultValue?: string | null;
 
   /** Called when value changes */
@@ -23,7 +23,7 @@ export interface RadioGroupProps
   /** Props passed down to the `Input.Wrapper` */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 
-  /** Controls size of the `Input.Wrapper`, `'sm'` by default */
+  /** Controls size of the `Input.Wrapper` @default `'sm'` */
   size?: MantineSize;
 
   /** `name` attribute of child radio inputs. By default, `name` is generated randomly. */
@@ -39,11 +39,9 @@ export type RadioGroupFactory = Factory<{
   stylesNames: RadioGroupStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<RadioGroupProps>;
-
 export const RadioGroup = factory<RadioGroupFactory>((props, ref) => {
   const { value, defaultValue, onChange, size, wrapperProps, children, name, readOnly, ...others } =
-    useProps('RadioGroup', defaultProps, props);
+    useProps('RadioGroup', null, props);
 
   const _name = useId(name);
 

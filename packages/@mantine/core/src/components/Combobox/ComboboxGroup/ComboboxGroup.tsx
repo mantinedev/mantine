@@ -27,12 +27,10 @@ export type ComboboxGroupFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {} satisfies Partial<ComboboxGroupProps>;
-
 export const ComboboxGroup = factory<ComboboxGroupFactory>((props, ref) => {
   const { classNames, className, style, styles, vars, children, label, ...others } = useProps(
     'ComboboxGroup',
-    defaultProps,
+    null,
     props
   );
 

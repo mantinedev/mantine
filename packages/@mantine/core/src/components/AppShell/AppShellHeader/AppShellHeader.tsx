@@ -10,20 +10,16 @@ import {
   useProps,
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
+import type { AppShellCompoundProps } from '../AppShell.types';
 import classes from '../AppShell.module.css';
 
 export type AppShellHeaderStylesNames = 'header';
 
 export interface AppShellHeaderProps
   extends BoxProps,
+    AppShellCompoundProps,
     StylesApiProps<AppShellHeaderFactory>,
-    ElementProps<'header'> {
-  /** Determines whether component should have a border, overrides `withBorder` prop on `AppShell` component */
-  withBorder?: boolean;
-
-  /** Component `z-index`, by default inherited from the `AppShell` */
-  zIndex?: string | number;
-}
+    ElementProps<'header'> {}
 
 export type AppShellHeaderFactory = Factory<{
   props: AppShellHeaderProps;
@@ -31,10 +27,7 @@ export type AppShellHeaderFactory = Factory<{
   stylesNames: AppShellHeaderStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<AppShellHeaderProps>;
-
 export const AppShellHeader = factory<AppShellHeaderFactory>((_props, ref) => {
-  const props = useProps('AppShellHeader', defaultProps, _props);
   const {
     classNames,
     className,
@@ -46,7 +39,8 @@ export const AppShellHeader = factory<AppShellHeaderFactory>((_props, ref) => {
     zIndex,
     mod,
     ...others
-  } = props;
+  } = useProps('AppShellHeader', null, _props);
+
   const ctx = useAppShellContext();
 
   if (ctx.disabled) {
