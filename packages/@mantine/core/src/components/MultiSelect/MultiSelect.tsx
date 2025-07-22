@@ -105,6 +105,9 @@ export interface MultiSelectProps
 
   /** Controls color of the default chevron */
   chevronColor?: MantineColor;
+
+  /** Clear search value when item is selected */
+  clearSearchOnChange?: boolean;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -118,6 +121,7 @@ const defaultProps = {
   withCheckIcon: true,
   checkIconPosition: 'left',
   hiddenInputValuesDivider: ',',
+  clearSearchOnChange: true,
 } satisfies Partial<MultiSelectProps>;
 
 export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
@@ -196,6 +200,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     scrollAreaProps,
     chevronColor,
     attributes,
+    clearSearchOnChange,
     ...others
   } = props;
 
@@ -316,7 +321,9 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
         attributes={attributes}
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
-          handleSearchChange('');
+          if (clearSearchOnChange) {
+            handleSearchChange('');
+          }
           combobox.updateSelectedOptionIndex('selected');
 
           if (_value.includes(optionsLockup[val].value)) {
