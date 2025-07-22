@@ -392,21 +392,21 @@ class MantineLLMCompiler {
               ].includes(node.name)
             ) {
               // Create placeholder for shared component content
-              const attributesStr = node.attributes
-                ?.map((attr: any) => `${attr.name}="${attr.value}"`)
-                .join('|') || '';
-              
+              const attributesStr =
+                node.attributes?.map((attr: any) => `${attr.name}="${attr.value}"`).join('|') || '';
+
               // Reconstruct the original JSX for preservation
-              const jsxProps = node.attributes
-                ?.map((attr: any) => {
-                  if (attr.value === true || attr.name === 'withNext') {
-                    return attr.name;
-                  }
-                  return `${attr.name}="${attr.value}"`;
-                })
-                .join(' ') || '';
+              const jsxProps =
+                node.attributes
+                  ?.map((attr: any) => {
+                    if (attr.value === true || attr.name === 'withNext') {
+                      return attr.name;
+                    }
+                    return `${attr.name}="${attr.value}"`;
+                  })
+                  .join(' ') || '';
               const originalJsx = `<${node.name} ${jsxProps} />`;
-              
+
               node.type = 'paragraph';
               node.children = [
                 {
@@ -487,25 +487,28 @@ class MantineLLMCompiler {
 
     // Replace shared content placeholders with actual content
     const sharedContentRegex = /SHAREDCONTENT::([^:]+)::([^:]*?)::JSX::(.+?)::END/g;
-    result = result.replace(sharedContentRegex, (match, componentName, attributesStr, originalJsx) => {
-      // Parse attributes from string
-      const attributes: any[] = [];
-      if (attributesStr) {
-        const attrPairs = attributesStr.split('|');
-        for (const pair of attrPairs) {
-          const [name, value] = pair.split('=');
-          if (name && value) {
-            attributes.push({ name, value: value.replace(/"/g, '') });
+    result = result.replace(
+      sharedContentRegex,
+      (match, componentName, attributesStr, originalJsx) => {
+        // Parse attributes from string
+        const attributes: any[] = [];
+        if (attributesStr) {
+          const attrPairs = attributesStr.split('|');
+          for (const pair of attrPairs) {
+            const [name, value] = pair.split('=');
+            if (name && value) {
+              attributes.push({ name, value: value.replace(/"/g, '') });
+            }
           }
         }
+
+        // Include the original JSX example along with the rendered content
+        const content = this.getSharedComponentContent(componentName, attributes);
+        // Remove any escape characters that might have been added
+        const cleanJsx = originalJsx.replace(/\\/g, '');
+        return `${cleanJsx}\n\n${content}`;
       }
-      
-      // Include the original JSX example along with the rendered content
-      const content = this.getSharedComponentContent(componentName, attributes);
-      // Remove any escape characters that might have been added
-      const cleanJsx = originalJsx.replace(/\\/g, '');
-      return `${cleanJsx}\n\n${content}`;
-    });
+    );
 
     return result;
   }
@@ -760,17 +763,17 @@ class MantineLLMCompiler {
       case 'AutoContrast':
         const withVariantAttr = attributes?.find((attr: any) => attr.name === 'withVariant');
         const withVariant = withVariantAttr ? withVariantAttr.value !== 'false' : true;
-        
+
         let autoContrastContent = `## autoContrast
 
 ${component} supports autoContrast prop and [theme.autoContrast](https://mantine.dev/theming/theme-object/#autocontrast). If autoContrast is set either on ${component} or on theme, content color will be adjusted to have sufficient contrast with the value specified in color prop.
 
 Note that autoContrast feature works only if you use color prop to change background color.`;
-        
+
         if (withVariant) {
           autoContrastContent += ' autoContrast works only with filled variant.';
         }
-        
+
         return autoContrastContent;
 
       case 'GetElementRef':
@@ -778,7 +781,7 @@ Note that autoContrast feature works only if you use color prop to change backgr
         const refType = refTypeAttr?.value || 'HTMLElement';
         const refTypeMap: Record<string, string> = {
           div: 'HTMLDivElement',
-          button: 'HTMLButtonElement', 
+          button: 'HTMLButtonElement',
           input: 'HTMLInputElement',
           textarea: 'HTMLTextAreaElement',
           select: 'HTMLSelectElement',
@@ -799,9 +802,11 @@ function Demo() {
 
       case 'Polymorphic':
         const defaultElementAttr = attributes?.find((attr: any) => attr.name === 'defaultElement');
-        const changeToElementAttr = attributes?.find((attr: any) => attr.name === 'changeToElement');
+        const changeToElementAttr = attributes?.find(
+          (attr: any) => attr.name === 'changeToElement'
+        );
         const withNextAttr = attributes?.find((attr: any) => attr.name === 'withNext');
-        
+
         const defaultElement = defaultElementAttr?.value || 'div';
         const changeToElement = changeToElementAttr?.value || 'span';
         const withNext = withNextAttr !== undefined;
