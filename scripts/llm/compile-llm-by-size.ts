@@ -422,15 +422,56 @@ class MantineLLMCompiler {
                 }
               }
             }
-            // Remove unwanted components
+            // Handle shared content components by creating placeholders
+            else if (
+              [
+                'AutoContrast',
+                'ComboboxData',
+                'ComboboxFiltering',
+                'ComboboxLargeData',
+                'FlexboxGapSupport',
+                'GetElementRef',
+                'Gradient',
+                'InputAccessibility',
+                'InputFeatures',
+                'InputSections',
+                'Polymorphic',
+                'ServerComponentsIncompatible',
+                'TargetComponent',
+                'WrapperProps',
+              ].includes(node.name)
+            ) {
+              // Create placeholder for shared component content
+              const attributesStr = node.attributes
+                ?.map((attr: any) => `${attr.name}="${attr.value}"`)
+                .join('|') || '';
+              
+              // Reconstruct the original JSX for preservation
+              const jsxProps = node.attributes
+                ?.map((attr: any) => {
+                  if (attr.value === true || attr.name === 'withNext') {
+                    return attr.name;
+                  }
+                  return `${attr.name}="${attr.value}"`;
+                })
+                .join(' ') || '';
+              const originalJsx = `<${node.name} ${jsxProps} />`;
+              
+              node.type = 'paragraph';
+              node.children = [
+                {
+                  type: 'text',
+                  value: `SHAREDCONTENT::${node.name}::${attributesStr}::JSX::${originalJsx}::END`,
+                },
+              ];
+            }
+            // Remove other unwanted components
             else if (
               [
                 'StylesApiSelectors',
                 'KeyboardEventsTable',
                 'InstallScript',
                 'DataTable',
-                'GetElementRef',
-                'Polymorphic',
                 'PropsTable',
                 'MantineProvider',
                 'DemoContainer',
@@ -495,6 +536,28 @@ class MantineLLMCompiler {
         result = result.replace(`DEMOPLACEHOLDER::${demo.name}::END`, '');
       }
     }
+
+    // Replace shared content placeholders with actual content
+    const sharedContentRegex = /SHAREDCONTENT::([^:]+)::([^:]*?)::JSX::(.+?)::END/g;
+    result = result.replace(sharedContentRegex, (match, componentName, attributesStr, originalJsx) => {
+      // Parse attributes from string
+      const attributes: any[] = [];
+      if (attributesStr) {
+        const attrPairs = attributesStr.split('|');
+        for (const pair of attrPairs) {
+          const [name, value] = pair.split('=');
+          if (name && value) {
+            attributes.push({ name, value: value.replace(/"/g, '') });
+          }
+        }
+      }
+      
+      // Include the original JSX example along with the rendered content
+      const content = this.getSharedComponentContent(componentName, attributes);
+      // Remove any escape characters that might have been added
+      const cleanJsx = originalJsx.replace(/\\/g, '');
+      return `${cleanJsx}\n\n${content}`;
+    });
 
     return result;
   }
@@ -738,6 +801,163 @@ class MantineLLMCompiler {
     }
 
     return '';
+  }
+
+  private getSharedComponentContent(componentName: string, attributes: any[]): string {
+    // Extract component prop from attributes
+    const componentAttr = attributes?.find((attr: any) => attr.name === 'component');
+    const component = componentAttr?.value || 'Component';
+
+    switch (componentName) {
+      case 'AutoContrast':
+        const withVariantAttr = attributes?.find((attr: any) => attr.name === 'withVariant');
+        const withVariant = withVariantAttr ? withVariantAttr.value !== 'false' : true;
+        
+        let autoContrastContent = `## autoContrast
+
+${component} supports autoContrast prop and [theme.autoContrast](https://mantine.dev/theming/theme-object/#autocontrast). If autoContrast is set either on ${component} or on theme, content color will be adjusted to have sufficient contrast with the value specified in color prop.
+
+Note that autoContrast feature works only if you use color prop to change background color.`;
+        
+        if (withVariant) {
+          autoContrastContent += ' autoContrast works only with filled variant.';
+        }
+        
+        return autoContrastContent;
+
+      case 'GetElementRef':
+        const refTypeAttr = attributes?.find((attr: any) => attr.name === 'refType');
+        const refType = refTypeAttr?.value || 'HTMLElement';
+        const refTypeMap: Record<string, string> = {
+          div: 'HTMLDivElement',
+          button: 'HTMLButtonElement', 
+          input: 'HTMLInputElement',
+          textarea: 'HTMLTextAreaElement',
+          select: 'HTMLSelectElement',
+          a: 'HTMLAnchorElement',
+        };
+        const actualRefType = refTypeMap[refType] || refType;
+        return `## Get element ref
+
+\`\`\`tsx
+import { useRef } from 'react';
+import { ${component} } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<${actualRefType}>(null);
+  return <${component} ref={ref} />;
+}
+\`\`\``;
+
+      case 'Polymorphic':
+        const defaultElementAttr = attributes?.find((attr: any) => attr.name === 'defaultElement');
+        const changeToElementAttr = attributes?.find((attr: any) => attr.name === 'changeToElement');
+        const withNextAttr = attributes?.find((attr: any) => attr.name === 'withNext');
+        
+        const defaultElement = defaultElementAttr?.value || 'div';
+        const changeToElement = changeToElementAttr?.value || 'span';
+        const withNext = withNextAttr !== undefined;
+
+        let polymorphicContent = `## Polymorphic component
+
+${component} is a polymorphic component – its default root element is ${defaultElement}, but it can be changed to any other element or component with component prop:
+
+\`\`\`tsx
+import { ${component} } from '@mantine/core';
+
+function Demo() {
+  return <${component} component="${changeToElement}" />;
+}
+\`\`\``;
+
+        if (withNext) {
+          polymorphicContent += `
+
+You can also use components in component prop, for example, Next.js Link:
+
+\`\`\`tsx
+import Link from 'next/link';
+import { ${component} } from '@mantine/core';
+
+function Demo() {
+  return <${component} component={Link} href="/" />;
+}
+\`\`\``;
+        }
+
+        polymorphicContent += `
+
+**Polymorphic components with TypeScript**
+
+Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, ${component}Props does not extend React.ComponentPropsWithoutRef<'${defaultElement}'> although ${defaultElement} is the default element.
+
+If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.`;
+
+        return polymorphicContent;
+
+      case 'ServerComponentsIncompatible':
+        return `## Server components
+
+${component} is not compatible with React Server Components as it uses useEffect and other client-side features. You can use it in client components only.`;
+
+      case 'Gradient':
+        return `## Gradient
+
+${component} supports Mantine color format in color prop. Color can be specified as:
+- Mantine color name (e.g., 'blue')
+- CSS color value (e.g., '#fff', 'rgba(255, 255, 255, 0.8)')
+- Gradient string (e.g., 'linear-gradient(45deg, blue, red)')`;
+
+      case 'InputAccessibility':
+        return `## Accessibility
+
+${component} provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.`;
+
+      case 'FlexboxGapSupport':
+        return `## Browser support
+
+Flex component uses CSS flexbox gap to add spacing between children. Flexbox gap is supported by all modern browsers, but if you need to support older browsers, use Space component instead.`;
+
+      case 'ComboboxData':
+        return `## Data prop
+
+Data that is used in ${component} must be an array of strings or objects with value and label properties. You can also specify additional properties that will be available in renderOption function.`;
+
+      case 'ComboboxFiltering':
+        return `## Filtering
+
+${component} provides built-in filtering functionality. You can control filtering behavior with filter prop or implement custom filtering logic.`;
+
+      case 'ComboboxLargeData':
+        return `## Large datasets
+
+${component} can handle large datasets efficiently. Consider implementing virtualization for datasets with thousands of items to improve performance.`;
+
+      case 'InputFeatures':
+        const elementAttr = attributes?.find((attr: any) => attr.name === 'element');
+        const element = elementAttr?.value || 'input';
+        return `${component} component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all ${element} element props. ${component} documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.`;
+
+      case 'InputSections':
+        return `## Input sections
+
+${component} supports left and right sections to display icons, buttons or other content alongside the input.`;
+
+      case 'TargetComponent':
+        return `## Target component
+
+The target element determines where the ${component} will be positioned relative to.`;
+
+      case 'WrapperProps':
+        return `## Wrapper props
+
+${component} supports additional props that are passed to the wrapper element for more customization options.`;
+
+      default:
+        return `## ${componentName}
+
+Additional information about ${component} component.`;
+    }
   }
 
   private async getComponentProps(componentName: string): Promise<string[]> {

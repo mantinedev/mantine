@@ -655,6 +655,13 @@ function Demo() {
 
 <Gradient component="ActionIcon" />
 
+## Gradient
+
+ActionIcon supports Mantine color format in color prop. Color can be specified as:
+- Mantine color name (e.g., 'blue')
+- CSS color value (e.g., '#fff', 'rgba(255, 255, 255, 0.8)')
+- Gradient string (e.g., 'linear-gradient(45deg, blue, red)')
+
 #### Example: gradient
 
 ```tsx
@@ -1027,6 +1034,12 @@ function Demo() {
 
 <AutoContrast component="ActionIcon" />
 
+## autoContrast
+
+ActionIcon supports autoContrast prop and [theme.autoContrast](https://mantine.dev/theming/theme-object/#autocontrast). If autoContrast is set either on ActionIcon or on theme, content color will be adjusted to have sufficient contrast with the value specified in color prop.
+
+Note that autoContrast feature works only if you use color prop to change background color. autoContrast works only with filled variant.
+
 #### Example: autoContrast
 
 ```tsx
@@ -1171,7 +1184,48 @@ function Demo() {
 
 <Polymorphic defaultElement="button" changeToElement="a" component="ActionIcon" withNext />
 
+## Polymorphic component
+
+ActionIcon is a polymorphic component – its default root element is button, but it can be changed to any other element or component with component prop:
+
+```tsx
+import { ActionIcon } from '@mantine/core';
+
+function Demo() {
+  return <ActionIcon component="a" />;
+}
+```
+
+You can also use components in component prop, for example, Next.js Link:
+
+```tsx
+import Link from 'next/link';
+import { ActionIcon } from '@mantine/core';
+
+function Demo() {
+  return <ActionIcon component={Link} href="/" />;
+}
+```
+
+**Polymorphic components with TypeScript**
+
+Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, ActionIconProps does not extend React.ComponentPropsWithoutRef<'button'> although button is the default element.
+
+If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
+
 <GetElementRef component="ActionIcon" refType="button" />
+
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { ActionIcon } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLButtonElement>(null);
+  return <ActionIcon ref={ref} />;
+}
+```
 
 ## Accessibility
 
@@ -1545,7 +1599,48 @@ function Demo() {
 
 <Polymorphic defaultElement="a" changeToElement="button" component="Anchor" withNext />
 
+## Polymorphic component
+
+Anchor is a polymorphic component – its default root element is a, but it can be changed to any other element or component with component prop:
+
+```tsx
+import { Anchor } from '@mantine/core';
+
+function Demo() {
+  return <Anchor component="button" />;
+}
+```
+
+You can also use components in component prop, for example, Next.js Link:
+
+```tsx
+import Link from 'next/link';
+import { Anchor } from '@mantine/core';
+
+function Demo() {
+  return <Anchor component={Link} href="/" />;
+}
+```
+
+**Polymorphic components with TypeScript**
+
+Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, AnchorProps does not extend React.ComponentPropsWithoutRef<'a'> although a is the default element.
+
+If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
+
 <GetElementRef component="Anchor" refType="a" />
+
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { Anchor } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLAnchorElement>(null);
+  return <Anchor ref={ref} />;
+}
+```
 
 
 #### Props
@@ -2495,7 +2590,15 @@ function Demo() {
 
 <ComboboxData component="Autocomplete" />
 
+## Data prop
+
+Data that is used in Autocomplete must be an array of strings or objects with value and label properties. You can also specify additional properties that will be available in renderOption function.
+
 <ComboboxFiltering component="Autocomplete" />
+
+## Filtering
+
+Autocomplete provides built-in filtering functionality. You can control filtering behavior with filter prop or implement custom filtering logic.
 
 #### Example: search
 
@@ -2556,6 +2659,10 @@ function Demo() {
 
 
 <ComboboxLargeData component="Autocomplete" />
+
+## Large datasets
+
+Autocomplete can handle large datasets efficiently. Consider implementing virtualization for datasets with thousands of items to improve performance.
 
 #### Example: limit
 
@@ -2925,6 +3032,10 @@ function Demo() {
 
 <InputSections component="Autocomplete" />
 
+## Input sections
+
+Autocomplete supports left and right sections to display icons, buttons or other content alongside the input.
+
 #### Example: sections
 
 ```tsx
@@ -2959,6 +3070,8 @@ function Demo() {
 ## Input props
 
 <InputFeatures component="Autocomplete" element="input" />
+
+Autocomplete component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. Autocomplete documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
 
 #### Example: configurator
 
@@ -3077,7 +3190,23 @@ function Demo() {
 
 <GetElementRef component="Autocomplete" refType="input" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { Autocomplete } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLInputElement>(null);
+  return <Autocomplete ref={ref} />;
+}
+```
+
 <InputAccessibility component="Autocomplete" />
+
+## Accessibility
+
+Autocomplete provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 
 #### Props
@@ -3359,6 +3488,35 @@ function Demo() {
 
 <Polymorphic defaultElement="div" changeToElement="button" component="Avatar" withNext />
 
+## Polymorphic component
+
+Avatar is a polymorphic component – its default root element is div, but it can be changed to any other element or component with component prop:
+
+```tsx
+import { Avatar } from '@mantine/core';
+
+function Demo() {
+  return <Avatar component="button" />;
+}
+```
+
+You can also use components in component prop, for example, Next.js Link:
+
+```tsx
+import Link from 'next/link';
+import { Avatar } from '@mantine/core';
+
+function Demo() {
+  return <Avatar component={Link} href="/" />;
+}
+```
+
+**Polymorphic components with TypeScript**
+
+Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, AvatarProps does not extend React.ComponentPropsWithoutRef<'div'> although div is the default element.
+
+If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
+
 Example using `Avatar` as a link:
 
 #### Example: link
@@ -3488,6 +3646,24 @@ function Demo() {
 
 <Polymorphic defaultElement="div" changeToElement="button" component="BackgroundImage" />
 
+## Polymorphic component
+
+BackgroundImage is a polymorphic component – its default root element is div, but it can be changed to any other element or component with component prop:
+
+```tsx
+import { BackgroundImage } from '@mantine/core';
+
+function Demo() {
+  return <BackgroundImage component="button" />;
+}
+```
+
+**Polymorphic components with TypeScript**
+
+Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, BackgroundImageProps does not extend React.ComponentPropsWithoutRef<'div'> although div is the default element.
+
+If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
+
 
 #### Props
 
@@ -3538,6 +3714,13 @@ function Demo() {
 
 
 <Gradient component="Badge" />
+
+## Gradient
+
+Badge supports Mantine color format in color prop. Color can be specified as:
+- Mantine color name (e.g., 'blue')
+- CSS color value (e.g., '#fff', 'rgba(255, 255, 255, 0.8)')
+- Gradient string (e.g., 'linear-gradient(45deg, blue, red)')
 
 #### Example: gradient
 
@@ -3709,6 +3892,12 @@ function Demo() {
 
 <AutoContrast component="Badge" />
 
+## autoContrast
+
+Badge supports autoContrast prop and [theme.autoContrast](https://mantine.dev/theming/theme-object/#autocontrast). If autoContrast is set either on Badge or on theme, content color will be adjusted to have sufficient contrast with the value specified in color prop.
+
+Note that autoContrast feature works only if you use color prop to change background color. autoContrast works only with filled variant.
+
 #### Example: autoContrast
 
 ```tsx
@@ -3748,6 +3937,35 @@ function Demo() {
 
 
 <Polymorphic defaultElement="div" changeToElement="a" component="Badge" withNext />
+
+## Polymorphic component
+
+Badge is a polymorphic component – its default root element is div, but it can be changed to any other element or component with component prop:
+
+```tsx
+import { Badge } from '@mantine/core';
+
+function Demo() {
+  return <Badge component="a" />;
+}
+```
+
+You can also use components in component prop, for example, Next.js Link:
+
+```tsx
+import Link from 'next/link';
+import { Badge } from '@mantine/core';
+
+function Demo() {
+  return <Badge component={Link} href="/" />;
+}
+```
+
+**Polymorphic components with TypeScript**
+
+Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, BadgeProps does not extend React.ComponentPropsWithoutRef<'div'> although div is the default element.
+
+If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
 
 
 #### Props
@@ -4003,6 +4221,18 @@ function Demo() {
 
 <GetElementRef component="Burger" refType="button" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { Burger } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLButtonElement>(null);
+  return <Burger ref={ref} />;
+}
+```
+
 ## Accessibility
 
 To make `Burger` accessible for screen readers, you need to either set `aria-label` or
@@ -4200,6 +4430,13 @@ function Demo() {
 
 
 <Gradient component="Button" />
+
+## Gradient
+
+Button supports Mantine color format in color prop. Color can be specified as:
+- Mantine color name (e.g., 'blue')
+- CSS color value (e.g., '#fff', 'rgba(255, 255, 255, 0.8)')
+- Gradient string (e.g., 'linear-gradient(45deg, blue, red)')
 
 #### Example: gradient
 
@@ -4450,6 +4687,12 @@ You can customize colors for `Button` and other components variants by adding
 
 <AutoContrast component="Button" />
 
+## autoContrast
+
+Button supports autoContrast prop and [theme.autoContrast](https://mantine.dev/theming/theme-object/#autocontrast). If autoContrast is set either on Button or on theme, content color will be adjusted to have sufficient contrast with the value specified in color prop.
+
+Note that autoContrast feature works only if you use color prop to change background color. autoContrast works only with filled variant.
+
 #### Example: autoContrast
 
 ```tsx
@@ -4536,7 +4779,48 @@ function Demo() {
 
 <Polymorphic defaultElement="button" changeToElement="a" component="Button" withNext />
 
+## Polymorphic component
+
+Button is a polymorphic component – its default root element is button, but it can be changed to any other element or component with component prop:
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return <Button component="a" />;
+}
+```
+
+You can also use components in component prop, for example, Next.js Link:
+
+```tsx
+import Link from 'next/link';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return <Button component={Link} href="/" />;
+}
+```
+
+**Polymorphic components with TypeScript**
+
+Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, ButtonProps does not extend React.ComponentPropsWithoutRef<'button'> although button is the default element.
+
+If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
+
 <GetElementRef component="Button" refType="button" />
+
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { Button } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLButtonElement>(null);
+  return <Button ref={ref} />;
+}
+```
 
 
 #### Props
@@ -4923,6 +5207,24 @@ function Demo() {
 
 <Polymorphic defaultElement="div" changeToElement="button" component="Center" />
 
+## Polymorphic component
+
+Center is a polymorphic component – its default root element is div, but it can be changed to any other element or component with component prop:
+
+```tsx
+import { Center } from '@mantine/core';
+
+function Demo() {
+  return <Center component="button" />;
+}
+```
+
+**Polymorphic components with TypeScript**
+
+Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, CenterProps does not extend React.ComponentPropsWithoutRef<'div'> although div is the default element.
+
+If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
+
 
 #### Props
 
@@ -5226,6 +5528,10 @@ function Demo() {
 
 <WrapperProps component="Checkbox" />
 
+## Wrapper props
+
+Checkbox supports additional props that are passed to the wrapper element for more customization options.
+
 ## Checkbox.Group
 
 #### Example: groupConfigurator
@@ -5393,6 +5699,18 @@ function Demo() {
 
 
 <GetElementRef component="Checkbox" refType="input" />
+
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLInputElement>(null);
+  return <Checkbox ref={ref} />;
+}
+```
 
 #### Example: stylesApi
 
@@ -5735,6 +6053,10 @@ function Demo() {
 
 
 <WrapperProps component="Chip" />
+
+## Wrapper props
+
+Chip supports additional props that are passed to the wrapper element for more customization options.
 
 ## Chip.Group
 
@@ -6196,6 +6518,8 @@ Import: import { ColorInput } from '@mantine/core';
 
 <InputFeatures component="ColorInput" element="input" />
 
+ColorInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. ColorInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
+
 #### Example: usage
 
 ```tsx
@@ -6451,6 +6775,10 @@ function Demo() {
 
 <InputSections component="ColorInput" />
 
+## Input sections
+
+ColorInput supports left and right sections to display icons, buttons or other content alongside the input.
+
 Note that by default, `ColorPicker` has color preview in the left section and eye dropper button
 in the right section. You can replace these elements with any React node using `leftSection`
 and `rightSection` props:
@@ -6557,7 +6885,23 @@ function Demo() {
 
 <GetElementRef component="ColorInput" refType="input" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { ColorInput } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLInputElement>(null);
+  return <ColorInput ref={ref} />;
+}
+```
+
 <InputAccessibility component="ColorInput" />
+
+## Accessibility
+
+ColorInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 
 #### Props
@@ -6956,6 +7300,24 @@ function Demo() {
 
 
 <Polymorphic defaultElement="div" changeToElement="button" component="ColorSwatch" />
+
+## Polymorphic component
+
+ColorSwatch is a polymorphic component – its default root element is div, but it can be changed to any other element or component with component prop:
+
+```tsx
+import { ColorSwatch } from '@mantine/core';
+
+function Demo() {
+  return <ColorSwatch component="button" />;
+}
+```
+
+**Polymorphic components with TypeScript**
+
+Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, ColorSwatchProps does not extend React.ComponentPropsWithoutRef<'div'> although div is the default element.
+
+If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
 
 #### Example: component
 
@@ -8637,6 +8999,10 @@ function Demo() {
 
 <ServerComponentsIncompatible component="CopyButton" />
 
+## Server components
+
+CopyButton is not compatible with React Server Components as it uses useEffect and other client-side features. You can use it in client components only.
+
 
 #### Props
 
@@ -9960,6 +10326,10 @@ function Demo() {
 
 <ServerComponentsIncompatible component="FileButton" />
 
+## Server components
+
+FileButton is not compatible with React Server Components as it uses useEffect and other client-side features. You can use it in client components only.
+
 
 #### Props
 
@@ -9986,6 +10356,8 @@ Import: import { FileInput } from '@mantine/core';
 ## Usage
 
 <InputFeatures component="FileInput" element="input" />
+
+FileInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. FileInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
 
 #### Example: usage
 
@@ -10151,6 +10523,10 @@ function Demo() {
 
 <InputSections component="FileInput" />
 
+## Input sections
+
+FileInput supports left and right sections to display icons, buttons or other content alongside the input.
+
 #### Example: sections
 
 ```tsx
@@ -10205,7 +10581,23 @@ function Demo() {
 
 <GetElementRef component="FileInput" refType="button" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { FileInput } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLButtonElement>(null);
+  return <FileInput ref={ref} />;
+}
+```
+
 <InputAccessibility component="FileInput" />
+
+## Accessibility
+
+FileInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 ## FileInputProps type
 
@@ -10351,6 +10743,10 @@ function Demo() {
 Unlike [Group](https://mantine.dev/core/group/) and [Stack](https://mantine.dev/core/stack/) `Flex` is [polymorphic](https://mantine.dev/guides/polymorphic/) and supports responsive props.
 
 <FlexboxGapSupport component="Flex" />
+
+## Browser support
+
+Flex component uses CSS flexbox gap to add spacing between children. Flexbox gap is supported by all modern browsers, but if you need to support older browsers, use Space component instead.
 
 
 #### Props
@@ -11273,6 +11669,10 @@ function InvalidDemo() {
 
 <FlexboxGapSupport component="Group" />
 
+## Browser support
+
+Flex component uses CSS flexbox gap to add spacing between children. Flexbox gap is supported by all modern browsers, but if you need to support older browsers, use Space component instead.
+
 
 #### Props
 
@@ -11618,6 +12018,10 @@ function Demo() {
 
 
 <TargetComponent component="HoverCard" />
+
+## Target component
+
+The target element determines where the HoverCard will be positioned relative to.
 
 ## Accessibility
 
@@ -12042,6 +12446,10 @@ function Demo() {
 
 
 <InputSections component="Input" />
+
+## Input sections
+
+Input supports left and right sections to display icons, buttons or other content alongside the input.
 
 #### Example: sections
 
@@ -12554,6 +12962,18 @@ function Demo() {
 
 <GetElementRef component="Input" refType="input" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { Input } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLInputElement>(null);
+  return <Input ref={ref} />;
+}
+```
+
 ## Accessibility
 
 If you use `Input` component without associated label element, set `aria-label`:
@@ -12710,6 +13130,8 @@ function Demo() {
 
 <InputFeatures component="JsonInput" element="textarea" />
 
+JsonInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all textarea element props. JsonInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
+
 #### Example: configurator
 
 ```tsx
@@ -12767,7 +13189,23 @@ function Demo() {
 
 <GetElementRef component="JsonInput" refType="textarea" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { JsonInput } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLTextAreaElement>(null);
+  return <JsonInput ref={ref} />;
+}
+```
+
 <InputAccessibility component="JsonInput" />
+
+## Accessibility
+
+JsonInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 
 #### Props
@@ -13809,6 +14247,10 @@ function Demo() {
 
 
 <TargetComponent component="Menu" />
+
+## Target component
+
+The target element determines where the Menu will be positioned relative to.
 
 ## Accessibility
 
@@ -15059,7 +15501,15 @@ function Demo() {
 
 <ComboboxData component="MultiSelect" />
 
+## Data prop
+
+Data that is used in MultiSelect must be an array of strings or objects with value and label properties. You can also specify additional properties that will be available in renderOption function.
+
 <ComboboxFiltering component="MultiSelect" />
+
+## Filtering
+
+MultiSelect provides built-in filtering functionality. You can control filtering behavior with filter prop or implement custom filtering logic.
 
 #### Example: search
 
@@ -15122,6 +15572,10 @@ function Demo() {
 
 
 <ComboboxLargeData component="MultiSelect" />
+
+## Large datasets
+
+MultiSelect can handle large datasets efficiently. Consider implementing virtualization for datasets with thousands of items to improve performance.
 
 #### Example: limit
 
@@ -15526,6 +15980,10 @@ function Demo() {
 
 <InputSections component="MultiSelect" />
 
+## Input sections
+
+MultiSelect supports left and right sections to display icons, buttons or other content alongside the input.
+
 #### Example: sections
 
 ```tsx
@@ -15560,6 +16018,8 @@ function Demo() {
 ## Input props
 
 <InputFeatures component="MultiSelect" element="input" />
+
+MultiSelect component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. MultiSelect documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
 
 #### Example: configurator
 
@@ -15682,7 +16142,23 @@ function Demo() {
 
 <GetElementRef component="MultiSelect" refType="input" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { MultiSelect } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLInputElement>(null);
+  return <MultiSelect ref={ref} />;
+}
+```
+
 <InputAccessibility component="MultiSelect" />
+
+## Accessibility
+
+MultiSelect provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 To set `aria-label` on the clear button, use `clearButtonProps`. Note that it is required
 only when `clearable` is set.
@@ -15798,6 +16274,8 @@ Import: import { NativeSelect } from '@mantine/core';
 ## Usage
 
 <InputFeatures component="NativeSelect" element="select" />
+
+NativeSelect component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all select element props. NativeSelect documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
 
 #### Example: usage
 
@@ -16024,6 +16502,10 @@ function Demo() {
 
 <InputSections component="NativeSelect" />
 
+## Input sections
+
+NativeSelect supports left and right sections to display icons, buttons or other content alongside the input.
+
 #### Example: sections
 
 ```tsx
@@ -16100,6 +16582,10 @@ function Demo() {
 
 
 <InputAccessibility component="NativeSelect" />
+
+## Accessibility
+
+NativeSelect provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 
 #### Props
@@ -16283,6 +16769,12 @@ function Demo() {
 
 <AutoContrast component="NavLink" />
 
+## autoContrast
+
+NavLink supports autoContrast prop and [theme.autoContrast](https://mantine.dev/theming/theme-object/#autocontrast). If autoContrast is set either on NavLink or on theme, content color will be adjusted to have sufficient contrast with the value specified in color prop.
+
+Note that autoContrast feature works only if you use color prop to change background color. autoContrast works only with filled variant.
+
 #### Example: autoContrast
 
 ```tsx
@@ -16346,7 +16838,48 @@ function Demo() {
 
 <Polymorphic defaultElement="a" changeToElement="button" component="NavLink" withNext />
 
+## Polymorphic component
+
+NavLink is a polymorphic component – its default root element is a, but it can be changed to any other element or component with component prop:
+
+```tsx
+import { NavLink } from '@mantine/core';
+
+function Demo() {
+  return <NavLink component="button" />;
+}
+```
+
+You can also use components in component prop, for example, Next.js Link:
+
+```tsx
+import Link from 'next/link';
+import { NavLink } from '@mantine/core';
+
+function Demo() {
+  return <NavLink component={Link} href="/" />;
+}
+```
+
+**Polymorphic components with TypeScript**
+
+Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, NavLinkProps does not extend React.ComponentPropsWithoutRef<'a'> although a is the default element.
+
+If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
+
 <GetElementRef component="NavLink" refType="a" />
+
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { NavLink } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLAnchorElement>(null);
+  return <NavLink ref={ref} />;
+}
+```
 
 
 #### Props
@@ -16643,6 +17176,8 @@ It supports most of the props from the `NumericFormat` component in the original
 
 <InputFeatures component="NumberInput" element="input" />
 
+NumberInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. NumberInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
+
 #### Example: usage
 
 ```tsx
@@ -16904,6 +17439,10 @@ function Demo() {
 
 <InputSections component="NumberInput" />
 
+## Input sections
+
+NumberInput supports left and right sections to display icons, buttons or other content alongside the input.
+
 #### Example: sections
 
 ```tsx
@@ -17086,7 +17625,23 @@ function Demo() {
 
 <GetElementRef component="NumberInput" refType="input" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLInputElement>(null);
+  return <NumberInput ref={ref} />;
+}
+```
+
 <InputAccessibility component="NumberInput" />
+
+## Accessibility
+
+NumberInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 
 #### Props
@@ -17273,6 +17828,35 @@ function Demo() {
 
 
 <Polymorphic defaultElement="div" changeToElement="a" component="Overlay" withNext />
+
+## Polymorphic component
+
+Overlay is a polymorphic component – its default root element is div, but it can be changed to any other element or component with component prop:
+
+```tsx
+import { Overlay } from '@mantine/core';
+
+function Demo() {
+  return <Overlay component="a" />;
+}
+```
+
+You can also use components in component prop, for example, Next.js Link:
+
+```tsx
+import Link from 'next/link';
+import { Overlay } from '@mantine/core';
+
+function Demo() {
+  return <Overlay component={Link} href="/" />;
+}
+```
+
+**Polymorphic components with TypeScript**
+
+Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, OverlayProps does not extend React.ComponentPropsWithoutRef<'div'> although div is the default element.
+
+If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
 
 
 #### Props
@@ -17675,7 +18259,13 @@ function Demo() {
 ```
 
 
-<AutoContrast component="Pagination" withVariant={false} />
+<AutoContrast component="Pagination" withVariant="[object Object]" />
+
+## autoContrast
+
+Pagination supports autoContrast prop and [theme.autoContrast](https://mantine.dev/theming/theme-object/#autocontrast). If autoContrast is set either on Pagination or on theme, content color will be adjusted to have sufficient contrast with the value specified in color prop.
+
+Note that autoContrast feature works only if you use color prop to change background color. autoContrast works only with filled variant.
 
 #### Example: autoContrast
 
@@ -17791,6 +18381,35 @@ function Demo() {
 
 <Polymorphic defaultElement="div" changeToElement="button" component="Paper" withNext />
 
+## Polymorphic component
+
+Paper is a polymorphic component – its default root element is div, but it can be changed to any other element or component with component prop:
+
+```tsx
+import { Paper } from '@mantine/core';
+
+function Demo() {
+  return <Paper component="button" />;
+}
+```
+
+You can also use components in component prop, for example, Next.js Link:
+
+```tsx
+import Link from 'next/link';
+import { Paper } from '@mantine/core';
+
+function Demo() {
+  return <Paper component={Link} href="/" />;
+}
+```
+
+**Polymorphic components with TypeScript**
+
+Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, PaperProps does not extend React.ComponentPropsWithoutRef<'div'> although div is the default element.
+
+If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
+
 
 #### Props
 
@@ -17831,6 +18450,8 @@ Import: import { PasswordInput } from '@mantine/core';
 ## Usage
 
 <InputFeatures component="PasswordInput" element="input" />
+
+PasswordInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. PasswordInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
 
 #### Example: usage
 
@@ -18023,6 +18644,10 @@ function Demo() {
 
 <InputSections component="PasswordInput" />
 
+## Input sections
+
+PasswordInput supports left and right sections to display icons, buttons or other content alongside the input.
+
 Note that when `rightSection` prop is used, visibility toggle button is not rendered.
 
 #### Example: sections
@@ -18113,7 +18738,23 @@ function Demo() {
 
 <GetElementRef component="PasswordInput" refType="input" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { PasswordInput } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLInputElement>(null);
+  return <PasswordInput ref={ref} />;
+}
+```
+
 <InputAccessibility component="PasswordInput" />
+
+## Accessibility
+
+PasswordInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 To set `aria-label` on the visibility toggle button, use `visibilityToggleButtonProps` prop:
 
@@ -18324,6 +18965,8 @@ function Demo() {
 ## Input props
 
 <InputFeatures component="PillsInput" element="div" />
+
+PillsInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all div element props. PillsInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
 
 #### Example: configurator
 
@@ -19161,6 +19804,10 @@ function Demo() {
 
 <TargetComponent component="Popover" />
 
+## Target component
+
+The target element determines where the Popover will be positioned relative to.
+
 ## Nested popovers
 
 Nested popovers require children rendering without [Portal](https://mantine.dev/core/portal/). Usually, you
@@ -19838,6 +20485,10 @@ function Demo() {
 
 <WrapperProps component="Radio" />
 
+## Wrapper props
+
+Radio supports additional props that are passed to the wrapper element for more customization options.
+
 ## Radio.Group component
 
 #### Example: groupConfigurator
@@ -20012,6 +20663,18 @@ function Demo() {
 
 
 <GetElementRef component="Radio" refType="input" />
+
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { Radio } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLInputElement>(null);
+  return <Radio ref={ref} />;
+}
+```
 
 #### Example: stylesApi
 
@@ -22001,7 +22664,15 @@ function Demo() {
 
 <ComboboxData component="Select" />
 
+## Data prop
+
+Data that is used in Select must be an array of strings or objects with value and label properties. You can also specify additional properties that will be available in renderOption function.
+
 <ComboboxFiltering component="Select" />
+
+## Filtering
+
+Select provides built-in filtering functionality. You can control filtering behavior with filter prop or implement custom filtering logic.
 
 #### Example: search
 
@@ -22065,6 +22736,10 @@ function Demo() {
 
 
 <ComboboxLargeData component="Select" />
+
+## Large datasets
+
+Select can handle large datasets efficiently. Consider implementing virtualization for datasets with thousands of items to improve performance.
 
 #### Example: limit
 
@@ -22463,6 +23138,10 @@ function Demo() {
 
 <InputSections component="Select" />
 
+## Input sections
+
+Select supports left and right sections to display icons, buttons or other content alongside the input.
+
 #### Example: sections
 
 ```tsx
@@ -22497,6 +23176,8 @@ function Demo() {
 ## Input props
 
 <InputFeatures component="Select" element="input" />
+
+Select component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. Select documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
 
 #### Example: configurator
 
@@ -22615,7 +23296,23 @@ function Demo() {
 
 <GetElementRef component="Select" refType="input" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { Select } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLInputElement>(null);
+  return <Select ref={ref} />;
+}
+```
+
 <InputAccessibility component="Select" />
+
+## Accessibility
+
+Select provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 To set `aria-label` on the clear button, use `clearButtonProps`. Note that it is required
 only when `clearable` is set.
@@ -24058,6 +24755,10 @@ function Demo() {
 
 <FlexboxGapSupport component="Stack" />
 
+## Browser support
+
+Flex component uses CSS flexbox gap to add spacing between children. Flexbox gap is supported by all modern browsers, but if you need to support older browsers, use Space component instead.
+
 
 #### Props
 
@@ -24899,6 +25600,10 @@ function Demo() {
 
 <WrapperProps component="Switch" />
 
+## Wrapper props
+
+Switch supports additional props that are passed to the wrapper element for more customization options.
+
 ## Switch.Group
 
 #### Example: groupConfigurator
@@ -25210,6 +25915,12 @@ function Demo() {
 
 
 <AutoContrast component="TableOfContents" />
+
+## autoContrast
+
+TableOfContents supports autoContrast prop and [theme.autoContrast](https://mantine.dev/theming/theme-object/#autocontrast). If autoContrast is set either on TableOfContents or on theme, content color will be adjusted to have sufficient contrast with the value specified in color prop.
+
+Note that autoContrast feature works only if you use color prop to change background color. autoContrast works only with filled variant.
 
 #### Example: autoContrast
 
@@ -26802,7 +27513,15 @@ function Demo() {
 
 <ComboboxData component="TagsInput" />
 
+## Data prop
+
+Data that is used in TagsInput must be an array of strings or objects with value and label properties. You can also specify additional properties that will be available in renderOption function.
+
 <ComboboxFiltering component="TagsInput" />
+
+## Filtering
+
+TagsInput provides built-in filtering functionality. You can control filtering behavior with filter prop or implement custom filtering logic.
 
 #### Example: search
 
@@ -26863,6 +27582,10 @@ function Demo() {
 
 
 <ComboboxLargeData component="TagsInput" />
+
+## Large datasets
+
+TagsInput can handle large datasets efficiently. Consider implementing virtualization for datasets with thousands of items to improve performance.
 
 #### Example: limit
 
@@ -27223,6 +27946,10 @@ function Demo() {
 
 <InputSections component="TagsInput" />
 
+## Input sections
+
+TagsInput supports left and right sections to display icons, buttons or other content alongside the input.
+
 #### Example: sections
 
 ```tsx
@@ -27257,6 +27984,8 @@ function Demo() {
 ## Input props
 
 <InputFeatures component="TagsInput" element="input" />
+
+TagsInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. TagsInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
 
 #### Example: configurator
 
@@ -27377,7 +28106,23 @@ function Demo() {
 
 <GetElementRef component="TagsInput" refType="input" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { TagsInput } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLInputElement>(null);
+  return <TagsInput ref={ref} />;
+}
+```
+
 <InputAccessibility component="TagsInput" />
+
+## Accessibility
+
+TagsInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 To set `aria-label` on the clear button, use `clearButtonProps`. Note that it is required
 only when `clearable` is set.
@@ -27493,6 +28238,8 @@ Import: import { TextInput } from '@mantine/core';
 
 <InputFeatures component="TextInput" element="input" />
 
+TextInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. TextInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
+
 #### Example: usage
 
 ```tsx
@@ -27526,6 +28273,10 @@ function Demo() {
 ```
 
 <InputSections component="TextInput" />
+
+## Input sections
+
+TextInput supports left and right sections to display icons, buttons or other content alongside the input.
 
 #### Example: sections
 
@@ -27616,7 +28367,23 @@ function Demo() {
 
 <GetElementRef component="TextInput" refType="input" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLInputElement>(null);
+  return <TextInput ref={ref} />;
+}
+```
+
 <InputAccessibility component="TextInput" />
+
+## Accessibility
+
+TextInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 
 #### Props
@@ -27709,6 +28476,13 @@ function Demo() {
 
 
 <Gradient component="Text" />
+
+## Gradient
+
+Text supports Mantine color format in color prop. Color can be specified as:
+- Mantine color name (e.g., 'blue')
+- CSS color value (e.g., '#fff', 'rgba(255, 255, 255, 0.8)')
+- Gradient string (e.g., 'linear-gradient(45deg, blue, red)')
 
 #### Example: gradient
 
@@ -27818,6 +28592,24 @@ function Demo() {
 
 <Polymorphic defaultElement="p" changeToElement="a" component="Text" />
 
+## Polymorphic component
+
+Text is a polymorphic component – its default root element is p, but it can be changed to any other element or component with component prop:
+
+```tsx
+import { Text } from '@mantine/core';
+
+function Demo() {
+  return <Text component="a" />;
+}
+```
+
+**Polymorphic components with TypeScript**
+
+Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, TextProps does not extend React.ComponentPropsWithoutRef<'p'> although p is the default element.
+
+If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
+
 ## span prop
 
 Use `span` prop as a shorthand for `component="span"`:
@@ -27882,6 +28674,8 @@ Description: Autosize or regular textarea
 ## Usage
 
 <InputFeatures component="Textarea" element="textarea" />
+
+Textarea component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all textarea element props. Textarea documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
 
 #### Example: configurator
 
@@ -28025,7 +28819,23 @@ function Demo() {
 
 <GetElementRef component="Textarea" refType="textarea" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { Textarea } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLTextAreaElement>(null);
+  return <Textarea ref={ref} />;
+}
+```
+
 <InputAccessibility component="Textarea" />
+
+## Accessibility
+
+Textarea provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 
 #### Props
@@ -28106,6 +28916,13 @@ function Demo() {
 
 
 <Gradient component="ThemeIcon" />
+
+## Gradient
+
+ThemeIcon supports Mantine color format in color prop. Color can be specified as:
+- Mantine color name (e.g., 'blue')
+- CSS color value (e.g., '#fff', 'rgba(255, 255, 255, 0.8)')
+- Gradient string (e.g., 'linear-gradient(45deg, blue, red)')
 
 #### Example: gradient
 
@@ -28210,6 +29027,12 @@ function Demo() {
 
 
 <AutoContrast component="ThemeIcon" />
+
+## autoContrast
+
+ThemeIcon supports autoContrast prop and [theme.autoContrast](https://mantine.dev/theming/theme-object/#autocontrast). If autoContrast is set either on ThemeIcon or on theme, content color will be adjusted to have sufficient contrast with the value specified in color prop.
+
+Note that autoContrast feature works only if you use color prop to change background color. autoContrast works only with filled variant.
 
 #### Example: autoContrast
 
@@ -30044,7 +30867,37 @@ function Demo() {
 
 <Polymorphic defaultElement="button" changeToElement="a" component="UnstyledButton" />
 
+## Polymorphic component
+
+UnstyledButton is a polymorphic component – its default root element is button, but it can be changed to any other element or component with component prop:
+
+```tsx
+import { UnstyledButton } from '@mantine/core';
+
+function Demo() {
+  return <UnstyledButton component="a" />;
+}
+```
+
+**Polymorphic components with TypeScript**
+
+Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, UnstyledButtonProps does not extend React.ComponentPropsWithoutRef<'button'> although button is the default element.
+
+If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.
+
 <GetElementRef component="UnstyledButton" refType="button" />
+
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { UnstyledButton } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLButtonElement>(null);
+  return <UnstyledButton ref={ref} />;
+}
+```
 
 
 #### Props
@@ -34953,6 +35806,8 @@ function Demo() {
 
 <InputFeatures component="DateInput" element="input" />
 
+DateInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. DateInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
+
 #### Example: configurator
 
 ```tsx
@@ -34972,7 +35827,23 @@ function Demo() {
 
 <GetElementRef component="DateInput" refType="input" package="@mantine/dates" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { DateInput } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLInputElement>(null);
+  return <DateInput ref={ref} />;
+}
+```
+
 <InputAccessibility component="DateInput" packageName="@mantine/dates" />
+
+## Accessibility
+
+DateInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 
 #### Props
@@ -35244,6 +36115,8 @@ function Demo() {
 
 <InputFeatures component="DatePickerInput" element="button" />
 
+DatePickerInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all button element props. DatePickerInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
+
 
 
 ## With icon
@@ -35252,7 +36125,23 @@ function Demo() {
 
 <GetElementRef component="DatePickerInput" refType="button" package="@mantine/dates" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { DatePickerInput } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLButtonElement>(null);
+  return <DatePickerInput ref={ref} />;
+}
+```
+
 <InputAccessibility component="DatePickerInput" packageName="@mantine/dates" />
+
+## Accessibility
+
+DatePickerInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 
 #### Props
@@ -36149,6 +37038,8 @@ function Demo() {
 
 <InputFeatures component="DateTimePicker" element="button" />
 
+DateTimePicker component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all button element props. DateTimePicker documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
+
 #### Example: configurator
 
 ```tsx
@@ -36214,7 +37105,23 @@ function Demo() {
 
 <GetElementRef component="DateTimePicker" refType="button" package="@mantine/dates" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { DateTimePicker } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLButtonElement>(null);
+  return <DateTimePicker ref={ref} />;
+}
+```
+
 <InputAccessibility component="DateTimePicker" packageName="@mantine/dates" />
+
+## Accessibility
+
+DateTimePicker provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 
 #### Props
@@ -36548,6 +37455,8 @@ function Demo() {
 
 <InputFeatures component="MonthPickerInput" element="button" />
 
+MonthPickerInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all button element props. MonthPickerInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
+
 
 
 ## With icon
@@ -36556,7 +37465,23 @@ function Demo() {
 
 <GetElementRef component="MonthPickerInput" refType="button" package="@mantine/dates" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { MonthPickerInput } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLButtonElement>(null);
+  return <MonthPickerInput ref={ref} />;
+}
+```
+
 <InputAccessibility component="MonthPickerInput" packageName="@mantine/dates" />
+
+## Accessibility
+
+MonthPickerInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 
 #### Props
@@ -37211,6 +38136,8 @@ Import: import { TimeInput } from '@mantine/dates';
 
 <InputFeatures component="TimeInput" element="input" />
 
+TimeInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all input element props. TimeInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
+
 #### Example: configurator
 
 ```tsx
@@ -37328,7 +38255,23 @@ function Demo() {
 
 <GetElementRef component="TimeInput" refType="input" package="@mantine/dates" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { TimeInput } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLInputElement>(null);
+  return <TimeInput ref={ref} />;
+}
+```
+
 <InputAccessibility component="TimeInput" packageName="@mantine/dates" />
+
+## Accessibility
+
+TimeInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 
 #### Props
@@ -37772,6 +38715,8 @@ function Demo() {
 
 <InputFeatures component="TimePicker" element="div" />
 
+TimePicker component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all div element props. TimePicker documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
+
 #### Example: configurator
 
 ```tsx
@@ -38160,6 +39105,8 @@ function Demo() {
 
 <InputFeatures component="MonthPickerInput" element="button" />
 
+MonthPickerInput component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all button element props. MonthPickerInput documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.
+
 
 
 ## With icon
@@ -38168,7 +39115,23 @@ function Demo() {
 
 <GetElementRef component="YearPickerInput" refType="button" package="@mantine/dates" />
 
+## Get element ref
+
+```tsx
+import { useRef } from 'react';
+import { YearPickerInput } from '@mantine/core';
+
+function Demo() {
+  const ref = useRef<HTMLButtonElement>(null);
+  return <YearPickerInput ref={ref} />;
+}
+```
+
 <InputAccessibility component="YearPickerInput" packageName="@mantine/dates" />
+
+## Accessibility
+
+YearPickerInput provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.
 
 
 #### Props
