@@ -1034,24 +1034,27 @@ Additional information about ${component} component.`;
     while ((match = codeBlockRegex.exec(content)) !== null) {
       codeBlocks.push(match[0]);
     }
-    
+
     // Replace code blocks with placeholders temporarily
     let contentWithPlaceholders = content;
     codeBlocks.forEach((block, index) => {
-      contentWithPlaceholders = contentWithPlaceholders.replace(block, `CODEBLOCK_PLACEHOLDER_${index}`);
+      contentWithPlaceholders = contentWithPlaceholders.replace(
+        block,
+        `CODEBLOCK_PLACEHOLDER_${index}`
+      );
     });
-    
+
     // Remove imports, export default Layout, and meta export (but not from code blocks)
     let inImportBlock = false;
     const contentLines = contentWithPlaceholders.split('\n').filter((line) => {
       const trimmed = line.trim();
-      
+
       // Check if we're starting an import
       if (trimmed.startsWith('import ')) {
         inImportBlock = !line.includes(';');
         return false;
       }
-      
+
       // Check if we're in a multi-line import
       if (inImportBlock) {
         if (line.includes(';')) {
@@ -1059,71 +1062,81 @@ Additional information about ${component} component.`;
         }
         return false;
       }
-      
+
       // Skip export default Layout
       if (trimmed.startsWith('export default Layout')) {
         return false;
       }
-      
+
       return true;
     });
-    
+
     // Remove the meta export
-    let contentWithoutMeta = contentLines.join('\n').replace(/export const meta = {[\s\S]*?};/g, '');
-    
+    let contentWithoutMeta = contentLines
+      .join('\n')
+      .replace(/export const meta = {[\s\S]*?};/g, '');
+
     // Restore code blocks
     codeBlocks.forEach((block, index) => {
       contentWithoutMeta = contentWithoutMeta.replace(`CODEBLOCK_PLACEHOLDER_${index}`, block);
     });
-    
+
     // Extract demo names from imports
     const demoNames: string[] = [];
     const importMatch = content.match(/import\s*{([^}]+)}\s*from\s*['"]@\/demos\/[^'"]+['"]/);
     if (importMatch) {
-      const imports = importMatch[1].split(',').map(name => name.trim());
+      const imports = importMatch[1].split(',').map((name) => name.trim());
       demoNames.push(...imports);
     }
-    
+
     // Process with unified/remark
     const processor = unified()
       .use(remarkParse as any)
       .use(remarkMdx as any)
       .use(() => {
         return (tree: any) => {
-          visit(tree, 'mdxJsxFlowElement', (node: any, _index: number | undefined, _parent: any) => {
-            if (node.name === 'Demo' && node.attributes) {
-              const dataAttr = node.attributes.find((attr: any) => attr.name === 'data');
-              if (dataAttr) {
-                let demoName = '';
-                
-                // Handle different attribute value formats
-                if (dataAttr.value && typeof dataAttr.value === 'object' && dataAttr.value.type === 'mdxJsxAttributeValueExpression') {
-                  // Expression like {AlignInputButton}
-                  demoName = dataAttr.value.value || '';
-                } else if (typeof dataAttr.value === 'string') {
-                  // Direct string value
-                  demoName = dataAttr.value;
-                }
-                
-                if (demoName) {
-                  // For FAQ demos, we need to load them specially
-                  node.type = 'paragraph';
-                  node.children = [
-                    {
-                      type: 'text',
-                      value: `FAQDEMOPLACEHOLDER::${demoName}::END`,
-                    },
-                  ];
+          visit(
+            tree,
+            'mdxJsxFlowElement',
+            (node: any, _index: number | undefined, _parent: any) => {
+              if (node.name === 'Demo' && node.attributes) {
+                const dataAttr = node.attributes.find((attr: any) => attr.name === 'data');
+                if (dataAttr) {
+                  let demoName = '';
+
+                  // Handle different attribute value formats
+                  if (
+                    dataAttr.value &&
+                    typeof dataAttr.value === 'object' &&
+                    dataAttr.value.type === 'mdxJsxAttributeValueExpression'
+                  ) {
+                    // Expression like {AlignInputButton}
+                    demoName = dataAttr.value.value || '';
+                  } else if (typeof dataAttr.value === 'string') {
+                    // Direct string value
+                    demoName = dataAttr.value;
+                  }
+
+                  if (demoName) {
+                    // For FAQ demos, we need to load them specially
+                    node.type = 'paragraph';
+                    node.children = [
+                      {
+                        type: 'text',
+                        value: `FAQDEMOPLACEHOLDER::${demoName}::END`,
+                      },
+                    ];
+                  }
                 }
               }
             }
-          });
+          );
         };
       })
       .use(remarkStringify as any);
-    
+
     let result = String(await processor.process(contentWithoutMeta));
-    
+
     // Load and replace FAQ demos - find all placeholders in the result
     const placeholderRegex = /FAQDEMOPLACEHOLDER::([^:]+)::END/g;
     let placeholderMatch;
@@ -1132,20 +1145,15 @@ Additional information about ${component} component.`;
       const placeholder = placeholderMatch[0];
       const demoCode = await this.loadFaqDemoCode(demoName, filePath);
       if (demoCode) {
-        const demoSection = [
-          `#### Example: ${demoName}`,
-          '',
-          '```tsx',
-          demoCode,
-          '```',
-          '',
-        ].join('\n');
+        const demoSection = [`#### Example: ${demoName}`, '', '```tsx', demoCode, '```', ''].join(
+          '\n'
+        );
         result = result.replace(placeholder, demoSection);
       } else {
         result = result.replace(placeholder, '');
       }
     }
-    
+
     return result;
   }
 
@@ -1155,20 +1163,21 @@ Additional information about ${component} component.`;
       const faqDir = path.dirname(faqFilePath);
       const demosDir = path.join(path.dirname(path.dirname(faqDir)), 'demos');
       const demoFile = path.join(demosDir, `${demoName}.demo.tsx`);
-      
-      
+
       // First try the exact file name
       if (await fs.pathExists(demoFile)) {
         const content = await fs.readFile(demoFile, 'utf-8');
-        
+
         // Look for the named export
-        const exportRegex = new RegExp(`export const ${demoName}:\\s*MantineDemo\\s*=\\s*{[\\s\\S]*?}\\s*;`);
+        const exportRegex = new RegExp(
+          `export const ${demoName}:\\s*MantineDemo\\s*=\\s*{[\\s\\S]*?}\\s*;`
+        );
         const exportMatch = content.match(exportRegex);
-        
+
         if (exportMatch) {
           // Extract code from the export
           const exportContent = exportMatch[0];
-          
+
           // Check if it's a multi-file demo (code is an array)
           const codeArrayMatch = exportContent.match(/code:\s*\[/);
           if (codeArrayMatch) {
@@ -1180,11 +1189,18 @@ Additional information about ${component} component.`;
               for (const codeRefMatch of codeRefs) {
                 const codeRef = codeRefMatch.replace(/code:\s*/, '').trim();
                 if (codeRef && !codeRef.startsWith('[')) {
-                  const codeVarMatch = content.match(new RegExp(`const ${codeRef}\\s*=\\s*\`([\\s\\S]*?)\``, 'm'));
+                  const codeVarMatch = content.match(
+                    new RegExp(`const ${codeRef}\\s*=\\s*\`([\\s\\S]*?)\``, 'm')
+                  );
                   if (codeVarMatch) {
                     const code = codeVarMatch[1];
                     // Check if this looks like TSX code (has JSX elements or React imports)
-                    if (code.includes('import') && (code.includes('from \'@mantine') || code.includes('function') || code.includes('return'))) {
+                    if (
+                      code.includes('import') &&
+                      (code.includes("from '@mantine") ||
+                        code.includes('function') ||
+                        code.includes('return'))
+                    ) {
                       return code.trim();
                     }
                   }
@@ -1196,10 +1212,16 @@ Additional information about ${component} component.`;
             const codeMatch = exportContent.match(/code:\s*([^,}]+)/);
             if (codeMatch) {
               const codeRef = codeMatch[1].trim();
-              
+
               // If code is a variable reference, find its definition
-              if (!codeRef.startsWith('`') && !codeRef.startsWith('"') && !codeRef.startsWith("'")) {
-                const codeVarMatch = content.match(new RegExp(`const ${codeRef}\\s*=\\s*\`([\\s\\S]*?)\``, 'm'));
+              if (
+                !codeRef.startsWith('`') &&
+                !codeRef.startsWith('"') &&
+                !codeRef.startsWith("'")
+              ) {
+                const codeVarMatch = content.match(
+                  new RegExp(`const ${codeRef}\\s*=\\s*\`([\\s\\S]*?)\``, 'm')
+                );
                 if (codeVarMatch) {
                   return codeVarMatch[1].trim();
                 }
@@ -1211,7 +1233,7 @@ Additional information about ${component} component.`;
             }
           }
         }
-        
+
         // Fallback: look for const code = `...`
         const codeMatch = content.match(/const code\s*=\s*`([\s\S]*?)`;?/);
         if (codeMatch) {
@@ -1220,18 +1242,20 @@ Additional information about ${component} component.`;
       } else {
         // If exact file doesn't exist, search all demo files in the directory
         const allDemoFiles = await glob('*.demo.tsx', { cwd: demosDir, absolute: true });
-        
+
         for (const file of allDemoFiles) {
           const content = await fs.readFile(file, 'utf-8');
-          
+
           // Look for the named export
-          const exportRegex = new RegExp(`export const ${demoName}:\\s*MantineDemo\\s*=\\s*{[\\s\\S]*?}\\s*;`);
+          const exportRegex = new RegExp(
+            `export const ${demoName}:\\s*MantineDemo\\s*=\\s*{[\\s\\S]*?}\\s*;`
+          );
           const exportMatch = content.match(exportRegex);
-          
+
           if (exportMatch) {
             // Extract code from the export
             const exportContent = exportMatch[0];
-            
+
             // Check if it's a multi-file demo (code is an array)
             const codeArrayMatch = exportContent.match(/code:\s*\[/);
             if (codeArrayMatch) {
@@ -1243,11 +1267,18 @@ Additional information about ${component} component.`;
                 for (const codeRefMatch of codeRefs) {
                   const codeRef = codeRefMatch.replace(/code:\s*/, '').trim();
                   if (codeRef && !codeRef.startsWith('[')) {
-                    const codeVarMatch = content.match(new RegExp(`const ${codeRef}\\s*=\\s*\`([\\s\\S]*?)\``, 'm'));
+                    const codeVarMatch = content.match(
+                      new RegExp(`const ${codeRef}\\s*=\\s*\`([\\s\\S]*?)\``, 'm')
+                    );
                     if (codeVarMatch) {
                       const code = codeVarMatch[1];
                       // Check if this looks like TSX code (has JSX elements or React imports)
-                      if (code.includes('import') && (code.includes('from \'@mantine') || code.includes('function') || code.includes('return'))) {
+                      if (
+                        code.includes('import') &&
+                        (code.includes("from '@mantine") ||
+                          code.includes('function') ||
+                          code.includes('return'))
+                      ) {
                         return code.trim();
                       }
                     }
@@ -1259,10 +1290,16 @@ Additional information about ${component} component.`;
               const codeMatch = exportContent.match(/code:\s*([^,}]+)/);
               if (codeMatch) {
                 const codeRef = codeMatch[1].trim();
-                
+
                 // If code is a variable reference, find its definition
-                if (!codeRef.startsWith('`') && !codeRef.startsWith('"') && !codeRef.startsWith("'")) {
-                  const codeVarMatch = content.match(new RegExp(`const ${codeRef}\\s*=\\s*\`([\\s\\S]*?)\``, 'm'));
+                if (
+                  !codeRef.startsWith('`') &&
+                  !codeRef.startsWith('"') &&
+                  !codeRef.startsWith("'")
+                ) {
+                  const codeVarMatch = content.match(
+                    new RegExp(`const ${codeRef}\\s*=\\s*\`([\\s\\S]*?)\``, 'm')
+                  );
                   if (codeVarMatch) {
                     return codeVarMatch[1].trim();
                   }
