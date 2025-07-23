@@ -219,6 +219,7 @@ class MantineLLMCompiler {
     const mdxFiles = await glob('**/*.mdx', {
       cwd: this.config.mdxPaths.docs,
       absolute: true,
+      ignore: ['**/changelog/**/*.mdx'],
     });
 
     const categories = {
