@@ -65351,24 +65351,68 @@ function Demo() {
 # How to align input with a button in a flex container?
 Learn how to align Mantine inputs with buttons using Group component
 
-AlignInputButton,
-AlignInputButtonCorrect,
-AlignInputButtonStyles,
-} from '@/demos/AlignInputButton.demo';
-
 If you try to align one of Mantine inputs in a flex container with a button,
 you will notice that input is not aligned with the button. This happens because
 Mantine inputs have associated elements: label, description and error message.
 
+#### Example: AlignInputButton
+
+```tsx
+import { Button, Group, TextInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Group align="flex-end">
+      <TextInput label="Your email" error="Something went wrong" />
+      <Button>Submit</Button>
+    </Group>
+  );
+}
+```
 
 
 To align input with a button, you can either use `inputContainer` prop to wrap the button
 next to the in a flex container:
 
+#### Example: AlignInputButtonCorrect
+
+```tsx
+import { Button, Group, TextInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <TextInput
+      label="Your email"
+      error="Something went wrong"
+      inputContainer={(children) => (
+        <Group align="flex-start">
+          {children}
+          <Button>Submit</Button>
+        </Group>
+      )}
+    />
+  );
+}
+```
 
 
 Or change error/description position to absolute with [Styles API](https://mantine.dev/styles/styles-api/):
 
+#### Example: AlignInputButtonStyles
+
+```tsx
+import { Button, Group, TextInput } from '@mantine/core';
+import classes from './Demo.module.css';
+
+function StylesDemo() {
+  return (
+    <Group align="flex-end" pb={18}>
+      <TextInput label="Your email" error="Something went wrong" classNames={classes} />
+      <Button>Submit</Button>
+    </Group>
+  );
+}
+```
 
 
 
@@ -65392,6 +65436,7 @@ in `.css` file to apply styles to all Mantine components:
 Note that if you change `classNamesPrefix` on `MantineProvider`:
 
 ```tsx
+import { MantineProvider, Text } from '@mantine/core';
 
 function Demo() {
   return (
@@ -65470,6 +65515,7 @@ If you decide to use these components, your application must handle free user in
 Example of Autocomplete usage with `data` prop:
 
 ```tsx
+import { Autocomplete } from '@mantine/core';
 
 function Demo() {
   return <Autocomplete data={['React', 'Vue']} />;
@@ -65488,6 +65534,7 @@ It is done on purpose to avoid confusion and make it clear that user can enter a
 Consider the following example:
 
 ```tsx
+import { Autocomplete } from '@mantine/core';
 
 const data = [
   { value: '18361', label: 'React' },
@@ -65564,6 +65611,7 @@ Mantine inputs have `size="sm"` with `14px` font-size. To prevent browser from z
 in you can increase input size:
 
 ```tsx
+import { TextInput } from '@mantine/core';
 
 function Demo() {
   return <TextInput size="md" />;
@@ -65758,6 +65806,8 @@ instructions to fix the issue. Import `@mantine/core` and `@mantine/carousel` st
 the root of your application:
 
 ```tsx
+import '@mantine/core/styles.css';
+import '@mantine/carousel/styles.css';
 ```
 
 ## That's it! It works now!
@@ -65773,6 +65823,25 @@ Learn how to use CSS variables resolver to change color value depending on the c
 `color` prop in all components uses Mantine [CSS variables](https://mantine.dev/styles/css-variables)
 to resolve color value depending on the color scheme. You can define these variables with `virtualColor` function:
 
+#### Example: ColorSchemeColor
+
+```tsx
+import { virtualColor, createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    primary: virtualColor({ name: 'primary', light: 'blue', dark: 'red' }),
+  },
+});
+
+function App() {
+  return (
+    <MantineProvider theme={theme}>
+      <YourApp />
+    </MantineProvider>
+  );
+}
+```
 
 
 
@@ -65803,6 +65872,7 @@ For example, a common issue is a mismatch of `defaultColorScheme` values defined
 on `ColorSchemeScript` and `MantineProvider`:
 
 ```tsx
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 // ❌ Incorrect usage – defaultColorScheme values do not match,
 // this will cause color scheme flickering
@@ -65844,6 +65914,7 @@ Minimal Next.js code that has this warning (Next.js used as an example, the same
 
 ```tsx
 // app/layout.tsx
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 export default function RootLayout({ children }: { children: any }) {
   return (
@@ -65903,6 +65974,7 @@ To fix the hydration warning, spread `mantineHtmlProps` on the `<html />` elemen
 
 ```tsx
 // app/layout.tsx
+import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core';
 
 export default function RootLayout({ children }: { children: any }) {
   return (
@@ -65983,6 +66055,7 @@ Note that:
 * It is recommended to set `name` attribute on all form components that you are planning to test
 
 ```tsx
+import { Select } from '@mantine/core';
 
 function MyForm() {
   return (
@@ -66027,6 +66100,7 @@ when one of the options is selected, so you can select several options one after
 without clicking the input again.
 
 ```tsx
+import { MultiSelect } from '@mantine/core';
 
 function MyForm() {
   return (
@@ -66065,6 +66139,7 @@ You can verify that the component is searchable by typing search query and check
 that only relevant options are visible.
 
 ```tsx
+import { MultiSelect } from '@mantine/core';
 
 function MyForm() {
   return (
@@ -66103,6 +66178,7 @@ To verify that the dropdown is opened, you can check that the listbox with the s
 as the input is visible.
 
 ```tsx
+import { Select } from '@mantine/core';
 
 function MyForm() {
   return (
@@ -66159,6 +66235,7 @@ In most cases, the easiest way to add support for both controlled and uncontroll
 Example of a custom input that supports both controlled and uncontrolled modes:
 
 ```tsx
+import { useUncontrolled } from '@mantine/hooks';
 
 interface CustomInputProps {
   value?: string;
@@ -66239,6 +66316,7 @@ instructions.
 Add styles import to your application:
 
 ```bash
+import '@mantine/dates/styles.css';
 ```
 
 
@@ -66253,6 +66331,25 @@ To disable all inputs/inputs group inside form, you can use the [Fieldset](https
 If `disabled` prop is set, all inputs inside `Fieldset` are disabled. By default, `Fieldset` has border and padding styles.
 If you want to use `Fieldset` only for `disabled` feature, set `variant="unstyled"`:
 
+#### Example: FieldsetInputs
+
+```tsx
+import { Fieldset, TextInput, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form>
+      <Fieldset disabled variant="unstyled">
+        <TextInput label="Your name" placeholder="Your name" />
+        <TextInput label="Your email" placeholder="Your email" mt="md" />
+        <Button type="submit" mt="md">
+          Submit
+        </Button>
+      </Fieldset>
+    </form>
+  );
+}
+```
 
 
 ## Disable all inputs with enhanceGetInputProps
@@ -66260,6 +66357,44 @@ If you want to use `Fieldset` only for `disabled` feature, set `variant="unstyle
 If you use [use-form](https://mantine.dev/form/get-input-props/#enhancegetinputprops) for
 your form, you can disable all inputs with `enhanceGetInputProps`:
 
+#### Example: EnhanceDisableInputs
+
+```tsx
+import { useState } from 'react';
+import { Button, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const [disabled, setDisabled] = useState(false);
+
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '', email: '' },
+    enhanceGetInputProps: () => ({ disabled }),
+  });
+
+  return (
+    <form>
+      <TextInput
+        label="Your name"
+        placeholder="Your name"
+        {...form.getInputProps('name')}
+        key={form.key('name')}
+      />
+      <TextInput
+        label="Your email"
+        placeholder="Your email"
+        mt="md"
+        {...form.getInputProps('email')}
+        key={form.key('email')}
+      />
+      <Button mt="md" onClick={() => setDisabled((d) => !d)}>
+        Toggle disabled
+      </Button>
+    </form>
+  );
+}
+```
 
 
 
@@ -66307,6 +66442,10 @@ Example below demonstrates how to upload files from Dropzone component to S3 buc
 with `axios`:
 
 ```tsx
+import axios from 'axios';
+import { useState } from 'react';
+import { Dropzone } from '@mantine/dropzone';
+import { notifications } from '@mantine/notifications';
 
 function Demo() {
   const [loading, setLoading] = useState(false);
@@ -66360,6 +66499,8 @@ First, define data- attributes on the component. In the example below:
   In styles you can reference it with `&[data-orientation="horizontal"]` selector.
 
 ```tsx
+import { Box } from '@mantine/core';
+import classes from './Demo.module.css';
 
 interface DemoProps {
   disabled: boolean;
@@ -66407,6 +66548,7 @@ of values (for example, value can be any valid CSS color), then you can use
 inline styles or [style props](https://mantine.dev/styles/style-props/):
 
 ```tsx
+import { Box } from '@mantine/core';
 
 interface DemoProps {
   fontFamily: string;
@@ -66426,6 +66568,7 @@ If you need to customize a deeply nested element, use [styles](https://mantine.d
 prop instead:
 
 ```tsx
+import { Button } from '@mantine/core';
 
 interface DemoProps {
   color: string;
@@ -66453,6 +66596,8 @@ with [classNames](https://mantine.dev/styles/styles-api/#classnames-prop) prop.
 First, define CSS variables in `style` or `styles` prop:
 
 ```tsx
+import { Box } from '@mantine/core';
+import classes from './Demo.module.css';
 
 interface DemoProps {
   color: string;
@@ -66491,6 +66636,27 @@ In the following example, the `onChange` callback will never be called
 even though the `FileButton` is rendered inside the `Menu` component and
 the file dialog is opened when the second `Menu.Item` is clicked.
 
+#### Example: FileButtonMenuBroken
+
+```tsx
+import { Button, FileButton, Menu } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Menu>
+      <Menu.Target>
+        <Button>Toggle menu</Button>
+      </Menu.Target>
+      <Menu.Dropdown>
+        <Menu.Item>Fist item</Menu.Item>
+        <FileButton onChange={(file) => console.log(file)} accept="image/png,image/jpeg">
+          {(props) => <Menu.Item {...props}>Upload Image</Menu.Item>}
+        </FileButton>
+      </Menu.Dropdown>
+    </Menu>
+  );
+}
+```
 
 
 ## Source of the issue
@@ -66507,12 +66673,58 @@ There are two solutions to this issue. The first one is to set `keepMounted` pro
 on the `Menu` component. This way, the `FileButton` will not be unmounted when the
 `Menu` is closed:
 
+#### Example: FileButtonMenuFix
+
+```tsx
+import { Button, FileButton, Menu } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Menu keepMounted>
+      <Menu.Target>
+        <Button>Toggle menu</Button>
+      </Menu.Target>
+      <Menu.Dropdown>
+        <Menu.Item>Fist item</Menu.Item>
+        <FileButton onChange={(file) => console.log(file)} accept="image/png,image/jpeg">
+          {(props) => <Menu.Item {...props}>Upload Image</Menu.Item>}
+        </FileButton>
+      </Menu.Dropdown>
+    </Menu>
+  );
+}
+```
 
 
 The other solution is to prevent `Menu` from closing when `Menu.Item` that contains
 `FileButton` is clicked. This can be done by setting `closeOnItemClick={false}` prop
 on the `Menu.Item` component:
 
+#### Example: FileButtonMenuFix2
+
+```tsx
+import { Button, FileButton, Menu } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Menu>
+      <Menu.Target>
+        <Button>Toggle menu</Button>
+      </Menu.Target>
+      <Menu.Dropdown>
+        <Menu.Item>Fist item</Menu.Item>
+        <FileButton onChange={(file) => console.log(file)} accept="image/png,image/jpeg">
+          {(props) => (
+            <Menu.Item {...props} closeMenuOnClick={false}>
+              Upload Image
+            </Menu.Item>
+          )}
+        </FileButton>
+      </Menu.Dropdown>
+    </Menu>
+  );
+}
+```
 
 
 
@@ -66539,6 +66751,7 @@ You can use `form.getInputNode` function to get input DOM node at the given path
 For example:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -66562,6 +66775,57 @@ with valid form values when validation passes, the second function is called
 with form errors when validation fails. You can use the second function and
 `form.getInputNode` to focus the first input with error:
 
+#### Example: FocusFirstInputWithError
+
+```tsx
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      email: '',
+    },
+
+    validate: {
+      name: isNotEmpty('Name is required'),
+      email: isEmail('Invalid email'),
+    },
+  });
+
+  return (
+    <form
+      onSubmit={form.onSubmit(
+        () => {},
+        (errors) => {
+          const firstErrorPath = Object.keys(errors)[0];
+          form.getInputNode(firstErrorPath)?.focus();
+        }
+      )}
+    >
+      <TextInput
+        withAsterisk
+        label="Your name"
+        placeholder="Your name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+
+      <TextInput
+        withAsterisk
+        label="Your email"
+        placeholder="your@email.com"
+        mt="md"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+
+      <Group justify="flex-end" mt="md">
+        <Button type="submit">Submit</Button>
+      </Group>
+    </form>
+  );
+}
+```
 
 
 
@@ -66584,7 +66848,7 @@ There are multiple ways to contribute even without writing code
   bug reports and feature requests, it is always nice to hear that people enjoy working with Mantine.
 * Star the project on [GitHub](https://github.com/mantinedev/mantine). It is a small thing that helps us grow and get more
   people interested in the project.
-* [Contribute](https://mantine.dev/contribute) to the Mantine codebase. We welcome all kinds of contributions: if you do not have much
+* [Contribute](/contribute) to the Mantine codebase. We welcome all kinds of contributions: if you do not have much
   experience with React/TypeScript, you can help us improve the documentation to make it more clear and understandable
   for new developers. If you are an experienced React developer, you can help us with open [issues](https://github.com/mantinedev/mantine/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22).
 
@@ -66652,6 +66916,8 @@ The simplest way of adding `:hover` styles to an element is to use the `&` selec
 Then import the styles into your component:
 
 ```tsx
+import { Box } from '@mantine/core';
+import styles from './Element.module.css';
 
 export const Element = () => {
   return <Box className={styles.element}>Element</Box>;
@@ -66707,6 +66973,8 @@ use [Transition](https://mantine.dev/core/transition/) component under the hood 
 presence. You can use `transitionProps` property to pass props to `Transition` component:
 
 ```tsx
+import { Modal } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 function Demo() {
   const [opened, handlers] = useDisclosure();
@@ -66738,6 +67006,7 @@ How to use useMantineColorScheme and useComputedColorScheme hooks to get current
 To get color scheme value in component use `useMantineColorScheme` hook:
 
 ```tsx
+import { useMantineColorScheme } from '@mantine/core';
 
 function Demo() {
   // colorScheme is `'dark' | 'light' | 'auto'`
@@ -66749,6 +67018,7 @@ If you want to get computed color scheme, use `useComputedColorScheme` hook inst
 It will resolve `auto` value to `dark` or `light` based on user preferences:
 
 ```tsx
+import { useComputedColorScheme } from '@mantine/core';
 
 function Demo() {
   // colorScheme is `'dark' | 'light'`
@@ -66766,6 +67036,7 @@ To get color scheme value outside of component, create an utility function
 that will parse color scheme value from `data-mantine-color-scheme` attribute:
 
 ```tsx
+import { MantineColorScheme } from '@mantine/core';
 
 export function getColorScheme() {
   return document.documentElement.getAttribute(
@@ -66777,6 +67048,7 @@ export function getColorScheme() {
 Then use it in any place of your application:
 
 ```tsx
+import { getColorScheme } from './getColorScheme';
 
 const colorScheme = getColorScheme();
 ```
@@ -66790,6 +67062,8 @@ For example, if you want to conditionally render some elements based on color sc
 you will get hydration mismatch or other error:
 
 ```tsx
+import { useComputedColorScheme } from '@mantine/core';
+import { getColorScheme } from './getColorScheme';
 
 // ❌ Not compatible with SSR
 function Demo() {
@@ -66812,6 +67086,25 @@ You can also use [light/dark mixins](https://mantine.dev/theming/color-schemes/#
 or `light-dark` function from [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset/)
 to hide elements based on color scheme value.
 
+#### Example: HideShowColorScheme
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Button color="cyan" lightHidden>
+        Visible in dark color scheme only
+      </Button>
+
+      <Button color="pink" darkHidden>
+        Visible in light color scheme only
+      </Button>
+    </>
+  );
+}
+```
 
 
 
@@ -66825,6 +67118,7 @@ library to lock scroll. You can use it in your application to lock scroll. For y
 convenience, `@mantine/core` package exports `RemoveScroll` component:
 
 ```tsx
+import { RemoveScroll } from '@mantine/core';
 
 function App() {
   return (
@@ -66849,6 +67143,45 @@ opened state is controlled by `opened` prop. You can use it to prevent modal fro
 it to `true`. For example, it can be useful if you have an async operation inside the modal and want to
 prevent user from closing it before the operation is finished:
 
+#### Example: ModalDoNotClose
+
+```tsx
+import { useState } from 'react';
+import { useDisclosure } from '@mantine/hooks';
+import { Button, Modal } from '@mantine/core';
+
+function operation() {
+  return new Promise((resolve) => {
+    setTimeout(resolve, 5000);
+  });
+}
+
+function Demo() {
+  const [opened, { open, close }] = useDisclosure();
+  const [loading, setLoading] = useState(false);
+
+  const performOperation = () => {
+    setLoading(true);
+    operation().then(() => setLoading(false));
+  };
+
+  return (
+    <>
+      <Modal
+        opened={opened}
+        onClose={loading ? () => {} : close}
+        withCloseButton={!loading}
+        title="Modal with async operation"
+      >
+        <Button loading={loading} onClick={performOperation} fullWidth>
+          Perform heavy operation
+        </Button>
+      </Modal>
+      <Button onClick={open}>Open modal</Button>
+    </>
+  );
+}
+```
 
 
 
@@ -66861,6 +67194,8 @@ Learn how to setup Stylelint for Mantine postcss syntax
 
 [Stylelint](https://stylelint.io/) is a tool to lint CSS and CSS like files.
 To get started install `stylelint` and `stylelint-config-standard-scss` packages:
+
+<InstallScript packages="stylelint stylelint-config-standard-scss" />
 
 ## Configuration
 
@@ -67067,6 +67402,73 @@ with `use-form` hook using the following form object properties:
 
 Using these properties you can integrate `Dropzone` with `use-form` hook:
 
+#### Example: DropzoneForm
+
+```tsx
+import { useForm } from '@mantine/form';
+import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
+import { Center, Text, CloseButton } from '@mantine/core';
+
+interface FormValues {
+  files: File[];
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    mode: 'uncontrolled',
+    initialValues: { files: [] },
+  });
+
+  const selectedFiles = form.getValues().files.map((file, index) => (
+    <Text key={file.name}>
+      <b>{file.name}</b> ({(file.size / 1024).toFixed(2)} kb)
+      <CloseButton
+        size="xs"
+        onClick={() =>
+          form.setFieldValue(
+            'files',
+            form.values.files.filter((_, i) => i !== index)
+          )
+        }
+      />
+    </Text>
+  ));
+
+  return (
+    <>
+      <Dropzone
+        h={120}
+        p={0}
+        multiple
+        accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg]}
+        onDrop={(files) => form.setFieldValue('files', files)}
+        onReject={() => form.setFieldError('files', 'Select images only')}
+      >
+        <Center h={120}>
+          <Dropzone.Idle>Drop files here</Dropzone.Idle>
+          <Dropzone.Accept>Drop files here</Dropzone.Accept>
+          <Dropzone.Reject>Files are invalid</Dropzone.Reject>
+        </Center>
+      </Dropzone>
+
+      {form.errors.files && (
+        <Text c="red" mt={5}>
+          {form.errors.files}
+        </Text>
+      )}
+
+      {selectedFiles.length > 0 && (
+        <>
+          <Text mb={5} mt="md">
+            Selected files:
+          </Text>
+          {selectedFiles}
+        </>
+      )}
+    </>
+  );
+}
+```
 
 
 
@@ -67081,6 +67483,21 @@ To change focus styles of a single input, use [Styles API](https://mantine.dev/s
 Note that in order for this to work correctly with all inputs, you need to use
 `:focus-within` pseudo-class instead of `:focus`:
 
+#### Example: InputFocusStyles
+
+```tsx
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <TextInput
+      classNames={classes}
+      label="TextInput with custom focus styles"
+      placeholder="TextInput with custom focus styles"
+    />
+  );
+}
+```
 
 
 ## Change focus styles of all inputs
@@ -67088,6 +67505,27 @@ Note that in order for this to work correctly with all inputs, you need to use
 To change focus styles of all inputs, use [Styles API](https://mantine.dev/styles/styles-api) with `Input` component
 in the [theme object](https://mantine.dev/theming/theme-object):
 
+#### Example: InputThemeFocusStyles
+
+```tsx
+import { TextInput, NativeSelect, MantineProvider, createTheme, Input } from '@mantine/core';
+import classes from './Demo.module.css';
+
+const theme = createTheme({
+  components: {
+    Input: Input.extend({ classNames: classes }),
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <TextInput label="Text input" placeholder="Text input" />
+      <NativeSelect mt="md" label="Native select" data={['React', 'Angular', 'Vue', 'Svelte']} />
+    </MantineProvider>
+  );
+}
+```
 
 
 
@@ -67099,9 +67537,28 @@ Learn how to integrate mask libraries with Mantine inputs
 Mantine does not provide built-in mask functionality, but you can easily integrate any mask library with Mantine inputs.
 The recommended library is [react-imask](https://www.npmjs.com/package/react-imask):
 
+<InstallScript packages="react-imask" />
+
 You can use it with [InputBase](https://mantine.dev/core/input/#inputbase-component) component
 to create custom input with mask:
 
+#### Example: InputMask
+
+```tsx
+import { IMaskInput } from 'react-imask';
+import { InputBase } from '@mantine/core';
+
+function Demo() {
+  return (
+    <InputBase
+      label="Your phone"
+      component={IMaskInput}
+      mask="+7 (000) 000-0000"
+      placeholder="Your phone"
+    />
+  );
+}
+```
 
 
 
@@ -67137,6 +67594,7 @@ If your application does not have server-side rendering, you can get color schem
 with `useMantineColorScheme` hook:
 
 ```tsx
+import { useMantineColorScheme } from '@mantine/core';
 
 function MyComponent() {
   const { colorScheme } = useMantineColorScheme();
@@ -67202,6 +67660,7 @@ color scheme, customize colors with [theme](https://mantine.dev/theming/theme-ob
 You can define custom colors in the [theme object](https://mantine.dev/theming/theme-object).
 
 ```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   colors: {
@@ -67256,6 +67715,8 @@ There are handlers available to add, remove, and reorder items in the list:
 Example of using form lists:
 
 ```tsx
+import { IconTrash } from '@tabler/icons-react';
+import {
   ActionIcon,
   Box,
   Button,
@@ -67264,6 +67725,8 @@ Example of using form lists:
   Text,
   TextInput,
 } from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { randomId } from '@mantine/hooks';
 
 function Demo() {
   const form = useForm({
@@ -67361,6 +67824,7 @@ Example:
 * `value` after mounting: `light` or `dark` depending on value in local storage (value from local storage)
 
 ```tsx
+import { useLocalStorage } from '@mantine/hooks';
 
 function Demo() {
   const [value, setValue] = useLocalStorage<'light' | 'dark'>({
@@ -67385,6 +67849,7 @@ Example:
 * `value` at subsequent renders: `light` or `dark` depending on value in local storage (value from local storage)
 
 ```tsx
+import { useLocalStorage } from '@mantine/hooks';
 
 function Demo() {
   const [value, setValue] = useLocalStorage<'light' | 'dark'>({
@@ -67506,6 +67971,7 @@ Mantine components do not support nested inline styles out of the box. The follo
 example will not work:
 
 ```tsx
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -67571,10 +68037,6 @@ Note that this will increase bundle size and will affect performance.
 # My Popover dropdown closes when I click on the dropdown of nested Popover
 Popover dropdown is closed when it detects click outside events
 
-NestedPopovers,
-NestedPopoversWorking,
-} from '@/demos/NestedPopovers.demo';
-
 ## Nested popovers
 
 By default, all popovers and dropdowns are rendered within [Portal](https://mantine.dev/core/portal/)
@@ -67588,6 +68050,32 @@ This happens with every component that uses [Popover](https://mantine.dev/core/p
 
 Example of the issue:
 
+#### Example: NestedPopovers
+
+```tsx
+import { Button, Popover, Select } from '@mantine/core';
+import { InputBase } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Popover width={200} position="bottom" withArrow shadow="md">
+      <Popover.Target>
+        <Button>Toggle popover</Button>
+      </Popover.Target>
+      <Popover.Dropdown>
+        <Select
+          placeholder="Choose your framework"
+          data={[
+            { value: 'react', label: 'React' },
+            { value: 'vue', label: 'Vue' },
+            { value: 'angular', label: 'Angular' },
+          ]}
+        />
+      </Popover.Dropdown>
+    </Popover>
+  );
+}
+```
 
 
 ## How to fix
@@ -67598,6 +68086,33 @@ To learn which prop to use, check the documentation of the component you are usi
 
 Example of the fixed issue:
 
+#### Example: NestedPopoversWorking
+
+```tsx
+import { Button, Popover, Select } from '@mantine/core';
+import { InputBase } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Popover width={200} position="bottom" withArrow shadow="md">
+      <Popover.Target>
+        <Button>Toggle popover</Button>
+      </Popover.Target>
+      <Popover.Dropdown>
+        <Select
+          comboboxProps={{ withinPortal: false }}
+          placeholder="Choose your framework"
+          data={[
+            { value: 'react', label: 'React' },
+            { value: 'vue', label: 'Vue' },
+            { value: 'angular', label: 'Angular' },
+          ]}
+        />
+      </Popover.Dropdown>
+    </Popover>
+  );
+}
+```
 
 
 
@@ -67621,6 +68136,7 @@ Roboto/
 In `Roboto.ts` file, add the following code:
 
 ```tsx
+import localFont from 'next/font/local';
 
 export const roboto = localFont({
   src: [
@@ -67641,11 +68157,14 @@ export const roboto = localFont({
 Then add the font to your [theme](https://mantine.dev/theming/theme-object/):
 
 ```tsx
+import '@mantine/core/styles.css';
 
+import {
   createTheme,
   DEFAULT_THEME,
   MantineProvider,
 } from '@mantine/core';
+import { roboto } from './Roboto';
 
 const theme = createTheme({
   fontFamily: roboto.style.fontFamily,
@@ -67696,11 +68215,14 @@ Then import `Roboto.css` file at the root of your application and
 add the font to your [theme](https://mantine.dev/theming/theme-object/):
 
 ```tsx
+import {
   createTheme,
   DEFAULT_THEME,
   MantineProvider,
 } from '@mantine/core';
 
+import '@mantine/core/styles.css';
+import './Roboto/Roboto.css';
 
 const theme = createTheme({
   fontFamily: 'Roboto, sans-serif',
@@ -67737,7 +68259,9 @@ Add the code to the [head](https://nextjs.org/docs/pages/api-reference/component
 of your application and add the font to your [theme](https://mantine.dev/theming/theme-object/):
 
 ```tsx
+import '@mantine/core/styles.css';
 
+import {
   createTheme,
   DEFAULT_THEME,
   MantineProvider,
@@ -67776,6 +68300,8 @@ is to wrap your application with `Notifications` component:
 
 ```tsx
 // ❌ This is incorrect
+import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 
 function Demo() {
   return (
@@ -67796,6 +68322,8 @@ as a sibling to your application:
 
 ```tsx
 // ✅ This is correct
+import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 
 function Demo() {
   return (
@@ -67824,6 +68352,8 @@ instructions.
 Add styles import to your application:
 
 ```bash
+import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 ```
 
 
@@ -67858,6 +68388,7 @@ to lock scroll when they are opened. By default, `react-remove-scroll` will lock
 To change various scroll lock options, you can use `removeScrollProps` prop:
 
 ```tsx
+import { Modal } from '@mantine/core';
 
 function Demo() {
   return (
@@ -67886,6 +68417,7 @@ For example, the `Button` component default element is `button` and it can be ch
 `a` or any other element or component:
 
 ```tsx
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -67904,6 +68436,7 @@ which is not known until the component is used.
 Example:
 
 ```tsx
+import { Box } from '@mantine/core';
 
 // MyBox component props types are now known
 // Types will be assigned only when MyBox is used
@@ -67930,6 +68463,7 @@ When you use one polymorphic component in `component` prop of another polymorphi
 types cannot be inferred correctly because the type of the root element is not known until the component is used.
 
 ```tsx
+import { Box, Button } from '@mantine/core';
 
 function Demo() {
   // Types cannot be inferred correctly
@@ -67965,6 +68499,8 @@ In all following examples we will use `AuthModal` component, it contains
 a button and a modal with a simple authentication form:
 
 ```tsx
+import { Button, Modal, PasswordInput, TextInput } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 export function AuthModal() {
   const [opened, { open, close }] = useDisclosure();
@@ -68000,6 +68536,8 @@ animation start and `@testing-library/react` does not wait for `setTimeout` to f
 Example of failing tests:
 
 ```tsx
+import { render, screen, userEvent } from '@/test-utils';
+import { AuthModal } from './AuthModal';
 
 describe('AuthModal', () => {
   it('opens modal when button is clicked', async () => {
@@ -68024,7 +68562,10 @@ To create a custom theme for tests, replace your `render` function
 in `test-utils` folder with the following code:
 
 ```tsx
+import { render as testingLibraryRender } from '@testing-library/react';
+import { createTheme, MantineProvider, mergeThemeOverrides, Modal } from '@mantine/core';
 // Your project theme
+import { theme } from '../theme';
 
 // Merge your project theme with tests specific overrides
 const testTheme = mergeThemeOverrides(
@@ -68116,6 +68657,7 @@ No, PostCSS functions are not supported in inline styles. **You can use PostCSS 
 The following example will not work:
 
 ```tsx
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -68143,6 +68685,7 @@ To have different primary color for light and dark color schemes you can use [vi
 Virtual color is a color that changes its value based on current color scheme.
 
 ```tsx
+import {
   createTheme,
   MantineProvider,
   virtualColor,
@@ -68259,13 +68802,17 @@ Then import `Roboto.css` file at the root of your application and
 add the font to your [theme](https://mantine.dev/theming/theme-object/):
 
 ```tsx
+import '@mantine/core/styles.css';
+import './Roboto/styles.css';
 
+import {
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
 } from 'react-router';
+import {
   ColorSchemeScript,
   createTheme,
   DEFAULT_THEME,
@@ -68332,13 +68879,17 @@ Add the code to the `<head />` of your application `root.tsx` file.
 The code will look something like this:
 
 ```tsx
+import '@mantine/core/styles.css';
+import './Roboto/styles.css';
 
+import {
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
 } from 'react-router';
+import {
   ColorSchemeScript,
   createTheme,
   DEFAULT_THEME,
@@ -68439,6 +68990,60 @@ to ensure that the form is not hidden behind the header. Note that `scroll-margi
 work if the form has `overflow: hidden;` styles or is inside other element that has
 `overflow: hidden;` styles.
 
+#### Example: ScrollToTopOfForm
+
+```tsx
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      email: '',
+    },
+
+    validate: {
+      name: isNotEmpty('Name is required'),
+      email: isEmail('Invalid email'),
+    },
+  });
+
+  return (
+    <form
+      id="my-form"
+      style={{ scrollMargin: '100px' }}
+      onSubmit={form.onSubmit(
+        () => {},
+        () => {
+          document
+            .getElementById('my-form')
+            ?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+        }
+      )}
+    >
+      <TextInput
+        withAsterisk
+        label="Your name"
+        placeholder="Your name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+
+      <TextInput
+        withAsterisk
+        label="Your email"
+        placeholder="your@email.com"
+        mt="md"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+
+      <Group justify="flex-end" mt="md">
+        <Button type="submit">Submit</Button>
+      </Group>
+    </form>
+  );
+}
+```
 
 
 
@@ -68485,6 +69090,50 @@ Use [Select](https://mantine.dev/core/select/) component in the following cases:
 
 For example, you can use [Select](https://mantine.dev/core/select/) to select country from the list of all countries:
 
+#### Example: SelectCountry
+
+```tsx
+import { Select } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Select
+      label="Your country"
+      placeholder="Select country"
+      searchable
+      data={[
+        { value: 'ca', label: 'Canada' },
+        { value: 'br', label: 'Brazil' },
+        { value: 'in', label: 'India' },
+        { value: 'mx', label: 'Mexico' },
+        { value: 'au', label: 'Australia' },
+        { value: 'kr', label: 'South Korea' },
+        { value: 'id', label: 'Indonesia' },
+        { value: 'tr', label: 'Turkey' },
+        { value: 'nl', label: 'Netherlands' },
+        { value: 'ch', label: 'Switzerland' },
+        { value: 'sa', label: 'Saudi Arabia' },
+        { value: 'se', label: 'Sweden' },
+        { value: 'pl', label: 'Poland' },
+        { value: 'ar', label: 'Argentina' },
+        { value: 'be', label: 'Belgium' },
+        { value: 'th', label: 'Thailand' },
+        { value: 'at', label: 'Austria' },
+        { value: 'ae', label: 'United Arab Emirates' },
+        { value: 'hk', label: 'Hong Kong' },
+        { value: 'dk', label: 'Denmark' },
+        { value: 'sg', label: 'Singapore' },
+        { value: 'my', label: 'Malaysia' },
+        { value: 'no', label: 'Norway' },
+        { value: 'ng', label: 'Nigeria' },
+        { value: 'cz', label: 'Czech Republic' },
+        { value: 'za', label: 'South Africa' },
+        { value: 'ro', label: 'Romania' },
+      ]}
+    />
+  );
+}
+```
 
 
 In the example above, the user can select country from the list of all countries, but cannot enter any other value.
@@ -68500,6 +69149,32 @@ Use [Autocomplete](https://mantine.dev/core/autocomplete/) component in the foll
 
 For example, you can use [Autocomplete](https://mantine.dev/core/autocomplete/) to ask user to enter city:
 
+#### Example: AutocompleteCity
+
+```tsx
+import { Autocomplete } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Autocomplete
+      label="Your city"
+      placeholder="Your city"
+      data={[
+        'New York',
+        'Los Angeles',
+        'Chicago',
+        'Houston',
+        'Phoenix',
+        'Philadelphia',
+        'San Antonio',
+        'San Diego',
+        'Dallas',
+        'San Jose',
+      ]}
+    />
+  );
+}
+```
 
 
 In the example above, suggestions are based on the input value,
@@ -68522,6 +69197,7 @@ or customize filtering logic to better suit your needs.
 Example of a custom filter function that matches options by words instead of letters sequence:
 
 ```tsx
+import { Select, ComboboxItem, OptionsFilter } from '@mantine/core';
 
 const optionsFilter: OptionsFilter = ({ options, search }) => {
   const splittedSearch = search.toLowerCase().trim().split(' ');
@@ -68548,6 +69224,28 @@ function Demo() {
 
 Example of adding fuzzy search with [fuse.js](https://fusejs.io/) to Select component:
 
+#### Example: SelectFuzzy
+
+```tsx
+import Fuse from 'fuse.js';
+import { Select } from '@mantine/core';
+import { data } from './data.json';
+
+function Demo() {
+  return (
+    <Select
+      label="Your country"
+      placeholder="Select country"
+      searchable
+      data={data}
+      filter={({ options, search }) => {
+        const fuse = new Fuse(options, { keys: ['label', 'value'] });
+        return search ? fuse.search(search).map((item) => item.item) : options;
+      }}
+    />
+  );
+}
+```
 
 
 
@@ -68593,6 +69291,7 @@ Example of code that will throw this error:
 
 ```tsx
 // ❌ This will throw an error
+import { useDisclosure } from '@mantine/hooks';
 
 function Demo() {
   const { opened, toggle } = useDisclosure();
@@ -68608,6 +69307,7 @@ Example of code that will work:
 // ✅ No error
 'use client';
 
+import { useDisclosure } from '@mantine/hooks';
 
 function Demo() {
   const { opened, toggle } = useDisclosure();
@@ -68628,6 +69328,7 @@ Example of code that will throw this error:
 
 ```tsx
 // ❌ This will throw an error
+import { CopyButton } from '@mantine/core';
 
 function Demo() {
   return (
@@ -68648,6 +69349,7 @@ Example of code that will work:
 // ✅ No error
 'use client';
 
+import { CopyButton } from '@mantine/core';
 
 function Demo() {
   return (
@@ -68673,6 +69375,7 @@ Example of code that will throw this error:
 
 ```tsx
 // ❌ This will throw an error
+import { useRef } from 'react';
 
 function Demo() {
   const ref = useRef();
@@ -68685,6 +69388,7 @@ Example of code that will work:
 // ✅ No error
 'use client';
 
+import { useRef } from 'react';
 
 function Demo() {
   const ref = useRef();
@@ -68702,6 +69406,7 @@ Example of code that will throw this error:
 
 ```tsx
 // ❌ This will throw an error
+import { Popover } from '@mantine/core';
 
 function Demo() {
   return (
@@ -68720,6 +69425,7 @@ Solution 1: add `'use client';` directive to the top of the file:
 // ✅ No error
 'use client';
 
+import { Popover } from '@mantine/core';
 
 function Demo() {
   return (
@@ -68736,6 +69442,7 @@ Solution 2: replace compound components with regular components:
 
 ```tsx
 // ✅ No error, 'use client' directive is not required
+import { Popover, PopoverTarget } from '@mantine/core';
 
 function Demo() {
   return (
@@ -68759,6 +69466,7 @@ Example of code that will throw this error:
 
 ```tsx
 // ❌ This will throw an error
+import { Button, createTheme } from '@mantine/core';
 
 export const theme = createTheme({
   components: {
@@ -68773,6 +69481,7 @@ Example of code that will work:
 // ✅ No error
 'use client';
 
+import { Button, createTheme } from '@mantine/core';
 
 export const theme = createTheme({
   components: {
@@ -68806,10 +69515,14 @@ issue can be resolved by changing the import order:
 
 ```tsx
 // ❌ Wrong order – Mantine styles override your styles
+import './styles.css';
+import '@mantine/core/styles.css';
 ```
 
 ```tsx
 // ✅ Correct order – your styles override Mantine styles
+import '@mantine/core/styles.css';
+import './styles.css';
 ```
 
 ## CSS layers
@@ -68828,6 +69541,7 @@ in which all selectors are wrapped with `@layer mantine {}`. To use CSS layers i
 simply replace `@mantine/*/styles.css` imports with `@mantine/*/styles.layer.css`:
 
 ```tsx
+import '@mantine/core/styles.layer.css';
 ```
 
 
@@ -68881,6 +69595,24 @@ Learn how to use Styles API with Tabs component
 element. You can use [Styles API](https://mantine.dev/styles/styles-api) to change
 styles of inner elements:
 
+#### Example: TabsBorderColor
+
+```tsx
+import { Tabs } from '@mantine/core';
+import classes from './Demo.module.css';
+
+function Demo() {
+  return (
+    <Tabs defaultValue="gallery" classNames={classes}>
+      <Tabs.List>
+        <Tabs.Tab value="gallery">Gallery</Tabs.Tab>
+        <Tabs.Tab value="messages">Messages</Tabs.Tab>
+        <Tabs.Tab value="settings">Settings</Tabs.Tab>
+      </Tabs.List>
+    </Tabs>
+  );
+}
+```
 
 
 
@@ -68894,7 +69626,7 @@ Learn how to create a new repository based on Mantine template
 Mantine provides a set of templates for most common use cases.
 A template is a set of configuration files that are required to
 get started with Mantine and a React framework of your choice.
-You can find a list of all available templates on the [getting started page](https://mantine.dev/getting-started).
+You can find a list of all available templates on the [getting started page](/getting-started).
 
 ## Prerequisites
 
@@ -68945,6 +69677,7 @@ in most components that support `color` prop.
 as default color in components with filled variant.
 
 ```tsx
+import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   colors: {
@@ -69009,6 +69742,7 @@ light/dark color schemes, and you do not rely on color changes for hover
 effects, you can define just one shade per color with `colorsTuple` function:
 
 ```tsx
+import { colorsTuple, createTheme } from '@mantine/core';
 
 const theme = createTheme({
   colors: {
@@ -69041,6 +69775,7 @@ There are two main strategies to apply styles with a third-party library:
 Example of applying styles with a utility CSS library:
 
 ```tsx
+import { TextInput } from '@mantine/core';
 
 function Demo() {
   return (
@@ -69076,6 +69811,8 @@ You can combine both approaches to achieve desired results, for example,
 a given component, and you can use static selectors to style inner elements:
 
 ```tsx
+import styled from '@emotion/styled';
+import { Slider } from '@mantine/core';
 
 const StyledSlider = styled(Slider)`
   & .mantine-Slider-bar {
@@ -69161,11 +69898,14 @@ Then import `Roboto.css` file at the root of your application and
 add the font to your [theme](https://mantine.dev/theming/theme-object/):
 
 ```tsx
+import {
   createTheme,
   DEFAULT_THEME,
   MantineProvider,
 } from '@mantine/core';
 
+import '@mantine/core/styles.css';
+import './Roboto/Roboto.css';
 
 const theme = createTheme({
   fontFamily: 'Roboto, sans-serif',
@@ -69233,11 +69973,13 @@ of your application. The code will look something like this:
 Then add the font to your [theme](https://mantine.dev/theming/theme-object/):
 
 ```tsx
+import {
   createTheme,
   DEFAULT_THEME,
   MantineProvider,
 } from '@mantine/core';
 
+import '@mantine/core/styles.css';
 
 const theme = createTheme({
   fontFamily: 'Roboto, sans-serif',
