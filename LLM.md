@@ -65348,22 +65348,13 @@ function Demo() {
 
 ## FREQUENTLY ASKED QUESTIONS
 
+# How to align input with a button in a flex container?
+Learn how to align Mantine inputs with buttons using Group component
 
 AlignInputButton,
 AlignInputButtonCorrect,
 AlignInputButtonStyles,
 } from '@/demos/AlignInputButton.demo';
-
-export const meta = {
-  title: 'How to align input with a button in a flex container?',
-  description:
-    'Learn how to align Mantine inputs with buttons using Group component',
-  slug: 'align-input-button',
-  category: 'styles',
-  tags: ['inputs', 'button', 'flexbox', 'centering'],
-  created_at: 'February 15, 2024',
-  last_updated_at: 'February 15, 2024',
-};
 
 If you try to align one of Mantine inputs in a flex container with a button,
 you will notice that input is not aligned with the button. This happens because
@@ -65383,16 +65374,8 @@ Or change error/description position to absolute with [Styles API](https://manti
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I apply styles to all Mantine components?',
-  description: 'Learn how to use attribute selector to apply styles to all Mantine components',
-  slug: 'apply-styles-to-all',
-  category: 'styles',
-  tags: ['selector', 'classnames', 'styles'],
-  created_at: 'December 7, 2024',
-  last_updated_at: 'December 7, 2024',
-};
+# How can I apply styles to all Mantine components?
+Learn how to use attribute selector to apply styles to all Mantine components
 
 ## Attribute selector
 
@@ -65430,17 +65413,8 @@ You will need to update selector to match new prefix:
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Are Mantine components accessible?',
-  description:
-    'Learn about Mantine components accessibility features',
-  slug: 'are-mantine-components-accessible',
-  category: 'about',
-  tags: ['inputs', 'a11y', 'axe', 'accessibility'],
-  created_at: 'July 15, 2024',
-  last_updated_at: 'July 15, 2024',
-};
+# Are Mantine components accessible?
+Learn about Mantine components accessibility features
 
 ## Are Mantine components accessible?
 
@@ -65484,25 +65458,8 @@ free courses:
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'Why can I not use value/label data structure with Autocomplete/TagsInput?',
-  description:
-    'Learn the difference between Autocomplete and Select components',
-  slug: 'autocomplete-value-label',
-  category: 'forms',
-  tags: [
-    'autocomplete',
-    'tags-input',
-    'data',
-    'select',
-    'multi-select',
-    'MultiSelect',
-  ],
-  created_at: 'July 15, 2024',
-  last_updated_at: 'July 15, 2024',
-};
+# Why can I not use value/label data structure with Autocomplete/TagsInput?
+Learn the difference between Autocomplete and Select components
 
 ## Data structure
 
@@ -65564,16 +65521,8 @@ check out [this guide](https://help.mantine.dev/q/select-autocomplete-difference
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I change body background color?',
-  description: 'Use CSS to change body background color',
-  slug: 'body-background',
-  category: 'styles',
-  tags: ['body', 'html', 'global styles'],
-  created_at: 'September 8, 2024',
-  last_updated_at: 'September 8, 2024',
-};
+# How can I change body background color?
+Use CSS to change body background color
 
 ## Change body background with CSS
 
@@ -65607,17 +65556,8 @@ To override this variable, create `styles.css` file in your project and import i
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Browser zooms in when input is focused. What should I do?',
-  description:
-    'Use meta tag to disable browser scaling or increase input size',
-  slug: 'browser-zooms-on-focus',
-  category: 'forms',
-  tags: ['inputs', 'textarea', 'select'],
-  created_at: 'February 15, 2024',
-  last_updated_at: 'February 15, 2024',
-};
+# Browser zooms in when input is focused. What should I do?
+Use meta tag to disable browser scaling or increase input size
 
 Browser zooms in when some of Mantine inputs are focused because by default all
 Mantine inputs have `size="sm"` with `14px` font-size. To prevent browser from zooming
@@ -65644,16 +65584,8 @@ application and may cause accessibility issues.
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Can I use Mantine with Astro?',
-  description: 'No, Astro does not support React context',
-  slug: 'can-i-use-mantine-with-astro',
-  category: 'tooling',
-  tags: ['astro'],
-  created_at: 'January 3, 2024',
-  last_updated_at: 'January 3, 2024',
-};
+# Can I use Mantine with Astro?
+No, Astro does not support React context
 
 ## If you need Astro, you do not need a component library
 
@@ -65682,24 +65614,8 @@ Astro does not support React context, which is required for Mantine to work.
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Can I use Mantine with Create React App (CRA)?',
-  description:
-    'Learn how to use Mantine without postcss-preset-mantine or how to eject CRA and customize webpack.config.js and use postcss-preset-mantine',
-  slug: 'can-i-use-mantine-with-cra',
-  category: 'tooling',
-  tags: [
-    'cra',
-    'create-react-app',
-    'rem',
-    '@mixin',
-    'light-dark',
-    'styles',
-  ],
-  created_at: 'November 30, 2023',
-  last_updated_at: 'November 30, 2023',
-};
+# Can I use Mantine with Create React App (CRA)?
+Learn how to use Mantine without postcss-preset-mantine or how to eject CRA and customize webpack.config.js and use postcss-preset-mantine
 
 ## Deprecation notice
 
@@ -65830,16 +65746,8 @@ You can find an example repository with ejected CRA application and full setup [
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Why my Carousel slides are in vertical orientation?',
-  description: 'You forgot to import carousel styles',
-  slug: 'carousel-missing-styles',
-  category: 'styles',
-  tags: ['carousel', '@mantine/carousel', 'broken'],
-  created_at: 'September 7, 2024',
-  last_updated_at: 'September 7, 2024',
-};
+# Why my Carousel slides are in vertical orientation?
+You forgot to import carousel styles
 
 ## Carousel component looks broken
 
@@ -65859,18 +65767,8 @@ Nice! 👍
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'How can I change component color prop value depending on the color scheme?',
-  description:
-    'Learn how to use CSS variables resolver to change color value depending on the color scheme',
-  slug: 'color-scheme-color',
-  category: 'styles',
-  tags: ['styles', 'color-scheme', 'css-variables'],
-  created_at: 'February 15, 2024',
-  last_updated_at: 'March 24, 2024',
-};
+# How can I change component color prop value depending on the color scheme?
+Learn how to use CSS variables resolver to change color value depending on the color scheme
 
 `color` prop in all components uses Mantine [CSS variables](https://mantine.dev/styles/css-variables)
 to resolve color value depending on the color scheme. You can define these variables with `virtualColor` function:
@@ -65880,18 +65778,8 @@ to resolve color value depending on the color scheme. You can define these varia
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'Why I see color scheme flickering on page load?',
-  description:
-    'Color scheme flickering is caused by incorrect usage of ColorSchemeScript',
-  slug: 'color-scheme-flickering',
-  category: 'common',
-  tags: ['FART', 'color-scheme', 'defaultColorScheme', 'forceColorScheme'],
-  created_at: 'November 25, 2024',
-  last_updated_at: 'November 25, 2024',
-};
+# Why I see color scheme flickering on page load?
+Color scheme flickering is caused by incorrect usage of ColorSchemeScript
 
 ## How Mantine applies color scheme
 
@@ -65945,18 +65833,8 @@ function CorrectDemo() {
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'I get hydration warning about data-mantine-color-scheme attribute, what does it mean?',
-  description:
-    'Learn how hydration works and how to fix warnings',
-  slug: 'color-scheme-hydration-warning',
-  category: 'common',
-  tags: ['color-scheme', 'defaultColorScheme', 'forceColorScheme', 'Next.js', 'React Router'],
-  created_at: 'January 11, 2025',
-  last_updated_at: 'January 11, 2025',
-};
+# I get hydration warning about data-mantine-color-scheme attribute, what does it mean?
+Learn how hydration works and how to fix warnings
 
 ## Example hydration warning
 
@@ -66073,26 +65951,8 @@ It does not disable hydration warning for the whole app, only for the element wi
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I test Select/MultiSelect components?',
-  description:
-    'Learn how to use react-testing-library to test Select and MultiSelect components.',
-  slug: 'combobox-testing',
-  category: 'testing',
-  tags: [
-    'select',
-    'multi-select',
-    'tags-input',
-    'TagsInput',
-    'autocomplete',
-    'combobox',
-    'jest',
-    'vitest',
-  ],
-  created_at: 'March 15, 2024',
-  last_updated_at: 'March 15, 2024',
-};
+# How can I test Select/MultiSelect components?
+Learn how to use react-testing-library to test Select and MultiSelect components.
 
 ## Getting started
 
@@ -66275,16 +66135,8 @@ it('verifies dropdown opened state', () => {
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How to integrate custom input with use-form hook?',
-  description: 'Learn how to add use-form support for custom inputs',
-  slug: 'custom-input-use-form',
-  category: 'forms',
-  tags: ['use-form', 'useForm'],
-  created_at: 'July 22, 2024',
-  last_updated_at: 'July 22, 2024',
-};
+# How to integrate custom input with use-form hook?
+Learn how to add use-form support for custom inputs
 
 ## How @mantine/form works
 
@@ -66349,17 +66201,8 @@ In the following example `CustomInput` component supports all `@mantine/form` fe
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Is there DataGrid component that I can use with Mantine?',
-  description:
-    'A list of community packages that provide DataGrid component that can be used with Mantine.',
-  slug: 'data-grid-i-need',
-  category: 'common',
-  tags: ['data-grid', 'data-table', 'table'],
-  created_at: 'December 26, 2023',
-  last_updated_at: 'December 26, 2023',
-};
+# Is there DataGrid component that I can use with Mantine?
+A list of community packages that provide DataGrid component that can be used with Mantine.
 
 ## Community packages
 
@@ -66382,16 +66225,8 @@ to Mantine in the near future.
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Why my dates components look broken?',
-  description: 'Because you did not import styles',
-  slug: 'dates-missing-styles',
-  category: 'styles',
-  tags: ['dates', 'broken'],
-  created_at: 'January 17, 2024',
-  last_updated_at: 'July 15, 2024',
-};
+# Why my dates components look broken?
+Because you did not import styles
 
 If your dates components look like this:
 
@@ -66409,17 +66244,8 @@ Add styles import to your application:
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I disable all inputs/inputs group inside form?',
-  description:
-    'Learn how to disable all inputs/inputs group inside form with unstyled Fieldset component',
-  slug: 'disable-all-inputs-in-form',
-  category: 'forms',
-  tags: ['form', 'inputs', 'Fieldset'],
-  created_at: 'November 30, 2023',
-  last_updated_at: 'July 15, 2023',
-};
+# How can I disable all inputs/inputs group inside form?
+Learn how to disable all inputs/inputs group inside form with unstyled Fieldset component
 
 ## Disable all inputs with fieldset
 
@@ -66439,16 +66265,8 @@ your form, you can disable all inputs with `enhanceGetInputProps`:
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'My styles are broken with disabled JavaScript. What should I do?',
-  description: 'Learn how to use Mantine without JavaScript enabled',
-  slug: 'disabled-js',
-  category: 'styles',
-  tags: ['noscript'],
-  created_at: 'December 7, 2024',
-  last_updated_at: 'December 7, 2024',
-};
+# My styles are broken with disabled JavaScript. What should I do?
+Learn how to use Mantine without JavaScript enabled
 
 ## data-mantine-color-scheme attribute
 
@@ -66480,16 +66298,8 @@ in this case. `auto` value is not supported without JavaScript.
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I upload files from Dropzone component?',
-  description: 'Learn how to process files dropped into Dropzone component',
-  slug: 'dropzone-upload',
-  category: 'components',
-  tags: ['S3', 'DND', 'drag and drop', 'file upload', 'file processing', 'AWS', 'Linode', 'DigitalOcean'],
-  created_at: 'December 7, 2024',
-  last_updated_at: 'December 7, 2024',
-};
+# How can I upload files from Dropzone component?
+Learn how to process files dropped into Dropzone component
 
 ## Example
 
@@ -66534,16 +66344,8 @@ function Demo() {
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I add dynamic CSS styles?',
-  description: 'Use data attributes, CSS variables or inline styles',
-  slug: 'dynamic-css-styles',
-  category: 'styles',
-  tags: ['dynamic', 'CSS', 'styles'],
-  created_at: 'January 4, 2024',
-  last_updated_at: 'January 4, 2024',
-};
+# How can I add dynamic CSS styles?
+Use data attributes, CSS variables or inline styles
 
 ## data- attributes
 
@@ -66680,16 +66482,8 @@ Then reference them in `.module.css` file:
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Why FileButton does not work in Menu?',
-  description: 'Learn how to use FileButton in Menu component',
-  slug: 'file-button-in-menu',
-  category: 'components',
-  tags: ['menu', 'file button', 'dropdown', 'file upload'],
-  created_at: 'July 15, 2024',
-  last_updated_at: 'July 15, 2024',
-};
+# Why FileButton does not work in Menu?
+Learn how to use FileButton in Menu component
 
 ## Example of the issue
 
@@ -66724,17 +66518,8 @@ on the `Menu.Item` component:
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Is there a floating action button component?',
-  description:
-    'No, but you can build it with Affix and ActionIcon components',
-  slug: 'floating-action-button',
-  category: 'components',
-  tags: ['fab', 'component'],
-  created_at: 'January 17, 2024',
-  last_updated_at: 'January 17, 2024',
-};
+# Is there a floating action button component?
+No, but you can build it with Affix and ActionIcon components
 
 Mantine does not include floating action button component,
 but you can build it with [Affix](https://mantine.dev/core/affix) and
@@ -66745,16 +66530,8 @@ but you can build it with [Affix](https://mantine.dev/core/affix) and
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I focus the first input with error with use-form?',
-  description: 'Learn how to handle focus with use-form hook',
-  slug: 'focus-first-input-with-error',
-  category: 'forms',
-  tags: ['inputs', 'focus', 'error', 'use-form', 'useForm'],
-  created_at: 'July 15, 2024',
-  last_updated_at: 'July 15, 2024',
-};
+# How can I focus the first input with error with use-form?
+Learn how to handle focus with use-form hook
 
 ## Get input DOM node with use-form
 
@@ -66790,17 +66567,8 @@ with form errors when validation fails. You can use the second function and
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I contribute to the library?',
-  description:
-    'There are multiple ways to contribute even without writing code',
-  slug: 'how-can-i-contribute',
-  category: 'about',
-  tags: ['contribute', 'pull request'],
-  created_at: 'January 3, 2024',
-  last_updated_at: 'January 3, 2024',
-};
+# How can I contribute to the library?
+There are multiple ways to contribute even without writing code
 
 ## Ways to contribute
 
@@ -66845,17 +66613,8 @@ export const meta = {
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How that thing is done on mantine.dev website?',
-  description:
-    'Learn how various elements are implemented on mantine.dev website',
-  slug: 'how-that-thing-is-done',
-  category: 'about',
-  tags: ['footer', 'floating button', 'layout'],
-  created_at: 'November 16, 2024',
-  last_updated_at: 'November 16, 2024',
-};
+# How that thing is done on mantine.dev website?
+Learn how various elements are implemented on mantine.dev website
 
 ## mantine.dev website
 
@@ -66874,17 +66633,8 @@ If you are interested how specific part of the website is implemented, you can b
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I add hover styles to an element?',
-  description:
-    'Learn how to add hover classes to an element with CSS modules, &:hover or @mixin hover',
-  slug: 'how-to-add-hover-styles',
-  category: 'styles',
-  tags: ['hover', 'before', 'after', 'css', '@mixin hover'],
-  created_at: 'December 1, 2023',
-  last_updated_at: 'December 26, 2023',
-};
+# How can I add hover styles to an element?
+Learn how to add hover classes to an element with CSS modules, &:hover or @mixin hover
 
 ## &:hover
 
@@ -66949,18 +66699,8 @@ or [emotion](https://emotion.sh/).
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'How to call a function when Modal/Drawer closes and animation completes?',
-  description:
-    'How to use transitionProps in Modal/Drawer components',
-  slug: 'how-to-call-function-when-modal-closes',
-  category: 'components',
-  tags: ['modal', 'drawer', 'close', 'transition', 'transitionProps'],
-  created_at: 'December 26, 2023',
-  last_updated_at: 'December 26, 2023',
-};
+# How to call a function when Modal/Drawer closes and animation completes?
+How to use transitionProps in Modal/Drawer components
 
 [Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer/) components
 use [Transition](https://mantine.dev/core/transition/) component under the hood to animate
@@ -66990,21 +66730,8 @@ function Demo() {
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I get current color scheme value in JavaScript?',
-  description:
-    'How to use useMantineColorScheme and useComputedColorScheme hooks to get current color scheme value in JavaScript',
-  slug: 'how-to-get-color-scheme-value-in-js',
-  category: 'styles',
-  tags: [
-    'color scheme',
-    'useMantineColorScheme',
-    'useComputedColorScheme',
-  ],
-  created_at: 'December 27, 2023',
-  last_updated_at: 'December 27, 2023',
-};
+# How can I get current color scheme value in JavaScript?
+How to use useMantineColorScheme and useComputedColorScheme hooks to get current color scheme value in JavaScript
 
 ## Get color scheme value in component
 
@@ -67090,17 +66817,8 @@ to hide elements based on color scheme value.
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I lock scroll in my application?',
-  description:
-    'Use react-remove-scroll library to lock scroll in your application',
-  slug: 'how-to-lock-scroll',
-  category: 'common',
-  tags: ['lockScroll', 'scroll lock', 'remove scroll', 'scrollbar'],
-  created_at: 'February 15, 2024',
-  last_updated_at: 'February 15, 2024',
-};
+# How can I lock scroll in my application?
+Use react-remove-scroll library to lock scroll in your application
 
 Mantine components use [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
 library to lock scroll. You can use it in your application to lock scroll. For your
@@ -67123,17 +66841,8 @@ you can find the full list of props in the [official documentation](https://gith
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How to prevent Modal from closing?',
-  description:
-    'Learn how to prevent Modal from closing when user clicks outside of it or presses Escape key',
-  slug: 'how-to-prevent-modal-from-closing',
-  category: 'components',
-  tags: ['modal', 'drawer', 'close', 'click outside'],
-  created_at: 'December 1, 2023',
-  last_updated_at: 'December 1, 2023',
-};
+# How to prevent Modal from closing?
+Learn how to prevent Modal from closing when user clicks outside of it or presses Escape key
 
 [Modal](https://mantine.dev/core/modal/) and [Drawer](https://mantine.dev/core/drawer/) components
 opened state is controlled by `opened` prop. You can use it to prevent modal from closing by setting
@@ -67145,17 +66854,8 @@ prevent user from closing it before the operation is finished:
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I lint CSS files?',
-  description:
-    'Learn how to setup Stylelint for Mantine postcss syntax',
-  slug: 'how-to-setup-stylelint',
-  category: 'tooling',
-  tags: ['stylelint', 'lint', 'postcss'],
-  created_at: 'December 27, 2023',
-  last_updated_at: 'December 27, 2023',
-};
+# How can I lint CSS files?
+Learn how to setup Stylelint for Mantine postcss syntax
 
 ## Installation
 
@@ -67237,17 +66937,8 @@ To enable linting in your editor, install [stylelint VSCode extension](https://m
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How to update Mantine dependencies?',
-  description:
-    'Learn how to update @mantine/*, @mantinex/* and postcss-preset-mantine dependencies manually or with ncu script',
-  slug: 'how-to-update-dependencies',
-  category: 'tooling',
-  tags: ['npm', 'yarn', 'package.json'],
-  created_at: 'November 14, 2023',
-  last_updated_at: 'November 30, 2023',
-};
+# How to update Mantine dependencies?
+Learn how to update @mantine/*, @mantinex/* and postcss-preset-mantine dependencies manually or with ncu script
 
 ## Update dependencies with npm-check-updates
 
@@ -67357,17 +67048,8 @@ To check the latest version of `postcss-preset-mantine` package, visit
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How to use Dropzone with @mantine/form?',
-  description:
-    'Learn how to use Dropzone with @mantine/form to handle file selection state',
-  slug: 'how-to-use-dropzone-with-form',
-  category: 'forms',
-  tags: ['form', '@mantine/form', 'dropzone'],
-  created_at: 'December 1, 2023',
-  last_updated_at: 'April 8, 2024',
-};
+# How to use Dropzone with @mantine/form?
+Learn how to use Dropzone with @mantine/form to handle file selection state
 
 [@mantine/dropzone](https://mantine.dev/others/dropzone/) package provides `Dropzone`
 component which allows to drag and drop files from your computer or select them using
@@ -67390,16 +67072,8 @@ Using these properties you can integrate `Dropzone` with `use-form` hook:
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I change inputs focus styles?',
-  description: 'Learn how to use Styles API with Mantine inputs',
-  slug: 'input-focus-styles',
-  category: 'styles',
-  tags: ['tabs', 'Styles API'],
-  created_at: 'February 15, 2024',
-  last_updated_at: 'July 15, 2024',
-};
+# How can I change inputs focus styles?
+Learn how to use Styles API with Mantine inputs
 
 ## Change focus styles of a single input
 
@@ -67419,17 +67093,8 @@ in the [theme object](https://mantine.dev/theming/theme-object):
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Is there a way to add mask to Mantine input?',
-  description:
-    'Learn how to integrate mask libraries with Mantine inputs',
-  slug: 'input-mask',
-  category: 'forms',
-  tags: ['inputs', 'textarea', 'mask', 'react-imask'],
-  created_at: 'February 15, 2024',
-  last_updated_at: 'February 15, 2024',
-};
+# Is there a way to add mask to Mantine input?
+Learn how to integrate mask libraries with Mantine inputs
 
 Mantine does not provide built-in mask functionality, but you can easily integrate any mask library with Mantine inputs.
 The recommended library is [react-imask](https://www.npmjs.com/package/react-imask):
@@ -67442,17 +67107,8 @@ to create custom input with mask:
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How to change inputs placeholder color?',
-  description:
-    'Learn how to change placeholder color with Styles API',
-  slug: 'inputs-placeholder-color',
-  category: 'styles',
-  tags: ['inputs', 'dates', 'placeholder'],
-  created_at: 'January 17, 2024',
-  last_updated_at: 'January 17, 2024',
-};
+# How to change inputs placeholder color?
+Learn how to change placeholder color with Styles API
 
 All Mantine inputs can be divided in two groups:
 
@@ -67464,18 +67120,8 @@ All Mantine inputs can be divided in two groups:
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'How can I display different elements in light and dark color schemes?',
-  description:
-    'Learn how to hide/show elements based on color scheme',
-  slug: 'light-dark-elements',
-  category: 'styles',
-  tags: ['postcss-preset-mantine', 'lightHidden', 'darkHidden'],
-  created_at: 'July 21, 2024',
-  last_updated_at: 'July 21, 2024',
-};
+# How can I display different elements in light and dark color schemes?
+Learn how to hide/show elements based on color scheme
 
 ## How Mantine color scheme works
 
@@ -67536,17 +67182,8 @@ use `light` and `dark` mixins from [postcss-presets-mantine](https://mantine.dev
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Can I have color schemes other than light and dark?',
-  description:
-    'Learn about the difference between color scheme and theme',
-  slug: 'light-dark-is-not-enough',
-  category: 'common',
-  tags: ['light', 'dark', 'sepia', 'color-scheme', 'theme'],
-  created_at: 'July 15, 2024',
-  last_updated_at: 'July 15, 2024',
-};
+# Can I have color schemes other than light and dark?
+Learn about the difference between color scheme and theme
 
 ## What is color scheme?
 
@@ -67604,16 +67241,8 @@ body {
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Can I use an array of strings as a list in use-form?',
-  description: 'Learn about use-form lists limitations',
-  slug: 'list-of-strings-in-use-form',
-  category: 'forms',
-  tags: ['@mantine/form', 'useForm', 'lists'],
-  created_at: 'July 25, 2024',
-  last_updated_at: 'July 25, 2024',
-};
+# Can I use an array of strings as a list in use-form?
+Learn about use-form lists limitations
 
 ## What is use-form list?
 
@@ -67715,16 +67344,8 @@ other types of values.
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'use-local-storage hook returns real value only after mounting, is it a bug?',
-  description: 'Learn how Mantine retrieves local storage value',
-  slug: 'local-storage-effect',
-  category: 'common',
-  tags: ['local storage', 'session storage', 'use-local-storage', 'use-session-storage'],
-  created_at: 'December 7, 2024',
-  last_updated_at: 'December 7, 2024',
-};
+# use-local-storage hook returns real value only after mounting, is it a bug?
+Learn how Mantine retrieves local storage value
 
 ## How use-local-storage hook works
 
@@ -67779,17 +67400,8 @@ function Demo() {
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'MantineProvider was not found in component tree. What should I do?',
-  description: 'Learn how to resolve MantineProvider issues',
-  slug: 'mantine-provider-missing',
-  category: 'common',
-  tags: ['provider', 'error'],
-  created_at: 'December 28, 2023',
-  last_updated_at: 'December 28, 2023',
-};
+# MantineProvider was not found in component tree. What should I do?
+Learn how to resolve MantineProvider issues
 
 <ErrorMessage error="@mantine/core: MantineProvider was not found in component tree, make sure you have it in your app." />
 
@@ -67815,18 +67427,8 @@ Steps to resolve the issue:
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'Can I remove MultiSelect placeholder when the component has selected values?',
-  description:
-    'Learn why MultiSelect placeholder is not removed when values are selected and how to remove it with CSS',
-  slug: 'multiselect-value-placeholder',
-  category: 'components',
-  tags: ['multi-select', 'placeholder'],
-  created_at: 'July 23, 2024',
-  last_updated_at: 'July 23, 2024',
-};
+# Can I remove MultiSelect placeholder when the component has selected values?
+Learn why MultiSelect placeholder is not removed when values are selected and how to remove it with CSS
 
 ## Why MultiSelect placeholder is not removed when values are selected?
 
@@ -67843,16 +67445,8 @@ Apply the following styles to the MultiSelect component to remove placeholder wh
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Native browser validation does not work in some components, what should I do?',
-  description: 'Learn why native browser validation does not work in some components',
-  slug: 'native-required',
-  category: 'components',
-  tags: ['select', 'multi-select', 'autocomplete', 'tags-input', 'datepicker', 'required'],
-  created_at: 'December 7, 2024',
-  last_updated_at: 'December 7, 2024',
-};
+# Native browser validation does not work in some components, what should I do?
+Learn why native browser validation does not work in some components
 
 ## Native browser validation
 
@@ -67883,16 +67477,8 @@ to perform form validation on submit.
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Can I use nested inline styles with Mantine components?',
-  description: 'Nested styles are supported only in CSS files',
-  slug: 'nested-inline-styles',
-  category: 'styles',
-  tags: ['hover', 'focus', 'data-', '::selection'],
-  created_at: 'September 7, 2024',
-  last_updated_at: 'September 7, 2024',
-};
+# Can I use nested inline styles with Mantine components?
+Nested styles are supported only in CSS files
 
 ## What are nested inline styles?
 
@@ -67982,22 +67568,12 @@ Note that this will increase bundle size and will affect performance.
 
 ----------------------------------------
 
+# My Popover dropdown closes when I click on the dropdown of nested Popover
+Popover dropdown is closed when it detects click outside events
 
 NestedPopovers,
 NestedPopoversWorking,
 } from '@/demos/NestedPopovers.demo';
-
-export const meta = {
-  title:
-    'My Popover dropdown closes when I click on the dropdown of nested Popover',
-  description:
-    'Popover dropdown is closed when it detects click outside events',
-  slug: 'nested-popover-closes',
-  category: 'components',
-  tags: ['popover', 'menu', 'DatePicker', 'Select'],
-  created_at: 'September 8, 2024',
-  last_updated_at: 'September 8, 2024',
-};
 
 ## Nested popovers
 
@@ -68027,17 +67603,8 @@ Example of the fixed issue:
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I load fonts in Next.js?',
-  description:
-    'A guide to load custom fonts in Next.js with CSS and next/font package',
-  slug: 'next-load-fonts',
-  category: 'next.js',
-  tags: ['fonts', 'Google fonts', 'next.js'],
-  created_at: 'January 4, 2024',
-  last_updated_at: 'January 4, 2024',
-};
+# How can I load fonts in Next.js?
+A guide to load custom fonts in Next.js with CSS and next/font package
 
 ## Loading fonts with next/font package
 
@@ -68199,17 +67766,8 @@ package to have Next.js fonts optimization feature.
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    "Why my screen is completely empty after I've added notifications package?",
-  description: 'You have used Notifications component incorrectly',
-  slug: 'notifications-empty-screen',
-  category: 'common',
-  tags: ['notifications', 'white screen'],
-  created_at: 'July 15, 2024',
-  last_updated_at: 'July 15, 2024',
-};
+# Why my screen is completely empty after I
+You have used Notifications component incorrectly
 
 ## Notifications component
 
@@ -68252,16 +67810,8 @@ function Demo() {
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Why my notifications are displayed at a wrong position?',
-  description: 'Because you did not import styles',
-  slug: 'notifications-missing-styles',
-  category: 'styles',
-  tags: ['notifications', 'broken', 'position'],
-  created_at: 'July 15, 2024',
-  last_updated_at: 'July 15, 2024',
-};
+# Why my notifications are displayed at a wrong position?
+Because you did not import styles
 
 If your notifications have incorrect position on the screen and look like this:
 
@@ -68279,17 +67829,8 @@ Add styles import to your application:
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Is there a comparison with other libraries?',
-  description:
-    'Comparison with other libraries is not provided, you are trusted to make your own decision based on documentation examples',
-  slug: 'other-libs',
-  category: 'about',
-  tags: ['mui', 'chakra-ui', 'antd', 'material-ui'],
-  created_at: 'March 15, 2024',
-  last_updated_at: 'March 15, 2024',
-};
+# Is there a comparison with other libraries?
+Comparison with other libraries is not provided, you are trusted to make your own decision based on documentation examples
 
 ## Do you have a comparison with other libraries?
 
@@ -68309,18 +67850,8 @@ so you can make an informed decision based on that.
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'It is not possible to pinch to zoom when Modal is opened. What should I do?',
-  description:
-    'Use removeScrollProps to configure react-remove-scroll options',
-  slug: 'pinch-to-zoom-modal',
-  category: 'components',
-  tags: ['modal', 'drawer', 'zoom', 'lockScroll', 'scroll lock'],
-  created_at: 'February 15, 2024',
-  last_updated_at: 'February 15, 2024',
-};
+# It is not possible to pinch to zoom when Modal is opened. What should I do?
+Use removeScrollProps to configure react-remove-scroll options
 
 [Modal](https://mantine.dev/core/modal) and [Drawer](https://mantine.dev/core/drawer) components use [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
 to lock scroll when they are opened. By default, `react-remove-scroll` will lock scroll and prevent pinch to zoom on mobile devices.
@@ -68344,17 +67875,8 @@ function Demo() {
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'Why I cannot use one polymorphic component in component prop of another polymorphic component?',
-  description: 'Learn how polymorphic components types work',
-  slug: 'polymorphic-in-polymorphic',
-  category: 'components',
-  tags: ['component', 'renderRoot'],
-  created_at: 'July 25, 2024',
-  last_updated_at: 'July 25, 2024',
-};
+# Why I cannot use one polymorphic component in component prop of another polymorphic component?
+Learn how polymorphic components types work
 
 ## What is polymorphic component?
 
@@ -68418,24 +67940,8 @@ function Demo() {
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I test Modal/Drawer/Popover components?',
-  description:
-    'Learn how to use react-testing-library to test components that use portals and transitions.',
-  slug: 'portals-testing',
-  category: 'testing',
-  tags: [
-    'modal',
-    'drawer',
-    'menu',
-    'combobox',
-    'jest',
-    'vitest',
-  ],
-  created_at: 'November 25, 2024',
-  last_updated_at: 'November 25, 2024',
-};
+# How can I test Modal/Drawer/Popover components?
+Learn how to use react-testing-library to test components that use portals and transitions.
 
 ## Getting started
 
@@ -68579,16 +68085,8 @@ describe('AuthModal', () => {
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Can I use PostCSS function in inline styles?',
-  description: 'Learn where PostCSS functions can be used in Mantine',
-  slug: 'postcss-fns-inline',
-  category: 'styles',
-  tags: ['postcss', 'light-dark', 'mixin'],
-  created_at: 'September 7, 2024',
-  last_updated_at: 'September 7, 2024',
-};
+# Can I use PostCSS function in inline styles?
+Learn where PostCSS functions can be used in Mantine
 
 ## What are PostCSS functions?
 
@@ -68636,18 +68134,8 @@ function Demo() {
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'Can I have different primary color for light and dark color schemes?',
-  description:
-    'Learn how to use virtual color with primary color in theme object',
-  slug: 'primary-virtual-color',
-  category: 'styles',
-  tags: ['colors', 'primaryColor'],
-  created_at: 'September 8, 2024',
-  last_updated_at: 'September 8, 2024',
-};
+# Can I have different primary color for light and dark color schemes?
+Learn how to use virtual color with primary color in theme object
 
 ## Virtual colors
 
@@ -68687,17 +68175,8 @@ function App() {
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Can I use private CSS variables to style components?',
-  description:
-    'No, it is not safe and will not work with future versions of Mantine.',
-  slug: 'private-css-variables',
-  category: 'styles',
-  tags: ['styles', 'variables', 'css-variables'],
-  created_at: 'December 28, 2023',
-  last_updated_at: 'December 28, 2023',
-};
+# Can I use private CSS variables to style components?
+No, it is not safe and will not work with future versions of Mantine.
 
 ## What are private CSS variables?
 
@@ -68744,16 +68223,8 @@ Use regular styles instead. For example, to change input border color on focus:
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I load fonts in React Router?',
-  description: 'A guide to load custom fonts in React Router',
-  slug: 'react-router-load-fonts',
-  category: 'tooling',
-  tags: ['fonts', 'Google fonts'],
-  created_at: 'July 23, 2024',
-  last_updated_at: 'July 23, 2024',
-};
+# How can I load fonts in React Router?
+A guide to load custom fonts in React Router
 
 ## Loading local fonts
 
@@ -68923,17 +68394,8 @@ export default function App() {
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Where can I find the roadmap?',
-  description:
-    'The roadmap is private and only available to the team.',
-  slug: 'roadmap',
-  category: 'about',
-  tags: ['project', 'roadmap'],
-  created_at: 'February 15, 2024',
-  last_updated_at: 'February 15, 2024',
-};
+# Where can I find the roadmap?
+The roadmap is private and only available to the team.
 
 ## Roadmap. Where is it?
 
@@ -68960,18 +68422,8 @@ Yes, Mantine is actively maintained and developed. It is not planned to be aband
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'How to scroll to the top of the form if the form is submitted with errors?',
-  description:
-    'Learn how to call a function when the form is submitted with errors',
-  slug: 'scroll-to-the-top-of-the-form',
-  category: 'forms',
-  tags: ['form', 'scroll', 'errors', 'element', 'DOM'],
-  created_at: 'July 15, 2024',
-  last_updated_at: 'July 15, 2024',
-};
+# How to scroll to the top of the form if the form is submitted with errors?
+Learn how to call a function when the form is submitted with errors
 
 ## use-form submit handlers
 
@@ -68992,16 +68444,8 @@ work if the form has `overflow: hidden;` styles or is inside other element that 
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Can I use SegmentedControl with empty value?',
-  description: 'SegmentedControl cannot be used without a value',
-  slug: 'segmented-control-no-value',
-  category: 'components',
-  tags: ['segmented control', 'components'],
-  created_at: 'March 15, 2024',
-  last_updated_at: 'March 15, 2024',
-};
+# Can I use SegmentedControl with empty value?
+SegmentedControl cannot be used without a value
 
 ## Can I use SegmentedControl with initial empty value?
 
@@ -69027,18 +68471,8 @@ with [FloatingIndicator](https://mantine.dev/core/floating-indicator/).
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'What is the difference between searchable Select and Autocomplete?',
-  description:
-    'Searchable Select and Autocomplete are similar components, but they serve different purposes.',
-  slug: 'select-autocomplete-difference',
-  category: 'components',
-  tags: ['select', 'autocomplete', 'searchable', 'combobox'],
-  created_at: 'December 26, 2023',
-  last_updated_at: 'December 26, 2023',
-};
+# What is the difference between searchable Select and Autocomplete?
+Searchable Select and Autocomplete are similar components, but they serve different purposes.
 
 ## Searchable select
 
@@ -69074,16 +68508,8 @@ but the user can enter any value and it will be preserved on blur.
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I add fuzzy search to Select component?',
-  description: 'Learn how to integrate third-party fuzzy search libraries with Mantine Select component',
-  slug: 'select-fuzzy',
-  category: 'components',
-  tags: ['select', 'multi-select', 'autocomplete', 'tags-input'],
-  created_at: 'December 7, 2024',
-  last_updated_at: 'December 7, 2024',
-};
+# How can I add fuzzy search to Select component?
+Learn how to integrate third-party fuzzy search libraries with Mantine Select component
 
 ## Options filtering
 
@@ -69127,23 +68553,8 @@ Example of adding fuzzy search with [fuse.js](https://fusejs.io/) to Select comp
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Can I use Mantine components as server components?',
-  description:
-    'Learn about use client directive and server components usage',
-  slug: 'server-components',
-  category: 'next.js',
-  tags: [
-    'server components',
-    'use client',
-    'next.js',
-    'rsc',
-    'react server components',
-  ],
-  created_at: 'December 30, 2023',
-  last_updated_at: 'July 15, 2024',
-};
+# Can I use Mantine components as server components?
+Learn about use client directive and server components usage
 
 ## Difference between server and client components
 
@@ -69373,18 +68784,8 @@ export const theme = createTheme({
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'My styles are overridden by Mantine components styles, what should I do?',
-  description:
-    'Learn how to use CSS layers to control styles order and prevent Mantine components from overriding your styles',
-  slug: 'styles-order',
-  category: 'styles',
-  tags: ['css-layers', '@layer', 'overrides', 'styles'],
-  created_at: 'July 25, 2024',
-  last_updated_at: 'July 25, 2024',
-};
+# My styles are overridden by Mantine components styles, what should I do?
+Learn how to use CSS layers to control styles order and prevent Mantine components from overriding your styles
 
 ## How Mantine styles work
 
@@ -69432,18 +68833,8 @@ simply replace `@mantine/*/styles.css` imports with `@mantine/*/styles.layer.css
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'How can I submit a template to Mantine documentation?',
-  description:
-    'Learn how to create and submit a template to Mantine documentation',
-  slug: 'submit-template',
-  category: 'about',
-  tags: ['template', 'community', 'contribution'],
-  created_at: 'November 15, 2024',
-  last_updated_at: 'November 15, 2024',
-};
+# How can I submit a template to Mantine documentation?
+Learn how to create and submit a template to Mantine documentation
 
 # Submit a template
 
@@ -69483,16 +68874,8 @@ Template examples:
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I change Tabs border color?',
-  description: 'Learn how to use Styles API with Tabs component',
-  slug: 'tabs-border-color',
-  category: 'styles',
-  tags: ['tabs', 'Styles API'],
-  created_at: 'February 15, 2024',
-  last_updated_at: 'February 15, 2024',
-};
+# How can I change Tabs border color?
+Learn how to use Styles API with Tabs component
 
 [Tabs](https://mantine.dev/core/tabs) border is added with `::before` on the `list`
 element. You can use [Styles API](https://mantine.dev/styles/styles-api) to change
@@ -69503,16 +68886,8 @@ styles of inner elements:
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How to use Mantine template on GitHub?',
-  description: 'Learn how to create a new repository based on Mantine template',
-  slug: 'templates-usage',
-  category: 'about',
-  tags: ['templates', 'getting started', 'github'],
-  created_at: 'November 15, 2024',
-  last_updated_at: 'November 15, 2024',
-};
+# How to use Mantine template on GitHub?
+Learn how to create a new repository based on Mantine template
 
 # Templates
 
@@ -69554,16 +68929,8 @@ If you do not have a GitHub account, you can download a template as a zip archiv
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Why is it required to have 10 shades per color?',
-  description: 'Learn how Mantine uses theme colors',
-  slug: 'ten-shades-per-color',
-  category: 'styles',
-  tags: ['colors', 'theme'],
-  created_at: 'November 21, 2024',
-  last_updated_at: 'November 21, 2024',
-};
+# Why is it required to have 10 shades per color?
+Learn how Mantine uses theme colors
 
 ## How Mantine colors are defined and used
 
@@ -69660,31 +69027,8 @@ for example `var(--mantine-color-blue-11)`.
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'Can I use Mantine with Emotion/styled-components/tailwindcss?',
-  description: 'Learn about limitations of third-party styles',
-  slug: 'third-party-styles',
-  category: 'styles',
-  tags: [
-    'unocss',
-    'pandacss',
-    'windicss',
-    'tailwindcss',
-    'emotion',
-    'styled-components',
-    'css-modules',
-    'scss',
-    'sass',
-    'less',
-    'postcss',
-    'css-in-js',
-    'jss',
-  ],
-  created_at: 'February 15, 2024',
-  last_updated_at: 'February 15, 2024',
-};
+# Can I use Mantine with Emotion/styled-components/tailwindcss?
+Learn about limitations of third-party styles
 
 ## I prefer a third-party styles solution, can I use Mantine with it?
 
@@ -69760,18 +69104,8 @@ If preflight is required in your project, follow one of the guides in the [GitHu
 
 ----------------------------------------
 
-
-export const meta = {
-  title:
-    'My buttons are transparent and the background is visible only on hover, what is wrong?',
-  description:
-    'You have installed a third-party library that overrides Mantine styles',
-  slug: 'transparent-buttons',
-  category: 'styles',
-  tags: ['tailwind', 'hover'],
-  created_at: 'September 8, 2024',
-  last_updated_at: 'September 8, 2024',
-};
+# My buttons are transparent and the background is visible only on hover, what is wrong?
+You have installed a third-party library that overrides Mantine styles
 
 ## Why my buttons are transparent?
 
@@ -69791,16 +69125,8 @@ Explore element in dev tools to find out which styles are applied to the button 
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'How can I load fonts in Vite?',
-  description: 'A guide to load custom fonts in Vite',
-  slug: 'vite-load-fonts',
-  category: 'tooling',
-  tags: ['fonts', 'Google fonts', 'Vite'],
-  created_at: 'January 17, 2024',
-  last_updated_at: 'January 17, 2024',
-};
+# How can I load fonts in Vite?
+A guide to load custom fonts in Vite
 
 ## Loading local fonts
 
@@ -69932,25 +69258,8 @@ function Demo() {
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Can I use Mantine with Vue/Svelte/Angular/etc.?',
-  description:
-    'No, Mantine is a React library and does not support other frameworks/libraries',
-  slug: 'vue-svelte-angular',
-  category: 'about',
-  tags: [
-    'vue',
-    'svelte',
-    'angular',
-    'react',
-    'qwik',
-    'solid',
-    'preact',
-  ],
-  created_at: 'March 15, 2024',
-  last_updated_at: 'March 15, 2024',
-};
+# Can I use Mantine with Vue/Svelte/Angular/etc.?
+No, Mantine is a React library and does not support other frameworks/libraries
 
 ## Can I use Mantine with Vue/Svelte/Angular?
 
@@ -69967,16 +69276,8 @@ reported that they were able to use Mantine with Preact without any issues.
 
 ----------------------------------------
 
-
-export const meta = {
-  title: 'Why VSCode cannot autoimport Text component?',
-  description: 'It is confused by the native Text constructor',
-  slug: 'why-vscode-cannot-autoimport-text',
-  category: 'tooling',
-  tags: ['vscode', 'autoimport'],
-  created_at: 'July 15, 2024',
-  last_updated_at: 'July 15, 2024',
-};
+# Why VSCode cannot autoimport Text component?
+It is confused by the native Text constructor
 
 ## Why Text component is not automatically imported?
 

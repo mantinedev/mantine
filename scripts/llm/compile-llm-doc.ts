@@ -2,7 +2,6 @@
 import path from 'path';
 import glob from 'fast-glob';
 import fs from 'fs-extra';
-import matter from 'gray-matter';
 import remarkMdx from 'remark-mdx';
 import remarkParse from 'remark-parse';
 import remarkStringify from 'remark-stringify';
@@ -197,7 +196,7 @@ class MantineLLMCompiler {
   }
 
   private getCategoryPackageName(category: string): string | null {
-    const categoryPackageMap: Record<string, string> = {
+    const categoryPackageMap: Record<string, string | null> = {
       core: '@mantine/core',
       hooks: '@mantine/hooks',
       dates: '@mantine/dates',
@@ -318,7 +317,7 @@ class MantineLLMCompiler {
   private async extractMdxContent(
     content: string,
     packageName?: string,
-    componentName?: string
+    _componentName?: string
   ): Promise<string> {
     // Remove import statements and export default Layout
     const cleanContent = content
@@ -334,12 +333,12 @@ class MantineLLMCompiler {
 
     // Process with remark to extract text content
     const processor = unified()
-      .use(remarkParse)
-      .use(remarkMdx)
+      .use(remarkParse as any)
+      .use(remarkMdx as any)
       .use(() => {
         return (tree: any) => {
           // Remove component references and convert demos
-          visit(tree, 'mdxJsxFlowElement', (node: any, index: number, parent: any) => {
+          visit(tree, 'mdxJsxFlowElement', (node: any, index: number | undefined, parent: any) => {
             // Handle Demo components
             if (node.name === 'Demo' && node.attributes) {
               const dataAttr = node.attributes.find((attr: any) => attr.name === 'data');
@@ -461,7 +460,7 @@ class MantineLLMCompiler {
           });
         };
       })
-      .use(remarkStringify);
+      .use(remarkStringify as any);
 
     let result = String(await processor.process(cleanContent));
 
@@ -490,7 +489,7 @@ class MantineLLMCompiler {
     const sharedContentRegex = /SHAREDCONTENT::([^:]+)::([^:]*?)::JSX::(.+?)::END/g;
     result = result.replace(
       sharedContentRegex,
-      (match, componentName, attributesStr, originalJsx) => {
+      (_match, componentName, attributesStr, originalJsx) => {
         // Parse attributes from string
         const attributes: any[] = [];
         if (attributesStr) {
@@ -928,7 +927,7 @@ Additional information about ${component} component.`;
     this.output.push('|------|------|---------|-------------|');
 
     for (const [propName, propData] of Object.entries(propsData.props as any)) {
-      const { type, defaultValue, description, required } = propData;
+      const { type, defaultValue, description, required } = propData as any;
       const typeStr = type?.name || 'unknown';
       const defaultStr = defaultValue?.value || (required ? 'required' : '-');
       const descStr = description || '-';
@@ -989,19 +988,36 @@ Additional information about ${component} component.`;
   private async processSingleFaq(filePath: string) {
     try {
       const content = await fs.readFile(filePath, 'utf-8');
-      const { data: frontmatter, content: mdxContent } = matter(content);
 
-      if (frontmatter.title) {
-        this.output.push(`### FAQ: ${frontmatter.title}`);
+      // Extract metadata from export const meta object
+      let title = '';
+      let description = '';
+      const metaMatch = content.match(/export const meta = {([\s\S]*?)};/);
+      if (metaMatch) {
+        const metaContent = metaMatch[1];
+        // Extract title
+        const titleMatch = metaContent.match(/title:\s*['"`]([^'"`]+)['"`]/);
+        if (titleMatch) title = titleMatch[1];
+        // Extract description
+        const descMatch = metaContent.match(/description:\s*['"`]([^'"`]+)['"`]/);
+        if (descMatch) description = descMatch[1];
       }
 
-      if (frontmatter.description) {
-        this.output.push(`${frontmatter.description}`);
+      // Format title as # {title}
+      if (title) {
+        this.output.push(`# ${title}`);
+      }
+
+      // Add description on the next line
+      if (description) {
+        this.output.push(description);
       }
 
       this.output.push('');
 
-      const processedContent = await this.extractMdxContent(mdxContent, null);
+      // Process the content but filter out the meta export
+      const contentWithoutMeta = content.replace(/export const meta = {[\s\S]*?};/g, '');
+      const processedContent = await this.extractMdxContent(contentWithoutMeta);
       this.output.push(processedContent);
       this.output.push('');
       this.output.push('-'.repeat(40));
