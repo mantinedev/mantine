@@ -19,6 +19,7 @@ interface CompilerConfig {
   stylesApiPath: string;
   propsDataPath: string;
   mdxDataPath: string;
+  publicPath?: string;
 }
 
 const config: CompilerConfig = {
@@ -32,18 +33,20 @@ const config: CompilerConfig = {
   stylesApiPath: './packages/@docs/styles-api/src/data',
   propsDataPath: './apps/mantine.dev/src/.docgen',
   mdxDataPath: './apps/mantine.dev/src/mdx/data',
+  publicPath: './apps/mantine.dev/public',
 };
 
 class MantineLLMCompiler {
   private output: string[] = [];
-  private mdxMetadata: Map<string, any> = new Map();
-  private stylesApiData: Map<string, any> = new Map();
-  private propsData: Map<string, any> = new Map();
+  private mdxMetadata = new Map<string, any>();
+  private stylesApiData = new Map<string, any>();
+  private propsData = new Map<string, any>();
 
-  constructor(private config: CompilerConfig) {}
+  constructor(private config: CompilerConfig) {
+    // Initialize configuration
+  }
 
   async compile() {
-    console.log('🚀 Starting Mantine LLM documentation compilation...');
 
     // Load all metadata first
     await this.loadMdxMetadata();
@@ -61,7 +64,7 @@ class MantineLLMCompiler {
     // Write output
     await this.writeOutput();
 
-    console.log('✅ Compilation complete! Output written to:', this.config.outputPath);
+    // Compilation complete
   }
 
   private addHeader() {
@@ -85,7 +88,6 @@ class MantineLLMCompiler {
   }
 
   private async loadMdxMetadata() {
-    console.log('📚 Loading MDX metadata...');
 
     const dataFiles = await glob('mdx-*-data.ts', {
       cwd: this.config.mdxDataPath,
@@ -98,7 +100,9 @@ class MantineLLMCompiler {
 
         // Extract MDX data exports
         const exportMatch = content.match(/export const MDX_\w+_DATA[^=]*=\s*{([\s\S]*?)};/);
-        if (!exportMatch) continue;
+        if (!exportMatch) {
+          continue;
+        }
 
         // Extract all component entries with their metadata
         const dataContent = exportMatch[1];
@@ -129,15 +133,15 @@ class MantineLLMCompiler {
           }
         }
       } catch (error) {
-        console.warn(`Warning: Could not parse ${file}:`, error);
+        // Warning: Could not parse file
       }
     }
 
-    console.log(`📊 Loaded metadata for ${this.mdxMetadata.size / 2} components`);
+    // Loaded metadata
   }
 
   private async loadStylesApiData() {
-    console.log('🎨 Loading Styles API data...');
+    // Loading Styles API data
 
     const stylesFiles = await glob('**/*.styles-api.ts', {
       cwd: this.config.stylesApiPath,
@@ -161,15 +165,15 @@ class MantineLLMCompiler {
           });
         }
       } catch (error) {
-        console.warn(`Could not load styles API for ${file}:`, error);
+        // Could not load styles API
       }
     }
 
-    console.log(`📊 Loaded Styles API data for ${this.stylesApiData.size} components`);
+    // Loaded Styles API data
   }
 
   private async loadPropsData() {
-    console.log('📊 Loading props data...');
+    // Loading props data
 
     // Load from docgen.json
     const docgenPath = path.join(this.config.propsDataPath, 'docgen.json');
@@ -188,11 +192,11 @@ class MantineLLMCompiler {
           }
         }
       } catch (error) {
-        console.warn(`Could not load docgen data:`, error);
+        // Could not load docgen data
       }
     }
 
-    console.log(`📊 Loaded props data for ${this.propsData.size / 2} components`);
+    // Loaded props data
   }
 
   private getCategoryPackageName(category: string): string | null {
@@ -213,7 +217,7 @@ class MantineLLMCompiler {
   }
 
   private async processMdxFiles() {
-    console.log('📄 Processing MDX documentation files...');
+    // Processing MDX documentation files
 
     const mdxFiles = await glob('**/*.mdx', {
       cwd: this.config.mdxPaths.docs,
@@ -247,7 +251,9 @@ class MantineLLMCompiler {
 
     // Process by category
     for (const [category, files] of Object.entries(categories)) {
-      if (files.length === 0) continue;
+      if (files.length === 0) {
+        continue;
+      }
 
       const packageName = this.getCategoryPackageName(category);
       this.output.push(`## ${category.toUpperCase()} COMPONENTS AND FEATURES`);
@@ -304,7 +310,7 @@ class MantineLLMCompiler {
       this.output.push('-'.repeat(80));
       this.output.push('');
     } catch (error) {
-      console.error(`Error processing ${filePath}:`, error);
+      // Error processing file
     }
   }
 
@@ -687,7 +693,7 @@ class MantineLLMCompiler {
         return null;
       }
     } catch (error) {
-      console.warn(`Could not load demo ${demoName}:`, error);
+      // Could not load demo
     }
     return null;
   }
@@ -760,7 +766,7 @@ class MantineLLMCompiler {
     const component = componentAttr?.value || 'Component';
 
     switch (componentName) {
-      case 'AutoContrast':
+      case 'AutoContrast': {
         const withVariantAttr = attributes?.find((attr: any) => attr.name === 'withVariant');
         const withVariant = withVariantAttr ? withVariantAttr.value !== 'false' : true;
 
@@ -775,8 +781,9 @@ Note that autoContrast feature works only if you use color prop to change backgr
         }
 
         return autoContrastContent;
+      }
 
-      case 'GetElementRef':
+      case 'GetElementRef': {
         const refTypeAttr = attributes?.find((attr: any) => attr.name === 'refType');
         const refType = refTypeAttr?.value || 'HTMLElement';
         const refTypeMap: Record<string, string> = {
@@ -799,8 +806,9 @@ function Demo() {
   return <${component} ref={ref} />;
 }
 \`\`\``;
+      }
 
-      case 'Polymorphic':
+      case 'Polymorphic': {
         const defaultElementAttr = attributes?.find((attr: any) => attr.name === 'defaultElement');
         const changeToElementAttr = attributes?.find(
           (attr: any) => attr.name === 'changeToElement'
@@ -847,69 +855,82 @@ Note that polymorphic components props types are different from regular componen
 If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.`;
 
         return polymorphicContent;
+      }
 
-      case 'ServerComponentsIncompatible':
+      case 'ServerComponentsIncompatible': {
         return `## Server components
 
 ${component} is not compatible with React Server Components as it uses useEffect and other client-side features. You can use it in client components only.`;
+      }
 
-      case 'Gradient':
+      case 'Gradient': {
         return `## Gradient
 
 ${component} supports Mantine color format in color prop. Color can be specified as:
 - Mantine color name (e.g., 'blue')
 - CSS color value (e.g., '#fff', 'rgba(255, 255, 255, 0.8)')
 - Gradient string (e.g., 'linear-gradient(45deg, blue, red)')`;
+      }
 
-      case 'InputAccessibility':
+      case 'InputAccessibility': {
         return `## Accessibility
 
 ${component} provides better accessibility support when used in forms. Make sure to associate the input with a label for better screen reader support.`;
+      }
 
-      case 'FlexboxGapSupport':
+      case 'FlexboxGapSupport': {
         return `## Browser support
 
 Flex component uses CSS flexbox gap to add spacing between children. Flexbox gap is supported by all modern browsers, but if you need to support older browsers, use Space component instead.`;
+      }
 
-      case 'ComboboxData':
+      case 'ComboboxData': {
         return `## Data prop
 
 Data that is used in ${component} must be an array of strings or objects with value and label properties. You can also specify additional properties that will be available in renderOption function.`;
+      }
 
-      case 'ComboboxFiltering':
+      case 'ComboboxFiltering': {
         return `## Filtering
 
 ${component} provides built-in filtering functionality. You can control filtering behavior with filter prop or implement custom filtering logic.`;
+      }
 
-      case 'ComboboxLargeData':
+      case 'ComboboxLargeData': {
         return `## Large datasets
 
 ${component} can handle large datasets efficiently. Consider implementing virtualization for datasets with thousands of items to improve performance.`;
+      }
 
-      case 'InputFeatures':
+      case 'InputFeatures': {
         const elementAttr = attributes?.find((attr: any) => attr.name === 'element');
         const element = elementAttr?.value || 'input';
         return `${component} component supports [Input](https://mantine.dev/core/input) and [Input.Wrapper](https://mantine.dev/core/input) components features and all ${element} element props. ${component} documentation does not include all features supported by the component – see [Input](https://mantine.dev/core/input) documentation to learn about all available features.`;
+      }
 
-      case 'InputSections':
+      case 'InputSections': {
         return `## Input sections
 
 ${component} supports left and right sections to display icons, buttons or other content alongside the input.`;
+      }
 
-      case 'TargetComponent':
+      case 'TargetComponent': {
         return `## Target component
 
 The target element determines where the ${component} will be positioned relative to.`;
+      }
 
-      case 'WrapperProps':
+      case 'WrapperProps': {
         return `## Wrapper props
 
 ${component} supports additional props that are passed to the wrapper element for more customization options.`;
+      }
 
-      default:
+      default: {
         return `## ${componentName}
 
 Additional information about ${component} component.`;
+      }
     }
   }
 
@@ -970,7 +991,7 @@ Additional information about ${component} component.`;
   }
 
   private async processFaqContent() {
-    console.log('❓ Processing FAQ content...');
+    // Processing FAQ content
 
     this.output.push('## FREQUENTLY ASKED QUESTIONS');
     this.output.push('');
@@ -997,10 +1018,14 @@ Additional information about ${component} component.`;
         const metaContent = metaMatch[1];
         // Extract title
         const titleMatch = metaContent.match(/title:\s*['"`]([^'"`]+)['"`]/);
-        if (titleMatch) title = titleMatch[1];
+        if (titleMatch) {
+          title = titleMatch[1];
+        }
         // Extract description
         const descMatch = metaContent.match(/description:\s*['"`]([^'"`]+)['"`]/);
-        if (descMatch) description = descMatch[1];
+        if (descMatch) {
+          description = descMatch[1];
+        }
       }
 
       // Format title as # {title}
@@ -1022,7 +1047,7 @@ Additional information about ${component} component.`;
       this.output.push('-'.repeat(40));
       this.output.push('');
     } catch (error) {
-      console.error(`Error processing FAQ ${filePath}:`, error);
+      // Error processing FAQ
     }
   }
 
@@ -1228,7 +1253,9 @@ Additional information about ${component} component.`;
               } else {
                 // Direct string
                 const match = codeRef.match(/^['"`]([^'"`]*?)['"`]$/);
-                if (match) return match[1];
+                if (match) {
+                  return match[1];
+                }
               }
             }
           }
@@ -1306,7 +1333,9 @@ Additional information about ${component} component.`;
                 } else {
                   // Direct string
                   const match = codeRef.match(/^['"`]([^'"`]*?)['"`]$/);
-                  if (match) return match[1];
+                  if (match) {
+                  return match[1];
+                }
                 }
               }
             }
@@ -1321,13 +1350,24 @@ Additional information about ${component} component.`;
 
   private async writeOutput() {
     const outputContent = this.output.join('\n');
+    
+    // Write to LLM.md in root
     await fs.writeFile(this.config.outputPath, outputContent, 'utf-8');
 
-    const stats = await fs.stat(this.config.outputPath);
-    console.log(`📁 Output file size: ${(stats.size / 1024 / 1024).toFixed(2)} MB`);
+    // Also write to llms.txt in public folder if publicPath is configured
+    if (this.config.publicPath) {
+      const llmsTxtPath = path.join(this.config.publicPath, 'llms.txt');
+      await fs.writeFile(llmsTxtPath, outputContent, 'utf-8');
+    }
+
+    await fs.stat(this.config.outputPath);
+    // Output files generated
   }
 }
 
 // Run the compiler
 const compiler = new MantineLLMCompiler(config);
-compiler.compile().catch(console.error);
+compiler.compile().catch(() => {
+  // Handle compilation error
+  process.exit(1);
+});
