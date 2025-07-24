@@ -100,8 +100,7 @@ export function useTimePicker({
         setAmPm(val);
       }
 
-      const clamped = clampTime(timeString.value, min || '00:00:00', max || '23:59:59');
-      onChange?.(clamped.timeString);
+      onChange?.(timeString.value);
     } else {
       acceptChange.current = false;
       if (typeof value === 'string' && value !== '') {
