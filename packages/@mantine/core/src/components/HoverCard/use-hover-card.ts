@@ -61,7 +61,7 @@ export function useHoverCard(settings: UseHoverCard) {
       delay: withinGroup ? groupDelay : { open: settings.openDelay, close: settings.closeDelay },
     }),
     useRole(context, { role: 'dialog' }),
-    useDismiss(context, { enabled: typeof settings.opened === 'undefined' }),
+    useDismiss(context, { enabled: withinGroup }),
   ]);
 
   const openDropdown = useCallback(() => {
