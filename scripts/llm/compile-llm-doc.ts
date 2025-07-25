@@ -37,17 +37,17 @@ const config: CompilerConfig = {
 };
 
 class MantineLLMCompiler {
+  private config: CompilerConfig;
   private output: string[] = [];
   private mdxMetadata = new Map<string, any>();
   private stylesApiData = new Map<string, any>();
   private propsData = new Map<string, any>();
 
-  constructor(private config: CompilerConfig) {
-    // Initialize configuration
+  constructor(config: CompilerConfig) {
+    this.config = config;
   }
 
   async compile() {
-
     // Load all metadata first
     await this.loadMdxMetadata();
     await this.loadStylesApiData();
@@ -88,7 +88,6 @@ class MantineLLMCompiler {
   }
 
   private async loadMdxMetadata() {
-
     const dataFiles = await glob('mdx-*-data.ts', {
       cwd: this.config.mdxDataPath,
       absolute: true,
@@ -1334,8 +1333,8 @@ Additional information about ${component} component.`;
                   // Direct string
                   const match = codeRef.match(/^['"`]([^'"`]*?)['"`]$/);
                   if (match) {
-                  return match[1];
-                }
+                    return match[1];
+                  }
                 }
               }
             }
@@ -1350,11 +1349,11 @@ Additional information about ${component} component.`;
 
   private async writeOutput() {
     const outputContent = this.output.join('\n');
-    
-    // Write to LLM.md in root
-    await fs.writeFile(this.config.outputPath, outputContent, 'utf-8');
 
-    // Also write to llms.txt in public folder if publicPath is configured
+    // Write to LLM.md in root
+    // await fs.writeFile(this.config.outputPath, outputContent, 'utf-8');
+
+    // Write to llms.txt in public folder if publicPath is configured
     if (this.config.publicPath) {
       const llmsTxtPath = path.join(this.config.publicPath, 'llms.txt');
       await fs.writeFile(llmsTxtPath, outputContent, 'utf-8');
