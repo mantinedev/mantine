@@ -175,6 +175,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
               disabled={disabled}
               component="button"
               type="button"
+              multiline
               onClick={(event) => {
                 onClick?.(event);
                 dropdownHandlers.toggle();
