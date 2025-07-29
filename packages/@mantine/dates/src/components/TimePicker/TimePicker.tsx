@@ -405,6 +405,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                   onNextInput={() => controller.focus('minutes')}
                   min={format === '12h' ? 1 : 0}
                   max={format === '12h' ? 12 : 23}
+                  allowTemporaryZero={format === '12h'}
                   focusable
                   step={hoursStep}
                   ref={_hoursRef}
@@ -415,6 +416,15 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                   onFocus={(event) => {
                     handleFocus(event);
                     hoursInputProps?.onFocus?.(event);
+                  }}
+                  onBlur={(event) => {
+                    const actualInputValue = event.currentTarget.value;
+                    const numericValue = actualInputValue ? parseInt(actualInputValue, 10) : null;
+                    
+                    if (format === '12h' && numericValue === 0) {
+                      controller.setHours(12);
+                    }
+                    hoursInputProps?.onBlur?.(event);
                   }}
                 />
                 <span>:</span>

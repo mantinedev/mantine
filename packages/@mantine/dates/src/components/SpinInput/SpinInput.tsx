@@ -12,6 +12,7 @@ interface SpinInputProps
   step: number;
   onNextInput?: () => void;
   onPreviousInput?: () => void;
+  allowTemporaryZero?: boolean;
 }
 
 const getMaxDigit = (max: number) => Number(max.toFixed(0)[0]);
@@ -29,6 +30,7 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
       onPreviousInput,
       onFocus,
       readOnly,
+      allowTemporaryZero = false,
       ...others
     },
     ref
@@ -43,12 +45,14 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
 
       const clearValue = value.replace(/\D/g, '');
       if (clearValue !== '') {
-        const parsedValue = clamp(parseInt(clearValue, 10), min, max);
-        onChange(parsedValue);
-        // If value starts with 00 it means that the user started typing with 0
-        // for example 01 or 02, in this case, next input should be focused
-        // 00 only case is handled separately in handleKeyDown
-        if (parsedValue > maxDigit || value.startsWith('00')) {
+        const parsedValue = parseInt(clearValue, 10);
+        const clampedValue = allowTemporaryZero && parsedValue === 0 && min > 0 
+          ? 0 
+          : clamp(parsedValue, min, max);
+          
+        onChange(clampedValue);
+
+        if (clampedValue > maxDigit || value.startsWith('00')) {
           onNextInput?.();
         }
       }
@@ -108,7 +112,7 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
         onChange(newValue);
       }
     };
-
+    
     return (
       <input
         ref={ref}
