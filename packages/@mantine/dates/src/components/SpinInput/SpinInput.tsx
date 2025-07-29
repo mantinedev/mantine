@@ -46,10 +46,9 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
       const clearValue = value.replace(/\D/g, '');
       if (clearValue !== '') {
         const parsedValue = parseInt(clearValue, 10);
-        const clampedValue = allowTemporaryZero && parsedValue === 0 && min > 0 
-          ? 0 
-          : clamp(parsedValue, min, max);
-          
+        const clampedValue =
+          allowTemporaryZero && parsedValue === 0 && min > 0 ? 0 : clamp(parsedValue, min, max);
+
         onChange(clampedValue);
 
         if (clampedValue > maxDigit || value.startsWith('00')) {
@@ -112,7 +111,7 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
         onChange(newValue);
       }
     };
-    
+
     return (
       <input
         ref={ref}

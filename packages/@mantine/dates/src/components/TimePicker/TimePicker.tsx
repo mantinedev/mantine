@@ -420,7 +420,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                   onBlur={(event) => {
                     const actualInputValue = event.currentTarget.value;
                     const numericValue = actualInputValue ? parseInt(actualInputValue, 10) : null;
-                    
+
                     if (format === '12h' && numericValue === 0) {
                       controller.setHours(12);
                     }
