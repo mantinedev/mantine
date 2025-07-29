@@ -158,7 +158,23 @@ export function MinMax() {
 
   return (
     <div style={{ padding: 40 }}>
-      <TimePicker min="10:30" max="18:30" format="12h" value={value} onChange={setValue} />
+      <TimePicker
+        min="10:30"
+        max="18:30"
+        format="12h"
+        value={value}
+        onChange={setValue}
+        label="12h format"
+      />
+      <div>{value}</div>
+      <TimePicker
+        min="10:30"
+        max="18:30"
+        format="24h"
+        value={value}
+        onChange={setValue}
+        label="24h format"
+      />
       <div>{value}</div>
     </div>
   );
