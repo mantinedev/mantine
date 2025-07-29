@@ -391,6 +391,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             strokeDasharray={strokeDasharray}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
             horizontal={gridAxis === 'x' || gridAxis === 'xy'}
+            yAxisId="left"
             {...getStyles('grid')}
             {...gridProps}
           />
