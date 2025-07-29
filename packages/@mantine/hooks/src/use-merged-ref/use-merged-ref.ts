@@ -27,7 +27,7 @@ export function mergeRefs<T>(...refs: PossibleRef<T>[]): RefCallback<T> {
       return () => {
         refs.forEach((ref) => {
           const cleanup = cleanupMap.get(ref);
-          if (cleanup) {
+          if (cleanup && typeof cleanup === 'function') {
             cleanup();
           } else {
             assignRef(ref, null);
