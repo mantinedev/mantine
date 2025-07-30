@@ -12,6 +12,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import * as Recharts from 'recharts';
 import {
   Box,
   BoxProps,
@@ -43,6 +44,10 @@ import classes from '../grid-chart.module.css';
 
 function valueToPercent(value: number) {
   return `${(value * 100).toFixed(0)}%`;
+}
+
+function isRechartsV3() {
+  return typeof (Recharts as any).useActiveTooltipLabel === 'function';
 }
 
 export interface AreaChartSeries extends ChartSeries {
@@ -391,7 +396,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             strokeDasharray={strokeDasharray}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
             horizontal={gridAxis === 'x' || gridAxis === 'xy'}
-            yAxisId="left"
+            {...(isRechartsV3() && { yAxisId: 'left' })}
             {...getStyles('grid')}
             {...gridProps}
           />
