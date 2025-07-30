@@ -122,8 +122,13 @@ export function useTimePicker({
   };
 
   const onHoursChange = (value: number | null) => {
-    setHours(value);
-    handleTimeChange('hours', value);
+    let adjustedValue = value;
+    if (format === '12h' && typeof value === 'number' && value > 12) {
+      adjustedValue = ((value - 1) % 12) + 1;
+    }
+
+    setHours(adjustedValue);
+    handleTimeChange('hours', adjustedValue);
     focus('hours');
   };
 
