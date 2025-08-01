@@ -31,6 +31,7 @@ import {
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { BaseChartStylesNames, GridChartBaseProps } from '../types';
+import { isRechartsV3 } from '../utils';
 import classes from '../grid-chart.module.css';
 
 export interface ScatterChartSeries {
@@ -250,6 +251,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
             strokeDasharray={strokeDasharray}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
             horizontal={gridAxis === 'x' || gridAxis === 'xy'}
+            {...(isRechartsV3() ? ({ yAxisId: 'left' } as any) : {})}
             {...getStyles('grid')}
             {...gridProps}
           />
