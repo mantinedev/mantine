@@ -67,8 +67,7 @@
     "ncu:root": "npx npm-check-updates --packageFile './package.json' -x @tabler/icons-react",
     "ncu": "npm run ncu:docs && npm run ncu:root",
     "backers": "tsx scripts/backers/generate-backers",
-    "compile:llm": "tsx scripts/llm/compile-llm-doc.ts",
-    "compile:llm:size": "tsx scripts/llm/compile-llm-by-size.ts"
+    "compile:llm": "tsx scripts/llm/compile-llm-doc.ts"
   },
   "dependencies": {
     "@emotion/cache": "^11.13.1",
