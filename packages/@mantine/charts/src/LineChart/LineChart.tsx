@@ -12,7 +12,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import * as Recharts from 'recharts';
 import {
   Box,
   BoxProps,
@@ -38,11 +37,8 @@ import type {
   GridChartBaseProps,
   MantineChartDotProps,
 } from '../types';
+import { isRechartsV3 } from '../utils';
 import classes from '../grid-chart.module.css';
-
-function isRechartsV3() {
-  return typeof (Recharts as any).useActiveTooltipLabel === 'function';
-}
 
 export type LineChartType = 'default' | 'gradient';
 

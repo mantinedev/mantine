@@ -15,7 +15,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import * as Recharts from 'recharts';
 import {
   Box,
   BoxProps,
@@ -34,14 +33,11 @@ import {
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
+import { isRechartsV3 } from '../utils';
 import classes from '../grid-chart.module.css';
 
 function valueToPercent(value: number) {
   return `${(value * 100).toFixed(0)}%`;
-}
-
-function isRechartsV3() {
-  return typeof (Recharts as any).useActiveTooltipLabel === 'function';
 }
 
 export interface BarChartSeries extends ChartSeries {
