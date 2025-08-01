@@ -12,7 +12,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import * as Recharts from 'recharts';
 import {
   Box,
   BoxProps,
@@ -41,13 +40,10 @@ import { AreaGradient } from './AreaGradient';
 import { AreaSplit } from './AreaSplit';
 import { getDefaultSplitOffset } from './get-split-offset';
 import classes from '../grid-chart.module.css';
+import { isRechartsV3 } from '../utils';
 
 function valueToPercent(value: number) {
   return `${(value * 100).toFixed(0)}%`;
-}
-
-function isRechartsV3() {
-  return typeof (Recharts as any).useActiveTooltipLabel === 'function';
 }
 
 export interface AreaChartSeries extends ChartSeries {

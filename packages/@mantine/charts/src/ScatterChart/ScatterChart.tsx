@@ -13,7 +13,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import * as Recharts from 'recharts';
 import {
   Box,
   BoxProps,
@@ -33,10 +32,7 @@ import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { BaseChartStylesNames, GridChartBaseProps } from '../types';
 import classes from '../grid-chart.module.css';
-
-function isRechartsV3() {
-  return typeof (Recharts as any).useActiveTooltipLabel === 'function';
-}
+import { isRechartsV3 } from '../utils';
 
 export interface ScatterChartSeries {
   color: MantineColor;

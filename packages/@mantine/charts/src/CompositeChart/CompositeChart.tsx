@@ -17,7 +17,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import * as Recharts from 'recharts';
 import {
   Box,
   BoxProps,
@@ -42,10 +41,7 @@ import type {
   MantineChartDotProps,
 } from '../types';
 import classes from '../grid-chart.module.css';
-
-function isRechartsV3() {
-  return typeof (Recharts as any).useActiveTooltipLabel === 'function';
-}
+import { isRechartsV3 } from '../utils';
 
 export type CompositeChartCurveType =
   | 'bump'
