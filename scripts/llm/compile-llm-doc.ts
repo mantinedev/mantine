@@ -1838,7 +1838,7 @@ Additional information about ${component} component.`;
     const outputContent = this.output.join('\n');
 
     // Write to LLM.md in root
-    await fs.writeFile(this.config.outputPath, outputContent, 'utf-8');
+    // await fs.writeFile(this.config.outputPath, outputContent, 'utf-8');
 
     // Write to llms.txt in public folder if publicPath is configured
     if (this.config.publicPath) {
