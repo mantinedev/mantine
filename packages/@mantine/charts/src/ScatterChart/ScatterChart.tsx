@@ -31,8 +31,8 @@ import {
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { BaseChartStylesNames, GridChartBaseProps } from '../types';
-import classes from '../grid-chart.module.css';
 import { isRechartsV3 } from '../utils';
+import classes from '../grid-chart.module.css';
 
 export interface ScatterChartSeries {
   color: MantineColor;

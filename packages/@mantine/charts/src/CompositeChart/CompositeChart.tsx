@@ -40,8 +40,8 @@ import type {
   GridChartBaseProps,
   MantineChartDotProps,
 } from '../types';
-import classes from '../grid-chart.module.css';
 import { isRechartsV3 } from '../utils';
+import classes from '../grid-chart.module.css';
 
 export type CompositeChartCurveType =
   | 'bump'
