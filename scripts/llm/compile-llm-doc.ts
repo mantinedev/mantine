@@ -40,7 +40,20 @@ class MantineLLMCompiler {
   private config: CompilerConfig;
   private output: string[] = [];
   private mdxMetadata = new Map<string, any>();
-  private stylesApiData = new Map<string, any>();
+  private stylesApiData = new Map<
+    string,
+    {
+      selectors?: Record<string, string>;
+      vars?: Record<string, Record<string, string> | any>;
+      modifiers?: Array<{
+        modifier?: string;
+        selector?: string;
+        condition?: string;
+        value?: string;
+      }>;
+      raw: string;
+    }
+  >();
   private propsData = new Map<string, any>();
 
   constructor(config: CompilerConfig) {
@@ -129,6 +142,12 @@ class MantineLLMCompiler {
             // Store both original case and lowercase for lookup flexibility
             this.mdxMetadata.set(componentName, metadata);
             this.mdxMetadata.set(componentName.toLowerCase(), metadata);
+            // Also store with kebab-case for code-highlight
+            const kebabName = componentName
+              .replace(/([A-Z])/g, '-$1')
+              .toLowerCase()
+              .replace(/^-/, '');
+            this.mdxMetadata.set(kebabName, metadata);
           }
         }
       } catch (error) {
@@ -147,19 +166,123 @@ class MantineLLMCompiler {
       absolute: true,
     });
 
+    // First pass: load all files to build the data
     for (const file of stylesFiles) {
       try {
         const content = await fs.readFile(file, 'utf-8');
-        const componentName = path.basename(file, '.styles-api.ts');
+        // const componentName = path.basename(file, '.styles-api.ts');
 
-        // Extract selectors and vars
-        const selectorsMatch = content.match(/selectors:\s*({[\s\S]*?})/);
-        const varsMatch = content.match(/vars:\s*({[\s\S]*?})/);
+        // Parse the TypeScript file to extract the StylesApi exports
+        // Look for export const ComponentStylesApi: StylesApiData<ComponentFactory> = { ... }
+        const stylesApiRegex =
+          /export const (\w+)StylesApi:\s*StylesApiData<[^>]+>\s*=\s*({[\s\S]*?})\s*;/g;
+        let match;
 
-        if (selectorsMatch || varsMatch) {
-          this.stylesApiData.set(componentName.toLowerCase(), {
-            selectors: selectorsMatch ? selectorsMatch[1] : null,
-            vars: varsMatch ? varsMatch[1] : null,
+        while ((match = stylesApiRegex.exec(content)) !== null) {
+          const exportName = match[1];
+          const dataObject = match[2];
+
+          // Parse selectors
+          const selectorsMatch = dataObject.match(/selectors:\s*({[\s\S]*?})\s*(?:,|$)/);
+          const selectors: Record<string, string> = {};
+
+          if (selectorsMatch) {
+            const selectorsContent = selectorsMatch[1];
+
+            // First, handle spread operators (e.g., ...InputStylesApi.selectors)
+            const spreadRegex = /\.\.\.(\w+)\.selectors/g;
+            let spreadMatch;
+            while ((spreadMatch = spreadRegex.exec(selectorsContent)) !== null) {
+              // Note: We'll handle spreads later by looking up the referenced component
+              // For now, just add a placeholder
+              selectors[`_spread_${spreadMatch[1]}`] = 'inherited';
+            }
+
+            // Extract key-value pairs from the selectors object
+            // Match pattern: selector: 'description with `code`'
+            const selectorLines = selectorsContent.split('\n');
+            for (const line of selectorLines) {
+              // Match either single quotes, double quotes, or backticks
+              const selectorMatch = line.match(/(\w+):\s*(['"`])(.*?)\2/);
+              if (selectorMatch) {
+                selectors[selectorMatch[1]] = selectorMatch[3];
+              }
+            }
+          }
+
+          // Parse vars
+          const varsMatch = dataObject.match(/vars:\s*({[\s\S]*?})\s*(?:,|$)/);
+          const vars: Record<string, Record<string, string>> = {};
+
+          if (varsMatch) {
+            const varsContent = varsMatch[1];
+            // Extract nested var definitions
+            // Pattern: componentName: { '--var-name': 'description' }
+            const componentVarRegex = /(\w+):\s*({[^}]+})/g;
+            let varMatch;
+            while ((varMatch = componentVarRegex.exec(varsContent)) !== null) {
+              const varComponent = varMatch[1];
+              const varDefs = varMatch[2];
+              vars[varComponent] = {};
+
+              // Extract individual CSS variables
+              // Match pattern: '--var-name': 'description with `code`'
+              const cssVarLines = varDefs.split('\n');
+              for (const line of cssVarLines) {
+                // Match CSS variable pattern with nested quotes
+                const cssVarMatch = line.match(/(['"`])(--[^'"`]+)\1:\s*(['"`])(.*?)\3/);
+                if (cssVarMatch) {
+                  vars[varComponent][cssVarMatch[2]] = cssVarMatch[4];
+                }
+              }
+            }
+
+            // Also check for direct references to other vars (e.g., vars: { indicator: RadioStylesApi.vars.root })
+            const varRefRegex = /(\w+):\s*(\w+)\.vars\.(\w+)/g;
+            let varRefMatch;
+            while ((varRefMatch = varRefRegex.exec(varsContent)) !== null) {
+              vars[`_ref_${varRefMatch[1]}`] = { from: varRefMatch[2], component: varRefMatch[3] };
+            }
+          }
+
+          // Parse modifiers if present
+          const modifiersMatch = dataObject.match(/modifiers:\s*\[([\s\S]*?)\]/);
+          const modifiers: any[] = [];
+
+          if (modifiersMatch) {
+            const modifiersContent = modifiersMatch[1];
+            // Extract modifier objects
+            const modifierRegex = /{([^}]+)}/g;
+            let modifierMatch;
+            while ((modifierMatch = modifierRegex.exec(modifiersContent)) !== null) {
+              const modifierContent = modifierMatch[1];
+              const modifier: any = {};
+
+              // Extract modifier properties
+              const propRegex = /(\w+):\s*['"`]([^'"`]+)['"`]/g;
+              let propMatch;
+              while ((propMatch = propRegex.exec(modifierContent)) !== null) {
+                modifier[propMatch[1]] = propMatch[2];
+              }
+
+              // Also handle 'value' property
+              const valueMatch = modifierContent.match(/value:\s*['"`]([^'"`]+)['"`]/);
+              if (valueMatch) {
+                modifier.value = valueMatch[1];
+              }
+
+              if (Object.keys(modifier).length > 0) {
+                modifiers.push(modifier);
+              }
+            }
+          }
+
+          // Store the parsed data
+          const key = exportName.toLowerCase().replace('stylescontent', '').replace('styles', '');
+          this.stylesApiData.set(key, {
+            selectors,
+            vars,
+            modifiers,
             raw: content,
           });
         }
@@ -169,6 +292,60 @@ class MantineLLMCompiler {
     }
 
     // Loaded Styles API data
+
+    // Second pass: resolve spread selectors and variable references
+    for (const [_key, data] of this.stylesApiData.entries()) {
+      // Resolve spread selectors
+      if (data.selectors) {
+        const resolvedSelectors: Record<string, string> = {};
+
+        for (const [selector, description] of Object.entries(data.selectors)) {
+          if (selector.startsWith('_spread_')) {
+            // Extract the referenced component name
+            const refComponent = selector.replace('_spread_', '').replace('StylesApi', '');
+            const refData = this.stylesApiData.get(refComponent.toLowerCase());
+
+            if (refData && refData.selectors) {
+              // Copy all selectors from the referenced component
+              for (const [refSelector, refDescription] of Object.entries(refData.selectors)) {
+                if (!refSelector.startsWith('_spread_')) {
+                  resolvedSelectors[refSelector] = refDescription;
+                }
+              }
+            }
+          } else {
+            resolvedSelectors[selector] = description;
+          }
+        }
+
+        data.selectors = resolvedSelectors;
+      }
+
+      // Resolve variable references
+      if (data.vars) {
+        const resolvedVars: Record<string, Record<string, string> | any> = {};
+
+        for (const [varKey, varValue] of Object.entries(data.vars)) {
+          if (varKey.startsWith('_ref_')) {
+            // This is a reference to another component's vars
+            const actualKey = varKey.replace('_ref_', '');
+            const refInfo = varValue as any;
+            if (refInfo.from && refInfo.component) {
+              // Find the referenced component's vars
+              const refComponentName = refInfo.from.replace('StylesApi', '').toLowerCase();
+              const refData = this.stylesApiData.get(refComponentName);
+              if (refData && refData.vars && refData.vars[refInfo.component]) {
+                resolvedVars[actualKey] = refData.vars[refInfo.component];
+              }
+            }
+          } else {
+            resolvedVars[varKey] = varValue;
+          }
+        }
+
+        data.vars = resolvedVars;
+      }
+    }
   }
 
   private async loadPropsData() {
@@ -286,7 +463,9 @@ class MantineLLMCompiler {
       if (packageName) {
         this.output.push(`Package: ${packageName}`);
         const capitalizedComponent = componentName.charAt(0).toUpperCase() + componentName.slice(1);
-        this.output.push(`Import: import { ${capitalizedComponent} } from '${packageName}';`);
+        // Use the actual component name from metadata if available
+        const importName = metadata?.title || capitalizedComponent;
+        this.output.push(`Import: import { ${importName} } from '${packageName}';`);
       }
 
       if (metadata?.description) {
@@ -324,14 +503,56 @@ class MantineLLMCompiler {
     packageName?: string,
     _componentName?: string
   ): Promise<string> {
-    // Remove import statements and export default Layout
-    const cleanContent = content
-      .split('\n')
-      .filter((line) => {
-        const trimmed = line.trim();
-        return !trimmed.startsWith('import') && !trimmed.startsWith('export default Layout');
-      })
-      .join('\n');
+    // Remove only the top-level imports and export default Layout
+    // Split content into lines to handle imports more carefully
+    const lines = content.split('\n');
+    const cleanedLines: string[] = [];
+    let inCodeBlock = false;
+    let skipNextLines = 0;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+
+      // Track code blocks
+      if (line.trim().startsWith('```')) {
+        inCodeBlock = !inCodeBlock;
+      }
+
+      // Skip lines if we're in a multi-line import
+      if (skipNextLines > 0) {
+        skipNextLines--;
+        continue;
+      }
+
+      // Only remove imports that are not in code blocks
+      if (!inCodeBlock) {
+        // Check for imports at the beginning of the file (before any content)
+        const isTopLevelImport =
+          cleanedLines.filter((l) => l.trim() && !l.trim().startsWith('import')).length === 0;
+
+        if (isTopLevelImport && line.trim().startsWith('import')) {
+          // Check if it's a multi-line import
+          if (line.includes('{') && !line.includes('}')) {
+            // Find the end of the import
+            for (let j = i + 1; j < lines.length; j++) {
+              skipNextLines++;
+              if (lines[j].includes('}')) {
+                break;
+              }
+            }
+          }
+          continue;
+        }
+
+        if (isTopLevelImport && line.trim().startsWith('export default Layout')) {
+          continue;
+        }
+      }
+
+      cleanedLines.push(line);
+    }
+
+    const cleanContent = cleanedLines.join('\n');
 
     // Store demos we find for later processing
     const demosToInclude: Array<{ name: string; packageName?: string }> = [];
@@ -344,8 +565,24 @@ class MantineLLMCompiler {
         return (tree: any) => {
           // Remove component references and convert demos
           visit(tree, 'mdxJsxFlowElement', (node: any, index: number | undefined, parent: any) => {
+            // Handle InstallScript components
+            if (node.name === 'InstallScript' && node.attributes) {
+              const packagesAttr = node.attributes.find((attr: any) => attr.name === 'packages');
+              if (packagesAttr) {
+                const packages = packagesAttr.value || '';
+
+                // Create installation instructions for both npm and yarn
+                node.type = 'paragraph';
+                node.children = [
+                  {
+                    type: 'text',
+                    value: `INSTALLSCRIPT::${packages}::END`,
+                  },
+                ];
+              }
+            }
             // Handle Demo components
-            if (node.name === 'Demo' && node.attributes) {
+            else if (node.name === 'Demo' && node.attributes) {
               const dataAttr = node.attributes.find((attr: any) => attr.name === 'data');
               if (dataAttr) {
                 let demoName = '';
@@ -425,7 +662,6 @@ class MantineLLMCompiler {
               [
                 'StylesApiSelectors',
                 'KeyboardEventsTable',
-                'InstallScript',
                 'DataTable',
                 'PropsTable',
                 'MantineProvider',
@@ -473,14 +709,38 @@ class MantineLLMCompiler {
     for (const demo of demosToInclude) {
       const demoCode = await this.loadDemoCode(demo.name);
       if (demoCode) {
-        const demoSection = [
-          `#### Example: ${demo.name.split('.').pop()}`,
-          '',
-          '```tsx',
-          demoCode,
-          '```',
-          '',
-        ].join('\n');
+        // Check if this is a code highlighting demo that shows example output
+        const exampleCodeMatch = demoCode.match(/const exampleCode\s*=\s*`([\s\S]+?)`;/);
+        let demoSection = '';
+
+        if (exampleCodeMatch) {
+          // For code highlighting demos, show the example output first
+          const exampleCode = exampleCodeMatch[1].trim();
+
+          demoSection = [
+            '',
+            '```tsx',
+            exampleCode,
+            '```',
+            '',
+            `#### Example: ${demo.name.split('.').pop()}`,
+            '',
+            '```tsx',
+            demoCode,
+            '```',
+            '',
+          ].join('\n');
+        } else {
+          // Regular demo
+          demoSection = [
+            `#### Example: ${demo.name.split('.').pop()}`,
+            '',
+            '```tsx',
+            demoCode,
+            '```',
+            '',
+          ].join('\n');
+        }
 
         const placeholder = `DEMOPLACEHOLDER::${demo.name}::END`;
         result = result.replace(placeholder, demoSection);
@@ -489,6 +749,65 @@ class MantineLLMCompiler {
         result = result.replace(`DEMOPLACEHOLDER::${demo.name}::END`, '');
       }
     }
+
+    // Replace InstallScript placeholders with installation instructions
+    // Also remove any duplicate "After installation" text that follows
+    const installScriptRegex =
+      /INSTALLSCRIPT::([^:]+)::END(?:\s*After installation import package styles[\s\S]*?```[\s\S]*?```)?/g;
+    result = result.replace(installScriptRegex, (_match, packages) => {
+      const packageList = packages.trim();
+      let installSection = `\`\`\`bash
+yarn add ${packageList}
+\`\`\`
+
+\`\`\`bash
+npm install ${packageList}
+\`\`\``;
+
+      // Add style imports for packages that have styles
+      const packagesWithStyles = [
+        '@mantine/core',
+        '@mantine/dates',
+        '@mantine/code-highlight',
+        '@mantine/spotlight',
+        '@mantine/tiptap',
+        '@mantine/dropzone',
+        '@mantine/carousel',
+        '@mantine/nprogress',
+        '@mantine/notifications',
+        '@mantine/charts',
+      ];
+
+      // Check if any of the packages need style imports
+      const needsStyles = packageList
+        .split(' ')
+        .some((pkg: string) => packagesWithStyles.includes(pkg.trim()));
+
+      if (needsStyles) {
+        installSection += `
+
+After installation import package styles at the root of your application:
+
+\`\`\`tsx
+import '@mantine/core/styles.css';`;
+
+        // Add specific package styles with comments
+        packageList.split(' ').forEach((pkg: string) => {
+          const trimmedPkg = pkg.trim();
+          if (trimmedPkg !== '@mantine/core' && packagesWithStyles.includes(trimmedPkg)) {
+            const pkgShortName = trimmedPkg.split('/').pop();
+            installSection += `
+// ‼️ import ${pkgShortName} styles after core package styles
+import '${trimmedPkg}/styles.css';`;
+          }
+        });
+
+        installSection += `
+\`\`\``;
+      }
+
+      return installSection;
+    });
 
     // Replace shared content placeholders with actual content
     const sharedContentRegex = /SHAREDCONTENT::([^:]+)::([^:]*?)::JSX::(.+?)::END/g;
@@ -527,11 +846,25 @@ class MantineLLMCompiler {
       const component = componentWithDemos.replace(/Demos$/, '');
 
       // Find the demo file with pattern: Component.demo.demoId.tsx
+      // Also check for kebab-case folder names
       const demoPattern = `**/${component}/${component}.demo.${demoId}.tsx`;
-      const demoFiles = await glob(demoPattern, {
+      const kebabCasePattern = `**/${component
+        .replace(/([A-Z])/g, '-$1')
+        .toLowerCase()
+        .slice(1)}/${component}.demo.${demoId}.tsx`;
+
+      let demoFiles = await glob(demoPattern, {
         cwd: this.config.demosPath,
         absolute: true,
       });
+
+      // If not found, try kebab-case folder name
+      if (demoFiles.length === 0) {
+        demoFiles = await glob(kebabCasePattern, {
+          cwd: this.config.demosPath,
+          absolute: true,
+        });
+      }
 
       if (demoFiles.length > 0) {
         const content = await fs.readFile(demoFiles[0], 'utf-8');
@@ -592,6 +925,19 @@ class MantineLLMCompiler {
             if (fileCode) {
               // Clean up the code
               fileCode = fileCode.replace(/\{\{props\}\}/g, '');
+
+              // Handle ${varName} interpolations in the extracted code
+              fileCode = fileCode.replace(/\$\{(\w+)\}/g, (match, varName) => {
+                // Try to find the variable definition in the file content
+                const varMatch = content.match(
+                  new RegExp(`const ${varName}\\s*=\\s*\`([\\s\\S]*?)\`;`, 'm')
+                );
+                if (varMatch) {
+                  return varMatch[1];
+                }
+                return match;
+              });
+
               files.push(`// ${fileName}\n${fileCode.trim()}`);
             }
           }
@@ -602,13 +948,29 @@ class MantineLLMCompiler {
         }
 
         // Single file demo - try existing patterns
-        // First, try to find a standalone code template literal (most common pattern)
-        const standaloneCodeMatch = content.match(/const code\s*=\s*`([\s\S]*?)`(?:\s*;|\s*\n)/);
-        if (standaloneCodeMatch) {
-          // Clean up the code: remove {{props}} placeholders
-          let code = standaloneCodeMatch[1];
-          code = code.replace(/\{\{props\}\}/g, '');
-          return code.trim();
+        // Use the more robust extraction method for template literals
+        const codeVarMatch = content.match(/const code\s*=/);
+        if (codeVarMatch) {
+          const extractedCode = await this.extractCodeVariable('code', content, demoDir);
+          if (extractedCode) {
+            // Clean up the code and handle interpolations
+            let code = extractedCode;
+            code = code.replace(/\{\{props\}\}/g, '');
+
+            // Handle ${varName} interpolations
+            code = code.replace(/\$\{(\w+)\}/g, (match, varName) => {
+              // Try to find the variable definition
+              const varMatch = content.match(
+                new RegExp(`const ${varName}\\s*=\\s*\`([\\s\\S]*?)\`;`, 'm')
+              );
+              if (varMatch) {
+                return varMatch[1];
+              }
+              return match;
+            });
+
+            return code.trim();
+          }
         }
 
         // Try to find code as a function that returns a template literal
@@ -652,14 +1014,10 @@ class MantineLLMCompiler {
           } else {
             // Variable reference
             const varName = codeValue;
-            // Check if it's a direct template literal
-            const varContentMatch = content.match(
-              new RegExp(`const ${varName}\\s*=\\s*\`([\\s\\S]*?)\``)
-            );
-            if (varContentMatch) {
-              let code = varContentMatch[1];
-              code = code.replace(/\{\{props\}\}/g, '');
-              return code.trim();
+            // Extract the code variable using dedicated function
+            const extractedCode = await this.extractCodeVariable(varName, content, demoDir);
+            if (extractedCode) {
+              return extractedCode;
             }
 
             // Check if it's a function that returns a template literal
@@ -702,12 +1060,64 @@ class MantineLLMCompiler {
     content: string,
     demoDir: string
   ): Promise<string> {
-    // Try different patterns to extract code
+    // Try to find the variable declaration
+    const varDeclPattern = new RegExp(`const ${varName}\\s*=\\s*\``, 'm');
+    const varDeclMatch = content.match(varDeclPattern);
+
+    if (varDeclMatch && varDeclMatch.index !== undefined) {
+      // Find the matching closing backtick by tracking nested backticks and braces
+      const startIdx = varDeclMatch.index + varDeclMatch[0].length;
+      let endIdx = startIdx;
+      let templateDepth = 1;
+      let braceDepth = 0;
+      let inExpression = false;
+
+      while (endIdx < content.length && templateDepth > 0) {
+        const char = content[endIdx];
+        const prevChar = endIdx > 0 ? content[endIdx - 1] : '';
+
+        // Handle escaped characters
+        if (prevChar === '\\') {
+          endIdx++;
+          continue;
+        }
+
+        // Track template literal boundaries
+        if (char === '`') {
+          if (!inExpression) {
+            templateDepth--;
+          }
+        }
+        // Track expression boundaries
+        else if (char === '$' && content[endIdx + 1] === '{') {
+          inExpression = true;
+          braceDepth++;
+          endIdx++; // Skip the {
+        } else if (char === '{' && inExpression) {
+          braceDepth++;
+        } else if (char === '}' && inExpression) {
+          braceDepth--;
+          if (braceDepth === 0) {
+            inExpression = false;
+          }
+        }
+
+        endIdx++;
+      }
+
+      if (templateDepth === 0) {
+        // Get the extracted content and handle escaped characters
+        let extracted = content.substring(startIdx, endIdx - 1);
+        // Replace escaped backticks with regular backticks
+        extracted = extracted.replace(/\\`/g, '`');
+        // Replace escaped dollar signs with regular dollar signs
+        extracted = extracted.replace(/\\\$/g, '$');
+        return extracted;
+      }
+    }
+
+    // Fallback to simpler patterns
     const patterns = [
-      // Template literal: const code = `...`;
-      new RegExp(`const ${varName}\\s*=\\s*\`([\\s\\S]*?)\`;`, 'm'),
-      // Template literal without semicolon: const code = `...`
-      new RegExp(`const ${varName}\\s*=\\s*\`([\\s\\S]*?)\`(?:\\s|$)`, 'm'),
       // Single quotes: const code = '...';
       new RegExp(`const ${varName}\\s*=\\s*'([\\s\\S]*?)';`, 'm'),
       // Double quotes: const code = "...";
@@ -959,34 +1369,111 @@ Additional information about ${component} component.`;
   }
 
   private async addComponentStylesApi(componentName: string) {
-    const stylesData = this.stylesApiData.get(componentName.toLowerCase());
+    // Get all styles data for this component (including sub-components like Radio.Group)
+    const allStylesData: Array<{ name: string; data: any }> = [];
 
-    if (!stylesData) {
+    // First, get the main component styles
+    const mainData = this.stylesApiData.get(componentName.toLowerCase());
+    if (mainData && mainData.selectors && Object.keys(mainData.selectors).length > 0) {
+      allStylesData.push({ name: componentName, data: mainData });
+    }
+
+    // Then, look for sub-components (e.g., RadioGroup, RadioIndicator, RadioCard)
+    for (const [key, data] of this.stylesApiData.entries()) {
+      if (key.startsWith(componentName.toLowerCase()) && key !== componentName.toLowerCase()) {
+        const subName = key.replace(componentName.toLowerCase(), '');
+        // Convert radioindicator -> Radio.Indicator, radiogroup -> Radio.Group
+        const formattedSubName = subName
+          .replace(/^group$/, '.Group')
+          .replace(/^indicator$/, '.Indicator')
+          .replace(/^card$/, '.Card')
+          .replace(/^tabs$/, '.Tabs');
+
+        if (data.selectors && Object.keys(data.selectors).length > 0) {
+          allStylesData.push({ name: componentName + formattedSubName, data });
+        }
+      }
+    }
+
+    if (allStylesData.length === 0) {
       return;
     }
 
     this.output.push('');
     this.output.push('#### Styles API');
     this.output.push('');
-
-    if (stylesData.selectors) {
-      this.output.push('This component supports the following CSS selectors:');
-      this.output.push('');
-      this.output.push('```typescript');
-      this.output.push(stylesData.selectors);
-      this.output.push('```');
-    }
-
-    if (stylesData.vars) {
-      this.output.push('');
-      this.output.push('CSS variables:');
-      this.output.push('');
-      this.output.push('```typescript');
-      this.output.push(stylesData.vars);
-      this.output.push('```');
-    }
-
+    this.output.push(
+      `${componentName} component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.`
+    );
     this.output.push('');
+
+    // Process each component's styles
+    for (const { name, data } of allStylesData) {
+      const componentPrefix = name.replace(/\./g, '');
+
+      // Add selectors table
+      if (data.selectors && Object.keys(data.selectors).length > 0) {
+        this.output.push(`**${name} selectors**`);
+        this.output.push('');
+        this.output.push('| Selector | Static selector | Description |');
+        this.output.push('|----------|----------------|-------------|');
+
+        for (const [selector, description] of Object.entries(data.selectors)) {
+          // Skip spread placeholders
+          if (selector.startsWith('_spread_')) {
+            continue;
+          }
+
+          // Generate the CSS class name from the selector
+          const className = `.mantine-${componentPrefix}-${selector}`;
+          this.output.push(`| ${selector} | ${className} | ${description} |`);
+        }
+        this.output.push('');
+      }
+
+      // Add CSS variables table
+      if (data.vars && Object.keys(data.vars).length > 0) {
+        const hasActualVars = Object.keys(data.vars).some((k) => !k.startsWith('_ref_'));
+
+        if (hasActualVars) {
+          this.output.push(`**${name} CSS variables**`);
+          this.output.push('');
+          this.output.push('| Selector | Variable | Description |');
+          this.output.push('|----------|----------|-------------|');
+
+          for (const [component, variables] of Object.entries(data.vars)) {
+            // Skip reference entries
+            if (component.startsWith('_ref_')) {
+              continue;
+            }
+
+            if (typeof variables === 'object' && variables && !(variables as any).from) {
+              for (const [varName, description] of Object.entries(variables)) {
+                this.output.push(`| ${component} | ${varName} | ${description} |`);
+              }
+            }
+          }
+          this.output.push('');
+        }
+      }
+
+      // Add data attributes table
+      if (data.modifiers && data.modifiers.length > 0) {
+        this.output.push(`**${name} data attributes**`);
+        this.output.push('');
+        this.output.push('| Selector | Attribute | Condition | Value |');
+        this.output.push('|----------|-----------|-----------|-------|');
+
+        for (const modifier of data.modifiers) {
+          const selector = modifier.selector || '-';
+          const attribute = modifier.modifier || '-';
+          const condition = modifier.condition || '-';
+          const value = modifier.value || '-';
+          this.output.push(`| ${selector} | ${attribute} | ${condition} | ${value} |`);
+        }
+        this.output.push('');
+      }
+    }
   }
 
   private async processFaqContent() {
@@ -1351,7 +1838,7 @@ Additional information about ${component} component.`;
     const outputContent = this.output.join('\n');
 
     // Write to LLM.md in root
-    // await fs.writeFile(this.config.outputPath, outputContent, 'utf-8');
+    await fs.writeFile(this.config.outputPath, outputContent, 'utf-8');
 
     // Write to llms.txt in public folder if publicPath is configured
     if (this.config.publicPath) {
