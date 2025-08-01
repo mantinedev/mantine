@@ -296,6 +296,9 @@ describe('@mantine/dates/TimePicker', () => {
     await userEvent.type(screen.getByLabelText('test-hours'), '7');
     await userEvent.type(screen.getByLabelText('test-minutes'), '30');
     await userEvent.type(screen.getByLabelText('test-seconds'), '0');
+    expect(spy).toHaveBeenCalledWith('07:30:00');
+
+    await userEvent.tab();
     expect(spy).toHaveBeenCalledWith('08:30:00');
 
     await userEvent.clear(screen.getByLabelText('test-hours'));
@@ -306,6 +309,9 @@ describe('@mantine/dates/TimePicker', () => {
     await userEvent.type(screen.getByLabelText('test-hours'), '19');
     await userEvent.type(screen.getByLabelText('test-minutes'), '30');
     await userEvent.type(screen.getByLabelText('test-seconds'), '0');
+    expect(spy).toHaveBeenCalledWith('19:30:00');
+
+    await userEvent.tab();
     expect(spy).toHaveBeenCalledWith('18:30:00');
   });
 
@@ -326,6 +332,9 @@ describe('@mantine/dates/TimePicker', () => {
     await userEvent.type(screen.getByLabelText('test-minutes'), '30');
     await userEvent.type(screen.getByLabelText('test-seconds'), '0');
     await userEvent.type(screen.getByLabelText('test-am-pm'), 'A');
+    expect(spy).toHaveBeenCalledWith('07:30:00');
+
+    await userEvent.tab();
     expect(spy).toHaveBeenCalledWith('08:30:00');
 
     await userEvent.clear(screen.getByLabelText('test-hours'));
@@ -337,6 +346,9 @@ describe('@mantine/dates/TimePicker', () => {
     await userEvent.type(screen.getByLabelText('test-minutes'), '30');
     await userEvent.type(screen.getByLabelText('test-seconds'), '0');
     await userEvent.type(screen.getByLabelText('test-am-pm'), 'P');
+    expect(spy).toHaveBeenCalledWith('19:30:00');
+
+    await userEvent.tab();
     expect(spy).toHaveBeenCalledWith('18:30:00');
   });
 
