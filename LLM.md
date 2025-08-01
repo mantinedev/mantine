@@ -265,6 +265,7 @@ To disable transitions, set `transitionDuration` to 0:
 For `multiple={false}`, set `defaultValue` as string:
 
 ```tsx
+import { Accordion } from '@mantine/core';
 
 function Demo() {
   // Second item will be opened by default
@@ -280,6 +281,7 @@ function Demo() {
 For `multiple={true}`, set `defaultValue` as an array of strings:
 
 ```tsx
+import { Accordion } from '@mantine/core';
 
 function Demo() {
   // Both items are opened by default
@@ -297,6 +299,8 @@ function Demo() {
 For `multiple={false}`, set `value` as string:
 
 ```tsx
+import { useState } from 'react';
+import { Accordion } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState<string | null>(null);
@@ -313,6 +317,8 @@ function Demo() {
 For `multiple={true}`, set `value` as an array of strings:
 
 ```tsx
+import { useState } from 'react';
+import { Accordion } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState<string[]>([]);
@@ -334,6 +340,7 @@ elements inside other interactive elements is forbidden – you will receive a D
 validation error from React if you try to implement the following component:
 
 ```tsx
+import { Accordion } from '@mantine/core';
 
 // ❌ Incorrect usage: do not do this
 function Demo() {
@@ -558,6 +565,7 @@ export const data = [
 describes `multiple` state:
 
 ```tsx
+import type { AccordionProps } from '@mantine/core';
 
 type MultipleAccordionProps = AccordionProps<true>;
 type DefaultAccordionProps = AccordionProps<false>;
@@ -571,6 +579,7 @@ Set `order` on `Accordion` component to wrap accordion controls with `h2`-`h6` h
 The following example wraps controls with `h3` tags:
 
 ```tsx
+import { Accordion } from '@mantine/core';
 
 function Demo() {
   return <Accordion order={3}>{/* ...items */}</Accordion>;
@@ -601,32 +610,29 @@ Keyboard interactions:
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Accordion component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    item: '`Accordion.Item` root element',
-    control: '`Accordion.Control` root element',
-    chevron: '`Accordion.Control` chevron container element',
-    label: '`Accordion.Control` label',
-    icon: '`Accordion.Control` icon',
-    itemTitle: '`Accordion.Control` title (h2-h6) tag',
-    panel: '`Accordion.Panel` root element',
-    content: 'Wrapper element of `Accordion.Panel` `children`',
-  }
-```
+**Accordion selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Accordion-root | Root element |
+| item | .mantine-Accordion-item | `Accordion.Item` root element |
+| control | .mantine-Accordion-control | `Accordion.Control` root element |
+| chevron | .mantine-Accordion-chevron | `Accordion.Control` chevron container element |
+| label | .mantine-Accordion-label | `Accordion.Control` label |
+| icon | .mantine-Accordion-icon | `Accordion.Control` icon |
+| itemTitle | .mantine-Accordion-itemTitle | `Accordion.Control` title (h2-h6) tag |
+| panel | .mantine-Accordion-panel | `Accordion.Panel` root element |
+| content | .mantine-Accordion-content | Wrapper element of `Accordion.Panel` `children` |
 
-```typescript
-{
-    root: {
-      '--accordion-chevron-size': 'Controls chevron container element `width` and `min-width`',
-      '--accordion-radius': 'Controls `border-radius` in various elements, depending on variant',
-      '--accordion-transition-duration': 'Controls all animations `transition-duration`',
-    }
-```
+**Accordion CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --accordion-chevron-size | Controls chevron container element `width` and `min-width` |
+| root | --accordion-radius | Controls `border-radius` in various elements, depending on variant |
+| root | --accordion-transition-duration | Controls all animations `transition-duration` |
 
 
 --------------------------------------------------------------------------------
@@ -634,6 +640,7 @@ CSS variables:
 ### ActionIcon
 Package: @mantine/core
 Import: import { ActionIcon } from '@mantine/core';
+Description: Icon button
 
 ## Usage
 
@@ -992,7 +999,7 @@ const variantColorResolver: VariantColorsResolver = (input) => {
     return {
       background: rgba(parsedColor.value, 0.1),
       hover: rgba(parsedColor.value, 0.15),
-      border: \`1px solid \${parsedColor.value}\`,
+      border: `1px solid ${parsedColor.value}`,
       color: darken(parsedColor.value, 0.1),
     };
   }
@@ -1137,6 +1144,7 @@ function Demo() {
 Note that you must not wrap child `ActionIcon` components with any additional elements:
 
 ```tsx
+import { ActionIcon } from '@mantine/core';
 
 // Will not work correctly
 function Demo() {
@@ -1233,6 +1241,8 @@ To make `ActionIcon` accessible for screen readers, you need to either set `aria
 use [VisuallyHidden](https://mantine.dev/core/visually-hidden) component:
 
 ```tsx
+import { IconHeart } from '@tabler/icons-react';
+import { ActionIcon, VisuallyHidden } from '@mantine/core';
 
 function Demo() {
   return (
@@ -1268,30 +1278,50 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+ActionIcon component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    loader: '`Loader` component, rendered inside root element when `loading` prop is set',
-    icon: 'Inner icon wrapper',
-  }
-```
+**ActionIcon selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-ActionIcon-root | Root element |
+| loader | .mantine-ActionIcon-loader | `Loader` component, rendered inside root element when `loading` prop is set |
+| icon | .mantine-ActionIcon-icon | Inner icon wrapper |
 
-```typescript
-{
-    root: {
-      '--ai-bg': 'Controls `background`',
-      '--ai-hover': 'Controls `background` when hovered',
-      '--ai-bd': 'Controls `border`',
-      '--ai-color': 'Controls icon `color`',
-      '--ai-hover-color': 'Controls icon `color` when hovered',
-      '--ai-radius': 'Controls `border-radius`',
-      '--ai-size': 'Controls `width`, `height`, `min-width` and `min-height` styles',
-    }
-```
+**ActionIcon CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --ai-bg | Controls `background` |
+| root | --ai-hover | Controls `background` when hovered |
+| root | --ai-bd | Controls `border` |
+| root | --ai-color | Controls icon `color` |
+| root | --ai-hover-color | Controls icon `color` when hovered |
+| root | --ai-radius | Controls `border-radius` |
+| root | --ai-size | Controls `width`, `height`, `min-width` and `min-height` styles |
+
+**ActionIcon data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-disabled | - | - |
+
+**ActionIcon.Group selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| group | .mantine-ActionIconGroup-group | Root element |
+
+**ActionIcon.Group CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+
+**ActionIcon.Group data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| group | data-orientation | - | Value of  |
 
 
 --------------------------------------------------------------------------------
@@ -1351,26 +1381,23 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Affix component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Affix selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Affix-root | Root element |
 
-```typescript
-{
-    root: {
-      '--affix-z-index': 'Controls `z-index` property',
-      '--affix-top': 'Controls `top` property',
-      '--affix-bottom': 'Controls `bottom` property',
-      '--affix-left': 'Controls `left` property',
-      '--affix-right': 'Controls `right` property',
-    }
-```
+**Affix CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --affix-z-index | Controls `z-index` property |
+| root | --affix-top | Controls `top` property |
+| root | --affix-bottom | Controls `bottom` property |
+| root | --affix-left | Controls `left` property |
+| root | --affix-right | Controls `right` property |
 
 
 --------------------------------------------------------------------------------
@@ -1427,6 +1454,7 @@ function Demo() {
 * Set `closeButtonLabel` prop to make close button accessible
 
 ```tsx
+import { Alert } from '@mantine/core';
 
 function Invalid() {
   // -> not ok
@@ -1461,32 +1489,35 @@ function AlsoValid() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Alert component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    wrapper: 'Wrapper around `body` and `icon`',
-    body: 'Body element, contains `title` and `message`',
-    title: 'Title element, contains `label` and `icon`',
-    label: 'Title label',
-    message: 'Alert message',
-    icon: 'Icon element',
-    closeButton: 'Close button',
-  }
-```
+**Alert selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Alert-root | Root element |
+| wrapper | .mantine-Alert-wrapper | Wrapper around `body` and `icon` |
+| body | .mantine-Alert-body | Body element, contains `title` and `message` |
+| title | .mantine-Alert-title | Title element, contains `label` and `icon` |
+| label | .mantine-Alert-label | Title label |
+| message | .mantine-Alert-message | Alert message |
+| icon | .mantine-Alert-icon | Icon element |
+| closeButton | .mantine-Alert-closeButton | Close button |
 
-```typescript
-{
-    root: {
-      '--alert-bd': 'Controls `border`',
-      '--alert-bg': 'Controls `background`',
-      '--alert-color': 'Controls `color`',
-      '--alert-radius': 'Controls `border-radius`',
-    }
-```
+**Alert CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --alert-bd | Controls `border` |
+| root | --alert-bg | Controls `background` |
+| root | --alert-color | Controls `color` |
+| root | --alert-radius | Controls `border-radius` |
+
+**Alert data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| title | data-with-close-button | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -1551,6 +1582,7 @@ function Demo() {
 You can also configure `underline` prop for all `Anchor` components with [default props](https://mantine.dev/theming/default-props):
 
 ```tsx
+import { Anchor, createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   components: {
@@ -1662,6 +1694,7 @@ function Demo() {
 ### AngleSlider
 Package: @mantine/core
 Import: import { AngleSlider } from '@mantine/core';
+Description: Pick angle value between 0 and 360
 
 ## Usage
 
@@ -1683,6 +1716,8 @@ function Demo() {
 `AngleSlider` value is a number between 0 and 360.
 
 ```tsx
+import { useState } from 'react';
+import { AngleSlider } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState(180);
@@ -1701,7 +1736,7 @@ It accepts a function that takes the angle value and returns a React node:
 import { AngleSlider } from '@mantine/core';
 
 function Demo() {
-  return <AngleSlider aria-label="Angle slider" formatLabel={(value) => \`\${value}°\`} />;
+  return <AngleSlider aria-label="Angle slider" formatLabel={(value) => `${value}°`} />;
 }
 ```
 
@@ -1722,7 +1757,7 @@ function Demo() {
     <Group p="lg" gap={50}>
       <AngleSlider
         aria-label="Angle slider"
-        formatLabel={(value) => \`\${value}°\`}
+        formatLabel={(value) => `${value}°`}
         size={100}
         restrictToMarks
         marks={[
@@ -1739,7 +1774,7 @@ function Demo() {
 
       <AngleSlider
         aria-label="Angle slider"
-        formatLabel={(value) => \`\${value}°\`}
+        formatLabel={(value) => `${value}°`}
         size={100}
         marks={[
           { value: 0, label: '0°' },
@@ -1804,6 +1839,7 @@ function Demo() {
 To make the component accessible for screen readers, set the `aria-label` prop:
 
 ```tsx
+import { AngleSlider } from '@mantine/core';
 
 function Demo() {
   return <AngleSlider aria-label="Gradient angle" />;
@@ -1844,27 +1880,30 @@ You can build a custom radial slider using this hook if you need more control ov
 
 #### Styles API
 
-This component supports the following CSS selectors:
+AngleSlider component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    label: 'Label inside the slider',
-    marks: 'Wrapper for all marks',
-    mark: 'Mark element',
-    thumb: 'Slider thumb',
-  }
-```
+**AngleSlider selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-AngleSlider-root | Root element |
+| label | .mantine-AngleSlider-label | Label inside the slider |
+| marks | .mantine-AngleSlider-marks | Wrapper for all marks |
+| mark | .mantine-AngleSlider-mark | Mark element |
+| thumb | .mantine-AngleSlider-thumb | Slider thumb |
 
-```typescript
-{
-    root: {
-      '--slider-size': 'Controls slider width and height',
-      '--thumb-size': 'Controls thumb size',
-    }
-```
+**AngleSlider CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --slider-size | Controls slider width and height |
+| root | --thumb-size | Controls thumb size |
+
+**AngleSlider data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | disabled | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -1872,6 +1911,7 @@ CSS variables:
 ### AppShell
 Package: @mantine/core
 Import: import { AppShell } from '@mantine/core';
+Description: Responsive shell for your application with header, navbar, aside and footer
 
 ## Examples
 
@@ -1890,6 +1930,8 @@ the page.
 The navbar is hidden on mobile by default and toggled with the burger button.
 
 ```tsx
+import { AppShell, Burger } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 function Demo() {
   const [opened, { toggle }] = useDisclosure();
@@ -1997,6 +2039,7 @@ Example with height as a number: `height` is converted to [rem](https://mantine.
 `height` is the same at all viewport sizes:
 
 ```tsx
+import { AppShell } from '@mantine/core';
 
 function Demo() {
   return (
@@ -2014,6 +2057,7 @@ Example with height as an object with breakpoints:
 * `height` is 76 when viewport width is >= `theme.breakpoints.lg`
 
 ```tsx
+import { AppShell } from '@mantine/core';
 
 function Demo() {
   return (
@@ -2039,6 +2083,7 @@ Example with width as a number: `width` is converted to [rem](https://mantine.de
 `width` is 100% when viewport width is less than `breakpoint`:
 
 ```tsx
+import { AppShell } from '@mantine/core';
 
 function Demo() {
   return (
@@ -2056,6 +2101,7 @@ Example with width as an object with breakpoints:
 * `width` is 300 when viewport width is >= `theme.breakpoints.lg`
 
 ```tsx
+import { AppShell } from '@mantine/core';
 
 function Demo() {
   return (
@@ -2081,6 +2127,7 @@ reference `theme.spacing` values or use any valid CSS values.
 Example with static `padding` prop:
 
 ```tsx
+import { AppShell } from '@mantine/core';
 
 function Demo() {
   return <AppShell padding="md">{/* AppShell content */}</AppShell>;
@@ -2094,6 +2141,7 @@ Example with responsive `padding` prop:
 * `padding` is `theme.spacing.xl` when viewport width is >= `theme.breakpoints.lg`
 
 ```tsx
+import { AppShell } from '@mantine/core';
 
 function Demo() {
   return (
@@ -2114,6 +2162,8 @@ hook to hide the header when the user scrolls down and show it when
 scrolling up ([example](https://mantine.dev/app-shell?e=Headroom)).
 
 ```tsx
+import { AppShell, rem } from '@mantine/core';
+import { useHeadroom } from '@mantine/hooks';
 
 function Demo() {
   const pinned = useHeadroom({ fixedAt: 120 });
@@ -2143,6 +2193,8 @@ This allows you to configure the collapsed state differently based on viewport w
 [Example](https://mantine.dev/app-shell?e=CollapseDesktop) with separate collapsed states for mobile and desktop:
 
 ```tsx
+import { AppShell, Button } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 export function CollapseDesktop() {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
@@ -2184,6 +2236,7 @@ For example, `AppShell.Header` is located at the top of the page – it has a bo
 To remove the border from all components, set `withBorder={false}` on the `AppShell`:
 
 ```tsx
+import { AppShell } from '@mantine/core';
 
 // None of the components will have a border
 function Demo() {
@@ -2196,6 +2249,7 @@ function Demo() {
 To remove the border from a specific component, set `withBorder={false}` on that component:
 
 ```tsx
+import { AppShell } from '@mantine/core';
 
 function Demo() {
   return (
@@ -2214,6 +2268,7 @@ By default, all sections have a `z-index` of `100`.
 To change the `z-index` of all sections, set the `zIndex` prop on the `AppShell` component:
 
 ```tsx
+import { AppShell } from '@mantine/core';
 
 // All sections will have z-index of 200
 function Demo() {
@@ -2224,6 +2279,7 @@ function Demo() {
 To change `z-index` of a specific section, set `zIndex` prop on that section:
 
 ```tsx
+import { AppShell } from '@mantine/core';
 
 // AppShell.Header has z-index of 100
 // AppShell.Navbar and AppShell.Aside have z-index of 300
@@ -2243,6 +2299,7 @@ function Demo() {
 Use the `transitionDuration` and `transitionTimingFunction` props on the `AppShell` component to control section animations:
 
 ```tsx
+import { AppShell } from '@mantine/core';
 
 function Demo() {
   return (
@@ -2262,6 +2319,7 @@ Set the `disabled` prop on the `AppShell` component to prevent all sections exce
 This is useful when you want to hide the shell on certain pages of your application.
 
 ```tsx
+import { AppShell } from '@mantine/core';
 
 function Demo() {
   return <AppShell disabled>{/* AppShell content */}</AppShell>;
@@ -2281,6 +2339,7 @@ In the following example:
 * The middle section with `grow` takes all remaining space and becomes scrollable when content exceeds the available height
 
 ```tsx
+import { AppShell, ScrollArea } from '@mantine/core';
 
 function Demo() {
   return (
@@ -2336,30 +2395,33 @@ Example of using CSS variables in styles:
 
 #### Styles API
 
-This component supports the following CSS selectors:
+AppShell component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element (`AppShell` component)',
-    navbar: '`AppShell.Navbar` root element',
-    header: '`AppShell.Header` root element',
-    main: '`AppShell.Main` root element',
-    aside: '`AppShell.Aside` root element',
-    footer: '`AppShell.Footer` root element',
-    section: '`AppShell.Section` root element',
-  }
-```
+**AppShell selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-AppShell-root | Root element (`AppShell` component) |
+| navbar | .mantine-AppShell-navbar | `AppShell.Navbar` root element |
+| header | .mantine-AppShell-header | `AppShell.Header` root element |
+| main | .mantine-AppShell-main | `AppShell.Main` root element |
+| aside | .mantine-AppShell-aside | `AppShell.Aside` root element |
+| footer | .mantine-AppShell-footer | `AppShell.Footer` root element |
+| section | .mantine-AppShell-section | `AppShell.Section` root element |
 
-```typescript
-{
-    root: {
-      '--app-shell-transition-duration': 'Controls transition duration of all children',
-      '--app-shell-transition-timing-function':
-        'Controls transition timing function of all children',
-    }
-```
+**AppShell CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --app-shell-transition-duration | Controls transition duration of all children |
+
+**AppShell data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-resizing | User is resizing the window | - |
+| root | data-layout | - | Value of the  |
+| root | data-disabled | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -2367,6 +2429,7 @@ CSS variables:
 ### AspectRatio
 Package: @mantine/core
 Import: import { AspectRatio } from '@mantine/core';
+Description: Maintain responsive consistent width/height ratio
 
 ## Usage
 
@@ -2471,22 +2534,19 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+AspectRatio component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**AspectRatio selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-AspectRatio-root | Root element |
 
-```typescript
-{
-    root: {
-      '--ar-ratio': 'Aspect ratio',
-    }
-```
+**AspectRatio CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --ar-ratio | Aspect ratio |
 
 
 --------------------------------------------------------------------------------
@@ -2534,6 +2594,8 @@ function Demo() {
 `onChange` function is called with a string value as a single argument.
 
 ```tsx
+import { useState } from 'react';
+import { Autocomplete } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('');
@@ -2671,7 +2733,7 @@ import { Autocomplete } from '@mantine/core';
 
 const largeData = Array(100_000)
   .fill(0)
-  .map((_, index) => \`Option \${index}\`);
+  .map((_, index) => `Option ${index}`);
 
 function Demo() {
   return (
@@ -2768,7 +2830,7 @@ import { Autocomplete } from '@mantine/core';
 
 const data = Array(100)
   .fill(0)
-  .map((_, index) => \`Option \${index}\`);
+  .map((_, index) => `Option ${index}`);
 
 function Demo() {
   return (
@@ -3262,21 +3324,20 @@ Autocomplete provides better accessibility support when used in forms. Make sure
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Autocomplete component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    ...InputStylesApi.selectors,
-    ...InputWrapperStylesApi.selectors,
-    ...ComboboxLikeSelectors,
-  }
-```
+**Autocomplete selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-Autocomplete-wrapper | Root element of the Input |
+| input | .mantine-Autocomplete-input | Input element |
+| section | .mantine-Autocomplete-section | Left and right sections |
+| root | .mantine-Autocomplete-root | Root element |
+| label | .mantine-Autocomplete-label | Label element |
+| required | .mantine-Autocomplete-required | Required asterisk element, rendered inside label |
+| description | .mantine-Autocomplete-description | Description element |
+| error | .mantine-Autocomplete-error | Error element |
 
 
 --------------------------------------------------------------------------------
@@ -3432,6 +3493,7 @@ but you can use wrap `Avatar` with components that do not render any HTML elemen
 in the current tree, for example [Tooltip](https://mantine.dev/core/tooltip).
 
 ```tsx
+import { Avatar } from '@mantine/core';
 
 // Will not work correctly
 function Demo() {
@@ -3544,6 +3606,7 @@ Avatar renders `<img />` HTML element. Set `alt` prop to describe image,
 it is also used as `title` attribute for avatar placeholder when the image cannot be loaded.
 
 ```tsx
+import { Avatar } from '@mantine/core';
 
 function NotOk() {
   // ❌ No alt for image
@@ -3586,28 +3649,37 @@ function OkPlaceholder() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Avatar component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    image: '`img` element',
-    placeholder: 'Avatar placeholder, displayed when the image cannot be loaded',
-  }
-```
+**Avatar selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Avatar-root | Root element |
+| image | .mantine-Avatar-image | `img` element |
+| placeholder | .mantine-Avatar-placeholder | Avatar placeholder, displayed when the image cannot be loaded |
 
-```typescript
-{
-    root: {
-      '--avatar-bd': 'Controls placeholder `border`',
-      '--avatar-bg': 'Controls placeholder `background`',
-      '--avatar-color': 'Controls placeholder text `color`',
-      '--avatar-size': 'Controls `width`, `min-width` and `height`',
-      '--avatar-radius': 'Controls `border-radius`',
-    }
-```
+**Avatar CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --avatar-bd | Controls placeholder `border` |
+| root | --avatar-bg | Controls placeholder `background` |
+| root | --avatar-color | Controls placeholder text `color` |
+| root | --avatar-size | Controls `width`, `min-width` and `height` |
+| root | --avatar-radius | Controls `border-radius` |
+
+**Avatar.Group selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| group | .mantine-AvatarGroup-group | Root element |
+
+**Avatar.Group CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| group | --ag-spacing | Controls negative spacing between avatars |
 
 
 --------------------------------------------------------------------------------
@@ -3615,6 +3687,7 @@ CSS variables:
 ### BackgroundImage
 Package: @mantine/core
 Import: import { BackgroundImage } from '@mantine/core';
+Description: Displays image as background
 
 ## Usage
 
@@ -3675,22 +3748,19 @@ If you want to create a wrapper for a polymorphic component that is not polymorp
 
 #### Styles API
 
-This component supports the following CSS selectors:
+BackgroundImage component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**BackgroundImage selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-BackgroundImage-root | Root element |
 
-```typescript
-{
-    root: {
-      '--bi-radius': 'Controls `border-radius`',
-    }
-```
+**BackgroundImage CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --bi-radius | Controls `border-radius` |
 
 
 --------------------------------------------------------------------------------
@@ -3850,7 +3920,7 @@ const variantColorResolver: VariantColorsResolver = (input) => {
     return {
       background: rgba(parsedColor.value, 0.1),
       hover: rgba(parsedColor.value, 0.15),
-      border: \`1px solid \${parsedColor.value}\`,
+      border: `1px solid ${parsedColor.value}`,
       color: darken(parsedColor.value, 0.1),
     };
   }
@@ -3986,31 +4056,35 @@ If you want to create a wrapper for a polymorphic component that is not polymorp
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Badge component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    section: 'Left and right sections',
-    label: 'Badge children',
-  }
-```
+**Badge selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Badge-root | Root element |
+| section | .mantine-Badge-section | Left and right sections |
+| label | .mantine-Badge-label | Badge children |
 
-```typescript
-{
-    root: {
-      '--badge-bd': 'Controls `border`',
-      '--badge-bg': 'Controls `background`',
-      '--badge-color': 'Controls text `color`',
-      '--badge-dot-color': 'Controls dot `color`, only applicable when `variant="dot"`',
-      '--badge-fz': 'Controls `font-size`',
-      '--badge-height': 'Controls `height`',
-      '--badge-padding-x': 'Controls horizontal `padding`',
-      '--badge-radius': 'Controls `border-radius`',
-    }
-```
+**Badge CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --badge-bd | Controls `border` |
+| root | --badge-bg | Controls `background` |
+| root | --badge-color | Controls text `color` |
+| root | --badge-dot-color | Controls dot `color`, only applicable when `variant="dot"` |
+| root | --badge-fz | Controls `font-size` |
+| root | --badge-height | Controls `height` |
+| root | --badge-padding-x | Controls horizontal `padding` |
+| root | --badge-radius | Controls `border-radius` |
+
+**Badge data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-block | - | - |
+| section | data-position | - | Section position: left or right |
 
 
 --------------------------------------------------------------------------------
@@ -4053,28 +4127,25 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Blockquote component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    icon: 'Icon element',
-    cite: 'Cite element',
-  }
-```
+**Blockquote selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Blockquote-root | Root element |
+| icon | .mantine-Blockquote-icon | Icon element |
+| cite | .mantine-Blockquote-cite | Cite element |
 
-```typescript
-{
-    root: {
-      '--bq-bd': 'Controls `border`',
-      '--bq-bg-dark': 'Controls `background-color` in dark color scheme',
-      '--bq-bg-light': 'Controls `background-color` in light color scheme',
-      '--bq-icon-size': 'Controls `width` and `height` of the icon',
-      '--bq-radius': 'Controls `border-radius`',
-    }
-```
+**Blockquote CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --bq-bd | Controls `border` |
+| root | --bq-bg-dark | Controls `background-color` in dark color scheme |
+| root | --bq-bg-light | Controls `background-color` in light color scheme |
+| root | --bq-icon-size | Controls `width` and `height` of the icon |
+| root | --bq-radius | Controls `border-radius` |
 
 
 --------------------------------------------------------------------------------
@@ -4095,6 +4166,7 @@ Description: Base component for all Mantine components
 You can use `Box` as a base for your own components or as a replacement for HTML elements:
 
 ```tsx
+import { Box } from '@mantine/core';
 
 function Demo() {
   return (
@@ -4158,24 +4230,21 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Breadcrumbs component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    separator: 'Separator between children',
-    breadcrumb: 'Breadcrumb item',
-  }
-```
+**Breadcrumbs selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Breadcrumbs-root | Root element |
+| separator | .mantine-Breadcrumbs-separator | Separator between children |
+| breadcrumb | .mantine-Breadcrumbs-breadcrumb | Breadcrumb item |
 
-```typescript
-{
-    root: {
-      '--bc-separator-margin': 'Control left and right `margin` of separator',
-    }
-```
+**Breadcrumbs CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --bc-separator-margin | Control left and right `margin` of separator |
 
 
 --------------------------------------------------------------------------------
@@ -4239,6 +4308,7 @@ To make `Burger` accessible for screen readers, you need to either set `aria-lab
 use [VisuallyHidden](https://mantine.dev/core/visually-hidden) component:
 
 ```tsx
+import { Burger, VisuallyHidden } from '@mantine/core';
 
 function Demo() {
   return (
@@ -4268,27 +4338,30 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Burger component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element (button)',
-    burger: 'Inner element that contains burger lines',
-  }
-```
+**Burger selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Burger-root | Root element (button) |
+| burger | .mantine-Burger-burger | Inner element that contains burger lines |
 
-```typescript
-{
-    root: {
-      '--burger-line-size': 'Controls height of lines',
-      '--burger-color': 'Controls background-color of lines',
-      '--burger-size': 'Controls width and height of the button',
-      '--burger-transition-duration': 'Controls transition-duration of lines',
-      '--burger-transition-timing-function': 'Controls transition-timing-function of lines',
-    }
-```
+**Burger CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --burger-line-size | Controls height of lines |
+| root | --burger-color | Controls background-color of lines |
+| root | --burger-size | Controls width and height of the button |
+| root | --burger-transition-duration | Controls transition-duration of lines |
+| root | --burger-transition-timing-function | Controls transition-timing-function of lines |
+
+**Burger data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| burger | data-opened | opened prop is set | - |
 
 
 --------------------------------------------------------------------------------
@@ -4628,6 +4701,84 @@ function Demo() {
 
 Example of customizing `Button` with [Styles API](https://mantine.dev/styles/styles-api) and [data-\* attributes](https://mantine.dev/styles/data-attributes):
 
+#### Example: dataAttributes
+
+```tsx
+// Demo.module.css
+.root {
+  border-top-left-radius: var(--mantine-radius-xl);
+  border-bottom-left-radius: var(--mantine-radius-xl);
+  padding-left: 4px;
+
+  /* The following styles will be applied only when button is disabled */
+  &[data-disabled] {
+    /* You can use Mantine PostCSS mixins inside data attributes */
+    @mixin light {
+      border: 1px solid var(--mantine-color-gray-2);
+    }
+
+    @mixin dark {
+      border: 1px solid var(--mantine-color-dark-4);
+    }
+
+    /* You can target child elements that are inside .root[data-disabled] */
+    & .section[data-position='left'] {
+      opacity: 0.6;
+    }
+  }
+}
+
+.section {
+  /* Apply styles only to left section */
+  &[data-position='left'] {
+    --section-size: calc(var(--button-height) - 8px);
+
+    background-color: var(--mantine-color-body);
+    color: var(--mantine-color-text);
+    height: var(--section-size);
+    width: var(--section-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--mantine-radius-xl);
+  }
+
+  &[data-position='right'] {
+    @mixin rtl {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+// Demo.tsx
+import { Button, ButtonProps, Group } from '@mantine/core';
+import { IconArrowRight } from '@tabler/icons-react';
+import classes from './Demo.module.css';
+
+function SendFilesButton(props: ButtonProps & React.ComponentPropsWithoutRef<'button'>) {
+  return <Button {...props} radius="md" classNames={classes} />;
+}
+
+function Demo() {
+  return (
+    <Group>
+      <SendFilesButton
+        leftSection="12"
+        rightSection={<IconArrowRight size={18} />}
+      >
+        Send files
+      </SendFilesButton>
+      <SendFilesButton
+        leftSection="3"
+        rightSection={<IconArrowRight size={18} />}
+        disabled
+      >
+        Send files
+      </SendFilesButton>
+    </Group>
+  );
+}
+```
 
 
 ## Custom variants
@@ -4683,6 +4834,77 @@ function Demo() {
 You can customize colors for `Button` and other components variants by adding
 [variantColorResolver](https://mantine.dev/theming/colors#colors-variant-resolver) to your theme.
 
+#### Example: variantColorsResolver
+
+```tsx
+import {
+  Button,
+  Group,
+  MantineProvider,
+  defaultVariantColorsResolver,
+  VariantColorsResolver,
+  parseThemeColor,
+  rgba,
+  darken,
+} from '@mantine/core';
+
+const variantColorResolver: VariantColorsResolver = (input) => {
+  const defaultResolvedColors = defaultVariantColorsResolver(input);
+  const parsedColor = parseThemeColor({
+    color: input.color || input.theme.primaryColor,
+    theme: input.theme,
+  });
+
+  // Override some properties for variant
+  if (parsedColor.isThemeColor && parsedColor.color === 'lime' && input.variant === 'filled') {
+    return {
+      ...defaultResolvedColors,
+      color: 'var(--mantine-color-black)',
+      hoverColor: 'var(--mantine-color-black)',
+    };
+  }
+
+  // Completely override variant
+  if (input.variant === 'light') {
+    return {
+      background: rgba(parsedColor.value, 0.1),
+      hover: rgba(parsedColor.value, 0.15),
+      border: `1px solid ${parsedColor.value}`,
+      color: darken(parsedColor.value, 0.1),
+    };
+  }
+
+  // Add new variants support
+  if (input.variant === 'danger') {
+    return {
+      background: 'var(--mantine-color-red-9)',
+      hover: 'var(--mantine-color-red-8)',
+      color: 'var(--mantine-color-white)',
+      border: 'none',
+    };
+  }
+
+  return defaultResolvedColors;
+};
+
+function Demo() {
+  return (
+    <MantineProvider theme={{ variantColorResolver }}>
+      <Group>
+        <Button color="lime.4" variant="filled">
+          Lime filled button
+        </Button>
+
+        <Button color="orange" variant="light">
+          Orange light button
+        </Button>
+
+        <Button variant="danger">Danger button</Button>
+      </Group>
+    </MantineProvider>
+  );
+}
+```
 
 
 <AutoContrast component="Button" />
@@ -4733,6 +4955,7 @@ function Demo() {
 Note that you must not wrap child `Button` components with any additional elements:
 
 ```tsx
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -4844,35 +5067,56 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Button component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    loader: 'Loader component, displayed only when `loading` prop is set',
-    inner: 'Contains all other elements, child of the `root` element',
-    section: 'Left and right sections of the button',
-    label: 'Button children',
-  }
-```
+**Button selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Button-root | Root element |
+| loader | .mantine-Button-loader | Loader component, displayed only when `loading` prop is set |
+| inner | .mantine-Button-inner | Contains all other elements, child of the `root` element |
+| section | .mantine-Button-section | Left and right sections of the button |
+| label | .mantine-Button-label | Button children |
 
-```typescript
-{
-    root: {
-      '--button-bg': 'Controls `background`',
-      '--button-bd': 'Control `border`',
-      '--button-hover': 'Controls `background` when hovered',
-      '--button-color': 'Control text `color`',
-      '--button-hover-color': 'Control text `color` when hovered',
-      '--button-radius': 'Controls `border-radius`',
-      '--button-height': 'Controls `height` of the button',
-      '--button-padding-x': 'Controls horizontal `padding` of the button',
-      '--button-fz': 'Controls `font-size` of the button',
-      '--button-justify': 'Controls `justify-content` of `inner` element',
-    }
-```
+**Button CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --button-bg | Controls `background` |
+| root | --button-bd | Control `border` |
+| root | --button-hover | Controls `background` when hovered |
+| root | --button-color | Control text `color` |
+| root | --button-hover-color | Control text `color` when hovered |
+| root | --button-radius | Controls `border-radius` |
+| root | --button-height | Controls `height` of the button |
+| root | --button-padding-x | Controls horizontal `padding` of the button |
+| root | --button-fz | Controls `font-size` of the button |
+| root | --button-justify | Controls `justify-content` of `inner` element |
+
+**Button data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-disabled | - | - |
+
+**Button.Group selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| group | .mantine-ButtonGroup-group | Root element |
+
+**Button.Group CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| group | --button-border-width | `border-width` of child `Button` components |
+
+**Button.Group data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| group | data-orientation | - | Value of  |
 
 
 --------------------------------------------------------------------------------
@@ -4971,6 +5215,7 @@ function Demo() {
 * If it is in the middle then, only the left and right margins will be negative
 
 ```tsx
+import { Card, Text } from '@mantine/core';
 
 function Demo() {
   return (
@@ -4994,6 +5239,7 @@ function Demo() {
 Note that `Card` relies on mapping direct children and you cannot use fragments or other wrappers for `Card.Section`:
 
 ```tsx
+import { Card } from '@mantine/core';
 
 function Demo() {
   return (
@@ -5137,24 +5383,29 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Card component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    section: '`Card.Section` root element',
-  }
-```
+**Card selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Card-root | Root element |
+| section | .mantine-Card-section | `Card.Section` root element |
 
-```typescript
-{
-    root: {
-      '--card-padding':
-        'Controls `padding` of the card, also used to control `Card.Section` spacing',
-    }
-```
+**Card CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+
+**Card data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| section | data-first-section | - | - |
+| section | data-last-section | - | - |
+| root | data-with-border | - | - |
+| section | data-with-border | - | - |
+| section | data-inherit-padding | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -5236,19 +5487,13 @@ If you want to create a wrapper for a polymorphic component that is not polymorp
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Center component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Center selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Center-root | Root element |
 
 
 --------------------------------------------------------------------------------
@@ -5280,6 +5525,8 @@ function Demo() {
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { Checkbox } from '@mantine/core';
 
 function Demo() {
   const [checked, setChecked] = useState(false);
@@ -5476,6 +5723,27 @@ function Demo() {
 By default, checkbox input and label have `cursor: default` (same as native `input[type="checkbox"]`).
 To change cursor to pointer, set `cursorType` on [theme](https://mantine.dev/theming/theme-object/):
 
+#### Example: cursorType
+
+```tsx
+import { MantineProvider, createTheme, Checkbox } from '@mantine/core';
+
+const theme = createTheme({
+  cursorType: 'pointer',
+});
+
+function Demo() {
+  return (
+    <>
+      <Checkbox label="Default cursor" />
+
+      <MantineProvider theme={theme}>
+        <Checkbox label="Pointer cursor" mt="md" />
+      </MantineProvider>
+    </>
+  );
+}
+```
 
 
 ## Add custom sizes
@@ -5561,6 +5829,8 @@ function Demo() {
 ## Controlled Checkbox.Group
 
 ```tsx
+import { useState } from 'react';
+import { Checkbox } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState<string[]>([]);
@@ -5850,6 +6120,7 @@ function Demo() {
 Set `aria-label` or `label` prop to make the checkbox accessible:
 
 ```tsx
+import { Checkbox } from '@mantine/core';
 
 // Not ok, input is not labeled
 function Bad() {
@@ -5890,33 +6161,91 @@ function GoodLabel() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Checkbox component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    input: 'Input element (`input[type="checkbox"]`)',
-    icon: 'Checkbox icon, used to display checkmark and indeterminate state icon',
-    inner: 'Wrapper for `icon` and `input`',
-    body: 'Input body, contains all other elements',
-    labelWrapper: 'Contains `label`, `description` and `error`',
-    label: 'Label element',
-    description: 'Description displayed below the label',
-    error: 'Error message displayed below the label',
-  }
-```
+**Checkbox selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Checkbox-root | Root element |
+| input | .mantine-Checkbox-input | Input element (`input[type="checkbox"]`) |
+| icon | .mantine-Checkbox-icon | Checkbox icon, used to display checkmark and indeterminate state icon |
+| inner | .mantine-Checkbox-inner | Wrapper for `icon` and `input` |
+| body | .mantine-Checkbox-body | Input body, contains all other elements |
+| labelWrapper | .mantine-Checkbox-labelWrapper | Contains `label`, `description` and `error` |
+| label | .mantine-Checkbox-label | Label element |
+| description | .mantine-Checkbox-description | Description displayed below the label |
+| error | .mantine-Checkbox-error | Error message displayed below the label |
 
-```typescript
-{
-    root: {
-      '--checkbox-color': 'Controls checked checkbox `background-color`',
-      '--checkbox-radius': 'Controls checkbox `border-radius`',
-      '--checkbox-size': 'Controls checkbox `width` and `height`',
-      '--checkbox-icon-color': 'Controls checkbox icon `color`',
-    }
-```
+**Checkbox CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --checkbox-color | Controls checked checkbox `background-color` |
+| root | --checkbox-radius | Controls checkbox `border-radius` |
+| root | --checkbox-size | Controls checkbox `width` and `height` |
+| root | --checkbox-icon-color | Controls checkbox icon `color` |
+
+**Checkbox data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-checked | - | - |
+| input | data-error | - | - |
+| input | data-indeterminate | - | - |
+| inner | data-label-position | - | Value of  |
+
+**Checkbox.Group selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-CheckboxGroup-root | Root element |
+| label | .mantine-CheckboxGroup-label | Label element |
+| required | .mantine-CheckboxGroup-required | Required asterisk element, rendered inside label |
+| description | .mantine-CheckboxGroup-description | Description element |
+| error | .mantine-CheckboxGroup-error | Error element |
+
+**Checkbox.Indicator selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| indicator | .mantine-CheckboxIndicator-indicator | Root element |
+| icon | .mantine-CheckboxIndicator-icon | Checkbox icon |
+
+**Checkbox.Indicator CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| indicator | --checkbox-color | Controls checked checkbox `background-color` |
+| indicator | --checkbox-radius | Controls checkbox `border-radius` |
+| indicator | --checkbox-size | Controls checkbox `width` and `height` |
+| indicator | --checkbox-icon-color | Controls checkbox icon `color` |
+
+**Checkbox.Indicator data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| indicator | data-checked | - | - |
+| indicator | data-disabled | - | - |
+
+**Checkbox.Card selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| card | .mantine-CheckboxCard-card | Root element |
+
+**Checkbox.Card CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| card | --card-radius | Controls card `border-radius` |
+
+**Checkbox.Card data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| card | data-checked | - | - |
+| card | data-with-border | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -5942,6 +6271,8 @@ function Demo() {
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { Chip } from '@mantine/core';
 
 function Demo() {
   const [checked, setChecked] = useState(false);
@@ -6095,6 +6426,8 @@ function Demo() {
 ## Controlled Chip.Group
 
 ```tsx
+import { useState } from 'react';
+import { Chip } from '@mantine/core';
 
 function Single() {
   // string value when multiple is false (default)
@@ -6187,36 +6520,40 @@ all keyboard events work the same as with native controls.
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Chip component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    checkIcon: 'Check icon, visible when checked prop is true',
-    iconWrapper: 'Wraps `checkIcon` for alignment',
-    input: 'Input element, hidden by default',
-    label: 'Input label, used as a chip body',
-  }
-```
+**Chip selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Chip-root | Root element |
+| checkIcon | .mantine-Chip-checkIcon | Check icon, visible when checked prop is true |
+| iconWrapper | .mantine-Chip-iconWrapper | Wraps `checkIcon` for alignment |
+| input | .mantine-Chip-input | Input element, hidden by default |
+| label | .mantine-Chip-label | Input label, used as a chip body |
 
-```typescript
-{
-    root: {
-      '--chip-fz': 'Controls `font-size`',
-      '--chip-size': 'Controls `height`',
-      '--chip-icon-size': 'Controls width and height of the icon',
-      '--chip-padding': 'Controls horizontal padding when chip is not checked',
-      '--chip-checked-padding': 'Controls horizontal padding when chip is checked',
-      '--chip-radius': 'Controls `border-radius`',
-      '--chip-bg': 'Controls `background-color` when chip is checked',
-      '--chip-hover': 'Controls `background-color` when chip is checked and hovered',
-      '--chip-color': 'Controls `color` when chip is checked',
-      '--chip-bd': 'Controls border when chip is checked',
-      '--chip-spacing': 'Controls spacing between check icon and label',
-    }
-```
+**Chip CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --chip-fz | Controls `font-size` |
+| root | --chip-size | Controls `height` |
+| root | --chip-icon-size | Controls width and height of the icon |
+| root | --chip-padding | Controls horizontal padding when chip is not checked |
+| root | --chip-checked-padding | Controls horizontal padding when chip is checked |
+| root | --chip-radius | Controls `border-radius` |
+| root | --chip-bg | Controls `background-color` when chip is checked |
+| root | --chip-hover | Controls `background-color` when chip is checked and hovered |
+| root | --chip-color | Controls `color` when chip is checked |
+| root | --chip-bd | Controls border when chip is checked |
+| root | --chip-spacing | Controls spacing between check icon and label |
+
+**Chip data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| label | data-checked | Chip is checked | - |
+| label | data-disabled | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -6224,6 +6561,7 @@ CSS variables:
 ### CloseButton
 Package: @mantine/core
 Import: import { CloseButton } from '@mantine/core';
+Description: Button with close icon
 
 ## Usage
 
@@ -6266,6 +6604,7 @@ To make `CloseButton` accessible for screen readers, you need to either set `ari
 use [VisuallyHidden](https://mantine.dev/core/visually-hidden) component:
 
 ```tsx
+import { CloseButton, VisuallyHidden } from '@mantine/core';
 
 function Demo() {
   return (
@@ -6295,24 +6634,21 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+CloseButton component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**CloseButton selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-CloseButton-root | Root element |
 
-```typescript
-{
-    root: {
-      '--cb-icon-size': 'Controls `width` of the `X` icon',
-      '--cb-radius': 'Controls `border-radius` of the button',
-      '--cb-size': 'Controls `width` and `height` of the button',
-    }
-```
+**CloseButton CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --cb-icon-size | Controls `width` of the `X` icon |
+| root | --cb-radius | Controls `border-radius` of the button |
+| root | --cb-size | Controls `width` and `height` of the button |
 
 
 --------------------------------------------------------------------------------
@@ -6346,11 +6682,15 @@ To render code in `pre` element pass `block` prop to Code component:
 ```tsx
 import { Code } from '@mantine/core';
 
-const codeForPreviousDemo = \`import { Code } from '@mantine/core';
+const codeForPreviousDemo = `import { Code } from '@mantine/core';
 
 function Demo() {
   return <Code>React.createElement()</Code>;
-}\
+}`;
+
+function Demo() {
+  return <Code block>{codeForPreviousDemo}</Code>;
+}
 ```
 
 
@@ -6388,22 +6728,64 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Code component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Code selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Code-root | Root element |
 
-```typescript
-{
-    root: {
-      '--code-bg': 'Controls `background-color`',
-    }
-```
+**Code CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --code-bg | Controls `background-color` |
+
+**Code data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-block | - | - |
+
+**Codehighlight selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| codeHighlight | .mantine-Codehighlight-codeHighlight | Root element |
+| showCodeButton | .mantine-Codehighlight-showCodeButton | Button that reveals full code when it is collapsed |
+| pre | .mantine-Codehighlight-pre | Pre element, contains code element |
+| code | .mantine-Codehighlight-code | Code element |
+| control | .mantine-Codehighlight-control | Control button, copy/collapse, custom controls |
+| controlTooltip | .mantine-Codehighlight-controlTooltip | Root element of control tooltip |
+| controls | .mantine-Codehighlight-controls | A wrapper around controls |
+| scrollarea | .mantine-Codehighlight-scrollarea | Scroll area, contains code |
+
+**Codehighlight CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| codeHighlight | --ch-background | Background color |
+| codeHighlight | --ch-max-height | Max height of code block in collapsed state |
+| codeHighlight | --ch-radius | Border radius |
+
+**Codehighlighttabs selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| codeHighlight | .mantine-Codehighlighttabs-codeHighlight | Root element of inner CodeHighlight component |
+| showCodeButton | .mantine-Codehighlighttabs-showCodeButton | Button that reveals full code when it is collapsed |
+| pre | .mantine-Codehighlighttabs-pre | Pre element, contains code element |
+| code | .mantine-Codehighlighttabs-code | Code element |
+| control | .mantine-Codehighlighttabs-control | Control button, copy/collapse, custom controls |
+| controlTooltip | .mantine-Codehighlighttabs-controlTooltip | Root element of control tooltip |
+| controls | .mantine-Codehighlighttabs-controls | A wrapper around controls |
+| scrollarea | .mantine-Codehighlighttabs-scrollarea | Scroll area, contains code |
+| root | .mantine-Codehighlighttabs-root | Root element |
+| filesScrollarea | .mantine-Codehighlighttabs-filesScrollarea | Scrollarea with files list |
+| files | .mantine-Codehighlighttabs-files | Files names list |
+| file | .mantine-Codehighlighttabs-file | File name |
+| fileIcon | .mantine-Codehighlighttabs-fileIcon | File icon |
 
 
 --------------------------------------------------------------------------------
@@ -6513,6 +6895,7 @@ function Demo() {
 ### ColorInput
 Package: @mantine/core
 Import: import { ColorInput } from '@mantine/core';
+Description: Capture color from user
 
 ## Usage
 
@@ -6540,6 +6923,8 @@ function Demo() {
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { ColorInput } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('');
@@ -6953,28 +7338,40 @@ ColorInput provides better accessibility support when used in forms. Make sure t
 
 #### Styles API
 
-This component supports the following CSS selectors:
+ColorInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    ...InputStylesApi.selectors,
-    ...InputWrapperStylesApi.selectors,
-    ...ColorPickerStylesApi.selectors,
-    dropdown: 'Popover dropdown',
-    colorPreview: 'Color swatch preview in input left section',
-    eyeDropperButton: 'Eye dropper button',
-    eyeDropperIcon: 'Default eye dropper icon',
-  }
-```
+**ColorInput selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-ColorInput-wrapper | Root element |
+| input | .mantine-ColorInput-input | Input element |
+| section | .mantine-ColorInput-section | Left and right sections |
+| root | .mantine-ColorInput-root | Root element |
+| label | .mantine-ColorInput-label | Label element |
+| required | .mantine-ColorInput-required | Required asterisk element, rendered inside label |
+| description | .mantine-ColorInput-description | Description element |
+| error | .mantine-ColorInput-error | Error element |
+| preview | .mantine-ColorInput-preview | Color preview, displayed only when `format` supports alpha channel |
+| body | .mantine-ColorInput-body | Contains alpha/hue sliders and color preview |
+| slider | .mantine-ColorInput-slider | Alpha and hue sliders root |
+| sliderOverlay | .mantine-ColorInput-sliderOverlay | Element used to display various overlays over hue and alpha sliders |
+| saturation | .mantine-ColorInput-saturation | Saturation picker |
+| saturationOverlay | .mantine-ColorInput-saturationOverlay | Element used to display various overlays over saturation picker |
+| sliders | .mantine-ColorInput-sliders | Contains alpha and hue sliders |
+| thumb | .mantine-ColorInput-thumb | Thumb of all sliders |
+| swatch | .mantine-ColorInput-swatch | Color swatch |
+| swatches | .mantine-ColorInput-swatches | Color swatches list |
+| dropdown | .mantine-ColorInput-dropdown | Popover dropdown |
+| colorPreview | .mantine-ColorInput-colorPreview | Color swatch preview in input left section |
+| eyeDropperButton | .mantine-ColorInput-eyeDropperButton | Eye dropper button |
+| eyeDropperIcon | .mantine-ColorInput-eyeDropperIcon | Default eye dropper icon |
 
-```typescript
-{
-    colorPreview: {
-      '--ci-preview-size': 'Controls `width` and `height` of color preview',
-    }
-```
+**ColorInput CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| colorPreview | --ci-preview-size | Controls `width` and `height` of color preview |
 
 
 --------------------------------------------------------------------------------
@@ -6982,6 +7379,7 @@ CSS variables:
 ### ColorPicker
 Package: @mantine/core
 Import: import { ColorPicker } from '@mantine/core';
+Description: Pick colors in hex(a), rgb(a), hsl(a) and hsv(a) formats
 
 ## Usage
 
@@ -7189,6 +7587,7 @@ ColorPicker component is accessible by default:
 To make component accessible for screen readers, set `saturationLabel`, `hueLabel` and `alphaLabel`:
 
 ```tsx
+import { ColorPicker } from '@mantine/core';
 
 function Demo() {
   return (
@@ -7225,37 +7624,34 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+ColorPicker component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    wrapper: 'Root element',
-    preview: 'Color preview, displayed only when `format` supports alpha channel',
-    body: 'Contains alpha/hue sliders and color preview',
-    slider: 'Alpha and hue sliders root',
-    sliderOverlay: 'Element used to display various overlays over hue and alpha sliders',
-    saturation: 'Saturation picker',
-    saturationOverlay: 'Element used to display various overlays over saturation picker',
-    sliders: 'Contains alpha and hue sliders',
-    thumb: 'Thumb of all sliders',
-    swatch: 'Color swatch',
-    swatches: 'Color swatches list',
-  }
-```
+**ColorPicker selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-ColorPicker-wrapper | Root element |
+| preview | .mantine-ColorPicker-preview | Color preview, displayed only when `format` supports alpha channel |
+| body | .mantine-ColorPicker-body | Contains alpha/hue sliders and color preview |
+| slider | .mantine-ColorPicker-slider | Alpha and hue sliders root |
+| sliderOverlay | .mantine-ColorPicker-sliderOverlay | Element used to display various overlays over hue and alpha sliders |
+| saturation | .mantine-ColorPicker-saturation | Saturation picker |
+| saturationOverlay | .mantine-ColorPicker-saturationOverlay | Element used to display various overlays over saturation picker |
+| sliders | .mantine-ColorPicker-sliders | Contains alpha and hue sliders |
+| thumb | .mantine-ColorPicker-thumb | Thumb of all sliders |
+| swatch | .mantine-ColorPicker-swatch | Color swatch |
+| swatches | .mantine-ColorPicker-swatches | Color swatches list |
 
-```typescript
-{
-    wrapper: {
-      '--cp-body-spacing': 'Controls spacing between sliders and saturation',
-      '--cp-preview-size': 'Controls size of the preview swatch',
-      '--cp-width': 'Controls `width` of the root element',
-      '--cp-swatch-size': 'Controls swatch `width` and `height`',
-      '--cp-thumb-size': 'Controls thumb `width` and `height` in all sliders and saturation picker',
-      '--cp-saturation-height': 'Controls `height` of the saturation picker',
-    }
-```
+**ColorPicker CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| wrapper | --cp-body-spacing | Controls spacing between sliders and saturation |
+| wrapper | --cp-preview-size | Controls size of the preview swatch |
+| wrapper | --cp-width | Controls `width` of the root element |
+| wrapper | --cp-swatch-size | Controls swatch `width` and `height` |
+| wrapper | --cp-thumb-size | Controls thumb `width` and `height` in all sliders and saturation picker |
+| wrapper | --cp-saturation-height | Controls `height` of the saturation picker |
 
 
 --------------------------------------------------------------------------------
@@ -7263,6 +7659,7 @@ CSS variables:
 ### ColorSwatch
 Package: @mantine/core
 Import: import { ColorSwatch } from '@mantine/core';
+Description: Displays color
 
 ## Usage
 
@@ -7356,27 +7753,24 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+ColorSwatch component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    alphaOverlay: 'Overlay with checkerboard pattern',
-    shadowOverlay: 'Overlay with inner box-shadow',
-    colorOverlay: 'Overlay with given color background',
-    childrenOverlay: 'Overlay with `children` inside',
-  }
-```
+**ColorSwatch selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-ColorSwatch-root | Root element |
+| alphaOverlay | .mantine-ColorSwatch-alphaOverlay | Overlay with checkerboard pattern |
+| shadowOverlay | .mantine-ColorSwatch-shadowOverlay | Overlay with inner box-shadow |
+| colorOverlay | .mantine-ColorSwatch-colorOverlay | Overlay with given color background |
+| childrenOverlay | .mantine-ColorSwatch-childrenOverlay | Overlay with `children` inside |
 
-```typescript
-{
-    root: {
-      '--cs-radius': 'Controls `border-radius` of all overlays and `root` element',
-      '--cs-size': 'Controls `width`, `height`, `min-width` and `min-height` of the `root` element',
-    }
-```
+**ColorSwatch CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --cs-radius | Controls `border-radius` of all overlays and `root` element |
+| root | --cs-size | Controls `width`, `height`, `min-width` and `min-height` of the `root` element |
 
 
 --------------------------------------------------------------------------------
@@ -7455,6 +7849,7 @@ function Demo() {
 and handlers to update it. Created store must be passed to the `store` prop of `Combobox`:
 
 ```tsx
+import { Combobox, useCombobox } from '@mantine/core';
 
 function Demo() {
   const combobox = useCombobox();
@@ -7496,6 +7891,7 @@ interface UseComboboxOptions {
 You can import `UseComboboxOptions` type from `@mantine/core` package:
 
 ```tsx
+import type { UseComboboxOptions } from '@mantine/core';
 ```
 
 ## Combobox store
@@ -7581,6 +7977,7 @@ interface ComboboxStore {
 You can import `ComboboxStore` type from `@mantine/core` package:
 
 ```tsx
+import type { ComboboxStore } from '@mantine/core';
 ```
 
 ## useCombobox handlers
@@ -7589,6 +7986,7 @@ Combobox store handlers can be used to control `Combobox` state.
 For example, to open the dropdown, call `openDropdown` handler:
 
 ```tsx
+import { Button, Combobox, useCombobox } from '@mantine/core';
 
 function Demo() {
   const combobox = useCombobox();
@@ -7612,6 +8010,7 @@ call `selectFirstOption` when the dropdown is opened and `resetSelectedOption`
 when it is closed:
 
 ```tsx
+import { Combobox, useCombobox } from '@mantine/core';
 
 function Demo() {
   const combobox = useCombobox({
@@ -8672,32 +9071,38 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Combobox component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    options: '`Combobox.Options` component',
-    dropdown: '`Combobox.Dropdown` component',
-    option: '`Combobox.Option` component',
-    search: '`Combobox.Search` input',
-    empty: '`Combobox.Empty` component',
-    header: '`Combobox.Header` component',
-    footer: '`Combobox.Footer` component',
-    group: '`Combobox.Group` component',
-    groupLabel: 'Label of `Combobox.Group` component',
-  }
-```
+**Combobox selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| options | .mantine-Combobox-options | `Combobox.Options` component |
+| dropdown | .mantine-Combobox-dropdown | `Combobox.Dropdown` component |
+| option | .mantine-Combobox-option | `Combobox.Option` component |
+| search | .mantine-Combobox-search | `Combobox.Search` input |
+| empty | .mantine-Combobox-empty | `Combobox.Empty` component |
+| header | .mantine-Combobox-header | `Combobox.Header` component |
+| footer | .mantine-Combobox-footer | `Combobox.Footer` component |
+| group | .mantine-Combobox-group | `Combobox.Group` component |
+| groupLabel | .mantine-Combobox-groupLabel | Label of `Combobox.Group` component |
 
-```typescript
-{
-    dropdown: {
-      '--combobox-option-fz': 'Controls option `font-size`',
-      '--combobox-option-padding': 'Controls option `padding`',
-      '--combobox-padding': 'Controls dropdown `padding`',
-    }
-```
+**Combobox CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| dropdown | --combobox-option-fz | Controls option `font-size` |
+| dropdown | --combobox-option-padding | Controls option `padding` |
+| dropdown | --combobox-padding | Controls dropdown `padding` |
+
+**Combobox data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| option | data-combobox-selected | Option is selected | - |
+| option | data-combobox-active | - | - |
+| option | data-combobox-disabled | - | - |
+| dropdown | data-hidden | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -8915,22 +9320,19 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Container component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Container selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Container-root | Root element |
 
-```typescript
-{
-    root: {
-      '--container-size': 'Controls container `max-width`',
-    }
-```
+**Container CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --container-size | Controls container `max-width` |
 
 
 --------------------------------------------------------------------------------
@@ -8938,6 +9340,7 @@ CSS variables:
 ### CopyButton
 Package: @mantine/core
 Import: import { CopyButton } from '@mantine/core';
+Description: Copies given text to clipboard
 
 ## Usage
 
@@ -9068,6 +9471,7 @@ function Demo() {
 `Dialog` is rendered in [Portal](https://mantine.dev/core/portal/) and has fixed position, set `position` prop to control dialog's position:
 
 ```tsx
+import { Dialog } from '@mantine/core';
 
 function Demo() {
   return (
@@ -9112,23 +9516,20 @@ to select [Modal](https://mantine.dev/core/modal/), [Drawer](https://mantine.dev
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Dialog component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    closeButton: 'Close button',
-  }
-```
+**Dialog selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Dialog-root | Root element |
+| closeButton | .mantine-Dialog-closeButton | Close button |
 
-```typescript
-{
-    root: {
-      '--dialog-size': 'Controls `width` of the dialog',
-    }
-```
+**Dialog CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --dialog-size | Controls `width` of the dialog |
 
 
 --------------------------------------------------------------------------------
@@ -9296,25 +9697,30 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Divider component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    label: 'Label element',
-  }
-```
+**Divider selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Divider-root | Root element |
+| label | .mantine-Divider-label | Label element |
 
-```typescript
-{
-    root: {
-      '--divider-border-style': 'Controls `border-style`',
-      '--divider-color': 'Controls `border-color`',
-      '--divider-size': 'Controls `border-width`',
-    }
-```
+**Divider CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --divider-border-style | Controls `border-style` |
+| root | --divider-color | Controls `border-color` |
+| root | --divider-size | Controls `border-width` |
+
+**Divider data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-with-label | - | - |
+| root | data-orientation | - | Value of  |
+| label | data-position | - | Value of  |
 
 
 --------------------------------------------------------------------------------
@@ -9466,6 +9872,7 @@ You can change drawer width/height (depends on `position`) by setting `size` pro
 for example, `size="55%"` or `size={200}`:
 
 ```tsx
+import { Drawer } from '@mantine/core';
 
 function Demo() {
   return (
@@ -9796,6 +10203,7 @@ package to lock scroll. You can pass props down to the `RemoveScroll` component
 with `removeScrollProps`:
 
 ```tsx
+import { Drawer } from '@mantine/core';
 
 function Demo() {
   return (
@@ -9999,6 +10407,7 @@ interface UseDrawersStackReturnType<T extends string> {
 Example of using `useDrawersStack` with `Drawer` component:
 
 ```tsx
+import { Drawer, useDrawersStack } from '@mantine/core';
 
 function Demo() {
   const stack = useDrawersStack(['first', 'second']);
@@ -10019,6 +10428,7 @@ function Demo() {
 package to lock scroll. To properly size these `elements` add a `className` to them ([documentation](https://github.com/theKashey/react-remove-scroll#positionfixed-elements)):
 
 ```tsx
+import { RemoveScroll } from '@mantine/core';
 
 function Demo() {
   return (
@@ -10041,6 +10451,7 @@ function Demo() {
 Set `title` props to make component accessible, will add `aria-labelledby` to the content element:
 
 ```tsx
+import { Drawer } from '@mantine/core';
 
 function Demo() {
   return <Drawer title="Drawer label" opened onClose={() => {}} />;
@@ -10050,6 +10461,7 @@ function Demo() {
 To set close button `aria-label` use `closeButtonProps`:
 
 ```tsx
+import { Drawer } from '@mantine/core';
 
 function Demo() {
   return (
@@ -10101,34 +10513,31 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Drawer component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    inner: 'Element used to center modal, has fixed position, takes entire screen',
-    content: '`Drawer.Content` root element',
-    header: 'Contains title and close button',
-    overlay: 'Overlay displayed under the `Drawer.Content`',
-    title: 'Drawer title (h2 tag), displayed in the header',
-    body: 'Drawer body, displayed after header',
-    close: 'Close button',
-  }
-```
+**Drawer selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Drawer-root | Root element |
+| inner | .mantine-Drawer-inner | Element used to center modal, has fixed position, takes entire screen |
+| content | .mantine-Drawer-content | `Drawer.Content` root element |
+| header | .mantine-Drawer-header | Contains title and close button |
+| overlay | .mantine-Drawer-overlay | Overlay displayed under the `Drawer.Content` |
+| title | .mantine-Drawer-title | Drawer title (h2 tag), displayed in the header |
+| body | .mantine-Drawer-body | Drawer body, displayed after header |
+| close | .mantine-Drawer-close | Close button |
 
-```typescript
-{
-    root: {
-      '--drawer-offset': 'Controls `margin` of `Drawer.Content`',
-      '--drawer-size': 'Controls `width` of `Drawer.Content`',
-      '--drawer-flex': 'Controls `flex` property of `Drawer.Content`',
-      '--drawer-align': 'Controls `align-items` property of `Drawer.Content`',
-      '--drawer-justify': 'Controls `justify-content` property of `Drawer.Content`',
-      '--drawer-height': 'Controls `height` property of `Drawer.Content`',
-    }
-```
+**Drawer CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --drawer-offset | Controls `margin` of `Drawer.Content` |
+| root | --drawer-size | Controls `width` of `Drawer.Content` |
+| root | --drawer-flex | Controls `flex` property of `Drawer.Content` |
+| root | --drawer-align | Controls `align-items` property of `Drawer.Content` |
+| root | --drawer-justify | Controls `justify-content` property of `Drawer.Content` |
+| root | --drawer-height | Controls `height` property of `Drawer.Content` |
 
 
 --------------------------------------------------------------------------------
@@ -10191,23 +10600,20 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Fieldset component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    legend: 'Legend element',
-  }
-```
+**Fieldset selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Fieldset-root | Root element |
+| legend | .mantine-Fieldset-legend | Legend element |
 
-```typescript
-{
-    root: {
-      '--fieldset-radius': 'Controls `border-radius`',
-    }
-```
+**Fieldset CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --fieldset-radius | Controls `border-radius` |
 
 
 --------------------------------------------------------------------------------
@@ -10215,6 +10621,7 @@ CSS variables:
 ### FileButton
 Package: @mantine/core
 Import: import { FileButton } from '@mantine/core';
+Description: Open file picker with a button click
 
 ## Usage
 
@@ -10352,6 +10759,7 @@ FileButton is not compatible with React Server Components as it uses useEffect a
 ### FileInput
 Package: @mantine/core
 Import: import { FileInput } from '@mantine/core';
+Description: Capture files from user
 
 ## Usage
 
@@ -10381,6 +10789,8 @@ function Demo() {
 When `multiple` is `false`:
 
 ```tsx
+import { useState } from 'react';
+import { FileInput } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState<File | null>(null);
@@ -10391,6 +10801,8 @@ function Demo() {
 When `multiple` is `true`:
 
 ```tsx
+import { useState } from 'react';
+import { FileInput } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState<File[]>([]);
@@ -10605,6 +11017,7 @@ FileInput provides better accessibility support when used in forms. Make sure to
 `multiple` value.
 
 ```tsx
+import type { FileInputProps } from '@mantine/core';
 
 type SingleInputProps = FileInputProps<false>;
 type MultipleInputProps = FileInputProps<true>;
@@ -10659,21 +11072,21 @@ type MultipleInputProps = FileInputProps<true>;
 
 #### Styles API
 
-This component supports the following CSS selectors:
+FileInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    ...InputStylesApi.selectors,
-    ...InputWrapperStylesApi.selectors,
-    placeholder: 'Placeholder text',
-  }
-```
+**FileInput selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-FileInput-wrapper | Root element of the Input |
+| input | .mantine-FileInput-input | Input element |
+| section | .mantine-FileInput-section | Left and right sections |
+| root | .mantine-FileInput-root | Root element |
+| label | .mantine-FileInput-label | Label element |
+| required | .mantine-FileInput-required | Required asterisk element, rendered inside label |
+| description | .mantine-FileInput-description | Description element |
+| error | .mantine-FileInput-error | Error element |
+| placeholder | .mantine-FileInput-placeholder | Placeholder text |
 
 
 --------------------------------------------------------------------------------
@@ -10764,19 +11177,13 @@ Flex component uses CSS flexbox gap to add spacing between children. Flexbox gap
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Flex component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Flex selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Flex-root | Root element |
 
 
 --------------------------------------------------------------------------------
@@ -10784,6 +11191,7 @@ CSS variables:
 ### FloatingIndicator
 Package: @mantine/core
 Import: import { FloatingIndicator } from '@mantine/core';
+Description: Display a floating indicator over a group of elements
 
 ## Usage
 
@@ -11065,22 +11473,19 @@ Should be set if the component is used inside a container that has <code>transfo
 
 #### Styles API
 
-This component supports the following CSS selectors:
+FloatingIndicator component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**FloatingIndicator selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-FloatingIndicator-root | Root element |
 
-```typescript
-{
-    root: {
-      '--transition-duration': 'Controls indicator transition duration',
-    }
-```
+**FloatingIndicator CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --transition-duration | Controls indicator transition duration |
 
 
 --------------------------------------------------------------------------------
@@ -11088,6 +11493,7 @@ CSS variables:
 ### FocusTrap
 Package: @mantine/core
 Import: import { FocusTrap } from '@mantine/core';
+Description: Trap focus at child node
 
 ## Usage
 
@@ -11520,6 +11926,7 @@ overflowing the grid container. For example, if you use `Grid` without parent co
 which has padding.
 
 ```tsx
+import { Grid } from '@mantine/core';
 
 function Demo() {
   return (
@@ -11548,27 +11955,24 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Grid component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    container: 'Container element, only used with `type="container"` prop',
-    root: 'Root element',
-    inner: 'Columns wrapper',
-    col: '`Grid.Col` root element',
-  }
-```
+**Grid selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| container | .mantine-Grid-container | Container element, only used with `type="container"` prop |
+| root | .mantine-Grid-root | Root element |
+| inner | .mantine-Grid-inner | Columns wrapper |
+| col | .mantine-Grid-col | `Grid.Col` root element |
 
-```typescript
-{
-    root: {
-      '--grid-overflow': 'Controls `overflow` property',
-      '--grid-align': 'Controls `align-items` property',
-      '--grid-justify': 'Controls `justify-content` property',
-    }
-```
+**Grid CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --grid-overflow | Controls `overflow` property |
+| root | --grid-align | Controls `align-items` property |
+| root | --grid-justify | Controls `justify-content` property |
 
 
 --------------------------------------------------------------------------------
@@ -11652,6 +12056,7 @@ Strings, numbers, fragments may have incorrect styles if `grow` prop is set:
 
 ```tsx
 // Invalid Group usage, do not do this
+import { Group } from '@mantine/core';
 
 function InvalidDemo() {
   return (
@@ -11688,27 +12093,28 @@ Flex component uses CSS flexbox gap to add spacing between children. Flexbox gap
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Group component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Group selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Group-root | Root element |
 
-```typescript
-{
-    root: {
-      '--group-align': 'Controls `align-items` property',
-      '--group-justify': 'Controls `justify-content` property',
-      '--group-gap': 'Controls `gap` property',
-      '--group-wrap': 'Controls `flex-wrap` property',
-      '--group-child-width':
-        'Controls `max-width` of child elements, applied when grow prop is set and `preventGrowOverflow` is `true`',
-    }
-```
+**Group CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --group-align | Controls `align-items` property |
+| root | --group-justify | Controls `justify-content` property |
+| root | --group-gap | Controls `gap` property |
+| root | --group-wrap | Controls `flex-wrap` property |
+
+**Group data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-grow | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -11832,19 +12238,13 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Highlight component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Highlight selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Highlight-root | Root element |
 
 
 --------------------------------------------------------------------------------
@@ -11852,6 +12252,7 @@ CSS variables:
 ### HoverCard
 Package: @mantine/core
 Import: import { HoverCard } from '@mantine/core';
+Description: Display popover section when target element is hovered
 
 ## Usage
 
@@ -12179,6 +12580,9 @@ function Demo() {
 You can use it with `next/image` and other similar components.
 
 ```tsx
+import NextImage from 'next/image';
+import { Image } from '@mantine/core';
+import myImage from './my-image.jpg';
 
 function Demo() {
   return <Image component={NextImage} src={myImage} alt="My image" />;
@@ -12199,23 +12603,26 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Image component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Image selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Image-root | Root element |
 
-```typescript
-{
-    root: {
-      '--image-object-fit': 'Controls `object-fit` property',
-      '--image-radius': 'Controls `border-radius` property',
-    }
-```
+**Image CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --image-object-fit | Controls `object-fit` property |
+| root | --image-radius | Controls `border-radius` property |
+
+**Image data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-fallback | Image failed to load | - |
 
 
 --------------------------------------------------------------------------------
@@ -12366,33 +12773,39 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Indicator component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    indicator: 'Indicator element',
-  }
-```
+**Indicator selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Indicator-root | Root element |
+| indicator | .mantine-Indicator-indicator | Indicator element |
 
-```typescript
-{
-    root: {
-      '--indicator-bottom': 'Controls `bottom` style',
-      '--indicator-left': 'Controls `left` style',
-      '--indicator-right': 'Controls `right` style',
-      '--indicator-top': 'Controls `top` style',
-      '--indicator-radius': 'Controls `border-radius`',
-      '--indicator-size': 'Controls `min-width` and `height`',
-      '--indicator-translate-x': 'Controls `translateX` style, used for positioning',
-      '--indicator-translate-y': 'Controls `translateY` style, used for positioning',
-      '--indicator-z-index': 'Controls `z-index` style',
-      '--indicator-color': 'Controls `background-color`',
-      '--indicator-text-color': 'Controls `color`',
-    }
-```
+**Indicator CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --indicator-bottom | Controls `bottom` style |
+| root | --indicator-left | Controls `left` style |
+| root | --indicator-right | Controls `right` style |
+| root | --indicator-top | Controls `top` style |
+| root | --indicator-radius | Controls `border-radius` |
+| root | --indicator-size | Controls `min-width` and `height` |
+| root | --indicator-translate-x | Controls `translateX` style, used for positioning |
+| root | --indicator-translate-y | Controls `translateY` style, used for positioning |
+| root | --indicator-z-index | Controls `z-index` style |
+| root | --indicator-color | Controls `background-color` |
+| root | --indicator-text-color | Controls `color` |
+
+**Indicator data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-inline | - | - |
+| indicator | data-with-label | - | - |
+| indicator | data-with-border | - | - |
+| indicator | data-processing | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -12410,6 +12823,7 @@ Use `Input` to create custom inputs, for other cases prefer [TextInput](https://
 or other component.
 
 ```tsx
+import { Input, TextInput } from '@mantine/core';
 
 // Incorrect usage, input is not accessible
 function Incorrect() {
@@ -12630,6 +13044,7 @@ The only difference is whether input element will have `required` attribute, exa
 [TextInput](https://mantine.dev/core/text-input/) component:
 
 ```tsx
+import { TextInput } from '@mantine/core';
 
 // Will display required asterisk and add `required` attribute to the input element
 function RequiredDemo() {
@@ -12979,6 +13394,7 @@ function Demo() {
 If you use `Input` component without associated label element, set `aria-label`:
 
 ```tsx
+import { Input } from '@mantine/core';
 
 // ok – the input is labelled by the aria-label
 function WithAriaLabel() {
@@ -13000,6 +13416,7 @@ When you use `Input` with `Input.Wrapper` it is required to set `id` on both com
 to connect label and other elements with the input:
 
 ```tsx
+import { Input } from '@mantine/core';
 
 function Demo() {
   return (
@@ -13013,6 +13430,8 @@ function Demo() {
 You can use [use-id](https://mantine.dev/hooks/use-id) to generate unique ids:
 
 ```tsx
+import { Input } from '@mantine/core';
+import { useId } from '@mantine/hooks';
 
 function Demo() {
   const id = useId();
@@ -13053,36 +13472,57 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Input component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    wrapper: 'Root element of the Input',
-    input: 'Input element',
-    section: 'Left and right sections',
-  }
-```
+**Input selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-Input-wrapper | Root element of the Input |
+| input | .mantine-Input-input | Input element |
+| section | .mantine-Input-section | Left and right sections |
 
-```typescript
-{
-    wrapper: {
-      '--input-fz': '`font-size` of the input element',
-      '--input-height':
-        '`height` or `min-height` of the input element (depends on `multiline` prop)',
-      '--input-left-section-width': '`width` of the left section',
-      '--input-right-section-width': '`width` of the right section',
-      '--input-margin-bottom':
-        '`margin-bottom` of the input element, usually controlled by `Input.Wrapper`',
-      '--input-margin-top':
-        '`margin-top` of the input element, usually controlled by `Input.Wrapper`',
-      '--input-padding-y': '`padding-top` and `padding-bottom` of the input element',
-      '--input-radius': '`border-radius` of the input element',
-      '--input-left-section-pointer-events': 'Controls `pointer-events` of the left section',
-      '--input-right-section-pointer-events': 'Controls `pointer-events` of the right section',
-    }
-```
+**Input CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| wrapper | --input-fz | `font-size` of the input element |
+| wrapper | --input-left-section-width | `width` of the left section |
+| wrapper | --input-right-section-width | `width` of the right section |
+| wrapper | --input-padding-y | `padding-top` and `padding-bottom` of the input element |
+| wrapper | --input-radius | `border-radius` of the input element |
+| wrapper | --input-left-section-pointer-events | Controls `pointer-events` of the left section |
+| wrapper | --input-right-section-pointer-events | Controls `pointer-events` of the right section |
+
+**Inputwrapper selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Inputwrapper-root | Root element |
+| label | .mantine-Inputwrapper-label | Label element |
+| required | .mantine-Inputwrapper-required | Required asterisk element, rendered inside label |
+| description | .mantine-Inputwrapper-description | Description element |
+| error | .mantine-Inputwrapper-error | Error element |
+
+**Inputwrapper CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| label | --input-label-size | Controls label `font-size` |
+| label | --input-asterisk-color | Controls label asterisk text `color` |
+
+**Inputbase selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-Inputbase-wrapper | Root element of the Input |
+| input | .mantine-Inputbase-input | Input element |
+| section | .mantine-Inputbase-section | Left and right sections |
+| root | .mantine-Inputbase-root | Root element |
+| label | .mantine-Inputbase-label | Label element |
+| required | .mantine-Inputbase-required | Required asterisk element, rendered inside label |
+| description | .mantine-Inputbase-description | Description element |
+| error | .mantine-Inputbase-error | Error element |
 
 
 --------------------------------------------------------------------------------
@@ -13090,6 +13530,7 @@ CSS variables:
 ### JsonInput
 Package: @mantine/core
 Import: import { JsonInput } from '@mantine/core';
+Description: Capture json data from user
 
 ## Usage
 
@@ -13119,6 +13560,8 @@ function Demo() {
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { JsonInput } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('');
@@ -13252,20 +13695,20 @@ JsonInput provides better accessibility support when used in forms. Make sure to
 
 #### Styles API
 
-This component supports the following CSS selectors:
+JsonInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    ...InputStylesApi.selectors,
-    ...InputWrapperStylesApi.selectors,
-  }
-```
+**JsonInput selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-JsonInput-wrapper | Root element of the Input |
+| input | .mantine-JsonInput-input | Input element |
+| section | .mantine-JsonInput-section | Left and right sections |
+| root | .mantine-JsonInput-root | Root element |
+| label | .mantine-JsonInput-label | Label element |
+| required | .mantine-JsonInput-required | Required asterisk element, rendered inside label |
+| description | .mantine-JsonInput-description | Description element |
+| error | .mantine-JsonInput-error | Error element |
 
 
 --------------------------------------------------------------------------------
@@ -13302,22 +13745,19 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Kbd component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Kbd selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Kbd-root | Root element |
 
-```typescript
-{
-    root: {
-      '--kbd-fz': 'Controls `font-size`',
-    }
-```
+**Kbd CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --kbd-fz | Controls `font-size` |
 
 
 --------------------------------------------------------------------------------
@@ -13448,28 +13888,33 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+List component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    item: 'ListItem root element',
-    itemIcon: 'ListItem icon',
-    itemLabel: 'ListItem content',
-    itemWrapper: 'ListItem wrapper element, container, icon and content',
-  }
-```
+**List selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-List-root | Root element |
+| item | .mantine-List-item | ListItem root element |
+| itemIcon | .mantine-List-itemIcon | ListItem icon |
+| itemLabel | .mantine-List-itemLabel | ListItem content |
+| itemWrapper | .mantine-List-itemWrapper | ListItem wrapper element, container, icon and content |
 
-```typescript
-{
-    root: {
-      '--list-fz': 'Controls `font-size`',
-      '--list-lh': 'Controls `line-height`',
-      '--list-spacing': 'Controls spacing between items',
-    }
-```
+**List CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --list-fz | Controls `font-size` |
+| root | --list-lh | Controls `line-height` |
+| root | --list-spacing | Controls spacing between items |
+
+**List data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-with-padding | - | - |
+| item | data-centered | - | - |
+| item | data-with-icon | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -13634,24 +14079,19 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Loader component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Loader selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Loader-root | Root element |
 
-```typescript
-{
-    root: {
-      '--loader-size':
-        'Controls loader size (usually `width` and `height`, in some cases only `width`)',
-      '--loader-color': 'Control loader color',
-    }
-```
+**Loader CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --loader-color | Control loader color |
 
 
 --------------------------------------------------------------------------------
@@ -13659,6 +14099,7 @@ CSS variables:
 ### LoadingOverlay
 Package: @mantine/core
 Import: import { LoadingOverlay } from '@mantine/core';
+Description: An overlay with centered loader
 
 ## Usage
 
@@ -13773,24 +14214,21 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+LoadingOverlay component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    overlay: '`Overlay` component',
-    loader: '`Loader` component',
-  }
-```
+**LoadingOverlay selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-LoadingOverlay-root | Root element |
+| overlay | .mantine-LoadingOverlay-overlay | `Overlay` component |
+| loader | .mantine-LoadingOverlay-loader | `Loader` component |
 
-```typescript
-{
-    root: {
-      '--lo-z-index': 'Controls `z-index` of the overlay and loader',
-    }
-```
+**LoadingOverlay CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --lo-z-index | Controls `z-index` of the overlay and loader |
 
 
 --------------------------------------------------------------------------------
@@ -13827,23 +14265,20 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Mark component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Mark selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Mark-root | Root element |
 
-```typescript
-{
-    root: {
-      '--mark-bg-dark': 'Controls `background-color` in dark color scheme',
-      '--mark-bg-light': 'Controls `background-color` for light color scheme',
-    }
-```
+**Mark CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --mark-bg-dark | Controls `background-color` in dark color scheme |
+| root | --mark-bg-light | Controls `background-color` for light color scheme |
 
 
 --------------------------------------------------------------------------------
@@ -13984,6 +14419,8 @@ function Demo() {
 Dropdown opened state can be controlled with `opened` and `onChange` props:
 
 ```tsx
+import { useState } from 'react';
+import { Menu } from '@mantine/core';
 
 function Demo() {
   const [opened, setOpened] = useState(false);
@@ -14143,6 +14580,7 @@ function Demo() {
 Note that the component you pass to `component` prop should allow spreading props to its root element:
 
 ```tsx
+import { Menu } from '@mantine/core';
 
 // ❌ Will not work with Menu.Item
 function IncorrectItem() {
@@ -14357,25 +14795,27 @@ If you also need to support `Tab` and `Shift + Tab` then set `menuItemTabIndex={
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Menu component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    ...PopoverStylesApi.selectors,
-    divider: '`Menu.Divider` root element',
-    label: '`Menu.Label` root element',
-    item: '`Menu.Item` root element',
-    itemLabel: 'Label of `Menu.Item`',
-    itemSection: 'Left and right sections of `Menu.Item`',
-    chevron: 'Sub menu chevron',
-  }
-```
+**Menu selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| dropdown | .mantine-Menu-dropdown | Dropdown element |
+| arrow | .mantine-Menu-arrow | Dropdown arrow |
+| overlay | .mantine-Menu-overlay | Overlay element |
+| divider | .mantine-Menu-divider | `Menu.Divider` root element |
+| label | .mantine-Menu-label | `Menu.Label` root element |
+| item | .mantine-Menu-item | `Menu.Item` root element |
+| itemLabel | .mantine-Menu-itemLabel | Label of `Menu.Item` |
+| itemSection | .mantine-Menu-itemSection | Left and right sections of `Menu.Item` |
+| chevron | .mantine-Menu-chevron | Sub menu chevron |
 
-```typescript
-{}
-```
+**Menu data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| item | data-disabled | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -14956,6 +15396,7 @@ package to lock scroll. You can pass props down to the `RemoveScroll` component
 with `removeScrollProps`:
 
 ```tsx
+import { Modal } from '@mantine/core';
 
 function Demo() {
   return (
@@ -15157,6 +15598,7 @@ interface UseModalsStackReturnType<T extends string> {
 Example of using `useModalsStack` with `Modal` component:
 
 ```tsx
+import { Modal, useModalsStack } from '@mantine/core';
 
 function Demo() {
   const stack = useModalsStack(['first', 'second']);
@@ -15177,6 +15619,7 @@ function Demo() {
 package to lock scroll. To properly size these `elements` add a `className` to them ([documentation](https://github.com/theKashey/react-remove-scroll#positionfixed-elements)):
 
 ```tsx
+import { RemoveScroll } from '@mantine/core';
 
 function Demo() {
   return (
@@ -15199,6 +15642,7 @@ function Demo() {
 Set `title` props to make component accessible, will add `aria-labelledby` to the content element:
 
 ```tsx
+import { Modal } from '@mantine/core';
 
 function Demo() {
   return <Modal title="Modal label" opened onClose={() => {}} />;
@@ -15208,6 +15652,7 @@ function Demo() {
 To set close button `aria-label` use `closeButtonProps`:
 
 ```tsx
+import { Modal } from '@mantine/core';
 
 function Demo() {
   return (
@@ -15261,34 +15706,34 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Modal component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    inner: 'Element used to center modal, has fixed position, takes entire screen',
-    content: '`Modal.Content` root element',
-    header: 'Contains title and close button',
-    overlay: 'Overlay displayed under the `Modal.Content`',
-    title: 'Modal title (h2 tag), displayed in the header',
-    body: 'Modal body, displayed after header',
-    close: 'Close button',
-  }
-```
+**Modal selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Modal-root | Root element |
+| inner | .mantine-Modal-inner | Element used to center modal, has fixed position, takes entire screen |
+| content | .mantine-Modal-content | `Modal.Content` root element |
+| header | .mantine-Modal-header | Contains title and close button |
+| overlay | .mantine-Modal-overlay | Overlay displayed under the `Modal.Content` |
+| title | .mantine-Modal-title | Modal title (h2 tag), displayed in the header |
+| body | .mantine-Modal-body | Modal body, displayed after header |
+| close | .mantine-Modal-close | Close button |
 
-```typescript
-{
-    root: {
-      '--modal-radius': 'Controls `border-radius` of `Modal.Content`',
-      '--modal-size': 'Controls `width` of `Modal.Content`',
-      '--modal-x-offset':
-        'Controls left and right `padding` of the inner element used to position `Modal.Content`',
-      '--modal-y-offset':
-        'Controls top and bottom `padding` of the inner element used to position `Modal.Content`',
-    }
-```
+**Modal CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --modal-radius | Controls `border-radius` of `Modal.Content` |
+| root | --modal-size | Controls `width` of `Modal.Content` |
+
+**Modal data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-full-screen | - | - |
+| root | data-centered | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -15296,6 +15741,7 @@ CSS variables:
 ### MultiSelect
 Package: @mantine/core
 Import: import { MultiSelect } from '@mantine/core';
+Description: Custom searchable multi select
 
 <ComboboxDisclaimer component="MultiSelect" />
 
@@ -15327,6 +15773,8 @@ function Demo() {
 `onChange` function is called with an array of strings as a single argument.
 
 ```tsx
+import { useState } from 'react';
+import { MultiSelect } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState<string[]>([]);
@@ -15389,6 +15837,8 @@ function Demo() {
 You can control search value with `searchValue` and `onSearchChange` props:
 
 ```tsx
+import { useState } from 'react';
+import { MultiSelect } from '@mantine/core';
 
 function Demo() {
   const [searchValue, setSearchValue] = useState('');
@@ -15584,7 +16034,7 @@ import { MultiSelect } from '@mantine/core';
 
 const largeData = Array(100_000)
   .fill(0)
-  .map((_, index) => \`Option \${index}\`);
+  .map((_, index) => `Option ${index}`);
 
 function Demo() {
   return (
@@ -15676,7 +16126,7 @@ import { MultiSelect } from '@mantine/core';
 
 const data = Array(100)
   .fill(0)
-  .map((_, index) => \`Option \${index}\`);
+  .map((_, index) => `Option ${index}`);
 
 function Demo() {
   return (
@@ -16164,6 +16614,7 @@ To set `aria-label` on the clear button, use `clearButtonProps`. Note that it is
 only when `clearable` is set.
 
 ```tsx
+import { MultiSelect } from '@mantine/core';
 
 function Demo() {
   return (
@@ -16245,24 +16696,23 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+MultiSelect component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    ...InputStylesApi.selectors,
-    ...InputWrapperStylesApi.selectors,
-    ...ComboboxLikeSelectors,
-    pill: 'Value pill',
-    inputField: 'Input field',
-    pillsList: 'List of pills, also contains input field',
-  }
-```
+**MultiSelect selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-MultiSelect-wrapper | Root element of the Input |
+| input | .mantine-MultiSelect-input | Input element |
+| section | .mantine-MultiSelect-section | Left and right sections |
+| root | .mantine-MultiSelect-root | Root element |
+| label | .mantine-MultiSelect-label | Label element |
+| required | .mantine-MultiSelect-required | Required asterisk element, rendered inside label |
+| description | .mantine-MultiSelect-description | Description element |
+| error | .mantine-MultiSelect-error | Error element |
+| pill | .mantine-MultiSelect-pill | Value pill |
+| inputField | .mantine-MultiSelect-inputField | Input field |
+| pillsList | .mantine-MultiSelect-pillsList | List of pills, also contains input field |
 
 
 --------------------------------------------------------------------------------
@@ -16270,6 +16720,7 @@ CSS variables:
 ### NativeSelect
 Package: @mantine/core
 Import: import { NativeSelect } from '@mantine/core';
+Description: Native select element based on Input
 
 ## Usage
 
@@ -16291,6 +16742,8 @@ function Demo() {
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { NativeSelect } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('');
@@ -16321,6 +16774,7 @@ Note that if `children` is used, `data` will be ignored.
 1. Array of strings:
 
 ```tsx
+import { NativeSelect } from '@mantine/core';
 
 function Demo() {
   return (
@@ -16332,6 +16786,7 @@ function Demo() {
 2. Array of objects with `label`, `value` and `disabled` keys:
 
 ```tsx
+import { NativeSelect } from '@mantine/core';
 
 function Demo() {
   return (
@@ -16350,6 +16805,7 @@ function Demo() {
 3. Array of grouped options (string format):
 
 ```tsx
+import { NativeSelect } from '@mantine/core';
 
 function Demo() {
   return (
@@ -16372,6 +16828,7 @@ function Demo() {
 4. Array of grouped options (object format):
 
 ```tsx
+import { NativeSelect } from '@mantine/core';
 
 function Demo() {
   return (
@@ -16621,20 +17078,20 @@ NativeSelect provides better accessibility support when used in forms. Make sure
 
 #### Styles API
 
-This component supports the following CSS selectors:
+NativeSelect component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    ...InputWrapperStylesApi.selectors,
-    ...InputStylesApi.selectors,
-  }
-```
+**NativeSelect selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-NativeSelect-root | Root element |
+| label | .mantine-NativeSelect-label | Label element |
+| required | .mantine-NativeSelect-required | Required asterisk element, rendered inside label |
+| description | .mantine-NativeSelect-description | Description element |
+| error | .mantine-NativeSelect-error | Error element |
+| wrapper | .mantine-NativeSelect-wrapper | Root element of the Input |
+| input | .mantine-NativeSelect-input | Input element |
+| section | .mantine-NativeSelect-section | Left and right sections |
 
 
 --------------------------------------------------------------------------------
@@ -16642,6 +17099,7 @@ CSS variables:
 ### NavLink
 Package: @mantine/core
 Import: import { NavLink } from '@mantine/core';
+Description: Navigation link
 
 ## Usage
 
@@ -16905,31 +17363,34 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+NavLink component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    body: 'Contains label and description',
-    section: 'Left and right sections',
-    label: 'NavLink label',
-    description: 'Dimmed description displayed below the label',
-    children: 'Wrapper around nested links',
-    chevron: 'Default chevron icon',
-    collapse: 'Nested links Collapse container',
-  }
-```
+**NavLink selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-NavLink-root | Root element |
+| body | .mantine-NavLink-body | Contains label and description |
+| section | .mantine-NavLink-section | Left and right sections |
+| label | .mantine-NavLink-label | NavLink label |
+| description | .mantine-NavLink-description | Dimmed description displayed below the label |
+| children | .mantine-NavLink-children | Wrapper around nested links |
+| chevron | .mantine-NavLink-chevron | Default chevron icon |
+| collapse | .mantine-NavLink-collapse | Nested links Collapse container |
 
-```typescript
-{
-    root: {
-      '--nl-bg': 'Controls link `background-color`',
-      '--nl-color': 'Controls link `color`',
-      '--nl-hover': 'Controls link `background-color` when hovered',
-    }
-```
+**NavLink CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --nl-bg | Controls link `background-color` |
+| root | --nl-color | Controls link `color` |
+| root | --nl-hover | Controls link `background-color` when hovered |
+
+**NavLink data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-active | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -17005,6 +17466,7 @@ function Demo() {
 To support screen readers, set close button aria-label or title with `closeButtonProps`:
 
 ```tsx
+import { Notification } from '@mantine/core';
 
 function Demo() {
   return (
@@ -17035,29 +17497,48 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Notification component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    loader: 'Loader component, displayed only when `loading` prop is set',
-    icon: 'Icon component, displayed only when `icon` prop is set',
-    body: 'Notification body, contains all other elements',
-    title: 'Title element, displayed only when `title` prop is set',
-    description: 'Description displayed below the title',
-    closeButton: 'Close button element',
-  }
-```
+**Notification selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Notification-root | Root element |
+| loader | .mantine-Notification-loader | Loader component, displayed only when `loading` prop is set |
+| icon | .mantine-Notification-icon | Icon component, displayed only when `icon` prop is set |
+| body | .mantine-Notification-body | Notification body, contains all other elements |
+| title | .mantine-Notification-title | Title element, displayed only when `title` prop is set |
+| description | .mantine-Notification-description | Description displayed below the title |
+| closeButton | .mantine-Notification-closeButton | Close button element |
 
-```typescript
-{
-    root: {
-      '--notification-radius': 'Controls `border-radius`',
-      '--notification-color': 'Controls icon color or notification line color',
-    }
-```
+**Notification CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --notification-radius | Controls `border-radius` |
+| root | --notification-color | Controls icon color or notification line color |
+
+**Notification data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-with-icon | - | - |
+| root | data-with-border | - | - |
+| description | data-with-title | - | - |
+
+**Notifications selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Notifications-root | Notifications container, contains all notifications |
+| notification | .mantine-Notifications-notification | Single notification |
+
+**Notifications CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --notifications-container-width | Controls notifications container `max-width` |
+| root | --notifications-z-index | Controls notifications container `z-index` |
 
 
 --------------------------------------------------------------------------------
@@ -17065,6 +17546,7 @@ CSS variables:
 ### NumberFormatter
 Package: @mantine/core
 Import: import { NumberFormatter } from '@mantine/core';
+Description: Format number with thousands/decimal separators and suffix/prefix
 
 ## Usage
 
@@ -17168,6 +17650,7 @@ function Demo() {
 ### NumberInput
 Package: @mantine/core
 Import: import { NumberInput } from '@mantine/core';
+Description: Capture number from user
 
 ## Usage
 
@@ -17198,6 +17681,8 @@ function Demo() {
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { NumberInput } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState<string | number>('');
@@ -17706,25 +18191,34 @@ NumberInput provides better accessibility support when used in forms. Make sure 
 
 #### Styles API
 
-This component supports the following CSS selectors:
+NumberInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    ...InputStylesApi.selectors,
-    ...InputWrapperStylesApi.selectors,
-    controls: 'Increment and decrement buttons wrapper',
-    control: 'Increment and decrement buttons',
-  }
-```
+**NumberInput selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-NumberInput-wrapper | Root element of the Input |
+| input | .mantine-NumberInput-input | Input element |
+| section | .mantine-NumberInput-section | Left and right sections |
+| root | .mantine-NumberInput-root | Root element |
+| label | .mantine-NumberInput-label | Label element |
+| required | .mantine-NumberInput-required | Required asterisk element, rendered inside label |
+| description | .mantine-NumberInput-description | Description element |
+| error | .mantine-NumberInput-error | Error element |
+| controls | .mantine-NumberInput-controls | Increment and decrement buttons wrapper |
+| control | .mantine-NumberInput-control | Increment and decrement buttons |
 
-```typescript
-{
-    controls: {
-      '--ni-chevron-size': 'Controls `width` and `height` of the default chevron icon',
-    }
-```
+**NumberInput CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| controls | --ni-chevron-size | Controls `width` and `height` of the default chevron icon |
+
+**NumberInput data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| control | data-direction | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -17876,25 +18370,29 @@ If you want to create a wrapper for a polymorphic component that is not polymorp
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Overlay component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Overlay selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Overlay-root | Root element |
 
-```typescript
-{
-    root: {
-      '--overlay-bg': 'Controls `background-color`',
-      '--overlay-filter': 'Controls `backdrop-filter`',
-      '--overlay-radius': 'Controls `border-radius`',
-      '--overlay-z-index': 'Controls `z-index`',
-    }
-```
+**Overlay CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --overlay-bg | Controls `background-color` |
+| root | --overlay-filter | Controls `backdrop-filter` |
+| root | --overlay-radius | Controls `border-radius` |
+| root | --overlay-z-index | Controls `z-index` |
+
+**Overlay data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-center | - | - |
+| root | data-fixed | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -17913,6 +18411,20 @@ provides essential components: buttons, inputs, modals, typography and many othe
 it is required to be installed in your project to use Mantine components.
 
 ## Installation
+
+```bash
+yarn add @mantine/hooks @mantine/core
+```
+
+```bash
+npm install @mantine/hooks @mantine/core
+```
+
+After installation import package styles at the root of your application:
+
+```tsx
+import '@mantine/core/styles.css';
+```
 
 ## Usage
 
@@ -18030,6 +18542,8 @@ function Demo() {
 To control component state provide `value` and `onChange` props:
 
 ```tsx
+import { useState } from 'react';
+import { Pagination } from '@mantine/core';
 
 function Demo() {
   const [activePage, setPage] = useState(1);
@@ -18107,7 +18621,15 @@ const totalPages = Math.ceil(total / limit);
 
 function Demo() {
   const [page, setPage] = useState(1);
-  const message = \`Showing \${limit * (page - 1) + 1} – \${Math.min(total, limit * page)} of \${total}\
+  const message = `Showing ${limit * (page - 1) + 1} – ${Math.min(total, limit * page)} of ${total}`;
+
+  return (
+    <Group justify="flex-end">
+      <Text size="sm">{message}</Text>
+      <Pagination total={totalPages} value={page} onChange={setPage} withPages={false} />
+    </Group>
+  );
+}
 ```
 
 
@@ -18170,7 +18692,7 @@ function Demo() {
         withEdges
         getItemProps={(page) => ({
           component: 'a',
-          href: \`#page-\${page}\`,
+          href: `#page-${page}`,
         })}
         getControlProps={(control) => {
           if (control === 'first') {
@@ -18198,7 +18720,7 @@ function Demo() {
         total={10}
         getItemProps={(page) => ({
           component: 'a',
-          href: \`#page-\${page}\`,
+          href: `#page-${page}`,
         })}
       >
         <Group gap={7} mt="xl">
@@ -18327,28 +18849,32 @@ you can use it to create custom pagination components.
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Pagination component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    control: 'Control element: items, next/previous, first/last buttons',
-    dots: 'Dots icon wrapper',
-  }
-```
+**Pagination selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Pagination-root | Root element |
+| control | .mantine-Pagination-control | Control element: items, next/previous, first/last buttons |
+| dots | .mantine-Pagination-dots | Dots icon wrapper |
 
-```typescript
-{
-    root: {
-      '--pagination-active-bg': 'Active control `background-color`',
-      '--pagination-active-color': 'Active control `color`',
-      '--pagination-control-fz': 'Controls control `font-size`',
-      '--pagination-control-radius': 'Controls control `border-radius`',
-      '--pagination-control-size': 'Controls control `min-width` and `height`',
-    }
-```
+**Pagination CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --pagination-active-bg | Active control `background-color` |
+| root | --pagination-active-color | Active control `color` |
+| root | --pagination-control-fz | Controls control `font-size` |
+| root | --pagination-control-radius | Controls control `border-radius` |
+| root | --pagination-control-size | Controls control `min-width` and `height` |
+
+**Pagination data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| control | data-active | Control is active | - |
+| control | data-disabled | Control is disabled | - |
 
 
 --------------------------------------------------------------------------------
@@ -18422,23 +18948,26 @@ If you want to create a wrapper for a polymorphic component that is not polymorp
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Paper component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Paper selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Paper-root | Root element |
 
-```typescript
-{
-    root: {
-      '--paper-radius': 'Controls `border-radius`',
-      '--paper-shadow': 'Controls `box-shadow`',
-    }
-```
+**Paper CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --paper-radius | Controls `border-radius` |
+| root | --paper-shadow | Controls `box-shadow` |
+
+**Paper data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-with-border | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -18446,6 +18975,7 @@ CSS variables:
 ### PasswordInput
 Package: @mantine/core
 Import: import { PasswordInput } from '@mantine/core';
+Description: Capture password data from user
 
 ## Usage
 
@@ -18473,6 +19003,8 @@ function Demo() {
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { PasswordInput } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('');
@@ -18636,6 +19168,7 @@ function Demo() {
 If you do not need visibility toggle button, use [TextInput](https://mantine.dev/core/text-input/) component instead:
 
 ```tsx
+import { TextInput } from '@mantine/core';
 
 function Demo() {
   return <TextInput type="password" />;
@@ -18759,6 +19292,7 @@ PasswordInput provides better accessibility support when used in forms. Make sur
 To set `aria-label` on the visibility toggle button, use `visibilityToggleButtonProps` prop:
 
 ```tsx
+import { PasswordInput } from '@mantine/core';
 
 function Demo() {
   return (
@@ -18811,26 +19345,29 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+PasswordInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    ...InputStylesApi.selectors,
-    ...InputWrapperStylesApi.selectors,
-    innerInput: 'Actual input element',
-    visibilityToggle: 'Visibility toggle button',
-  }
-```
+**PasswordInput selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-PasswordInput-wrapper | Root element of the Input |
+| input | .mantine-PasswordInput-input | Input element |
+| section | .mantine-PasswordInput-section | Left and right sections |
+| root | .mantine-PasswordInput-root | Root element |
+| label | .mantine-PasswordInput-label | Label element |
+| required | .mantine-PasswordInput-required | Required asterisk element, rendered inside label |
+| description | .mantine-PasswordInput-description | Description element |
+| error | .mantine-PasswordInput-error | Error element |
+| innerInput | .mantine-PasswordInput-innerInput | Actual input element |
+| visibilityToggle | .mantine-PasswordInput-visibilityToggle | Visibility toggle button |
 
-```typescript
-{
-    root: {
-      '--psi-button-size': 'Controls visibility toggle button `width` and `height`',
-      '--psi-icon-size': 'Controls visibility toggle icon `width` and `height`',
-    }
-```
+**PasswordInput CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --psi-button-size | Controls visibility toggle button `width` and `height` |
+| root | --psi-icon-size | Controls visibility toggle icon `width` and `height` |
 
 
 --------------------------------------------------------------------------------
@@ -18908,26 +19445,68 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Pill component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    label: 'Pill label (children)',
-    remove: 'Remove button',
-  }
-```
+**Pill selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Pill-root | Root element |
+| label | .mantine-Pill-label | Pill label (children) |
+| remove | .mantine-Pill-remove | Remove button |
 
-```typescript
-{
-    root: {
-      '--pill-height': 'Controls `height` of the pill',
-      '--pill-fz': 'Controls `font-size`',
-      '--pill-radius': 'Controls `border-radius`',
-    }
-```
+**Pill CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --pill-height | Controls `height` of the pill |
+| root | --pill-fz | Controls `font-size` |
+| root | --pill-radius | Controls `border-radius` |
+
+**Pill data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-with-remove | - | - |
+| root | data-disabled | - | - |
+
+**Pill.Group selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| group | .mantine-PillGroup-group | Root element |
+
+**Pill.Group CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| group | --pg-gap | Controls `gap` between pills |
+
+**Pillsinput selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-Pillsinput-wrapper | Root element of the Input |
+| input | .mantine-Pillsinput-input | Input element |
+| section | .mantine-Pillsinput-section | Left and right sections |
+| root | .mantine-Pillsinput-root | Root element |
+| label | .mantine-Pillsinput-label | Label element |
+| required | .mantine-Pillsinput-required | Required asterisk element, rendered inside label |
+| description | .mantine-Pillsinput-description | Description element |
+| error | .mantine-Pillsinput-error | Error element |
+
+**Pillsinputfield selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| field | .mantine-Pillsinputfield-field | Root element |
+
+**Pillsinputfield data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| field | data-type | - | Value of  |
+| field | data-disabled | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -18935,6 +19514,7 @@ CSS variables:
 ### PillsInput
 Package: @mantine/core
 Import: import { PillsInput } from '@mantine/core';
+Description: Base component for custom tags inputs and multi selects
 
 ## Usage
 
@@ -19082,6 +19662,7 @@ function Demo() {
 If `PillsInput` is used without label prop, it will not be announced properly by screen reader:
 
 ```tsx
+import { PillsInput } from '@mantine/core';
 
 // Inaccessible input – screen reader will not announce it properly
 function Demo() {
@@ -19097,6 +19678,7 @@ Set `aria-label` on the `PillsInput.Field` component to make the input accessibl
 In this case label will not be visible, but screen reader will announce it:
 
 ```tsx
+import { PillsInput } from '@mantine/core';
 
 // Accessible input – it has aria-label
 function Demo() {
@@ -19111,6 +19693,7 @@ function Demo() {
 If `label` prop is set, the input will be accessible it is not required to set `aria-label`:
 
 ```tsx
+import { PillsInput } from '@mantine/core';
 
 // Accessible input – it has associated label element
 function Demo() {
@@ -19156,20 +19739,33 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+PillsInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    ...InputStylesApi.selectors,
-    ...InputWrapperStylesApi.selectors,
-  }
-```
+**PillsInput selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-PillsInput-wrapper | Root element of the Input |
+| input | .mantine-PillsInput-input | Input element |
+| section | .mantine-PillsInput-section | Left and right sections |
+| root | .mantine-PillsInput-root | Root element |
+| label | .mantine-PillsInput-label | Label element |
+| required | .mantine-PillsInput-required | Required asterisk element, rendered inside label |
+| description | .mantine-PillsInput-description | Description element |
+| error | .mantine-PillsInput-error | Error element |
 
-```typescript
-{}
-```
+**PillsInputfield selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| field | .mantine-PillsInputfield-field | Root element |
+
+**PillsInputfield data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| field | data-type | - | Value of  |
+| field | data-disabled | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -19177,6 +19773,7 @@ CSS variables:
 ### PinInput
 Package: @mantine/core
 Import: import { PinInput } from '@mantine/core';
+Description: Capture pin code or one time password from the user
 
 ## Usage
 
@@ -19215,6 +19812,7 @@ If the current form input asks for this code, your keyboard adapts and proposes 
 Prop `oneTimeCode` makes your input setting `autocomplete="one-time-code"` which allows using that feature.
 
 ```tsx
+import { PinInput } from '@mantine/core';
 
 function OneTimeCodeInput() {
   return <PinInput oneTimeCode />;
@@ -19239,6 +19837,7 @@ function Demo() {
 Inputs do not have associated labels, set `aria-label` to make component visible to the screen reader:
 
 ```tsx
+import { PinInput } from '@mantine/core';
 
 function Accessibility() {
   return <PinInput aria-label="One time code" />;
@@ -19280,24 +19879,21 @@ function Accessibility() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+PinInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    pinInput: 'Input item wrapper',
-    input: 'Input element',
-  }
-```
+**PinInput selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-PinInput-root | Root element |
+| pinInput | .mantine-PinInput-pinInput | Input item wrapper |
+| input | .mantine-PinInput-input | Input element |
 
-```typescript
-{
-    root: {
-      '--pin-input-size': 'Controls input `width` and `height`',
-    }
-```
+**PinInput CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --pin-input-size | Controls input `width` and `height` |
 
 
 --------------------------------------------------------------------------------
@@ -19334,6 +19930,8 @@ function Demo() {
 You can control Popover state with `opened` and `onChange` props:
 
 ```tsx
+import { useState } from 'react';
+import { Button, Popover } from '@mantine/core';
 
 function Demo() {
   const [opened, setOpened] = useState(false);
@@ -19532,6 +20130,7 @@ You can enable or disable [Floating UI](https://floating-ui.com/) middlewares wi
 Example of turning off `shift` and `flip` middlewares:
 
 ```tsx
+import { Popover } from '@mantine/core';
 
 function Demo() {
   return (
@@ -19552,6 +20151,7 @@ an object to the `middlewares` prop. For example, to change [shift](https://floa
 middleware padding to `20px` use the following configuration:
 
 ```tsx
+import { Popover } from '@mantine/core';
 
 function Demo() {
   return (
@@ -19759,6 +20359,8 @@ If you need to control opened state, but still want to close popover on outside 
 and escape key presses, use `onDismiss` prop:
 
 ```tsx
+import { useState } from 'react';
+import { Button, Popover } from '@mantine/core';
 
 function Demo() {
   const [opened, setOpened] = useState(false);
@@ -19785,6 +20387,7 @@ Popover uses [FocusTrap](https://mantine.dev/core/focus-trap/) component to mana
 Add `data-autofocus` attribute to element that should receive initial focus:
 
 ```tsx
+import { Popover } from '@mantine/core';
 
 function Demo() {
   return (
@@ -19912,25 +20515,28 @@ Other elements will not support `Space` and `Enter` key presses.
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Popover component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    dropdown: 'Dropdown element',
-    arrow: 'Dropdown arrow',
-    overlay: 'Overlay element',
-  }
-```
+**Popover selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| dropdown | .mantine-Popover-dropdown | Dropdown element |
+| arrow | .mantine-Popover-arrow | Dropdown arrow |
+| overlay | .mantine-Popover-overlay | Overlay element |
 
-```typescript
-{
-    dropdown: {
-      '--popover-radius': 'Controls dropdown border-radius',
-      '--popover-shadow': 'Controls dropdown box-shadow',
-    }
-```
+**Popover CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| dropdown | --popover-radius | Controls dropdown border-radius |
+| dropdown | --popover-shadow | Controls dropdown box-shadow |
+
+**Popover data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| dropdown | data-position | - | Value of floating ui dropdown position |
 
 
 --------------------------------------------------------------------------------
@@ -19951,6 +20557,8 @@ usually all these styles are related to `position` and `z-index` properties
 and portals are used for components with fixed position, for example, modals.
 
 ```tsx
+import { useState } from 'react';
+import { Portal } from '@mantine/core';
 
 function Demo() {
   const [opened, setOpened] = useState(false);
@@ -19981,6 +20589,7 @@ reuse the same target node for all instances, set `reuseTargetNode` prop. In the
 example, all three paragraphs will be rendered in the same target node:
 
 ```tsx
+import { Portal } from '@mantine/core';
 
 function Demo() {
   return (
@@ -20006,6 +20615,7 @@ function Demo() {
 You can specify dom node where portal will be rendered by passing `target` prop:
 
 ```tsx
+import { Portal } from '@mantine/core';
 
 const container = document.createElement('div');
 document.body.appendChild(container);
@@ -20018,6 +20628,7 @@ function Demo() {
 Alternatively, you can specify selector to render portal in existing element:
 
 ```tsx
+import { Portal } from '@mantine/core';
 
 function Demo() {
   return <Portal target="#portal-container">My portal</Portal>;
@@ -20037,6 +20648,7 @@ All components inside Portal are rendered only after the application was mounted
 It accepts the same props as the `Portal` component:
 
 ```tsx
+import { OptionalPortal } from '@mantine/core';
 
 function Demo() {
   return (
@@ -20265,6 +20877,7 @@ function Demo() {
 Set `aria-label` attribute to label progress:
 
 ```tsx
+import { Progress } from '@mantine/core';
 
 function Demo() {
   return <Progress aria-label="Uploading progress" value={10} />;
@@ -20296,26 +20909,30 @@ function DemoCompound() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Progress component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    section: '`Progress.Section` root element',
-    label: '`Progress.Label` root element',
-  }
-```
+**Progress selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Progress-root | Root element |
+| section | .mantine-Progress-section | `Progress.Section` root element |
+| label | .mantine-Progress-label | `Progress.Label` root element |
 
-```typescript
-{
-    root: {
-      '--progress-radius': 'Controls `border-radius` of track and sections',
-      '--progress-size': 'Controls height of progress bar',
-      '--progress-transition-duration': 'Controls width `transition-duration` of progress bar',
-    }
-```
+**Progress CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --progress-radius | Controls `border-radius` of track and sections |
+| root | --progress-size | Controls height of progress bar |
+| root | --progress-transition-duration | Controls width `transition-duration` of progress bar |
+
+**Progress data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| section | data-striped | - | - |
+| section | data-animated | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -20346,6 +20963,8 @@ function Demo() {
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { Radio } from '@mantine/core';
 
 function Demo() {
   const [checked, setChecked] = useState(false);
@@ -20441,6 +21060,7 @@ By default, radio input and label have `cursor: default` (same as native `input[
 To change cursor to pointer, set `cursorType` on [theme](https://mantine.dev/theming/theme-object/):
 
 ```tsx
+import { createTheme, MantineProvider, Radio } from '@mantine/core';
 
 const theme = createTheme({
   cursorType: 'pointer',
@@ -20518,6 +21138,8 @@ function Demo() {
 ## Controlled Radio.Group
 
 ```tsx
+import { useState } from 'react';
+import { Radio } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('react');
@@ -20700,6 +21322,7 @@ function Demo() {
 Set `aria-label` or `label` prop to make the radio accessible:
 
 ```tsx
+import { Radio } from '@mantine/core';
 
 // Not ok, input is not labeled
 function Bad() {
@@ -20738,34 +21361,91 @@ function GoodLabel() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Radio component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    radio: 'Input element (`input[type="radio"]`)',
-    icon: 'Radio icon, used to display checked icon',
-    inner: 'Wrapper for `icon` and `input`',
-    body: 'Input body, contains all other elements',
-    labelWrapper: 'Contains `label`, `description` and `error`',
-    label: 'Label element',
-    description: 'Description displayed below the label',
-    error: 'Error message displayed below the label',
-  }
-```
+**Radio selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Radio-root | Root element |
+| radio | .mantine-Radio-radio | Input element (`input[type="radio"]`) |
+| icon | .mantine-Radio-icon | Radio icon, used to display checked icon |
+| inner | .mantine-Radio-inner | Wrapper for `icon` and `input` |
+| body | .mantine-Radio-body | Input body, contains all other elements |
+| labelWrapper | .mantine-Radio-labelWrapper | Contains `label`, `description` and `error` |
+| label | .mantine-Radio-label | Label element |
+| description | .mantine-Radio-description | Description displayed below the label |
+| error | .mantine-Radio-error | Error message displayed below the label |
 
-```typescript
-{
-    root: {
-      '--radio-color': 'Controls checked radio `background-color`',
-      '--radio-radius': 'Controls radio `border-radius`',
-      '--radio-size': 'Controls radio `width` and `height`',
-      '--radio-icon-color': 'Controls radio icon `color`',
-      '--radio-icon-size': 'Controls radio icon `width` and `height`',
-    }
-```
+**Radio CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --radio-color | Controls checked radio `background-color` |
+| root | --radio-radius | Controls radio `border-radius` |
+| root | --radio-size | Controls radio `width` and `height` |
+| root | --radio-icon-color | Controls radio icon `color` |
+| root | --radio-icon-size | Controls radio icon `width` and `height` |
+
+**Radio data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| radio | data-error | - | - |
+| inner | data-label-position | - | Value of  |
+
+**Radio.Group selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-RadioGroup-root | Root element |
+| label | .mantine-RadioGroup-label | Label element |
+| required | .mantine-RadioGroup-required | Required asterisk element, rendered inside label |
+| description | .mantine-RadioGroup-description | Description element |
+| error | .mantine-RadioGroup-error | Error element |
+
+**Radio.Indicator selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| indicator | .mantine-RadioIndicator-indicator | Root element |
+| icon | .mantine-RadioIndicator-icon | Radio icon |
+
+**Radio.Indicator CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| indicator | --radio-color | Controls checked radio `background-color` |
+| indicator | --radio-radius | Controls radio `border-radius` |
+| indicator | --radio-size | Controls radio `width` and `height` |
+| indicator | --radio-icon-color | Controls radio icon `color` |
+| indicator | --radio-icon-size | Controls radio icon `width` and `height` |
+
+**Radio.Indicator data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| indicator | data-checked | - | - |
+| indicator | data-disabled | - | - |
+
+**Radio.Card selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| card | .mantine-RadioCard-card | Root element |
+
+**Radio.Card CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| card | --card-radius | Controls card `border-radius` |
+
+**Radio.Card data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| card | data-checked | - | - |
+| card | data-with-border | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -20773,6 +21453,7 @@ CSS variables:
 ### RangeSlider
 Package: @mantine/core
 Import: import { RangeSlider } from '@mantine/core';
+Description: RangeSlider component
 
 ## Usage
 
@@ -20801,6 +21482,8 @@ function Demo() {
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { RangeSlider } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState<[number, number]>([20, 80]);
@@ -20841,7 +21524,7 @@ function Demo() {
       <RangeSlider defaultValue={[20, 60]} label={null} />
 
       <Text size="sm" mt="xl">Formatted label</Text>
-      <RangeSlider defaultValue={[20, 60]} label={(value) => \`\${value} °C\`} />
+      <RangeSlider defaultValue={[20, 60]} label={(value) => `${value} °C`} />
 
       <Text size="sm" mt="xl">Label always visible</Text>
       <RangeSlider defaultValue={[20, 60]} labelAlwaysOn />
@@ -21060,6 +21743,7 @@ function Demo() {
 To label component for screen readers, add labels to thumbs:
 
 ```tsx
+import { RangeSlider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -21134,6 +21818,8 @@ function Demo() {
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { Rating } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState(0);
@@ -21213,7 +21899,7 @@ import {
 const getIconStyle = (color?: string) => ({
   width: 24,
   height: 24,
-  color: color ? \`var(--mantine-color-\${color}-7)\` : undefined,
+  color: color ? `var(--mantine-color-${color}-7)` : undefined,
 });
 
 const getEmptyIcon = (value: number) => {
@@ -21281,28 +21967,33 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Rating component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    starSymbol: 'Default star icon',
-    input: 'Item input, hidden by default',
-    label: 'Item label, used to display star icon',
-    symbolBody: 'Wrapper around star icon for centering',
-    symbolGroup: 'Group of symbols, used to display fractions',
-  }
-```
+**Rating selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Rating-root | Root element |
+| starSymbol | .mantine-Rating-starSymbol | Default star icon |
+| input | .mantine-Rating-input | Item input, hidden by default |
+| label | .mantine-Rating-label | Item label, used to display star icon |
+| symbolBody | .mantine-Rating-symbolBody | Wrapper around star icon for centering |
+| symbolGroup | .mantine-Rating-symbolGroup | Group of symbols, used to display fractions |
 
-```typescript
-{
-    root: {
-      '--rating-color': 'Controls filled star icon color',
-      '--rating-size': 'Controls star icon width and height',
-    }
-```
+**Rating CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --rating-color | Controls filled star icon color |
+| root | --rating-size | Controls star icon width and height |
+
+**Rating data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| label | data-read-only | - | - |
+| input | data-active | Input value is the same as component value | - |
+| starSymbol | data-filled | Associated input value is less or equal to the component value | - |
 
 
 --------------------------------------------------------------------------------
@@ -21310,6 +22001,7 @@ CSS variables:
 ### RingProgress
 Package: @mantine/core
 Import: import { RingProgress } from '@mantine/core';
+Description: Give user feedback for status of the task with circle diagram
 
 ## Usage
 
@@ -21526,27 +22218,24 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+RingProgress component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    svg: 'svg element',
-    curve: 'circle element',
-    label: 'Label element',
-  }
-```
+**RingProgress selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-RingProgress-root | Root element |
+| svg | .mantine-RingProgress-svg | svg element |
+| curve | .mantine-RingProgress-curve | circle element |
+| label | .mantine-RingProgress-label | Label element |
 
-```typescript
-{
-    root: {
-      '--rp-label-offset': 'Label offset on the left and right sides of the ring',
-      '--rp-size': 'Controls `height` and `width` of svg and root elements',
-      '--rp-transition-duration': 'Controls transition duration of filled segments',
-    }
-```
+**RingProgress CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --rp-label-offset | Label offset on the left and right sides of the ring |
+| root | --rp-size | Controls `height` and `width` of svg and root elements |
+| root | --rp-transition-duration | Controls transition duration of filled segments |
 
 
 --------------------------------------------------------------------------------
@@ -21554,6 +22243,7 @@ CSS variables:
 ### ScrollArea
 Package: @mantine/core
 Import: import { ScrollArea } from '@mantine/core';
+Description: Area with custom scrollbars
 
 ## Usage
 
@@ -21656,7 +22346,7 @@ function Demo() {
       </ScrollArea>
 
       <Text>
-        Scroll position: <Code>{\`{ x: \${scrollPosition.x}, y: \${scrollPosition.y} }\`}</Code>
+        Scroll position: <Code>{`{ x: ${scrollPosition.x}, y: ${scrollPosition.y} }`}</Code>
       </Text>
     </>
   );
@@ -22020,27 +22710,24 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+ScrollArea component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    content: 'Wraps component children',
-    viewport: 'Main scrollable area',
-    scrollbar: 'Horizontal or vertical scrollbar root',
-    thumb: 'Scrollbar thumb',
-    corner: 'Corner between horizontal and vertical scrollbars',
-  }
-```
+**ScrollArea selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-ScrollArea-root | Root element |
+| content | .mantine-ScrollArea-content | Wraps component children |
+| viewport | .mantine-ScrollArea-viewport | Main scrollable area |
+| scrollbar | .mantine-ScrollArea-scrollbar | Horizontal or vertical scrollbar root |
+| thumb | .mantine-ScrollArea-thumb | Scrollbar thumb |
+| corner | .mantine-ScrollArea-corner | Corner between horizontal and vertical scrollbars |
 
-```typescript
-{
-    root: {
-      '--scrollarea-scrollbar-size': 'Scrollbar size',
-    }
-```
+**ScrollArea CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --scrollarea-scrollbar-size | Scrollbar size |
 
 
 --------------------------------------------------------------------------------
@@ -22048,6 +22735,7 @@ CSS variables:
 ### SegmentedControl
 Package: @mantine/core
 Import: import { SegmentedControl } from '@mantine/core';
+Description: A linear set of two or more segments
 
 ## Usage
 
@@ -22065,6 +22753,8 @@ function Demo() {
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { SegmentedControl } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('react');
@@ -22092,6 +22782,7 @@ function Demo() {
 2. An array of objects – used when `value` and `label` are different
 
 ```tsx
+import { SegmentedControl } from '@mantine/core';
 
 function ArrayOfStrings() {
   return (
@@ -22384,35 +23075,37 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+SegmentedControl component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    control: 'Wrapper element for input and label',
-    input: 'Input element (`input[type="radio"]`), hidden by default',
-    label: 'Label element associated with input',
-    indicator: 'Floating indicator that moves between items',
-    innerLabel: 'Wrapper of label element children',
-  }
-```
+**SegmentedControl selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-SegmentedControl-root | Root element |
+| control | .mantine-SegmentedControl-control | Wrapper element for input and label |
+| input | .mantine-SegmentedControl-input | Input element (`input[type="radio"]`), hidden by default |
+| label | .mantine-SegmentedControl-label | Label element associated with input |
+| indicator | .mantine-SegmentedControl-indicator | Floating indicator that moves between items |
+| innerLabel | .mantine-SegmentedControl-innerLabel | Wrapper of label element children |
 
-```typescript
-{
-    root: {
-      '--sc-color': 'Control `background-color` of `indicator`',
-      '--sc-font-size': 'Controls `font-size` of labels',
-      '--sc-padding': 'Controls `padding` of control',
-      '--sc-radius': 'Controls `border-radius` of `indicator` and `root` elements',
-      '--sc-shadow': 'Controls `box-shadow` of indicator',
-      '--sc-transition-duration':
-        'Controls `transition-duration` of various elements that have animations',
-      '--sc-transition-timing-function':
-        'Controls `transition-timing-function` of various elements that have animations',
-    }
-```
+**SegmentedControl CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --sc-color | Control `background-color` of `indicator` |
+| root | --sc-font-size | Controls `font-size` of labels |
+| root | --sc-padding | Controls `padding` of control |
+| root | --sc-radius | Controls `border-radius` of `indicator` and `root` elements |
+| root | --sc-shadow | Controls `box-shadow` of indicator |
+
+**SegmentedControl data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-full-width | - | - |
+| root | data-with-items-border | - | - |
+| root | data-disabled | Value of  | - |
+| control | data-orientation | - | Value of  |
 
 
 --------------------------------------------------------------------------------
@@ -22452,6 +23145,8 @@ function Demo() {
 `onChange` function is called with a string value as a single argument.
 
 ```tsx
+import { useState } from 'react';
+import { Select } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState<string | null>('');
@@ -22469,6 +23164,8 @@ function Demo() {
 If you prefer object format in state, use second argument of onChange handler:
 
 ```tsx
+import { useState } from 'react';
+import { ComboboxItem, Select } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState<ComboboxItem | null>(null);
@@ -22597,6 +23294,8 @@ function Demo() {
 You can control search value with `searchValue` and `onSearchChange` props:
 
 ```tsx
+import { useState } from 'react';
+import { Select } from '@mantine/core';
 
 function Demo() {
   const [searchValue, setSearchValue] = useState('');
@@ -22748,7 +23447,7 @@ import { Select } from '@mantine/core';
 
 const largeData = Array(100_000)
   .fill(0)
-  .map((_, index) => \`Option \${index}\`);
+  .map((_, index) => `Option ${index}`);
 
 function Demo() {
   return (
@@ -22836,7 +23535,7 @@ import { Select } from '@mantine/core';
 
 const data = Array(100)
   .fill(0)
-  .map((_, index) => \`Option \${index}\`);
+  .map((_, index) => `Option ${index}`);
 
 function Demo() {
   return (
@@ -23318,6 +24017,7 @@ To set `aria-label` on the clear button, use `clearButtonProps`. Note that it is
 only when `clearable` is set.
 
 ```tsx
+import { Select } from '@mantine/core';
 
 function Demo() {
   return (
@@ -23397,21 +24097,20 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Select component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    ...InputStylesApi.selectors,
-    ...InputWrapperStylesApi.selectors,
-    ...ComboboxLikeSelectors,
-  }
-```
+**Select selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-Select-wrapper | Root element of the Input |
+| input | .mantine-Select-input | Input element |
+| section | .mantine-Select-section | Left and right sections |
+| root | .mantine-Select-root | Root element |
+| label | .mantine-Select-label | Label element |
+| required | .mantine-Select-required | Required asterisk element, rendered inside label |
+| description | .mantine-Select-description | Description element |
+| error | .mantine-Select-error | Error element |
 
 
 --------------------------------------------------------------------------------
@@ -23419,6 +24118,7 @@ CSS variables:
 ### SemiCircleProgress
 Package: @mantine/core
 Import: import { SemiCircleProgress } from '@mantine/core';
+Description: Represent progress with semi circle diagram
 
 ## Usage
 
@@ -23492,7 +24192,7 @@ function Demo() {
 
   return (
     <>
-      <SemiCircleProgress value={value} transitionDuration={250} label={\`\${value}%\`} />
+      <SemiCircleProgress value={value} transitionDuration={250} label={`${value}%`} />
 
       <Button onClick={() => setValue(Math.floor(Math.random() * 100))} mt="xl" fullWidth>
         Set random value
@@ -23522,31 +24222,32 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+SemiCircleProgress component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    svg: 'Root svg element',
-    emptySegment: 'Empty circle segment',
-    filledSegment: 'Filled circle segment',
-    label: 'Label element',
-  }
-```
+**SemiCircleProgress selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-SemiCircleProgress-root | Root element |
+| svg | .mantine-SemiCircleProgress-svg | Root svg element |
+| emptySegment | .mantine-SemiCircleProgress-emptySegment | Empty circle segment |
+| filledSegment | .mantine-SemiCircleProgress-filledSegment | Filled circle segment |
+| label | .mantine-SemiCircleProgress-label | Label element |
 
-```typescript
-{
-    root: {
-      '--scp-empty-segment-color': 'Color of the empty segment',
-      '--scp-filled-segment-color': 'Color of the filled segment',
-      '--scp-rotation':
-        'Transform styles of the svg, controlled by `orientation` and `fillDirection` props',
-      '--scp-thickness': 'Controls `strokeWidth` of the circle',
-      '--scp-transition-duration': 'Controls transition duration of the filled segment',
-    }
-```
+**SemiCircleProgress CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --scp-empty-segment-color | Color of the empty segment |
+| root | --scp-filled-segment-color | Color of the filled segment |
+| root | --scp-thickness | Controls `strokeWidth` of the circle |
+| root | --scp-transition-duration | Controls transition duration of the filled segment |
+
+**SemiCircleProgress data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| label | data-position | - | Value of  |
 
 
 --------------------------------------------------------------------------------
@@ -23554,6 +24255,7 @@ CSS variables:
 ### SimpleGrid
 Package: @mantine/core
 Import: import { SimpleGrid } from '@mantine/core';
+Description: Responsive grid in which each item takes equal amount of space
 
 ## Usage
 
@@ -23585,6 +24287,7 @@ function Demo() {
 `spacing` prop is used both for horizontal and vertical spacing if `verticalSpacing` is not set:
 
 ```tsx
+import { SimpleGrid } from '@mantine/core';
 
 // `spacing` is used for both horizontal and vertical spacing
 const Spacing = () => <SimpleGrid spacing="xl" />;
@@ -23694,20 +24397,14 @@ do not use container queries option.
 
 #### Styles API
 
-This component supports the following CSS selectors:
+SimpleGrid component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    container: 'Container element, available only when `type="container"` is set',
-  }
-```
+**SimpleGrid selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-SimpleGrid-root | Root element |
+| container | .mantine-SimpleGrid-container | Container element, available only when `type="container"` is set |
 
 
 --------------------------------------------------------------------------------
@@ -23792,24 +24489,28 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Skeleton component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Skeleton selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Skeleton-root | Root element |
 
-```typescript
-{
-    root: {
-      '--skeleton-height': 'Controls skeleton `height`',
-      '--skeleton-width': 'Controls skeleton `width`',
-      '--skeleton-radius': 'Controls skeleton `border-radius`',
-    }
-```
+**Skeleton CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --skeleton-height | Controls skeleton `height` |
+| root | --skeleton-width | Controls skeleton `width` |
+| root | --skeleton-radius | Controls skeleton `border-radius` |
+
+**Skeleton data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-visible | - | - |
+| root | data-animate | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -23846,6 +24547,8 @@ function Demo() {
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { Slider } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState(40);
@@ -23917,7 +24620,7 @@ function Demo() {
       <Slider defaultValue={40} label={null} />
 
       <Text size="sm" mt="xl">Formatted label</Text>
-      <Slider defaultValue={40} label={(value) => \`\${value} °C\`} />
+      <Slider defaultValue={40} label={(value) => `${value} °C`} />
 
       <Text size="sm" mt="xl">Label always visible</Text>
       <Slider defaultValue={40} labelAlwaysOn />
@@ -24167,7 +24870,36 @@ function valueLabelFormat(value: number) {
     scaledValue /= 1024;
   }
 
-  return \`\${scaledValue} \${units[unitIndex]}\
+  return `${scaledValue} ${units[unitIndex]}`;
+}
+
+const getScale = (v: number) => 2 ** v;
+
+function Demo() {
+  return (
+    <>
+      <Slider
+        scale={getScale}
+        step={1}
+        min={2}
+        max={30}
+        labelAlwaysOn
+        defaultValue={10}
+        label={valueLabelFormat}
+      />
+      <RangeSlider
+        mt={50}
+        scale={getScale}
+        step={1}
+        min={2}
+        max={30}
+        labelAlwaysOn
+        defaultValue={[10, 20]}
+        label={valueLabelFormat}
+      />
+    </>
+  );
+}
 ```
 
 
@@ -24285,7 +25017,7 @@ function Demo() {
         <div
           className={classes.filled}
           style={{
-            width: \`calc(\${value * 100}% - var(--thumb-width) / 2 - var(--thumb-offset) / 2)\`,
+            width: `calc(${value * 100}% - var(--thumb-width) / 2 - var(--thumb-offset) / 2)`,
           }}
         >
           <span className={classes.label} data-floating={labelFloating || undefined} data-filled>
@@ -24296,7 +25028,7 @@ function Demo() {
         <div
           className={classes.empty}
           style={{
-            width: \`calc(\${(1 - value) * 100}% - var(--thumb-width) / 2 - var(--thumb-offset) / 2)\`,
+            width: `calc(${(1 - value) * 100}% - var(--thumb-width) / 2 - var(--thumb-offset) / 2)`,
           }}
         >
           <span className={classes.label} data-floating={labelFloating || undefined}>
@@ -24306,7 +25038,7 @@ function Demo() {
 
         <div
           className={classes.thumb}
-          style={{ left: \`calc(\${value * 100}% - var(--thumb-width) / 2)\` }}
+          style={{ left: `calc(${value * 100}% - var(--thumb-width) / 2)` }}
         >
           <IconGripVertical stroke={1.5} />
         </div>
@@ -24412,6 +25144,7 @@ function Demo() {
 To label component for screen readers, add labels to thumbs:
 
 ```tsx
+import { Slider } from '@mantine/core';
 
 function Demo() {
   return <Slider thumbLabel="Thumb aria-label" />;
@@ -24456,33 +25189,30 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Slider component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    label: 'Thumb label',
-    thumb: 'Thumb element',
-    trackContainer: 'Wraps track element',
-    track: 'Slider track',
-    bar: 'Track filled part',
-    markWrapper: 'Contains `mark` and `markLabel` elements',
-    mark: 'Mark displayed on track',
-    markLabel: 'Label of the associated mark, displayed below track',
-  }
-```
+**Slider selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Slider-root | Root element |
+| label | .mantine-Slider-label | Thumb label |
+| thumb | .mantine-Slider-thumb | Thumb element |
+| trackContainer | .mantine-Slider-trackContainer | Wraps track element |
+| track | .mantine-Slider-track | Slider track |
+| bar | .mantine-Slider-bar | Track filled part |
+| markWrapper | .mantine-Slider-markWrapper | Contains `mark` and `markLabel` elements |
+| mark | .mantine-Slider-mark | Mark displayed on track |
+| markLabel | .mantine-Slider-markLabel | Label of the associated mark, displayed below track |
 
-```typescript
-{
-    root: {
-      '--slider-size': 'Controls track `height`',
-      '--slider-color': 'Controls filled track, thumb and marks `background`',
-      '--slider-thumb-size': 'Controls thumb `width` and `height`',
-      '--slider-radius': 'Controls `border-radius` of track and thumb',
-    }
-```
+**Slider CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --slider-size | Controls track `height` |
+| root | --slider-color | Controls filled track, thumb and marks `background` |
+| root | --slider-thumb-size | Controls thumb `width` and `height` |
+| root | --slider-radius | Controls `border-radius` of track and thumb |
 
 
 --------------------------------------------------------------------------------
@@ -24537,6 +25267,7 @@ function Demo() {
 In most cases, you would want to use margin props instead of `Space` when working with Mantine components:
 
 ```tsx
+import { Space, Text } from '@mantine/core';
 
 // Space is not required as the same can be achieved with `mt` prop
 function Demo() {
@@ -24553,6 +25284,7 @@ But when you work with regular HTML elements you do not have access to `theme.sp
 `Space` component to skip direct theme subscription:
 
 ```tsx
+import { Space } from '@mantine/core';
 
 // Margin props are not available on div,
 // use Space to add spacing from theme
@@ -24611,6 +25343,8 @@ To control expanded state use `expanded` and `onExpandedChange` props. Note that
 is less than given `maxHeight`.
 
 ```tsx
+import { useState } from 'react';
+import { Spoiler } from '@mantine/core';
 
 function Demo() {
   const [expanded, setExpanded] = useState(false);
@@ -24633,6 +25367,7 @@ function Demo() {
 Use `onExpandedChange` to subscribe to expanded state changes:
 
 ```tsx
+import { Spoiler } from '@mantine/core';
 
 function Demo() {
   return (
@@ -24670,6 +25405,8 @@ function Demo() {
 ## Get control ref
 
 ```tsx
+import { useRef } from 'react';
+import { Spoiler } from '@mantine/core';
 
 function Demo() {
   const spoilerControlRef = useRef<HTMLButtonElement>(null);
@@ -24700,24 +25437,27 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Spoiler component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    content: 'Wraps content to set max-height and transition',
-    control: 'Show/hide content control',
-  }
-```
+**Spoiler selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Spoiler-root | Root element |
+| content | .mantine-Spoiler-content | Wraps content to set max-height and transition |
+| control | .mantine-Spoiler-control | Show/hide content control |
 
-```typescript
-{
-    root: {
-      '--spoiler-transition-duration': 'Controls transition duration',
-    }
-```
+**Spoiler CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --spoiler-transition-duration | Controls transition duration |
+
+**Spoiler data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-has-spoiler | Whether the control button is shown or not | - |
 
 
 --------------------------------------------------------------------------------
@@ -24771,24 +25511,21 @@ Flex component uses CSS flexbox gap to add spacing between children. Flexbox gap
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Stack component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Stack selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Stack-root | Root element |
 
-```typescript
-{
-    root: {
-      '--stack-align': 'Controls `align-items` property',
-      '--stack-justify': 'Controls `justify-content` property',
-      '--stack-gap': 'Controls `gap` property',
-    }
-```
+**Stack CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --stack-align | Controls `align-items` property |
+| root | --stack-justify | Controls `justify-content` property |
+| root | --stack-gap | Controls `gap` property |
 
 
 --------------------------------------------------------------------------------
@@ -25310,6 +26047,8 @@ function Demo() {
 You can get refs of step button and stepper root element (div):
 
 ```tsx
+import { useRef } from 'react';
+import { Stepper } from '@mantine/core';
 
 function MyStepper() {
   const firstStep = useRef<HTMLButtonElement>(null);
@@ -25330,6 +26069,7 @@ function MyStepper() {
 Instead you will need to use different approaches:
 
 ```tsx
+import { Stepper } from '@mantine/core';
 
 // This will not work, step children will not render
 function WillNotWork() {
@@ -25366,6 +26106,7 @@ function Demo() {
 to make component visible for screen readers in case you do not specify `label` or `description`:
 
 ```tsx
+import { Stepper } from '@mantine/core';
 
 function Demo() {
   return (
@@ -25408,40 +26149,44 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Stepper component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    steps: 'Steps controls wrapper',
-    separator: 'Separator line between step controls',
-    verticalSeparator: 'Vertical separator line between step controls',
-    content: 'Current step content wrapper',
-    stepWrapper: 'Wrapper for the step icon and separator',
-    step: 'Step control button',
-    stepIcon: 'Step icon wrapper',
-    stepCompletedIcon: 'Completed step icon, rendered within stepIcon',
-    stepBody: 'Contains stepLabel and stepDescription',
-    stepLabel: 'Step label',
-    stepDescription: 'Step description',
-    stepLoader: 'Step loader',
-  }
-```
+**Stepper selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Stepper-root | Root element |
+| steps | .mantine-Stepper-steps | Steps controls wrapper |
+| separator | .mantine-Stepper-separator | Separator line between step controls |
+| verticalSeparator | .mantine-Stepper-verticalSeparator | Vertical separator line between step controls |
+| content | .mantine-Stepper-content | Current step content wrapper |
+| stepWrapper | .mantine-Stepper-stepWrapper | Wrapper for the step icon and separator |
+| step | .mantine-Stepper-step | Step control button |
+| stepIcon | .mantine-Stepper-stepIcon | Step icon wrapper |
+| stepCompletedIcon | .mantine-Stepper-stepCompletedIcon | Completed step icon, rendered within stepIcon |
+| stepBody | .mantine-Stepper-stepBody | Contains stepLabel and stepDescription |
+| stepLabel | .mantine-Stepper-stepLabel | Step label |
+| stepDescription | .mantine-Stepper-stepDescription | Step description |
+| stepLoader | .mantine-Stepper-stepLoader | Step loader |
 
-```typescript
-{
-    root: {
-      '--stepper-color': 'Controls color of the active step and separator',
-      '--stepper-icon-color': 'Controls `color` of the step icon',
-      '--stepper-icon-size': 'Controls `width` and `height` of the icons',
-      '--stepper-content-padding': 'Controls `padding-top` of the content',
-      '--stepper-radius': 'Controls `border-radius` of the step icon',
-      '--stepper-fz': 'Controls `font-size` of various elements',
-      '--stepper-spacing': 'Controls various spacings',
-    }
-```
+**Stepper CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --stepper-color | Controls color of the active step and separator |
+| root | --stepper-icon-color | Controls `color` of the step icon |
+| root | --stepper-icon-size | Controls `width` and `height` of the icons |
+| root | --stepper-content-padding | Controls `padding-top` of the content |
+| root | --stepper-radius | Controls `border-radius` of the step icon |
+| root | --stepper-fz | Controls `font-size` of various elements |
+| root | --stepper-spacing | Controls various spacings |
+
+**Stepper data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| stepIcon | data-progress | Step is current | - |
+| stepIcon | data-completed | Step is completed | - |
 
 
 --------------------------------------------------------------------------------
@@ -25473,6 +26218,8 @@ function Demo() {
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { Switch } from '@mantine/core';
 
 function Demo() {
   const [checked, setChecked] = useState(false);
@@ -25584,6 +26331,7 @@ By default, switch input and label have `cursor: default` (same as native `input
 To change cursor to pointer, set `cursorType` on [theme](https://mantine.dev/theming/theme-object/):
 
 ```tsx
+import { createTheme, MantineProvider, Switch } from '@mantine/core';
 
 const theme = createTheme({
   cursorType: 'pointer',
@@ -25632,6 +26380,8 @@ function Demo() {
 ## Controlled Switch.Group
 
 ```tsx
+import { useState } from 'react';
+import { Switch } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState<string[]>([]);
@@ -25694,6 +26444,8 @@ function Demo() {
 ## Get input ref
 
 ```tsx
+import { useRef } from 'react';
+import { Switch } from '@mantine/core';
 
 function Demo() {
   const ref = useRef<HTMLInputElement>(null);
@@ -25706,6 +26458,7 @@ function Demo() {
 `Switch` is a regular `input[type="checkbox"]`. Set `aria-label` if the `Switch` is used without `label` prop:
 
 ```tsx
+import { Switch } from '@mantine/core';
 
 // -> not ok, input is not labeled
 function Bad() {
@@ -25746,37 +26499,50 @@ function AlsoGood() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Switch component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    track: 'Switch track, contains `thumb` and `trackLabel`',
-    trackLabel: 'Label displayed inside `track`',
-    thumb: 'Thumb displayed inside `track`',
-    input: 'Input element (`input[type="checkbox"]`), hidden by default',
-    body: 'Input body, contains all other elements',
-    labelWrapper: 'Contains `label`, `description` and `error`',
-    label: 'Label element',
-    description: 'Description displayed below the label',
-    error: 'Error message displayed below the label',
-  }
-```
+**Switch selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Switch-root | Root element |
+| track | .mantine-Switch-track | Switch track, contains `thumb` and `trackLabel` |
+| trackLabel | .mantine-Switch-trackLabel | Label displayed inside `track` |
+| thumb | .mantine-Switch-thumb | Thumb displayed inside `track` |
+| input | .mantine-Switch-input | Input element (`input[type="checkbox"]`), hidden by default |
+| body | .mantine-Switch-body | Input body, contains all other elements |
+| labelWrapper | .mantine-Switch-labelWrapper | Contains `label`, `description` and `error` |
+| label | .mantine-Switch-label | Label element |
+| description | .mantine-Switch-description | Description displayed below the label |
+| error | .mantine-Switch-error | Error message displayed below the label |
 
-```typescript
-{
-    root: {
-      '--switch-radius': 'Controls `border-radius` of `track` and `thumb`',
-      '--switch-height': 'Controls height of `track`',
-      '--switch-width': 'Controls min-width of `track`',
-      '--switch-thumb-size': 'Controls width and height of `thumb`',
-      '--switch-label-font-size': 'Controls `font-size` of `trackLabel`',
-      '--switch-track-label-padding': 'Controls `trackLabel` offset',
-      '--switch-color': 'Controls track `background-color` when input is checked',
-    }
-```
+**Switch CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --switch-radius | Controls `border-radius` of `track` and `thumb` |
+| root | --switch-height | Controls height of `track` |
+| root | --switch-width | Controls min-width of `track` |
+| root | --switch-thumb-size | Controls width and height of `thumb` |
+| root | --switch-label-font-size | Controls `font-size` of `trackLabel` |
+| root | --switch-track-label-padding | Controls `trackLabel` offset |
+| root | --switch-color | Controls track `background-color` when input is checked |
+
+**Switch data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| track | data-error | - | - |
+
+**Switch.Group selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-SwitchGroup-root | Root element |
+| label | .mantine-SwitchGroup-label | Label element |
+| required | .mantine-SwitchGroup-required | Required asterisk element, rendered inside label |
+| description | .mantine-SwitchGroup-description | Description element |
+| error | .mantine-SwitchGroup-error | Error element |
 
 
 --------------------------------------------------------------------------------
@@ -25784,6 +26550,7 @@ CSS variables:
 ### TableOfContents
 Package: @mantine/core
 Import: import { TableOfContents } from '@mantine/core';
+Description: Renders a list of headings on the page and tracks current heading visible in the viewport
 
 ## Usage
 
@@ -25822,6 +26589,7 @@ You can pass options down to `use-scroll-spy` hook using `scrollSpyOptions` prop
 Example of customizing selector, depth and value retrieval:
 
 ```tsx
+import { TableOfContents } from '@mantine/core';
 
 function Demo() {
   return (
@@ -25845,6 +26613,7 @@ properties and should return props object.
 Example of changing controls to links:
 
 ```tsx
+import { TableOfContents } from '@mantine/core';
 
 function Demo() {
   return (
@@ -25868,6 +26637,7 @@ you can pass `initialData` prop with array of headings data. `initialData` is re
 with actual data on mount.
 
 ```tsx
+import { TableOfContents } from '@mantine/core';
 
 function Demo() {
   return (
@@ -25996,6 +26766,8 @@ to update headings data after the parent component has mounted, you can use
 `reinitializeRef` to get reinitialize function from [use-scroll-spy](https://mantine.dev/hooks/use-scroll-spy) hook:
 
 ```tsx
+import { useRef, useLayoutEffect } from 'react';
+import { TableOfContents } from '@mantine/core';
 
 function Demo({ dependency }) {
   const reinitializeRef = useRef(() => {});
@@ -26027,27 +26799,30 @@ function Demo({ dependency }) {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+TableOfContents component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    control: 'Control element',
-  }
-```
+**TableOfContents selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-TableOfContents-root | Root element |
+| control | .mantine-TableOfContents-control | Control element |
 
-```typescript
-{
-    root: {
-      '--toc-bg': 'Background color of active control',
-      '--toc-color': 'Text color of active control',
-      '--toc-depth-offset': 'Offset between of control depending on depth',
-      '--toc-radius': 'Border-radius of control',
-      '--toc-size': 'Controls font-size and padding of all elements',
-    }
-```
+**TableOfContents CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --toc-bg | Background color of active control |
+| root | --toc-color | Text color of active control |
+| root | --toc-depth-offset | Offset between of control depending on depth |
+| root | --toc-radius | Border-radius of control |
+| root | --toc-size | Controls font-size and padding of all elements |
+
+**TableOfContents data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| control | data-active | Associated heading is currently the best match in the viewport | - |
 
 
 --------------------------------------------------------------------------------
@@ -26546,39 +27321,59 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Table component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    table: 'Root `table` element (`Table` component)',
-    thead: '`thead` element (`Table.Thead` component)',
-    tbody: '`tbody` element (`Table.Tbody` component)',
-    tfoot: '`tfoot` element (`Table.Tfoot` component)',
-    tr: '`tr` element (`Table.Tr` component)',
-    th: '`th` element (`Table.Th` component)',
-    td: '`td` element (`Table.Td` component)',
-    caption: '`caption` element (`Table.Caption` component)',
-  }
-```
+**Table selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| table | .mantine-Table-table | Root `table` element (`Table` component) |
+| thead | .mantine-Table-thead | `thead` element (`Table.Thead` component) |
+| tbody | .mantine-Table-tbody | `tbody` element (`Table.Tbody` component) |
+| tfoot | .mantine-Table-tfoot | `tfoot` element (`Table.Tfoot` component) |
+| tr | .mantine-Table-tr | `tr` element (`Table.Tr` component) |
+| th | .mantine-Table-th | `th` element (`Table.Th` component) |
+| td | .mantine-Table-td | `td` element (`Table.Td` component) |
+| caption | .mantine-Table-caption | `caption` element (`Table.Caption` component) |
 
-```typescript
-{
-    table: {
-      '--table-border-color': 'Controls `border-color` of all elements inside table',
-      '--table-layout': 'Controls `table-layout` of the table element, auto by default',
-      '--table-caption-side': 'Controls caption-side of the table element, `bottom` by default',
-      '--table-horizontal-spacing':
-        'Controls `padding-left` and `padding-right` of `Table.Th` and `Table.Td` elements',
-      '--table-vertical-spacing':
-        'Controls `padding-top` and `padding-bottom` of `Table.Td` and `Table.Th` elements',
-      '--table-striped-color': 'Controls `background-color` of even/odd `Table.Tr` elements',
-      '--table-highlight-on-hover-color':
-        'Controls `background-color` of `Table.Tr` elements when hovered',
-      '--table-sticky-header-offset': 'Controls `top` offset of sticky header',
-    }
-```
+**Table CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| table | --table-border-color | Controls `border-color` of all elements inside table |
+| table | --table-layout | Controls `table-layout` of the table element, auto by default |
+| table | --table-caption-side | Controls caption-side of the table element, `bottom` by default |
+| table | --table-striped-color | Controls `background-color` of even/odd `Table.Tr` elements |
+| table | --table-sticky-header-offset | Controls `top` offset of sticky header |
+
+**Table data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| table | data-with-table-border | - | - |
+
+**Tableofcontents selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Tableofcontents-root | Root element |
+| control | .mantine-Tableofcontents-control | Control element |
+
+**Tableofcontents CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --toc-bg | Background color of active control |
+| root | --toc-color | Text color of active control |
+| root | --toc-depth-offset | Offset between of control depending on depth |
+| root | --toc-radius | Border-radius of control |
+| root | --toc-size | Controls font-size and padding of all elements |
+
+**Tableofcontents data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| control | data-active | Associated heading is currently the best match in the viewport | - |
 
 
 --------------------------------------------------------------------------------
@@ -26633,6 +27428,8 @@ function Demo() {
 To control Tabs state, use `value` and `onChange` props:
 
 ```tsx
+import { useState } from 'react';
+import { Tabs } from '@mantine/core';
 
 function Demo() {
   const [activeTab, setActiveTab] = useState<string | null>('first');
@@ -26656,6 +27453,7 @@ function Demo() {
 If you do not need to subscribe to Tabs state changes, use `defaultValue`:
 
 ```tsx
+import { Tabs } from '@mantine/core';
 
 function Demo() {
   return (
@@ -26965,6 +27763,7 @@ This is useful when you want to render components that impact performance inside
 components that are rendered inside `Tabs.Panel` will reset their state on each mount (tab change).
 
 ```tsx
+import { Tabs } from '@mantine/core';
 
 // Second tab panel will be mounted only when user activates second tab
 function Demo() {
@@ -26985,6 +27784,8 @@ function Demo() {
 ## Get tab control ref
 
 ```tsx
+import { useRef } from 'react';
+import { Tabs } from '@mantine/core';
 
 function Demo() {
   const secondTabRef = useRef<HTMLButtonElement>(null);
@@ -27010,6 +27811,8 @@ function Demo() {
 ```
 
 ```tsx
+import { useNavigate, useParams } from 'react-router-dom';
+import { Tabs } from '@mantine/core';
 
 function Demo() {
   const navigate = useNavigate();
@@ -27033,6 +27836,8 @@ function Demo() {
 
 ```tsx
 // For file /tabs/[activeTab].tsx
+import { useRouter } from 'next/router';
+import { Tabs } from '@mantine/core';
 
 function Demo() {
   const router = useRouter();
@@ -27182,6 +27987,8 @@ If you use `Tabs.Tab` without text content, for example, only with icon, then se
 or use [VisuallyHidden](https://mantine.dev/core/visually-hidden) component:
 
 ```tsx
+import { IconCoin } from '@tabler/icons-react';
+import { Tabs, VisuallyHidden } from '@mantine/core';
 
 function Demo() {
   return (
@@ -27210,6 +28017,7 @@ function Demo() {
 To set tabs list label, set `aria-label` on `Tabs.List` component, it will be announced by screen reader:
 
 ```tsx
+import { Tabs } from '@mantine/core';
 
 function Demo() {
   return (
@@ -27251,29 +28059,24 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Tabs component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element (`Tabs` component)',
-    list: 'List of tabs (`Tabs.List` component)',
-    panel: 'Panel with tab content (`Tabs.Panel` component)',
-    tab: 'Tab button (`Tabs.Tab` component)',
-    tabLabel: 'Label of `Tabs.Tab`',
-    tabSection: 'Left and right sections of `Tabs.Tab`',
-  }
-```
+**Tabs selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Tabs-root | Root element (`Tabs` component) |
+| list | .mantine-Tabs-list | List of tabs (`Tabs.List` component) |
+| panel | .mantine-Tabs-panel | Panel with tab content (`Tabs.Panel` component) |
+| tab | .mantine-Tabs-tab | Tab button (`Tabs.Tab` component) |
+| tabLabel | .mantine-Tabs-tabLabel | Label of `Tabs.Tab` |
+| tabSection | .mantine-Tabs-tabSection | Left and right sections of `Tabs.Tab` |
 
-```typescript
-{
-    root: {
-      '--tabs-color':
-        'Controls colors of `Tabs.Tab`, only applicable when variant is `pills` or `default`',
-      '--tabs-radius': 'Controls `Tabs.Tab` `border-radius`',
-    }
-```
+**Tabs CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --tabs-radius | Controls `Tabs.Tab` `border-radius` |
 
 
 --------------------------------------------------------------------------------
@@ -27281,6 +28084,7 @@ CSS variables:
 ### TagsInput
 Package: @mantine/core
 Import: import { TagsInput } from '@mantine/core';
+Description: Capture a list of values from user with free input and suggestions
 
 <ComboboxDisclaimer component="TagsInput" />
 
@@ -27306,6 +28110,8 @@ function Demo() {
 `onChange` function is called with an array of strings as a single argument.
 
 ```tsx
+import { useState } from 'react';
+import { TagsInput } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState<string[]>([]);
@@ -27318,6 +28124,8 @@ function Demo() {
 You can control search value with `searchValue` and `onSearchChange` props:
 
 ```tsx
+import { useState } from 'react';
+import { TagsInput } from '@mantine/core';
 
 function Demo() {
   const [searchValue, setSearchValue] = useState('');
@@ -27594,7 +28402,7 @@ import { TagsInput } from '@mantine/core';
 
 const largeData = Array(100_000)
   .fill(0)
-  .map((_, index) => \`Option \${index}\`);
+  .map((_, index) => `Option ${index}`);
 
 function Demo() {
   return (
@@ -27685,7 +28493,7 @@ import { TagsInput } from '@mantine/core';
 
 const data = Array(100)
   .fill(0)
-  .map((_, index) => \`Option \${index}\`);
+  .map((_, index) => `Option ${index}`);
 
 function Demo() {
   return (
@@ -28128,6 +28936,7 @@ To set `aria-label` on the clear button, use `clearButtonProps`. Note that it is
 only when `clearable` is set.
 
 ```tsx
+import { TagsInput } from '@mantine/core';
 
 function Demo() {
   return (
@@ -28208,24 +29017,23 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+TagsInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    ...InputStylesApi.selectors,
-    ...InputWrapperStylesApi.selectors,
-    ...ComboboxLikeSelectors,
-    pill: 'Value pill',
-    inputField: 'Input field',
-    pillsList: 'List of pills, also contains input field',
-  }
-```
+**TagsInput selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-TagsInput-wrapper | Root element of the Input |
+| input | .mantine-TagsInput-input | Input element |
+| section | .mantine-TagsInput-section | Left and right sections |
+| root | .mantine-TagsInput-root | Root element |
+| label | .mantine-TagsInput-label | Label element |
+| required | .mantine-TagsInput-required | Required asterisk element, rendered inside label |
+| description | .mantine-TagsInput-description | Description element |
+| error | .mantine-TagsInput-error | Error element |
+| pill | .mantine-TagsInput-pill | Value pill |
+| inputField | .mantine-TagsInput-inputField | Input field |
+| pillsList | .mantine-TagsInput-pillsList | List of pills, also contains input field |
 
 
 --------------------------------------------------------------------------------
@@ -28233,6 +29041,7 @@ CSS variables:
 ### TextInput
 Package: @mantine/core
 Import: import { TextInput } from '@mantine/core';
+Description: Capture string input from user
 
 ## Usage
 
@@ -28260,6 +29069,8 @@ function Demo() {
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { TextInput } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('');
@@ -28419,20 +29230,20 @@ TextInput provides better accessibility support when used in forms. Make sure to
 
 #### Styles API
 
-This component supports the following CSS selectors:
+TextInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    ...InputStylesApi.selectors,
-    ...InputWrapperStylesApi.selectors,
-  }
-```
+**TextInput selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-TextInput-wrapper | Root element of the Input |
+| input | .mantine-TextInput-input | Input element |
+| section | .mantine-TextInput-section | Left and right sections |
+| root | .mantine-TextInput-root | Root element |
+| label | .mantine-TextInput-label | Label element |
+| required | .mantine-TextInput-required | Required asterisk element, rendered inside label |
+| description | .mantine-TextInput-description | Description element |
+| error | .mantine-TextInput-error | Error element |
 
 
 --------------------------------------------------------------------------------
@@ -28615,6 +29426,7 @@ If you want to create a wrapper for a polymorphic component that is not polymorp
 Use `span` prop as a shorthand for `component="span"`:
 
 ```tsx
+import { Text } from '@mantine/core';
 
 function Demo() {
   return (
@@ -28643,25 +29455,57 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Text component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Text selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Text-root | Root element |
 
-```typescript
-{
-    root: {
-      '--text-fz': 'Controls `font-size` property',
-      '--text-lh': 'Controls `line-height` property',
-      '--text-gradient': 'Text fill gradient',
-      '--text-line-clamp': 'Number of lines that should be visible',
-    }
-```
+**Text CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --text-fz | Controls `font-size` property |
+| root | --text-lh | Controls `line-height` property |
+| root | --text-gradient | Text fill gradient |
+| root | --text-line-clamp | Number of lines that should be visible |
+
+**Text data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-truncate | - | Value of  |
+| root | data-line-clamp | - | - |
+| root | data-inline | - | - |
+| root | data-inherit | - | - |
+
+**Textinput selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-Textinput-wrapper | Root element of the Input |
+| input | .mantine-Textinput-input | Input element |
+| section | .mantine-Textinput-section | Left and right sections |
+| root | .mantine-Textinput-root | Root element |
+| label | .mantine-Textinput-label | Label element |
+| required | .mantine-Textinput-required | Required asterisk element, rendered inside label |
+| description | .mantine-Textinput-description | Description element |
+| error | .mantine-Textinput-error | Error element |
+
+**Textarea selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-Textarea-wrapper | Root element of the Input |
+| input | .mantine-Textarea-input | Input element |
+| section | .mantine-Textarea-section | Left and right sections |
+| root | .mantine-Textarea-root | Root element |
+| label | .mantine-Textarea-label | Label element |
+| required | .mantine-Textarea-required | Required asterisk element, rendered inside label |
+| description | .mantine-Textarea-description | Description element |
+| error | .mantine-Textarea-error | Error element |
 
 
 --------------------------------------------------------------------------------
@@ -28697,6 +29541,8 @@ function Demo() {
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { Textarea } from '@mantine/core';
 
 function Demo() {
   const [value, setValue] = useState('');
@@ -28875,20 +29721,20 @@ Textarea provides better accessibility support when used in forms. Make sure to 
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Textarea component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    ...InputStylesApi.selectors,
-    ...InputWrapperStylesApi.selectors,
-  }
-```
+**Textarea selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-Textarea-wrapper | Root element of the Input |
+| input | .mantine-Textarea-input | Input element |
+| section | .mantine-Textarea-section | Left and right sections |
+| root | .mantine-Textarea-root | Root element |
+| label | .mantine-Textarea-label | Label element |
+| required | .mantine-Textarea-required | Required asterisk element, rendered inside label |
+| description | .mantine-Textarea-description | Description element |
+| error | .mantine-Textarea-error | Error element |
 
 
 --------------------------------------------------------------------------------
@@ -28896,6 +29742,7 @@ CSS variables:
 ### ThemeIcon
 Package: @mantine/core
 Import: import { ThemeIcon } from '@mantine/core';
+Description: Render icon inside element with theme colors
 
 ## Usage
 
@@ -28986,7 +29833,7 @@ const variantColorResolver: VariantColorsResolver = (input) => {
     return {
       background: rgba(parsedColor.value, 0.1),
       hover: rgba(parsedColor.value, 0.15),
-      border: \`1px solid \${parsedColor.value}\`,
+      border: `1px solid ${parsedColor.value}`,
       color: darken(parsedColor.value, 0.1),
     };
   }
@@ -29070,26 +29917,23 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+ThemeIcon component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**ThemeIcon selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-ThemeIcon-root | Root element |
 
-```typescript
-{
-    root: {
-      '--ti-bg': 'Controls `background`',
-      '--ti-bd': 'Controls `border`',
-      '--ti-color': 'Controls icon `color`',
-      '--ti-radius': 'Controls `border-radius`',
-      '--ti-size': 'Controls `width`, `height`, `min-width` and `min-height` styles',
-    }
-```
+**ThemeIcon CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --ti-bg | Controls `background` |
+| root | --ti-bd | Controls `border` |
+| root | --ti-color | Controls icon `color` |
+| root | --ti-radius | Controls `border-radius` |
+| root | --ti-size | Controls `width`, `height`, `min-width` and `min-height` styles |
 
 
 --------------------------------------------------------------------------------
@@ -29224,6 +30068,7 @@ function Demo() {
 Instead you will need to use different approaches:
 
 ```tsx
+import { Timeline } from '@mantine/core';
 
 // This will not work, step children will not render
 function WillNotWork() {
@@ -29267,31 +30112,28 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Timeline component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    item: 'Item root element',
-    itemBody: 'Item body, wraps title and content',
-    itemTitle: 'Item title, controlled by title prop',
-    itemContent: 'Item content, controlled by children prop',
-    itemBullet: 'Item bullet',
-  }
-```
+**Timeline selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Timeline-root | Root element |
+| item | .mantine-Timeline-item | Item root element |
+| itemBody | .mantine-Timeline-itemBody | Item body, wraps title and content |
+| itemTitle | .mantine-Timeline-itemTitle | Item title, controlled by title prop |
+| itemContent | .mantine-Timeline-itemContent | Item content, controlled by children prop |
+| itemBullet | .mantine-Timeline-itemBullet | Item bullet |
 
-```typescript
-{
-    root: {
-      '--tl-bullet-size': 'Controls bullet `width` and `height`',
-      '--tl-color': 'Controls active bullet and line colors',
-      '--tl-icon-color': 'Controls icon color',
-      '--tl-line-width': 'Controls width of the line between bullets',
-      '--tl-radius': 'Controls bullet `border-radius`',
-    }
-```
+**Timeline CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --tl-bullet-size | Controls bullet `width` and `height` |
+| root | --tl-color | Controls active bullet and line colors |
+| root | --tl-icon-color | Controls icon color |
+| root | --tl-line-width | Controls width of the line between bullets |
+| root | --tl-radius | Controls bullet `border-radius` |
 
 
 --------------------------------------------------------------------------------
@@ -29380,6 +30222,7 @@ function Demo() {
 You can also set `textWrap` on [theme](https://mantine.dev/theming/theme-object):
 
 ```tsx
+import { createTheme, MantineProvider, Title } from '@mantine/core';
 
 const theme = createTheme({
   headings: {
@@ -29432,26 +30275,30 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Title component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Title selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Title-root | Root element |
 
-```typescript
-{
-    root: {
-      '--title-fw': 'Title `font-weight`, by default value from `theme.headings`',
-      '--title-fz': 'Title `font-size`, by default value from `theme.headings`',
-      '--title-lh': 'Title `line-height`, by default value from `theme.headings`',
-      '--title-line-clamp': 'Controls `-webkit-line-clamp` css property',
-      '--title-text-wrap': 'Controls `text-wrap` css property',
-    }
-```
+**Title CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --title-fw | Title `font-weight`, by default value from `theme.headings` |
+| root | --title-fz | Title `font-size`, by default value from `theme.headings` |
+| root | --title-lh | Title `line-height`, by default value from `theme.headings` |
+| root | --title-line-clamp | Controls `-webkit-line-clamp` css property |
+| root | --title-text-wrap | Controls `text-wrap` css property |
+
+**Title data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-order | - | Value of the  |
+| root | data-line-clamp | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -29486,6 +30333,7 @@ Custom components must provide a prop to get root element ref,
 all Mantine components support ref out of the box.
 
 ```tsx
+import { Badge, Tooltip } from '@mantine/core';
 
 function Demo() {
   return (
@@ -29548,6 +30396,7 @@ Custom components that are rendered inside `Tooltip` are required to support `re
 
 ```tsx
 // Example of code that WILL NOT WORK
+import { Tooltip } from '@mantine/core';
 
 function MyComponent() {
   return <div>My component</div>;
@@ -29567,6 +30416,8 @@ Use `forwardRef` function to forward ref to root element:
 
 ```tsx
 // Example of code that will work
+import { forwardRef } from 'react';
+import { Tooltip } from '@mantine/core';
 
 const MyComponent = forwardRef<HTMLDivElement>((props, ref) => (
   <div ref={ref} {...props}>
@@ -29701,6 +30552,7 @@ with the following properties that determine which events will trigger tooltip:
 * `touch` – events for touchscreen devices, `false` by default
 
 ```tsx
+import { Tooltip } from '@mantine/core';
 
 function Demo() {
   return (
@@ -29771,6 +30623,7 @@ function Demo() {
 Tooltip is built with [Transition](https://mantine.dev/core/transition/) component, it supports `transitionProps` props:
 
 ```tsx
+import { Button, Tooltip } from '@mantine/core';
 
 function Demo() {
   return (
@@ -29886,6 +30739,8 @@ If you want to build a component that can be used with Tooltip use
 This logic is applied to Tooltip and Tooltip.Floating components:
 
 ```tsx
+import { forwardRef } from 'react';
+import { Tooltip } from '@mantine/core';
 
 // forwardRef function will allow to get root element ref
 const MyBadge = forwardRef<HTMLDivElement, { color: string }>(
@@ -29939,6 +30794,7 @@ or navigate with keyboard will not be able to get tooltip content. Set `events` 
 focus/blur tooltip events:
 
 ```tsx
+import { Button, Tooltip } from '@mantine/core';
 
 // Tooltip will be visible for screen readers
 function Demo() {
@@ -29993,25 +30849,28 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Tooltip component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    tooltip: 'Root element',
-    arrow: 'Tooltip arrow, rendered inside tooltip',
-  }
-```
+**Tooltip selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| tooltip | .mantine-Tooltip-tooltip | Root element |
+| arrow | .mantine-Tooltip-arrow | Tooltip arrow, rendered inside tooltip |
 
-```typescript
-{
-    tooltip: {
-      '--tooltip-bg': 'Tooltip `background-color`',
-      '--tooltip-radius': 'Tooltip `border-radius`',
-      '--tooltip-color': 'Controls tooltip text color',
-    }
-```
+**Tooltip CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| tooltip | --tooltip-bg | Tooltip `background-color` |
+| tooltip | --tooltip-radius | Tooltip `border-radius` |
+| tooltip | --tooltip-color | Controls tooltip text color |
+
+**Tooltip data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| tooltip | data-multiline | - | - |
 
 
 --------------------------------------------------------------------------------
@@ -30047,6 +30906,7 @@ function Demo() {
 To use one of them set `transition` property to one of these values:
 
 ```tsx
+import { Transition } from '@mantine/core';
 
 function Demo({ opened }: { opened: boolean }) {
   return (
@@ -30254,6 +31114,7 @@ const data = [
 You can import `TreeNodeData` type to define data type for your tree:
 
 ```tsx
+import { TreeNodeData } from '@mantine/core';
 
 const data: TreeNodeData[] = [
   {
@@ -30618,6 +31479,7 @@ it accepts data and an array of expanded nodes values and returns expanded state
 If `'*'` is passed as the second argument to `getTreeExpandedState`, all nodes will be expanded:
 
 ```tsx
+import { getTreeExpandedState } from '@mantine/core';
 
 // Expand two given nodes
 getTreeExpandedState(data, ['src', 'src/components']);
@@ -30725,25 +31587,22 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Tree component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    node: 'Node element (li), contains label and subtree elements',
-    subtree: 'Subtree element (ul)',
-    label: 'Node label',
-  }
-```
+**Tree selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Tree-root | Root element |
+| node | .mantine-Tree-node | Node element (li), contains label and subtree elements |
+| subtree | .mantine-Tree-subtree | Subtree element (ul) |
+| label | .mantine-Tree-label | Node label |
 
-```typescript
-{
-    root: {
-      '--level-offset': 'Controls offset of nested tree levels',
-    }
-```
+**Tree CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --level-offset | Controls offset of nested tree levels |
 
 
 --------------------------------------------------------------------------------
@@ -30759,6 +31618,7 @@ Mantine does not include typography global styles.
 Use `Typography` to add typography styles to your html content:
 
 ```tsx
+import { Typography } from '@mantine/core';
 
 function Demo() {
   return (
@@ -30827,19 +31687,13 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Typography component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Typography selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Typography-root | Root element |
 
 
 --------------------------------------------------------------------------------
@@ -30847,6 +31701,7 @@ CSS variables:
 ### UnstyledButton
 Package: @mantine/core
 Import: import { UnstyledButton } from '@mantine/core';
+Description: Unstyled polymorphic button
 
 ## Usage
 
@@ -30909,19 +31764,13 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+UnstyledButton component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**UnstyledButton selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-UnstyledButton-root | Root element |
 
 
 --------------------------------------------------------------------------------
@@ -30929,6 +31778,7 @@ CSS variables:
 ### VisuallyHidden
 Package: @mantine/core
 Import: import { VisuallyHidden } from '@mantine/core';
+Description: Hide element visually but keep it accessible for screen readers
 
 ## Usage
 
@@ -30937,6 +31787,8 @@ Import: import { VisuallyHidden } from '@mantine/core';
 For example, it can be used with [ActionIcon](https://mantine.dev/core/action-icon) component:
 
 ```tsx
+import { IconHeart } from '@tabler/icons-react';
+import { ActionIcon, VisuallyHidden } from '@mantine/core';
 
 function Demo() {
   return (
@@ -30975,6 +31827,14 @@ it is required to be installed in your project to use Mantine components.
 
 ## Installation
 
+```bash
+yarn add @mantine/hooks
+```
+
+```bash
+npm install @mantine/hooks
+```
+
 ## Usage
 
 `@mantine/hooks` package can be used in any web React application, state
@@ -31005,7 +31865,7 @@ function Demo() {
         <div
           className={classes.filled}
           style={{
-            width: \`calc(\${value * 100}% - var(--thumb-width) / 2 - var(--thumb-offset) / 2)\`,
+            width: `calc(${value * 100}% - var(--thumb-width) / 2 - var(--thumb-offset) / 2)`,
           }}
         >
           <span className={classes.label} data-floating={labelFloating || undefined} data-filled>
@@ -31016,7 +31876,7 @@ function Demo() {
         <div
           className={classes.empty}
           style={{
-            width: \`calc(\${(1 - value) * 100}% - var(--thumb-width) / 2 - var(--thumb-offset) / 2)\`,
+            width: `calc(${(1 - value) * 100}% - var(--thumb-width) / 2 - var(--thumb-offset) / 2)`,
           }}
         >
           <span className={classes.label} data-floating={labelFloating || undefined}>
@@ -31026,7 +31886,7 @@ function Demo() {
 
         <div
           className={classes.thumb}
-          style={{ left: \`calc(\${value * 100}% - var(--thumb-width) / 2)\` }}
+          style={{ left: `calc(${value * 100}% - var(--thumb-width) / 2)` }}
         >
           <IconGripVertical stroke={1.5} />
         </div>
@@ -31148,6 +32008,7 @@ The hook returns a `ref` object that must be passed to the element
 based on which outside clicks should be captured.
 
 ```tsx
+import { useClickOutside } from '@mantine/hooks';
 
 function Example() {
   const handleClickOutside = () =>
@@ -31168,6 +32029,9 @@ you can change these events by passing an array of events as second argument:
 
 ```tsx
 // Will work only with useState, not useRef
+import { useState } from 'react';
+import { Portal } from '@mantine/core';
+import { useClickOutside } from '@mantine/hooks';
 
 function Demo() {
   const [dropdown, setDropdown] = useState<HTMLDivElement | null>(
@@ -31195,6 +32059,7 @@ function Demo() {
 ## Set ref type
 
 ```tsx
+import { useClickOutside } from '@mantine/hooks';
 
 const ref = useClickOutside<HTMLDivElement>(() =>
   console.log('Click outside')
@@ -31262,6 +32127,7 @@ function useClipboard(options?: UseClipboardOptions): UseClipboardReturnValue
 you can import them in your application:
 
 ```tsx
+import type { UseClipboardOptions, UseClipboardReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -31326,6 +32192,7 @@ function useColorScheme(
 you can import them in your application:
 
 ```tsx
+import type { UseColorSchemeValue, UseMediaQueryOptions } from '@mantine/hooks';
 ```
 
 
@@ -31373,6 +32240,7 @@ function useCounter(
 you can import them in your application:
 
 ```tsx
+import type { UseCounterOptions, UseCounterHandlers, UseCounterReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -31396,6 +32264,7 @@ If you want to execute the pending callback before the component unmounts,
 set `flushOnUnmount: true`:
 
 ```tsx
+import { useDebouncedCallback } from '@mantine/hooks';
 
 const callback = useDebouncedCallback(
   () => console.log('Hello'),
@@ -31408,6 +32277,7 @@ const callback = useDebouncedCallback(
 You can call the `flush` method to execute the debounced callback immediately:
 
 ```tsx
+import { useDebouncedCallback } from '@mantine/hooks';
 
 const callback = useDebouncedCallback(() => console.log('Hello'), 1000);
 
@@ -31438,6 +32308,7 @@ function useDebouncedCallback<T extends (...args: any[]) => any>(
 you can import them in your application:
 
 ```tsx
+import type { UseDebouncedCallbackOptions, UseDebouncedCallbackReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -31490,6 +32361,7 @@ function useDebouncedState<T = any>(
 you can import them in your application:
 
 ```tsx
+import type { UseDebouncedStateOptions, UseDebouncedStateReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -31552,6 +32424,7 @@ function useDebouncedValue<T = any>(
 you can import them in your application:
 
 ```tsx
+import type { UseDebouncedValueOptions, UseDebouncedValueReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -31566,6 +32439,7 @@ Import: import { UseDidUpdate } from '@mantine/hooks';
 `use-did-update` hook works the same way as `useEffect` but it is not called when component is mounted:
 
 ```tsx
+import { useDidUpdate } from '@mantine/hooks';
 
 function Demo() {
   useDidUpdate(
@@ -31595,6 +32469,7 @@ and accepts optional `onOpen` and `onClose` callbacks. You can use it to manage 
 popovers and other similar components:
 
 ```tsx
+import { useDisclosure } from '@mantine/hooks';
 
 function Demo() {
   const [opened, handlers] = useDisclosure(false);
@@ -31615,6 +32490,7 @@ function Demo() {
 The `onOpen` and `onClose` callbacks execute when the opened state changes:
 
 ```tsx
+import { useDisclosure } from '@mantine/hooks';
 
 function Demo() {
   const [opened, handlers] = useDisclosure(false, {
@@ -31667,6 +32543,7 @@ function useDisclosure(
 you can import them in your application:
 
 ```tsx
+import type { UseDisclosureOptions, UseDisclosureHandlers, UseDisclosureReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -31719,9 +32596,10 @@ function useDocumentVisibility(): DocumentVisibilityState;
 
 --------------------------------------------------------------------------------
 
-### useElementSize
+### use-element-size
 Package: @mantine/hooks
-Import: import { UseElementSize } from '@mantine/hooks';
+Import: import { use-element-size } from '@mantine/hooks';
+Description: Returns element width and height and observes changes with ResizeObserver
 
 ## Usage
 
@@ -31734,6 +32612,7 @@ Hook returns a `ref` object that should be passed to the observed element, and t
 On the first render (as well as during SSR), or when no element is being observed, `width` and `height` properties are equal to `0`.
 
 ```tsx
+import { useElementSize } from '@mantine/hooks';
 
 const { ref, width, height } = useElementSize();
 ```
@@ -31812,6 +32691,7 @@ function useEyeDropper(): UseEyeDropperReturnValue;
 you can import them in your application:
 
 ```tsx
+import type {
   EyeDropperOpenOptions,
   EyeDropperOpenReturnType,
   UseEyeDropperReturnValue,
@@ -31882,6 +32762,7 @@ function useFetch<T>(
 you can import them in your application:
 
 ```tsx
+import type { UseFetchOptions, UseFetchReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -31941,6 +32822,7 @@ function useFileDialog(input?: UseFileDialogOptions): UseFileDialogReturnValue;
 you can import them in your application:
 
 ```tsx
+import type { UseFileDialogOptions, UseFileDialogReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -31984,6 +32866,7 @@ function Demo() {
 In most cases, you should use this hook with [use-focus-trap](https://mantine.dev/hooks/use-focus-trap/).
 
 ```tsx
+import { useFocusReturn } from '@mantine/hooks';
 
 useFocusReturn({
   // Is region with focus trap active?
@@ -31999,6 +32882,7 @@ useFocusReturn({
 If `shouldReturnFocus` option is set to `false` you can call returned function to focus last active element:
 
 ```tsx
+import { useFocusReturn } from '@mantine/hooks';
 
 const returnFocus = useFocusReturn({
   opened: false,
@@ -32028,6 +32912,7 @@ function useFocusReturn(options: UseFocusReturnOptions): UseFocusReturnReturnVal
 you can import them in your application:
 
 ```tsx
+import type { UseFocusReturnOptions, UseFocusReturnReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -32043,6 +32928,7 @@ Import: import { UseFocusTrap } from '@mantine/hooks';
 Node must include at least one focusable element. When the node unmounts, the focus trap is automatically released.
 
 ```tsx
+import { useFocusTrap } from '@mantine/hooks';
 
 function Demo() {
   const focusTrapRef = useFocusTrap();
@@ -32060,6 +32946,7 @@ function Demo() {
 The hook accepts focus trap active state as a single argument:
 
 ```tsx
+import { useFocusTrap } from '@mantine/hooks';
 
 useFocusTrap(); // -> focus trap inactive
 useFocusTrap(true); // -> focus trap active
@@ -32070,6 +32957,8 @@ useFocusTrap(false); // -> focus trap disabled
 The hook returns `ref` that should be passed to the element:
 
 ```tsx
+import { Paper } from '@mantine/core';
+import { useFocusTrap } from '@mantine/hooks';
 
 function Demo() {
   const focusTrapRef = useFocusTrap();
@@ -32091,6 +32980,8 @@ function Demo() {
 To combine `use-focus-trap` with other ref based hooks, use [use-merged-ref](https://mantine.dev/hooks/use-merged-ref/) hook:
 
 ```tsx
+import { useRef } from 'react';
+import {
   useClickOutside,
   useFocusTrap,
   useMergedRef,
@@ -32116,6 +33007,7 @@ By default, focus trap will move focus to the first interactive element.
 To specify the element that should receive initial focus, add `data-autofocus` attribute:
 
 ```tsx
+import { useFocusTrap } from '@mantine/hooks';
 
 function Demo() {
   const focusTrapRef = useFocusTrap();
@@ -32175,6 +33067,7 @@ function useFocusWithin<T extends HTMLElement = any>(
 you can import them in your application:
 
 ```tsx
+import type { UseFocusWithinOptions, UseFocusWithinReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -32235,6 +33128,7 @@ function useFullscreen<T extends HTMLElement = any>(): UseFullscreenReturnValue<
 you can import it in your application:
 
 ```tsx
+import type { UseFullscreenReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -32258,6 +33152,8 @@ as soon as hook is called, set `getInitialValueInEffect` to `false`. Note that t
 not compatible with server side rendering – you can only use it if your app is client-side only.
 
 ```tsx
+import { Button } from '@mantine/core';
+import { useHash } from '@mantine/hooks';
 
 function Demo() {
   const [hash, setHash] = useHash({ getInitialValueInEffect: false });
@@ -32285,6 +33181,7 @@ function useHash(options?: UseHashOptions): UseHashReturnValue
 you can import them in your application:
 
 ```tsx
+import { UseHashOptions, UseHashReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -32328,6 +33225,7 @@ function useHeadroom(input?: UseHeadroomOptions): boolean;
 `UseHeadroomOptions` type is exported from `@mantine/hooks` package, you can import it in your application:
 
 ```tsx
+import { UseHeadroomOptions } from '@mantine/hooks';
 ```
 
 
@@ -32351,6 +33249,7 @@ The second argument is a list of HTML tags on which hotkeys should be ignored.
 By default, hotkeys events are ignored if the focus is in `input`, `textarea` and `select` elements.
 
 ```tsx
+import { useHotkeys } from '@mantine/hooks';
 
 function Demo() {
   // Ignore hotkeys events only when focus is in input and textarea elements
@@ -32375,6 +33274,7 @@ which should be used with `onKeyDown`:
 With `getHotkeyHandler` you can also add events to any dom node using `.addEventListener`:
 
 ```tsx
+import { getHotkeyHandler } from '@mantine/hooks';
 
 document.body.addEventListener(
   'keydown',
@@ -32416,6 +33316,7 @@ type HotkeyItem = [
 `HotkeyItem` type can be used to create hotkey items outside of `use-hotkeys` hook:
 
 ```tsx
+import { HotkeyItem, useHotkeys } from '@mantine/hooks';
 
 const hotkeys: HotkeyItem[] = [
   [
@@ -32458,6 +33359,7 @@ function useHotkeys(
 you can import them in your application:
 
 ```tsx
+import type { HotkeyItemOptions, HotkeyItem } from '@mantine/hooks';
 ```
 
 
@@ -32488,6 +33390,7 @@ function useHover<T extends HTMLElement = any>(): UseHoverReturnValue<T>
 you can import it in your application:
 
 ```tsx
+import type { UseHoverReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -32504,6 +33407,7 @@ The hook is usually used to bind input elements to labels.
 The generated random id is saved to ref and will not change unless the component is unmounted.
 
 ```tsx
+import { useId } from '@mantine/hooks';
 
 function Input({ id }: { id?: string }) {
   const uuid = useId(id);
@@ -32573,6 +33477,7 @@ function useIdle(timeout: number, options?: UseIdleOptions): boolean;
 you can import it in your application:
 
 ```tsx
+import type { UseIdleOptions } from '@mantine/hooks';
 ```
 
 
@@ -32606,6 +33511,7 @@ function useInViewport<T extends HTMLElement = any>(): UseInViewportReturnValue<
 you can import it in your application:
 
 ```tsx
+import type { UseInViewportReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -32621,6 +33527,9 @@ Import: import { UseInputState } from '@mantine/hooks';
 Hook works with all Mantine and native inputs:
 
 ```tsx
+import { useState } from 'react';
+import { NumberInput, TextInput } from '@mantine/core';
+import { useInputState } from '@mantine/hooks';
 
 function WithUseInputState() {
   const [stringValue, setStringValue] = useInputState('');
@@ -32683,6 +33592,7 @@ function useInputState<T>(initialState: T): UseInputStateReturnValue<T>
 you can import it in your application:
 
 ```tsx
+import type { UseInputStateReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -32704,6 +33614,7 @@ of a given element with its scroll container or body element with [Intersection 
 The hook accepts `IntersectionObserver`'s options as its only optional argument:
 
 ```tsx
+import { useIntersection } from '@mantine/hooks';
 
 useIntersection({
   root: document.querySelector('#some-element'),
@@ -32718,6 +33629,8 @@ See [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API
 On the first render (as well as during SSR), or when no element is being observed, the entry is `null`.
 
 ```tsx
+import { Paper } from '@mantine/core';
+import { useIntersection } from '@mantine/hooks';
 
 function Demo() {
   const { ref } = useIntersection();
@@ -32753,6 +33666,7 @@ function useIntersection<T extends HTMLElement = any>(
 you can import it in your application:
 
 ```tsx
+import type { UseIntersectionReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -32771,6 +33685,7 @@ Import: import { UseInterval } from '@mantine/hooks';
 To automatically start interval when component is mounted, set `autoInvoke` option to `true`:
 
 ```tsx
+import { useInterval } from '@mantine/hooks';
 
 const interval = useInterval(
   () => console.log('Interval tick'),
@@ -32782,6 +33697,7 @@ const interval = useInterval(
 ## API
 
 ```tsx
+import { useInterval } from '@mantine/hooks';
 
 const { start, stop, toggle, active } = useInterval(fn, interval);
 ```
@@ -32833,6 +33749,7 @@ function useInterval(
 you can import them in your application:
 
 ```tsx
+import type { UseIntervalOptions, UseIntervalReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -32867,6 +33784,7 @@ Import: import { UseIsomorphicEffect } from '@mantine/hooks';
 `use-isomorphic-effect` is a replacement for `useLayoutEffect` hook that works in both browser and server environments.
 
 ```tsx
+import { useIsomorphicEffect } from '@mantine/hooks';
 
 function Demo() {
   useIsomorphicEffect(() => {
@@ -32889,6 +33807,7 @@ Import: import { UseListState } from '@mantine/hooks';
 `use-list-state` provides an API to work with list state:
 
 ```tsx
+import { useListState } from '@mantine/hooks';
 
 const [values, handlers] = useListState([{ a: 1 }]);
 
@@ -33056,6 +33975,7 @@ The type is useful when you want to pass `use-list-state` handlers to child comp
 as a prop:
 
 ```tsx
+import { UseListStateHandlers } from '@mantine/hooks';
 
 interface Props {
   handlers: UseListStateHandlers<string>;
@@ -33076,6 +33996,7 @@ By default, `use-list-state` will use type from `initialValues`.
 If you call the hook with an empty array, you must specify item type:
 
 ```tsx
+import { useListState } from '@mantine/hooks';
 
 useListState(['hello']); // ok, item type is string
 useListState([]); // not ok, item type is any
@@ -33096,6 +34017,7 @@ function useListState<T>(
 you can import it in your application:
 
 ```tsx
+import type { UseListStateHandlers } from '@mantine/hooks';
 ```
 
 
@@ -33111,6 +34033,7 @@ Import: import { UseLocalStorage } from '@mantine/hooks';
 The hook works the same way as `useState`, but also writes the value to the `localStorage`:
 
 ```tsx
+import { useLocalStorage } from '@mantine/hooks';
 
 // The hook will read value from localStorage.getItem('color-scheme')
 // If localStorage is not available or value at a given key does not exist
@@ -33133,6 +34056,9 @@ Example of a color scheme toggle button that uses `use-local-storage` hook
 to store current color scheme in the `localStorage`:
 
 ```tsx
+import { IconMoonStars, IconSun } from '@tabler/icons-react';
+import { ActionIcon } from '@mantine/core';
+import { useLocalStorage } from '@mantine/hooks';
 
 function ColorSchemeToggle() {
   const [colorScheme, setColorScheme] = useLocalStorage<
@@ -33161,6 +34087,7 @@ Use `removeValue` callback to clean `localStorage`/`sessionStorage`.
 When value is removed it is reset to `defaultValue`:
 
 ```tsx
+import { useLocalStorage } from '@mantine/hooks';
 
 const [value, setValue, removeValue] = useLocalStorage({
   key: 'color-scheme',
@@ -33182,6 +34109,7 @@ If you need to store data in local storage that cannot be serialized with `JSON.
 – provide your own serialization handlers:
 
 ```tsx
+import { useLocalStorage } from '@mantine/hooks';
 
 const [value, setValue] = useLocalStorage({
   key: 'color-scheme',
@@ -33199,6 +34127,8 @@ const [value, setValue] = useLocalStorage({
 [superjson](https://github.com/blitz-js/superjson) is compatible with `JSON.stringify`/`JSON.parse` but works for `Date`, `Map`, `Set` and `BigInt`:
 
 ```tsx
+import superjson from 'superjson';
+import { useLocalStorage } from '@mantine/hooks';
 
 const defaultValue = { name: 'John', age: 25 };
 
@@ -33216,6 +34146,7 @@ const [value, setValue] = useLocalStorage({
 `use-session-storage` hook works the same way as `use-local-storage` hook but uses `sessionStorage` instead of `window.localStorage`:
 
 ```tsx
+import { useSessionStorage } from '@mantine/hooks';
 
 const [value, setValue] = useSessionStorage({
   key: 'session-key',
@@ -33228,6 +34159,7 @@ const [value, setValue] = useSessionStorage({
 You can specify value type same as in `useState` hook:
 
 ```tsx
+import { useLocalStorage } from '@mantine/hooks';
 
 const [value, setValue] = useLocalStorage<'dark' | 'light'>({
   key: 'color-scheme',
@@ -33241,6 +34173,7 @@ To read value from storage without using hook, use `readLocalStorageValue`/`read
 Functions accept the same arguments as `use-local-storage`/`use-session-storage` hooks:
 
 ```tsx
+import { readLocalStorageValue } from '@mantine/hooks';
 
 const value = readLocalStorageValue({ key: 'color-scheme' });
 ```
@@ -33285,6 +34218,7 @@ function useLocalStorage<T = string>(
 you can import them in your application:
 
 ```tsx
+import type { UseStorageOptions, UseStorageReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -33355,6 +34289,7 @@ function useLongPress(
 you can import them in your application:
 
 ```tsx
+import type { UseLongPressOptions, UseLongPressReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -33401,6 +34336,7 @@ During server side rendering the hook will always return `false` as `window.matc
 if that is not a desired behavior, you can override the initial value:
 
 ```tsx
+import { useMediaQuery } from '@mantine/hooks';
 
 function Demo() {
   // Set initial value in second argument and getInitialValueInEffect option to false
@@ -33430,6 +34366,7 @@ function useMediaQuery(
 you can import it in your application:
 
 ```tsx
+import type { UseMediaQueryOptions } from '@mantine/hooks';
 ```
 
 
@@ -33446,6 +34383,8 @@ Use this hook when you need to use more than one ref on a single dom node, for e
 when you want to use [use-click-outside](https://mantine.dev/hooks/use-click-outside/) and [use-focus-trap](https://mantine.dev/hooks/use-focus-trap/) hooks and also get a ref for yourself:
 
 ```tsx
+import { useRef } from 'react';
+import {
   useClickOutside,
   useFocusTrap,
   useMergedRef,
@@ -33473,6 +34412,8 @@ of dynamic components React will complain that different number of hooks was cal
 across two renders. To fix that issue, use `mergeRefs` function instead:
 
 ```tsx
+import { useRef } from 'react';
+import { mergeRefs, useClickOutside } from '@mantine/hooks';
 
 function Demo() {
   const myRef = useRef();
@@ -33493,6 +34434,8 @@ use `use-merged-ref` with it.
 It is usually used to assign refs that do not reference elements:
 
 ```tsx
+import { useState } from 'react';
+import { assignRef } from '@mantine/hooks';
 
 interface NumberInputHandlers {
   increment: () => void;
@@ -33523,6 +34466,7 @@ function Demo({ handlersRef }: DemoProps) {
 ## Set node type
 
 ```tsx
+import { useMergedRef } from '@mantine/hooks';
 
 const ref = useMergedRef<HTMLDivElement>();
 ```
@@ -33547,6 +34491,7 @@ Import: import { UseMounted } from '@mantine/hooks';
 `useMounted` hook returns `true` if component is mounted and `false` if it's not.
 
 ```tsx
+import { useMounted } from '@mantine/hooks';
 
 function Demo() {
   const mounted = useMounted();
@@ -33584,6 +34529,7 @@ If you do not provide `ref`, mouse position is tracked relative to the document 
 Set `resetOnExit` option to reset mouse position to `0, 0` when mouse leaves the element:
 
 ```tsx
+import { useMouse } from '@mantine/hooks';
 
 const { ref, x, y } = useMouse({ resetOnExit: true });
 ```
@@ -33591,6 +34537,7 @@ const { ref, x, y } = useMouse({ resetOnExit: true });
 The hook returns an object with `ref` and `x`, `y` mouse coordinates:
 
 ```tsx
+import { useMouse } from '@mantine/hooks';
 
 const {
   ref, // -> pass ref to target element, if not used document element will be used as target element
@@ -33632,6 +34579,7 @@ The hook accepts a callback that is called when user moves pressed mouse over th
 and returns an object with `ref` and active state:
 
 ```tsx
+import { useMove } from '@mantine/hooks';
 
 const {
   ref, // -> pass ref to target element
@@ -33669,7 +34617,7 @@ function Demo() {
         <div
           className={classes.filled}
           style={{
-            width: \`calc(\${value * 100}% - var(--thumb-width) / 2 - var(--thumb-offset) / 2)\`,
+            width: `calc(${value * 100}% - var(--thumb-width) / 2 - var(--thumb-offset) / 2)`,
           }}
         >
           <span className={classes.label} data-floating={labelFloating || undefined} data-filled>
@@ -33680,7 +34628,7 @@ function Demo() {
         <div
           className={classes.empty}
           style={{
-            width: \`calc(\${(1 - value) * 100}% - var(--thumb-width) / 2 - var(--thumb-offset) / 2)\`,
+            width: `calc(${(1 - value) * 100}% - var(--thumb-width) / 2 - var(--thumb-offset) / 2)`,
           }}
         >
           <span className={classes.label} data-floating={labelFloating || undefined}>
@@ -33690,7 +34638,7 @@ function Demo() {
 
         <div
           className={classes.thumb}
-          style={{ left: \`calc(\${value * 100}% - var(--thumb-width) / 2)\` }}
+          style={{ left: `calc(${value * 100}% - var(--thumb-width) / 2)` }}
         >
           <IconGripVertical stroke={1.5} />
         </div>
@@ -33801,6 +34749,7 @@ Moving the slider down increases the value, to reverse that set value to `1 - y`
 It is useful when you want to use external events to change the value, for example changing value with keyboard arrows:
 
 ```tsx
+import { clampUseMovePosition } from '@mantine/hooks';
 
 clampUseMovePosition({ x: 0.5, y: 0.5 }); // -> { x: 0.5, y: 0.5 }
 clampUseMovePosition({ x: 1.5, y: 0.5 }); // -> { x: 1, y: 0.5 }
@@ -33812,6 +34761,8 @@ clampUseMovePosition({ x: -0.5, y: 0.5 }); // -> { x: 0, y: 0.5 }
 `@mantine/hooks` exports `UseMovePosition` type, it can be used as a type parameter for `useState`:
 
 ```tsx
+import { useState } from 'react';
+import { UseMovePosition } from '@mantine/hooks';
 
 const [value, setValue] = useState<UseMovePosition>({
   x: 0.5,
@@ -33850,6 +34801,7 @@ function useMove<T extends HTMLElement = any>(
 you can import them in your application:
 
 ```tsx
+import type { UseMovePosition, UseMoveHandlers, UseMoveReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -33923,6 +34875,7 @@ function useNetwork(): UserNetworkReturnValue;
 you can import it in your application:
 
 ```tsx
+import type { UserNetworkReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -33975,6 +34928,7 @@ function useOrientation(options?: UseOrientationOptions): UseOrientationReturnTy
 you can import them in your application:
 
 ```tsx
+import type { UseOrientationOptions, UseOrientationReturnType } from '@mantine/hooks';
 ```
 
 
@@ -34016,6 +34970,7 @@ function getOS(options?: UseOsOptions): UseOSReturnValue;
 you can import them in your application:
 
 ```tsx
+import type { UseOsOptions, UseOSReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -34059,6 +35014,7 @@ function Demo() {
 
 
 ```tsx
+import { usePagination } from '@mantine/hooks';
 
 const pagination = usePagination({ total: 10, initialPage: 1 });
 
@@ -34085,6 +35041,8 @@ pagination.range; // -> [1, 2, 3, 4, 5, 'dots', 10];
 The hook supports controlled mode, provide `page` and `onChange` props to manage state from outside:
 
 ```tsx
+import { useState } from 'react';
+import { usePagination } from '@mantine/hooks';
 
 const [page, onChange] = useState(1);
 const pagination = usePagination({ total: 10, page, onChange });
@@ -34101,6 +35059,7 @@ pagination.range; // -> [1, 'dots', 4, 5, 6, 'dots', 10];
 Control number of active item siblings with `siblings`:
 
 ```tsx
+import { usePagination } from '@mantine/hooks';
 
 const pagination = usePagination({ total: 20, siblings: 3 });
 ```
@@ -34132,6 +35091,7 @@ function Demo() {
 Control number of items on each boundary with `boundaries`:
 
 ```tsx
+import { usePagination } from '@mantine/hooks';
 
 const pagination = usePagination({ total: 20, boundaries: 3 });
 ```
@@ -34213,6 +35173,7 @@ function usePagination(settings: UsePaginationOptions): UsePaginationReturnValue
 you can import them in your application:
 
 ```tsx
+import type { UsePaginationOptions, UsePaginationReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -34250,6 +35211,7 @@ notifications that is currently displayed is limited and other new notifications
 available space appears.
 
 ```tsx
+import { useQueue } from '@mantine/hooks';
 
 const { state, queue, add, update, cleanQueue } = useQueue({
   initialValues: [1],
@@ -34305,6 +35267,7 @@ Return value:
 By default, the hook will get types information from `initialValues` automatically:
 
 ```tsx
+import { useQueue } from '@mantine/hooks';
 
 const q = useQueue({
   limit: 2,
@@ -34320,6 +35283,7 @@ typeof q.state[number]; // -> { name: string; id: number; }
 If you do not provide `initialValues`, pass in type for state item:
 
 ```tsx
+import { useQueue } from '@mantine/hooks';
 
 const q = useQueue<{ name: string; id: number }>({
   limit: 2,
@@ -34366,6 +35330,7 @@ function useQueue<T>(options: UseQueueOptions<T>): UseQueueReturnValue<T>
 you can import them in your application:
 
 ```tsx
+import type { UseQueueOptions, UseQueueReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -34421,6 +35386,7 @@ function useRadialMove<T extends HTMLElement = HTMLDivElement>(
 you can import them in your application:
 
 ```tsx
+import type { UseRadialMoveOptions, UseRadialMoveReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -34469,6 +35435,7 @@ See [Resize Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Resiz
 On the first render (as well as during SSR), or when no element is being observed, all of the properties are equal to `0`.
 
 ```tsx
+import { useResizeObserver } from '@mantine/hooks';
 
 function Demo() {
   const [ref, rect] = useResizeObserver();
@@ -34524,6 +35491,7 @@ Hook returns an object with:
 Returned `scrollIntoView` function accepts single optional argument `alignment` - optional target element alignment relatively to parent based on current axis.
 
 ```tsx
+import { useScrollIntoView } from '@mantine/hooks';
 
 const { scrollIntoView } = useScrollIntoView();
 
@@ -34539,6 +35507,7 @@ Default easing is `easeInOutQuad` - more info [here](https://easings.net/#easeIn
 You can find other popular examples on [easings.net](https://easings.net/)
 
 ```tsx
+import { useScrollIntoView } from '@mantine/hooks';
 
 useScrollIntoView({
   easing: (t) => (t < 0.5 ? 16 * t ** 5 : 1 - (-2 * t + 2) ** 5 / 2), // easeInOutQuint
@@ -34608,6 +35577,7 @@ function useScrollIntoView<
 you can import them in your application:
 
 ```tsx
+import type { UseScrollIntoViewOptions, UseScrollIntoViewReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -34645,6 +35615,8 @@ to update headings data after the parent component has mounted, you can use
 `reinitialize` function:
 
 ```tsx
+import { useEffect } from 'react';
+import { useScrollSpy } from '@mantine/hooks';
 
 function Demo({ dependency }) {
   const { reinitialize } = useScrollSpy();
@@ -34713,6 +35685,7 @@ function useScrollSpy(options?: UseScrollSpyOptions): UseScrollSpyReturnType
 you can import them in your application:
 
 ```tsx
+import type { UseScrollSpyOptions, UseScrollSpyReturnType } from '@mantine/hooks';
 ```
 
 
@@ -34774,6 +35747,7 @@ function useSelection<T>(input: UseSelectionInput<T>): UseSelectionReturnValue<T
 you can import them in your application:
 
 ```tsx
+import type { UseSelectionInput, UseSelectionReturnValue, UseSelectionHandlers } from '@mantine/hooks';
 ```
 
 
@@ -34789,6 +35763,7 @@ Import: import { UseSetState } from '@mantine/hooks';
 into current state.
 
 ```tsx
+import { useSetState } from '@mantine/hooks';
 
 const [state, setState] = useSetState({
   name: 'John',
@@ -34806,6 +35781,7 @@ setState((current) => ({ age: current.age + 7 })); // -> { name: 'Jane', age: 32
 Note that it can work only with objects: primitive values and arrays are not supported:
 
 ```tsx
+import { useSetState } from '@mantine/hooks';
 
 useSetState([1, 2, 3]); // -> will not work
 useSetState(1); // -> will not work
@@ -34830,6 +35806,7 @@ function useSetState<T extends Record<string, any>>(initialState: T): UseSetStat
 you can import them in your application:
 
 ```tsx
+import type { UseSetStateCallback, UseSetStateReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -34864,6 +35841,8 @@ Import: import { UseShallowEffect } from '@mantine/hooks';
 `use-shallow-effect` works exactly like `useEffect`, but performs shallow dependencies comparison instead of referential comparison:
 
 ```tsx
+import { useEffect } from 'react';
+import { useShallowEffect } from '@mantine/hooks';
 
 // Will be called on each render
 useEffect(() => {}, [{ a: 1 }]);
@@ -34875,6 +35854,7 @@ useShallowEffect(() => {}, [{ a: 1 }]);
 Hook works with primitive values, arrays and objects:
 
 ```tsx
+import { useShallowEffect } from '@mantine/hooks';
 
 // Primitive values are handled like in useEffect
 useShallowEffect(() => {}, [1, 2, 3]);
@@ -34945,6 +35925,7 @@ function useStateHistory<T>(initialValue: T): UseStateHistoryReturnValue<T>;
 you can import them in your application:
 
 ```tsx
+import type { UseStateHistoryHandlers, UseStateHistoryReturnValue, UseStateHistoryValue } from '@mantine/hooks';
 ```
 
 
@@ -35046,6 +36027,7 @@ Import: import { UseTimeout } from '@mantine/hooks';
 ## API
 
 ```tsx
+import { useTimeout } from '@mantine/hooks';
 
 const { start, clear } = useTimeout(callback, delay, {
   autoInvoke: true,
@@ -35088,6 +36070,7 @@ function useTimeout(
 you can import them in your application:
 
 ```tsx
+import type { UseTimeoutOptions, UseTimeoutReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -35110,6 +36093,7 @@ The hook accepts an array as single argument, the first option will be used as t
 The hook returns an array with state value and toggle function:
 
 ```tsx
+import { useToggle } from '@mantine/hooks';
 
 const [value, toggle] = useToggle(['light', 'dark'] as const);
 
@@ -35123,6 +36107,7 @@ toggle('dark'); // -> value == 'dark'
 If you do not provide an array with options, then `use-toggle` will use boolean values with `false` as default:
 
 ```tsx
+import { useToggle } from '@mantine/hooks';
 
 const [value, toggle] = useToggle();
 // -> value === false
@@ -35134,6 +36119,7 @@ toggle(); // -> value === true
 By default, TypeScript will guess your type, but in most cases it's better to use const assertion to prevent type widening:
 
 ```tsx
+import { useToggle } from '@mantine/hooks';
 
 useToggle(['light', 'dark']); // value is string
 useToggle(['light', 'dark'] as const); // value is 'dark' | 'light'
@@ -35155,6 +36141,7 @@ function useToggle<T = boolean>(options?: T[]): UseToggleReturnValue<T>;
 you can import it in your application:
 
 ```tsx
+import type { UseToggleReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -35169,6 +36156,7 @@ Import: import { UseUncontrolled } from '@mantine/hooks';
 `use-uncontrolled` manages state for both controlled and uncontrolled components:
 
 ```tsx
+import { useUncontrolled } from '@mantine/hooks';
 
 interface CustomInputProps {
   value?: string;
@@ -35203,6 +36191,7 @@ function CustomInput({
 By default, the hook will set type automatically, but you can provide your own type:
 
 ```tsx
+import { useUncontrolled } from '@mantine/hooks';
 
 function Demo() {
   const [_value, handleChange] = useUncontrolled<number>({
@@ -35251,6 +36240,7 @@ function useUncontrolled<T>(input: UseUncontrolledOptions<T>): UseUncontrolledRe
 you can import them in your application:
 
 ```tsx
+import type { UseUncontrolledOptions, UseUncontrolledReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -35266,6 +36256,7 @@ Import: import { UseValidatedState } from '@mantine/hooks';
 It returns an object with current validation state, last valid value and current value:
 
 ```tsx
+import { useValidatedState } from '@mantine/hooks';
 
 const [{ lastValidValue, value, valid }, setValue] =
   useValidatedState('valid', (state) => state === 'valid');
@@ -35319,6 +36310,7 @@ function useValidatedState<T>(
 you can import them in your application:
 
 ```tsx
+import type { UseValidatedStateValue, UseValidatedStateReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -35356,6 +36348,8 @@ Import: import { UseWindowEvent } from '@mantine/hooks';
 `use-window-event` adds event listener to `window` object on component mount and removes it on unmount:
 
 ```tsx
+import { useEffect } from 'react';
+import { useWindowEvent } from '@mantine/hooks';
 
 const handler = (event: KeyboardEvent) => console.log(event);
 
@@ -35374,6 +36368,8 @@ useWindowEvent('keydown', handler);
 Search focus with `⌘ + K` on mac or `Ctrl + K` on windows and linux on Mantine docs website:
 
 ```tsx
+import { useRef } from 'react';
+import { useWindowEvent } from '@mantine/hooks';
 
 function Demo() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -35434,6 +36430,7 @@ function useWindowScroll(): UseWindowScrollReturnValue;
 you can import them in your application:
 
 ```tsx
+import type { UseWindowScrollTo, UseWindowScrollPosition, UseWindowScrollReturnValue } from '@mantine/hooks';
 ```
 
 
@@ -35651,11 +36648,67 @@ function Demo() {
 | yearsListFormat | string | - | dayjs format for years list |
 
 
+#### Styles API
+
+Calendar component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**Calendar selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| calendarHeader | .mantine-Calendar-calendarHeader | Calendar header root element |
+| calendarHeaderControl | .mantine-Calendar-calendarHeaderControl | Previous/next calendar header controls |
+| calendarHeaderControlIcon | .mantine-Calendar-calendarHeaderControlIcon | Icon of previous/next calendar header controls |
+| calendarHeaderLevel | .mantine-Calendar-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |
+| levelsGroup | .mantine-Calendar-levelsGroup | Group of months levels |
+| yearsList | .mantine-Calendar-yearsList | Years list table element |
+| yearsListRow | .mantine-Calendar-yearsListRow | Years list row element |
+| yearsListCell | .mantine-Calendar-yearsListCell | Years list cell element |
+| yearsListControl | .mantine-Calendar-yearsListControl | Button used to pick months and years |
+| monthsList | .mantine-Calendar-monthsList | Months list table element |
+| monthsListRow | .mantine-Calendar-monthsListRow | Months list row element |
+| monthsListCell | .mantine-Calendar-monthsListCell | Months list cell element |
+| monthsListControl | .mantine-Calendar-monthsListControl | Button used to pick months and years |
+| monthThead | .mantine-Calendar-monthThead | thead element of month table |
+| monthRow | .mantine-Calendar-monthRow | tr element of month table |
+| monthTbody | .mantine-Calendar-monthTbody | tbody element of month table |
+| monthCell | .mantine-Calendar-monthCell | td element of month table |
+| month | .mantine-Calendar-month | Month table element |
+| weekdaysRow | .mantine-Calendar-weekdaysRow | Weekdays tr element |
+| weekday | .mantine-Calendar-weekday | Weekday th element |
+| day | .mantine-Calendar-day | Month day control |
+| weekNumber | .mantine-Calendar-weekNumber | Week number td element |
+
+**Calendarheader selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| calendarHeader | .mantine-Calendarheader-calendarHeader | Calendar header root element |
+| calendarHeaderControl | .mantine-Calendarheader-calendarHeaderControl | Previous/next calendar header controls |
+| calendarHeaderControlIcon | .mantine-Calendarheader-calendarHeaderControlIcon | Icon of previous/next calendar header controls |
+| calendarHeaderLevel | .mantine-Calendarheader-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |
+
+**Calendarheader CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| calendarHeader | --dch-control-size | Controls size of the previous/next and level controls |
+| calendarHeader | --dch-fz | Controls font-size of the previous/next and level controls |
+
+**Calendarheader data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| calendarHeaderControl | data-direction | - | - |
+| calendarHeaderControl | data-disabled | Control is disabled for any reason | - |
+
+
 --------------------------------------------------------------------------------
 
 ### DateInput
 Package: @mantine/dates
 Import: import { DateInput } from '@mantine/dates';
+Description: Free form date input
 
 ## DatePicker props
 
@@ -35691,6 +36744,8 @@ To use some custom formats, you need to enable [custom parse format](https://day
 
 ```tsx
 // Do this once in your application root file
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 dayjs.extend(customParseFormat);
 ```
@@ -35938,11 +36993,47 @@ DateInput provides better accessibility support when used in forms. Make sure to
 | yearsListFormat | string | - | dayjs format for years list |
 
 
+#### Styles API
+
+DateInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**DateInput selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| calendarHeader | .mantine-DateInput-calendarHeader | Calendar header root element |
+| calendarHeaderControl | .mantine-DateInput-calendarHeaderControl | Previous/next calendar header controls |
+| calendarHeaderControlIcon | .mantine-DateInput-calendarHeaderControlIcon | Icon of previous/next calendar header controls |
+| calendarHeaderLevel | .mantine-DateInput-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |
+| levelsGroup | .mantine-DateInput-levelsGroup | Group of months levels |
+| yearsList | .mantine-DateInput-yearsList | Years list table element |
+| yearsListRow | .mantine-DateInput-yearsListRow | Years list row element |
+| yearsListCell | .mantine-DateInput-yearsListCell | Years list cell element |
+| yearsListControl | .mantine-DateInput-yearsListControl | Button used to pick months and years |
+| monthsList | .mantine-DateInput-monthsList | Months list table element |
+| monthsListRow | .mantine-DateInput-monthsListRow | Months list row element |
+| monthsListCell | .mantine-DateInput-monthsListCell | Months list cell element |
+| monthsListControl | .mantine-DateInput-monthsListControl | Button used to pick months and years |
+| monthThead | .mantine-DateInput-monthThead | thead element of month table |
+| monthRow | .mantine-DateInput-monthRow | tr element of month table |
+| monthTbody | .mantine-DateInput-monthTbody | tbody element of month table |
+| monthCell | .mantine-DateInput-monthCell | td element of month table |
+| month | .mantine-DateInput-month | Month table element |
+| weekdaysRow | .mantine-DateInput-weekdaysRow | Weekdays tr element |
+| weekday | .mantine-DateInput-weekday | Weekday th element |
+| day | .mantine-DateInput-day | Month day control |
+| weekNumber | .mantine-DateInput-weekNumber | Week number td element |
+| datePickerRoot | .mantine-DateInput-datePickerRoot | Date picker root element, contains calendar and presets |
+| presetsList | .mantine-DateInput-presetsList | Presets wrapper element |
+| presetButton | .mantine-DateInput-presetButton | Preset button |
+
+
 --------------------------------------------------------------------------------
 
 ### DatePickerInput
 Package: @mantine/dates
 Import: import { DatePickerInput } from '@mantine/dates';
+Description: Date, multiple dates and dates range picker input
 
 ## DatePicker props
 
@@ -36242,11 +37333,48 @@ DatePickerInput provides better accessibility support when used in forms. Make s
 | yearsListFormat | string | - | dayjs format for years list |
 
 
+#### Styles API
+
+DatePickerInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**DatePickerInput selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| calendarHeader | .mantine-DatePickerInput-calendarHeader | Calendar header root element |
+| calendarHeaderControl | .mantine-DatePickerInput-calendarHeaderControl | Previous/next calendar header controls |
+| calendarHeaderControlIcon | .mantine-DatePickerInput-calendarHeaderControlIcon | Icon of previous/next calendar header controls |
+| calendarHeaderLevel | .mantine-DatePickerInput-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |
+| levelsGroup | .mantine-DatePickerInput-levelsGroup | Group of months levels |
+| yearsList | .mantine-DatePickerInput-yearsList | Years list table element |
+| yearsListRow | .mantine-DatePickerInput-yearsListRow | Years list row element |
+| yearsListCell | .mantine-DatePickerInput-yearsListCell | Years list cell element |
+| yearsListControl | .mantine-DatePickerInput-yearsListControl | Button used to pick months and years |
+| monthsList | .mantine-DatePickerInput-monthsList | Months list table element |
+| monthsListRow | .mantine-DatePickerInput-monthsListRow | Months list row element |
+| monthsListCell | .mantine-DatePickerInput-monthsListCell | Months list cell element |
+| monthsListControl | .mantine-DatePickerInput-monthsListControl | Button used to pick months and years |
+| monthThead | .mantine-DatePickerInput-monthThead | thead element of month table |
+| monthRow | .mantine-DatePickerInput-monthRow | tr element of month table |
+| monthTbody | .mantine-DatePickerInput-monthTbody | tbody element of month table |
+| monthCell | .mantine-DatePickerInput-monthCell | td element of month table |
+| month | .mantine-DatePickerInput-month | Month table element |
+| weekdaysRow | .mantine-DatePickerInput-weekdaysRow | Weekdays tr element |
+| weekday | .mantine-DatePickerInput-weekday | Weekday th element |
+| day | .mantine-DatePickerInput-day | Month day control |
+| weekNumber | .mantine-DatePickerInput-weekNumber | Week number td element |
+| datePickerRoot | .mantine-DatePickerInput-datePickerRoot | Date picker root element, contains calendar and presets |
+| presetsList | .mantine-DatePickerInput-presetsList | Presets wrapper element |
+| presetButton | .mantine-DatePickerInput-presetButton | Preset button |
+| placeholder | .mantine-DatePickerInput-placeholder | Placeholder element |
+
+
 --------------------------------------------------------------------------------
 
 ### DatePicker
 Package: @mantine/dates
 Import: import { DatePicker } from '@mantine/dates';
+Description: Inline date, multiple dates and dates range picker
 
 ## Usage
 
@@ -36793,6 +37921,7 @@ function Demo() {
 Set `ariaLabels` prop to specify `aria-label` attributes for next/previous controls:
 
 ```tsx
+import { DatePicker } from '@mantine/dates';
 
 function Demo() {
   return (
@@ -36817,6 +37946,7 @@ function Demo() {
 Use `getYearControlProps`/`getMonthControlProps`/`getDayProps` to customize `aria-label` attribute:
 
 ```tsx
+import { DatePicker } from '@mantine/dates';
 
 function Demo() {
   return (
@@ -36903,11 +38033,78 @@ Note that the following events will only trigger if focus is on date control.
 | yearsListFormat | string | - | dayjs format for years list |
 
 
+#### Styles API
+
+DatePicker component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**DatePicker selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| calendarHeader | .mantine-DatePicker-calendarHeader | Calendar header root element |
+| calendarHeaderControl | .mantine-DatePicker-calendarHeaderControl | Previous/next calendar header controls |
+| calendarHeaderControlIcon | .mantine-DatePicker-calendarHeaderControlIcon | Icon of previous/next calendar header controls |
+| calendarHeaderLevel | .mantine-DatePicker-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |
+| levelsGroup | .mantine-DatePicker-levelsGroup | Group of months levels |
+| yearsList | .mantine-DatePicker-yearsList | Years list table element |
+| yearsListRow | .mantine-DatePicker-yearsListRow | Years list row element |
+| yearsListCell | .mantine-DatePicker-yearsListCell | Years list cell element |
+| yearsListControl | .mantine-DatePicker-yearsListControl | Button used to pick months and years |
+| monthsList | .mantine-DatePicker-monthsList | Months list table element |
+| monthsListRow | .mantine-DatePicker-monthsListRow | Months list row element |
+| monthsListCell | .mantine-DatePicker-monthsListCell | Months list cell element |
+| monthsListControl | .mantine-DatePicker-monthsListControl | Button used to pick months and years |
+| monthThead | .mantine-DatePicker-monthThead | thead element of month table |
+| monthRow | .mantine-DatePicker-monthRow | tr element of month table |
+| monthTbody | .mantine-DatePicker-monthTbody | tbody element of month table |
+| monthCell | .mantine-DatePicker-monthCell | td element of month table |
+| month | .mantine-DatePicker-month | Month table element |
+| weekdaysRow | .mantine-DatePicker-weekdaysRow | Weekdays tr element |
+| weekday | .mantine-DatePicker-weekday | Weekday th element |
+| day | .mantine-DatePicker-day | Month day control |
+| weekNumber | .mantine-DatePicker-weekNumber | Week number td element |
+| datePickerRoot | .mantine-DatePicker-datePickerRoot | Date picker root element, contains calendar and presets |
+| presetsList | .mantine-DatePicker-presetsList | Presets wrapper element |
+| presetButton | .mantine-DatePicker-presetButton | Preset button |
+
+**DatePickerinput selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| calendarHeader | .mantine-DatePickerinput-calendarHeader | Calendar header root element |
+| calendarHeaderControl | .mantine-DatePickerinput-calendarHeaderControl | Previous/next calendar header controls |
+| calendarHeaderControlIcon | .mantine-DatePickerinput-calendarHeaderControlIcon | Icon of previous/next calendar header controls |
+| calendarHeaderLevel | .mantine-DatePickerinput-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |
+| levelsGroup | .mantine-DatePickerinput-levelsGroup | Group of months levels |
+| yearsList | .mantine-DatePickerinput-yearsList | Years list table element |
+| yearsListRow | .mantine-DatePickerinput-yearsListRow | Years list row element |
+| yearsListCell | .mantine-DatePickerinput-yearsListCell | Years list cell element |
+| yearsListControl | .mantine-DatePickerinput-yearsListControl | Button used to pick months and years |
+| monthsList | .mantine-DatePickerinput-monthsList | Months list table element |
+| monthsListRow | .mantine-DatePickerinput-monthsListRow | Months list row element |
+| monthsListCell | .mantine-DatePickerinput-monthsListCell | Months list cell element |
+| monthsListControl | .mantine-DatePickerinput-monthsListControl | Button used to pick months and years |
+| monthThead | .mantine-DatePickerinput-monthThead | thead element of month table |
+| monthRow | .mantine-DatePickerinput-monthRow | tr element of month table |
+| monthTbody | .mantine-DatePickerinput-monthTbody | tbody element of month table |
+| monthCell | .mantine-DatePickerinput-monthCell | td element of month table |
+| month | .mantine-DatePickerinput-month | Month table element |
+| weekdaysRow | .mantine-DatePickerinput-weekdaysRow | Weekdays tr element |
+| weekday | .mantine-DatePickerinput-weekday | Weekday th element |
+| day | .mantine-DatePickerinput-day | Month day control |
+| weekNumber | .mantine-DatePickerinput-weekNumber | Week number td element |
+| datePickerRoot | .mantine-DatePickerinput-datePickerRoot | Date picker root element, contains calendar and presets |
+| presetsList | .mantine-DatePickerinput-presetsList | Presets wrapper element |
+| presetButton | .mantine-DatePickerinput-presetButton | Preset button |
+| placeholder | .mantine-DatePickerinput-placeholder | Placeholder element |
+
+
 --------------------------------------------------------------------------------
 
 ### DateTimePicker
 Package: @mantine/dates
 Import: import { DateTimePicker } from '@mantine/dates';
+Description: Capture datetime from the user
 
 ## DatePicker props
 
@@ -37219,22 +38416,66 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | yearsListFormat | string | - | dayjs format for years list |
 
 
+#### Styles API
+
+DateTimePicker component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**DateTimePicker selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| calendarHeader | .mantine-DateTimePicker-calendarHeader | Calendar header root element |
+| calendarHeaderControl | .mantine-DateTimePicker-calendarHeaderControl | Previous/next calendar header controls |
+| calendarHeaderControlIcon | .mantine-DateTimePicker-calendarHeaderControlIcon | Icon of previous/next calendar header controls |
+| calendarHeaderLevel | .mantine-DateTimePicker-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |
+| levelsGroup | .mantine-DateTimePicker-levelsGroup | Group of months levels |
+| yearsList | .mantine-DateTimePicker-yearsList | Years list table element |
+| yearsListRow | .mantine-DateTimePicker-yearsListRow | Years list row element |
+| yearsListCell | .mantine-DateTimePicker-yearsListCell | Years list cell element |
+| yearsListControl | .mantine-DateTimePicker-yearsListControl | Button used to pick months and years |
+| monthsList | .mantine-DateTimePicker-monthsList | Months list table element |
+| monthsListRow | .mantine-DateTimePicker-monthsListRow | Months list row element |
+| monthsListCell | .mantine-DateTimePicker-monthsListCell | Months list cell element |
+| monthsListControl | .mantine-DateTimePicker-monthsListControl | Button used to pick months and years |
+| monthThead | .mantine-DateTimePicker-monthThead | thead element of month table |
+| monthRow | .mantine-DateTimePicker-monthRow | tr element of month table |
+| monthTbody | .mantine-DateTimePicker-monthTbody | tbody element of month table |
+| monthCell | .mantine-DateTimePicker-monthCell | td element of month table |
+| month | .mantine-DateTimePicker-month | Month table element |
+| weekdaysRow | .mantine-DateTimePicker-weekdaysRow | Weekdays tr element |
+| weekday | .mantine-DateTimePicker-weekday | Weekday th element |
+| day | .mantine-DateTimePicker-day | Month day control |
+| weekNumber | .mantine-DateTimePicker-weekNumber | Week number td element |
+| datePickerRoot | .mantine-DateTimePicker-datePickerRoot | Date picker root element, contains calendar and presets |
+| presetsList | .mantine-DateTimePicker-presetsList | Presets wrapper element |
+| presetButton | .mantine-DateTimePicker-presetButton | Preset button |
+| timeWrapper | .mantine-DateTimePicker-timeWrapper | Wrapper around time input and submit button |
+| timeInput | .mantine-DateTimePicker-timeInput | TimeInput |
+| submitButton | .mantine-DateTimePicker-submitButton | Submit button |
+
+
 --------------------------------------------------------------------------------
 
 ### GettingStartedDates
 Package: @mantine/dates
 Import: import { GettingStartedDates } from '@mantine/dates';
 
-DatePickerInputDemos,
-DatesProviderDemos,
-} from '@docs/demos';
-
 ## Installation
+
+```bash
+yarn add @mantine/dates dayjs
+```
+
+```bash
+npm install @mantine/dates dayjs
+```
 
 After installation import package styles at the root of your application:
 
 ```tsx
+import '@mantine/core/styles.css';
 // ‼️ import dates styles after core package styles
+import '@mantine/dates/styles.css';
 ```
 
 ## Do not forget to import styles
@@ -37245,6 +38486,7 @@ You've fallen into the trap of not importing dates styles!
 To fix the issue, import dates styles at the root of your application:
 
 ```tsx
+import '@mantine/dates/styles.css';
 ```
 
 ## Usage
@@ -37313,6 +38555,8 @@ dayjs plugin. You need to extend dayjs with this plugin before using components 
 it is usually done once in your application root file, so you don't need to do it every time you use component.
 
 ```tsx
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 dayjs.extend(customParseFormat);
 ```
@@ -37325,7 +38569,9 @@ and set `locale` either on `DatesProvider` or on each component individually.
 Example of setting locale on DatesProvider:
 
 ```tsx
+import 'dayjs/locale/ru';
 
+import { DatesProvider } from '@mantine/dates';
 
 function Demo() {
   return (
@@ -37344,7 +38590,9 @@ is required both on client and server.
 ```tsx
 'use client';
 
+import 'dayjs/locale/ru';
 
+import { DatesProvider } from '@mantine/dates';
 
 function Demo() {
   return (
@@ -37361,6 +38609,7 @@ function Demo() {
 ### MonthPickerInput
 Package: @mantine/dates
 Import: import { MonthPickerInput } from '@mantine/dates';
+Description: Month, multiple months and months range picker input
 
 ## MonthPicker props
 
@@ -37560,11 +38809,36 @@ MonthPickerInput provides better accessibility support when used in forms. Make 
 | yearsListFormat | string | - | dayjs format for years list |
 
 
+#### Styles API
+
+MonthPickerInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**MonthPickerInput selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| calendarHeader | .mantine-MonthPickerInput-calendarHeader | Calendar header root element |
+| calendarHeaderControl | .mantine-MonthPickerInput-calendarHeaderControl | Previous/next calendar header controls |
+| calendarHeaderControlIcon | .mantine-MonthPickerInput-calendarHeaderControlIcon | Icon of previous/next calendar header controls |
+| calendarHeaderLevel | .mantine-MonthPickerInput-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |
+| levelsGroup | .mantine-MonthPickerInput-levelsGroup | Group of years levels |
+| yearsList | .mantine-MonthPickerInput-yearsList | Years list table element |
+| yearsListRow | .mantine-MonthPickerInput-yearsListRow | Years list row element |
+| yearsListCell | .mantine-MonthPickerInput-yearsListCell | Years list cell element |
+| yearsListControl | .mantine-MonthPickerInput-yearsListControl | Button used to pick months and years |
+| monthsList | .mantine-MonthPickerInput-monthsList | Months list table element |
+| monthsListRow | .mantine-MonthPickerInput-monthsListRow | Months list row element |
+| monthsListCell | .mantine-MonthPickerInput-monthsListCell | Months list cell element |
+| monthsListControl | .mantine-MonthPickerInput-monthsListControl | Button used to pick months and years |
+| placeholder | .mantine-MonthPickerInput-placeholder | Placeholder element |
+
+
 --------------------------------------------------------------------------------
 
 ### MonthPicker
 Package: @mantine/dates
 Import: import { MonthPicker } from '@mantine/dates';
+Description: Inline month, multiple months and months range picker
 
 ## Usage
 
@@ -37833,6 +39107,7 @@ function Demo() {
 Set `ariaLabels` prop to specify `aria-label` attributes for next/previous controls:
 
 ```tsx
+import { MonthPicker } from '@mantine/dates';
 
 function Demo() {
   return (
@@ -37854,6 +39129,7 @@ function Demo() {
 Use `getYearControlProps`/`getMonthControlProps` to customize `aria-label` attribute:
 
 ```tsx
+import { MonthPicker } from '@mantine/dates';
 
 function Demo() {
   return (
@@ -37914,11 +39190,54 @@ Note that the following events will only trigger if focus is on month control.
 | yearsListFormat | string | - | dayjs format for years list |
 
 
+#### Styles API
+
+MonthPicker component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**MonthPicker selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| calendarHeader | .mantine-MonthPicker-calendarHeader | Calendar header root element |
+| calendarHeaderControl | .mantine-MonthPicker-calendarHeaderControl | Previous/next calendar header controls |
+| calendarHeaderControlIcon | .mantine-MonthPicker-calendarHeaderControlIcon | Icon of previous/next calendar header controls |
+| calendarHeaderLevel | .mantine-MonthPicker-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |
+| levelsGroup | .mantine-MonthPicker-levelsGroup | Group of years levels |
+| yearsList | .mantine-MonthPicker-yearsList | Years list table element |
+| yearsListRow | .mantine-MonthPicker-yearsListRow | Years list row element |
+| yearsListCell | .mantine-MonthPicker-yearsListCell | Years list cell element |
+| yearsListControl | .mantine-MonthPicker-yearsListControl | Button used to pick months and years |
+| monthsList | .mantine-MonthPicker-monthsList | Months list table element |
+| monthsListRow | .mantine-MonthPicker-monthsListRow | Months list row element |
+| monthsListCell | .mantine-MonthPicker-monthsListCell | Months list cell element |
+| monthsListControl | .mantine-MonthPicker-monthsListControl | Button used to pick months and years |
+
+**MonthPickerinput selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| calendarHeader | .mantine-MonthPickerinput-calendarHeader | Calendar header root element |
+| calendarHeaderControl | .mantine-MonthPickerinput-calendarHeaderControl | Previous/next calendar header controls |
+| calendarHeaderControlIcon | .mantine-MonthPickerinput-calendarHeaderControlIcon | Icon of previous/next calendar header controls |
+| calendarHeaderLevel | .mantine-MonthPickerinput-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |
+| levelsGroup | .mantine-MonthPickerinput-levelsGroup | Group of years levels |
+| yearsList | .mantine-MonthPickerinput-yearsList | Years list table element |
+| yearsListRow | .mantine-MonthPickerinput-yearsListRow | Years list row element |
+| yearsListCell | .mantine-MonthPickerinput-yearsListCell | Years list cell element |
+| yearsListControl | .mantine-MonthPickerinput-yearsListControl | Button used to pick months and years |
+| monthsList | .mantine-MonthPickerinput-monthsList | Months list table element |
+| monthsListRow | .mantine-MonthPickerinput-monthsListRow | Months list row element |
+| monthsListCell | .mantine-MonthPickerinput-monthsListCell | Months list cell element |
+| monthsListControl | .mantine-MonthPickerinput-monthsListControl | Button used to pick months and years |
+| placeholder | .mantine-MonthPickerinput-placeholder | Placeholder element |
+
+
 --------------------------------------------------------------------------------
 
 ### TimeGrid
 Package: @mantine/dates
 Import: import { TimeGrid } from '@mantine/dates';
+Description: Captures time value from the user with a predefined set of options
 
 ## Usage
 
@@ -37950,6 +39269,8 @@ function Demo() {
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { TimeGrid } from '@mantine/dates';
 
 function Demo() {
   const [value, setValue] = useState<string | null>('10:00');
@@ -37964,6 +39285,7 @@ must be unique. To generate time range use `getTimeRange` function
 exported from `@mantine/dates` package:
 
 ```tsx
+import { TimeGrid, getTimeRange } from '@mantine/dates';
 
 function WithArray() {
   return <TimeGrid data={['10:00', '12:00']} />
@@ -38105,25 +39427,29 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+TimeGrid component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    control: 'Time grid control',
-    simpleGrid: 'SimpleGrid component root',
-  }
-```
+**TimeGrid selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-TimeGrid-root | Root element |
+| control | .mantine-TimeGrid-control | Time grid control |
+| simpleGrid | .mantine-TimeGrid-simpleGrid | SimpleGrid component root |
 
-```typescript
-{
-    root: {
-      '--time-grid-fz': 'Controls `font-size` property of all controls',
-      '--time-grid-radius': 'Controls `border-radius` property of all controls',
-    }
-```
+**TimeGrid CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --time-grid-fz | Controls `font-size` property of all controls |
+| root | --time-grid-radius | Controls `border-radius` property of all controls |
+
+**TimeGrid data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| control | data-active | Current component value is the same as control value | - |
+| control | data-disabled | Component is disabled by one of the props:  | - |
 
 
 --------------------------------------------------------------------------------
@@ -38131,6 +39457,7 @@ CSS variables:
 ### TimeInput
 Package: @mantine/dates
 Import: import { TimeInput } from '@mantine/dates';
+Description: Capture time from the user
 
 ## Usage
 
@@ -38171,6 +39498,8 @@ more features, use [TimePicker](https://mantine.dev/dates/time-picker) component
 ## Controlled
 
 ```tsx
+import { useState } from 'react';
+import { TimeInput } from '@mantine/dates';
 
 function Demo() {
   const [value, setValue] = useState('');
@@ -38313,6 +39642,7 @@ TimeInput provides better accessibility support when used in forms. Make sure to
 ### TimePicker
 Package: @mantine/dates
 Import: import { TimePicker } from '@mantine/dates';
+Description: Captures time value from the user
 
 ## Usage
 
@@ -38341,6 +39671,8 @@ The input value is considered valid in the following cases:
 * All inputs are filled. For example if `withSeconds` prop is set and the user entered `12:34:56`, `onChange` will be called with `12:34:56`. But if the user entered `12:34`, `onChange` will not be called because seconds value is missing.
 
 ```tsx
+import { useState } from 'react';
+import { TimePicker } from '@mantine/dates';
 
 function Demo() {
   const [value, setValue] = useState('');
@@ -38739,6 +40071,8 @@ function Demo() {
 Use `hoursRef`, `minutesRef`, `secondsRef` and `amPmRef` props to get refs of inner inputs:
 
 ```tsx
+import { useRef } from 'react';
+import { TimePicker } from '@mantine/dates';
 
 function Demo() {
   const hoursRef = useRef<HTMLInputElement>(null);
@@ -38762,6 +40096,7 @@ function Demo() {
 `onFocus` and `onBlur` events are called when the first input is focused and the last input is blurred:
 
 ```tsx
+import { TimePicker } from '@mantine/dates';
 
 function Demo() {
   return (
@@ -38778,6 +40113,7 @@ function Demo() {
 Set aria labels for hours, minutes, seconds and am/pm inputs and clear button with corresponding props:
 
 ```tsx
+import { TimePicker } from '@mantine/dates';
 
 function Demo() {
   return (
@@ -38865,35 +40201,38 @@ Keyboard interactions:
 
 #### Styles API
 
-This component supports the following CSS selectors:
+TimePicker component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    ...InputStylesApi.selectors,
-    ...InputWrapperStylesApi.selectors,
-    control: 'Button in the dropdown which is used to select hours/minutes/seconds/am-pm',
-    controlsList: 'List of buttons with hours/minutes/seconds/am-pm',
-    controlsListGroup: 'Group of controlsLists',
-    dropdown: 'Popover dropdown',
-    fieldsRoot: 'A wrapper element for all fieldsGroups',
-    fieldsGroup: 'A wrapper element for hours/minutes/seconds/am-pm fields',
-    field: 'Hours/minutes/seconds/am-pm input field',
-    presetControl: 'Time preset button',
-    presetsGroup: 'Wraps preset controls and label',
-    presetsGroupLabel: 'Labels of the preset group',
-    presetsRoot: 'Element wrapping all presets content',
-    scrollarea: 'Scroll area in the dropdown',
-  }
-```
+**TimePicker selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| wrapper | .mantine-TimePicker-wrapper | Root element of the Input |
+| input | .mantine-TimePicker-input | Input element |
+| section | .mantine-TimePicker-section | Left and right sections |
+| root | .mantine-TimePicker-root | Root element |
+| label | .mantine-TimePicker-label | Label element |
+| required | .mantine-TimePicker-required | Required asterisk element, rendered inside label |
+| description | .mantine-TimePicker-description | Description element |
+| error | .mantine-TimePicker-error | Error element |
+| control | .mantine-TimePicker-control | Button in the dropdown which is used to select hours/minutes/seconds/am-pm |
+| controlsList | .mantine-TimePicker-controlsList | List of buttons with hours/minutes/seconds/am-pm |
+| controlsListGroup | .mantine-TimePicker-controlsListGroup | Group of controlsLists |
+| dropdown | .mantine-TimePicker-dropdown | Popover dropdown |
+| fieldsRoot | .mantine-TimePicker-fieldsRoot | A wrapper element for all fieldsGroups |
+| fieldsGroup | .mantine-TimePicker-fieldsGroup | A wrapper element for hours/minutes/seconds/am-pm fields |
+| field | .mantine-TimePicker-field | Hours/minutes/seconds/am-pm input field |
+| presetControl | .mantine-TimePicker-presetControl | Time preset button |
+| presetsGroup | .mantine-TimePicker-presetsGroup | Wraps preset controls and label |
+| presetsGroupLabel | .mantine-TimePicker-presetsGroupLabel | Labels of the preset group |
+| presetsRoot | .mantine-TimePicker-presetsRoot | Element wrapping all presets content |
+| scrollarea | .mantine-TimePicker-scrollarea | Scroll area in the dropdown |
 
-```typescript
-{
-    dropdown: {
-      '--control-font-size': 'Controls `font-size` of dropdown controls',
-    }
-```
+**TimePicker CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| dropdown | --control-font-size | Controls `font-size` of dropdown controls |
 
 
 --------------------------------------------------------------------------------
@@ -38901,6 +40240,7 @@ CSS variables:
 ### TimeValue
 Package: @mantine/dates
 Import: import { TimeValue } from '@mantine/dates';
+Description: Display a formatted time value
 
 ## Usage
 
@@ -39016,6 +40356,7 @@ function Demo() {
 ### YearPickerInput
 Package: @mantine/dates
 Import: import { YearPickerInput } from '@mantine/dates';
+Description: Inline year, multiple years and years range picker
 
 ## YearPicker props
 
@@ -39201,11 +40542,32 @@ YearPickerInput provides better accessibility support when used in forms. Make s
 | yearsListFormat | string | - | dayjs format for years list |
 
 
+#### Styles API
+
+YearPickerInput component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**YearPickerInput selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| calendarHeader | .mantine-YearPickerInput-calendarHeader | Calendar header root element |
+| calendarHeaderControl | .mantine-YearPickerInput-calendarHeaderControl | Previous/next calendar header controls |
+| calendarHeaderControlIcon | .mantine-YearPickerInput-calendarHeaderControlIcon | Icon of previous/next calendar header controls |
+| calendarHeaderLevel | .mantine-YearPickerInput-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |
+| levelsGroup | .mantine-YearPickerInput-levelsGroup | Group of decades levels |
+| yearsList | .mantine-YearPickerInput-yearsList | Years list table element |
+| yearsListRow | .mantine-YearPickerInput-yearsListRow | Years list row element |
+| yearsListCell | .mantine-YearPickerInput-yearsListCell | Years list cell element |
+| yearsListControl | .mantine-YearPickerInput-yearsListControl | Button used to pick months and years |
+| placeholder | .mantine-YearPickerInput-placeholder | Placeholder element |
+
+
 --------------------------------------------------------------------------------
 
 ### YearPicker
 Package: @mantine/dates
 Import: import { YearPicker } from '@mantine/dates';
+Description: Inline year, multiple years and years range picker
 
 ## Usage
 
@@ -39412,6 +40774,7 @@ function Demo() {
 Set `ariaLabels` prop to specify `aria-label` attributes for next/previous controls:
 
 ```tsx
+import { YearPicker } from '@mantine/dates';
 
 function Demo() {
   return (
@@ -39430,6 +40793,7 @@ function Demo() {
 Use `getYearControlProps` to customize `aria-label` attribute:
 
 ```tsx
+import { YearPicker } from '@mantine/dates';
 
 function Demo() {
   return (
@@ -39478,6 +40842,40 @@ Note that the following events will only trigger if focus is on year control.
 | yearsListFormat | string | - | dayjs format for years list |
 
 
+#### Styles API
+
+YearPicker component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**YearPicker selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| calendarHeader | .mantine-YearPicker-calendarHeader | Calendar header root element |
+| calendarHeaderControl | .mantine-YearPicker-calendarHeaderControl | Previous/next calendar header controls |
+| calendarHeaderControlIcon | .mantine-YearPicker-calendarHeaderControlIcon | Icon of previous/next calendar header controls |
+| calendarHeaderLevel | .mantine-YearPicker-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |
+| levelsGroup | .mantine-YearPicker-levelsGroup | Group of decades levels |
+| yearsList | .mantine-YearPicker-yearsList | Years list table element |
+| yearsListRow | .mantine-YearPicker-yearsListRow | Years list row element |
+| yearsListCell | .mantine-YearPicker-yearsListCell | Years list cell element |
+| yearsListControl | .mantine-YearPicker-yearsListControl | Button used to pick months and years |
+
+**YearPickerinput selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| calendarHeader | .mantine-YearPickerinput-calendarHeader | Calendar header root element |
+| calendarHeaderControl | .mantine-YearPickerinput-calendarHeaderControl | Previous/next calendar header controls |
+| calendarHeaderControlIcon | .mantine-YearPickerinput-calendarHeaderControlIcon | Icon of previous/next calendar header controls |
+| calendarHeaderLevel | .mantine-YearPickerinput-calendarHeaderLevel | Level control (changes levels when clicked, month -> year -> decade) |
+| levelsGroup | .mantine-YearPickerinput-levelsGroup | Group of decades levels |
+| yearsList | .mantine-YearPickerinput-yearsList | Years list table element |
+| yearsListRow | .mantine-YearPickerinput-yearsListRow | Years list row element |
+| yearsListCell | .mantine-YearPickerinput-yearsListCell | Years list cell element |
+| yearsListControl | .mantine-YearPickerinput-yearsListControl | Button used to pick months and years |
+| placeholder | .mantine-YearPickerinput-placeholder | Placeholder element |
+
+
 --------------------------------------------------------------------------------
 
 ## CHARTS COMPONENTS AND FEATURES
@@ -39486,6 +40884,7 @@ Primary Package: @mantine/charts
 ### AreaChart
 Package: @mantine/charts
 Import: import { AreaChart } from '@mantine/charts';
+Description: Area chart component with stacked, percent and split variants
 
 ## Usage
 
@@ -40827,6 +42226,8 @@ If your application has only one color scheme, you can use `gridColor` and `text
 props instead of CSS variables:
 
 ```tsx
+import { AreaChart } from '@mantine/charts';
+import { data } from './data';
 
 function Demo() {
   return (
@@ -41736,41 +43137,38 @@ export const data = [
 
 #### Styles API
 
-This component supports the following CSS selectors:
+AreaChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    area: 'Area of the chart',
-    axis: 'X and Y axis of the chart',
-    container: 'Recharts ResponsiveContainer component',
-    grid: 'Recharts CartesianGrid component',
-    legend: 'Legend root element',
-    legendItem: 'Legend item representing data series',
-    legendItemColor: 'Legend item color',
-    legendItemName: 'Legend item name',
-    tooltip: 'Tooltip root element',
-    tooltipBody: 'Tooltip wrapper around all items',
-    tooltipItem: 'Tooltip item representing data series',
-    tooltipItemBody: 'Tooltip item wrapper around item color and name',
-    tooltipItemColor: 'Tooltip item color',
-    tooltipItemName: 'Tooltip item name',
-    tooltipItemData: 'Tooltip item data',
-    tooltipLabel: 'Label of the tooltip',
-    referenceLine: 'Reference line',
-    axisLabel: 'X and Y axis labels',
-  }
-```
+**AreaChart selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-AreaChart-root | Root element |
+| area | .mantine-AreaChart-area | Area of the chart |
+| axis | .mantine-AreaChart-axis | X and Y axis of the chart |
+| container | .mantine-AreaChart-container | Recharts ResponsiveContainer component |
+| grid | .mantine-AreaChart-grid | Recharts CartesianGrid component |
+| legend | .mantine-AreaChart-legend | Legend root element |
+| legendItem | .mantine-AreaChart-legendItem | Legend item representing data series |
+| legendItemColor | .mantine-AreaChart-legendItemColor | Legend item color |
+| legendItemName | .mantine-AreaChart-legendItemName | Legend item name |
+| tooltip | .mantine-AreaChart-tooltip | Tooltip root element |
+| tooltipBody | .mantine-AreaChart-tooltipBody | Tooltip wrapper around all items |
+| tooltipItem | .mantine-AreaChart-tooltipItem | Tooltip item representing data series |
+| tooltipItemBody | .mantine-AreaChart-tooltipItemBody | Tooltip item wrapper around item color and name |
+| tooltipItemColor | .mantine-AreaChart-tooltipItemColor | Tooltip item color |
+| tooltipItemName | .mantine-AreaChart-tooltipItemName | Tooltip item name |
+| tooltipItemData | .mantine-AreaChart-tooltipItemData | Tooltip item data |
+| tooltipLabel | .mantine-AreaChart-tooltipLabel | Label of the tooltip |
+| referenceLine | .mantine-AreaChart-referenceLine | Reference line |
+| axisLabel | .mantine-AreaChart-axisLabel | X and Y axis labels |
 
-```typescript
-{
-    root: {
-      '--chart-grid-color': 'Controls color of the grid and cursor lines',
-      '--chart-text-color': 'Controls color of the axis labels',
-    }
-```
+**AreaChart CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --chart-grid-color | Controls color of the grid and cursor lines |
+| root | --chart-text-color | Controls color of the axis labels |
 
 
 --------------------------------------------------------------------------------
@@ -41778,6 +43176,7 @@ CSS variables:
 ### BarChart
 Package: @mantine/charts
 Import: import { BarChart } from '@mantine/charts';
+Description: Bar chart component with stacked and percent variants
 
 ## Usage
 
@@ -42679,6 +44078,8 @@ If your application has only one color scheme, you can use `gridColor` and `text
 props instead of CSS variables:
 
 ```tsx
+import { BarChart } from '@mantine/charts';
+import { data } from './data';
 
 function Demo() {
   return (
@@ -43281,43 +44682,40 @@ export const data = [
 
 #### Styles API
 
-This component supports the following CSS selectors:
+BarChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    bar: 'Bar of the chart',
-    axis: 'X and Y axis of the chart',
-    container: 'Recharts ResponsiveContainer component',
-    grid: 'Recharts CartesianGrid component',
-    legend: 'Legend root element',
-    legendItem: 'Legend item representing data series',
-    legendItemColor: 'Legend item color',
-    legendItemName: 'Legend item name',
-    tooltip: 'Tooltip root element',
-    tooltipBody: 'Tooltip wrapper around all items',
-    tooltipItem: 'Tooltip item representing data series',
-    tooltipItemBody: 'Tooltip item wrapper around item color and name',
-    tooltipItemColor: 'Tooltip item color',
-    tooltipItemName: 'Tooltip item name',
-    tooltipItemData: 'Tooltip item data',
-    tooltipLabel: 'Label of the tooltip',
-    referenceLine: 'Reference line',
-    axisLabel: 'X and Y axis labels',
-  }
-```
+**BarChart selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-BarChart-root | Root element |
+| bar | .mantine-BarChart-bar | Bar of the chart |
+| axis | .mantine-BarChart-axis | X and Y axis of the chart |
+| container | .mantine-BarChart-container | Recharts ResponsiveContainer component |
+| grid | .mantine-BarChart-grid | Recharts CartesianGrid component |
+| legend | .mantine-BarChart-legend | Legend root element |
+| legendItem | .mantine-BarChart-legendItem | Legend item representing data series |
+| legendItemColor | .mantine-BarChart-legendItemColor | Legend item color |
+| legendItemName | .mantine-BarChart-legendItemName | Legend item name |
+| tooltip | .mantine-BarChart-tooltip | Tooltip root element |
+| tooltipBody | .mantine-BarChart-tooltipBody | Tooltip wrapper around all items |
+| tooltipItem | .mantine-BarChart-tooltipItem | Tooltip item representing data series |
+| tooltipItemBody | .mantine-BarChart-tooltipItemBody | Tooltip item wrapper around item color and name |
+| tooltipItemColor | .mantine-BarChart-tooltipItemColor | Tooltip item color |
+| tooltipItemName | .mantine-BarChart-tooltipItemName | Tooltip item name |
+| tooltipItemData | .mantine-BarChart-tooltipItemData | Tooltip item data |
+| tooltipLabel | .mantine-BarChart-tooltipLabel | Label of the tooltip |
+| referenceLine | .mantine-BarChart-referenceLine | Reference line |
+| axisLabel | .mantine-BarChart-axisLabel | X and Y axis labels |
 
-```typescript
-{
-    root: {
-      '--chart-grid-color': 'Controls color of the grid and cursor lines',
-      '--chart-text-color': 'Controls color of the axis labels',
-      '--chart-cursor-fill': 'Controls fill color of the cursor line',
-      '--chart-bar-label-color': 'Controls color of the bar labels',
-    }
-```
+**BarChart CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --chart-grid-color | Controls color of the grid and cursor lines |
+| root | --chart-text-color | Controls color of the axis labels |
+| root | --chart-cursor-fill | Controls fill color of the cursor line |
+| root | --chart-bar-label-color | Controls color of the bar labels |
 
 
 --------------------------------------------------------------------------------
@@ -43325,6 +44723,7 @@ CSS variables:
 ### BubbleChart
 Package: @mantine/charts
 Import: import { BubbleChart } from '@mantine/charts';
+Description: Bubble chart component
 
 ## Usage
 
@@ -43515,7 +44914,7 @@ function Demo() {
       label="Sales/hour"
       color="lime.6"
       dataKey={{ x: 'hour', y: 'index', z: 'value' }}
-      valueFormatter={(value) => \`\${value.toFixed(2)} USD\`}
+      valueFormatter={(value) => `${value.toFixed(2)} USD`}
     />
   );
 }
@@ -43593,6 +44992,8 @@ If your application has only one color scheme, you can use `gridColor` and `text
 props instead of CSS variables:
 
 ```tsx
+import { BubbleChart } from '@mantine/charts';
+import { data } from './data';
 
 function Demo() {
   return (
@@ -43633,25 +45034,22 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+BubbleChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    axis: 'X and Y axis of the chart',
-    tooltip: 'Tooltip root element',
-  }
-```
+**BubbleChart selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-BubbleChart-root | Root element |
+| axis | .mantine-BubbleChart-axis | X and Y axis of the chart |
+| tooltip | .mantine-BubbleChart-tooltip | Tooltip root element |
 
-```typescript
-{
-    root: {
-      '--chart-grid-color': 'Controls color of the grid and cursor lines',
-      '--chart-text-color': 'Controls color of the axis labels',
-    }
-```
+**BubbleChart CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --chart-grid-color | Controls color of the grid and cursor lines |
+| root | --chart-text-color | Controls color of the axis labels |
 
 
 --------------------------------------------------------------------------------
@@ -43659,6 +45057,7 @@ CSS variables:
 ### CompositeChart
 Package: @mantine/charts
 Import: import { CompositeChart } from '@mantine/charts';
+Description: Composed chart with support for Area, Bar and Line charts
 
 ## Usage
 
@@ -44695,6 +46094,8 @@ If your application has only one color scheme, you can use `gridColor` and `text
 props instead of CSS variables:
 
 ```tsx
+import { CompositeChart } from '@mantine/charts';
+import { data } from './data';
 
 function Demo() {
   return (
@@ -45394,43 +46795,40 @@ export const data = [
 
 #### Styles API
 
-This component supports the following CSS selectors:
+CompositeChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    area: 'Area of the chart',
-    line: 'Line of the chart',
-    bar: 'Bar of the chart',
-    axis: 'X and Y axis of the chart',
-    container: 'Recharts ResponsiveContainer component',
-    grid: 'Recharts CartesianGrid component',
-    legend: 'Legend root element',
-    legendItem: 'Legend item representing data series',
-    legendItemColor: 'Legend item color',
-    legendItemName: 'Legend item name',
-    tooltip: 'Tooltip root element',
-    tooltipBody: 'Tooltip wrapper around all items',
-    tooltipItem: 'Tooltip item representing data series',
-    tooltipItemBody: 'Tooltip item wrapper around item color and name',
-    tooltipItemColor: 'Tooltip item color',
-    tooltipItemName: 'Tooltip item name',
-    tooltipItemData: 'Tooltip item data',
-    tooltipLabel: 'Label of the tooltip',
-    referenceLine: 'Reference line',
-    axisLabel: 'X and Y axis labels',
-  }
-```
+**CompositeChart selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-CompositeChart-root | Root element |
+| area | .mantine-CompositeChart-area | Area of the chart |
+| line | .mantine-CompositeChart-line | Line of the chart |
+| bar | .mantine-CompositeChart-bar | Bar of the chart |
+| axis | .mantine-CompositeChart-axis | X and Y axis of the chart |
+| container | .mantine-CompositeChart-container | Recharts ResponsiveContainer component |
+| grid | .mantine-CompositeChart-grid | Recharts CartesianGrid component |
+| legend | .mantine-CompositeChart-legend | Legend root element |
+| legendItem | .mantine-CompositeChart-legendItem | Legend item representing data series |
+| legendItemColor | .mantine-CompositeChart-legendItemColor | Legend item color |
+| legendItemName | .mantine-CompositeChart-legendItemName | Legend item name |
+| tooltip | .mantine-CompositeChart-tooltip | Tooltip root element |
+| tooltipBody | .mantine-CompositeChart-tooltipBody | Tooltip wrapper around all items |
+| tooltipItem | .mantine-CompositeChart-tooltipItem | Tooltip item representing data series |
+| tooltipItemBody | .mantine-CompositeChart-tooltipItemBody | Tooltip item wrapper around item color and name |
+| tooltipItemColor | .mantine-CompositeChart-tooltipItemColor | Tooltip item color |
+| tooltipItemName | .mantine-CompositeChart-tooltipItemName | Tooltip item name |
+| tooltipItemData | .mantine-CompositeChart-tooltipItemData | Tooltip item data |
+| tooltipLabel | .mantine-CompositeChart-tooltipLabel | Label of the tooltip |
+| referenceLine | .mantine-CompositeChart-referenceLine | Reference line |
+| axisLabel | .mantine-CompositeChart-axisLabel | X and Y axis labels |
 
-```typescript
-{
-    root: {
-      '--chart-grid-color': 'Controls color of the grid and cursor lines',
-      '--chart-text-color': 'Controls color of the axis labels',
-    }
-```
+**CompositeChart CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --chart-grid-color | Controls color of the grid and cursor lines |
+| root | --chart-text-color | Controls color of the axis labels |
 
 
 --------------------------------------------------------------------------------
@@ -45438,6 +46836,7 @@ CSS variables:
 ### DonutChart
 Package: @mantine/charts
 Import: import { DonutChart } from '@mantine/charts';
+Description: Donut chart component
 
 ## Usage
 
@@ -45718,6 +47117,7 @@ other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
 color value is also accepted.
 
 ```tsx
+import { DonutChart } from '@mantine/charts';
 
 function Demo() {
   return <DonutChart data={[]} strokeColor="red.5" />;
@@ -45793,33 +47193,30 @@ export const data = [
 
 #### Styles API
 
-This component supports the following CSS selectors:
+DonutChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    label: 'Chart label, controlled by `chartLabel` prop',
-    tooltip: 'Tooltip root element',
-    tooltipBody: 'Tooltip wrapper around all items',
-    tooltipItem: 'Tooltip item representing data series',
-    tooltipItemBody: 'Tooltip item wrapper around item color and name',
-    tooltipItemColor: 'Tooltip item color',
-    tooltipItemName: 'Tooltip item name',
-    tooltipItemData: 'Tooltip item data',
-    tooltipLabel: 'Label of the tooltip',
-  }
-```
+**DonutChart selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-DonutChart-root | Root element |
+| label | .mantine-DonutChart-label | Chart label, controlled by `chartLabel` prop |
+| tooltip | .mantine-DonutChart-tooltip | Tooltip root element |
+| tooltipBody | .mantine-DonutChart-tooltipBody | Tooltip wrapper around all items |
+| tooltipItem | .mantine-DonutChart-tooltipItem | Tooltip item representing data series |
+| tooltipItemBody | .mantine-DonutChart-tooltipItemBody | Tooltip item wrapper around item color and name |
+| tooltipItemColor | .mantine-DonutChart-tooltipItemColor | Tooltip item color |
+| tooltipItemName | .mantine-DonutChart-tooltipItemName | Tooltip item name |
+| tooltipItemData | .mantine-DonutChart-tooltipItemData | Tooltip item data |
+| tooltipLabel | .mantine-DonutChart-tooltipLabel | Label of the tooltip |
 
-```typescript
-{
-    root: {
-      '--chart-labels-color': 'Controls color of the chart labels',
-      '--chart-size': 'Controls size of the chart',
-      '--chart-stroke-color': 'Controls color of the chart stroke',
-    }
-```
+**DonutChart CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --chart-labels-color | Controls color of the chart labels |
+| root | --chart-size | Controls size of the chart |
+| root | --chart-stroke-color | Controls color of the chart stroke |
 
 
 --------------------------------------------------------------------------------
@@ -45827,6 +47224,7 @@ CSS variables:
 ### FunnelChart
 Package: @mantine/charts
 Import: import { FunnelChart } from '@mantine/charts';
+Description: Funnel chart component
 
 ## Usage
 
@@ -46027,6 +47425,7 @@ other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
 color value is also accepted.
 
 ```tsx
+import { FunnelChart } from '@mantine/charts';
 
 function Demo() {
   return <FunnelChart data={[]} strokeColor="red.5" />;
@@ -46096,32 +47495,29 @@ export const data = [
 
 #### Styles API
 
-This component supports the following CSS selectors:
+FunnelChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    tooltip: 'Tooltip root element',
-    tooltipBody: 'Tooltip wrapper around all items',
-    tooltipItem: 'Tooltip item representing data series',
-    tooltipItemBody: 'Tooltip item wrapper around item color and name',
-    tooltipItemColor: 'Tooltip item color',
-    tooltipItemName: 'Tooltip item name',
-    tooltipItemData: 'Tooltip item data',
-    tooltipLabel: 'Label of the tooltip',
-  }
-```
+**FunnelChart selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-FunnelChart-root | Root element |
+| tooltip | .mantine-FunnelChart-tooltip | Tooltip root element |
+| tooltipBody | .mantine-FunnelChart-tooltipBody | Tooltip wrapper around all items |
+| tooltipItem | .mantine-FunnelChart-tooltipItem | Tooltip item representing data series |
+| tooltipItemBody | .mantine-FunnelChart-tooltipItemBody | Tooltip item wrapper around item color and name |
+| tooltipItemColor | .mantine-FunnelChart-tooltipItemColor | Tooltip item color |
+| tooltipItemName | .mantine-FunnelChart-tooltipItemName | Tooltip item name |
+| tooltipItemData | .mantine-FunnelChart-tooltipItemData | Tooltip item data |
+| tooltipLabel | .mantine-FunnelChart-tooltipLabel | Label of the tooltip |
 
-```typescript
-{
-    root: {
-      '--chart-labels-color': 'Controls color of the chart labels',
-      '--chart-size': 'Controls size of the chart',
-      '--chart-stroke-color': 'Controls color of the chart stroke',
-    }
-```
+**FunnelChart CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --chart-labels-color | Controls color of the chart labels |
+| root | --chart-size | Controls size of the chart |
+| root | --chart-stroke-color | Controls color of the chart stroke |
 
 
 --------------------------------------------------------------------------------
@@ -46132,10 +47528,20 @@ Import: import { GettingStartedCharts } from '@mantine/charts';
 
 ## Installation
 
+```bash
+yarn add @mantine/charts recharts
+```
+
+```bash
+npm install @mantine/charts recharts
+```
+
 After installation import package styles at the root of your application:
 
 ```tsx
+import '@mantine/core/styles.css';
 // ‼️ import charts styles after core package styles
+import '@mantine/charts/styles.css';
 ```
 
 ## Do not forget to import styles
@@ -46146,6 +47552,7 @@ You've fallen into the trap of not importing charts styles!
 To fix the issue, import charts styles at the root of your application:
 
 ```tsx
+import '@mantine/charts/styles.css';
 ```
 
 ## Based on recharts
@@ -46228,7 +47635,7 @@ function Demo() {
       withWeekdayLabels
       withMonthLabels
       getTooltipLabel={({ date, value }) =>
-        \`\${dayjs(date).format('DD MMM, YYYY')} – \${value === null || value === 0 ? 'No contributions' : \`\${value} contribution\${value > 1 ? 's' : ''}\`}\`
+        `${dayjs(date).format('DD MMM, YYYY')} – ${value === null || value === 0 ? 'No contributions' : `${value} contribution${value > 1 ? 's' : ''}`}`
       }
     />
   );
@@ -46323,6 +47730,9 @@ Note that in this case, you can only use 4 colors without passing `colors` prop.
 If you need more colors, you should pass them manually to the component:
 
 ```tsx
+import { Heatmap } from '@mantine/charts';
+import { data } from './data';
+import classes from './Demo.module.css';
 
 function Demo() {
   return (
@@ -46365,6 +47775,7 @@ the subset of data passed to the heatmap has values from 1 to 4, but the actual
 range is from 1 to 10. In this case, you can pass `[1, 10]` to `domain` prop:
 
 ```tsx
+import { Heatmap } from '@mantine/charts';
 
 const data = {
   '2025-02-14': 2,
@@ -46527,7 +47938,7 @@ function Demo() {
       withMonthLabels
       withWeekdayLabels
       withTooltip
-      getTooltipLabel={({ date, value }) => \`\${date} – \${value ?? 0} contributions\`}
+      getTooltipLabel={({ date, value }) => `${date} – ${value ?? 0} contributions`}
     />
   );
 }
@@ -46559,7 +47970,7 @@ function Demo() {
       withTooltip
       firstDayOfWeek={0}
       weekdayLabels={['', 'Mon', '', 'Wed', '', 'Fri', '']}
-      getTooltipLabel={({ date, value }) => \`\${date} – \${value ?? 0} contributions\`}
+      getTooltipLabel={({ date, value }) => `${date} – ${value ?? 0} contributions`}
     />
   );
 }
@@ -46599,22 +48010,16 @@ export const data = ${JSON.stringify(data, null, 2)};
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Heatmap component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    weekdayLabel: 'Weekday text element',
-    monthLabel: 'Month text element',
-    rect: 'Rect that represents date',
-  }
-```
+**Heatmap selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Heatmap-root | Root element |
+| weekdayLabel | .mantine-Heatmap-weekdayLabel | Weekday text element |
+| monthLabel | .mantine-Heatmap-monthLabel | Month text element |
+| rect | .mantine-Heatmap-rect | Rect that represents date |
 
 
 --------------------------------------------------------------------------------
@@ -46622,6 +48027,7 @@ CSS variables:
 ### LineChart
 Package: @mantine/charts
 Import: import { LineChart } from '@mantine/charts';
+Description: Line chart component
 
 ## Usage
 
@@ -46719,7 +48125,7 @@ function Demo() {
       strokeWidth={5}
       curveType="natural"
       yAxisProps={{ domain: [-25, 40] }}
-      valueFormatter={(value) => \`\${value}°C\`}
+      valueFormatter={(value) => `${value}°C`}
     />
   );
 }
@@ -47695,6 +49101,8 @@ If your application has only one color scheme, you can use `gridColor` and `text
 props instead of CSS variables:
 
 ```tsx
+import { LineChart } from '@mantine/charts';
+import { data } from './data';
 
 function Demo() {
   return (
@@ -48528,41 +49936,38 @@ export const data = [
 
 #### Styles API
 
-This component supports the following CSS selectors:
+LineChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    line: 'Line of the chart',
-    axis: 'X and Y axis of the chart',
-    container: 'Recharts ResponsiveContainer component',
-    grid: 'Recharts CartesianGrid component',
-    legend: 'Legend root element',
-    legendItem: 'Legend item representing data series',
-    legendItemColor: 'Legend item color',
-    legendItemName: 'Legend item name',
-    tooltip: 'Tooltip root element',
-    tooltipBody: 'Tooltip wrapper around all items',
-    tooltipItem: 'Tooltip item representing data series',
-    tooltipItemBody: 'Tooltip item wrapper around item color and name',
-    tooltipItemColor: 'Tooltip item color',
-    tooltipItemName: 'Tooltip item name',
-    tooltipItemData: 'Tooltip item data',
-    tooltipLabel: 'Label of the tooltip',
-    referenceLine: 'Reference line',
-    axisLabel: 'X and Y axis labels',
-  }
-```
+**LineChart selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-LineChart-root | Root element |
+| line | .mantine-LineChart-line | Line of the chart |
+| axis | .mantine-LineChart-axis | X and Y axis of the chart |
+| container | .mantine-LineChart-container | Recharts ResponsiveContainer component |
+| grid | .mantine-LineChart-grid | Recharts CartesianGrid component |
+| legend | .mantine-LineChart-legend | Legend root element |
+| legendItem | .mantine-LineChart-legendItem | Legend item representing data series |
+| legendItemColor | .mantine-LineChart-legendItemColor | Legend item color |
+| legendItemName | .mantine-LineChart-legendItemName | Legend item name |
+| tooltip | .mantine-LineChart-tooltip | Tooltip root element |
+| tooltipBody | .mantine-LineChart-tooltipBody | Tooltip wrapper around all items |
+| tooltipItem | .mantine-LineChart-tooltipItem | Tooltip item representing data series |
+| tooltipItemBody | .mantine-LineChart-tooltipItemBody | Tooltip item wrapper around item color and name |
+| tooltipItemColor | .mantine-LineChart-tooltipItemColor | Tooltip item color |
+| tooltipItemName | .mantine-LineChart-tooltipItemName | Tooltip item name |
+| tooltipItemData | .mantine-LineChart-tooltipItemData | Tooltip item data |
+| tooltipLabel | .mantine-LineChart-tooltipLabel | Label of the tooltip |
+| referenceLine | .mantine-LineChart-referenceLine | Reference line |
+| axisLabel | .mantine-LineChart-axisLabel | X and Y axis labels |
 
-```typescript
-{
-    root: {
-      '--chart-grid-color': 'Controls color of the grid and cursor lines',
-      '--chart-text-color': 'Controls color of the axis labels',
-    }
-```
+**LineChart CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --chart-grid-color | Controls color of the grid and cursor lines |
+| root | --chart-text-color | Controls color of the axis labels |
 
 
 --------------------------------------------------------------------------------
@@ -48570,6 +49975,7 @@ CSS variables:
 ### PieChart
 Package: @mantine/charts
 Import: import { PieChart } from '@mantine/charts';
+Description: Pie chart component
 
 ## Usage
 
@@ -48802,6 +50208,7 @@ other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
 color value is also accepted.
 
 ```tsx
+import { PieChart } from '@mantine/charts';
 
 function Demo() {
   return <PieChart data={[]} strokeColor="red.5" />;
@@ -48876,32 +50283,29 @@ export const data = [
 
 #### Styles API
 
-This component supports the following CSS selectors:
+PieChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    tooltip: 'Tooltip root element',
-    tooltipBody: 'Tooltip wrapper around all items',
-    tooltipItem: 'Tooltip item representing data series',
-    tooltipItemBody: 'Tooltip item wrapper around item color and name',
-    tooltipItemColor: 'Tooltip item color',
-    tooltipItemName: 'Tooltip item name',
-    tooltipItemData: 'Tooltip item data',
-    tooltipLabel: 'Label of the tooltip',
-  }
-```
+**PieChart selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-PieChart-root | Root element |
+| tooltip | .mantine-PieChart-tooltip | Tooltip root element |
+| tooltipBody | .mantine-PieChart-tooltipBody | Tooltip wrapper around all items |
+| tooltipItem | .mantine-PieChart-tooltipItem | Tooltip item representing data series |
+| tooltipItemBody | .mantine-PieChart-tooltipItemBody | Tooltip item wrapper around item color and name |
+| tooltipItemColor | .mantine-PieChart-tooltipItemColor | Tooltip item color |
+| tooltipItemName | .mantine-PieChart-tooltipItemName | Tooltip item name |
+| tooltipItemData | .mantine-PieChart-tooltipItemData | Tooltip item data |
+| tooltipLabel | .mantine-PieChart-tooltipLabel | Label of the tooltip |
 
-```typescript
-{
-    root: {
-      '--chart-labels-color': 'Controls color of the chart labels',
-      '--chart-size': 'Controls size of the chart',
-      '--chart-stroke-color': 'Controls color of the chart stroke',
-    }
-```
+**PieChart CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --chart-labels-color | Controls color of the chart labels |
+| root | --chart-size | Controls size of the chart |
+| root | --chart-stroke-color | Controls color of the chart stroke |
 
 
 --------------------------------------------------------------------------------
@@ -48909,6 +50313,7 @@ CSS variables:
 ### RadarChart
 Package: @mantine/charts
 Import: import { RadarChart } from '@mantine/charts';
+Description: Radar chart component
 
 ## Usage
 
@@ -49213,7 +50618,296 @@ function Demo() {
       data={data}
       dataKey="product"
       withPolarRadiusAxis
-      polarRadiusAxisProps={{ angle: 30, tickFormatter: (value) => \`\${value}$\` }}
+      polarRadiusAxisProps={{ angle: 30, tickFormatter: (value) => `${value}## Usage
+
+`RadarChart` is based on recharts [RadarChart](https://recharts.org/en-US/api/RadarChart) component:
+
+#### Example: usage
+
+```tsx
+// Demo.tsx
+import { RadarChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <RadarChart
+      h={300}
+      data={data}
+      dataKey="product"
+      withPolarRadiusAxis
+      series={[{ name: 'sales', color: 'blue.4', opacity: 0.2 }]}
+    />
+  );
+}
+
+// data.ts
+export const data = [
+  {
+    product: 'Apples',
+    sales: 120,
+  },
+  {
+    product: 'Oranges',
+    sales: 98,
+  },
+  {
+    product: 'Tomatoes',
+    sales: 86,
+  },
+  {
+    product: 'Grapes',
+    sales: 99,
+  },
+  {
+    product: 'Bananas',
+    sales: 85,
+  },
+  {
+    product: 'Lemons',
+    sales: 65,
+  },
+];
+```
+
+
+## Multiple series
+
+You can display multiple series on the same radar chart:
+
+#### Example: multiple
+
+```tsx
+// Demo.tsx
+import { RadarChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <RadarChart
+      h={300}
+      data={data}
+      dataKey="product"
+      withPolarRadiusAxis
+      series={[
+        { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
+        { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
+      ]}
+    />
+  );
+}
+
+// data.ts
+export const data = [
+  {
+    product: 'Apples',
+    'Sales January': 120,
+    'Sales February': 100,
+  },
+  {
+    product: 'Oranges',
+    'Sales January': 98,
+    'Sales February': 90,
+  },
+  {
+    product: 'Tomatoes',
+    'Sales January': 86,
+    'Sales February': 70,
+  },
+  {
+    product: 'Grapes',
+    'Sales January': 99,
+    'Sales February': 80,
+  },
+  {
+    product: 'Bananas',
+    'Sales January': 85,
+    'Sales February': 120,
+  },
+  {
+    product: 'Lemons',
+    'Sales January': 65,
+    'Sales February': 150,
+  },
+];
+```
+
+
+## Change color
+
+You can reference colors from [theme](https://mantine.dev/theming/theme-object) the same way as in
+other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
+color value is also accepted.
+
+#### Example: color
+
+```tsx
+// data.ts
+export const data = [
+  {
+    product: 'Apples',
+    sales: 120,
+  },
+  {
+    product: 'Oranges',
+    sales: 98,
+  },
+  {
+    product: 'Tomatoes',
+    sales: 86,
+  },
+  {
+    product: 'Grapes',
+    sales: 99,
+  },
+  {
+    product: 'Bananas',
+    sales: 85,
+  },
+  {
+    product: 'Lemons',
+    sales: 65,
+  },
+];
+```
+
+
+## Hide/show chart parts
+
+#### Example: parts
+
+```tsx
+// Demo.tsx
+import { RadarChart } from '@mantine/charts';
+import { data } from './data';
+
+
+function Demo() {
+  return (
+    <RadarChart
+      h={300}
+      data={data}
+      dataKey="product"
+      series={[
+        { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
+        { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
+      ]}
+      
+    />
+  );
+}
+
+// data.ts
+export const data = [
+  {
+    product: 'Apples',
+    'Sales January': 120,
+    'Sales February': 100,
+  },
+  {
+    product: 'Oranges',
+    'Sales January': 98,
+    'Sales February': 90,
+  },
+  {
+    product: 'Tomatoes',
+    'Sales January': 86,
+    'Sales February': 70,
+  },
+  {
+    product: 'Grapes',
+    'Sales January': 99,
+    'Sales February': 80,
+  },
+  {
+    product: 'Bananas',
+    'Sales January': 85,
+    'Sales February': 120,
+  },
+  {
+    product: 'Lemons',
+    'Sales January': 65,
+    'Sales February': 150,
+  },
+];
+```
+
+
+## With tooltip and dots
+
+#### Example: tooltip
+
+```tsx
+// Demo.tsx
+import { RadarChart } from '@mantine/charts';
+import { data } from './data';
+
+
+function Demo() {
+  return (
+    <RadarChart
+      h={300}
+      data={data}
+      dataKey="product"
+      withTooltip
+      withDots
+      series={[
+        { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
+        { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
+      ]}
+      
+    />
+  );
+}
+
+// data.ts
+export const data = [
+  {
+    product: 'Apples',
+    'Sales January': 120,
+    'Sales February': 100,
+  },
+  {
+    product: 'Oranges',
+    'Sales January': 98,
+    'Sales February': 90,
+  },
+  {
+    product: 'Tomatoes',
+    'Sales January': 86,
+    'Sales February': 70,
+  },
+  {
+    product: 'Grapes',
+    'Sales January': 99,
+    'Sales February': 80,
+  },
+  {
+    product: 'Bananas',
+    'Sales January': 85,
+    'Sales February': 120,
+  },
+  {
+    product: 'Lemons',
+    'Sales January': 65,
+    'Sales February': 150,
+  },
+];
+```
+
+
+## Recharts props
+
+To pass props down to the underlying recharts components, use the following props:
+
+* `radarChartProps` passed props to [RadarChart](https://recharts.org/en-US/api/RadarChart) component
+* `polarGridProps` passed props to [PolarGrid](https://recharts.org/en-US/api/PolarGrid) component
+* `polarAngleAxisProps` passed props to [PolarAngleAxis](https://recharts.org/en-US/api/PolarAngleAxis) component
+* `polarRadiusAxisProps` passed props to [PolarRadiusAxis](https://recharts.org/en-US/api/PolarRadiusAxis) component
+
+Example of passing props down to [PolarRadiusAxis](https://recharts.org/en-US/api/PolarRadiusAxis) component:
+
+ }}
       series={[
         { name: 'Sales January', color: 'lime.4', opacity: 0.1 },
         { name: 'Sales February', color: 'cyan.4', opacity: 0.1 },
@@ -49352,36 +51046,33 @@ export const data = [
 
 #### Styles API
 
-This component supports the following CSS selectors:
+RadarChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    container: 'Recharts ResponsiveContainer component',
-    tooltip: 'Tooltip root element',
-    tooltipBody: 'Tooltip wrapper around all items',
-    tooltipItem: 'Tooltip item representing data series',
-    tooltipItemBody: 'Tooltip item wrapper around item color and name',
-    tooltipItemColor: 'Tooltip item color',
-    tooltipItemName: 'Tooltip item name',
-    tooltipItemData: 'Tooltip item data',
-    tooltipLabel: 'Label of the tooltip',
-    legend: 'Legend root element',
-    legendItem: 'Legend item representing data series',
-    legendItemColor: 'Legend item color',
-    legendItemName: 'Legend item name',
-  }
-```
+**RadarChart selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-RadarChart-root | Root element |
+| container | .mantine-RadarChart-container | Recharts ResponsiveContainer component |
+| tooltip | .mantine-RadarChart-tooltip | Tooltip root element |
+| tooltipBody | .mantine-RadarChart-tooltipBody | Tooltip wrapper around all items |
+| tooltipItem | .mantine-RadarChart-tooltipItem | Tooltip item representing data series |
+| tooltipItemBody | .mantine-RadarChart-tooltipItemBody | Tooltip item wrapper around item color and name |
+| tooltipItemColor | .mantine-RadarChart-tooltipItemColor | Tooltip item color |
+| tooltipItemName | .mantine-RadarChart-tooltipItemName | Tooltip item name |
+| tooltipItemData | .mantine-RadarChart-tooltipItemData | Tooltip item data |
+| tooltipLabel | .mantine-RadarChart-tooltipLabel | Label of the tooltip |
+| legend | .mantine-RadarChart-legend | Legend root element |
+| legendItem | .mantine-RadarChart-legendItem | Legend item representing data series |
+| legendItemColor | .mantine-RadarChart-legendItemColor | Legend item color |
+| legendItemName | .mantine-RadarChart-legendItemName | Legend item name |
 
-```typescript
-{
-    root: {
-      '--chart-grid-color': 'Controls color of the chart grid',
-      '--chart-text-color': 'Controls color of all text elements in the chart',
-    }
-```
+**RadarChart CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --chart-grid-color | Controls color of the chart grid |
+| root | --chart-text-color | Controls color of all text elements in the chart |
 
 
 --------------------------------------------------------------------------------
@@ -49389,6 +51080,7 @@ CSS variables:
 ### RadialBarChart
 Package: @mantine/charts
 Import: import { RadialBarChart } from '@mantine/charts';
+Description: Radial bar chart component
 
 ## Usage
 
@@ -49550,27 +51242,24 @@ export const data = [
 
 #### Styles API
 
-This component supports the following CSS selectors:
+RadialBarChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    tooltip: 'Tooltip root element',
-    legend: 'Legend root element',
-    legendItem: 'Legend item representing data series',
-    legendItemColor: 'Legend item color',
-    legendItemName: 'Legend item name',
-  }
-```
+**RadialBarChart selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-RadialBarChart-root | Root element |
+| tooltip | .mantine-RadialBarChart-tooltip | Tooltip root element |
+| legend | .mantine-RadialBarChart-legend | Legend root element |
+| legendItem | .mantine-RadialBarChart-legendItem | Legend item representing data series |
+| legendItemColor | .mantine-RadialBarChart-legendItemColor | Legend item color |
+| legendItemName | .mantine-RadialBarChart-legendItemName | Legend item name |
 
-```typescript
-{
-    root: {
-      '--chart-empty-background': 'Background color of the empty space in the chart',
-    }
-```
+**RadialBarChart CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --chart-empty-background | Background color of the empty space in the chart |
 
 
 --------------------------------------------------------------------------------
@@ -49578,6 +51267,7 @@ CSS variables:
 ### ScatterChart
 Package: @mantine/charts
 Import: import { ScatterChart } from '@mantine/charts';
+Description: Scatter chart component
 
 ## Usage
 
@@ -50035,8 +51725,8 @@ function Demo() {
       dataKey={{ x: 'age', y: 'average_monthly_spending' }}
       yAxisProps={{ domain: [800, 3400] }}
       valueFormatter={{
-        x: (value) => \`\${value} years\`,
-        y: (value) => \`$\${new Intl.NumberFormat('en-US').format(value)}\`,
+        x: (value) => `${value} years`,
+        y: (value) => `${new Intl.NumberFormat('en-US').format(value)}`,
       }}
     />
   );
@@ -50237,6 +51927,8 @@ If your application has only one color scheme, you can use `gridColor` and `text
 props instead of CSS variables:
 
 ```tsx
+import { ScatterChart } from '@mantine/charts';
+import { data } from './data';
 
 function Demo() {
   return (
@@ -50892,41 +52584,38 @@ DEMOPLACEHOLDER::ScatterChartDemos.referenceLines::END
 
 #### Styles API
 
-This component supports the following CSS selectors:
+ScatterChart component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    scatter: 'recharts Scatter component',
-    axis: 'X and Y axis of the chart',
-    container: 'Recharts ResponsiveContainer component',
-    grid: 'Recharts CartesianGrid component',
-    legend: 'Legend root element',
-    legendItem: 'Legend item representing data series',
-    legendItemColor: 'Legend item color',
-    legendItemName: 'Legend item name',
-    tooltip: 'Tooltip root element',
-    tooltipBody: 'Tooltip wrapper around all items',
-    tooltipItem: 'Tooltip item representing data series',
-    tooltipItemBody: 'Tooltip item wrapper around item color and name',
-    tooltipItemColor: 'Tooltip item color',
-    tooltipItemName: 'Tooltip item name',
-    tooltipItemData: 'Tooltip item data',
-    tooltipLabel: 'Label of the tooltip',
-    referenceLine: 'Reference line',
-    axisLabel: 'X and Y axis labels',
-  }
-```
+**ScatterChart selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-ScatterChart-root | Root element |
+| scatter | .mantine-ScatterChart-scatter | recharts Scatter component |
+| axis | .mantine-ScatterChart-axis | X and Y axis of the chart |
+| container | .mantine-ScatterChart-container | Recharts ResponsiveContainer component |
+| grid | .mantine-ScatterChart-grid | Recharts CartesianGrid component |
+| legend | .mantine-ScatterChart-legend | Legend root element |
+| legendItem | .mantine-ScatterChart-legendItem | Legend item representing data series |
+| legendItemColor | .mantine-ScatterChart-legendItemColor | Legend item color |
+| legendItemName | .mantine-ScatterChart-legendItemName | Legend item name |
+| tooltip | .mantine-ScatterChart-tooltip | Tooltip root element |
+| tooltipBody | .mantine-ScatterChart-tooltipBody | Tooltip wrapper around all items |
+| tooltipItem | .mantine-ScatterChart-tooltipItem | Tooltip item representing data series |
+| tooltipItemBody | .mantine-ScatterChart-tooltipItemBody | Tooltip item wrapper around item color and name |
+| tooltipItemColor | .mantine-ScatterChart-tooltipItemColor | Tooltip item color |
+| tooltipItemName | .mantine-ScatterChart-tooltipItemName | Tooltip item name |
+| tooltipItemData | .mantine-ScatterChart-tooltipItemData | Tooltip item data |
+| tooltipLabel | .mantine-ScatterChart-tooltipLabel | Label of the tooltip |
+| referenceLine | .mantine-ScatterChart-referenceLine | Reference line |
+| axisLabel | .mantine-ScatterChart-axisLabel | X and Y axis labels |
 
-```typescript
-{
-    root: {
-      '--chart-grid-color': 'Controls color of the grid and cursor lines',
-      '--chart-text-color': 'Controls color of the axis labels',
-    }
-```
+**ScatterChart CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --chart-grid-color | Controls color of the grid and cursor lines |
+| root | --chart-text-color | Controls color of the axis labels |
 
 
 --------------------------------------------------------------------------------
@@ -51065,22 +52754,19 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Sparkline component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Sparkline selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Sparkline-root | Root element |
 
-```typescript
-{
-    root: {
-      '--chart-color': 'Controls stroke and fill color',
-    }
-```
+**Sparkline CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --chart-color | Controls stroke and fill color |
 
 
 --------------------------------------------------------------------------------
@@ -51109,8 +52795,10 @@ to `@mantine/emotion`:
 
 ```tsx
 // 6.x
+import { createStyles, Global } from '@mantine/core';
 
 // 7.x
+import { createStyles, Global } from '@mantine/emotion';
 ```
 
 ### sx and styles props
@@ -51119,6 +52807,7 @@ to `@mantine/emotion`:
 
 ```tsx
 // 6.x and 7.x, no changes
+import { Box, Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -51145,6 +52834,7 @@ Example of 6.x `createStyles` with `theme.colorScheme` migration to 7.0:
 
 ```tsx
 // 6.x
+import { createStyles } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -51159,6 +52849,7 @@ const useStyles = createStyles((theme) => ({
 
 ```tsx
 // 7.x
+import { createStyles } from '@mantine/emotion';
 
 const useStyles = createStyles((theme, _, u) => ({
   root: {
@@ -51196,6 +52887,7 @@ in your project.
 
 ```tsx
 // 6.x
+import { createStyles } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -51217,6 +52909,7 @@ const useStyles = createStyles((theme) => ({
 
 ```tsx
 // 6.x
+import { Box } from '@mantine/core';
 
 function Demo() {
   return (
@@ -51227,6 +52920,7 @@ function Demo() {
 
 ```tsx
 // 7.0
+import { Box } from '@mantine/core';
 
 function Demo() {
   return (
@@ -51239,6 +52933,7 @@ Nested selectors are not supported in [style prop](https://mantine.dev/styles/st
 
 ```tsx
 // 6.x
+import { Box } from '@mantine/core';
 
 function Demo() {
   return <Box sx={{ '&:hover': { background: 'red' } }} />;
@@ -51260,6 +52955,7 @@ function Demo() {
 
 ```tsx
 // 6.x – nested selectors
+import { TextInput } from '@mantine/core';
 
 function Demo() {
   return (
@@ -51289,6 +52985,7 @@ Regular selectors are still supported:
 
 ```tsx
 // Works both in 6.x and 7.x
+import { TextInput } from '@mantine/core';
 
 function Demo() {
   return (
@@ -51310,6 +53007,7 @@ create a global stylesheet (`.css` file) and import it in your application entry
 
 ```tsx
 // 6.x
+import { Global } from '@mantine/core';
 
 function Demo() {
   return (
@@ -51381,6 +53079,7 @@ All [theme](https://mantine.dev/theming/theme-object) properties are now availab
 
 ```tsx
 // 6.x
+import { Box } from '@mantine/core';
 
 function Demo() {
   return (
@@ -51417,6 +53116,7 @@ Example of 6.x `createStyles` with `theme.colorScheme` migration to 7.0:
 
 ```tsx
 // 6.x
+import { createStyles } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -51463,6 +53163,31 @@ on color scheme value.
 
 Color scheme toggle example:
 
+#### Example: colorSchemeControl
+
+```tsx
+import { ActionIcon, useMantineColorScheme, useComputedColorScheme } from '@mantine/core';
+import { IconSun, IconMoon } from '@tabler/icons-react';
+import cx from 'clsx';
+import classes from './Demo.module.css';
+
+function Demo() {
+  const { setColorScheme } = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
+
+  return (
+    <ActionIcon
+      onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
+      variant="default"
+      size="xl"
+      aria-label="Toggle color scheme"
+    >
+      <IconSun className={cx(classes.icon, classes.light)} stroke={1.5} />
+      <IconMoon className={cx(classes.icon, classes.dark)} stroke={1.5} />
+    </ActionIcon>
+  );
+}
+```
 
 
 
@@ -51481,12 +53206,16 @@ Note that if you previously imported `@mantine/core/styles.css`, no changes are 
 
 ```tsx
 // ❌ No longer includes all global styles
+import '@mantine/core/styles/global.css';
 ```
 
 8.x version import:
 
 ```tsx
 // ✅ Import all global styles separately
+import '@mantine/core/styles/baseline.css';
+import '@mantine/core/styles/default-css-variables.css';
+import '@mantine/core/styles/global.css';
 ```
 
 If you used `@mantine/core/styles.css`, no changes are required,
@@ -51494,6 +53223,7 @@ the import works the same in 7.x and 8.x versions:
 
 ```tsx
 // 👍 No changes needed if you used styles.css
+import '@mantine/core/styles.css';
 ```
 
 ## Portal reuseTargetNode
@@ -51505,6 +53235,7 @@ in some edge cases, it might cause issues with `z-index` stacking context.
 If you experience issues with `z-index`, change `reuseTargetNode` prop to `false` in theme:
 
 ```tsx
+import { createTheme, Portal } from '@mantine/core';
 
 export const theme = createTheme({
   components: {
@@ -51525,6 +53256,7 @@ includes checked state indicator inside the thumb. If you want to use
 old styles without indicator, set `withThumbIndicator` prop to `false` in theme:
 
 ```tsx
+import { createTheme, Switch } from '@mantine/core';
 
 export const theme = createTheme({
   components: {
@@ -51545,6 +53277,8 @@ If you want to continue using `@mantine/dates` components the same way as in 7.x
 to convert callback values to `Date` objects:
 
 ```tsx
+import { useState } from 'react';
+import { DatePicker } from '@mantine/dates';
 
 export function Demo7x() {
   const [value, setValue] = useState<Date | null>(null);
@@ -51567,6 +53301,7 @@ export function Demo8x() {
 `DatesProvider` component no longer supports `timezone` option:
 
 ```tsx
+import { DatesProvider } from '@mantine/dates';
 
 function Demo7x() {
   // ❌ timezone option is no longer supported
@@ -51592,6 +53327,8 @@ If you need to handle timezones in your application, you can use a dedicated dat
 to update timezone values. Example of using Mantine components with [dayjs](https://day.js.org/):
 
 ```tsx
+import dayjs from 'dayjs';
+import { DatePicker } from '@mantine/dates';
 
 function Demo() {
   const [value, setValue] = useState<string | null>('2022-08-21');
@@ -51613,6 +53350,8 @@ To pass props down to [TimePicker](https://mantine.dev/dates/time-picker) compon
 7.x version:
 
 ```tsx
+import { DateTimePicker } from '@mantine/dates';
+import { IconClock } from '@tabler/icons-react';
 
 function Demo() {
   return (
@@ -51629,6 +53368,7 @@ function Demo() {
 8.x version:
 
 ```tsx
+import { DateTimePicker } from '@mantine/dates';
 
 function Demo() {
   return (
@@ -51652,9 +53392,21 @@ You can follow the [updated documentation](https://mantine.dev/x/code-highlight/
 If you want to continue using [highlight.js](https://highlightjs.org/), in your application,
 install `highlight.js` package:
 
+```bash
+yarn add highlight.js
+```
+
+```bash
+npm install highlight.js
+```
+
 Then wrap your app with `CodeHighlightAdapterProvider` and provide `createHighlightJsAdapter` as `adapter` prop:
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
+import { CodeHighlightAdapterProvider, createHighlightJsAdapter } from '@mantine/code-highlight';
+import hljs from 'highlight.js/lib/core';
+import tsLang from 'highlight.js/lib/languages/typescript';
 
 hljs.registerLanguage('typescript', tsLang);
 
@@ -51753,6 +53505,7 @@ By default, `hideDetached` is enabled – the behavior has changed from 7.x vers
 If you prefer to keep the old behavior, you can disable `hideDetached` for all components:
 
 ```tsx
+import { createTheme, Popover } from '@mantine/core';
 
 export const theme = createTheme({
   components: {
@@ -51774,6 +53527,14 @@ Starting from 8.x version, [@mantine/carousel](https://mantine.dev/x/carousel) p
 
 You need to update embla dependencies:
 
+```bash
+yarn add embla-carousel@^8.5.2 embla-carousel-react@^8.5.2
+```
+
+```bash
+npm install embla-carousel@^8.5.2 embla-carousel-react@^8.5.2
+```
+
 Update embla props that were previously passed to `Carousel` component
 to `emblaOptions`. Full list of props:
 
@@ -51787,6 +53548,7 @@ to `emblaOptions`. Full list of props:
 * `speed` and `draggable` props were removed – they are no longer supported by embla
 
 ```tsx
+import { Carousel } from '@mantine/carousel';
 
 // ❌ 7.x – embla options passed as props,
 // no longer works in 8.x
@@ -51805,6 +53567,7 @@ remove it from your code:
 
 ```tsx
 // ❌ 7.x – useAnimationOffsetEffect is no longer available in 8.x
+import { Carousel, Embla, useAnimationOffsetEffect } from '@mantine/carousel';
 
 function Demo7x() {
   const [embla, setEmbla] = useState<Embla | null>(null);
@@ -51813,6 +53576,7 @@ function Demo7x() {
 }
 
 // ✅ 8.x – remove useAnimationOffsetEffect entirely, it is not required
+import { Carousel } from '@mantine/carousel';
 
 function Demo8x() {
   return <Carousel />;
@@ -51824,6 +53588,7 @@ you need to change this import to reference `embla-carousel` package instead:
 
 ```tsx
 // ❌ 7.x – Embla type is no longer available in 8.x
+import { Carousel, Embla } from '@mantine/carousel';
 
 function Demo7x() {
   const [embla, setEmbla] = useState<Embla | null>(null);
@@ -51831,6 +53596,8 @@ function Demo7x() {
 }
 
 // ✅ 8.x – replace Embla type import
+import { Carousel } from '@mantine/carousel';
+import { EmblaCarouselType } from 'embla-carousel';
 
 function Demo8x() {
   const [embla, setEmbla] = useState<EmblaCarouselType | null>(null);
@@ -51854,6 +53621,7 @@ are not documented anywhere else.
 It clamps number within the inclusive lower and upper bounds.
 
 ```tsx
+import { clamp } from '@mantine/hooks';
 
 // With both min and max boundaries
 clamp(10, 0, 5); // 5
@@ -51875,6 +53643,7 @@ clamp(10, undefined, 5); // 5
 It converts first character of a string to lower case.
 
 ```tsx
+import { lowerFirst } from '@mantine/hooks';
 
 lowerFirst('Mantine'); // mantine
 lowerFirst('mantine'); // mantine
@@ -51886,6 +53655,7 @@ lowerFirst('mantine'); // mantine
 It converts first character of a string to upper case.
 
 ```tsx
+import { upperFirst } from '@mantine/hooks';
 
 upperFirst('Mantine'); // Mantine
 upperFirst('mantine'); // Mantine
@@ -51897,6 +53667,7 @@ upperFirst('mantine'); // Mantine
 It generates random id with `mantine-` prefix.
 
 ```tsx
+import { randomId } from '@mantine/hooks';
 
 randomId(); // mantine-d7h137oav
 randomId(); // mantine-1q2j3j4j5
@@ -51908,6 +53679,7 @@ randomId(); // mantine-1q2j3j4j5
 It generates array of numbers from `start` to `end` (inclusive).
 
 ```tsx
+import { range } from '@mantine/hooks';
 
 range(0, 5); // [0, 1, 2, 3, 4, 5]
 range(5, 0); // [5, 4, 3, 2, 1, 0]
@@ -51919,6 +53691,7 @@ range(5, 0); // [5, 4, 3, 2, 1, 0]
 It performs shallow equal check of two objects.
 
 ```tsx
+import { shallowEqual } from '@mantine/hooks';
 
 shallowEqual({ a: 1 }, { a: 1 }); // true
 shallowEqual({ a: 1 }, { a: 2 }); // false
@@ -51950,6 +53723,14 @@ When asked "Would you like to install a styling system?", select `PostCSS`.
 
 Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset):
 
+```bash
+yarn add postcss postcss-preset-mantine postcss-simple-vars
+```
+
+```bash
+npm install postcss postcss-preset-mantine postcss-simple-vars
+```
+
 Create `postcss.config.cjs` file at the root of your application with the following content:
 
 ```js
@@ -51975,6 +53756,7 @@ Create `src/theme.ts` file with your theme override:
 
 ```tsx
 // src/theme.ts
+import { createTheme } from '@mantine/core';
 
 export const theme = createTheme({
   fontFamily: 'serif',
@@ -51985,6 +53767,8 @@ export const theme = createTheme({
 Create `gatsby-ssr.tsx` with the following content:
 
 ```tsx
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import { theme } from './src/theme';
 
 export const onPreRenderHTML = ({
   getHeadComponents,
@@ -52007,7 +53791,10 @@ Create `gatsby-browser.tsx` with the following content:
 ```tsx
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
 
+import { MantineProvider } from '@mantine/core';
+import { theme } from './src/theme';
 
 export const wrapPageElement = ({ element }) => {
   return <MantineProvider theme={theme}>{element}</MantineProvider>;
@@ -52026,8 +53813,10 @@ By default, Gatsby has different syntax for importing CSS modules:
 
 ```tsx
 // Default syntax – will not work in Gatsby
+import classes from './Demo.module.css';
 
 // Gatsby syntax
+import * as classes from './Demo.module.css';
 ```
 
 
@@ -52056,6 +53845,21 @@ to use, we recommend [Tabler icons](https://tabler-icons.io/).
 Most of the icons libraries support `size` prop (or similar `width` and `height` props) which allows changing
 icon width and height. Usually, it is a number in pixels.
 
+#### Example: icon
+
+```tsx
+import { IconBrandMantine } from '@tabler/icons-react';
+
+function Demo() {
+  return (
+    <IconBrandMantine
+      size={80}
+      stroke={1.5}
+      color="var(--mantine-color-blue-filled)"
+    />
+  );
+}
+```
 
 
 > **rem units in size prop**
@@ -52073,6 +53877,42 @@ It is recommended to use icons as React components. In this case, you will be ab
 `currentColor` in the `fill` and `stroke` prop. This will change icon color based on the context
 it is used in.
 
+#### Example: customIcon
+
+```tsx
+// AddressBookIcon.tsx
+interface AddressBookIconProps extends React.ComponentPropsWithoutRef<'svg'> {
+  size?: number | string;
+}
+
+export function AddressBookIcon({ size, style, ...others }: AddressBookIconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      viewBox="0 0 24 24"
+      style={{ width: size, height: size, ...style }}
+      {...others}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <path d="M20 6v12a2 2 0 01-2 2H8a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2zM10 16h6" />
+      <path d="M11 11a2 2 0 104 0 2 2 0 10-4 0M4 8h3M4 12h3M4 16h3" />
+    </svg>
+  );
+}
+
+// Demo.tsx
+import { Button } from '@mantine/core';
+import { AddressBookIcon } from './AddressBookIcon';
+
+function Demo() {
+  return <Button leftSection={<AddressBookIcon size={18} />}>Demo</Button>;
+}
+```
 
 
 
@@ -52101,6 +53941,7 @@ Example of transformed code:
 
 ```tsx
 // TypeScript code
+import { Button, ButtonProps } from '@mantine/core';
 
 interface MyButtonProps extends ButtonProps {
   myProp: string;
@@ -52113,6 +53954,7 @@ function MyButton({ myProp, ...others }: MyButtonProps) {
 
 ```tsx
 // JavaScript code
+import { Button } from '@mantine/core';
 
 function MyButton({ myProp, ...others }) {
   return <Button {...others} />;
@@ -52150,7 +53992,10 @@ function:
 
 ```tsx
 // ./test-utils/render.tsx
+import { render as testingLibraryRender } from '@testing-library/react';
+import { MantineProvider } from '@mantine/core';
 // Import your theme object
+import { theme } from '../src/theme';
 
 export function render(ui: React.ReactNode) {
   return testingLibraryRender(<>{ui}</>, {
@@ -52165,6 +54010,7 @@ It is usually more convenient to export all `@testing-library/*` functions that 
 from `./testing-utils/index.ts` file:
 
 ```tsx
+import userEvent from '@testing-library/user-event';
 
 export * from '@testing-library/react';
 export { render } from './render';
@@ -52174,6 +54020,8 @@ export { userEvent };
 Then you should import all testing utilities from `./testing-utils` instead of `@testing-library/react`:
 
 ```tsx
+import { render, screen } from '../test-utils';
+import { Welcome } from './Welcome';
 
 describe('Welcome component', () => {
   it('has correct Next.js theming section link', () => {
@@ -52194,6 +54042,7 @@ These APIs are not available in `jest-environment-jsdom` environment and you wil
 Create `jest.setup.js` file in your project root and add the following code to it:
 
 ```tsx
+import '@testing-library/jest-dom';
 
 const { getComputedStyle } = window;
 window.getComputedStyle = (elt) => getComputedStyle(elt);
@@ -52357,6 +54206,14 @@ create new Next.js application:
 
 Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset):
 
+```bash
+yarn add postcss postcss-preset-mantine postcss-simple-vars
+```
+
+```bash
+npm install postcss postcss-preset-mantine postcss-simple-vars
+```
+
 Create `postcss.config.cjs` file at the root of your application with the following content:
 
 ```js
@@ -52383,7 +54240,10 @@ Add styles imports and [MantineProvider](https://mantine.dev/theming/mantine-pro
 ```tsx
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
 
+import type { AppProps } from 'next/app';
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   /** Put your mantine theme override here */
@@ -52402,6 +54262,8 @@ Create `pages/_document.tsx` file with [ColorSchemeScript](https://mantine.dev/t
 Note that it is required even if you use only one color scheme in your application.
 
 ```tsx
+import { Head, Html, Main, NextScript } from 'next/document';
+import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
 
 export default function Document() {
   return (
@@ -52432,7 +54294,9 @@ and styles imports to the `app/layout.tsx` file:
 ```tsx
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
 
+import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core';
 
 export const metadata = {
   title: 'My Mantine app',
@@ -52471,6 +54335,8 @@ and `app/layout.tsx` files as described above.
 ## Next.js Link with polymorphic components
 
 ```tsx
+import Link from 'next/link';
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -52499,6 +54365,7 @@ Instead, use `ComponentXXX` syntax or add `'use client';` directive to the top o
 Example that will not work in server components:
 
 ```tsx
+import { Popover } from '@mantine/core';
 
 // This will throw an error
 export default function Page() {
@@ -52516,6 +54383,7 @@ Example with `'use client';` directive:
 ```tsx
 'use client';
 
+import { Popover } from '@mantine/core';
 
 // No error
 export default function Page() {
@@ -52531,6 +54399,7 @@ export default function Page() {
 Example with `ComponentXXX` syntax:
 
 ```tsx
+import {
   Popover,
   PopoverDropdown,
   PopoverTarget,
@@ -52581,6 +54450,19 @@ All polymorphic components have a default element which is used when `component`
 For example, the [Button](https://mantine.dev/core/button) component default element is `button` and
 it can be changed to `a` or any other element or component:
 
+#### Example: polymorphic
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button component="a" href="https://mantine.dev/" target="_blank">
+      Mantine website
+    </Button>
+  );
+}
+```
 
 
 ## renderRoot prop
@@ -52593,6 +54475,7 @@ when the component that you want to pass to the `component` is generic
 Example of using `renderRoot` prop, the result is the same as in the previous demo:
 
 ```tsx
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -52616,6 +54499,8 @@ You can pass any other React component to `component` prop.
 For example, you can pass `Link` component from `react-router-dom`:
 
 ```tsx
+import { Link } from 'react-router-dom';
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -52633,6 +54518,8 @@ Next.js link does not work in the same way as other similar components in all Ne
 With Next.js 12 and below:
 
 ```tsx
+import Link from 'next/link';
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -52646,6 +54533,8 @@ function Demo() {
 With Next.js 13 and above:
 
 ```tsx
+import Link from 'next/link';
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -52666,6 +54555,8 @@ will work correctly, but you will have a TypeScript error.
 To make generic components work with polymorphic components, use `renderRoot` prop instead of `component`:
 
 ```tsx
+import Link from 'next/link';
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -52683,6 +54574,9 @@ function Demo() {
 incompatible with Mantine `component` prop, but you can use `renderRoot` prop instead:
 
 ```tsx
+import cx from 'clsx';
+import { NavLink } from 'react-router-dom';
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -52713,10 +54607,69 @@ because their root element can be changed, and thus props type can be inferred o
 
 Example of creating a non-polymorphic wrapper component for Mantine polymorphic component:
 
+#### Example: staticPolymorphic
+
+```tsx
+import { forwardRef } from 'react';
+import { Button, ButtonProps } from '@mantine/core';
+
+interface LinkButtonProps
+  extends ButtonProps,
+    Omit<React.ComponentPropsWithoutRef<'a'>, keyof ButtonProps> {}
+
+const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>((props, ref) => (
+  <Button {...props} ref={ref} component="a" />
+));
+
+function Demo() {
+  return (
+    <LinkButton href="https://mantine.dev" target="_blank">
+      Mantine website
+    </LinkButton>
+  );
+}
+```
 
 
 Example of creating a polymorphic wrapper component for Mantine polymorphic component:
 
+#### Example: createPolymorphic
+
+```tsx
+import { forwardRef } from 'react';
+import { createPolymorphicComponent, Button, ButtonProps, Group } from '@mantine/core';
+
+interface CustomButtonProps extends ButtonProps {
+  label: string;
+}
+
+// Default root element is 'button', but it can be changed with 'component' prop
+const CustomButton = createPolymorphicComponent<'button', CustomButtonProps>(
+  forwardRef<HTMLButtonElement, CustomButtonProps>(({ label, ...others }, ref) => (
+    <Button {...others} ref={ref}>
+      {label}
+    </Button>
+  ))
+);
+
+// Default root element is 'a', but it can be changed with 'component' prop
+const CustomButtonAnchor = createPolymorphicComponent<'a', CustomButtonProps>(
+  forwardRef<HTMLAnchorElement, CustomButtonProps>(({ label, ...others }, ref) => (
+    <Button component="a" {...others} ref={ref}>
+      {label}
+    </Button>
+  ))
+);
+
+function Demo() {
+  return (
+    <Group>
+      <CustomButton label="Button by default" color="cyan" />
+      <CustomButtonAnchor label="Anchor by default" href="https://mantine.dev" target="_blank" />
+    </Group>
+  );
+}
+```
 
 
 ## Dynamic component prop
@@ -52725,6 +54678,7 @@ You can use dynamic value in the `component` prop, but in this case, you need to
 or disable type checking by passing `any` as a type argument to the polymorphic component:
 
 ```tsx
+import { Box } from '@mantine/core';
 
 function KeepTypes() {
   return (
@@ -52745,6 +54699,38 @@ function NukeTypes() {
 
 Use `createPolymorphicComponent` function and [Box](https://mantine.dev/core/box) component to create new polymorphic components:
 
+#### Example: newPolymorphic
+
+```tsx
+import { forwardRef } from 'react';
+import { Box, BoxProps, createPolymorphicComponent, Group } from '@mantine/core';
+
+interface MyButtonProps extends BoxProps {
+  label: string;
+}
+
+const MyButton = createPolymorphicComponent<'button', MyButtonProps>(
+  forwardRef<HTMLButtonElement, MyButtonProps>(({ label, ...others }, ref) => (
+    <Box component="button" {...others} ref={ref}>
+      {label}
+    </Box>
+  ))
+);
+
+function Demo() {
+  return (
+    <Group>
+      <MyButton label="Button by default" />
+      <MyButton
+        label="MyButton as anchor"
+        component="a"
+        href="https://mantine.dev"
+        target="_blank"
+      />
+    </Group>
+  );
+}
+```
 
 
 ## Make Mantine component polymorphic
@@ -52757,6 +54743,7 @@ To make Mantine component polymorphic, use `createPolymorphicComponent` function
 as in the previous example:
 
 ```tsx
+import {
   createPolymorphicComponent,
   Group,
   GroupProps,
@@ -52797,6 +54784,14 @@ npx create-react-router@latest my-react-router-app
 
 Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset):
 
+```bash
+yarn add postcss postcss-preset-mantine postcss-simple-vars
+```
+
+```bash
+npm install postcss postcss-preset-mantine postcss-simple-vars
+```
+
 Create `postcss.config.cjs` file at the root of your application with the following content:
 
 ```js
@@ -52823,13 +54818,16 @@ Add styles imports, [MantineProvider](https://mantine.dev/theming/mantine-provid
 ```tsx
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
 
+import {
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
 } from "react-router";
+import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -52893,6 +54891,14 @@ cd web
 
 Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset):
 
+```bash
+yarn add postcss postcss-preset-mantine postcss-simple-vars
+```
+
+```bash
+npm install postcss postcss-preset-mantine postcss-simple-vars
+```
+
 Create `postcss.config.js` file in `web` directory with the following content:
 
 ```js
@@ -52920,7 +54926,13 @@ to `web/src/App.tsx` file:
 ```tsx
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
 
+import { FatalErrorBoundary, RedwoodProvider } from '@redwoodjs/web';
+import { RedwoodApolloProvider } from '@redwoodjs/web/apollo';
+import FatalErrorPage from 'src/pages/FatalErrorPage';
+import Routes from 'src/Routes';
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 const App = () => (
   <FatalErrorBoundary page={FatalErrorPage}>
@@ -52975,9 +54987,18 @@ Install Storybook addons:
 * [storybook-dark-mode](https://storybook.js.org/addons/storybook-dark-mode/)
 * [@storybook/addon-styling-webpack](https://storybook.js.org/addons/@storybook/addon-styling-webpack)
 
+```bash
+yarn add storybook-dark-mode @storybook/addon-styling-webpack
+```
+
+```bash
+npm install storybook-dark-mode @storybook/addon-styling-webpack
+```
+
 Add addons to `.storybook/main.ts`:
 
 ```tsx
+import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
   // ... other config properties
@@ -52998,6 +55019,7 @@ To shared [theme object](https://mantine.dev/theming/theme-object) between your 
 
 ```tsx
 // src/theme.ts
+import { createTheme } from '@mantine/core';
 
 export const theme = createTheme({
   fontFamily: 'serif',
@@ -53010,6 +55032,8 @@ Then you will be able to use the same theme both in your application and Storybo
 ```tsx
 // In your application
 
+import { MantineProvider } from '@mantine/core';
+import { theme } from './theme';
 
 function App() {
   return <MantineProvider theme={theme}>{/* ... */}</MantineProvider>;
@@ -53024,11 +55048,17 @@ the following content:
 ```tsx
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
 
+import { useEffect } from 'react';
+import { addons } from '@storybook/preview-api';
+import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
+import {
   MantineProvider,
   useMantineColorScheme,
 } from '@mantine/core';
 // theme.ts file from previous step
+import { theme } from '../src/theme';
 
 const channel = addons.getChannel();
 
@@ -53084,6 +55114,8 @@ You can import component props types by adding `Props` to the component name,
 for example, you can import Button and DatePicker components props like so:
 
 ```tsx
+import type { ButtonProps } from '@mantine/core';
+import type { DatePickerProps } from '@mantine/dates';
 ```
 
 Note that there are two variations of props types: for polymorphic components and for regular components.
@@ -53093,6 +55125,7 @@ type, for example `'div'`.
 Example of extending regular component props:
 
 ```tsx
+import { Group, GroupProps } from '@mantine/core';
 
 // Interface includes `React.ComponentPropsWithoutRef<'div'>`
 interface MyGroupProps extends GroupProps {
@@ -53110,6 +55143,7 @@ because their root element depends on the `component` prop value.
 Example of extending [polymorphic components](https://mantine.dev/guides/polymorphic) props:
 
 ```tsx
+import { Button, ButtonProps, ElementProps } from '@mantine/core';
 
 interface MyButtonProps
   extends ButtonProps,
@@ -53129,6 +55163,7 @@ features. It replaces native elements `style` prop with Mantine [style prop](htt
 allows omitting properties that are passed as a second type.
 
 ```tsx
+import { ButtonProps, ElementProps } from '@mantine/core';
 
 // Equivalent of `React.ComponentPropsWithoutRef<'button'>`
 type ButtonElementProps = ElementProps<'button'>;
@@ -53148,6 +55183,7 @@ type OmitButtonProps = ElementProps<'button', keyof ButtonProps>;
 to functions that accept theme object as an argument:
 
 ```tsx
+import { MantineTheme, useMantineTheme } from '@mantine/core';
 
 function getPrimaryColor(theme: MantineTheme) {
   return theme.colors.blue[5];
@@ -53165,6 +55201,7 @@ function Demo() {
 that accept theme override as an argument:
 
 ```tsx
+import {
   createTheme,
   MantineThemeOverride,
   mergeThemeOverrides,
@@ -53195,6 +55232,7 @@ const mergedTheme = mergeThemes([overrideTheme, overrideTheme2]);
 to function that accept color scheme as an argument:
 
 ```tsx
+import {
   MantineColorScheme,
   useMantineColorScheme,
 } from '@mantine/core';
@@ -53215,6 +55253,7 @@ function Demo() {
 to various props that accept size as an argument, for example, `radius`, `shadow`, `p`.
 
 ```tsx
+import { MantineSize, Paper } from '@mantine/core';
 
 interface DemoProps {
   size: MantineSize;
@@ -53248,6 +55287,7 @@ declare module '@mantine/core' {
 To override `theme.colors`:
 
 ```tsx
+import {
   DefaultMantineColor,
   MantineColorsTuple,
 } from '@mantine/core';
@@ -53270,6 +55310,7 @@ You can also customize size related types for `theme.spacing`, `theme.radius`,
 To override `theme.spacing` and `theme.radius`
 
 ```tsx
+import {
   DefaultMantineSize,
   MantineThemeSizesOverride,
 } from '@mantine/core';
@@ -53302,6 +55343,7 @@ extending `{x}Props` interface with the new variant type in your `mantine.d.ts` 
 Example of adding custom variant type to [Button](https://mantine.dev/core/button) component:
 
 ```tsx
+import { ButtonVariant, MantineSize } from '@mantine/core';
 
 type ExtendedButtonVariant = ButtonVariant | 'contrast' | 'radial-gradient';
 
@@ -53335,6 +55377,14 @@ Follow [Vite getting started](https://vitejs.dev/guide/) guide to create new Vit
 
 Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset):
 
+```bash
+yarn add postcss postcss-preset-mantine postcss-simple-vars
+```
+
+```bash
+npm install postcss postcss-preset-mantine postcss-simple-vars
+```
+
 Create `postcss.config.cjs` file at the root of your application with the following content:
 
 ```js
@@ -53361,7 +55411,9 @@ Add styles imports and [MantineProvider](https://mantine.dev/theming/mantine-pro
 ```tsx
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
+import '@mantine/core/styles.css';
 
+import { MantineProvider } from '@mantine/core';
 
 export default function App() {
   return <MantineProvider>{/* Your app here */}</MantineProvider>;
@@ -53389,6 +55441,14 @@ other frameworks/bundlers, it is recommended to use [Jest](https://mantine.dev/g
 
 Install vitest and react testing library:
 
+```bash
+yarn add vitest jsdom @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event
+```
+
+```bash
+npm install vitest jsdom @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event
+```
+
 If you want to run tests from your IDE, install one of the [extensions](https://vitest.dev/guide/ide).
 
 ## Configuration
@@ -53396,6 +55456,7 @@ If you want to run tests from your IDE, install one of the [extensions](https://
 Add vitest configuration to your Vite config file:
 
 ```tsx
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   // ... rest of your config
@@ -53410,7 +55471,9 @@ export default defineConfig({
 Then create `vitest.setup.mjs` file in your project root and add the following code to it:
 
 ```tsx
+import '@testing-library/jest-dom/vitest';
 
+import { vi } from 'vitest';
 
 const { getComputedStyle } = window;
 window.getComputedStyle = (elt) => getComputedStyle(elt);
@@ -53461,7 +55524,10 @@ function:
 
 ```tsx
 // ./test-utils/render.tsx
+import { render as testingLibraryRender } from '@testing-library/react';
+import { MantineProvider } from '@mantine/core';
 // Import your theme object
+import { theme } from '../src/theme';
 
 export function render(ui: React.ReactNode) {
   return testingLibraryRender(<>{ui}</>, {
@@ -53476,6 +55542,7 @@ It is usually more convenient to export all `@testing-library/*` functions that 
 from `./testing-utils/index.ts` file:
 
 ```tsx
+import userEvent from '@testing-library/user-event';
 
 export * from '@testing-library/react';
 export { render } from './render';
@@ -53485,6 +55552,8 @@ export { userEvent };
 Then you should import all testing utilities from `./testing-utils` instead of `@testing-library/react`:
 
 ```tsx
+import { render, screen } from '../test-utils';
+import { Welcome } from './Welcome';
 
 describe('Welcome component', () => {
   it('has correct Next.js theming section link', () => {
@@ -53515,6 +55584,7 @@ You can configure the default color scheme value with `defaultColorScheme` prop,
 `dark` and `auto` (system color scheme is used). The default value is `light`.
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -53551,6 +55621,24 @@ function useMantineColorScheme(): {
 };
 ```
 
+#### Example: colorScheme
+
+```tsx
+import { useMantineColorScheme, Button, Group } from '@mantine/core';
+
+function Demo() {
+  const { setColorScheme, clearColorScheme } = useMantineColorScheme();
+
+  return (
+    <Group>
+      <Button onClick={() => setColorScheme('light')}>Light</Button>
+      <Button onClick={() => setColorScheme('dark')}>Dark</Button>
+      <Button onClick={() => setColorScheme('auto')}>Auto</Button>
+      <Button onClick={clearColorScheme}>Clear</Button>
+    </Group>
+  );
+}
+```
 
 
 ## use-computed-color-scheme hook
@@ -53559,6 +55647,7 @@ function useMantineColorScheme(): {
 It can be used to implement color scheme toggle logic:
 
 ```tsx
+import {
   useComputedColorScheme,
   useMantineColorScheme,
 } from '@mantine/core';
@@ -53593,6 +55682,7 @@ inconsistent animations. To enable transitions during color scheme change, set `
 option on `useMantineColorScheme` hook:
 
 ```tsx
+import { useMantineColorScheme } from '@mantine/core';
 
 function Demo() {
   const { colorScheme, setColorScheme } = useMantineColorScheme({
@@ -53613,6 +55703,31 @@ value in your application to avoid hydration issues. Instead, you can use `dark`
 mixins from [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset) to generate styles that will
 hide elements based on color scheme value:
 
+#### Example: colorSchemeControl
+
+```tsx
+import { ActionIcon, useMantineColorScheme, useComputedColorScheme } from '@mantine/core';
+import { IconSun, IconMoon } from '@tabler/icons-react';
+import cx from 'clsx';
+import classes from './Demo.module.css';
+
+function Demo() {
+  const { setColorScheme } = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
+
+  return (
+    <ActionIcon
+      onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
+      variant="default"
+      size="xl"
+      aria-label="Toggle color scheme"
+    >
+      <IconSun className={cx(classes.icon, classes.light)} stroke={1.5} />
+      <IconMoon className={cx(classes.icon, classes.dark)} stroke={1.5} />
+    </ActionIcon>
+  );
+}
+```
 
 
 > **colorScheme for client only applications**
@@ -53632,6 +55747,7 @@ You can add any additional props to the `<script />` tag generated by `ColorSche
 for example, you can add [nonce](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) attribute:
 
 ```tsx
+import { ColorSchemeScript } from '@mantine/core';
 
 function Demo() {
   return (
@@ -53649,6 +55765,7 @@ Set `defaultColorScheme="auto"` on `MantineProvider` and `ColorSchemeScript` to 
 In this case color scheme value will be controlled by the user OS:
 
 ```tsx
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -53694,6 +55811,7 @@ Usually, it is better to wrap color scheme manager in a creator function to prov
 configure it. Default local storage based color scheme manager example:
 
 ```tsx
+import {
   isMantineColorScheme,
   MantineColorScheme,
   MantineColorSchemeManager,
@@ -53765,6 +55883,8 @@ export function localStorageColorSchemeManager({
 Then custom color scheme manager can be passed to [MantineProvider](https://mantine.dev/theming/mantine-provider):
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
+import { localStorageColorSchemeManager } from './localStorageColorSchemeManager';
 
 const colorSchemeManager = localStorageColorSchemeManager({
   key: 'my-color-scheme',
@@ -53786,6 +55906,7 @@ It is required to be set both on [MantineProvider](https://mantine.dev/theming/m
 `ColorSchemeScript`. If `defaultColorScheme` is not set, then `light` is used.
 
 ```tsx
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -53807,6 +55928,7 @@ It is required to be set both on [MantineProvider](https://mantine.dev/theming/m
 When `forceColorScheme` is set, it is not possible to change color scheme value with `setColorScheme` function.
 
 ```tsx
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -53825,6 +55947,25 @@ function Demo() {
 All Mantine components support `lightHidden` and `darkHidden` props that can be used to hide
 component in specific color scheme:
 
+#### Example: lightDarkHidden
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Button color="cyan" lightHidden>
+        Visible in dark color scheme only
+      </Button>
+
+      <Button color="pink" darkHidden>
+        Visible in light color scheme only
+      </Button>
+    </>
+  );
+}
+```
 
 
 ## With disabled JavaScript
@@ -53835,7 +55976,9 @@ attribute on the `<html />` element manually.
 Example with Next.js app router that supports disabled JavaScript:
 
 ```tsx
+import '@mantine/core/styles.css';
 
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
 export const metadata = {
   title: 'My Mantine app',
@@ -53874,6 +56017,7 @@ Colors are exposed on the [theme object](https://mantine.dev/theming/theme-objec
 you can access color shade by color name and index (0-9), colors with larger index are darker:
 
 ```tsx
+import { useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
@@ -53907,6 +56051,31 @@ You can add any number of extra colors to `theme.colors` object.
 This will allow you to use them in all components that support `color` prop, for example
 [Button](https://mantine.dev/core/button), [Badge](https://mantine.dev/core/badge) and [Switch](https://mantine.dev/core/switch).
 
+#### Example: colorsOverride
+
+```tsx
+import { Group, Button, MantineProvider, createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    'ocean-blue': ['#7AD1DD', '#5FCCDB', '#44CADC', '#2AC9DE', '#1AC2D9', '#11B7CD', '#09ADC3', '#0E99AC', '#128797', '#147885'],
+    'bright-pink': ['#F0BBDD', '#ED9BCF', '#EC7CC3', '#ED5DB8', '#F13EAF', '#F71FA7', '#FF00A1', '#E00890', '#C50E82', '#AD1374'],
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Group>
+        <Button color="ocean-blue">Ocean blue button</Button>
+        <Button color="bright-pink" variant="filled">
+          Bright pink button
+        </Button>
+      </Group>
+    </MantineProvider>
+  );
+}
+```
 
 
 > **10 shades per color**
@@ -53930,6 +56099,43 @@ properties as a single argument:
 
 To see the demo in action, switch between light and dark color schemes (`Ctrl + J`):
 
+#### Example: virtualColors
+
+```tsx
+// App.tsx
+import { createTheme, MantineProvider, virtualColor } from '@mantine/core';
+import { Demo } from './Demo';
+
+const theme = createTheme({
+  colors: {
+    primary: virtualColor({
+      name: 'primary',
+      dark: 'pink',
+      light: 'cyan',
+    }),
+  },
+});
+
+function App() {
+  return (
+    <MantineProvider theme={theme}>
+      <Demo />
+    </MantineProvider>
+  );
+}
+
+// Demo.tsx
+import { Box } from '@mantine/core';
+
+export function Demo() {
+  return (
+    <Box bg="primary" c="white" p="md" fw={700}>
+      This box has virtual background color,
+      it is pink in dark mode and cyan in light mode
+    </Box>
+  );
+}
+```
 
 
 ## colorsTuple
@@ -53940,6 +56146,7 @@ Use `colorsTuple` function to:
 * Transform dynamic string arrays to Mantine color tuple (the array should still have 10 values)
 
 ```tsx
+import { colorsTuple, createTheme } from '@mantine/core';
 
 const theme = createTheme({
   colors: {
@@ -53962,6 +56169,44 @@ You can use the following color formats in `theme.colors`:
 
 Example of adding oklch color to theme:
 
+#### Example: oklch
+
+```tsx
+import { MantineProvider, createTheme, Group, Button } from '@mantine/core';
+
+const theme = createTheme({
+  colors: {
+    'oklch-blue': [
+      'oklch(96.27% 0.0217 238.66)',
+      'oklch(92.66% 0.0429 240.01)',
+      'oklch(86.02% 0.0827 241.66)',
+      'oklch(78.2% 0.13 243.83)',
+      'oklch(71.8% 0.1686 246.06)',
+      'oklch(66.89% 0.1986 248.32)',
+      'oklch(62.59% 0.2247 250.29)',
+      'oklch(58.56% 0.2209 251.26)',
+      'oklch(54.26% 0.2067 251.67)',
+      'oklch(49.72% 0.1888 251.59)',
+    ],
+  }
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Group>
+        <Button color="oklch-blue">Filled</Button>
+        <Button color="oklch-blue" variant="outline">
+          Outline
+        </Button>
+        <Button color="oklch-blue" variant="light">
+          Light
+        </Button>
+      </Group>
+    </MantineProvider>
+  );
+}
+```
 
 
 ## primaryColor
@@ -53971,6 +56216,29 @@ Example of adding oklch color to theme:
 * As a default value for most of the components that support `color` prop
 * To set default focus ring outline color
 
+#### Example: primaryColor
+
+```tsx
+import { Group, Button, MantineProvider, createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  primaryColor: 'bright-pink',
+  colors: {
+    'bright-pink': ['#F0BBDD', '#ED9BCF', '#EC7CC3', '#ED5DB8', '#F13EAF', '#F71FA7', '#FF00A1', '#E00890', '#C50E82', '#AD1374'],
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Group>
+        <Button>Primary button</Button>
+        <Button color="blue">Blue button</Button>
+      </Group>
+    </MantineProvider>
+  );
+}
+```
 
 
 > **CSS color values at `theme.primaryColor`**
@@ -53998,11 +56266,29 @@ Example of adding oklch color to theme:
 
 `theme.primaryShade` is a number from 0 to 9. It determines which shade will be used for the components that have `color` prop.
 
+#### Example: primaryShadeConfigurator
+
+```tsx
+import { MantineProvider, Button, Group } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider theme={{ primaryShade:  }}>
+      <Group>
+        <Button>Filled</Button>
+        <Button variant="light">Light</Button>
+        <Button variant="outline">Outline</Button>
+      </Group>
+    </MantineProvider>
+  );
+}
+```
 
 
 You can also customize primary shade for dark and light color schemes separately:
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -54021,12 +56307,69 @@ Components that support changing their color have `color` prop. This prop suppor
 * Key of `theme.colors` with color index, for example, `blue.5` or `green.9`
 * CSS color value, for example, `#fff` or `rgba(0, 0, 0, 0.5)`
 
+#### Example: colorProp
+
+```tsx
+import { Group, Button, Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Text size="sm" mb={5} fw={500}>
+        Filled variant
+      </Text>
+      <Group>
+        <Button color="cyan">Theme color</Button>
+        <Button color="#1D72FE">Hex color</Button>
+      </Group>
+
+      <Text size="sm" mb={5} mt="md" fw={500}>
+        Light variant
+      </Text>
+      <Group>
+        <Button variant="light" color="cyan">
+          Theme color
+        </Button>
+        <Button variant="light" color="#1D72FE">
+          Hex color
+        </Button>
+      </Group>
+
+      <Text size="sm" mb={5} mt="md" fw={500}>
+        Outline variant
+      </Text>
+      <Group>
+        <Button variant="outline" color="cyan">
+          Theme color
+        </Button>
+        <Button variant="outline" color="#1D72FE">
+          Hex color
+        </Button>
+      </Group>
+    </>
+  );
+}
+```
 
 
 ## Colors index reference
 
 You can reference colors by index in `color` prop and [style props](https://mantine.dev/styles/style-props), for example `c` prop:
 
+#### Example: colorsIndexConfigurator
+
+```tsx
+import { Button, Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Text c="blue.">Text with blue. color</Text>
+      <Button color="cyan.">Button</Button>
+    </>
+  );
+}
+```
 
 
 ## Difference between color and c props
@@ -54046,6 +56389,19 @@ You can combine both props to achieve better contrast between text and backgroun
 * `color` prop sets all `background: #C3FF36` and `color: var(--mantine-color-white)`
 * `c` prop overrides color styles to `color: var(--mantine-color-black)`
 
+#### Example: colorAndCProps
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Button color="#C3FF36" c="black">
+      Button with color and c props
+    </Button>
+  );
+}
+```
 
 
 ## Colors variant resolver
@@ -54085,6 +56441,77 @@ interface VariantColorResolverResult {
 You can use `theme.variantColorResolver` to customize colors handling by default variants
 or to add new variants support:
 
+#### Example: variantColorsResolver
+
+```tsx
+import {
+  Button,
+  Group,
+  MantineProvider,
+  defaultVariantColorsResolver,
+  VariantColorsResolver,
+  parseThemeColor,
+  rgba,
+  darken,
+} from '@mantine/core';
+
+const variantColorResolver: VariantColorsResolver = (input) => {
+  const defaultResolvedColors = defaultVariantColorsResolver(input);
+  const parsedColor = parseThemeColor({
+    color: input.color || input.theme.primaryColor,
+    theme: input.theme,
+  });
+
+  // Override some properties for variant
+  if (parsedColor.isThemeColor && parsedColor.color === 'lime' && input.variant === 'filled') {
+    return {
+      ...defaultResolvedColors,
+      color: 'var(--mantine-color-black)',
+      hoverColor: 'var(--mantine-color-black)',
+    };
+  }
+
+  // Completely override variant
+  if (input.variant === 'light') {
+    return {
+      background: rgba(parsedColor.value, 0.1),
+      hover: rgba(parsedColor.value, 0.15),
+      border: `1px solid ${parsedColor.value}`,
+      color: darken(parsedColor.value, 0.1),
+    };
+  }
+
+  // Add new variants support
+  if (input.variant === 'danger') {
+    return {
+      background: 'var(--mantine-color-red-9)',
+      hover: 'var(--mantine-color-red-8)',
+      color: 'var(--mantine-color-white)',
+      border: 'none',
+    };
+  }
+
+  return defaultResolvedColors;
+};
+
+function Demo() {
+  return (
+    <MantineProvider theme={{ variantColorResolver }}>
+      <Group>
+        <Button color="lime.4" variant="filled">
+          Lime filled button
+        </Button>
+
+        <Button color="orange" variant="light">
+          Orange light button
+        </Button>
+
+        <Button variant="danger">Danger button</Button>
+      </Group>
+    </MantineProvider>
+  );
+}
+```
 
 
 ## Colors generation
@@ -54092,12 +56519,22 @@ or to add new variants support:
 You can use [colors generator](https://mantine.dev/colors-generator) to generate 10 shades of color based on a single value
 or install `@mantine/colors-generator` package to generate dynamic colors in your application:
 
+```bash
+yarn add chroma-js @mantine/colors-generator
+```
+
+```bash
+npm install chroma-js @mantine/colors-generator
+```
+
 The package exports `generateColors` function that accepts a color value and returns an array of 10 shades.
 Note that `generateColors` function works best with darker colors (blue, violet, red) and may produce
 colors with poor contrast for lighter colors (yellow, teal, orange). Usually, it is better to generate
 colors in advance to avoid contrast issues.
 
 ```tsx
+import { generateColors } from '@mantine/colors-generator';
+import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -54123,6 +56560,7 @@ function Demo() {
 TypeScript will only autocomplete Mantine's default colors when accessing the theme. To add your custom colors to the MantineColor type, you can use TypeScript module declaration.
 
 ```ts
+import {
   DefaultMantineColor,
   MantineColorsTuple,
 } from '@mantine/core';
@@ -54140,6 +56578,28 @@ declare module '@mantine/core' {
 ```
 
 
+#### Styles API
+
+Colors component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**Colorswatch selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Colorswatch-root | Root element |
+| alphaOverlay | .mantine-Colorswatch-alphaOverlay | Overlay with checkerboard pattern |
+| shadowOverlay | .mantine-Colorswatch-shadowOverlay | Overlay with inner box-shadow |
+| colorOverlay | .mantine-Colorswatch-colorOverlay | Overlay with given color background |
+| childrenOverlay | .mantine-Colorswatch-childrenOverlay | Overlay with `children` inside |
+
+**Colorswatch CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --cs-radius | Controls `border-radius` of all overlays and `root` element |
+| root | --cs-size | Controls `width`, `height`, `min-width` and `min-height` of the `root` element |
+
+
 --------------------------------------------------------------------------------
 
 ### DefaultProps
@@ -54149,6 +56609,35 @@ declare module '@mantine/core' {
 You can define default props for every Mantine component by setting `theme.components`.
 These props will be used by default by all components of your application unless they are overridden by component props:
 
+#### Example: defaultProps
+
+```tsx
+import { MantineProvider, Button, Group, createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  components: {
+    Button: Button.extend({
+      defaultProps: {
+        color: 'cyan',
+        variant: 'outline',
+      },
+    }),
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Group>
+        <Button>Default button</Button>
+        <Button color="red" variant="filled">
+          Button with props
+        </Button>
+      </Group>
+    </MantineProvider>
+  );
+}
+```
 
 
 ## Default props with MantineThemeProvider
@@ -54157,6 +56646,7 @@ You can also use `MantineThemeProvider` to define default props
 for a part of your application:
 
 ```tsx
+import {
   Button,
   createTheme,
   MantineThemeProvider,
@@ -54192,6 +56682,7 @@ Some components like [Menu](https://mantine.dev/core/menu/) and [Tabs](https://m
 `Menu.Item`, `Tabs.List`, etc.. You can add default props to these components by omitting the dot from component name:
 
 ```tsx
+import {
   createTheme,
   MantineProvider,
   Menu,
@@ -54230,6 +56721,48 @@ You can use `useProps` hook to add default props support to any custom component
 * `defaultProps` – default props on component level – these props are used when default props are not defined on theme
 * `props` – props passed to component
 
+#### Example: usePropsHook
+
+```tsx
+import { useProps, MantineThemeProvider, createTheme } from '@mantine/core';
+
+interface CustomComponentProps {
+  color?: string;
+  children?: React.ReactNode;
+}
+
+const defaultProps = {
+  color: 'red',
+} satisfies Partial<CustomComponentProps>;
+
+function CustomComponent(props: CustomComponentProps) {
+  const { color, children } = useProps('CustomComponent', defaultProps, props);
+  return <div style={{ color }}>{children}</div>;
+}
+
+const theme = createTheme({
+  components: {
+    CustomComponent: {
+      defaultProps: {
+        color: 'green',
+      },
+    },
+  },
+});
+
+function Demo() {
+  return (
+    <div>
+      <CustomComponent>Default color</CustomComponent>
+
+      <MantineThemeProvider theme={theme}>
+        <CustomComponent>Provider color</CustomComponent>
+        <CustomComponent color="blue">Prop color</CustomComponent>
+      </MantineThemeProvider>
+    </div>
+  );
+}
+```
 
 
 ## withProps function
@@ -54238,6 +56771,8 @@ All Mantine components have `withProps` static function that can be used to
 add default props to the component:
 
 ```tsx
+import { IMaskInput } from 'react-imask';
+import { Button, InputBase } from '@mantine/core';
 
 const LinkButton = Button.withProps({
   component: 'a',
@@ -54282,6 +56817,7 @@ application and should be used only once.
 ## Usage
 
 ```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   /** Your theme override here */
@@ -54355,6 +56891,7 @@ Pass [theme object](https://mantine.dev/theming/theme-object) override to `theme
 theme and used in all components.
 
 ```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   fontFamily: 'Open Sans, sans-serif',
@@ -54378,6 +56915,7 @@ implementation to `colorSchemeManager` prop. You can learn more about color sche
 [color schemes guide](https://mantine.dev/theming/color-schemes).
 
 ```tsx
+import {
   localStorageColorSchemeManager,
   MantineProvider,
 } from '@mantine/core';
@@ -54403,6 +56941,7 @@ Possible values are `light`, `dark` and `auto`. By default, color scheme value i
 You can learn more about color scheme management in the [color schemes guide](https://mantine.dev/theming/color-schemes).
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -54421,6 +56960,7 @@ and `cssVariablesResolver`, then these variables are rendered into `<style />` t
 You can learn more about Mantine CSS variables in the [CSS variables guide](https://mantine.dev/styles/css-variables/).
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -54439,6 +56979,7 @@ via `.css` file (Note that in this case you will need to generate all theme toke
 that are not a part of the default theme on your side).
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -54456,6 +56997,7 @@ By default, it is set to `true`. If set to `false`, all Mantine CSS variables wi
 even if they have the same value as in the default theme.
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -54474,6 +57016,7 @@ attribute will be added to `<html />` tag. You can learn more about color scheme
 [color schemes guide](https://mantine.dev/theming/color-schemes).
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
 
 const getRootElement = () =>
   typeof window === 'undefined' ? undefined : document.body;
@@ -54493,6 +57036,7 @@ function Demo() {
 Default value is `mantine` – all components will have `mantine-` prefix in their **static classes**.
 
 ```tsx
+import { MantineProvider, Text } from '@mantine/core';
 
 function Demo() {
   return (
@@ -54512,6 +57056,7 @@ In this case (default `classNamesPrefix`), [Text](https://mantine.dev/core/text)
 With `classNamesPrefix` you can change only **static class**:
 
 ```tsx
+import { MantineProvider, Text } from '@mantine/core';
 
 function Demo() {
   return (
@@ -54534,6 +57079,7 @@ Now [Text](https://mantine.dev/core/text) component will have the following clas
 By default, static classes are enabled, to disable them set `withStaticClasses` to `false`:
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -54552,6 +57098,7 @@ By default, global classes are enabled, to disable them set `withGlobalClasses` 
 disabling global classes may break styles of some components.
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -54582,6 +57129,7 @@ might impact tests and/or make it harder to test components:
 To enable test environment, set `env` to `test`:
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -54744,6 +57292,7 @@ To customize theme, pass theme override object to [MantineProvider](https://mant
 Theme override will be deeply merged with the default theme.
 
 ```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   colors: {
@@ -54830,6 +57379,37 @@ and changes text color to either `theme.white` or `theme.black` accordingly.
 `autoContrast` can be set globally on the theme level or individually for each component via `autoContrast` prop,
 except for [Spotlight](https://mantine.dev/x/spotlight) and [@mantine/dates](https://mantine.dev/dates/getting-started) components which only support global theme setting.
 
+#### Example: autoContrast
+
+```tsx
+import { Button, Code, Group } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Code>autoContrast: true</Code>
+      <Group mt="xs" mb="lg">
+        <Button color="lime.4" autoContrast>
+          Lime.4 button
+        </Button>
+        <Button color="blue.2" autoContrast>
+          Blue.2 button
+        </Button>
+        <Button color="orange.3" autoContrast>
+          Orange.3 button
+        </Button>
+      </Group>
+
+      <Code>autoContrast: false</Code>
+      <Group mt="xs">
+        <Button color="lime.4">Lime.4 button</Button>
+        <Button color="blue.2">Blue.2 button</Button>
+        <Button color="orange.3">Orange.3 button</Button>
+      </Group>
+    </>
+  );
+}
+```
 
 
 ### luminanceThreshold
@@ -54837,6 +57417,26 @@ except for [Spotlight](https://mantine.dev/x/spotlight) and [@mantine/dates](htt
 `luminanceThreshold` controls which luminance value is used to determine if text color should be light or dark.
 It is used only if `theme.autoContrast` is set to `true`. Default value is `0.3`.
 
+#### Example: luminanceThreshold
+
+```tsx
+import { Button, createTheme, MantineProvider, Stack } from '@mantine/core';
+
+const theme = createTheme({
+  autoContrast: true,
+  luminanceThreshold: ,
+});
+
+function Wrapper(props: any) {
+  const buttons = Array(10)
+    .fill(0)
+    .map((_, index) => (
+      <Button
+        key={index}
+        color=${
+          parseThemeColor({ theme: DEFAULT_THEME, color: props.color }).isThemeColor
+            ?
+```
 
 
 ### focusRing
@@ -54847,6 +57447,46 @@ It is used only if `theme.autoContrast` is set to `true`. Default value is `0.3`
 * `always` – focus ring is visible when user navigates with keyboard and mouse, for example, the focus ring will be visible when user clicks on a button
 * `never` – focus ring is always hidden, it is not recommended – users who navigate with keyboard will not have visual indication of the current focused element
 
+#### Example: focusRing
+
+```tsx
+function Demo() {
+  return (
+    <>
+      <Text>
+        Focus ring: <Code>auto</Code>
+      </Text>
+
+      <Group mt="xs">
+        <Button size="xs">Button 1</Button>
+        <Button size="xs">Button 2</Button>
+      </Group>
+
+      <MantineThemeProvider inherit theme={{ focusRing: 'always' }}>
+        <Text mt="lg">
+          Focus ring: <Code>always</Code>
+        </Text>
+
+        <Group mt="xs">
+          <Button size="xs">Button 1</Button>
+          <Button size="xs">Button 2</Button>
+        </Group>
+      </MantineThemeProvider>
+
+      <MantineThemeProvider inherit theme={{ focusRing: 'never' }}>
+        <Text mt="lg">
+          Focus ring: <Code>never</Code>
+        </Text>
+
+        <Group mt="xs">
+          <Button size="xs">Button 1</Button>
+          <Button size="xs">Button 2</Button>
+        </Group>
+      </MantineThemeProvider>
+    </>
+  );
+}
+```
 
 
 ### focusClassName
@@ -54871,6 +57511,19 @@ It can be used to customize active styles of all interactive components.
 
 To disable active styles for all components, set `theme.activeClassName` to an empty string:
 
+#### Example: activeClassNameEmpty
+
+```tsx
+import { MantineProvider, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider theme={{ activeClassName: '' }}>
+      <Button>No active styles</Button>
+    </MantineProvider>
+  );
+}
+```
 
 
 ### defaultRadius
@@ -54880,6 +57533,20 @@ You can set to either one of the values from `theme.radius` or a number/string t
 converted to rem. For example, `theme.defaultRadius: 4` will be converted to `0.25rem`.
 You can learn more about rem conversion in the [rem units guide](https://mantine.dev/styles/rem).
 
+#### Example: defaultRadiusConfigurator
+
+```tsx
+import { MantineProvider, TextInput, Button } from '@mantine/core';
+
+function Demo() {
+  return (
+    <MantineProvider theme={{ defaultRadius: '' }}>
+      <Button fullWidth>Button with defaultRadius</Button>
+      <TextInput mt="sm" label="TextInput with defaultRadius" placeholder="TextInput with default radius" />
+    </MantineProvider>
+  );
+}
+```
 
 
 ### cursorType
@@ -54887,6 +57554,27 @@ You can learn more about rem conversion in the [rem units guide](https://mantine
 `theme.cursorType` controls the default cursor type for interactive elements,
 that do not have `cursor: pointer` styles by default. For example, [Checkbox](https://mantine.dev/core/checkbox) and [NativeSelect](https://mantine.dev/core/native-select).
 
+#### Example: cursorType
+
+```tsx
+import { MantineProvider, createTheme, Checkbox } from '@mantine/core';
+
+const theme = createTheme({
+  cursorType: 'pointer',
+});
+
+function Demo() {
+  return (
+    <>
+      <Checkbox label="Default cursor" />
+
+      <MantineProvider theme={theme}>
+        <Checkbox label="Pointer cursor" mt="md" />
+      </MantineProvider>
+    </>
+  );
+}
+```
 
 
 ### defaultGradient
@@ -54894,6 +57582,27 @@ that do not have `cursor: pointer` styles by default. For example, [Checkbox](ht
 `theme.defaultGradient` controls the default gradient configuration for components that support `variant="gradient"`
 ([Button](https://mantine.dev/core/button), [ActionIcon](https://mantine.dev/core/action-icon), [Badge](https://mantine.dev/core/badge), etc.).
 
+#### Example: defaultGradient
+
+```tsx
+import { MantineProvider, createTheme, Button } from '@mantine/core';
+
+const theme = createTheme({
+  defaultGradient: {
+    from: 'orange',
+    to: 'red',
+    deg: 45,
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Button variant="gradient">Button with custom default gradient</Button>
+    </MantineProvider>
+  );
+}
+```
 
 
 ### components
@@ -54906,6 +57615,7 @@ You can learn more about these features in [default props](https://mantine.dev/t
 `theme.other` is an object that can be used to store any other properties that you want to access with the theme objects.
 
 ```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   other: {
@@ -54932,6 +57642,7 @@ function Demo() {
 To store theme override object in a variable, use `createTheme` function:
 
 ```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const myTheme = createTheme({
   primaryColor: 'orange',
@@ -54952,6 +57663,7 @@ function Demo() {
 Use `mergeThemeOverrides` function to merge multiple themes into one theme override object:
 
 ```tsx
+import {
   createTheme,
   MantineProvider,
   mergeThemeOverrides,
@@ -54984,6 +57696,7 @@ function Demo() {
 `useMantineTheme` hook returns theme object from [MantineProvider](https://mantine.dev/theming/mantine-provider) context:
 
 ```tsx
+import { useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
@@ -54999,6 +57712,7 @@ all theme properties with default values. When you pass theme override to
 the default theme.
 
 ```tsx
+import { DEFAULT_THEME } from '@mantine/core';
 ```
 
 ## Access theme outside of components
@@ -55008,6 +57722,7 @@ To access theme outside of components, you need to create a full theme object
 
 ```tsx
 // theme.ts
+import {
   createTheme,
   DEFAULT_THEME,
   mergeMantineTheme,
@@ -55024,6 +57739,7 @@ export const theme = mergeMantineTheme(DEFAULT_THEME, themeOverride);
 Then you will be able to import it anywhere in your application:
 
 ```tsx
+import { theme } from './theme';
 ```
 
 
@@ -55044,6 +57760,27 @@ You can change fonts and other text styles for headings, code and all other comp
 * `theme.fontFamilyMonospace` – controls font-family of components that require monospace font: [Code](https://mantine.dev/core/code/), [Kbd](https://mantine.dev/core/kbd/) and [CodeHighlight](https://mantine.dev/x/code-highlight/)
 * `theme.headings.fontFamily` – controls font-family of h1-h6 tags in [Title](https://mantine.dev/core/title/) and [Typography](https://mantine.dev/core/typography/) components, fallbacks to `theme.fontFamily` if not defined
 
+#### Example: fonts
+
+```tsx
+import { Button, Code, Title, MantineProvider, createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  fontFamily: 'Verdana, sans-serif',
+  fontFamilyMonospace: 'Monaco, Courier, monospace',
+  headings: { fontFamily: 'Outfit, sans-serif' },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Title order={3}>Outfit or sans-serif title</Title>
+      <Button>Verdana button</Button>
+      <Code>Monaco, Courier Code</Code>
+    </MantineProvider>
+  );
+}
+```
 
 
 ## System fonts
@@ -55063,11 +57800,28 @@ Default values for theme properties:
 
 ## Font sizes
 
+#### Example: fontSizeConfigurator
+
+```tsx
+import { Text } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Text fz="" lh="">
+      Paras is an orange, insectoid Pokémon that resembles the nymph stage of a cicada. Its ovoid
+      body is segmented, and it has three pairs of legs. The foremost pair of legs is the largest
+      and has sharp claws at the tips. There are five specks on its forehead and three teeth on
+      either side of its mouth. It has circular eyes with large pseudopupils.
+    </Text>
+  );
+}
+```
 
 
 `theme.fontSizes` property defines font-size values for all Mantine components:
 
 ```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   fontSizes: {
@@ -55096,6 +57850,7 @@ Default `theme.fontSizes` values:
 most other components use `theme.lineHeights.md` by default:
 
 ```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   lineHeights: {
@@ -55124,6 +57879,7 @@ To customize headings styles in [Title](https://mantine.dev/core/title/) and [Ty
 set `theme.headings`:
 
 ```tsx
+import { createTheme, MantineProvider, rem } from '@mantine/core';
 
 const theme = createTheme({
   headings: {
@@ -55158,6 +57914,35 @@ With `theme.headings` you can customize font-size, font-weight and line-height p
 If you need more control over styles, use [:is selector](https://developer.mozilla.org/en-US/docs/Web/CSS/:is)
 with [Styles API](https://mantine.dev/styles/styles-api) to target specific heading level:
 
+#### Example: headingsStyles
+
+```tsx
+import { Title, MantineProvider } from '@mantine/core';
+import classes from './Demo.module.css';
+
+const theme = createTheme({
+  components: {
+    Title: Title.extend({
+      classNames: {
+        root: classes.heading,
+      },
+    }),
+  },
+});
+
+function Demo() {
+  return (
+    <MantineThemeProvider theme={theme}>
+      <Title order={1}>Heading 1</Title>
+      <Title order={2}>Heading 2</Title>
+      <Title order={3}>Heading 3</Title>
+      <Title order={4}>Heading 4</Title>
+      <Title order={5}>Heading 5</Title>
+      <Title order={6}>Heading 6</Title>
+    </MantineThemeProvider>
+  );
+}
+```
 
 
 
@@ -55169,19 +57954,13 @@ with [Styles API](https://mantine.dev/styles/styles-api) to target specific head
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Typography component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-  }
-```
+**Typography selectors**
 
-CSS variables:
-
-```typescript
-{}
-```
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Typography-root | Root element |
 
 
 --------------------------------------------------------------------------------
@@ -55201,6 +57980,7 @@ or extract information before using them as CSS value.
 they accept color in any format as first argument and the amount of lightness to add/remove as second argument.
 
 ```tsx
+import { darken, lighten } from '@mantine/core';
 
 lighten('#228BE6', 0.1); // lighten by 10%
 // -> rgba(56, 151, 233, 1)
@@ -55224,6 +58004,7 @@ Note that `color-mix` is not supported in some older browsers, you can check [ca
 for more information.
 
 ```tsx
+import { alpha } from '@mantine/core';
 
 alpha('#4578FC', 0.45); // -> rgba(69, 120, 252, 0.45)
 alpha('var(--mantine-color-gray-4)', 0.74);
@@ -55280,6 +58061,7 @@ for example in [CSS variables resolver](https://mantine.dev/styles/css-variables
 or component body:
 
 ```tsx
+import {
   MantineColor,
   parseThemeColor,
   useMantineTheme,
@@ -55311,6 +58093,7 @@ function Demo({ color }: DemoProps) {
 as first argument and theme object as second argument. It returns parsed color value or CSS variable:
 
 ```tsx
+import { getThemeColor, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
@@ -55327,6 +58110,7 @@ function Demo() {
 `getGradient` function transforms given `MantineGradient` object to CSS gradient string:
 
 ```tsx
+import { getGradient, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const theme = useMantineTheme();
@@ -55341,6 +58125,7 @@ function Demo() {
 `isLightColor` function can be used to achieve better contrast between text and background:
 
 ```tsx
+import { Box, isLightColor } from '@mantine/core';
 
 interface DemoProps {
   color: string;
@@ -55360,6 +58145,7 @@ export function Demo({ color }: DemoProps) {
 `luminance` function returns color luminance, it can be used to check colors contrast:
 
 ```tsx
+import { luminance } from '@mantine/core';
 
 luminance('#fff'); // -> 1
 luminance('#000'); // -> 0
@@ -55383,6 +58169,8 @@ component is based on [UnstyledButton](https://mantine.dev/core/unstyled-button/
 you need to import styles for `UnstyledButton` as well.
 
 ```tsx
+import '@mantine/core/styles/UnstyledButton.css';
+import '@mantine/core/styles/Button.css';
 ```
 
 Some components like [Select](https://mantine.dev/core/select/) do not have any styles on their own – they are built
@@ -55393,6 +58181,21 @@ If you are not sure which components are used in a particular component, you can
 all styles for components that are reused in other components:
 
 ```tsx
+import '@mantine/core/styles/ScrollArea.css';
+import '@mantine/core/styles/UnstyledButton.css';
+import '@mantine/core/styles/VisuallyHidden.css';
+import '@mantine/core/styles/Paper.css';
+import '@mantine/core/styles/Popover.css';
+import '@mantine/core/styles/CloseButton.css';
+import '@mantine/core/styles/Group.css';
+import '@mantine/core/styles/Loader.css';
+import '@mantine/core/styles/Overlay.css';
+import '@mantine/core/styles/ModalBase.css';
+import '@mantine/core/styles/Input.css';
+import '@mantine/core/styles/InlineInput.css';
+import '@mantine/core/styles/Flex.css';
+import '@mantine/core/styles/FloatingIndicator.css';
+import '@mantine/core/styles/ActionIcon.css';
 ```
 
 ## Global styles
@@ -55405,6 +58208,9 @@ all other styles:
 * `global.css` – global classes used in Mantine components
 
 ```tsx
+import '@mantine/core/styles/baseline.css';
+import '@mantine/core/styles/default-css-variables.css';
+import '@mantine/core/styles/global.css';
 ```
 
 ## Import order
@@ -55415,10 +58221,14 @@ It is important to keep correct styles import order. For example, if you want to
 
 ```tsx
 // ✅ Correct order – Button styles will override UnstyledButton styles
+import '@mantine/core/styles/UnstyledButton.css';
+import '@mantine/core/styles/Button.css';
 ```
 
 ```tsx
 // ❌ Incorrect order – UnstyledButton styles will override Button styles
+import '@mantine/core/styles/Button.css';
+import '@mantine/core/styles/UnstyledButton.css';
 ```
 
 ## Files list
@@ -55454,6 +58264,7 @@ to do is to create `*.module.css` file:
 And then import it in your component:
 
 ```tsx
+import classes from './Button.module.css';
 
 function Demo() {
   return (
@@ -55483,6 +58294,7 @@ For example, when you import the following file in your `.js`/`.ts` file:
 You will get an object with unique class names:
 
 ```tsx
+import classes from './Button.module.css';
 
 console.log(classes);
 // -> Object of scoped class names: key is a class name, value is a generated unique class name
@@ -55518,11 +58330,54 @@ You can add styles to most of Mantine components using `className` prop
 – the same way as you would do with a regular HTML element.
 To set properties to your [theme](https://mantine.dev/theming/theme-object) values, you can use [Mantine CSS variables](https://mantine.dev/styles/css-variables):
 
+#### Example: className
+
+```tsx
+import { Box } from '@mantine/core';
+import classes from './Demo.module.css';
+
+function Demo() {
+  return (
+    <Box className={classes.box}>
+      Box component with <span className={classes.highlight}>some styles</span>
+    </Box>
+  );
+}
+```
 
 
 To apply styles to inner elements of Mantine components with CSS modules, you can use `classNames` prop
 (see [Styles API](https://mantine.dev/styles/styles-api) for more information):
 
+#### Example: classNames
+
+```tsx
+import { useState } from 'react';
+import { TextInput } from '@mantine/core';
+import classes from './Demo.module.css';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  const [focused, setFocused] = useState(false);
+  const floating = focused || value.length > 0 || undefined;
+
+  return (
+    <TextInput
+      label="Floating label input"
+      labelProps={{ 'data-floating': floating }}
+      classNames={{
+        root: classes.root,
+        input: classes.input,
+        label: classes.label,
+      }}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
+      value={value}
+      onChange={(event) => setValue(event.currentTarget.value)}
+    />
+  );
+}
+```
 
 
 ## Styling Mantine components without CSS modules
@@ -55536,6 +58391,7 @@ There are two main strategies to apply styles with a third-party library:
 Example of applying styles with a utility CSS library:
 
 ```tsx
+import { TextInput } from '@mantine/core';
 
 function Demo() {
   return (
@@ -55571,6 +58427,8 @@ You can combine both approaches to achieve desired results, for example,
 a given component, and you can use static selectors to style inner elements:
 
 ```tsx
+import styled from '@emotion/styled';
+import { Slider } from '@mantine/core';
 
 const StyledSlider = styled(Slider)`
   & .mantine-Slider-bar {
@@ -55656,6 +58514,7 @@ You can control these variables in the [theme](https://mantine.dev/theming/theme
 will be the same as `--mantine-font-family`.
 
 ```tsx
+import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   // Controls --mantine-font-family
@@ -55675,6 +58534,7 @@ If you want to use system fonts as a fallback for custom fonts, you can referenc
 value instead of defining it manually:
 
 ```tsx
+import { createTheme, DEFAULT_THEME } from '@mantine/core';
 
 const theme = createTheme({
   fontFamily: `Roboto, ${DEFAULT_THEME.fontFamily}`,
@@ -55704,6 +58564,7 @@ And in [ff style prop](https://mantine.dev/styles/style-props):
 * `ff="heading"` will use `--mantine-font-family-headings` variable
 
 ```tsx
+import { Text } from '@mantine/core';
 
 function Demo() {
   return (
@@ -55755,6 +58616,7 @@ You can reference font size variables in CSS:
 And in [fz style prop](https://mantine.dev/styles/style-props):
 
 ```tsx
+import { Text } from '@mantine/core';
 
 function Demo() {
   return (
@@ -55768,6 +58630,7 @@ function Demo() {
 To define custom font sizes, can use `theme.fontSizes` property:
 
 ```tsx
+import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   fontSizes: {
@@ -55784,6 +58647,7 @@ Note that `theme.fontSizes` object is merged with the `DEFAULT_THEME.fontSizes` 
 it is not required to define all values, only those that you want to change.
 
 ```tsx
+import { createTheme } from '@mantine/core';
 
 // Changes only xs font size,
 // other values will be taken from the DEFAULT_THEME
@@ -55798,6 +58662,7 @@ You can add any number of additional font sizes to the `theme.fontSizes` object.
 These values will be defined as CSS variables in `--mantine-font-size-{size}` format:
 
 ```tsx
+import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   fontSizes: {
@@ -55867,6 +58732,7 @@ You can reference line height variables in your CSS:
 And in [lh style prop](https://mantine.dev/styles/style-props):
 
 ```tsx
+import { Text } from '@mantine/core';
 
 function Demo() {
   return (
@@ -55880,6 +58746,7 @@ function Demo() {
 To define custom line heights, you can use `theme.lineHeights` property:
 
 ```tsx
+import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   lineHeights: {
@@ -56032,6 +58899,7 @@ You can reference heading variables in your CSS:
 And in [fz and lh style props](https://mantine.dev/styles/style-props):
 
 ```tsx
+import { Box } from '@mantine/core';
 
 function Demo() {
   return (
@@ -56045,6 +58913,7 @@ function Demo() {
 To change heading styles, can use `theme.headings` property:
 
 ```tsx
+import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   headings: {
@@ -56069,6 +58938,7 @@ const theme = createTheme({
 it is not required to define all values, only those that you want to change.
 
 ```tsx
+import { createTheme } from '@mantine/core';
 
 // Changes only font-size of h1,
 // other values will be taken from the DEFAULT_THEME
@@ -56109,6 +58979,7 @@ If you need to override font smoothing values, the best way is to disable `theme
 on the body element:
 
 ```tsx
+import { createTheme } from '@mantine/core';
 
 // Disable font smoothing in your theme
 const theme = createTheme({
@@ -56133,6 +59004,7 @@ referenced by its name and shade index, for example, `--mantine-color-red-6`.
 You can define new colors on the theme object or override existing colors:
 
 ```tsx
+import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   colors: {
@@ -56252,6 +59124,7 @@ For example, for the default `blue` color the following CSS variables are define
 For example, if you use [Button](https://mantine.dev/core/button) component the following way:
 
 ```tsx
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -56452,6 +59325,7 @@ spacing-related properties. The following CSS variables are defined based on `th
 To define custom spacing values, use `theme.spacing` property:
 
 ```tsx
+import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   spacing: {
@@ -56500,6 +59374,7 @@ value. If `radius` prop on components is not set explicitly, `--mantine-radius-d
 To define custom border radius values, use `theme.radius` and `theme.defaultRadius` properties:
 
 ```tsx
+import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   defaultRadius: 'sm',
@@ -56551,6 +59426,7 @@ variables are defined based on `theme.shadows`:
 To define custom shadow values, use `theme.shadows` property:
 
 ```tsx
+import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   shadows: {
@@ -56605,6 +59481,7 @@ You can reference z-index variables in CSS:
 And in components by referencing CSS variable:
 
 ```tsx
+import { Modal } from '@mantine/core';
 
 function Demo() {
   return (
@@ -56633,6 +59510,7 @@ argument and returns an object with CSS variables divided into three groups:
 Example of adding new CSS variables based on `theme.other`:
 
 ```tsx
+import {
   createTheme,
   CSSVariablesResolver,
   MantineProvider,
@@ -56695,6 +59573,84 @@ styles: one class with shared styles and any number of `data-*` attributes as mo
 
 Example of applying styles with `data-*` attributes:
 
+#### Example: dataAttributes
+
+```tsx
+// Demo.module.css
+.root {
+  border-top-left-radius: var(--mantine-radius-xl);
+  border-bottom-left-radius: var(--mantine-radius-xl);
+  padding-left: 4px;
+
+  /* The following styles will be applied only when button is disabled */
+  &[data-disabled] {
+    /* You can use Mantine PostCSS mixins inside data attributes */
+    @mixin light {
+      border: 1px solid var(--mantine-color-gray-2);
+    }
+
+    @mixin dark {
+      border: 1px solid var(--mantine-color-dark-4);
+    }
+
+    /* You can target child elements that are inside .root[data-disabled] */
+    & .section[data-position='left'] {
+      opacity: 0.6;
+    }
+  }
+}
+
+.section {
+  /* Apply styles only to left section */
+  &[data-position='left'] {
+    --section-size: calc(var(--button-height) - 8px);
+
+    background-color: var(--mantine-color-body);
+    color: var(--mantine-color-text);
+    height: var(--section-size);
+    width: var(--section-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--mantine-radius-xl);
+  }
+
+  &[data-position='right'] {
+    @mixin rtl {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+// Demo.tsx
+import { Button, ButtonProps, Group } from '@mantine/core';
+import { IconArrowRight } from '@tabler/icons-react';
+import classes from './Demo.module.css';
+
+function SendFilesButton(props: ButtonProps & React.ComponentPropsWithoutRef<'button'>) {
+  return <Button {...props} radius="md" classNames={classes} />;
+}
+
+function Demo() {
+  return (
+    <Group>
+      <SendFilesButton
+        leftSection="12"
+        rightSection={<IconArrowRight size={18} />}
+      >
+        Send files
+      </SendFilesButton>
+      <SendFilesButton
+        leftSection="3"
+        rightSection={<IconArrowRight size={18} />}
+        disabled
+      >
+        Send files
+      </SendFilesButton>
+    </Group>
+  );
+}
+```
 
 
 ## data attributes values
@@ -56704,6 +59660,7 @@ state or a feature. For example, when the `disabled` prop on [Button](https://ma
 the `data-disabled` attribute is added to the `<button />` element:
 
 ```tsx
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -56745,6 +59702,7 @@ component's `section` element has an associated `data-position` attribute which 
 `data-position="left"` and another with `data-position="right"`:
 
 ```tsx
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -56805,6 +59763,7 @@ All components support `mod` prop, which allows adding data attributes to
 the root element:
 
 ```tsx
+import { Box } from '@mantine/core';
 
 <Box mod="data-button" />;
 // -> <div data-button />
@@ -56875,10 +59834,20 @@ consider using [CSS modules](https://mantine.dev/styles/css-modules/) instead.
 
 Install dependencies:
 
+```bash
+yarn add @mantine/emotion @emotion/react @emotion/cache @emotion/serialize @emotion/utils
+```
+
+```bash
+npm install @mantine/emotion @emotion/react @emotion/cache @emotion/serialize @emotion/utils
+```
+
 Create `emotion.d.ts` file in `src` directory to add types support for `sx` and `styles` props:
 
 ```tsx
+import '@mantine/core';
 
+import type { EmotionStyles, EmotionSx } from '@mantine/emotion';
 
 declare module '@mantine/core' {
   export interface BoxProps {
@@ -56891,7 +59860,10 @@ declare module '@mantine/core' {
 Wrap your application with `MantineEmotionProvider` and add `emotionTransform` to `MantineProvider`:
 
 ```tsx
+import '@mantine/core/styles.css';
 
+import { MantineProvider } from '@mantine/core';
+import {
   emotionTransform,
   MantineEmotionProvider,
 } from '@mantine/emotion';
@@ -56908,6 +59880,7 @@ export default function App() {
 Done! You can now use `sx`, `styles` props and `createStyles` in your application:
 
 ```tsx
+import { Box } from '@mantine/core';
 
 function Demo() {
   return (
@@ -56937,11 +59910,20 @@ function Demo() {
 
 Install dependencies:
 
+```bash
+yarn add @mantine/emotion @emotion/react @emotion/cache @emotion/serialize @emotion/utils @emotion/server
+```
+
+```bash
+npm install @mantine/emotion @emotion/react @emotion/cache @emotion/serialize @emotion/utils @emotion/server
+```
+
 Create `emotion` folder with `cache.ts` and `emotion.d.ts` files.
 
 `cache.ts` file:
 
 ```tsx
+import createCache from '@emotion/cache';
 
 export const emotionCache = createCache({ key: 'css' });
 ```
@@ -56949,7 +59931,9 @@ export const emotionCache = createCache({ key: 'css' });
 `emotion.d.ts` file:
 
 ```tsx
+import '@mantine/core';
 
+import type { EmotionStyles, EmotionSx } from '@mantine/emotion';
 
 declare module '@mantine/core' {
   export interface BoxProps {
@@ -56962,12 +59946,17 @@ declare module '@mantine/core' {
 Add the following content to `pages/_document.tsx` file:
 
 ```tsx
+import NextDocument, {
   Head,
   Html,
   Main,
   NextScript,
 } from 'next/document';
+import createEmotionServer from '@emotion/server/create-instance';
+import { ColorSchemeScript } from '@mantine/core';
+import { createGetInitialProps } from '@mantine/emotion';
 // Import cache created in the previous step
+import { emotionCache } from '../emotion/cache';
 
 export default function Document() {
   return (
@@ -56994,10 +59983,15 @@ Document.getInitialProps = createGetInitialProps(
 Add `MantineEmotionProvider` and `emotionTransform` to `pages/_app.tsx` file:
 
 ```tsx
+import '@mantine/core/styles.css';
 
+import Head from 'next/head';
+import { MantineProvider } from '@mantine/core';
+import {
   emotionTransform,
   MantineEmotionProvider,
 } from '@mantine/emotion';
+import { emotionCache } from '../emotion/cache';
 
 export default function App({ Component, pageProps }: any) {
   return (
@@ -57021,6 +60015,7 @@ export default function App({ Component, pageProps }: any) {
 Done! You can now use `sx`, `styles` props and `createStyles` in your application:
 
 ```tsx
+import { Box } from '@mantine/core';
 
 function Demo() {
   return (
@@ -57050,10 +60045,20 @@ function Demo() {
 
 Install dependencies:
 
+```bash
+yarn add @mantine/emotion @emotion/react @emotion/cache @emotion/serialize @emotion/utils @emotion/server
+```
+
+```bash
+npm install @mantine/emotion @emotion/react @emotion/cache @emotion/serialize @emotion/utils @emotion/server
+```
+
 Create `app/emotion.d.ts` file with the following content:
 
 ```tsx
+import '@mantine/core';
 
+import type { EmotionStyles, EmotionSx } from '@mantine/emotion';
 
 declare module '@mantine/core' {
   export interface BoxProps {
@@ -57068,6 +60073,10 @@ Create `app/EmotionRootStyleRegistry.tsx` file with the following content:
 ```tsx
 'use client';
 
+import { useState } from 'react';
+import { useServerInsertedHTML } from 'next/navigation';
+import createCache from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
 
 export function RootStyleRegistry({
   children,
@@ -57119,10 +60128,14 @@ Add `RootStyleRegistry`, `MantineEmotionProvider` and `emotionTransform` to `app
 It should look something like this:
 
 ```tsx
+import '@mantine/core/styles.css';
 
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import {
   emotionTransform,
   MantineEmotionProvider,
 } from '@mantine/emotion';
+import { RootStyleRegistry } from './EmotionRootStyleRegistry';
 
 export const metadata = {
   title: 'Mantine Next.js template',
@@ -57160,6 +60173,7 @@ Note that `'use client'` is required in most components that use `sx`, `styles` 
 ```tsx
 'use client';
 
+import { Box } from '@mantine/core';
 
 export default function HomePage() {
   return (
@@ -57190,6 +60204,7 @@ With the setup above you can use `sx` prop in all Mantine components.
 It accepts either a styles object or a function that receives theme, utilities and returns styles object:
 
 ```tsx
+import { Box, Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -57239,6 +60254,7 @@ nested elements of the components that are specified in the Styles API table.
 receives theme, component props, utilities and returns styles object:
 
 ```tsx
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -57278,6 +60294,8 @@ Emotion with `styles` prop. Note that to avoid types collisions, you should not 
 `Component.extend` method and just pass component configuration object directly.
 
 ```tsx
+import { createTheme, MantineTheme, TextProps } from '@mantine/core';
+import { EmotionHelpers } from '@mantine/emotion';
 
 export const theme = createTheme({
   components: {
@@ -57310,12 +60328,124 @@ The function receives 3 arguments that will be described more detailed in the fo
 `createStyles` function returns `useStyles` hook that should be called in the component
 that uses given styles:
 
+#### Example: usage
+
+```tsx
+import { createStyles } from '@mantine/emotion';
+
+const useStyles = createStyles((theme, _, u) => ({
+  wrapper: {
+    maxWidth: 400,
+    width: '100%',
+    height: 180,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    borderRadius: theme.radius.sm,
+
+    // Use light and dark selectors to change styles based on color scheme
+    [u.light]: {
+      backgroundColor: theme.colors.gray[1],
+    },
+
+    [u.dark]: {
+      backgroundColor: theme.colors.dark[5],
+    },
+
+    // Reference theme.breakpoints in smallerThan and largerThan functions
+    [u.smallerThan('sm')]: {
+      // Child reference in nested selectors via ref
+      [`& .${u.ref('child')}`]: {
+        fontSize: theme.fontSizes.xs,
+      },
+    },
+  },
+
+  child: {
+    // Assign selector to a ref to reference it in other styles
+    ref: u.ref('child'),
+    padding: theme.spacing.md,
+    borderRadius: theme.radius.sm,
+    boxShadow: theme.shadows.md,
+
+    [u.light]: {
+      backgroundColor: theme.white,
+      color: theme.black,
+    },
+
+    [u.dark]: {
+      backgroundColor: theme.colors.dark[8],
+      color: theme.white,
+    },
+  },
+}));
+
+function Demo() {
+  const { classes } = useStyles();
+
+  return (
+    <div className={classes.wrapper}>
+      <div className={classes.child}>createStyles demo</div>
+    </div>
+  );
+}
+```
 
 
 ### Pseudo-classes
 
 You can add pseudo-classes the same way as in any css-preprocessor like Sass:
 
+#### Example: pseudo
+
+```tsx
+import { createStyles } from '@mantine/emotion';
+
+const useStyles = createStyles((theme) => ({
+  button: {
+    color: theme.white,
+    backgroundColor: theme.colors.blue[6],
+    border: 0,
+    borderRadius: theme.radius.md,
+    padding: `${theme.spacing.sm} ${theme.spacing.lg}`,
+    cursor: 'pointer',
+    margin: theme.spacing.md,
+
+    // Use pseudo-classes just like you would in Sass
+    '&:hover': {
+      backgroundColor: theme.colors.blue[9],
+    },
+
+    '&:not(:first-of-type)': {
+      backgroundColor: theme.colors.violet[6],
+
+      // pseudo-classes can be nested
+      '&:hover': {
+        backgroundColor: theme.colors.violet[9],
+      },
+    },
+  },
+}));
+
+function Demo() {
+  const { classes } = useStyles();
+  return (
+    <div>
+      <button type="button" className={classes.button}>
+        First
+      </button>
+      <button type="button" className={classes.button}>
+        Second
+      </button>
+      <button type="button" className={classes.button}>
+        Third
+      </button>
+    </div>
+  );
+}
+```
 
 
 ### Styles parameters
@@ -57323,6 +60453,46 @@ You can add pseudo-classes the same way as in any css-preprocessor like Sass:
 You can receive any amount of parameters as second argument of `createStyles` function,
 latter you will need to pass those parameters as argument to `useStyles` hook:
 
+#### Example: parameters
+
+```tsx
+import { createStyles } from '@mantine/emotion';
+
+interface ButtonProps {
+  color: 'blue' | 'violet';
+  radius: number;
+}
+
+const useStyles = createStyles((theme, { color, radius }: ButtonProps) => ({
+  button: {
+    color: theme.white,
+    backgroundColor: theme.colors[color][6],
+    borderRadius: radius,
+    padding: theme.spacing.md,
+    margin: theme.spacing.md,
+    border: 0,
+    cursor: 'pointer',
+  },
+}));
+
+function Button({ color, radius }: ButtonProps) {
+  const { classes } = useStyles({ color, radius });
+  return (
+    <button type="button" className={classes.button}>
+      {color} button with {radius} radius
+    </button>
+  );
+}
+
+function Demo() {
+  return (
+    <>
+      <Button color="blue" radius={5} />
+      <Button color="violet" radius={50} />
+    </>
+  );
+}
+```
 
 
 ### Composition and nested selectors
@@ -57330,6 +60500,57 @@ latter you will need to pass those parameters as argument to `useStyles` hook:
 Since `createStyles` produces scoped class names you will need to create a reference to selector
 in order to get static selector. Use `u.ref` function to assign static selectors:
 
+#### Example: composition
+
+```tsx
+import { createStyles } from '@mantine/emotion';
+
+const useStyles = createStyles((theme, _, u) => ({
+  button: {
+    // assign reference to selector
+    ref: u.ref('button'),
+
+    // and add any other properties
+    backgroundColor: theme.colors.blue[6],
+    color: theme.white,
+    padding: `${theme.spacing.sm} ${theme.spacing.lg}`,
+    borderRadius: theme.radius.md,
+    cursor: 'pointer',
+    border: 0,
+  },
+
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: theme.spacing.xl,
+
+    [u.light]: {
+      backgroundColor: theme.colors.gray[1],
+    },
+
+    [u.dark]: {
+      backgroundColor: theme.colors.dark[8],
+    },
+
+    // reference button with nested selector
+    [`&:hover .${u.ref('button')}`]: {
+      backgroundColor: theme.colors.violet[6],
+    },
+  },
+}));
+
+function Demo() {
+  const { classes } = useStyles();
+
+  return (
+    <div className={classes.container}>
+      <button className={classes.button} type="button">
+        Hover container to change button color
+      </button>
+    </div>
+  );
+}
+```
 
 
 ### Classes merging (cx function)
@@ -57340,6 +60561,66 @@ To merge class names use `cx` function, it has the same api as [clsx](https://ww
 or [clsx](https://www.npmjs.com/package/clsx) with class names created with `createStyles` function
 as it will produce styles collisions.
 
+#### Example: cx
+
+```tsx
+import { useState } from 'react';
+import { createStyles } from '@mantine/emotion';
+
+const useStyles = createStyles((theme, _, u) => ({
+  button: {
+    border: 0,
+    borderRadius: theme.radius.md,
+    padding: theme.spacing.md,
+    cursor: 'pointer',
+    margin: theme.spacing.md,
+    lineHeight: 1,
+
+    [u.light]: {
+      backgroundColor: theme.colors.gray[1],
+    },
+
+    [u.dark]: {
+      backgroundColor: theme.colors.dark[5],
+    },
+  },
+
+  active: {
+    color: theme.white,
+
+    [u.light]: {
+      backgroundColor: theme.colors.blue[6],
+    },
+    [u.dark]: {
+      backgroundColor: theme.colors.blue[8],
+    },
+  },
+}));
+
+function Demo() {
+  const [active, setActive] = useState(0);
+  const { classes, cx } = useStyles();
+
+  return (
+    <div>
+      <button
+        className={cx(classes.button, { [classes.active]: active === 0 })}
+        onClick={() => setActive(0)}
+        type="button"
+      >
+        First
+      </button>
+      <button
+        className={cx(classes.button, { [classes.active]: active === 1 })}
+        onClick={() => setActive(1)}
+        type="button"
+      >
+        Second
+      </button>
+    </div>
+  );
+}
+```
 
 
 ### Media queries
@@ -57347,10 +60628,69 @@ as it will produce styles collisions.
 You can use nested media queries like in Sass. Within query body you can use `theme.breakpoints`
 defined with [MantineProvider](https://mantine.dev/theming/mantine-provider) or just static values:
 
+#### Example: media
+
+```tsx
+import { em, getBreakpointValue } from '@mantine/core';
+import { createStyles } from '@mantine/emotion';
+
+const useStyles = createStyles((theme, _, u) => ({
+  container: {
+    height: 100,
+    backgroundColor: theme.colors.blue[6],
+
+    // Media query with value from theme
+    [`@media (max-width: ${em(getBreakpointValue(theme.breakpoints.xl, theme.breakpoints) - 1)})`]: {
+      backgroundColor: theme.colors.pink[6],
+    },
+
+    // Simplify media query writing with theme functions
+    [u.smallerThan('lg')]: {
+      backgroundColor: theme.colors.yellow[6],
+    },
+
+    // Static media query
+    [`@media (max-width: ${em(800)})`]: {
+      backgroundColor: theme.colors.orange[6],
+    },
+  },
+}));
+
+function Demo() {
+  const { classes } = useStyles();
+  return <div className={classes.container} />;
+}
+```
 
 
 ### Keyframes
 
+#### Example: keyframes
+
+```tsx
+import { createStyles, keyframes } from '@mantine/emotion';
+
+// Export animation to reuse it in other components
+export const bounce = keyframes({
+  'from, 20%, 53%, 80%, to': { transform: 'translate3d(0, 0, 0)' },
+  '40%, 43%': { transform: 'translate3d(0, -30px, 0)' },
+  '70%': { transform: 'translate3d(0, -15px, 0)' },
+  '90%': { transform: 'translate3d(0, -4px, 0)' },
+});
+
+const useStyles = createStyles((theme) => ({
+  container: {
+    textAlign: 'center',
+    padding: theme.spacing.xl,
+    animation: `${bounce} 3s ease-in-out infinite`,
+  },
+}));
+
+function Demo() {
+  const { classes } = useStyles();
+  return <div className={classes.container}>Keyframes demo</div>;
+}
+```
 
 
 ## Utilities
@@ -57399,12 +60739,16 @@ If you override these styles, some components might not work as expected.
 Global styles are automatically imported with:
 
 ```tsx
+import '@mantine/core/styles.css';
 ```
 
 If you want to import styles [per component](https://mantine.dev/styles/css-files-list), you need to import all global
 styles manually:
 
 ```tsx
+import '@mantine/core/styles/baseline.css';
+import '@mantine/core/styles/default-css-variables.css';
+import '@mantine/core/styles/global.css';
 ```
 
 ## CSS reset
@@ -57471,6 +60815,30 @@ body {
 
 You can use these classes with any components or elements:
 
+#### Example: globalClasses
+
+```tsx
+import { Group } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Group>
+      <button type="button" className="mantine-focus-auto">
+        Focus auto
+      </button>
+      <button type="button" className="mantine-focus-always">
+        Focus always
+      </button>
+      <button type="button" className="mantine-focus-never">
+        Focus never
+      </button>
+      <button type="button" className="mantine-active">
+        Active
+      </button>
+    </Group>
+  );
+}
+```
 
 
 ## Add global styles in your application
@@ -57507,6 +60875,7 @@ To include these styles, you need to import `@mantine/{package}/styles.css` file
 Example with `@mantine/core` package:
 
 ```tsx
+import '@mantine/core/styles.css';
 ```
 
 By adding this import, you will have all styles of `@mantine/core` components in your application.
@@ -57519,6 +60888,8 @@ component internally, so you need to import styles for both components. You can 
 exported styles from `@mantine/core` package and additional instructions on [this page](https://mantine.dev/styles/css-files-list).
 
 ```tsx
+import '@mantine/core/styles/UnstyledButton.css';
+import '@mantine/core/styles/Button.css';
 ```
 
 Note that individual component styles are available only for `@mantine/core` package.
@@ -57531,15 +60902,25 @@ styles must always be imported before any other Mantine package styles:
 
 ```tsx
 // ✅ Correct order
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 // ❌ Incorrect order
+import '@mantine/dates/styles.css';
+import '@mantine/core/styles.css';
 ```
 
 Your application styles must always be imported after all `@mantine/*` packages styles:
 
 ```tsx
 // ✅ Correct order - your styles will override Mantine styles
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
+import classes from './Demo.module.css';
 
 // ❌ Incorrect order – Mantine styles will override your styles
+import classes from './Demo.module.css';
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 ```
 
 ## CSS layers
@@ -57553,6 +60934,8 @@ All `@mantine/*` packages that export styles have an additional file in which al
 `@layer mantine` directive.
 
 ```tsx
+import '@mantine/core/styles.layer.css';
+import '@mantine/dates/styles.layer.css';
 
 // ... other styles
 ```
@@ -57562,11 +60945,15 @@ Make sure that you do not import both `styles.css` and `styles.layer.css` files 
 
 ```tsx
 // ❌ Do not import both styles.css and styles.layer.css
+import '@mantine/core/styles.css';
+import '@mantine/core/styles.layer.css';
 ```
 
 Similar to package styles, you can import individual component styles with `@layer mantine` directive:
 
 ```tsx
+import '@mantine/core/styles/UnstyledButton.layer.css';
+import '@mantine/core/styles/Button.layer.css';
 
 // ... other styles
 ```
@@ -57580,7 +60967,9 @@ regular styles.
 ```tsx
 // ✅ If your styles are not wrapped in @layer directive,
 // they will be applied after Mantine styles
+import classes from './Demo.module.css';
 
+import '@mantine/core/styles.layer.css';
 ```
 
 CSS layers are also useful if you want to combine Mantine components with other libraries which also
@@ -57637,6 +61026,14 @@ assume that you have this preset installed.
 ## Installation
 
 Install `postcss-preset-mantine` as a dev dependency:
+
+```bash
+yarn add postcss-preset-mantine
+```
+
+```bash
+npm install postcss-preset-mantine
+```
 
 ## Usage
 
@@ -58134,6 +61531,24 @@ All Mantine components use `rem` units to apply size styles (`margin`, `padding`
 By default, `1rem` is considered to be `16px` as it is a default setting in most browsers.
 All components scale based on the user's browser font-size settings or font-size of `html`/`:root`.
 
+#### Example: remSlider
+
+```tsx
+import { Slider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Slider
+      defaultValue={100}
+      min={70}
+      max={130}
+      onChange={(value) => {
+        document.documentElement.style.fontSize = `${value}%`;
+      }}
+    />
+  );
+}
+```
 
 
 ## rem units scaling
@@ -58151,6 +61566,7 @@ to set `scale` to `1 / (10 / 16)` (16 – default font-size) = `1 / 0.625` = `1.
 ```
 
 ```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   scale: 1.6,
@@ -58175,6 +61591,7 @@ function Demo() {
 You can use numbers in some Mantine components props. Numbers are treated as `px` and converted to `rem`, for example:
 
 ```tsx
+import { ColorSwatch } from '@mantine/core';
 
 function DemoPx() {
   // Specify ColorSwatch size in px, it will be automatically converted to rem
@@ -58191,6 +61608,7 @@ function DemoRem() {
 The same conversion happens in [style props](https://mantine.dev/styles/style-props/):
 
 ```tsx
+import { Box } from '@mantine/core';
 
 function Demo() {
   // width: calc(2rem * var(--mantine-scale))
@@ -58204,6 +61622,7 @@ function Demo() {
 `@mantine/core` package exports `rem` and `em` function that can be used to convert `px` into `rem`/`em`:
 
 ```tsx
+import { em, rem } from '@mantine/core';
 
 // numbers and values in px are converted to rem
 rem(32); // -> calc(2rem * var(--mantine-scale))
@@ -58229,6 +61648,7 @@ rem('16px 2rem'); // -> calc(1rem * var(--mantine-scale)) 2rem
 To convert `rem`/`em` to `px` use `px` function exported from `@mantine/core`:
 
 ```tsx
+import { px } from '@mantine/core';
 
 px('2rem'); // -> 32
 px('10rem'); // -> 160
@@ -58273,6 +61693,28 @@ module.exports = {
 
 ## Media queries
 
+#### Example: responsive
+
+```tsx
+// Demo.module.css
+.demo {
+  background-color: var(--mantine-color-blue-filled);
+  color: var(--mantine-color-white);
+  padding: var(--mantine-spacing-md);
+  text-align: center;
+
+  @media (min-width: em(750px)) {
+    background-color: var(--mantine-color-red-filled);
+  }
+}
+
+// Demo.tsx
+import classes from './Demo.module.css';
+
+function Demo() {
+  return <div className={classes.demo}>Demo</div>;
+}
+```
 
 
 ## Configure breakpoints
@@ -58281,6 +61723,7 @@ module.exports = {
 You can configure these values with [MantineProvider](https://mantine.dev/theming/mantine-provider/):
 
 ```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   breakpoints: {
@@ -58308,6 +61751,14 @@ Default `theme.breakpoints` values:
 It is not possible to use CSS variables inside media queries – these values cannot be dynamically
 generated by [MantineProvider](https://mantine.dev/theming/mantine-provider). To use Mantine theme breakpoints
 in your `.css` files, you will need `postcss-simple-vars` package:
+
+```bash
+yarn add postcss-simple-vars
+```
+
+```bash
+npm install postcss-simple-vars
+```
 
 Add it to your [PostCSS config](https://mantine.dev/styles/postcss-preset) in `postcss.config.cjs`:
 
@@ -58360,6 +61811,27 @@ All Mantine components that have a root element support `hiddenFrom` and `visibl
 These props accept breakpoint (`xs`, `sm`, `md`, `lg`, `xl`) and hide the component when
 viewport width is less than or greater than the specified breakpoint:
 
+#### Example: hiddenVisible
+
+```tsx
+import { Button, Group } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Group justify="center">
+      <Button hiddenFrom="sm" color="orange">
+        Hidden from sm
+      </Button>
+      <Button visibleFrom="sm" color="cyan">
+        Visible from sm
+      </Button>
+      <Button visibleFrom="md" color="pink">
+        Visible from md
+      </Button>
+    </Group>
+  );
+}
+```
 
 
 ## Hidden and visible from as classes
@@ -58386,6 +61858,21 @@ Some components support `size` prop, which changes various aspects of component 
 screen sizes. Instead, you can render multiple components with different sizes and show/hide them
 based on media query with `className` or `hiddenFrom`/`visibleFrom` props:
 
+#### Example: sizesMedia
+
+```tsx
+// Demo.tsx
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <TextInput size="xs" hiddenFrom="sm" label="My input" placeholder="My input" />
+      <TextInput size="xl" visibleFrom="sm" label="My input" placeholder="My input" />
+    </>
+  );
+}
+```
 
 
 ## use-media-query hook
@@ -58401,6 +61888,22 @@ based on hook return value.
 on server side (modals, tooltips, etc.). In the following example, it is safe to use `useMediaQuery` hook to
 change [Tooltip](https://mantine.dev/core/tooltip) props as it is not rendered on server side:
 
+#### Example: useMediaQueryHook
+
+```tsx
+import { Tooltip, Button, em } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
+
+function Demo() {
+  const isMobile = useMediaQuery(`(max-width: ${em(750)})`);
+
+  return (
+    <Tooltip label={isMobile ? 'Mobile' : 'Desktop'}>
+      <Button>Hover me</Button>
+    </Tooltip>
+  );
+}
+```
 
 
 ## use-matches hook
@@ -58418,6 +61921,25 @@ In the following example:
 * Between `theme.breakpoints.sm` and `theme.breakpoints.lg`, color will be `orange.9`
 * Below `theme.breakpoints.sm`, color will be `blue.9`
 
+#### Example: useMatchesHook
+
+```tsx
+import { Box, useMatches } from '@mantine/core';
+
+function Demo() {
+  const color = useMatches({
+    base: 'blue.9',
+    sm: 'orange.9',
+    lg: 'red.9',
+  });
+
+  return (
+    <Box bg={color} c="white" p="xl">
+      Box with color that changes based on screen size
+    </Box>
+  );
+}
+```
 
 
 ## Container queries
@@ -58433,6 +61955,44 @@ in container queries. Note that CSS variables do not work in container queries a
 [rem scaling](https://mantine.dev/styles/rem/#rem-units-scaling) feature is not available. If you rely on this feature,
 it is better to define breakpoints in `px` units.
 
+#### Example: containers
+
+```tsx
+// Demo.module.css
+.root {
+  min-width: 200px;
+  max-width: 100%;
+  min-height: 120px;
+  container-type: inline-size;
+  overflow: auto;
+  resize: horizontal;
+}
+
+.child {
+  background-color: var(--mantine-color-dimmed);
+  color: var(--mantine-color-white);
+  padding: var(--mantine-spacing-md);
+
+  @container (max-width: 500px) {
+    background-color: var(--mantine-color-blue-filled);
+  }
+
+  @container (max-width: 300px) {
+    background-color: var(--mantine-color-red-filled);
+  }
+}
+
+// Demo.tsx
+import classes from './Demo.module.css';
+
+function Demo() {
+  return (
+    <div className={classes.root}>
+      <div className={classes.child}>Resize parent element to see container query in action</div>
+    </div>
+  );
+}
+```
 
 
 ## Responsive style props
@@ -58441,6 +62001,26 @@ You can use object syntax to add responsive styles with [style props](https://ma
 Note that responsive style props are [less performant](https://mantine.dev/styles/styles-performance) than regular style props,
 it is not recommended to use them in large lists of elements.
 
+#### Example: responsiveStyleProps
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Box
+      w={{ base: 200, sm: 400, lg: 500 }}
+      py={{ base: 'xs', sm: 'md', lg: 'xl' }}
+      bg={{ base: 'blue.7', sm: 'red.7', lg: 'green.7' }}
+      c="#fff"
+      ta="center"
+      mx="auto"
+    >
+      Box with responsive style props
+    </Box>
+  );
+}
+```
 
 
 Responsive values are calculated the following way:
@@ -58449,6 +62029,7 @@ Responsive values are calculated the following way:
 * `xs`, `sm`, `md`, `lg`, `xl` values are used when the viewport width is larger that the value of corresponding breakpoint specified in [theme.breakpoints](https://mantine.dev/styles/responsive/)
 
 ```tsx
+import { Box } from '@mantine/core';
 
 function Demo() {
   return <Box w={{ base: 320, sm: 480, lg: 640 }} />;
@@ -58513,6 +62094,7 @@ export interface DirectionProviderProps {
 Setup `DirectionProvider` in your application:
 
 ```tsx
+import { DirectionProvider, MantineProvider } from '@mantine/core';
 
 function Demo() {
   return (
@@ -58549,12 +62131,56 @@ documentation to learn how to do it.
 
 You can use it to create direction control in your application:
 
+#### Example: directionControl
+
+```tsx
+import { ActionIcon, useDirection } from '@mantine/core';
+import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
+
+function Demo() {
+  const { toggleDirection, dir } = useDirection();
+  return (
+    <ActionIcon onClick={() => toggleDirection()} variant="default" radius="md" size="lg">
+      {dir === 'rtl' ? (
+        <IconTextDirectionLtr stroke={1.5} />
+      ) : (
+        <IconTextDirectionRtl stroke={1.5} />
+      )}
+    </ActionIcon>
+  );
+}
+```
 
 
 ## rtl mixin
 
 If you have [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset) installed then you can use `rtl` mixin in `.css` files:
 
+#### Example: rtlMixin
+
+```tsx
+// Demo.module.css
+.demo {
+  text-align: center;
+  color: var(--mantine-color-white);
+  padding: var(--mantine-spacing-md);
+
+  /* LTR styles */
+  background-color: var(--mantine-color-blue-filled);
+
+  @mixin rtl {
+    /* RTL styles override LTR styles */
+    background-color: var(--mantine-color-red-filled);
+  }
+}
+
+// Demo.tsx
+import classes from './Demo.module.css';
+
+function Demo() {
+  return <div className={classes.demo}>Demo</div>;
+}
+```
 
 
 
@@ -58579,9 +62205,20 @@ You can use Sass modules the same way as [CSS modules](https://mantine.dev/style
 
 Install `sass`:
 
+```bash
+yarn add sass-embedded
+```
+
+```bash
+npm install sass-embedded
+```
+
 Add mantine resources in your `vite.config.js` file:
 
 ```tsx
+import path from 'node:path';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
@@ -58697,9 +62334,18 @@ All done! you can now use breakpoint variables, `rem` function, `hover`, `light`
 
 Install `sass`:
 
+```bash
+yarn add sass-embedded
+```
+
+```bash
+npm install sass-embedded
+```
+
 Add mantine resources in your `next.config.mjs` file:
 
 ```tsx
+import path from 'node:path';
 
 export default {
   // ...other config
@@ -58819,6 +62465,7 @@ Style props add styles to the **root** element, if you need to style nested elem
 use [Styles API](https://mantine.dev/styles/styles-api/) instead.
 
 ```tsx
+import { Box } from '@mantine/core';
 
 function Demo() {
   return (
@@ -58841,6 +62488,7 @@ Some style props can reference values from theme, for example `mt` will use `the
 if you set `xs`, `sm`, `md`, `lg`, `xl`:
 
 ```tsx
+import { Box } from '@mantine/core';
 
 function Demo() {
   return (
@@ -58867,6 +62515,7 @@ function Demo() {
 In `c`, `bd` and `bg` props you can reference colors from `theme.colors`:
 
 ```tsx
+import { Box } from '@mantine/core';
 
 function Demo() {
   return (
@@ -58904,6 +62553,26 @@ You can use object syntax to add responsive styles with style props.
 Note that responsive style props are [less performant](https://mantine.dev/styles/styles-performance) than regular style props,
 it is not recommended to use them in large lists of elements.
 
+#### Example: responsiveStyleProps
+
+```tsx
+import { Box } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Box
+      w={{ base: 200, sm: 400, lg: 500 }}
+      py={{ base: 'xs', sm: 'md', lg: 'xl' }}
+      bg={{ base: 'blue.7', sm: 'red.7', lg: 'green.7' }}
+      c="#fff"
+      ta="center"
+      mx="auto"
+    >
+      Box with responsive style props
+    </Box>
+  );
+}
+```
 
 
 Responsive values are calculated the following way:
@@ -58912,6 +62581,7 @@ Responsive values are calculated the following way:
 * `xs`, `sm`, `md`, `lg`, `xl` values are used when the viewport width is larger that the value of corresponding breakpoint specified in [theme.breakpoints](https://mantine.dev/styles/responsive/)
 
 ```tsx
+import { Box } from '@mantine/core';
 
 function Demo() {
   return <Box w={{ base: 320, sm: 480, lg: 640 }} />;
@@ -58958,6 +62628,7 @@ as React `style` prop. You can use Mantine [CSS variables](https://mantine.dev/s
 the same way as in [.css files](https://mantine.dev/styles/css-modules).
 
 ```tsx
+import { Box, rem } from '@mantine/core';
 
 function Demo() {
   return (
@@ -58976,6 +62647,7 @@ function Demo() {
 You can define CSS variables in the style prop. Note that it only works with Mantine components:
 
 ```tsx
+import { Box } from '@mantine/core';
 
 function Demo() {
   return (
@@ -58993,6 +62665,7 @@ It is useful when you need to access [theme](https://mantine.dev/theming/theme-o
 for example, properties from `theme.other`.
 
 ```tsx
+import { Box } from '@mantine/core';
 
 function Demo() {
   return (
@@ -59013,6 +62686,7 @@ It is useful when you want to create a wrapper around Mantine component, add inl
 `style` prop to it.
 
 ```tsx
+import { Box, MantineStyleProp } from '@mantine/core';
 
 interface DemoProps {
   style?: MantineStyleProp;
@@ -59027,10 +62701,6 @@ function Demo({ style }: DemoProps) {
 --------------------------------------------------------------------------------
 
 ### StylesApi
-
-SelectorsTable,
-VariablesTable,
-} from '@/components/StylesApiTable';
 
 # Styles API
 
@@ -59054,6 +62724,7 @@ Example of [Button](https://mantine.dev/core/button) component selectors:
 You can use these selectors in `classNames` and `styles` in, both, component props and `theme.components`:
 
 ```tsx
+import { Button, createTheme, MantineProvider } from '@mantine/core';
 
 function ClassNamesDemo() {
   return (
@@ -59114,6 +62785,35 @@ function ProviderDemo() {
 With the `classNames` prop you can add classes to inner elements of Mantine components. It accepts
 an object with element names as keys and classes as values:
 
+#### Example: classNames
+
+```tsx
+import { useState } from 'react';
+import { TextInput } from '@mantine/core';
+import classes from './Demo.module.css';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  const [focused, setFocused] = useState(false);
+  const floating = focused || value.length > 0 || undefined;
+
+  return (
+    <TextInput
+      label="Floating label input"
+      labelProps={{ 'data-floating': floating }}
+      classNames={{
+        root: classes.root,
+        input: classes.input,
+        label: classes.label,
+      }}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
+      value={value}
+      onChange={(event) => setValue(event.currentTarget.value)}
+    />
+  );
+}
+```
 
 
 ## classNames in theme.components
@@ -59122,11 +62822,14 @@ You can also define `classNames` in [`theme.components`](https://mantine.dev/the
 components of a specific type:
 
 ```tsx
+import { useState } from 'react';
+import {
   createTheme,
   MantineProvider,
   TextInput,
 } from '@mantine/core';
 // Styles are the same as in previous example
+import classes from './Demo.module.css';
 
 const theme = createTheme({
   components: {
@@ -59162,6 +62865,93 @@ Example of [Button](https://mantine.dev/core/button) component CSS variables:
 
 Example of a custom CSS variables resolver function used to add more sizes to the [Button](https://mantine.dev/core/button) component:
 
+#### Example: vars
+
+```tsx
+// MantineProvider.tsx
+import { Button, Group, MantineProvider, createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  components: {
+    Button: Button.extend({
+      vars: (theme, props) => {
+        if (props.size === 'xxl') {
+          return {
+            root: {
+              '--button-height': '60px',
+              '--button-padding-x': '30px',
+              '--button-fz': '24px',
+            },
+          };
+        }
+
+        if (props.size === 'xxs') {
+          return {
+            root: {
+              '--button-height': '24px',
+              '--button-padding-x': '10px',
+              '--button-fz': '10px',
+            },
+          };
+        }
+
+        return { root: {} };
+      },
+    }),
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Group>
+        <Button size="xxl">XXL Button</Button>
+        <Button size="xxs">XXS Button</Button>
+      </Group>
+    </MantineProvider>
+  );
+}
+
+// Inline.tsx
+import { Button, PartialVarsResolver, ButtonFactory, Group } from '@mantine/core';
+
+const varsResolver: PartialVarsResolver<ButtonFactory> = (theme, props) => {
+  if (props.size === 'xxl') {
+    return {
+      root: {
+        '--button-height': '60px',
+        '--button-padding-x': '30px',
+        '--button-fz': '24px',
+      },
+    };
+  }
+
+  if (props.size === 'xxs') {
+    return {
+      root: {
+        '--button-height': '24px',
+        '--button-padding-x': '10px',
+        '--button-fz': '10px',
+      },
+    };
+  }
+
+  return { root: {} };
+};
+
+function Demo() {
+  return (
+    <Group>
+      <Button vars={varsResolver} size="xxl">
+        XXL Button
+      </Button>
+      <Button vars={varsResolver} size="xxs">
+        XXS Button
+      </Button>
+    </Group>
+  );
+}
+```
 
 
 ## styles prop
@@ -59171,6 +62961,45 @@ styles have higher specificity than classes, so you will not be able to override
 without using `!important`. You cannot use pseudo-classes (for example, `:hover`, `:first-of-type`)
 and media queries inside the `styles` prop.
 
+#### Example: styles
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  const gradient =
+    'linear-gradient(45deg, var(--mantine-color-pink-filled) 0%, var(--mantine-color-orange-filled) 50%, var(--mantine-color-yellow-filled) 100%)';
+
+  return (
+    <Button
+      radius="md"
+      styles={{
+        root: {
+          padding: 2,
+          border: 0,
+          backgroundImage: gradient,
+        },
+
+        inner: {
+          background: 'var(--mantine-color-body)',
+          color: 'var(--mantine-color-text)',
+          borderRadius: 'calc(var(--button-radius) - 2px)',
+          paddingLeft: 'var(--mantine-spacing-md)',
+          paddingRight: 'var(--mantine-spacing-md)',
+        },
+
+        label: {
+          backgroundImage: gradient,
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+        },
+      }}
+    >
+      Gradient button
+    </Button>
+  );
+}
+```
 
 
 > **styles prop usage**
@@ -59189,6 +63018,43 @@ You can use this feature to conditionally apply styles based on component props.
 you can change the [TextInput](https://mantine.dev/core/text-input) label color if the input is required or change the input
 background color if the input is wrong:
 
+#### Example: classNamesProps
+
+```tsx
+// Demo.tsx
+import cx from 'clsx';
+import { MantineProvider, createTheme, TextInput } from '@mantine/core';
+import classes from './Demo.module.css';
+
+const theme = createTheme({
+  components: {
+    TextInput: TextInput.extend({
+      classNames: (_theme, props) => ({
+        label: cx({ [classes.labelRequired]: props.required }),
+        input: cx({ [classes.inputError]: props.error }),
+      }),
+    }),
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <TextInput required label="Required input" placeholder="Required input" />
+      <TextInput error label="Input with error" placeholder="Input with error" mt="md" />
+    </MantineProvider>
+  );
+}
+
+// Demo.module.css
+.labelRequired {
+  color: var(--mantine-color-red-filled);
+}
+
+.inputError {
+  background-color: var(--mantine-color-red-light);
+}
+```
 
 
 ## Static classes
@@ -59216,6 +63082,7 @@ find the classes of [Button](https://mantine.dev/core/button) in `Button.classes
 You can use these classes to create components with the same styles as Mantine components:
 
 ```tsx
+import { Button } from '@mantine/core';
 
 function Demo() {
   return <button type="button" className={Button.classes.root} />;
@@ -59228,6 +63095,7 @@ You can pass attributes to inner elements of Mantine components using the `attri
 For example, it can be used to add data attributes for testing purposes:
 
 ```tsx
+import { Button } from '@mantine/core';
 
 function Demo() {
   return (
@@ -59287,6 +63155,7 @@ Some of the most common use cases are:
 * Changing text color and font-size
 
 ```tsx
+import { Text } from '@mantine/core';
 
 function Demo() {
   return (
@@ -59305,6 +63174,7 @@ function Demo() {
 * Applying margins to inputs inside a form:
 
 ```tsx
+import { TextInput } from '@mantine/core';
 
 function Demo() {
   return (
@@ -59320,6 +63190,7 @@ function Demo() {
 * Adding padding to various elements:
 
 ```tsx
+import { Paper } from '@mantine/core';
 
 function Demo() {
   return <Paper p="xl">My custom card</Paper>;
@@ -59340,6 +63211,7 @@ CSS properties as well as CSS variables. It is useful in the following cases:
 * You want to apply a single CSS property to a component:
 
 ```tsx
+import { Button, Flex } from '@mantine/core';
 
 function Demo() {
   return (
@@ -59354,6 +63226,7 @@ function Demo() {
 * You want to set a CSS variable based on component prop:
 
 ```tsx
+import { Box } from '@mantine/core';
 
 function Demo({ color }: { color: string }) {
   // Later you will be able to use var(--my-color) in any nested element
@@ -59408,6 +63281,7 @@ CSS modules are the most performant and flexible way of styling components.
 
 ```tsx
 // Demo.tsx
+import classes from './Demo.module.css';
 
 function Demo({ collapsed }: { collapsed: boolean }) {
   return (
@@ -59446,6 +63320,7 @@ You can reference Mantine [theme](https://mantine.dev/theming/theme-object/) val
 * In [style props](https://mantine.dev/styles/style-props/):
 
 ```tsx
+import { Box } from '@mantine/core';
 
 function Demo() {
   // bg="red.5" references theme.colors.red[5]
@@ -59464,6 +63339,7 @@ function Demo() {
 * In [style prop](https://mantine.dev/styles/style/):
 
 ```tsx
+import { Box } from '@mantine/core';
 
 function Demo() {
   return (
@@ -59509,10 +63385,53 @@ You can apply styles to HTML elements with `className` prop and to Mantine compo
 
 Applying styles with `className`:
 
+#### Example: className
+
+```tsx
+import { Box } from '@mantine/core';
+import classes from './Demo.module.css';
+
+function Demo() {
+  return (
+    <Box className={classes.box}>
+      Box component with <span className={classes.highlight}>some styles</span>
+    </Box>
+  );
+}
+```
 
 
 Applying styles with `classNames` (see [Styles API guide](https://mantine.dev/styles/styles-api) to learn more):
 
+#### Example: classNames
+
+```tsx
+import { useState } from 'react';
+import { TextInput } from '@mantine/core';
+import classes from './Demo.module.css';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  const [focused, setFocused] = useState(false);
+  const floating = focused || value.length > 0 || undefined;
+
+  return (
+    <TextInput
+      label="Floating label input"
+      labelProps={{ 'data-floating': floating }}
+      classNames={{
+        root: classes.root,
+        input: classes.input,
+        label: classes.label,
+      }}
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
+      value={value}
+      onChange={(event) => setValue(event.currentTarget.value)}
+    />
+  );
+}
+```
 
 
 ## Inline styles
@@ -59531,6 +63450,45 @@ Inline styles caveats:
 
 Example of inline styles:
 
+#### Example: styles
+
+```tsx
+import { Button } from '@mantine/core';
+
+function Demo() {
+  const gradient =
+    'linear-gradient(45deg, var(--mantine-color-pink-filled) 0%, var(--mantine-color-orange-filled) 50%, var(--mantine-color-yellow-filled) 100%)';
+
+  return (
+    <Button
+      radius="md"
+      styles={{
+        root: {
+          padding: 2,
+          border: 0,
+          backgroundImage: gradient,
+        },
+
+        inner: {
+          background: 'var(--mantine-color-body)',
+          color: 'var(--mantine-color-text)',
+          borderRadius: 'calc(var(--button-radius) - 2px)',
+          paddingLeft: 'var(--mantine-spacing-md)',
+          paddingRight: 'var(--mantine-spacing-md)',
+        },
+
+        label: {
+          backgroundImage: gradient,
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+        },
+      }}
+    >
+      Gradient button
+    </Button>
+  );
+}
+```
 
 
 ## Style props
@@ -59549,6 +63507,7 @@ them in large lists of components, for example, if you have 1000 inputs with res
 it is better to refactor to use `classNames` prop:
 
 ```tsx
+import { TextInput } from '@mantine/core';
 
 // Ok, style props are used to apply margin-top property to several components
 function StyleProps() {
@@ -59622,6 +63581,7 @@ Note that you do not need to use [ColorSchemeScript](https://mantine.dev/theming
 you can ignore this part of the guide.
 
 ```tsx
+import { HeadlessMantineProvider } from '@mantine/core';
 
 function App() {
   return (
@@ -59640,6 +63600,27 @@ from scratch. Note that `unstyled` prop is not supported by compound components 
 
 Unstyled [Tabs](https://mantine.dev/core/tabs) component:
 
+#### Example: unstyled
+
+```tsx
+import { Tabs } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Tabs defaultValue="chat" unstyled>
+      <Tabs.List>
+        <Tabs.Tab value="chat">Chat</Tabs.Tab>
+        <Tabs.Tab value="gallery">Gallery</Tabs.Tab>
+        <Tabs.Tab value="account">Account</Tabs.Tab>
+      </Tabs.List>
+
+      <Tabs.Panel value="chat">Chat panel</Tabs.Panel>
+      <Tabs.Panel value="gallery">Gallery panel</Tabs.Panel>
+      <Tabs.Panel value="account">Account panel</Tabs.Panel>
+    </Tabs>
+  );
+}
+```
 
 
 > **Choosing between unstyled prop and headless components**
@@ -59689,6 +63670,14 @@ it will not cause any issues: performance will be the same and the bundle size w
 Follow the [installation instructions](https://vanilla-extract.style/documentation/getting-started) to install vanilla extract.
 Then install `@mantine/vanilla-extract` package, it exports `themeToVars` function to convert Mantine theme to CSS variables:
 
+```bash
+yarn add @mantine/vanilla-extract
+```
+
+```bash
+npm install @mantine/vanilla-extract
+```
+
 ## Templates
 
 You can use one of the following templates to get started or a reference for your own setup.
@@ -59711,6 +63700,7 @@ to create an object with CSS variables from Mantine theme:
 
 ```tsx
 // theme.ts
+import { createTheme } from '@mantine/core';
 
 // Do not forget to pass theme to MantineProvider
 export const theme = createTheme({
@@ -59721,6 +63711,8 @@ export const theme = createTheme({
 
 ```tsx
 // theme.css.ts
+import { theme } from './theme';
+import { themeToVars } from '@mantine/vanilla-extract';
 
 // CSS variables object, can be access in *.css.ts files
 export const vars = themeToVars(theme);
@@ -59732,6 +63724,8 @@ Import `vars` object in `*.css.ts` files to access Mantine [CSS variables](https
 
 ```tsx
 // Demo.css.ts
+import { style } from '@vanilla-extract/css';
+import { vars } from './theme';
 
 export const demo = style({
   fontSize: vars.fontSizes.xl,
@@ -59746,6 +63740,8 @@ To convert px to [rem or em](https://mantine.dev/styles/rem) use `rem` and `em` 
 
 ```tsx
 // Demo.css.ts
+import { style } from '@vanilla-extract/css';
+import { rem } from '@mantine/core';
 
 export const demo = style({
   fontSize: rem(16),
@@ -59765,6 +63761,8 @@ apply styles only in light or dark color scheme:
 
 ```tsx
 // Demo.css.ts
+import { style } from '@vanilla-extract/css';
+import { vars } from './theme';
 
 export const demo = style({
   fontSize: vars.fontSizes.xl,
@@ -59789,6 +63787,8 @@ with `vars.darkSelector` (or vice versa):
 
 ```tsx
 // Demo.css.ts
+import { style } from '@vanilla-extract/css';
+import { vars } from './theme';
 
 export const demo = style({
   fontSize: vars.fontSizes.xl,
@@ -59811,6 +63811,8 @@ export const demo = style({
 
 ```tsx
 // Demo.css.ts
+import { style } from '@vanilla-extract/css';
+import { vars } from './theme';
 
 export const demo = style({
   fontSize: vars.fontSizes.sm,
@@ -59842,6 +63844,8 @@ Use `vars.rtlSelector` to apply styles only in rtl direction:
 
 ```tsx
 // Demo.css.ts
+import { style } from '@vanilla-extract/css';
+import { vars } from './theme';
 
 export const demo = style({
   paddingRight: vars.spacing.md,
@@ -59860,11 +63864,6 @@ export const demo = style({
 
 ### VariantsAndSizes
 
-ActionIconDemos,
-StylesDemos,
-ThemingDemos,
-} from '@docs/demos';
-
 # Variants and sizes
 
 ## Adding custom variants
@@ -59878,6 +63877,52 @@ Example of adding a new variant to the [Input](https://mantine.dev/core/input) c
 * `underline` variant styles are added
 * `filled` variant is a default variant – you do not need to define any additional styles for it
 
+#### Example: customVariant
+
+```tsx
+// Demo.tsx
+import { Input, MantineProvider, createTheme } from '@mantine/core';
+import classes from './Demo.module.css';
+
+// It is better to add new variants in theme.components
+// This way you will be able to use them in anywhere in the app
+const theme = createTheme({
+  components: {
+    Input: Input.extend({ classNames: classes }),
+  }
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Input variant="underline" placeholder="Underline input" />
+      <Input variant="filled" placeholder="Filled input" mt="md" />
+    </MantineProvider>
+  );
+}
+
+// Demo.module.css
+.input {
+  &[data-variant='underline'] {
+    border-bottom: 2px solid;
+    border-radius: 0;
+    padding-left: 0;
+    padding-right: 0;
+
+    @mixin light {
+      border-color: var(--mantine-color-gray-3);
+    }
+
+    @mixin dark {
+      border-color: var(--mantine-color-dark-3);
+    }
+
+    &:focus {
+      border-color: var(--mantine-color-blue-filled);
+    }
+  }
+}
+```
 
 
 Note that you can add custom variants to every Mantine component that supports [Styles API](https://mantine.dev/styles/styles-api)
@@ -59896,6 +63941,7 @@ in your project and extending `{x}Props` interface with the new variant type.
 Example of adding custom variant type to [Button](https://mantine.dev/core/button) component:
 
 ```tsx
+import { ButtonVariant, MantineSize } from '@mantine/core';
 
 type ExtendedButtonVariant = ButtonVariant | 'contrast' | 'radial-gradient';
 
@@ -59913,6 +63959,77 @@ components support custom variants with [variantColorResolver](https://mantine.d
 – it supports both changing colors and adding new variants. Note that `theme.variantColorResolver` is
 responsible only for colors, if you need to change other properties, use `data-variant` attribute.
 
+#### Example: variantColorsResolver
+
+```tsx
+import {
+  Button,
+  Group,
+  MantineProvider,
+  defaultVariantColorsResolver,
+  VariantColorsResolver,
+  parseThemeColor,
+  rgba,
+  darken,
+} from '@mantine/core';
+
+const variantColorResolver: VariantColorsResolver = (input) => {
+  const defaultResolvedColors = defaultVariantColorsResolver(input);
+  const parsedColor = parseThemeColor({
+    color: input.color || input.theme.primaryColor,
+    theme: input.theme,
+  });
+
+  // Override some properties for variant
+  if (parsedColor.isThemeColor && parsedColor.color === 'lime' && input.variant === 'filled') {
+    return {
+      ...defaultResolvedColors,
+      color: 'var(--mantine-color-black)',
+      hoverColor: 'var(--mantine-color-black)',
+    };
+  }
+
+  // Completely override variant
+  if (input.variant === 'light') {
+    return {
+      background: rgba(parsedColor.value, 0.1),
+      hover: rgba(parsedColor.value, 0.15),
+      border: `1px solid ${parsedColor.value}`,
+      color: darken(parsedColor.value, 0.1),
+    };
+  }
+
+  // Add new variants support
+  if (input.variant === 'danger') {
+    return {
+      background: 'var(--mantine-color-red-9)',
+      hover: 'var(--mantine-color-red-8)',
+      color: 'var(--mantine-color-white)',
+      border: 'none',
+    };
+  }
+
+  return defaultResolvedColors;
+};
+
+function Demo() {
+  return (
+    <MantineProvider theme={{ variantColorResolver }}>
+      <Group>
+        <Button color="lime.4" variant="filled">
+          Lime filled button
+        </Button>
+
+        <Button color="orange" variant="light">
+          Orange light button
+        </Button>
+
+        <Button variant="danger">Danger button</Button>
+      </Group>
+    </MantineProvider>
+  );
+}
+```
 
 
 ## Sizes with components CSS variables
@@ -59920,6 +64037,93 @@ responsible only for colors, if you need to change other properties, use `data-v
 You can add custom sizes to any component that supports `size` prop by providing a custom
 CSS variables resolver, usually it is done in `theme.components`:
 
+#### Example: vars
+
+```tsx
+// MantineProvider.tsx
+import { Button, Group, MantineProvider, createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  components: {
+    Button: Button.extend({
+      vars: (theme, props) => {
+        if (props.size === 'xxl') {
+          return {
+            root: {
+              '--button-height': '60px',
+              '--button-padding-x': '30px',
+              '--button-fz': '24px',
+            },
+          };
+        }
+
+        if (props.size === 'xxs') {
+          return {
+            root: {
+              '--button-height': '24px',
+              '--button-padding-x': '10px',
+              '--button-fz': '10px',
+            },
+          };
+        }
+
+        return { root: {} };
+      },
+    }),
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Group>
+        <Button size="xxl">XXL Button</Button>
+        <Button size="xxs">XXS Button</Button>
+      </Group>
+    </MantineProvider>
+  );
+}
+
+// Inline.tsx
+import { Button, PartialVarsResolver, ButtonFactory, Group } from '@mantine/core';
+
+const varsResolver: PartialVarsResolver<ButtonFactory> = (theme, props) => {
+  if (props.size === 'xxl') {
+    return {
+      root: {
+        '--button-height': '60px',
+        '--button-padding-x': '30px',
+        '--button-fz': '24px',
+      },
+    };
+  }
+
+  if (props.size === 'xxs') {
+    return {
+      root: {
+        '--button-height': '24px',
+        '--button-padding-x': '10px',
+        '--button-fz': '10px',
+      },
+    };
+  }
+
+  return { root: {} };
+};
+
+function Demo() {
+  return (
+    <Group>
+      <Button vars={varsResolver} size="xxl">
+        XXL Button
+      </Button>
+      <Button vars={varsResolver} size="xxs">
+        XXS Button
+      </Button>
+    </Group>
+  );
+}
+```
 
 
 ## Sizes with data-size attribute
@@ -59927,6 +64131,49 @@ CSS variables resolver, usually it is done in `theme.components`:
 Every component that supports `size` prop exposes it as `data-size="{value}"` attribute on the root element.
 You can use it to add custom sizes:
 
+#### Example: dataSize
+
+```tsx
+// Demo.tsx
+import { Input, createTheme, MantineProvider } from '@mantine/core';
+import classes from './Demo.module.css';
+
+const theme = createTheme({
+  components: {
+    Input: Input.extend({ classNames: classes }),
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Input placeholder="Size XXL" size="xxl" />
+      <Input placeholder="Size XXS" size="xxs" mt="md" />
+    </MantineProvider>
+  );
+}
+
+// Demo.module.css
+.wrapper {
+  &[data-size='xxl'] {
+    & .input {
+      padding-left: 28px;
+      padding-right: 28px;
+      height: 68px;
+      font-size: 28px;
+    }
+  }
+
+  &[data-size='xxs'] {
+    & .input {
+      padding-left: 10px;
+      padding-right: 10px;
+      height: 28px;
+      font-size: 10px;
+    }
+  }
+}
+```
 
 
 ## Sizes with static CSS variables
@@ -60033,10 +64280,20 @@ Description: Embla based carousel component
 
 ## Installation
 
+```bash
+yarn add embla-carousel@^8.5.2 embla-carousel-react@^8.5.2 @mantine/carousel
+```
+
+```bash
+npm install embla-carousel@^8.5.2 embla-carousel-react@^8.5.2 @mantine/carousel
+```
+
 After installation import package styles at the root of your application:
 
 ```tsx
+import '@mantine/core/styles.css';
 // ‼️ import carousel styles after core package styles
+import '@mantine/carousel/styles.css';
 ```
 
 ## Do not forget to import styles
@@ -60047,6 +64304,7 @@ You've fallen into the trap of not importing carousel styles!
 To fix the issue, import carousel styles at the root of your application:
 
 ```tsx
+import '@mantine/carousel/styles.css';
 ```
 
 ## Documentation demos
@@ -60059,10 +64317,44 @@ When you copy paste demo code to your project, it will not have blue background 
 
 `@mantine/carousel` package is based on [embla carousel](https://www.embla-carousel.com/):
 
+#### Example: usage
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+
+function Demo() {
+  return (
+    <Carousel withIndicators height={200}>
+      <Carousel.Slide>1</Carousel.Slide>
+      <Carousel.Slide>2</Carousel.Slide>
+      <Carousel.Slide>3</Carousel.Slide>
+      {/* ...other slides */}
+    </Carousel>
+  );
+}
+```
 
 
 ## Options
 
+#### Example: configurator
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+
+
+function Demo() {
+  return (
+    <Carousel
+      slideSize="70%"
+      height={200}
+      
+    >
+      {/* ...slides */}
+    </Carousel>
+  );
+}
+```
 
 
 ## Embla options
@@ -60072,12 +64364,55 @@ You can find embla options description in [embla options reference](https://www.
 
 Example of passing `loop`, `dragFree` and `align` options:
 
+#### Example: emblaOptions
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+
+function Demo() {
+  return (
+    <Carousel
+      slideSize="70%"
+      height={200}
+      emblaOptions={{
+        loop: ,
+        dragFree: ,
+        align: ''
+      }}
+    >
+      {/* ...slides */}
+    </Carousel>
+  );
+}
+```
 
 
 ## Size and gap
 
 Set `slideSize` and `slideGap` on `Carousel` component to control size and gap of every slide:
 
+#### Example: multiple
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+
+function Demo() {
+  return (
+    <Carousel
+      withIndicators
+      height={200}
+      slideSize="33.333333%"
+      slideGap="md"
+      emblaOptions={{ loop: true, align: 'start', slidesToScroll: 3 }}
+    >
+      <Carousel.Slide>1</Carousel.Slide>
+      <Carousel.Slide>2</Carousel.Slide>
+      <Carousel.Slide>3</Carousel.Slide>
+      {/* ...other slides */}
+    </Carousel>
+  );
+}
+```
 
 
 ## Responsive styles
@@ -60085,6 +64420,28 @@ Set `slideSize` and `slideGap` on `Carousel` component to control size and gap o
 `slideSize` and `slideGap` props work the same way as [style props](https://mantine.dev/styles/style-props/),
 you can pass an object with values for different breakpoints:
 
+#### Example: breakpoints
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+
+function Demo() {
+  return (
+    <Carousel
+      withIndicators
+      height={200}
+      slideSize={{ base: '100%', sm: '50%', md: '33.333333%' }}
+      slideGap={{ base: 0, sm: 'md' }}
+      emblaOptions={{ loop: true, align: 'start' }}
+    >
+      <Carousel.Slide>1</Carousel.Slide>
+      <Carousel.Slide>2</Carousel.Slide>
+      <Carousel.Slide>3</Carousel.Slide>
+      {/* ...other slides */}
+    </Carousel>
+  );
+}
+```
 
 
 ## Container queries
@@ -60099,24 +64456,117 @@ reference `theme.breakpoints` values in keys. It is required to use exact px or 
 To see how the slides size and gap changes, resize the root element of the demo
 with the resize handle located at the bottom right corner of the demo:
 
+#### Example: container
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+
+function Demo() {
+  return (
+    // Wrapper div is added for demonstration purposes only,
+    // It is not required in real projects
+    <div
+      style={{
+        resize: 'horizontal',
+        overflow: 'hidden',
+        maxWidth: '100%',
+        minWidth: 250,
+        padding: 10,
+      }}
+    >
+      <Carousel
+        withIndicators
+        height={200}
+        type="container"
+        slideSize={{ base: '100%', '300px': '50%', '500px': '33.333333%' }}
+        slideGap={{ base: 0, '300px': 'md', '500px': 'lg' }}
+        emblaOptions={{ loop: true, align: 'start' }}
+      >
+        <Carousel.Slide>1</Carousel.Slide>
+        <Carousel.Slide>2</Carousel.Slide>
+        <Carousel.Slide>3</Carousel.Slide>
+        {/* ...other slides */}
+      </Carousel>
+    </div>
+  );
+}
+```
 
 
 ## Drag free
 
 `dragFree` will disable slides snap points – user will be able to stop dragging at any position:
 
+#### Example: dragFree
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+
+function Demo() {
+  return (
+    <Carousel
+      withIndicators
+      height={200}
+      emblaOptions={{ dragFree: true, align: 'start' }}
+      slideGap="md"
+    >
+      <Carousel.Slide>1</Carousel.Slide>
+      <Carousel.Slide>2</Carousel.Slide>
+      <Carousel.Slide>3</Carousel.Slide>
+      {/* ...other slides */}
+    </Carousel>
+  );
+}
+```
 
 
 ## Vertical orientation
 
 Carousel with `orientation="vertical"` requires `height` prop to be set:
 
+#### Example: vertical
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+
+function Demo() {
+  return (
+    <Carousel orientation="vertical" height={200} withIndicators>
+      <Carousel.Slide>1</Carousel.Slide>
+      <Carousel.Slide>2</Carousel.Slide>
+      <Carousel.Slide>3</Carousel.Slide>
+      {/* ...other slides */}
+    </Carousel>
+  );
+}
+```
 
 
 ## Controls icons
 
 You can replace default next/previous controls icons with any React nodes:
 
+#### Example: icons
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+import { IconArrowRight, IconArrowLeft } from '@tabler/icons-react';
+
+function Demo() {
+  return (
+    <Carousel
+      height={180}
+      nextControlIcon={<IconArrowRight size={16} />}
+      previousControlIcon={<IconArrowLeft size={16} />}
+    >
+      <Carousel.Slide>1</Carousel.Slide>
+      <Carousel.Slide>2</Carousel.Slide>
+      <Carousel.Slide>3</Carousel.Slide>
+      {/* ...other slides */}
+    </Carousel>
+  );
+}
+```
 
 
 ## 100% height
@@ -60128,6 +64578,7 @@ Set `height="100%"` to make Carousel take 100% height of the container. Note tha
 * container element must have fixed height
 
 ```tsx
+import { Carousel } from '@mantine/carousel';
 
 export function PercentageHeight() {
   return (
@@ -60147,6 +64598,50 @@ export function PercentageHeight() {
 You can get [embla instance](https://www.embla-carousel.com/api/methods/) with `getEmblaApi` prop.
 You will be able enhance carousel with additional logic after that using embla api methods:
 
+#### Example: progress
+
+```tsx
+import { useCallback, useEffect, useState } from 'react';
+import { EmblaCarouselType } from 'embla-carousel';
+import { Carousel } from '@mantine/carousel';
+import { Progress } from '@mantine/core';
+
+function Demo() {
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [embla, setEmbla] = useState<EmblaCarouselType | null>(null);
+
+  const handleScroll = useCallback(() => {
+    if (!embla) {
+      return;
+    }
+    const progress = Math.max(0, Math.min(1, embla.scrollProgress()));
+    setScrollProgress(progress * 100);
+  }, [embla, setScrollProgress]);
+
+  useEffect(() => {
+    if (embla) {
+      embla.on('scroll', handleScroll);
+      handleScroll();
+    }
+  }, [embla]);
+
+  return (
+    <>
+      <Carousel
+        emblaOptions={{ dragFree: true }}
+        slideSize="50%"
+        slideGap="md"
+        height={200}
+        getEmblaApi={setEmbla}
+        initialSlide={2}
+      >
+        <Slides count={12} />
+      </Carousel>
+      <Progress value={scrollProgress} maw={320} size="sm" mt="xl" mx="auto" />
+    </>
+  );
+}
+```
 
 
 ## Embla plugins
@@ -60157,28 +64652,314 @@ install them on your side.
 
 Example with [autoplay plugin](https://www.embla-carousel.com/plugins/autoplay/):
 
+```bash
+yarn add embla-carousel-autoplay@^8.5.2
+```
+
+```bash
+npm install embla-carousel-autoplay@^8.5.2
+```
+
+#### Example: autoplay
+
+```tsx
+import { useRef } from 'react';
+import Autoplay from 'embla-carousel-autoplay';
+import { Carousel } from '@mantine/carousel';
+
+function Demo() {
+  const autoplay = useRef(Autoplay({ delay: 1000 }));
+
+  return (
+    <Carousel
+      withIndicators
+      height={200}
+      plugins={[autoplay.current]}
+      onMouseEnter={autoplay.current.stop}
+      onMouseLeave={() => autoplay.current.play()}
+    >
+      <Slides count={5} />
+    </Carousel>
+  );
+}
+```
 
 
+#### Example: stylesApi
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+
+function Demo() {
+  return (
+    <Carousel withIndicators height={200}>
+      <Carousel.Slide>1</Carousel.Slide>
+      <Carousel.Slide>2</Carousel.Slide>
+    </Carousel>
+  );
+}
+```
 
 
 ## Indicator styles
 
+#### Example: indicatorStyles
+
+```tsx
+// Demo.tsx
+import { Carousel } from '@mantine/carousel';
+import classes from './Demo.module.css';
+
+function Demo() {
+  return (
+    <Carousel withIndicators height={200} classNames={classes}>
+      <Carousel.Slide>1</Carousel.Slide>
+      <Carousel.Slide>2</Carousel.Slide>
+      <Carousel.Slide>3</Carousel.Slide>
+      {/* ...other slides */}
+    </Carousel>
+  );
+}
+
+// Demo.module.css
+.indicator {
+  width: 12px;
+  height: 4px;
+  transition: width 250ms ease;
+
+  &[data-active] {
+    width: 40px;
+  }
+}
+```
 
 
 ## Hide inactive controls
 
+#### Example: controlsStyles
+
+```tsx
+// Demo.tsx
+import { Carousel } from '@mantine/carousel';
+import classes from './Demo.module.css';
+
+function Demo() {
+  return (
+    <Carousel height={200} classNames={classes}>
+      <Carousel.Slide>1</Carousel.Slide>
+      <Carousel.Slide>2</Carousel.Slide>
+      <Carousel.Slide>3</Carousel.Slide>
+      {/* ...other slides */}
+    </Carousel>
+  );
+}
+
+// Demo.module.css
+.control {
+  &[data-inactive] {
+    opacity: 0;
+    cursor: default;
+  }
+}
+```
 
 
 ## Show controls on hover
 
+#### Example: controlsHover
+
+```tsx
+// Demo.tsx
+import { Carousel } from '@mantine/carousel';
+import classes from './Demo.module.css';
+
+function Demo() {
+  return (
+    <Carousel height={200} classNames={classes}>
+      <Carousel.Slide>1</Carousel.Slide>
+      <Carousel.Slide>2</Carousel.Slide>
+      <Carousel.Slide>3</Carousel.Slide>
+      {/* ...other slides */}
+    </Carousel>
+  );
+}
+
+// Demo.module.css
+.controls {
+  transition: opacity 150ms ease;
+  opacity: 0;
+}
+
+.root {
+  &:hover {
+    .controls {
+      opacity: 1;
+    }
+  }
+}
+```
 
 
 ## Example: Images carousel
 
+#### Example: images
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+import { Image } from '@mantine/core';
+
+const images = [
+  'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-1.png',
+  'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-2.png',
+  'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-3.png',
+  'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-4.png',
+  'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-5.png',
+];
+
+function Demo() {
+  const slides = images.map((url) => (
+    <Carousel.Slide key={url}>
+      <Image src={url} />
+    </Carousel.Slide>
+  ));
+
+  return (
+    <Carousel withIndicators height={200}>
+      {slides}
+    </Carousel>
+  );
+}
+```
 
 
 ## Example: Cards carousel
 
+#### Example: cards
+
+```tsx
+// Demo.tsx
+import { Carousel } from '@mantine/carousel';
+import { useMediaQuery } from '@mantine/hooks';
+import { Button, Paper, Title, useMantineTheme, Text } from '@mantine/core';
+import classes from './Demo.module.css';
+
+const data = [
+  {
+    image:
+      'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
+    title: 'Best forests to visit in North America',
+    category: 'nature',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1559494007-9f5847c49d94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
+    title: 'Hawaii beaches review: better than you think',
+    category: 'beach',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1608481337062-4093bf3ed404?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
+    title: 'Mountains at night: 12 best locations to enjoy the view',
+    category: 'nature',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
+    title: 'Aurora in Norway: when to visit for best experience',
+    category: 'nature',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
+    title: 'Best places to visit this winter',
+    category: 'tourism',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1582721478779-0ae163c05a60?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
+    title: 'Active volcanos reviews: travel at your own risk',
+    category: 'nature',
+  },
+];
+
+interface CardProps {
+  image: string;
+  title: string;
+  category: string;
+}
+
+function Card({ image, title, category }: CardProps) {
+  return (
+    <Paper
+      shadow="md"
+      p="xl"
+      radius="md"
+      style={{ backgroundImage: `url(${image})` }}
+      className={classes.card}
+    >
+      <div>
+        <Text className={classes.category} size="xs">
+          {category}
+        </Text>
+        <Title order={3} className={classes.title}>
+          {title}
+        </Title>
+      </div>
+      <Button variant="white" color="dark">
+        Read article
+      </Button>
+    </Paper>
+  );
+}
+
+function Demo() {
+  const theme = useMantineTheme();
+  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+  const slides = data.map((item) => (
+    <Carousel.Slide key={item.title}>
+      <Card {...item} />
+    </Carousel.Slide>
+  ));
+
+  return (
+    <Carousel
+      slideSize={{ base: '100%', sm: '50%' }}
+      slideGap={{ base: 'xl', sm: 2 }}
+      emblaOptions={{ align: 'start', slidesToScroll: mobile ? 1 : 2 }}
+    >
+      {slides}
+    </Carousel>
+  );
+}
+
+// Demo.module.css
+.card {
+  height: 440px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-size: cover;
+  background-position: center;
+}
+
+.title {
+  font-weight: 900;
+  color: var(--mantine-color-white);
+  line-height: 1.2;
+  font-size: 32px;
+  margin-top: var(--mantine-spacing-xs);
+  cursor: default;
+}
+
+.category {
+  color: var(--mantine-color-white);
+  opacity: 0.7;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: default;
+}
+```
 
 
 
@@ -60213,45 +64994,62 @@ Example with [autoplay plugin](https://www.embla-carousel.com/plugins/autoplay/)
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Carousel component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Root element',
-    slide: '`Carousel.Slide` root element',
-    container: 'Slides container',
-    viewport: 'Main element, contains slides container and all controls',
-    controls: 'Next/previous controls container',
-    control: 'Next/previous control',
-    indicators: 'Indicators container',
-    indicator: 'Indicator button',
-  }
-```
+**Carousel selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Carousel-root | Root element |
+| slide | .mantine-Carousel-slide | `Carousel.Slide` root element |
+| container | .mantine-Carousel-container | Slides container |
+| viewport | .mantine-Carousel-viewport | Main element, contains slides container and all controls |
+| controls | .mantine-Carousel-controls | Next/previous controls container |
+| control | .mantine-Carousel-control | Next/previous control |
+| indicators | .mantine-Carousel-indicators | Indicators container |
+| indicator | .mantine-Carousel-indicator | Indicator button |
 
-```typescript
-{
-    root: {
-      '--carousel-control-size': 'Controls `width` and `height` of the next/previous buttons',
-      '--carousel-controls-offset': 'Controls offsets of the next/previous buttons',
-      '--carousel-height': 'Controls height of the carousel',
-    }
-```
+**Carousel CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --carousel-control-size | Controls `width` and `height` of the next/previous buttons |
+| root | --carousel-controls-offset | Controls offsets of the next/previous buttons |
+| root | --carousel-height | Controls height of the carousel |
+
+**Carousel data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-orientation | - | Value of  |
+| root | data-include-gap-in-size | - | - |
+| control | data-inactive | No previous/next slides are available | - |
+| indicator | data-active | Associated slide is active | - |
 
 
 --------------------------------------------------------------------------------
 
 ### CodeHighlight
-Package: @mantine/x
-Import: import { CodeHighlight } from '@mantine/x';
+Package: @mantine/code-highlight
+Import: import { CodeHighlight } from '@mantine/code-highlight';
+Description: Highlight code with shiki or highlight.js
 
 ## Installation
+
+```bash
+yarn add @mantine/code-highlight
+```
+
+```bash
+npm install @mantine/code-highlight
+```
 
 After installation import package styles at the root of your application:
 
 ```tsx
+import '@mantine/core/styles.css';
 // ‼️ import code-highlight styles after core package styles
+import '@mantine/code-highlight/styles.css';
 ```
 
 ## Example
@@ -60262,6 +65060,46 @@ of your choice.
 
 Example of code highlighting with [shiki](https://shiki.matsu.io/):
 
+
+```tsx
+type FilterPropsRes<T extends Record<string, any>> = {
+  [Key in keyof T]-?: T[Key] extends undefined ? never : T[Key];
+};
+
+export function filterProps<T extends Record<string, any>>(props: T) {
+  return Object.keys(props).reduce<FilterPropsRes<T>>((acc, key: keyof T) => {
+    if (props[key] !== undefined) {
+      acc[key] = props[key];
+    }
+    return acc;
+  }, {} as FilterPropsRes<T>);
+}
+```
+
+#### Example: usage
+
+```tsx
+import { CodeHighlight } from '@mantine/code-highlight';
+
+const exampleCode = `
+type FilterPropsRes<T extends Record<string, any>> = {
+  [Key in keyof T]-?: T[Key] extends undefined ? never : T[Key];
+};
+
+export function filterProps<T extends Record<string, any>>(props: T) {
+  return Object.keys(props).reduce<FilterPropsRes<T>>((acc, key: keyof T) => {
+    if (props[key] !== undefined) {
+      acc[key] = props[key];
+    }
+    return acc;
+  }, {} as FilterPropsRes<T>);
+}
+`;
+
+function Demo() {
+  return <CodeHighlight code={exampleCode} language="tsx" radius="md" />;
+}
+```
 
 
 ## Adapters
@@ -60284,9 +65122,19 @@ Shiki adapter is used for all code highlighting in Mantine documentation.
 
 To use shiki adapter you need to install `shiki` package:
 
+```bash
+yarn add shiki
+```
+
+```bash
+npm install shiki
+```
+
 Then wrap your app with `CodeHighlightAdapterProvider` and provide `createShikiAdapter` as `adapter` prop:
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
+import { CodeHighlightAdapterProvider, createShikiAdapter } from '@mantine/code-highlight';
 
 // Shiki requires async code to load the highlighter
 async function loadShiki() {
@@ -60315,6 +65163,46 @@ function App() {
 After that, you can use `CodeHighlight` component in your application:
 
 
+```tsx
+type FilterPropsRes<T extends Record<string, any>> = {
+  [Key in keyof T]-?: T[Key] extends undefined ? never : T[Key];
+};
+
+export function filterProps<T extends Record<string, any>>(props: T) {
+  return Object.keys(props).reduce<FilterPropsRes<T>>((acc, key: keyof T) => {
+    if (props[key] !== undefined) {
+      acc[key] = props[key];
+    }
+    return acc;
+  }, {} as FilterPropsRes<T>);
+}
+```
+
+#### Example: usage
+
+```tsx
+import { CodeHighlight } from '@mantine/code-highlight';
+
+const exampleCode = `
+type FilterPropsRes<T extends Record<string, any>> = {
+  [Key in keyof T]-?: T[Key] extends undefined ? never : T[Key];
+};
+
+export function filterProps<T extends Record<string, any>>(props: T) {
+  return Object.keys(props).reduce<FilterPropsRes<T>>((acc, key: keyof T) => {
+    if (props[key] !== undefined) {
+      acc[key] = props[key];
+    }
+    return acc;
+  }, {} as FilterPropsRes<T>);
+}
+`;
+
+function Demo() {
+  return <CodeHighlight code={exampleCode} language="tsx" radius="md" />;
+}
+```
+
 
 All further code highlighting examples on this page are using shiki adapter.
 
@@ -60326,9 +65214,21 @@ to highlight basic JavaScript, HTML, and CSS code.
 
 To use highlight.js adapter you need to install `highlight.js` package:
 
+```bash
+yarn add highlight.js
+```
+
+```bash
+npm install highlight.js
+```
+
 Then wrap your app with `CodeHighlightAdapterProvider` and provide `createHighlightJsAdapter` as `adapter` prop:
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
+import { CodeHighlightAdapterProvider, createHighlightJsAdapter } from '@mantine/code-highlight';
+import hljs from 'highlight.js/lib/core';
+import tsLang from 'highlight.js/lib/languages/typescript';
 
 hljs.registerLanguage('typescript', tsLang);
 
@@ -60366,11 +65266,14 @@ or use a different library.
 Example of creating a custom shiki adapter with custom themes and logic:
 
 ```tsx
+import type { CodeHighlightAdapter, stripShikiCodeBlocks } from '@mantine/code-highlight';
 
 // Shiki transformers can be used to highlight diffs and other notations
 // https://shiki.style/packages/transformers
+import { transformerNotationDiff, transformerNotationHighlight } from '@shikijs/transformers'
 
 // Shiki themes as objects, you can use any VSCode themes
+import { darkTheme, lightTheme } from './shiki-themes';
 
 async function loadShiki() {
   const { createHighlighter } = await import('shiki');
@@ -60417,11 +65320,116 @@ You can customize copy button labels with `copyLabel` and `copiedLabel` props.
 In case you need to remove the copy button, set `withCopyButton={false}`.
 
 
+```tsx
+function Button() {
+  return <button>Click me</button>;
+}
+```
+
+#### Example: copy
+
+```tsx
+import { CodeHighlight } from '@mantine/code-highlight';
+
+const exampleCode = `
+function Button() {
+  return <button>Click me</button>;
+}
+`;
+
+function Demo() {
+  return (
+    <>
+      <CodeHighlight
+        code={`// Custom copy label
+function Button() {
+  return <button>Click me</button>;
+}
+`}
+        language="tsx"
+        copyLabel="Copy button code"
+        copiedLabel="Copied!"
+        radius="md"
+      />
+      <CodeHighlight
+        code={`// Without copy button
+function Button() {
+  return <button>Click me</button>;
+}
+`}
+        language="tsx"
+        withCopyButton={false}
+        mt="md"
+        radius="md"
+      />
+    </>
+  );
+}
+```
+
 
 ## With tabs
 
 `CodeHighlightTabs` component allows organizing multiple code blocks into tabs:
 
+#### Example: tabs
+
+```tsx
+// Demo.tsx
+import { CodeHighlightTabs } from '@mantine/code-highlight';
+import { tsxCode, cssCode } from './code';
+
+function Demo() {
+  return (
+    <CodeHighlightTabs
+      radius="md"
+      code={[
+        { fileName: 'Demo.tsx', code: tsxCode, language: 'tsx' },
+        { fileName: 'Demo.module.css', code: cssCode, language: 'scss' },
+      ]}
+    />
+  );
+}
+
+// code.ts
+export const tsxCode = `
+import { Group, Button, MantineProvider, createTheme } from '@mantine/core';
+import classes from './Demo.module.css';
+
+const theme = createTheme({
+  components: {
+    Button: Button.extend({
+      classNames: classes,
+    }),
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Group>
+        <Button variant="danger">Danger variant</Button>
+        <Button variant="primary">Primary variant</Button>
+      </Group>
+    </MantineProvider>
+  );
+}
+`;
+
+export const cssCode = `
+.root {
+  &[data-variant='danger'] {
+    background-color: var(--mantine-color-red-9);
+    color: var(--mantine-color-red-0);
+  }
+
+  &[data-variant='primary'] {
+    background: linear-gradient(45deg, #4b6cb7 10%, #253b67 90%);
+    color: var(--mantine-color-white);
+  }
+}
+`;
+```
 
 
 ## Tabs with icons
@@ -60430,6 +65438,50 @@ You can use any React node as tab icon. The example below uses TypeScript and CS
 icons from the `@mantinex/dev-icons` package, but you can use any other icons library or custom
 icons:
 
+#### Example: tabsIcons
+
+```tsx
+import { CodeHighlightTabs } from '@mantine/code-highlight';
+import { TypeScriptIcon, CssIcon } from '@mantinex/dev-icons';
+
+const tsxCode = `
+function Button() {
+  return <button>Click me</button>;
+}
+`;
+
+const cssCode = `
+.button {
+  background-color: transparent;
+  color: var(--mantine-color-blue-9);
+}
+`;
+
+function Demo() {
+  const tsIcon = <TypeScriptIcon size={14} />;
+  const cssIcon = <CssIcon size={14} />;
+
+  return (
+    <CodeHighlightTabs
+      radius="md"
+      code={[
+        {
+          fileName: 'Button.tsx',
+          code: tsxCode,
+          language: 'tsx',
+          icon: tsIcon,
+        },
+        {
+          fileName: 'Button.module.css',
+          code: cssCode,
+          language: 'scss',
+          icon: cssIcon,
+        },
+      ]}
+    />
+  );
+}
+```
 
 
 ## Tabs icons based on file name
@@ -60438,6 +65490,58 @@ As an alternative to providing icons manually for each tab, you can use `getFile
 to assign icons based on file name. `getFileIcon` accepts file name and must React node
 or `null`.
 
+#### Example: tabsGetIcons
+
+```tsx
+import { CodeHighlightTabs } from '@mantine/code-highlight';
+import { TypeScriptIcon, CssIcon } from '@mantinex/dev-icons';
+
+const tsxCode = `
+function Button() {
+  return <button>Click me</button>;
+}
+`;
+
+const cssCode = `
+.button {
+  background-color: transparent;
+  color: var(--mantine-color-blue-9);
+}
+`;
+
+function getFileIcon(fileName: string) {
+  if (fileName.endsWith('.ts') || fileName.endsWith('.tsx')) {
+    return <TypeScriptIcon size={14} />;
+  }
+
+  if (fileName.endsWith('.css')) {
+    return <CssIcon size={14} />;
+  }
+
+  return null;
+}
+
+function Demo() {
+  return (
+    <CodeHighlightTabs
+      getFileIcon={getFileIcon}
+      radius="md"
+      code={[
+        {
+          fileName: 'Button.tsx',
+          code: tsxCode,
+          language: 'tsx',
+        },
+        {
+          fileName: 'Button.module.css',
+          code: cssCode,
+          language: 'scss',
+        },
+      ]}
+    />
+  );
+}
+```
 
 
 ## Expandable code
@@ -60446,6 +65550,67 @@ If the code snippet is too long, you can make it expandable with `withExpandButt
 and `defaultExpanded={false}` props. To change label of the expand/collapse control
 tooltip, use `expandCodeLabel` and `collapseCodeLabel`.
 
+#### Example: expand
+
+```tsx
+// Demo.tsx
+import { CodeHighlightTabs } from '@mantine/code-highlight';
+import { tsxCode, cssCode } from './code';
+
+function Demo() {
+  return (
+    <CodeHighlightTabs
+      withExpandButton
+      defaultExpanded={false}
+      expandLabel="Show full code"
+      collapseLabel="Show less"
+      code={[
+        { fileName: 'Demo.tsx', code: tsxCode, language: 'tsx' },
+        { fileName: 'Demo.module.css', code: cssCode, language: 'scss' },
+      ]}
+    />
+  );
+}
+
+// code.ts
+export const tsxCode = `
+import { Group, Button, MantineProvider, createTheme } from '@mantine/core';
+import classes from './Demo.module.css';
+
+const theme = createTheme({
+  components: {
+    Button: Button.extend({
+      classNames: classes,
+    }),
+  },
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      <Group>
+        <Button variant="danger">Danger variant</Button>
+        <Button variant="primary">Primary variant</Button>
+      </Group>
+    </MantineProvider>
+  );
+}
+`;
+
+export const cssCode = `
+.root {
+  &[data-variant='danger'] {
+    background-color: var(--mantine-color-red-9);
+    color: var(--mantine-color-red-0);
+  }
+
+  &[data-variant='primary'] {
+    background: linear-gradient(45deg, #4b6cb7 10%, #253b67 90%);
+    color: var(--mantine-color-white);
+  }
+}
+`;
+```
 
 
 ## Custom controls
@@ -60454,11 +65619,74 @@ Use `controls` prop with `CodeHighlightControl` component to add custom controls
 to the code block:
 
 
+```tsx
+function greet() {
+  return 'Hello, World!';
+}
+```
+
+#### Example: customControl
+
+```tsx
+import { IconBrandCodesandbox, IconMessage2 } from '@tabler/icons-react';
+import { CodeHighlight, CodeHighlightControl } from '@mantine/code-highlight';
+
+const exampleCode = `
+function greet() {
+  return 'Hello, World!';
+}
+`;
+
+function Demo() {
+  return (
+    <CodeHighlight
+      code={exampleCode}
+      language="tsx"
+      radius="md"
+      controls={[
+        <CodeHighlightControl
+          component="a"
+          href="https://codesandbox.io"
+          target="_blank"
+          tooltipLabel="Open on codesandbox"
+          key="sandbox"
+        >
+          <IconBrandCodesandbox />
+        </CodeHighlightControl>,
+        <CodeHighlightControl tooltipLabel="Discuss with GPT" key="gpt">
+          <IconMessage2 />
+        </CodeHighlightControl>,
+      ]}
+    />
+  );
+}
+```
+
 
 ## Inline code
 
 `InlineCodeHighlight` component allows highlighting inline code snippets:
 
+#### Example: inline
+
+```tsx
+import { Text } from '@mantine/core';
+import { InlineCodeHighlight } from '@mantine/code-highlight';
+
+function Demo() {
+  return (
+    <Text>
+      You can highlight code inline:{' '}
+      <InlineCodeHighlight
+        code='<InlineCodeHighlight code="" language="tsx" />'
+        language="tsx"
+        withBorder
+      />
+      . Is that not cool?
+    </Text>
+  );
+}
+```
 
 
 
@@ -60487,31 +65715,46 @@ to the code block:
 
 #### Styles API
 
-This component supports the following CSS selectors:
+CodeHighlight component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    codeHighlight: 'Root element',
-    showCodeButton: 'Button that reveals full code when it is collapsed',
-    pre: 'Pre element, contains code element',
-    code: 'Code element',
-    control: 'Control button, copy/collapse, custom controls',
-    controlTooltip: 'Root element of control tooltip',
-    controls: 'A wrapper around controls',
-    scrollarea: 'Scroll area, contains code',
-  }
-```
+**CodeHighlight selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| codeHighlight | .mantine-CodeHighlight-codeHighlight | Root element |
+| showCodeButton | .mantine-CodeHighlight-showCodeButton | Button that reveals full code when it is collapsed |
+| pre | .mantine-CodeHighlight-pre | Pre element, contains code element |
+| code | .mantine-CodeHighlight-code | Code element |
+| control | .mantine-CodeHighlight-control | Control button, copy/collapse, custom controls |
+| controlTooltip | .mantine-CodeHighlight-controlTooltip | Root element of control tooltip |
+| controls | .mantine-CodeHighlight-controls | A wrapper around controls |
+| scrollarea | .mantine-CodeHighlight-scrollarea | Scroll area, contains code |
 
-```typescript
-{
-    codeHighlight: {
-      '--ch-background': 'Background color',
-      '--ch-max-height': 'Max height of code block in collapsed state',
-      '--ch-radius': 'Border radius',
-    }
-```
+**CodeHighlight CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| codeHighlight | --ch-background | Background color |
+| codeHighlight | --ch-max-height | Max height of code block in collapsed state |
+| codeHighlight | --ch-radius | Border radius |
+
+**CodeHighlight.Tabs selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| codeHighlight | .mantine-CodeHighlightTabs-codeHighlight | Root element of inner CodeHighlight component |
+| showCodeButton | .mantine-CodeHighlightTabs-showCodeButton | Button that reveals full code when it is collapsed |
+| pre | .mantine-CodeHighlightTabs-pre | Pre element, contains code element |
+| code | .mantine-CodeHighlightTabs-code | Code element |
+| control | .mantine-CodeHighlightTabs-control | Control button, copy/collapse, custom controls |
+| controlTooltip | .mantine-CodeHighlightTabs-controlTooltip | Root element of control tooltip |
+| controls | .mantine-CodeHighlightTabs-controls | A wrapper around controls |
+| scrollarea | .mantine-CodeHighlightTabs-scrollarea | Scroll area, contains code |
+| root | .mantine-CodeHighlightTabs-root | Root element |
+| filesScrollarea | .mantine-CodeHighlightTabs-filesScrollarea | Scrollarea with files list |
+| files | .mantine-CodeHighlightTabs-files | Files names list |
+| file | .mantine-CodeHighlightTabs-file | File name |
+| fileIcon | .mantine-CodeHighlightTabs-fileIcon | File icon |
 
 
 --------------------------------------------------------------------------------
@@ -60521,20 +65764,22 @@ Package: @mantine/dropzone
 Import: import { Dropzone } from '@mantine/dropzone';
 Description: Capture files from user with drag and drop
 
-IMAGE\_MIME\_TYPE,
-MIME\_TYPES,
-MS\_EXCEL\_MIME\_TYPE,
-MS\_POWERPOINT\_MIME\_TYPE,
-MS\_WORD\_MIME\_TYPE,
-PDF\_MIME\_TYPE,
-} from '@mantine/dropzone';
-
 ## Installation
+
+```bash
+yarn add @mantine/dropzone
+```
+
+```bash
+npm install @mantine/dropzone
+```
 
 After installation import package styles at the root of your application:
 
 ```tsx
+import '@mantine/core/styles.css';
 // ‼️ import dropzone styles after core package styles
+import '@mantine/dropzone/styles.css';
 ```
 
 ## Usage
@@ -60546,6 +65791,46 @@ Component is based on [react-dropzone](https://react-dropzone.js.org/) and suppo
 * Limits individual file size
 * Renders given children and provides context based component to display elements based on current status
 
+#### Example: usage
+
+```tsx
+import { Group, Text } from '@mantine/core';
+import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
+import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+
+export function BaseDemo(props: Partial<DropzoneProps>) {
+  return (
+    <Dropzone
+      onDrop={(files) => console.log('accepted files', files)}
+      onReject={(files) => console.log('rejected files', files)}
+      maxSize={5 * 1024 ** 2}
+      accept={IMAGE_MIME_TYPE}
+      {...props}
+    >
+      <Group justify="center" gap="xl" mih={220} style={{ pointerEvents: 'none' }}>
+        <Dropzone.Accept>
+          <IconUpload size={52} color="var(--mantine-color-blue-6)" stroke={1.5} />
+        </Dropzone.Accept>
+        <Dropzone.Reject>
+          <IconX size={52} color="var(--mantine-color-red-6)" stroke={1.5} />
+        </Dropzone.Reject>
+        <Dropzone.Idle>
+          <IconPhoto size={52} color="var(--mantine-color-dimmed)" stroke={1.5} />
+        </Dropzone.Idle>
+
+        <div>
+          <Text size="xl" inline>
+            Drag images here or click to select files
+          </Text>
+          <Text size="sm" c="dimmed" inline mt={7}>
+            Attach as many files as you like, each file should not exceed 5mb
+          </Text>
+        </div>
+      </Group>
+    </Dropzone>
+  );
+}
+```
 
 
 ## Dropzone.Accept, Dropzone.Reject and Dropzone.Idle
@@ -60561,6 +65846,19 @@ Component is based on [react-dropzone](https://react-dropzone.js.org/) and suppo
 Set `loading` prop to indicate loading state with [LoadingOverlay](https://mantine.dev/core/loading-overlay/) component.
 When `loading` props is true user cannot drop or select new files (`Dropzone` becomes disabled):
 
+#### Example: loading
+
+```tsx
+import { Dropzone } from '@mantine/dropzone';
+
+function Demo() {
+  return (
+    <Dropzone loading onDrop={() => {}}>
+      {/* children */}
+    </Dropzone>
+  );
+}
+```
 
 
 ## Disabled state
@@ -60568,12 +65866,61 @@ When `loading` props is true user cannot drop or select new files (`Dropzone` be
 If you want to implement your own loading state you can disable `Dropzone` without `LoadingOverlay`.
 Same as with `loading`, when `Dropzone` is disabled user cannot drop or select new files:
 
+#### Example: disabled
+
+```tsx
+// Demo.tsx
+import { Dropzone } from '@mantine/dropzone';
+import classes from './Demo.module.css';
+
+function Demo() {
+  return (
+    <Dropzone disabled className={classes.disabled} onDrop={() => {}}>
+      {/* children... */}
+    </Dropzone>
+  );
+}
+
+// Demo.module.css
+.disabled {
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  border-color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
+  cursor: not-allowed;
+
+  & * {
+    color: light-dark(var(--mantine-color-gray-5), var(--mantine-color-dark-3));
+  }
+}
+```
 
 
 ## Open file browser manually
 
 To open files browser from outside of component use `openRef` prop to get function that will trigger file browser:
 
+#### Example: manual
+
+```tsx
+import { useRef } from 'react';
+import { Button, Group } from '@mantine/core';
+import { Dropzone } from '@mantine/dropzone';
+
+function Demo() {
+  const openRef = useRef<() => void>(null);
+
+  return (
+    <>
+      <Dropzone openRef={openRef} onDrop={() => {}}>
+        {/* children */}
+      </Dropzone>
+
+      <Group justify="center" mt="md">
+        <Button onClick={() => openRef.current?.()}>Select files</Button>
+      </Group>
+    </>
+  );
+}
+```
 
 
 ## Enable child pointer event
@@ -60583,6 +65930,27 @@ clicking on any children inside Dropzone will not do anything.
 However, you can set style `pointerEvents: 'all'` to make children clickable.
 Note that you need to set these styles only on interactive elements, such as buttons or links.
 
+#### Example: enableChildPointerEvent
+
+```tsx
+import { useRef } from 'react';
+import { Button, Group } from '@mantine/core';
+import { Dropzone } from '@mantine/dropzone';
+
+function Demo() {
+  const openRef = useRef<() => void>(null);
+
+  return (
+    <Dropzone openRef={openRef} onDrop={() => {}} activateOnClick={false}>
+      <Group justify="center">
+        <Button onClick={() => openRef.current?.()} style={{ pointerEvents: 'all' }}>
+          Select files
+        </Button>
+      </Group>
+    </Dropzone>
+  );
+}
+```
 
 
 ## Mime types
@@ -60592,6 +65960,7 @@ and the values as an array of file extensions. Find more examples of accepting s
 in the [react-dropzone documentation](https://react-dropzone.js.org/#section-accepting-specific-file-types).
 
 ```tsx
+import { Dropzone } from '@mantine/dropzone';
 
 function Demo() {
   return (
@@ -60611,6 +65980,7 @@ function Demo() {
 You can also specify file types by providing an array of mime types to `accept` prop:
 
 ```tsx
+import { Dropzone } from '@mantine/dropzone';
 
 function Demo() {
   return (
@@ -60632,6 +66002,7 @@ function Demo() {
 To save some research time you can use `MIME_TYPES` variable exported from `@mantine/dropzone`:
 
 ```tsx
+import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 
 function Demo() {
   return (
@@ -60655,6 +66026,7 @@ function Demo() {
 Additionally you can use grouped mime types:
 
 ```tsx
+import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 
 function Demo() {
   return (
@@ -60674,15 +66046,81 @@ function Demo() {
 * `data-reject` – when user drags files that cannot be accepted over the dropzone
 * `data-idle` – default state – user does not drag any files over dropzone
 
+#### Example: stylesApi
+
+```tsx
+// Demo.tsx
+import { Text } from '@mantine/core';
+import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import classes from './Demo.module.css';
+
+function Demo() {
+  return (
+    <Dropzone onDrop={() => {}} accept={IMAGE_MIME_TYPE} className={classes.root}>
+      <Text ta="center">Drop images here</Text>
+    </Dropzone>
+  );
+}
+
+// Demo.module.css
+.root {
+  min-height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+
+  &[data-accept] {
+    color: var(--mantine-color-white);
+    background-color: var(--mantine-color-blue-6);
+  }
+
+  &[data-reject] {
+    color: var(--mantine-color-white);
+    background-color: var(--mantine-color-red-6);
+  }
+}
+```
 
 
 ## Images previews
 
+#### Example: preview
+
+```tsx
+import { useState } from 'react';
+import { Text, Image, SimpleGrid } from '@mantine/core';
+import { Dropzone, IMAGE_MIME_TYPE, FileWithPath } from '@mantine/dropzone';
+
+function Demo() {
+  const [files, setFiles] = useState<FileWithPath[]>([]);
+
+  const previews = files.map((file, index) => {
+    const imageUrl = URL.createObjectURL(file);
+    return <Image key={index} src={imageUrl} onLoad={() => URL.revokeObjectURL(imageUrl)} />;
+  });
+
+  return (
+    <div>
+      <Dropzone accept={IMAGE_MIME_TYPE} onDrop={setFiles}>
+        <Text ta="center">Drop images here</Text>
+      </Dropzone>
+
+      <SimpleGrid cols={{ base: 1, sm: 4 }} mt={previews.length > 0 ? 'xl' : 0}>
+        {previews}
+      </SimpleGrid>
+    </div>
+  );
+}
+```
 
 
 ## Get ref
 
 ```tsx
+import { useEffect, useRef } from 'react';
+import { Dropzone } from '@mantine/dropzone';
 
 function Demo() {
   const dropzoneRef = useRef<HTMLDivElement>(null);
@@ -60706,6 +66144,58 @@ It supports the same props as `Dropzone` component.
 
 To preview component click button and drop images to browser window:
 
+#### Example: fullScreen
+
+```tsx
+import { useState } from 'react';
+import { Group, Text, Button } from '@mantine/core';
+import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
+import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+
+function Demo() {
+  const [active, setActive] = useState(false);
+
+  return (
+    <>
+      <Group justify="center">
+        <Button color={active ? 'red' : 'blue'} onClick={() => setActive((d) => !d)}>
+          {active ? 'Deactivate' : 'Activate'} full screen dropzone
+        </Button>
+      </Group>
+
+      <Dropzone.FullScreen
+        active={active}
+        accept={IMAGE_MIME_TYPE}
+        onDrop={(files) => {
+          console.log(files);
+          setActive(false);
+        }}
+      >
+        <Group justify="center" gap="xl" mih={220} style={{ pointerEvents: 'none' }}>
+          <Dropzone.Accept>
+            <IconUpload size={52} color="var(--mantine-color-blue-6)" stroke={1.5} />
+          </Dropzone.Accept>
+          <Dropzone.Reject>
+            <IconX size={52} color="var(--mantine-color-red-6)" stroke={1.5} />
+          </Dropzone.Reject>
+          <Dropzone.Idle>
+            <IconPhoto size={52} color="var(--mantine-color-dimmed)" stroke={1.5} />
+          </Dropzone.Idle>
+
+          <div>
+            <Text size="xl" inline>
+              Drag images here or click to select files
+            </Text>
+            <Text size="sm" c="dimmed" inline mt={7}>
+              Attach as many files as you like, each file should not exceed 5mb
+            </Text>
+          </div>
+        </Group>
+      </Dropzone.FullScreen>
+    </>
+  );
+}
+```
 
 
 
@@ -60748,27 +66238,43 @@ To preview component click button and drop images to browser window:
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Dropzone component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Dropzone root element',
-    inner: 'Dropzone inner element (wraps children)',
-  }
-```
+**Dropzone selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Dropzone-root | Dropzone root element |
+| inner | .mantine-Dropzone-inner | Dropzone inner element (wraps children) |
 
-```typescript
-{
-    root: {
-      '--dropzone-accept-bg': 'Controls `background-color` when file is accepted',
-      '--dropzone-reject-bg': 'Controls `background-color` when file is rejected',
-      '--dropzone-accept-color': 'Controls `color` when file is accepted',
-      '--dropzone-reject-color': 'Controls `color` when file is rejected',
-      '--dropzone-radius': 'Controls `border-radius`',
-    }
-```
+**Dropzone CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --dropzone-accept-bg | Controls `background-color` when file is accepted |
+| root | --dropzone-reject-bg | Controls `background-color` when file is rejected |
+| root | --dropzone-accept-color | Controls `color` when file is accepted |
+| root | --dropzone-reject-color | Controls `color` when file is rejected |
+| root | --dropzone-radius | Controls `border-radius` |
+
+**Dropzone data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| root | data-accept | Files that are dragged over the dropzone are accepted | - |
+| root | data-reject | Files that are dragged over the dropzone are rejected | - |
+| root | data-idle | Dropzone is idle | - |
+| root | data-loading | - | - |
+| root | data-disabled | - | - |
+| root | data-activate-on-click | - | - |
+
+**Dropzonefullscreen selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Dropzonefullscreen-root | Dropzone root element |
+| inner | .mantine-Dropzonefullscreen-inner | Dropzone inner element (wraps children) |
+| fullScreen | .mantine-Dropzonefullscreen-fullScreen | Dropzone.Fullscreen root element |
 
 
 --------------------------------------------------------------------------------
@@ -60834,16 +66340,26 @@ in the list above. To submit a new extension to be featured on this page:
 
 ### Modals manager
 Package: @mantine/modals
-Import: import { Modals } from '@mantine/modals';
+Import: import { Modals manager } from '@mantine/modals';
 Description: Centralized modals manager with option to handle state of multi-step modals
 
 ## Installation
+
+```bash
+yarn add @mantine/modals
+```
+
+```bash
+npm install @mantine/modals
+```
 
 ## Setup ModalsProvider
 
 Wrap your app with `ModalsProvider` component:
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
 
 function Demo() {
   return (
@@ -60860,6 +66376,29 @@ function Demo() {
 Component includes confirm and cancel buttons and supports children to display additional
 information about action. Use `openConfirmModal` function to open a confirm modal:
 
+#### Example: confirm
+
+```tsx
+import { Button, Text } from '@mantine/core';
+import { modals } from '@mantine/modals';
+
+function Demo() {
+  const openModal = () => modals.openConfirmModal({
+    title: 'Please confirm your action',
+    children: (
+      <Text size="sm">
+        This action is so important that you are required to confirm it with a modal. Please click
+        one of these buttons to proceed.
+      </Text>
+    ),
+    labels: { confirm: 'Confirm', cancel: 'Cancel' },
+    onCancel: () => console.log('Cancel'),
+    onConfirm: () => console.log('Confirmed'),
+  });
+
+  return <Button onClick={openModal}>Open confirm modal</Button>;
+}
+```
 
 
 `openConfirmModal` function accepts one argument with following properties:
@@ -60877,11 +66416,38 @@ information about action. Use `openConfirmModal` function to open a confirm moda
 
 Using this properties you can customize confirm modal to match current context requirements:
 
+#### Example: confirmCustomize
+
+```tsx
+import { Button, Text } from '@mantine/core';
+import { modals } from '@mantine/modals';
+
+function Demo() {
+  const openDeleteModal = () =>
+    modals.openConfirmModal({
+      title: 'Delete your profile',
+      centered: true,
+      children: (
+        <Text size="sm">
+          Are you sure you want to delete your profile? This action is destructive and you will have
+          to contact support to restore your data.
+        </Text>
+      ),
+      labels: { confirm: 'Delete account', cancel: "No don't delete it" },
+      confirmProps: { color: 'red' },
+      onCancel: () => console.log('Cancel'),
+      onConfirm: () => console.log('Confirmed'),
+    });
+
+  return <Button onClick={openDeleteModal} color="red">Delete account</Button>;
+}
+```
 
 
 To setup shared labels for confirm modals set `labels` on `ModalsProvider`:
 
 ```tsx
+import { ModalsProvider } from '@mantine/modals';
 
 function Demo() {
   return (
@@ -60897,6 +66463,8 @@ function Demo() {
 You can define any amount of modals in ModalsProvider context:
 
 ```tsx
+import { Button, Text } from '@mantine/core';
+import { ContextModalProps, ModalsProvider } from '@mantine/modals';
 
 const TestModal = ({
   context,
@@ -60925,6 +66493,31 @@ function Demo() {
 And then open one of these modals with `modals.openContextModal` function.
 `modals.openContextModal` function accepts 2 arguments: modal key (should match one defined on ModalsProvider) and modal props:
 
+#### Example: context
+
+```tsx
+import { Button } from '@mantine/core';
+import { modals } from '@mantine/modals';
+
+function Demo() {
+  return (
+    <Button
+      onClick={() =>
+        modals.openContextModal({
+          modal: 'demonstration',
+          title: 'Test modal from context',
+          innerProps: {
+            modalBody:
+              'This modal was defined in ModalsProvider, you can open it anywhere in you app with useModals hook',
+          },
+        })
+      }
+    >
+      Open demonstration context modal
+    </Button>
+  );
+}
+```
 
 
 ## Typesafe context modals
@@ -60965,6 +66558,7 @@ function Demo() {
 Typesafe context modals will force you to use the correct types for `openContextModal`:
 
 ```tsx
+import { closeModal, openContextModal } from '@mantine/modals';
 
 openContextModal({
   modal: 'demonstration',
@@ -60981,6 +66575,34 @@ closeModal('demonstration');
 
 With `modals.open` function you can open a modal with any content:
 
+#### Example: content
+
+```tsx
+import { TextInput, Button } from '@mantine/core';
+import { modals } from '@mantine/modals';
+
+function Demo() {
+  return (
+    <Button
+      onClick={() => {
+        modals.open({
+          title: 'Subscribe to newsletter',
+          children: (
+            <>
+              <TextInput label="Your email" placeholder="Your email" data-autofocus />
+              <Button fullWidth onClick={() => modals.closeAll()} mt="md">
+                Submit
+              </Button>
+            </>
+          ),
+        });
+      }}
+    >
+      Open content modal
+    </Button>
+  );
+}
+```
 
 
 ## Multiple opened modals
@@ -60988,6 +66610,46 @@ With `modals.open` function you can open a modal with any content:
 You can open multiple layers of modals. Every opened modal is added as first element in modals queue.
 To close all opened modals call `modals.closeAll()` function:
 
+#### Example: multipleSteps
+
+```tsx
+import { Button, Text } from '@mantine/core';
+import { modals } from '@mantine/modals';
+
+function Demo() {
+  return (
+    <Button
+      onClick={() =>
+        modals.openConfirmModal({
+          title: 'Please confirm your action',
+          closeOnConfirm: false,
+          labels: { confirm: 'Next modal', cancel: 'Close modal' },
+          children: (
+            <Text size="sm">
+              This action is so important that you are required to confirm it with a modal. Please
+              click one of these buttons to proceed.
+            </Text>
+          ),
+          onConfirm: () =>
+            modals.openConfirmModal({
+              title: 'This is modal at second layer',
+              labels: { confirm: 'Close modal', cancel: 'Back' },
+              closeOnConfirm: false,
+              children: (
+                <Text size="sm">
+                  When this modal is closed modals state will revert to first modal
+                </Text>
+              ),
+              onConfirm: modals.closeAll,
+            }),
+        })
+      }
+    >
+      Open multiple steps modal
+    </Button>
+  );
+}
+```
 
 
 ## Modal props
@@ -60996,6 +66658,32 @@ You can pass props down to the [Modal](https://mantine.dev/core/modal) component
 argument of every `modals.x` function. Example of setting `radius`, `size` and `withCloseButton`
 props:
 
+#### Example: modalProps
+
+```tsx
+import { Button, Text } from '@mantine/core';
+import { modals } from '@mantine/modals';
+
+function Demo() {
+  const openModal = () => modals.openConfirmModal({
+    title: 'Please confirm your action',
+    size: 'sm',
+    radius: 'md',
+    withCloseButton: false,
+    children: (
+      <Text size="sm">
+        This action is so important that you are required to confirm it with a modal. Please click
+        one of these buttons to proceed.
+      </Text>
+    ),
+    labels: { confirm: 'Confirm', cancel: 'Cancel' },
+    onCancel: () => console.log('Cancel'),
+    onConfirm: () => console.log('Confirmed'),
+  });
+
+  return <Button onClick={openModal}>Open confirm modal</Button>;
+}
+```
 
 
 ## Dynamic Content and the modals manager
@@ -61004,10 +66692,114 @@ The Modals manager allows you to dynamically update the content and properties o
 
 To update regular modals, use the `modals.updateModal` function:
 
+#### Example: updateModal
+
+```tsx
+import { Button } from '@mantine/core';
+import { modals } from '@mantine/modals';
+
+function Demo() {
+  return (
+    <Button
+      onClick={() => {
+        const modalId = modals.open({
+          title: 'Initial Modal Title',
+          children: <Text>This text will update in 2 seconds.</Text>,
+        });
+
+        setTimeout(() => {
+          modals.updateModal({
+            modalId,
+            title: 'Updated Modal Title',
+            children: (
+              <Text size="sm" c="dimmed">
+                This is the updated content of the modal.
+              </Text>
+            ),
+          });
+        }, 2000);
+      }}
+    >
+      Open updating modal
+    </Button>
+  );
+}
+```
 
 
 Context modals can also be updated dynamically using `modals.updateContextModal`:
 
+#### Example: updateContextModal
+
+```tsx
+import { Button, Text, Stack, Center, Loader } from '@mantine/core';
+import { modals, ContextModalProps, ModalsProvider } from '@mantine/modals';
+import { IconCheck } from '@tabler/icons-react';
+
+const TestModal = ({
+  context,
+  id,
+  innerProps,
+}: ContextModalProps<{ modalBody: string, loading: boolean }>) => (
+  <>
+    <Stack>
+      <Text size="sm">{innerProps.modalBody}</Text>
+      <Center>
+        {innerProps.loading ? (
+          <Loader size={32}/>
+        ): (
+          <IconCheck size={23} color="var(--mantine-color-teal-6)" />
+        )}
+      </Center>
+    </Stack>
+    <Button fullWidth mt="md" disabled={innerProps.loading} onClick={() => context.closeModal(id)}>
+      Close modal
+    </Button>
+  </>
+);
+
+function Demo() {
+  return (
+    <ModalsProvider
+      modals={{ demonstration: TestModal /* ...other modals */ }}
+    >
+      <Button
+        onClick={() => {
+          const modalId = modals.openContextModal({
+            modal: 'asyncDemonstration',
+            title: 'Processing...',
+            closeOnEscape: false,
+            closeOnClickOutside: false,
+            closeButtonProps:{ disabled:true },
+            innerProps: {
+              modalBody:
+                'You cannot close this modal until 2 seconds have passed.',
+              loading: true,
+            },
+          });
+
+          setTimeout(() => {
+            modals.updateContextModal({
+              modalId,
+              title: "Processing Complete!",
+              closeOnEscape: true,
+              closeOnClickOutside: true,
+              closeButtonProps:{ disabled: false },
+              innerProps: {
+                modalBody:
+                  'You can now close the modal.',
+                loading: false,
+              },
+            })
+          }, 2000);
+        }}
+      >
+        Open updating context modal
+      </Button>
+    </ModalsProvider>
+  );
+}
+```
 
 
 
@@ -61015,15 +66807,25 @@ Context modals can also be updated dynamically using `modals.updateContextModal`
 
 ### Notifications system
 Package: @mantine/notifications
-Import: import { Notifications } from '@mantine/notifications';
+Import: import { Notifications system } from '@mantine/notifications';
 Description: Mantine notifications system
 
 ## Installation
 
+```bash
+yarn add @mantine/notifications
+```
+
+```bash
+npm install @mantine/notifications
+```
+
 After installation import package styles at the root of your application:
 
 ```tsx
+import '@mantine/core/styles.css';
 // ‼️ import notifications styles after core package styles
+import '@mantine/notifications/styles.css';
 ```
 
 Add `Notifications` component anywhere in your application. Note that:
@@ -61033,6 +66835,8 @@ Add `Notifications` component anywhere in your application. Note that:
 * You should not render multiple `Notifications` components – if you do that, your notifications will be duplicated
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 
 function Demo() {
   return (
@@ -61046,6 +66850,27 @@ function Demo() {
 
 All set! You can now use all notifications system features.
 
+#### Example: base
+
+```tsx
+import { Button } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+
+function Demo() {
+  return (
+    <Button
+      onClick={() =>
+        notifications.show({
+          title: 'Default notification',
+          message: 'Do not forget to star Mantine on GitHub! 🌟',
+        })
+      }
+    >
+      Show notification
+    </Button>
+  );
+}
+```
 
 
 ## Do not forget to import styles
@@ -61056,6 +66881,7 @@ You've fallen into the trap of not importing notifications styles!
 To fix the issue, import notifications styles at the root of your application:
 
 ```tsx
+import '@mantine/notifications/styles.css';
 ```
 
 ## Functions
@@ -61072,12 +66898,14 @@ To fix the issue, import notifications styles at the root of your application:
 All functions can be imported from `@mantine/notifications` package and can be used in any part of your application:
 
 ```tsx
+import { notifications } from '@mantine/notifications';
 ```
 
 You can also import these functions separately:
 
 ```tsx
 // alias functions
+import {
   cleanNotifications, // notifications.clean
   cleanNotificationsQueue, // notifications.cleanQueue
   hideNotification, // notifications.hide
@@ -61104,6 +66932,8 @@ You can also import these functions separately:
 All properties except `message` are optional.
 
 ```tsx
+import { IconX } from '@tabler/icons-react';
+import { notifications } from '@mantine/notifications';
 
 // Bare minimum – message is required for all notifications
 notifications.show({ message: 'Hello' });
@@ -61148,6 +66978,68 @@ function Demo() {
 You can use `style`, `className` or [Styles API](https://mantine.dev/styles/styles-api/) `classNames`, `styles` props to customize notification styles.
 Usually, it is better to override [Notification](https://mantine.dev/core/notification) styles with `classNames` prop in the [theme object](https://mantine.dev/theming/theme-object/).
 
+#### Example: customize
+
+```tsx
+// Demo.tsx
+import { Button, Group } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import classes from './Demo.module.css';
+
+function Demo() {
+  return (
+    <Group justify="center">
+      <Button
+        onClick={() =>
+          notifications.show({
+            title: 'Notification with custom styles',
+            message: 'It is default blue',
+            classNames: classes,
+          })
+        }
+      >
+        Default notification
+      </Button>
+
+      <Button
+        color="red"
+        onClick={() =>
+          notifications.show({
+            color: 'red',
+            title: 'Notification with custom styles',
+            message: 'It is red',
+            classNames: classes,
+          })
+        }
+      >
+        Error notification
+      </Button>
+    </Group>
+  );
+}
+
+// Demo.module.css
+.root {
+  background-color: var(--notification-color, var(--mantine-primary-color-filled));
+
+  &::before {
+    background-color: var(--mantine-color-white);
+  }
+}
+
+.description,
+.title {
+  color: var(--mantine-color-white);
+}
+
+.closeButton {
+  color: var(--mantine-color-white);
+
+  @mixin hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+```
 
 
 ## Notifications container position
@@ -61161,6 +67053,40 @@ You can define notification position in `notifications.show` function. Possible 
 * `bottom-right`
 * `bottom-center`
 
+#### Example: position
+
+```tsx
+import { Button } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+
+const positions = [
+  'top-left',
+  'top-right',
+  'bottom-left',
+  'bottom-right',
+  'top-center',
+  'bottom-center',
+] as const;
+
+function Demo() {
+  const buttons = positions.map((position) => (
+    <Button
+      key={position}
+      onClick={() =>
+        notifications.show({
+          title: `Notification at ${position}`,
+          message: `Notification at ${position} message`,
+          position,
+        })
+      }
+    >
+      {position}
+    </Button>
+  ));
+
+  return <Group>{buttons}</Group>;
+}
+```
 
 
 The `position` can be defined on the `Notifications` component.
@@ -61168,6 +67094,7 @@ In the following example, notifications will be displayed in the top right corne
 if `position` is not defined in `notifications.show` function:
 
 ```tsx
+import { Notifications } from '@mantine/notifications';
 
 function Demo() {
   return <Notifications position="top-right" zIndex={1000} />;
@@ -61180,6 +67107,7 @@ You can limit maximum number of notifications that are displayed at a time by se
 `limit` prop on `Notifications`:
 
 ```tsx
+import { Notifications } from '@mantine/notifications';
 
 function Demo() {
   return <Notifications limit={5} />;
@@ -61189,6 +67117,31 @@ function Demo() {
 All notifications added after the `limit` was reached are added to the queue
 and displayed when notification from current state is hidden.
 
+#### Example: limit
+
+```tsx
+import { Button } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+
+function Demo() {
+  return (
+    <Button
+      onClick={() => {
+        Array(10).fill(0).forEach((_, index) => {
+          setTimeout(() => {
+            notifications.show({
+              title: `Notification ${index + 1}`,
+              message: 'Most notifications are added to queue',
+            });
+          }, 200 * index);
+        });
+      }}
+    >
+      Show 10 notifications
+    </Button>
+  );
+}
+```
 
 
 ## Remove notifications from state and queue
@@ -61196,6 +67149,7 @@ and displayed when notification from current state is hidden.
 To remove specific notification from state or queue use `notifications.hide` function:
 
 ```tsx
+import { notifications } from '@mantine/notifications';
 
 const id = notifications.show({ message: 'Hello!' });
 notifications.hide(id);
@@ -61204,10 +67158,83 @@ notifications.hide(id);
 Use `notifications.cleanQueue` function to remove all notifications from the queue and
 `notifications.clean` to remove all notifications both from the state and queue:
 
+#### Example: clean
+
+```tsx
+import { Group, Button } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+
+function Demo() {
+  return (
+    <Group justify="center">
+      <Button
+        onClick={() => {
+          Array(10)
+            .fill(0)
+            .forEach((_, index) => {
+              notifications.show({
+                title: `Notification ${index + 1}`,
+                message: 'Most notifications are added to queue',
+                autoClose: false,
+              });
+            });
+        }}
+      >
+        Show 10 notifications
+      </Button>
+
+      <Button variant="default" onClick={() => notifications.cleanQueue()}>
+        Clean queue
+      </Button>
+
+      <Button variant="outline" color="red" onClick={() => notifications.clean()}>
+        Clean all
+      </Button>
+    </Group>
+  );
+}
+```
 
 
 ## Update notification
 
+#### Example: update
+
+```tsx
+import { Button } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { IconCheck } from '@tabler/icons-react';
+
+function Demo() {
+  return (
+    <Button
+      onClick={() => {
+        const id = notifications.show({
+          loading: true,
+          title: 'Loading your data',
+          message: 'Data will be loaded in 3 seconds, you cannot close this yet',
+          autoClose: false,
+          withCloseButton: false,
+        });
+
+        setTimeout(() => {
+          notifications.update({
+            id,
+            color: 'teal',
+            title: 'Data was loaded',
+            message: 'Notification will close in 2 seconds, you can close this notification now',
+            icon: <IconCheck size={18} />,
+            loading: false,
+            autoClose: 2000,
+          });
+        }, 3000);
+      }}
+    >
+      Show update notification
+    </Button>
+  );
+}
+```
 
 
 ## Auto close
@@ -61215,6 +67242,7 @@ Use `notifications.cleanQueue` function to remove all notifications from the que
 You can configure auto close timeout with `Notifications`:
 
 ```tsx
+import { Notifications } from '@mantine/notifications';
 
 // All notifications will be closed automatically in 4000ms
 function Demo() {
@@ -61225,6 +67253,7 @@ function Demo() {
 Or per notification in `notifications.show`/`notifications.update` functions:
 
 ```tsx
+import { notifications } from '@mantine/notifications';
 
 notifications.show({
   message: 'I will close in 500ms seconds',
@@ -61240,6 +67269,48 @@ notifications.update({
 
 `notifications.show` and `notifications.update` functions `autoClose` prop has higher priority.
 
+#### Example: autoclose
+
+```tsx
+import { Group, Button } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+
+function Demo() {
+  return (
+    <Group justify="center">
+      <Button
+        onClick={() => notifications.show({ message: 'I will close in 4 seconds' })}
+      >
+        Notifications Provider timeout
+      </Button>
+
+      <Button
+        onClick={() =>
+          notifications.show({
+            message: 'I will close in 500ms',
+            autoClose: 500,
+          })
+        }
+      >
+        Closes in 500ms
+      </Button>
+
+      <Button
+        onClick={() =>
+          notifications.show({
+            color: 'blue',
+            title: 'I will never close',
+            message: 'unless you click X',
+            autoClose: false,
+          })
+        }
+      >
+        Never closes automatically
+      </Button>
+    </Group>
+  );
+}
+```
 
 
 ## Subscribe to notifications state
@@ -61249,6 +67320,37 @@ The hook returns an object with `notifications` and `queue` arrays. `notificatio
 array contains all notifications that are currently displayed, `queue` contains
 notifications that are waiting to be displayed.
 
+#### Example: store
+
+```tsx
+function Demo() {
+  const [counter, { increment }] = useCounter();
+  const notificationsStore = useNotifications();
+
+  const showNotification = () => {
+    notifications.show({
+      title: `Notification ${counter}`,
+      message: 'Most notifications are added to queue',
+    });
+
+    increment();
+  };
+
+  return (
+    <>
+      <Button onClick={showNotification} mb="md">
+        Show notification
+      </Button>
+
+      <Text>Notifications state</Text>
+      <Code block>{JSON.stringify(notificationsStore.notifications, null, 2)}</Code>
+
+      <Text mt="md">Notifications queue</Text>
+      <Code block>{JSON.stringify(notificationsStore.queue, null, 2)}</Code>
+    </>
+  );
+}
+```
 
 
 
@@ -61270,39 +67372,46 @@ notifications that are waiting to be displayed.
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Notifications component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    root: 'Notifications container, contains all notifications',
-    notification: 'Single notification',
-  }
-```
+**Notifications selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Notifications-root | Notifications container, contains all notifications |
+| notification | .mantine-Notifications-notification | Single notification |
 
-```typescript
-{
-    root: {
-      '--notifications-container-width': 'Controls notifications container `max-width`',
-      '--notifications-z-index': 'Controls notifications container `z-index`',
-    }
-```
+**Notifications CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --notifications-container-width | Controls notifications container `max-width` |
+| root | --notifications-z-index | Controls notifications container `z-index` |
 
 
 --------------------------------------------------------------------------------
 
 ### NavigationProgress
 Package: @mantine/nprogress
-Import: import { Nprogress } from '@mantine/nprogress';
+Import: import { NavigationProgress } from '@mantine/nprogress';
 Description: Navigation progress bar
 
 ## Installation
 
+```bash
+yarn add @mantine/nprogress
+```
+
+```bash
+npm install @mantine/nprogress
+```
+
 After installation import package styles at the root of your application:
 
 ```tsx
+import '@mantine/core/styles.css';
 // ‼️ import nprogress styles after core package styles
+import '@mantine/nprogress/styles.css';
 ```
 
 ## Setup NavigationProgress
@@ -61310,6 +67419,8 @@ After installation import package styles at the root of your application:
 Render `NavigationProgress` anywhere in your app within [MantineProvider](https://mantine.dev/theming/mantine-provider/):
 
 ```tsx
+import { MantineProvider } from '@mantine/core';
+import { NavigationProgress } from '@mantine/nprogress';
 
 function Demo() {
   return (
@@ -61335,10 +67446,20 @@ Description: Command center for your application
 
 ## Installation
 
+```bash
+yarn add @mantine/spotlight
+```
+
+```bash
+npm install @mantine/spotlight
+```
+
 After installation import package styles at the root of your application:
 
 ```tsx
+import '@mantine/core/styles.css';
 // ‼️ import spotlight styles after core package styles
+import '@mantine/spotlight/styles.css';
 ```
 
 ## Usage
@@ -61347,6 +67468,54 @@ After installation import package styles at the root of your application:
 It is used as a search on mantine.dev website, you can trigger it with `Ctrl + K` shortcut.
 `Spotlight` is based on [Modal](https://mantine.dev/core/modal) component and supports most of its props.
 
+#### Example: usage
+
+```tsx
+import { Button } from '@mantine/core';
+import { Spotlight, SpotlightActionData, spotlight } from '@mantine/spotlight';
+import { IconHome, IconDashboard, IconFileText, IconSearch } from '@tabler/icons-react';
+
+const actions: SpotlightActionData[] = [
+  {
+    id: 'home',
+    label: 'Home',
+    description: 'Get to home page',
+    onClick: () => console.log('Home'),
+    leftSection: <IconHome size={24} stroke={1.5} />,
+  },
+  {
+    id: 'dashboard',
+    label: 'Dashboard',
+    description: 'Get full information about current system status',
+    onClick: () => console.log('Dashboard'),
+    leftSection: <IconDashboard size={24} stroke={1.5} />,
+  },
+  {
+    id: 'documentation',
+    label: 'Documentation',
+    description: 'Visit documentation to lean more about all features',
+    onClick: () => console.log('Documentation'),
+    leftSection: <IconFileText size={24} stroke={1.5} />,
+  },
+];
+
+function Demo() {
+  return (
+    <>
+      <Button onClick={spotlight.open}>Open spotlight</Button>
+      <Spotlight
+        actions={actions}
+        nothingFound="Nothing found..."
+        highlightQuery
+        searchProps={{
+          leftSection: <IconSearch size={20} stroke={1.5} />,
+          placeholder: 'Search...',
+        }}
+      />
+    </>
+  );
+}
+```
 
 
 ## Actions
@@ -61354,6 +67523,7 @@ It is used as a search on mantine.dev website, you can trigger it with `Ctrl + K
 `@mantine/spotlight` package exports an object with actions that can be used to control the spotlight:
 
 ```tsx
+import { spotlight } from '@mantine/spotlight';
 
 spotlight.open(); // -> opens spotlight
 spotlight.close(); // -> closes spotlight
@@ -61364,6 +67534,8 @@ These actions can be passed to event listeners or used anywhere in your applicat
 (not limited to React components):
 
 ```tsx
+import { Button } from '@mantine/core';
+import { spotlight } from '@mantine/spotlight';
 
 function Demo() {
   return <Button onClick={spotlight.open}>Open spotlight</Button>;
@@ -61373,6 +67545,7 @@ function Demo() {
 You can also import actions directly from the `@mantine/spotlight` package, if you prefer this syntax:
 
 ```tsx
+import {
   closeSpotlight,
   openSpotlight,
   toggleSpotlight,
@@ -61389,6 +67562,8 @@ toggleSpotlight(); // same as spotlight.toggle()
 in your application. In case you need multiple spotlights, you need to create your own store for each of them:
 
 ```tsx
+import { Button } from '@mantine/core';
+import { createSpotlight, Spotlight } from '@mantine/spotlight';
 
 // You can import `firstSpotlight` and `secondSpotlight` anywhere
 // in your application and use `open`, `close` and `toggle` actions
@@ -61420,6 +67595,7 @@ By default, `Ctrl + K` and `Cmd + K` shortcuts are used to open spotlight, you c
 with `shortcut` prop:
 
 ```tsx
+import { Spotlight } from '@mantine/spotlight';
 
 function SingleShortcut() {
   return <Spotlight shortcut="mod + J" actions={[]} />;
@@ -61446,6 +67622,39 @@ you have a lot of actions, it will prevent the spotlight from rendering all of t
 
 The example below renders 3000 actions, but only 7 of them are displayed at a time:
 
+#### Example: limit
+
+```tsx
+import { Button } from '@mantine/core';
+import { Spotlight, SpotlightActionData, spotlight } from '@mantine/spotlight';
+import { IconSearch } from '@tabler/icons-react';
+
+const actions: SpotlightActionData[] = Array(3000)
+  .fill(0)
+  .map((_, index) => ({
+    id: `action-${index}`,
+    label: `Action ${index}`,
+    description: `Action ${index} description`,
+  }));
+
+function Demo() {
+  return (
+    <>
+      <Button onClick={spotlight.open}>Open spotlight</Button>
+      <Spotlight
+        actions={actions}
+        nothingFound="Nothing found..."
+        highlightQuery
+        limit={7}
+        searchProps={{
+          leftSection: <IconSearch size={20} stroke={1.5} />,
+          placeholder: 'Search...',
+        }}
+      />
+    </>
+  );
+}
+```
 
 
 ## Scrollable actions list
@@ -61466,12 +67675,90 @@ caveats with both approaches:
 In other words, if you want the actions list to shrink, do not set `scrollable` prop and use `limit`
 prop. If you want the actions list to always have a fixed height, set `scrollable` and `maxHeight` props.
 
+#### Example: scrollable
+
+```tsx
+import { Button } from '@mantine/core';
+import { Spotlight, SpotlightActionData, spotlight } from '@mantine/spotlight';
+import { IconSearch } from '@tabler/icons-react';
+
+const actions: SpotlightActionData[] = Array(100)
+  .fill(0)
+  .map((_, index) => ({
+    id: `action-${index}`,
+    label: `Action ${index}`,
+    description: `Action ${index} description`,
+  }));
+
+function Demo() {
+  return (
+    <>
+      <Button onClick={spotlight.open}>Open spotlight</Button>
+      <Spotlight
+        actions={actions}
+        nothingFound="Nothing found..."
+        highlightQuery
+        scrollable
+        maxHeight={350}
+        searchProps={{
+          leftSection: <IconSearch size={20} stroke={1.5} />,
+          placeholder: 'Search...',
+        }}
+      />
+    </>
+  );
+}
+```
 
 
 ## Actions groups
 
 `Spotlight` supports actions groups, you can use them to group actions by category:
 
+#### Example: groups
+
+```tsx
+import { Button } from '@mantine/core';
+import { Spotlight, SpotlightActionData, SpotlightActionGroupData, spotlight } from '@mantine/spotlight';
+import { IconSearch } from '@tabler/icons-react';
+
+const actions: (SpotlightActionGroupData | SpotlightActionData)[] = [
+  {
+    group: 'Pages',
+    actions: [
+      { id: 'home', label: 'Home page', description: 'Where we present the product' },
+      { id: 'careers', label: 'Careers page', description: 'Where we list open positions' },
+      { id: 'about-us', label: 'About us page', description: 'Where we tell what we do' },
+    ],
+  },
+
+  {
+    group: 'Apps',
+    actions: [
+      { id: 'svg-compressor', label: 'SVG compressor', description: 'Compress SVG images' },
+      { id: 'base64', label: 'Base 64 converter', description: 'Convert data to base 64 format' },
+      { id: 'fake-data', label: 'Fake data generator', description: 'Lorem ipsum generator' },
+    ],
+  },
+];
+
+function Demo() {
+  return (
+    <>
+      <Button onClick={spotlight.open}>Open spotlight</Button>
+      <Spotlight
+        actions={actions}
+        nothingFound="Nothing found..."
+        highlightQuery
+        searchProps={{
+          leftSection: <IconSearch size={20} stroke={1.5} />,
+          placeholder: 'Search...',
+        }}
+      />
+    </>
+  );
+}
+```
 
 
 ## Compound components
@@ -61486,10 +67773,120 @@ Available components:
 * `Spotlight.ActionsGroup` - group of actions
 * `Spotlight.Empty` – empty state (nothing found)
 
+#### Example: compound
+
+```tsx
+import { useState } from 'react';
+import { Spotlight, spotlight } from '@mantine/spotlight';
+import { Button } from '@mantine/core';
+import { IconSearch } from '@tabler/icons-react';
+
+const data = ['Home', 'About us', 'Contacts', 'Blog', 'Careers', 'Terms of service'];
+
+function Demo() {
+  const [query, setQuery] = useState('');
+
+  const items = data
+    .filter((item) => item.toLowerCase().includes(query.toLowerCase().trim()))
+    .map((item) => <Spotlight.Action key={item} label={item} />);
+
+  return (
+    <>
+      <Button onClick={spotlight.open}>Open spotlight</Button>
+
+      <Spotlight.Root query={query} onQueryChange={setQuery}>
+        <Spotlight.Search placeholder="Search..." leftSection={<IconSearch stroke={1.5} />} />
+        <Spotlight.ActionsList>
+          {items.length > 0 ? items : <Spotlight.Empty>Nothing found...</Spotlight.Empty>}
+        </Spotlight.ActionsList>
+      </Spotlight.Root>
+    </>
+  );
+}
+```
 
 
 For example, with compound components pattern you can customize actions contents:
 
+#### Example: customAction
+
+```tsx
+import { useState } from 'react';
+import { Spotlight, spotlight } from '@mantine/spotlight';
+import { Badge, Button, Center, Group, Text } from '@mantine/core';
+import { IconSearch } from '@tabler/icons-react';
+
+const data = [
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/futurama-bender.png',
+    title: 'Bender Bending Rodríguez',
+    description: 'Fascinated with cooking, though has no sense of taste',
+    new: true,
+  },
+
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/futurama-mom.png',
+    title: 'Carol Miller',
+    description: 'One of the richest people on Earth',
+    new: false,
+  },
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/homer-simpson.png',
+    title: 'Homer Simpson',
+    description: 'Overweight, lazy, and often ignorant',
+    new: false,
+  },
+  {
+    image: 'https://img.icons8.com/clouds/256/000000/spongebob-squarepants.png',
+    title: 'Spongebob Squarepants',
+    description: 'Not just a sponge',
+    new: false,
+  },
+];
+
+function Demo() {
+  const [query, setQuery] = useState('');
+
+  const items = data
+  .filter((item) => item.title.toLowerCase().includes(query.toLowerCase().trim()))
+  .map((item) => (
+    <Spotlight.Action key={item.title} onClick={() => console.log(item)}>
+      <Group wrap="nowrap" w="100%">
+        {item.image && (
+          <Center>
+            <img src={item.image} alt={item.title} width={50} height={50} />
+          </Center>
+        )}
+
+        <div style={{ flex: 1 }}>
+          <Text>{item.title}</Text>
+
+          {item.description && (
+            <Text opacity={0.6} size="xs">
+              {item.description}
+            </Text>
+          )}
+        </div>
+
+        {item.new && <Badge variant="default">new</Badge>}
+      </Group>
+    </Spotlight.Action>
+  ));
+
+  return (
+    <>
+      <Button onClick={spotlight.open}>Open spotlight</Button>
+
+      <Spotlight.Root query={query} onQueryChange={setQuery}>
+        <Spotlight.Search placeholder="Search..." leftSection={<IconSearch stroke={1.5} />} />
+        <Spotlight.ActionsList>
+          {items.length > 0 ? items : <Spotlight.Empty>Nothing found...</Spotlight.Empty>}
+        </Spotlight.ActionsList>
+      </Spotlight.Root>
+    </>
+  );
+}
+```
 
 
 ## Fixed elements offset
@@ -61498,6 +67895,7 @@ For example, with compound components pattern you can customize actions contents
 package to lock scroll. To properly size these `elements` add a `className` to them ([documentation](https://github.com/theKashey/react-remove-scroll#positionfixed-elements)):
 
 ```tsx
+import { RemoveScroll } from '@mantine/core';
 
 function Demo() {
   return (
@@ -61570,46 +67968,65 @@ function Demo() {
 
 #### Styles API
 
-This component supports the following CSS selectors:
+Spotlight component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
 
-```typescript
-{
-    ...ModalStylesApi.selectors,
-    search: 'Search input (`Spotlight.Search`)',
-    actionsList: 'Actions list (`Spotlight.ActionsList`)',
-    empty: 'Empty state (`Spotlight.Empty`)',
-    footer: 'Footer (`Spotlight.Footer`)',
-    action: 'Action (`Spotlight.Action`)',
-    actionBody: 'Body of the action, contains label and description',
-    actionLabel: '`Spotlight.Action` label',
-    actionDescription: '`Spotlight.Action` description',
-    actionSection: '`Spotlight.Action` left and right sections',
-    actionsGroup: '`Spotlight.ActionsGroup` root element',
-  }
-```
+**Spotlight selectors**
 
-CSS variables:
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-Spotlight-root | Root element |
+| inner | .mantine-Spotlight-inner | Element used to center modal, has fixed position, takes entire screen |
+| content | .mantine-Spotlight-content | `Modal.Content` root element |
+| header | .mantine-Spotlight-header | Contains title and close button |
+| overlay | .mantine-Spotlight-overlay | Overlay displayed under the `Modal.Content` |
+| title | .mantine-Spotlight-title | Modal title (h2 tag), displayed in the header |
+| body | .mantine-Spotlight-body | Modal body, displayed after header |
+| close | .mantine-Spotlight-close | Close button |
+| search | .mantine-Spotlight-search | Search input (`Spotlight.Search`) |
+| actionsList | .mantine-Spotlight-actionsList | Actions list (`Spotlight.ActionsList`) |
+| empty | .mantine-Spotlight-empty | Empty state (`Spotlight.Empty`) |
+| footer | .mantine-Spotlight-footer | Footer (`Spotlight.Footer`) |
+| action | .mantine-Spotlight-action | Action (`Spotlight.Action`) |
+| actionBody | .mantine-Spotlight-actionBody | Body of the action, contains label and description |
+| actionLabel | .mantine-Spotlight-actionLabel | `Spotlight.Action` label |
+| actionDescription | .mantine-Spotlight-actionDescription | `Spotlight.Action` description |
+| actionSection | .mantine-Spotlight-actionSection | `Spotlight.Action` left and right sections |
+| actionsGroup | .mantine-Spotlight-actionsGroup | `Spotlight.ActionsGroup` root element |
 
-```typescript
-{}
-```
+**Spotlight data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| action | data-selected | Action is selected with up/down keys | - |
+| actionSection | data-position | - | Section position: left or right |
+| actionSection | data-dimmed | - | - |
 
 
 --------------------------------------------------------------------------------
 
 ### Rich text editor
 Package: @mantine/tiptap
-Import: import { TipTap } from '@mantine/tiptap';
+Import: import { Rich text editor } from '@mantine/tiptap';
 Description: Tiptap based rich text editor
 
 ## Installation
 
 Install with yarn:
 
+```bash
+yarn add @mantine/tiptap @mantine/core @mantine/hooks @tiptap/react @tiptap/pm @tiptap/extension-link @tiptap/starter-kit
+```
+
+```bash
+npm install @mantine/tiptap @mantine/core @mantine/hooks @tiptap/react @tiptap/pm @tiptap/extension-link @tiptap/starter-kit
+```
+
 After installation import package styles at the root of your application:
 
 ```tsx
+import '@mantine/core/styles.css';
 // ‼️ import tiptap styles after core package styles
+import '@mantine/tiptap/styles.css';
 ```
 
 ## TipTap editor
@@ -61641,6 +68058,9 @@ To control editor state, create a wrapper component and pass `onChange` handler
 to `useEditor` hook:
 
 ```tsx
+import { useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import { RichTextEditor as MantineRichTextEditor } from '@mantine/tiptap';
 
 interface RichTextEditorProps {
   value: string;
@@ -61678,6 +68098,14 @@ export function RichTextEditor({
 
 Some controls require installation of additional [Tiptap extensions](https://tiptap.dev/extensions).
 For example, if you want to use `RichTextEditor.Underline` control, you will need to install `@tiptap/extension-underline` package:
+
+```bash
+yarn add @tiptap/extension-underline
+```
+
+```bash
+npm install @tiptap/extension-underline
+```
 
 Included with `@tiptap/starter-kit` (should be installed by default):
 
@@ -61729,6 +68157,14 @@ Other controls with required extensions:
 
 To use placeholder you will need to install [@tiptap/extension-placeholder](https://www.npmjs.com/package/@tiptap/extension-placeholder) package:
 
+```bash
+yarn add @tiptap/extension-placeholder
+```
+
+```bash
+npm install @tiptap/extension-placeholder
+```
+
 
 
 ## Link extension
@@ -61738,6 +68174,8 @@ To use placeholder you will need to install [@tiptap/extension-placeholder](http
 
 ```tsx
 // Use Link extension exported from the @mantine/tiptap package
+import { useEditor } from '@tiptap/react';
+import { Link, RichTextEditor } from '@mantine/tiptap';
 
 function Demo() {
   const editor = useEditor({
@@ -61759,6 +68197,14 @@ function Demo() {
 
 To use text color you will need to install additional packages:
 
+```bash
+yarn add @tiptap/extension-color @tiptap/extension-text-style
+```
+
+```bash
+npm install @tiptap/extension-color @tiptap/extension-text-style
+```
+
 You can use the following controls to change text color:
 
 * `RichTextEditor.ColorPicker` – allows to pick colors from given predefined color swatches and with [ColorPicker](https://mantine.dev/core/color-picker/) component
@@ -61770,6 +68216,14 @@ You can use the following controls to change text color:
 ## Code highlight
 
 To use code highlight you will need to install additional packages:
+
+```bash
+yarn add lowlight @tiptap/extension-code-block-lowlight
+```
+
+```bash
+npm install lowlight @tiptap/extension-code-block-lowlight
+```
 
 
 
@@ -61785,6 +68239,14 @@ You can use the following control to see and edit source code of editor content:
 
 To use tasks you will need to install additional packages:
 
+```bash
+yarn add @tiptap/extension-task-item @tiptap/extension-task-list
+```
+
+```bash
+npm install @tiptap/extension-task-item @tiptap/extension-task-list
+```
+
 
 
 ## Typography styles
@@ -61793,6 +68255,8 @@ By default, `RichTextEditor` renders content with [Typography](https://mantine.d
 You can disable these styles by setting `withTypographyStyles={false}`:
 
 ```tsx
+import { useEditor } from '@tiptap/react';
+import { RichTextEditor } from '@mantine/tiptap';
 
 function Demo() {
   const editor = useEditor({
@@ -61844,6 +68308,8 @@ the context. This hook can be used to create custom control or run any operation
 by the Tiptap [editor API](https://tiptap.dev/api/editor).
 
 ```tsx
+import { Button } from '@mantine/core';
+import { useRichTextEditorContext } from '@mantine/tiptap';
 
 function Demo() {
   const { editor } = useRichTextEditorContext();
@@ -61877,6 +68343,8 @@ that must handle `size` prop:
 `RichTextEditor` supports changing labels for all controls with `labels` prop:
 
 ```tsx
+import { useEditor } from '@tiptap/react';
+import { RichTextEditor } from '@mantine/tiptap';
 
 function Demo() {
   const editor = useEditor({
@@ -62040,6 +68508,7 @@ export interface RichTextEditorLabels {
 Default labels (can be imported from `@mantine/tiptap` package):
 
 ```tsx
+import { RichTextEditorLabels } from '@mantine/tiptap';
 
 export const DEFAULT_LABELS: RichTextEditorLabels = {
   // Controls labels
@@ -62163,6 +68632,23 @@ Download Mantine logos in `.svg` format:
 You can also install `@mantinex/mantine-logo` package and import `MantineLogo` component.
 Note that the package depends on `@mantine/core` and `@mantine/hooks` packages.
 
+```bash
+yarn add @mantinex/mantine-logo
+```
+
+```bash
+npm install @mantinex/mantine-logo
+```
+
+#### Example: logo
+
+```tsx
+import { MantineLogo } from '@mantinex/mantine-logo';
+
+function Demo() {
+  return <MantineLogo />;
+}
+```
 
 
 
@@ -62296,11 +68782,21 @@ style and conventions as Mantine.
 
 Mantine ESLint config requires ESLint 9 or higher:
 
+```bash
+yarn add @eslint/js eslint eslint-plugin-jsx-a11y eslint-plugin-react typescript-eslint eslint-config-mantine
+```
+
+```bash
+npm install @eslint/js eslint eslint-plugin-jsx-a11y eslint-plugin-react typescript-eslint eslint-config-mantine
+```
+
 ## Usage
 
 Add the following configuration to your `eslint.config.mjs`:
 
 ```tsx
+import mantine from 'eslint-config-mantine';
+import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   ...mantine,
@@ -62369,6 +68865,14 @@ If you still prefer to use Create React App, follow [this guide](https://help.ma
 
 Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset):
 
+```bash
+yarn add postcss postcss-preset-mantine postcss-simple-vars
+```
+
+```bash
+npm install postcss postcss-preset-mantine postcss-simple-vars
+```
+
 > **PostCSS without framework**
 >
 > If you are using a framework that is not officially supported,
@@ -62400,6 +68904,7 @@ you can import styles in `_app.tsx` file:
 
 ```tsx
 // core styles are required for all packages
+import '@mantine/core/styles.css';
 
 // other css files are required only if
 // you are using components from the corresponding package
@@ -62412,6 +68917,7 @@ you can import styles in `_app.tsx` file:
 Wrap your application with [MantineProvider](https://mantine.dev/theming/mantine-provider/):
 
 ```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
 
 const theme = createTheme({
   /** Put your mantine theme override here */
@@ -62430,6 +68936,7 @@ If your application has server side rendering, add [ColorSchemeScript](https://m
 to the `<head />` of your application:
 
 ```tsx
+import { ColorSchemeScript } from '@mantine/core';
 
 function Demo() {
   return (
@@ -62619,6 +69126,7 @@ The mechanism of form actions is similar to [notifications system](https://manti
 To use form actions, set `name` property in [use-form](https://mantine.dev/form/use-form/) settings:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 export interface DemoFormValues {
   name: string;
@@ -62641,6 +69149,8 @@ Then call `createFormActions` function with the same form name as specified in `
 
 ```tsx
 // Import type of form values from the file where you defined useForm
+import { createFormActions } from '@mantine/form';
+import type { DemoFormValues } from './DemoForm';
 
 export const demoFormActions =
   createFormActions<DemoFormValues>('demo-form');
@@ -62651,6 +69161,9 @@ For example, after a fetch request or after a user interaction with a component 
 to the form state:
 
 ```tsx
+import { useEffect } from 'react';
+import { Button } from '@mantine/core';
+import { demoFormActions } from './demoFormActions';
 
 function ExternalComponent() {
   useEffect(() => {
@@ -62677,6 +69190,7 @@ function ExternalComponent() {
 Form name must be a string that contains only letters, numbers and dashes:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 // ✅ Valid form name
 const valid = useForm({
@@ -62722,15 +69236,18 @@ functions accept the same arguments but do not return anything.
 
 --------------------------------------------------------------------------------
 
-### createFormContext
+### Form context
 Package: @mantine/form
-Import: import { CreateFormContext } from '@mantine/form';
+Import: import { Form context } from '@mantine/form';
+Description: Add context support to use-form with createFormContext
 
 ## Usage
 
 `createFormContext` function creates context provider and hook to get form object from context:
 
 ```tsx
+import { TextInput } from '@mantine/core';
+import { createFormContext } from '@mantine/form';
 
 // Definition of form values is required
 interface FormValues {
@@ -62783,6 +69300,7 @@ Usually it is a good idea to store form context in separate file to avoid depend
 
 ```tsx
 // form-context.ts file
+import { createFormContext } from '@mantine/form';
 
 interface UserFormValues {
   age: number;
@@ -62798,6 +69316,8 @@ Then you can import context variables from anywhere:
 
 ```tsx
 // NameInput.tsx
+import { TextInput } from '@mantine/core';
+import { useUserFormContext } from './form-context';
 
 export function NameInput() {
   const form = useUserFormContext();
@@ -62813,6 +69333,9 @@ export function NameInput() {
 
 ```tsx
 // UserForm.tsx
+import { NumberInput } from '@mantine/core';
+import { UserFormProvider, useUserForm } from './form-context';
+import { NameInput } from './NameInput';
 
 function UserForm() {
   const form = useUserForm({
@@ -62850,6 +69373,7 @@ Import: import { FormErrors } from '@mantine/form';
 `form.errors` is an object of React nodes that contains validation errors:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -62881,6 +69405,7 @@ form.errors; // ->
 Same as with [initial values](https://mantine.dev/form/values/) you can set initial form errors:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -62895,6 +69420,7 @@ const form = useForm({
 ## setErrors handler
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({ mode: 'uncontrolled' });
 form.setErrors({ firstName: 'Too short', email: 'Invalid email' });
@@ -62908,6 +69434,7 @@ form.errors;
 `form.setFieldError` handler sets error of the given field:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -62924,6 +69451,7 @@ form.errors; // -> { email: 'Invalid email' }
 `form.clearErrors` handler clear all form errors:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -62940,6 +69468,7 @@ form.errors; // -> {}
 `form.clearFieldError` handler clears error of the given field:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -62955,6 +69484,7 @@ form.errors; // -> { email: 'Invalid email' }
 You can use any React node as an error message:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -62969,6 +69499,7 @@ const form = useForm({
 Note that errors that are `false`, `null` or `undefined` will be automatically removed:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -62983,11 +69514,13 @@ form.errors; // -> { name: 'name-error' }, email error is not included in errors
 `form.errors` type is `Record<string, React.ReactNode>`, you can import a shorthand `FormErrors` type from `@mantine/form`:
 
 ```tsx
+import type { FormErrors } from '@mantine/form';
 ```
 
 You can also get type directly from the `form` instance:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({ mode: 'uncontrolled' });
 
@@ -63016,6 +69549,8 @@ You can pass the following options to `form.getInputProps` as second argument:
 * Any additional props that can be accessed with `enhanceGetInputProps` function. These props are not passed to the input.
 
 ```tsx
+import { Checkbox, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
@@ -63054,15 +69589,143 @@ You can define it in `useForm` hook options. Its argument is an object with the 
 
 Example of using `enhanceGetInputProps` to disable input based on field path:
 
+#### Example: enhanceGetInputProps
+
+```tsx
+import { NumberInput, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  age: number | string;
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    mode: 'uncontrolled',
+    initialValues: { name: '', age: '' },
+    enhanceGetInputProps: (payload) => ({
+      disabled: payload.field === 'name',
+    }),
+  });
+
+  return (
+    <>
+      <TextInput
+        {...form.getInputProps('name')}
+        key={form.key('name')}
+        label="Name"
+        placeholder="Name"
+      />
+      <NumberInput
+        {...form.getInputProps('age')}
+        key={form.key('age')}
+        label="Age"
+        placeholder="Age"
+        mt="md"
+      />
+    </>
+  );
+}
+```
 
 
 Example of using `enhanceGetInputProps` to add additional props to the input based on option passed to `form.getInputProps`:
 
+#### Example: enhanceGetInputPropsOptions
+
+```tsx
+import { NumberInput, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  age: number | string;
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    mode: 'uncontrolled',
+    initialValues: { name: '', age: '' },
+    enhanceGetInputProps: (payload) => {
+      if (payload.options.fieldType === 'name') {
+        return {
+          label: 'Your name',
+          placeholder: 'Your name',
+          withAsterisk: true,
+          description: 'Your personal information is stored securely. (Just kidding!)',
+        };
+      }
+
+      return {};
+    },
+  });
+
+  return (
+    <>
+      <TextInput {...form.getInputProps('name', { fieldType: 'name' })} key={form.key('name')} />
+      <NumberInput
+        {...form.getInputProps('age')}
+        key={form.key('age')}
+        label="Age"
+        placeholder="Age"
+        mt="md"
+      />
+    </>
+  );
+}
+```
 
 
 Example of using `enhanceGetInputProps` to add `disabled` prop to all inputs if the form
 has not been initialized yet:
 
+#### Example: enhanceGetInputPropsForm
+
+```tsx
+import { NumberInput, TextInput, Button } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  age: number | string;
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    mode: 'uncontrolled',
+    initialValues: { name: '', age: '' },
+    enhanceGetInputProps: (payload) => {
+      if (!payload.form.initialized) {
+        return { disabled: true };
+      }
+
+      return {};
+    },
+  });
+
+  return (
+    <>
+      <TextInput
+        {...form.getInputProps('name')}
+        key={form.key('name')}
+        label="Your name"
+        placeholder="Your name"
+      />
+      <NumberInput
+        {...form.getInputProps('age')}
+        key={form.key('age')}
+        label="Age"
+        placeholder="Age"
+        mt="md"
+      />
+      <Button onClick={() => form.initialize({ name: 'John', age: 20 })} mt="md">
+        Initialize form
+      </Button>
+    </>
+  );
+}
+```
 
 
 ## Initialize form
@@ -63073,11 +69736,65 @@ are ignored.
 
 `form.initialize` is useful when you want to sync form values with backend API response:
 
+#### Example: initialize
+
+```tsx
+import { Button, NumberInput, TextInput } from '@mantine/core';
+import { isInRange, isNotEmpty, useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  age: number | string;
+}
+
+function apiRequest(): Promise<FormValues> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ name: 'John Doe', age: 25 });
+    }, 1000);
+  });
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    mode: 'uncontrolled',
+    initialValues: { name: '', age: 0 },
+    validate: {
+      name: isNotEmpty('Name is required'),
+      age: isInRange({ min: 18 }, 'You must be at least 18 to register'),
+    },
+  });
+
+  return (
+    <>
+      <TextInput
+        {...form.getInputProps('name')}
+        key={form.key('name')}
+        label="Name"
+        placeholder="Name"
+      />
+      <NumberInput
+        {...form.getInputProps('age')}
+        key={form.key('age')}
+        label="Age"
+        placeholder="Age"
+        mt="md"
+      />
+      <Button onClick={() => apiRequest().then((values) => form.initialize(values))} mt="md">
+        Initialize form
+      </Button>
+    </>
+  );
+}
+```
 
 
 Example with [TanStack Query](https://tanstack.com/query/latest) (react-query):
 
 ```tsx
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useForm } from '@mantine/form';
 
 function Demo() {
   const query = useQuery({
@@ -63154,6 +69871,8 @@ export function CustomInput({
 Then use it with `form.getInputProps`:
 
 ```tsx
+import { useForm } from '@mantine/form';
+import { CustomInput } from './CustomInput';
 
 function Demo() {
   const form = useForm({
@@ -63183,6 +69902,7 @@ Most of `form` handlers accept property path as the first argument.
 Property path includes keys/indices of objects/arrays at which target property is contained:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -63217,11 +69937,55 @@ form.validateField('deeply.nested.object.0.item');
 
 ## Nested objects
 
+#### Example: nested
+
+```tsx
+import { useForm } from '@mantine/form';
+import { Box, Checkbox, TextInput } from '@mantine/core';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      terms: false,
+      user: {
+        firstName: '',
+        lastName: '',
+      },
+    },
+  });
+
+  return (
+    <Box maw={340} mx="auto">
+      <TextInput
+        label="First name"
+        placeholder="First name"
+        key={form.key('user.firstName')}
+        {...form.getInputProps('user.firstName')}
+      />
+      <TextInput
+        label="Last name"
+        placeholder="Last name"
+        mt="md"
+        key={form.key('user.lastName')}
+        {...form.getInputProps('user.lastName')}
+      />
+      <Checkbox
+        label="I accept terms and conditions"
+        mt="sm"
+        key={form.key('terms')}
+        {...form.getInputProps('terms', { type: 'checkbox' })}
+      />
+    </Box>
+  );
+}
+```
 
 
 ## Set nested object value
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -63244,6 +70008,7 @@ form.setFieldValue('user', { name: 'Jane', occupation: 'Architect' });
 ## Nested object values validation
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -63270,6 +70035,74 @@ form.errors; // -> { 'user.name': 'Name is too short', 'user.occupation': 'Occup
 
 ## Nested arrays
 
+#### Example: lists
+
+```tsx
+import { useForm } from '@mantine/form';
+import { TextInput, Switch, Group, ActionIcon, Box, Text, Button } from '@mantine/core';
+import { randomId } from '@mantine/hooks';
+import { IconTrash } from '@tabler/icons-react';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      employees: [{ name: '', active: false, key: randomId() }],
+    },
+  });
+
+  const fields = form.getValues().employees.map((item, index) => (
+    <Group key={item.key} mt="xs">
+      <TextInput
+        placeholder="John Doe"
+        withAsterisk
+        style={{ flex: 1 }}
+        key={form.key(`employees.${index}.name`)}
+        {...form.getInputProps(`employees.${index}.name`)}
+      />
+      <Switch
+        label="Active"
+        key={form.key(`employees.${index}.active`)}
+        {...form.getInputProps(`employees.${index}.active`, { type: 'checkbox' })}
+      />
+      <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
+        <IconTrash size={16} />
+      </ActionIcon>
+    </Group>
+  ));
+
+  return (
+    <Box maw={500} mx="auto">
+      {fields.length > 0 ? (
+        <Group mb="xs">
+          <Text fw={500} size="sm" style={{ flex: 1 }}>
+            Name
+          </Text>
+          <Text fw={500} size="sm" pr={90}>
+            Status
+          </Text>
+        </Group>
+      ) : (
+        <Text c="dimmed" ta="center">
+          No one here...
+        </Text>
+      )}
+
+      {fields}
+
+      <Group justify="center" mt="md">
+        <Button
+          onClick={() =>
+            form.insertListItem('employees', { name: '', active: false, key: randomId() })
+          }
+        >
+          Add employee
+        </Button>
+      </Group>
+    </Box>
+  );
+}
+```
 
 
 ## List handlers
@@ -63284,6 +70117,7 @@ form.errors; // -> { 'user.name': 'Name is too short', 'user.occupation': 'Occup
 ## List values validation
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -63336,6 +70170,14 @@ contains `useForm` hook that manages form state, validation, and submission.
 
 ## Installation
 
+```bash
+yarn add @mantine/form
+```
+
+```bash
+npm install @mantine/form
+```
+
 ## Usage
 
 `@mantine/form` package can be used in any web React application.
@@ -63345,6 +70187,49 @@ and does not have any dependencies except React.
 
 Example of using `useForm` hook to create a simple form:
 
+#### Example: usage
+
+```tsx
+import { Button, Checkbox, Group, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      email: '',
+      termsOfService: false,
+    },
+
+    validate: {
+      email: (value) => (/^\\S+@\\S+$/.test(value) ? null : 'Invalid email'),
+    },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <TextInput
+        withAsterisk
+        label="Email"
+        placeholder="your@email.com"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+
+      <Checkbox
+        mt="md"
+        label="I agree to sell my privacy"
+        key={form.key('termsOfService')}
+        {...form.getInputProps('termsOfService', { type: 'checkbox' })}
+      />
+
+      <Group justify="flex-end" mt="md">
+        <Button type="submit">Submit</Button>
+      </Group>
+    </form>
+  );
+}
+```
 
 
 ## License
@@ -63360,18 +70245,308 @@ Import: import { FormRecipes } from '@mantine/form';
 
 ## Set initial values with async request
 
+#### Example: asyncSetValues
+
+```tsx
+import { useEffect } from 'react';
+import { useForm } from '@mantine/form';
+import { TextInput, Checkbox } from '@mantine/core';
+
+interface FormValues {
+  email: string;
+  terms: boolean;
+}
+
+function loadInitialValues(): Promise<FormValues> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve({ email: 'test@email', terms: true }), 2000);
+  });
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    mode: 'uncontrolled',
+    initialValues: { email: '', terms: false },
+  });
+
+  useEffect(() => {
+    loadInitialValues().then((values) => {
+      form.setValues(values);
+      form.resetDirty(values);
+    });
+  }, []);
+
+  return (
+    <form onSubmit={form.onSubmit(console.log)}>
+      <TextInput
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+      <Checkbox
+        mt="sm"
+        label="I accept terms and conditions"
+        key={form.key('terms')}
+        {...form.getInputProps('terms', { type: 'checkbox' })}
+      />
+    </form>
+  );
+}
+```
 
 
 ## Save form values to local storage
 
+#### Example: localStorage
+
+```tsx
+import { useEffect } from 'react';
+import { useForm } from '@mantine/form';
+import { TextInput, Box } from '@mantine/core';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '', occupation: '' },
+    onValuesChange: (values) => {
+      window.localStorage.setItem('user-form', JSON.stringify(values));
+    },
+  });
+
+  useEffect(() => {
+    const storedValue = window.localStorage.getItem('user-form');
+    if (storedValue) {
+      try {
+        form.setValues(JSON.parse(window.localStorage.getItem('user-form')!));
+      } catch (e) {
+        console.log('Failed to parse stored value');
+      }
+    }
+  }, []);
+
+  return (
+    <Box maw={340} mx="auto">
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="md"
+        label="Occupation"
+        placeholder="Occupation"
+        key={form.key('occupation')}
+        {...form.getInputProps('occupation')}
+      />
+    </Box>
+  );
+}
+```
 
 
 ## List items reordering
 
+#### Example: dnd
+
+```tsx
+import { Group, TextInput, Button, Center } from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { randomId } from '@mantine/hooks';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import { IconGripVertical } from '@tabler/icons-react';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      employees: [
+        { name: 'John Doe', email: 'john@mantine.dev', key: randomId() },
+        { name: 'Bill Love', email: 'bill@mantine.dev', key: randomId() },
+        { name: 'Nancy Eagle', email: 'nanacy@mantine.dev', key: randomId() },
+        { name: 'Lim Notch', email: 'lim@mantine.dev', key: randomId() },
+        { name: 'Susan Seven', email: 'susan@mantine.dev', key: randomId() },
+      ],
+    },
+  });
+
+  const fields = form.getValues().employees.map((item, index) => (
+    <Draggable key={item.key} index={index} draggableId={item.key}>
+      {(provided) => (
+        <Group ref={provided.innerRef} mt="xs" {...provided.draggableProps}>
+          <Center {...provided.dragHandleProps}>
+            <IconGripVertical size={18} />
+          </Center>
+          <TextInput
+            placeholder="John Doe"
+            key={form.key(`employees.${index}.name`)}
+            {...form.getInputProps(`employees.${index}.name`)}
+          />
+          <TextInput
+            placeholder="example@mail.com"
+            key={form.key(`employees.${index}.email`)}
+            {...form.getInputProps(`employees.${index}.email`)}
+          />
+        </Group>
+      )}
+    </Draggable>
+  ));
+
+  return (
+    <div>
+      <DragDropContext
+        onDragEnd={({ destination, source }) =>
+          destination?.index !== undefined && form.reorderListItem('employees', { from: source.index, to: destination.index })
+        }
+      >
+        <Droppable droppableId="dnd-list" direction="vertical">
+          {(provided) => (
+            <div {...provided.droppableProps} ref={provided.innerRef}>
+              {fields}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+
+      <Group justify="center" mt="md">
+        <Button onClick={() => form.insertListItem('employees', { name: '', email: '', key: randomId() })}>
+          Add employee
+        </Button>
+      </Group>
+    </div>
+  );
+}
+```
 
 
 ## Form with multiple steps
 
+#### Example: stepper
+
+```tsx
+import { useState } from 'react';
+import { Stepper, Button, Group, TextInput, PasswordInput, Code } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const [active, setActive] = useState(0);
+
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      username: '',
+      password: '',
+      name: '',
+      email: '',
+      website: '',
+      github: '',
+    },
+
+    validate: (values) => {
+      if (active === 0) {
+        return {
+          username:
+            values.username.trim().length < 6
+              ? 'Username must include at least 6 characters'
+              : null,
+          password:
+            values.password.length < 6 ? 'Password must include at least 6 characters' : null,
+        };
+      }
+
+      if (active === 1) {
+        return {
+          name: values.name.trim().length < 2 ? 'Name must include at least 2 characters' : null,
+          email: /^\\S+@\\S+$/.test(values.email) ? null : 'Invalid email',
+        };
+      }
+
+      return {};
+    },
+  });
+
+  const nextStep = () =>
+    setActive((current) => {
+      if (form.validate().hasErrors) {
+        return current;
+      }
+      return current < 3 ? current + 1 : current;
+    });
+
+  const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
+
+  return (
+    <>
+      <Stepper active={active}>
+        <Stepper.Step label="First step" description="Profile settings">
+          <TextInput
+            label="Username"
+            placeholder="Username"
+            key={form.key('username')}
+            {...form.getInputProps('username')}
+          />
+          <PasswordInput
+            mt="md"
+            label="Password"
+            placeholder="Password"
+            key={form.key('password')}
+            {...form.getInputProps('password')}
+          />
+        </Stepper.Step>
+
+        <Stepper.Step label="Second step" description="Personal information">
+          <TextInput
+            label="Name"
+            placeholder="Name"
+            key={form.key('name')}
+            {...form.getInputProps('name')}
+          />
+          <TextInput
+            mt="md"
+            label="Email"
+            placeholder="Email"
+            key={form.key('email')}
+            {...form.getInputProps('email')}
+          />
+        </Stepper.Step>
+
+        <Stepper.Step label="Final step" description="Social media">
+          <TextInput
+            label="Website"
+            placeholder="Website"
+            key={form.key('website')}
+            {...form.getInputProps('website')}
+          />
+          <TextInput
+            mt="md"
+            label="GitHub"
+            placeholder="GitHub"
+            key={form.key('github')}
+            {...form.getInputProps('github')}
+          />
+        </Stepper.Step>
+        <Stepper.Completed>
+          Completed! Form values:
+          <Code block mt="xl">
+            {JSON.stringify(form.getValues(), null, 2)}
+          </Code>
+        </Stepper.Completed>
+      </Stepper>
+
+      <Group justify="flex-end" mt="xl">
+        {active !== 0 && (
+          <Button variant="default" onClick={prevStep}>
+            Back
+          </Button>
+        )}
+        {active !== 3 && <Button onClick={nextStep}>Next step</Button>}
+      </Group>
+    </>
+  );
+}
+```
 
 
 
@@ -63399,9 +70574,20 @@ it is the most modern and developer-friendly library.
 
 Installation:
 
+```bash
+yarn add zod mantine-form-zod-resolver
+```
+
+```bash
+npm install zod mantine-form-zod-resolver
+```
+
 Basic fields validation with zod v3:
 
 ```tsx
+import { zodResolver } from 'mantine-form-zod-resolver';
+import { z } from 'zod';
+import { useForm } from '@mantine/form';
 
 const schema = z.object({
   name: z
@@ -63435,6 +70621,9 @@ form.errors;
 Nested fields validation
 
 ```tsx
+import { zodResolver } from 'mantine-form-zod-resolver';
+import { z } from 'zod';
+import { useForm } from '@mantine/form';
 
 const nestedSchema = z.object({
   nested: z.object({
@@ -63464,6 +70653,9 @@ form.errors;
 List fields validation:
 
 ```tsx
+import { zodResolver } from 'mantine-form-zod-resolver';
+import { z } from 'zod';
+import { useForm } from '@mantine/form';
 
 const listSchema = z.object({
   list: z.array(
@@ -63503,6 +70695,8 @@ To use zod 4:
 Example with zod v4:
 
 ```tsx
+import { z } from 'zod/v4';
+import { zod4Resolver } from 'mantine-form-zod-resolver';
 
 const schema = z.object({
   name: z.string().min(2, { error: 'Name should have at least 2 letters' }),
@@ -63524,9 +70718,20 @@ const form = useForm({
 
 Installation:
 
+```bash
+yarn add yup mantine-form-yup-resolver
+```
+
+```bash
+npm install yup mantine-form-yup-resolver
+```
+
 Basic fields validation:
 
 ```tsx
+import { yupResolver } from 'mantine-form-yup-resolver';
+import * as yup from 'yup';
+import { useForm } from '@mantine/form';
 
 const schema = yup.object().shape({
   name: yup.string().min(2, 'Name should have at least 2 letters'),
@@ -63561,6 +70766,9 @@ form.errors;
 Nested fields validation:
 
 ```tsx
+import { yupResolver } from 'mantine-form-yup-resolver';
+import * as yup from 'yup';
+import { useForm } from '@mantine/form';
 
 const nestedSchema = yup.object().shape({
   nested: yup.object().shape({
@@ -63590,6 +70798,9 @@ form.errors;
 List fields validation:
 
 ```tsx
+import { yupResolver } from 'mantine-form-yup-resolver';
+import * as yup from 'yup';
+import { useForm } from '@mantine/form';
 
 const listSchema = yup.object().shape({
   list: yup.array().of(
@@ -63620,9 +70831,20 @@ form.errors;
 
 Installation:
 
+```bash
+yarn add joi mantine-form-joi-resolver
+```
+
+```bash
+npm install joi mantine-form-joi-resolver
+```
+
 Basic fields validation:
 
 ```tsx
+import Joi from 'joi';
+import { joiResolver } from 'mantine-form-joi-resolver';
+import { useForm } from '@mantine/form';
 
 const schema = Joi.object({
   name: Joi.string().min(2).messages({
@@ -63662,6 +70884,9 @@ form.errors;
 Nested fields validation:
 
 ```tsx
+import Joi from 'joi';
+import { joiResolver } from 'mantine-form-joi-resolver';
+import { useForm } from '@mantine/form';
 
 const nestedSchema = Joi.object({
   nested: Joi.object({
@@ -63691,6 +70916,9 @@ form.errors;
 List fields validation:
 
 ```tsx
+import Joi from 'joi';
+import { joiResolver } from 'mantine-form-joi-resolver';
+import { useForm } from '@mantine/form';
 
 const listSchema = Joi.object({
   list: Joi.array().items(
@@ -63722,9 +70950,20 @@ form.errors;
 
 Installation:
 
+```bash
+yarn add superstruct mantine-form-superstruct-resolver
+```
+
+```bash
+npm install superstruct mantine-form-superstruct-resolver
+```
+
 Basic fields validation:
 
 ```tsx
+import isEmail from 'is-email';
+import { superstructResolver } from 'mantine-form-superstruct-resolver';
+import * as s from 'superstruct';
 
 const emailString = s.define('email', isEmail);
 
@@ -63756,6 +70995,9 @@ form.errors;
 Nested fields validation:
 
 ```tsx
+import { superstructResolver } from 'mantine-form-superstruct-resolver';
+import * as s from 'superstruct';
+import { useForm } from '@mantine/form';
 
 const nestedSchema = s.object({
   nested: s.object({
@@ -63783,6 +71025,9 @@ form.errors;
 List fields validation:
 
 ```tsx
+import { superstructResolver } from 'mantine-form-superstruct-resolver';
+import * as s from 'superstruct';
+import { useForm } from '@mantine/form';
 
 const listSchema = s.object({
   list: s.array(
@@ -63811,9 +71056,20 @@ form.errors;
 
 Installation:
 
+```bash
+yarn add valibot mantine-form-valibot-resolver
+```
+
+```bash
+npm install valibot mantine-form-valibot-resolver
+```
+
 Basic fields validation:
 
 ```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import * as v from 'valibot';
+import { useForm } from '@mantine/form';
 
 const schema = v.object({
   name: v.pipe(
@@ -63848,6 +71104,9 @@ form.errors;
 Nested fields validation:
 
 ```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import * as v from 'valibot';
+import { useForm } from '@mantine/form';
 
 const nestedSchema = v.object({
   nested: v.object({
@@ -63877,6 +71136,9 @@ form.errors;
 List fields validation:
 
 ```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import * as v from 'valibot';
+import { useForm } from '@mantine/form';
 
 const listSchema = v.object({
   list: v.array(
@@ -63908,6 +71170,9 @@ With TypeScript:
 You can use the `InferInput` type from the `valibot` library to get the type of the form data.
 
 ```tsx
+import { valibotResolver } from 'mantine-form-valibot-resolver';
+import * as v from 'valibot';
+import { useForm } from '@mantine/form';
 
 export const userSchema = v.object({
   email: v.pipe(v.string(), v.email()),
@@ -63937,11 +71202,44 @@ Import: import { FormStatus } from '@mantine/form';
 * Field is considered to be `touched` when user focused it or its value was changed programmatically with `form.setFieldValue` handler
 * Field is considered to be `dirty` when its value was changed and new value is different from field value specified in `initialValues` (compared with [fast-deep-equal](https://www.npmjs.com/package/fast-deep-equal))
 
+#### Example: status
+
+```tsx
+import { useForm } from '@mantine/form';
+import { TextInput, Button } from '@mantine/core';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { text: 'initial value' },
+  });
+
+  return (
+    <div>
+      <TextInput
+        {...form.getInputProps('text')}
+        key={form.key('text')}
+        label="Touched/dirty demo"
+        placeholder="Touched/dirty demo"
+      />
+
+      <Button
+        onClick={() =>
+          console.log({ touched: form.isTouched('text'), dirty: form.isDirty('text') })
+        }
+      >
+        Log status to console
+      </Button>
+    </div>
+  );
+}
+```
 
 
 ## isTouched and isDirty functions
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -63970,6 +71268,7 @@ It accepts two options:
 Example of using `focus` trigger:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -63992,6 +71291,7 @@ You can provide initial touched and dirty values with `initialTouched` and `init
 Both properties support [the same fields path format as errors](https://mantine.dev/form/errors/):
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64007,6 +71307,7 @@ const form = useForm({
 Note that `form.reset` will also reset `touched` and `dirty` state:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64028,6 +71329,7 @@ form.isDirty('a'); // -> false
 To reset values that are used for dirty check call `form.resetDirty` with new values:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64050,11 +71352,64 @@ form.isDirty(); // -> true
 `form.onSubmit` returns a promise. After the promise is resolved or rejected,
 `form.submitting` will be set to `false`:
 
+#### Example: submitting
+
+```tsx
+import { useState } from 'react';
+import { Button, Group, Stack, Text, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+const asyncSubmit = (values: any) =>
+  new Promise((resolve) => setTimeout(() => resolve(values), 3000));
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: 'John' },
+  });
+
+  const [completed, setCompleted] = useState(false);
+
+  const handleSubmit = async (values: typeof form.values) => {
+    await asyncSubmit(values);
+    setCompleted(true);
+  };
+
+  if (completed) {
+    return (
+      <Stack>
+        <Text>Form submitted!</Text>
+        <Button onClick={() => setCompleted(false)}>Reset to initial state</Button>
+      </Stack>
+    );
+  }
+
+  return (
+    <form onSubmit={form.onSubmit(handleSubmit)}>
+      <TextInput
+        withAsterisk
+        label="Name"
+        placeholder="Your name"
+        key={form.key('name')}
+        disabled={form.submitting}
+        {...form.getInputProps('name')}
+      />
+
+      <Group justify="flex-end" mt="md">
+        <Button type="submit" loading={form.submitting}>
+          Submit
+        </Button>
+      </Group>
+    </form>
+  );
+}
+```
 
 
 You can also manually set `form.submitting` to `true` or `false`:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({ mode: 'uncontrolled' });
 form.submitting; // -> false
@@ -64081,6 +71436,42 @@ Controlled mode is not recommended for large forms.
 
 Example of a form with controlled mode:
 
+#### Example: controlled
+
+```tsx
+import { useState } from 'react';
+import { Button, Code, Text, TextInput } from '@mantine/core';
+import { hasLength, isEmail, useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'controlled',
+    initialValues: { name: '', email: '' },
+    validate: {
+      name: hasLength({ min: 3 }, 'Must be at least 3 characters'),
+      email: isEmail('Invalid email'),
+    },
+  });
+
+  const [submittedValues, setSubmittedValues] = useState<typeof form.values | null>(null);
+
+  return (
+    <form onSubmit={form.onSubmit(setSubmittedValues)}>
+      <TextInput {...form.getInputProps('name')} label="Name" placeholder="Name" />
+      <TextInput {...form.getInputProps('email')} mt="md" label="Email" placeholder="Email" />
+      <Button type="submit" mt="md">
+        Submit
+      </Button>
+
+      <Text mt="md">Form values:</Text>
+      <Code block>{JSON.stringify(form.values, null, 2)}</Code>
+
+      <Text mt="md">Submitted values:</Text>
+      <Code block>{submittedValues ? JSON.stringify(submittedValues, null, 2) : '–'}</Code>
+    </form>
+  );
+}
+```
 
 
 As you can see in the example above, `form.values` update on every change. This
@@ -64097,6 +71488,53 @@ and `form.values` are not updated on every change.
 
 Example of a form with uncontrolled mode:
 
+#### Example: uncontrolled
+
+```tsx
+import { useState } from 'react';
+import { Button, Code, Text, TextInput } from '@mantine/core';
+import { hasLength, isEmail, useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '', email: '' },
+    validate: {
+      name: hasLength({ min: 3 }, 'Must be at least 3 characters'),
+      email: isEmail('Invalid email'),
+    },
+  });
+
+  const [submittedValues, setSubmittedValues] = useState<typeof form.values | null>(null);
+
+  return (
+    <form onSubmit={form.onSubmit(setSubmittedValues)}>
+      <TextInput
+        {...form.getInputProps('name')}
+        key={form.key('name')}
+        label="Name"
+        placeholder="Name"
+      />
+      <TextInput
+        {...form.getInputProps('email')}
+        key={form.key('email')}
+        mt="md"
+        label="Email"
+        placeholder="Email"
+      />
+      <Button type="submit" mt="md">
+        Submit
+      </Button>
+
+      <Text mt="md">Form values:</Text>
+      <Code block>{JSON.stringify(form.values, null, 2)}</Code>
+
+      <Text mt="md">Submitted values:</Text>
+      <Code block>{submittedValues ? JSON.stringify(submittedValues, null, 2) : '–'}</Code>
+    </form>
+  );
+}
+```
 
 
 As you can see in the example above, `form.values` do not update at all.
@@ -64108,6 +71546,7 @@ used anywhere in the component to get the current form values. It can
 be used in both controlled and uncontrolled modes.
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64126,6 +71565,7 @@ values while `form.values` is outdated in uncontrolled mode and before state
 update in controlled mode.
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64151,6 +71591,8 @@ you cannot pass it to `useEffect` dependencies array as it will always be the sa
 reference.
 
 ```tsx
+import { useEffect } from 'react';
+import { useForm } from '@mantine/form';
 
 const form = useForm({ mode: 'uncontrolled' });
 
@@ -64164,6 +71606,7 @@ Instead of observing form values with `useEffect`, use `onValuesChange` callback
 to listen to form values changes:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64187,6 +71630,7 @@ set `key` supplied by `form.key()` to the input component to ensure that it has
 updated value:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
@@ -64205,6 +71649,8 @@ do not pass `key` to the input component directly, instead add a wrapper
 element and pass `key` to it:
 
 ```tsx
+import { useForm } from '@mantine/form';
+import { randomId } from '@mantine/hooks';
 
 // ❌ Incorrect: Do not override key prop, even in lists
 function Demo() {
@@ -64257,6 +71703,7 @@ you must add support for `defaultValue` prop. The best way to add support for
 `defaultValue` is to use [use-uncontrolled](https://mantine.dev/hooks/use-uncontrolled/) hook:
 
 ```tsx
+import { useUncontrolled } from '@mantine/hooks';
 
 interface CustomInputProps {
   value?: string;
@@ -64306,9 +71753,10 @@ function Demo() {
 
 --------------------------------------------------------------------------------
 
-### useField
+### use-field
 Package: @mantine/form
-Import: import { UseField } from '@mantine/form';
+Import: import { use-field } from '@mantine/form';
+Description: use-field hook – manage single field state
 
 ## Usage
 
@@ -64454,16 +71902,68 @@ mode is recommended as it always provides up to date field information as React 
 
 --------------------------------------------------------------------------------
 
-### useForm
+### use-form
 Package: @mantine/form
-Import: import { UseForm } from '@mantine/form';
+Import: import { use-form } from '@mantine/form';
+Description: Manage form state
 
 ## Installation
 
 `@mantine/form` package does not depend on any other libraries, you can use it with or without `@mantine/core` inputs:
 
+```bash
+yarn add @mantine/form
+```
+
+```bash
+npm install @mantine/form
+```
+
 ## Usage
 
+#### Example: usage
+
+```tsx
+import { Button, Checkbox, Group, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      email: '',
+      termsOfService: false,
+    },
+
+    validate: {
+      email: (value) => (/^\\S+@\\S+$/.test(value) ? null : 'Invalid email'),
+    },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <TextInput
+        withAsterisk
+        label="Email"
+        placeholder="your@email.com"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+
+      <Checkbox
+        mt="md"
+        label="I agree to sell my privacy"
+        key={form.key('termsOfService')}
+        {...form.getInputProps('termsOfService', { type: 'checkbox' })}
+      />
+
+      <Group justify="flex-end" mt="md">
+        <Button type="submit">Submit</Button>
+      </Group>
+    </form>
+  );
+}
+```
 
 
 ## API overview
@@ -64471,6 +71971,7 @@ Import: import { UseForm } from '@mantine/form';
 All examples below use the following example use-form hook.
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64551,6 +72052,7 @@ form.reorderListItem('fruits', { from: 1, to: 0 });
 [Form validation guide](https://mantine.dev/form/validation/)
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64613,6 +72115,7 @@ Wrapper function for form `onSubmit` and `onReset` event handler. `onSubmit` han
 that will be called with errors object when validation fails.
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({ mode: 'uncontrolled' });
@@ -64663,6 +72166,7 @@ to `useForm` hook. It can have the following values:
 * `validation-failed` - call `event.preventDefault()` only if validation failed
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64707,6 +72211,8 @@ form.resetDirty();
 `UseFormReturnType` can be used when you want to pass `form` as a prop to another component:
 
 ```tsx
+import { TextInput } from '@mantine/core';
+import { useForm, UseFormReturnType } from '@mantine/form';
 
 interface FormValues {
   name: string;
@@ -64765,6 +72271,56 @@ Import: import { FormValidation } from '@mantine/form';
 To validate form with rules object, provide an object of functions which take field value as an argument
 and return error message (any React node) or null if field is valid:
 
+#### Example: rulesValidation
+
+```tsx
+import { useForm } from '@mantine/form';
+import { NumberInput, TextInput, Button } from '@mantine/core';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '', email: '', age: 0 },
+
+    // functions will be used to validate values at corresponding key
+    validate: {
+      name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+      email: (value) => (/^\\S+@\\S+$/.test(value) ? null : 'Invalid email'),
+      age: (value) => (value < 18 ? 'You must be at least 18 to register' : null),
+    },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit(console.log)}>
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="sm"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+      <NumberInput
+        mt="sm"
+        label="Age"
+        placeholder="Age"
+        min={0}
+        max={99}
+        key={form.key('age')}
+        {...form.getInputProps('age')}
+      />
+      <Button type="submit" mt="sm">
+        Submit
+      </Button>
+    </form>
+  );
+}
+```
 
 
 ## Rule function arguments
@@ -64779,6 +72335,7 @@ Each form rule receives the following arguments:
 for example you can get index of array element:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64798,10 +72355,146 @@ alongside with their nested fields. For example, it is useful when you want to c
 a list of values, validate each value individually and then validate the list itself
 to not be empty:
 
+#### Example: rootRuleArray
+
+```tsx
+import { IconTrash } from '@tabler/icons-react';
+import { ActionIcon, Button, Group, Switch, Text, TextInput } from '@mantine/core';
+import { formRootRule, isNotEmpty, useForm } from '@mantine/form';
+import { randomId } from '@mantine/hooks';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      employees: [{ name: '', active: false, key: randomId() }],
+    },
+    validate: {
+      employees: {
+        [formRootRule]: isNotEmpty('At least one employee is required'),
+        name: isNotEmpty('Name is required'),
+      },
+    },
+  });
+
+  const fields = form.getValues().employees.map((item, index) => (
+    <Group key={item.key} mt="xs">
+      <TextInput
+        placeholder="John Doe"
+        withAsterisk
+        style={{ flex: 1 }}
+        key={form.key(`employees.${index}.name`)}
+        {...form.getInputProps(`employees.${index}.name`)}
+      />
+      <Switch
+        label="Active"
+        key={form.key(`employees.${index}.active`)}
+        {...form.getInputProps(`employees.${index}.active`, { type: 'checkbox' })}
+      />
+      <ActionIcon color="red" onClick={() => form.removeListItem('employees', index)}>
+        <IconTrash size={16} />
+      </ActionIcon>
+    </Group>
+  ));
+
+  return (
+    <form onSubmit={form.onSubmit(() => {})}>
+      {fields.length > 0 ? (
+        <Group mb="xs">
+          <Text fw={500} size="sm" style={{ flex: 1 }}>
+            Name
+          </Text>
+          <Text fw={500} size="sm" pr={90}>
+            Status
+          </Text>
+        </Group>
+      ) : (
+        <Text c="dimmed" ta="center">
+          No one here...
+        </Text>
+      )}
+
+      {fields}
+
+      {form.errors.employees && (
+        <Text c="red" size="sm" mt="sm">
+          {form.errors.employees}
+        </Text>
+      )}
+
+      <Group justify="space-between" mt="md">
+        <Button
+          variant="default"
+          onClick={() => {
+            form.insertListItem('employees', { name: '', active: false, key: randomId() });
+            form.clearFieldError('employees');
+          }}
+        >
+          Add employee
+        </Button>
+        <Button type="submit">Submit</Button>
+      </Group>
+    </form>
+  );
+}
+```
 
 
 Another example is to validate an object fields combination:
 
+#### Example: rootRuleObject
+
+```tsx
+import { Button, Text, TextInput } from '@mantine/core';
+import { formRootRule, isNotEmpty, useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      user: {
+        firstName: '',
+        lastName: '',
+      },
+    },
+
+    validate: {
+      user: {
+        [formRootRule]: (value) =>
+          value.firstName.trim().length > 0 && value.firstName === value.lastName
+            ? 'First name and last name cannot be the same'
+            : null,
+        firstName: isNotEmpty('First name is required'),
+        lastName: isNotEmpty('Last name is required'),
+      },
+    },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit(() => {})}>
+      <TextInput
+        label="First name"
+        placeholder="First name"
+        {...form.getInputProps('user.firstName')}
+      />
+      <TextInput
+        label="Last name"
+        placeholder="Last name"
+        mt="md"
+        {...form.getInputProps('user.lastName')}
+      />
+      {form.errors.user && (
+        <Text c="red" mt={5} fz="sm">
+          {form.errors.user}
+        </Text>
+      )}
+      <Button type="submit" mt="lg">
+        Submit
+      </Button>
+    </form>
+  );
+}
+```
 
 
 ## Validation based on other form values
@@ -64809,6 +72502,52 @@ Another example is to validate an object fields combination:
 You can get all form values as a second rule function argument to perform field validation based on other
 form values. For example, you can validate that password confirmation is the same as password:
 
+#### Example: password
+
+```tsx
+import { useForm } from '@mantine/form';
+import { PasswordInput, Group, Button, Box } from '@mantine/core';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      password: 'secret',
+      confirmPassword: 'sevret',
+    },
+
+    validate: {
+      confirmPassword: (value, values) =>
+        value !== values.password ? 'Passwords did not match' : null,
+    },
+  });
+
+  return (
+    <Box maw={340} mx="auto">
+      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <PasswordInput
+          label="Password"
+          placeholder="Password"
+          key={form.key('password')}
+          {...form.getInputProps('password')}
+        />
+
+        <PasswordInput
+          mt="sm"
+          label="Confirm password"
+          placeholder="Confirm password"
+          key={form.key('confirmPassword')}
+          {...form.getInputProps('confirmPassword')}
+        />
+
+        <Group justify="flex-end" mt="md">
+          <Button type="submit">Submit</Button>
+        </Group>
+      </form>
+    </Box>
+  );
+}
+```
 
 
 ## Function based validation
@@ -64818,6 +72557,52 @@ Function takes form values as single argument and should return object that cont
 errors of corresponding fields. If field is valid or field validation is not required, you can either return null or simply omit it
 from the validation results.
 
+#### Example: validateFunction
+
+```tsx
+import { useForm } from '@mantine/form';
+import { Box, TextInput, NumberInput, Button, Group } from '@mantine/core';
+
+function Demo() {
+  const form = useForm<{ name: string; age: number | undefined }>({
+    mode: 'uncontrolled',
+    initialValues: { name: '', age: undefined },
+    validate: (values) => ({
+      name: values.name.length < 2 ? 'Too short name' : null,
+      age:
+        values.age === undefined
+          ? 'Age is required'
+          : values.age < 18
+            ? 'You must be at least 18'
+            : null,
+    }),
+  });
+
+  return (
+    <Box maw={340} mx="auto">
+      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <TextInput
+          label="Name"
+          placeholder="Name"
+          key={form.key('name')}
+          {...form.getInputProps('name')}
+        />
+        <NumberInput
+          mt="sm"
+          label="Age"
+          placeholder="You age"
+          key={form.key('age')}
+          {...form.getInputProps('age')}
+        />
+
+        <Group justify="flex-end" mt="md">
+          <Button type="submit">Submit</Button>
+        </Group>
+      </form>
+    </Box>
+  );
+}
+```
 
 
 ## Validate fields on change
@@ -64825,6 +72610,7 @@ from the validation results.
 To validate all fields on change set `validateInputOnChange` option to `true`:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64832,11 +72618,63 @@ const form = useForm({
 });
 ```
 
+#### Example: liveValidation
+
+```tsx
+import { useForm } from '@mantine/form';
+import { NumberInput, TextInput, Button, } from '@mantine/core';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    validateInputOnChange: true,
+    initialValues: { name: '', email: '', age: 0 },
+
+    // functions will be used to validate values at corresponding key
+    validate: {
+      name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+      email: (value) => (/^\\S+@\\S+$/.test(value) ? null : 'Invalid email'),
+      age: (value) => (value < 18 ? 'You must be at least 18 to register' : null),
+    },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit(console.log)}>
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="sm"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+      <NumberInput
+        mt="sm"
+        label="Age"
+        placeholder="Age"
+        min={0}
+        max={99}
+        key={form.key('age')}
+        {...form.getInputProps('age')}
+      />
+      <Button type="submit" mt="sm">
+        Submit
+      </Button>
+    </form>
+  );
+}
+```
 
 
 You can also provide an array of fields paths to validate only those values:
 
 ```tsx
+import { FORM_INDEX, useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64848,6 +72686,79 @@ const form = useForm({
 });
 ```
 
+#### Example: liveFieldValidation
+
+```tsx
+import { useForm, FORM_INDEX } from '@mantine/form';
+import { NumberInput, TextInput, Button } from '@mantine/core';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    validateInputOnChange: [
+      'email',
+      'name',
+      // use FORM_INDEX to reference fields indices
+      `jobs.${FORM_INDEX}.title`,
+    ],
+    initialValues: { name: '', email: '', age: 0, jobs: [{ title: '' }, { title: '' }] },
+
+    // functions will be used to validate values at corresponding key
+    validate: {
+      name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+      email: (value) => (/^\\S+@\\S+$/.test(value) ? null : 'Invalid email'),
+      age: (value) => (value < 18 ? 'You must be at least 18 to register' : null),
+      jobs: {
+        title: (value) => (value.length < 2 ? 'Job must have at least 2 letters' : null),
+      },
+    },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit(console.log)}>
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="sm"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+      <NumberInput
+        mt="sm"
+        label="Age"
+        placeholder="Age"
+        min={0}
+        max={99}
+        key={form.key('age')}
+        {...form.getInputProps('age')}
+      />
+      <TextInput
+        mt="sm"
+        label="Job 1"
+        placeholder="Job 1"
+        key={form.key('jobs.0.title')}
+        {...form.getInputProps('jobs.0.title')}
+      />
+      <TextInput
+        mt="sm"
+        label="Job 2"
+        placeholder="Job 2"
+        key={form.key('jobs.1.title')}
+        {...form.getInputProps('jobs.1.title')}
+      />
+      <Button type="submit" mt="sm">
+        Submit
+      </Button>
+    </form>
+  );
+}
+```
 
 
 ## Validate fields on blur
@@ -64855,6 +72766,7 @@ const form = useForm({
 To validate all fields on blur set `validateInputOnBlur` option to `true`:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64862,11 +72774,63 @@ const form = useForm({
 });
 ```
 
+#### Example: blurValidation
+
+```tsx
+import { useForm } from '@mantine/form';
+import { NumberInput, TextInput, Button } from '@mantine/core';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    validateInputOnBlur: true,
+    initialValues: { name: '', email: '', age: 0 },
+
+    // functions will be used to validate values at corresponding key
+    validate: {
+      name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+      email: (value) => (/^\\S+@\\S+$/.test(value) ? null : 'Invalid email'),
+      age: (value) => (value < 18 ? 'You must be at least 18 to register' : null),
+    },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit(console.log)}>
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="sm"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+      <NumberInput
+        mt="sm"
+        label="Age"
+        placeholder="Age"
+        min={0}
+        max={99}
+        key={form.key('age')}
+        {...form.getInputProps('age')}
+      />
+      <Button type="submit" mt="sm">
+        Submit
+      </Button>
+    </form>
+  );
+}
+```
 
 
 You can also provide an array of fields paths to validate only those values:
 
 ```tsx
+import { FORM_INDEX, useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64874,6 +72838,79 @@ const form = useForm({
 });
 ```
 
+#### Example: blurFieldValidation
+
+```tsx
+import { useForm, FORM_INDEX } from '@mantine/form';
+import { NumberInput, TextInput, Button } from '@mantine/core';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    validateInputOnBlur: [
+      'email',
+      'name',
+      // use FORM_INDEX to reference fields indices
+      `jobs.${FORM_INDEX}.title`,
+    ],
+    initialValues: { name: '', email: '', age: 0, jobs: [{ title: '' }, { title: '' }] },
+
+    // functions will be used to validate values at corresponding key
+    validate: {
+      name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+      email: (value) => (/^\\S+@\\S+$/.test(value) ? null : 'Invalid email'),
+      age: (value) => (value < 18 ? 'You must be at least 18 to register' : null),
+      jobs: {
+        title: (value) => (value.length < 2 ? 'Job must have at least 2 letters' : null),
+      },
+    },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit(console.log)}>
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="sm"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+      <NumberInput
+        mt="sm"
+        label="Age"
+        placeholder="Age"
+        min={0}
+        max={99}
+        key={form.key('age')}
+        {...form.getInputProps('age')}
+      />
+      <TextInput
+        mt="sm"
+        label="Job 1"
+        placeholder="Job 1"
+        key={form.key('jobs.0.title')}
+        {...form.getInputProps('jobs.0.title')}
+      />
+      <TextInput
+        mt="sm"
+        label="Job 2"
+        placeholder="Job 2"
+        key={form.key('jobs.1.title')}
+        {...form.getInputProps('jobs.1.title')}
+      />
+      <Button type="submit" mt="sm">
+        Submit
+      </Button>
+    </form>
+  );
+}
+```
 
 
 ## Clear field error on change
@@ -64881,6 +72918,7 @@ const form = useForm({
 By default, field error is cleared when value changes. To change this, set `clearInputErrorOnChange` to `false`:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64888,6 +72926,50 @@ const form = useForm({
 });
 ```
 
+#### Example: clearErrorOnChange
+
+```tsx
+import { TextInput, Checkbox, Button, Group } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    clearInputErrorOnChange: false,
+    initialValues: {
+      email: '',
+      termsOfService: false,
+    },
+
+    validate: {
+      email: (value) => (/^\\S+@\\S+$/.test(value) ? null : 'Invalid email'),
+    },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <TextInput
+        withAsterisk
+        label="Email"
+        placeholder="your@email.com"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+
+      <Checkbox
+        mt="md"
+        label="I agree to sell my privacy"
+        key={form.key('termsOfService')}
+        {...form.getInputProps('termsOfService', { type: 'checkbox' })}
+      />
+
+      <Group justify="flex-end" mt="md">
+        <Button type="submit">Submit</Button>
+      </Group>
+    </form>
+  );
+}
+```
 
 
 ## Validation in onSubmit handler
@@ -64898,6 +72980,53 @@ was completed without errors, second argument is `handleErrors` function, it is 
 You can use `handleErrors` function to perform certain actions when user tries to submit form without values,
 for example, you can show a notification:
 
+#### Example: onSubmitErrors
+
+```tsx
+import { useForm } from '@mantine/form';
+import { TextInput, Button } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '', email: '' },
+    validate: {
+      name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+      email: (value) => (/^\\S+@\\S+$/.test(value) ? null : 'Invalid email'),
+    },
+  });
+
+  const handleError = (errors: typeof form.errors) => {
+    if (errors.name) {
+      notifications.show({ message: 'Please fill name field', color: 'red' });
+    } else if (errors.email) {
+      notifications.show({ message: 'Please provide a valid email', color: 'red' });
+    }
+  };
+
+  return (
+    <form onSubmit={form.onSubmit(console.log, handleError)}>
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="sm"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+      <Button type="submit" mt="sm">
+        Submit
+      </Button>
+    </form>
+  );
+}
+```
 
 
 ## isValid handler
@@ -64906,6 +73035,7 @@ for example, you can show a notification:
 `form.validate` it does not set `form.errors` and just returns boolean value that indicates whether form is valid.
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64933,6 +73063,61 @@ To get the DOM node of any input, use `form.getInputNode('path-to-field')`. Note
 in order for this feature to work, you need to spread `form.getInputProps('path-to-field')` to
 the input element.
 
+#### Example: focusError
+
+```tsx
+import { Button, Group, TextInput } from '@mantine/core';
+import { isEmail, isNotEmpty, useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    name: 'register-form',
+    initialValues: {
+      name: '',
+      email: '',
+    },
+
+    validate: {
+      name: isNotEmpty('Name is required'),
+      email: isEmail('Invalid email'),
+    },
+  });
+
+  return (
+    <form
+      onSubmit={form.onSubmit(
+        (values) => console.log(values),
+        (errors) => {
+          const firstErrorPath = Object.keys(errors)[0];
+          form.getInputNode(firstErrorPath)?.focus();
+        }
+      )}
+    >
+      <TextInput
+        withAsterisk
+        label="Your name"
+        placeholder="Your name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+
+      <TextInput
+        withAsterisk
+        label="Your email"
+        placeholder="your@email.com"
+        mt="md"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+
+      <Group justify="flex-end" mt="md">
+        <Button type="submit">Submit</Button>
+      </Group>
+    </form>
+  );
+}
+```
 
 
 
@@ -64947,6 +73132,81 @@ Import: import { FormValidators } from '@mantine/form';
 `@mantine/form` package exports several functions that can be used in [validation rules object](https://mantine.dev/form/validation/#validation-with-rules-object).
 Validation functions are tiny in size and provide basic validation, if you have complex validation requirements, use other types of [validation](https://mantine.dev/form/validation/).
 
+#### Example: validators
+
+```tsx
+import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
+import { Button, Group, TextInput, NumberInput } from '@mantine/core';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      job: '',
+      email: '',
+      favoriteColor: '',
+      age: 18,
+    },
+
+    validate: {
+      name: hasLength({ min: 2, max: 10 }, 'Name must be 2-10 characters long'),
+      job: isNotEmpty('Enter your current job'),
+      email: isEmail('Invalid email'),
+      favoriteColor: matches(/^#([0-9a-f]{3}){1,2}$/, 'Enter a valid hex color'),
+      age: isInRange({ min: 18, max: 99 }, 'You must be 18-99 years old to register'),
+    },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit(() => {})}>
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        withAsterisk
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        label="Your job"
+        placeholder="Your job"
+        withAsterisk
+        mt="md"
+        key={form.key('job')}
+        {...form.getInputProps('job')}
+      />
+      <TextInput
+        label="Your email"
+        placeholder="Your email"
+        withAsterisk
+        mt="md"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+      <TextInput
+        label="Your favorite color"
+        placeholder="Your favorite color"
+        withAsterisk
+        mt="md"
+        key={form.key('favoriteColor')}
+        {...form.getInputProps('favoriteColor')}
+      />
+      <NumberInput
+        label="Your age"
+        placeholder="Your age"
+        withAsterisk
+        mt="md"
+        key={form.key('age')}
+        {...form.getInputProps('age')}
+      />
+
+      <Group justify="flex-end" mt="md">
+        <Button type="submit">Submit</Button>
+      </Group>
+    </form>
+  );
+}
+```
 
 
 ## Optional error
@@ -64954,6 +73214,81 @@ Validation functions are tiny in size and provide basic validation, if you have 
 Last argument of all validator functions below is optional. If error is not set, then fields with failed validation will
 only have invalid styles without error message:
 
+#### Example: validatorsEmpty
+
+```tsx
+import { useForm, isNotEmpty, isEmail, isInRange, hasLength, matches } from '@mantine/form';
+import { Button, Group, TextInput, NumberInput } from '@mantine/core';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      job: '',
+      email: '',
+      favoriteColor: '',
+      age: 18,
+    },
+
+    validate: {
+      name: hasLength({ min: 2, max: 10 }),
+      job: isNotEmpty(),
+      email: isEmail(),
+      favoriteColor: matches(/^#([0-9a-f]{3}){1,2}$/),
+      age: isInRange({ min: 18, max: 99 }),
+    },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit(() => {})}>
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        withAsterisk
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        label="Your job"
+        placeholder="Your job"
+        withAsterisk
+        mt="md"
+        key={form.key('job')}
+        {...form.getInputProps('job')}
+      />
+      <TextInput
+        label="Your email"
+        placeholder="Your email"
+        withAsterisk
+        mt="md"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+      <TextInput
+        label="Your favorite color"
+        placeholder="Your favorite color"
+        withAsterisk
+        mt="md"
+        key={form.key('favoriteColor')}
+        {...form.getInputProps('favoriteColor')}
+      />
+      <NumberInput
+        label="Your age"
+        placeholder="Your age"
+        withAsterisk
+        mt="md"
+        key={form.key('age')}
+        {...form.getInputProps('age')}
+      />
+
+      <Group justify="flex-end" mt="md">
+        <Button type="submit">Submit</Button>
+      </Group>
+    </form>
+  );
+}
+```
 
 
 ## isNotEmpty
@@ -64962,6 +73297,7 @@ only have invalid styles without error message:
 values are considered to be empty. Strings are trimmed before validation.
 
 ```tsx
+import { isNotEmpty, useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -64993,6 +73329,7 @@ const form = useForm({
 `isEmail` uses `/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/` regexp to determine whether form value is an email:
 
 ```tsx
+import { isEmail, useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -65011,6 +73348,7 @@ const form = useForm({
 `matches` checks whether form value matches given regexp. If form value is not a string, validation will be failed.
 
 ```tsx
+import { matches, useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -65029,6 +73367,7 @@ const form = useForm({
 `isInRange` checks whether form value is within given `min`-`max` range. If form value is not a number, validation will be failed.
 
 ```tsx
+import { isInRange, useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -65056,6 +73395,7 @@ const form = useForm({
 Strings are trimmed before validation.
 
 ```tsx
+import { hasLength, useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -65090,6 +73430,7 @@ const form = useForm({
 Note that `matchesField` can only work with primitive values (arrays and objects cannot be compared).
 
 ```tsx
+import { matchesField, useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -65112,6 +73453,7 @@ const form = useForm({
 `isJSONString` checks whether form value is a valid JSON string.
 
 ```tsx
+import { isJSONString, useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -65130,6 +73472,7 @@ const form = useForm({
 `isNotEmptyHTML` checks that form value is not an empty HTML string. Empty string, string with only HTML tags and whitespace are considered to be empty.
 
 ```tsx
+import { isNotEmptyHTML, useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -65155,6 +73498,7 @@ Import: import { FormValues } from '@mantine/form';
 In most cases you should set `initialValues`:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -65169,6 +73513,54 @@ const form = useForm({
 
 With `form.setValues` you can set all form values, for example you can set values after you have received a response from the backend API:
 
+#### Example: setValues
+
+```tsx
+import { useForm } from '@mantine/form';
+import { TextInput, Button, Group } from '@mantine/core';
+import { randomId } from '@mantine/hooks';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      email: '',
+    },
+  });
+
+  return (
+    <div>
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="md"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+
+      <Group justify="center" mt="xl">
+        <Button
+          onClick={() =>
+            form.setValues({
+              name: randomId(),
+              email: `${randomId()}@test.com`,
+            })
+          }
+        >
+          Set random values
+        </Button>
+      </Group>
+    </div>
+  );
+}
+```
 
 
 ## setValues partial
@@ -65176,6 +73568,7 @@ With `form.setValues` you can set all form values, for example you can set value
 `form.setValues` can also be used to set multiple values at once, payload will be shallow merged with current values state:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 const form = useForm({
   mode: 'uncontrolled',
@@ -65194,11 +73587,65 @@ are ignored.
 
 `form.initialize` is useful when you want to sync form values with backend API response:
 
+#### Example: initialize
+
+```tsx
+import { Button, NumberInput, TextInput } from '@mantine/core';
+import { isInRange, isNotEmpty, useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  age: number | string;
+}
+
+function apiRequest(): Promise<FormValues> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ name: 'John Doe', age: 25 });
+    }, 1000);
+  });
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    mode: 'uncontrolled',
+    initialValues: { name: '', age: 0 },
+    validate: {
+      name: isNotEmpty('Name is required'),
+      age: isInRange({ min: 18 }, 'You must be at least 18 to register'),
+    },
+  });
+
+  return (
+    <>
+      <TextInput
+        {...form.getInputProps('name')}
+        key={form.key('name')}
+        label="Name"
+        placeholder="Name"
+      />
+      <NumberInput
+        {...form.getInputProps('age')}
+        key={form.key('age')}
+        label="Age"
+        placeholder="Age"
+        mt="md"
+      />
+      <Button onClick={() => apiRequest().then((values) => form.initialize(values))} mt="md">
+        Initialize form
+      </Button>
+    </>
+  );
+}
+```
 
 
 Example with [TanStack Query](https://tanstack.com/query/latest) (react-query):
 
 ```tsx
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useForm } from '@mantine/form';
 
 function Demo() {
   const query = useQuery({
@@ -65228,18 +73675,144 @@ It is usually a good idea to set `readOnly` or `disabled` on all form fields bef
 `form.initialize` is called to prevent data loss. You can implement this with
 [enhanceGetInputProps](https://mantine.dev/form/get-input-props/#enhancegetinputprops):
 
+#### Example: enhanceGetInputPropsForm
+
+```tsx
+import { NumberInput, TextInput, Button } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  age: number | string;
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    mode: 'uncontrolled',
+    initialValues: { name: '', age: '' },
+    enhanceGetInputProps: (payload) => {
+      if (!payload.form.initialized) {
+        return { disabled: true };
+      }
+
+      return {};
+    },
+  });
+
+  return (
+    <>
+      <TextInput
+        {...form.getInputProps('name')}
+        key={form.key('name')}
+        label="Your name"
+        placeholder="Your name"
+      />
+      <NumberInput
+        {...form.getInputProps('age')}
+        key={form.key('age')}
+        label="Age"
+        placeholder="Age"
+        mt="md"
+      />
+      <Button onClick={() => form.initialize({ name: 'John', age: 20 })} mt="md">
+        Initialize form
+      </Button>
+    </>
+  );
+}
+```
 
 
 ## setFieldValue handler
 
 `form.setFieldValue` handler allows to set value of the field at given path:
 
+#### Example: setFieldValue
+
+```tsx
+import { useForm } from '@mantine/form';
+import { TextInput, Button, Group } from '@mantine/core';
+import { randomId } from '@mantine/hooks';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      email: '',
+    },
+  });
+
+  return (
+    <div>
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="md"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+
+      <Group justify="center" mt="xl">
+        <Button onClick={() => form.setFieldValue('name', randomId())}>Random name</Button>
+        <Button onClick={() => form.setFieldValue('email', `${randomId()}@test.com`)}>
+          Random email
+        </Button>
+      </Group>
+    </div>
+  );
+}
+```
 
 
 ## reset handler
 
 `form.reset` handler sets values to `initialValues` and clear all errors:
 
+#### Example: reset
+
+```tsx
+import { useForm } from '@mantine/form';
+import { TextInput, Button, Group } from '@mantine/core';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      email: '',
+    },
+  });
+
+  return (
+    <div>
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="md"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+
+      <Group justify="center" mt="xl">
+        <Button onClick={() => form.reset()}>Reset to initial values</Button>
+      </Group>
+    </div>
+  );
+}
+```
 
 
 ## setInitialValues handler
@@ -65247,6 +73820,8 @@ It is usually a good idea to set `readOnly` or `disabled` on all form fields bef
 `form.setInitialValues` handler allows to update `initialValues` after form was initialized:
 
 ```tsx
+import { useEffect } from 'react';
+import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
@@ -65276,6 +73851,70 @@ function Demo() {
 Use `transformValues` to transform values before they get submitted in `onSubmit` handler.
 For example, it can be used to merge several fields into one or to convert types:
 
+#### Example: transformValues
+
+```tsx
+import { useState } from 'react';
+import { useForm } from '@mantine/form';
+import { TextInput, Button, Code } from '@mantine/core';
+
+function Demo() {
+  const [submittedValues, setSubmittedValues] = useState('');
+
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      firstName: 'Jane',
+      lastName: 'Doe',
+      age: '33',
+    },
+
+    transformValues: (values) => ({
+      fullName: `${values.firstName} ${values.lastName}`,
+      age: Number(values.age) || 0,
+    }),
+  });
+
+  return (
+    <>
+      <form
+        onSubmit={form.onSubmit((values) => setSubmittedValues(JSON.stringify(values, null, 2)))}
+      >
+        <TextInput
+          label="First name"
+          placeholder="First name"
+          key={form.key('firstName')}
+          {...form.getInputProps('firstName')}
+        />
+        <TextInput
+          label="Last name"
+          placeholder="Last name"
+          mt="md"
+          key={form.key('lastName')}
+          {...form.getInputProps('lastName')}
+        />
+        <TextInput
+          type="number"
+          label="Age"
+          placeholder="Age"
+          mt="md"
+          key={form.key('age')}
+          {...form.getInputProps('age')}
+        />
+        <Button type="submit" mt="md">
+          Submit
+        </Button>
+      </form>
+
+      {submittedValues && (
+        <Code block mt="md">
+          {submittedValues}
+        </Code>
+      )}
+    </>
+  );
+}
+```
 
 
 ## Get transformed values
@@ -65285,6 +73924,7 @@ It accepts `values` that need to be transformed as optional argument, if it is n
 the result of `form.getValues()` transformation will be returned instead:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
@@ -65312,6 +73952,43 @@ function Demo() {
 `onValuesChange` function is called every time form values change, use it
 instead of `useEffect` to subscribe to form values changes:
 
+#### Example: onValuesChange
+
+```tsx
+import { TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      email: '',
+    },
+    onValuesChange: (values) => {
+      console.log(values);
+    },
+  });
+
+  return (
+    <div>
+      <TextInput
+        label="Name"
+        placeholder="Name"
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <TextInput
+        mt="md"
+        label="Email"
+        placeholder="Email"
+        key={form.key('email')}
+        {...form.getInputProps('email')}
+      />
+    </div>
+  );
+}
+```
 
 
 ## form.watch
@@ -65320,6 +73997,33 @@ instead of `useEffect` to subscribe to form values changes:
 specific form field. It accepts field path and a callback function that is
 called with new value, previous value, touched and dirty field states:
 
+#### Example: watch
+
+```tsx
+import { TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      email: '',
+    },
+  });
+
+  form.watch('name', ({ previousValue, value, touched, dirty }) => {
+    console.log({ previousValue, value, touched, dirty });
+  });
+
+  return (
+    <div>
+      <TextInput label="Name" placeholder="Name" {...form.getInputProps('name')} />
+      <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+    </div>
+  );
+}
+```
 
 
 Note that `form.watch` uses `useEffect` under the hood – all hooks rules apply.
@@ -65348,11 +74052,58 @@ This allows for parent objects to be written to directly, while still having
 subscribers to nested keys updated. Additionally, writes to nested keys
 will bubble up triggering parent key subscriptions as well.
 
+#### Example: cascadeUpdates
+
+```tsx
+import { Button, Code, Stack, TextInput } from '@mantine/core';
+import { createFormContext } from '@mantine/form';
+import { useState } from 'react';
+
+const [Provider, usePersonFormContext, usePersonForm] = createFormContext<{ person: { name: string } }>();
+
+function Demo() {
+  const form = usePersonForm({
+    mode: 'uncontrolled',
+    cascadeUpdates: true,
+    initialValues: {
+      person: { name: "" }
+    }
+  })
+
+  return (
+    <Provider form={form}>
+      <Stack>
+        <TextInput
+          label="Name"
+          placeholder="Name"
+          key={form.key('person.name')}
+          {...form.getInputProps('person.name')}
+        />
+        <Button onClick={() => form.setFieldValue("person", { name: "Jane Doe" })}>Set 'person' object to `{'{ name: "Jane Doe" }'}`</Button>
+        <Watcher />
+      </Stack>
+    </Provider>
+  );
+}
+
+function Watcher() {
+  const form = usePersonFormContext();
+
+  const [person, setPerson] = useState<{ name: string }>();
+  const [name, setName] = useState<string>();
+
+  form.watch('person', ({ value }) => setPerson(value));
+  form.watch("person.name", ({ value }) => setName(value));
+
+  return <Code block>{JSON.stringify({ person, name }, null, 2)}</Code>
+}
+```
 
 
 ## Get values type
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({ initialValues: { name: '', age: 0 } });
@@ -65371,6 +74122,7 @@ To get transformed values (output of [transformValues](#transformvalues)) use `T
 It is useful when you want to create a custom submit function:
 
 ```tsx
+import { TransformedValues, useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
@@ -65402,6 +74154,7 @@ To avoid that, you can pass type to `useForm` hook, this approach is useful when
 types cannot be correctly inferred or when you want to provide more specific types:
 
 ```tsx
+import { useForm } from '@mantine/form';
 
 interface FormValues {
   name: string; // regular field, same as inferred type
