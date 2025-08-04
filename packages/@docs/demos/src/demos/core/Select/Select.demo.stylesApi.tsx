@@ -32,6 +32,7 @@ function Demo(props: any) {
       label="Select"
       description="Description"
       placeholder="Select"
+      comboboxProps={{ hideDetached: false }}
       data={[
         { group: 'Frontend', items: ['React', 'Angular'] },
         { group: 'Backend', items: ['Node', 'Django'] },

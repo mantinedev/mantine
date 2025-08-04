@@ -34,6 +34,7 @@ function Demo(props: any) {
       description="Description"
       placeholder="TagsInput"
       defaultValue={['First', 'Second']}
+      comboboxProps={{ hideDetached: false }}
       data={[
         { group: 'Frontend', items: ['React', 'Angular'] },
         { group: 'Backend', items: ['Node', 'Django'] },
