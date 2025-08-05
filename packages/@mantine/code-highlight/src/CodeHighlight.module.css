@@ -156,15 +156,24 @@
 .scrollarea {
   &[data-collapsed] {
     max-height: var(--ch-max-height, 180px);
+    overflow: hidden;
+    position: relative;
 
-    &::before {
+    &::after {
       content: '';
       position: absolute;
-      inset-inline: 0;
+      left: 0;
+      right: 0;
       bottom: 0;
       height: 80px;
       pointer-events: none;
-      background-image: linear-gradient(0deg, var(--ch-background) 25%, rgba(0, 0, 0, 0) 100%);
+      background: linear-gradient(
+        0deg,
+        var(--ch-background) 0%,
+        var(--ch-background) 25%,
+        transparent 100%
+      );
+      z-index: 1;
     }
   }
 }

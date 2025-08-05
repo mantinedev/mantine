@@ -1,6 +1,6 @@
 {
   "name": "mantine-a91763c0e2",
-  "version": "8.2.2",
+  "version": "8.2.3",
   "description": "Mantine Components Monorepo",
   "packageManager": "yarn@4.9.2",
   "license": "MIT",
@@ -55,6 +55,7 @@
     "test:validate-package-json": "tsx scripts/tests/validate-package-json",
     "test:validate-packages-files": "tsx scripts/tests/validate-packages-files",
     "jest": "jest",
+    "jest:update": "jest --updateSnapshot",
     "typecheck": "tsc --noEmit && cd apps/mantine.dev && npm run typecheck && cd ../help.mantine.dev && npm run typecheck",
     "lint": "npm run eslint && npm run stylelint",
     "eslint": "eslint packages apps/mantine.dev/src apps/help.mantine.dev/src scripts --cache",

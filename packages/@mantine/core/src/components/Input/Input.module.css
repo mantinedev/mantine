@@ -65,7 +65,6 @@
 
     --input-size: auto;
     --input-line-height: var(--mantine-line-height);
-    --input-padding-y: var(--input-padding-y-sm);
   }
 
   &[data-with-left-section] {
