@@ -52,7 +52,6 @@
 }
 
 .main {
-  max-width: var(--docs-mdx-content-width);
   padding-inline: var(--docs-inline-spacing);
   width: 100%;
 
@@ -69,7 +68,6 @@
 .tabContent {
   margin-top: 39px;
   width: 100%;
-  max-width: var(--docs-full-mdx-content-width);
   padding-inline-start: var(--docs-inline-spacing);
   display: flex;
   flex-direction: column;
