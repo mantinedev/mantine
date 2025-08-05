@@ -203,17 +203,19 @@ export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
       ]}
       {...others}
     >
-      <Transition mounted={!!loading} transition={loaderTransition} duration={150}>
-        {(transitionStyles) => (
-          <Box component="span" {...getStyles('loader', { style: transitionStyles })} aria-hidden>
-            <Loader
-              color="var(--button-color)"
-              size="calc(var(--button-height) / 1.8)"
-              {...loaderProps}
-            />
-          </Box>
-        )}
-      </Transition>
+      {typeof loading === 'boolean' && (
+        <Transition mounted={loading} transition={loaderTransition} duration={150}>
+          {(transitionStyles) => (
+            <Box component="span" {...getStyles('loader', { style: transitionStyles })} aria-hidden>
+              <Loader
+                color="var(--button-color)"
+                size="calc(var(--button-height) / 1.8)"
+                {...loaderProps}
+              />
+            </Box>
+          )}
+        </Transition>
+      )}
 
       <span {...getStyles('inner')}>
         {leftSection && (
