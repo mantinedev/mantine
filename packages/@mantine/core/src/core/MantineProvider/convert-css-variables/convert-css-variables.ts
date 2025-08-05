@@ -30,5 +30,5 @@ export function convertCssVariables(input: ConvertCSSVariablesInput, selector: s
       : wrapWithSelector(`${selector}[data-mantine-color-scheme="light"]`, light)
     : '';
 
-  return `${shared}${darkForced}${lightForced}`;
+  return `${shared}\n\n${darkForced}\n\n${lightForced}`;
 }
