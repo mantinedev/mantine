@@ -1,5 +1,5 @@
-import * as Recharts from 'recharts';
-
 export function isRechartsV3() {
-  return typeof (Recharts as any).useActiveTooltipLabel === 'function';
+  // Lazy require so Jest can mock it
+  const Recharts = require('recharts');
+  return typeof Recharts.useActiveTooltipLabel === 'function';
 }
