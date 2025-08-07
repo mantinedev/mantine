@@ -119,6 +119,7 @@ const defaultProps = {
   acceptValueOnBlur: true,
   splitChars: [','],
   hiddenInputValuesDivider: ',',
+  size: 'sm',
 } satisfies Partial<TagsInputProps>;
 
 export const TagsInput = factory<TagsInputFactory>((_props, ref) => {

@@ -9,7 +9,7 @@ function Demo() {
     <Box
       bd="1px solid var(--mantine-color-dimmed)"
       p="xl"
-      w={400}
+      w={{ base: 340, sm: 400 }}
       h={200}
       style={{ overflow: 'auto' }}
     >
@@ -42,7 +42,7 @@ function Demo() {
     <Box
       bd="1px solid var(--mantine-color-dimmed)"
       p="xl"
-      w={400}
+      w={{ base: 340, sm: 400 }}
       h={200}
       style={{ overflow: 'auto', colorScheme }}
     >

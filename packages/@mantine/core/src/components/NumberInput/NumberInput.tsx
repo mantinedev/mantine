@@ -202,7 +202,7 @@ function clampAndSanitizeInput(sanitizedValue: string | number, max?: number, mi
   if (Number.isNaN(parsedValue)) {
     return replaced;
   } else if (parsedValue > Number.MAX_SAFE_INTEGER) {
-    return max !== undefined ? String(max) : replaced;
+    return max !== undefined ? max : replaced;
   }
   return clamp(parsedValue, min, max);
 }

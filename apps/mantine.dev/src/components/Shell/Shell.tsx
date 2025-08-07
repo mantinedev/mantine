@@ -43,13 +43,17 @@ export function Shell({
     >
       <div>
         <DocsHeader headerControlsProps={headerControlsProps} withNav={withNav} />
-        <Container size={1440} fluid={fluid} px={fluid ? 0 : undefined}>
-          <div className={classes.inner}>
-            {withMobileNavbar && mobileNavbarOpened && <DocsMobileNavbar />}
-            {withNavbar && <DocsNavbar />}
-            <main className={classes.content}>{children}</main>
-          </div>
-        </Container>
+        {withNavbar ? (
+          <Container size={1440} fluid={fluid} px={fluid ? 0 : undefined}>
+            <div className={classes.inner}>
+              {withMobileNavbar && mobileNavbarOpened && <DocsMobileNavbar />}
+              <DocsNavbar />
+              <main className={classes.content}>{children}</main>
+            </div>
+          </Container>
+        ) : (
+          children
+        )}
       </div>
     </ShellProvider>
   );
