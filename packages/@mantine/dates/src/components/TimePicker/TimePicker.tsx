@@ -35,7 +35,9 @@ import {
 } from './TimePicker.types';
 import { TimePresets } from './TimePresets/TimePresets';
 import { useTimePicker } from './use-time-picker';
+import { clampTime } from './utils/clamp-time/clamp-time';
 import { getParsedTime } from './utils/get-parsed-time/get-parsed-time';
+import { getTimeString } from './utils/get-time-string/get-time-string';
 import classes from './TimePicker.module.css';
 
 export type TimePickerStylesNames =
@@ -312,6 +314,21 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
 
   const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
+      const computedValue = controller.values;
+      const timeString = getTimeString({
+        ...computedValue,
+        format,
+        amPmLabels,
+        withSeconds: !!withSeconds,
+      });
+
+      if (timeString.valid && min && max) {
+        const clamped = clampTime(timeString.value, min, max);
+
+        if (clamped.timeString !== timeString.value) {
+          controller.setTimeString(clamped.timeString);
+        }
+      }
       hasFocusRef.current = false;
       onBlur?.(event);
     }
@@ -388,6 +405,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                   onNextInput={() => controller.focus('minutes')}
                   min={format === '12h' ? 1 : 0}
                   max={format === '12h' ? 12 : 23}
+                  allowTemporaryZero={format === '12h'}
                   focusable
                   step={hoursStep}
                   ref={_hoursRef}
@@ -398,6 +416,15 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                   onFocus={(event) => {
                     handleFocus(event);
                     hoursInputProps?.onFocus?.(event);
+                  }}
+                  onBlur={(event) => {
+                    const actualInputValue = event.currentTarget.value;
+                    const numericValue = actualInputValue ? parseInt(actualInputValue, 10) : null;
+
+                    if (format === '12h' && numericValue === 0) {
+                      controller.setHours(12);
+                    }
+                    hoursInputProps?.onBlur?.(event);
                   }}
                 />
                 <span>:</span>

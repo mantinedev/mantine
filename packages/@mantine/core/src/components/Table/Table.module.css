@@ -68,6 +68,10 @@
 .th {
   padding: var(--table-vertical-spacing) var(--table-horizontal-spacing, var(--mantine-spacing-xs));
 
+  &:where([data-with-column-border]:not(:first-child)) {
+    border-inline-start: rem(1px) solid var(--table-border-color);
+  }
+
   &:where([data-with-column-border]:not(:last-child)) {
     border-inline-end: rem(1px) solid var(--table-border-color);
   }

@@ -97,7 +97,7 @@ function Demo() {
 
   return (
     <Table>
-      <Table.Thead>
+      <Table.Thead visibleFrom="sm">
         <Table.Tr>
           <Table.Th />
           <Table.Th>Element position</Table.Th>
