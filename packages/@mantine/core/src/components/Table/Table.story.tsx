@@ -44,7 +44,7 @@ export function Usage() {
 export function StickyHeader() {
   return (
     <div style={{ padding: 40 }}>
-      <Table stickyHeader>
+      <Table stickyHeader withTableBorder stickyHeaderOffset={10}>
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Element position</Table.Th>

@@ -124,10 +124,10 @@
   display: block;
   position: absolute;
   left: 0;
-  top: 0;
+  top: -0.5px;
   width: 100%;
   height: 1px;
-  background: var(--table-border-color);
+  background-color: var(--table-border-color);
   z-index: 5;
 }
 
