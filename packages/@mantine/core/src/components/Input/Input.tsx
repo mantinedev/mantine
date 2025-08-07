@@ -163,6 +163,7 @@ const defaultProps = {
   rightSectionPointerEvents: 'none',
   withAria: true,
   withErrorStyles: true,
+  size: 'sm',
 } satisfies Partial<InputProps>;
 
 const varsResolver = createVarsResolver<InputFactory>((_, props, ctx) => ({
