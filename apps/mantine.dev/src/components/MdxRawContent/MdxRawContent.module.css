@@ -5,13 +5,34 @@
   justify-content: space-between;
   background-color: var(--mantine-color-body);
   width: 100%;
+  flex: 1;
+
+  @mixin smaller-than 1450px {
+    width: 100%;
+    flex: 0 0 calc(100% - var(--docs-table-of-contents-width) - var(--docs-navbar-width));
+  }
+
+  @mixin smaller-than 550px {
+    max-width: 100%;
+  }
 }
 
 .container {
   padding-inline: var(--docs-inline-spacing);
   padding-block: var(--mantine-spacing-xl);
-  max-width: var(--docs-mdx-content-width);
-  width: 100%;
+  max-width: 994px;
+
+  @mixin smaller-than 1750px {
+    max-width: 914px;
+  }
+
+  @mixin smaller-than 1450px {
+    max-width: calc(100vw - var(--docs-table-of-contents-width) - var(--docs-navbar-width) - 48px);
+  }
+
+  @media (hover: none) and (max-width: 750px) {
+    max-width: calc(100vw - var(--docs-table-of-contents-width) - var(--docs-navbar-width) - 28px);
+  }
 
   @mixin smaller-than $docs-toc-breakpoint {
     padding-inline-end: 0;

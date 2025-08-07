@@ -4,8 +4,4 @@
 
 .content {
   flex: 1;
-
-  @mixin smaller-than 1480px {
-    max-width: calc(100% - var(--docs-navbar-width) - var(--docs-table-of-contents-width));
-  }
 }
