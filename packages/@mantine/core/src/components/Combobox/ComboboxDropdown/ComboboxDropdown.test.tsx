@@ -6,7 +6,10 @@ import {
   ComboboxDropdownStylesNames,
 } from './ComboboxDropdown';
 
-const TestContainer = createContextContainer(ComboboxDropdown, Combobox, { withinPortal: false });
+const TestContainer = createContextContainer(ComboboxDropdown, Combobox, {
+  withinPortal: false,
+  keepMounted: true,
+});
 
 const defaultProps: ComboboxDropdownProps = {};
 

@@ -39,10 +39,6 @@ export interface CalendarAriaLabels {
 
   nextDecade?: string;
   previousDecade?: string;
-
-  keyboardNavigationYear?: string;
-  keyboardNavigationDecade?: string;
-  keyboardOpenYearView?: string;
 }
 
 type OmittedSettings =

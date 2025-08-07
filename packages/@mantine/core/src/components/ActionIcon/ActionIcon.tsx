@@ -163,13 +163,15 @@ export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) =>
       ref={ref}
       mod={[{ loading, disabled: disabled || dataDisabled }, mod]}
     >
-      <Transition mounted={!!loading} transition="slide-down" duration={150}>
-        {(transitionStyles) => (
-          <Box component="span" {...getStyles('loader', { style: transitionStyles })} aria-hidden>
-            <Loader color="var(--ai-color)" size="calc(var(--ai-size) * 0.55)" {...loaderProps} />
-          </Box>
-        )}
-      </Transition>
+      {typeof loading === 'boolean' && (
+        <Transition mounted={loading} transition="slide-down" duration={150}>
+          {(transitionStyles) => (
+            <Box component="span" {...getStyles('loader', { style: transitionStyles })} aria-hidden>
+              <Loader color="var(--ai-color)" size="calc(var(--ai-size) * 0.55)" {...loaderProps} />
+            </Box>
+          )}
+        </Transition>
+      )}
 
       <Box component="span" mod={{ loading }} {...getStyles('icon')}>
         {children}

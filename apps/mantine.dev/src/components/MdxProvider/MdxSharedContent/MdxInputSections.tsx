@@ -21,21 +21,21 @@ export function MdxInputSections({ component }: MdxInputSectionsProps) {
       </MdxParagraph>
       <MdxUl>
         <MdxLi>
-          <MdxCode>rightSection</MdxCode>/<MdxCode>leftSection</MdxCode> – React node to render on
+          <MdxCode>rightSection</MdxCode> / <MdxCode>leftSection</MdxCode> – React node to render on
           the corresponding side of input
         </MdxLi>
 
         <MdxLi>
-          <MdxCode>rightSectionWidth</MdxCode>/<MdxCode>leftSectionWidth</MdxCode> – controls width
-          of the right section and padding on the corresponding side of the input. By default, it is
-          controlled by component <MdxCode>size</MdxCode> prop.
+          <MdxCode>rightSectionWidth</MdxCode> / <MdxCode>leftSectionWidth</MdxCode> – controls
+          width of the right section and padding on the corresponding side of the input. By default,
+          it is controlled by component <MdxCode>size</MdxCode> prop.
         </MdxLi>
 
         <MdxLi>
-          <MdxCode>rightSectionPointerEvents</MdxCode>/<MdxCode>leftSectionPointerEvents</MdxCode> –
-          controls <MdxCode>pointer-events</MdxCode> property of the section. If you want to render
-          a non-interactive element, set it to <MdxCode>none</MdxCode> to pass clicks through to the
-          input.
+          <MdxCode>rightSectionPointerEvents</MdxCode> / <MdxCode>leftSectionPointerEvents</MdxCode>{' '}
+          – controls <MdxCode>pointer-events</MdxCode> property of the section. If you want to
+          render a non-interactive element, set it to <MdxCode>none</MdxCode> to pass clicks through
+          to the input.
         </MdxLi>
       </MdxUl>
     </>
