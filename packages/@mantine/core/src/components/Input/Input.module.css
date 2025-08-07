@@ -212,7 +212,7 @@
     color: var(--input-disabled-color);
   }
 
-  &:read-only {
+  &[readonly] {
     caret-color: transparent;
   }
 }
