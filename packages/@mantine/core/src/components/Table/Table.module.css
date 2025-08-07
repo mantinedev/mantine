@@ -112,8 +112,27 @@
   }
 }
 
-:where([data-with-table-border]) .thead[data-sticky] .th {
-  top: initial;
+:where([data-with-table-border]) .thead[data-sticky] {
+  position: sticky;
+  top: var(--table-sticky-header-offset, 0);
+  z-index: 4;
+  border-top: none;
+}
+
+:where([data-with-table-border]) .thead[data-sticky]::before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: -0.5px;
+  width: 100%;
+  height: 1px;
+  background-color: var(--table-border-color);
+  z-index: 5;
+}
+
+:where([data-with-table-border]) .thead[data-sticky] .th:first-child {
+  border-top: none;
 }
 
 .caption {
