@@ -101,7 +101,7 @@ function Demo() {
     <Box
       bd="1px solid var(--mantine-color-dimmed)"
       p="xl"
-      w={400}
+      w={{ base: 340, sm: 400 }}
       h={200}
       style={{ overflow: 'auto' }}
     >
@@ -125,7 +125,7 @@ function Demo() {
     </Box>
   );
 }
-`,centered:!0,component:function(){let e=(0,r.l)();return(0,i.jsx)(o.a,{bd:"1px solid var(--mantine-color-dimmed)",p:"xl",w:400,h:200,style:{overflow:"auto",colorScheme:e},children:(0,i.jsx)(o.a,{w:1e3,h:400,children:(0,i.jsxs)(s.Y,{children:[(0,i.jsxs)(a.A,{width:"target",position:"bottom",opened:!0,children:[(0,i.jsx)(a.A.Target,{children:(0,i.jsx)(d.$,{children:"Toggle popover"})}),(0,i.jsx)(a.A.Dropdown,{children:"This popover dropdown is hidden when detached"})]}),(0,i.jsxs)(a.A,{width:"target",position:"bottom",opened:!0,hideDetached:!1,children:[(0,i.jsx)(a.A.Target,{children:(0,i.jsx)(d.$,{children:"Toggle popover"})}),(0,i.jsx)(a.A.Dropdown,{children:"This popover dropdown is visible when detached"})]})]})})})}}},94667:(e,n,t)=>{"use strict";t.d(n,{c:()=>o});var i=t(31085),r=t(26975);let o={type:"configurator",component:e=>(0,i.jsx)(r.d,{defaultChecked:!0,...e}),code:`
+`,centered:!0,component:function(){let e=(0,r.l)();return(0,i.jsx)(o.a,{bd:"1px solid var(--mantine-color-dimmed)",p:"xl",w:{base:340,sm:400},h:200,style:{overflow:"auto",colorScheme:e},children:(0,i.jsx)(o.a,{w:1e3,h:400,children:(0,i.jsxs)(s.Y,{children:[(0,i.jsxs)(a.A,{width:"target",position:"bottom",opened:!0,children:[(0,i.jsx)(a.A.Target,{children:(0,i.jsx)(d.$,{children:"Toggle popover"})}),(0,i.jsx)(a.A.Dropdown,{children:"This popover dropdown is hidden when detached"})]}),(0,i.jsxs)(a.A,{width:"target",position:"bottom",opened:!0,hideDetached:!1,children:[(0,i.jsx)(a.A.Target,{children:(0,i.jsx)(d.$,{children:"Toggle popover"})}),(0,i.jsx)(a.A.Dropdown,{children:"This popover dropdown is visible when detached"})]})]})})})}}},94667:(e,n,t)=>{"use strict";t.d(n,{c:()=>o});var i=t(31085),r=t(26975);let o={type:"configurator",component:e=>(0,i.jsx)(r.d,{defaultChecked:!0,...e}),code:`
 import { Switch } from '@mantine/core';
 
 

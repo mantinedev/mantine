@@ -6,7 +6,7 @@ function Demo() {
     <Box
       bd="1px solid var(--mantine-color-dimmed)"
       p="xl"
-      w={400}
+      w={{ base: 340, sm: 400 }}
       h={200}
       style={{ overflow: 'auto' }}
     >
@@ -30,4 +30,4 @@ function Demo() {
     </Box>
   );
 }
-`,centered:!0,component:function(){let e=(0,s.l)();return(0,o.jsx)(r.a,{bd:"1px solid var(--mantine-color-dimmed)",p:"xl",w:400,h:200,style:{overflow:"auto",colorScheme:e},children:(0,o.jsx)(r.a,{w:1e3,h:400,children:(0,o.jsxs)(i.Y,{children:[(0,o.jsxs)(a.A,{width:"target",position:"bottom",opened:!0,children:[(0,o.jsx)(a.A.Target,{children:(0,o.jsx)(l.$,{children:"Toggle popover"})}),(0,o.jsx)(a.A.Dropdown,{children:"This popover dropdown is hidden when detached"})]}),(0,o.jsxs)(a.A,{width:"target",position:"bottom",opened:!0,hideDetached:!1,children:[(0,o.jsx)(a.A.Target,{children:(0,o.jsx)(l.$,{children:"Toggle popover"})}),(0,o.jsx)(a.A.Dropdown,{children:"This popover dropdown is visible when detached"})]})]})})})}}}},e=>{var n=n=>e(e.s=n);e.O(0,[18675,90636,46593,38792],()=>n(44061)),_N_E=e.O()}]);
+`,centered:!0,component:function(){let e=(0,s.l)();return(0,o.jsx)(r.a,{bd:"1px solid var(--mantine-color-dimmed)",p:"xl",w:{base:340,sm:400},h:200,style:{overflow:"auto",colorScheme:e},children:(0,o.jsx)(r.a,{w:1e3,h:400,children:(0,o.jsxs)(i.Y,{children:[(0,o.jsxs)(a.A,{width:"target",position:"bottom",opened:!0,children:[(0,o.jsx)(a.A.Target,{children:(0,o.jsx)(l.$,{children:"Toggle popover"})}),(0,o.jsx)(a.A.Dropdown,{children:"This popover dropdown is hidden when detached"})]}),(0,o.jsxs)(a.A,{width:"target",position:"bottom",opened:!0,hideDetached:!1,children:[(0,o.jsx)(a.A.Target,{children:(0,o.jsx)(l.$,{children:"Toggle popover"})}),(0,o.jsx)(a.A.Dropdown,{children:"This popover dropdown is visible when detached"})]})]})})})}}}},e=>{var n=n=>e(e.s=n);e.O(0,[18675,90636,46593,38792],()=>n(44061)),_N_E=e.O()}]);
