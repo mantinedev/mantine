@@ -18,8 +18,11 @@ export function ControlledClear() {
 
   return (
     <div style={{ padding: 40 }}>
-      <TimePicker label="Enter time" withSeconds value={value} onChange={setValue} format="12h" />
+      <TimePicker label="Enter time" value={value} onChange={setValue} format="12h" />
+      {value}
       <button onClick={() => setValue('')}>Clear</button>
+      <button onClick={() => setValue('12:00')}>Set 12:00</button>
+      <button onClick={() => setValue('18:00')}>Set 18:00</button>
     </div>
   );
 }
