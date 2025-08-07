@@ -11,10 +11,10 @@ export interface ConfirmModalProps {
   closeOnCancel?: boolean;
   cancelProps?: ButtonProps &
     React.ComponentPropsWithoutRef<'button'> &
-    Record<`data-${string}`, string>;
+    Record<`data-${string}`, any>;
   confirmProps?: ButtonProps &
     React.ComponentPropsWithoutRef<'button'> &
-    Record<`data-${string}`, string>;
+    Record<`data-${string}`, any>;
   groupProps?: GroupProps;
   labels?: ConfirmLabels;
 }
