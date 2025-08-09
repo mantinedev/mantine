@@ -3,6 +3,10 @@
 
   position: relative;
   overflow: hidden;
+
+  &:where([data-autosize]) .content {
+    width: min-content;
+  }
 }
 
 .viewport {

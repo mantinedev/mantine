@@ -128,6 +128,30 @@ export function OverflowIssue() {
   );
 }
 
+export function AutoOverflowIssue() {
+  const [width, setWidth] = useState(150);
+  const [height, setHeight] = useState(150);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Box w={200}>
+        <ScrollArea.Autosize offsetScrollbars type="auto" mah={200} maw={170}>
+          <button onClick={() => setWidth((prev) => (prev === 150 ? 300 : 150))} style={{ width }}>
+            Horizontal
+          </button>
+
+          <button
+            onClick={() => setHeight((prev) => (prev === 150 ? 300 : 150))}
+            style={{ height }}
+          >
+            Vertical
+          </button>
+        </ScrollArea.Autosize>
+      </Box>
+    </div>
+  );
+}
+
 export function OnBottomReached() {
   const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 });
   const [hasReachedBottom, setHasReachedBottom] = useState(false);

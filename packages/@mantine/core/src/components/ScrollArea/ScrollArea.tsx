@@ -331,7 +331,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
 
   return (
     <Box {...others} ref={ref} style={[{ display: 'flex', overflow: 'auto' }, style]}>
-      <Box style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+      <Box style={{ display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden' }}>
         <ScrollArea
           classNames={classNames}
           styles={styles}
@@ -349,6 +349,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
           scrollbars={scrollbars}
           onBottomReached={onBottomReached}
           onTopReached={onTopReached}
+          data-autosize="true"
         >
           {children}
         </ScrollArea>
