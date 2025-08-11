@@ -1,9 +1,12 @@
 import { createRef, useEffect, useState } from 'react';
 import { Box } from '../../core';
+import { Button } from '../Button';
 import { Code } from '../Code';
+import { InputBase } from '../InputBase';
 import { MultiSelect } from '../MultiSelect';
 import { NumberInput } from '../NumberInput';
 import { Paper } from '../Paper';
+import { Pill, PillGroup } from '../Pill';
 import { Stack } from '../Stack';
 import { ScrollArea } from './ScrollArea';
 
@@ -184,6 +187,41 @@ export function OnBottomReached() {
       <div>
         Custom Has Reached Bottom: <Code>{`{ ${customReachedBottom} }`}</Code>
       </div>
+    </Stack>
+  );
+}
+
+export function PillGroupIssue() {
+  const [pills, setPills] = useState<string[]>([]);
+
+  const handleAdd = () => {
+    const index = pills.length + 1;
+    setPills((prev) => [...prev, 'Pill '.repeat(index).trim()]);
+  };
+
+  const handleClear = () => {
+    setPills([]);
+  };
+
+  const handleRemove = (id: string) => {
+    setPills((prev) => prev.filter((item) => item !== id));
+  };
+
+  return (
+    <Stack p="md" w={250}>
+      <Button onClick={handleAdd}>Add Pill</Button>
+      <Button onClick={handleClear}>Clear</Button>
+      <InputBase component="div" multiline>
+        <ScrollArea.Autosize mah={120} scrollbars="y" type="always">
+          <PillGroup>
+            {pills.map((datumId) => (
+              <Pill key={datumId} withRemoveButton onRemove={() => handleRemove(datumId)}>
+                {datumId}
+              </Pill>
+            ))}
+          </PillGroup>
+        </ScrollArea.Autosize>
+      </InputBase>
     </Stack>
   );
 }
