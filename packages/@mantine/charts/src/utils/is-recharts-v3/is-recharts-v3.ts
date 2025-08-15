@@ -1,5 +1,6 @@
-import * as Recharts from 'recharts';
-
 export function isRechartsV3() {
-  return typeof (Recharts as any).useActiveTooltipLabel === 'function';
+  // Lazy require so Jest can mock it
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const Recharts = require('recharts');
+  return typeof Recharts.useActiveTooltipLabel === 'function';
 }
