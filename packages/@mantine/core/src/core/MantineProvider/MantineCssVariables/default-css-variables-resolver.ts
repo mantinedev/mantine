@@ -26,9 +26,13 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
 
   const result: ConvertCSSVariablesInput = {
     variables: {
+      '--mantine-z-index-app': '100',
+      '--mantine-z-index-modal': '200',
+      '--mantine-z-index-popover': '300',
+      '--mantine-z-index-overlay': '400',
+      '--mantine-z-index-max': '9999',
       '--mantine-scale': theme.scale.toString(),
       '--mantine-cursor-type': theme.cursorType,
-      '--mantine-color-scheme': 'light dark',
       '--mantine-webkit-font-smoothing': theme.fontSmoothing ? 'antialiased' : 'unset',
       '--mantine-moz-font-smoothing': theme.fontSmoothing ? 'grayscale' : 'unset',
       '--mantine-color-white': theme.white,
@@ -49,6 +53,7 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-primary-color-light-color': `var(--mantine-color-${theme.primaryColor}-light-color)`,
     },
     light: {
+      '--mantine-color-scheme': 'light',
       '--mantine-primary-color-contrast': getPrimaryContrastColor(theme, 'light'),
       '--mantine-color-bright': 'var(--mantine-color-black)',
       '--mantine-color-text': theme.black,
@@ -66,6 +71,7 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-disabled-border': 'var(--mantine-color-gray-3)',
     },
     dark: {
+      '--mantine-color-scheme': 'dark',
       '--mantine-primary-color-contrast': getPrimaryContrastColor(theme, 'dark'),
       '--mantine-color-bright': 'var(--mantine-color-white)',
       '--mantine-color-text': 'var(--mantine-color-dark-0)',

@@ -37,6 +37,7 @@
 .tooltipItem {
   font-size: var(--mantine-font-size-sm);
   display: flex;
+  align-items: center;
   justify-content: space-between;
 
   &:where(& + &) {

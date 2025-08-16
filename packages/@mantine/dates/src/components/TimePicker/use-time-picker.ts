@@ -100,8 +100,7 @@ export function useTimePicker({
         setAmPm(val);
       }
 
-      const clamped = clampTime(timeString.value, min || '00:00:00', max || '23:59:59');
-      onChange?.(clamped.timeString);
+      onChange?.(timeString.value);
     } else {
       acceptChange.current = false;
       if (typeof value === 'string' && value !== '') {
@@ -123,8 +122,13 @@ export function useTimePicker({
   };
 
   const onHoursChange = (value: number | null) => {
-    setHours(value);
-    handleTimeChange('hours', value);
+    let adjustedValue = value;
+    if (format === '12h' && typeof value === 'number' && value > 12) {
+      adjustedValue = ((value - 1) % 12) + 1;
+    }
+
+    setHours(adjustedValue);
+    handleTimeChange('hours', adjustedValue);
     focus('hours');
   };
 
@@ -189,6 +193,7 @@ export function useTimePicker({
       setMinutes(null);
       setSeconds(null);
       setAmPm(null);
+      acceptChange.current = true;
       return;
     }
 

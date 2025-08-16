@@ -65,7 +65,6 @@
 
     --input-size: auto;
     --input-line-height: var(--mantine-line-height);
-    --input-padding-y: var(--input-padding-y-sm);
   }
 
   &[data-with-left-section] {
@@ -213,7 +212,7 @@
     color: var(--input-disabled-color);
   }
 
-  &:read-only {
+  &[readonly] {
     caret-color: transparent;
   }
 }

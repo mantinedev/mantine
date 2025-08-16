@@ -8,7 +8,7 @@
   font-size: var(--mantine-font-size-lg);
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-lg);
   color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-1));
-  font-family: var(--docs-font-family);
+  font-family: var(--docs-font-primary);
   transition:
     color 100ms ease,
     background-color 100ms ease;

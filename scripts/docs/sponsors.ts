@@ -22,13 +22,34 @@ async function fetchSponsors() {
 
   const sponsors = data
     .filter((item: any) => item.role === 'BACKER' && item.tier === 'sponsor')
-    .map((sponsor: any) => ({
-      name: sponsor.name,
-      image: sponsor.image,
-      url: sponsor.website || sponsor.profile,
-      monthlyDonation: sponsor.monthlyDonation / 100,
-      totalDonations: sponsor.totalAmountDonated / 100,
-    }))
+    .reduce((unique: Sponsor[], item: any) => {
+      const sponsor: Sponsor = {
+        name: item.name,
+        image: item.image,
+        url: item.website || item.profile,
+        monthlyDonation: item.monthlyDonation / 100,
+        totalDonations: item.totalAmountDonated / 100,
+      };
+
+      // Only add sponsor if name doesn't already exist or if it has an image when existing doesn't
+      const existingIndex = unique.findIndex((s) => s.name === sponsor.name);
+      if (existingIndex === -1) {
+        unique.push(sponsor);
+      } else {
+        const existing = unique[existingIndex];
+        // Prefer sponsor with image, or if both have images/no images, prefer higher monthly donation
+        const shouldReplace =
+          (sponsor.image && !existing.image) ||
+          (!!sponsor.image === !!existing.image &&
+            sponsor.monthlyDonation > existing.monthlyDonation);
+
+        if (shouldReplace) {
+          unique[existingIndex] = sponsor;
+        }
+      }
+
+      return unique;
+    }, [])
     .sort((a: Sponsor, b: Sponsor) => b.monthlyDonation - a.monthlyDonation);
 
   await fs.ensureDir(docgenPath);

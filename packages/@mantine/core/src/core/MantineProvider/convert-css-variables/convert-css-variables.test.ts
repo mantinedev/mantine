@@ -26,6 +26,6 @@ describe('@mantine/core/convert-css-variables', () => {
         },
         '.mantine-test'
       )
-    ).toBe(result.join(''));
+    ).toBe(result.join('\n\n'));
   });
 });

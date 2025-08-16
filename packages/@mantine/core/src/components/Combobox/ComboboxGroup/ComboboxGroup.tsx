@@ -1,3 +1,4 @@
+import { useId } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -28,21 +29,28 @@ export type ComboboxGroupFactory = Factory<{
 }>;
 
 export const ComboboxGroup = factory<ComboboxGroupFactory>((props, ref) => {
-  const { classNames, className, style, styles, vars, children, label, ...others } = useProps(
+  const { classNames, className, style, styles, vars, children, label, id, ...others } = useProps(
     'ComboboxGroup',
     null,
     props
   );
 
   const ctx = useComboboxContext();
+  const _id = useId(id);
 
   return (
     <Box
       ref={ref}
+      role="group"
+      aria-labelledby={label ? _id : undefined}
       {...ctx.getStyles('group', { className, classNames, style, styles })}
       {...others}
     >
-      {label && <div {...ctx.getStyles('groupLabel', { classNames, styles })}>{label}</div>}
+      {label && (
+        <div id={_id} {...ctx.getStyles('groupLabel', { classNames, styles })}>
+          {label}
+        </div>
+      )}
       {children}
     </Box>
   );

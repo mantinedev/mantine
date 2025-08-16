@@ -22,7 +22,7 @@ export interface UseListStateHandlers<T> {
 
 export type UseListStateReturnValue<T> = [T[], UseListStateHandlers<T>];
 
-export function useListState<T>(initialValue: T[] = []): UseListStateReturnValue<T> {
+export function useListState<T>(initialValue: T[] | (() => T[]) = []): UseListStateReturnValue<T> {
   const [state, setState] = useState(initialValue);
 
   const append = (...items: T[]) => setState((current) => [...current, ...items]);

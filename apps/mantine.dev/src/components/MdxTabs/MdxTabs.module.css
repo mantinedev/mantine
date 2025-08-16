@@ -52,9 +52,17 @@
 }
 
 .main {
-  max-width: var(--docs-mdx-content-width);
   padding-inline: var(--docs-inline-spacing);
   width: 100%;
+  max-width: 994px;
+
+  @mixin smaller-than 1750px {
+    max-width: 914px;
+  }
+
+  @mixin smaller-than 1450px {
+    max-width: calc(100vw - var(--docs-table-of-contents-width) - var(--docs-navbar-width) - 48px);
+  }
 
   @mixin smaller-than $docs-toc-breakpoint {
     padding-inline-end: 0;
@@ -69,11 +77,19 @@
 .tabContent {
   margin-top: 39px;
   width: 100%;
-  max-width: var(--docs-full-mdx-content-width);
   padding-inline-start: var(--docs-inline-spacing);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  max-width: 100%;
+
+  @mixin smaller-than 1450px {
+    max-width: calc(100vw - var(--docs-navbar-width) - 48px);
+  }
+
+  @media (hover: none) and (max-width: 750px) {
+    max-width: calc(100vw - var(--docs-navbar-width) - 33px);
+  }
 }
 
 .contentWrapper {

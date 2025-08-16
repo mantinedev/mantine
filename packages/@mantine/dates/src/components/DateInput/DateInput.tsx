@@ -130,6 +130,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     onDateChange,
     getMonthControlProps,
     getYearControlProps,
+    disabled,
     ...rest
   } = props;
 
@@ -232,7 +233,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
 
   const _rightSection =
     rightSection ||
-    (clearable && _value && !readOnly ? (
+    (clearable && _value && !readOnly && !disabled ? (
       <CloseButton
         variant="transparent"
         onMouseDown={(event) => event.preventDefault()}
@@ -264,7 +265,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
           opened={dropdownOpened}
           trapFocus={false}
           position="bottom-start"
-          disabled={readOnly}
+          disabled={readOnly || disabled}
           withRoles={false}
           unstyled={unstyled}
           {...popoverProps}
@@ -285,6 +286,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
               rightSection={_rightSection}
               {...inputProps}
               {...others}
+              disabled={disabled}
               __staticSelector="DateInput"
             />
           </Popover.Target>

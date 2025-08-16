@@ -32,6 +32,12 @@ const defaultProps = {
   offset: 0,
   position: 'right-start',
   transitionProps: { duration: 0 },
+  middlewares: {
+    shift: {
+      // Enable crossAxis shift to keep submenu dropdown within viewport bounds when positioned horizontally
+      crossAxis: true,
+    },
+  },
 } satisfies Partial<MenuSubProps>;
 
 export function MenuSub(_props: MenuSubProps) {

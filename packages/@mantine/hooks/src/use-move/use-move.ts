@@ -72,7 +72,7 @@ export function useMove<T extends HTMLElement = any>(
       const bindEvents = () => {
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', stopScrubbing);
-        document.addEventListener('touchmove', onTouchMove);
+        document.addEventListener('touchmove', onTouchMove, { passive: false });
         document.addEventListener('touchend', stopScrubbing);
       };
 

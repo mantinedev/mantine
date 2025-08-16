@@ -57,7 +57,7 @@
 .title {
   font-size: 22px;
   font-weight: 550;
-  font-family: var(--docs-font-family);
+  font-family: var(--docs-font-primary);
 }
 
 .description {
