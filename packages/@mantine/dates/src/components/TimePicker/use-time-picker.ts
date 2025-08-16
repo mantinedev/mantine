@@ -193,6 +193,7 @@ export function useTimePicker({
       setMinutes(null);
       setSeconds(null);
       setAmPm(null);
+      acceptChange.current = true;
       return;
     }
 

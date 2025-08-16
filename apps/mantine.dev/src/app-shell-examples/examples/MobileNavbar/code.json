@@ -7,6 +7,6 @@
   {
     "fileName": "MobileNavbar.module.css",
     "language": "css",
-    "code": "  display: block;\n  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);\n  border-radius: var(--mantine-radius-md);\n  font-weight: 500;\n\n  @mixin hover {\n    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));\n  }\n}\n"
+    "code": ".control {\n    display: block;\n  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);\n  border-radius: var(--mantine-radius-md);\n  font-weight: 500;\n\n  @mixin hover {\n    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));\n  }\n}\n"
   }
 ]

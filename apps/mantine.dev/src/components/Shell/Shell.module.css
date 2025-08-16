@@ -3,6 +3,5 @@
 }
 
 .content {
-  flex: 0 0 calc(100% - var(--docs-navbar-width) - var(--docs-table-of-contents-width));
-  max-width: calc(100% - var(--docs-navbar-width) - var(--docs-table-of-contents-width));
+  flex: 1;
 }

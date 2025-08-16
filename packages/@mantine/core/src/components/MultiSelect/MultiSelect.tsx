@@ -122,6 +122,7 @@ const defaultProps = {
   checkIconPosition: 'left',
   hiddenInputValuesDivider: ',',
   clearSearchOnChange: true,
+  size: 'sm',
 } satisfies Partial<MultiSelectProps>;
 
 export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
