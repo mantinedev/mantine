@@ -109,7 +109,7 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
   },
 
   LLMDocumentation: {
-    title: 'LLM Documentation',
+    title: 'LLMs.txt',
     slug: '/guides/llms',
     search: 'LLM, AI, ChatGPT, Claude, Copilot, Cursor, Windsurf, documentation',
     hideHeader: true,
