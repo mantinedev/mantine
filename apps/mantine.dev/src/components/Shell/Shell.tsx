@@ -43,10 +43,10 @@ export function Shell({
     >
       <div>
         <DocsHeader headerControlsProps={headerControlsProps} withNav={withNav} />
+        {withMobileNavbar && mobileNavbarOpened && <DocsMobileNavbar />}
         {withNavbar ? (
           <Container size={1440} fluid={fluid} px={fluid ? 0 : undefined}>
             <div className={classes.inner}>
-              {withMobileNavbar && mobileNavbarOpened && <DocsMobileNavbar />}
               <DocsNavbar />
               <main className={classes.content}>{children}</main>
             </div>

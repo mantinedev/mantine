@@ -54,4 +54,5 @@ apps/mantine.dev/.cache
 apps/mantine.dev/out
 apps/mantine.dev/.next
 apps/mantine.dev/src/.docgen/
+apps/mantine.dev/public/llms.txt
 .samples

@@ -107,4 +107,11 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
       'A list of functions exported from Mantine packages that are not documented anywhere else',
     hideHeader: true,
   },
+
+  LLMDocumentation: {
+    title: 'LLMs.txt',
+    slug: '/guides/llms',
+    search: 'LLM, AI, ChatGPT, Claude, Copilot, Cursor, Windsurf, documentation',
+    hideHeader: true,
+  },
 };
