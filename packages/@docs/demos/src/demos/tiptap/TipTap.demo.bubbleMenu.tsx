@@ -35,6 +35,7 @@ function Demo() {
 
 function Demo() {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [StarterKit, Link],
     content: '<p>Select some text to see bubble menu</p>',
   });

@@ -47,6 +47,7 @@ function Demo() {
   const [isSourceCodeModeActive, onSourceCodeTextSwitch] = useState(false);
 
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [StarterKit],
     content:
       '<p>Source code control example</p><p>New line with <strong>bold text</strong></p><p>New line with <em>italic</em> <em>text</em></p>',

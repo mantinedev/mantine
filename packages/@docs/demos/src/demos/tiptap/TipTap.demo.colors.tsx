@@ -64,6 +64,7 @@ function Demo() {
 
 function Demo() {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [StarterKit, TextStyle, Color],
     content: '<p>Apply some colors to this text</p>',
   });

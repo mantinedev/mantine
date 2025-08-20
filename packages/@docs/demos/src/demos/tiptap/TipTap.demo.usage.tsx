@@ -94,6 +94,7 @@ function Demo() {
 // Demo requires to have props as it is used on the home page
 function Demo({ stickyOffset = 'var(--docs-header-height)' }: { stickyOffset: string | number }) {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit,
       Underline,

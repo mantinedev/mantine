@@ -56,6 +56,7 @@ function InsertStarControl() {
 
 function Demo() {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [StarterKit],
     content: '<p>Click control to insert star emoji</p>',
   });

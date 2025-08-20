@@ -52,6 +52,7 @@ function Demo() {
 
 function Demo() {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit,
       getTaskListExtension(TipTapTaskList),

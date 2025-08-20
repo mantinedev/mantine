@@ -26,6 +26,7 @@ function Demo() {
 
 function Demo() {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [StarterKit, Placeholder.configure({ placeholder: 'This is placeholder' })],
     content: '',
   });

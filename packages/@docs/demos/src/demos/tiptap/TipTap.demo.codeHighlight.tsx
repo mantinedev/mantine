@@ -131,6 +131,7 @@ export function validBraces(braces: string) {
 
 function Demo() {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit.configure({ codeBlock: false }),
       CodeBlockLowlight.configure({ lowlight }),

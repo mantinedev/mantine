@@ -35,6 +35,7 @@ function Demo() {
 
 function Demo() {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [StarterKit, Link],
     content: '<p>Enter a new line to see floating menu</p>',
   });

@@ -44,6 +44,7 @@ function Demo() {
 
 function Demo() {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [StarterKit, Underline, Highlight],
     content,
   });

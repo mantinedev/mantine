@@ -39,6 +39,7 @@ const ItalicIcon = () => <IconItalic size={16} stroke={3.5} />;
 
 function Demo() {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [StarterKit],
     content: '<p>Customize icons with icon prop</p>',
   });

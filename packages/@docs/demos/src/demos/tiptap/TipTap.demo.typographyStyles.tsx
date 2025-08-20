@@ -50,6 +50,7 @@ export const typographyStyles: MantineDemo = {
 
 function Demo() {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [StarterKit, Link],
     content: `
     <h2>Heading 2</h2>
