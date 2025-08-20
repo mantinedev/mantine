@@ -6593,18 +6593,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shikijs/core@npm:3.1.0":
-  version: 3.1.0
-  resolution: "@shikijs/core@npm:3.1.0"
-  dependencies:
-    "@shikijs/types": "npm:3.1.0"
-    "@shikijs/vscode-textmate": "npm:^10.0.2"
-    "@types/hast": "npm:^3.0.4"
-    hast-util-to-html: "npm:^9.0.5"
-  checksum: 10c0/5e511b1eab294b8f68eeb5b20e97c3100fcef28800562a054f3f34cd102f80a783de21fb7abe5fd97bfb1fcf1df3d00305ab969a54642b91dd5c3f339681e242
-  languageName: node
-  linkType: hard
-
 "@shikijs/core@npm:3.11.0":
   version: 3.11.0
   resolution: "@shikijs/core@npm:3.11.0"
@@ -6656,23 +6644,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shikijs/transformers@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@shikijs/transformers@npm:3.1.0"
+"@shikijs/transformers@npm:^3.11.0":
+  version: 3.11.0
+  resolution: "@shikijs/transformers@npm:3.11.0"
   dependencies:
-    "@shikijs/core": "npm:3.1.0"
-    "@shikijs/types": "npm:3.1.0"
-  checksum: 10c0/7f8114885b7b79771cfd2528703319d62f544d04de77bb0d834fe8187e309d7e1df5ac636b5db3566ff3a6345f7cb5602d615d718663109af1a40fe6a6e07645
-  languageName: node
-  linkType: hard
-
-"@shikijs/types@npm:3.1.0":
-  version: 3.1.0
-  resolution: "@shikijs/types@npm:3.1.0"
-  dependencies:
-    "@shikijs/vscode-textmate": "npm:^10.0.2"
-    "@types/hast": "npm:^3.0.4"
-  checksum: 10c0/a4b898772b66210cd1d2fc5489b36b2835cd0cfe6eb0f2ae4b606e00f48995a933fe93813bab1b9a5744e6c6dd48553693f3ec7e94b81d48e6f4b9243fd604ba
+    "@shikijs/core": "npm:3.11.0"
+    "@shikijs/types": "npm:3.11.0"
+  checksum: 10c0/3f9809d63d424620f134fa1ef8ede5216947f1180b9cb5364996fd9a979cf179d6bc1f40cfbe8907e8194ebb1de228d94c97eebe1b6fcdcbab0a6bf78891ed9a
   languageName: node
   linkType: hard
 
@@ -17689,7 +17667,7 @@ __metadata:
     "@rollup/plugin-alias": "npm:^5.1.1"
     "@rollup/plugin-node-resolve": "npm:^16.0.1"
     "@rollup/plugin-replace": "npm:^6.0.2"
-    "@shikijs/transformers": "npm:^3.1.0"
+    "@shikijs/transformers": "npm:^3.11.0"
     "@storybook/addon-styling-webpack": "npm:^1.0.1"
     "@storybook/nextjs": "npm:^8.4.4"
     "@storybook/react": "npm:^8.4.4"
@@ -17810,7 +17788,7 @@ __metadata:
     version-next: "npm:^1.0.2"
     wrangler: "npm:^4.31.0"
     yargs: "npm:^18.0.0"
-    zx: "npm:^8.8.0"
+    zx: "npm:^8.8.1"
   languageName: unknown
   linkType: soft
 
@@ -26040,11 +26018,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zx@npm:^8.8.0":
-  version: 8.8.0
-  resolution: "zx@npm:8.8.0"
+"zx@npm:^8.8.1":
+  version: 8.8.1
+  resolution: "zx@npm:8.8.1"
   bin:
     zx: build/cli.js
-  checksum: 10c0/e183a6ab5a3b6645f05fc0f5174c420b25a826a1be6e337dbf4032074d63379cd2f8025ed28362514cf24cf03f0736786f09b59e3ef09fefd7b128ccffdcbeb7
+  checksum: 10c0/41a861b4d151c70a9c3fd358b96e8c6ec954ccb22122b4cdea42d0f77cc66fd0a398ebac26b0f24a22d38ab0a1b8e5e0b3efa5232a26a9d37e5fbbf4d530c9ea
   languageName: node
   linkType: hard
