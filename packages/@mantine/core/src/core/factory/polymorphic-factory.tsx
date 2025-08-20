@@ -51,3 +51,14 @@ export function polymorphicFactory<Payload extends PolymorphicFactoryPayload>(
 
   return Component as PolymorphicComponent;
 }
+
+export type MantinePolymorphicComponent<Payload extends PolymorphicFactoryPayload> = (<
+  C = Payload['defaultComponent'],
+>(
+  props: PolymorphicComponentProps<C, Payload['props']>
+) => React.ReactElement) &
+  Omit<React.FunctionComponent<PolymorphicComponentProps<any, Payload['props']>>, never> &
+  ThemeExtend<Payload> &
+  ComponentClasses<Payload> &
+  PolymorphicComponentWithProps<Payload> &
+  StaticComponents<Payload['staticComponents']>;

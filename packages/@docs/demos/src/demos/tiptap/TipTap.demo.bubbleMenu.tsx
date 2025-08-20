@@ -1,12 +1,14 @@
-import { BubbleMenu, useEditor } from '@tiptap/react';
+import { useEditor } from '@tiptap/react';
+import { BubbleMenu } from '@tiptap/react/menus';
 import StarterKit from '@tiptap/starter-kit';
 import { Link, RichTextEditor } from '@mantine/tiptap';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { useEditor, BubbleMenu } from '@tiptap/react';
+import { useEditor } from '@tiptap/react';
+import { BubbleMenu } from '@tiptap/react/menus';
 import StarterKit from '@tiptap/starter-kit';
-import { RichTextEditor, Link } from '@mantine/tiptap';
+import { Link, RichTextEditor } from '@mantine/tiptap';
 
 function Demo() {
   const editor = useEditor({
