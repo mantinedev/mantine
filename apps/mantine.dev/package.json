@@ -58,7 +58,7 @@
     "@tiptap/pm": "^2.9.1",
     "@tiptap/react": "^2.9.1",
     "@tiptap/starter-kit": "^2.9.1",
-    "@types/node": "^22.9.1",
+    "@types/node": "^24.3.0",
     "@types/react": "19.1.10",
     "chroma-js": "^3.1.2",
     "dayjs": "^1.11.13",
