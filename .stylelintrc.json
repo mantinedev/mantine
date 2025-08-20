@@ -20,6 +20,7 @@
     "media-feature-range-notation": null,
     "color-hex-length": null,
     "scss/no-global-function-names": null,
+    "color-function-alias-notation": null,
     "selector-pseudo-class-no-unknown": [
       true,
       {

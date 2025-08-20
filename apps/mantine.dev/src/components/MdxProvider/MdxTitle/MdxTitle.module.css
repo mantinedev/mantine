@@ -1,7 +1,7 @@
 .title {
   margin-top: calc(var(--mantine-spacing-xl) * 1.2);
   margin-bottom: var(--mantine-spacing-md);
-  word-break: break-word;
+  overflow-wrap: break-word;
   font-family: var(--docs-font-primary);
   font-weight: 500;
   position: relative;

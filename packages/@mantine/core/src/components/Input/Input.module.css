@@ -264,7 +264,7 @@
 .label {
   display: inline-block;
   font-weight: 500;
-  word-break: break-word;
+  overflow-wrap: break-word;
   cursor: default;
   -webkit-tap-highlight-color: transparent;
   font-size: var(--input-label-size, var(--mantine-font-size-sm));

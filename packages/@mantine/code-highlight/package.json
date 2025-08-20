@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "highlight.js": "^11.10.0"
+    "highlight.js": "^11.11.1"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",

@@ -35,7 +35,7 @@
   background-color: transparent;
   color: inherit;
   cursor: pointer;
-  word-break: break-word;
+  overflow-wrap: break-word;
 
   &:where([data-combobox-selected]) {
     background-color: var(--mantine-primary-color-filled);
