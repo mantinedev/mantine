@@ -1,0 +1,16 @@
+import { useDisclosure } from '@mantine/hooks';
+import { Button, Modal } from '@mantine/core';
+
+export function Demo() {
+  const [opened, { open, close }] = useDisclosure(false);
+
+  return (
+    <>
+      <Modal opened={opened} onClose={close} title="Mantine Modal Example">
+        Modal content goes here 🚀
+      </Modal>
+
+      <Button onClick={open}>Open Modal</Button>
+    </>
+  );
+}
