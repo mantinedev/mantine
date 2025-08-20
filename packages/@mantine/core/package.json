@@ -51,7 +51,7 @@
     "@floating-ui/react": "^0.26.28",
     "clsx": "^2.1.1",
     "react-number-format": "^5.4.4",
-    "react-remove-scroll": "^2.6.2",
+    "react-remove-scroll": "^2.7.1",
     "react-textarea-autosize": "8.5.9",
     "type-fest": "^4.41.0"
   },
