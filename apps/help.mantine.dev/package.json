@@ -27,8 +27,8 @@
     "dayjs": "^1.11.13",
     "fuse.js": "^7.1.0",
     "next": "15.5.0",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
     "react-imask": "^7.6.1",
     "rehype-slug": "^6.0.0",
     "shiki": "^3.11.0"

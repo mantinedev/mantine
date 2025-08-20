@@ -3537,8 +3537,8 @@ __metadata:
     "@tiptap/react": "npm:^2.9.1"
     dayjs: "npm:^1.11.13"
     embla-carousel-react: "npm:^8.6.0"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
     recharts: "npm:^2.13.3"
   peerDependencies:
     react: ^18.x || ^19.x
@@ -3566,8 +3566,8 @@ __metadata:
     "@tiptap/react": "npm:^2.9.1"
     dayjs: "npm:^1.11.13"
     embla-carousel-react: "npm:^8.6.0"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
     recharts: "npm:^2.13.3"
     shiki: "npm:^3.11.0"
   peerDependencies:
@@ -5618,8 +5618,8 @@ __metadata:
   dependencies:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
   peerDependencies:
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x
@@ -5635,8 +5635,8 @@ __metadata:
     "@mantine/dates": "workspace:*"
     "@mantine/hooks": "workspace:*"
     dayjs: "npm:^1.11.13"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
   peerDependencies:
     dayjs: "*"
     react: ^18.x || ^19.x
@@ -5651,8 +5651,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
   peerDependencies:
     "@mantine/core": 8.2.5
     "@mantine/hooks": 8.2.5
@@ -5670,8 +5670,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
   peerDependencies:
     "@mantine/core": 8.2.5
     "@mantine/hooks": 8.2.5
@@ -5690,8 +5690,8 @@ __metadata:
     "@mantine/hooks": "workspace:*"
     clsx: "npm:^2.1.1"
     highlight.js: "npm:^11.11.1"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
   peerDependencies:
     "@mantine/core": 8.2.5
     "@mantine/hooks": 8.2.5
@@ -5716,8 +5716,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     clsx: "npm:^2.1.1"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
     react-number-format: "npm:^5.4.4"
     react-remove-scroll: "npm:^2.6.2"
     react-textarea-autosize: "npm:8.5.9"
@@ -5738,8 +5738,8 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     clsx: "npm:^2.1.1"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
   peerDependencies:
     "@mantine/core": 8.2.5
     "@mantine/hooks": 8.2.5
@@ -5756,8 +5756,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
     react-dropzone: "npm:14.3.8"
   peerDependencies:
     "@mantine/core": 8.2.5
@@ -5775,8 +5775,8 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     html-react-parser: "npm:^5.2.6"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
   peerDependencies:
     "@emotion/cache": ^11.11.0
     "@emotion/react": ^11.11.4
@@ -5814,8 +5814,8 @@ __metadata:
   dependencies:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
   peerDependencies:
     "@mantine/core": 8.2.5
     "@mantine/hooks": 8.2.5
@@ -5832,8 +5832,8 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     "@mantine/store": "npm:8.2.5"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
     react-transition-group: "npm:4.4.5"
   peerDependencies:
     "@mantine/core": 8.2.5
@@ -5851,8 +5851,8 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     "@mantine/store": "npm:8.2.5"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
   peerDependencies:
     "@mantine/core": 8.2.5
     "@mantine/hooks": 8.2.5
@@ -5869,8 +5869,8 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     "@mantine/store": "npm:8.2.5"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
   peerDependencies:
     "@mantine/core": 8.2.5
     "@mantine/hooks": 8.2.5
@@ -5894,8 +5894,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
   peerDependencies:
     "@mantine/core": 8.2.5
     "@mantine/hooks": 8.2.5
@@ -5910,8 +5910,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mantine/vanilla-extract@workspace:packages/@mantine/vanilla-extract"
   dependencies:
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
   peerDependencies:
     "@mantine/core": 8.2.5
   languageName: unknown
@@ -5925,8 +5925,8 @@ __metadata:
     "@mantine/code-highlight": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
     shiki: "npm:^3.11.0"
   peerDependencies:
     "@mantine/code-highlight": ">=7.0.0"
@@ -5946,8 +5946,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
   peerDependencies:
     "@mantine/core": ">=7.0.0"
     "@mantine/hooks": ">=7.0.0"
@@ -5963,8 +5963,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
   peerDependencies:
     "@mantine/core": ">=7.0.0"
     "@mantine/hooks": ">=7.0.0"
@@ -5982,8 +5982,8 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
   peerDependencies:
     "@mantine/core": ">=7.0.0"
     "@mantine/hooks": ">=7.0.0"
@@ -11903,8 +11903,8 @@ __metadata:
     lowlight: "npm:^3.3.0"
     next: "npm:15.5.0"
     next-sitemap: "npm:^4.2.3"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
     react-dropzone: "npm:14.3.8"
     react-number-format: "npm:^5.4.4"
     recharts: "npm:^2.13.3"
@@ -14855,8 +14855,8 @@ __metadata:
     dayjs: "npm:^1.11.13"
     fuse.js: "npm:^7.1.0"
     next: "npm:15.5.0"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
     react-imask: "npm:^7.6.1"
     rehype-slug: "npm:^6.0.0"
     shiki: "npm:^3.11.0"
@@ -17688,8 +17688,8 @@ __metadata:
     postcss-preset-mantine: "npm:1.18.0"
     postcss-simple-vars: "npm:^7.0.1"
     prettier: "npm:^3.6.2"
-    react: "npm:19.0.0"
-    react-dom: "npm:19.0.0"
+    react: "npm:19.1.1"
+    react-dom: "npm:19.1.1"
     react-dropzone: "npm:14.3.8"
     react-imask: "npm:^7.6.1"
     react-number-format: "npm:^5.4.4"
@@ -21119,14 +21119,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:19.0.0":
-  version: 19.0.0
-  resolution: "react-dom@npm:19.0.0"
+"react-dom@npm:19.1.1":
+  version: 19.1.1
+  resolution: "react-dom@npm:19.1.1"
   dependencies:
-    scheduler: "npm:^0.25.0"
+    scheduler: "npm:^0.26.0"
   peerDependencies:
-    react: ^19.0.0
-  checksum: 10c0/a36ce7ab507b237ae2759c984cdaad4af4096d8199fb65b3815c16825e5cfeb7293da790a3fc2184b52bfba7ba3ff31c058c01947aff6fd1a3701632aabaa6a9
+    react: ^19.1.1
+  checksum: 10c0/8c91198510521299c56e4e8d5e3a4508b2734fb5e52f29eeac33811de64e76fe586ad32c32182e2e84e070d98df67125da346c3360013357228172dbcd20bcdd
   languageName: node
   linkType: hard
 
@@ -21338,10 +21338,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:19.0.0":
-  version: 19.0.0
-  resolution: "react@npm:19.0.0"
-  checksum: 10c0/9cad8f103e8e3a16d15cb18a0d8115d8bd9f9e1ce3420310aea381eb42aa0a4f812cf047bb5441349257a05fba8a291515691e3cb51267279b2d2c3253f38471
+"react@npm:19.1.1":
+  version: 19.1.1
+  resolution: "react@npm:19.1.1"
+  checksum: 10c0/8c9769a2dfd02e603af6445058325e6c8a24b47b185d0e461f66a6454765ddcaecb3f0a90184836c68bb509f3c38248359edbc42f0d07c23eb500a5c30c87b4e
   languageName: node
   linkType: hard
 
@@ -22424,10 +22424,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "scheduler@npm:0.25.0"
-  checksum: 10c0/a4bb1da406b613ce72c1299db43759526058fdcc413999c3c3e0db8956df7633acf395cb20eb2303b6a65d658d66b6585d344460abaee8080b4aa931f10eaafe
+"scheduler@npm:^0.26.0":
+  version: 0.26.0
+  resolution: "scheduler@npm:0.26.0"
+  checksum: 10c0/5b8d5bfddaae3513410eda54f2268e98a376a429931921a81b5c3a2873aab7ca4d775a8caac5498f8cbc7d0daeab947cf923dbd8e215d61671f9f4e392d34356
   languageName: node
   linkType: hard
 

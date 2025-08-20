@@ -61,8 +61,8 @@
     "@tiptap/react": "^2.9.1",
     "dayjs": "^1.11.13",
     "embla-carousel-react": "^8.6.0",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
     "recharts": "^2.13.3"
   }
 }
