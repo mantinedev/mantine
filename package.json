@@ -180,7 +180,7 @@
     "postcss-loader": "^8.1.1",
     "postcss-preset-mantine": "1.18.0",
     "postcss-simple-vars": "^7.0.1",
-    "prettier": "^3.3.3",
+    "prettier": "^3.6.2",
     "react-dom": "19.0.0",
     "react-virtuoso": "^4.14.0",
     "remark-mdx": "^3.1.0",

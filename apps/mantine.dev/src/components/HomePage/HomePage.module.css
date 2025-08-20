@@ -12,22 +12,16 @@
     --hp-block-spacing: 40px;
   }
 
-  --hp-primary-bg: linear-gradient(
-      45deg,
-      var(--mantine-color-blue-6) 15%,
-      var(--mantine-color-blue-7)
-    ),
+  --hp-primary-bg:
+    linear-gradient(45deg, var(--mantine-color-blue-6) 15%, var(--mantine-color-blue-7)),
     linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent),
     linear-gradient(45deg, rgba(0, 0, 0, 0.3) 15%, transparent);
   --hp-primary-shadow: 0px 0px 15px 2px alpha(var(--mantine-color-blue-filled), 0.2);
   --hp-primary-border: 3px solid var(--mantine-color-blue-7);
 
   @mixin dark {
-    --hp-primary-bg: linear-gradient(
-        45deg,
-        var(--mantine-color-blue-7) 15%,
-        var(--mantine-color-blue-8)
-      ),
+    --hp-primary-bg:
+      linear-gradient(45deg, var(--mantine-color-blue-7) 15%, var(--mantine-color-blue-8)),
       linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent),
       linear-gradient(45deg, rgba(0, 0, 0, 0.3) 15%, transparent);
     --hp-primary-shadow: 0px 0px 15px 2px alpha(var(--mantine-color-blue-5), 0.3);
