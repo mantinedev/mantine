@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export interface UseMediaQueryOptions {
   getInitialValueInEffect: boolean;
@@ -51,7 +51,6 @@ export function useMediaQuery(
       return attachMediaListener(mediaQuery, (event) => setMatches(event.matches));
     } catch (e) {
       // Safari iframe compatibility issue
-      console.warn('MediaQuery not available:', e);
       return undefined;
     }
   }, [query]);
