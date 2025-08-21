@@ -264,6 +264,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
         readOnly={readOnly}
         size={size}
         attributes={attributes}
+        keepMounted={autoSelectOnBlur}
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
           const optionLockup = allowDeselect
