@@ -31,7 +31,7 @@
     "docs:docgen": "tsx scripts/docgen && npm run docs:count",
     "docs:sponsors": "tsx scripts/docs/sponsors",
     "docs:codegen": "tsx scripts/codegen",
-    "docs:build": "npm run docs:docgen && cd apps/mantine.dev && npm run build && npm run compile:llm",
+    "docs:build": "npm run docs:docgen && cd apps/mantine.dev && npm run build && cd ../.. && npm run compile:llm",
     "docs:build:alpha": "npm run docs:docgen && cd apps/mantine.dev && npm run build:alpha",
     "docs:deploy": "npm run docs:sponsors && npm run docs:build && gh-pages -d apps/mantine.dev/out -t true",
     "docs:deploy:alpha": "npm run docs:build:alpha && wrangler pages deploy apps/mantine.dev/out --branch master --project-name alpha-mantine-dev",
