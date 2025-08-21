@@ -1,12 +1,14 @@
-import { createContext, ReactNode } from 'react';
-import { ModalProps } from '@mantine/core';
-import type { ConfirmModalProps } from './ConfirmModal';
+import {createContext, ReactNode} from 'react';
+import {ModalProps} from '@mantine/core';
+import type {ConfirmModalProps} from './ConfirmModal';
 
 export type ModalSettings = Partial<Omit<ModalProps, 'opened'>> & { modalId?: string };
 
 export type ConfirmLabels = Record<'confirm' | 'cancel', ReactNode>;
 
-export interface OpenConfirmModal extends ModalSettings, ConfirmModalProps {}
+export interface OpenConfirmModal extends ModalSettings, ConfirmModalProps {
+}
+
 export interface OpenContextModal<CustomProps extends Record<string, any> = {}>
   extends ModalSettings {
   innerProps: CustomProps;
@@ -18,10 +20,10 @@ export interface ContextModalProps<T extends Record<string, any> = {}> {
   id: string;
 }
 
-export type ModalState =
-  | { id: string; props: ModalSettings; type: 'content' }
-  | { id: string; props: OpenConfirmModal; type: 'confirm' }
-  | { id: string; props: OpenContextModal; type: 'context'; ctx: string };
+export type ModalState = { stackIndex?: number } &
+  (| { id: string; props: ModalSettings; type: 'content' }
+    | { id: string; props: OpenConfirmModal; type: 'confirm' }
+    | { id: string; props: OpenContextModal; type: 'context'; ctx: string });
 
 export interface ModalsContextProps {
   modalProps: ModalSettings;
@@ -39,15 +41,16 @@ export interface ModalsContextProps {
   updateContextModal: (payload: { modalId: string } & Partial<OpenContextModal<any>>) => void;
 }
 
-export interface MantineModalsOverride {}
+export interface MantineModalsOverride {
+}
 
 export type MantineModalsOverwritten = MantineModalsOverride extends {
-  modals: Record<string, React.FC<ContextModalProps<any>>>;
-}
+    modals: Record<string, React.FC<ContextModalProps<any>>>;
+  }
   ? MantineModalsOverride
   : {
-      modals: Record<string, React.FC<ContextModalProps<any>>>;
-    };
+    modals: Record<string, React.FC<ContextModalProps<any>>>;
+  };
 
 export type MantineModals = MantineModalsOverwritten['modals'];
 

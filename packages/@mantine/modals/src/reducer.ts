@@ -1,6 +1,6 @@
 import { ModalSettings, ModalState, OpenContextModal } from './context';
 
-interface ModalsState {
+export interface TModalsState {
   modals: ModalState[];
 
   /**
@@ -41,9 +41,9 @@ function handleCloseModal(modal: ModalState, canceled?: boolean) {
 }
 
 export function modalsReducer(
-  state: ModalsState,
+  state: TModalsState,
   action: OpenAction | CloseAction | CloseAllAction | UpdateAction
-): ModalsState {
+): TModalsState {
   switch (action.type) {
     case 'OPEN': {
       return {
