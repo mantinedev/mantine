@@ -51,8 +51,7 @@
     "react-dom": "^18.x || ^19.x"
   },
   "dependencies": {
-    "clsx": "^2.1.1",
-    "highlight.js": "^11.11.1"
+    "clsx": "^2.1.1"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",

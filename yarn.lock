@@ -5808,7 +5808,6 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
     clsx: "npm:^2.1.1"
-    highlight.js: "npm:^11.11.1"
     react: "npm:19.1.1"
     react-dom: "npm:19.1.1"
   peerDependencies:
