@@ -46,14 +46,14 @@ export function useMediaQuery(
   );
   useEffect(() => {
     try {
-        const mediaQuery = window.matchMedia(query);
-        setMatches(mediaQuery.matches);
-        return attachMediaListener(mediaQuery, (event) => setMatches(event.matches));
-      } catch (e) {
-        // Safari iframe compatibility issue
-        console.warn('MediaQuery not available:', e);
-        return undefined;
-      }
+      const mediaQuery = window.matchMedia(query);
+      setMatches(mediaQuery.matches);
+      return attachMediaListener(mediaQuery, (event) => setMatches(event.matches));
+    } catch (e) {
+      // Safari iframe compatibility issue
+      console.warn('MediaQuery not available:', e);
+      return undefined;
+    }
   }, [query]);
 
   return matches || false;
