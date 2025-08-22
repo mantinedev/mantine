@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export interface UseDebouncedValueOptions {
   leading?: boolean;
@@ -16,7 +16,7 @@ export function useDebouncedValue<T = any>(
   const timeoutRef = useRef<number | null>(null);
   const cooldownRef = useRef(false);
 
-  const cancel = () => window.clearTimeout(timeoutRef.current!);
+  const cancel = useCallback(() => window.clearTimeout(timeoutRef.current!), []);
 
   useEffect(() => {
     if (mountedRef.current) {
