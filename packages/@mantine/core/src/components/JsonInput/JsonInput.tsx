@@ -38,6 +38,7 @@ export type JsonInputFactory = Factory<{
 const defaultProps = {
   serialize: JSON.stringify,
   deserialize: JSON.parse,
+  size: 'sm',
 } satisfies Partial<JsonInputProps>;
 
 export const JsonInput = factory<JsonInputFactory>((props, ref) => {

@@ -37,10 +37,14 @@ export type TextareaFactory = Factory<{
   stylesNames: __InputStylesNames;
 }>;
 
+const defaultProps = {
+  size: 'sm',
+} satisfies Partial<TextareaProps>;
+
 export const Textarea = factory<TextareaFactory>((props, ref) => {
   const { autosize, maxRows, minRows, __staticSelector, resize, ...others } = useProps(
     'Textarea',
-    null,
+    defaultProps,
     props
   );
 
