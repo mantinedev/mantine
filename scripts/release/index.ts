@@ -73,6 +73,7 @@ async function release() {
     getPath('scripts/plop/templates/package.json'),
   ]);
   await git.commit(`[release] Version: ${incrementedVersion}`);
+  await git.addTag(`v${incrementedVersion}`);
   await git.push();
 
   openGithubRelease(incrementedVersion);
