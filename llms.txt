@@ -601,7 +601,7 @@ Keyboard interactions:
 | disableChevronRotation | boolean | - | If set, chevron rotation is disabled |
 | loop | boolean | - | If set, arrow keys loop though items (first to last and last to first) |
 | multiple | boolean | - | If set, multiple items can be opened at the same time |
-| onChange | ((value: AccordionValue<Multiple>) => void) | - | Called when value changes, payload type depends on <code>multiple</code> prop |
+| onChange | (value: AccordionValue<Multiple>) => void | - | Called when value changes, payload type depends on <code>multiple</code> prop |
 | order | 2 | 3 | 4 | 5 | 6 | - | Heading order, has no effect on visuals |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set border-radius. Numbers are converted to rem. |
 | transitionDuration | number | - | Transition duration in ms |
@@ -1481,7 +1481,7 @@ function AlsoValid() {
 | closeButtonLabel | string | - | Close button <code>aria-label</code> |
 | color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color |
 | icon | React.ReactNode | - | Icon displayed next to the title |
-| onClose | (() => void) | - | Called when the close button is clicked |
+| onClose | () => void | - | Called when the close button is clicked |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set border-radius |
 | title | React.ReactNode | - | Alert title |
 | withCloseButton | boolean | - | Determines whether close button should be displayed |
@@ -1862,14 +1862,14 @@ You can build a custom radial slider using this hook if you need more control ov
 |------|------|---------|-------------|
 | defaultValue | number | - | Uncontrolled component default value |
 | disabled | boolean | - | Sets <code>data-disabled</code> attribute, disables interactions |
-| formatLabel | ((value: number) => ReactNode) | - | A function to format label based on the current value |
+| formatLabel | (value: number) => ReactNode | - | A function to format label based on the current value |
 | hiddenInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to the hidden input |
 | marks | { value: number; label?: string; }[] | undefined | - | Array of marks displayed on the slider |
 | name | string | - | Hidden input name, use with uncontrolled component |
-| onChange | ((value: number) => void) | - | Called on value change |
-| onChangeEnd | ((value: number) => void) | - | Called after the selection is finished |
-| onScrubEnd | (() => void) | - | Called in <code>onMouseUp</code> and <code>onTouchEnd</code> |
-| onScrubStart | (() => void) | - | Called in <code>onMouseDown</code> and <code>onTouchStart</code> |
+| onChange | (value: number) => void | - | Called on value change |
+| onChangeEnd | (value: number) => void | - | Called after the selection is finished |
+| onScrubEnd | () => void | - | Called in <code>onMouseUp</code> and <code>onTouchEnd</code> |
+| onScrubStart | () => void | - | Called in <code>onMouseDown</code> and <code>onTouchStart</code> |
 | restrictToMarks | boolean | - | If set, the selection is allowed only from the given marks array |
 | size | number | - | Slider size in px |
 | step | number | - | Step between values |
@@ -3283,28 +3283,28 @@ Autocomplete provides better accessibility support when used in forms. Make sure
 | defaultDropdownOpened | boolean | - | Uncontrolled dropdown initial opened state |
 | defaultValue | string | - | Default value for uncontrolled component |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | dropdownOpened | boolean | - | Controlled dropdown opened state |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
 | filter | OptionsFilter | - | Function based on which items are filtered and sorted |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
 | leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height |
 | limit | number | - | Maximum number of options displayed at a time, <code>Infinity</code> by default |
 | maxDropdownHeight | string | number | - | <code>max-height</code> of the dropdown, only applicable when <code>withScrollArea</code> prop is <code>true</code>, <code>250</code> by default |
-| onChange | ((value: string) => void) | - | Called when value changes |
-| onClear | (() => void) | - | Called when the clear button is clicked |
-| onDropdownClose | (() => void) | - | Called when dropdown closes |
-| onDropdownOpen | (() => void) | - | Called when dropdown opens |
-| onOptionSubmit | ((value: string) => void) | - | Called when option is submitted from dropdown with mouse click or <code>Enter</code> key |
+| onChange | (value: string) => void | - | Called when value changes |
+| onClear | () => void | - | Called when the clear button is clicked |
+| onDropdownClose | () => void | - | Called when dropdown closes |
+| onDropdownOpen | () => void | - | Called when dropdown opens |
+| onOptionSubmit | (value: string) => void | - | Called when option is submitted from dropdown with mouse click or <code>Enter</code> key |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | renderOption | RenderAutocompleteOption | - | Function to render custom option content |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
@@ -6156,7 +6156,7 @@ function GoodLabel() {
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code> |
 | rootRef | ForwardedRef<HTMLDivElement> | - | Root element ref |
 | size | MantineSize | (string & {}) | - | Controls size of the component |
-| wrapperProps | (Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> & DataAttributes) | - | Props passed down to the root element |
+| wrapperProps | Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> & DataAttributes | - | Props passed down to the root element |
 
 
 #### Styles API
@@ -6510,12 +6510,12 @@ all keyboard events work the same as with native controls.
 | defaultChecked | boolean | - | Default checked state for uncontrolled component |
 | icon | React.ReactNode | - | Any element or component to replace default icon |
 | id | string | - | Unique input id |
-| onChange | ((checked: boolean) => void) | - | Calls when checked state changes |
+| onChange | (checked: boolean) => void | - | Calls when checked state changes |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code> |
 | rootRef | ForwardedRef<HTMLDivElement> | - | Assigns ref of the root element |
 | size | MantineSize | - | Controls various properties related to component size |
 | type | "checkbox" | "radio" | - | Chip input type |
-| wrapperProps | (Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> & DataAttributes) | - | Props passed down to the root element |
+| wrapperProps | Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> & DataAttributes | - | Props passed down to the root element |
 
 
 #### Styles API
@@ -6885,7 +6885,7 @@ function Demo() {
 | animateOpacity | boolean | - | Determines whether opacity should be animated |
 | in | boolean | required | Opened state |
 | keepMounted | boolean | - | Keep element in DOM when collapsed, useful for nested collapses |
-| onTransitionEnd | (() => void) | - | Called each time transition ends |
+| onTransitionEnd | () => void | - | Called each time transition ends |
 | transitionDuration | number | - | Transition duration in ms |
 | transitionTimingFunction | string | - | Transition timing function |
 
@@ -7296,26 +7296,26 @@ ColorInput provides better accessibility support when used in forms. Make sure t
 | closeOnColorSwatchClick | boolean | - | If set, the dropdown is closed when one of the color swatches is clicked |
 | defaultValue | string | - | Uncontrolled component default value |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | disallowInput | boolean | - | If input is not allowed, the user can only pick value with color picker and swatches |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
 | eyeDropperButtonProps | Record<string, any> | - | Props passed down to the eye dropper button |
 | eyeDropperIcon | React.ReactNode | - | An icon to replace the default eye dropper icon |
 | fixOnBlur | boolean | - | If set, the input value resets to the last known valid value when the input loses focus |
 | format | ColorFormat | - | Color format |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
 | leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height |
-| onChange | ((value: string) => void) | - | Called when value changes |
-| onChangeEnd | ((value: string) => void) | - | Called when the user stops dragging one of the sliders or changes the value with keyboard |
+| onChange | (value: string) => void | - | Called when value changes |
+| onChangeEnd | (value: string) => void | - | Called when the user stops dragging one of the sliders or changes the value with keyboard |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | popoverProps | PopoverProps | - | Props passed down to the <code>Popover</code> component |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
@@ -7611,9 +7611,9 @@ function Demo() {
 | format | ColorFormat | - | Color format |
 | fullWidth | boolean | - | If set, the component takes 100% width of its container |
 | hueLabel | string | - | Hue slider <code>aria-label</code> |
-| onChange | ((value: string) => void) | - | Called when value changes |
-| onChangeEnd | ((value: string) => void) | - | Called when the user stops dragging one of the sliders or changes the value with keyboard |
-| onColorSwatchClick | ((color: string) => void) | - | Called when one of the color swatches is clicked |
+| onChange | (value: string) => void | - | Called when value changes |
+| onChangeEnd | (value: string) => void | - | Called when the user stops dragging one of the sliders or changes the value with keyboard |
+| onColorSwatchClick | (color: string) => void | - | Called when one of the color swatches is clicked |
 | saturationLabel | string | - | Saturation slider <code>aria-label</code> |
 | size | MantineSize | (string & {}) | - | Controls size of hue, alpha and saturation sliders |
 | swatches | string[] | - | A list of colors used to display swatches list below the color picker |
@@ -9042,14 +9042,14 @@ function Demo() {
 | keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. <code>display: none</code> styles are added instead. |
 | middlewares | PopoverMiddlewares | - | Floating ui middlewares to configure position handling |
 | offset | number | FloatingAxesOffsets | - | Offset of the dropdown element |
-| onClose | (() => void) | - | Called when dropdown closes |
-| onDismiss | (() => void) | - | Called when the popover is dismissed by clicking outside or by pressing escape |
-| onEnterTransitionEnd | (() => void) | - | Called when enter transition ends |
-| onExitTransitionEnd | (() => void) | - | Called when exit transition ends |
-| onOpen | (() => void) | - | Called when dropdown opens |
-| onOptionSubmit | ((value: string, optionProps: ComboboxOptionProps) => void) | - | Called when item is selected with the <code>Enter</code> key or by clicking it |
-| onPositionChange | ((position: FloatingPosition) => void) | - | Called when dropdown position changes |
-| overlayProps | (OverlayProps & ElementProps<"div">) | - | Props passed down to <code>Overlay</code> component |
+| onClose | () => void | - | Called when dropdown closes |
+| onDismiss | () => void | - | Called when the popover is dismissed by clicking outside or by pressing escape |
+| onEnterTransitionEnd | () => void | - | Called when enter transition ends |
+| onExitTransitionEnd | () => void | - | Called when exit transition ends |
+| onOpen | () => void | - | Called when dropdown opens |
+| onOptionSubmit | (value: string, optionProps: ComboboxOptionProps) => void | - | Called when item is selected with the <code>Enter</code> key or by clicking it |
+| onPositionChange | (position: FloatingPosition) => void | - | Called when dropdown position changes |
+| overlayProps | OverlayProps & ElementProps<"div"> | - | Props passed down to <code>Overlay</code> component |
 | portalProps | BasePortalProps | - | Props to pass down to the <code>Portal</code> when <code>withinPortal</code> is true |
 | position | FloatingPosition | - | Dropdown position relative to the target element |
 | positionDependencies | any[] | - | @deprecated : Do not use, will be removed in 9.0 |
@@ -9500,7 +9500,7 @@ to select [Modal](https://mantine.dev/core/modal/), [Drawer](https://mantine.dev
 |------|------|---------|-------------|
 | children | React.ReactNode | - | Dialog content |
 | keepMounted | boolean | - | If set, dialog is not unmounted from the DOM when hidden, <code>display: none</code> styles are applied instead |
-| onClose | (() => void) | - | Called when the close button is clicked |
+| onClose | () => void | - | Called when the close button is clicked |
 | opened | boolean | required | Opened state |
 | portalProps | BasePortalProps | - | Props passed down to the <code>Portal</code> component. Ignored when <code>withinPortal</code> is <code>false</code>. |
 | position | AffixPosition | - | Affix position on screen |
@@ -10488,8 +10488,8 @@ function Demo() {
 | lockScroll | boolean | - | If set, scroll is locked when <code>opened={true}</code> |
 | offset | string | number | - | Drawer container offset from the viewport end |
 | onClose | () => void | required | Called when modal/drawer is closed |
-| onEnterTransitionEnd | (() => void) | - | Called when enter transition ends |
-| onExitTransitionEnd | (() => void) | - | Called when exit transition ends |
+| onEnterTransitionEnd | () => void | - | Called when enter transition ends |
+| onExitTransitionEnd | () => void | - | Called when exit transition ends |
 | opened | boolean | required | Controls opened state |
 | overlayProps | ModalBaseOverlayProps | - | Props passed down to the <code>Overlay</code> component, can be used to configure opacity, <code>background-color</code>, styles and other properties |
 | padding | MantineSpacing | - | Key of <code>theme.spacing</code> or any valid CSS value to set content, header and footer padding |
@@ -11034,24 +11034,24 @@ type MultipleInputProps = FileInputProps<true>;
 | clearable | boolean | - | If set, the clear button is displayed in the right section |
 | defaultValue | File | File[] | null | - | Uncontrolled component default value |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
 | fileInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to the hidden input element which is used to capture files |
 | form | string | - | Input form attribute |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
 | leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height |
 | multiple | boolean | - | If set, user can pick more than one file |
 | name | string | - | Input name attribute |
-| onChange | ((payload: Multiple extends true ? File[] : File | null) => void) | - | Called when value changes |
+| onChange | (payload: Multiple extends true ? File[] : File | null) => void | - | Called when value changes |
 | placeholder | React.ReactNode | - | Input placeholder |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
@@ -12452,14 +12452,14 @@ that is not required to understand the context.
 | keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. <code>display: none</code> styles are added instead. |
 | middlewares | PopoverMiddlewares | - | Floating ui middlewares to configure position handling |
 | offset | number | FloatingAxesOffsets | - | Offset of the dropdown element |
-| onClose | (() => void) | - | Called when the dropdown is closed |
-| onDismiss | (() => void) | - | Called when the popover is dismissed by clicking outside or by pressing escape |
-| onEnterTransitionEnd | (() => void) | - | Called when enter transition ends |
-| onExitTransitionEnd | (() => void) | - | Called when exit transition ends |
-| onOpen | (() => void) | - | Called when the dropdown is opened |
-| onPositionChange | ((position: FloatingPosition) => void) | - | Called when dropdown position changes |
+| onClose | () => void | - | Called when the dropdown is closed |
+| onDismiss | () => void | - | Called when the popover is dismissed by clicking outside or by pressing escape |
+| onEnterTransitionEnd | () => void | - | Called when enter transition ends |
+| onExitTransitionEnd | () => void | - | Called when exit transition ends |
+| onOpen | () => void | - | Called when the dropdown is opened |
+| onPositionChange | (position: FloatingPosition) => void | - | Called when dropdown position changes |
 | openDelay | number | - | Open delay in ms |
-| overlayProps | (OverlayProps & ElementProps<"div">) | - | Props passed down to <code>Overlay</code> component |
+| overlayProps | OverlayProps & ElementProps<"div"> | - | Props passed down to <code>Overlay</code> component |
 | portalProps | BasePortalProps | - | Props to pass down to the <code>Portal</code> when <code>withinPortal</code> is true |
 | position | FloatingPosition | - | Dropdown position relative to the target element |
 | positionDependencies | any[] | - | @deprecated : Do not use, will be removed in 9.0 |
@@ -12596,7 +12596,7 @@ function Demo() {
 |------|------|---------|-------------|
 | fallbackSrc | string | - | Image url used as a fallback if the image cannot be loaded |
 | fit | ObjectFit | - | Controls <code>object-fit</code> style |
-| onError | ((event: SyntheticEvent<HTMLImageElement, Event>) => void) | - | Called when image fails to load |
+| onError | (event: SyntheticEvent<HTMLImageElement, Event>) => void | - | Called when image fails to load |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code> |
 | src | any | - | Image url |
 
@@ -13658,24 +13658,24 @@ JsonInput provides better accessibility support when used in forms. Make sure to
 | autosize | boolean | - | If set, enables textarea height growing with its content |
 | defaultValue | string | - | Uncontrolled component default value |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | deserialize | ((text: string, reviver?: ((this: any, key: string, value: any) => any)) => any) | undefined | - | Function to deserialize string value, used for value formatting and input JSON validation, must throw error if string cannot be processed |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
 | formatOnBlur | boolean | - | Determines whether the value should be formatted on blur |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
 | leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height |
 | maxRows | number | - | Maximum rows for autosize textarea to grow, ignored if <code>autosize</code> prop is not set |
 | minRows | number | - | Minimum rows of autosize textarea, ignored if <code>autosize</code> prop is not set |
-| onChange | ((value: string) => void) | - | Called when value changes |
+| onChange | (value: string) => void | - | Called when value changes |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
@@ -14765,16 +14765,16 @@ If you also need to support `Tab` and `Shift + Tab` then set `menuItemTabIndex={
 | menuItemTabIndex | 0 | -1 | - | Set the <code>tabindex</code> on all menu items |
 | middlewares | PopoverMiddlewares | - | Floating ui middlewares to configure position handling |
 | offset | number | FloatingAxesOffsets | - | Offset of the dropdown element |
-| onChange | ((opened: boolean) => void) | - | Called when menu opened state changes |
-| onClose | (() => void) | - | Called when Menu is closed |
-| onDismiss | (() => void) | - | Called when the popover is dismissed by clicking outside or by pressing escape |
-| onEnterTransitionEnd | (() => void) | - | Called when enter transition ends |
-| onExitTransitionEnd | (() => void) | - | Called when exit transition ends |
-| onOpen | (() => void) | - | Called when Menu is opened |
-| onPositionChange | ((position: FloatingPosition) => void) | - | Called when dropdown position changes |
+| onChange | (opened: boolean) => void | - | Called when menu opened state changes |
+| onClose | () => void | - | Called when Menu is closed |
+| onDismiss | () => void | - | Called when the popover is dismissed by clicking outside or by pressing escape |
+| onEnterTransitionEnd | () => void | - | Called when enter transition ends |
+| onExitTransitionEnd | () => void | - | Called when exit transition ends |
+| onOpen | () => void | - | Called when Menu is opened |
+| onPositionChange | (position: FloatingPosition) => void | - | Called when dropdown position changes |
 | openDelay | number | - | Open delay in ms, applicable only to <code>trigger="hover"</code> variant |
 | opened | boolean | - | Controlled menu opened state |
-| overlayProps | (OverlayProps & ElementProps<"div">) | - | Props passed down to <code>Overlay</code> component |
+| overlayProps | OverlayProps & ElementProps<"div"> | - | Props passed down to <code>Overlay</code> component |
 | portalProps | BasePortalProps | - | Props to pass down to the <code>Portal</code> when <code>withinPortal</code> is true |
 | position | FloatingPosition | - | Dropdown position relative to the target element |
 | positionDependencies | any[] | - | @deprecated : Do not use, will be removed in 9.0 |
@@ -15680,8 +15680,8 @@ function Demo() {
 | keepMounted | boolean | - | If set modal/drawer is not unmounted from the DOM when hidden. <code>display: none</code> styles are applied instead. |
 | lockScroll | boolean | - | If set, scroll is locked when <code>opened={true}</code> |
 | onClose | () => void | required | Called when modal/drawer is closed |
-| onEnterTransitionEnd | (() => void) | - | Called when enter transition ends |
-| onExitTransitionEnd | (() => void) | - | Called when exit transition ends |
+| onEnterTransitionEnd | () => void | - | Called when enter transition ends |
+| onExitTransitionEnd | () => void | - | Called when exit transition ends |
 | opened | boolean | required | Controls opened state |
 | overlayProps | ModalBaseOverlayProps | - | Props passed down to the <code>Overlay</code> component, use to configure opacity, <code>background-color</code>, styles and other properties |
 | padding | MantineSpacing | - | Key of <code>theme.spacing</code> or any valid CSS value to set content, header and footer padding |
@@ -16645,20 +16645,20 @@ function Demo() {
 | defaultSearchValue | string | - | Default search value |
 | defaultValue | string[] | - | Uncontrolled component default value |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | dropdownOpened | boolean | - | Controlled dropdown opened state |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
 | filter | OptionsFilter | - | Function based on which items are filtered and sorted |
 | hiddenInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to the hidden input |
 | hiddenInputValuesDivider | string | - | Divider used to separate values in the hidden input <code>value</code> attribute |
 | hidePickedOptions | boolean | - | If set, picked options are removed from the options list |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
@@ -16667,16 +16667,16 @@ function Demo() {
 | maxDropdownHeight | string | number | - | <code>max-height</code> of the dropdown, only applicable when <code>withScrollArea</code> prop is <code>true</code>, <code>250</code> by default |
 | maxValues | number | - | Maximum number of values, no limit if not set |
 | nothingFoundMessage | React.ReactNode | - | Message displayed when no option matches the current search query while the <code>searchable</code> prop is set or there is no data |
-| onChange | ((value: string[]) => void) | - | Called when value changes |
-| onClear | (() => void) | - | Called when the clear button is clicked |
-| onDropdownClose | (() => void) | - | Called when dropdown closes |
-| onDropdownOpen | (() => void) | - | Called when dropdown opens |
-| onOptionSubmit | ((value: string) => void) | - | Called when option is submitted from dropdown with mouse click or <code>Enter</code> key |
-| onRemove | ((value: string) => void) | - | Called with <code>value</code> of the removed item |
-| onSearchChange | ((value: string) => void) | - | Called when search changes |
+| onChange | (value: string[]) => void | - | Called when value changes |
+| onClear | () => void | - | Called when the clear button is clicked |
+| onDropdownClose | () => void | - | Called when dropdown closes |
+| onDropdownOpen | () => void | - | Called when dropdown opens |
+| onOptionSubmit | (value: string) => void | - | Called when option is submitted from dropdown with mouse click or <code>Enter</code> key |
+| onRemove | (value: string) => void | - | Called with <code>value</code> of the removed item |
+| onSearchChange | (value: string) => void | - | Called when search changes |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
-| renderOption | ((item: ComboboxLikeRenderOptionInput<ComboboxItem>) => ReactNode) | - | A function to render content of the option, replaces the default content of the option |
+| renderOption | (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => ReactNode | - | A function to render content of the option, replaces the default content of the option |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
 | rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
 | rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>rightSection</code> element |
@@ -17052,15 +17052,15 @@ NativeSelect provides better accessibility support when used in forms. Make sure
 |------|------|---------|-------------|
 | data | ComboboxData | - | Data used to render options, can be replaced with <code>children</code> |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
@@ -17357,7 +17357,7 @@ function Demo() {
 | label | React.ReactNode | - | Main link label |
 | leftSection | React.ReactNode | - | Section displayed on the left side of the label |
 | noWrap | boolean | - | If set, label and description do not wrap to the next line |
-| onChange | ((opened: boolean) => void) | - | Called when open state changes |
+| onChange | (opened: boolean) => void | - | Called when open state changes |
 | opened | boolean | - | Controlled nested items collapse state |
 | rightSection | React.ReactNode | - | Section displayed on the right side of the label |
 
@@ -17489,7 +17489,7 @@ function Demo() {
 | icon | React.ReactNode | - | Notification icon, replaces color line |
 | loaderProps | LoaderProps | - | Props passed down to the <code>Loader</code> component |
 | loading | boolean | - | If set, the <code>Loader</code> component is displayed instead of the icon |
-| onClose | (() => void) | - | Called when the close button is clicked |
+| onClose | () => void | - | Called when the close button is clicked |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code> |
 | title | React.ReactNode | - | Notification title, displayed above the message body |
 | withBorder | boolean | - | Adds border to the root element |
@@ -18143,26 +18143,26 @@ NumberInput provides better accessibility support when used in forms. Make sure 
 | decimalSeparator | string | - | Character used as a decimal separator |
 | defaultValue | string | number | - | Uncontrolled component default value |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
 | fixedDecimalScale | boolean | - | If set, 0s are added after <code>decimalSeparator</code> to match given <code>decimalScale</code>. |
 | handlersRef | ForwardedRef<NumberInputHandlers> | undefined | - | Increment/decrement handlers |
 | hideControls | boolean | - | If set, the up/down controls are hidden |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
-| isAllowed | ((values: NumberFormatValues) => boolean) | - | A function to validate the input value. If this function returns <code>false</code>, the <code>onChange</code> will not be called and the input value will not change. |
+| isAllowed | (values: NumberFormatValues) => boolean | - | A function to validate the input value. If this function returns <code>false</code>, the <code>onChange</code> will not be called and the input value will not change. |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
 | leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height |
 | max | number | - | Maximum possible value |
 | min | number | - | Minimum possible value |
-| onChange | ((value: string | number) => void) | - | Called when value changes |
+| onChange | (value: string | number) => void | - | Called when value changes |
 | onValueChange | OnValueChange | - | Called when value changes with <code>react-number-format</code> payload |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | prefix | string | - | Prefix added before the input value |
@@ -18827,16 +18827,16 @@ you can use it to create custom pagination components.
 | dotsIcon | PaginationIcon | - | Dots icon component |
 | firstIcon | PaginationIcon | - | First control icon component |
 | gap | MantineSpacing | - | Key of <code>theme.spacing</code>, gap between controls |
-| getControlProps | ((control: "next" | "previous" | "first" | "last") => Record<string, any>) | - | Props passed down to next/previous/first/last controls |
-| getItemProps | ((page: number) => Record<string, any>) | - | Additional props passed down to controls |
+| getControlProps | (control: "next" | "previous" | "first" | "last") => Record<string, any> | - | Props passed down to next/previous/first/last controls |
+| getItemProps | (page: number) => Record<string, any> | - | Additional props passed down to controls |
 | hideWithOnePage | boolean | - | If set, the pagination is hidden when only one page is available (<code>total={1}</code>) |
 | lastIcon | PaginationIcon | - | Last control icon component |
 | nextIcon | PaginationIcon | - | Next control icon component |
-| onChange | ((value: number) => void) | - | Called when page changes |
-| onFirstPage | (() => void) | - | Called when first page control is clicked |
-| onLastPage | (() => void) | - | Called when last page control is clicked |
-| onNextPage | (() => void) | - | Called when next page control is clicked |
-| onPreviousPage | (() => void) | - | Called when previous page control is clicked |
+| onChange | (value: number) => void | - | Called when page changes |
+| onFirstPage | () => void | - | Called when first page control is clicked |
+| onLastPage | () => void | - | Called when last page control is clicked |
+| onNextPage | () => void | - | Called when next page control is clicked |
+| onPreviousPage | () => void | - | Called when previous page control is clicked |
 | previousIcon | PaginationIcon | - | Previous control icon component |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | siblings | number | - | Number of siblings displayed on the left/right side of the selected page |
@@ -19314,20 +19314,20 @@ function Demo() {
 |------|------|---------|-------------|
 | defaultVisible | boolean | - | If set, the input value is visible by default |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
 | leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height |
-| onVisibilityChange | ((visible: boolean) => void) | - | Called when visibility changes |
+| onVisibilityChange | (visible: boolean) => void | - | Called when visibility changes |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
@@ -19437,9 +19437,9 @@ function Demo() {
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | disabled | boolean | - | Adds disabled attribute, applies disabled styles |
-| onRemove | (() => void) | - | Called when the remove button is clicked |
+| onRemove | () => void | - | Called when the remove button is clicked |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set border-radius. Numbers are converted to rem. |
-| removeButtonProps | (CloseButtonProps & Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref">) | - | Props passed down to the remove button |
+| removeButtonProps | CloseButtonProps & Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref"> | - | Props passed down to the remove button |
 | size | MantineSize | - | Controls pill <code>font-size</code> and <code>padding</code> |
 | withRemoveButton | boolean | - | Controls visibility of the remove button |
 
@@ -19712,15 +19712,15 @@ function Demo() {
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
@@ -19857,7 +19857,7 @@ function Accessibility() {
 | error | boolean | - | Sets <code>aria-invalid</code> attribute and applies error styles to all inputs |
 | form | string | - | Hidden input <code>form</code> attribute |
 | gap | MantineSpacing | - | Key of <code>theme.spacing</code> or any valid CSS value to set <code>gap</code> between inputs, numbers are converted to rem |
-| getInputProps | ((index: number) => InputProps & ElementProps<"input", "size">) | - | Props added to the input element depending on its index |
+| getInputProps | (index: number) => InputProps & ElementProps<"input", "size"> | - | Props added to the input element depending on its index |
 | hiddenInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to the hidden input |
 | id | string | - | Base id used to generate unique ids for inputs |
 | inputMode | "search" | "text" | "none" | "tel" | "url" | "email" | "numeric" | "decimal" | - | <code>inputmode</code> attribute, inferred from the <code>type</code> prop if not specified |
@@ -19866,8 +19866,8 @@ function Accessibility() {
 | manageFocus | boolean | - | Determines whether focus should be moved automatically to the next input once filled |
 | mask | boolean | - | Changes input type to <code>"password"</code> |
 | name | string | - | Hidden input <code>name</code> attribute |
-| onChange | ((value: string) => void) | - | Called when value changes |
-| onComplete | ((value: string) => void) | - | Called when all inputs have value |
+| onChange | (value: string) => void | - | Called when value changes |
+| onComplete | (value: string) => void | - | Called when all inputs have value |
 | oneTimeCode | boolean | - | Determines whether <code>autocomplete="one-time-code"</code> attribute should be set on all inputs |
 | placeholder | string | - | Inputs placeholder |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
@@ -20488,15 +20488,15 @@ Other elements will not support `Space` and `Enter` key presses.
 | keepMounted | boolean | - | If set, the dropdown is not unmounted from the DOM when hidden. <code>display: none</code> styles are added instead. |
 | middlewares | PopoverMiddlewares | - | Floating ui middlewares to configure position handling |
 | offset | number | FloatingAxesOffsets | - | Offset of the dropdown element |
-| onChange | ((opened: boolean) => void) | - | Called with current state when dropdown opens or closes |
-| onClose | (() => void) | - | Called when dropdown closes |
-| onDismiss | (() => void) | - | Called when the popover is dismissed by clicking outside or by pressing escape |
-| onEnterTransitionEnd | (() => void) | - | Called when enter transition ends |
-| onExitTransitionEnd | (() => void) | - | Called when exit transition ends |
-| onOpen | (() => void) | - | Called when dropdown opens |
-| onPositionChange | ((position: FloatingPosition) => void) | - | Called when dropdown position changes |
+| onChange | (opened: boolean) => void | - | Called with current state when dropdown opens or closes |
+| onClose | () => void | - | Called when dropdown closes |
+| onDismiss | () => void | - | Called when the popover is dismissed by clicking outside or by pressing escape |
+| onEnterTransitionEnd | () => void | - | Called when enter transition ends |
+| onExitTransitionEnd | () => void | - | Called when exit transition ends |
+| onOpen | () => void | - | Called when dropdown opens |
+| onPositionChange | (position: FloatingPosition) => void | - | Called when dropdown position changes |
 | opened | boolean | - | Controlled dropdown opened state |
-| overlayProps | (OverlayProps & ElementProps<"div">) | - | Props passed down to <code>Overlay</code> component |
+| overlayProps | OverlayProps & ElementProps<"div"> | - | Props passed down to <code>Overlay</code> component |
 | portalProps | BasePortalProps | - | Props to pass down to the <code>Portal</code> when <code>withinPortal</code> is true |
 | position | FloatingPosition | - | Dropdown position relative to the target element |
 | positionDependencies | any[] | - | @deprecated : Do not use, will be removed in 9.0 |
@@ -20720,6 +20720,36 @@ function Demo() {
 ```
 
 
+## Vertical orientation
+
+#### Example: vertical
+
+```tsx
+import { Progress } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Group>
+      <Progress value={80} orientation="vertical" h={200} />
+      <Progress value={60} color="orange" size="xl" orientation="vertical" h={200} animated />
+
+      <Progress.Root size="xl" autoContrast orientation="vertical" h={200}>
+        <Progress.Section value={40} color="lime.4">
+          <Progress.Label>Documents</Progress.Label>
+        </Progress.Section>
+        <Progress.Section value={20} color="yellow.4">
+          <Progress.Label>Apps</Progress.Label>
+        </Progress.Section>
+        <Progress.Section value={20} color="cyan.7">
+          <Progress.Label>Other</Progress.Label>
+        </Progress.Section>
+      </Progress.Root>
+    </Group>
+  );
+}
+```
+
+
 ## With tooltips
 
 #### Example: tooltips
@@ -20901,6 +20931,7 @@ function DemoCompound() {
 | animated | boolean | - | If set, the sections stripes are animated, <code>striped</code> prop is ignored |
 | autoContrast | boolean | - | If set, adjusts text color based on background color for <code>filled</code> variant |
 | color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS value |
+| orientation | "horizontal" | "vertical" | - | Controls orientation |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code> |
 | size | number | MantineSize | (string & {}) | - | Controls track height |
 | striped | boolean | - | If set, the section has stripes |
@@ -21357,7 +21388,7 @@ function GoodLabel() {
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius,</code> |
 | rootRef | ForwardedRef<HTMLDivElement> | - | Assigns ref of the root element |
 | size | MantineSize | (string & {}) | - | Controls size of the component |
-| wrapperProps | (Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> & DataAttributes) | - | Props passed down to the root element |
+| wrapperProps | Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> & DataAttributes | - | Props passed down to the root element |
 
 
 #### Styles API
@@ -21778,19 +21809,19 @@ function Demo() {
 | min | number | - | Minimal possible value |
 | minRange | number | - | Minimal range interval |
 | name | string | - | Hidden input name, use with uncontrolled component |
-| onChange | ((value: RangeSliderValue) => void) | - | Called when value changes |
-| onChangeEnd | ((value: RangeSliderValue) => void) | - | Called when user stops dragging slider or changes value with arrows |
+| onChange | (value: RangeSliderValue) => void | - | Called when value changes |
+| onChangeEnd | (value: RangeSliderValue) => void | - | Called when user stops dragging slider or changes value with arrows |
 | precision | number | - | Number of significant digits after the decimal point |
 | pushOnOverlap | boolean | - | Determines whether the other thumb should be pushed by the current thumb dragging when <code>minRange</code>/<code>maxRange</code> is reached |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | restrictToMarks | boolean | - | Determines whether the selection should be only allowed from the given marks array |
-| scale | ((value: number) => number) | - | A transformation function to change the scale of the slider |
+| scale | (value: number) => number | - | A transformation function to change the scale of the slider |
 | showLabelOnHover | boolean | - | Determines whether the label should be displayed when the slider is hovered |
 | size | number | MantineSize | (string & {}) | - | Controls size of the track |
 | step | number | - | Number by which value will be incremented/decremented with thumb drag and arrows |
 | thumbChildren | React.ReactNode | - | Content rendered inside thumb |
 | thumbFromLabel | string | - | First thumb <code>aria-label</code> |
-| thumbProps | ((index: 0 | 1) => Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref">) | - | Props passed down to thumb element based on the thumb index |
+| thumbProps | (index: 0 | 1) => Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> | - | Props passed down to thumb element based on the thumb index |
 | thumbSize | string | number | - | Thumb <code>width</code> and <code>height</code>, by default value is computed based on <code>size</code> prop |
 | thumbToLabel | string | - | Second thumb <code>aria-label</code> |
 | value | RangeSliderValue | - | Controlled component value |
@@ -21956,11 +21987,11 @@ function Demo() {
 | emptySymbol | ReactNode | ((value: number) => ReactNode) | - | Icon displayed when the symbol is empty |
 | fractions | number | - | Number of fractions each item can be divided into |
 | fullSymbol | ReactNode | ((value: number) => ReactNode) | - | Icon displayed when the symbol is full |
-| getSymbolLabel | ((index: number) => string) | - | A function to assign <code>aria-label</code> of the the control at index given in the argument. If not specified, control index is used as <code>aria-label</code>. |
+| getSymbolLabel | (index: number) => string | - | A function to assign <code>aria-label</code> of the the control at index given in the argument. If not specified, control index is used as <code>aria-label</code>. |
 | highlightSelectedOnly | boolean | - | If set, only the selected symbol changes to full symbol when selected |
 | name | string | - | <code>name</code> attribute passed down to all inputs. By default, <code>name</code> is generated randomly. |
-| onChange | ((value: number) => void) | - | Called when value changes |
-| onHover | ((value: number) => void) | - | Called when one of the controls is hovered |
+| onChange | (value: number) => void | - | Called when value changes |
+| onHover | (value: number) => void | - | Called when one of the controls is hovered |
 | readOnly | boolean | - | If set, the user cannot interact with the component |
 | size | number | MantineSize | (string & {}) | - | Controls component size |
 | value | number | - | Controlled component value |
@@ -22695,9 +22726,9 @@ function Demo() {
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | offsetScrollbars | boolean | "x" | "y" | "present" | - | Determines whether scrollbars should be offset with padding on given axis |
-| onBottomReached | (() => void) | - | Called when scrollarea is scrolled all the way to the bottom |
-| onScrollPositionChange | ((position: { x: number; y: number; }) => void) | - | Called with current position (<code>x</code> and <code>y</code> coordinates) when viewport is scrolled |
-| onTopReached | (() => void) | - | Called when scrollarea is scrolled all the way to the top |
+| onBottomReached | () => void | - | Called when scrollarea is scrolled all the way to the bottom |
+| onScrollPositionChange | (position: { x: number; y: number; }) => void | - | Called with current position (<code>x</code> and <code>y</code> coordinates) when viewport is scrolled |
+| onTopReached | () => void | - | Called when scrollarea is scrolled all the way to the top |
 | overscrollBehavior | OverscrollBehavior | - | Defines <code>overscroll-behavior</code> of the viewport |
 | scrollHideDelay | number | - | Scroll hide delay in ms, applicable only when type is set to <code>hover</code> or <code>scroll</code> |
 | scrollbarSize | string | number | - | Scrollbar size, any valid CSS value for width/height, numbers are converted to rem, default value is 0.75rem |
@@ -23066,7 +23097,7 @@ function Demo() {
 | disabled | boolean | - | Determines whether the component is disabled |
 | fullWidth | boolean | - | Determines whether the component should take 100% width of its parent |
 | name | string | - | Name of the radio group, by default random name is generated |
-| onChange | ((value: string) => void) | - | Called when value changes |
+| onChange | (value: string) => void | - | Called when value changes |
 | orientation | "horizontal" | "vertical" | - | Component orientation |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | readOnly | boolean | - | If set to <code>false</code>, prevents changing the value |
@@ -24053,18 +24084,18 @@ function Demo() {
 | defaultSearchValue | string | - | Default search value |
 | defaultValue | string | null | - | Uncontrolled component default value |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | dropdownOpened | boolean | - | Controlled dropdown opened state |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
 | filter | OptionsFilter | - | Function based on which items are filtered and sorted |
 | hiddenInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to the hidden input |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
@@ -24072,15 +24103,15 @@ function Demo() {
 | limit | number | - | Maximum number of options displayed at a time, <code>Infinity</code> by default |
 | maxDropdownHeight | string | number | - | <code>max-height</code> of the dropdown, only applicable when <code>withScrollArea</code> prop is <code>true</code>, <code>250</code> by default |
 | nothingFoundMessage | React.ReactNode | - | Message displayed when no option matches the current search query when the <code>searchable</code> prop is set or there is no data |
-| onChange | ((value: string | null, option: ComboboxItem) => void) | - | Called when value changes |
-| onClear | (() => void) | - | Called when the clear button is clicked |
-| onDropdownClose | (() => void) | - | Called when dropdown closes |
-| onDropdownOpen | (() => void) | - | Called when dropdown opens |
-| onOptionSubmit | ((value: string) => void) | - | Called when option is submitted from dropdown with mouse click or <code>Enter</code> key |
-| onSearchChange | ((value: string) => void) | - | Called when search changes |
+| onChange | (value: string | null, option: ComboboxItem) => void | - | Called when value changes |
+| onClear | () => void | - | Called when the clear button is clicked |
+| onDropdownClose | () => void | - | Called when dropdown closes |
+| onDropdownOpen | () => void | - | Called when dropdown opens |
+| onOptionSubmit | (value: string) => void | - | Called when option is submitted from dropdown with mouse click or <code>Enter</code> key |
+| onSearchChange | (value: string) => void | - | Called when search changes |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
-| renderOption | ((item: ComboboxLikeRenderOptionInput<ComboboxItem>) => ReactNode) | - | A function to render content of the option, replaces the default content of the option |
+| renderOption | (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => ReactNode | - | A function to render content of the option, replaces the default content of the option |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
 | rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
 | rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>rightSection</code> element |
@@ -25175,12 +25206,12 @@ function Demo() {
 | max | number | - | Maximum possible value |
 | min | number | - | Minimal possible value |
 | name | string | - | Hidden input name, use with uncontrolled component |
-| onChange | ((value: number) => void) | - | Called when value changes |
-| onChangeEnd | ((value: number) => void) | - | Called when user stops dragging slider or changes value with arrows |
+| onChange | (value: number) => void | - | Called when value changes |
+| onChangeEnd | (value: number) => void | - | Called when user stops dragging slider or changes value with arrows |
 | precision | number | - | Number of significant digits after the decimal point |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | restrictToMarks | boolean | - | Determines whether the selection should be only allowed from the given marks array |
-| scale | ((value: number) => number) | - | A transformation function to change the scale of the slider |
+| scale | (value: number) => number | - | A transformation function to change the scale of the slider |
 | showLabelOnHover | boolean | - | Determines whether the label should be displayed when the slider is hovered |
 | size | number | MantineSize | (string & {}) | - | Controls size of the track |
 | step | number | - | Number by which value will be incremented/decremented with thumb drag and arrows |
@@ -25434,7 +25465,7 @@ function Demo() {
 | hideLabel | React.ReactNode | required | Label for close spoiler action |
 | initialState | boolean | - | Initial spoiler state, <code>true</code> to wrap content in spoiler, <code>false</code> to show content without spoiler, opened state is updated on mount |
 | maxHeight | number | - | Maximum height of the visible content, when this point is reached spoiler appears |
-| onExpandedChange | ((expanded: boolean) => void) | - | Called when expanded state changes (when spoiler visibility is toggled by the user) |
+| onExpandedChange | (expanded: boolean) => void | - | Called when expanded state changes (when spoiler visibility is toggled by the user) |
 | showLabel | React.ReactNode | required | Label for open spoiler action |
 | transitionDuration | number | - | Spoiler reveal transition duration in ms, set 0 or null to turn off animation |
 
@@ -26143,7 +26174,7 @@ function Demo() {
 | icon | ReactNode | StepFragmentComponent | - | Step icon, default value is <code>step index + 1</code> |
 | iconPosition | "left" | "right" | - | Icon position relative to the step body |
 | iconSize | string | number | - | Controls size of the step icon, by default icon size is inferred from <code>size</code> prop |
-| onStepClick | ((stepIndex: number) => void) | - | Called when step is clicked |
+| onStepClick | (stepIndex: number) => void | - | Called when step is clicked |
 | orientation | "horizontal" | "vertical" | - | Stepper orientation |
 | progressIcon | ReactNode | StepFragmentComponent | - | Step icon displayed when step is in progress, default value is <code>step index + 1</code> |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set steps border-radius |
@@ -26498,7 +26529,7 @@ function AlsoGood() {
 | size | MantineSize | (string & {}) | - | Controls size of all elements |
 | thumbIcon | React.ReactNode | - | Icon inside the thumb of the switch |
 | withThumbIndicator | boolean | - | If set, the indicator will be displayed inside thumb |
-| wrapperProps | (Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> & DataAttributes) | - | Props passed down to the root element |
+| wrapperProps | Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> & DataAttributes | - | Props passed down to the root element |
 
 
 #### Styles API
@@ -26792,7 +26823,7 @@ function Demo({ dependency }) {
 | autoContrast | boolean | - | If set, adjusts text color based on background color for <code>filled</code> variant |
 | color | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color value |
 | depthOffset | string | number | - | Controls padding on the left side of control, multiplied by (<code>depth</code> - <code>minDepthToOffset</code>), <code>20px</code> by default |
-| getControlProps | ((payload: TableOfContentsGetControlPropsPayload) => UnstyledButtonProps & ElementProps<"button"> & Record<...>) | - | A function to pass props down to controls, accepts values from <code>use-scroll-spy</code> hook as an argument and active state. |
+| getControlProps | (payload: TableOfContentsGetControlPropsPayload) => UnstyledButtonProps & ElementProps<"button"> & Record<...> | - | A function to pass props down to controls, accepts values from <code>use-scroll-spy</code> hook as an argument and active state. |
 | initialData | InitialTableOfContentsData[] | - | Data used to render content until actual values are retrieved from the DOM |
 | minDepthToOffset | number | - | Minimum <code>depth</code> value that requires offset, <code>1</code> by default |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>@default <code>theme.defaultRadius</code> |
@@ -28054,7 +28085,7 @@ function Demo() {
 | inverted | boolean | - | Determines whether tabs should have inverted styles |
 | keepMounted | boolean | - | If set to <code>false</code>, <code>Tabs.Panel</code> content will be unmounted when the associated tab is not active |
 | loop | boolean | - | If set, arrow key presses loop though items (first to last and last to first) |
-| onChange | ((value: string | null) => void) | - | Called when value changes |
+| onChange | (value: string | null) => void | - | Called when value changes |
 | orientation | "horizontal" | "vertical" | - | Tabs orientation |
 | placement | "left" | "right" | - | <code>Tabs.List</code> placement relative to <code>Tabs.Panel</code>, applicable only when <code>orientation="vertical"</code> |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>@default <code>theme.defaultRadius</code> |
@@ -28970,20 +29001,20 @@ function Demo() {
 | defaultSearchValue | string | - | Default search value |
 | defaultValue | string[] | - | Uncontrolled component default value |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | dropdownOpened | boolean | - | Controlled dropdown opened state |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
 | filter | OptionsFilter | - | Function based on which items are filtered and sorted |
 | hiddenInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to the hidden input |
 | hiddenInputValuesDivider | string | - | Divider used to separate values in the hidden input <code>value</code> attribute |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
-| isDuplicate | ((value: string, currentValues: string[]) => boolean) | - | Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. |
+| isDuplicate | (value: string, currentValues: string[]) => boolean | - | Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
@@ -28991,17 +29022,17 @@ function Demo() {
 | limit | number | - | Maximum number of options displayed at a time, <code>Infinity</code> by default |
 | maxDropdownHeight | string | number | - | <code>max-height</code> of the dropdown, only applicable when <code>withScrollArea</code> prop is <code>true</code>, <code>250</code> by default |
 | maxTags | number | - | Maximum number of tags |
-| onChange | ((value: string[]) => void) | - | Called when value changes |
-| onClear | (() => void) | - | Called when the clear button is clicked |
-| onDropdownClose | (() => void) | - | Called when dropdown closes |
-| onDropdownOpen | (() => void) | - | Called when dropdown opens |
-| onDuplicate | ((value: string) => void) | - | Called when user tries to submit a duplicated tag |
-| onOptionSubmit | ((value: string) => void) | - | Called when option is submitted from dropdown with mouse click or <code>Enter</code> key |
-| onRemove | ((value: string) => void) | - | Called when tag is removed |
-| onSearchChange | ((value: string) => void) | - | Called when search changes |
+| onChange | (value: string[]) => void | - | Called when value changes |
+| onClear | () => void | - | Called when the clear button is clicked |
+| onDropdownClose | () => void | - | Called when dropdown closes |
+| onDropdownOpen | () => void | - | Called when dropdown opens |
+| onDuplicate | (value: string) => void | - | Called when user tries to submit a duplicated tag |
+| onOptionSubmit | (value: string) => void | - | Called when option is submitted from dropdown with mouse click or <code>Enter</code> key |
+| onRemove | (value: string) => void | - | Called when tag is removed |
+| onSearchChange | (value: string) => void | - | Called when search changes |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
-| renderOption | ((input: ComboboxLikeRenderOptionInput<ComboboxStringItem>) => ReactNode) | - | A function to render content of the option, replaces the default content of the option |
+| renderOption | (input: ComboboxLikeRenderOptionInput<ComboboxStringItem>) => ReactNode | - | A function to render content of the option, replaces the default content of the option |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
 | rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
 | rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>rightSection</code> element |
@@ -29206,15 +29237,15 @@ TextInput provides better accessibility support when used in forms. Make sure to
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
@@ -29694,15 +29725,15 @@ Textarea provides better accessibility support when used in forms. Make sure to 
 |------|------|---------|-------------|
 | autosize | boolean | - | If set, enables textarea height growing with its content |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
@@ -30836,7 +30867,7 @@ function Demo() {
 | middlewares | TooltipMiddlewares | - | Floating ui middlewares to configure position handling, <code>{ flip: true, shift: true, inline: false }</code> by default |
 | multiline | boolean | - | Determines whether content should be wrapped on to the next line, <code>false</code> by default |
 | offset | number | FloatingAxesOffsets | - | Space between target element and tooltip in px |
-| onPositionChange | ((position: FloatingPosition) => void) | - | Called when tooltip position changes |
+| onPositionChange | (position: FloatingPosition) => void | - | Called when tooltip position changes |
 | openDelay | number | - | Open delay in ms |
 | opened | boolean | - | Controlled opened state |
 | portalProps | Omit<BasePortalProps, "withinPortal"> | - | Props to pass down to the portal when withinPortal is true |
@@ -31040,10 +31071,10 @@ export function Demo() {
 | exitDuration | number | - | Exit transition duration in ms |
 | keepMounted | boolean | - | If set, the element is not unmounted from the DOM when hidden, <code>display: none</code> styles are applied instead |
 | mounted | boolean | required | Determines whether component should be mounted to the DOM |
-| onEnter | (() => void) | - | Called when enter transition starts |
-| onEntered | (() => void) | - | Called when enter transition ends |
-| onExit | (() => void) | - | Called when exit transition starts |
-| onExited | (() => void) | - | Called when exit transition ends |
+| onEnter | () => void | - | Called when enter transition starts |
+| onEntered | () => void | - | Called when enter transition ends |
+| onExit | () => void | - | Called when exit transition starts |
+| onExited | () => void | - | Called when exit transition ends |
 | timingFunction | string | - | Transition timing function |
 | transition | MantineTransition | - | Transition name or object |
 
@@ -36606,12 +36637,12 @@ function Demo() {
 | defaultDate | string | Date | - | Initial displayed date in uncontrolled mode |
 | defaultLevel | "month" | "year" | "decade" | - | Initial displayed level in uncontrolled mode |
 | enableKeyboardNavigation | boolean | - | Enable enhanced keyboard navigation (Ctrl/Cmd + Arrow keys for year navigation, Ctrl/Cmd + Shift + Arrow keys for decade navigation, Y key to open year view) |
-| excludeDate | ((date: string) => boolean) | - | Callback function to determine whether the day should be disabled |
+| excludeDate | (date: string) => boolean | - | Callback function to determine whether the day should be disabled |
 | firstDayOfWeek | 0 | 1 | 2 | 3 | 4 | 5 | 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |
-| getDayAriaLabel | ((date: string) => string) | - | Assigns <code>aria-label</code> to <code>Day</code> components based on date |
-| getDayProps | ((date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars">) | - | Passes props down to <code>Day</code> components |
-| getMonthControlProps | ((date: string) => Partial<PickerControlProps>) | - | Passes props down month picker control |
-| getYearControlProps | ((date: string) => Partial<PickerControlProps>) | - | Passes props down to year picker control based on date |
+| getDayAriaLabel | (date: string) => string | - | Assigns <code>aria-label</code> to <code>Day</code> components based on date |
+| getDayProps | (date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars"> | - | Passes props down to <code>Day</code> components |
+| getMonthControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down month picker control |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
 | hasNextLevel | boolean | - | Determines whether next level button should be enabled |
 | headerControlsOrder | ("next" | "previous" | "level")[] | - | Controls order |
 | hideOutsideDates | boolean | - | Determines whether outside dates should be hidden |
@@ -36628,18 +36659,18 @@ function Demo() {
 | nextIcon | React.ReactNode | - | Change next icon |
 | nextLabel | string | - | Next button <code>aria-label</code> |
 | numberOfColumns | number | - | Number of columns displayed next to each other |
-| onDateChange | ((date: string) => void) | - | Called when date changes |
-| onLevelChange | ((level: CalendarLevel) => void) | - | Called when level changes |
-| onMonthMouseEnter | ((event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void) | - | Called when mouse enters month control |
-| onMonthSelect | ((date: string) => void) | - | Called when user selects month |
-| onNextDecade | ((date: string) => void) | - | Called when the next decade button is clicked |
-| onNextMonth | ((date: string) => void) | - | Called when the next month button is clicked |
-| onNextYear | ((date: string) => void) | - | Called when the next year button is clicked |
-| onPreviousDecade | ((date: string) => void) | - | Called when the previous decade button is clicked |
-| onPreviousMonth | ((date: string) => void) | - | Called when the previous month button is clicked |
-| onPreviousYear | ((date: string) => void) | - | Called when the previous year button is clicked |
-| onYearMouseEnter | ((event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void) | - | Called when mouse enters year control |
-| onYearSelect | ((date: string) => void) | - | Called when user selects year |
+| onDateChange | (date: string) => void | - | Called when date changes |
+| onLevelChange | (level: CalendarLevel) => void | - | Called when level changes |
+| onMonthMouseEnter | (event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void | - | Called when mouse enters month control |
+| onMonthSelect | (date: string) => void | - | Called when user selects month |
+| onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |
+| onNextMonth | (date: string) => void | - | Called when the next month button is clicked |
+| onNextYear | (date: string) => void | - | Called when the next year button is clicked |
+| onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |
+| onPreviousMonth | (date: string) => void | - | Called when the previous month button is clicked |
+| onPreviousYear | (date: string) => void | - | Called when the previous year button is clicked |
+| onYearMouseEnter | (event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void | - | Called when mouse enters year control |
+| onYearSelect | (date: string) => void | - | Called when user selects year |
 | previousIcon | React.ReactNode | - | Change previous icon |
 | previousLabel | string | - | Previous button <code>aria-label</code> |
 | renderDay | (date: string) => React.ReactNode | - | Controls day value rendering |
@@ -36916,33 +36947,33 @@ DateInput provides better accessibility support when used in forms. Make sure to
 | clearable | boolean | - | If set, clear button is displayed in the <code>rightSection</code> when the component has value. Ignored if <code>rightSection</code> prop is set. |
 | columnsToScroll | number | - | Number of columns to scroll with next/prev buttons, same as <code>numberOfColumns</code> if not set explicitly |
 | date | string | Date | - | Displayed date in controlled mode |
-| dateParser | ((value: string) => string | Date | null) | - | A function to parse user input and convert it to date string value |
+| dateParser | (value: string) => string | Date | null | - | A function to parse user input and convert it to date string value |
 | decadeLabelFormat | string | ((startOfDecade: string, endOfDecade: string) => ReactNode) | - | <code>dayjs</code> format for decade label or a function that returns decade label based on the date value |
 | defaultDate | string | Date | - | Initial displayed date in uncontrolled mode |
 | defaultLevel | "month" | "year" | "decade" | - | Initial displayed level (uncontrolled) |
 | defaultValue | DateValue | - | Uncontrolled component default value |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
-| excludeDate | ((date: string) => boolean) | - | Callback function to determine whether the day should be disabled |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
+| excludeDate | (date: string) => boolean | - | Callback function to determine whether the day should be disabled |
 | firstDayOfWeek | 0 | 1 | 2 | 3 | 4 | 5 | 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |
 | fixOnBlur | boolean | - | If set to <code>false</code>, invalid user input is preserved and is not corrected on blur |
-| getDayAriaLabel | ((date: string) => string) | - | Assigns <code>aria-label</code> to <code>Day</code> components based on date |
-| getDayProps | ((date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars">) | - | Passes props down to <code>Day</code> components |
-| getMonthControlProps | ((date: string) => Partial<PickerControlProps>) | - | Passes props down month picker control |
-| getYearControlProps | ((date: string) => Partial<PickerControlProps>) | - | Passes props down to year picker control based on date |
+| getDayAriaLabel | (date: string) => string | - | Assigns <code>aria-label</code> to <code>Day</code> components based on date |
+| getDayProps | (date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars"> | - | Passes props down to <code>Day</code> components |
+| getMonthControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down month picker control |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
 | hasNextLevel | boolean | - | Determines whether next level button should be enabled |
 | headerControlsOrder | ("next" | "previous" | "level")[] | - | Controls order |
 | hideOutsideDates | boolean | - | Determines whether outside dates should be hidden |
 | hideWeekdays | boolean | - | Determines whether weekdays row should be hidden |
 | highlightToday | boolean | - | Determines whether today should be highlighted with a border |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
@@ -36958,18 +36989,18 @@ DateInput provides better accessibility support when used in forms. Make sure to
 | nextIcon | React.ReactNode | - | Change next icon |
 | nextLabel | string | - | Next button <code>aria-label</code> |
 | numberOfColumns | number | - | Number of columns displayed next to each other |
-| onChange | ((value: string | null) => void) | - | Called when value changes |
-| onDateChange | ((date: string) => void) | - | Called when date changes |
-| onLevelChange | ((level: CalendarLevel) => void) | - | Called when the level changes |
-| onLevelClick | (() => void) | - | Called when the level button is clicked |
-| onNext | (() => void) | - | Called when the next button is clicked |
-| onNextDecade | ((date: string) => void) | - | Called when the next decade button is clicked |
-| onNextMonth | ((date: string) => void) | - | Called when the next month button is clicked |
-| onNextYear | ((date: string) => void) | - | Called when the next year button is clicked |
-| onPrevious | (() => void) | - | Called when the previous button is clicked |
-| onPreviousDecade | ((date: string) => void) | - | Called when the previous decade button is clicked |
-| onPreviousMonth | ((date: string) => void) | - | Called when the previous month button is clicked |
-| onPreviousYear | ((date: string) => void) | - | Called when the previous year button is clicked |
+| onChange | (value: string | null) => void | - | Called when value changes |
+| onDateChange | (date: string) => void | - | Called when date changes |
+| onLevelChange | (level: CalendarLevel) => void | - | Called when the level changes |
+| onLevelClick | () => void | - | Called when the level button is clicked |
+| onNext | () => void | - | Called when the next button is clicked |
+| onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |
+| onNextMonth | (date: string) => void | - | Called when the next month button is clicked |
+| onNextYear | (date: string) => void | - | Called when the next year button is clicked |
+| onPrevious | () => void | - | Called when the previous button is clicked |
+| onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |
+| onPreviousMonth | (date: string) => void | - | Called when the previous month button is clicked |
+| onPreviousYear | (date: string) => void | - | Called when the previous year button is clicked |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to the <code>Popover</code> component |
 | previousDisabled | boolean | - | Disables previous control |
@@ -37257,27 +37288,27 @@ DatePickerInput provides better accessibility support when used in forms. Make s
 | defaultLevel | "month" | "year" | "decade" | - | Initial displayed level (uncontrolled) |
 | defaultValue | DateValue | DatesRangeValue<DateValue> | DateValue[] | - | Default value for uncontrolled component |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | dropdownType | "popover" | "modal" | - | Type of the dropdown |
 | enableKeyboardNavigation | boolean | - | Enable enhanced keyboard navigation (Ctrl/Cmd + Arrow keys for year navigation, Ctrl/Cmd + Shift + Arrow keys for decade navigation, Y key to open year view) |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
-| excludeDate | ((date: string) => boolean) | - | Callback function to determine whether the day should be disabled |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
+| excludeDate | (date: string) => boolean | - | Callback function to determine whether the day should be disabled |
 | firstDayOfWeek | 0 | 1 | 2 | 3 | 4 | 5 | 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |
-| getDayAriaLabel | ((date: string) => string) | - | Assigns <code>aria-label</code> to <code>Day</code> components based on date |
-| getDayProps | ((date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars">) | - | Passes props down to <code>Day</code> components |
-| getMonthControlProps | ((date: string) => Partial<PickerControlProps>) | - | Passes props down month picker control |
-| getYearControlProps | ((date: string) => Partial<PickerControlProps>) | - | Passes props down to year picker control based on date |
+| getDayAriaLabel | (date: string) => string | - | Assigns <code>aria-label</code> to <code>Day</code> components based on date |
+| getDayProps | (date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars"> | - | Passes props down to <code>Day</code> components |
+| getMonthControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down month picker control |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
 | headerControlsOrder | ("next" | "previous" | "level")[] | - | Controls order |
 | hideOutsideDates | boolean | - | Determines whether outside dates should be hidden |
 | hideWeekdays | boolean | - | Determines whether weekdays row should be hidden |
 | highlightToday | boolean | - | Determines whether today should be highlighted with a border |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | labelSeparator | string | - | Separator between range value |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
@@ -37294,20 +37325,20 @@ DatePickerInput provides better accessibility support when used in forms. Make s
 | nextIcon | React.ReactNode | - | Change next icon |
 | nextLabel | string | - | Next button <code>aria-label</code> |
 | numberOfColumns | number | - | Number of columns displayed next to each other |
-| onChange | ((value: DatePickerValue<Type, string>) => void) | - | Called when value changes |
-| onDateChange | ((date: string) => void) | - | Called when date changes |
-| onDropdownClose | (() => void) | - | Called when the dropdown is closed |
-| onLevelChange | ((level: CalendarLevel) => void) | - | Called when level changes |
-| onMonthMouseEnter | ((event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void) | - | Called when mouse enters month control |
-| onMonthSelect | ((date: string) => void) | - | Called when user selects month |
-| onNextDecade | ((date: string) => void) | - | Called when the next decade button is clicked |
-| onNextMonth | ((date: string) => void) | - | Called when the next month button is clicked |
-| onNextYear | ((date: string) => void) | - | Called when the next year button is clicked |
-| onPreviousDecade | ((date: string) => void) | - | Called when the previous decade button is clicked |
-| onPreviousMonth | ((date: string) => void) | - | Called when the previous month button is clicked |
-| onPreviousYear | ((date: string) => void) | - | Called when the previous year button is clicked |
-| onYearMouseEnter | ((event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void) | - | Called when mouse enters year control |
-| onYearSelect | ((date: string) => void) | - | Called when user selects year |
+| onChange | (value: DatePickerValue<Type, string>) => void | - | Called when value changes |
+| onDateChange | (date: string) => void | - | Called when date changes |
+| onDropdownClose | () => void | - | Called when the dropdown is closed |
+| onLevelChange | (level: CalendarLevel) => void | - | Called when level changes |
+| onMonthMouseEnter | (event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void | - | Called when mouse enters month control |
+| onMonthSelect | (date: string) => void | - | Called when user selects month |
+| onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |
+| onNextMonth | (date: string) => void | - | Called when the next month button is clicked |
+| onNextYear | (date: string) => void | - | Called when the next year button is clicked |
+| onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |
+| onPreviousMonth | (date: string) => void | - | Called when the previous month button is clicked |
+| onPreviousYear | (date: string) => void | - | Called when the previous year button is clicked |
+| onYearMouseEnter | (event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void | - | Called when mouse enters year control |
+| onYearSelect | (date: string) => void | - | Called when user selects year |
 | placeholder | string | - | Input placeholder |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to <code>Popover</code> component |
@@ -37992,12 +38023,12 @@ Note that the following events will only trigger if focus is on date control.
 | defaultLevel | "month" | "year" | "decade" | - | Initial displayed level (uncontrolled) |
 | defaultValue | DateValue | DatesRangeValue<DateValue> | DateValue[] | - | Default value for uncontrolled component |
 | enableKeyboardNavigation | boolean | - | Enable enhanced keyboard navigation (Ctrl/Cmd + Arrow keys for year navigation, Ctrl/Cmd + Shift + Arrow keys for decade navigation, Y key to open year view) |
-| excludeDate | ((date: string) => boolean) | - | Callback function to determine whether the day should be disabled |
+| excludeDate | (date: string) => boolean | - | Callback function to determine whether the day should be disabled |
 | firstDayOfWeek | 0 | 1 | 2 | 3 | 4 | 5 | 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |
-| getDayAriaLabel | ((date: string) => string) | - | Assigns <code>aria-label</code> to <code>Day</code> components based on date |
-| getDayProps | ((date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars">) | - | Passes props down to <code>Day</code> components |
-| getMonthControlProps | ((date: string) => Partial<PickerControlProps>) | - | Passes props down month picker control |
-| getYearControlProps | ((date: string) => Partial<PickerControlProps>) | - | Passes props down to year picker control based on date |
+| getDayAriaLabel | (date: string) => string | - | Assigns <code>aria-label</code> to <code>Day</code> components based on date |
+| getDayProps | (date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars"> | - | Passes props down to <code>Day</code> components |
+| getMonthControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down month picker control |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
 | headerControlsOrder | ("next" | "previous" | "level")[] | - | Controls order |
 | hideOutsideDates | boolean | - | Determines whether outside dates should be hidden |
 | hideWeekdays | boolean | - | Determines whether weekdays row should be hidden |
@@ -38012,19 +38043,19 @@ Note that the following events will only trigger if focus is on date control.
 | nextIcon | React.ReactNode | - | Change next icon |
 | nextLabel | string | - | Next button <code>aria-label</code> |
 | numberOfColumns | number | - | Number of columns displayed next to each other |
-| onChange | ((value: DatePickerValue<Type, string>) => void) | - | Called when value changes |
-| onDateChange | ((date: string) => void) | - | Called when date changes |
-| onLevelChange | ((level: CalendarLevel) => void) | - | Called when level changes |
-| onMonthMouseEnter | ((event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void) | - | Called when mouse enters month control |
-| onMonthSelect | ((date: string) => void) | - | Called when user selects month |
-| onNextDecade | ((date: string) => void) | - | Called when the next decade button is clicked |
-| onNextMonth | ((date: string) => void) | - | Called when the next month button is clicked |
-| onNextYear | ((date: string) => void) | - | Called when the next year button is clicked |
-| onPreviousDecade | ((date: string) => void) | - | Called when the previous decade button is clicked |
-| onPreviousMonth | ((date: string) => void) | - | Called when the previous month button is clicked |
-| onPreviousYear | ((date: string) => void) | - | Called when the previous year button is clicked |
-| onYearMouseEnter | ((event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void) | - | Called when mouse enters year control |
-| onYearSelect | ((date: string) => void) | - | Called when user selects year |
+| onChange | (value: DatePickerValue<Type, string>) => void | - | Called when value changes |
+| onDateChange | (date: string) => void | - | Called when date changes |
+| onLevelChange | (level: CalendarLevel) => void | - | Called when level changes |
+| onMonthMouseEnter | (event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void | - | Called when mouse enters month control |
+| onMonthSelect | (date: string) => void | - | Called when user selects month |
+| onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |
+| onNextMonth | (date: string) => void | - | Called when the next month button is clicked |
+| onNextYear | (date: string) => void | - | Called when the next year button is clicked |
+| onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |
+| onPreviousMonth | (date: string) => void | - | Called when the previous month button is clicked |
+| onPreviousYear | (date: string) => void | - | Called when the previous year button is clicked |
+| onYearMouseEnter | (event: MouseEvent<HTMLButtonElement, MouseEvent>, date: string) => void | - | Called when mouse enters year control |
+| onYearSelect | (date: string) => void | - | Called when user selects year |
 | presets | DatePickerPreset<Type>[] | - | Predefined values to pick from |
 | previousIcon | React.ReactNode | - | Change previous icon |
 | previousLabel | string | - | Previous button <code>aria-label</code> |
@@ -38343,26 +38374,26 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | defaultTimeValue | string | - | Default time value in <code>HH:mm</code> or <code>HH:mm:ss</code> format. Assigned to time when date is selected. |
 | defaultValue | DateValue | - | Uncontrolled component default value |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | dropdownType | "popover" | "modal" | - | Type of the dropdown |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
-| excludeDate | ((date: string) => boolean) | - | Callback function to determine whether the day should be disabled |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
+| excludeDate | (date: string) => boolean | - | Callback function to determine whether the day should be disabled |
 | firstDayOfWeek | 0 | 1 | 2 | 3 | 4 | 5 | 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |
-| getDayAriaLabel | ((date: string) => string) | - | Assigns <code>aria-label</code> to <code>Day</code> components based on date |
-| getDayProps | ((date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars">) | - | Passes props down to <code>Day</code> components |
-| getMonthControlProps | ((date: string) => Partial<PickerControlProps>) | - | Passes props down month picker control |
-| getYearControlProps | ((date: string) => Partial<PickerControlProps>) | - | Passes props down to year picker control based on date |
+| getDayAriaLabel | (date: string) => string | - | Assigns <code>aria-label</code> to <code>Day</code> components based on date |
+| getDayProps | (date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars"> | - | Passes props down to <code>Day</code> components |
+| getMonthControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down month picker control |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
 | headerControlsOrder | ("next" | "previous" | "level")[] | - | Controls order |
 | hideOutsideDates | boolean | - | Determines whether outside dates should be hidden |
 | hideWeekdays | boolean | - | Determines whether weekdays row should be hidden |
 | highlightToday | boolean | - | Determines whether today should be highlighted with a border |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | labelSeparator | string | - | Separator between range value |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
@@ -38379,18 +38410,18 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | nextIcon | React.ReactNode | - | Change next icon |
 | nextLabel | string | - | Next button <code>aria-label</code> |
 | numberOfColumns | number | - | Number of columns displayed next to each other |
-| onChange | ((value: string | null) => void) | - | Called when value changes |
-| onDateChange | ((date: string) => void) | - | Called when date changes |
-| onDropdownClose | (() => void) | - | Called when the dropdown is closed |
-| onLevelChange | ((level: CalendarLevel) => void) | - | Called when level changes |
-| onMonthSelect | ((date: string) => void) | - | Called when user selects month |
-| onNextDecade | ((date: string) => void) | - | Called when the next decade button is clicked |
-| onNextMonth | ((date: string) => void) | - | Called when the next month button is clicked |
-| onNextYear | ((date: string) => void) | - | Called when the next year button is clicked |
-| onPreviousDecade | ((date: string) => void) | - | Called when the previous decade button is clicked |
-| onPreviousMonth | ((date: string) => void) | - | Called when the previous month button is clicked |
-| onPreviousYear | ((date: string) => void) | - | Called when the previous year button is clicked |
-| onYearSelect | ((date: string) => void) | - | Called when user selects year |
+| onChange | (value: string | null) => void | - | Called when value changes |
+| onDateChange | (date: string) => void | - | Called when date changes |
+| onDropdownClose | () => void | - | Called when the dropdown is closed |
+| onLevelChange | (level: CalendarLevel) => void | - | Called when level changes |
+| onMonthSelect | (date: string) => void | - | Called when user selects month |
+| onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |
+| onNextMonth | (date: string) => void | - | Called when the next month button is clicked |
+| onNextYear | (date: string) => void | - | Called when the next year button is clicked |
+| onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |
+| onPreviousMonth | (date: string) => void | - | Called when the previous month button is clicked |
+| onPreviousYear | (date: string) => void | - | Called when the previous year button is clicked |
+| onYearSelect | (date: string) => void | - | Called when user selects year |
 | placeholder | string | - | Input placeholder |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to <code>Popover</code> component |
@@ -38407,7 +38438,7 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height |
 | size | MantineSize | - | Component size |
 | sortDates | boolean | - | Determines whether dates values should be sorted before <code>onChange</code> call, only applicable with type="multiple" |
-| submitButtonProps | (ActionIconProps & Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref">) | - | Props passed down to the submit button |
+| submitButtonProps | ActionIconProps & Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref"> | - | Props passed down to the submit button |
 | timePickerProps | Omit<TimePickerProps, "defaultValue" | "value"> | - | Props passed down to <code>TimePicker</code> component |
 | value | DateValue | - | Controlled component value |
 | valueFormat | string | - | <code>dayjs</code> format for input value |
@@ -38757,18 +38788,18 @@ MonthPickerInput provides better accessibility support when used in forms. Make 
 | defaultLevel | "month" | "year" | "decade" | - | Initial displayed level (uncontrolled) |
 | defaultValue | DateValue | DatesRangeValue<DateValue> | DateValue[] | - | Default value for uncontrolled component |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | dropdownType | "popover" | "modal" | - | Type of the dropdown |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
-| getMonthControlProps | ((date: string) => Partial<PickerControlProps>) | - | Passes props down month picker control |
-| getYearControlProps | ((date: string) => Partial<PickerControlProps>) | - | Passes props down to year picker control based on date |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
+| getMonthControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down month picker control |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | labelSeparator | string | - | Separator between range value |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
@@ -38783,14 +38814,14 @@ MonthPickerInput provides better accessibility support when used in forms. Make 
 | monthsListFormat | string | - | <code>dayjs</code> format for months list |
 | nextLabel | string | - | Next button <code>aria-label</code> |
 | numberOfColumns | number | - | Number of columns displayed next to each other |
-| onChange | ((value: DatePickerValue<Type, string>) => void) | - | Called when value changes |
-| onDateChange | ((date: string) => void) | - | Called when date changes |
-| onDropdownClose | (() => void) | - | Called when the dropdown is closed |
-| onLevelChange | ((level: MonthPickerLevel) => void) | - | Called when level changes |
-| onNextDecade | ((date: string) => void) | - | Called when the next decade button is clicked |
-| onNextYear | ((date: string) => void) | - | Called when the next year button is clicked |
-| onPreviousDecade | ((date: string) => void) | - | Called when the previous decade button is clicked |
-| onPreviousYear | ((date: string) => void) | - | Called when the previous year button is clicked |
+| onChange | (value: DatePickerValue<Type, string>) => void | - | Called when value changes |
+| onDateChange | (date: string) => void | - | Called when date changes |
+| onDropdownClose | () => void | - | Called when the dropdown is closed |
+| onLevelChange | (level: MonthPickerLevel) => void | - | Called when level changes |
+| onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |
+| onNextYear | (date: string) => void | - | Called when the next year button is clicked |
+| onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |
+| onPreviousYear | (date: string) => void | - | Called when the previous year button is clicked |
 | placeholder | string | - | Input placeholder |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to <code>Popover</code> component |
@@ -39170,8 +39201,8 @@ Note that the following events will only trigger if focus is on month control.
 | defaultDate | string | Date | - | Initial displayed date in uncontrolled mode |
 | defaultLevel | "month" | "year" | "decade" | - | Initial displayed level (uncontrolled) |
 | defaultValue | DateValue | DatesRangeValue<DateValue> | DateValue[] | - | Default value for uncontrolled component |
-| getMonthControlProps | ((date: string) => Partial<PickerControlProps>) | - | Passes props down month picker control |
-| getYearControlProps | ((date: string) => Partial<PickerControlProps>) | - | Passes props down to year picker control based on date |
+| getMonthControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down month picker control |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
 | level | "month" | "year" | "decade" | - | Current displayed level (controlled) |
 | locale | string | - | Dayjs locale, defaults to value defined in DatesProvider |
 | maxDate | string | Date | - | Maximum possible date in <code>YYYY-MM-DD</code> format or Date object |
@@ -39180,14 +39211,14 @@ Note that the following events will only trigger if focus is on month control.
 | monthsListFormat | string | - | <code>dayjs</code> format for months list |
 | nextLabel | string | - | Next button <code>aria-label</code> |
 | numberOfColumns | number | - | Number of columns displayed next to each other |
-| onChange | ((value: DatePickerValue<Type, string>) => void) | - | Called when value changes |
-| onDateChange | ((date: string) => void) | - | Called when date changes |
-| onLevelChange | ((level: MonthPickerLevel) => void) | - | Called when level changes |
-| onMonthSelect | ((date: string) => void) | - | Called when month is selected |
-| onNextDecade | ((date: string) => void) | - | Called when the next decade button is clicked |
-| onNextYear | ((date: string) => void) | - | Called when the next year button is clicked |
-| onPreviousDecade | ((date: string) => void) | - | Called when the previous decade button is clicked |
-| onPreviousYear | ((date: string) => void) | - | Called when the previous year button is clicked |
+| onChange | (value: DatePickerValue<Type, string>) => void | - | Called when value changes |
+| onDateChange | (date: string) => void | - | Called when date changes |
+| onLevelChange | (level: MonthPickerLevel) => void | - | Called when level changes |
+| onMonthSelect | (date: string) => void | - | Called when month is selected |
+| onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |
+| onNextYear | (date: string) => void | - | Called when the next year button is clicked |
+| onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |
+| onPreviousYear | (date: string) => void | - | Called when the previous year button is clicked |
 | previousLabel | string | - | Previous button <code>aria-label</code> |
 | size | MantineSize | - | Component size |
 | type | "range" | "multiple" | "default" | - | Picker type: range, multiple or default |
@@ -39424,7 +39455,7 @@ function Demo() {
 | getControlProps | (time: string) => React.ComponentPropsWithoutRef<"button"> | - | A function to pass props down to control based on the time value |
 | maxTime | string | - | All controls after this time are disabled |
 | minTime | string | - | All controls before this time are disabled |
-| onChange | ((value: string | null) => void) | - | Called when value changes |
+| onChange | (value: string | null) => void | - | Called when value changes |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code> |
 | simpleGridProps | SimpleGridProps | - | Props passed down to the underlying <code>SimpleGrid</code> component |
 | size | MantineSize | - | Control <code>font-size</code> of controls, key of <code>theme.fontSizes</code> or any valid CSS value |
@@ -39615,15 +39646,15 @@ TimeInput provides better accessibility support when used in forms. Make sure to
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
@@ -40155,10 +40186,10 @@ Keyboard interactions:
 | clearable | boolean | - | Determines whether the clear button should be displayed |
 | defaultValue | string | - | Uncontrolled component default value |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | If set, the component becomes disabled |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
 | form | string | - | <code>form</code> prop passed down to the hidden input |
 | format | "12h" | "24h" | - | Time format, <code>'24h'</code> by default |
 | hiddenInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to the hidden input |
@@ -40166,11 +40197,11 @@ Keyboard interactions:
 | hoursInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to hours input |
 | hoursRef | Ref<HTMLInputElement> | - | A ref object to get node reference of the hours input |
 | hoursStep | number | - | Number by which hours are incremented/decremented |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
@@ -40183,9 +40214,9 @@ Keyboard interactions:
 | minutesRef | Ref<HTMLInputElement> | - | A ref object to get node reference of the minutes input |
 | minutesStep | number | - | Number by which minutes are incremented/decremented |
 | name | string | - | <code>name</code> prop passed down to the hidden input |
-| onBlur | ((event: FocusEvent<HTMLDivElement, Element>) => void) | - | Called once when the focus is no longer on any of the inputs |
-| onChange | ((value: string) => void) | - | Called when the value changes |
-| onFocus | ((event: FocusEvent<HTMLInputElement, Element>) => void) | - | Called once when one of the inputs is focused, not called when focused is shifted between hours, minutes, seconds and am/pm inputs |
+| onBlur | (event: FocusEvent<HTMLDivElement, Element>) => void | - | Called once when the focus is no longer on any of the inputs |
+| onChange | (value: string) => void | - | Called when the value changes |
+| onFocus | (event: FocusEvent<HTMLInputElement, Element>) => void | - | Called once when one of the inputs is focused, not called when focused is shifted between hours, minutes, seconds and am/pm inputs |
 | pasteSplit | TimePickerPasteSplit | - | A function to transform paste values, by default time in 24h format can be parsed on paste for example <code>23:34:22</code> |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | popoverProps | PopoverProps | - | Props passed down to <code>Popover</code> component |
@@ -40503,17 +40534,17 @@ YearPickerInput provides better accessibility support when used in forms. Make s
 | defaultDate | string | Date | - | Initial displayed date in uncontrolled mode |
 | defaultValue | DateValue | DatesRangeValue<DateValue> | DateValue[] | - | Default value for uncontrolled component |
 | description | React.ReactNode | - | Contents of <code>Input.Description</code> component. If not set, description is not displayed. |
-| descriptionProps | (InputDescriptionProps & DataAttributes) | - | Props passed down to the <code>Input.Description</code> component |
+| descriptionProps | InputDescriptionProps & DataAttributes | - | Props passed down to the <code>Input.Description</code> component |
 | disabled | boolean | - | Sets <code>disabled</code> attribute on the <code>input</code> element |
 | dropdownType | "popover" | "modal" | - | Type of the dropdown |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
-| errorProps | (InputErrorProps & DataAttributes) | - | Props passed down to the <code>Input.Error</code> component |
-| getYearControlProps | ((date: string) => Partial<PickerControlProps>) | - | Passes props down to year picker control based on date |
-| inputContainer | ((children: ReactNode) => ReactNode) | - | Input container component |
+| errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
+| inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
 | label | React.ReactNode | - | Contents of <code>Input.Label</code> component. If not set, label is not displayed. |
-| labelProps | (InputLabelProps & DataAttributes) | - | Props passed down to the <code>Input.Label</code> component |
+| labelProps | InputLabelProps & DataAttributes | - | Props passed down to the <code>Input.Label</code> component |
 | labelSeparator | string | - | Separator between range value |
 | leftSection | React.ReactNode | - | Content section displayed on the left side of the input |
 | leftSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>leftSection</code> element |
@@ -40525,11 +40556,11 @@ YearPickerInput provides better accessibility support when used in forms. Make s
 | modalProps | Partial<Omit<ModalProps, "children">> | - | Props passed down to <code>Modal</code> component |
 | nextLabel | string | - | Next button <code>aria-label</code> |
 | numberOfColumns | number | - | Number of columns displayed next to each other |
-| onChange | ((value: DatePickerValue<Type, string>) => void) | - | Called when value changes |
-| onDateChange | ((date: string) => void) | - | Called when date changes |
-| onDropdownClose | (() => void) | - | Called when the dropdown is closed |
-| onNextDecade | ((date: string) => void) | - | Called when the next decade button is clicked |
-| onPreviousDecade | ((date: string) => void) | - | Called when the previous decade button is clicked |
+| onChange | (value: DatePickerValue<Type, string>) => void | - | Called when value changes |
+| onDateChange | (date: string) => void | - | Called when date changes |
+| onDropdownClose | () => void | - | Called when the dropdown is closed |
+| onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |
+| onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |
 | placeholder | string | - | Input placeholder |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | popoverProps | Partial<Omit<PopoverProps, "children">> | - | Props passed down to <code>Popover</code> component |
@@ -40835,17 +40866,17 @@ Note that the following events will only trigger if focus is on year control.
 | decadeLabelFormat | string | ((startOfDecade: string, endOfDecade: string) => ReactNode) | - | <code>dayjs</code> format for decade label or a function that returns decade label based on the date value |
 | defaultDate | string | Date | - | Initial displayed date in uncontrolled mode |
 | defaultValue | DateValue | DatesRangeValue<DateValue> | DateValue[] | - | Default value for uncontrolled component |
-| getYearControlProps | ((date: string) => Partial<PickerControlProps>) | - | Passes props down to year picker control based on date |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
 | locale | string | - | Dayjs locale, defaults to value defined in DatesProvider |
 | maxDate | string | Date | - | Maximum possible date in <code>YYYY-MM-DD</code> format or Date object |
 | minDate | string | Date | - | Minimum possible date in <code>YYYY-MM-DD</code> format or Date object |
 | nextLabel | string | - | Next button <code>aria-label</code> |
 | numberOfColumns | number | - | Number of columns displayed next to each other |
-| onChange | ((value: DatePickerValue<Type, string>) => void) | - | Called when value changes |
-| onDateChange | ((date: string) => void) | - | Called when date changes |
-| onNextDecade | ((date: string) => void) | - | Called when the next decade button is clicked |
-| onPreviousDecade | ((date: string) => void) | - | Called when the previous decade button is clicked |
-| onYearSelect | ((date: string) => void) | - | Called when year is selected |
+| onChange | (value: DatePickerValue<Type, string>) => void | - | Called when value changes |
+| onDateChange | (date: string) => void | - | Called when date changes |
+| onNextDecade | (date: string) => void | - | Called when the next decade button is clicked |
+| onPreviousDecade | (date: string) => void | - | Called when the previous decade button is clicked |
+| onYearSelect | (date: string) => void | - | Called when year is selected |
 | previousLabel | string | - | Previous button <code>aria-label</code> |
 | size | MantineSize | - | Component size |
 | type | "range" | "multiple" | "default" | - | Picker type: range, multiple or default |
@@ -43132,7 +43163,7 @@ export const data = [
 | tooltipProps | RechartsProps | - | Props passed down to the <code>Tooltip</code> component |
 | type | AreaChartType | - | Controls how chart areas are positioned relative to each other |
 | unit | string | - | Unit displayed next to each tick in y-axis |
-| valueFormatter | ((value: number) => string) | - | A function to format values on Y axis and inside the tooltip |
+| valueFormatter | (value: number) => string | - | A function to format values on Y axis and inside the tooltip |
 | withDots | boolean | - | Determines whether dots should be displayed |
 | withGradient | boolean | - | Determines whether the chart area should be represented with a gradient instead of the solid color |
 | withLegend | boolean | - | Determines whether chart legend should be displayed, <code>false</code> by default |
@@ -44659,7 +44690,7 @@ export const data = [
 | data | Record<string, any>[] | required | Data used to display chart. |
 | dataKey | string | required | Key of the <code>data</code> object for x-axis values |
 | fillOpacity | number | - | Controls fill opacity of all bars |
-| getBarColor | ((value: number, series: BarChartSeries) => DefaultMantineColor) | - | A function to assign dynamic bar color based on its value |
+| getBarColor | (value: number, series: BarChartSeries) => DefaultMantineColor | - | A function to assign dynamic bar color based on its value |
 | gridAxis | "none" | "x" | "y" | "xy" | - | Specifies which lines should be displayed in the grid, <code>'x'</code> by default |
 | gridColor | MantineColor | - | Color of the grid and cursor lines, by default depends on color scheme |
 | gridProps | RechartsProps | - | Props passed down to the <code>CartesianGrid</code> component |
@@ -44678,7 +44709,7 @@ export const data = [
 | tooltipProps | RechartsProps | - | Props passed down to the <code>Tooltip</code> component |
 | type | BarChartType | - | Controls how bars are positioned relative to each other |
 | unit | string | - | Unit displayed next to each tick in y-axis |
-| valueFormatter | ((value: number) => string) | - | A function to format values on Y axis and inside the tooltip |
+| valueFormatter | (value: number) => string | - | A function to format values on Y axis and inside the tooltip |
 | valueLabelProps | ((series: BarChartSeries) => Partial<Omit<Props<Record<string, any>>, "ref">>) | Partial<Props<Record<string, any>>> | - | Props passed down to recharts <code>LabelList</code> component |
 | withBarValueLabel | boolean | - | Determines whether a label with bar value should be displayed on top of each bar, incompatible with <code>type="stacked"</code> and <code>type="percent"</code> |
 | withLegend | boolean | - | Determines whether chart legend should be displayed, <code>false</code> by default |
@@ -45037,7 +45068,7 @@ function Demo() {
 | scatterProps | Partial<Omit<Props, "ref">> | - | Props passed down to the <code>Scatter</code> component |
 | textColor | MantineColor | - | Color of the text displayed inside the chart |
 | tooltipProps | RechartsProps | - | Props passed down to the <code>Tooltip</code> component |
-| valueFormatter | ((value: number) => string) | - | Function to format z axis values |
+| valueFormatter | (value: number) => string | - | Function to format z axis values |
 | withTooltip | boolean | - | Determines whether the tooltip should be displayed |
 | xAxisProps | RechartsProps | - | Props passed down to the <code>XAxis</code> recharts component |
 | yAxisProps | RechartsProps | - | Props passed down to the <code>YAxis</code> recharts component |
@@ -46790,7 +46821,7 @@ export const data = [
 | tooltipAnimationDuration | number | - | Tooltip position animation duration in ms, <code>0</code> by default |
 | tooltipProps | RechartsProps | - | Props passed down to the <code>Tooltip</code> component |
 | unit | string | - | Unit displayed next to each tick in y-axis |
-| valueFormatter | ((value: number) => string) | - | A function to format values on Y axis and inside the tooltip |
+| valueFormatter | (value: number) => string | - | A function to format values on Y axis and inside the tooltip |
 | withBarValueLabel | boolean | - | Determines whether a label with bar value should be displayed on top of each bar |
 | withDots | boolean | - | Determines whether dots should be displayed |
 | withLegend | boolean | - | Determines whether chart legend should be displayed, <code>false</code> by default |
@@ -47197,7 +47228,7 @@ export const data = [
 | tooltipAnimationDuration | number | - | Tooltip animation duration in ms |
 | tooltipDataSource | "all" | "segment" | - | Determines which data is displayed in the tooltip. <code>'all'</code> – display all values, <code>'segment'</code> – display only hovered segment. |
 | tooltipProps | RechartsProps | - | Props passed down to <code>Tooltip</code> recharts component |
-| valueFormatter | ((value: number) => string) | - | A function to format values inside the tooltip |
+| valueFormatter | (value: number) => string | - | A function to format values inside the tooltip |
 | withLabels | boolean | - | Determines whether each segment should have associated label |
 | withLabelsLine | boolean | - | Determines whether segments labels should have lines that connect the segment with the label |
 | withTooltip | boolean | - | Determines whether the tooltip should be displayed when one of the section is hovered |
@@ -47500,7 +47531,7 @@ export const data = [
 | tooltipAnimationDuration | number | - | Tooltip animation duration in ms |
 | tooltipDataSource | "all" | "segment" | - | Determines which data is displayed in the tooltip. <code>'all'</code> – display all values, <code>'segment'</code> – display only hovered segment. |
 | tooltipProps | RechartsProps | - | Props passed down to <code>Tooltip</code> recharts component |
-| valueFormatter | ((value: number) => string) | - | A function to format values inside the tooltip and labels |
+| valueFormatter | (value: number) => string | - | A function to format values inside the tooltip and labels |
 | withLabels | boolean | - | Determines whether each segment should have associated label |
 | withTooltip | boolean | - | Determines whether the tooltip should be displayed when a section is hovered |
 
@@ -48004,8 +48035,8 @@ export const data = ${JSON.stringify(data, null, 2)};
 | firstDayOfWeek | 0 | 2 | 1 | 3 | 4 | 5 | 6 | - | First day of week, 0 – Sunday, 1 – Monday. |
 | fontSize | number | - | Font size of month and weekday labels |
 | gap | number | - | Gap between rects in px |
-| getRectProps | ((input: HeatmapRectData) => Omit<SVGProps<SVGRectElement>, "ref">) | - | Props passed down to each rect depending on its date and associated value |
-| getTooltipLabel | ((input: HeatmapRectData) => ReactNode) | - | A function to generate tooltip label based on the hovered rect date and value, required for the tooltip to be visible |
+| getRectProps | (input: HeatmapRectData) => Omit<SVGProps<SVGRectElement>, "ref"> | - | Props passed down to each rect depending on its date and associated value |
+| getTooltipLabel | (input: HeatmapRectData) => ReactNode | - | A function to generate tooltip label based on the hovered rect date and value, required for the tooltip to be visible |
 | monthLabels | string[] | - | Month labels, array of 12 elements, can be used for localization |
 | monthsLabelsHeight | number | - | Height of month labels row |
 | rectRadius | number | - | Rect radius in px |
@@ -49932,7 +49963,7 @@ export const data = [
 | tooltipProps | RechartsProps | - | Props passed down to the <code>Tooltip</code> component |
 | type | LineChartType | - | Controls styles of the line |
 | unit | string | - | Unit displayed next to each tick in y-axis |
-| valueFormatter | ((value: number) => string) | - | A function to format values on Y axis and inside the tooltip |
+| valueFormatter | (value: number) => string | - | A function to format values on Y axis and inside the tooltip |
 | withDots | boolean | - | Determines whether dots should be displayed |
 | withLegend | boolean | - | Determines whether chart legend should be displayed, <code>false</code> by default |
 | withPointLabels | boolean | - | Determines whether each point should have associated label |
@@ -50287,7 +50318,7 @@ export const data = [
 | tooltipAnimationDuration | number | - | Tooltip animation duration in ms |
 | tooltipDataSource | "all" | "segment" | - | Determines which data is displayed in the tooltip. <code>'all'</code> – display all values, <code>'segment'</code> – display only hovered segment. |
 | tooltipProps | RechartsProps | - | Props passed down to <code>Tooltip</code> recharts component |
-| valueFormatter | ((value: number) => string) | - | A function to format values inside the tooltip |
+| valueFormatter | (value: number) => string | - | A function to format values inside the tooltip |
 | withLabels | boolean | - | Determines whether each segment should have associated label |
 | withLabelsLine | boolean | - | Determines whether segments labels should have lines that connect the segment with the label |
 | withTooltip | boolean | - | Determines whether the tooltip should be displayed when one of the section is hovered |
@@ -54112,9 +54143,11 @@ You can find testing examples in Mantine Help Center:
 
 ### LLMDocumentation
 
-## Overview
+# LLMs.txt
 
 Mantine provides LLM-friendly documentation to help AI tools like **Cursor**, **Windsurf**, **GitHub Copilot**, **ChatGPT**, and **Claude** understand and work with the Mantine UI library.
+
+`llms.txt` documentation is updated with every Mantine release.
 
 ## Available Documentation
 
@@ -64983,15 +65016,15 @@ function Demo() {
 | controlSize | React.CSSProperties["width"] | - | Controls size of the next and previous controls |
 | controlsOffset | MantineSpacing | - | Controls position of the next and previous controls, key of <code>theme.spacing</code> or any valid CSS value |
 | emblaOptions | Partial<OptionsType> | - | Options passed down to embla carousel |
-| getEmblaApi | ((embla: EmblaCarouselType) => void) | - | Get embla API as ref |
+| getEmblaApi | (embla: EmblaCarouselType) => void | - | Get embla API as ref |
 | height | Height<string | number> | - | Slides container <code>height</code>, required for vertical orientation |
 | includeGapInSize | boolean | - | Determines whether gap between slides should be treated as part of the slide size |
 | initialSlide | number | - | Index of initial slide |
 | nextControlIcon | React.ReactNode | - | Icon of the next control |
 | nextControlProps | React.ComponentPropsWithoutRef<"button"> | - | Props passed down to next control |
-| onNextSlide | (() => void) | - | Called when next slide is shown |
-| onPreviousSlide | (() => void) | - | Called when previous slider is shown |
-| onSlideChange | ((index: number) => void) | - | Called with slide index when slide changes |
+| onNextSlide | () => void | - | Called when next slide is shown |
+| onPreviousSlide | () => void | - | Called when previous slider is shown |
+| onSlideChange | (index: number) => void | - | Called with slide index when slide changes |
 | orientation | "horizontal" | "vertical" | - | Carousel orientation |
 | plugins | CreatePluginType<LoosePluginType, {}>[] | - | A list of embla plugins |
 | previousControlIcon | React.ReactNode | - | Icon of the previous control |
@@ -65718,7 +65751,7 @@ function Demo() {
 | expanded | boolean | - | Controlled expanded state |
 | language | string | - | Language of the code, used for syntax highlighting |
 | maxCollapsedHeight | string | number | - | Max height of collapsed state |
-| onExpandedChange | ((expanded: boolean) => void) | - | Called when expanded state changes |
+| onExpandedChange | (expanded: boolean) => void | - | Called when expanded state changes |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set border-radius |
 | withBorder | boolean | - | Adds border to the root element |
 | withCopyButton | boolean | - | Determines whether the copy button should be displayed |
@@ -66224,7 +66257,7 @@ function Demo() {
 | disabled | boolean | - | Determines whether files capturing should be disabled |
 | dragEventsBubbling | boolean | - | If <code>false</code>, stops drag event propagation to parents |
 | enablePointerEvents | boolean | - | Determines whether pointer events should be enabled on the inner element |
-| getFilesFromEvent | ((event: DropEvent) => Promise<(File | DataTransferItem)[]>) | - | Use this to provide a custom file aggregator |
+| getFilesFromEvent | (event: DropEvent) => Promise<(File | DataTransferItem)[]> | - | Use this to provide a custom file aggregator |
 | inputProps | InputHTMLAttributes<HTMLInputElement> | - | Props passed down to the internal Input component |
 | loaderProps | LoaderProps | - | Props passed down to the Loader component |
 | loading | boolean | - | Determines whether a loading overlay should be displayed over the dropzone |
@@ -66232,20 +66265,20 @@ function Demo() {
 | maxSize | number | - | Maximum file size in bytes |
 | multiple | boolean | - | Determines whether multiple files can be dropped to the dropzone or selected from file system picker |
 | name | string | - | Name of the form control. Submitted with the form as part of a name/value pair. |
-| onDragEnter | ((event: DragEvent<HTMLElement>) => void) | - | Called when the <code>dragenter</code> event occurs |
-| onDragLeave | ((event: DragEvent<HTMLElement>) => void) | - | Called when the <code>dragleave</code> event occurs |
-| onDragOver | ((event: DragEvent<HTMLElement>) => void) | - | Called when the <code>dragover</code> event occurs |
+| onDragEnter | (event: DragEvent<HTMLElement>) => void | - | Called when the <code>dragenter</code> event occurs |
+| onDragLeave | (event: DragEvent<HTMLElement>) => void | - | Called when the <code>dragleave</code> event occurs |
+| onDragOver | (event: DragEvent<HTMLElement>) => void | - | Called when the <code>dragover</code> event occurs |
 | onDrop | (files: FileWithPath[]) => void | required | Called when valid files are dropped to the dropzone |
-| onDropAny | ((files: FileWithPath[], fileRejections: FileRejection[]) => void) | - | Called when any files are dropped to the dropzone |
-| onFileDialogCancel | (() => void) | - | Called when user closes the file selection dialog with no selection |
-| onFileDialogOpen | (() => void) | - | Called when user opens the file selection dialog |
-| onReject | ((fileRejections: FileRejection[]) => void) | - | Called when dropped files do not meet file restrictions |
+| onDropAny | (files: FileWithPath[], fileRejections: FileRejection[]) => void | - | Called when any files are dropped to the dropzone |
+| onFileDialogCancel | () => void | - | Called when user closes the file selection dialog with no selection |
+| onFileDialogOpen | () => void | - | Called when user opens the file selection dialog |
+| onReject | (fileRejections: FileRejection[]) => void | - | Called when dropped files do not meet file restrictions |
 | openRef | ForwardedRef<() => void> | undefined | - | A ref function which when called opens the file system file picker |
 | preventDropOnDocument | boolean | - | If <code>false</code>, allow dropped items to take over the current browser window |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | rejectColor | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color to set colors of <code>Dropzone.Reject</code> |
 | useFsAccessApi | boolean | - | Set to true to use the File System Access API to open the file picker instead of using an <input type="file"> click event |
-| validator | (<T extends File>(file: T) => FileError | FileError[] | null) | - | Custom validation function. It must return null if there's no errors. |
+| validator | <T extends File>(file: T) => FileError | FileError[] | null | - | Custom validation function. It must return null if there's no errors. |
 
 
 #### Styles API
@@ -67946,11 +67979,11 @@ function Demo() {
 | lockScroll | boolean | - | If set, scroll is locked when <code>opened={true}</code> |
 | maxHeight | MaxHeight<string | number> | - | Spotlight content max-height. Ignored unless <code>scrollable</code> prop is set. |
 | nothingFound | React.ReactNode | - | Message displayed when none of the actions match given <code>filter</code> |
-| onEnterTransitionEnd | (() => void) | - | Called when enter transition ends |
-| onExitTransitionEnd | (() => void) | - | Called when exit transition ends |
-| onQueryChange | ((query: string) => void) | - | Called when query changes |
-| onSpotlightClose | (() => void) | - | Called when spotlight closes |
-| onSpotlightOpen | (() => void) | - | Called when spotlight opens |
+| onEnterTransitionEnd | () => void | - | Called when enter transition ends |
+| onExitTransitionEnd | () => void | - | Called when exit transition ends |
+| onQueryChange | (query: string) => void | - | Called when query changes |
+| onSpotlightClose | () => void | - | Called when spotlight closes |
+| onSpotlightOpen | () => void | - | Called when spotlight opens |
 | overlayProps | ModalBaseOverlayProps | - | Props passed down to the <code>Overlay</code> component, use to configure opacity, <code>background-color</code>, styles and other properties |
 | padding | MantineSpacing | - | Key of <code>theme.spacing</code> or any valid CSS value to set content, header and footer padding |
 | portalProps | BasePortalProps | - | Props passed down to the Portal component when <code>withinPortal</code> is set |
@@ -70366,8 +70399,36 @@ function Demo() {
 import { Group, TextInput, Button, Center } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { IconGripVertical } from '@tabler/icons-react';
+import { DndContext, closestCenter, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+
+function SortableItem({ id, index, form }) {
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <Group ref={setNodeRef} mt="xs" style={style} {...attributes}>
+      <Center {...listeners}>
+        <IconGripVertical size={18} />
+      </Center>
+      <TextInput
+        placeholder="John Doe"
+        key={form.key(`employees.${index}.name`)}
+        {...form.getInputProps(`employees.${index}.name`)}
+      />
+      <TextInput
+        placeholder="example@mail.com"
+        key={form.key(`employees.${index}.email`)}
+        {...form.getInputProps(`employees.${index}.email`)}
+      />
+    </Group>
+  );
+}
 
 function Demo() {
   const form = useForm({
@@ -70383,45 +70444,32 @@ function Demo() {
     },
   });
 
-  const fields = form.getValues().employees.map((item, index) => (
-    <Draggable key={item.key} index={index} draggableId={item.key}>
-      {(provided) => (
-        <Group ref={provided.innerRef} mt="xs" {...provided.draggableProps}>
-          <Center {...provided.dragHandleProps}>
-            <IconGripVertical size={18} />
-          </Center>
-          <TextInput
-            placeholder="John Doe"
-            key={form.key(`employees.${index}.name`)}
-            {...form.getInputProps(`employees.${index}.name`)}
-          />
-          <TextInput
-            placeholder="example@mail.com"
-            key={form.key(`employees.${index}.email`)}
-            {...form.getInputProps(`employees.${index}.email`)}
-          />
-        </Group>
-      )}
-    </Draggable>
-  ));
+  const sensors = useSensors(useSensor(PointerSensor));
+
+  const items = form.getValues().employees.map((item) => item.key);
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const employees = form.getValues().employees;
+      const oldIndex = employees.findIndex((e) => e.key === active.id);
+      const newIndex = employees.findIndex((e) => e.key === over.id);
+      form.setFieldValue(
+        'employees',
+        arrayMove(employees, oldIndex, newIndex)
+      );
+    }
+  };
 
   return (
     <div>
-      <DragDropContext
-        onDragEnd={({ destination, source }) =>
-          destination?.index !== undefined && form.reorderListItem('employees', { from: source.index, to: destination.index })
-        }
-      >
-        <Droppable droppableId="dnd-list" direction="vertical">
-          {(provided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef}>
-              {fields}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-
+      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <SortableContext items={items} strategy={verticalListSortingStrategy}>
+          {items.map((id, index) => (
+            <SortableItem key={id} id={id} index={index} form={form} />
+          ))}
+        </SortableContext>
+      </DndContext>
       <Group justify="center" mt="md">
         <Button onClick={() => form.insertListItem('employees', { name: '', email: '', key: randomId() })}>
           Add employee
