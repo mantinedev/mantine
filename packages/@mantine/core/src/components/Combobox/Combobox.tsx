@@ -95,7 +95,7 @@ export type ComboboxFactory = Factory<{
 }>;
 
 const defaultProps = {
-  keepMounted: false,
+  keepMounted: true,
   withinPortal: true,
   resetSelectionOnOptionHover: false,
   width: 'target',

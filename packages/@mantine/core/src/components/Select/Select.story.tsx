@@ -28,6 +28,30 @@ export function Usage() {
   );
 }
 
+export function FlipDropdownPosition() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div style={{ height: 800 }} />
+      <Select
+        data={[
+          'React',
+          'Angular',
+          'Svelte',
+          'Vue',
+          'Ember',
+          'Backbone',
+          'Preact',
+          'Inferno',
+          'Aurelia',
+          'Meteor',
+        ]}
+        placeholder="Select something"
+      />
+      <div style={{ height: 2000 }} />
+    </div>
+  );
+}
+
 export function WithAreaLabel() {
   return (
     <div style={{ padding: 40 }}>

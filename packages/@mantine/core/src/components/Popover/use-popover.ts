@@ -158,23 +158,13 @@ export function usePopover(options: UsePopoverOptions) {
       ? options.positionRef.current
       : options.position,
     middleware: getPopoverMiddlewares(options, () => floating, env),
-    // Only use whileElementsMounted when elements are conditionally rendered (not keepMounted)
-    // When keepMounted=true, elements are hidden with CSS and we need manual autoUpdate control
-    whileElementsMounted: options.keepMounted ? undefined : autoUpdate,
   });
 
-  // Manual autoUpdate control for keepMounted scenario
-  // This follows Floating UI's recommendation for CSS-hidden elements
   useEffect(() => {
-    if (
-      !options.keepMounted ||
-      !floating.refs.reference.current ||
-      !floating.refs.floating.current
-    ) {
+    if (!floating.refs.reference.current || !floating.refs.floating.current) {
       return;
     }
 
-    // Only run autoUpdate when the popover is actually opened
     if (_opened) {
       return autoUpdate(
         floating.refs.reference.current,
@@ -182,18 +172,12 @@ export function usePopover(options: UsePopoverOptions) {
         floating.update
       );
     }
-  }, [
-    options.keepMounted,
-    _opened,
-    floating.refs.reference,
-    floating.refs.floating,
-    floating.update,
-  ]);
+  }, [_opened, floating.update]);
 
   useDidUpdate(() => {
     options.onPositionChange?.(floating.placement);
     options.positionRef.current = floating.placement;
-  }, [floating.placement]);
+  }, [floating.placement, options.preventPositionChangeWhenVisible]);
 
   useDidUpdate(() => {
     if (_opened !== previouslyOpened.current) {
