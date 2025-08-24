@@ -132,9 +132,12 @@ export type SetFieldDirty<Values> = <Field extends LooseKeys<Values>>(
   forceUpdate?: boolean
 ) => void;
 
-export type SetCalculatedFieldDirty<Values> = <Field extends LooseKeys<Values>>(
+export type SetCalculatedFieldDirty<out Values> = <
+  TValues extends Values,
+  Field extends LooseKeys<Values>,
+>(
   path: Field,
-  value: FormPathValue<Values, Field>
+  value: FormPathValue<TValues, Field>
 ) => void;
 
 export type ReorderListItem<Values> = <Field extends LooseKeys<Values>>(
@@ -169,16 +172,21 @@ export type Initialize<out Values> = <TValues extends Values>(values: TValues) =
 
 export type _TransformValues<Values> = (values: Values) => unknown;
 
-export type FormFieldSubscriber<Values, Field extends LooseKeys<Values>> = (input: {
-  previousValue: FormPathValue<Values, Field>;
-  value: FormPathValue<Values, Field>;
+export type FormFieldSubscriber<out Values, out Field extends LooseKeys<Values>> = <
+  TValues extends Values,
+>(input: {
+  previousValue: FormPathValue<TValues, Field>;
+  value: FormPathValue<TValues, Field>;
   touched: boolean;
   dirty: boolean;
 }) => void;
 
-export type Watch<out Values> = <TValues extends Values, Field extends LooseKeys<TValues>>(
-  path: Field,
-  subscriber: FormFieldSubscriber<TValues, Field>
+export type Watch<out Values, out Field extends LooseKeys<Values> = LooseKeys<Values>> = <
+  TValues extends Values,
+  TField extends Field,
+>(
+  path: TField,
+  subscriber: FormFieldSubscriber<TValues, TField>
 ) => void;
 
 export type Key<Values> = <Field extends LooseKeys<Values>>(path: Field) => string;
