@@ -28,7 +28,7 @@ import {
 import { shouldValidateOnChange, validateFieldValue, validateValues } from './validate';
 
 export function useForm<
-  Values extends Record<PropertyKey, any> = Record<PropertyKey, any>,
+  Values extends Record<PropertyKey, any> = Record<string, any>,
   TransformValues extends _TransformValues<Values> = (values: Values) => Values,
 >({
   name,
