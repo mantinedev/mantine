@@ -224,53 +224,6 @@ export interface UseFormInput<
 
 interface _UseFormReturnType<
   out Values,
-  TransformValues extends _TransformValues<Values> = (values: Values) => Values,
-> {
-  values: Values;
-  submitting: boolean;
-  initialized: boolean;
-  errors: FormErrors;
-  setSubmitting: SetSubmitting;
-  initialize: Initialize<Values>;
-  setValues: SetValues<Values>;
-  setInitialValues: SetInitialValues<Values>;
-  setErrors: SetErrors;
-  setFieldValue: SetFieldValue<Values>;
-  setFieldError: SetFieldError<Values>;
-  clearFieldError: ClearFieldError;
-  clearErrors: ClearErrors;
-  reset: Reset;
-  validate: Validate;
-  validateField: ValidateField<Values>;
-  reorderListItem: ReorderListItem<Values>;
-  removeListItem: RemoveListItem<Values>;
-  replaceListItem: ReplaceListItem<Values>;
-  insertListItem: InsertListItem<Values>;
-  getInputProps: GetInputProps<Values>;
-  onSubmit: OnSubmit<Values, TransformValues>;
-  onReset: OnReset;
-  isDirty: GetFieldStatus<Values>;
-  isTouched: GetFieldStatus<Values>;
-  setTouched: SetFormStatus;
-  setDirty: SetFormStatus;
-  resetTouched: ResetStatus;
-  resetDirty: ResetDirty<Values>;
-  isValid: IsValid<Values>;
-  getTransformedValues: GetTransformedValues<Values, TransformValues>;
-  getValues: () => Values;
-  getInitialValues: () => Values;
-  getTouched: GetStatus;
-  getDirty: GetStatus;
-  watch: Watch<Values>;
-  key: Key<Values>;
-  getInputNode: GetInputNode<Values>;
-  resetField: (path: PropertyKey) => void;
-}
-
-// new type which allows passing a full form to a function
-// which only accepts only a specific parts of the form
-interface _UseFormReturnType2<
-  out Values,
   out TransformedValues = Values,
   TransformValues extends _TransformValues<Values> = <
     TValues extends Values,
@@ -322,9 +275,11 @@ interface _UseFormReturnType2<
 
 export type UseFormReturnType<
   Values,
-  TransformValues extends _TransformValues<Values> = (values: Values) => Values,
+  TransformValues extends _TransformValues<Values> = <TValues extends Values, TTransformedValues>(
+    values: TValues
+  ) => TTransformedValues,
   TransformedValues = Values,
-> = _UseFormReturnType<Values, TransformValues> | _UseFormReturnType2<Values, TransformedValues>;
+> = _UseFormReturnType<Values, TransformedValues, TransformValues>;
 
 export type UseForm<
   Values = Record<string, unknown>,
