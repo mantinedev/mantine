@@ -49,7 +49,7 @@ export type FormRulesRecord<Values, InitValues = Values> = Partial<{
 export type FormValidateInput<Values> = FormRulesRecord<Values> | ((values: Values) => FormErrors);
 
 export type SetValues<out Values> = <TValues extends Values>(
-  value: TValues | ((prevState: TValues) => TValues)
+  value: Partial<TValues> | ((prevState: Partial<TValues>) => Partial<TValues>)
 ) => void;
 export type SetInitialValues<out Values> = <TValues extends Values>(values: TValues) => void;
 export type SetErrors = React.Dispatch<React.SetStateAction<FormErrors>>;
