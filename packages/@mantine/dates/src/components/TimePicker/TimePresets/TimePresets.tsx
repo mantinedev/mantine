@@ -47,8 +47,9 @@ export function TimePresets({
     ));
 
     return (
-      <ScrollArea
+      <ScrollArea.Autosize
         mah={ctx.maxDropdownContentHeight}
+
         type="never"
         {...ctx.getStyles('scrollarea')}
         {...ctx.scrollAreaProps}
@@ -58,7 +59,7 @@ export function TimePresets({
             {items}
           </SimpleGrid>
         </div>
-      </ScrollArea>
+      </ScrollArea.Autosize>
     );
   }
 
@@ -75,14 +76,14 @@ export function TimePresets({
   ));
 
   return (
-    <ScrollArea
+    <ScrollArea.Autosize
       mah={ctx.maxDropdownContentHeight}
       type="never"
       {...ctx.getStyles('scrollarea')}
       {...ctx.scrollAreaProps}
     >
       <div {...ctx.getStyles('presetsRoot')}>{groups}</div>
-    </ScrollArea>
+    </ScrollArea.Autosize>
   );
 }
 
