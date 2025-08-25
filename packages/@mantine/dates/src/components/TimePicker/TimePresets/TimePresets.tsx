@@ -49,7 +49,6 @@ export function TimePresets({
     return (
       <ScrollArea.Autosize
         mah={ctx.maxDropdownContentHeight}
-
         type="never"
         {...ctx.getStyles('scrollarea')}
         {...ctx.scrollAreaProps}
