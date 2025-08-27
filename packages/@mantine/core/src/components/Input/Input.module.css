@@ -144,7 +144,7 @@
   color: var(--input-color);
   border: rem(1px) solid var(--input-bd);
   background-color: var(--input-bg);
-  font-family: var(--input-font-family, var(--mantine-font-family));
+  font-family: var(--input-font-family, inherit);
   height: var(--input-size);
   min-height: var(--input-height);
   line-height: var(--input-line-height);
