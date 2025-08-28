@@ -78,7 +78,7 @@ export interface UseScrollSpyOptions {
   /** Host element to attach scroll event listener, if not provided, `window` is used */
   scrollHost?: HTMLElement;
 
-  /** Offset from the top of the viewport to consider when determining the active heading */
+  /** Offset from the top of the viewport to use when determining the active heading, `0` by default */
   offset?: number;
 }
 
