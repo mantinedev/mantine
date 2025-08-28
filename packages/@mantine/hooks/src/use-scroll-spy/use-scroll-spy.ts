@@ -126,7 +126,12 @@ export function useScrollSpy({
     headingsRef.current = headings;
     setInitialized(true);
     setData(headings);
-    setActive(getActiveElement(headings.map((d) => d.getNode().getBoundingClientRect()), offset));
+    setActive(
+      getActiveElement(
+        headings.map((d) => d.getNode().getBoundingClientRect()),
+        offset
+      )
+    );
   };
 
   useEffect(() => {
