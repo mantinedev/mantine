@@ -40,7 +40,7 @@ export interface AvatarProps extends BoxProps, StylesApiProps<AvatarFactory> {
   /** Width and height of the avatar, numbers are converted to rem @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius @default `'100%'` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default `'1000px'` */
   radius?: MantineRadius;
 
   /** Key of `theme.colors` or any valid CSS color @default `'gray'` */
