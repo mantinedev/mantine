@@ -205,6 +205,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
     rightYAxisProps,
     withPointLabels,
     attributes,
+    gridColor,
     ...others
   } = props;
 
