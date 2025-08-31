@@ -5,7 +5,7 @@
   overflow: hidden;
 
   &:where([data-autosize]) .content {
-    width: min-content;
+    min-width: min-content;
   }
 }
 

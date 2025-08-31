@@ -148,7 +148,7 @@
   height: var(--input-size);
   min-height: var(--input-height);
   line-height: var(--input-line-height);
-  font-size: var(--input-fz, var(--input-fz, var(--mantine-font-size-sm)));
+  font-size: var(--_input-fz, var(--input-fz, var(--mantine-font-size-md)));
   border-radius: var(--input-radius);
   padding-inline-start: var(--input-padding-inline-start);
   padding-inline-end: var(--input-padding-inline-end);
@@ -165,7 +165,7 @@
   /* Used as data attribute in JsonInput component, does not have associated prop on the Input component */
   &[data-monospace] {
     --input-font-family: var(--mantine-font-family-monospace);
-    --input-fz: calc(var(--input-fz, var(--mantine-font-size-sm)) - rem(2px));
+    --_input-fz: calc(var(--input-fz) - rem(2px));
   }
 
   &:focus,

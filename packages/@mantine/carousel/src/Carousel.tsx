@@ -355,6 +355,7 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
                 previousControlProps?.onClick?.(event);
               }}
               data-inactive={!canScrollPrev || undefined}
+              data-type="previous"
               tabIndex={canScrollPrev ? 0 : -1}
             >
               {typeof previousControlIcon !== 'undefined' ? (
@@ -383,6 +384,7 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
                 nextControlProps?.onClick?.(event);
               }}
               data-inactive={!canScrollNext || undefined}
+              data-type="next"
               tabIndex={canScrollNext ? 0 : -1}
             >
               {typeof nextControlIcon !== 'undefined' ? (
