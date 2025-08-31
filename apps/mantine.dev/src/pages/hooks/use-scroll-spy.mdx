@@ -20,6 +20,8 @@ and similar features.
 - `selector` - selector to get headings, by default it is `'h1, h2, h3, h4, h5, h6'`
 - `getDepth` - a function to retrieve depth of heading, by default depth is calculated based on tag name
 - `getValue` - a function to retrieve heading value, by default `element.textContent` is used
+- `scrollHost` - host element to attach scroll event listener, if not provided, `window` is used
+- `offset` - offset from the top of the viewport to use when determining the active heading, by default `0` is used
 
 Example of using custom options to get headings with `data-heading` attribute:
 
@@ -77,6 +79,9 @@ interface UseScrollSpyOptions {
 
   /** Host element to attach scroll event listener, if not provided, `window` is used */
   scrollHost?: HTMLElement;
+
+  /** Offset from the top of the viewport to use when determining the active heading, `0` by default */
+  offset?: number;
 }
 
 interface UseScrollSpyReturnType {
