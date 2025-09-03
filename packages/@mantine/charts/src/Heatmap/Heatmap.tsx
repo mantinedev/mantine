@@ -91,6 +91,9 @@ export interface HeatmapProps
 
   /** Props passed down to each rect depending on its date and associated value */
   getRectProps?: (input: HeatmapRectData) => React.ComponentPropsWithoutRef<'rect'>;
+
+  /** If set, inserts a spacer column between months @default `false` */
+  splitMonths?: boolean;
 }
 
 export type HeatmapFactory = Factory<{
@@ -148,6 +151,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
     withTooltip,
     tooltipProps,
     getRectProps,
+    splitMonths,
     attributes,
     ...others
   } = props;
@@ -182,9 +186,93 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
     firstDayOfWeek,
   });
 
-  const weeks = datesRange.map((week, weekIndex) => {
+  // Calculate months range for labels and optional split between months
+  const monthsRange = withMonthLabels || splitMonths ? getMonthsRange(datesRange) : [];
+
+  type Column = { type: 'spacer' } | { type: 'column'; month: number; weekIndex: number };
+
+  let columns: Column[];
+
+  if (!splitMonths) {
+    // Default behavior: one column per week
+    columns = datesRange.map((week, weekIndex) => {
+      // Determine month for labeling purposes: pick first non-null day
+      const firstDay = week.find((d) => d !== null)! as string;
+      const month = new Date(firstDay).getMonth();
+      return { type: 'column', month, weekIndex } as Column;
+    });
+  } else {
+    // Split weeks at month boundaries and insert spacers between month groups
+    const tmp: Column[] = [];
+    datesRange.forEach((week, weekIndex) => {
+      const months = week.map((d) => (d ? new Date(d).getMonth() : null));
+      let firstMonth: number | null = null;
+      let boundaryIndex: number | null = null;
+      for (let i = 0; i < months.length; i += 1) {
+        if (months[i] === null) {
+          continue;
+        }
+        if (firstMonth === null) {
+          firstMonth = months[i]!;
+        } else if (months[i] !== firstMonth) {
+          boundaryIndex = i;
+          break;
+        }
+      }
+
+      if (firstMonth === null) {
+        return; // should not happen
+      }
+
+      if (boundaryIndex === null) {
+        tmp.push({ type: 'column', month: firstMonth, weekIndex });
+      } else {
+        // Find nextMonth as first non-null month from boundaryIndex
+        let nextMonth: number | null = null;
+        for (let i = boundaryIndex; i < months.length; i += 1) {
+          if (months[i] !== null) {
+            nextMonth = months[i]!;
+            break;
+          }
+        }
+        if (nextMonth === null) {
+          tmp.push({ type: 'column', month: firstMonth, weekIndex });
+        } else {
+          tmp.push({ type: 'column', month: firstMonth, weekIndex });
+          tmp.push({ type: 'column', month: nextMonth, weekIndex });
+        }
+      }
+    });
+
+    // Insert spacer between adjacent columns when month changes
+    columns = [];
+    for (let i = 0; i < tmp.length; i += 1) {
+      if (i > 0 && (tmp[i] as any).month !== (tmp[i - 1] as any).month) {
+        columns.push({ type: 'spacer' });
+      }
+      columns.push(tmp[i]);
+    }
+  }
+
+  const totalColumns = columns.length;
+
+  const weeks = columns.map((col, columnIndex) => {
+    if (col.type === 'spacer') {
+      return (
+        <g
+          key={`spacer-${columnIndex}`}
+          transform={`translate(${columnIndex * rectSizeWithGap}, 0)`}
+        />
+      );
+    }
+
+    const week = datesRange[col.weekIndex];
+
     const days = week.map((date, dayIndex) => {
       if (!date) {
+        return null;
+      }
+      if (new Date(date).getMonth() !== col.month) {
         return null;
       }
 
@@ -193,7 +281,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
 
       return (
         <rect
-          key={date}
+          key={`${date}-${col.month}`}
           width={rectSize}
           height={rectSize}
           x={gap}
@@ -211,13 +299,35 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
     });
 
     return (
-      <g key={weekIndex} transform={`translate(${weekIndex * rectSizeWithGap}, 0)`} data-id="week">
+      <g
+        key={`col-${col.weekIndex}-${col.month}-${columnIndex}`}
+        transform={`translate(${columnIndex * rectSizeWithGap}, 0)`}
+        data-id="week"
+      >
         {days}
       </g>
     );
   });
 
-  const monthsRange = withMonthLabels ? getMonthsRange(datesRange) : [];
+  const computeMonthLabelX = (monthPosition: number, monthIndex: number) => {
+    if (!splitMonths) {
+      return monthPosition * rectSizeWithGap + gap + weekdaysOffset;
+    }
+
+    // For split months, find the first column index that has this month
+    const firstMonth = monthsRange[monthIndex];
+    for (let i = 0; i < columns.length; i += 1) {
+      const c = columns[i];
+      if (c.type === 'spacer') {
+        continue;
+      }
+      if (c.month === firstMonth.month) {
+        return i * rectSizeWithGap + gap + weekdaysOffset;
+      }
+    }
+
+    return monthPosition * rectSizeWithGap + gap + weekdaysOffset;
+  };
 
   const monthsLabelsNodes =
     withMonthLabels && monthLabels
@@ -231,7 +341,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
           return (
             <text
               key={monthIndex}
-              x={month.position * rectSizeWithGap + gap + weekdaysOffset}
+              x={computeMonthLabelX(month.position, monthIndex)}
               y={monthsLabelsHeight - 4}
               width={month.size * rectSizeWithGap}
               fontSize={fontSize}
@@ -265,7 +375,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
     <Box
       component="svg"
       ref={ref}
-      width={rectSizeWithGap * datesRange.length + gap + weekdaysOffset}
+      width={rectSizeWithGap * totalColumns + gap + weekdaysOffset}
       height={rectSizeWithGap * 7 + gap + monthsOffset}
       {...getStyles('root')}
       {...others}
@@ -281,7 +391,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
           {withTooltip && (
             <rect
               fill="transparent"
-              width={rectSizeWithGap * datesRange.length + gap}
+              width={rectSizeWithGap * totalColumns + gap}
               height={rectSizeWithGap * 7 + gap}
             />
           )}

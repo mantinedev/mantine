@@ -51,3 +51,20 @@ export function WithTooltip() {
     </div>
   );
 }
+
+export function SplitMonths() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Heatmap
+        data={convertedRandomValues}
+        rectSize={10}
+        gap={1}
+        withWeekdayLabels
+        withMonthLabels
+        splitMonths
+        withTooltip
+        getTooltipLabel={({ date, value }) => `${date} – ${value || 0} contributions`}
+      />
+    </div>
+  );
+}
