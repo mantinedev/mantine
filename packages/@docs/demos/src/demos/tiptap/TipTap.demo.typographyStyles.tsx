@@ -27,7 +27,8 @@ import classes from './Demo.module.css';
 
 function Demo() {
   const editor = useEditor({
-    extensions: [StarterKit, Link],
+    shouldRerenderOnTransaction: true,
+    extensions: [StarterKit.configure({ link: false }), Link],
     content: \`
     <h2>Heading 2</h2>
     <p>Paragraph with <a href="https://mantine.dev">link</a></p>
@@ -51,7 +52,8 @@ export const typographyStyles: MantineDemo = {
 function Demo() {
   const editor = useEditor({
     immediatelyRender: false,
-    extensions: [StarterKit, Link],
+    shouldRerenderOnTransaction: true,
+    extensions: [StarterKit.configure({ link: false }), Link],
     content: `
     <h2>Heading 2</h2>
     <p>Paragraph with <a href="https://mantine.dev">link</a></p>

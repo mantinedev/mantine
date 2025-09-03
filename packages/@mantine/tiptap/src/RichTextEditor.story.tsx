@@ -9,7 +9,6 @@ import { TaskItem } from '@tiptap/extension-task-item';
 import TipTapTaskList from '@tiptap/extension-task-list';
 import { TextAlign } from '@tiptap/extension-text-align';
 import { TextStyle } from '@tiptap/extension-text-style';
-import Underline from '@tiptap/extension-underline';
 import { useEditor } from '@tiptap/react';
 import { BubbleMenu, FloatingMenu } from '@tiptap/react/menus';
 import StarterKit from '@tiptap/starter-kit';
@@ -49,8 +48,6 @@ function BasicEditor({
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Underline,
-      Link,
       Superscript,
       SubScript,
       TextStyle,
@@ -61,6 +58,7 @@ function BasicEditor({
       }),
     ],
     content: content || htmlContent,
+    shouldRerenderOnTransaction: true,
   });
 
   return (

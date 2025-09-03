@@ -12,7 +12,8 @@ import { RichTextEditor, Link } from '@mantine/tiptap';
 
 function Demo() {
   const editor = useEditor({
-    extensions: [StarterKit, Link],
+    shouldRerenderOnTransaction: true,
+    extensions: [StarterKit.configure({ link: false }), Link],
     content: '<p>Enter a new line to see floating menu</p>',
   });
 
@@ -35,8 +36,9 @@ function Demo() {
 
 function Demo() {
   const editor = useEditor({
+    shouldRerenderOnTransaction: true,
     immediatelyRender: false,
-    extensions: [StarterKit, Link],
+    extensions: [StarterKit.configure({ link: false }), Link],
     content: '<p>Enter a new line to see floating menu</p>',
   });
 

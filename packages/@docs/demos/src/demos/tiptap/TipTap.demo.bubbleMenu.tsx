@@ -12,7 +12,8 @@ import { Link, RichTextEditor } from '@mantine/tiptap';
 
 function Demo() {
   const editor = useEditor({
-    extensions: [StarterKit, Link],
+    shouldRerenderOnTransaction: true,
+    extensions: [StarterKit.configure({ link: false }), Link],
     content: '<p>Select some text to see bubble menu</p>',
   });
 
@@ -36,7 +37,8 @@ function Demo() {
 function Demo() {
   const editor = useEditor({
     immediatelyRender: false,
-    extensions: [StarterKit, Link],
+    shouldRerenderOnTransaction: true,
+    extensions: [StarterKit.configure({ link: false }), Link],
     content: '<p>Select some text to see bubble menu</p>',
   });
 

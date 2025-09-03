@@ -14,6 +14,7 @@ import { RichTextEditor, getTaskListExtension } from '@mantine/tiptap';
 
 function Demo() {
   const editor = useEditor({
+    shouldRerenderOnTransaction: true,
     extensions: [
       StarterKit,
       getTaskListExtension(TipTapTaskList),
@@ -53,6 +54,7 @@ function Demo() {
 function Demo() {
   const editor = useEditor({
     immediatelyRender: false,
+    shouldRerenderOnTransaction: true,
     extensions: [
       StarterKit,
       getTaskListExtension(TipTapTaskList),

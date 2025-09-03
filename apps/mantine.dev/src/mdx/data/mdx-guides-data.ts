@@ -100,6 +100,14 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
     searchTags: '7x, 8x, 7to8, 78',
   },
 
+  Tiptap3Migration: {
+    title: 'Migration guide Tiptap 2 → Tiptap 3',
+    slug: '/guides/tiptap-3-migration',
+    search: 'Migration guide from Tiptap 2 to Tiptap 3',
+    hideHeader: true,
+    searchTags: 'tiptap2, tiptap3, migration',
+  },
+
   FunctionsReference: {
     title: 'Functions reference',
     slug: '/guides/functions-reference',
