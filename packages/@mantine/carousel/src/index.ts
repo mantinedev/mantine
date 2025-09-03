@@ -1,5 +1,5 @@
-export { Carousel } from './Carousel';
-export { CarouselSlide } from './CarouselSlide/CarouselSlide';
+export { Carousel } from './Carousel.js';
+export { CarouselSlide } from './CarouselSlide/CarouselSlide.js';
 export type {
   CarouselProps,
   CarouselCssVariables,
