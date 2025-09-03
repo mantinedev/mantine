@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from 'react';
-import { useIsomorphicEffect } from '@mantine/hooks';
+import { createContext, useCallback, useContext, useState } from 'react';
+import { useIsomorphicEffect, useMutationObserver } from '@mantine/hooks';
 
 export type Direction = 'ltr' | 'rtl';
 
@@ -37,10 +37,12 @@ export function DirectionProvider({
 }: DirectionProviderProps) {
   const [dir, setDir] = useState<Direction>(initialDirection);
 
-  const setDirection = (direction: Direction) => {
+  const setDirection = useCallback((direction: Direction) => {
     setDir(direction);
-    document.documentElement.setAttribute('dir', direction);
-  };
+    if (document.documentElement.getAttribute('dir') !== direction) {
+      document.documentElement.setAttribute('dir', direction);
+    }
+  }, []);
 
   const toggleDirection = () => setDirection(dir === 'ltr' ? 'rtl' : 'ltr');
 
@@ -48,10 +50,26 @@ export function DirectionProvider({
     if (detectDirection) {
       const direction = document.documentElement.getAttribute('dir');
       if (direction === 'rtl' || direction === 'ltr') {
-        setDirection(direction);
+        setDir(direction);
       }
     }
   }, []);
+
+  const mutationCallback = useCallback<MutationCallback>(() => {
+    if (typeof document === 'undefined') {
+      return;
+    }
+    const direction = document.documentElement.getAttribute('dir');
+    if (direction === 'rtl' || direction === 'ltr') {
+      setDir((prev) => (prev !== direction ? (direction as Direction) : prev));
+    }
+  }, []);
+
+  useMutationObserver(
+    mutationCallback,
+    detectDirection ? { attributes: true, attributeFilter: ['dir'] } : {},
+    typeof document !== 'undefined' && detectDirection ? document.documentElement : null
+  );
 
   return (
     <DirectionContext.Provider value={{ dir, toggleDirection, setDirection }}>
