@@ -79,12 +79,15 @@ export const InputError = factory<InputErrorFactory>((_props, ref) => {
   const ctx = useInputWrapperContext();
   const getStyles = (__inheritStyles && ctx?.getStyles) || _getStyles;
 
+  const htmlTag = typeof others.children === 'string' ? 'p' : 'div';
+
   return (
     <Box
-      component="p"
+      component={htmlTag}
       ref={ref}
       variant={variant}
       size={size}
+      aria-live="polite"
       {...getStyles('error', ctx?.getStyles ? { className, style } : undefined)}
       {...others}
     />
