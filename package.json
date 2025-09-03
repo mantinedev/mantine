@@ -118,7 +118,7 @@
     "react-textarea-autosize": "8.5.9",
     "react-transition-group": "4.4.5",
     "recharts": "^2.13.3",
-    "shiki": "^3.11.0",
+    "shiki": "^3.12.2",
     "type-fest": "^4.41.0"
   },
   "devDependencies": {
@@ -149,8 +149,8 @@
     "@types/jest-axe": "^3.5.9",
     "@types/lodash": "^4.17.20",
     "@types/node": "^24.3.0",
-    "@types/react": "19.1.10",
-    "@types/react-dom": "19.1.7",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9",
     "@types/react-transition-group": "^4.4.12",
     "@types/resize-observer-browser": "^0.1.11",
     "@types/rimraf": "^4.0.5",
