@@ -177,6 +177,9 @@ export interface TimePickerProps
 
   /** Props passed down to all underlying `ScrollArea` components */
   scrollAreaProps?: ScrollAreaProps;
+
+  /** If set, the time controls list are reversed, @default `false` */
+  reverseTimeControlsList?: boolean;
 }
 
 export type TimePickerFactory = Factory<{
@@ -258,6 +261,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
     maxDropdownContentHeight,
     scrollAreaProps,
     attributes,
+    reverseTimeControlsList,
     ...others
   } = props;
 
@@ -542,6 +546,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                 step={hoursStep}
                 value={controller.values.hours}
                 onSelect={controller.setHours}
+                reversed={reverseTimeControlsList}
               />
               <TimeControlsList
                 min={0}
@@ -549,6 +554,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                 step={minutesStep}
                 value={controller.values.minutes}
                 onSelect={controller.setMinutes}
+                reversed={reverseTimeControlsList}
               />
               {withSeconds && (
                 <TimeControlsList
@@ -557,6 +563,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
                   step={secondsStep}
                   value={controller.values.seconds}
                   onSelect={controller.setSeconds}
+                  reversed={reverseTimeControlsList}
                 />
               )}
               {format === '12h' && (
