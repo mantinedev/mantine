@@ -8,3 +8,4 @@ export { firstDayOfWeek } from './Heatmap.demo.firstDayOfWeek';
 export { getRectProps } from './Heatmap.demo.getRectProps';
 export { colors } from './Heatmap.demo.colors';
 export { cssColors } from './Heatmap.demo.cssColors';
+export { splitMonths } from './Heatmap.demo.splitMonths';

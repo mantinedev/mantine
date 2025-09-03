@@ -152,3 +152,9 @@ it can be used to add onClick handler to each rect:
 The default first day of the week is Monday, you can change it with `firstDayOfWeek` prop:
 
 <Demo data={HeatmapDemos.firstDayOfWeek} />
+
+## Split months
+
+Use `splitMonths` to separate months visually with a spacer column and show only days that belong to the current month in each column. Month labels will be shifted by one column when `splitMonths` is enabled and months with fewer than 2 weeks are not labeled.
+
+<Demo data={HeatmapDemos.splitMonths} />

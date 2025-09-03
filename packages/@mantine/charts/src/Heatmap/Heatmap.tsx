@@ -12,6 +12,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { getBoundaries } from './get-boundaries/get-boundaries';
+import { getColumns, getFirstMonthColumnIndex, HeatmapColumn } from './get-columns/get-columns';
 import { getDatesRange } from './get-dates-range/get-dates-range';
 import { getHeatColor } from './get-heat-color/get-heat-color';
 import { getMonthsRange } from './get-months-range/get-months-range';
@@ -189,70 +190,8 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
   // Calculate months range for labels and optional split between months
   const monthsRange = withMonthLabels || splitMonths ? getMonthsRange(datesRange) : [];
 
-  type Column = { type: 'spacer' } | { type: 'column'; month: number; weekIndex: number };
-
-  let columns: Column[];
-
-  if (!splitMonths) {
-    // Default behavior: one column per week
-    columns = datesRange.map((week, weekIndex) => {
-      // Determine month for labeling purposes: pick first non-null day
-      const firstDay = week.find((d) => d !== null)! as string;
-      const month = new Date(firstDay).getMonth();
-      return { type: 'column', month, weekIndex } as Column;
-    });
-  } else {
-    // Split weeks at month boundaries and insert spacers between month groups
-    const tmp: Column[] = [];
-    datesRange.forEach((week, weekIndex) => {
-      const months = week.map((d) => (d ? new Date(d).getMonth() : null));
-      let firstMonth: number | null = null;
-      let boundaryIndex: number | null = null;
-      for (let i = 0; i < months.length; i += 1) {
-        if (months[i] === null) {
-          continue;
-        }
-        if (firstMonth === null) {
-          firstMonth = months[i]!;
-        } else if (months[i] !== firstMonth) {
-          boundaryIndex = i;
-          break;
-        }
-      }
-
-      if (firstMonth === null) {
-        return; // should not happen
-      }
-
-      if (boundaryIndex === null) {
-        tmp.push({ type: 'column', month: firstMonth, weekIndex });
-      } else {
-        // Find nextMonth as first non-null month from boundaryIndex
-        let nextMonth: number | null = null;
-        for (let i = boundaryIndex; i < months.length; i += 1) {
-          if (months[i] !== null) {
-            nextMonth = months[i]!;
-            break;
-          }
-        }
-        if (nextMonth === null) {
-          tmp.push({ type: 'column', month: firstMonth, weekIndex });
-        } else {
-          tmp.push({ type: 'column', month: firstMonth, weekIndex });
-          tmp.push({ type: 'column', month: nextMonth, weekIndex });
-        }
-      }
-    });
-
-    // Insert spacer between adjacent columns when month changes
-    columns = [];
-    for (let i = 0; i < tmp.length; i += 1) {
-      if (i > 0 && (tmp[i] as any).month !== (tmp[i - 1] as any).month) {
-        columns.push({ type: 'spacer' });
-      }
-      columns.push(tmp[i]);
-    }
-  }
+  // Columns: computed by a helper so logic is isolated
+  const columns: HeatmapColumn[] = getColumns(datesRange, splitMonths);
 
   const totalColumns = columns.length;
 
@@ -314,25 +253,19 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
       return monthPosition * rectSizeWithGap + gap + weekdaysOffset;
     }
 
-    // For split months, find the first column index that has this month
+    // For split months, find the first column index that has this month and shift label by 1 column
     const firstMonth = monthsRange[monthIndex];
-    for (let i = 0; i < columns.length; i += 1) {
-      const c = columns[i];
-      if (c.type === 'spacer') {
-        continue;
-      }
-      if (c.month === firstMonth.month) {
-        return i * rectSizeWithGap + gap + weekdaysOffset;
-      }
-    }
-
-    return monthPosition * rectSizeWithGap + gap + weekdaysOffset;
+    const i = getFirstMonthColumnIndex(columns, firstMonth.month);
+    const base = i >= 0 ? i : monthPosition;
+    // shift right by one column
+    return (base + 1) * rectSizeWithGap + gap + weekdaysOffset;
   };
 
   const monthsLabelsNodes =
     withMonthLabels && monthLabels
       ? monthsRange.map((month, monthIndex) => {
-          if (month.size < 3) {
+          // Do not include months with less than 2 weeks
+          if (month.size < 2) {
             return null;
           }
 
