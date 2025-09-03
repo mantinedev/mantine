@@ -6,19 +6,19 @@ export {
   openSpotlight,
   closeSpotlight,
   toggleSpotlight,
-} from './spotlight.store';
-export type { SpotlightState, SpotlightStore } from './spotlight.store';
+} from './spotlight.store.js';
+export type { SpotlightState, SpotlightStore } from './spotlight.store.js';
 
-export { isActionsGroup } from './is-actions-group';
+export { isActionsGroup } from './is-actions-group.js';
 
-export { Spotlight } from './Spotlight';
-export { SpotlightRoot } from './SpotlightRoot';
-export { SpotlightAction } from './SpotlightAction';
-export { SpotlightActionsGroup } from './SpotlightActionsGroup';
-export { SpotlightActionsList } from './SpotlightActionsList';
-export { SpotlightEmpty } from './SpotlightEmpty';
-export { SpotlightFooter } from './SpotlightFooter';
-export { SpotlightSearch } from './SpotlightSearch';
+export { Spotlight } from './Spotlight.js';
+export { SpotlightRoot } from './SpotlightRoot.js';
+export { SpotlightAction } from './SpotlightAction.js';
+export { SpotlightActionsGroup } from './SpotlightActionsGroup.js';
+export { SpotlightActionsList } from './SpotlightActionsList.js';
+export { SpotlightEmpty } from './SpotlightEmpty.js';
+export { SpotlightFooter } from './SpotlightFooter.js';
+export { SpotlightSearch } from './SpotlightSearch.js';
 
 export type {
   SpotlightFactory,
