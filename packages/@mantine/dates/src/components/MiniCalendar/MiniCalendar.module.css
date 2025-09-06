@@ -1,3 +1,22 @@
 .root {
   background-color: red;
+  width: fit-content;
+}
+
+.control {
+  &[data-direction='previous'] [data-chevron] {
+    transform: rotate(90deg);
+
+    @mixin rtl {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &[data-direction='next'] [data-chevron] {
+    transform: rotate(-90deg);
+
+    @mixin rtl {
+      transform: rotate(90deg);
+    }
+  }
 }
