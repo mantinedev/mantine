@@ -90,6 +90,7 @@ export type DateTimePickerFactory = Factory<{
 
 const defaultProps = {
   dropdownType: 'popover',
+  size: 'sm',
 } satisfies Partial<DateTimePickerProps>;
 
 export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
