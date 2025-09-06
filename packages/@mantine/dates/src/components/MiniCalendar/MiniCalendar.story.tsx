@@ -5,7 +5,7 @@ export default { title: 'MiniCalendar' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <MiniCalendar />
+      <MiniCalendar size="xl" />
     </div>
   );
 }

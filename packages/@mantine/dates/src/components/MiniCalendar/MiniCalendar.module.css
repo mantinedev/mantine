@@ -2,15 +2,18 @@
   width: fit-content;
   display: flex;
   align-items: center;
+  font-size: var(--mini-calendar-font-size);
 }
 
 .days {
   display: flex;
+  font-size: inherit;
 }
 
 .day {
   display: flex;
   gap: 0.5em;
+  font-size: inherit;
   flex-direction: column;
   align-items: center;
   line-height: 1;
@@ -46,13 +49,14 @@
 }
 
 .dayNumber {
-  font-size: 1em;
+  font-size: 0.9em;
   font-weight: 500;
   color: var(--mantine-color-bright);
 }
 
 .control {
   align-self: stretch;
+  font-size: inherit;
   width: 2em;
   border-radius: var(--mantine-radius-default);
   display: flex;
@@ -62,6 +66,11 @@
   &:where([data-disabled]) {
     opacity: 0.3;
     cursor: not-allowed;
+  }
+
+  & [data-chevron] {
+    font-size: inherit;
+    width: 60%;
   }
 
   &[data-direction='previous'] [data-chevron] {

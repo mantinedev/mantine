@@ -8,6 +8,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  getSize,
   MantineSize,
   StylesApiProps,
   UnstyledButton,
@@ -27,7 +28,7 @@ export type MiniCalendarStylesNames =
   | 'dayNumber';
 
 export type MiniCalendarCssVariables = {
-  root: '--test';
+  root: '--mini-calendar-font-size';
 };
 
 export interface MiniCalendarProps
@@ -96,9 +97,9 @@ const defaultProps = {
   monthLabelFormat: 'MMM',
 } satisfies Partial<MiniCalendarProps>;
 
-const varsResolver = createVarsResolver<MiniCalendarFactory>(() => ({
+const varsResolver = createVarsResolver<MiniCalendarFactory>((_theme, { size }) => ({
   root: {
-    '--test': 'test',
+    '--mini-calendar-font-size': getSize(size, 'mantine-font-size'),
   },
 }));
 
@@ -214,7 +215,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
           style: previousControlProps?.style,
         })}
       >
-        {previousControlProps?.children || <AccordionChevron data-chevron />}
+        {previousControlProps?.children || <AccordionChevron data-chevron size={size} />}
       </UnstyledButton>
 
       <div {...getStyles('days')}>{range}</div>
@@ -232,7 +233,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
           style: nextControlProps?.style,
         })}
       >
-        {nextControlProps?.children || <AccordionChevron data-chevron />}
+        {nextControlProps?.children || <AccordionChevron data-chevron size={size} />}
       </UnstyledButton>
     </Box>
   );
