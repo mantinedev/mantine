@@ -184,7 +184,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
           disabled={disabled}
           aria-label={date.format('YYYY-MM-DD')}
           data-disabled={disabled || undefined}
-          data-selected={dayjs(date).isSame(value) ? true : undefined}
+          data-selected={dayjs(date).isSame(value, 'day') ? true : undefined}
           {...dayProps}
           onClick={(event) => {
             dayProps?.onClick?.(event);
