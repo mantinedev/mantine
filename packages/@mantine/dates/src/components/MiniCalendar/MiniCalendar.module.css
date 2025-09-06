@@ -22,7 +22,7 @@
   border-radius: var(--mantine-radius-default);
 
   &:where([data-selected]) {
-    --mini-calendar-control-color: var(--mantine-primary-color-contrast);
+    color: var(--mantine-primary-color-contrast);
     background-color: var(--mantine-primary-color-filled);
 
     @mixin hover {
@@ -57,13 +57,12 @@
 .dayMonth {
   font-size: 0.75em;
   font-weight: 500;
-  color: var(--mini-calendar-control-color, var(--mantine-color-dimmed));
+  opacity: 0.65;
 }
 
 .dayNumber {
   font-size: 0.9em;
   font-weight: 500;
-  color: var(--mini-calendar-control-color, var(--mantine-color-bright));
 }
 
 .control {

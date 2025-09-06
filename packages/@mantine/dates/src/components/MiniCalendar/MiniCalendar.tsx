@@ -17,6 +17,7 @@ import {
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { toDateString } from '../../utils';
+import { useDatesContext } from '../DatesProvider';
 import classes from './MiniCalendar.module.css';
 
 export type MiniCalendarStylesNames =
@@ -45,7 +46,7 @@ export interface MiniCalendarProps
   onDateChange?: (date: string) => void;
 
   /** Selected date, controlled value */
-  value?: Date | string;
+  value?: Date | string | null;
 
   /** Called with date in `YYYY-MM-DD` format when date changes */
   onChange?: (date: string) => void;
@@ -79,6 +80,9 @@ export interface MiniCalendarProps
 
   /** Props passed to next control button */
   nextControlProps?: React.ComponentPropsWithoutRef<'button'> & DataAttributes;
+
+  /** dayjs locale used for formatting */
+  locale?: string;
 }
 
 export type MiniCalendarFactory = Factory<{
@@ -124,6 +128,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
     monthLabelFormat,
     nextControlProps,
     previousControlProps,
+    locale,
     ...others
   } = props;
 
@@ -139,6 +144,9 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
     vars,
     varsResolver,
   });
+
+  const ctx = useDatesContext();
+  const _locale = ctx.getLocale(locale);
 
   const [_date, setDate] = useUncontrolled({
     value: toDateString(date),
@@ -160,7 +168,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
   };
 
   const previousDisabled = minDate
-    ? dayjs(_date).subtract(numberOfDays, 'days').isBefore(dayjs(minDate))
+    ? dayjs(_date).subtract(1, 'days').isBefore(dayjs(minDate))
     : false;
 
   const nextDisabled = maxDate
@@ -184,7 +192,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
           disabled={disabled}
           aria-label={date.format('YYYY-MM-DD')}
           data-disabled={disabled || undefined}
-          data-selected={dayjs(date).isSame(value, 'day') ? true : undefined}
+          data-selected={value && dayjs(date).isSame(value, 'day') ? true : undefined}
           {...dayProps}
           onClick={(event) => {
             dayProps?.onClick?.(event);
@@ -196,7 +204,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
             style: dayProps?.style,
           })}
         >
-          <span {...getStyles('dayMonth')}>{date.format(monthLabelFormat)}</span>
+          <span {...getStyles('dayMonth')}>{date.locale(_locale).format(monthLabelFormat)}</span>
           <span {...getStyles('dayNumber')}>{date.date()}</span>
         </UnstyledButton>
       );
