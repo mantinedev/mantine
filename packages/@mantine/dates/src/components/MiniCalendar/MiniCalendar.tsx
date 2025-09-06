@@ -34,7 +34,7 @@ export type MiniCalendarCssVariables = {
 export interface MiniCalendarProps
   extends BoxProps,
     StylesApiProps<MiniCalendarFactory>,
-    ElementProps<'div', 'onChange' | 'defaultValue'> {
+    ElementProps<'div', 'onChange'> {
   /** Controlled component date value, start date of the interval */
   date?: Date | string;
 
@@ -46,9 +46,6 @@ export interface MiniCalendarProps
 
   /** Selected date, controlled value */
   value?: Date | string;
-
-  /** Uncontrolled component default value, selected date */
-  defaultValue?: Date | string;
 
   /** Called with date in `YYYY-MM-DD` format when date changes */
   onChange?: (date: string) => void;
@@ -116,7 +113,6 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
     defaultDate,
     onDateChange,
     value,
-    defaultValue,
     onChange,
     onNext,
     onPrevious,
@@ -187,7 +183,12 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
           key={date.toString()}
           disabled={disabled}
           data-disabled={disabled || undefined}
+          data-selected={dayjs(date).isSame(value) ? true : undefined}
           {...dayProps}
+          onClick={(event) => {
+            dayProps?.onClick?.(event);
+            onChange?.(toDateString(date));
+          }}
           {...getStyles('day', {
             active: !disabled,
             className: dayProps?.className,

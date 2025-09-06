@@ -12,6 +12,7 @@
 
 .day {
   display: flex;
+  min-width: 3em;
   gap: 0.5em;
   font-size: inherit;
   flex-direction: column;
@@ -20,6 +21,17 @@
   padding: 0.75em;
   border-radius: var(--mantine-radius-default);
 
+  &:where([data-selected]) {
+    --mini-calendar-control-color: var(--mantine-primary-color-contrast);
+    background-color: var(--mantine-primary-color-filled);
+
+    @mixin hover {
+      &:where(:not([data-disabled], [data-static])) {
+        background-color: var(--mantine-primary-color-filled-hover);
+      }
+    }
+  }
+
   &:where([data-disabled]) {
     opacity: 0.3;
     cursor: not-allowed;
@@ -27,7 +39,7 @@
 
   @mixin where-light {
     @mixin hover {
-      &:where(:not([data-disabled])) {
+      &:where(:not([data-disabled], [data-selected])) {
         background-color: var(--mantine-color-gray-1);
       }
     }
@@ -35,7 +47,7 @@
 
   @mixin where-dark {
     @mixin hover {
-      &:where(:not([data-disabled])) {
+      &:where(:not([data-disabled], [data-selected])) {
         background-color: var(--mantine-color-dark-5);
       }
     }
@@ -45,13 +57,13 @@
 .dayMonth {
   font-size: 0.75em;
   font-weight: 500;
-  color: var(--mantine-color-dimmed);
+  color: var(--mini-calendar-control-color, var(--mantine-color-dimmed));
 }
 
 .dayNumber {
   font-size: 0.9em;
   font-weight: 500;
-  color: var(--mantine-color-bright);
+  color: var(--mini-calendar-control-color, var(--mantine-color-bright));
 }
 
 .control {
