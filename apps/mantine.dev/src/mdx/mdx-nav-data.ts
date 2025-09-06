@@ -395,6 +395,7 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
     category: 'Dates',
     pages: [
       MDX_DATA.GettingStartedDates,
+      MDX_DATA.MiniCalendar,
       MDX_DATA.Calendar,
       MDX_DATA.DateTimePicker,
       MDX_DATA.DatePicker,

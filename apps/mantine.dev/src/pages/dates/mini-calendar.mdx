@@ -1,0 +1,52 @@
+import { MiniCalendarDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.MiniCalendar);
+
+## Usage
+
+<Demo data={MiniCalendarDemos.usage} />
+
+## Number of days
+
+Use `numberOfDays` prop to control how many days are displayed at once.
+The default value is `7`.
+
+<Demo data={MiniCalendarDemos.numberOfDays} />
+
+## getDayProps
+
+Use `getDayProps` to add custom props to days, for example, assign styles to weekends:
+
+<Demo data={MiniCalendarDemos.getDayProps} />
+
+## Min and max dates
+
+Use `minDate` and `maxDate` props to limit date selection:
+
+<Demo data={MiniCalendarDemos.minMax} />
+
+## Localization
+
+You can change localization both on component level with `locale` prop and
+globally with [DatesProvider](/dates/getting-started).
+
+<Demo data={MiniCalendarDemos.locale} />
+
+## Accessibility
+
+Use `nextControlProps` and `previousControlProps` to add `aria-label` and other props to navigation buttons:
+
+```tsx
+import { MiniCalendar } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <MiniCalendar
+      nextControlProps={{ 'aria-label': 'Next range' }}
+      previousControlProps={{ 'aria-label': 'Previous range' }}
+    />
+  );
+}
+```
