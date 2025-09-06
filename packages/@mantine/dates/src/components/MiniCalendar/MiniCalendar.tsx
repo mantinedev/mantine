@@ -4,6 +4,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -17,7 +18,14 @@ import { useUncontrolled } from '@mantine/hooks';
 import { toDateString } from '../../utils';
 import classes from './MiniCalendar.module.css';
 
-export type MiniCalendarStylesNames = 'root' | 'control' | 'days' | 'day';
+export type MiniCalendarStylesNames =
+  | 'root'
+  | 'control'
+  | 'days'
+  | 'day'
+  | 'dayMonth'
+  | 'dayNumber';
+
 export type MiniCalendarCssVariables = {
   root: '--test';
 };
@@ -67,6 +75,12 @@ export interface MiniCalendarProps
 
   /** Component size @default 'sm' */
   size?: MantineSize;
+
+  /** Props passed to previous control button */
+  previousControlProps?: React.ComponentPropsWithoutRef<'button'> & DataAttributes;
+
+  /** Props passed to next control button */
+  nextControlProps?: React.ComponentPropsWithoutRef<'button'> & DataAttributes;
 }
 
 export type MiniCalendarFactory = Factory<{
@@ -79,6 +93,7 @@ export type MiniCalendarFactory = Factory<{
 const defaultProps = {
   size: 'sm',
   numberOfDays: 7,
+  monthLabelFormat: 'MMM',
 } satisfies Partial<MiniCalendarProps>;
 
 const varsResolver = createVarsResolver<MiniCalendarFactory>(() => ({
@@ -109,6 +124,9 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
     size,
     minDate,
     maxDate,
+    monthLabelFormat,
+    nextControlProps,
+    previousControlProps,
     ...others
   } = props;
 
@@ -147,34 +165,74 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
   const previousDisabled = minDate
     ? dayjs(_date).subtract(numberOfDays, 'days').isBefore(dayjs(minDate))
     : false;
+
   const nextDisabled = maxDate
     ? dayjs(_date).add(numberOfDays, 'days').isAfter(dayjs(maxDate))
     : false;
+
+  const range = Array(numberOfDays)
+    .fill(0)
+    .map((_, index) => dayjs(_date).add(index, 'days'))
+    .map((date) => {
+      const disabled =
+        (minDate && date.isBefore(dayjs(minDate), 'day')) ||
+        (maxDate && date.isAfter(dayjs(maxDate), 'day')) ||
+        false;
+
+      const dayProps = getDayProps?.(toDateString(date));
+
+      return (
+        <UnstyledButton
+          key={date.toString()}
+          disabled={disabled}
+          data-disabled={disabled || undefined}
+          {...dayProps}
+          {...getStyles('day', {
+            active: !disabled,
+            className: dayProps?.className,
+            style: dayProps?.style,
+          })}
+        >
+          <span {...getStyles('dayMonth')}>{date.format(monthLabelFormat)}</span>
+          <span {...getStyles('dayNumber')}>{date.date()}</span>
+        </UnstyledButton>
+      );
+    });
 
   return (
     <Box ref={ref} {...getStyles('root')} {...others}>
       <UnstyledButton
         size={size}
         onClick={handlePrevious}
-        variant="default"
-        {...getStyles('control')}
         disabled={previousDisabled}
         data-disabled={previousDisabled || undefined}
         data-direction="previous"
+        {...previousControlProps}
+        {...getStyles('control', {
+          active: !previousDisabled,
+          className: previousControlProps?.className,
+          style: previousControlProps?.style,
+        })}
       >
-        <AccordionChevron data-chevron />
+        {previousControlProps?.children || <AccordionChevron data-chevron />}
       </UnstyledButton>
-      MiniCalendar
+
+      <div {...getStyles('days')}>{range}</div>
+
       <UnstyledButton
         size={size}
         onClick={handleNext}
-        variant="default"
-        {...getStyles('control')}
         disabled={nextDisabled}
         data-disabled={nextDisabled || undefined}
         data-direction="next"
+        {...nextControlProps}
+        {...getStyles('control', {
+          active: !nextDisabled,
+          className: nextControlProps?.className,
+          style: nextControlProps?.style,
+        })}
       >
-        <AccordionChevron data-chevron />
+        {nextControlProps?.children || <AccordionChevron data-chevron />}
       </UnstyledButton>
     </Box>
   );

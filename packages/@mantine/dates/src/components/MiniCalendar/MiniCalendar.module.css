@@ -1,9 +1,69 @@
 .root {
-  background-color: red;
   width: fit-content;
+  display: flex;
+  align-items: center;
+}
+
+.days {
+  display: flex;
+}
+
+.day {
+  display: flex;
+  gap: 0.5em;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+  padding: 0.75em;
+  border-radius: var(--mantine-radius-default);
+
+  &:where([data-disabled]) {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  @mixin where-light {
+    @mixin hover {
+      &:where(:not([data-disabled])) {
+        background-color: var(--mantine-color-gray-1);
+      }
+    }
+  }
+
+  @mixin where-dark {
+    @mixin hover {
+      &:where(:not([data-disabled])) {
+        background-color: var(--mantine-color-dark-5);
+      }
+    }
+  }
+}
+
+.dayMonth {
+  font-size: 0.75em;
+  font-weight: 500;
+  color: var(--mantine-color-dimmed);
+}
+
+.dayNumber {
+  font-size: 1em;
+  font-weight: 500;
+  color: var(--mantine-color-bright);
 }
 
 .control {
+  align-self: stretch;
+  width: 2em;
+  border-radius: var(--mantine-radius-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:where([data-disabled]) {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
   &[data-direction='previous'] [data-chevron] {
     transform: rotate(90deg);
 
@@ -17,6 +77,22 @@
 
     @mixin rtl {
       transform: rotate(90deg);
+    }
+  }
+
+  @mixin where-light {
+    @mixin hover {
+      &:where(:not([data-disabled])) {
+        background-color: var(--mantine-color-gray-1);
+      }
+    }
+  }
+
+  @mixin where-dark {
+    @mixin hover {
+      &:where(:not([data-disabled])) {
+        background-color: var(--mantine-color-dark-5);
+      }
     }
   }
 }
