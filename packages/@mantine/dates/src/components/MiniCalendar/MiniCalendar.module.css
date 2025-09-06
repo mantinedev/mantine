@@ -74,6 +74,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--mantine-color-bright);
 
   &:where([data-disabled]) {
     opacity: 0.3;

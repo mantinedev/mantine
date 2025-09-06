@@ -182,6 +182,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
         <UnstyledButton
           key={date.toString()}
           disabled={disabled}
+          aria-label={date.format('YYYY-MM-DD')}
           data-disabled={disabled || undefined}
           data-selected={dayjs(date).isSame(value) ? true : undefined}
           {...dayProps}
@@ -202,7 +203,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
     });
 
   return (
-    <Box ref={ref} {...getStyles('root')} {...others}>
+    <Box ref={ref} size={size} {...getStyles('root')} {...others}>
       <UnstyledButton
         size={size}
         onClick={handlePrevious}
@@ -240,5 +241,5 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
   );
 });
 
-MiniCalendar.displayName = '@mantine/core/MiniCalendar';
+MiniCalendar.displayName = '@mantine/dates/MiniCalendar';
 MiniCalendar.classes = classes;
