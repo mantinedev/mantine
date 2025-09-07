@@ -69,7 +69,6 @@ function getPopoverMiddlewares(
 
   if (options.dropdownVisible && env !== 'test' && options.preventPositionChangeWhenVisible) {
     middlewaresOptions.flip = false;
-    middlewaresOptions.shift = false;
   }
 
   if (middlewaresOptions.shift) {
@@ -158,6 +157,7 @@ export function usePopover(options: UsePopoverOptions) {
       ? options.positionRef.current
       : options.position,
     middleware: getPopoverMiddlewares(options, () => floating, env),
+    whileElementsMounted: !options.keepMounted ? autoUpdate : undefined,
   });
 
   useEffect(() => {
