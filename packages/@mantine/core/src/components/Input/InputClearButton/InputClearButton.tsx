@@ -44,6 +44,7 @@ export const InputClearButton = factory<InputClearButtonFactory>((_props, ref) =
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       __staticSelector="InputClearButton"
+      style={{ pointerEvents: 'all', ...others.style }}
       {...others}
     />
   );

@@ -237,6 +237,10 @@
     --section-end: var(--right-section-end);
     --section-size: var(--input-right-section-size);
     --section-border-radius: var(--right-section-border-radius);
+
+    &:has([data-combined-clear-section]) {
+      --section-size: auto;
+    }
   }
 
   &[data-position='left'] {

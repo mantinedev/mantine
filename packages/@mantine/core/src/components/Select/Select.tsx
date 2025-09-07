@@ -317,7 +317,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
             __clearSection={clearButton}
             __clearable={_clearable}
             rightSection={rightSection}
-            rightSectionPointerEvents={rightSectionPointerEvents || (_clearable ? 'all' : 'none')}
+            rightSectionPointerEvents={rightSectionPointerEvents || 'none'}
             {...others}
             size={size}
             __staticSelector="Select"

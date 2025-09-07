@@ -372,7 +372,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
             __clearSection={clearButton}
             __clearable={_clearable}
             rightSection={rightSection}
-            rightSectionPointerEvents={rightSectionPointerEvents || (clearButton ? 'all' : 'none')}
+            rightSectionPointerEvents={rightSectionPointerEvents || 'none'}
             rightSectionWidth={rightSectionWidth}
             rightSectionProps={rightSectionProps}
             leftSection={leftSection}

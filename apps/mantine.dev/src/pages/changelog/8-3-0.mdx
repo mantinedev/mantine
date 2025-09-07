@@ -1,4 +1,4 @@
-import { ProgressDemos, HeatmapDemos, MiniCalendarDemos } from '@docs/demos';
+import { ProgressDemos, HeatmapDemos, MiniCalendarDemos, SelectDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -28,6 +28,13 @@ New [MiniCalendar](/dates/mini-calendar) component:
 [Heatmap](/charts/heatmap) now supports `splitMonths` prop to visually separate months with a spacer column and render only days that belong to each month in its columns.
 
 <Demo data={HeatmapDemos.splitMonths} />
+
+## Improved clearable prop handling
+
+[Select](/core/select), [MultiSelect](/core/multi-select), and other components with
+`clearable` prop now allow displaying the clear button next to the right section:
+
+<Demo data={SelectDemos.clearable} />
 
 ## Tiptap 3 support
 

@@ -28,6 +28,20 @@ export function Usage() {
   );
 }
 
+export function ClearButtonWithRightSection() {
+  const sizes = ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => (
+    <Select
+      data={['React', 'Angular']}
+      defaultValue="React"
+      clearable
+      placeholder="Select something"
+      size={size}
+      key={size}
+    />
+  ));
+  return <div style={{ padding: 40 }}>{sizes}</div>;
+}
+
 export function RetainSelectedValue() {
   const [data, setData] = useState([
     { value: '1', label: 'React' },
