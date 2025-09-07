@@ -92,6 +92,7 @@ export type DateInputFactory = Factory<{
 const defaultProps = {
   valueFormat: 'MMMM D, YYYY',
   fixOnBlur: true,
+  size: 'sm',
 } satisfies Partial<DateInputProps>;
 
 export const DateInput = factory<DateInputFactory>((_props, ref) => {
