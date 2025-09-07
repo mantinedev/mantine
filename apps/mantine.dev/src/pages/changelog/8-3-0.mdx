@@ -52,3 +52,4 @@ and further documentation [here](/guides/llms).
 - [Reordering list items example](/form/recipes/#list-items-reordering) now uses [dnd-kit](https://dndkit.com/) instead of `@hello-pangea/dnd`
 - [TimePicker](/dates/time-picker) now supports `reverseTimeControlsList` prop to reverse the order of time controls in the dropdown. Use this option if you want the order of controls to match keyboard controls (up and down arrow) direction.
 - [DirectionProvider](/styles/rtl) now automatically subscribes to the `dir` attribute mutations of the root element (usually `<html />`)  and updates internal state automatically.
+- [Select](/core/select) and [MultiSelect](/core/multi-select) now retain references to selected options that are no longer present in `data` prop.
