@@ -28,6 +28,29 @@ export function Usage() {
   );
 }
 
+export function RetainSelectedValue() {
+  const [data, setData] = useState([
+    { value: '1', label: 'React' },
+    { value: '2', label: 'Angular' },
+    { value: '3', label: 'Svelte' },
+  ]);
+
+  const updateData = () => {
+    setData([
+      { value: '4', label: 'Vue' },
+      { value: '5', label: 'Ember' },
+      { value: '6', label: 'Backbone' },
+    ]);
+  };
+
+  return (
+    <div style={{ padding: 40 }}>
+      <button onClick={updateData}>Update data</button>
+      <Select data={data} label="Retain data" defaultValue="1" mt="md" />
+    </div>
+  );
+}
+
 export function FlipDropdownPosition() {
   return (
     <div style={{ padding: 40 }}>
