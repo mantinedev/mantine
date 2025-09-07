@@ -4,7 +4,6 @@ import {
   __BaseInputProps,
   __InputStylesNames,
   BoxProps,
-  CloseButton,
   ElementProps,
   factory,
   Factory,
@@ -231,23 +230,19 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     },
   });
 
-  const _rightSection =
-    rightSection ||
-    (clearable && _value && !readOnly && !disabled ? (
-      <CloseButton
-        variant="transparent"
-        onMouseDown={(event) => event.preventDefault()}
-        tabIndex={-1}
-        onClick={() => {
-          setValue(null);
-          !controlled && setInputValue('');
-          setDropdownOpened(false);
-        }}
-        unstyled={unstyled}
-        size={inputProps.size || 'sm'}
-        {...clearButtonProps}
-      />
-    ) : null);
+  const clearButton = (
+    <Input.ClearButton
+      onClick={() => {
+        setValue(null);
+        !controlled && setInputValue('');
+        setDropdownOpened(false);
+      }}
+      unstyled={unstyled}
+      {...clearButtonProps}
+    />
+  );
+
+  const _clearable = clearable && !!_value && !readOnly && !disabled;
 
   useDidUpdate(() => {
     _value !== undefined && !dropdownOpened && setInputValue(formatValue(_value));
@@ -283,7 +278,9 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
               onClick={handleInputClick}
               onKeyDown={handleInputKeyDown}
               readOnly={readOnly}
-              rightSection={_rightSection}
+              rightSection={rightSection}
+              __clearSection={clearButton}
+              __clearable={_clearable}
               {...inputProps}
               {...others}
               disabled={disabled}

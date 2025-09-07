@@ -44,5 +44,3 @@ export function InputClearSection({
 
   return rightSection || clearSection || __defaultRightSection;
 }
-
-InputClearSection.displayName = '@mantine/core/InputClearSection';

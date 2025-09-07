@@ -254,15 +254,13 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
       }
     : {};
 
-  const _rightSection: React.ReactNode = (
-    <InputClearSection
-      __clearable={__clearable}
-      __clearSection={__clearSection}
-      rightSection={rightSection}
-      __defaultRightSection={__defaultRightSection}
-      size={size}
-    />
-  );
+  const _rightSection: React.ReactNode = InputClearSection({
+    __clearable,
+    __clearSection,
+    rightSection,
+    __defaultRightSection,
+    size,
+  });
 
   return (
     <InputContext value={{ size: size || 'sm' }}>
