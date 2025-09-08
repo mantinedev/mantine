@@ -223,8 +223,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     onClick: (event: any) => {
       getDayProps?.(day).onClick?.(event);
 
-      const val =
-        clearable && _allowDeselect ? (dayjs(_value).isSame(day, 'day') ? null : day) : day;
+      const val = _allowDeselect ? (dayjs(_value).isSame(day, 'day') ? null : day) : day;
       setValue(val);
       !controlled && val && setInputValue(formatValue(val));
       setDropdownOpened(false);

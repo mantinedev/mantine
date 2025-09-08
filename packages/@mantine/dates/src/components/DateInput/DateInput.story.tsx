@@ -17,12 +17,7 @@ export default { title: 'DateInput' };
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DateInput
-        placeholder="Enter date"
-        defaultValue="2022-04-11"
-        clearable
-        rightSection={<span>$</span>}
-      />
+      <DateInput placeholder="Enter date" defaultValue="2022-04-11" allowDeselect />
     </div>
   );
 }
