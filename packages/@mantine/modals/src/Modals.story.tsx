@@ -31,6 +31,7 @@ export function Usage() {
       title: 'Context modal',
       centered: true,
       onClose: () => console.log('context modal closed'),
+      'data-testid': 'modal-tenant-switch',
       innerProps: {
         contextProp: 'test-modal',
       },
