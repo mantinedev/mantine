@@ -35638,6 +35638,8 @@ and similar features.
 * `selector` - selector to get headings, by default it is `'h1, h2, h3, h4, h5, h6'`
 * `getDepth` - a function to retrieve depth of heading, by default depth is calculated based on tag name
 * `getValue` - a function to retrieve heading value, by default `element.textContent` is used
+* `scrollHost` - host element to attach scroll event listener, if not provided, `window` is used
+* `offset` - offset from the top of the viewport to use when determining the active heading, by default `0` is used
 
 Example of using custom options to get headings with `data-heading` attribute:
 
@@ -35695,6 +35697,9 @@ interface UseScrollSpyOptions {
 
   /** Host element to attach scroll event listener, if not provided, `window` is used */
   scrollHost?: HTMLElement;
+
+  /** Offset from the top of the viewport to use when determining the active heading, `0` by default */
+  offset?: number;
 }
 
 interface UseScrollSpyReturnType {
@@ -38644,6 +38649,183 @@ function Demo() {
 
 --------------------------------------------------------------------------------
 
+### MiniCalendar
+Package: @mantine/dates
+Import: import { MiniCalendar } from '@mantine/dates';
+Description: Compact calendar to display a small number of days in a row
+
+## Usage
+
+#### Example: usage
+
+```tsx
+import { useState } from 'react';
+import { MiniCalendar } from '@mantine/dates';
+
+function Demo() {
+  const [value, onChange] = useState<string | null>('2025-04-15');
+  return <MiniCalendar value={value} onChange={onChange} numberOfDays={6} />;
+}
+```
+
+
+## Number of days
+
+Use `numberOfDays` prop to control how many days are displayed at once.
+The default value is `7`.
+
+#### Example: numberOfDays
+
+```tsx
+import { MiniCalendar } from '@mantine/dates';
+
+function Demo() {
+  return <MiniCalendar numberOfDays={5} />;
+}
+```
+
+
+## getDayProps
+
+Use `getDayProps` to add custom props to days, for example, assign styles to weekends:
+
+#### Example: getDayProps
+
+```tsx
+import dayjs from 'dayjs';
+import { MiniCalendar } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <MiniCalendar
+      numberOfDays={6}
+      getDayProps={(date) => ({
+        style: {
+          color: [0, 6].includes(dayjs(date).day()) ? 'var(--mantine-color-red-8)' : undefined,
+        },
+      })}
+    />
+  );
+}
+```
+
+
+## Min and max dates
+
+Use `minDate` and `maxDate` props to limit date selection:
+
+#### Example: minMax
+
+```tsx
+import { useState } from 'react';
+import { MiniCalendar } from '@mantine/dates';
+
+function Demo() {
+  const [value, onChange] = useState<string | null>('2025-04-15');
+  return (
+    <MiniCalendar
+      value={value}
+      onChange={onChange}
+      numberOfDays={6}
+      defaultDate="2025-04-13"
+      minDate="2025-04-14"
+      maxDate="2025-04-24"
+    />
+  );
+}
+```
+
+
+## Localization
+
+You can change localization both on component level with `locale` prop and
+globally with [DatesProvider](https://mantine.dev/dates/getting-started).
+
+#### Example: locale
+
+```tsx
+import 'dayjs/locale/ru';
+import { MiniCalendar } from '@mantine/dates';
+
+function Demo() {
+  return <MiniCalendar defaultDate="2025-04-15" locale="ru" numberOfDays={6} />;
+}
+```
+
+
+## Accessibility
+
+Use `nextControlProps` and `previousControlProps` to add `aria-label` and other props to navigation buttons:
+
+```tsx
+import { MiniCalendar } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <MiniCalendar
+      nextControlProps={{ 'aria-label': 'Next range' }}
+      previousControlProps={{ 'aria-label': 'Previous range' }}
+    />
+  );
+}
+```
+
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| date | string | Date | - | Controlled component date value, start date of the interval |
+| defaultDate | string | Date | - | Uncontrolled component default value, start date of the interval |
+| getDayProps | (date: string) => Record<string, any> | - | Props passed down to the day component |
+| locale | string | - | dayjs locale used for formatting |
+| maxDate | string | Date | - | Maximum date that can be selected, date object or date string in <code>YYYY-MM-DD</code> format |
+| minDate | string | Date | - | Minimum date that can be selected, date object or date string in <code>YYYY-MM-DD</code> format |
+| monthLabelFormat | string | - | Dayjs format string for month label |
+| nextControlProps | Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref"> & DataAttributes | - | Props passed to next control button |
+| numberOfDays | number | - | Number of days to display in the calendar |
+| onChange | (date: string) => void | - | Called with date in <code>YYYY-MM-DD</code> format when date changes |
+| onDateChange | (date: string) => void | - | Called with date in <code>YYYY-MM-DD</code> format when date internal changes |
+| onNext | () => void | - | Called when the next button is clicked |
+| onPrevious | () => void | - | Called when the previous button is clicked |
+| previousControlProps | Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, "ref"> & DataAttributes | - | Props passed to previous control button |
+| size | MantineSize | - | Component size |
+| value | string | Date | null | - | Selected date, controlled value |
+
+
+#### Styles API
+
+MiniCalendar component supports Styles API. With Styles API, you can customize styles of any inner element. Follow the documentation to learn how to use CSS modules, CSS variables and inline styles to get full control over component styles.
+
+**MiniCalendar selectors**
+
+| Selector | Static selector | Description |
+|----------|----------------|-------------|
+| root | .mantine-MiniCalendar-root | Root element |
+| control | .mantine-MiniCalendar-control | Button in the dropdown which is used to select hours/minutes/seconds/am-pm |
+| days | .mantine-MiniCalendar-days | Days container |
+| day | .mantine-MiniCalendar-day | Single day element |
+| dayMonth | .mantine-MiniCalendar-dayMonth | Day element in month view |
+| dayNumber | .mantine-MiniCalendar-dayNumber | Day number element |
+
+**MiniCalendar CSS variables**
+
+| Selector | Variable | Description |
+|----------|----------|-------------|
+| root | --mini-calendar-font-size | Controls size of all elements (based on em units) |
+
+**MiniCalendar data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| control | disabled | Next/previous range is after  | - |
+| control | direction | - | - |
+| day | selected | The day matches the  | - |
+| day | disabled | The day is before  | - |
+
+
+--------------------------------------------------------------------------------
+
 ### MonthPickerInput
 Package: @mantine/dates
 Import: import { MonthPickerInput } from '@mantine/dates';
@@ -39853,6 +40035,7 @@ function Demo() {
 
   return (
     <TimePicker
+      withDropdown
       rightSection={
         <ActionIcon onClick={() => setDropdownOpened(true)} variant="default">
           <IconClock size={18} stroke={1.5} />
@@ -40224,6 +40407,7 @@ Keyboard interactions:
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | readOnly | boolean | - | If set, the value cannot be updated |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
+| reverseTimeControlsList | boolean | - | If set, the time controls list are reversed, |
 | rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
 | rightSectionPointerEvents | React.CSSProperties["pointerEvents"] | - | Sets <code>pointer-events</code> styles on the <code>rightSection</code> element |
 | rightSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>rightSection</code> element |
@@ -48023,6 +48207,34 @@ export const data = ${JSON.stringify(data, null, 2)};
 ```
 
 
+## Split months
+
+Use `splitMonths` to separate months visually with a spacer column and show only days that belong to the current month in each column. Month labels will be shifted by one column when `splitMonths` is enabled and months with fewer than 2 weeks are not labeled.
+
+#### Example: splitMonths
+
+```tsx
+// Demo.tsx
+import { Heatmap } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <Heatmap
+      data={data}
+      startDate="2024-02-16"
+      endDate="2025-02-16"
+      withMonthLabels
+      splitMonths
+    />
+  );
+}
+
+// data.ts
+export const data = ${JSON.stringify(data, null, 2)};
+```
+
+
 
 #### Props
 
@@ -48041,6 +48253,7 @@ export const data = ${JSON.stringify(data, null, 2)};
 | monthsLabelsHeight | number | - | Height of month labels row |
 | rectRadius | number | - | Rect radius in px |
 | rectSize | number | - | Size of day rect in px |
+| splitMonths | boolean | - | If set, inserts a spacer column between months |
 | startDate | string | Date | - | Heatmap start date. Current date - 1 year by default. |
 | tooltipProps | Partial<TooltipFloatingProps> | - | Props passed down to the <code>Tooltip.Floating</code> component |
 | weekdayLabels | string[] | - | Weekday labels, array of 7 elements, can be used for localization |
@@ -55143,6 +55356,78 @@ npm run storybook
 
 --------------------------------------------------------------------------------
 
+### Tiptap3Migration
+
+# Migration guide Tiptap 2 → Tiptap 3
+
+This guide will help you update [TipTap](https://tiptap.dev/docs) from version 2 to version 3.
+
+## shouldRerenderOnTransaction
+
+Set `shouldRerenderOnTransaction: true` in `useEditor`. It is required to have active control
+highlight.
+
+```tsx
+const editor = useEditor({
+  shouldRerenderOnTransaction: true,
+  // ... other options
+});
+```
+
+## immediatelyRender
+
+Set `immediatelyRender: false` if you use Next.js or other framework with server-side rendering.
+It is required to prevent hydration mismatches.
+
+```tsx
+const editor = useEditor({
+  immediatelyRender: false,
+  // ... other options
+});
+```
+
+## StarterKit changes
+
+`StarterKit` now includes underline and link extensions out of the box:
+
+* You no longer need to add underline extension manually
+* You must disable the default link extension to use extension provided by Mantine
+
+```tsx
+// With tiptap 2.x – ❌ no longer works with tiptap 3.x
+import Underline from '@tiptap/extension-underline';
+import StarterKit from '@tiptap/starter-kit';
+import { Link } from '@mantine/tiptap';
+
+const editor = useEditor({
+  extensions: [StarterKit, Underline, Link],
+});
+
+// With tiptap 3x – ✅ new usage example
+import StarterKit from '@tiptap/starter-kit';
+import { Link } from '@mantine/tiptap';
+
+const editor = useEditor({
+  // Remove underline and link extensions
+  extensions: [StarterKit.configure({ link: false }), Link],
+});
+```
+
+## Import paths
+
+Change import paths for floating and bubble menu components:
+
+```tsx
+// With tiptap 2.x – ❌ no longer works with tiptap 3.x
+import { BubbleMenu, FloatingMenu } from '@tiptap/react';
+
+// With tiptap 3.x – ✅ new usage example
+import { BubbleMenu, FloatingMenu } from '@tiptap/react/menus';
+```
+
+
+--------------------------------------------------------------------------------
+
 ### TypeScript
 
 # Usage with TypeScript
@@ -57377,7 +57662,7 @@ const theme = createTheme({
   headings: {
     fontFamily: 'Roboto, sans-serif',
     sizes: {
-      h1: { fontSize: 36 },
+      h1: { fontSize: '36px' },
     },
   },
 });
@@ -64354,9 +64639,9 @@ import '@mantine/carousel/styles.css';
 
 ## Documentation demos
 
-Demos presents on this page use blue background color for demonstration purposes. To simply
-demos code, background color and other demo-only styles are not included in the demo code.
-When you copy paste demo code to your project, it will not have blue background color.
+Demos on this page use a blue background color for demonstration purposes. To simplify
+the demos, background color and other demo-only styles are not included in the code.
+If you copy-paste demo code into your project, it will not have a blue background color.
 
 ## Usage
 
@@ -68142,14 +68427,14 @@ export function RichTextEditor({
 ## Controls and extensions
 
 Some controls require installation of additional [Tiptap extensions](https://tiptap.dev/extensions).
-For example, if you want to use `RichTextEditor.Underline` control, you will need to install `@tiptap/extension-underline` package:
+For example, if you want to use `RichTextEditor.Superscript` control, you will need to install `@tiptap/extension-superscript` package:
 
 ```bash
-yarn add @tiptap/extension-underline
+yarn add @tiptap/extension-superscript
 ```
 
 ```bash
-npm install @tiptap/extension-underline
+npm install @tiptap/extension-superscript
 ```
 
 Included with `@tiptap/starter-kit` (should be installed by default):
@@ -68172,10 +68457,7 @@ Included with `@tiptap/starter-kit` (should be installed by default):
 * `RichTextEditor.Hr`
 * `RichTextEditor.Undo`
 * `RichTextEditor.Redo`
-
-Controls that require [@tiptap/extension-link](https://www.npmjs.com/package/@tiptap/extension-link) extension:
-
-* `RichTextEditor.Link`
+* `RichTextEditor.Underline`
 * `RichTextEditor.Unlink`
 
 Controls that require [@tiptap/extension-text-align](https://www.npmjs.com/package/@tiptap/extension-text-align) extension:
@@ -68193,7 +68475,6 @@ Controls that require [@tiptap/extension-color](https://www.npmjs.com/package/@t
 
 Other controls with required extensions:
 
-* `RichTextEditor.Underline` requires [@tiptap/extension-underline](https://www.npmjs.com/package/@tiptap/extension-underline)
 * `RichTextEditor.Superscript` requires [@tiptap/extension-superscript](https://www.npmjs.com/package/@tiptap/extension-superscript)
 * `RichTextEditor.Subscript` requires [@tiptap/extension-subscript](https://www.npmjs.com/package/@tiptap/extension-subscript)
 * `RichTextEditor.Highlight` requires [@tiptap/extension-highlight](https://www.npmjs.com/package/@tiptap/extension-highlight)
@@ -68715,7 +68996,7 @@ All Mantine components and hooks were tested to work in the following browsers:
 * Safari 15.4+
 * IE (any version) is not supported
 
-Browsers version that support [:where selector](https://caniuse.com/mdn-css_selectors_where) and [@layer directive](https://caniuse.com/mdn-css_at-rules_layer)
+Browser versions that support [:where selector](https://caniuse.com/mdn-css_selectors_where) and [@layer directive](https://caniuse.com/mdn-css_at-rules_layer)
 features that are required for Mantine styles (any versions below may have major issues with styles):
 
 * Chromium browsers 99+ – Chrome, Edge, Chrome for Android, etc.
@@ -68741,7 +69022,7 @@ If you need to support older browsers, you should:
 
 * check the component `Browser support` section before usage and decide whether this component will work for your case
 * install corresponding polyfills that are required for hook/component to work in older browsers
-* check that component works in those browsers on your side (we do not test Mantine in browsers that are older than those that are listed above)
+* check that the component works in those browsers on your side (we do not test Mantine in browsers that are older than those that are listed above)
 
 ## Polyfills
 
@@ -76772,7 +77053,7 @@ Learn how to resolve MantineProvider issues
 
 The error above occurs in the following cases:
 
-* You are do not have `MantineProvider` in your app at all
+* You do not have `MantineProvider` in your app at all
 * You are rendering Mantine components outside of `MantineProvider` context
 * You have different versions of `@mantine/*` packages in your application.
   For example, you have `@mantine/core@7.0.0` and `@mantine/dates@7.1.0` installed.
