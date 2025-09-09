@@ -9,8 +9,8 @@ export {
   createNotificationsStore,
   notificationsStore,
   useNotifications,
-} from './notifications.store';
-export { Notifications } from './Notifications';
+} from './notifications.store.js';
+export { Notifications } from './Notifications.js';
 
 export type {
   NotificationData,

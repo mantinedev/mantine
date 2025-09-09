@@ -21,7 +21,7 @@ export function MdxInputSections({ component }: MdxInputSectionsProps) {
       </MdxParagraph>
       <MdxUl>
         <MdxLi>
-          <MdxCode>rightSection</MdxCode>/<MdxCode>leftSection</MdxCode> – React node to render on
+          <MdxCode>rightSection</MdxCode> / <MdxCode>leftSection</MdxCode> – React node to render on
           the corresponding side of input
         </MdxLi>
 

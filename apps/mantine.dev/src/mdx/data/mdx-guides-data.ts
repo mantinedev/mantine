@@ -108,11 +108,26 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
     searchTags: '8x, 9x, 8to9, 89',
   },
 
+  Tiptap3Migration: {
+    title: 'Migration guide Tiptap 2 → Tiptap 3',
+    slug: '/guides/tiptap-3-migration',
+    search: 'Migration guide from Tiptap 2 to Tiptap 3',
+    hideHeader: true,
+    searchTags: 'tiptap2, tiptap3, migration',
+  },
+
   FunctionsReference: {
     title: 'Functions reference',
     slug: '/guides/functions-reference',
     search:
       'A list of functions exported from Mantine packages that are not documented anywhere else',
+    hideHeader: true,
+  },
+
+  LLMDocumentation: {
+    title: 'LLMs.txt',
+    slug: '/guides/llms',
+    search: 'LLM, AI, ChatGPT, Claude, Copilot, Cursor, Windsurf, documentation',
     hideHeader: true,
   },
 };

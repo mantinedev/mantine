@@ -181,6 +181,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
       readOnly={readOnly}
       size={size}
       attributes={attributes}
+      keepMounted={autoSelectOnBlur}
       onOptionSubmit={(val) => {
         onOptionSubmit?.(val);
         handleValueChange(optionsLockup[val].label);

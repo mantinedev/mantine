@@ -13,8 +13,15 @@ export interface Version {
 
 export const allVersions = [
   {
+    version: '8.4.0',
+    date: 'September 8, 2025',
+    github: 'https://github.com/mantinedev/mantine/releases/tag/8.4.0',
+    link: 'https://mantine.dev/changelog/8-4-0',
+    patches: [],
+  },
+  {
     version: '8.3.0',
-    date: 'August 26, 2025',
+    date: 'September 8, 2025',
     github: 'https://github.com/mantinedev/mantine/releases/tag/8.3.0',
     link: 'https://mantine.dev/changelog/8-3-0',
     patches: [],
@@ -24,14 +31,52 @@ export const allVersions = [
     date: 'July 22, 2025',
     github: 'https://github.com/mantinedev/mantine/releases/tag/8.2.0',
     link: 'https://mantine.dev/changelog/8-2-0',
-    patches: [],
+    patches: [
+      {
+        version: '8.2.2',
+        date: 'July 30, 2025',
+      },
+      {
+        version: '8.2.3',
+        date: 'August 5, 2025',
+      },
+      {
+        version: '8.2.4',
+        date: 'August 7, 2025',
+      },
+      {
+        version: '8.2.5',
+        date: 'August 16, 2025',
+      },
+      {
+        version: '8.2.7',
+        date: 'August 22, 2025',
+      },
+      {
+        version: '8.2.7',
+        date: 'August 31, 2025',
+      },
+    ],
   },
   {
     version: '8.1.0',
     date: 'June 10, 2025',
     github: 'https://github.com/mantinedev/mantine/releases/tag/8.1.0',
     link: 'https://mantine.dev/changelog/8-1-0',
-    patches: [],
+    patches: [
+      {
+        version: '8.1.1',
+        date: 'June 16, 2025',
+      },
+      {
+        version: '8.1.2',
+        date: 'June 25, 2025',
+      },
+      {
+        version: '8.1.3',
+        date: 'July 7, 2025',
+      },
+    ],
   },
   {
     version: '8.0.0',

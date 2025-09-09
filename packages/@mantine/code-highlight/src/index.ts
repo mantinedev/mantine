@@ -1,19 +1,19 @@
-export { CodeHighlight } from './CodeHighlight/CodeHighlight';
-export { InlineCodeHighlight } from './CodeHighlight/InlineCodeHighlight';
-export { CodeHighlightTabs } from './CodeHighlightTabs/CodeHighlightTabs';
-export { CodeHighlightControl } from './CodeHighlight/CodeHighlightControl/CodeHighlightControl';
+export { CodeHighlight } from './CodeHighlight/CodeHighlight.js';
+export { InlineCodeHighlight } from './CodeHighlight/InlineCodeHighlight.js';
+export { CodeHighlightTabs } from './CodeHighlightTabs/CodeHighlightTabs.js';
+export { CodeHighlightControl } from './CodeHighlight/CodeHighlightControl/CodeHighlightControl.js';
 
 export {
   CodeHighlightAdapterProvider,
   useHighlight,
-} from './CodeHighlightProvider/CodeHighlightProvider';
+} from './CodeHighlightProvider/CodeHighlightProvider.js';
 
-export { createHighlightJsAdapter } from './CodeHighlightProvider/adapters/highlight-js-adapter';
+export { createHighlightJsAdapter } from './CodeHighlightProvider/adapters/highlight-js-adapter.js';
 export {
   createShikiAdapter,
   stripShikiCodeBlocks,
-} from './CodeHighlightProvider/adapters/shiki-adapter';
-export { plainTextAdapter } from './CodeHighlightProvider/adapters/plain-text-adapter';
+} from './CodeHighlightProvider/adapters/shiki-adapter.js';
+export { plainTextAdapter } from './CodeHighlightProvider/adapters/plain-text-adapter.js';
 
 export type {
   CodeHighlightFactory,

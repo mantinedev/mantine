@@ -248,6 +248,7 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
           dir="ltr"
           offsetScrollbars={false}
           data-collapsed={!_expanded || undefined}
+          styles={{ viewport: { overscrollBehaviorInline: 'none' } }}
           {...getStyles('scrollarea')}
         >
           <pre {...getStyles('pre')} data-with-offset={__withOffset || undefined}>

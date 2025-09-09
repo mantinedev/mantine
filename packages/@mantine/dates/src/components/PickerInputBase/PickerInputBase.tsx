@@ -120,7 +120,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
     onDropdownClose,
     withTime,
     ...others
-  } = useInputProps('PickerInputBase', null, _props);
+  } = useInputProps('PickerInputBase', { size: 'sm' }, _props);
 
   const clearButton = (
     <Input.ClearButton onClick={onClear} unstyled={unstyled} {...clearButtonProps} />
@@ -175,6 +175,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
               disabled={disabled}
               component="button"
               type="button"
+              multiline
               onClick={(event) => {
                 onClick?.(event);
                 dropdownHandlers.toggle();

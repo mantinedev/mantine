@@ -8,6 +8,16 @@
   }
 }
 
+@keyframes stripes-animation-vertical {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 0 40px;
+  }
+}
+
 .root {
   --progress-radius: var(--mantine-radius-default);
   --progress-size: var(--progress-size-md);
@@ -31,12 +41,18 @@
   @mixin where-dark {
     background-color: var(--mantine-color-dark-4);
   }
+
+  &:where([data-orientation='vertical']) {
+    height: auto;
+    width: var(--progress-size);
+    flex-direction: column-reverse;
+  }
 }
 
 .section {
   background-color: var(--progress-section-color);
   height: 100%;
-  width: var(--progress-section-width);
+  width: var(--progress-section-size);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,6 +88,41 @@
     border-start-start-radius: var(--progress-radius);
     border-end-start-radius: var(--progress-radius);
   }
+
+  .root:where([data-orientation='vertical']) & {
+    width: 100%;
+    height: var(--progress-section-size);
+    transition: height var(--progress-transition-duration, 100ms) ease;
+
+    &:where([data-striped]) {
+      background-image: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.15) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.15) 75%,
+        transparent 75%,
+        transparent
+      );
+    }
+
+    &:where([data-animated]) {
+      animation: stripes-animation-vertical 1s linear infinite;
+    }
+
+    &:where(:last-of-type) {
+      border-radius: 0;
+      border-start-start-radius: var(--progress-radius);
+      border-start-end-radius: var(--progress-radius);
+    }
+
+    &:where(:first-of-type) {
+      border-radius: 0;
+      border-end-start-radius: var(--progress-radius);
+      border-end-end-radius: var(--progress-radius);
+    }
+  }
 }
 
 .label {
@@ -84,4 +135,8 @@
   font-size: min(calc(var(--progress-size) * 0.65), rem(18px));
   line-height: 1;
   padding-inline: 4px;
+
+  .root:where([data-orientation='vertical']) & {
+    writing-mode: vertical-rl;
+  }
 }

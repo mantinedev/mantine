@@ -1,6 +1,6 @@
 {
   "name": "@mantine/charts",
-  "version": "8.1.3",
+  "version": "8.3.0",
   "description": "Charts components built with recharts and Mantine",
   "homepage": "https://mantine.dev/",
   "license": "MIT",
@@ -35,8 +35,8 @@
     "directory": "packages/@mantine/charts"
   },
   "peerDependencies": {
-    "@mantine/core": "8.1.3",
-    "@mantine/hooks": "8.1.3",
+    "@mantine/core": "8.3.0",
+    "@mantine/hooks": "8.3.0",
     "react": "^18.x || ^19.x",
     "react-dom": "^18.x || ^19.x",
     "recharts": ">=2.13.3"
@@ -45,7 +45,7 @@
     "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
   }
 }

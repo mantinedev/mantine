@@ -21,7 +21,7 @@ export interface ExtendCompoundComponent<Payload extends FactoryPayload> {
 }
 
 export interface ExtendsRootComponent<Payload extends FactoryPayload> {
-  defaultProps?: Partial<Payload['props']> & DataAttributes;
+  defaultProps?: Partial<Payload['props']> & DataAttributes & { component?: any };
   classNames?: ClassNames<Payload>;
   styles?: Styles<Payload>;
   vars?: PartialVarsResolver<Payload>;

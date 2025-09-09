@@ -28,6 +28,67 @@ export function Usage() {
   );
 }
 
+export function ClearButtonWithRightSection() {
+  const sizes = ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => (
+    <Select
+      data={['Very long option that exceeds the length of the input', 'Angular']}
+      defaultValue="Very long option that exceeds the length of the input"
+      clearable
+      placeholder="Select something"
+      size={size}
+      key={size}
+    />
+  ));
+  return <div style={{ padding: 40, maxWidth: 300 }}>{sizes}</div>;
+}
+
+export function RetainSelectedValue() {
+  const [data, setData] = useState([
+    { value: '1', label: 'React' },
+    { value: '2', label: 'Angular' },
+    { value: '3', label: 'Svelte' },
+  ]);
+
+  const updateData = () => {
+    setData([
+      { value: '4', label: 'Vue' },
+      { value: '5', label: 'Ember' },
+      { value: '6', label: 'Backbone' },
+    ]);
+  };
+
+  return (
+    <div style={{ padding: 40 }}>
+      <button onClick={updateData}>Update data</button>
+      <Select data={data} label="Retain data" defaultValue="1" mt="md" />
+    </div>
+  );
+}
+
+export function FlipDropdownPosition() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div style={{ height: 800 }} />
+      <Select
+        data={[
+          'React',
+          'Angular',
+          'Svelte',
+          'Vue',
+          'Ember',
+          'Backbone',
+          'Preact',
+          'Inferno',
+          'Aurelia',
+          'Meteor',
+        ]}
+        placeholder="Select something"
+      />
+      <div style={{ height: 2000 }} />
+    </div>
+  );
+}
+
 export function WithAreaLabel() {
   return (
     <div style={{ padding: 40 }}>

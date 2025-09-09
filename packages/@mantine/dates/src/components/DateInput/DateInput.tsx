@@ -4,7 +4,6 @@ import {
   __BaseInputProps,
   __InputStylesNames,
   BoxProps,
-  CloseButton,
   ElementProps,
   factory,
   Factory,
@@ -93,6 +92,7 @@ export type DateInputFactory = Factory<{
 const defaultProps = {
   valueFormat: 'MMMM D, YYYY',
   fixOnBlur: true,
+  size: 'sm',
 } satisfies Partial<DateInputProps>;
 
 export const DateInput = factory<DateInputFactory>((_props, ref) => {
@@ -130,6 +130,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     onDateChange,
     getMonthControlProps,
     getYearControlProps,
+    disabled,
     ...rest
   } = props;
 
@@ -222,31 +223,26 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     onClick: (event: any) => {
       getDayProps?.(day).onClick?.(event);
 
-      const val =
-        clearable && _allowDeselect ? (dayjs(_value).isSame(day, 'day') ? null : day) : day;
+      const val = _allowDeselect ? (dayjs(_value).isSame(day, 'day') ? null : day) : day;
       setValue(val);
       !controlled && val && setInputValue(formatValue(val));
       setDropdownOpened(false);
     },
   });
 
-  const _rightSection =
-    rightSection ||
-    (clearable && _value && !readOnly ? (
-      <CloseButton
-        variant="transparent"
-        onMouseDown={(event) => event.preventDefault()}
-        tabIndex={-1}
-        onClick={() => {
-          setValue(null);
-          !controlled && setInputValue('');
-          setDropdownOpened(false);
-        }}
-        unstyled={unstyled}
-        size={inputProps.size || 'sm'}
-        {...clearButtonProps}
-      />
-    ) : null);
+  const clearButton = (
+    <Input.ClearButton
+      onClick={() => {
+        setValue(null);
+        !controlled && setInputValue('');
+        setDropdownOpened(false);
+      }}
+      unstyled={unstyled}
+      {...clearButtonProps}
+    />
+  );
+
+  const _clearable = clearable && !!_value && !readOnly && !disabled;
 
   useDidUpdate(() => {
     _value !== undefined && !dropdownOpened && setInputValue(formatValue(_value));
@@ -264,7 +260,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
           opened={dropdownOpened}
           trapFocus={false}
           position="bottom-start"
-          disabled={readOnly}
+          disabled={readOnly || disabled}
           withRoles={false}
           unstyled={unstyled}
           {...popoverProps}
@@ -282,9 +278,12 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
               onClick={handleInputClick}
               onKeyDown={handleInputKeyDown}
               readOnly={readOnly}
-              rightSection={_rightSection}
+              rightSection={rightSection}
+              __clearSection={clearButton}
+              __clearable={_clearable}
               {...inputProps}
               {...others}
+              disabled={disabled}
               __staticSelector="DateInput"
             />
           </Popover.Target>

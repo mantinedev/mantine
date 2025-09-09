@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useId, usePrevious, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -168,6 +168,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
   } = props;
 
   const parsedData = useMemo(() => getParsedComboboxData(data), [data]);
+  const retainedSelectedOptions = useRef<Record<string, ComboboxItem>>({});
   const optionsLockup = useMemo(() => getOptionsLockup(parsedData), [parsedData]);
   const _id = useId(id);
 
@@ -178,7 +179,12 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     onChange,
   });
 
-  const selectedOption = typeof _value === 'string' ? optionsLockup[_value] : undefined;
+  const selectedOption =
+    typeof _value === 'string'
+      ? _value in optionsLockup
+        ? optionsLockup[_value]
+        : retainedSelectedOptions.current[_value]
+      : undefined;
   const previousSelectedOption = usePrevious(selectedOption);
 
   const [search, setSearch, searchControlled] = useUncontrolled({
@@ -236,9 +242,23 @@ export const Select = factory<SelectFactory>((_props, ref) => {
 
   useEffect(() => {
     if (!controlled && !searchControlled) {
-      handleSearchChange(typeof _value === 'string' ? optionsLockup[_value]?.label || '' : '');
+      handleSearchChange(
+        typeof _value === 'string'
+          ? _value in optionsLockup
+            ? optionsLockup[_value]?.label
+            : retainedSelectedOptions.current[_value]?.label || ''
+          : ''
+      );
     }
-  }, [data, _value]);
+  }, [optionsLockup, _value]);
+
+  useEffect(() => {
+    if (_value) {
+      if (_value in optionsLockup) {
+        retainedSelectedOptions.current[_value] = optionsLockup[_value];
+      }
+    }
+  }, [optionsLockup, _value]);
 
   const clearButton = (
     <Combobox.ClearButton
@@ -264,6 +284,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
         readOnly={readOnly}
         size={size}
         attributes={attributes}
+        keepMounted={autoSelectOnBlur}
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
           const optionLockup = allowDeselect
@@ -296,7 +317,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
             __clearSection={clearButton}
             __clearable={_clearable}
             rightSection={rightSection}
-            rightSectionPointerEvents={rightSectionPointerEvents || (_clearable ? 'all' : 'none')}
+            rightSectionPointerEvents={rightSectionPointerEvents || 'none'}
             {...others}
             size={size}
             __staticSelector="Select"
@@ -318,7 +339,12 @@ export const Select = factory<SelectFactory>((_props, ref) => {
               }
 
               !!searchable && combobox.closeDropdown();
-              handleSearchChange(_value != null ? optionsLockup[_value]?.label || '' : '');
+              const optionLockup =
+                typeof _value === 'string' &&
+                (_value in optionsLockup
+                  ? optionsLockup[_value]
+                  : retainedSelectedOptions.current[_value]);
+              handleSearchChange(optionLockup ? optionLockup.label || '' : '');
               onBlur?.(event);
             }}
             onClick={(event) => {

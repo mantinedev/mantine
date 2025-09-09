@@ -279,11 +279,11 @@ export function useCombobox({
   }, []);
 
   const focusSearchInput = useCallback(() => {
-    focusSearchTimeout.current = window.setTimeout(() => searchRef.current!.focus(), 0);
+    focusSearchTimeout.current = window.setTimeout(() => searchRef.current?.focus(), 0);
   }, []);
 
   const focusTarget = useCallback(() => {
-    focusTargetTimeout.current = window.setTimeout(() => targetRef.current!.focus(), 0);
+    focusTargetTimeout.current = window.setTimeout(() => targetRef.current?.focus(), 0);
   }, []);
 
   const getSelectedOptionIndex = useCallback(() => selectedOptionIndex.current, []);

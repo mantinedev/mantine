@@ -12,6 +12,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { getBoundaries } from './get-boundaries/get-boundaries';
+import { getColumns, getFirstMonthColumnIndex, HeatmapColumn } from './get-columns/get-columns';
 import { getDatesRange } from './get-dates-range/get-dates-range';
 import { getHeatColor } from './get-heat-color/get-heat-color';
 import { getMonthsRange } from './get-months-range/get-months-range';
@@ -91,6 +92,9 @@ export interface HeatmapProps
 
   /** Props passed down to each rect depending on its date and associated value */
   getRectProps?: (input: HeatmapRectData) => React.ComponentPropsWithoutRef<'rect'>;
+
+  /** If set, inserts a spacer column between months @default `false` */
+  splitMonths?: boolean;
 }
 
 export type HeatmapFactory = Factory<{
@@ -148,6 +152,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
     withTooltip,
     tooltipProps,
     getRectProps,
+    splitMonths,
     attributes,
     ...others
   } = props;
@@ -182,9 +187,31 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
     firstDayOfWeek,
   });
 
-  const weeks = datesRange.map((week, weekIndex) => {
+  // Calculate months range for labels and optional split between months
+  const monthsRange = withMonthLabels || splitMonths ? getMonthsRange(datesRange) : [];
+
+  // Columns: computed by a helper so logic is isolated
+  const columns: HeatmapColumn[] = getColumns(datesRange, splitMonths);
+
+  const totalColumns = columns.length;
+
+  const weeks = columns.map((col, columnIndex) => {
+    if (col.type === 'spacer') {
+      return (
+        <g
+          key={`spacer-${columnIndex}`}
+          transform={`translate(${columnIndex * rectSizeWithGap}, 0)`}
+        />
+      );
+    }
+
+    const week = datesRange[col.weekIndex];
+
     const days = week.map((date, dayIndex) => {
       if (!date) {
+        return null;
+      }
+      if (new Date(date).getMonth() !== col.month) {
         return null;
       }
 
@@ -193,7 +220,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
 
       return (
         <rect
-          key={date}
+          key={`${date}-${col.month}`}
           width={rectSize}
           height={rectSize}
           x={gap}
@@ -211,18 +238,34 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
     });
 
     return (
-      <g key={weekIndex} transform={`translate(${weekIndex * rectSizeWithGap}, 0)`} data-id="week">
+      <g
+        key={`col-${col.weekIndex}-${col.month}-${columnIndex}`}
+        transform={`translate(${columnIndex * rectSizeWithGap}, 0)`}
+        data-id="week"
+      >
         {days}
       </g>
     );
   });
 
-  const monthsRange = withMonthLabels ? getMonthsRange(datesRange) : [];
+  const computeMonthLabelX = (monthPosition: number, monthIndex: number) => {
+    if (!splitMonths) {
+      return monthPosition * rectSizeWithGap + gap + weekdaysOffset;
+    }
+
+    // For split months, find the first column index that has this month and shift label by 1 column
+    const firstMonth = monthsRange[monthIndex];
+    const i = getFirstMonthColumnIndex(columns, firstMonth.month);
+    const base = i >= 0 ? i : monthPosition;
+    // shift right by one column
+    return (base + 1) * rectSizeWithGap + gap + weekdaysOffset;
+  };
 
   const monthsLabelsNodes =
     withMonthLabels && monthLabels
       ? monthsRange.map((month, monthIndex) => {
-          if (month.size < 3) {
+          // Do not include months with less than 2 weeks
+          if (month.size < 2) {
             return null;
           }
 
@@ -231,7 +274,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
           return (
             <text
               key={monthIndex}
-              x={month.position * rectSizeWithGap + gap + weekdaysOffset}
+              x={computeMonthLabelX(month.position, monthIndex)}
               y={monthsLabelsHeight - 4}
               width={month.size * rectSizeWithGap}
               fontSize={fontSize}
@@ -265,7 +308,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
     <Box
       component="svg"
       ref={ref}
-      width={rectSizeWithGap * datesRange.length + gap + weekdaysOffset}
+      width={rectSizeWithGap * totalColumns + gap + weekdaysOffset}
       height={rectSizeWithGap * 7 + gap + monthsOffset}
       {...getStyles('root')}
       {...others}
@@ -281,7 +324,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
           {withTooltip && (
             <rect
               fill="transparent"
-              width={rectSizeWithGap * datesRange.length + gap}
+              width={rectSizeWithGap * totalColumns + gap}
               height={rectSizeWithGap * 7 + gap}
             />
           )}

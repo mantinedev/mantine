@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export interface UseMediaQueryOptions {
   getInitialValueInEffect: boolean;
@@ -26,20 +26,21 @@ export function useMediaQuery(
   const [matches, setMatches] = useState(
     getInitialValueInEffect ? initialValue : getInitialValue(query)
   );
-  const queryRef = useRef<MediaQueryList>(null);
-
   useEffect(() => {
-    if ('matchMedia' in window) {
-      queryRef.current = window.matchMedia(query);
-      setMatches(queryRef.current.matches);
-      const callback = (event: MediaQueryListEvent) => setMatches(event.matches);
-      queryRef.current.addEventListener('change', callback);
-      return () => {
-        queryRef.current?.removeEventListener('change', callback);
-      };
+    try {
+      if ('matchMedia' in window) {
+        const mediaQuery = window.matchMedia(query);
+        setMatches(mediaQuery.matches);
+        const callback = (event: MediaQueryListEvent) => setMatches(event.matches);
+        mediaQuery.addEventListener('change', callback);
+        return () => {
+          mediaQuery.removeEventListener('change', callback);
+        };
+      }
+    } catch (e) {
+      // Safari iframe compatibility issue
+      return undefined;
     }
-
-    return undefined;
   }, [query]);
 
   return matches || false;

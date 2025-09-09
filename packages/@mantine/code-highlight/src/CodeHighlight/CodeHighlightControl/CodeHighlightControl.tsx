@@ -1,6 +1,7 @@
 import {
   ActionIcon,
   BoxProps,
+  MantinePolymorphicComponent,
   polymorphicFactory,
   PolymorphicFactory,
   StylesApiProps,
@@ -25,8 +26,8 @@ export type CodeHighlightControlFactory = PolymorphicFactory<{
   defaultComponent: 'button';
 }>;
 
-export const CodeHighlightControl = polymorphicFactory<CodeHighlightControlFactory>(
-  (_props, ref) => {
+export const CodeHighlightControl: MantinePolymorphicComponent<CodeHighlightControlFactory> =
+  polymorphicFactory<CodeHighlightControlFactory>((_props, ref) => {
     const props = useProps('CodeHighlightControl', null, _props);
     const { children, vars, tooltipLabel, ...others } = props;
     const ctx = useCodeHighlightContext();
@@ -61,7 +62,6 @@ export const CodeHighlightControl = polymorphicFactory<CodeHighlightControlFacto
     }
 
     return control;
-  }
-);
+  });
 
 CodeHighlightControl.displayName = '@mantine/code-highlight/CodeHighlightControl';

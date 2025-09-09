@@ -64,7 +64,9 @@ export function MdxPolymorphic(props: MdxPolymorphicProps) {
 
       <MdxInfo icon={<TypeScriptCircleIcon size={32} />} color="#3178C6">
         <MdxParagraph>
-          <strong>Polymorphic components with TypeScript</strong>
+          <span style={{ fontSize: 18, fontWeight: 500, fontFamily: 'var(--docs-font-primary)' }}>
+            Polymorphic components with TypeScript
+          </span>
         </MdxParagraph>
 
         <MdxParagraph>

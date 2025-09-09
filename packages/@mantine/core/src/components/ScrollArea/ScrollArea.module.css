@@ -3,6 +3,10 @@
 
   position: relative;
   overflow: hidden;
+
+  &:where([data-autosize]) .content {
+    min-width: min-content;
+  }
 }
 
 .viewport {
@@ -19,10 +23,10 @@
 
   &:where([data-scrollbars='xy'], [data-scrollbars='y']) {
     &:where(
-        [data-offset-scrollbars='xy'],
-        [data-offset-scrollbars='y'],
-        [data-offset-scrollbars='present']
-      ) {
+      [data-offset-scrollbars='xy'],
+      [data-offset-scrollbars='y'],
+      [data-offset-scrollbars='present']
+    ) {
       &:where([data-vertical-hidden]) {
         padding-inline-end: 0;
         padding-inline-start: 0;
@@ -37,10 +41,10 @@
 
   &:where([data-scrollbars='xy'], [data-scrollbars='x']) {
     &:where(
-        [data-offset-scrollbars='xy'],
-        [data-offset-scrollbars='x'],
-        [data-offset-scrollbars='present']
-      ) {
+      [data-offset-scrollbars='xy'],
+      [data-offset-scrollbars='x'],
+      [data-offset-scrollbars='present']
+    ) {
       &:where([data-horizontal-hidden]) {
         padding-bottom: 0;
       }

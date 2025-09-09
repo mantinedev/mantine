@@ -117,7 +117,6 @@ export function createControl({
     const _label = labels[label] as string;
     return (
       <RichTextEditorControlBase
-        {...props}
         aria-label={_label}
         title={_label}
         active={isActive?.name ? editor?.isActive(isActive.name, isActive.attributes) : false}
@@ -125,6 +124,7 @@ export function createControl({
         onClick={() => (editor as any)?.chain().focus()[operation.name](operation.attributes).run()}
         icon={props.icon || icon}
         disabled={isDisabled?.(editor) || false}
+        {...props}
       />
     );
   });

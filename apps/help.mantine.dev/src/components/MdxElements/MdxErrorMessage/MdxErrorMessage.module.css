@@ -9,7 +9,7 @@
 .error {
   font-size: inherit;
   font-family: var(--mantine-font-family-monospace);
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .label {

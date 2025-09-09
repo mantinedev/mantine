@@ -45,7 +45,6 @@ export const TabsPanel = factory<TabsPanelFactory>((_props, ref) => {
 
   return (
     <Box
-      {...others}
       {...ctx.getStyles('panel', {
         className,
         classNames,
@@ -58,6 +57,7 @@ export const TabsPanel = factory<TabsPanelFactory>((_props, ref) => {
       role="tabpanel"
       id={ctx.getPanelId(value)}
       aria-labelledby={ctx.getTabId(value)}
+      {...others}
     >
       {content}
     </Box>

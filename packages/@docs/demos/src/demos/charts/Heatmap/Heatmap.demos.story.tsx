@@ -52,3 +52,8 @@ export const Demo_cssColors = {
   name: '⭐ Demo: cssColors',
   render: renderDemo(demos.cssColors),
 };
+
+export const Demo_splitMonths = {
+  name: '⭐ Demo: splitMonths',
+  render: renderDemo(demos.splitMonths),
+};

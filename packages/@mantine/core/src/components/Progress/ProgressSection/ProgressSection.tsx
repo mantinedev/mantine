@@ -85,7 +85,7 @@ export const ProgressSection = factory<ProgressSectionFactory>((props, ref) => {
       {...ariaAttributes}
       mod={[{ striped: striped || animated, animated }, mod]}
       __vars={{
-        '--progress-section-width': `${value}%`,
+        '--progress-section-size': `${value}%`,
         '--progress-section-color': getThemeColor(color, theme),
         '--progress-label-color': getAutoContrastValue(ctx.autoContrast, theme)
           ? getContrastColor({ color, theme, autoContrast: ctx.autoContrast })

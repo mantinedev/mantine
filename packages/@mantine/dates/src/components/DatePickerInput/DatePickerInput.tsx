@@ -12,11 +12,11 @@ import {
 import { useDatesInput } from '../../hooks';
 import { DatePickerType } from '../../types';
 import { getDefaultClampedDate } from '../../utils';
-import { CalendarStylesNames, pickCalendarProps } from '../Calendar';
-import { DatePicker, DatePickerBaseProps } from '../DatePicker';
+import { pickCalendarProps } from '../Calendar';
+import { DatePicker, DatePickerBaseProps, DatePickerStylesNames } from '../DatePicker';
 import { DateInputSharedProps, PickerInputBase } from '../PickerInputBase';
 
-export type DatePickerInputStylesNames = __InputStylesNames | 'placeholder' | CalendarStylesNames;
+export type DatePickerInputStylesNames = __InputStylesNames | 'placeholder' | DatePickerStylesNames;
 
 export interface DatePickerInputProps<Type extends DatePickerType = 'default'>
   extends BoxProps,

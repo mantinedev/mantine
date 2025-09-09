@@ -1,12 +1,12 @@
 export * from './extensions/index.js';
-export { RichTextEditor } from './RichTextEditor';
-export { useRichTextEditorContext } from './RichTextEditor.context';
-export { DEFAULT_LABELS } from './labels';
+export { RichTextEditor } from './RichTextEditor.js';
+export { useRichTextEditorContext } from './RichTextEditor.context.js';
+export { DEFAULT_LABELS } from './labels.js';
 
 export * from './RichTextEditorControl/index.js';
-export { RichTextEditorControlsGroup } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
-export { RichTextEditorControl } from './RichTextEditorControl/RichTextEditorControl';
-export { RichTextEditorContent } from './RichTextEditorContent/RichTextEditorContent';
+export { RichTextEditorControlsGroup } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup.js';
+export { RichTextEditorControl } from './RichTextEditorControl/RichTextEditorControl.js';
+export { RichTextEditorContent } from './RichTextEditorContent/RichTextEditorContent.js';
 
 export type {
   RichTextEditorProps,

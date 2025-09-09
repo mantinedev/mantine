@@ -18,6 +18,7 @@ import {
 } from '../../core';
 import { InputContext } from './Input.context';
 import { InputClearButton } from './InputClearButton/InputClearButton';
+import { InputClearSection } from './InputClearSection/InputClearSection';
 import { InputDescription } from './InputDescription/InputDescription';
 import { InputError } from './InputError/InputError';
 import { InputLabel } from './InputLabel/InputLabel';
@@ -163,6 +164,7 @@ const defaultProps = {
   rightSectionPointerEvents: 'none',
   withAria: true,
   withErrorStyles: true,
+  size: 'sm',
 } satisfies Partial<InputProps>;
 
 const varsResolver = createVarsResolver<InputFactory>((_, props, ctx) => ({
@@ -252,8 +254,13 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
       }
     : {};
 
-  const _rightSection: React.ReactNode =
-    rightSection || (__clearable && __clearSection) || __defaultRightSection;
+  const _rightSection: React.ReactNode = InputClearSection({
+    __clearable,
+    __clearSection,
+    rightSection,
+    __defaultRightSection,
+    size,
+  });
 
   return (
     <InputContext value={{ size: size || 'sm' }}>

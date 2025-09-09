@@ -33,6 +33,9 @@ export interface __ProgressRootProps extends BoxProps, ElementProps<'div'> {
 
   /** Controls sections width transition duration, value is specified in ms @default `100` */
   transitionDuration?: number;
+
+  /** Controls orientation @default `'horizontal'` */
+  orientation?: 'horizontal' | 'vertical';
 }
 
 export interface ProgressRootProps
@@ -68,7 +71,9 @@ export const ProgressRoot = factory<ProgressRootFactory>((_props, ref) => {
     vars,
     autoContrast,
     transitionDuration,
+    orientation,
     attributes,
+    mod,
     ...others
   } = props;
 
@@ -88,7 +93,7 @@ export const ProgressRoot = factory<ProgressRootFactory>((_props, ref) => {
 
   return (
     <ProgressProvider value={{ getStyles, autoContrast }}>
-      <Box ref={ref} {...getStyles('root')} {...others} />
+      <Box ref={ref} mod={[{ orientation }, mod]} {...getStyles('root')} {...others} />
     </ProgressProvider>
   );
 });

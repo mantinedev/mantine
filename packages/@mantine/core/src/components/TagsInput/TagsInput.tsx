@@ -119,6 +119,7 @@ const defaultProps = {
   acceptValueOnBlur: true,
   splitChars: [','],
   hiddenInputValuesDivider: ',',
+  size: 'sm',
 } satisfies Partial<TagsInputProps>;
 
 export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
@@ -314,7 +315,8 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       event.key === 'Backspace' &&
       length === 0 &&
       _value.length > 0 &&
-      !event.nativeEvent.isComposing
+      !event.nativeEvent.isComposing &&
+      !readOnly
     ) {
       onRemove?.(_value[_value.length - 1]);
       setValue(_value.slice(0, _value.length - 1));

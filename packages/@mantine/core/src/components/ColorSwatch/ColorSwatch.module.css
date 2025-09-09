@@ -53,7 +53,8 @@
     0 4px,
     4px -4px,
     -4px 0;
-  background-image: linear-gradient(45deg, var(--alpha-overlay-color) 25%, transparent 25%),
+  background-image:
+    linear-gradient(45deg, var(--alpha-overlay-color) 25%, transparent 25%),
     linear-gradient(-45deg, var(--alpha-overlay-color) 25%, transparent 25%),
     linear-gradient(45deg, transparent 75%, var(--alpha-overlay-color) 75%),
     linear-gradient(-45deg, var(--alpha-overlay-bg) 75%, var(--alpha-overlay-color) 75%);

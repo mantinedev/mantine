@@ -7,7 +7,7 @@ interface Options {
 }
 
 export function itSupportsClearableProps(options: Options, name = 'supports clearable props') {
-  it(`${name}: renders given rightSection instead of clear button`, () => {
+  it(`${name}: renders given rightSection next to the clear button`, () => {
     render(
       <options.component
         {...options.props}
@@ -17,7 +17,7 @@ export function itSupportsClearableProps(options: Options, name = 'supports clea
       />
     );
 
-    expect(screen.queryAllByLabelText('test-clear')).toHaveLength(0);
+    expect(screen.queryAllByLabelText('test-clear')).toHaveLength(1);
     expect(screen.getByText('test-right-section')).toBeInTheDocument();
   });
 

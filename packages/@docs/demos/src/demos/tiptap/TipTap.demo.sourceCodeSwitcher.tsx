@@ -15,6 +15,7 @@ function Demo() {
 
   const editor = useEditor({
     extensions: [StarterKit],
+    shouldRerenderOnTransaction: true,
     content: '<p>Source code control example</p><p>New line with <strong>bold text</strong></p><p>New line with <em>italic</em> <em>text</em></p>',
   });
 
@@ -47,6 +48,8 @@ function Demo() {
   const [isSourceCodeModeActive, onSourceCodeTextSwitch] = useState(false);
 
   const editor = useEditor({
+    immediatelyRender: false,
+    shouldRerenderOnTransaction: true,
     extensions: [StarterKit],
     content:
       '<p>Source code control example</p><p>New line with <strong>bold text</strong></p><p>New line with <em>italic</em> <em>text</em></p>',

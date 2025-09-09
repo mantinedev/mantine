@@ -40,6 +40,9 @@
     "react-dom": "^18.x || ^19.x"
   },
   "devDependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@docs/styles-api": "workspace:*",
     "@mantine/carousel": "workspace:*",
     "@mantine/charts": "workspace:*",
@@ -55,14 +58,15 @@
     "@mantine/tiptap": "workspace:*",
     "@mantinex/demo": "workspace:*",
     "@mantinex/dev-icons": "workspace:*",
-    "@tiptap/core": "^2.9.1",
-    "@tiptap/extension-link": "^2.9.1",
-    "@tiptap/pm": "^2.9.1",
-    "@tiptap/react": "^2.9.1",
-    "dayjs": "^1.11.13",
-    "embla-carousel-react": "^8.5.2",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "@tiptap/core": "^3.3.1",
+    "@tiptap/extension-floating-menu": "^3.2.0",
+    "@tiptap/extension-link": "^3.3.1",
+    "@tiptap/pm": "^3.3.1",
+    "@tiptap/react": "^3.3.1",
+    "dayjs": "^1.11.18",
+    "embla-carousel-react": "^8.6.0",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
     "recharts": "^2.13.3"
   }
 }

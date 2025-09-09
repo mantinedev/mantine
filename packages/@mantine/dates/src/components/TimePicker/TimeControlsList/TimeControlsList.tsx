@@ -38,13 +38,21 @@ interface TimeControlsListProps {
   step: number;
   value: number | null;
   onSelect: (value: number) => void;
+  reversed: boolean | undefined;
 }
 
-export function TimeControlsList({ min, max, step, value, onSelect }: TimeControlsListProps) {
+export function TimeControlsList({
+  min,
+  max,
+  step,
+  value,
+  onSelect,
+  reversed,
+}: TimeControlsListProps) {
   const ctx = useTimePickerContext();
   const ref = useRef<HTMLDivElement>(null);
   const range = getValuesRange(min, max, step);
-  const controls = range.map((control) => (
+  const controls = (reversed ? range.reverse() : range).map((control) => (
     <TimeControl key={control} value={control} active={value === control} onSelect={onSelect} />
   ));
 

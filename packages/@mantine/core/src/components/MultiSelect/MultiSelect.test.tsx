@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
@@ -105,5 +106,42 @@ describe('@mantine/core/MultiSelect', () => {
     render(<MultiSelect {...defaultProps} data={[]} nothingFoundMessage="No data" />);
     await userEvent.click(screen.getByRole('textbox'));
     expect(screen.getByText('No data')).toBeVisible();
+  });
+
+  it('retains labels of selected values when data changes', async () => {
+    function Demo() {
+      const [data, setData] = useState([
+        { value: '1', label: 'React' },
+        { value: '2', label: 'Angular' },
+        { value: '3', label: 'Svelte' },
+      ]);
+
+      return (
+        <div>
+          <button
+            type="button"
+            onClick={() =>
+              setData([
+                { value: '4', label: 'Vue' },
+                { value: '5', label: 'Ember' },
+                { value: '6', label: 'Backbone' },
+              ])
+            }
+          >
+            Update data
+          </button>
+          <MultiSelect data={data} defaultValue={['1', '2']} searchable />
+        </div>
+      );
+    }
+
+    render(<Demo />);
+    expect(screen.getAllByText('React').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Angular').length).toBeGreaterThan(0);
+
+    await userEvent.click(screen.getByRole('button', { name: 'Update data' }));
+
+    expect(screen.getAllByText('React').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Angular').length).toBeGreaterThan(0);
   });
 });

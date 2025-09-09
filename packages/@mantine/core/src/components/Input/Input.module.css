@@ -65,7 +65,6 @@
 
     --input-size: auto;
     --input-line-height: var(--mantine-line-height);
-    --input-padding-y: var(--input-padding-y-sm);
   }
 
   &[data-with-left-section] {
@@ -74,6 +73,10 @@
 
   &[data-with-right-section] {
     --input-padding-inline-end: var(--input-right-section-size);
+
+    &:has([data-combined-clear-section]) {
+      --input-padding-inline-end: calc(var(--input-right-section-size) * 1.55);
+    }
   }
 
   @mixin light {
@@ -149,7 +152,7 @@
   height: var(--input-size);
   min-height: var(--input-height);
   line-height: var(--input-line-height);
-  font-size: var(--input-fz, var(--input-fz, var(--mantine-font-size-sm)));
+  font-size: var(--_input-fz, var(--input-fz, var(--mantine-font-size-md)));
   border-radius: var(--input-radius);
   padding-inline-start: var(--input-padding-inline-start);
   padding-inline-end: var(--input-padding-inline-end);
@@ -166,7 +169,7 @@
   /* Used as data attribute in JsonInput component, does not have associated prop on the Input component */
   &[data-monospace] {
     --input-font-family: var(--mantine-font-family-monospace);
-    --input-fz: calc(var(--input-fz, var(--mantine-font-size-sm)) - rem(2px));
+    --_input-fz: calc(var(--input-fz) - rem(2px));
   }
 
   &:focus,
@@ -212,6 +215,10 @@
     background-color: var(--input-disabled-bg);
     color: var(--input-disabled-color);
   }
+
+  &[readonly] {
+    caret-color: transparent;
+  }
 }
 
 .section {
@@ -234,6 +241,10 @@
     --section-end: var(--right-section-end);
     --section-size: var(--input-right-section-size);
     --section-border-radius: var(--right-section-border-radius);
+
+    &:has([data-combined-clear-section]) {
+      --section-size: calc(var(--input-right-section-size) * 1.55);
+    }
   }
 
   &[data-position='left'] {
@@ -261,7 +272,7 @@
 .label {
   display: inline-block;
   font-weight: 500;
-  word-break: break-word;
+  overflow-wrap: break-word;
   cursor: default;
   -webkit-tap-highlight-color: transparent;
   font-size: var(--input-label-size, var(--mantine-font-size-sm));

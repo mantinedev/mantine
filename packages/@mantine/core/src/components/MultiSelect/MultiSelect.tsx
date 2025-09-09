@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -105,6 +105,9 @@ export interface MultiSelectProps
 
   /** Controls color of the default chevron */
   chevronColor?: MantineColor;
+
+  /** Clear search value when item is selected */
+  clearSearchOnChange?: boolean;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -118,6 +121,8 @@ const defaultProps = {
   withCheckIcon: true,
   checkIconPosition: 'left',
   hiddenInputValuesDivider: ',',
+  clearSearchOnChange: true,
+  size: 'sm',
 } satisfies Partial<MultiSelectProps>;
 
 export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
@@ -196,12 +201,14 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     scrollAreaProps,
     chevronColor,
     attributes,
+    clearSearchOnChange,
     ...others
   } = props;
 
   const _id = useId(id);
   const parsedData = getParsedComboboxData(data);
   const optionsLockup = getOptionsLockup(parsedData);
+  const retainedSelectedOptions = useRef<Record<string, ComboboxItem>>({});
 
   const combobox = useCombobox({
     opened: dropdownOpened,
@@ -267,27 +274,38 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     }
   };
 
-  const values = _value.map((item, index) => (
-    <Pill
-      key={`${item}-${index}`}
-      withRemoveButton={!readOnly && !optionsLockup[item]?.disabled}
-      onRemove={() => {
-        setValue(_value.filter((i) => item !== i));
-        onRemove?.(item);
-      }}
-      unstyled={unstyled}
-      disabled={disabled}
-      {...getStyles('pill')}
-    >
-      {optionsLockup[item]?.label || item}
-    </Pill>
-  ));
+  const values = _value.map((item, index) => {
+    const optionData = optionsLockup[item] || retainedSelectedOptions.current[item];
+    return (
+      <Pill
+        key={`${item}-${index}`}
+        withRemoveButton={!readOnly && !optionsLockup[item]?.disabled}
+        onRemove={() => {
+          setValue(_value.filter((i) => item !== i));
+          onRemove?.(item);
+        }}
+        unstyled={unstyled}
+        disabled={disabled}
+        {...getStyles('pill')}
+      >
+        {optionData?.label || item}
+      </Pill>
+    );
+  });
 
   useEffect(() => {
     if (selectFirstOptionOnChange) {
       combobox.selectFirstOption();
     }
   }, [selectFirstOptionOnChange, _searchValue]);
+
+  useEffect(() => {
+    _value.forEach((val) => {
+      if (val in optionsLockup) {
+        retainedSelectedOptions.current[val] = optionsLockup[val];
+      }
+    });
+  }, [optionsLockup, _value]);
 
   const clearButton = (
     <Combobox.ClearButton
@@ -316,7 +334,9 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
         attributes={attributes}
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
-          handleSearchChange('');
+          if (clearSearchOnChange) {
+            handleSearchChange('');
+          }
           combobox.updateSelectedOptionIndex('selected');
 
           if (_value.includes(optionsLockup[val].value)) {
@@ -352,7 +372,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
             __clearSection={clearButton}
             __clearable={_clearable}
             rightSection={rightSection}
-            rightSectionPointerEvents={rightSectionPointerEvents || (clearButton ? 'all' : 'none')}
+            rightSectionPointerEvents={rightSectionPointerEvents || 'none'}
             rightSectionWidth={rightSectionWidth}
             rightSectionProps={rightSectionProps}
             leftSection={leftSection}

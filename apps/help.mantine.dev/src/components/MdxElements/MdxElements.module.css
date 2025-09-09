@@ -23,7 +23,7 @@
 .title {
   margin-top: calc(var(--mantine-spacing-xl) * 1.2);
   margin-bottom: var(--mantine-spacing-md);
-  word-break: break-word;
+  overflow-wrap: break-word;
   font-weight: 500;
 
   @mixin light {

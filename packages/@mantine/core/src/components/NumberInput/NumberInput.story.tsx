@@ -13,6 +13,7 @@ export function Usage() {
     <div style={{ padding: 40 }}>
       <NumberInput
         value={value}
+        max={20}
         label="Number input"
         placeholder="Number input"
         onChange={setValue}

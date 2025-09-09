@@ -32,3 +32,8 @@ export const Demo_segments = {
   name: '⭐ Demo: segments',
   render: renderDemo(demos.segments),
 };
+
+export const Demo_vertical = {
+  name: '⭐ Demo: vertical',
+  render: renderDemo(demos.vertical),
+};

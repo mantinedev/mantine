@@ -7,23 +7,11 @@ body {
   --docs-table-of-contents-width: 250px;
   --docs-main-header-section-height: 56px;
 
-  --docs-mdx-content-width: min(
-    calc(1440px - var(--docs-table-of-contents-width) - var(--docs-navbar-width) - 50px),
-    calc(100vw - var(--docs-table-of-contents-width) - var(--docs-navbar-width) - 50px)
-  );
-
-  --docs-full-mdx-content-width: calc(
-    var(--docs-mdx-content-width) + var(--docs-table-of-contents-width)
-  );
-
   @mixin smaller-than $docs-mdx-breakpoint {
     --docs-header-height: 56px;
     --docs-navbar-width: 0px;
-    --docs-mdx-content-width: calc(100vw - 48px);
-
     --docs-font-size: 16px;
     --docs-inline-spacing: 0px;
-    --docs-full-mdx-content-width: var(--docs-mdx-content-width);
   }
 
   @mixin smaller-than $docs-toc-breakpoint {

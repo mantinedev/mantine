@@ -31,3 +31,4 @@ export * from './components/YearPickerInput/index.js';
 export * from './components/MonthPickerInput/index.js';
 export * from './components/DatePickerInput/index.js';
 export * from './components/TimeGrid/index.js';
+export * from './components/MiniCalendar/index.js';
