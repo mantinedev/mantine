@@ -73,6 +73,10 @@
 
   &[data-with-right-section] {
     --input-padding-inline-end: var(--input-right-section-size);
+
+    &:has([data-combined-clear-section]) {
+      --input-padding-inline-end: calc(var(--input-right-section-size) * 1.55);
+    }
   }
 
   @mixin light {
@@ -239,7 +243,7 @@
     --section-border-radius: var(--right-section-border-radius);
 
     &:has([data-combined-clear-section]) {
-      --section-size: auto;
+      --section-size: calc(var(--input-right-section-size) * 1.55);
     }
   }
 

@@ -31,15 +31,15 @@ export function Usage() {
 export function ClearButtonWithRightSection() {
   const sizes = ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => (
     <Select
-      data={['React', 'Angular']}
-      defaultValue="React"
+      data={['Very long option that exceeds the length of the input', 'Angular']}
+      defaultValue="Very long option that exceeds the length of the input"
       clearable
       placeholder="Select something"
       size={size}
       key={size}
     />
   ));
-  return <div style={{ padding: 40 }}>{sizes}</div>;
+  return <div style={{ padding: 40, maxWidth: 300 }}>{sizes}</div>;
 }
 
 export function RetainSelectedValue() {
