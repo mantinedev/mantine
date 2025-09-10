@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useState } from 'react';
-import { useIsomorphicEffect, useMutationObserver } from '@mantine/hooks';
+import { useIsomorphicEffect, useMutationObserverTarget } from '@mantine/hooks';
 
 export type Direction = 'ltr' | 'rtl';
 
@@ -65,7 +65,7 @@ export function DirectionProvider({
     }
   }, []);
 
-  useMutationObserver(
+  useMutationObserverTarget(
     mutationCallback,
     detectDirection ? { attributes: true, attributeFilter: ['dir'] } : {},
     typeof document !== 'undefined' && detectDirection ? document.documentElement : null

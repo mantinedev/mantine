@@ -25,7 +25,7 @@ export {
 } from './use-session-storage/use-session-storage.js';
 export { useMediaQuery } from './use-media-query/use-media-query.js';
 export { useMergedRef, mergeRefs, assignRef } from './use-merged-ref/use-merged-ref.js';
-export { useMouse } from './use-mouse/use-mouse.js';
+export { useMouse, useMousePosition } from './use-mouse/use-mouse.js';
 export { useMove, clampUseMovePosition } from './use-move/use-move.js';
 export { usePagination } from './use-pagination/use-pagination.js';
 export { useQueue } from './use-queue/use-queue.js';
@@ -42,7 +42,7 @@ export { useWindowScroll } from './use-window-scroll/use-window-scroll.js';
 export { useIntersection } from './use-intersection/use-intersection.js';
 export { useHash } from './use-hash/use-hash.js';
 export { useHotkeys, getHotkeyHandler } from './use-hotkeys/use-hotkeys.js';
-export { useFullscreen } from './use-fullscreen/use-fullscreen.js';
+export { useFullscreenDocument, useFullscreenElement } from './use-fullscreen/use-fullscreen.js';
 export { useLogger } from './use-logger/use-logger.js';
 export { useHover } from './use-hover/use-hover.js';
 export { useValidatedState } from './use-validated-state/use-validated-state.js';
@@ -60,7 +60,10 @@ export { useFavicon } from './use-favicon/use-favicon.js';
 export { useHeadroom } from './use-headroom/use-headroom.js';
 export { useEyeDropper } from './use-eye-dropper/use-eye-dropper.js';
 export { useInViewport } from './use-in-viewport/use-in-viewport.js';
-export { useMutationObserver } from './use-mutation-observer/use-mutation-observer.js';
+export {
+  useMutationObserver,
+  useMutationObserverTarget,
+} from './use-mutation-observer/use-mutation-observer.js';
 export { useMounted } from './use-mounted/use-mounted.js';
 export { useStateHistory } from './use-state-history/use-state-history.js';
 export { useMap } from './use-map/use-map.js';
