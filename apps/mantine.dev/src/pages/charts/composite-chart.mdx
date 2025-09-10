@@ -73,7 +73,9 @@ To display additional Y axis on the right side of the chart, set `withRightYAxis
 You can pass props down to recharts [YAxis](https://recharts.org/en-US/api/YAxis)
 component with `rightYAxisProps` prop and assign a label to the right Y axis with
 `rightYAxisLabel` prop. Note that you need to bind data series to the right Y axis
-by setting `yAxisId` in the `series` object.
+by setting `yAxisId` in the `series` object. Also note that if all the data in your
+series has `yAxisId` set to "right" and you use recharts 3, you will need to add
+`gridProps={{ yAxisId: "right" }}` to the chart component.
 
 <Demo data={CompositeChartDemos.rightYAxis} />
 

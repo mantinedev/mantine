@@ -40,6 +40,7 @@ import type {
   GridChartBaseProps,
   MantineChartDotProps,
 } from '../types';
+import { isRechartsV3 } from '../utils';
 import classes from '../grid-chart.module.css';
 
 export type CompositeChartCurveType =
@@ -501,6 +502,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
             strokeDasharray={strokeDasharray}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
             horizontal={gridAxis === 'x' || gridAxis === 'xy'}
+            {...(isRechartsV3() ? ({ yAxisId: 'left' } as any) : {})}
             {...getStyles('grid')}
             {...gridProps}
           />
