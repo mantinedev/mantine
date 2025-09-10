@@ -139,7 +139,7 @@ export function useScrollSpy({
     const _scrollHost = scrollHost || window;
     _scrollHost.addEventListener('scroll', handleScroll);
     return () => _scrollHost.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [scrollHost]);
 
   return {
     reinitialize: initialize,
