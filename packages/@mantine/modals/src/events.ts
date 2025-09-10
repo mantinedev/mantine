@@ -19,7 +19,9 @@ type ModalsEvents = {
   closeModal: (id: string) => void;
   closeContextModal: <TKey extends MantineModal>(id: TKey) => void;
   closeAllModals: () => void;
-  updateModal: (payload: { modalId: string } & Partial<ModalSettings>) => void;
+  updateModal: (
+    payload: { modalId: string } & Partial<ModalSettings> & Partial<OpenConfirmModal>
+  ) => void;
   updateContextModal: (payload: { modalId: string } & Partial<OpenContextModal<any>>) => void;
 };
 
