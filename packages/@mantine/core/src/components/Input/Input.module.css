@@ -75,7 +75,25 @@
     --input-padding-inline-end: var(--input-right-section-size);
 
     &:has([data-combined-clear-section]) {
-      --input-padding-inline-end: calc(var(--input-right-section-size) * 1.55);
+      .wrapper[data-size='xs'] & {
+        --input-padding-inline-end: 41px;
+      }
+
+      .wrapper[data-size='sm'] & {
+        --input-padding-inline-end: 50px;
+      }
+
+      .wrapper[data-size='md'] & {
+        --input-padding-inline-end: 60px;
+      }
+
+      .wrapper[data-size='lg'] & {
+        --input-padding-inline-end: 72px;
+      }
+
+      .wrapper[data-size='xl'] & {
+        --input-padding-inline-end: 89px;
+      }
     }
   }
 
@@ -243,7 +261,25 @@
     --section-border-radius: var(--right-section-border-radius);
 
     &:has([data-combined-clear-section]) {
-      --section-size: calc(var(--input-right-section-size) * 1.55);
+      .wrapper[data-size='xs'] & {
+        --section-size: 41px;
+      }
+
+      .wrapper[data-size='sm'] & {
+        --section-size: 50px;
+      }
+
+      .wrapper[data-size='md'] & {
+        --section-size: 60px;
+      }
+
+      .wrapper[data-size='lg'] & {
+        --section-size: 72px;
+      }
+
+      .wrapper[data-size='xl'] & {
+        --section-size: 89px;
+      }
     }
   }
 
