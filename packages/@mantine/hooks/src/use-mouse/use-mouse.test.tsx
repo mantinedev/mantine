@@ -1,5 +1,5 @@
 import { fireEvent, render, renderHook, screen } from '@testing-library/react';
-import { useMouse } from './use-mouse';
+import { useMouse, useMousePosition } from './use-mouse';
 
 const Target: React.FunctionComponent<any> = () => {
   const { ref, x, y } = useMouse();
@@ -15,15 +15,13 @@ describe('@mantine/hook/use-mouse', () => {
   it('returns correct initial position (0, 0)', () => {
     const { result } = renderHook(() => useMouse());
 
-    expect(result.current).toEqual({ ref: expect.any(Object), x: 0, y: 0 });
+    expect(result.current).toEqual({ ref: expect.any(Function), x: 0, y: 0 });
   });
 
   it('updates the position without a ref', () => {
-    const { result } = renderHook(() => useMouse());
-
+    const { result } = renderHook(() => useMousePosition());
     fireEvent.mouseMove(document, { clientX: 123, clientY: 456 });
-
-    expect(result.current).toEqual({ ref: expect.any(Object), x: 123, y: 456 });
+    expect(result.current).toEqual({ x: 123, y: 456 });
   });
 
   it('updates the position', () => {
@@ -43,17 +41,5 @@ describe('@mantine/hook/use-mouse', () => {
     fireEvent(target, customEvent);
 
     expect(target).toHaveTextContent('{ x: 123, y: 456 }');
-  });
-
-  it('resets the position on mouse leave when resetOnExit is enabled', () => {
-    const { result } = renderHook(() => useMouse({ resetOnExit: true }));
-
-    fireEvent.mouseMove(document, { clientX: 123, clientY: 456 });
-
-    expect(result.current).toEqual({ ref: expect.any(Object), x: 123, y: 456 });
-
-    fireEvent.mouseLeave(document);
-
-    expect(result.current).toEqual({ ref: expect.any(Object), x: 0, y: 0 });
   });
 });
