@@ -44,7 +44,9 @@ export const SpotlightActionsGroup = factory<SpotlightActionsGroupFactory>((prop
       {...ctx.getStyles('actionsGroup', { className, style, classNames, styles })}
       ref={ref}
       {...others}
-      __vars={{ '--spotlight-label': `'${label?.replace(/'/g, "\\'")}'` }}
+      __vars={{
+        '--spotlight-label': `'${label?.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`,
+      }}
     >
       {children}
     </Box>
