@@ -45,9 +45,7 @@ export const SpotlightActionsGroup = factory<SpotlightActionsGroupFactory>((prop
       ref={ref}
       {...others}
       __vars={{
-        '--spotlight-label': `'${label
-          ?.replace(/\\/g, '\\\\')
-          .replace(/'/g, "\\'")}'`
+        '--spotlight-label': `'${label?.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`,
       }}
     >
       {children}
