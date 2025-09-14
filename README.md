@@ -20,8 +20,8 @@
 
 ## Packages
 
-- `@mantine/hooks` – collection of 50+ hooks for state and UI management
-- `@mantine/core` – core components library – 100+ components
+- [`@mantine/hooks`](https://mantine.dev/hooks/package/) – collection of 50+ hooks for state and UI management
+- [`@mantine/core`](https://mantine.dev/core/package/) – core components library – 100+ components
 - [`@mantine/form`](https://mantine.dev/form/use-form) – forms management library
 - [`@mantine/charts`](https://mantine.dev/charts/getting-started/) – recharts based charts library
 - [`@mantine/notifications`](https://mantine.dev/x/notifications) – a fully featured notifications system
