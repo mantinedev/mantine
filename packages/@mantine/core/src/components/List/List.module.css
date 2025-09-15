@@ -40,6 +40,7 @@
   flex-direction: var(--li-direction, column);
   align-items: var(--li-align, flex-start);
   white-space: normal;
+  width: calc(100% - 24px);
 }
 
 .itemIcon {
