@@ -1,20 +1,22 @@
 .root {
   --list-fz: var(--mantine-font-size-md);
   --list-lh: var(--mantine-line-height-md);
+  --list-marker-gap: var(--mantine-spacing-lg);
 
-  list-style-position: inside;
+  list-style-position: outside;
   font-size: var(--list-fz);
   line-height: var(--list-lh);
   margin: 0;
   padding: 0;
+  padding-inline-start: var(--list-marker-gap);
 
   &:where([data-with-padding]) {
-    padding-inline-start: var(--mantine-spacing-md);
+    padding-inline-start: calc(var(--list-marker-gap) + var(--mantine-spacing-md));
   }
 }
 
 .item {
-  white-space: nowrap;
+  white-space: normal;
   line-height: var(--list-lh);
 
   &:where([data-with-icon]) {
