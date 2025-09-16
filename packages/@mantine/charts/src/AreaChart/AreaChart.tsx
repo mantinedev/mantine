@@ -36,6 +36,7 @@ import type {
   GridChartBaseProps,
   MantineChartDotProps,
 } from '../types';
+import { isRechartsV3 } from '../utils';
 import { AreaGradient } from './AreaGradient';
 import { AreaSplit } from './AreaSplit';
 import { getDefaultSplitOffset } from './get-split-offset';
@@ -391,6 +392,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
             strokeDasharray={strokeDasharray}
             vertical={gridAxis === 'y' || gridAxis === 'xy'}
             horizontal={gridAxis === 'x' || gridAxis === 'xy'}
+            {...(isRechartsV3() ? ({ yAxisId: 'left' } as any) : {})}
             {...getStyles('grid')}
             {...gridProps}
           />
