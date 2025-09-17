@@ -1,41 +1,40 @@
-import { Ref, useCallback, type RefCallback } from 'react';
+import { useCallback, type Ref, type RefCallback } from 'react';
 
 type PossibleRef<T> = Ref<T> | undefined;
-
+type StrictRef<T> = NonNullable<Ref<T>>;
 type RefCleanup<T> = ReturnType<RefCallback<T>>;
 
-export function assignRef<T>(ref: PossibleRef<T>, value: T): RefCleanup<T> {
+export function assignRef<T>(ref: StrictRef<T>, value: T): RefCleanup<T> {
   if (typeof ref === 'function') {
     return ref(value);
-  } else if (typeof ref === 'object' && ref !== null && 'current' in ref) {
-    ref.current = value;
   }
+
+  ref.current = value;
 }
 
 export function mergeRefs<T>(...refs: PossibleRef<T>[]): RefCallback<T> {
-  const cleanupMap = new Map<PossibleRef<T>, Exclude<RefCleanup<T>, void>>();
+  const availableRefs = refs.filter((ref) => ref != null);
+  const cleanupMap = new Map<StrictRef<T>, Exclude<RefCleanup<T>, void>>();
 
   return (node: T | null) => {
-    refs.forEach((ref) => {
+    availableRefs.forEach((ref) => {
       const cleanup = assignRef(ref, node);
       if (cleanup) {
         cleanupMap.set(ref, cleanup);
       }
     });
 
-    if (cleanupMap.size > 0) {
-      return () => {
-        refs.forEach((ref) => {
-          const cleanup = cleanupMap.get(ref);
-          if (cleanup && typeof cleanup === 'function') {
-            cleanup();
-          } else {
-            assignRef(ref, null);
-          }
-        });
-        cleanupMap.clear();
-      };
-    }
+    return () => {
+      availableRefs.forEach((ref) => {
+        const cleanup = cleanupMap.get(ref);
+        if (cleanup && typeof cleanup === 'function') {
+          cleanup();
+        } else {
+          assignRef(ref, null);
+        }
+      });
+      cleanupMap.clear();
+    };
   };
 }
 
