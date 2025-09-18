@@ -81,7 +81,7 @@
 .icon {
   display: block;
   width: 60%;
-  color: transparent;
+  color: var(--checkbox-icon-color);
   pointer-events: none;
   transform: translateY(rem(5px)) scale(0.5);
   opacity: 1;
