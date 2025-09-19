@@ -98,4 +98,26 @@ describe('@mantine/hooks/use-click-outside', () => {
     await userEvent.click(target);
     expect(handler).toHaveBeenCalledTimes(1);
   });
+
+  it('propagates event to handler', async () => {
+    const handler = jest.fn();
+
+    render(
+      <>
+        <Target handler={handler} />
+        <div data-testid="outside-target" />
+      </>
+    );
+
+    const outsideTarget = screen.getByTestId('outside-target');
+
+    await userEvent.click(outsideTarget);
+
+    expect(handler).toHaveBeenCalledTimes(1);
+    expect(handler).toHaveBeenCalledWith(expect.any(MouseEvent));
+
+    const event = handler.mock.calls[0][0];
+    expect(event).toHaveProperty('type', 'mousedown');
+    expect(event).toHaveProperty('target', outsideTarget);
+  });
 });

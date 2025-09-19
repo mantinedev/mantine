@@ -1,9 +1,11 @@
 import { useEffect, useRef } from 'react';
 
+type EventType = MouseEvent | TouchEvent;
+
 const DEFAULT_EVENTS = ['mousedown', 'touchstart'];
 
 export function useClickOutside<T extends HTMLElement = any>(
-  callback: () => void,
+  callback: (event: EventType) => void,
   events?: string[] | null,
   nodes?: (HTMLElement | null)[]
 ) {
@@ -11,14 +13,15 @@ export function useClickOutside<T extends HTMLElement = any>(
   const eventsList = events || DEFAULT_EVENTS;
 
   useEffect(() => {
-    const listener = (event: any) => {
+    const listener = (event: Event) => {
       const { target } = event ?? {};
       if (Array.isArray(nodes)) {
-        const shouldIgnore = !document.body.contains(target) && target.tagName !== 'HTML';
+        const shouldIgnore =
+          !document.body.contains(target as Node) && (target as Element)?.tagName !== 'HTML';
         const shouldTrigger = nodes.every((node) => !!node && !event.composedPath().includes(node));
-        shouldTrigger && !shouldIgnore && callback();
-      } else if (ref.current && !ref.current.contains(target)) {
-        callback();
+        shouldTrigger && !shouldIgnore && callback(event as EventType);
+      } else if (ref.current && !ref.current.contains(target as Node)) {
+        callback(event as EventType);
       }
     };
 
