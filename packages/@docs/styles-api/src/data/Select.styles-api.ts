@@ -11,4 +11,14 @@ export const SelectStylesApi: StylesApiData<SelectFactory> = {
   },
 
   vars: {},
+
+  modifiers: [
+    { modifier: 'data-combobox-selected', selector: 'option', condition: 'Option is selected' },
+    {
+      modifier: 'data-combobox-active',
+      selector: 'option',
+      condition: 'Options was activated by keyboard',
+    },
+    { modifier: 'data-combobox-disabled', selector: 'option', condition: 'Option is disabled' },
+  ],
 };
