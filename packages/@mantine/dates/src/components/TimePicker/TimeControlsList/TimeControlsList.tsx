@@ -58,10 +58,13 @@ export function TimeControlsList({
 
   useEffect(() => {
     if (value !== null) {
-      const target = ref.current?.querySelector<HTMLButtonElement>(`[data-value="${value}"]`);
-      if (!isElementVisibleInScrollContainer(target, ref.current)) {
-        target?.scrollIntoView({ block: 'nearest' });
-      }
+      const scrollToValue = () => {
+        const target = ref.current?.querySelector<HTMLButtonElement>(`[data-value="${value}"]`);
+        if (!isElementVisibleInScrollContainer(target, ref.current)) {
+          target?.scrollIntoView({ block: 'nearest' });
+        }
+      };
+      requestAnimationFrame(scrollToValue);
     }
   }, [value]);
 

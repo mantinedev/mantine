@@ -183,7 +183,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     setInputValue(val);
     setDropdownOpened(true);
 
-    if (val.trim() === '' && clearable) {
+    if (val.trim() === '' && (allowDeselect || clearable)) {
       setValue(null);
     } else {
       const dateValue = _dateParser(val);

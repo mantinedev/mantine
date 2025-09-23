@@ -51,6 +51,17 @@ describe('@mantine/core/NavLink', () => {
     expect(screen.getByRole('link')).toHaveAttribute('data-expanded');
   });
 
+  it('sets correct data-expanded attribute on link (uncontrolled) when onClick is provided', async () => {
+    render(
+      <NavLink {...defaultProps} onClick={() => {}}>
+        <div>test-dropdown</div>
+      </NavLink>
+    );
+    expect(screen.getByRole('link')).not.toHaveAttribute('data-expanded');
+    await userEvent.click(screen.getByRole('link'));
+    expect(screen.getByRole('link')).toHaveAttribute('data-expanded');
+  });
+
   it('sets correct data-expanded attribute on link based on defaultOpened prop (uncontrolled)', async () => {
     render(
       <NavLink {...defaultProps} defaultOpened>

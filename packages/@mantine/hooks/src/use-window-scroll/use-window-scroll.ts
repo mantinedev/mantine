@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useWindowEvent } from '../use-window-event/use-window-event';
+import { useEffect, useRef, useState } from 'react';
 
 export interface UseWindowScrollPosition {
   x: number;
@@ -31,9 +30,33 @@ function scrollTo({ x, y }: Partial<UseWindowScrollPosition>) {
 
 export function useWindowScroll(): UseWindowScrollReturnValue {
   const [position, setPosition] = useState<UseWindowScrollPosition>({ x: 0, y: 0 });
+  const ticking = useRef(false);
 
-  useWindowEvent('scroll', () => setPosition(getScrollPosition()));
-  useWindowEvent('resize', () => setPosition(getScrollPosition()));
+  useEffect(() => {
+    let rafID: number | null = null;
+
+    function updatePosition() {
+      if (!ticking.current) {
+        ticking.current = true;
+        rafID = window.requestAnimationFrame(() => {
+          setPosition(getScrollPosition());
+          ticking.current = false;
+        });
+      }
+    }
+
+    window.addEventListener('scroll', updatePosition);
+    window.addEventListener('resize', updatePosition);
+
+    return () => {
+      window.removeEventListener('scroll', updatePosition);
+      window.removeEventListener('resize', updatePosition);
+
+      if (rafID) {
+        window.cancelAnimationFrame(rafID);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     setPosition(getScrollPosition());
