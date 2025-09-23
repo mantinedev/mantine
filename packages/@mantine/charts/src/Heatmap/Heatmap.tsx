@@ -190,63 +190,107 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
   // Calculate months range for labels and optional split between months
   const monthsRange = withMonthLabels || splitMonths ? getMonthsRange(datesRange) : [];
 
-  // Columns: computed by a helper so logic is isolated
-  const columns: HeatmapColumn[] = getColumns(datesRange, splitMonths);
+  // Use different rendering logic based on splitMonths
+  const weeks = splitMonths
+    ? (() => {
+        // Columns: computed by a helper so logic is isolated
+        const columns: HeatmapColumn[] = getColumns(datesRange, splitMonths);
 
-  const totalColumns = columns.length;
-
-  const weeks = columns.map((col, columnIndex) => {
-    if (col.type === 'spacer') {
-      return (
-        <g
-          key={`spacer-${columnIndex}`}
-          transform={`translate(${columnIndex * rectSizeWithGap}, 0)`}
-        />
-      );
-    }
-
-    const week = datesRange[col.weekIndex];
-
-    const days = week.map((date, dayIndex) => {
-      if (!date) {
-        return null;
-      }
-      if (new Date(date).getMonth() !== col.month) {
-        return null;
-      }
-
-      const hasValue = date in data && data[date] !== null;
-      const rectValue = hasValue ? data[date] : null;
-
-      return (
-        <rect
-          key={`${date}-${col.month}`}
-          width={rectSize}
-          height={rectSize}
-          x={gap}
-          y={dayIndex * rectSizeWithGap + gap}
-          rx={rectRadius}
-          data-empty={!hasValue || undefined}
-          fill={hasValue ? getHeatColor({ value: data[date], min, max, colors }) : undefined}
-          onPointerEnter={
-            withTooltip ? () => setHoveredRect({ date, value: rectValue }) : undefined
+        return columns.map((col, columnIndex) => {
+          if (col.type === 'spacer') {
+            return (
+              <g
+                key={`spacer-${columnIndex}`}
+                transform={`translate(${columnIndex * rectSizeWithGap}, 0)`}
+              />
+            );
           }
-          {...getRectProps?.({ date, value: rectValue })}
-          {...getStyles('rect')}
-        />
-      );
-    });
 
-    return (
-      <g
-        key={`col-${col.weekIndex}-${col.month}-${columnIndex}`}
-        transform={`translate(${columnIndex * rectSizeWithGap}, 0)`}
-        data-id="week"
-      >
-        {days}
-      </g>
-    );
-  });
+          const week = datesRange[col.weekIndex];
+
+          const days = week.map((date, dayIndex) => {
+            if (!date) {
+              return null;
+            }
+            if (new Date(date).getMonth() !== col.month) {
+              return null;
+            }
+
+            const hasValue = date in data && data[date] !== null;
+            const rectValue = hasValue ? data[date] : null;
+
+            return (
+              <rect
+                key={`${date}-${col.month}`}
+                width={rectSize}
+                height={rectSize}
+                x={gap}
+                y={dayIndex * rectSizeWithGap + gap}
+                rx={rectRadius}
+                data-empty={!hasValue || undefined}
+                fill={hasValue ? getHeatColor({ value: data[date], min, max, colors }) : undefined}
+                onPointerEnter={
+                  withTooltip ? () => setHoveredRect({ date, value: rectValue }) : undefined
+                }
+                {...getRectProps?.({ date, value: rectValue })}
+                {...getStyles('rect')}
+              />
+            );
+          });
+
+          return (
+            <g
+              key={`col-${col.weekIndex}-${col.month}-${columnIndex}`}
+              transform={`translate(${columnIndex * rectSizeWithGap}, 0)`}
+              data-id="week"
+            >
+              {days}
+            </g>
+          );
+        });
+      })()
+    : datesRange.map((week, weekIndex) => {
+        // Original simple logic without month splitting
+        const days = week.map((date, dayIndex) => {
+          if (!date) {
+            return null;
+          }
+
+          const hasValue = date in data && data[date] !== null;
+          const rectValue = hasValue ? data[date] : null;
+
+          return (
+            <rect
+              key={date}
+              width={rectSize}
+              height={rectSize}
+              x={gap}
+              y={dayIndex * rectSizeWithGap + gap}
+              rx={rectRadius}
+              data-empty={!hasValue || undefined}
+              fill={hasValue ? getHeatColor({ value: data[date], min, max, colors }) : undefined}
+              onPointerEnter={
+                withTooltip ? () => setHoveredRect({ date, value: rectValue }) : undefined
+              }
+              {...getRectProps?.({ date, value: rectValue })}
+              {...getStyles('rect')}
+            />
+          );
+        });
+
+        return (
+          <g
+            key={weekIndex}
+            transform={`translate(${weekIndex * rectSizeWithGap}, 0)`}
+            data-id="week"
+          >
+            {days}
+          </g>
+        );
+      });
+
+  // Calculate total columns based on whether splitMonths is enabled
+  const totalColumns = splitMonths ? getColumns(datesRange, splitMonths).length : datesRange.length;
 
   const computeMonthLabelX = (monthPosition: number, monthIndex: number) => {
     if (!splitMonths) {
@@ -255,6 +299,7 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
 
     // For split months, find the first column index that has this month and shift label by 1 column
     const firstMonth = monthsRange[monthIndex];
+    const columns: HeatmapColumn[] = getColumns(datesRange, splitMonths);
     const i = getFirstMonthColumnIndex(columns, firstMonth.month);
     const base = i >= 0 ? i : monthPosition;
     // shift right by one column
@@ -264,8 +309,10 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
   const monthsLabelsNodes =
     withMonthLabels && monthLabels
       ? monthsRange.map((month, monthIndex) => {
-          // Do not include months with less than 2 weeks
-          if (month.size < 2) {
+          // For non-split months, use original logic with minimum size of 3
+          // For split months, use minimum size of 2
+          const minSize = splitMonths ? 2 : 3;
+          if (month.size < minSize) {
             return null;
           }
 
