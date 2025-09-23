@@ -77,6 +77,12 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
 
   /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
+
+  /** Called when the root element is clicked */
+  onClick?: React.MouseEventHandler<HTMLElement>;
+
+  /** Called on keydown of the root element */
+  onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
 }
 
 export type NavLinkFactory = PolymorphicFactory<{
@@ -136,6 +142,8 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
     autoContrast,
     mod,
     attributes,
+    onClick,
+    onKeyDown,
     ...others
   } = props;
 
@@ -163,7 +171,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
   const withChildren = !!children;
 
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    (others as any).onClick?.(event);
+    onClick?.(event);
 
     if (withChildren) {
       event.preventDefault();
@@ -179,7 +187,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
         ref={ref}
         onClick={handleClick}
         onKeyDown={(event) => {
-          (others as any).onKeyDown?.(event);
+          onKeyDown?.(event);
 
           if (event.nativeEvent.code === 'Space' && withChildren) {
             event.preventDefault();
