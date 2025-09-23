@@ -14,8 +14,9 @@ import {
 import { getBoundaries } from './get-boundaries/get-boundaries';
 import { getColumns, getFirstMonthColumnIndex, HeatmapColumn } from './get-columns/get-columns';
 import { getDatesRange } from './get-dates-range/get-dates-range';
-import { getHeatColor } from './get-heat-color/get-heat-color';
 import { getMonthsRange } from './get-months-range/get-months-range';
+import { HeatmapSplitWeeks } from './HeatmapSplitWeeks';
+import { HeatmapWeeks } from './HeatmapWeeks';
 import { rotateWeekdaysNames } from './rotate-weekdays-names/rotate-weekdays-names';
 import classes from './Heatmap.module.css';
 
@@ -190,104 +191,28 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
   // Calculate months range for labels and optional split between months
   const monthsRange = withMonthLabels || splitMonths ? getMonthsRange(datesRange) : [];
 
+  // Shared props for weeks rendering components
+  const weeksProps = {
+    data,
+    datesRange,
+    rectSize,
+    gap,
+    rectRadius,
+    min,
+    max,
+    colors,
+    withTooltip,
+    setHoveredRect,
+    getRectProps,
+    getStyles,
+  };
+
   // Use different rendering logic based on splitMonths
-  const weeks = splitMonths
-    ? (() => {
-        // Columns: computed by a helper so logic is isolated
-        const columns: HeatmapColumn[] = getColumns(datesRange, splitMonths);
-
-        return columns.map((col, columnIndex) => {
-          if (col.type === 'spacer') {
-            return (
-              <g
-                key={`spacer-${columnIndex}`}
-                transform={`translate(${columnIndex * rectSizeWithGap}, 0)`}
-              />
-            );
-          }
-
-          const week = datesRange[col.weekIndex];
-
-          const days = week.map((date, dayIndex) => {
-            if (!date) {
-              return null;
-            }
-            if (new Date(date).getMonth() !== col.month) {
-              return null;
-            }
-
-            const hasValue = date in data && data[date] !== null;
-            const rectValue = hasValue ? data[date] : null;
-
-            return (
-              <rect
-                key={`${date}-${col.month}`}
-                width={rectSize}
-                height={rectSize}
-                x={gap}
-                y={dayIndex * rectSizeWithGap + gap}
-                rx={rectRadius}
-                data-empty={!hasValue || undefined}
-                fill={hasValue ? getHeatColor({ value: data[date], min, max, colors }) : undefined}
-                onPointerEnter={
-                  withTooltip ? () => setHoveredRect({ date, value: rectValue }) : undefined
-                }
-                {...getRectProps?.({ date, value: rectValue })}
-                {...getStyles('rect')}
-              />
-            );
-          });
-
-          return (
-            <g
-              key={`col-${col.weekIndex}-${col.month}-${columnIndex}`}
-              transform={`translate(${columnIndex * rectSizeWithGap}, 0)`}
-              data-id="week"
-            >
-              {days}
-            </g>
-          );
-        });
-      })()
-    : datesRange.map((week, weekIndex) => {
-        // Original simple logic without month splitting
-        const days = week.map((date, dayIndex) => {
-          if (!date) {
-            return null;
-          }
-
-          const hasValue = date in data && data[date] !== null;
-          const rectValue = hasValue ? data[date] : null;
-
-          return (
-            <rect
-              key={date}
-              width={rectSize}
-              height={rectSize}
-              x={gap}
-              y={dayIndex * rectSizeWithGap + gap}
-              rx={rectRadius}
-              data-empty={!hasValue || undefined}
-              fill={hasValue ? getHeatColor({ value: data[date], min, max, colors }) : undefined}
-              onPointerEnter={
-                withTooltip ? () => setHoveredRect({ date, value: rectValue }) : undefined
-              }
-              {...getRectProps?.({ date, value: rectValue })}
-              {...getStyles('rect')}
-            />
-          );
-        });
-
-        return (
-          <g
-            key={weekIndex}
-            transform={`translate(${weekIndex * rectSizeWithGap}, 0)`}
-            data-id="week"
-          >
-            {days}
-          </g>
-        );
-      });
+  const weeks = splitMonths ? (
+    <HeatmapSplitWeeks {...weeksProps} />
+  ) : (
+    <HeatmapWeeks {...weeksProps} />
+  );
 
   // Calculate total columns based on whether splitMonths is enabled
   const totalColumns = splitMonths ? getColumns(datesRange, splitMonths).length : datesRange.length;
