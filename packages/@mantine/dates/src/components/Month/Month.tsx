@@ -3,6 +3,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -76,7 +77,7 @@ export interface MonthSettings {
   /** Passes props down to `Day` components */
   getDayProps?: (
     date: DateStringValue
-  ) => Omit<Partial<DayProps>, 'classNames' | 'styles' | 'vars'>;
+  ) => Omit<Partial<DayProps>, 'classNames' | 'styles' | 'vars'> & DataAttributes;
 
   /** Callback function to determine whether the day should be disabled */
   excludeDate?: (date: DateStringValue) => boolean;
