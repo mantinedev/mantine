@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import {
   Box,
   BoxProps,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -30,7 +31,7 @@ export interface MonthsListSettings extends ControlsGroupSettings {
   monthsListFormat?: string;
 
   /** Passes props down month picker control */
-  getMonthControlProps?: (date: DateStringValue) => Partial<PickerControlProps>;
+  getMonthControlProps?: (date: DateStringValue) => Partial<PickerControlProps> & DataAttributes;
 
   /** Determines whether controls should be separated @default `true` */
   withCellSpacing?: boolean;
