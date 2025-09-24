@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import { IconChevronDown } from '@tabler/icons-react';
 import { Button } from '../Button';
 import { Group } from '../Group';
 import { Tree, TreeNodeData } from './Tree';
-import { useTree } from './use-tree';
+import { getTreeExpandedState, useTree } from './use-tree';
 
 export default { title: 'Tree' };
 
@@ -58,15 +59,24 @@ export function Usage() {
 }
 
 export function Controller() {
+  const [expandedState, setExpandedState] = useState(getTreeExpandedState(data, '*'));
   const tree = useTree({
     onNodeCollapse: (value) => console.log('Node collapsed:', value),
     onNodeExpand: (value) => console.log('Node expanded:', value),
+    expandedState,
+    onExpandedStateChange: setExpandedState,
   });
+
+  console.log(expandedState);
+
   return (
     <div style={{ padding: 40 }}>
       <Tree data={data} tree={tree} />
       <Button onClick={() => tree.expandAllNodes()}>Expand all</Button>
       <Button onClick={() => tree.collapseAllNodes()}>Collapse all</Button>
+      <Button onClick={() => setExpandedState(getTreeExpandedState(data, '*'))}>
+        Expand external
+      </Button>
     </div>
   );
 }
