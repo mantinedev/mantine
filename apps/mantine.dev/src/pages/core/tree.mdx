@@ -104,7 +104,6 @@ export interface RenderTreeNodePayload {
     onClick: (event: React.MouseEvent) => void;
     'data-selected': boolean | undefined;
     'data-value': string;
-    'data-hovered': boolean | undefined;
   };
 }
 ```
@@ -215,12 +214,6 @@ export interface UseTreeReturnType {
 
   /** Sets selected state */
   setSelectedState: React.Dispatch<React.SetStateAction<string[]>>;
-
-  /** A value of the node that is currently hovered */
-  hoveredNode: string | null;
-
-  /** Sets hovered node */
-  setHoveredNode: React.Dispatch<React.SetStateAction<string | null>>;
 
   /** Checks node with provided value */
   checkNode: (value: string) => void;

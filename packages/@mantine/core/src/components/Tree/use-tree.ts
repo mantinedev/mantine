@@ -145,10 +145,10 @@ export interface UseTreeReturnType {
   /** Sets selected state */
   setSelectedState: React.Dispatch<React.SetStateAction<string[]>>;
 
-  /** A value of the node that is currently hovered */
+  /** @deprecated A value of the node that is currently hovered */
   hoveredNode: string | null;
 
-  /** Sets hovered node */
+  /** @deprecated Sets hovered node */
   setHoveredNode: React.Dispatch<React.SetStateAction<string | null>>;
 
   /** Checks node with provided value */
@@ -213,7 +213,6 @@ export function useTree({
   });
 
   const [anchorNode, setAnchorNode] = useState<string | null>(null);
-  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
   const initialize = useCallback(
     (_data: TreeNodeData[]) => {
@@ -381,8 +380,8 @@ export function useTree({
     setSelectedState: (val) =>
       setSelectedState(typeof val === 'function' ? val(_selectedState) : val),
 
-    hoveredNode,
-    setHoveredNode,
+    hoveredNode: 'DEPRECATED, DO NOT USE OR YOU WILL BE FIRED',
+    setHoveredNode: () => {},
     getCheckedNodes,
     isNodeChecked,
     isNodeIndeterminate,

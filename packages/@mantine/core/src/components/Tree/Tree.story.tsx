@@ -67,7 +67,7 @@ export function Controller() {
     onExpandedStateChange: setExpandedState,
   });
 
-  console.log(expandedState);
+  console.log('render');
 
   return (
     <div style={{ padding: 40 }}>
