@@ -11,7 +11,27 @@ const Target: React.FunctionComponent<any> = () => {
   );
 };
 
+const originalRAF = window.requestAnimationFrame;
+const originalCAF = window.cancelAnimationFrame;
+
 describe('@mantine/hook/use-mouse', () => {
+  beforeEach(() => {
+    window.requestAnimationFrame = jest.fn((callback) => {
+      callback(0);
+      return 0;
+    });
+    window.cancelAnimationFrame = jest.fn();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  afterAll(() => {
+    window.requestAnimationFrame = originalRAF;
+    window.cancelAnimationFrame = originalCAF;
+  });
+
   it('returns correct initial position (0, 0)', () => {
     const { result } = renderHook(() => useMouse());
 
@@ -30,7 +50,6 @@ describe('@mantine/hook/use-mouse', () => {
     render(<Target />);
     const target = screen.getByTestId('target');
 
-    // Work around to pass pageX and pageY to the event
     const customEvent = new MouseEvent('mousemove', {
       clientX: 123,
       clientY: 456,
