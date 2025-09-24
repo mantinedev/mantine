@@ -22,7 +22,6 @@ export function getTransitionStyles({
 }): React.CSSProperties {
   const shared: React.CSSProperties = {
     WebkitBackfaceVisibility: 'hidden',
-    willChange: 'transform, opacity',
     transitionDuration: `${duration}ms`,
     transitionTimingFunction: timingFunction,
   };
