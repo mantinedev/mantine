@@ -19,9 +19,10 @@ function visible(element: HTMLElement) {
     return false;
   }
 
-  let parentElement: HTMLElement = element;
+  let parentElement: HTMLElement | null = element;
   while (parentElement) {
-    if (parentElement === document.body || parentElement.nodeType === 11) {
+    const isDocumentFragment = parentElement.nodeType === 11;
+    if (parentElement === document.body || isDocumentFragment) {
       break;
     }
 
@@ -29,37 +30,52 @@ function visible(element: HTMLElement) {
       return false;
     }
 
-    parentElement = parentElement.parentNode as HTMLElement;
+    parentElement = parentElement.parentElement;
   }
 
   return true;
 }
 
 function getElementTabIndex(element: HTMLElement) {
-  let tabIndex: string | null | undefined = element.getAttribute('tabindex');
+  const tabIndex = element.getAttribute('tabindex');
   if (tabIndex === null) {
-    tabIndex = undefined;
+    return NaN;
   }
-  return parseInt(tabIndex as string, 10);
+  return parseInt(tabIndex, 10);
 }
 
-export function focusable(element: HTMLElement) {
+const isTabbableElement = (element: HTMLElement) => {
   const nodeName = element.nodeName.toLowerCase();
-  const isTabIndexNotNaN = !Number.isNaN(getElementTabIndex(element));
-  const res =
-    // @ts-expect-error function accepts any html element but if it is a button, it should not be disabled to trigger the condition
-    (TABBABLE_NODES.test(nodeName) && !element.disabled) ||
-    (element instanceof HTMLAnchorElement ? element.href || isTabIndexNotNaN : isTabIndexNotNaN);
+  return TABBABLE_NODES.test(nodeName) && !element.hasAttribute('disabled');
+};
 
-  return res && visible(element);
+const isAnchorFocusable = (element: HTMLElement) => {
+  return element.hasAttribute('href') || hasExplicitTabIndex(element);
+};
+
+const hasExplicitTabIndex = (element: HTMLElement) => {
+  return !Number.isNaN(getElementTabIndex(element));
+};
+
+const isFocusableElement = (element: HTMLElement) => {
+  if (element instanceof HTMLAnchorElement) {
+    return isAnchorFocusable(element);
+  }
+  return hasExplicitTabIndex(element);
+};
+
+export function focusable(element: HTMLElement) {
+  const isTabbable = isTabbableElement(element);
+  const isFocusable = isFocusableElement(element);
+
+  return (isTabbable || isFocusable) && visible(element);
+}
+
+function isNegativeTabIndex(element: HTMLElement) {
+  const tabIndex = getElementTabIndex(element);
+  return !Number.isNaN(tabIndex) && tabIndex < 0;
 }
 
 export function tabbable(element: HTMLElement) {
-  const tabIndex = getElementTabIndex(element);
-  const isTabIndexNaN = Number.isNaN(tabIndex);
-  return (isTabIndexNaN || tabIndex >= 0) && focusable(element);
-}
-
-export function findTabbableDescendants(element: HTMLElement): HTMLElement[] {
-  return Array.from(element.querySelectorAll<HTMLElement>(FOCUS_SELECTOR)).filter(tabbable);
+  return !isNegativeTabIndex(element) && focusable(element);
 }
