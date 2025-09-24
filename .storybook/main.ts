@@ -1,4 +1,5 @@
-import path from 'path';
+import path from 'node:path';
+import type { StorybookConfig } from '@storybook/nextjs';
 import fg from 'fast-glob';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import yargs from 'yargs';
@@ -30,51 +31,18 @@ const storiesPath = !argv._[1]
   ? [...getStoryPaths()]
   : [...getStoryPaths(argv._[1]), ...getStoryPaths(`${argv._[1]}.demos`)];
 
-export default {
-  stories: storiesPath,
+const config: StorybookConfig = {
   core: {
     disableWhatsNewNotifications: true,
     disableTelemetry: true,
     enableCrashReports: false,
   },
-
-  addons: [
-    getAbsolutePath('storybook-dark-mode'),
-    {
-      name: '@storybook/addon-styling-webpack',
-      options: {
-        rules: [
-          {
-            test: /\.css$/,
-            sideEffects: true,
-            use: ['style-loader', 'css-loader', 'postcss-loader'],
-          },
-        ],
-      },
-    },
-  ],
-
-  module: {
-    rules: [
-      {
-        test: /\.[jt]sx?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-react', '@babel/preset-env', '@babel/preset-typescript'],
-            plugins: ['@babel/plugin-transform-runtime', 'react-refresh/babel'],
-          },
-        },
-      },
-    ],
-  },
-
+  stories: storiesPath,
+  addons: ['@storybook/addon-themes'],
   framework: {
     name: getAbsolutePath('@storybook/nextjs'),
     options: {},
   },
-
   webpackFinal: async (config: any) => {
     config.resolve = {
       ...config.resolve,
@@ -90,12 +58,6 @@ export default {
 
     return config;
   },
-
-  docs: {
-    autodocs: false,
-  },
-
-  typescript: {
-    reactDocgen: false,
-  },
 };
+
+export default config;

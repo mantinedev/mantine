@@ -1,32 +1,53 @@
 /* eslint-disable no-console */
-import React, { useEffect } from 'react';
-import { addons } from '@storybook/preview-api';
+import React from 'react';
+import type { Preview } from '@storybook/nextjs';
 import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
-import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
 import { CodeHighlightAdapterProvider, createShikiAdapter } from '@mantine/code-highlight';
-import {
-  ActionIcon,
-  DirectionProvider,
-  MantineProvider,
-  useDirection,
-  useMantineColorScheme,
-} from '@mantine/core';
+import { ActionIcon, MantineProvider, useDirection } from '@mantine/core';
 import { MantineEmotionProvider } from '@mantine/emotion';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 import { theme } from '../apps/mantine.dev/theme';
 
+export const globalTypes = {
+  theme: {
+    name: 'Theme',
+    description: 'Mantine color scheme',
+    defaultValue: 'light',
+    toolbar: {
+      icon: 'mirror',
+      items: [
+        { value: 'light', title: 'Light' },
+        { value: 'dark', title: 'Dark' },
+      ],
+    },
+  },
+};
+
+const preview: Preview = {
+  parameters: {
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/i,
+      },
+    },
+  },
+};
+
+export default preview;
+
 export const parameters = {
   layout: 'fullscreen',
   options: {
     showPanel: false,
+    // Storybook fails to compile if `(a: any, b: any)` is added to storySort function
+    // @ts-expect-error
     storySort: (a, b) => {
       return a.title.localeCompare(b.title, undefined, { numeric: true });
     },
   },
 };
-
-const channel = addons.getChannel();
 
 // Removes incorrect key error from SliderMarks component visible only in Storybook
 const originalError = console.error;
@@ -37,18 +58,6 @@ console.error = (...args: any[]) => {
 
   originalError.call(console, ...args);
 };
-
-function ColorSchemeWrapper({ children }: { children: React.ReactNode }) {
-  const { setColorScheme } = useMantineColorScheme();
-  const handleColorScheme = (value: boolean) => setColorScheme(value ? 'dark' : 'light');
-
-  useEffect(() => {
-    channel.on(DARK_MODE_EVENT_NAME, handleColorScheme);
-    return () => channel.off(DARK_MODE_EVENT_NAME, handleColorScheme);
-  }, [channel]);
-
-  return <DirectionProvider>{children}</DirectionProvider>;
-}
 
 function DirectionWrapper({ children }: { children: React.ReactNode }) {
   const { dir, toggleDirection } = useDirection();
@@ -86,7 +95,6 @@ const shikiAdapter = createShikiAdapter(loadShiki);
 
 export const decorators = [
   (renderStory: any) => <DirectionWrapper>{renderStory()}</DirectionWrapper>,
-  (renderStory: any) => <ColorSchemeWrapper>{renderStory()}</ColorSchemeWrapper>,
   (renderStory: any) => (
     <CodeHighlightAdapterProvider adapter={shikiAdapter}>
       {renderStory()}
@@ -100,10 +108,13 @@ export const decorators = [
       {renderStory()}
     </ModalsProvider>
   ),
-  (renderStory: any) => (
-    <MantineProvider theme={theme}>
-      <Notifications zIndex={10000} />
-      <MantineEmotionProvider>{renderStory()}</MantineEmotionProvider>
-    </MantineProvider>
-  ),
+  (renderStory: any, context: any) => {
+    const scheme = (context.globals.theme || 'light') as 'light' | 'dark';
+    return (
+      <MantineProvider theme={theme} forceColorScheme={scheme}>
+        <Notifications zIndex={10000} />
+        <MantineEmotionProvider>{renderStory()}</MantineEmotionProvider>
+      </MantineProvider>
+    );
+  },
 ];
