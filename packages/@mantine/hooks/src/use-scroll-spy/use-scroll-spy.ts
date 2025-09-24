@@ -107,15 +107,7 @@ export function useScrollSpy({
   const [initialized, setInitialized] = useState(false);
   const [data, setData] = useState<UseScrollSpyHeadingData[]>([]);
   const headingsRef = useRef<UseScrollSpyHeadingData[]>([]);
-
-  const handleScroll = () => {
-    setActive(
-      getActiveElement(
-        headingsRef.current.map((d) => d.getNode().getBoundingClientRect()),
-        offset
-      )
-    );
-  };
+  const ticking = useRef(false);
 
   const initialize = () => {
     const headings = getHeadingsData(
@@ -135,10 +127,33 @@ export function useScrollSpy({
   };
 
   useEffect(() => {
+    let rafId: number | null = null;
+
+    const handleScroll = () => {
+      if (!ticking.current) {
+        ticking.current = true;
+        rafId = window.requestAnimationFrame(() => {
+          setActive(
+            getActiveElement(
+              headingsRef.current.map((d) => d.getNode().getBoundingClientRect()),
+              offset
+            )
+          );
+          ticking.current = false;
+        });
+      }
+    };
+
     initialize();
     const _scrollHost = scrollHost || window;
     _scrollHost.addEventListener('scroll', handleScroll);
-    return () => _scrollHost.removeEventListener('scroll', handleScroll);
+    return () => {
+      _scrollHost.removeEventListener('scroll', handleScroll);
+
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+      }
+    };
   }, [scrollHost]);
 
   return {
