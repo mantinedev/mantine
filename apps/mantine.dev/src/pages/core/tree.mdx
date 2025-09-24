@@ -119,14 +119,32 @@ The hook accepts an object with the following properties:
 
 ```tsx
 export interface UseTreeInput {
-  /** Initial expanded state of all nodes */
-  initialExpandedState?: Record<string, boolean>;
+  /** Initial expanded state of all nodes, uncontrolled state */
+  initialExpandedState?: TreeExpandedState;
+
+  /** Expanded state of all nodes, controlled state */
+  expandedState?: TreeExpandedState;
+
+  /** Called when the tree expanded state changes */
+  onExpandedStateChange?: (expandedState: TreeExpandedState) => void;
 
   /** Initial selected state of nodes */
   initialSelectedState?: string[];
 
+  /** Selected state of all nodes, controlled state */
+  selectedState?: string[];
+
+  /** Called when the tree selected state changes */
+  onSelectedStateChange?: (selectedState: string[]) => void;
+
   /** Initial checked state of nodes */
   initialCheckedState?: string[];
+
+  /** Checked state of all nodes, controlled state */
+  checkedState?: string[];
+
+  /** Called when the tree checked state changes */
+  onCheckedStateChange?: (checkedState: string[]) => void;
 
   /** Determines whether multiple node can be selected at a time */
   multiple?: boolean;
