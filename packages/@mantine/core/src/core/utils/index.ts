@@ -39,3 +39,4 @@ export {
   createResponsiveSpacingVariables, 
   createResponsiveRadiusVariables 
 } from './create-responsive-size-variables/create-responsive-size-variables';
+export { useResponsiveSize, createResponsiveSizeHelpers } from './use-responsive-size/use-responsive-size';

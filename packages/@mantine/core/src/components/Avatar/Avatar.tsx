@@ -9,11 +9,16 @@ import {
   MantineGradient,
   MantineRadius,
   MantineSize,
+  MantineResponsiveSize,
   polymorphicFactory,
   PolymorphicFactory,
   StylesApiProps,
   useProps,
   useStyles,
+  useMantineTheme,
+  InlineStyles,
+  isResponsiveSize,
+  createResponsiveSizeVariables,
 } from '../../core';
 import { AvatarGroup } from './AvatarGroup/AvatarGroup';
 import { useAvatarGroupContext } from './AvatarGroup/AvatarGroup.context';
@@ -38,7 +43,7 @@ export type AvatarCssVariables = {
 
 export interface AvatarProps extends BoxProps, StylesApiProps<AvatarFactory> {
   /** Width and height of the avatar, numbers are converted to rem @default `'md'` */
-  size?: MantineSize | (string & {}) | number;
+  size?: MantineResponsiveSize | (string & {}) | number;
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius @default `'1000px'` */
   radius?: MantineRadius;
@@ -133,11 +138,18 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
     mod,
     name,
     allowedInitialsColors,
+    size,
     attributes,
     ...others
   } = props;
   const ctx = useAvatarGroupContext();
   const [error, setError] = useState(!src);
+  const theme = useMantineTheme();
+
+  // Handle responsive size properties
+  const sizeVars = isResponsiveSize(size) 
+    ? createResponsiveSizeVariables({ size, property: '--avatar-size', getter: (s) => getSize(s, 'avatar-size'), theme })
+    : { base: {}, media: [] };
 
   const getStyles = useStyles<AvatarFactory>({
     name: 'Avatar',
@@ -149,19 +161,29 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
     styles,
     unstyled,
     attributes,
-    vars,
+    vars: {
+      ...vars,
+      ...sizeVars.base,
+    },
     varsResolver,
   });
 
   useEffect(() => setError(!src), [src]);
 
   return (
-    <Box
-      {...getStyles('root')}
-      mod={[{ 'within-group': ctx.withinGroup }, mod]}
-      ref={ref}
-      {...others}
-    >
+    <>
+      {sizeVars.media.length > 0 && (
+        <InlineStyles
+          selector={`.${getStyles('root').className.split(' ')[0]}`}
+          media={sizeVars.media}
+        />
+      )}
+      <Box
+        {...getStyles('root')}
+        mod={[{ 'within-group': ctx.withinGroup }, mod]}
+        ref={ref}
+        {...others}
+      >
       {error || !src ? (
         <span {...getStyles('placeholder')} title={alt}>
           {children || (typeof name === 'string' && getInitials(name)) || <AvatarPlaceholderIcon />}
