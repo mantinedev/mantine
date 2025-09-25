@@ -1,16 +1,21 @@
 import { isNumberLike } from '../is-number-like/is-number-like';
 import { rem } from '../units-converters';
+import { getBaseValue } from '../get-base-value/get-base-value';
+import type { StyleProp } from '../../Box';
 
 export function getSize(size: unknown, prefix = 'size', convertToRem = true): string | undefined {
   if (size === undefined) {
     return undefined;
   }
 
-  return isNumberLike(size)
+  // Handle responsive size objects by extracting the base value
+  const baseSize = getBaseValue(size);
+
+  return isNumberLike(baseSize)
     ? convertToRem
-      ? rem(size)
-      : (size as string)
-    : `var(--${prefix}-${size})`;
+      ? rem(baseSize)
+      : (baseSize as string)
+    : `var(--${prefix}-${baseSize})`;
 }
 
 export function getSpacing(size: unknown) {
@@ -39,4 +44,20 @@ export function getShadow(size: unknown) {
   }
 
   return getSize(size, 'mantine-shadow', false);
+}
+
+/**
+ * Check if a value is a responsive size object (has breakpoints other than 'base')
+ */
+export function isResponsiveSize(size: unknown): size is StyleProp<unknown> {
+  if (typeof size !== 'object' || size === null) {
+    return false;
+  }
+  
+  const keys = Object.keys(size);
+  if (keys.length === 1 && keys[0] === 'base') {
+    return false;
+  }
+  
+  return keys.length > 1 || (keys.length === 1 && keys[0] !== 'base');
 }

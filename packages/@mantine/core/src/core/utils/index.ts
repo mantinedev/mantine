@@ -20,6 +20,7 @@ export {
   getRadius,
   getFontSize,
   getLineHeight,
+  isResponsiveSize,
 } from './get-size/get-size';
 export { createEventHandler } from './create-event-handler/create-event-handler';
 export { getBreakpointValue } from './get-breakpoint-value/get-breakpoint-value';
@@ -32,3 +33,10 @@ export { getEnv } from './get-env/get-env';
 export { memoize } from './memoize/memoize';
 export { findClosestNumber } from './find-closest-number/find-closest-number';
 export { getRefProp } from './get-ref-prop/get-ref-prop';
+export { 
+  createResponsiveSizeVariables, 
+  createResponsiveFontSizeVariables, 
+  createResponsiveSpacingVariables, 
+  createResponsiveRadiusVariables 
+} from './create-responsive-size-variables/create-responsive-size-variables';
+export { useResponsiveSize, createResponsiveSizeHelpers } from './use-responsive-size/use-responsive-size';
