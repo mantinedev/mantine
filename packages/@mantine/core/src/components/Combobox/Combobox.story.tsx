@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Anchor } from '../Anchor';
 import { Button } from '../Button';
+import { Input } from '../Input';
+import { InputBase } from '../InputBase';
 import { Popover } from '../Popover';
 import { ScrollArea } from '../ScrollArea';
 import { Text } from '../Text';
@@ -466,5 +468,111 @@ export function SearchWithScrollArea() {
         </Combobox.Options>
       </Combobox.Dropdown>
     </Combobox>
+  );
+}
+
+export function BottomRightAbsolute() {
+  const combobox = useCombobox({
+    onDropdownClose: () => combobox.resetSelectedOption(),
+  });
+
+  const [value, setValue] = useState<string | null>(null);
+
+  const options = groceries.slice(0, 5).map((item) => (
+    <Combobox.Option value={item} key={item}>
+      {item}
+    </Combobox.Option>
+  ));
+
+  return (
+    <>
+      <div style={{ height: '100vh', position: 'relative' }}>
+        <h2 style={{ padding: 20 }}>Test: Combobox at bottom-right corner</h2>
+        <p style={{ padding: '0 20px' }}>
+          Click the dropdown at the bottom-right corner twice. It should consistently flip to top
+          when there's no space at bottom.
+        </p>
+
+        <div style={{ position: 'absolute', right: 10, bottom: 10 }}>
+          <Combobox
+            store={combobox}
+            onOptionSubmit={(val) => {
+              setValue(val);
+              combobox.closeDropdown();
+            }}
+          >
+            <Combobox.Target>
+              <InputBase
+                component="button"
+                type="button"
+                pointer
+                rightSection={<Combobox.Chevron />}
+                rightSectionPointerEvents="none"
+                onClick={() => combobox.toggleDropdown()}
+              >
+                {value || <Input.Placeholder>Pick value (bottom-right)</Input.Placeholder>}
+              </InputBase>
+            </Combobox.Target>
+
+            <Combobox.Dropdown>
+              <Combobox.Options>{options}</Combobox.Options>
+            </Combobox.Dropdown>
+          </Combobox>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export function BottomLeftAbsolute() {
+  const combobox = useCombobox({
+    onDropdownClose: () => combobox.resetSelectedOption(),
+  });
+
+  const [value, setValue] = useState<string | null>(null);
+
+  const options = groceries.slice(0, 5).map((item) => (
+    <Combobox.Option value={item} key={item}>
+      {item}
+    </Combobox.Option>
+  ));
+
+  return (
+    <>
+      <div style={{ height: '100vh', position: 'relative' }}>
+        <h2 style={{ padding: 20 }}>Test: Combobox at bottom-left corner</h2>
+        <p style={{ padding: '0 20px' }}>
+          Click the dropdown at the bottom-left corner twice. It should consistently flip to top
+          when there's no space at bottom.
+        </p>
+
+        <div style={{ position: 'absolute', left: 10, bottom: 10 }}>
+          <Combobox
+            store={combobox}
+            onOptionSubmit={(val) => {
+              setValue(val);
+              combobox.closeDropdown();
+            }}
+          >
+            <Combobox.Target>
+              <InputBase
+                component="button"
+                type="button"
+                pointer
+                rightSection={<Combobox.Chevron />}
+                rightSectionPointerEvents="none"
+                onClick={() => combobox.toggleDropdown()}
+              >
+                {value || <Input.Placeholder>Pick value (bottom-left)</Input.Placeholder>}
+              </InputBase>
+            </Combobox.Target>
+
+            <Combobox.Dropdown>
+              <Combobox.Options>{options}</Combobox.Options>
+            </Combobox.Dropdown>
+          </Combobox>
+        </div>
+      </div>
+    </>
   );
 }

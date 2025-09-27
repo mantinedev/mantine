@@ -336,8 +336,12 @@ export function Popover(_props: PopoverProps) {
     transitionProps?.onExited?.();
     onExitTransitionEnd?.();
     setDropdownVisible(false);
-    positionRef.current = position;
-  }, [transitionProps?.onExited, onExitTransitionEnd]);
+    // Only reset position if preventPositionChangeWhenVisible is false
+    // to maintain the flipped position on subsequent opens
+    if (!preventPositionChangeWhenVisible) {
+      positionRef.current = position;
+    }
+  }, [transitionProps?.onExited, onExitTransitionEnd, preventPositionChangeWhenVisible, position]);
 
   const onEntered = useCallback(() => {
     transitionProps?.onEntered?.();
