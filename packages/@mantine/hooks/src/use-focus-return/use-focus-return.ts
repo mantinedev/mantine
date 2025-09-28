@@ -12,14 +12,17 @@ export function useFocusReturn({
   opened,
   shouldReturnFocus = true,
 }: UseFocusReturnOptions): UseFocusReturnReturnValue {
-  const lastActiveElement = useRef<HTMLElement>(null);
+  const lastActiveElement = useRef<HTMLElement>(
+    typeof document !== 'undefined' ? (document.activeElement as HTMLElement) : null
+  );
+
   const returnFocus = () => {
     if (
       lastActiveElement.current &&
       'focus' in lastActiveElement.current &&
       typeof lastActiveElement.current.focus === 'function'
     ) {
-      lastActiveElement.current?.focus({ preventScroll: true });
+      lastActiveElement.current.focus({ preventScroll: true });
     }
   };
 
@@ -34,12 +37,9 @@ export function useFocusReturn({
 
     document.addEventListener('keydown', clearFocusTimeout);
 
-    if (opened) {
-      lastActiveElement.current = document.activeElement as HTMLElement;
-    } else if (shouldReturnFocus) {
+    if (!opened && shouldReturnFocus) {
       timeout = window.setTimeout(returnFocus, 10);
     }
-
     return () => {
       window.clearTimeout(timeout);
       document.removeEventListener('keydown', clearFocusTimeout);
