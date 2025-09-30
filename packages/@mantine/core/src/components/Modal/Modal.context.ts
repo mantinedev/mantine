@@ -8,6 +8,8 @@ interface ModalContext {
   yOffset: string | number | undefined;
   scrollAreaComponent: ScrollAreaComponent | undefined;
   getStyles: GetStylesApi<ModalRootFactory>;
+  stackId?: string;
+  opened: boolean;
 }
 
 export const [ModalProvider, useModalContext] = createSafeContext<ModalContext>(
