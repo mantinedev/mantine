@@ -77,7 +77,6 @@ export const TabsTab = factory<TabsTabFactory>((_props, ref) => {
 
   return (
     <UnstyledButton
-      {...others}
       {...ctx.getStyles('tab', { className, style, variant: ctx.variant, ...stylesApiProps })}
       disabled={disabled}
       unstyled={ctx.unstyled}
@@ -109,6 +108,7 @@ export const TabsTab = factory<TabsTabFactory>((_props, ref) => {
         dir,
         onKeyDown,
       })}
+      {...others}
     >
       {leftSection && (
         <span {...ctx.getStyles('tabSection', stylesApiProps)} data-position="left">
