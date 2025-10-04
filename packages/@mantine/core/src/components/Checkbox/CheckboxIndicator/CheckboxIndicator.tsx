@@ -70,6 +70,7 @@ export type CheckboxIndicatorFactory = Factory<{
 
 const defaultProps = {
   icon: CheckboxIcon,
+  variant: 'filled',
 } satisfies Partial<CheckboxIndicatorProps>;
 
 const varsResolver = createVarsResolver<CheckboxIndicatorFactory>(

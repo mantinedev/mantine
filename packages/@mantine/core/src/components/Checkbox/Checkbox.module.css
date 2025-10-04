@@ -7,7 +7,14 @@
 
   --checkbox-size: var(--checkbox-size-sm);
   --checkbox-color: var(--mantine-primary-color-filled);
-  --checkbox-icon-color: var(--mantine-color-white);
+
+  &:where([data-variant='filled']) {
+    --checkbox-icon-color: var(--mantine-color-white);
+  }
+
+  &:where([data-variant='outline']) {
+    --checkbox-icon-color: var(--checkbox-color);
+  }
 }
 
 .inner {
@@ -83,7 +90,7 @@
     border-color: var(--checkbox-color);
 
     & + .icon {
-      color: var(--checkbox-color);
+      color: var(--checkbox-icon-color);
       opacity: 1;
       transform: none;
     }

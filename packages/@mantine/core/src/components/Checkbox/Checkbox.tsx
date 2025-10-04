@@ -99,6 +99,7 @@ export type CheckboxFactory = Factory<{
 const defaultProps = {
   labelPosition: 'right',
   icon: CheckboxIcon,
+  variant: 'filled',
 } satisfies Partial<CheckboxProps>;
 
 const varsResolver = createVarsResolver<CheckboxFactory>(
