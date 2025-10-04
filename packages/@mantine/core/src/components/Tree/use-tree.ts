@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { useUncontrolled } from '@mantine/hooks';
 import {
   CheckedNodeStatus,
   getAllCheckedNodes,
@@ -53,14 +54,32 @@ function getInitialCheckedState(initialState: string[], data: TreeNodeData[]) {
 }
 
 export interface UseTreeInput {
-  /** Initial expanded state of all nodes */
+  /** Initial expanded state of all nodes, uncontrolled state */
   initialExpandedState?: TreeExpandedState;
+
+  /** Expanded state of all nodes, controlled state */
+  expandedState?: TreeExpandedState;
+
+  /** Called when the tree expanded state changes */
+  onExpandedStateChange?: (expandedState: TreeExpandedState) => void;
 
   /** Initial selected state of nodes */
   initialSelectedState?: string[];
 
+  /** Selected state of all nodes, controlled state */
+  selectedState?: string[];
+
+  /** Called when the tree selected state changes */
+  onSelectedStateChange?: (selectedState: string[]) => void;
+
   /** Initial checked state of nodes */
   initialCheckedState?: string[];
+
+  /** Checked state of all nodes, controlled state */
+  checkedState?: string[];
+
+  /** Called when the tree checked state changes */
+  onCheckedStateChange?: (checkedState: string[]) => void;
 
   /** Determines whether multiple node can be selected at a time */
   multiple?: boolean;
@@ -126,10 +145,10 @@ export interface UseTreeReturnType {
   /** Sets selected state */
   setSelectedState: React.Dispatch<React.SetStateAction<string[]>>;
 
-  /** A value of the node that is currently hovered */
+  /** @deprecated A value of the node that is currently hovered */
   hoveredNode: string | null;
 
-  /** Sets hovered node */
+  /** @deprecated Sets hovered node */
   setHoveredNode: React.Dispatch<React.SetStateAction<string | null>>;
 
   /** Checks node with provided value */
@@ -159,123 +178,144 @@ export interface UseTreeReturnType {
 
 export function useTree({
   initialSelectedState = [],
+  expandedState,
   initialCheckedState = [],
+  checkedState,
   initialExpandedState = {},
+  selectedState,
   multiple = false,
   onNodeCollapse,
   onNodeExpand,
+  onCheckedStateChange,
+  onSelectedStateChange,
+  onExpandedStateChange,
 }: UseTreeInput = {}): UseTreeReturnType {
   const [data, setData] = useState<TreeNodeData[]>([]);
-  const [expandedState, setExpandedState] = useState(initialExpandedState);
-  const [selectedState, setSelectedState] = useState(initialSelectedState);
-  const [checkedState, setCheckedState] = useState(initialCheckedState);
+  const [_expandedState, setExpandedState] = useUncontrolled({
+    value: expandedState,
+    defaultValue: initialExpandedState,
+    finalValue: {},
+    onChange: onExpandedStateChange,
+  });
+
+  const [_selectedState, setSelectedState] = useUncontrolled({
+    value: selectedState,
+    defaultValue: initialSelectedState,
+    finalValue: [],
+    onChange: onSelectedStateChange,
+  });
+
+  const [_checkedState, setCheckedState] = useUncontrolled({
+    value: checkedState,
+    defaultValue: initialCheckedState,
+    finalValue: [],
+    onChange: onCheckedStateChange,
+  });
+
   const [anchorNode, setAnchorNode] = useState<string | null>(null);
-  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
   const initialize = useCallback(
     (_data: TreeNodeData[]) => {
-      setExpandedState((current) => getInitialTreeExpandedState(current, _data, selectedState));
-      setCheckedState((current) => getInitialCheckedState(current, _data));
+      setExpandedState(getInitialTreeExpandedState(_expandedState, _data, _selectedState));
+      setCheckedState(getInitialCheckedState(_checkedState, _data));
       setData(_data);
     },
-    [selectedState, checkedState]
+    [_selectedState, _checkedState, _expandedState]
   );
 
   const toggleExpanded = useCallback(
     (value: string) => {
-      setExpandedState((current) => {
-        const nextState = { ...current, [value]: !current[value] };
-        nextState[value] ? onNodeExpand?.(value) : onNodeCollapse?.(value);
-        return nextState;
-      });
+      const nextState = { ..._expandedState, [value]: !_expandedState[value] };
+      nextState[value] ? onNodeExpand?.(value) : onNodeCollapse?.(value);
+      setExpandedState(nextState);
     },
-    [onNodeCollapse, onNodeExpand]
+    [onNodeCollapse, onNodeExpand, _expandedState]
   );
 
   const collapse = useCallback(
     (value: string) => {
-      setExpandedState((current) => {
-        if (current[value] !== false) {
-          onNodeCollapse?.(value);
-        }
+      if (_expandedState[value] !== false) {
+        onNodeCollapse?.(value);
+      }
 
-        return { ...current, [value]: false };
-      });
+      setExpandedState({ ..._expandedState, [value]: false });
     },
-    [onNodeCollapse]
+    [onNodeCollapse, _expandedState]
   );
 
   const expand = useCallback(
     (value: string) => {
-      setExpandedState((current) => {
-        if (current[value] !== true) {
-          onNodeExpand?.(value);
-        }
+      if (_expandedState[value] !== true) {
+        onNodeExpand?.(value);
+      }
 
-        return { ...current, [value]: true };
-      });
+      setExpandedState({ ..._expandedState, [value]: true });
     },
-    [onNodeExpand]
+    [onNodeExpand, _expandedState]
   );
 
   const expandAllNodes = useCallback(() => {
-    setExpandedState((current) => {
-      const next = { ...current };
-      Object.keys(next).forEach((key) => {
-        next[key] = true;
-      });
-
-      return next;
+    const nextState = { ..._expandedState };
+    Object.keys(nextState).forEach((key) => {
+      nextState[key] = true;
     });
-  }, []);
+
+    setExpandedState(nextState);
+  }, [_expandedState]);
 
   const collapseAllNodes = useCallback(() => {
-    setExpandedState((current) => {
-      const next = { ...current };
-      Object.keys(next).forEach((key) => {
-        next[key] = false;
-      });
-
-      return next;
+    const nextState = { ..._expandedState };
+    Object.keys(nextState).forEach((key) => {
+      nextState[key] = false;
     });
-  }, []);
+
+    setExpandedState(nextState);
+  }, [_expandedState]);
 
   const toggleSelected = useCallback(
-    (value: string) =>
-      setSelectedState((current) => {
-        if (!multiple) {
-          if (current.includes(value)) {
-            setAnchorNode(null);
-            return [];
-          }
-
-          setAnchorNode(value);
-          return [value];
-        }
-
-        if (current.includes(value)) {
+    (value: string) => {
+      if (!multiple) {
+        if (_selectedState.includes(value)) {
           setAnchorNode(null);
-          return current.filter((item) => item !== value);
+          return [];
         }
 
         setAnchorNode(value);
+        return [value];
+      }
 
-        return [...current, value];
-      }),
-    []
+      if (_selectedState.includes(value)) {
+        setAnchorNode(null);
+        return _selectedState.filter((item) => item !== value);
+      }
+
+      setAnchorNode(value);
+      setSelectedState([..._selectedState, value]);
+    },
+    [_selectedState]
   );
 
-  const select = useCallback((value: string) => {
-    setAnchorNode(value);
-    setSelectedState((current) =>
-      multiple ? (current.includes(value) ? current : [...current, value]) : [value]
-    );
-  }, []);
+  const select = useCallback(
+    (value: string) => {
+      setAnchorNode(value);
+      setSelectedState(
+        multiple
+          ? _selectedState.includes(value)
+            ? _selectedState
+            : [..._selectedState, value]
+          : [value]
+      );
+    },
+    [_selectedState]
+  );
 
-  const deselect = useCallback((value: string) => {
-    anchorNode === value && setAnchorNode(null);
-    setSelectedState((current) => current.filter((item) => item !== value));
-  }, []);
+  const deselect = useCallback(
+    (value: string) => {
+      anchorNode === value && setAnchorNode(null);
+      setSelectedState(_selectedState.filter((item) => item !== value));
+    },
+    [_selectedState]
+  );
 
   const clearSelected = useCallback(() => {
     setSelectedState([]);
@@ -285,37 +325,37 @@ export function useTree({
   const checkNode = useCallback(
     (value: string) => {
       const checkedNodes = getChildrenNodesValues(value, data);
-      setCheckedState((current) => Array.from(new Set([...current, ...checkedNodes])));
+      setCheckedState(Array.from(new Set([..._checkedState, ...checkedNodes])));
     },
-    [data]
+    [data, _checkedState]
   );
 
   const uncheckNode = useCallback(
     (value: string) => {
       const checkedNodes = getChildrenNodesValues(value, data);
-      setCheckedState((current) => current.filter((item) => !checkedNodes.includes(item)));
+      setCheckedState(_checkedState.filter((item) => !checkedNodes.includes(item)));
     },
-    [data]
+    [data, _checkedState]
   );
 
   const checkAllNodes = useCallback(() => {
-    setCheckedState(() => getAllChildrenNodes(data));
+    setCheckedState(getAllChildrenNodes(data));
   }, [data]);
 
   const uncheckAllNodes = useCallback(() => {
     setCheckedState([]);
   }, []);
 
-  const getCheckedNodes = () => getAllCheckedNodes(data, checkedState).result;
-  const isNodeChecked = (value: string) => memoizedIsNodeChecked(value, data, checkedState);
+  const getCheckedNodes = () => getAllCheckedNodes(data, _checkedState).result;
+  const isNodeChecked = (value: string) => memoizedIsNodeChecked(value, data, _checkedState);
   const isNodeIndeterminate = (value: string) =>
-    memoizedIsNodeIndeterminate(value, data, checkedState);
+    memoizedIsNodeIndeterminate(value, data, _checkedState);
 
   return {
     multiple,
-    expandedState,
-    selectedState,
-    checkedState,
+    expandedState: _expandedState,
+    selectedState: _selectedState,
+    checkedState: _checkedState,
     anchorNode,
     initialize,
 
@@ -324,22 +364,24 @@ export function useTree({
     expand,
     expandAllNodes,
     collapseAllNodes,
-    setExpandedState,
+    setExpandedState: (val) =>
+      setExpandedState(typeof val === 'function' ? val(_expandedState) : val),
 
     checkNode,
     uncheckNode,
     checkAllNodes,
     uncheckAllNodes,
-    setCheckedState,
+    setCheckedState: (val) => setCheckedState(typeof val === 'function' ? val(_checkedState) : val),
 
     toggleSelected,
     select,
     deselect,
     clearSelected,
-    setSelectedState,
+    setSelectedState: (val) =>
+      setSelectedState(typeof val === 'function' ? val(_selectedState) : val),
 
-    hoveredNode,
-    setHoveredNode,
+    hoveredNode: 'DEPRECATED, DO NOT USE OR YOU WILL BE FIRED',
+    setHoveredNode: () => {},
     getCheckedNodes,
     isNodeChecked,
     isNodeIndeterminate,

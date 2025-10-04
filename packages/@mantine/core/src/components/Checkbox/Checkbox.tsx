@@ -108,6 +108,7 @@ const defaultProps = {
   labelPosition: 'right',
   icon: CheckboxIcon,
   withErrorStyles: true,
+  variant: 'filled',
 } satisfies Partial<CheckboxProps>;
 
 const varsResolver = createVarsResolver<CheckboxFactory>(
