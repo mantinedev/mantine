@@ -70,6 +70,7 @@ export * from './NavLink';
 export * from './Notification';
 export * from './NumberFormatter';
 export * from './NumberInput';
+export * from './OverflowList';
 export * from './Pagination';
 export * from './PasswordInput';
 export * from './Pill';
