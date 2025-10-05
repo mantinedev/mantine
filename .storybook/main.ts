@@ -43,7 +43,7 @@ const config: StorybookConfig = {
     name: getAbsolutePath('@storybook/nextjs'),
     options: {},
   },
-  webpackFinal: async (config: any) => {
+  webpackFinal: async (config) => {
     config.resolve = {
       ...config.resolve,
       extensionAlias: { '.js': ['.ts', '.tsx', '.js'] },

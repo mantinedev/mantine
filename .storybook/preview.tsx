@@ -49,16 +49,6 @@ export const parameters = {
   },
 };
 
-// Removes incorrect key error from SliderMarks component visible only in Storybook
-const originalError = console.error;
-console.error = (...args: any[]) => {
-  if (args.join('').includes('It was passed a child from @mantine/core/SliderMarks')) {
-    return;
-  }
-
-  originalError.call(console, ...args);
-};
-
 function DirectionWrapper({ children }: { children: React.ReactNode }) {
   const { dir, toggleDirection } = useDirection();
   return (
@@ -94,13 +84,13 @@ async function loadShiki() {
 const shikiAdapter = createShikiAdapter(loadShiki);
 
 export const decorators = [
-  (renderStory: any) => <DirectionWrapper>{renderStory()}</DirectionWrapper>,
-  (renderStory: any) => (
+  (renderStory) => <DirectionWrapper>{renderStory()}</DirectionWrapper>,
+  (renderStory) => (
     <CodeHighlightAdapterProvider adapter={shikiAdapter}>
       {renderStory()}
     </CodeHighlightAdapterProvider>
   ),
-  (renderStory: any) => (
+  (renderStory) => (
     <ModalsProvider
       labels={{ confirm: 'Confirm', cancel: 'Cancel' }}
       modalProps={{ trapFocus: false }}
@@ -108,7 +98,7 @@ export const decorators = [
       {renderStory()}
     </ModalsProvider>
   ),
-  (renderStory: any, context: any) => {
+  (renderStory, context) => {
     const scheme = (context.globals.theme || 'light') as 'light' | 'dark';
     return (
       <MantineProvider theme={theme} forceColorScheme={scheme}>
