@@ -1,6 +1,6 @@
 // Originally based on https://github.com/Eliav2/react-responsive-overflow-list (MIT License)
 // Contains the modified version adapted for Mantine
-import { cloneElement, useRef, useState } from 'react';
+import { cloneElement, Ref, useRef, useState } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import {
@@ -8,10 +8,12 @@ import {
   BoxProps,
   createVarsResolver,
   ElementProps,
-  factory,
+  ExtendComponent,
   Factory,
   getSpacing,
+  getWithProps,
   MantineSpacing,
+  MantineThemeComponent,
   StylesApiProps,
   useProps,
   useStyles,
@@ -25,7 +27,7 @@ export type OverflowListCssVariables = {
   root: '--ol-gap';
 };
 
-export interface OverflowListProps<T>
+export interface OverflowListProps<T = any>
   extends BoxProps,
     StylesApiProps<OverflowListFactory>,
     ElementProps<'div', 'children'> {
@@ -33,10 +35,10 @@ export interface OverflowListProps<T>
   data: T[];
 
   /** Function to render item */
-  renderItem: (item: NoInfer<T>, index: number) => React.ReactNode;
+  renderItem: (item: T, index: number) => React.ReactNode;
 
   /** Function to render hidden items */
-  renderOverflow: (items: NoInfer<T>[]) => React.ReactNode;
+  renderOverflow: (items: T[]) => React.ReactNode;
 
   /** Number of rows to display @default `1` */
   maxRows?: number;
@@ -46,6 +48,8 @@ export interface OverflowListProps<T>
 
   /** Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem @default `'xs'` */
   gap?: MantineSpacing;
+
+  ref?: Ref<HTMLDivElement>;
 }
 
 export type OverflowListFactory = Factory<{
@@ -66,7 +70,7 @@ const varsResolver = createVarsResolver<OverflowListFactory>((_, { gap }) => ({
   },
 }));
 
-export const OverflowList = factory<OverflowListFactory>((_props, ref) => {
+export function OverflowList<T>(_props: OverflowListProps<T>) {
   const props = useProps('OverflowList', defaultProps, _props);
   const {
     classNames,
@@ -80,6 +84,7 @@ export const OverflowList = factory<OverflowListFactory>((_props, ref) => {
     renderItem,
     maxRows,
     maxVisibleItems,
+    ref,
     ...others
   } = props;
 
@@ -220,7 +225,10 @@ export const OverflowList = factory<OverflowListFactory>((_props, ref) => {
       {clonedOverflowElement}
     </Box>
   );
-});
+}
 
+const extendOverflowList = (c: ExtendComponent<OverflowListFactory>): MantineThemeComponent => c;
+OverflowList.extend = extendOverflowList;
+OverflowList.withProps = getWithProps<OverflowListProps, OverflowListProps>(OverflowList as any);
 OverflowList.displayName = '@mantine/core/OverflowList';
 OverflowList.classes = classes;
