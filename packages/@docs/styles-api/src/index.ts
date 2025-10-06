@@ -70,6 +70,7 @@ export * from './data/NavLink.styles-api';
 export * from './data/Notification.styles-api';
 export * from './data/NumberInput.styles-api';
 export * from './data/Notifications.styles-api';
+export * from './data/OverflowList.styles-api';
 export * from './data/Overlay.styles-api';
 export * from './data/Pagination.styles-api';
 export * from './data/Paper.styles-api';

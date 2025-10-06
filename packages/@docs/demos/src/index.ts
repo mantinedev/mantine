@@ -66,6 +66,7 @@ export * as MultiSelectDemos from './demos/core/MultiSelect';
 export * as NativeSelectDemos from './demos/core/NativeSelect';
 export * as NavLinkDemos from './demos/core/NavLink';
 export * as OverlayDemos from './demos/core/Overlay';
+export * as OverflowListDemos from './demos/core/OverflowList';
 export * as PaginationDemos from './demos/core/Pagination';
 export * as PaperDemos from './demos/core/Paper';
 export * as PasswordInputDemos from './demos/core/PasswordInput';
