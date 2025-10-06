@@ -1,0 +1,28 @@
+import { OverflowListDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.OverflowList);
+
+## Usage
+
+<Demo data={OverflowListDemos.usage} />
+
+## Max rows
+
+Use `maxRows` to limit visible rows count. By default, 1 row is visible.
+
+<Demo data={OverflowListDemos.maxRows} />
+
+## Max visible items
+
+Use `maxVisibleItems` to limit visible items count. By default, there is no limit.
+
+<Demo data={OverflowListDemos.maxVisibleItems} />
+
+## Example: overflow with hover card
+
+You can use any React components in `renderOverflow` function. Example
+of displaying collapsed items inside [HoverCard](/core/hover-card):
+
+<Demo data={OverflowListDemos.hoverCard} />

@@ -1128,4 +1128,16 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/TableOfContents/TableOfContents.tsx',
     docs: 'core/table-of-contents.mdx',
   },
+
+  OverflowList: {
+    title: 'OverflowList',
+    package: '@mantine/core',
+    slug: '/core/overflow-list',
+    props: ['OverflowList'],
+    styles: ['OverflowList'],
+    description:
+      'Hide items that do not fit in a container and display them as a single collapsed item',
+    source: '@mantine/core/src/components/OverflowList/OverflowList.tsx',
+    docs: 'core/overflow-list.mdx',
+  },
 };

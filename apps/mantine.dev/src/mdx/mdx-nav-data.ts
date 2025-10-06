@@ -363,6 +363,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.Timeline,
       MDX_DATA.Spoiler,
       MDX_DATA.NumberFormatter,
+      MDX_DATA.OverflowList,
     ],
   },
   {
