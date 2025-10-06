@@ -1,3 +1,4 @@
+import { Badge } from '../Badge';
 import { OverflowList } from './OverflowList';
 
 export default { title: 'OverflowList' };
@@ -23,16 +24,13 @@ const fruits = [
 
 export function Usage() {
   return (
-    <div style={{ padding: 40, maxWidth: 400 }}>
+    <div style={{ padding: 40, maxWidth: 500 }}>
       <OverflowList
         data={fruits}
-        renderOverflow={(items) => <div>+{items.length}</div>}
-        renderItem={(item, index) => (
-          <span key={index} className="fruit-item">
-            {item}
-          </span>
-        )}
-        style={{ gap: '8px' }}
+        maxRows={2}
+        gap={4}
+        renderOverflow={(items) => <Badge>+{items.length} more</Badge>}
+        renderItem={(item, index) => <Badge key={index}>{item}</Badge>}
       />
     </div>
   );

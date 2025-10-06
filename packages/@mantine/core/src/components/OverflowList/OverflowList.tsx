@@ -10,6 +10,8 @@ import {
   ElementProps,
   factory,
   Factory,
+  getSpacing,
+  MantineSpacing,
   StylesApiProps,
   useProps,
   useStyles,
@@ -20,7 +22,7 @@ import classes from './OverflowList.module.css';
 
 export type OverflowListStylesNames = 'root';
 export type OverflowListCssVariables = {
-  root: '--test';
+  root: '--ol-gap';
 };
 
 export interface OverflowListProps<T>
@@ -41,6 +43,9 @@ export interface OverflowListProps<T>
 
   /** Maximum number of visible items @default `Infinity` */
   maxVisibleItems?: number;
+
+  /** Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem @default `'xs'` */
+  gap?: MantineSpacing;
 }
 
 export type OverflowListFactory = Factory<{
@@ -55,9 +60,9 @@ const defaultProps = {
   maxVisibleItems: Infinity,
 } satisfies Partial<OverflowListProps<any>>;
 
-const varsResolver = createVarsResolver<OverflowListFactory>(() => ({
+const varsResolver = createVarsResolver<OverflowListFactory>((_, { gap }) => ({
   root: {
-    '--test': 'test',
+    '--ol-gap': getSpacing(gap),
   },
 }));
 
@@ -98,17 +103,15 @@ export const OverflowList = factory<OverflowListFactory>((_props, ref) => {
   );
 
   const containerRef = useRef<HTMLElement>(null);
-  const finalContainerRef = useMergedRef(containerRef, ref);
+  const rootRef = useMergedRef(containerRef, ref);
   const finalVisibleCount = visibleCount - subtractCount;
-
   const overflowCount = data.length - finalVisibleCount;
   const showOverflow = overflowCount > 0 && phase !== 'measuring';
+  const overflowElement = showOverflow ? renderOverflow?.(data.slice(finalVisibleCount)) : null;
 
-  const finalRenderOverflow = renderOverflow?.(data.slice(finalVisibleCount));
-  const overflowElement = showOverflow ? finalRenderOverflow : null;
-
-  const overflowRef = useRef<HTMLElement>(null);
-  const finalOverflowRef = useMergedRef(overflowRef, (overflowElement as any)?.ref);
+  const _overflowRef = useRef<HTMLElement>(null);
+  const overflowRef = useMergedRef(_overflowRef, (overflowElement as any)?.ref);
+  const dimensions = useDimensions(containerRef);
 
   useIsomorphicEffect(() => {
     setPhase('measuring');
@@ -132,25 +135,21 @@ export const OverflowList = factory<OverflowListFactory>((_props, ref) => {
     }
   }, [phase, subtractCount]);
 
-  const containerDims = useDimensions(containerRef);
-
   useIsomorphicEffect(() => {
     if (phase === 'normal') {
       setPhase('measuring');
       setSubtractCount(0);
     }
-  }, [containerDims]);
+  }, [dimensions]);
 
   const countVisibleItems = () => {
-    const rowData = getRowPositionsData(containerRef, overflowRef);
+    const rowData = getRowPositionsData(containerRef, _overflowRef);
     if (!rowData) {
       return;
     }
 
-    const { itemsSizesMap, rowPositions } = rowData;
-
     if (data.length === 1) {
-      const itemRef = itemsSizesMap[rowPositions[0]].elements.values().next().value;
+      const itemRef = rowData.itemsSizesMap[rowData.rowPositions[0]].elements.values().next().value;
       const containerWidth = containerRef.current?.getBoundingClientRect().width ?? 0;
       const itemWidth = itemRef?.getBoundingClientRect().width ?? 0;
 
@@ -163,10 +162,10 @@ export const OverflowList = factory<OverflowListFactory>((_props, ref) => {
       return;
     }
 
-    const visibleRowPositions = rowPositions.slice(0, maxRows);
+    const visibleRowPositions = rowData.rowPositions.slice(0, maxRows);
 
     let fittingCount = visibleRowPositions.reduce((acc, position) => {
-      return acc + itemsSizesMap[position].elements.size;
+      return acc + rowData.itemsSizesMap[position].elements.size;
     }, 0);
 
     fittingCount = Math.min(fittingCount, maxVisibleItems);
@@ -174,17 +173,17 @@ export const OverflowList = factory<OverflowListFactory>((_props, ref) => {
   };
 
   const updateOverflowIndicator = () => {
-    if (!overflowRef.current) {
+    if (!_overflowRef.current) {
       return false;
     }
-    const rowData = getRowPositionsData(containerRef, overflowRef);
+    const rowData = getRowPositionsData(containerRef, _overflowRef);
     if (!rowData) {
       return false;
     }
 
     const { rowPositions, itemsSizesMap } = rowData;
 
-    const overflowRect = overflowRef.current.getBoundingClientRect();
+    const overflowRect = _overflowRef.current.getBoundingClientRect();
     const overflowMiddleY = overflowRect.top + overflowRect.height / 2;
     const lastRowTop = rowPositions[rowPositions.length - 1];
     const lastRow = itemsSizesMap[lastRowTop];
@@ -198,7 +197,7 @@ export const OverflowList = factory<OverflowListFactory>((_props, ref) => {
   };
 
   const clonedOverflowElement = overflowElement
-    ? cloneElement(overflowElement as React.ReactElement<any>, { ref: finalOverflowRef })
+    ? cloneElement(overflowElement as React.ReactElement<any>, { ref: overflowRef })
     : null;
 
   let finalItems = data;
@@ -206,14 +205,8 @@ export const OverflowList = factory<OverflowListFactory>((_props, ref) => {
     finalItems = finalItems.slice(0, maxVisibleItems);
   }
 
-  const containerStyles: React.CSSProperties = {
-    display: 'flex',
-    flexWrap: 'wrap',
-    contain: 'layout style',
-  };
-
   return (
-    <Box {...others} ref={finalContainerRef} style={containerStyles}>
+    <Box ref={rootRef} {...getStyles('root')} {...others}>
       {finalItems.map((item, index) => {
         const isVisible = phase === 'measuring' || index < finalVisibleCount;
         if (!isVisible) {
