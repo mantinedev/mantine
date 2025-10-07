@@ -95,8 +95,8 @@ export interface BarChartProps
 
   /** Props passed down to recharts `LabelList` component */
   valueLabelProps?:
-    | ((series: BarChartSeries) => Partial<Omit<LabelListProps<Record<string, any>>, 'ref'>>)
-    | Partial<LabelListProps<Record<string, any>>>;
+    | ((series: BarChartSeries) => Partial<Omit<LabelListProps, 'ref'>>)
+    | Partial<LabelListProps>;
 
   /** Sets minimum height of the bar in px @default `0` */
   minBarSize?: number;
@@ -275,7 +275,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         fillOpacity={dimmed ? 0.1 : fillOpacity}
         strokeOpacity={dimmed ? 0.2 : 0}
         stackId={stacked ? 'stack' : item.stackId || undefined}
-        yAxisId={item.yAxisId || 'left'}
+        yAxisId={item.yAxisId || undefined}
         minPointSize={minBarSize}
         {...(typeof barProps === 'function' ? barProps(item) : barProps)}
       >
@@ -308,7 +308,7 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
         key={index}
         stroke={line.color ? color : 'var(--chart-grid-color)'}
         strokeWidth={1}
-        yAxisId={line.yAxisId || 'left'}
+        yAxisId={line.yAxisId || undefined}
         {...line}
         label={{
           value: line.label,
@@ -395,7 +395,6 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
           </XAxis>
 
           <YAxis
-            yAxisId="left"
             orientation="left"
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             hide={!withYAxis}

@@ -288,7 +288,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         connectNulls={connectNulls}
         type={curveType}
         strokeDasharray={item.strokeDasharray}
-        yAxisId={item.yAxisId || 'left'}
+        yAxisId={item.yAxisId || undefined}
         label={withPointLabels ? <PointLabel valueFormatter={valueFormatter} /> : undefined}
         {...(typeof lineProps === 'function' ? lineProps(item) : lineProps)}
       />
@@ -302,7 +302,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         key={index}
         stroke={line.color ? color : 'var(--chart-grid-color)'}
         strokeWidth={1}
-        yAxisId={line.yAxisId || 'left'}
+        yAxisId={line.yAxisId || undefined}
         {...line}
         label={{
           value: line.label,
@@ -394,8 +394,8 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
           </XAxis>
 
           <YAxis
-            yAxisId="left"
-            orientation="left"
+            // yAxisId="left"
+            // orientation="left"
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             hide={!withYAxis}
             {...sharedYAxisProps}

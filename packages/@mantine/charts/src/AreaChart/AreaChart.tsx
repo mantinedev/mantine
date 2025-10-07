@@ -269,7 +269,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
         isAnimationActive={false}
         connectNulls={connectNulls}
         stackId={stacked ? 'stack-dots' : undefined}
-        yAxisId={item.yAxisId || 'left'}
+        yAxisId={item.yAxisId || undefined}
         {...(typeof areaProps === 'function' ? areaProps(item) : areaProps)}
       />
     );
@@ -306,7 +306,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           fillOpacity={dimmed ? 0 : 1}
           strokeOpacity={dimmed ? 0.5 : 1}
           strokeDasharray={item.strokeDasharray}
-          yAxisId={item.yAxisId || 'left'}
+          yAxisId={item.yAxisId || undefined}
           label={withPointLabels ? <PointLabel valueFormatter={valueFormatter} /> : undefined}
           {...(typeof areaProps === 'function' ? areaProps(item) : areaProps)}
         />
@@ -321,7 +321,7 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
         key={index}
         stroke={line.color ? color : 'var(--chart-grid-color)'}
         strokeWidth={1}
-        yAxisId={line.yAxisId || 'left'}
+        yAxisId={line.yAxisId || undefined}
         {...line}
         label={{
           value: line.label,
@@ -416,7 +416,6 @@ export const AreaChart = factory<AreaChartFactory>((_props, ref) => {
           </XAxis>
 
           <YAxis
-            yAxisId="left"
             orientation="left"
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             hide={!withYAxis}
