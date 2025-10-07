@@ -76,7 +76,7 @@
     "react-dom": "19.1.1",
     "react-dropzone": "14.3.8",
     "react-number-format": "^5.4.4",
-    "recharts": "^2.13.3",
+    "recharts": "^3.2.1",
     "rehype-slug": "^6.0.0",
     "shiki": "^3.12.2",
     "typescript": "5.9.2"

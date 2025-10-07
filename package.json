@@ -117,7 +117,7 @@
     "react-remove-scroll": "^2.7.1",
     "react-textarea-autosize": "8.5.9",
     "react-transition-group": "4.4.5",
-    "recharts": "^2.13.3",
+    "recharts": "^3.2.1",
     "shiki": "^3.12.2",
     "type-fest": "^4.41.0"
   },
