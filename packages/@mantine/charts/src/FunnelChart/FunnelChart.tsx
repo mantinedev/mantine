@@ -185,7 +185,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
                 }
                 stroke="none"
                 fontFamily="var(--mantine-font-family)"
-                fontSize={14}
+                fontSize={12}
                 dataKey={(entry) => {
                   return typeof valueFormatter === 'function'
                     ? valueFormatter(entry.value as number)

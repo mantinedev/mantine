@@ -161,12 +161,14 @@ const getLabel =
       y={y}
       cx={cx}
       cy={cy}
-      textAnchor={x > cx ? 'start' : 'end'}
+      textAnchor={x > Number(cx) ? 'start' : 'end'}
       fill="var(--chart-labels-color, var(--mantine-color-dimmed))"
       fontFamily="var(--mantine-font-family)"
       fontSize={12}
     >
-      <tspan x={x}>{getLabelValue(labelsType, value, percent, valueFormatter)}</tspan>
+      <tspan x={x}>
+        {getLabelValue(labelsType, Number(value), Number(percent), valueFormatter)}
+      </tspan>
     </text>
   );
 
@@ -239,7 +241,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
       <ResponsiveContainer>
         <ReChartsPieChart {...pieChartProps}>
           <Pie
-            data={data}
+            data={data as any}
             innerRadius={size / 2 - thickness}
             outerRadius={size / 2}
             dataKey="value"

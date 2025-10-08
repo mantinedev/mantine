@@ -14,7 +14,7 @@ function Demo() {
       dataKey="month"
       valueFormatter={(value) => new Intl.NumberFormat('en-US').format(value)}
       withBarValueLabel
-      valueLabelProps={{ position: 'inside', fill: 'white' }}
+      valueLabelProps={{ position: 'inside', fill: 'white', fontSize: 8 }}
       series={[
         { name: 'Smartphones', color: 'violet.6' },
         { name: 'Laptops', color: 'blue.6' },
@@ -33,7 +33,7 @@ function Demo() {
       dataKey="month"
       valueFormatter={(value) => new Intl.NumberFormat('en-US').format(value)}
       withBarValueLabel
-      valueLabelProps={{ position: 'inside', fill: 'white' }}
+      valueLabelProps={{ position: 'inside', fill: 'white', fontSize: 8 }}
       series={[
         { name: 'Smartphones', color: 'violet.6' },
         { name: 'Laptops', color: 'blue.6' },

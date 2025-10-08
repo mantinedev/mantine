@@ -155,19 +155,19 @@ const getInsideLabel =
   (labelsType: 'value' | 'percent', valueFormatter?: PieChartProps['valueFormatter']): PieLabel =>
   ({ cx, cy, midAngle, innerRadius, outerRadius, value, percent }) => {
     const RADIAN = Math.PI / 180;
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-(midAngle || 0) * RADIAN);
-    const y = cy + radius * Math.sin(-(midAngle || 0) * RADIAN);
+    const radius = Number(innerRadius) + (Number(outerRadius) - Number(innerRadius)) * 0.5;
+    const x = Number(cx) + radius * Math.cos(-(midAngle || 0) * RADIAN);
+    const y = Number(cy) + radius * Math.sin(-(midAngle || 0) * RADIAN);
 
     return (
       <text
         x={x}
         y={y}
-        textAnchor={x > cx ? 'start' : 'end'}
+        textAnchor={x > Number(cx) ? 'start' : 'end'}
         dominantBaseline="central"
         className={classes.label}
       >
-        {getLabelValue(labelsType, value, percent, valueFormatter)}
+        {getLabelValue(labelsType, Number(value), Number(percent), valueFormatter)}
       </text>
     );
   };
@@ -180,12 +180,14 @@ const getOutsideLabel =
       y={y}
       cx={cx}
       cy={cy}
-      textAnchor={x > cx ? 'start' : 'end'}
+      textAnchor={x > Number(cx) ? 'start' : 'end'}
       fill="var(--chart-labels-color, var(--mantine-color-dimmed))"
       fontFamily="var(--mantine-font-family)"
       fontSize={12}
     >
-      <tspan x={x}>{getLabelValue(labelsType, value, percent, valueFormatter)}</tspan>
+      <tspan x={x}>
+        {getLabelValue(labelsType, Number(value), Number(percent), valueFormatter)}
+      </tspan>
     </text>
   );
 
@@ -257,7 +259,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
       <ResponsiveContainer>
         <ReChartsPieChart {...pieChartProps}>
           <Pie
-            data={data}
+            data={data as any}
             innerRadius={0}
             outerRadius={size / 2}
             dataKey="value"

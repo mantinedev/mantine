@@ -281,7 +281,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
           connectNulls={connectNulls}
           type={curveType}
           strokeDasharray={item.strokeDasharray}
-          yAxisId={item.yAxisId || 'left'}
+          yAxisId={item.yAxisId || undefined}
           label={withPointLabels ? <PointLabel valueFormatter={valueFormatter} /> : undefined}
           {...(typeof lineProps === 'function' ? lineProps(item) : lineProps)}
         />
@@ -327,7 +327,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
           fillOpacity={dimmed ? 0 : 0.2}
           strokeOpacity={dimmed ? 0.5 : 1}
           strokeDasharray={item.strokeDasharray}
-          yAxisId={item.yAxisId || 'left'}
+          yAxisId={item.yAxisId || undefined}
           label={withPointLabels ? <PointLabel valueFormatter={valueFormatter} /> : undefined}
           {...(typeof areaProps === 'function' ? areaProps(item) : areaProps)}
         />
@@ -346,7 +346,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
           isAnimationActive={false}
           fillOpacity={dimmed ? 0.1 : 1}
           strokeOpacity={dimmed ? 0.2 : 0}
-          yAxisId={item.yAxisId || 'left'}
+          yAxisId={item.yAxisId || undefined}
           minPointSize={minBarSize}
           {...(typeof barProps === 'function' ? barProps(item) : barProps)}
         >
@@ -372,7 +372,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
         key={index}
         stroke={line.color ? color : 'var(--chart-grid-color)'}
         strokeWidth={1}
-        yAxisId={line.yAxisId || 'left'}
+        yAxisId={line.yAxisId || undefined}
         {...line}
         label={{
           value: line.label,
@@ -452,7 +452,6 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
           </XAxis>
 
           <YAxis
-            yAxisId="left"
             orientation="left"
             tick={{ transform: 'translate(-10, 0)', fontSize: 12, fill: 'currentColor' }}
             hide={!withYAxis}

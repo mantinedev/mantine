@@ -14,8 +14,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { AreaChartCurveType, AreaGradient } from '../AreaChart';
-
-const classes = {};
+import classes from './Sparkline.module.css';
 
 export interface SparklineTrendColors {
   positive: MantineColor;
@@ -157,6 +156,7 @@ export const Sparkline = factory<SparklineFactory>((_props, ref) => {
             connectNulls={connectNulls}
             strokeWidth={strokeWidth}
             fillOpacity={1}
+            activeDot={false}
             {...areaProps}
           />
 

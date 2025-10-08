@@ -8,6 +8,10 @@
     --chart-empty-background: var(--mantine-color-dark-6);
     --chart-cursor-color: var(--mantine-color-dark-4);
   }
+
+  :where(svg) {
+    outline: 0;
+  }
 }
 
 .tooltip {
