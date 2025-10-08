@@ -31,7 +31,8 @@
 
 .control {
   text-align: center;
-  width: 2.5em;
+  min-width: 2.5em;
+  width: max-content;
   height: 2em;
   border-radius: var(--mantine-radius-default);
   font-size: var(--control-font-size, var(--mantine-font-size-sm));
@@ -132,7 +133,7 @@
   appearance: none;
 
   &:where([data-am-pm]) {
-    width: calc(3ch + 0.3em);
+    width: auto;
   }
 
   &:where(:disabled) {
