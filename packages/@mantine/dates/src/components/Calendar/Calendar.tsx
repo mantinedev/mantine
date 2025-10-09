@@ -48,7 +48,8 @@ type OmittedSettings =
   | 'withNext'
   | 'withPrevious'
   | 'nextDisabled'
-  | 'previousDisabled';
+  | 'previousDisabled'
+  | 'hasNextLevel';
 
 export interface CalendarSettings
   extends Omit<DecadeLevelSettings, OmittedSettings>,
