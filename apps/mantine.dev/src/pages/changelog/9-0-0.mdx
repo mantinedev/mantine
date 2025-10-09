@@ -81,6 +81,40 @@ You can follow the [migration guide](/guides/tiptap-3-migration) to update Tipta
 Starting from Mantine 9.0, Recharts 3 is required for [@mantine/charts](/charts/getting-started/).
 There are no breaking changes required on your side besides updating Recharts package.
 
+## use-form TransformedValues type argument
+
+[use-form](/form/use-form) now supports passing second type argument `TransformedValues` to define the type of
+transformed values returned by `form.getTransformedValues` and `form.onSubmit`:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  locationId: string;
+}
+
+interface TransformedValues {
+  name: string;
+  locationId: number;
+}
+
+function Demo() {
+  const form = useForm<FormValues, TransformedValues>({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      locationId: '2',
+    },
+
+    transformValues: (values) => ({
+      ...values,
+      locationId: Number(values.locationId),
+    }),
+  });
+}
+```
+
 ## Other changes
 
 - `@mantine/form` package no longer exports schema resolvers, use [dedicated packages](/form/schema-validation/) instead

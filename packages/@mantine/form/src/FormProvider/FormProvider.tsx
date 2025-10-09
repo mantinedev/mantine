@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { _TransformValues, UseForm, UseFormReturnType } from '../types';
+import { UseForm, UseFormReturnType } from '../types';
 import { useForm } from '../use-form';
 
 export interface FormProviderProps<Form> {
@@ -7,11 +7,8 @@ export interface FormProviderProps<Form> {
   children: React.ReactNode;
 }
 
-export function createFormContext<
-  Values,
-  TransformValues extends _TransformValues<Values> = (values: Values) => Values,
->() {
-  type Form = UseFormReturnType<Values, TransformValues>;
+export function createFormContext<Values, TransformedValues = Values>() {
+  type Form = UseFormReturnType<Values, TransformedValues>;
 
   const FormContext = createContext<Form | null>(null);
 
@@ -31,6 +28,6 @@ export function createFormContext<
   return [FormProvider, useFormContext, useForm] as [
     React.FC<FormProviderProps<Form>>,
     () => Form,
-    UseForm<Values, TransformValues>,
+    UseForm<Values, TransformedValues>,
   ];
 }

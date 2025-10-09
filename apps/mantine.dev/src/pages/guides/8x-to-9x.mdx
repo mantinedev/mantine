@@ -6,6 +6,40 @@ export default Layout(MDX_DATA.EightToNine);
 
 # 8.x → 9.x migration guide
 
+## use-form TransformValues type
+
+The second generic type of the `useForm` hook is now the type of transformed values
+instead of the transform function type. New usage example:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  locationId: string;
+}
+
+interface TransformedValues {
+  name: string;
+  locationId: number;
+}
+
+function Demo() {
+  const form = useForm<FormValues, TransformedValues>({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      locationId: '2',
+    },
+
+    transformValues: (values) => ({
+      ...values,
+      locationId: Number(values.locationId),
+    }),
+  });
+}
+```
+
 ## Text color prop
 
 The `color` prop of the [Text](/core/text) and [Anchor](/core/anchor) components was removed.

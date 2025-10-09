@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect } from 'react';
 import type {
-  _TransformValues,
   ClearErrors,
   ClearFieldError,
   InsertListItem,
@@ -114,10 +113,10 @@ function useFormEvent(eventKey: string | undefined, handler: (event: any) => voi
   }, [eventKey]);
 }
 
-export function useFormActions<
-  Values = Record<string, unknown>,
-  TransformValues extends _TransformValues<Values> = (values: Values) => Values,
->(name: string | undefined, form: UseFormReturnType<Values, TransformValues>) {
+export function useFormActions<Values = Record<string, unknown>, TransformedValues = Values>(
+  name: string | undefined,
+  form: UseFormReturnType<Values, TransformedValues>
+) {
   if (name) {
     validateFormName(name);
   }

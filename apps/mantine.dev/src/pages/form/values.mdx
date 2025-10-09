@@ -294,3 +294,37 @@ function Demo() {
   });
 }
 ```
+
+## Set transformed values type
+
+By default, transformed values type is the same as form values type. To set a different type, you can pass a second generic
+argument to the `useForm`:
+
+```tsx
+import { useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  locationId: string;
+}
+
+interface TransformedValues {
+  name: string;
+  locationId: number;
+}
+
+function Demo() {
+  const form = useForm<FormValues, TransformedValues>({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      locationId: '2',
+    },
+
+    transformValues: (values) => ({
+      ...values,
+      locationId: Number(values.locationId),
+    }),
+  });
+}
+```

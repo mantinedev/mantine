@@ -8,7 +8,6 @@ import { useFormValues } from './hooks/use-form-values/use-form-values';
 import { useFormWatch } from './hooks/use-form-watch/use-form-watch';
 import { getDataPath, getPath } from './paths';
 import {
-  _TransformValues,
   GetInputNode,
   GetInputProps,
   GetTransformedValues,
@@ -29,7 +28,7 @@ import { shouldValidateOnChange, validateFieldValue, validateValues } from './va
 
 export function useForm<
   Values extends Record<string, any> = Record<string, any>,
-  TransformValues extends _TransformValues<Values> = (values: Values) => Values,
+  TransformedValues = Values,
 >({
   name,
   mode = 'controlled',
@@ -47,7 +46,7 @@ export function useForm<
   onSubmitPreventDefault = 'always',
   touchTrigger = 'change',
   cascadeUpdates = false,
-}: UseFormInput<Values, TransformValues> = {}): UseFormReturnType<Values, TransformValues> {
+}: UseFormInput<Values, TransformedValues> = {}): UseFormReturnType<Values, TransformedValues> {
   const $errors = useFormErrors<Values>(initialErrors);
   const $values = useFormValues<Values>({ initialValues, onValuesChange, mode });
   const $status = useFormStatus<Values>({ initialDirty, initialTouched, $values, mode });
@@ -204,7 +203,7 @@ export function useForm<
     );
   };
 
-  const onSubmit: OnSubmit<Values, TransformValues> =
+  const onSubmit: OnSubmit<Values, TransformedValues> =
     (handleSubmit, handleValidationFailure) => (event) => {
       if (onSubmitPreventDefault === 'always') {
         event?.preventDefault();
@@ -231,7 +230,7 @@ export function useForm<
       }
     };
 
-  const getTransformedValues: GetTransformedValues<Values, TransformValues> = (input) =>
+  const getTransformedValues: GetTransformedValues<Values, TransformedValues> = (input) =>
     (transformValues as any)(input || $values.refValues.current);
 
   const onReset: OnReset = useCallback((event) => {
@@ -269,7 +268,7 @@ export function useForm<
     [$values.resetField, mode, setFieldKeys]
   );
 
-  const form: UseFormReturnType<Values, TransformValues> = {
+  const form: UseFormReturnType<Values, TransformedValues> = {
     watch: $watch.watch,
 
     initialized: $values.initialized.current,
