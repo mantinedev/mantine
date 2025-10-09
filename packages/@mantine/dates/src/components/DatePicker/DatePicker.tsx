@@ -40,7 +40,9 @@ import classes from './DatePicker.module.css';
 export interface DatePickerPreset<Type extends DatePickerType> {
   value: Type extends 'range'
     ? [DateStringValue | null, DateStringValue | null]
-    : DateStringValue | null;
+    : Type extends 'multiple'
+      ? DateStringValue[]
+      : DateStringValue | null;
   label: React.ReactNode;
 }
 
