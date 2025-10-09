@@ -23,6 +23,7 @@ export function Usage() {
         placeholder="Select something"
         searchable
         autoSelectOnBlur
+        rightSection="right"
       />
     </div>
   );

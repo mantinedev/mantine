@@ -42,5 +42,5 @@ export function InputClearSection({
     );
   }
 
-  return rightSection || clearSection || __defaultRightSection;
+  return rightSection === null ? null : rightSection || clearSection || __defaultRightSection;
 }
