@@ -75,8 +75,8 @@ function getPopoverMiddlewares(
     middlewares.push(
       shift(
         typeof middlewaresOptions.shift === 'boolean'
-          ? { limiter: limitShift(), padding: 5 }
-          : { limiter: limitShift(), padding: 5, ...middlewaresOptions.shift }
+          ? { limiter: limitShift(), padding: 0 }
+          : { limiter: limitShift(), padding: 0, ...middlewaresOptions.shift }
       )
     );
   }
