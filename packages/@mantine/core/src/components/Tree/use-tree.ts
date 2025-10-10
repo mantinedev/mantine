@@ -128,7 +128,7 @@ export interface UseTreeReturnType {
   collapseAllNodes: () => void;
 
   /** Sets expanded state */
-  setExpandedState: React.Dispatch<React.SetStateAction<TreeExpandedState>>;
+  setExpandedState: (value: TreeExpandedState) => void;
 
   /** Toggles selected state of the node with provided value */
   toggleSelected: (value: string) => void;
@@ -143,7 +143,7 @@ export interface UseTreeReturnType {
   clearSelected: () => void;
 
   /** Sets selected state */
-  setSelectedState: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedState: (value: string[]) => void;
 
   /** Checks node with provided value */
   checkNode: (value: string) => void;
@@ -158,7 +158,7 @@ export interface UseTreeReturnType {
   uncheckAllNodes: () => void;
 
   /** Sets checked state */
-  setCheckedState: React.Dispatch<React.SetStateAction<string[]>>;
+  setCheckedState: (value: string[]) => void;
 
   /** Returns all checked nodes with status */
   getCheckedNodes: () => CheckedNodeStatus[];
@@ -358,21 +358,19 @@ export function useTree({
     expand,
     expandAllNodes,
     collapseAllNodes,
-    setExpandedState: (val) =>
-      setExpandedState(typeof val === 'function' ? val(_expandedState) : val),
+    setExpandedState,
 
     checkNode,
     uncheckNode,
     checkAllNodes,
     uncheckAllNodes,
-    setCheckedState: (val) => setCheckedState(typeof val === 'function' ? val(_checkedState) : val),
+    setCheckedState,
 
     toggleSelected,
     select,
     deselect,
     clearSelected,
-    setSelectedState: (val) =>
-      setSelectedState(typeof val === 'function' ? val(_selectedState) : val),
+    setSelectedState,
 
     getCheckedNodes,
     isNodeChecked,
