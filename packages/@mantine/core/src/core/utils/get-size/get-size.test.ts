@@ -1,4 +1,4 @@
-import { getFontSize, getLineHeight, getRadius, getShadow, getSize, getSpacing } from './get-size';
+import { getFontSize, getLineHeight, getRadius, getShadow, getSize, getSpacing, isResponsiveSize } from './get-size';
 
 describe('@mantine/core/get-size', () => {
   it('returns correct size for numbers and number like values', () => {
@@ -22,6 +22,13 @@ describe('@mantine/core/get-size', () => {
     expect(getSize('xs')).toBe('var(--size-xs)');
     expect(getSize('md')).toBe('var(--size-md)');
   });
+
+  it('handles responsive size objects by extracting base value', () => {
+    expect(getSize({ base: 'sm', md: 'lg' })).toBe('var(--size-sm)');
+    expect(getSize({ base: 10, md: 20 })).toBe('calc(0.625rem * var(--mantine-scale))');
+    expect(getSize({ sm: 'md', lg: 'xl' })).toBe('var(--size-undefined)');
+  });
+});
 });
 
 describe('@mantine/core/get-spacing', () => {
@@ -84,5 +91,17 @@ describe('@mantine/core/get-shadow', () => {
     expect(getShadow('5px 5px 10px red')).toBe('5px 5px 10px red');
     expect(getShadow('xs')).toBe('var(--mantine-shadow-xs)');
     expect(getShadow('md')).toBe('var(--mantine-shadow-md)');
+  });
+});
+
+describe('@mantine/core/isResponsiveSize', () => {
+  it('correctly identifies responsive size objects', () => {
+    expect(isResponsiveSize({ base: 'sm', md: 'lg' })).toBe(true);
+    expect(isResponsiveSize({ sm: 'md', lg: 'xl' })).toBe(true);
+    expect(isResponsiveSize({ base: 'sm' })).toBe(false);
+    expect(isResponsiveSize('sm')).toBe(false);
+    expect(isResponsiveSize(null)).toBe(false);
+    expect(isResponsiveSize(undefined)).toBe(false);
+    expect(isResponsiveSize({})).toBe(false);
   });
 });

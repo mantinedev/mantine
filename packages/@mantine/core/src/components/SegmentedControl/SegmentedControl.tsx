@@ -22,10 +22,15 @@ import {
   MantineColor,
   MantineRadius,
   MantineSize,
+  MantineResponsiveSize,
   StylesApiProps,
   useMantineTheme,
   useProps,
   useStyles,
+  InlineStyles,
+  isResponsiveSize,
+  createResponsiveFontSizeVariables,
+  createResponsiveSizeVariables,
 } from '../../core';
 import { FloatingIndicator } from '../FloatingIndicator';
 import classes from './SegmentedControl.module.css';
@@ -83,7 +88,7 @@ export interface SegmentedControlProps
   color?: MantineColor;
 
   /** Controls `font-size`, `padding` and `height` properties @default `'sm'` */
-  size?: MantineSize | (string & {});
+  size?: MantineResponsiveSize;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
   radius?: MantineRadius;
@@ -119,8 +124,8 @@ const defaultProps = {
 } satisfies Partial<SegmentedControlProps>;
 
 const varsResolver = createVarsResolver<SegmentedControlFactory>(
-  (theme, { radius, color, transitionDuration, size, transitionTimingFunction }) => ({
-    root: {
+  (theme, { radius, color, transitionDuration, size, transitionTimingFunction }) => {
+    const baseVars = {
       '--sc-radius': radius === undefined ? undefined : getRadius(radius),
       '--sc-color': color ? getThemeColor(color, theme) : undefined,
       '--sc-shadow': color ? undefined : 'var(--mantine-shadow-xs)',
@@ -129,8 +134,12 @@ const varsResolver = createVarsResolver<SegmentedControlFactory>(
       '--sc-transition-timing-function': transitionTimingFunction,
       '--sc-padding': getSize(size, 'sc-padding'),
       '--sc-font-size': getFontSize(size),
-    },
-  })
+    };
+
+    return {
+      root: baseVars,
+    };
+  }
 );
 
 export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) => {
@@ -164,6 +173,39 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
     ...others
   } = props;
 
+  const theme = useMantineTheme();
+
+  // Handle responsive size properties
+  const paddingVars = isResponsiveSize(size) 
+    ? createResponsiveSizeVariables({ size, property: '--sc-padding', getter: (s) => getSize(s, 'sc-padding'), theme })
+    : { base: { '--sc-padding': getSize(size, 'sc-padding') }, media: [] };
+
+  const fontSizeVars = isResponsiveSize(size)
+    ? createResponsiveFontSizeVariables(size, '--sc-font-size', theme)
+    : { base: { '--sc-font-size': getFontSize(size) }, media: [] };
+
+  const responsiveMediaQueries = [
+    ...paddingVars.media.map(m => ({
+      query: m.query,
+      styles: { ...m.styles }
+    })),
+    ...fontSizeVars.media.map(m => ({
+      query: m.query,
+      styles: { ...m.styles }
+    }))
+  ];
+
+  // Merge media queries for the same breakpoint
+  const mergedMediaQueries = responsiveMediaQueries.reduce((acc, curr) => {
+    const existing = acc.find(item => item.query === curr.query);
+    if (existing) {
+      existing.styles = { ...existing.styles, ...curr.styles };
+    } else {
+      acc.push(curr);
+    }
+    return acc;
+  }, [] as typeof responsiveMediaQueries);
+
   const getStyles = useStyles<SegmentedControlFactory>({
     name: 'SegmentedControl',
     props,
@@ -174,11 +216,13 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
     styles,
     unstyled,
     attributes,
-    vars,
+    vars: {
+      ...vars,
+      ...paddingVars.base,
+      ...fontSizeVars.base,
+    },
     varsResolver,
   });
-
-  const theme = useMantineTheme();
 
   const _data = data.map((item) =>
     typeof item === 'string' ? { label: item, value: item } : item
@@ -255,37 +299,45 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
   }
 
   return (
-    <Box
-      {...getStyles('root')}
-      variant={variant}
-      size={size}
-      ref={mergedRef}
-      mod={[
-        {
-          'full-width': fullWidth,
-          orientation,
-          initialized,
-          'with-items-borders': withItemsBorders,
-        },
-        mod,
-      ]}
-      {...others}
-      role="radiogroup"
-      data-disabled={disabled}
-    >
-      {typeof _value === 'string' && (
-        <FloatingIndicator
-          target={refs[_value]}
-          parent={parent}
-          component="span"
-          transitionDuration="var(--sc-transition-duration)"
-          key={key}
-          {...getStyles('indicator')}
+    <>
+      {mergedMediaQueries.length > 0 && (
+        <InlineStyles
+          selector={`.${getStyles('root').className.split(' ')[0]}`}
+          media={mergedMediaQueries}
         />
       )}
+      <Box
+        {...getStyles('root')}
+        variant={variant}
+        size={size}
+        ref={mergedRef}
+        mod={[
+          {
+            'full-width': fullWidth,
+            orientation,
+            initialized,
+            'with-items-borders': withItemsBorders,
+          },
+          mod,
+        ]}
+        {...others}
+        role="radiogroup"
+        data-disabled={disabled}
+      >
+        {typeof _value === 'string' && (
+          <FloatingIndicator
+            target={refs[_value]}
+            parent={parent}
+            component="span"
+            transitionDuration="var(--sc-transition-duration)"
+            key={key}
+            {...getStyles('indicator')}
+          />
+        )}
 
-      {controls}
-    </Box>
+        {controls}
+      </Box>
+    </>
   );
 });
 
