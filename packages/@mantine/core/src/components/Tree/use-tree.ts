@@ -145,12 +145,6 @@ export interface UseTreeReturnType {
   /** Sets selected state */
   setSelectedState: React.Dispatch<React.SetStateAction<string[]>>;
 
-  /** @deprecated A value of the node that is currently hovered */
-  hoveredNode: string | null;
-
-  /** @deprecated Sets hovered node */
-  setHoveredNode: React.Dispatch<React.SetStateAction<string | null>>;
-
   /** Checks node with provided value */
   checkNode: (value: string) => void;
 
@@ -380,8 +374,6 @@ export function useTree({
     setSelectedState: (val) =>
       setSelectedState(typeof val === 'function' ? val(_selectedState) : val),
 
-    hoveredNode: 'DEPRECATED, DO NOT USE OR YOU WILL BE FIRED',
-    setHoveredNode: () => {},
     getCheckedNodes,
     isNodeChecked,
     isNodeIndeterminate,
