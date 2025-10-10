@@ -48,7 +48,7 @@ const varsResolver = createVarsResolver<PillGroupFactory>((_, { gap }, { size })
   },
 }));
 
-export const PillGroup = factory<PillGroupFactory>((_props, ref) => {
+export const PillGroup = factory<PillGroupFactory>((_props) => {
   const props = useProps('PillGroup', null, _props);
   const {
     classNames,
@@ -83,7 +83,7 @@ export const PillGroup = factory<PillGroupFactory>((_props, ref) => {
 
   return (
     <PillGroupProvider value={{ size: _size, disabled }}>
-      <Box ref={ref} size={_size} {...getStyles('group')} {...others} />
+      <Box size={_size} {...getStyles('group')} {...others} />
     </PillGroupProvider>
   );
 });

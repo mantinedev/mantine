@@ -108,7 +108,7 @@ const defaultProps = {
   maxHeight: 400,
 } satisfies Partial<SpotlightRootProps>;
 
-export const SpotlightRoot = factory<SpotlightRootFactory>((_props, ref) => {
+export const SpotlightRoot = factory<SpotlightRootFactory>((_props) => {
   const props = useProps('SpotlightRoot', defaultProps, _props);
   const {
     classNames,
@@ -178,7 +178,6 @@ export const SpotlightRoot = factory<SpotlightRootFactory>((_props, ref) => {
       }}
     >
       <Modal
-        ref={ref}
         {...others}
         withCloseButton={false}
         opened={opened || !!forceOpened}

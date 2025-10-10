@@ -104,7 +104,7 @@ const varsResolver = createVarsResolver<MiniCalendarFactory>((_theme, { size }) 
   },
 }));
 
-export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
+export const MiniCalendar = factory<MiniCalendarFactory>((_props) => {
   const props = useProps('MiniCalendar', defaultProps, _props);
   const {
     classNames,
@@ -211,7 +211,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
     });
 
   return (
-    <Box ref={ref} size={size} {...getStyles('root')} {...others}>
+    <Box size={size} {...getStyles('root')} {...others}>
       <UnstyledButton
         size={size}
         onClick={handlePrevious}

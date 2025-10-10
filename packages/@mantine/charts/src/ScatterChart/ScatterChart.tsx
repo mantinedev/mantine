@@ -109,7 +109,7 @@ const varsResolver = createVarsResolver<ScatterChartFactory>((theme, { textColor
   },
 }));
 
-export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
+export const ScatterChart = factory<ScatterChartFactory>((_props) => {
   const props = useProps('ScatterChart', defaultProps, _props);
   const {
     classNames,
@@ -230,13 +230,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props, ref) => {
   });
 
   return (
-    <Box
-      ref={ref}
-      {...getStyles('root')}
-      onMouseLeave={handleMouseLeave}
-      dir={dir || 'ltr'}
-      {...others}
-    >
+    <Box {...getStyles('root')} onMouseLeave={handleMouseLeave} dir={dir || 'ltr'} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsScatterChart
           margin={{

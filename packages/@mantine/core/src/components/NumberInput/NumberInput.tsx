@@ -210,7 +210,7 @@ function clampAndSanitizeInput(sanitizedValue: string | number, max?: number, mi
   return clamp(parsedValue, min, max);
 }
 
-export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
+export const NumberInput = factory<NumberInputFactory>((_props) => {
   const props = useProps('NumberInput', defaultProps, _props);
   const {
     className,
@@ -248,6 +248,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     withKeyboardEvents,
     trimLeadingZeroesOnBlur,
     attributes,
+    ref,
     ...others
   } = props;
 

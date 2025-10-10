@@ -16,7 +16,7 @@ export type ModalOverlayFactory = Factory<{
   compound: true;
 }>;
 
-export const ModalOverlay = factory<ModalOverlayFactory>((_props, ref) => {
+export const ModalOverlay = factory<ModalOverlayFactory>((_props) => {
   const props = useProps('ModalOverlay', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
@@ -24,7 +24,6 @@ export const ModalOverlay = factory<ModalOverlayFactory>((_props, ref) => {
 
   return (
     <ModalBaseOverlay
-      ref={ref}
       {...ctx.getStyles('overlay', { classNames, style, styles, className })}
       {...others}
     />

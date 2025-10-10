@@ -28,18 +28,18 @@ export type AccordionItemFactory = Factory<{
   compound: true;
 }>;
 
-export const AccordionItem = factory<AccordionItemFactory>((props, ref) => {
+export const AccordionItem = factory<AccordionItemFactory>((props) => {
   const { classNames, className, style, styles, vars, value, mod, ...others } = useProps(
     'AccordionItem',
     null,
     props
   );
+
   const ctx = useAccordionContext();
 
   return (
     <AccordionItemProvider value={{ value }}>
       <Box
-        ref={ref}
         mod={[{ active: ctx.isItemActive(value) }, mod]}
         {...ctx.getStyles('item', { className, classNames, styles, style, variant: ctx.variant })}
         {...others}

@@ -70,7 +70,7 @@ const varsResolver = createVarsResolver<BurgerFactory>(
   })
 );
 
-export const Burger = factory<BurgerFactory>((_props, ref) => {
+export const Burger = factory<BurgerFactory>((_props) => {
   const props = useProps('Burger', null, _props);
   const {
     classNames,
@@ -103,7 +103,7 @@ export const Burger = factory<BurgerFactory>((_props, ref) => {
   });
 
   return (
-    <UnstyledButton {...getStyles('root')} ref={ref} {...others}>
+    <UnstyledButton {...getStyles('root')} {...others}>
       <Box mod={['reduce-motion', { opened }]} {...getStyles('burger')} />
       {children}
     </UnstyledButton>

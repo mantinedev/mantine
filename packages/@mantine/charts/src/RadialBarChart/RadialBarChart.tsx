@@ -106,7 +106,7 @@ const varsResolver = createVarsResolver<RadialBarChartFactory>(
   })
 );
 
-export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
+export const RadialBarChart = factory<RadialBarChartFactory>((_props) => {
   const props = useProps('RadialBarChart', defaultProps, _props);
   const {
     classNames,
@@ -169,7 +169,7 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props, ref) => {
   });
 
   return (
-    <Box ref={ref} {...getStyles('root')} {...others}>
+    <Box {...getStyles('root')} {...others}>
       <ResponsiveContainer>
         <ReChartsRadialBarChart
           margin={{ top: 0, bottom: 0, left: 0, right: 0 }}

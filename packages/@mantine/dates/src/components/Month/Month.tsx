@@ -117,7 +117,7 @@ export interface MonthProps
   extends BoxProps,
     MonthSettings,
     StylesApiProps<MonthFactory>,
-    ElementProps<'div'> {
+    ElementProps<'table'> {
   __staticSelector?: string;
 
   /** Month to display, value `YYYY-MM-DD` */
@@ -144,7 +144,7 @@ const varsResolver = createVarsResolver<MonthFactory>((_, { size }) => ({
   },
 }));
 
-export const Month = factory<MonthFactory>((_props, ref) => {
+export const Month = factory<MonthFactory>((_props) => {
   const props = useProps('Month', defaultProps, _props);
   const {
     classNames,
@@ -295,7 +295,7 @@ export const Month = factory<MonthFactory>((_props, ref) => {
   });
 
   return (
-    <Box component="table" {...getStyles('month')} size={size} ref={ref} {...others}>
+    <Box component="table" {...getStyles('month')} size={size} {...others}>
       {!hideWeekdays && (
         <thead {...getStyles('monthThead')}>
           <WeekdaysRow

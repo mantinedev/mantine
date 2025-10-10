@@ -25,7 +25,7 @@ export type InputClearButtonFactory = Factory<{
   stylesNames: CloseButtonStylesNames;
 }>;
 
-export const InputClearButton = factory<InputClearButtonFactory>((_props, ref) => {
+export const InputClearButton = factory<InputClearButtonFactory>((_props) => {
   const props = useProps('InputClearButton', null, _props);
   const { size, variant, vars, classNames, styles, ...others } = props;
   const ctx = useInputContext();
@@ -39,7 +39,6 @@ export const InputClearButton = factory<InputClearButtonFactory>((_props, ref) =
   return (
     <CloseButton
       variant={variant || 'transparent'}
-      ref={ref}
       size={size || ctx?.size || 'sm'}
       classNames={resolvedClassNames}
       styles={resolvedStyles}

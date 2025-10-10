@@ -131,7 +131,7 @@ const varsResolver = createVarsResolver<TooltipFactory>(
   }
 );
 
-export const Tooltip = factory<TooltipFactory>((_props, ref) => {
+export const Tooltip = factory<TooltipFactory>((_props) => {
   const props = useProps('Tooltip', defaultProps, _props);
   const {
     children,
@@ -176,6 +176,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     autoContrast,
     attributes,
     target,
+    ref,
     ...others
   } = useProps('Tooltip', defaultProps, props);
 

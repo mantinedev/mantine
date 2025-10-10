@@ -114,7 +114,7 @@ const varsResolver = createVarsResolver<NotificationsFactory>((_, { zIndex, cont
   },
 }));
 
-export const Notifications = factory<NotificationsFactory>((_props, ref) => {
+export const Notifications = factory<NotificationsFactory>((_props) => {
   const props = useProps('Notifications', defaultProps, _props);
   const {
     classNames,
@@ -217,7 +217,7 @@ export const Notifications = factory<NotificationsFactory>((_props, ref) => {
 
   return (
     <OptionalPortal withinPortal={withinPortal} {...portalProps}>
-      <Box {...getStyles('root')} data-position="top-center" ref={ref} {...others}>
+      <Box {...getStyles('root')} data-position="top-center" {...others}>
         <TransitionGroup>{groupedComponents['top-center']}</TransitionGroup>
       </Box>
 

@@ -31,7 +31,7 @@ export type RichTextEditorToolbarFactory = Factory<{
   compound: true;
 }>;
 
-export const RichTextEditorToolbar = factory<RichTextEditorToolbarFactory>((_props, ref) => {
+export const RichTextEditorToolbar = factory<RichTextEditorToolbarFactory>((_props) => {
   const props = useProps('RichTextEditorToolbar', null, _props);
   const {
     classNames,
@@ -49,7 +49,6 @@ export const RichTextEditorToolbar = factory<RichTextEditorToolbarFactory>((_pro
 
   return (
     <Box
-      ref={ref}
       mod={[{ sticky }, mod]}
       variant={variant || ctx.variant}
       {...ctx.getStyles('toolbar', { className, style, styles, classNames })}

@@ -24,7 +24,7 @@ export type CarouselSlideFactory = Factory<{
   compound: true;
 }>;
 
-export const CarouselSlide = factory<CarouselSlideFactory>((props, ref) => {
+export const CarouselSlide = factory<CarouselSlideFactory>((props) => {
   const { classNames, className, style, styles, vars, mod, ...others } = useProps(
     'CarouselSlide',
     null,
@@ -35,7 +35,6 @@ export const CarouselSlide = factory<CarouselSlideFactory>((props, ref) => {
 
   return (
     <Box
-      ref={ref}
       mod={[{ orientation: ctx.orientation }, mod]}
       {...ctx.getStyles('slide', { className, style, classNames, styles })}
       {...others}

@@ -74,7 +74,7 @@ const varsResolver = createVarsResolver<ListFactory>((_, { size, spacing }) => (
   },
 }));
 
-export const List = factory<ListFactory>((_props, ref) => {
+export const List = factory<ListFactory>((_props) => {
   const props = useProps('List', defaultProps, _props);
   const {
     classNames,
@@ -115,7 +115,6 @@ export const List = factory<ListFactory>((_props, ref) => {
         {...getStyles('root', { style: { listStyleType } })}
         component={type === 'unordered' ? ('ul' as const) : ('ol' as const)}
         mod={[{ 'with-padding': withPadding }, mod]}
-        ref={ref}
         {...others}
       >
         {children}

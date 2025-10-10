@@ -68,7 +68,7 @@ const defaultProps = {
   highlightQuery: false,
 } satisfies Partial<SpotlightActionProps>;
 
-export const SpotlightAction = factory<SpotlightActionFactory>((_props, ref) => {
+export const SpotlightAction = factory<SpotlightActionFactory>((_props) => {
   const props = useProps('SpotlightAction', defaultProps, _props);
   const {
     className,
@@ -112,7 +112,6 @@ export const SpotlightAction = factory<SpotlightActionFactory>((_props, ref) => 
 
   return (
     <UnstyledButton
-      ref={ref}
       data-action
       {...ctx.getStyles('action', { className, style, ...stylesApi })}
       {...others}

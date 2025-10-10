@@ -49,7 +49,7 @@ type YearPickerComponent = (<Type extends DatePickerType = 'default'>(
   displayName?: string;
 } & MantineComponentStaticProperties<YearPickerFactory>;
 
-export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_props, ref) => {
+export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_props) => {
   const props = useProps('YearPicker', defaultProps, _props);
   const {
     classNames,
@@ -88,7 +88,6 @@ export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_prop
 
   return (
     <Calendar
-      ref={ref}
       minLevel="decade"
       __updateDateOnYearSelect={__updateDateOnYearSelect ?? false}
       __staticSelector={__staticSelector || 'YearPicker'}

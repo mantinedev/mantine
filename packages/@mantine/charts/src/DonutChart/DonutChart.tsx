@@ -172,7 +172,7 @@ const getLabel =
     </text>
   );
 
-export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
+export const DonutChart = factory<DonutChartFactory>((_props) => {
   const props = useProps('DonutChart', defaultProps, _props);
   const {
     classNames,
@@ -237,7 +237,7 @@ export const DonutChart = factory<DonutChartFactory>((_props, ref) => {
   ));
 
   return (
-    <Box ref={ref} size={size} {...getStyles('root')} {...others}>
+    <Box size={size} {...getStyles('root')} {...others}>
       <ResponsiveContainer>
         <ReChartsPieChart {...pieChartProps}>
           <Pie

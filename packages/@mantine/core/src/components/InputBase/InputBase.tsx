@@ -38,11 +38,11 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<InputBaseProps>;
 
-export const InputBase = polymorphicFactory<InputBaseFactory>((props, ref) => {
+export const InputBase = polymorphicFactory<InputBaseFactory>((props) => {
   const { inputProps, wrapperProps, ...others } = useInputProps('InputBase', defaultProps, props);
   return (
     <Input.Wrapper {...wrapperProps}>
-      <Input {...inputProps} {...others} ref={ref} />
+      <Input {...inputProps} {...others} />
     </Input.Wrapper>
   );
 });

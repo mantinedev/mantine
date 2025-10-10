@@ -162,7 +162,7 @@ const varsResolver = createVarsResolver<CarouselFactory>(
   })
 );
 
-export const Carousel = factory<CarouselFactory>((_props, ref) => {
+export const Carousel = factory<CarouselFactory>((_props) => {
   const props = useProps('Carousel', defaultProps, _props);
   const {
     classNames,
@@ -321,7 +321,6 @@ export const Carousel = factory<CarouselFactory>((_props, ref) => {
       )}
 
       <Box
-        ref={ref}
         {...getStyles('root', { className: 'responsiveClassName' })}
         {...others}
         mod={[{ orientation, 'include-gap-in-size': includeGapInSize }, mod]}

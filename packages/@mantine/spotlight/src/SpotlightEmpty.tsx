@@ -24,7 +24,7 @@ export type SpotlightEmptyFactory = Factory<{
   compound: true;
 }>;
 
-export const SpotlightEmpty = factory<SpotlightEmptyFactory>((props, ref) => {
+export const SpotlightEmpty = factory<SpotlightEmptyFactory>((props) => {
   const { className, style, classNames, styles, ...others } = useProps(
     'SpotlightEmpty',
     null,
@@ -33,13 +33,7 @@ export const SpotlightEmpty = factory<SpotlightEmptyFactory>((props, ref) => {
 
   const ctx = useSpotlightContext();
 
-  return (
-    <Box
-      ref={ref}
-      {...ctx.getStyles('empty', { classNames, styles, className, style })}
-      {...others}
-    />
-  );
+  return <Box {...ctx.getStyles('empty', { classNames, styles, className, style })} {...others} />;
 });
 
 SpotlightEmpty.classes = classes;

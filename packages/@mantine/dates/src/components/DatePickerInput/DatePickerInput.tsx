@@ -49,7 +49,7 @@ type DatePickerInputComponent = (<Type extends DatePickerType = 'default'>(
 } & MantineComponentStaticProperties<DatePickerInputFactory>;
 
 export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInputFactory>(
-  (_props, ref) => {
+  (_props) => {
     const props = useProps('DatePickerInput', defaultProps, _props);
     const {
       type,
@@ -116,7 +116,6 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}
-        ref={ref}
         onClear={onClear}
         shouldClear={shouldClear}
         value={_value}

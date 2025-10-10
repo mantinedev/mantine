@@ -30,7 +30,7 @@ export type SpotlightActionsGroupFactory = Factory<{
   compound: true;
 }>;
 
-export const SpotlightActionsGroup = factory<SpotlightActionsGroupFactory>((props, ref) => {
+export const SpotlightActionsGroup = factory<SpotlightActionsGroupFactory>((props) => {
   const { className, style, styles, classNames, label, children, ...others } = useProps(
     'SpotlightActionsGroup',
     null,
@@ -42,7 +42,6 @@ export const SpotlightActionsGroup = factory<SpotlightActionsGroupFactory>((prop
   return (
     <Box
       {...ctx.getStyles('actionsGroup', { className, style, classNames, styles })}
-      ref={ref}
       {...others}
       __vars={{
         '--spotlight-label': `'${label?.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`,

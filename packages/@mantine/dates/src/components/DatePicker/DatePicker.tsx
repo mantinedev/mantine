@@ -117,7 +117,7 @@ type DatePickerComponent = (<Type extends DatePickerType = 'default'>(
   displayName?: string;
 } & MantineComponentStaticProperties<DatePickerFactory>;
 
-export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_props, ref) => {
+export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_props) => {
   const props = useProps('DatePicker', defaultProps, _props);
   const {
     allowDeselect,
@@ -182,7 +182,6 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
 
   const calendar = (
     <Calendar
-      ref={ref}
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       __staticSelector={__staticSelector || 'DatePicker'}

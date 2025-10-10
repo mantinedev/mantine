@@ -16,7 +16,7 @@ export type DrawerBodyFactory = Factory<{
   compound: true;
 }>;
 
-export const DrawerBody = factory<DrawerBodyFactory>((_props, ref) => {
+export const DrawerBody = factory<DrawerBodyFactory>((_props) => {
   const props = useProps('DrawerBody', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
@@ -24,7 +24,6 @@ export const DrawerBody = factory<DrawerBodyFactory>((_props, ref) => {
 
   return (
     <ModalBaseBody
-      ref={ref}
       {...ctx.getStyles('body', { classNames, style, styles, className })}
       {...others}
     />

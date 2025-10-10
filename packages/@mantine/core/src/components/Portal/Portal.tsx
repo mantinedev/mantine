@@ -60,8 +60,12 @@ const defaultProps = {
   reuseTargetNode: true,
 } satisfies Partial<PortalProps>;
 
-export const Portal = factory<PortalFactory>((props, ref) => {
-  const { children, target, reuseTargetNode, ...others } = useProps('Portal', defaultProps, props);
+export const Portal = factory<PortalFactory>((props) => {
+  const { children, target, reuseTargetNode, ref, ...others } = useProps(
+    'Portal',
+    defaultProps,
+    props
+  );
 
   const [mounted, setMounted] = useState(false);
   const nodeRef = useRef<HTMLElement | null>(null);

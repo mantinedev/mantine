@@ -43,7 +43,7 @@ export type TabsTabFactory = Factory<{
   compound: true;
 }>;
 
-export const TabsTab = factory<TabsTabFactory>((_props, ref) => {
+export const TabsTab = factory<TabsTabFactory>((_props) => {
   const props = useProps('TabsTab', null, _props);
   const {
     className,
@@ -91,7 +91,6 @@ export const TabsTab = factory<TabsTabFactory>((_props, ref) => {
         },
         mod,
       ]}
-      ref={ref}
       role="tab"
       id={ctx.getTabId(value)}
       aria-selected={active}

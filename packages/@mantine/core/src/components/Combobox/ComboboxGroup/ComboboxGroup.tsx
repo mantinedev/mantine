@@ -28,7 +28,7 @@ export type ComboboxGroupFactory = Factory<{
   compound: true;
 }>;
 
-export const ComboboxGroup = factory<ComboboxGroupFactory>((props, ref) => {
+export const ComboboxGroup = factory<ComboboxGroupFactory>((props) => {
   const { classNames, className, style, styles, vars, children, label, id, ...others } = useProps(
     'ComboboxGroup',
     null,
@@ -40,7 +40,6 @@ export const ComboboxGroup = factory<ComboboxGroupFactory>((props, ref) => {
 
   return (
     <Box
-      ref={ref}
       role="group"
       aria-labelledby={label ? _id : undefined}
       {...ctx.getStyles('group', { className, classNames, style, styles })}

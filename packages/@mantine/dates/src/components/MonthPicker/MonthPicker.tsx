@@ -63,7 +63,7 @@ type MonthPickerComponent = (<Type extends DatePickerType = 'default'>(
   displayName?: string;
 } & MantineComponentStaticProperties<MonthPickerFactory>;
 
-export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_props, ref) => {
+export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_props) => {
   const props = useProps('MonthPicker', defaultProps, _props);
   const {
     classNames,
@@ -103,7 +103,6 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
 
   return (
     <Calendar
-      ref={ref}
       minLevel="year"
       __updateDateOnMonthSelect={__updateDateOnMonthSelect ?? false}
       __staticSelector={__staticSelector || 'MonthPicker'}

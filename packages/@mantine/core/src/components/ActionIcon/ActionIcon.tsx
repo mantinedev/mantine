@@ -112,7 +112,7 @@ const varsResolver = createVarsResolver<ActionIconFactory>(
   }
 );
 
-export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) => {
+export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props) => {
   const props = useProps('ActionIcon', null, _props);
   const {
     className,
@@ -160,7 +160,6 @@ export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props, ref) =>
       variant={variant}
       size={size}
       disabled={disabled || loading}
-      ref={ref}
       mod={[{ loading, disabled: disabled || dataDisabled }, mod]}
     >
       {typeof loading === 'boolean' && (

@@ -75,7 +75,7 @@ const defaultProps = {
   withCloseButton: true,
 } satisfies Partial<ModalProps>;
 
-export const Modal = factory<ModalFactory>((_props, ref) => {
+export const Modal = factory<ModalFactory>((_props) => {
   const {
     title,
     withOverlay,
@@ -113,7 +113,6 @@ export const Modal = factory<ModalFactory>((_props, ref) => {
 
   return (
     <ModalRoot
-      ref={ref}
       radius={radius}
       opened={opened}
       zIndex={ctx && stackId ? ctx.getZIndex(stackId) : zIndex}

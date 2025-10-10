@@ -143,7 +143,7 @@ const varsResolver = createVarsResolver<StepperFactory>(
   })
 );
 
-export const Stepper = factory<StepperFactory>((_props, ref) => {
+export const Stepper = factory<StepperFactory>((_props) => {
   const props = useProps('Stepper', defaultProps, _props);
   const {
     classNames,
@@ -252,7 +252,7 @@ export const Stepper = factory<StepperFactory>((_props, ref) => {
 
   return (
     <StepperProvider value={{ getStyles, orientation, iconPosition }}>
-      <Box {...getStyles('root')} ref={ref} size={size} {...others}>
+      <Box {...getStyles('root')} size={size} {...others}>
         <Box
           {...getStyles('steps')}
           mod={{

@@ -123,7 +123,7 @@ const defaultProps = {
   ],
 } satisfies Partial<HeatmapProps>;
 
-export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
+export const Heatmap = factory<HeatmapFactory>((_props) => {
   const props = useProps('Heatmap', defaultProps, _props);
   const {
     classNames,
@@ -279,7 +279,6 @@ export const Heatmap = factory<HeatmapFactory>((_props, ref) => {
   return (
     <Box
       component="svg"
-      ref={ref}
       width={rectSizeWithGap * totalColumns + gap + weekdaysOffset}
       height={rectSizeWithGap * 7 + gap + monthsOffset}
       {...getStyles('root')}

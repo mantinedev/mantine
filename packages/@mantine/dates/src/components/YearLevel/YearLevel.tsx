@@ -52,7 +52,7 @@ const defaultProps = {
   yearLabelFormat: 'YYYY',
 } satisfies Partial<YearLevelProps>;
 
-export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
+export const YearLevel = factory<YearLevelFactory>((_props) => {
   const props = useProps('YearLevel', defaultProps, _props);
   const {
     // MonthsList settings
@@ -123,7 +123,7 @@ export const YearLevel = factory<YearLevelFactory>((_props, ref) => {
         : false;
 
   return (
-    <Box data-year-level size={size} ref={ref} {...others}>
+    <Box data-year-level size={size} {...others}>
       <CalendarHeader
         label={
           typeof yearLabelFormat === 'function'

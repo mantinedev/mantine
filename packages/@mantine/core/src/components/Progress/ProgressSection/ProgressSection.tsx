@@ -48,7 +48,7 @@ const defaultProps = {
   withAria: true,
 } satisfies Partial<ProgressSectionProps>;
 
-export const ProgressSection = factory<ProgressSectionFactory>((props, ref) => {
+export const ProgressSection = factory<ProgressSectionFactory>((props) => {
   const {
     classNames,
     className,
@@ -79,7 +79,6 @@ export const ProgressSection = factory<ProgressSectionFactory>((props, ref) => {
 
   return (
     <Box
-      ref={ref}
       {...ctx.getStyles('section', { className, classNames, styles, style })}
       {...others}
       {...ariaAttributes}

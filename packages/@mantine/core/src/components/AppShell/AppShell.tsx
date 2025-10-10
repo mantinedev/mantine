@@ -115,7 +115,7 @@ const varsResolver = createVarsResolver<AppShellFactory>(
   })
 );
 
-export const AppShell = factory<AppShellFactory>((_props, ref) => {
+export const AppShell = factory<AppShellFactory>((_props) => {
   const props = useProps('AppShell', defaultProps, _props);
   const {
     classNames,
@@ -166,12 +166,7 @@ export const AppShell = factory<AppShellFactory>((_props, ref) => {
         footer={footer}
         padding={padding}
       />
-      <Box
-        ref={ref}
-        {...getStyles('root')}
-        mod={[{ resizing, layout, disabled }, mod]}
-        {...others}
-      />
+      <Box {...getStyles('root')} mod={[{ resizing, layout, disabled }, mod]} {...others} />
     </AppShellProvider>
   );
 });

@@ -76,7 +76,7 @@ const varsResolver = createVarsResolver<OverlayFactory>(
   })
 );
 
-export const Overlay = polymorphicFactory<OverlayFactory>((_props, ref) => {
+export const Overlay = polymorphicFactory<OverlayFactory>((_props) => {
   const props = useProps('Overlay', defaultProps, _props);
   const {
     classNames,
@@ -114,7 +114,7 @@ export const Overlay = polymorphicFactory<OverlayFactory>((_props, ref) => {
   });
 
   return (
-    <Box ref={ref} {...getStyles('root')} mod={[{ center, fixed }, mod]} {...others}>
+    <Box {...getStyles('root')} mod={[{ center, fixed }, mod]} {...others}>
       {children}
     </Box>
   );

@@ -70,7 +70,7 @@ const varsResolver = createVarsResolver<AffixFactory>((_, { zIndex, position }) 
   },
 }));
 
-export const Affix = factory<AffixFactory>((_props, ref) => {
+export const Affix = factory<AffixFactory>((_props) => {
   const props = useProps('Affix', defaultProps, _props);
   const {
     classNames,
@@ -103,7 +103,7 @@ export const Affix = factory<AffixFactory>((_props, ref) => {
 
   return (
     <OptionalPortal {...portalProps} withinPortal={withinPortal}>
-      <Box ref={ref} {...getStyles('root')} {...others} />
+      <Box {...getStyles('root')} {...others} />
     </OptionalPortal>
   );
 });

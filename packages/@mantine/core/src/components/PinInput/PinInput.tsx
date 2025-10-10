@@ -35,7 +35,9 @@ export type PinInputCssVariables = {
 export interface PinInputProps
   extends BoxProps,
     StylesApiProps<PinInputFactory>,
-    ElementProps<'div', 'onChange'> {
+    ElementProps<'div', 'onChange' | 'ref'> {
+  ref?: React.Ref<HTMLInputElement>;
+
   /** Hidden input `name` attribute */
   name?: string;
 
@@ -115,10 +117,10 @@ export interface PinInputProps
   ariaLabel?: string;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+  hiddenInputProps?: React.ComponentProps<'input'>;
 
   /** Assigns ref of the root element */
-  rootRef?: React.ForwardedRef<HTMLDivElement>;
+  rootRef?: React.Ref<HTMLDivElement>;
 
   /** Props added to the input element depending on its index */
   getInputProps?: (index: number) => InputProps & ElementProps<'input', 'size'>;
@@ -126,7 +128,7 @@ export interface PinInputProps
 
 export type PinInputFactory = Factory<{
   props: PinInputProps;
-  ref: HTMLInputElement;
+  ref: HTMLDivElement;
   stylesNames: PinInputStylesNames;
   vars: PinInputCssVariables;
 }>;
@@ -148,7 +150,7 @@ const varsResolver = createVarsResolver<PinInputFactory>((_, { size }) => ({
   },
 }));
 
-export const PinInput = factory<PinInputFactory>((props, ref) => {
+export const PinInput = factory<PinInputFactory>((props) => {
   const {
     name,
     form,
@@ -184,6 +186,7 @@ export const PinInput = factory<PinInputFactory>((props, ref) => {
     rootRef,
     getInputProps,
     attributes,
+    ref,
     ...others
   } = useProps('PinInput', defaultProps, props);
 

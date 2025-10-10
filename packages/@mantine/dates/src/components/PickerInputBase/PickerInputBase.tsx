@@ -90,7 +90,7 @@ export type PickerInputBaseFactory = Factory<{
   variant: InputVariant;
 }>;
 
-export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => {
+export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
   const {
     inputProps,
     wrapperProps,
@@ -184,7 +184,6 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
               __clearable={clearable && shouldClear && !readOnly && !disabled}
               rightSection={rightSection}
               {...inputProps}
-              ref={ref}
               classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
               {...others}
             >

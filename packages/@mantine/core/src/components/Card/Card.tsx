@@ -63,7 +63,7 @@ const defaultProps = {
   orientation: 'vertical',
 } satisfies Partial<CardProps>;
 
-export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
+export const Card = polymorphicFactory<CardFactory>((_props) => {
   const props = useProps('Card', defaultProps, _props);
   const {
     classNames,
@@ -108,13 +108,7 @@ export const Card = polymorphicFactory<CardFactory>((_props, ref) => {
 
   return (
     <CardProvider value={{ getStyles }}>
-      <Paper
-        ref={ref}
-        unstyled={unstyled}
-        data-orientation={orientation}
-        {...getStyles('root')}
-        {...others}
-      >
+      <Paper unstyled={unstyled} data-orientation={orientation} {...getStyles('root')} {...others}>
         {content}
       </Paper>
     </CardProvider>

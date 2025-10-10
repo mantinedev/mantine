@@ -172,7 +172,7 @@ function getBarFill(barProps: BarChartProps['barProps'], series: BarChartSeries)
   return barProps?.fill;
 }
 
-export const BarChart = factory<BarChartFactory>((_props, ref) => {
+export const BarChart = factory<BarChartFactory>((_props) => {
   const props = useProps('BarChart', defaultProps, _props);
   const {
     classNames,
@@ -335,7 +335,6 @@ export const BarChart = factory<BarChartFactory>((_props, ref) => {
 
   return (
     <Box
-      ref={ref}
       {...getStyles('root')}
       onMouseLeave={handleMouseLeave}
       dir={dir || 'ltr'}

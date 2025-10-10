@@ -71,7 +71,7 @@ const varsResolver = createVarsResolver<LoaderFactory>((theme, { size, color }) 
   },
 }));
 
-export const Loader = factory<LoaderFactory>((_props, ref) => {
+export const Loader = factory<LoaderFactory>((_props) => {
   const props = useProps('Loader', defaultProps, _props);
   const {
     size,
@@ -106,7 +106,7 @@ export const Loader = factory<LoaderFactory>((_props, ref) => {
 
   if (children) {
     return (
-      <Box {...getStyles('root')} ref={ref as any} {...(others as any)}>
+      <Box {...getStyles('root')} {...(others as any)}>
         {children}
       </Box>
     );
@@ -115,7 +115,6 @@ export const Loader = factory<LoaderFactory>((_props, ref) => {
   return (
     <Box
       {...getStyles('root')}
-      ref={ref}
       component={loaders[type]}
       variant={variant}
       size={size}

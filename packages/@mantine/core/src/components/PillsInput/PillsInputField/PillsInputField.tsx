@@ -36,7 +36,7 @@ const defaultProps = {
   type: 'visible',
 } satisfies Partial<PillsInputFieldProps>;
 
-export const PillsInputField = factory<PillsInputFieldFactory>((_props, ref) => {
+export const PillsInputField = factory<PillsInputFieldFactory>((_props) => {
   const props = useProps('PillsInputField', defaultProps, _props);
   const {
     classNames,
@@ -51,6 +51,7 @@ export const PillsInputField = factory<PillsInputFieldFactory>((_props, ref) => 
     pointer,
     mod,
     attributes,
+    ref,
     ...others
   } = props;
   const ctx = usePillsInputContext();

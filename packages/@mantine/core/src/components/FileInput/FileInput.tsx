@@ -84,7 +84,7 @@ const defaultProps = {
   valueComponent: DefaultValue,
 } satisfies Partial<FileInputProps>;
 
-const _FileInput = factory<FileInputFactory>((_props, ref) => {
+const _FileInput = factory<FileInputFactory>((_props) => {
   const props = useProps('FileInput', defaultProps, _props);
   const {
     unstyled,
@@ -162,7 +162,6 @@ const _FileInput = factory<FileInputFactory>((_props, ref) => {
       {(fileButtonProps) => (
         <InputBase
           component={component || 'button'}
-          ref={ref}
           rightSection={_rightSection}
           {...fileButtonProps}
           {...others}

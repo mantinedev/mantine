@@ -55,7 +55,7 @@ const defaultProps = {
   monthLabelFormat: 'MMMM YYYY',
 } satisfies Partial<MonthLevelProps>;
 
-export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
+export const MonthLevel = factory<MonthLevelFactory>((_props) => {
   const props = useProps('MonthLevel', defaultProps, _props);
   const {
     // Month settings
@@ -136,7 +136,7 @@ export const MonthLevel = factory<MonthLevelFactory>((_props, ref) => {
         : false;
 
   return (
-    <Box data-month-level size={size} ref={ref} {...others}>
+    <Box data-month-level size={size} {...others}>
       <CalendarHeader
         label={
           typeof monthLabelFormat === 'function'

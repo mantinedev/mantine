@@ -67,7 +67,7 @@ export type CodeHighlightTabsFactory = Factory<{
   stylesNames: CodeHighlightTabsStylesNames;
 }>;
 
-export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref) => {
+export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props) => {
   const props = useProps('CodeHighlightTabs', null, _props);
   const {
     classNames,
@@ -165,7 +165,7 @@ export const CodeHighlightTabs = factory<CodeHighlightTabsFactory>((_props, ref)
   ));
 
   return (
-    <Box ref={ref} {...getStyles('root')} {...others}>
+    <Box {...getStyles('root')} {...others}>
       <ScrollArea type="never" dir="ltr" offsetScrollbars={false} {...getStyles('filesScrollarea')}>
         <div {...getStyles('files')}>{files}</div>
       </ScrollArea>

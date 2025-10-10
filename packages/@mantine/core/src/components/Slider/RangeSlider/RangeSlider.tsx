@@ -173,7 +173,7 @@ const defaultProps = {
   maxRange: Infinity,
 } satisfies Partial<RangeSliderProps>;
 
-export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
+export const RangeSlider = factory<RangeSliderFactory>((_props) => {
   const props = useProps('RangeSlider', defaultProps, _props);
   const {
     classNames,
@@ -211,6 +211,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
     thumbProps,
     pushOnOverlap,
     attributes,
+    ref,
     ...others
   } = props;
 

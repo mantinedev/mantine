@@ -49,7 +49,7 @@ type YearPickerInputComponent = (<Type extends DatePickerType = 'default'>(
 } & MantineComponentStaticProperties<YearPickerInputFactory>;
 
 export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInputFactory>(
-  (_props, ref) => {
+  (_props) => {
     const props = useProps('YearPickerInput', defaultProps, _props);
     const {
       type,
@@ -112,7 +112,6 @@ export const YearPickerInput: YearPickerInputComponent = factory<YearPickerInput
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}
-        ref={ref}
         onClear={onClear}
         shouldClear={shouldClear}
         value={_value}

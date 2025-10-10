@@ -68,7 +68,7 @@ const varsResolver = createVarsResolver<PasswordInputFactory>((_, { size }) => (
   },
 }));
 
-export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
+export const PasswordInput = factory<PasswordInputFactory>((_props) => {
   const props = useProps('PasswordInput', defaultProps, _props);
   const {
     classNames,
@@ -239,7 +239,6 @@ export const PasswordInput = factory<PasswordInputFactory>((_props, ref) => {
           {...getStyles('innerInput')}
           disabled={disabled}
           id={uuid}
-          ref={ref}
           {...rest}
           aria-describedby={describedBy}
           autoComplete={rest.autoComplete || 'off'}

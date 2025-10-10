@@ -53,7 +53,7 @@ export type ColorSliderFactory = Factory<{
   stylesNames: ColorSliderStylesNames;
 }>;
 
-export const ColorSlider = factory<ColorSliderFactory>((_props, ref) => {
+export const ColorSlider = factory<ColorSliderFactory>((_props) => {
   const props = useProps('ColorSlider', null, _props);
   const {
     classNames,
@@ -75,6 +75,7 @@ export const ColorSlider = factory<ColorSliderFactory>((_props, ref) => {
     onScrubEnd,
     __staticSelector = 'ColorPicker',
     attributes,
+    ref,
     ...others
   } = props;
 

@@ -37,7 +37,7 @@ export type ComboboxOptionFactory = Factory<{
   compound: true;
 }>;
 
-export const ComboboxOption = factory<ComboboxOptionFactory>((_props, ref) => {
+export const ComboboxOption = factory<ComboboxOptionFactory>((_props) => {
   const props = useProps('ComboboxOption', null, _props);
   const {
     classNames,
@@ -64,7 +64,6 @@ export const ComboboxOption = factory<ComboboxOptionFactory>((_props, ref) => {
     <Box
       {...ctx.getStyles('option', { className, classNames, styles, style })}
       {...others}
-      ref={ref}
       id={_id}
       mod={[
         'combobox-option',

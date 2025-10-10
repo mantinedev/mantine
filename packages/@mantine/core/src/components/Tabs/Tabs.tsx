@@ -119,7 +119,7 @@ const varsResolver = createVarsResolver<TabsFactory>((theme, { radius, color, au
   },
 }));
 
-export const Tabs = factory<TabsFactory>((_props, ref) => {
+export const Tabs = factory<TabsFactory>((_props) => {
   const props = useProps('Tabs', defaultProps, _props);
   const {
     defaultValue,
@@ -195,7 +195,6 @@ export const Tabs = factory<TabsFactory>((_props, ref) => {
       }}
     >
       <Box
-        ref={ref}
         id={uid}
         variant={variant}
         mod={[

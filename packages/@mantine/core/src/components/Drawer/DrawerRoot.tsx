@@ -109,7 +109,7 @@ const varsResolver = createVarsResolver<DrawerRootFactory>((_, { position, size,
   },
 }));
 
-export const DrawerRoot = factory<DrawerRootFactory>((_props, ref) => {
+export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
   const props = useProps('DrawerRoot', defaultProps, _props);
   const {
     classNames,
@@ -147,7 +147,6 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props, ref) => {
   return (
     <DrawerProvider value={{ scrollAreaComponent, getStyles, radius }}>
       <ModalBase
-        ref={ref}
         {...getStyles('root')}
         transitionProps={{ transition: drawerTransition, ...transitionProps }}
         data-offset-scrollbars={scrollAreaComponent === ScrollArea.Autosize || undefined}

@@ -27,7 +27,7 @@ export type AppShellHeaderFactory = Factory<{
   stylesNames: AppShellHeaderStylesNames;
 }>;
 
-export const AppShellHeader = factory<AppShellHeaderFactory>((_props, ref) => {
+export const AppShellHeader = factory<AppShellHeaderFactory>((_props) => {
   const {
     classNames,
     className,
@@ -50,7 +50,6 @@ export const AppShellHeader = factory<AppShellHeaderFactory>((_props, ref) => {
   return (
     <Box
       component="header"
-      ref={ref}
       mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
       {...ctx.getStyles('header', {
         className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, className),

@@ -84,7 +84,7 @@ const varsResolver = createVarsResolver<ThemeIconFactory>(
   }
 );
 
-export const ThemeIcon = factory<ThemeIconFactory>((_props, ref) => {
+export const ThemeIcon = factory<ThemeIconFactory>((_props) => {
   const props = useProps('ThemeIcon', null, _props);
   const {
     classNames,
@@ -112,7 +112,7 @@ export const ThemeIcon = factory<ThemeIconFactory>((_props, ref) => {
     varsResolver,
   });
 
-  return <Box ref={ref} {...getStyles('root')} {...others} />;
+  return <Box {...getStyles('root')} {...others} />;
 });
 
 ThemeIcon.classes = classes;

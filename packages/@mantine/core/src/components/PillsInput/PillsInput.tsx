@@ -27,7 +27,7 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<PillsInputProps>;
 
-export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
+export const PillsInput = factory<PillsInputFactory>((_props) => {
   const props = useProps('PillsInput', defaultProps, _props);
   const {
     children,
@@ -50,7 +50,6 @@ export const PillsInput = factory<PillsInputFactory>((_props, ref) => {
         error={error}
         variant={variant}
         component="div"
-        ref={ref}
         data-no-overflow
         onMouseDown={(event) => {
           event.preventDefault();

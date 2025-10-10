@@ -126,7 +126,7 @@ const varsResolver = createVarsResolver<ChipFactory>(
   }
 );
 
-export const Chip = factory<ChipFactory>((_props, ref) => {
+export const Chip = factory<ChipFactory>((_props) => {
   const props = useProps('Chip', defaultProps, _props);
   const {
     classNames,
@@ -209,7 +209,6 @@ export const Chip = factory<ChipFactory>((_props, ref) => {
         onChange={(event) => setValue(event.currentTarget.checked)}
         id={uuid}
         disabled={disabled}
-        ref={ref}
         value={value}
         {...contextProps}
         {...rest}

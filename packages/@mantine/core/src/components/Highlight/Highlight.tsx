@@ -31,7 +31,7 @@ export type HighlightFactory = PolymorphicFactory<{
   variant: TextVariant;
 }>;
 
-export const Highlight = polymorphicFactory<HighlightFactory>((props, ref) => {
+export const Highlight = polymorphicFactory<HighlightFactory>((props) => {
   const { unstyled, children, highlight, highlightStyles, color, ...others } = useProps(
     'Highlight',
     null,
@@ -41,7 +41,7 @@ export const Highlight = polymorphicFactory<HighlightFactory>((props, ref) => {
   const highlightChunks = highlighter(children, highlight);
 
   return (
-    <Text unstyled={unstyled} ref={ref} {...others} __staticSelector="Highlight">
+    <Text unstyled={unstyled} {...others} __staticSelector="Highlight">
       {highlightChunks.map(({ chunk, highlighted }, i) =>
         highlighted ? (
           <Mark

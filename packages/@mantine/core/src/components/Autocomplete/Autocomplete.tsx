@@ -80,7 +80,7 @@ export type AutocompleteFactory = Factory<{
   variant: InputVariant;
 }>;
 
-export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
+export const Autocomplete = factory<AutocompleteFactory>((_props) => {
   const props = useProps('Autocomplete', null, _props);
   const {
     classNames,
@@ -191,7 +191,6 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     >
       <Combobox.Target autoComplete={autoComplete}>
         <InputBase
-          ref={ref}
           {...others}
           size={size}
           __staticSelector="Autocomplete"

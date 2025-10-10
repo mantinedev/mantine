@@ -25,7 +25,7 @@ export type AppShellAsideFactory = Factory<{
   stylesNames: AppShellAsideStylesNames;
 }>;
 
-export const AppShellAside = factory<AppShellAsideFactory>((_props, ref) => {
+export const AppShellAside = factory<AppShellAsideFactory>((_props) => {
   const {
     classNames,
     className,
@@ -48,7 +48,6 @@ export const AppShellAside = factory<AppShellAsideFactory>((_props, ref) => {
   return (
     <Box
       component="aside"
-      ref={ref}
       mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
       {...ctx.getStyles('aside', { className, classNames, styles, style })}
       {...others}

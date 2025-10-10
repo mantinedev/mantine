@@ -167,7 +167,7 @@ const varsResolver = createVarsResolver<TableFactory>(
   })
 );
 
-export const Table = factory<TableFactory>((_props, ref) => {
+export const Table = factory<TableFactory>((_props) => {
   const props = useProps('Table', defaultProps, _props);
   const {
     classNames,
@@ -188,7 +188,6 @@ export const Table = factory<TableFactory>((_props, ref) => {
     withTableBorder,
     borderColor,
     layout,
-    variant,
     data,
     children,
     stickyHeader,
@@ -228,8 +227,6 @@ export const Table = factory<TableFactory>((_props, ref) => {
     >
       <Box
         component="table"
-        variant={variant}
-        ref={ref}
         mod={[{ 'data-with-table-border': withTableBorder, 'data-tabular-nums': tabularNums }, mod]}
         {...getStyles('table')}
         {...others}

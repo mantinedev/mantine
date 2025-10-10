@@ -50,7 +50,7 @@ export type FlexFactory = PolymorphicFactory<{
   stylesNames: FlexStylesNames;
 }>;
 
-export const Flex = polymorphicFactory<FlexFactory>((_props, ref) => {
+export const Flex = polymorphicFactory<FlexFactory>((_props) => {
   const props = useProps('Flex', null, _props);
   const {
     classNames,
@@ -101,7 +101,6 @@ export const Flex = polymorphicFactory<FlexFactory>((_props, ref) => {
         />
       )}
       <Box
-        ref={ref}
         {...getStyles('root', {
           className: responsiveClassName,
           style: filterProps(parsedStyleProps.inlineStyles),

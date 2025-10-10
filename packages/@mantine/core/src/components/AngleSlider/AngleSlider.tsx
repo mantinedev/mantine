@@ -92,7 +92,7 @@ const varsResolver = createVarsResolver<AngleSliderFactory>((_, { size, thumbSiz
   },
 }));
 
-export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
+export const AngleSlider = factory<AngleSliderFactory>((_props) => {
   const props = useProps('AngleSlider', defaultProps, _props);
   const {
     classNames,
@@ -122,6 +122,7 @@ export const AngleSlider = factory<AngleSliderFactory>((_props, ref) => {
     onScrubEnd,
     mod,
     attributes,
+    ref,
     ...others
   } = props;
 

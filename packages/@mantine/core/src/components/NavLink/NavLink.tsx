@@ -117,7 +117,7 @@ const varsResolver = createVarsResolver<NavLinkFactory>(
   }
 );
 
-export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
+export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
   const props = useProps('NavLink', null, _props);
   const {
     classNames,
@@ -184,7 +184,6 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props, ref) => {
       <UnstyledButton
         {...getStyles('root')}
         component="a"
-        ref={ref}
         onClick={handleClick}
         onKeyDown={(event) => {
           onKeyDown?.(event);

@@ -116,7 +116,7 @@ const varsResolver = createVarsResolver<SwitchFactory>((theme, { radius, color, 
   },
 }));
 
-export const Switch = factory<SwitchFactory>((_props, ref) => {
+export const Switch = factory<SwitchFactory>((_props) => {
   const props = useProps('Switch', defaultProps, _props);
   const {
     classNames,
@@ -218,7 +218,6 @@ export const Switch = factory<SwitchFactory>((_props, ref) => {
           handleChange(event.currentTarget.checked);
         }}
         id={uuid}
-        ref={ref}
         type="checkbox"
         role="switch"
         {...getStyles('input')}

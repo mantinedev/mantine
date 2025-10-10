@@ -45,7 +45,7 @@ const varsResolver = createVarsResolver<InputDescriptionFactory>((_, { size }) =
   },
 }));
 
-export const InputDescription = factory<InputDescriptionFactory>((_props, ref) => {
+export const InputDescription = factory<InputDescriptionFactory>((_props) => {
   const props = useProps('InputDescription', null, _props);
   const {
     classNames,
@@ -54,11 +54,9 @@ export const InputDescription = factory<InputDescriptionFactory>((_props, ref) =
     styles,
     unstyled,
     vars,
-    size,
     __staticSelector,
     __inheritStyles = true,
     attributes,
-    variant,
     ...others
   } = useProps('InputDescription', null, props);
   const ctx = useInputWrapperContext();
@@ -83,9 +81,6 @@ export const InputDescription = factory<InputDescriptionFactory>((_props, ref) =
   return (
     <Box
       component="p"
-      ref={ref}
-      variant={variant}
-      size={size}
       {...getStyles('description', ctx?.getStyles ? { className, style } : undefined)}
       {...others}
     />

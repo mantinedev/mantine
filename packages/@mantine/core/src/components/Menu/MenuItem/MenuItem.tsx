@@ -50,7 +50,7 @@ export type MenuItemFactory = PolymorphicFactory<{
   compound: true;
 }>;
 
-export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
+export const MenuItem = polymorphicFactory<MenuItemFactory>((props) => {
   const {
     classNames,
     className,
@@ -64,6 +64,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props, ref) => {
     children,
     disabled,
     'data-disabled': dataDisabled,
+    ref,
     ...others
   } = useProps('MenuItem', null, props);
 

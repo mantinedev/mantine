@@ -109,7 +109,7 @@ const varsResolver = createVarsResolver<CalendarHeaderFactory>((_, { size }) => 
   },
 }));
 
-export const CalendarHeader = factory<CalendarHeaderFactory>((_props, ref) => {
+export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
   const props = useProps('CalendarHeader', defaultProps, _props);
   const {
     classNames,
@@ -239,7 +239,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props, ref) => {
   });
 
   return (
-    <Box {...getStyles('calendarHeader')} ref={ref} {...others}>
+    <Box {...getStyles('calendarHeader')} {...others}>
       {controls}
     </Box>
   );

@@ -122,7 +122,7 @@ const varsResolver = createVarsResolver<TableOfContentsFactory>(
   }
 );
 
-export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => {
+export const TableOfContents = factory<TableOfContentsFactory>((_props) => {
   const props = useProps('TableOfContents', defaultProps, _props);
   const {
     classNames,
@@ -193,7 +193,7 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props, ref) => 
   });
 
   return (
-    <Box ref={ref} variant={variant} {...getStyles('root')} {...others}>
+    <Box variant={variant} {...getStyles('root')} {...others}>
       {controls}
     </Box>
   );

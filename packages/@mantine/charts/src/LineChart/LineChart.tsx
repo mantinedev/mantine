@@ -155,7 +155,7 @@ const varsResolver = createVarsResolver<LineChartFactory>((theme, { textColor, g
   },
 }));
 
-export const LineChart = factory<LineChartFactory>((_props, ref) => {
+export const LineChart = factory<LineChartFactory>((_props) => {
   const props = useProps('LineChart', defaultProps, _props);
   const {
     classNames,
@@ -328,13 +328,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
   };
 
   return (
-    <Box
-      ref={ref}
-      {...getStyles('root')}
-      onMouseLeave={handleMouseLeave}
-      dir={dir || 'ltr'}
-      {...others}
-    >
+    <Box {...getStyles('root')} onMouseLeave={handleMouseLeave} dir={dir || 'ltr'} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsLineChart
           data={data}

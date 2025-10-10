@@ -45,7 +45,7 @@ export type ComboboxEventsTargetFactory = Factory<{
   compound: true;
 }>;
 
-export const ComboboxEventsTarget = factory<ComboboxEventsTargetFactory>((props, ref) => {
+export const ComboboxEventsTarget = factory<ComboboxEventsTargetFactory>((props) => {
   const {
     children,
     refProp,
@@ -54,6 +54,7 @@ export const ComboboxEventsTarget = factory<ComboboxEventsTargetFactory>((props,
     withExpandedAttribute,
     targetType,
     autoComplete,
+    ref,
     ...others
   } = useProps('ComboboxEventsTarget', defaultProps, props);
 

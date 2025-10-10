@@ -25,7 +25,7 @@ describe('@mantine/core/PillsInput', () => {
     </PillsInput>,
   ]);
 
-  tests.itSupportsSystemProps<PillsInputProps, __InputStylesNames>({
+  tests.itSupportsSystemProps<any, __InputStylesNames>({
     component: PillsInput,
     props: defaultProps,
     mod: true,
@@ -40,12 +40,12 @@ describe('@mantine/core/PillsInput', () => {
     stylesApiSelectors: [...inputStylesApiSelectors],
   });
 
-  tests.itSupportsInputWrapperProps<PillsInputProps>({
+  tests.itSupportsInputWrapperProps<any>({
     component: PillsInput,
     props: defaultProps,
   });
 
-  tests.itSupportsInputSections<PillsInputProps>({
+  tests.itSupportsInputSections<any>({
     component: PillsInput,
     props: defaultProps,
   });

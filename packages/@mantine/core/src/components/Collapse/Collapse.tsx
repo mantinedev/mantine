@@ -12,7 +12,7 @@ import { useCollapse } from './use-collapse';
 
 export interface CollapseProps
   extends BoxProps,
-    Omit<React.ComponentPropsWithoutRef<'div'>, keyof BoxProps> {
+    Omit<React.ComponentPropsWithRef<'div'>, keyof BoxProps> {
   /** Opened state */
   in: boolean;
 
@@ -43,7 +43,7 @@ const defaultProps = {
   animateOpacity: true,
 } satisfies Partial<CollapseProps>;
 
-export const Collapse = factory<CollapseFactory>((props, ref) => {
+export const Collapse = factory<CollapseFactory>((props) => {
   const {
     children,
     in: opened,
@@ -53,6 +53,7 @@ export const Collapse = factory<CollapseFactory>((props, ref) => {
     onTransitionEnd,
     animateOpacity,
     keepMounted,
+    ref,
     ...others
   } = useProps('Collapse', defaultProps, props);
 

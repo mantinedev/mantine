@@ -100,7 +100,7 @@ const varsResolver = createVarsResolver<ColorInputFactory>((_, { size }) => ({
   },
 }));
 
-export const ColorInput = factory<ColorInputFactory>((_props, ref) => {
+export const ColorInput = factory<ColorInputFactory>((_props) => {
   const props = useProps('ColorInput', defaultProps, _props);
   const {
     classNames,
@@ -247,7 +247,6 @@ export const ColorInput = factory<ColorInputFactory>((_props, ref) => {
             classNames={resolvedClassNames}
             styles={resolvedStyles}
             disabled={disabled}
-            ref={ref}
             __staticSelector="ColorInput"
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}

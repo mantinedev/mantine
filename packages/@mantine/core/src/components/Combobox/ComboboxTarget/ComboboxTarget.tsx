@@ -46,7 +46,7 @@ export type ComboboxTargetFactory = Factory<{
   compound: true;
 }>;
 
-export const ComboboxTarget = factory<ComboboxTargetFactory>((props, ref) => {
+export const ComboboxTarget = factory<ComboboxTargetFactory>((props) => {
   const {
     children,
     refProp,
@@ -55,6 +55,7 @@ export const ComboboxTarget = factory<ComboboxTargetFactory>((props, ref) => {
     withExpandedAttribute,
     targetType,
     autoComplete,
+    ref,
     ...others
   } = useProps('ComboboxTarget', defaultProps, props);
 

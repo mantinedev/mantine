@@ -26,7 +26,7 @@ export type SpotlightActionsListFactory = Factory<{
   compound: true;
 }>;
 
-export const SpotlightActionsList = factory<SpotlightActionsListFactory>((props, ref) => {
+export const SpotlightActionsList = factory<SpotlightActionsListFactory>((props) => {
   const { className, style, id, children, vars, classNames, styles, ...others } = useProps(
     'SpotlightActionsList',
     null,
@@ -44,7 +44,6 @@ export const SpotlightActionsList = factory<SpotlightActionsListFactory>((props,
   return (
     <ScrollArea.Autosize
       {...ctx.getStyles('actionsList', { className, style, classNames, styles })}
-      ref={ref}
       type="scroll"
       scrollbarSize="var(--spotlight-actions-list-padding)"
       offsetScrollbars="y"

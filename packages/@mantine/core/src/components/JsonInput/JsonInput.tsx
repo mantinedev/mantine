@@ -41,7 +41,7 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<JsonInputProps>;
 
-export const JsonInput = factory<JsonInputFactory>((props, ref) => {
+export const JsonInput = factory<JsonInputFactory>((props) => {
   const {
     value,
     defaultValue,
@@ -88,7 +88,6 @@ export const JsonInput = factory<JsonInputFactory>((props, ref) => {
       onChange={(event) => setValue(event.currentTarget.value)}
       onFocus={handleFocus}
       onBlur={handleBlur}
-      ref={ref}
       readOnly={readOnly}
       {...others}
       autoComplete="off"

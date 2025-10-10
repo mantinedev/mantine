@@ -41,7 +41,7 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<TextareaProps>;
 
-export const Textarea = factory<TextareaFactory>((props, ref) => {
+export const Textarea = factory<TextareaFactory>((props) => {
   const { autosize, maxRows, minRows, __staticSelector, resize, ...others } = useProps(
     'Textarea',
     defaultProps,
@@ -54,7 +54,6 @@ export const Textarea = factory<TextareaFactory>((props, ref) => {
   return (
     <InputBase<any>
       component={shouldAutosize ? TextareaAutosize : 'textarea'}
-      ref={ref}
       {...others}
       __staticSelector={__staticSelector || 'Textarea'}
       multiline

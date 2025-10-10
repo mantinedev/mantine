@@ -30,7 +30,7 @@ export type PopoverDropdownFactory = Factory<{
   compound: true;
 }>;
 
-export const PopoverDropdown = factory<PopoverDropdownFactory>((_props, ref) => {
+export const PopoverDropdown = factory<PopoverDropdownFactory>((_props) => {
   const props = useProps('PopoverDropdown', null, _props);
   const {
     className,
@@ -41,6 +41,7 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props, ref) => 
     variant,
     classNames,
     styles,
+    ref,
     ...others
   } = props;
 

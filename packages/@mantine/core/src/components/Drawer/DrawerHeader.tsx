@@ -16,7 +16,7 @@ export type DrawerHeaderFactory = Factory<{
   compound: true;
 }>;
 
-export const DrawerHeader = factory<DrawerHeaderFactory>((_props, ref) => {
+export const DrawerHeader = factory<DrawerHeaderFactory>((_props) => {
   const props = useProps('DrawerHeader', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
@@ -24,7 +24,6 @@ export const DrawerHeader = factory<DrawerHeaderFactory>((_props, ref) => {
 
   return (
     <ModalBaseHeader
-      ref={ref}
       {...ctx.getStyles('header', { classNames, style, styles, className })}
       {...others}
     />

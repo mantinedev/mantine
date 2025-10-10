@@ -72,7 +72,7 @@ const defaultProps = {
   withCloseButton: true,
 } satisfies Partial<DrawerProps>;
 
-export const Drawer = factory<DrawerFactory>((_props, ref) => {
+export const Drawer = factory<DrawerFactory>((_props) => {
   const {
     title,
     withOverlay,
@@ -110,7 +110,6 @@ export const Drawer = factory<DrawerFactory>((_props, ref) => {
 
   return (
     <DrawerRoot
-      ref={ref}
       opened={opened}
       zIndex={ctx && stackId ? ctx.getZIndex(stackId) : zIndex}
       {...others}

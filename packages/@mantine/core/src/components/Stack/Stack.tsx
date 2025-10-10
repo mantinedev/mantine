@@ -50,7 +50,7 @@ const varsResolver = createVarsResolver<StackFactory>((_, { gap, align, justify 
   },
 }));
 
-export const Stack = factory<StackFactory>((_props, ref) => {
+export const Stack = factory<StackFactory>((_props) => {
   const props = useProps('Stack', defaultProps, _props);
   const {
     classNames,
@@ -81,7 +81,7 @@ export const Stack = factory<StackFactory>((_props, ref) => {
     varsResolver,
   });
 
-  return <Box ref={ref} {...getStyles('root')} variant={variant} {...others} />;
+  return <Box {...getStyles('root')} variant={variant} {...others} />;
 });
 
 Stack.classes = classes;

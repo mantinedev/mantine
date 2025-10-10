@@ -61,7 +61,7 @@ const varsResolver = createVarsResolver<PickerControlFactory>((_, { size }) => (
   },
 }));
 
-export const PickerControl = factory<PickerControlFactory>((_props, ref) => {
+export const PickerControl = factory<PickerControlFactory>((_props) => {
   const props = useProps('PickerControl', null, _props);
   const {
     classNames,
@@ -98,7 +98,6 @@ export const PickerControl = factory<PickerControlFactory>((_props, ref) => {
   return (
     <UnstyledButton
       {...getStyles('pickerControl')}
-      ref={ref}
       unstyled={unstyled}
       data-picker-control
       data-selected={(selected && !disabled) || undefined}

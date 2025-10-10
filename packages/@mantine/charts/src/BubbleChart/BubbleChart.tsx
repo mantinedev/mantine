@@ -144,7 +144,7 @@ const varsResolver = createVarsResolver<BubbleChartFactory>((theme, { textColor,
   },
 }));
 
-export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
+export const BubbleChart = factory<BubbleChartFactory>((_props) => {
   const props = useProps('BubbleChart', defaultProps, _props);
   const {
     classNames,
@@ -188,7 +188,7 @@ export const BubbleChart = factory<BubbleChartFactory>((_props, ref) => {
   const yAxisWidth = label ? undefined : { width: 0 };
 
   return (
-    <Box ref={ref} {...getStyles('root')} {...others}>
+    <Box {...getStyles('root')} {...others}>
       <ResponsiveContainer>
         <ScatterChart>
           <XAxis

@@ -122,7 +122,7 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<TagsInputProps>;
 
-export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
+export const TagsInput = factory<TagsInputFactory>((_props) => {
   const props = useProps('TagsInput', defaultProps, _props);
   const {
     classNames,
@@ -197,6 +197,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     acceptValueOnBlur,
     isDuplicate,
     attributes,
+    ref,
     ...others
   } = props;
 

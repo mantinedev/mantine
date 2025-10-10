@@ -191,7 +191,7 @@ const getOutsideLabel =
     </text>
   );
 
-export const PieChart = factory<PieChartFactory>((_props, ref) => {
+export const PieChart = factory<PieChartFactory>((_props) => {
   const props = useProps('PieChart', defaultProps, _props);
   const {
     classNames,
@@ -255,7 +255,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
   ));
 
   return (
-    <Box ref={ref} size={size} {...getStyles('root')} {...others}>
+    <Box size={size} {...getStyles('root')} {...others}>
       <ResponsiveContainer>
         <ReChartsPieChart {...pieChartProps}>
           <Pie

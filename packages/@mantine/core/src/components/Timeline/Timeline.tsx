@@ -87,7 +87,7 @@ const varsResolver = createVarsResolver<TimelineFactory>(
   })
 );
 
-export const Timeline = factory<TimelineFactory>((_props, ref) => {
+export const Timeline = factory<TimelineFactory>((_props) => {
   const props = useProps('Timeline', defaultProps, _props);
   const {
     classNames,
@@ -140,7 +140,7 @@ export const Timeline = factory<TimelineFactory>((_props, ref) => {
 
   return (
     <TimelineProvider value={{ getStyles }}>
-      <Box {...getStyles('root')} mod={[{ align }, mod]} ref={ref} {...others}>
+      <Box {...getStyles('root')} mod={[{ align }, mod]} {...others}>
         {items}
       </Box>
     </TimelineProvider>

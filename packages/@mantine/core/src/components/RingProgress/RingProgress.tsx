@@ -78,7 +78,7 @@ const varsResolver = createVarsResolver<RingProgressFactory>(
   })
 );
 
-export const RingProgress = factory<RingProgressFactory>((_props, ref) => {
+export const RingProgress = factory<RingProgressFactory>((_props) => {
   const props = useProps('RingProgress', defaultProps, _props);
   const {
     classNames,
@@ -136,7 +136,7 @@ export const RingProgress = factory<RingProgressFactory>((_props, ref) => {
   ));
 
   return (
-    <Box {...getStyles('root')} size={size} ref={ref} {...others}>
+    <Box {...getStyles('root')} size={size} {...others}>
       <svg {...getStyles('svg')}>{curves}</svg>
       {label && <div {...getStyles('label')}>{label}</div>}
     </Box>

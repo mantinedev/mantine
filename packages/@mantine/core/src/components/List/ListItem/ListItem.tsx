@@ -30,7 +30,7 @@ export type ListItemFactory = Factory<{
   compound: true;
 }>;
 
-export const ListItem = factory<ListItemFactory>((_props, ref) => {
+export const ListItem = factory<ListItemFactory>((_props) => {
   const props = useProps('ListItem', null, _props);
   const { classNames, className, style, styles, vars, icon, children, mod, ...others } = props;
 
@@ -43,7 +43,6 @@ export const ListItem = factory<ListItemFactory>((_props, ref) => {
       {...ctx.getStyles('item', { ...stylesApiProps, className, style })}
       component="li"
       mod={[{ 'with-icon': !!_icon, centered: ctx.center }, mod]}
-      ref={ref}
       {...others}
     >
       <div {...ctx.getStyles('itemWrapper', stylesApiProps)}>

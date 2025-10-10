@@ -126,7 +126,7 @@ const varsResolver = createVarsResolver<RadioFactory>(
   }
 );
 
-export const Radio = factory<RadioFactory>((_props, ref) => {
+export const Radio = factory<RadioFactory>((_props) => {
   const props = useProps('Radio', defaultProps, _props);
   const {
     classNames,
@@ -219,7 +219,6 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
           {...contextProps}
           component="input"
           mod={{ error: !!error, 'with-error-styles': withErrorStyles }}
-          ref={ref}
           id={uuid}
           disabled={disabled}
           type="radio"

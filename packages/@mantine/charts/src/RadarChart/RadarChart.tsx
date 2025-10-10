@@ -148,7 +148,7 @@ const varsResolver = createVarsResolver<RadarChartFactory>((theme, { gridColor, 
   },
 }));
 
-export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
+export const RadarChart = factory<RadarChartFactory>((_props) => {
   const props = useProps('RadarChart', defaultProps, _props);
   const {
     classNames,
@@ -249,7 +249,7 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
   ));
 
   return (
-    <Box ref={ref} {...getStyles('root')} {...others}>
+    <Box {...getStyles('root')} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsRadarChart data={data} {...radarChartProps}>
           {withPolarGrid && <PolarGrid stroke="var(--chart-grid-color)" {...polarGridProps} />}

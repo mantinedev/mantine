@@ -33,7 +33,7 @@ export type TabsListFactory = Factory<{
   compound: true;
 }>;
 
-export const TabsList = factory<TabsListFactory>((_props, ref) => {
+export const TabsList = factory<TabsListFactory>((_props) => {
   const props = useProps('TabsList', null, _props);
   const { children, className, grow, justify, classNames, styles, style, mod, ...others } = props;
 
@@ -50,7 +50,6 @@ export const TabsList = factory<TabsListFactory>((_props, ref) => {
         props,
         variant: ctx.variant,
       })}
-      ref={ref}
       role="tablist"
       variant={ctx.variant}
       mod={[

@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import type { MantineThemeComponent } from '../MantineProvider';
 import type { ClassNames, PartialVarsResolver, Styles } from '../styles-api';
 
@@ -49,7 +48,7 @@ export type MantineComponentStaticProperties<Payload extends FactoryPayload> =
     FactoryComponentWithProps<Payload>;
 
 export type FactoryComponentWithProps<Payload extends FactoryPayload> = {
-  withProps: (props: Partial<Payload['props']>) => React.ForwardRefExoticComponent<
+  withProps: (props: Partial<Payload['props']>) => React.NamedExoticComponent<
     Payload['props'] &
       React.RefAttributes<Payload['ref']> & {
         component?: any;
@@ -58,7 +57,7 @@ export type FactoryComponentWithProps<Payload extends FactoryPayload> = {
   >;
 };
 
-export type MantineComponent<Payload extends FactoryPayload> = React.ForwardRefExoticComponent<
+export type MantineComponent<Payload extends FactoryPayload> = React.NamedExoticComponent<
   Payload['props'] &
     React.RefAttributes<Payload['ref']> & {
       component?: any;
@@ -74,25 +73,20 @@ export function identity<T>(value: T): T {
 export function getWithProps<T, Props>(Component: T): (props: Partial<Props>) => T {
   const _Component = Component as any;
   return (fixedProps: any) => {
-    const Extended = forwardRef((props, ref) => (
-      <_Component {...fixedProps} {...props} ref={ref as any} />
-    )) as any;
+    const Extended = (props: any) => <_Component {...fixedProps} {...props} />;
     Extended.extend = _Component.extend;
     Extended.displayName = `WithProps(${_Component.displayName})`;
-    return Extended;
+    return Extended as any;
   };
 }
 
 export function factory<Payload extends FactoryPayload>(
-  ui: React.ForwardRefRenderFunction<Payload['ref'], Payload['props']>
+  ui: (props: Payload['props'] & { ref?: React.Ref<Payload['ref']> }) => React.ReactNode
 ) {
-  const Component = forwardRef(ui) as any;
-
+  const Component = ui as any;
   Component.extend = identity as any;
   Component.withProps = (fixedProps: any) => {
-    const Extended = forwardRef((props, ref) => (
-      <Component {...fixedProps} {...props} ref={ref as any} />
-    )) as any;
+    const Extended = (props: any) => <Component {...fixedProps} {...props} />;
     Extended.extend = Component.extend;
     Extended.displayName = `WithProps(${Component.displayName})`;
     return Extended;

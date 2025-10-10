@@ -105,7 +105,7 @@ const defaultProps = {
   iconPosition: 'left',
 } satisfies Partial<StepperStepProps>;
 
-export const StepperStep = factory<StepperStepFactory>((props, ref) => {
+export const StepperStep = factory<StepperStepFactory>((props) => {
   const {
     classNames,
     className,
@@ -148,7 +148,6 @@ export const StepperStep = factory<StepperStepFactory>((props, ref) => {
         { 'icon-position': iconPosition || ctx.iconPosition, 'allow-click': allowStepClick },
         mod,
       ]}
-      ref={ref}
       {...dataAttributes}
       {...others}
       __vars={{ '--step-color': color ? getThemeColor(color, theme) : undefined }}

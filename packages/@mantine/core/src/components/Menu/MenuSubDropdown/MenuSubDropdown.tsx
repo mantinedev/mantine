@@ -28,7 +28,7 @@ export type MenuSubDropdownFactory = Factory<{
   compound: true;
 }>;
 
-export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props, ref) => {
+export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props) => {
   const {
     classNames,
     className,
@@ -39,6 +39,7 @@ export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props, ref) => {
     onMouseLeave,
     onKeyDown,
     children,
+    ref,
     ...others
   } = useProps('MenuSubDropdown', null, props);
 

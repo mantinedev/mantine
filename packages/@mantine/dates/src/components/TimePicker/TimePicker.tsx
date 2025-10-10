@@ -206,7 +206,7 @@ const varsResolver = createVarsResolver<TimePickerFactory>((_theme, { size }) =>
   },
 }));
 
-export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
+export const TimePicker = factory<TimePickerFactory>((_props) => {
   const props = useProps('TimePicker', defaultProps, _props);
   const {
     classNames,
@@ -353,7 +353,6 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
             component="div"
             size={size}
             disabled={disabled}
-            ref={ref}
             onClick={(event) => {
               onClick?.(event);
               controller.focus('hours');

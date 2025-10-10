@@ -112,7 +112,7 @@ const varsResolver = createVarsResolver<PaginationRootFactory>(
   })
 );
 
-export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
+export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
   const props = useProps('PaginationRoot', defaultProps, _props);
   const {
     classNames,
@@ -184,7 +184,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props, ref) => {
         getStyles,
       }}
     >
-      <Box ref={ref} {...getStyles('root')} {...others} />
+      <Box {...getStyles('root')} {...others} />
     </PaginationProvider>
   );
 });

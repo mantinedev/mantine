@@ -113,7 +113,7 @@ const varsResolver = createVarsResolver<ScrollAreaFactory>(
   })
 );
 
-export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
+export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
   const props = useProps('ScrollArea', defaultProps, _props);
   const {
     classNames,
@@ -186,7 +186,6 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
       getStyles={getStyles}
       type={type === 'never' ? 'always' : type}
       scrollHideDelay={scrollHideDelay}
-      ref={ref}
       scrollbars={scrollbars}
       {...getStyles('root')}
       {...others}
@@ -264,7 +263,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
 
 ScrollArea.displayName = '@mantine/core/ScrollArea';
 
-export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref) => {
+export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props) => {
   const {
     children,
     classNames,
@@ -330,7 +329,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
   }, [onOverflowChange, overflowing]);
 
   return (
-    <Box {...others} ref={ref} style={[{ display: 'flex', overflow: 'hidden' }, style]}>
+    <Box {...others} style={[{ display: 'flex', overflow: 'hidden' }, style]}>
       <Box
         style={{
           display: 'flex',

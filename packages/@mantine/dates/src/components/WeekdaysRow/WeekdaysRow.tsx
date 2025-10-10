@@ -61,7 +61,7 @@ const varsResolver = createVarsResolver<WeekdaysRowFactory>((_, { size }) => ({
   },
 }));
 
-export const WeekdaysRow = factory<WeekdaysRowFactory>((_props, ref) => {
+export const WeekdaysRow = factory<WeekdaysRowFactory>((_props) => {
   const props = useProps('WeekdaysRow', null, _props);
   const {
     classNames,
@@ -108,7 +108,7 @@ export const WeekdaysRow = factory<WeekdaysRowFactory>((_props, ref) => {
   ));
 
   return (
-    <Box component="tr" ref={ref} {...getStyles('weekdaysRow')} {...others}>
+    <Box component="tr" {...getStyles('weekdaysRow')} {...others}>
       {withWeekNumbers && <CellComponent {...getStyles('weekday')}>#</CellComponent>}
       {weekdays}
     </Box>

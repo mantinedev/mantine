@@ -15,10 +15,9 @@ export type TextInputFactory = Factory<{
   stylesNames: __InputStylesNames;
 }>;
 
-export const TextInput = factory<TextInputFactory>((props, ref) => {
+export const TextInput = factory<TextInputFactory>((props) => {
   const _props = useProps('TextInput', null, props);
-
-  return <InputBase component="input" ref={ref} {..._props} __staticSelector="TextInput" />;
+  return <InputBase component="input" {..._props} __staticSelector="TextInput" />;
 });
 
 TextInput.classes = InputBase.classes;

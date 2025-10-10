@@ -28,7 +28,7 @@ export type InputPlaceholderFactory = Factory<{
   stylesNames: InputPlaceholderStylesNames;
 }>;
 
-export const InputPlaceholder = factory<InputPlaceholderFactory>((_props, ref) => {
+export const InputPlaceholder = factory<InputPlaceholderFactory>((_props) => {
   const props = useProps('InputPlaceholder', null, _props);
   const {
     classNames,
@@ -38,7 +38,6 @@ export const InputPlaceholder = factory<InputPlaceholderFactory>((_props, ref) =
     unstyled,
     vars,
     __staticSelector,
-    variant,
     error,
     mod,
     attributes,
@@ -63,8 +62,6 @@ export const InputPlaceholder = factory<InputPlaceholderFactory>((_props, ref) =
       {...getStyles('placeholder')}
       mod={[{ error: !!error }, mod]}
       component="span"
-      variant={variant}
-      ref={ref}
       {...others}
     />
   );

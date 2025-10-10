@@ -133,7 +133,7 @@ const varsResolver = createVarsResolver<SegmentedControlFactory>(
   })
 );
 
-export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) => {
+export const SegmentedControl = factory<SegmentedControlFactory>((_props) => {
   const props = useProps('SegmentedControl', defaultProps, _props);
   const {
     classNames,
@@ -161,6 +161,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props, ref) =
     withItemsBorders,
     mod,
     attributes,
+    ref,
     ...others
   } = props;
 

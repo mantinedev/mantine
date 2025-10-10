@@ -56,7 +56,7 @@ export type TimelineItemFactory = Factory<{
   compound: true;
 }>;
 
-export const TimelineItem = factory<TimelineItemFactory>((_props, ref) => {
+export const TimelineItem = factory<TimelineItemFactory>((_props) => {
   const props = useProps('TimelineItem', null, _props);
   const {
     classNames,
@@ -87,7 +87,6 @@ export const TimelineItem = factory<TimelineItemFactory>((_props, ref) => {
     <Box
       {...ctx.getStyles('item', { ...stylesApiProps, className, style })}
       mod={[{ 'line-active': __lineActive, active: __active }, mod]}
-      ref={ref}
       __vars={{
         '--tli-radius': radius ? getRadius(radius) : undefined,
         '--tli-color': color ? getThemeColor(color, theme) : undefined,

@@ -124,7 +124,7 @@ const varsResolver = createVarsResolver<SemiCircleProgressFactory>(
   })
 );
 
-export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props, ref) => {
+export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props) => {
   const props = useProps('SemiCircleProgress', defaultProps, _props);
   const {
     classNames,
@@ -167,7 +167,7 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props, re
   const semiCirclePercentage = clamp(value, 0, 100) * (circumference / 100);
 
   return (
-    <Box ref={ref} size={size} {...getStyles('root')} {...others}>
+    <Box size={size} {...getStyles('root')} {...others}>
       {label && (
         <p {...getStyles('label')} data-position={labelPosition} data-orientation={orientation}>
           {label}

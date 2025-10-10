@@ -72,7 +72,7 @@ const varsResolver = createVarsResolver<GridFactory>((_, { justify, align, overf
   },
 }));
 
-export const Grid = factory<GridFactory>((_props, ref) => {
+export const Grid = factory<GridFactory>((_props) => {
   const props = useProps('Grid', defaultProps, _props);
   const {
     classNames,
@@ -114,7 +114,7 @@ export const Grid = factory<GridFactory>((_props, ref) => {
       <GridProvider value={{ getStyles, grow, columns, breakpoints, type }}>
         <GridVariables selector={`.${responsiveClassName}`} {...props} />
         <div {...getStyles('container')}>
-          <Box ref={ref} {...getStyles('root', { className: responsiveClassName })} {...others}>
+          <Box {...getStyles('root', { className: responsiveClassName })} {...others}>
             <div {...getStyles('inner')}>{children}</div>
           </Box>
         </div>
@@ -125,7 +125,7 @@ export const Grid = factory<GridFactory>((_props, ref) => {
   return (
     <GridProvider value={{ getStyles, grow, columns, breakpoints, type }}>
       <GridVariables selector={`.${responsiveClassName}`} {...props} />
-      <Box ref={ref} {...getStyles('root', { className: responsiveClassName })} {...others}>
+      <Box {...getStyles('root', { className: responsiveClassName })} {...others}>
         <div {...getStyles('inner')}>{children}</div>
       </Box>
     </GridProvider>

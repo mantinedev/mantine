@@ -155,7 +155,7 @@ const varsResolver = createVarsResolver<SliderFactory>(
   })
 );
 
-export const Slider = factory<SliderFactory>((_props, ref) => {
+export const Slider = factory<SliderFactory>((_props) => {
   const props = useProps('Slider', defaultProps, _props);
   const {
     classNames,
@@ -189,6 +189,7 @@ export const Slider = factory<SliderFactory>((_props, ref) => {
     restrictToMarks,
     thumbProps,
     attributes,
+    ref,
     ...others
   } = props;
 

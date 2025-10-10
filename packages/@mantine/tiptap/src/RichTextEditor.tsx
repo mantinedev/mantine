@@ -113,7 +113,7 @@ const defaultProps = {
   variant: 'default',
 } satisfies Partial<RichTextEditorProps>;
 
-export const RichTextEditor = factory<RichTextEditorFactory>((_props, ref) => {
+export const RichTextEditor = factory<RichTextEditorFactory>((_props) => {
   const props = useProps('RichTextEditor', defaultProps, _props);
   const {
     classNames,
@@ -161,7 +161,7 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props, ref) => {
         variant,
       }}
     >
-      <Box {...getStyles('root')} {...others} ref={ref}>
+      <Box {...getStyles('root')} {...others}>
         {children}
       </Box>
     </RichTextEditorProvider>

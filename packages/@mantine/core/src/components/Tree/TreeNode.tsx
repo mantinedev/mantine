@@ -170,14 +170,6 @@ export function TreeNode({
       tabIndex={rootIndex === 0 ? 0 : -1}
       onKeyDown={handleKeyDown}
       ref={ref}
-      onMouseOver={(event) => {
-        event.stopPropagation();
-        controller.setHoveredNode(node.value);
-      }}
-      onMouseLeave={(event) => {
-        event.stopPropagation();
-        controller.setHoveredNode(null);
-      }}
     >
       {typeof renderNode === 'function' ? (
         renderNode({

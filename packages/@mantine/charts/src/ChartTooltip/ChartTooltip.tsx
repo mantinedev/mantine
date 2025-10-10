@@ -117,7 +117,7 @@ const defaultProps = {
   showColor: true,
 } satisfies Partial<ChartTooltipProps>;
 
-export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
+export const ChartTooltip = factory<ChartTooltipFactory>((_props) => {
   const props = useProps('ChartTooltip', defaultProps, _props);
   const {
     classNames,
@@ -189,7 +189,7 @@ export const ChartTooltip = factory<ChartTooltipFactory>((_props, ref) => {
   ));
 
   return (
-    <Box {...getStyles('tooltip')} mod={[{ type }, mod]} ref={ref} {...others}>
+    <Box {...getStyles('tooltip')} mod={[{ type }, mod]} {...others}>
       {_label && <div {...getStyles('tooltipLabel')}>{_label}</div>}
       <div {...getStyles('tooltipBody')}>{items}</div>
     </Box>

@@ -25,7 +25,7 @@ const defaultProps = {
   underline: 'hover',
 } satisfies Partial<AnchorProps>;
 
-export const Anchor = polymorphicFactory<AnchorFactory>((props, ref) => {
+export const Anchor = polymorphicFactory<AnchorFactory>((props) => {
   const { underline, className, unstyled, mod, ...others } = useProps(
     'Anchor',
     defaultProps,
@@ -35,7 +35,6 @@ export const Anchor = polymorphicFactory<AnchorFactory>((props, ref) => {
   return (
     <Text
       component="a"
-      ref={ref}
       className={cx({ [classes.root]: !unstyled }, className)}
       {...others}
       mod={[{ underline }, mod]}

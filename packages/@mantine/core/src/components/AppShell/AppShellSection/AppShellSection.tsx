@@ -26,7 +26,7 @@ export type AppShellSectionFactory = PolymorphicFactory<{
   compound: true;
 }>;
 
-export const AppShellSection = polymorphicFactory<AppShellSectionFactory>((_props, ref) => {
+export const AppShellSection = polymorphicFactory<AppShellSectionFactory>((_props) => {
   const { classNames, className, style, styles, vars, grow, mod, ...others } = useProps(
     'AppShellSection',
     null,
@@ -37,7 +37,6 @@ export const AppShellSection = polymorphicFactory<AppShellSectionFactory>((_prop
 
   return (
     <Box
-      ref={ref}
       mod={[{ grow }, mod]}
       {...ctx.getStyles('section', { className, style, classNames, styles })}
       {...others}

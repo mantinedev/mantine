@@ -161,7 +161,7 @@ const varsResolver = createVarsResolver<CompositeChartFactory>(
   })
 );
 
-export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
+export const CompositeChart = factory<CompositeChartFactory>((_props) => {
   const props = useProps('CompositeChart', defaultProps, _props);
   const {
     classNames,
@@ -396,13 +396,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props, ref) => {
   };
 
   return (
-    <Box
-      ref={ref}
-      {...getStyles('root')}
-      onMouseLeave={handleMouseLeave}
-      dir={dir || 'ltr'}
-      {...others}
-    >
+    <Box {...getStyles('root')} onMouseLeave={handleMouseLeave} dir={dir || 'ltr'} {...others}>
       <ResponsiveContainer {...getStyles('container')}>
         <ReChartsCompositeChart
           data={data}

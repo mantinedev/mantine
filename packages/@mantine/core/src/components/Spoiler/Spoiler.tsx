@@ -67,7 +67,7 @@ const varsResolver = createVarsResolver<SpoilerFactory>((_, { transitionDuration
   },
 }));
 
-export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
+export const Spoiler = factory<SpoilerFactory>((_props) => {
   const props = useProps('Spoiler', defaultProps, _props);
   const {
     classNames,
@@ -117,13 +117,7 @@ export const Spoiler = factory<SpoilerFactory>((_props, ref) => {
   const spoiler = spoilerMoreContent !== null && maxHeight! < height;
 
   return (
-    <Box
-      {...getStyles('root')}
-      id={_id}
-      ref={ref}
-      data-has-spoiler={spoiler || undefined}
-      {...others}
-    >
+    <Box {...getStyles('root')} id={_id} data-has-spoiler={spoiler || undefined} {...others}>
       {spoiler && (
         <Anchor
           component="button"

@@ -15,9 +15,9 @@ export type SpaceFactory = Factory<{
   ref: HTMLDivElement;
 }>;
 
-export const Space = factory<SpaceFactory>((props, ref) => {
+export const Space = factory<SpaceFactory>((props) => {
   const { w, h, miw, mih, ...others } = useProps('Space', null, props);
-  return <Box ref={ref} {...others} w={w} miw={miw ?? w} h={h} mih={mih ?? h} />;
+  return <Box {...others} w={w} miw={miw ?? w} h={h} mih={mih ?? h} />;
 });
 
 Space.displayName = '@mantine/core/Space';

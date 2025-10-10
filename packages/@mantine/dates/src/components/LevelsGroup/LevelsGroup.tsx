@@ -27,7 +27,7 @@ export type LevelsGroupFactory = Factory<{
   stylesNames: LevelsGroupStylesNames;
 }>;
 
-export const LevelsGroup = factory<LevelsGroupFactory>((_props, ref) => {
+export const LevelsGroup = factory<LevelsGroupFactory>((_props) => {
   const props = useProps('LevelsGroup', null, _props);
   const {
     classNames,
@@ -55,7 +55,7 @@ export const LevelsGroup = factory<LevelsGroupFactory>((_props, ref) => {
     rootSelector: 'levelsGroup',
   });
 
-  return <Box ref={ref} {...getStyles('levelsGroup')} {...others} />;
+  return <Box {...getStyles('levelsGroup')} {...others} />;
 });
 
 LevelsGroup.classes = classes;

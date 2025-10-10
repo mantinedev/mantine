@@ -26,7 +26,7 @@ export type AppShellNavbarFactory = Factory<{
   stylesNames: AppShellNavbarStylesNames;
 }>;
 
-export const AppShellNavbar = factory<AppShellNavbarFactory>((_props, ref) => {
+export const AppShellNavbar = factory<AppShellNavbarFactory>((_props) => {
   const {
     classNames,
     className,
@@ -49,7 +49,6 @@ export const AppShellNavbar = factory<AppShellNavbarFactory>((_props, ref) => {
   return (
     <Box
       component="nav"
-      ref={ref}
       mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
       {...ctx.getStyles('navbar', { className, classNames, styles, style })}
       {...others}

@@ -107,7 +107,7 @@ const varsResolver = createVarsResolver<IndicatorFactory>(
   })
 );
 
-export const Indicator = factory<IndicatorFactory>((_props, ref) => {
+export const Indicator = factory<IndicatorFactory>((_props) => {
   const props = useProps('Indicator', defaultProps, _props);
   const {
     classNames,
@@ -148,7 +148,7 @@ export const Indicator = factory<IndicatorFactory>((_props, ref) => {
   });
 
   return (
-    <Box ref={ref} {...getStyles('root')} mod={[{ inline }, mod]} {...others}>
+    <Box {...getStyles('root')} mod={[{ inline }, mod]} {...others}>
       {!disabled && (
         <Box
           mod={{ 'with-label': !!label, 'with-border': withBorder, processing }}

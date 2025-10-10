@@ -16,7 +16,7 @@ export type DrawerOverlayFactory = Factory<{
   compound: true;
 }>;
 
-export const DrawerOverlay = factory<DrawerOverlayFactory>((_props, ref) => {
+export const DrawerOverlay = factory<DrawerOverlayFactory>((_props) => {
   const props = useProps('DrawerOverlay', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
@@ -24,7 +24,6 @@ export const DrawerOverlay = factory<DrawerOverlayFactory>((_props, ref) => {
 
   return (
     <ModalBaseOverlay
-      ref={ref}
       {...ctx.getStyles('overlay', { classNames, style, styles, className })}
       {...others}
     />

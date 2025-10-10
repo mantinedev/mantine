@@ -45,7 +45,7 @@ const defaultProps = {
   type: 'media',
 } satisfies Partial<SimpleGridProps>;
 
-export const SimpleGrid = factory<SimpleGridFactory>((_props, ref) => {
+export const SimpleGrid = factory<SimpleGridFactory>((_props) => {
   const props = useProps('SimpleGrid', defaultProps, _props);
   const {
     classNames,
@@ -82,7 +82,7 @@ export const SimpleGrid = factory<SimpleGridFactory>((_props, ref) => {
       <>
         <SimpleGridContainerVariables {...props} selector={`.${responsiveClassName}`} />
         <div {...getStyles('container')}>
-          <Box ref={ref} {...getStyles('root', { className: responsiveClassName })} {...others} />
+          <Box {...getStyles('root', { className: responsiveClassName })} {...others} />
         </div>
       </>
     );
@@ -91,7 +91,7 @@ export const SimpleGrid = factory<SimpleGridFactory>((_props, ref) => {
   return (
     <>
       <SimpleGridMediaVariables {...props} selector={`.${responsiveClassName}`} />
-      <Box ref={ref} {...getStyles('root', { className: responsiveClassName })} {...others} />
+      <Box {...getStyles('root', { className: responsiveClassName })} {...others} />
     </>
   );
 });

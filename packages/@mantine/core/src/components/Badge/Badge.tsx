@@ -106,7 +106,7 @@ const varsResolver = createVarsResolver<BadgeFactory>(
   }
 );
 
-export const Badge = polymorphicFactory<BadgeFactory>((_props, ref) => {
+export const Badge = polymorphicFactory<BadgeFactory>((_props) => {
   const props = useProps('Badge', null, _props);
   const {
     classNames,
@@ -157,7 +157,6 @@ export const Badge = polymorphicFactory<BadgeFactory>((_props, ref) => {
         mod,
       ]}
       {...getStyles('root', { variant })}
-      ref={ref}
       {...others}
     >
       {leftSection && (

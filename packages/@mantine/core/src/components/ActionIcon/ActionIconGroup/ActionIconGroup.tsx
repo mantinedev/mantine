@@ -2,6 +2,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  ElementProps,
   factory,
   Factory,
   rem,
@@ -16,7 +17,10 @@ export type ActionIconGroupCssVariables = {
   group: '--ai-border-width';
 };
 
-export interface ActionIconGroupProps extends BoxProps, StylesApiProps<ActionIconGroupFactory> {
+export interface ActionIconGroupProps
+  extends BoxProps,
+    StylesApiProps<ActionIconGroupFactory>,
+    ElementProps<'div'> {
   /** `ActionIcon` and `ActionIcon.GroupSection` components only */
   children?: React.ReactNode;
 
@@ -42,7 +46,7 @@ const varsResolver = createVarsResolver<ActionIconGroupFactory>((_, { borderWidt
   group: { '--ai-border-width': rem(borderWidth) },
 }));
 
-export const ActionIconGroup = factory<ActionIconGroupFactory>((_props, ref) => {
+export const ActionIconGroup = factory<ActionIconGroupFactory>((_props) => {
   const props = useProps('ActionIconGroup', defaultProps, _props);
   const {
     className,
@@ -77,7 +81,6 @@ export const ActionIconGroup = factory<ActionIconGroupFactory>((_props, ref) => 
   return (
     <Box
       {...getStyles('group')}
-      ref={ref}
       variant={variant}
       mod={[{ 'data-orientation': orientation }, mod]}
       role="group"

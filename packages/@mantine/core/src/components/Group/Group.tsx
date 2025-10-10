@@ -78,7 +78,7 @@ const varsResolver = createVarsResolver<GroupFactory>(
   })
 );
 
-export const Group = factory<GroupFactory>((_props, ref) => {
+export const Group = factory<GroupFactory>((_props) => {
   const props = useProps('Group', defaultProps, _props);
   const {
     classNames,
@@ -126,14 +126,7 @@ export const Group = factory<GroupFactory>((_props, ref) => {
   });
 
   return (
-    <Box
-      {...getStyles('root')}
-      ref={ref}
-      variant={variant}
-      mod={[{ grow }, mod]}
-      size={__size}
-      {...others}
-    >
+    <Box {...getStyles('root')} variant={variant} mod={[{ grow }, mod]} size={__size} {...others}>
       {filteredChildren}
     </Box>
   );

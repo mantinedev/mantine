@@ -188,7 +188,7 @@ const varsResolver = createVarsResolver<DropzoneFactory>(
   }
 );
 
-export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
+export const Dropzone = factory<DropzoneFactory>((_props) => {
   const props = useProps('Dropzone', defaultProps, _props);
   const {
     classNames,
@@ -305,11 +305,7 @@ export const Dropzone = factory<DropzoneFactory>((_props, ref) => {
           loaderProps={loaderProps}
         />
         <input {...getInputProps(inputProps)} name={name} />
-        <div
-          {...getStyles('inner')}
-          ref={ref}
-          data-enable-pointer-events={enablePointerEvents || undefined}
-        >
+        <div {...getStyles('inner')} data-enable-pointer-events={enablePointerEvents || undefined}>
           {children}
         </div>
       </Box>

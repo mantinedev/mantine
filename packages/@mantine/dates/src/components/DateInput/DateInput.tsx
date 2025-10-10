@@ -95,7 +95,7 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<DateInputProps>;
 
-export const DateInput = factory<DateInputFactory>((_props, ref) => {
+export const DateInput = factory<DateInputFactory>((_props) => {
   const props = useInputProps('DateInput', defaultProps, _props);
   const {
     inputProps,
@@ -270,7 +270,6 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
               data-dates-input
               data-read-only={readOnly || undefined}
               autoComplete="off"
-              ref={ref}
               value={inputValue}
               onChange={handleInputChange}
               onBlur={handleInputBlur}

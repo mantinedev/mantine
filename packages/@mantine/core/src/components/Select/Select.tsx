@@ -109,7 +109,7 @@ const defaultProps = {
   checkIconPosition: 'left',
 } satisfies Partial<SelectProps>;
 
-export const Select = factory<SelectFactory>((_props, ref) => {
+export const Select = factory<SelectFactory>((_props) => {
   const props = useProps('Select', defaultProps, _props);
   const {
     classNames,
@@ -305,7 +305,6 @@ export const Select = factory<SelectFactory>((_props, ref) => {
         <Combobox.Target targetType={searchable ? 'input' : 'button'} autoComplete={autoComplete}>
           <InputBase
             id={_id}
-            ref={ref}
             __defaultRightSection={
               <Combobox.Chevron
                 size={size}

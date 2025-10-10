@@ -51,7 +51,7 @@ const defaultProps = {
   hiddenInputValuesSeparator: ',',
 } satisfies Partial<CheckboxGroupProps>;
 
-export const CheckboxGroup = factory<CheckboxGroupFactory>((props, ref) => {
+export const CheckboxGroup = factory<CheckboxGroupFactory>((props) => {
   const {
     value,
     defaultValue,
@@ -108,7 +108,6 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((props, ref) => {
     <CheckboxGroupProvider value={{ value: _value, onChange: handleChange, size, isDisabled }}>
       <Input.Wrapper
         size={size}
-        ref={ref}
         {...wrapperProps}
         {...others}
         labelElement="div"

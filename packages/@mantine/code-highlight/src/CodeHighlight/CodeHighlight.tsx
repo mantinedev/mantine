@@ -131,7 +131,7 @@ const varsResolver = createVarsResolver<CodeHighlightFactory>(
   })
 );
 
-export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
+export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
   const props = useProps('CodeHighlight', defaultProps, _props);
   const {
     classNames,
@@ -201,7 +201,6 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
     return (
       <Box
         component="code"
-        ref={ref}
         {...others}
         {...highlightedCode.codeElementProps}
         {...getStyles('codeHighlight', {
@@ -217,7 +216,6 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
   return (
     <CodeHighlightContextProvider value={{ getStyles, codeColorScheme }}>
       <Box
-        ref={ref}
         {...getStyles('codeHighlight')}
         {...others}
         dir="ltr"

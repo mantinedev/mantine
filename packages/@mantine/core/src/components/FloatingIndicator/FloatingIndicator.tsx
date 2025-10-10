@@ -54,7 +54,7 @@ const varsResolver = createVarsResolver<FloatingIndicatorFactory>(
   })
 );
 
-export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props, ref) => {
+export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props) => {
   const props = useProps('FloatingIndicator', null, _props);
   const {
     classNames,
@@ -69,6 +69,7 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props, ref)
     mod,
     displayAfterTransitionEnd,
     attributes,
+    ref,
     ...others
   } = props;
 

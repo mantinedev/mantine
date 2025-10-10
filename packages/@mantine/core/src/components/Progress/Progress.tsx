@@ -44,7 +44,7 @@ export type ProgressFactory = Factory<{
   };
 }>;
 
-export const Progress = factory<ProgressFactory>((_props, ref) => {
+export const Progress = factory<ProgressFactory>((_props) => {
   const props = useProps('Progress', null, _props);
   const {
     value,
@@ -66,7 +66,6 @@ export const Progress = factory<ProgressFactory>((_props, ref) => {
 
   return (
     <ProgressRoot
-      ref={ref}
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       vars={vars as any}

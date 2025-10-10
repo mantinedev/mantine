@@ -39,7 +39,7 @@ export type AccordionControlFactory = Factory<{
   compound: true;
 }>;
 
-export const AccordionControl = factory<AccordionControlFactory>((props, ref) => {
+export const AccordionControl = factory<AccordionControlFactory>((props) => {
   const {
     classNames,
     className,
@@ -72,7 +72,6 @@ export const AccordionControl = factory<AccordionControlFactory>((props, ref) =>
         { active: isActive, 'chevron-position': ctx.chevronPosition, disabled },
         mod,
       ]}
-      ref={ref}
       onClick={(event) => {
         onClick?.(event);
         ctx.onChange(value);

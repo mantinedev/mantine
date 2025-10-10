@@ -73,7 +73,7 @@ const varsResolver = createVarsResolver<DialogFactory>((_, { size }) => ({
   },
 }));
 
-export const Dialog = factory<DialogFactory>((_props, ref) => {
+export const Dialog = factory<DialogFactory>((_props) => {
   const props = useProps('Dialog', defaultProps, _props);
   const {
     classNames,
@@ -114,7 +114,6 @@ export const Dialog = factory<DialogFactory>((_props, ref) => {
     <Affix
       zIndex={zIndex}
       position={position}
-      ref={ref}
       withinPortal={withinPortal}
       portalProps={portalProps}
       unstyled={unstyled}

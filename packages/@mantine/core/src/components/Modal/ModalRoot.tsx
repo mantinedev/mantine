@@ -76,7 +76,7 @@ const varsResolver = createVarsResolver<ModalRootFactory>(
   })
 );
 
-export const ModalRoot = factory<ModalRootFactory>((_props, ref) => {
+export const ModalRoot = factory<ModalRootFactory>((_props) => {
   const props = useProps('ModalRoot', defaultProps, _props);
   const {
     classNames,
@@ -113,7 +113,6 @@ export const ModalRoot = factory<ModalRootFactory>((_props, ref) => {
   return (
     <ModalProvider value={{ yOffset, scrollAreaComponent, getStyles, fullScreen }}>
       <ModalBase
-        ref={ref}
         {...getStyles('root')}
         data-full-screen={fullScreen || undefined}
         data-centered={centered || undefined}

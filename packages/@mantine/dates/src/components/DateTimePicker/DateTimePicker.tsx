@@ -93,7 +93,7 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<DateTimePickerProps>;
 
-export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
+export const DateTimePicker = factory<DateTimePickerFactory>((_props) => {
   const props = useProps('DateTimePicker', defaultProps, _props);
   const {
     value,
@@ -225,7 +225,6 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       unstyled={unstyled}
-      ref={ref}
       onClear={() => setValue(null)}
       shouldClear={!!_value}
       value={_value}

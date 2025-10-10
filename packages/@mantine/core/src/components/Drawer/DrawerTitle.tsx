@@ -16,7 +16,7 @@ export type DrawerTitleFactory = Factory<{
   compound: true;
 }>;
 
-export const DrawerTitle = factory<DrawerTitleFactory>((_props, ref) => {
+export const DrawerTitle = factory<DrawerTitleFactory>((_props) => {
   const props = useProps('DrawerTitle', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
@@ -24,7 +24,6 @@ export const DrawerTitle = factory<DrawerTitleFactory>((_props, ref) => {
 
   return (
     <ModalBaseTitle
-      ref={ref}
       {...ctx.getStyles('title', { classNames, style, styles, className })}
       {...others}
     />

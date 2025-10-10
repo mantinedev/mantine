@@ -33,7 +33,7 @@ export type TabsPanelFactory = Factory<{
   compound: true;
 }>;
 
-export const TabsPanel = factory<TabsPanelFactory>((_props, ref) => {
+export const TabsPanel = factory<TabsPanelFactory>((_props) => {
   const props = useProps('TabsPanel', null, _props);
   const { children, className, value, classNames, styles, style, mod, keepMounted, ...others } =
     props;
@@ -52,7 +52,6 @@ export const TabsPanel = factory<TabsPanelFactory>((_props, ref) => {
         style: [style, !active ? { display: 'none' } : undefined],
         props,
       })}
-      ref={ref}
       mod={[{ orientation: ctx.orientation }, mod]}
       role="tabpanel"
       id={ctx.getPanelId(value)}

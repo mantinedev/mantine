@@ -10,7 +10,7 @@ import {
   useProps,
   useResolvedStylesApi,
 } from '@mantine/core';
-import { useUncontrolled } from '@mantine/hooks';
+import { useMergedRef, useUncontrolled } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
 import { CalendarLevel, DateStringValue } from '../../types';
 import { toDateString } from '../../utils';
@@ -171,7 +171,7 @@ const defaultProps = {
   enableKeyboardNavigation: true,
 } satisfies Partial<CalendarProps>;
 
-export const Calendar = factory<CalendarFactory>((_props, ref) => {
+export const Calendar = factory<CalendarFactory>((_props) => {
   const props = useProps('Calendar', defaultProps, _props);
   const {
     // CalendarLevel props
@@ -248,6 +248,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     static: isStatic,
     enableKeyboardNavigation,
     attributes,
+    ref,
     ...others
   } = props;
 
@@ -335,7 +336,6 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     setDate(nextDate);
   };
 
-  // Keyboard navigation
   const calendarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -344,7 +344,6 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      // Only handle keyboard events when focus is within the calendar
       if (!calendarRef.current?.contains(document.activeElement)) {
         return;
       }
@@ -356,11 +355,9 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
         case 'ArrowUp':
           if (isCtrlOrCmd && isShift) {
             event.preventDefault();
-            // Navigate by decade (10 years back)
             handlePreviousDecade();
           } else if (isCtrlOrCmd) {
             event.preventDefault();
-            // Navigate by year
             handlePreviousYear();
           }
           break;
@@ -368,11 +365,9 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
         case 'ArrowDown':
           if (isCtrlOrCmd && isShift) {
             event.preventDefault();
-            // Navigate by decade (10 years forward)
             handleNextDecade();
           } else if (isCtrlOrCmd) {
             event.preventDefault();
-            // Navigate by year
             handleNextYear();
           }
           break;
@@ -381,7 +376,6 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
         case 'Y':
           if (_level === 'month') {
             event.preventDefault();
-            // Open year selection view
             setLevel('year');
           }
           break;
@@ -403,18 +397,8 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     handlePreviousDecade,
   ]);
 
-  // Merge refs
-  const mergedRef = (node: HTMLDivElement) => {
-    calendarRef.current = node;
-    if (typeof ref === 'function') {
-      ref(node);
-    } else if (ref) {
-      ref.current = node;
-    }
-  };
-
   return (
-    <Box ref={mergedRef} size={size} data-calendar {...others}>
+    <Box ref={useMergedRef(calendarRef, ref)} size={size} data-calendar {...others}>
       {_level === 'month' && (
         <MonthLevelGroup
           month={currentDate}

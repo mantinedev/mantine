@@ -80,7 +80,7 @@ const varsResolver = createVarsResolver<ButtonGroupSectionFactory>(
   }
 );
 
-export const ButtonGroupSection = factory<ButtonGroupSectionFactory>((_props, ref) => {
+export const ButtonGroupSection = factory<ButtonGroupSectionFactory>((_props) => {
   const props = useProps('ButtonGroupSection', null, _props);
   const {
     className,
@@ -89,7 +89,6 @@ export const ButtonGroupSection = factory<ButtonGroupSectionFactory>((_props, re
     styles,
     unstyled,
     vars,
-    variant,
     gradient,
     radius,
     autoContrast,
@@ -112,7 +111,7 @@ export const ButtonGroupSection = factory<ButtonGroupSectionFactory>((_props, re
     rootSelector: 'groupSection',
   });
 
-  return <Box {...getStyles('groupSection')} ref={ref} variant={variant} {...others} />;
+  return <Box {...getStyles('groupSection')} {...others} />;
 });
 
 ButtonGroupSection.classes = classes;

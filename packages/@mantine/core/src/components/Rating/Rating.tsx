@@ -107,7 +107,7 @@ const varsResolver = createVarsResolver<RatingFactory>((theme, { size, color }) 
   },
 }));
 
-export const Rating = factory<RatingFactory>((_props, ref) => {
+export const Rating = factory<RatingFactory>((_props) => {
   const props = useProps('Rating', defaultProps, _props);
   const {
     classNames,
@@ -138,6 +138,7 @@ export const Rating = factory<RatingFactory>((_props, ref) => {
     fullSymbol,
     highlightSelectedOnly,
     attributes,
+    ref,
     ...others
   } = props;
 

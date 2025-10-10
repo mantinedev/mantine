@@ -130,7 +130,7 @@ const varsResolver = createVarsResolver<ColorPickerFactory>((_, { size, swatches
   },
 }));
 
-export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
+export const ColorPicker = factory<ColorPickerFactory>((_props) => {
   const props = useProps('ColorPicker', defaultProps, _props);
   const {
     classNames,
@@ -226,7 +226,6 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
   return (
     <ColorPickerProvider value={{ getStyles, unstyled }}>
       <Box
-        ref={ref}
         {...getStyles('wrapper')}
         size={size}
         mod={[{ 'full-width': fullWidth }, mod]}

@@ -16,7 +16,7 @@ export type ModalBodyFactory = Factory<{
   compound: true;
 }>;
 
-export const ModalBody = factory<ModalBodyFactory>((_props, ref) => {
+export const ModalBody = factory<ModalBodyFactory>((_props) => {
   const props = useProps('ModalBody', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
@@ -24,7 +24,6 @@ export const ModalBody = factory<ModalBodyFactory>((_props, ref) => {
 
   return (
     <ModalBaseBody
-      ref={ref}
       {...ctx.getStyles('body', { classNames, style, styles, className })}
       {...others}
     />

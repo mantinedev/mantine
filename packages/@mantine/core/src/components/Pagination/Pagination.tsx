@@ -81,7 +81,7 @@ const defaultProps = {
   gap: 8,
 } satisfies Partial<PaginationProps>;
 
-export const Pagination = factory<PaginationFactory>((_props, ref) => {
+export const Pagination = factory<PaginationFactory>((_props) => {
   const props = useProps('Pagination', defaultProps, _props);
   const {
     withEdges,
@@ -104,7 +104,7 @@ export const Pagination = factory<PaginationFactory>((_props, ref) => {
   }
 
   return (
-    <PaginationRoot ref={ref} total={total} {...others}>
+    <PaginationRoot total={total} {...others}>
       <Group gap={gap}>
         {withEdges && <PaginationFirst icon={firstIcon} {...getControlProps?.('first')} />}
         {withControls && (

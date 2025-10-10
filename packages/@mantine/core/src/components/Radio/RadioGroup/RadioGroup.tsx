@@ -39,7 +39,7 @@ export type RadioGroupFactory = Factory<{
   stylesNames: RadioGroupStylesNames;
 }>;
 
-export const RadioGroup = factory<RadioGroupFactory>((props, ref) => {
+export const RadioGroup = factory<RadioGroupFactory>((props) => {
   const { value, defaultValue, onChange, size, wrapperProps, children, name, readOnly, ...others } =
     useProps('RadioGroup', null, props);
 
@@ -59,7 +59,6 @@ export const RadioGroup = factory<RadioGroupFactory>((props, ref) => {
     <RadioGroupProvider value={{ value: _value, onChange: handleChange, size, name: _name }}>
       <Input.Wrapper
         size={size}
-        ref={ref}
         {...wrapperProps}
         {...others}
         labelElement="div"

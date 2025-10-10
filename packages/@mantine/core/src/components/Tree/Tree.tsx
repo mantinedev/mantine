@@ -121,7 +121,7 @@ const varsResolver = createVarsResolver<TreeFactory>((_theme, { levelOffset }) =
   },
 }));
 
-export const Tree = factory<TreeFactory>((_props, ref) => {
+export const Tree = factory<TreeFactory>((_props) => {
   const props = useProps('Tree', defaultProps, _props);
   const {
     classNames,
@@ -141,6 +141,7 @@ export const Tree = factory<TreeFactory>((_props, ref) => {
     levelOffset,
     checkOnSpace,
     attributes,
+    ref,
     ...others
   } = props;
 

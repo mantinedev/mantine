@@ -115,7 +115,7 @@ const varsResolver = createVarsResolver<FunnelChartFactory>(
   })
 );
 
-export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
+export const FunnelChart = factory<FunnelChartFactory>((_props) => {
   const props = useProps('FunnelChart', defaultProps, _props);
   const {
     classNames,
@@ -164,7 +164,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props, ref) => {
   });
 
   return (
-    <Box ref={ref} size={size} {...getStyles('root')} {...others}>
+    <Box size={size} {...getStyles('root')} {...others}>
       <ResponsiveContainer>
         <RechartsFunnelChart {...funnelChartProps}>
           <Funnel

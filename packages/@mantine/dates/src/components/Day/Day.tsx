@@ -75,7 +75,7 @@ const varsResolver = createVarsResolver<DayFactory>((_, { size }) => ({
   },
 }));
 
-export const Day = factory<DayFactory>((_props, ref) => {
+export const Day = factory<DayFactory>((_props) => {
   const props = useProps('Day', null, _props);
   const {
     classNames,
@@ -120,7 +120,6 @@ export const Day = factory<DayFactory>((_props, ref) => {
     <UnstyledButton<any>
       {...getStyles('day', { style: hidden ? { display: 'none' } : undefined })}
       component={isStatic ? 'div' : 'button'}
-      ref={ref}
       disabled={disabled}
       data-today={dayjs(date).isSame(new Date(), 'day') || undefined}
       data-hidden={hidden || undefined}

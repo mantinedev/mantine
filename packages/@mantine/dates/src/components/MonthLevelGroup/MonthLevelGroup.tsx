@@ -40,7 +40,7 @@ const defaultProps = {
   numberOfColumns: 1,
 } satisfies Partial<MonthLevelGroupProps>;
 
-export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => {
+export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
   const props = useProps('MonthLevelGroup', defaultProps, _props);
   const {
     // Month settings
@@ -178,7 +178,6 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props, ref) => 
       classNames={classNames}
       styles={styles}
       __staticSelector={__staticSelector || 'MonthLevelGroup'}
-      ref={ref}
       size={size}
       attributes={attributes}
       {...others}

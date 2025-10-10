@@ -42,7 +42,7 @@ const defaultProps = {
   span: 12,
 } satisfies Partial<GridColProps>;
 
-export const GridCol = factory<GridColFactory>((_props, ref) => {
+export const GridCol = factory<GridColFactory>((_props) => {
   const props = useProps('GridCol', defaultProps, _props);
   const { classNames, className, style, styles, vars, span, order, offset, ...others } = props;
   const ctx = useGridContext();
@@ -57,7 +57,6 @@ export const GridCol = factory<GridColFactory>((_props, ref) => {
       />
 
       <Box
-        ref={ref}
         {...ctx.getStyles('col', {
           className: cx(className, responsiveClassName),
           style,

@@ -60,7 +60,7 @@ const varsResolver = createVarsResolver<LoadingOverlayFactory>((_, { zIndex }) =
   },
 }));
 
-export const LoadingOverlay = factory<LoadingOverlayFactory>((_props, ref) => {
+export const LoadingOverlay = factory<LoadingOverlayFactory>((_props) => {
   const props = useProps('LoadingOverlay', defaultProps, _props);
   const {
     classNames,
@@ -99,7 +99,7 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props, ref) => {
   return (
     <Transition transition="fade" {...transitionProps} mounted={!!visible}>
       {(transitionStyles) => (
-        <Box {...getStyles('root', { style: transitionStyles })} ref={ref} {...others}>
+        <Box {...getStyles('root', { style: transitionStyles })} {...others}>
           <Loader {...getStyles('loader')} unstyled={unstyled} {...loaderProps} />
 
           <Overlay

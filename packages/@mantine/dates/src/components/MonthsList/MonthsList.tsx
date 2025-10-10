@@ -68,7 +68,7 @@ const defaultProps = {
   withCellSpacing: true,
 } satisfies Partial<MonthsListProps>;
 
-export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
+export const MonthsList = factory<MonthsListFactory>((_props) => {
   const props = useProps('MonthsList', defaultProps, _props);
   const {
     classNames,
@@ -180,7 +180,7 @@ export const MonthsList = factory<MonthsListFactory>((_props, ref) => {
   });
 
   return (
-    <Box component="table" ref={ref} size={size} {...getStyles('monthsList')} {...others}>
+    <Box component="table" size={size} {...getStyles('monthsList')} {...others}>
       <tbody>{rows}</tbody>
     </Box>
   );

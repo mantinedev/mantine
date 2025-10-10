@@ -23,21 +23,18 @@ export type RichTextEditorControlsGroupFactory = Factory<{
   compound: true;
 }>;
 
-export const RichTextEditorControlsGroup = factory<RichTextEditorControlsGroupFactory>(
-  (_props, ref) => {
-    const props = useProps('RichTextEditorControlsGroup', null, _props);
-    const { classNames, className, style, styles, vars, variant, ...others } = props;
-    const ctx = useRichTextEditorContext();
-    return (
-      <Box
-        ref={ref}
-        variant={variant || ctx.variant}
-        {...ctx.getStyles('controlsGroup', { className, style, styles, classNames })}
-        {...others}
-      />
-    );
-  }
-);
+export const RichTextEditorControlsGroup = factory<RichTextEditorControlsGroupFactory>((_props) => {
+  const props = useProps('RichTextEditorControlsGroup', null, _props);
+  const { classNames, className, style, styles, vars, variant, ...others } = props;
+  const ctx = useRichTextEditorContext();
+  return (
+    <Box
+      variant={variant || ctx.variant}
+      {...ctx.getStyles('controlsGroup', { className, style, styles, classNames })}
+      {...others}
+    />
+  );
+});
 
 RichTextEditorControlsGroup.classes = classes;
 RichTextEditorControlsGroup.displayName = '@mantine/tiptap/RichTextEditorControlsGroup';

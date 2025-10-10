@@ -23,7 +23,7 @@ export type TypographyFactory = Factory<{
   stylesNames: TypographyStylesNames;
 }>;
 
-export const Typography = factory<TypographyFactory>((_props, ref) => {
+export const Typography = factory<TypographyFactory>((_props) => {
   const props = useProps('Typography', null, _props);
   const { classNames, className, style, styles, unstyled, attributes, ...others } = props;
 
@@ -39,7 +39,7 @@ export const Typography = factory<TypographyFactory>((_props, ref) => {
     attributes,
   });
 
-  return <Box ref={ref} {...getStyles('root')} {...others} />;
+  return <Box {...getStyles('root')} {...others} />;
 });
 
 Typography.classes = classes;

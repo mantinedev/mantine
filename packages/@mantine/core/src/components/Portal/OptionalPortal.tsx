@@ -12,18 +12,14 @@ export type OptionalPortalFactory = Factory<{
 }>;
 
 export const OptionalPortal = factory<OptionalPortalFactory>(
-  ({ withinPortal = true, children, ...others }, ref) => {
+  ({ withinPortal = true, children, ...others }) => {
     const env = useMantineEnv();
 
     if (env === 'test' || !withinPortal) {
       return <>{children}</>;
     }
 
-    return (
-      <Portal ref={ref} {...others}>
-        {children}
-      </Portal>
-    );
+    return <Portal {...others}>{children}</Portal>;
   }
 );
 

@@ -87,7 +87,7 @@ const varsResolver = createVarsResolver<AlertFactory>(
   }
 );
 
-export const Alert = factory<AlertFactory>((_props, ref) => {
+export const Alert = factory<AlertFactory>((_props) => {
   const props = useProps('Alert', null, _props);
   const {
     classNames,
@@ -134,7 +134,6 @@ export const Alert = factory<AlertFactory>((_props, ref) => {
       id={rootId}
       {...getStyles('root', { variant })}
       variant={variant}
-      ref={ref}
       {...others}
       role="alert"
       aria-describedby={bodyId}

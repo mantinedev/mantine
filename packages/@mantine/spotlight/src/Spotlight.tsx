@@ -93,7 +93,7 @@ const defaultProps = {
   shortcut: 'mod + K',
 } satisfies Partial<SpotlightProps>;
 
-export const Spotlight = factory<SpotlightFactory>((_props, ref) => {
+export const Spotlight = factory<SpotlightFactory>((_props) => {
   const props = useProps('Spotlight', defaultProps, _props);
   const {
     searchProps,
@@ -132,7 +132,7 @@ export const Spotlight = factory<SpotlightFactory>((_props, ref) => {
   });
 
   return (
-    <SpotlightRoot {...others} query={_query} onQueryChange={setQuery} ref={ref}>
+    <SpotlightRoot {...others} query={_query} onQueryChange={setQuery}>
       <SpotlightSearch {...searchProps} />
       <SpotlightActionsList {...(scrollAreaProps as any)}>
         {filteredActions}

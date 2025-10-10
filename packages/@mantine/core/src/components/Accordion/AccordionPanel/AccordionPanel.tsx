@@ -28,7 +28,7 @@ export type AccordionPanelFactory = Factory<{
   compound: true;
 }>;
 
-export const AccordionPanel = factory<AccordionPanelFactory>((props, ref) => {
+export const AccordionPanel = factory<AccordionPanelFactory>((props) => {
   const { classNames, className, style, styles, vars, children, ...others } = useProps(
     'AccordionPanel',
     null,
@@ -40,7 +40,6 @@ export const AccordionPanel = factory<AccordionPanelFactory>((props, ref) => {
 
   return (
     <Collapse
-      ref={ref}
       {...ctx.getStyles('panel', { className, classNames, style, styles })}
       {...others}
       in={ctx.isItemActive(value)}

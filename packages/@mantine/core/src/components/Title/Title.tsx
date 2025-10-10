@@ -62,7 +62,7 @@ const varsResolver = createVarsResolver<TitleFactory>((_, { order, size, lineCla
   };
 });
 
-export const Title = factory<TitleFactory>((_props, ref) => {
+export const Title = factory<TitleFactory>((_props) => {
   const props = useProps('Title', defaultProps, _props);
   const {
     classNames,
@@ -104,7 +104,6 @@ export const Title = factory<TitleFactory>((_props, ref) => {
       {...getStyles('root')}
       component={`h${order}`}
       variant={variant}
-      ref={ref}
       mod={[{ order, 'data-line-clamp': typeof lineClamp === 'number' }, mod]}
       size={size}
       {...others}

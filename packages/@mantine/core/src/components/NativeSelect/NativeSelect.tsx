@@ -23,7 +23,7 @@ const defaultProps = {
   rightSectionPointerEvents: 'none',
 } satisfies Partial<NativeSelectProps>;
 
-export const NativeSelect = factory<NativeSelectFactory>((props, ref) => {
+export const NativeSelect = factory<NativeSelectFactory>((props) => {
   const { data, children, size, error, rightSection, unstyled, ...others } = useProps(
     'NativeSelect',
     defaultProps,
@@ -37,7 +37,6 @@ export const NativeSelect = factory<NativeSelectFactory>((props, ref) => {
   return (
     <InputBase
       component="select"
-      ref={ref}
       {...others}
       __staticSelector="NativeSelect"
       size={size}

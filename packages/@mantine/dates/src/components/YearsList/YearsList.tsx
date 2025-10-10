@@ -67,7 +67,7 @@ const defaultProps = {
   withCellSpacing: true,
 } satisfies Partial<YearsListProps>;
 
-export const YearsList = factory<YearsListFactory>((_props, ref) => {
+export const YearsList = factory<YearsListFactory>((_props) => {
   const props = useProps('YearsList', defaultProps, _props);
   const {
     classNames,
@@ -174,7 +174,7 @@ export const YearsList = factory<YearsListFactory>((_props, ref) => {
   });
 
   return (
-    <Box component="table" ref={ref} size={size} {...getStyles('yearsList')} {...others}>
+    <Box component="table" size={size} {...getStyles('yearsList')} {...others}>
       <tbody>{rows}</tbody>
     </Box>
   );

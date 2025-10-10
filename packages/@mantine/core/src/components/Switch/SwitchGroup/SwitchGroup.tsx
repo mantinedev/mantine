@@ -51,7 +51,7 @@ const defaultProps = {
   hiddenInputValuesSeparator: ',',
 } satisfies Partial<SwitchGroupProps>;
 
-export const SwitchGroup = factory<SwitchGroupFactory>((props, ref) => {
+export const SwitchGroup = factory<SwitchGroupFactory>((props) => {
   const {
     value,
     defaultValue,
@@ -108,7 +108,6 @@ export const SwitchGroup = factory<SwitchGroupFactory>((props, ref) => {
     <SwitchGroupProvider value={{ value: _value, onChange: handleChange, size, isDisabled }}>
       <Input.Wrapper
         size={size}
-        ref={ref}
         {...wrapperProps}
         {...others}
         labelElement="div"

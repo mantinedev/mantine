@@ -51,7 +51,7 @@ const varsResolver = createVarsResolver<TooltipFloatingFactory>((theme, { radius
   },
 }));
 
-export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => {
+export const TooltipFloating = factory<TooltipFloatingFactory>((_props) => {
   const props = useProps('TooltipFloating', defaultProps, _props);
   const {
     children,
@@ -75,6 +75,7 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => 
     vars,
     portalProps,
     attributes,
+    ref,
     ...others
   } = props;
 

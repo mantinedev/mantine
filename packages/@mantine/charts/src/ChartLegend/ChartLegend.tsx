@@ -63,7 +63,7 @@ export type ChartLegendFactory = Factory<{
   stylesNames: ChartLegendStylesNames;
 }>;
 
-export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
+export const ChartLegend = factory<ChartLegendFactory>((_props) => {
   const props = useProps('ChartLegend', null, _props);
   const {
     classNames,
@@ -121,12 +121,7 @@ export const ChartLegend = factory<ChartLegendFactory>((_props, ref) => {
   ));
 
   return (
-    <Box
-      ref={ref}
-      mod={[{ position: legendPosition, centered }, mod]}
-      {...getStyles('legend')}
-      {...others}
-    >
+    <Box mod={[{ position: legendPosition, centered }, mod]} {...getStyles('legend')} {...others}>
       {items}
     </Box>
   );

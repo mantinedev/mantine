@@ -52,7 +52,7 @@ type MonthPickerInputComponent = (<Type extends DatePickerType = 'default'>(
 } & MantineComponentStaticProperties<MonthPickerInputFactory>;
 
 export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerInputFactory>(
-  (_props, ref) => {
+  (_props) => {
     const props = useProps('MonthPickerInput', defaultProps, _props);
     const {
       type,
@@ -115,7 +115,6 @@ export const MonthPickerInput: MonthPickerInputComponent = factory<MonthPickerIn
         classNames={resolvedClassNames}
         styles={resolvedStyles}
         unstyled={unstyled}
-        ref={ref}
         onClear={onClear}
         shouldClear={shouldClear}
         value={_value}

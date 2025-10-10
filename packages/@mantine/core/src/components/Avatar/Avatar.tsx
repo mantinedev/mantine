@@ -113,7 +113,7 @@ const varsResolver = createVarsResolver<AvatarFactory>(
   }
 );
 
-export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
+export const Avatar = polymorphicFactory<AvatarFactory>((_props) => {
   const props = useProps('Avatar', null, _props);
   const {
     classNames,
@@ -156,12 +156,7 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props, ref) => {
   useEffect(() => setError(!src), [src]);
 
   return (
-    <Box
-      {...getStyles('root')}
-      mod={[{ 'within-group': ctx.withinGroup }, mod]}
-      ref={ref}
-      {...others}
-    >
+    <Box {...getStyles('root')} mod={[{ 'within-group': ctx.withinGroup }, mod]} {...others}>
       {error || !src ? (
         <span {...getStyles('placeholder')} title={alt}>
           {children || (typeof name === 'string' && getInitials(name)) || <AvatarPlaceholderIcon />}

@@ -57,7 +57,7 @@ const defaultProps = {
   decadeLabelFormat: 'YYYY',
 } satisfies Partial<DecadeLevelProps>;
 
-export const DecadeLevel = factory<DecadeLevelFactory>((_props, ref) => {
+export const DecadeLevel = factory<DecadeLevelFactory>((_props) => {
   const props = useProps('DecadeLevel', defaultProps, _props);
   const {
     // YearsList settings
@@ -132,7 +132,7 @@ export const DecadeLevel = factory<DecadeLevelFactory>((_props, ref) => {
       .format(format);
 
   return (
-    <Box data-decade-level size={size} ref={ref} {...others}>
+    <Box data-decade-level size={size} {...others}>
       <CalendarHeader
         label={
           typeof decadeLabelFormat === 'function'

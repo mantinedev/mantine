@@ -16,7 +16,7 @@ export type ModalTitleFactory = Factory<{
   compound: true;
 }>;
 
-export const ModalTitle = factory<ModalTitleFactory>((_props, ref) => {
+export const ModalTitle = factory<ModalTitleFactory>((_props) => {
   const props = useProps('ModalTitle', null, _props);
   const { classNames, className, style, styles, vars, ...others } = props;
 
@@ -24,7 +24,6 @@ export const ModalTitle = factory<ModalTitleFactory>((_props, ref) => {
 
   return (
     <ModalBaseTitle
-      ref={ref}
       {...ctx.getStyles('title', { classNames, style, styles, className })}
       {...others}
     />

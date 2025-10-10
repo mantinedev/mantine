@@ -102,7 +102,7 @@ const varsResolver = createVarsResolver<TimeGridFactory>((_theme, { size, radius
   },
 }));
 
-export const TimeGrid = factory<TimeGridFactory>((_props, ref) => {
+export const TimeGrid = factory<TimeGridFactory>((_props) => {
   const props = useProps('TimeGrid', defaultProps, _props);
   const {
     classNames,
@@ -184,7 +184,7 @@ export const TimeGrid = factory<TimeGridFactory>((_props, ref) => {
 
   return (
     <TimeGridProvider value={{ getStyles }}>
-      <Box ref={ref} {...getStyles('root')} {...others}>
+      <Box {...getStyles('root')} {...others}>
         <SimpleGrid
           {...simpleGridProps}
           {...getStyles('simpleGrid', {

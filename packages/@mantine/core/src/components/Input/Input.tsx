@@ -184,7 +184,7 @@ const varsResolver = createVarsResolver<InputFactory>((_, props, ctx) => ({
   },
 }));
 
-export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
+export const Input = polymorphicFactory<InputFactory>((_props) => {
   const props = useProps('Input', defaultProps, _props);
   const {
     classNames,
@@ -299,7 +299,6 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
           component="input"
           {...rest}
           {...ariaAttributes}
-          ref={ref}
           required={required}
           mod={{ disabled, error: !!error && withErrorStyles }}
           variant={variant}

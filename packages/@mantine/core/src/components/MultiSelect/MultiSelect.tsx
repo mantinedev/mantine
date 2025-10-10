@@ -125,7 +125,7 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<MultiSelectProps>;
 
-export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
+export const MultiSelect = factory<MultiSelectFactory>((_props) => {
   const props = useProps('MultiSelect', defaultProps, _props);
   const {
     classNames,
@@ -413,7 +413,6 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
               <Combobox.EventsTarget autoComplete={autoComplete}>
                 <PillsInput.Field
                   {...rest}
-                  ref={ref}
                   id={_id}
                   placeholder={placeholder}
                   type={!searchable && !placeholder ? 'hidden' : 'visible'}

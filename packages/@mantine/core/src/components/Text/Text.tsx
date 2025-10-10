@@ -87,7 +87,7 @@ const varsResolver = createVarsResolver<TextFactory>(
   })
 );
 
-export const Text = polymorphicFactory<TextFactory>((_props, ref) => {
+export const Text = polymorphicFactory<TextFactory>((_props) => {
   const props = useProps('Text', defaultProps, _props);
   const {
     lineClamp,
@@ -127,7 +127,6 @@ export const Text = polymorphicFactory<TextFactory>((_props, ref) => {
   return (
     <Box
       {...getStyles('root', { focusable: true })}
-      ref={ref}
       component={span ? 'span' : 'p'}
       variant={variant}
       mod={[

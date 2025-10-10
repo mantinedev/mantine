@@ -51,7 +51,7 @@ const defaultProps = {
   zIndex: getDefaultZIndex('overlay'),
 } satisfies Partial<FloatingWindowProps>;
 
-export const FloatingWindow = factory<FloatingWindowFactory>((_props, ref) => {
+export const FloatingWindow = factory<FloatingWindowFactory>((_props) => {
   const props = useProps('FloatingWindow', defaultProps, _props);
   const {
     classNames,
@@ -75,6 +75,7 @@ export const FloatingWindow = factory<FloatingWindowFactory>((_props, ref) => {
     withinPortal,
     portalProps,
     zIndex,
+    ref,
     ...others
   } = props;
 

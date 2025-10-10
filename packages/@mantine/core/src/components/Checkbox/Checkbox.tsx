@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useId } from '@mantine/hooks';
 import {
   Box,
@@ -134,7 +134,7 @@ const varsResolver = createVarsResolver<CheckboxFactory>(
   }
 );
 
-export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
+export const Checkbox = factory<CheckboxFactory>((_props) => {
   const props = useProps('Checkbox', defaultProps, _props);
   const {
     classNames,
@@ -166,6 +166,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
     readOnly,
     onClick,
     withErrorStyles,
+    ref,
     ...others
   } = props;
 
@@ -201,9 +202,6 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
 
   const isDisabledByGroup = ctx?.isDisabled?.(rest.value as string) ?? false;
   const finalDisabled = disabled || isDisabledByGroup;
-
-  const fallbackRef = useRef<HTMLInputElement>(null);
-  const ref = forwardedRef || fallbackRef;
 
   useEffect(() => {
     if (ref && 'current' in ref && ref.current) {

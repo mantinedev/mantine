@@ -128,7 +128,7 @@ const varsResolver = createVarsResolver<InputWrapperFactory>((_, { size }) => ({
   },
 }));
 
-export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
+export const InputWrapper = factory<InputWrapperFactory>((_props) => {
   const props = useProps('InputWrapper', defaultProps, _props);
   const {
     classNames,
@@ -256,7 +256,6 @@ export const InputWrapper = factory<InputWrapperFactory>((_props, ref) => {
       }}
     >
       <Box
-        ref={ref}
         variant={variant}
         size={size}
         mod={[{ error: !!error }, mod]}

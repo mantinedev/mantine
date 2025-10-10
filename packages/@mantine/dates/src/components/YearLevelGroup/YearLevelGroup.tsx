@@ -37,7 +37,7 @@ const defaultProps = {
   numberOfColumns: 1,
 } satisfies Partial<YearLevelGroupProps>;
 
-export const YearLevelGroup = factory<YearLevelGroupFactory>((_props, ref) => {
+export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
   const props = useProps('YearLevelGroup', defaultProps, _props);
   const {
     // YearLevel settings
@@ -155,7 +155,6 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props, ref) => {
       classNames={classNames}
       styles={styles}
       __staticSelector={__staticSelector || 'YearLevelGroup'}
-      ref={ref}
       size={size}
       unstyled={unstyled}
       attributes={attributes}

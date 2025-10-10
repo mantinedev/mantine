@@ -37,7 +37,7 @@ const varsResolver = createVarsResolver<BackgroundImageFactory>((_, { radius }) 
   root: { '--bi-radius': radius === undefined ? undefined : getRadius(radius) },
 }));
 
-export const BackgroundImage = polymorphicFactory<BackgroundImageFactory>((_props, ref) => {
+export const BackgroundImage = polymorphicFactory<BackgroundImageFactory>((_props) => {
   const props = useProps('BackgroundImage', null, _props);
   const {
     classNames,
@@ -69,7 +69,6 @@ export const BackgroundImage = polymorphicFactory<BackgroundImageFactory>((_prop
 
   return (
     <Box
-      ref={ref}
       variant={variant}
       {...getStyles('root', { style: { backgroundImage: `url(${src})` } })}
       {...others}

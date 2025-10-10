@@ -40,7 +40,7 @@ const defaultProps = {
   numberOfColumns: 1,
 } satisfies Partial<DecadeLevelGroupProps>;
 
-export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props, ref) => {
+export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props) => {
   const props = useProps('DecadeLevelGroup', defaultProps, _props);
   const {
     // DecadeLevel settings
@@ -156,7 +156,6 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props, ref) =
       classNames={classNames}
       styles={styles}
       __staticSelector={__staticSelector || 'DecadeLevelGroup'}
-      ref={ref}
       size={size}
       unstyled={unstyled}
       attributes={attributes}

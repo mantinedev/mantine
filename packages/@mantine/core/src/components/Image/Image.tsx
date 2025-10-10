@@ -50,7 +50,7 @@ const varsResolver = createVarsResolver<ImageFactory>((_, { radius, fit }) => ({
   },
 }));
 
-export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
+export const Image = polymorphicFactory<ImageFactory>((_props) => {
   const props = useProps('Image', null, _props);
   const {
     classNames,
@@ -91,7 +91,6 @@ export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
     return (
       <Box
         component="img"
-        ref={ref}
         src={fallbackSrc}
         {...getStyles('root')}
         onError={onError}
@@ -104,7 +103,6 @@ export const Image = polymorphicFactory<ImageFactory>((_props, ref) => {
   return (
     <Box
       component="img"
-      ref={ref}
       {...getStyles('root')}
       src={src}
       onError={(event) => {

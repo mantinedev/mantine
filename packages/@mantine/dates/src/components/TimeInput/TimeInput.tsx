@@ -34,7 +34,7 @@ export type TimeInputFactory = Factory<{
   stylesNames: __InputStylesNames;
 }>;
 
-export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
+export const TimeInput = factory<TimeInputFactory>((_props) => {
   const props = useProps('TimeInput', null, _props);
   const {
     classNames,
@@ -123,7 +123,6 @@ export const TimeInput = factory<TimeInputFactory>((_props, ref) => {
       classNames={{ ...resolvedClassNames, input: cx(classes.input, resolvedClassNames?.input) }}
       styles={resolvedStyles}
       unstyled={unstyled}
-      ref={ref}
       value={value}
       step={step ?? (withSeconds ? 1 : 60)}
       {...others}

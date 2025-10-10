@@ -69,7 +69,7 @@ const varsResolver = createVarsResolver<PillFactory>((_, { radius }, { size }) =
   },
 }));
 
-export const Pill = factory<PillFactory>((_props, ref) => {
+export const Pill = factory<PillFactory>((_props) => {
   const props = useProps('Pill', defaultProps, _props);
   const {
     classNames,
@@ -114,7 +114,6 @@ export const Pill = factory<PillFactory>((_props, ref) => {
   return (
     <Box
       component="span"
-      ref={ref}
       variant={_variant}
       size={_size}
       {...getStyles('root', { variant: _variant })}

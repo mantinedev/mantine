@@ -24,7 +24,7 @@ export type ComboboxFooterFactory = Factory<{
   compound: true;
 }>;
 
-export const ComboboxFooter = factory<ComboboxFooterFactory>((props, ref) => {
+export const ComboboxFooter = factory<ComboboxFooterFactory>((props) => {
   const { classNames, className, style, styles, vars, ...others } = useProps(
     'ComboboxFooter',
     null,
@@ -35,7 +35,6 @@ export const ComboboxFooter = factory<ComboboxFooterFactory>((props, ref) => {
 
   return (
     <Box
-      ref={ref}
       {...ctx.getStyles('footer', { className, classNames, style, styles })}
       {...others}
       onMouseDown={(event) => {
