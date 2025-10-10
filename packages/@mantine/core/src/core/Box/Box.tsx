@@ -50,7 +50,7 @@ export interface BoxProps extends MantineStyleProps {
 export type ElementProps<
   ElementType extends React.ElementType,
   PropsToOmit extends string = never,
-> = Omit<React.ComponentPropsWithoutRef<ElementType>, 'style' | PropsToOmit>;
+> = Omit<React.ComponentPropsWithRef<ElementType>, 'style' | PropsToOmit>;
 
 export interface BoxComponentProps extends BoxProps {
   /** Variant passed from parent component, sets `data-variant` */
