@@ -22,6 +22,6 @@ interface EmotionCacheProviderProps {
 
 export const MantineEmotionProvider = withEmotionCache<EmotionCacheProviderProps>(
   ({ children, cache }, ctx) => (
-    <EmotionCacheContext.Provider value={cache || ctx}>{children}</EmotionCacheContext.Provider>
+    <EmotionCacheContext value={cache || ctx}>{children}</EmotionCacheContext>
   )
 );

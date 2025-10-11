@@ -1,7 +1,7 @@
 import { ExtendComponent, Factory, useProps } from '../../core';
 import { Popover, PopoverProps, PopoverStylesNames } from '../Popover';
 import { PopoverCssVariables } from '../Popover/Popover';
-import { HoverCardContextProvider } from './HoverCard.context';
+import { HoverCardContext } from './HoverCard.context';
 import { HoverCardDropdown } from './HoverCardDropdown/HoverCardDropdown';
 import { HoverCardGroup } from './HoverCardGroup/HoverCardGroup';
 import { HoverCardTarget } from './HoverCardTarget/HoverCardTarget';
@@ -54,7 +54,7 @@ export function HoverCard(props: HoverCardProps) {
   });
 
   return (
-    <HoverCardContextProvider
+    <HoverCardContext
       value={{
         openDropdown: hoverCard.openDropdown,
         closeDropdown: hoverCard.closeDropdown,
@@ -67,7 +67,7 @@ export function HoverCard(props: HoverCardProps) {
       <Popover {...others} opened={hoverCard.opened} __staticSelector="HoverCard">
         {children}
       </Popover>
-    </HoverCardContextProvider>
+    </HoverCardContext>
   );
 }
 

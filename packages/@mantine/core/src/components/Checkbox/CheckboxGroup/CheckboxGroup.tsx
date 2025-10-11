@@ -1,8 +1,17 @@
+import { createContext } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../../core';
 import { InputsGroupFieldset } from '../../../utils/InputsGroupFieldset';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
-import { CheckboxGroupProvider } from '../CheckboxGroup.context';
+
+export interface CheckboxGroupContextValue {
+  value: string[];
+  onChange: (event: React.ChangeEvent<HTMLInputElement> | string) => void;
+  size: MantineSize | (string & {}) | undefined;
+  isDisabled?: (value: string) => boolean;
+}
+
+export const CheckboxGroupContext = createContext<CheckboxGroupContextValue | null>(null);
 
 export type CheckboxGroupStylesNames = InputWrapperStylesNames;
 
@@ -105,7 +114,7 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((props) => {
   const hiddenInputValue = _value.join(hiddenInputValuesSeparator);
 
   return (
-    <CheckboxGroupProvider value={{ value: _value, onChange: handleChange, size, isDisabled }}>
+    <CheckboxGroupContext value={{ value: _value, onChange: handleChange, size, isDisabled }}>
       <Input.Wrapper
         size={size}
         {...wrapperProps}
@@ -116,7 +125,7 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((props) => {
         <InputsGroupFieldset role="group">{children}</InputsGroupFieldset>
         <input type="hidden" name={name} value={hiddenInputValue} {...hiddenInputProps} />
       </Input.Wrapper>
-    </CheckboxGroupProvider>
+    </CheckboxGroupContext>
   );
 });
 

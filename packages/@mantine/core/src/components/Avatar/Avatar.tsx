@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -15,8 +15,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { AvatarGroup } from './AvatarGroup/AvatarGroup';
-import { useAvatarGroupContext } from './AvatarGroup/AvatarGroup.context';
+import { AvatarGroup, AvatarGroupContext } from './AvatarGroup/AvatarGroup';
 import { AvatarPlaceholderIcon } from './AvatarPlaceholderIcon';
 import { getInitialsColor } from './get-initials-color/get-initials-color';
 import { getInitials } from './get-initials/get-initials';
@@ -136,7 +135,7 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props) => {
     attributes,
     ...others
   } = props;
-  const ctx = useAvatarGroupContext();
+  const groupCtx = use(AvatarGroupContext);
   const [error, setError] = useState(!src);
 
   const getStyles = useStyles<AvatarFactory>({
@@ -156,7 +155,7 @@ export const Avatar = polymorphicFactory<AvatarFactory>((_props) => {
   useEffect(() => setError(!src), [src]);
 
   return (
-    <Box {...getStyles('root')} mod={[{ 'within-group': ctx.withinGroup }, mod]} {...others}>
+    <Box {...getStyles('root')} mod={[{ 'within-group': groupCtx.withinGroup }, mod]} {...others}>
       {error || !src ? (
         <span {...getStyles('placeholder')} title={alt}>
           {children || (typeof name === 'string' && getInitials(name)) || <AvatarPlaceholderIcon />}

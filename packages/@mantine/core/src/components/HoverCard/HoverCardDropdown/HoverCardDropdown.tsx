@@ -1,7 +1,8 @@
+import { use } from 'react';
 import { createEventHandler, useProps } from '../../../core';
 import { Popover, PopoverDropdownProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';
-import { useHoverCardGroupContext } from '../HoverCardGroup/HoverCardGroup.context';
+import { HoverCardGroupContext } from '../HoverCardGroup/HoverCardGroup';
 
 export interface HoverCardDropdownProps extends PopoverDropdownProps {
   /** Dropdown content */
@@ -16,9 +17,9 @@ export function HoverCardDropdown(props: HoverCardDropdownProps) {
   );
 
   const ctx = useHoverCardContext();
-  const withinGroup = useHoverCardGroupContext();
+  const groupCtx = use(HoverCardGroupContext);
 
-  if (withinGroup && ctx.getFloatingProps && ctx.floating) {
+  if (groupCtx.withinGroup && ctx.getFloatingProps && ctx.floating) {
     const floatingProps = ctx.getFloatingProps();
 
     return (

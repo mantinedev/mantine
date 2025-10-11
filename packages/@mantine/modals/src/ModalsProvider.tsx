@@ -225,7 +225,7 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
   const { modalProps: currentModalProps, content } = getCurrentModal();
 
   return (
-    <ModalsContext.Provider value={ctx}>
+    <ModalsContext value={ctx}>
       <Modal
         zIndex={getDefaultZIndex('modal') + 1}
         {...modalProps}
@@ -237,6 +237,6 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
       </Modal>
 
       {children}
-    </ModalsContext.Provider>
+    </ModalsContext>
   );
 }

@@ -9,6 +9,6 @@ interface HoverCardContext {
   floating?: (node: HTMLElement | null) => void;
 }
 
-export const [HoverCardContextProvider, useHoverCardContext] = createSafeContext<HoverCardContext>(
+export const [HoverCardContext, useHoverCardContext] = createSafeContext<HoverCardContext>(
   'HoverCard component was not found in the tree'
 );

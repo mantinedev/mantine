@@ -1,5 +1,5 @@
 export { Avatar } from './Avatar';
-export { AvatarGroup } from './AvatarGroup/AvatarGroup';
+export { AvatarGroup, AvatarGroupContext } from './AvatarGroup/AvatarGroup';
 export type {
   AvatarCssVariables,
   AvatarFactory,
@@ -12,4 +12,5 @@ export type {
   AvatarGroupFactory,
   AvatarGroupProps,
   AvatarGroupStylesNames,
+  AvatarGroupContextValue,
 } from './AvatarGroup/AvatarGroup';

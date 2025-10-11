@@ -1,3 +1,4 @@
+import { createContext } from 'react';
 import {
   Box,
   BoxProps,
@@ -11,8 +12,13 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { AvatarGroupProvider } from './AvatarGroup.context';
 import classes from '../Avatar.module.css';
+
+export interface AvatarGroupContextValue {
+  withinGroup: boolean;
+}
+
+export const AvatarGroupContext = createContext<AvatarGroupContextValue>({ withinGroup: false });
 
 export type AvatarGroupStylesNames = 'group';
 export type AvatarGroupCssVariables = {
@@ -61,9 +67,9 @@ export const AvatarGroup = factory<AvatarGroupFactory>((_props) => {
   });
 
   return (
-    <AvatarGroupProvider value>
+    <AvatarGroupContext value={{ withinGroup: true }}>
       <Box {...getStyles('group')} {...others} />
-    </AvatarGroupProvider>
+    </AvatarGroupContext>
   );
 });
 

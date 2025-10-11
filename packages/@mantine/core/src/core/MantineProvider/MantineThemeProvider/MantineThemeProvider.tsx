@@ -40,9 +40,7 @@ export function MantineThemeProvider({
     [theme, parentTheme, inherit]
   );
 
-  return (
-    <MantineThemeContext.Provider value={mergedTheme}>{children}</MantineThemeContext.Provider>
-  );
+  return <MantineThemeContext value={mergedTheme}>{children}</MantineThemeContext>;
 }
 
 MantineThemeProvider.displayName = '@mantine/core/MantineThemeProvider';

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { use, useEffect, useRef } from 'react';
 import { useId, useMergedRef } from '@mantine/hooks';
 import {
   Box,
@@ -24,8 +24,7 @@ import {
 } from '../../core';
 import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../../utils/InlineInput';
 import { CheckboxCard } from './CheckboxCard/CheckboxCard';
-import { useCheckboxGroupContext } from './CheckboxGroup.context';
-import { CheckboxGroup } from './CheckboxGroup/CheckboxGroup';
+import { CheckboxGroup, CheckboxGroupContext } from './CheckboxGroup/CheckboxGroup';
 import { CheckboxIndicator } from './CheckboxIndicator/CheckboxIndicator';
 import { CheckboxIcon } from './CheckIcon';
 import classes from './Checkbox.module.css';
@@ -171,7 +170,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
   } = props;
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const ctx = useCheckboxGroupContext();
+  const ctx = use(CheckboxGroupContext);
   const _size = size || ctx?.size;
 
   const getStyles = useStyles<CheckboxFactory>({

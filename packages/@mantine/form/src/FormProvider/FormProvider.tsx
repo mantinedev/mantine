@@ -13,7 +13,7 @@ export function createFormContext<Values, TransformedValues = Values>() {
   const FormContext = createContext<Form | null>(null);
 
   function FormProvider({ form, children }: FormProviderProps<Form>) {
-    return <FormContext.Provider value={form}>{children}</FormContext.Provider>;
+    return <FormContext value={form}>{children}</FormContext>;
   }
 
   function useFormContext() {

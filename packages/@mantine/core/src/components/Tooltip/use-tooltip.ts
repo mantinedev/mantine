@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { use, useCallback, useState } from 'react';
 import {
   arrow,
   autoUpdate,
@@ -18,7 +18,7 @@ import {
 import { useDidUpdate, useId } from '@mantine/hooks';
 import { FloatingAxesOffsets, FloatingPosition, FloatingStrategy } from '../../utils/Floating';
 import { type TooltipMiddlewares } from './Tooltip.types';
-import { useTooltipGroupContext } from './TooltipGroup/TooltipGroup.context';
+import { TooltipGroupContext } from './TooltipGroup/TooltipGroup';
 
 interface UseTooltip {
   position: FloatingPosition;
@@ -90,7 +90,7 @@ export function useTooltip(settings: UseTooltip) {
   const [uncontrolledOpened, setUncontrolledOpened] = useState(settings.defaultOpened);
   const controlled = typeof settings.opened === 'boolean';
   const opened = controlled ? settings.opened : uncontrolledOpened;
-  const withinGroup = useTooltipGroupContext();
+  const withinGroup = use(TooltipGroupContext).withinGroup;
   const uid = useId();
 
   const onChange = useCallback(

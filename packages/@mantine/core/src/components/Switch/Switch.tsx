@@ -1,3 +1,4 @@
+import { use } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
@@ -19,8 +20,7 @@ import {
   useStyles,
 } from '../../core';
 import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../../utils/InlineInput';
-import { useSwitchGroupContext } from './SwitchGroup.context';
-import { SwitchGroup } from './SwitchGroup/SwitchGroup';
+import { SwitchGroup, SwitchGroupContext } from './SwitchGroup/SwitchGroup';
 import classes from './Switch.module.css';
 
 export type SwitchStylesNames =
@@ -149,7 +149,7 @@ export const Switch = factory<SwitchFactory>((_props) => {
     ...others
   } = props;
 
-  const ctx = useSwitchGroupContext();
+  const ctx = use(SwitchGroupContext);
   const _size = size || ctx?.size;
 
   const getStyles = useStyles<SwitchFactory>({

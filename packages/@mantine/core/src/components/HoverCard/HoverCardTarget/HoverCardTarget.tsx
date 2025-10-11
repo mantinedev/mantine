@@ -1,8 +1,8 @@
-import { cloneElement } from 'react';
+import { cloneElement, use } from 'react';
 import { createEventHandler, isElement, useProps } from '../../../core';
 import { Popover, PopoverTargetProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';
-import { useHoverCardGroupContext } from '../HoverCardGroup/HoverCardGroup.context';
+import { HoverCardGroupContext } from '../HoverCardGroup/HoverCardGroup';
 
 export interface HoverCardTargetProps extends PopoverTargetProps {
   /** Key of the prop used to pass event listeners, by default event listeners are passed directly to component */
@@ -27,9 +27,9 @@ export function HoverCardTarget(props: HoverCardTargetProps) {
   }
 
   const ctx = useHoverCardContext();
-  const withinGroup = useHoverCardGroupContext();
+  const groupContext = use(HoverCardGroupContext);
 
-  if (withinGroup && ctx.getReferenceProps && ctx.reference) {
+  if (groupContext.withinGroup && ctx.getReferenceProps && ctx.reference) {
     const referenceProps = ctx.getReferenceProps();
 
     return (

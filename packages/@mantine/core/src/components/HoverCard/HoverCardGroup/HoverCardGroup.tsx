@@ -1,6 +1,14 @@
+import { createContext } from 'react';
 import { FloatingDelayGroup } from '@floating-ui/react';
 import { ExtendComponent, Factory, MantineThemeComponent, useProps } from '../../../core';
-import { HoverCardGroupProvider } from './HoverCardGroup.context';
+
+export interface HoverCardGroupContextValue {
+  withinGroup: boolean;
+}
+
+export const HoverCardGroupContext = createContext<HoverCardGroupContextValue>({
+  withinGroup: false,
+});
 
 export interface HoverCardGroupProps {
   /** `HoverCard` components */
@@ -22,11 +30,11 @@ export function HoverCardGroup(props: HoverCardGroupProps) {
   const { openDelay, closeDelay, children } = useProps('HoverCardGroup', defaultProps, props);
 
   return (
-    <HoverCardGroupProvider value>
+    <HoverCardGroupContext value={{ withinGroup: true }}>
       <FloatingDelayGroup delay={{ open: openDelay, close: closeDelay }}>
         {children}
       </FloatingDelayGroup>
-    </HoverCardGroupProvider>
+    </HoverCardGroupContext>
   );
 }
 

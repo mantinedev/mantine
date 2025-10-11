@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   Box,
   BoxProps,
@@ -19,7 +20,7 @@ import {
   useStyles,
 } from '../../../core';
 import type { CheckboxIconComponent } from '../Checkbox';
-import { useCheckboxCardContext } from '../CheckboxCard/CheckboxCard.context';
+import { CheckboxCardContext } from '../CheckboxCard/CheckboxCard';
 import { CheckboxIcon } from '../CheckIcon';
 import classes from './CheckboxIndicator.module.css';
 
@@ -135,7 +136,7 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props) => {
     rootSelector: 'indicator',
   });
 
-  const ctx = useCheckboxCardContext();
+  const ctx = use(CheckboxCardContext);
   const _checked =
     typeof checked === 'boolean' || typeof indeterminate === 'boolean'
       ? checked || indeterminate

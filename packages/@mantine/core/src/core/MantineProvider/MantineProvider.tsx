@@ -92,7 +92,7 @@ export function MantineProvider({
   });
 
   return (
-    <MantineContext.Provider
+    <MantineContext
       value={{
         colorScheme,
         setColorScheme,
@@ -117,7 +117,7 @@ export function MantineProvider({
         {withGlobalClasses && <MantineClasses />}
         {children}
       </MantineThemeProvider>
-    </MantineContext.Provider>
+    </MantineContext>
   );
 }
 
@@ -136,7 +136,7 @@ export interface HeadlessMantineProviderProps {
 
 export function HeadlessMantineProvider({ children, theme, env }: HeadlessMantineProviderProps) {
   return (
-    <MantineContext.Provider
+    <MantineContext
       value={{
         colorScheme: 'auto',
         setColorScheme: () => {},
@@ -150,7 +150,7 @@ export function HeadlessMantineProvider({ children, theme, env }: HeadlessMantin
       }}
     >
       <MantineThemeProvider theme={theme}>{children}</MantineThemeProvider>
-    </MantineContext.Provider>
+    </MantineContext>
   );
 }
 

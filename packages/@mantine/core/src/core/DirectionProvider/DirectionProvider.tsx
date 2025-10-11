@@ -72,8 +72,6 @@ export function DirectionProvider({
   );
 
   return (
-    <DirectionContext.Provider value={{ dir, toggleDirection, setDirection }}>
-      {children}
-    </DirectionContext.Provider>
+    <DirectionContext value={{ dir, toggleDirection, setDirection }}>{children}</DirectionContext>
   );
 }

@@ -1,8 +1,17 @@
+import { createContext } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../../core';
 import { InputsGroupFieldset } from '../../../utils/InputsGroupFieldset';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
-import { SwitchGroupProvider } from '../SwitchGroup.context';
+
+export interface SwitchGroupContextValue {
+  value: string[];
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  size: MantineSize | (string & {}) | undefined;
+  isDisabled?: (value: string) => boolean;
+}
+
+export const SwitchGroupContext = createContext<SwitchGroupContextValue | null>(null);
 
 export type SwitchGroupStylesNames = InputWrapperStylesNames;
 
@@ -105,7 +114,7 @@ export const SwitchGroup = factory<SwitchGroupFactory>((props) => {
   const hiddenInputValue = _value.join(hiddenInputValuesSeparator);
 
   return (
-    <SwitchGroupProvider value={{ value: _value, onChange: handleChange, size, isDisabled }}>
+    <SwitchGroupContext value={{ value: _value, onChange: handleChange, size, isDisabled }}>
       <Input.Wrapper
         size={size}
         {...wrapperProps}
@@ -116,7 +125,7 @@ export const SwitchGroup = factory<SwitchGroupFactory>((props) => {
         <InputsGroupFieldset role="group">{children}</InputsGroupFieldset>
         <input type="hidden" name={name} value={hiddenInputValue} {...hiddenInputProps} />
       </Input.Wrapper>
-    </SwitchGroupProvider>
+    </SwitchGroupContext>
   );
 });
 
