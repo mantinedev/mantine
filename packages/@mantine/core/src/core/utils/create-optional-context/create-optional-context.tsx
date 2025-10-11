@@ -1,9 +1,9 @@
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 
 export function createOptionalContext<ContextValue>(initialValue: ContextValue | null = null) {
   const Context = createContext<ContextValue | null>(initialValue);
 
-  const useOptionalContext = () => useContext(Context);
+  const useOptionalContext = () => use(Context);
 
   const Provider = ({ children, value }: { value: ContextValue; children: React.ReactNode }) => (
     <Context.Provider value={value}>{children}</Context.Provider>

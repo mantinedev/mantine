@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 import { ConvertCSSVariablesInput } from './convert-css-variables';
 import type { MantineColorScheme, MantineTheme } from './theme.types';
 
@@ -25,7 +25,7 @@ interface MantineContextValue {
 export const MantineContext = createContext<MantineContextValue | null>(null);
 
 export function useMantineContext() {
-  const ctx = useContext(MantineContext);
+  const ctx = use(MantineContext);
 
   if (!ctx) {
     throw new Error('[@mantine/core] MantineProvider was not found in tree');

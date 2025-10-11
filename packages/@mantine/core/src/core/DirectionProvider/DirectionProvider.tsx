@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useState } from 'react';
+import { createContext, use, useCallback, useState } from 'react';
 import { useIsomorphicEffect, useMutationObserverTarget } from '@mantine/hooks';
 
 export type Direction = 'ltr' | 'rtl';
@@ -16,7 +16,7 @@ export const DirectionContext = createContext<DirectionContextValue>({
 });
 
 export function useDirection() {
-  return useContext(DirectionContext);
+  return use(DirectionContext);
 }
 
 export interface DirectionProviderProps {

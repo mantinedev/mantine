@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 import { MantineSize } from '../../core';
 
 interface SwitchGroupContextValue {
@@ -10,4 +10,4 @@ interface SwitchGroupContextValue {
 
 const SwitchGroupContext = createContext<SwitchGroupContextValue | null>(null);
 export const SwitchGroupProvider = SwitchGroupContext.Provider;
-export const useSwitchGroupContext = () => useContext(SwitchGroupContext);
+export const useSwitchGroupContext = () => use(SwitchGroupContext);

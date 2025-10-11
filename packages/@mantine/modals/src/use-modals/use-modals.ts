@@ -1,8 +1,8 @@
-import { useContext } from 'react';
+import { use } from 'react';
 import { ModalsContext } from '../context';
 
 export function useModals() {
-  const ctx = useContext(ModalsContext);
+  const ctx = use(ModalsContext);
 
   if (!ctx) {
     throw new Error(

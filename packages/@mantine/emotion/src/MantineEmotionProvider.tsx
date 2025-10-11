@@ -1,10 +1,10 @@
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 import { EmotionCache, withEmotionCache } from '@emotion/react';
 
 export const EmotionCacheContext = createContext<EmotionCache | null>(null);
 
 export function useEmotionCache() {
-  const cache = useContext(EmotionCacheContext);
+  const cache = use(EmotionCacheContext);
 
   if (cache === null) {
     throw new Error(

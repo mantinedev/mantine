@@ -1,6 +1,6 @@
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 
 const TooltipGroupContext = createContext(false);
 
 export const TooltipGroupProvider = TooltipGroupContext.Provider;
-export const useTooltipGroupContext = () => useContext(TooltipGroupContext);
+export const useTooltipGroupContext = () => use(TooltipGroupContext);

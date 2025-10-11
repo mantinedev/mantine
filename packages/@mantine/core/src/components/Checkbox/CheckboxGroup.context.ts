@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 import { MantineSize } from '../../core';
 
 interface CheckboxGroupContextValue {
@@ -10,4 +10,4 @@ interface CheckboxGroupContextValue {
 
 const CheckboxGroupContext = createContext<CheckboxGroupContextValue | null>(null);
 export const CheckboxGroupProvider = CheckboxGroupContext.Provider;
-export const useCheckboxGroupContext = () => useContext(CheckboxGroupContext);
+export const useCheckboxGroupContext = () => use(CheckboxGroupContext);
