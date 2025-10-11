@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import { rem, useProps } from '../../../core';
 import { ColorSlider, ColorSliderProps } from '../ColorSlider/ColorSlider';
 import { round } from '../converters/parsers';
@@ -8,13 +7,12 @@ export interface AlphaSliderProps
   color: string;
 }
 
-export const AlphaSlider = forwardRef<HTMLDivElement, AlphaSliderProps>((props, ref) => {
+export function AlphaSlider(props: AlphaSliderProps) {
   const { value, onChange, onChangeEnd, color, ...others } = useProps('AlphaSlider', null, props);
 
   return (
     <ColorSlider
       {...others}
-      ref={ref}
       value={value}
       onChange={(val) => onChange?.(round(val, 2))}
       onChangeEnd={(val) => onChangeEnd?.(round(val, 2))}
@@ -39,6 +37,6 @@ export const AlphaSlider = forwardRef<HTMLDivElement, AlphaSliderProps>((props, 
       ]}
     />
   );
-});
+}
 
 AlphaSlider.displayName = '@mantine/core/AlphaSlider';

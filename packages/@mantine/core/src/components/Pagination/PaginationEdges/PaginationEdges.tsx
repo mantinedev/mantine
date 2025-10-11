@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import { BoxProps, createPolymorphicComponent, useProps } from '../../../core';
 import { usePaginationContext } from '../Pagination.context';
 import {
@@ -25,7 +24,7 @@ export interface PaginationEdgeProps extends BoxProps {
 export function createEdgeComponent({ icon, name, action, type }: CreateEdgeComponent) {
   const defaultProps = { icon } satisfies Partial<PaginationEdgeProps>;
 
-  const Component = forwardRef<HTMLButtonElement, PaginationEdgeProps>((props, ref) => {
+  const Component = (props: PaginationEdgeProps) => {
     const { icon: Icon, ...others } = useProps(name, defaultProps, props);
     const ctx = usePaginationContext();
     const disabled = type === 'next' ? ctx.active === ctx.total : ctx.active === 1;
@@ -33,7 +32,6 @@ export function createEdgeComponent({ icon, name, action, type }: CreateEdgeComp
     return (
       <PaginationControl
         disabled={ctx.disabled || disabled}
-        ref={ref}
         onClick={ctx[action]}
         withPadding={false}
         {...others}
@@ -47,7 +45,7 @@ export function createEdgeComponent({ icon, name, action, type }: CreateEdgeComp
         />
       </PaginationControl>
     );
-  });
+  };
 
   Component.displayName = `@mantine/core/${name}`;
   return createPolymorphicComponent<'button', PaginationEdgeProps>(Component);

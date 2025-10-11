@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import { ElementProps } from '../../core';
 import { Overlay, OverlayProps } from '../Overlay';
 import { Transition, TransitionOverride } from '../Transition';
@@ -15,34 +14,37 @@ export interface ModalBaseOverlayProps
   visible?: boolean;
 }
 
-export const ModalBaseOverlay = forwardRef<HTMLDivElement, ModalBaseOverlayProps>(
-  ({ onClick, transitionProps, style, visible, ...others }, ref) => {
-    const ctx = useModalBaseContext();
-    const transition = useModalTransition(transitionProps);
+export function ModalBaseOverlay({
+  onClick,
+  transitionProps,
+  style,
+  visible,
+  ...others
+}: ModalBaseOverlayProps) {
+  const ctx = useModalBaseContext();
+  const transition = useModalTransition(transitionProps);
 
-    return (
-      <Transition
-        mounted={visible !== undefined ? visible : ctx.opened}
-        {...transition}
-        transition="fade"
-      >
-        {(transitionStyles) => (
-          <Overlay
-            ref={ref}
-            fixed
-            style={[style, transitionStyles]}
-            zIndex={ctx.zIndex}
-            unstyled={ctx.unstyled}
-            onClick={(event) => {
-              onClick?.(event);
-              ctx.closeOnClickOutside && ctx.onClose();
-            }}
-            {...others}
-          />
-        )}
-      </Transition>
-    );
-  }
-);
+  return (
+    <Transition
+      mounted={visible !== undefined ? visible : ctx.opened}
+      {...transition}
+      transition="fade"
+    >
+      {(transitionStyles) => (
+        <Overlay
+          fixed
+          style={[style, transitionStyles]}
+          zIndex={ctx.zIndex}
+          unstyled={ctx.unstyled}
+          onClick={(event) => {
+            onClick?.(event);
+            ctx.closeOnClickOutside && ctx.onClose();
+          }}
+          {...others}
+        />
+      )}
+    </Transition>
+  );
+}
 
 ModalBaseOverlay.displayName = '@mantine/core/ModalBaseOverlay';

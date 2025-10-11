@@ -1,16 +1,14 @@
-import { forwardRef } from 'react';
 import { rem, useProps } from '../../../core';
 import { ColorSlider, ColorSliderProps } from '../ColorSlider/ColorSlider';
 
 export interface HueSliderProps extends Omit<ColorSliderProps, 'maxValue' | 'overlays' | 'round'> {}
 
-export const HueSlider = forwardRef<HTMLDivElement, HueSliderProps>((props, ref) => {
+export function HueSlider(props: HueSliderProps) {
   const { value, onChange, onChangeEnd, color, ...others } = useProps('HueSlider', {}, props);
 
   return (
     <ColorSlider
       {...others}
-      ref={ref}
       value={value}
       onChange={onChange}
       onChangeEnd={onChangeEnd}
@@ -31,6 +29,6 @@ export const HueSlider = forwardRef<HTMLDivElement, HueSliderProps>((props, ref)
       ]}
     />
   );
-});
+}
 
 HueSlider.displayName = '@mantine/core/HueSlider';

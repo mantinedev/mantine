@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import { Input } from '../../components/Input';
 import {
   Box,
@@ -45,94 +44,88 @@ export type InlineInputFactory = Factory<{
   stylesNames: InlineInputStylesNames;
 }>;
 
-export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
-  (
-    {
-      __staticSelector,
-      __stylesApiProps,
-      className,
-      classNames,
-      styles,
-      unstyled,
-      children,
-      label,
-      description,
-      id,
-      disabled,
-      error,
-      size,
-      labelPosition = 'left',
-      bodyElement = 'div',
-      labelElement = 'label',
-      variant,
-      style,
-      vars,
-      mod,
-      attributes,
-      ...others
-    },
-    ref
-  ) => {
-    const getStyles = useStyles<InlineInputFactory>({
-      name: __staticSelector,
-      props: __stylesApiProps,
-      className,
-      style,
-      classes,
-      classNames,
-      styles,
-      unstyled,
-      attributes,
-    });
+export function InlineInput({
+  __staticSelector,
+  __stylesApiProps,
+  className,
+  classNames,
+  styles,
+  unstyled,
+  children,
+  label,
+  description,
+  id,
+  disabled,
+  error,
+  size,
+  labelPosition = 'left',
+  bodyElement = 'div',
+  labelElement = 'label',
+  variant,
+  style,
+  vars,
+  mod,
+  attributes,
+  ...others
+}: InlineInputProps) {
+  const getStyles = useStyles<InlineInputFactory>({
+    name: __staticSelector,
+    props: __stylesApiProps,
+    className,
+    style,
+    classes,
+    classNames,
+    styles,
+    unstyled,
+    attributes,
+  });
 
-    return (
+  return (
+    <Box
+      {...getStyles('root')}
+      __vars={{
+        '--label-fz': getFontSize(size),
+        '--label-lh': getSize(size, 'label-lh'),
+      }}
+      mod={[{ 'label-position': labelPosition }, mod]}
+      variant={variant}
+      size={size}
+      {...others}
+    >
       <Box
-        {...getStyles('root')}
-        ref={ref}
-        __vars={{
-          '--label-fz': getFontSize(size),
-          '--label-lh': getSize(size, 'label-lh'),
-        }}
-        mod={[{ 'label-position': labelPosition }, mod]}
-        variant={variant}
-        size={size}
-        {...others}
+        component={bodyElement}
+        htmlFor={bodyElement === 'label' ? id : undefined}
+        {...getStyles('body')}
       >
-        <Box
-          component={bodyElement}
-          htmlFor={bodyElement === 'label' ? id : undefined}
-          {...getStyles('body')}
-        >
-          {children}
+        {children}
 
-          <div {...getStyles('labelWrapper')} data-disabled={disabled || undefined}>
-            {label && (
-              <Box
-                component={labelElement}
-                htmlFor={labelElement === 'label' ? id : undefined}
-                {...getStyles('label')}
-                data-disabled={disabled || undefined}
-              >
-                {label}
-              </Box>
-            )}
+        <div {...getStyles('labelWrapper')} data-disabled={disabled || undefined}>
+          {label && (
+            <Box
+              component={labelElement}
+              htmlFor={labelElement === 'label' ? id : undefined}
+              {...getStyles('label')}
+              data-disabled={disabled || undefined}
+            >
+              {label}
+            </Box>
+          )}
 
-            {description && (
-              <Input.Description size={size} __inheritStyles={false} {...getStyles('description')}>
-                {description}
-              </Input.Description>
-            )}
+          {description && (
+            <Input.Description size={size} __inheritStyles={false} {...getStyles('description')}>
+              {description}
+            </Input.Description>
+          )}
 
-            {error && typeof error !== 'boolean' && (
-              <Input.Error size={size} __inheritStyles={false} {...getStyles('error')}>
-                {error}
-              </Input.Error>
-            )}
-          </div>
-        </Box>
+          {error && typeof error !== 'boolean' && (
+            <Input.Error size={size} __inheritStyles={false} {...getStyles('error')}>
+              {error}
+            </Input.Error>
+          )}
+        </div>
       </Box>
-    );
-  }
-);
+    </Box>
+  );
+}
 
 InlineInput.displayName = '@mantine/core/InlineInput';

@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 import {
   Box,
@@ -82,83 +81,77 @@ export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
   removeScrollProps?: RemoveScrollProps;
 }
 
-export const ModalBase = forwardRef<HTMLDivElement, ModalBaseProps>(
-  (
-    {
-      keepMounted,
-      opened,
-      onClose,
-      id,
-      transitionProps,
-      onExitTransitionEnd,
-      onEnterTransitionEnd,
-      trapFocus,
-      closeOnEscape,
-      returnFocus,
-      closeOnClickOutside,
-      withinPortal,
-      portalProps,
-      lockScroll,
-      children,
-      zIndex,
-      shadow,
-      padding,
-      __vars,
-      unstyled,
-      removeScrollProps,
-      ...others
-    },
-    ref
-  ) => {
-    const { _id, titleMounted, bodyMounted, shouldLockScroll, setTitleMounted, setBodyMounted } =
-      useModal({ id, transitionProps, opened, trapFocus, closeOnEscape, onClose, returnFocus });
+export function ModalBase({
+  keepMounted,
+  opened,
+  onClose,
+  id,
+  transitionProps,
+  onExitTransitionEnd,
+  onEnterTransitionEnd,
+  trapFocus,
+  closeOnEscape,
+  returnFocus,
+  closeOnClickOutside,
+  withinPortal,
+  portalProps,
+  lockScroll,
+  children,
+  zIndex,
+  shadow,
+  padding,
+  __vars,
+  unstyled,
+  removeScrollProps,
+  ...others
+}: ModalBaseProps) {
+  const { _id, titleMounted, bodyMounted, shouldLockScroll, setTitleMounted, setBodyMounted } =
+    useModal({ id, transitionProps, opened, trapFocus, closeOnEscape, onClose, returnFocus });
 
-    const { key: removeScrollKey, ...otherRemoveScrollProps } = removeScrollProps || {};
+  const { key: removeScrollKey, ...otherRemoveScrollProps } = removeScrollProps || {};
 
-    return (
-      <OptionalPortal {...portalProps} withinPortal={withinPortal}>
-        <ModalBaseProvider
-          value={{
-            opened,
-            onClose,
-            closeOnClickOutside,
-            onExitTransitionEnd,
-            onEnterTransitionEnd,
-            transitionProps: { ...transitionProps, keepMounted },
-            getTitleId: () => `${_id}-title`,
-            getBodyId: () => `${_id}-body`,
-            titleMounted,
-            bodyMounted,
-            setTitleMounted,
-            setBodyMounted,
-            trapFocus,
-            closeOnEscape,
-            zIndex,
-            unstyled,
-          }}
+  return (
+    <OptionalPortal {...portalProps} withinPortal={withinPortal}>
+      <ModalBaseProvider
+        value={{
+          opened,
+          onClose,
+          closeOnClickOutside,
+          onExitTransitionEnd,
+          onEnterTransitionEnd,
+          transitionProps: { ...transitionProps, keepMounted },
+          getTitleId: () => `${_id}-title`,
+          getBodyId: () => `${_id}-body`,
+          titleMounted,
+          bodyMounted,
+          setTitleMounted,
+          setBodyMounted,
+          trapFocus,
+          closeOnEscape,
+          zIndex,
+          unstyled,
+        }}
+      >
+        <RemoveScroll
+          enabled={shouldLockScroll && lockScroll}
+          key={removeScrollKey}
+          {...otherRemoveScrollProps}
         >
-          <RemoveScroll
-            enabled={shouldLockScroll && lockScroll}
-            key={removeScrollKey}
-            {...otherRemoveScrollProps}
+          <Box
+            {...others}
+            __vars={{
+              ...__vars,
+              '--mb-z-index': (zIndex || getDefaultZIndex('modal')).toString(),
+              '--mb-shadow': getShadow(shadow),
+              '--mb-padding': getSpacing(padding),
+            }}
           >
-            <Box
-              ref={ref}
-              {...others}
-              __vars={{
-                ...__vars,
-                '--mb-z-index': (zIndex || getDefaultZIndex('modal')).toString(),
-                '--mb-shadow': getShadow(shadow),
-                '--mb-padding': getSpacing(padding),
-              }}
-            >
-              {children}
-            </Box>
-          </RemoveScroll>
-        </ModalBaseProvider>
-      </OptionalPortal>
-    );
-  }
-);
+            {children}
+          </Box>
+        </RemoveScroll>
+      </ModalBaseProvider>
+    </OptionalPortal>
+  );
+}
 
 ModalBase.displayName = '@mantine/core/ModalBase';

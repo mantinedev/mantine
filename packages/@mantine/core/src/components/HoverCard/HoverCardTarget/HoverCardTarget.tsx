@@ -1,4 +1,4 @@
-import { cloneElement, forwardRef } from 'react';
+import { cloneElement } from 'react';
 import { createEventHandler, isElement, useProps } from '../../../core';
 import { Popover, PopoverTargetProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';
@@ -13,7 +13,7 @@ const defaultProps = {
   refProp: 'ref',
 } satisfies Partial<HoverCardTargetProps>;
 
-export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((props, ref) => {
+export function HoverCardTarget(props: HoverCardTargetProps) {
   const { children, refProp, eventPropsWrapperName, ...others } = useProps(
     'HoverCardTarget',
     defaultProps,
@@ -33,7 +33,7 @@ export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((pr
     const referenceProps = ctx.getReferenceProps();
 
     return (
-      <Popover.Target refProp={refProp} ref={ref} {...others}>
+      <Popover.Target refProp={refProp} {...others}>
         {cloneElement(
           children as React.ReactElement,
           eventPropsWrapperName
@@ -50,13 +50,13 @@ export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((pr
   const eventListeners = { onMouseEnter, onMouseLeave };
 
   return (
-    <Popover.Target refProp={refProp} ref={ref} {...others}>
+    <Popover.Target refProp={refProp} {...others}>
       {cloneElement(
         children as React.ReactElement,
         eventPropsWrapperName ? { [eventPropsWrapperName]: eventListeners } : eventListeners
       )}
     </Popover.Target>
   );
-});
+}
 
 HoverCardTarget.displayName = '@mantine/core/HoverCardTarget';

@@ -40,6 +40,7 @@ const getNoRefCode = (component: string) => `
 // Example of code that WILL NOT WORK
 import { ${component} } from '@mantine/core';
 
+// ❌ ref is not forwarded to the root element
 function MyComponent() {
   return <div>My component</div>;
 }
@@ -55,16 +56,14 @@ function Demo() {
   );
 }`;
 
-const getForwardRefCode = (component: string) => `
+const getWithRefCode = (component: string) => `
 // Example of code that will work
-import { forwardRef } from 'react';
 import { ${component} } from '@mantine/core';
 
-const MyComponent = forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<'div'>>((props, ref) => (
-  <div ref={ref} {...props}>
-    My component
-  </div>
-));
+// ✅ ref is forwarded to the root element
+function MyComponent({ ref, ...others }: React.ComponentProps<'div'>) {
+  return <div ref={ref} {...others}>My component</div>;
+}
 
 // Works correctly – ref is forwarded
 function Demo() {
@@ -104,10 +103,10 @@ export function MdxTargetComponent({ component }: MdxTargetComponentProps) {
       <MdxCodeHighlight code={getNoRefCode(component)} language="tsx" />
 
       <MdxParagraph>
-        Use the <MdxCode>forwardRef</MdxCode> function to forward ref to the root element:
+        Pass <MdxCode>ref</MdxCode> to the root element:
       </MdxParagraph>
 
-      <MdxCodeHighlight code={getForwardRefCode(component)} language="tsx" />
+      <MdxCodeHighlight code={getWithRefCode(component)} language="tsx" />
     </>
   );
 }

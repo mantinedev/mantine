@@ -1,12 +1,13 @@
-import { forwardRef } from 'react';
+import React from 'react';
+import { ref } from 'process';
 
-export interface CloseIconProps extends React.ComponentPropsWithoutRef<'svg'> {
+export interface CloseIconProps extends React.ComponentProps<'svg'> {
   /** Icon width and height, `var(--icon-size)` by default */
   size?: string;
 }
 
-export const CloseIcon = forwardRef<SVGSVGElement, CloseIconProps>(
-  ({ size = 'var(--cb-icon-size, 70%)', style, ...others }, ref) => (
+export function CloseIcon({ size = 'var(--cb-icon-size, 70%)', style, ...others }: CloseIconProps) {
+  return (
     <svg
       viewBox="0 0 15 15"
       fill="none"
@@ -22,7 +23,7 @@ export const CloseIcon = forwardRef<SVGSVGElement, CloseIconProps>(
         clipRule="evenodd"
       />
     </svg>
-  )
-);
+  );
+}
 
 CloseIcon.displayName = '@mantine/core/CloseIcon';

@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { useState } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import { Box, BoxProps, ElementProps, Factory, GetStylesApi, useProps } from '../../../core';
 import type { ScrollAreaFactory } from '../ScrollArea';
@@ -39,8 +39,8 @@ const defaultProps = {
   type: 'hover',
 } satisfies Partial<ScrollAreaRootProps>;
 
-export const ScrollAreaRoot = forwardRef<HTMLDivElement, ScrollAreaRootProps>((_props, ref) => {
-  const { type, scrollHideDelay, scrollbars, getStyles, ...others } = useProps(
+export function ScrollAreaRoot(_props: ScrollAreaRootProps) {
+  const { type, scrollHideDelay, scrollbars, getStyles, ref, ...others } = useProps(
     'ScrollAreaRoot',
     defaultProps,
     _props
@@ -90,6 +90,6 @@ export const ScrollAreaRoot = forwardRef<HTMLDivElement, ScrollAreaRootProps>((_
       />
     </ScrollAreaProvider>
   );
-});
+}
 
 ScrollAreaRoot.displayName = '@mantine/core/ScrollAreaRoot';

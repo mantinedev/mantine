@@ -1,9 +1,7 @@
-import { forwardRef } from 'react';
 import { Box, BoxProps, createPolymorphicComponent, Group } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { forwardRef } from 'react';
 import { Box, BoxProps, createPolymorphicComponent, Group } from '@mantine/core';
 
 interface MyButtonProps extends BoxProps {
@@ -11,11 +9,11 @@ interface MyButtonProps extends BoxProps {
 }
 
 const MyButton = createPolymorphicComponent<'button', MyButtonProps>(
-  forwardRef<HTMLButtonElement, MyButtonProps>(({ label, ...others }, ref) => (
-    <Box component="button" {...others} ref={ref}>
+  ({ label, ...others }: MyButtonProps) => (
+    <Box component="button" {...others}>
       {label}
     </Box>
-  ))
+  )
 );
 
 function Demo() {
@@ -38,11 +36,11 @@ interface MyButtonProps extends BoxProps {
 }
 
 const MyButton = createPolymorphicComponent<'button', MyButtonProps>(
-  forwardRef<HTMLButtonElement, MyButtonProps>(({ label, ...others }, ref) => (
-    <Box component="button" {...others} ref={ref}>
+  ({ label, ...others }: MyButtonProps) => (
+    <Box component="button" {...others}>
       {label}
     </Box>
-  ))
+  )
 );
 
 function Demo() {

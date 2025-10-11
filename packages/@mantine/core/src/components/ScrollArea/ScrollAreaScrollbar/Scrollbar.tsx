@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useCallbackRef, useDebouncedCallback, useMergedRef } from '@mantine/hooks';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { Sizes } from '../ScrollArea.types';
@@ -20,9 +20,9 @@ export interface ScrollbarPrivateProps {
 
 interface ScrollbarProps
   extends ScrollbarPrivateProps,
-    Omit<React.ComponentPropsWithoutRef<'div'>, 'onResize'> {}
+    Omit<React.ComponentProps<'div'>, 'onResize'> {}
 
-export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forwardedRef) => {
+export function Scrollbar(props: ScrollbarProps) {
   const {
     sizes,
     hasThumb,
@@ -33,11 +33,12 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
     onDragScroll,
     onWheelScroll,
     onResize,
+    ref,
     ...scrollbarProps
   } = props;
   const context = useScrollAreaContext();
   const [scrollbar, setScrollbar] = useState<HTMLDivElement | null>(null);
-  const composeRefs = useMergedRef(forwardedRef, (node) => setScrollbar(node));
+  const composeRefs = useMergedRef(ref, (node) => setScrollbar(node));
   const rectRef = useRef<DOMRect | null>(null);
   const prevWebkitUserSelectRef = useRef<string>('');
   const { viewport } = context;
@@ -117,4 +118,4 @@ export const Scrollbar = forwardRef<HTMLDivElement, ScrollbarProps>((props, forw
       />
     </ScrollbarProvider>
   );
-});
+}

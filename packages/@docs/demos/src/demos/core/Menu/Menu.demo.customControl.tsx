@@ -1,11 +1,9 @@
-import { forwardRef } from 'react';
 import { IconChevronRight } from '@tabler/icons-react';
 import { Avatar, Group, Menu, Text, UnstyledButton } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { DemoMenuItems } from './_menu-items';
 
 const code = `
-import { forwardRef } from 'react';
 import { IconChevronRight } from '@tabler/icons-react';
 import { Group, Avatar, Text, Menu, UnstyledButton } from '@mantine/core';
 
@@ -16,10 +14,9 @@ interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   icon?: React.ReactNode;
 }
 
-const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
-  ({ image, name, email, icon, ...others }: UserButtonProps, ref) => (
+function UserButton({ image, name, email, icon, ...others }: UserButtonProps) {
+  return (
     <UnstyledButton
-      ref={ref}
       style={{
         padding: 'var(--mantine-spacing-md)',
         color: 'var(--mantine-color-text)',
@@ -43,8 +40,8 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
         {icon || <IconChevronRight size={16} />}
       </Group>
     </UnstyledButton>
-  )
-);
+  );
+}
 
 function Demo() {
   return (
@@ -69,10 +66,9 @@ interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   icon?: React.ReactNode;
 }
 
-const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
-  ({ image, name, email, icon, ...others }: UserButtonProps, ref) => (
+function UserButton({ image, name, email, icon, ...others }: UserButtonProps) {
+  return (
     <UnstyledButton
-      ref={ref}
       style={{
         padding: 'var(--mantine-spacing-md)',
         color: 'var(--mantine-color-text)',
@@ -96,8 +92,8 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
         {icon || <IconChevronRight size={16} />}
       </Group>
     </UnstyledButton>
-  )
-);
+  );
+}
 
 function Demo() {
   return (

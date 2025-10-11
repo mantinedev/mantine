@@ -1,10 +1,10 @@
-import { forwardRef, useState } from 'react';
+import { useState } from 'react';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { useResizeObserver } from '../use-resize-observer';
 
 interface ScrollAreaCornerProps extends React.ComponentPropsWithoutRef<'div'> {}
 
-export const Corner = forwardRef<HTMLDivElement, ScrollAreaCornerProps>((props, ref) => {
+export function Corner(props: ScrollAreaCornerProps) {
   const { style, ...others } = props;
   const ctx = useScrollAreaContext();
   const [width, setWidth] = useState(0);
@@ -23,12 +23,12 @@ export const Corner = forwardRef<HTMLDivElement, ScrollAreaCornerProps>((props, 
     setWidth(w);
   });
 
-  return hasSize ? <div {...others} ref={ref} style={{ ...style, width, height }} /> : null;
-});
+  return hasSize ? <div {...others} style={{ ...style, width, height }} /> : null;
+}
 
-export const ScrollAreaCorner = forwardRef<HTMLDivElement, ScrollAreaCornerProps>((props, ref) => {
+export function ScrollAreaCorner(props: ScrollAreaCornerProps) {
   const ctx = useScrollAreaContext();
   const hasBothScrollbarsVisible = Boolean(ctx.scrollbarX && ctx.scrollbarY);
   const hasCorner = ctx.type !== 'scroll' && hasBothScrollbarsVisible;
-  return hasCorner ? <Corner {...props} ref={ref} /> : null;
-});
+  return hasCorner ? <Corner {...props} /> : null;
+}

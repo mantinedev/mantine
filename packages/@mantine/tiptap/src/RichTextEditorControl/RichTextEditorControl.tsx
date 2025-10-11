@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import {
   BoxProps,
   CompoundStylesApiProps,
@@ -81,18 +80,19 @@ export interface RichTextEditorControlBaseProps extends RichTextEditorControlPro
   icon?: React.FC<{ style: React.CSSProperties }>;
 }
 
-export const RichTextEditorControlBase = forwardRef<
-  HTMLButtonElement,
-  RichTextEditorControlBaseProps
->(({ className, icon: Icon, ...others }: any, ref) => {
+export function RichTextEditorControlBase({
+  className,
+  icon: Icon,
+  ...others
+}: RichTextEditorControlBaseProps & { icon: React.FC<{ style: React.CSSProperties }> }) {
   const ctx = useRichTextEditorContext();
 
   return (
-    <RichTextEditorControl ref={ref} {...others}>
+    <RichTextEditorControl {...others}>
       <Icon {...ctx.getStyles('controlIcon')} />
     </RichTextEditorControl>
   );
-});
+}
 
 RichTextEditorControlBase.displayName = '@mantine/tiptap/RichTextEditorControlBase';
 
@@ -111,7 +111,7 @@ export function createControl({
   icon,
   isDisabled,
 }: CreateControlProps) {
-  const Control = forwardRef<HTMLButtonElement, RichTextEditorControlBaseProps>((props, ref) => {
+  const Control = (props: RichTextEditorControlBaseProps) => {
     const { editor, labels } = useRichTextEditorContext();
     const _label = labels[label] as string;
     return (
@@ -119,14 +119,13 @@ export function createControl({
         aria-label={_label}
         title={_label}
         active={isActive?.name ? editor?.isActive(isActive.name, isActive.attributes) : false}
-        ref={ref}
         onClick={() => (editor as any)?.chain().focus()[operation.name](operation.attributes).run()}
         icon={props.icon || icon}
         disabled={isDisabled?.(editor) || false}
         {...props}
       />
     );
-  });
+  };
 
   Control.displayName = `@mantine/tiptap/${label}`;
 

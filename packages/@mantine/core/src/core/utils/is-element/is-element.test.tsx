@@ -1,8 +1,7 @@
-import { forwardRef } from 'react';
 import { isElement } from './is-element';
 
 const TestComponent = () => <div />;
-const TextRefComponent = forwardRef<HTMLDivElement>((_props, ref) => <div ref={ref} />);
+const TextRefComponent = (_props: any) => <div ref={_props.ref} />;
 TextRefComponent.displayName = 'TextRefComponent';
 
 describe('@mantine/utils/is-element', () => {

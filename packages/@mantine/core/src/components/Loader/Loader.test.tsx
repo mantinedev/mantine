@@ -1,9 +1,8 @@
-import { forwardRef } from 'react';
 import { render, tests } from '@mantine-tests/core';
 import { defaultLoaders, Loader, LoaderProps, LoaderStylesNames } from './Loader';
 import { MantineLoaderComponent } from './Loader.types';
 
-const customLoader: MantineLoaderComponent = forwardRef(() => <div data-custom-loader />);
+const customLoader: MantineLoaderComponent = () => <div data-custom-loader />;
 customLoader.displayName = 'CustomLoader';
 
 const defaultProps: LoaderProps = {};

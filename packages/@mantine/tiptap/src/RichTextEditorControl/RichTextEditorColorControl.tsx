@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import { BoxProps, ColorSwatch, ElementProps, useProps } from '@mantine/core';
 import { useRichTextEditorContext } from '../RichTextEditor.context';
 import { RichTextEditorControl } from './RichTextEditorControl';
@@ -8,10 +7,7 @@ export interface RichTextEditorColorControlProps extends BoxProps, ElementProps<
   color: string;
 }
 
-export const RichTextEditorColorControl = forwardRef<
-  HTMLButtonElement,
-  RichTextEditorColorControlProps
->((props, ref) => {
+export function RichTextEditorColorControl(props: RichTextEditorColorControlProps) {
   const { color, ...others } = useProps('RichTextEditorColorControl', null, props);
   const { editor, labels, variant } = useRichTextEditorContext();
   const currentColor = editor?.getAttributes('textStyle').color || null;
@@ -25,11 +21,10 @@ export const RichTextEditorColorControl = forwardRef<
       aria-label={label}
       title={label}
       onClick={() => (editor?.chain() as any).focus().setColor(color).run()}
-      ref={ref}
     >
       <ColorSwatch color={color} size={14} />
     </RichTextEditorControl>
   );
-});
+}
 
 RichTextEditorColorControl.displayName = '@mantine/tiptap/RichTextEditorColorControl';

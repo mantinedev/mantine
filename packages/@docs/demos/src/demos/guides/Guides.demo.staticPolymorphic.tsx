@@ -1,18 +1,12 @@
-import { forwardRef } from 'react';
-import { Button, ButtonProps } from '@mantine/core';
+import { Button, ButtonProps, ElementProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { forwardRef } from 'react';
-import { Button, ButtonProps } from '@mantine/core';
+import { Button, ButtonProps, ElementProps } from '@mantine/core';
 
-interface LinkButtonProps
-  extends ButtonProps,
-    Omit<React.ComponentPropsWithoutRef<'a'>, keyof ButtonProps> {}
-
-const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>((props, ref) => (
-  <Button {...props} ref={ref} component="a" />
-));
+const LinkButton = (props: ButtonProps & ElementProps<'a', keyof ButtonProps>) => (
+  <Button {...props} component="a" />
+);
 
 function Demo() {
   return (
@@ -23,13 +17,9 @@ function Demo() {
 }
 `;
 
-interface LinkButtonProps
-  extends ButtonProps,
-    Omit<React.ComponentPropsWithoutRef<'a'>, keyof ButtonProps> {}
-
-const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>((props, ref) => (
-  <Button {...props} ref={ref} component="a" />
-));
+const LinkButton = (props: ButtonProps & ElementProps<'a', keyof ButtonProps>) => (
+  <Button {...props} component="a" />
+);
 
 function Demo() {
   return (

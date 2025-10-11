@@ -1,4 +1,4 @@
-import { cloneElement, forwardRef } from 'react';
+import { cloneElement } from 'react';
 import { createEventHandler, isElement, useProps } from '../../../core';
 import { Popover } from '../../Popover';
 import { useMenuContext } from '../Menu.context';
@@ -15,7 +15,7 @@ const defaultProps = {
   refProp: 'ref',
 } satisfies Partial<MenuTargetProps>;
 
-export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) => {
+export function MenuTarget(props: MenuTargetProps) {
   const { children, refProp, ...others } = useProps('MenuTarget', defaultProps, props);
 
   if (!isElement(children)) {
@@ -52,7 +52,7 @@ export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) 
   });
 
   return (
-    <Popover.Target refProp={refProp} popupType="menu" ref={ref} {...others}>
+    <Popover.Target refProp={refProp} popupType="menu" {...others}>
       {cloneElement(children, {
         onClick,
         onMouseEnter,
@@ -61,6 +61,6 @@ export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) 
       } as any)}
     </Popover.Target>
   );
-});
+}
 
 MenuTarget.displayName = '@mantine/core/MenuTarget';

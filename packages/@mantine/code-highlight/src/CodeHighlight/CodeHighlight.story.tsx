@@ -12,7 +12,6 @@ import { InlineCodeHighlight } from './InlineCodeHighlight';
 export default { title: 'CodeHighlight' };
 
 const tsxCode = `
-import { forwardRef } from 'react';
 import { Group, Avatar, Text, Select } from '@mantine/core';
 
 // Data for select
@@ -52,21 +51,19 @@ interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
   description: string;
 }
 
-const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
-  ({ image, label, description, ...others }: ItemProps, ref) => (
-    <div ref={ref} {...others}>
-      <Group noWrap>
-        <Avatar src={image} />
+const SelectItem = ({ image, label, description, ...others }: ItemProps) => (
+  <div {...others}>
+    <Group noWrap>
+      <Avatar src={image} />
 
-        <div>
-          <Text size="sm">{label}</Text>
-          <Text size="xs" opacity={0.65}>
-            {description}
-          </Text>
-        </div>
-      </Group>
-    </div>
-  )
+      <div>
+        <Text size="sm">{label}</Text>
+        <Text size="xs" opacity={0.65}>
+          {description}
+        </Text>
+      </div>
+    </Group>
+  </div>
 );
 
 function Demo() {

@@ -1,8 +1,10 @@
-import { forwardRef, useRef } from 'react';
+import React, { useRef } from 'react';
 import { assignRef, useMergedRef } from '@mantine/hooks';
 import { useProps } from '../../core';
 
 export interface FileButtonProps<Multiple extends boolean = false> {
+  ref?: React.Ref<HTMLInputElement>;
+
   /** Called when files are picked */
   onChange: (payload: Multiple extends true ? File[] : File | null) => void;
 
@@ -34,75 +36,66 @@ export interface FileButtonProps<Multiple extends boolean = false> {
   inputProps?: React.ComponentPropsWithoutRef<'input'>;
 }
 
-const defaultProps = {
-  multiple: false,
-} satisfies Partial<FileButtonProps>;
+export function FileButton<Multiple extends boolean = false>(props: FileButtonProps<Multiple>) {
+  const {
+    onChange,
+    children,
+    multiple,
+    accept,
+    name,
+    form,
+    resetRef,
+    disabled,
+    capture,
+    inputProps,
+    ref,
+    ...others
+  } = useProps('FileButton', null, props);
 
-type FileButtonComponent = (<Multiple extends boolean = false>(
-  props: FileButtonProps<Multiple>
-) => React.ReactElement) & { displayName?: string };
+  const inputRef = useRef<HTMLInputElement>(null);
 
-export const FileButton: FileButtonComponent = forwardRef<HTMLInputElement, FileButtonProps>(
-  (props, ref) => {
-    const {
-      onChange,
-      children,
-      multiple,
-      accept,
-      name,
-      form,
-      resetRef,
-      disabled,
-      capture,
-      inputProps,
-      ...others
-    } = useProps('FileButton', defaultProps, props);
+  const onClick = () => {
+    !disabled && inputRef.current?.click();
+  };
 
-    const inputRef = useRef<HTMLInputElement>(null);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.currentTarget.files === null) {
+      return onChange(multiple ? ([] as any) : null);
+    }
 
-    const onClick = () => {
-      !disabled && inputRef.current?.click();
-    };
+    if (multiple) {
+      onChange(Array.from(event.currentTarget.files) as any);
+    } else {
+      onChange((event.currentTarget.files[0] as any) || null);
+    }
+  };
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event.currentTarget.files === null) {
-        return onChange(multiple ? ([] as any) : null);
-      }
+  const reset = () => {
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
+  };
 
-      if (multiple) {
-        onChange(Array.from(event.currentTarget.files) as any);
-      } else {
-        onChange(event.currentTarget.files[0] || null);
-      }
-    };
+  assignRef(resetRef, reset);
 
-    const reset = () => {
-      if (inputRef.current) {
-        inputRef.current.value = '';
-      }
-    };
+  return (
+    <>
+      <input
+        style={{ display: 'none' }}
+        type="file"
+        accept={accept}
+        multiple={multiple}
+        onChange={handleChange}
+        ref={useMergedRef(ref, inputRef)}
+        name={name}
+        form={form}
+        capture={capture}
+        {...inputProps}
+      />
 
-    assignRef(resetRef, reset);
-
-    return (
-      <>
-        <input
-          style={{ display: 'none' }}
-          type="file"
-          accept={accept}
-          multiple={multiple}
-          onChange={handleChange}
-          ref={useMergedRef(ref, inputRef)}
-          name={name}
-          form={form}
-          capture={capture}
-          {...inputProps}
-        />
-
-        {children({ onClick, ...others })}
-      </>
-    );
-  }
-) as any;
+      {children({ onClick, ...others })}
+    </>
+  );
+}
 
 FileButton.displayName = '@mantine/core/FileButton';
