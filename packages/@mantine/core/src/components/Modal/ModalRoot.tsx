@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   createVarsResolver,
   factory,
@@ -14,6 +15,7 @@ import {
 import { ModalBase, ModalBaseProps, ModalBaseStylesNames } from '../ModalBase';
 import { ScrollArea } from '../ScrollArea';
 import { ModalProvider, ScrollAreaComponent } from './Modal.context';
+import { useModalStackContext } from './ModalStack';
 import classes from './Modal.module.css';
 
 export type ModalRootStylesNames = ModalBaseStylesNames;
@@ -41,6 +43,9 @@ export interface ModalRootProps extends StylesApiProps<ModalRootFactory>, ModalB
 
   /** If set, the modal takes the entire screen @default `false` */
   fullScreen?: boolean;
+
+  /** Id of the modal in the `Modal.Stack` */
+  stackId?: string;
 }
 
 export type ModalRootFactory = Factory<{
@@ -93,8 +98,30 @@ export const ModalRoot = factory<ModalRootFactory>((_props, ref) => {
     xOffset,
     __staticSelector,
     attributes,
+    stackId,
+    opened,
+    zIndex,
     ...others
   } = props;
+
+  const ctx = useModalStackContext();
+
+  const stackProps =
+    ctx && stackId
+      ? {
+          closeOnEscape: ctx.currentId === stackId,
+          trapFocus: ctx.currentId === stackId,
+          zIndex: ctx.getZIndex(stackId),
+        }
+      : {};
+
+  useEffect(() => {
+    if (ctx && stackId) {
+      opened
+        ? ctx.addModal(stackId, zIndex || getDefaultZIndex('modal'))
+        : ctx.removeModal(stackId);
+    }
+  }, [opened, stackId, zIndex]);
 
   const getStyles = useStyles<ModalRootFactory>({
     name: __staticSelector,
@@ -111,15 +138,18 @@ export const ModalRoot = factory<ModalRootFactory>((_props, ref) => {
   });
 
   return (
-    <ModalProvider value={{ yOffset, scrollAreaComponent, getStyles, fullScreen }}>
+    <ModalProvider value={{ yOffset, scrollAreaComponent, getStyles, fullScreen, stackId, opened }}>
       <ModalBase
         ref={ref}
+        opened={opened}
         {...getStyles('root')}
         data-full-screen={fullScreen || undefined}
         data-centered={centered || undefined}
         data-offset-scrollbars={scrollAreaComponent === ScrollArea.Autosize || undefined}
         unstyled={unstyled}
+        zIndex={ctx && stackId ? ctx.getZIndex(stackId) : zIndex}
         {...others}
+        {...stackProps}
       />
     </ModalProvider>
   );
