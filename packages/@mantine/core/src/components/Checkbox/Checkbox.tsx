@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useId } from '@mantine/hooks';
+import { useEffect, useRef } from 'react';
+import { useId, useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -170,6 +170,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
     ...others
   } = props;
 
+  const inputRef = useRef<HTMLInputElement>(null);
   const ctx = useCheckboxGroupContext();
   const _size = size || ctx?.size;
 
@@ -204,10 +205,10 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
   const finalDisabled = disabled || isDisabledByGroup;
 
   useEffect(() => {
-    if (ref && 'current' in ref && ref.current) {
-      ref.current.indeterminate = indeterminate || false;
+    if (inputRef.current) {
+      inputRef.current.indeterminate = indeterminate || false;
     }
-  }, [indeterminate, ref]);
+  }, [indeterminate]);
 
   return (
     <InlineInput
@@ -235,7 +236,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
         <Box
           component="input"
           id={uuid}
-          ref={ref}
+          ref={useMergedRef(inputRef, ref)}
           checked={checked}
           disabled={finalDisabled}
           mod={{ error: !!error, indeterminate, 'with-error-styles': withErrorStyles }}

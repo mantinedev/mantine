@@ -105,9 +105,9 @@ describe('@mantine/charts/LineChart', () => {
     const legendElementList = container.querySelectorAll('.mantine-ChartLegend-legendItemName');
     expect(legendElementList).toHaveLength(3);
 
-    expect(legendElementList[0].textContent).toEqual('AppleLabel');
-    expect(legendElementList[1].textContent).toEqual('OrangesLabel');
-    expect(legendElementList[2].textContent).toEqual('TomatoesLabel');
+    expect(legendElementList[0].textContent).toEqual('TomatoesLabel');
+    expect(legendElementList[1].textContent).toEqual('AppleLabel');
+    expect(legendElementList[2].textContent).toEqual('OrangesLabel');
   });
 
   it('renders LineChart legend labels', () => {
