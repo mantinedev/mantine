@@ -1,6 +1,5 @@
-/* eslint-disable no-console */
 import React from 'react';
-import type { Preview } from '@storybook/nextjs';
+import type { Decorator, Preview } from '@storybook/nextjs';
 import { IconTextDirectionLtr, IconTextDirectionRtl } from '@tabler/icons-react';
 import { CodeHighlightAdapterProvider, createShikiAdapter } from '@mantine/code-highlight';
 import { ActionIcon, MantineProvider, useDirection } from '@mantine/core';
@@ -83,7 +82,7 @@ async function loadShiki() {
 
 const shikiAdapter = createShikiAdapter(loadShiki);
 
-export const decorators = [
+export const decorators: Decorator[] = [
   (renderStory) => <DirectionWrapper>{renderStory()}</DirectionWrapper>,
   (renderStory) => (
     <CodeHighlightAdapterProvider adapter={shikiAdapter}>

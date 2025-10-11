@@ -48,7 +48,7 @@ const config: StorybookConfig = {
       ...config.resolve,
       extensionAlias: { '.js': ['.ts', '.tsx', '.js'] },
       plugins: [
-        ...(config.resolve.plugins || []),
+        ...(config.resolve?.plugins || []),
         new TsconfigPathsPlugin({
           extensions: ['.ts', '.tsx', '.js'],
           configFile: path.join(__dirname, '../tsconfig.json'),
