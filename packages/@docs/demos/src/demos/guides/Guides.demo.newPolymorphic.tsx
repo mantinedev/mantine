@@ -1,14 +1,14 @@
-import { Box, BoxProps, createPolymorphicComponent, Group } from '@mantine/core';
+import { Box, BoxProps, Group, polymorphic } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Box, BoxProps, createPolymorphicComponent, Group } from '@mantine/core';
+import { Box, BoxProps, polymorphic, Group } from '@mantine/core';
 
 interface MyButtonProps extends BoxProps {
   label: string;
 }
 
-const MyButton = createPolymorphicComponent<'button', MyButtonProps>(
+const MyButton = polymorphic<'button', MyButtonProps>(
   ({ label, ...others }: MyButtonProps) => (
     <Box component="button" {...others}>
       {label}
@@ -35,13 +35,11 @@ interface MyButtonProps extends BoxProps {
   label: string;
 }
 
-const MyButton = createPolymorphicComponent<'button', MyButtonProps>(
-  ({ label, ...others }: MyButtonProps) => (
-    <Box component="button" {...others}>
-      {label}
-    </Box>
-  )
-);
+const MyButton = polymorphic<'button', MyButtonProps>(({ label, ...others }: MyButtonProps) => (
+  <Box component="button" {...others}>
+    {label}
+  </Box>
+));
 
 function Demo() {
   return (

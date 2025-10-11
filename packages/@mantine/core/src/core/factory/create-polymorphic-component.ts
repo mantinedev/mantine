@@ -42,3 +42,5 @@ export function createPolymorphicComponent<
 
   return component as PolymorphicComponent;
 }
+
+export const polymorphic = createPolymorphicComponent;

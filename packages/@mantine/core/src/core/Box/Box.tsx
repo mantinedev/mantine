@@ -1,5 +1,5 @@
 import cx from 'clsx';
-import { createPolymorphicComponent } from '../factory';
+import { polymorphic } from '../factory';
 import { InlineStyles } from '../InlineStyles';
 import { MantineBreakpoint, useMantineSxTransform, useMantineTheme } from '../MantineProvider';
 import { isNumberLike } from '../utils';
@@ -127,4 +127,4 @@ function _Box({
 
 _Box.displayName = '@mantine/core/Box';
 
-export const Box = createPolymorphicComponent<'div', BoxComponentProps>(_Box);
+export const Box = polymorphic<'div', BoxComponentProps>(_Box);

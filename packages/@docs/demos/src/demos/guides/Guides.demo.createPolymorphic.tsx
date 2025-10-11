@@ -1,20 +1,20 @@
-import { Button, ButtonProps, createPolymorphicComponent, Group } from '@mantine/core';
+import { Button, ButtonProps, Group, polymorphic } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { createPolymorphicComponent, Button, ButtonProps, Group } from '@mantine/core';
+import { polymorphic, Button, ButtonProps, Group } from '@mantine/core';
 
 interface CustomButtonProps extends ButtonProps {
   label: string;
 }
 
 // Default root element is 'button', but it can be changed with 'component' prop
-const CustomButton = createPolymorphicComponent<'button', CustomButtonProps>(
+const CustomButton = polymorphic<'button', CustomButtonProps>(
   ({ label, ...others }: CustomButtonProps) => <Button {...others}>{label}</Button>
 );
 
 // Default root element is 'a', but it can be changed with 'component' prop
-const CustomButtonAnchor = createPolymorphicComponent<'a', CustomButtonProps>(
+const CustomButtonAnchor = polymorphic<'a', CustomButtonProps>(
   ({ label, ...others }: CustomButtonProps) => (
     <Button component="a" {...others}>
       {label}
@@ -36,11 +36,11 @@ interface CustomButtonProps extends ButtonProps {
   label: string;
 }
 
-const CustomButton = createPolymorphicComponent<'button', CustomButtonProps>(
+const CustomButton = polymorphic<'button', CustomButtonProps>(
   ({ label, ...others }: CustomButtonProps) => <Button {...others}>{label}</Button>
 );
 
-const CustomButtonAnchor = createPolymorphicComponent<'a', CustomButtonProps>(
+const CustomButtonAnchor = polymorphic<'a', CustomButtonProps>(
   ({ label, ...others }: CustomButtonProps) => (
     <Button component="a" {...others}>
       {label}

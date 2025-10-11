@@ -4,7 +4,7 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
   Polymorphic: {
     title: 'Polymorphic components',
     slug: '/guides/polymorphic',
-    search: 'createPolymorphicComponent, change root element, component prop',
+    search: 'polymorphic, change root element, component prop',
     hideHeader: true,
   },
 

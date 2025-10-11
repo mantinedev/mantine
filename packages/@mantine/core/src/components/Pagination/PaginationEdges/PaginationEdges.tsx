@@ -1,4 +1,4 @@
-import { BoxProps, createPolymorphicComponent, useProps } from '../../../core';
+import { BoxProps, polymorphic, useProps } from '../../../core';
 import { usePaginationContext } from '../Pagination.context';
 import {
   PaginationFirstIcon,
@@ -48,7 +48,7 @@ export function createEdgeComponent({ icon, name, action, type }: CreateEdgeComp
   };
 
   Component.displayName = `@mantine/core/${name}`;
-  return createPolymorphicComponent<'button', PaginationEdgeProps>(Component);
+  return polymorphic<'button', PaginationEdgeProps>(Component);
 }
 
 export const PaginationNext = createEdgeComponent({

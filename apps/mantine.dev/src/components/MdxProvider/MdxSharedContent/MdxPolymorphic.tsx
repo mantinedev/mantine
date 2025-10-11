@@ -89,7 +89,7 @@ export function MdxPolymorphic(props: MdxPolymorphicProps) {
 
         <MdxParagraph>
           If you want your component to remain polymorphic after wrapping, use the{' '}
-          <MdxCode>createPolymorphicComponent</MdxCode> function described in{' '}
+          <MdxCode>polymorphic</MdxCode> function described in{' '}
           <MdxLink href="/guides/polymorphic/">this guide</MdxLink>.
         </MdxParagraph>
       </MdxInfo>
