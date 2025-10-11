@@ -201,6 +201,27 @@ To change dropdown offset, set `offset` prop in `comboboxProps`:
 
 <Demo data={SelectDemos.dropdownOffset} />
 
+## Prevent horizontal infinite scrolling
+
+If you experience horizontal infinite scrolling in the dropdown, set the `shift` middleware `padding` to `0`:
+
+```tsx
+import { Select } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Select
+      data={['React', 'Angular', 'Vue']}
+      comboboxProps={{
+        middlewares: {
+          shift: { padding: 0 }
+        }
+      }}
+    />
+  );
+}
+```
+
 ## Dropdown animation
 
 By default, dropdown animations are disabled. To enable them, you can set `transitionProps`,
