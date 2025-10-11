@@ -137,7 +137,7 @@ export const Notification = factory<NotificationFactory>((_props) => {
       {...others}
     >
       {icon && !loading && <div {...getStyles('icon')}>{icon}</div>}
-      {loading && <Loader size={28} color={color} {...loaderProps} {...getStyles('loader')} />}
+      {loading && <Loader size={28} color={color} {...getStyles('loader')} {...loaderProps} />}
 
       <div {...getStyles('body')}>
         {title && <div {...getStyles('title')}>{title}</div>}

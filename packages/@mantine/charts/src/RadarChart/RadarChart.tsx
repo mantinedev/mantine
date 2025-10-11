@@ -89,7 +89,7 @@ export interface RadarChartProps
     | Partial<Omit<RadarProps, 'ref'>>;
 
   /** Props passed down to recharts RadarChart component */
-  radarChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsRadarChart>;
+  radarChartProps?: React.ComponentProps<typeof ReChartsRadarChart>;
 
   /** Props passed down to recharts PolarGrid component */
   polarGridProps?: Omit<PolarGridProps, 'ref'>;

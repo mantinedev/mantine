@@ -57,7 +57,7 @@ export interface RadioProps
   icon?: React.FC<RadioIconProps>;
 
   /** Props passed down to the root element */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
+  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
   /** Position of the label relative to the input @default `'right'` */
   labelPosition?: 'left' | 'right';

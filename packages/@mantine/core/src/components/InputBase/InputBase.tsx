@@ -15,7 +15,7 @@ export interface InputBaseProps
   __stylesApiProps?: Record<string, any>;
 
   /** Props passed down to the root element (`Input.Wrapper` component) */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
+  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
   /** If set, the input can have multiple lines, for example when `component="textarea"` @default `false` */
   multiline?: boolean;

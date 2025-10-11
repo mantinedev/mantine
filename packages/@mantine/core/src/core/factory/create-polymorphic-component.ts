@@ -5,7 +5,7 @@ type ElementType = keyof React.JSX.IntrinsicElements | React.JSXElementConstruct
 
 type PropsOf<C extends ElementType> = React.JSX.LibraryManagedAttributes<
   C,
-  React.ComponentPropsWithoutRef<C>
+  React.ComponentProps<C>
 >;
 
 type ComponentProp<C> = {
@@ -15,7 +15,7 @@ type ComponentProp<C> = {
 type InheritedProps<C extends ElementType, Props = {}> = ExtendedProps<PropsOf<C>, Props>;
 
 export type PolymorphicRef<C> = C extends React.ElementType
-  ? React.ComponentPropsWithRef<C>['ref']
+  ? React.ComponentProps<C>['ref']
   : never;
 
 export type PolymorphicComponentProps<C, Props = {}> = C extends React.ElementType

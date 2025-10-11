@@ -7,7 +7,7 @@ const code = `
 import { IconChevronRight } from '@tabler/icons-react';
 import { Group, Avatar, Text, Menu, UnstyledButton } from '@mantine/core';
 
-interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {
+interface UserButtonProps extends React.ComponentProps<'button'> {
   image: string;
   name: string;
   email: string;
@@ -59,7 +59,7 @@ function Demo() {
 }
 `;
 
-interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'> {
+interface UserButtonProps extends React.ComponentProps<'button'> {
   image: string;
   name: string;
   email: string;

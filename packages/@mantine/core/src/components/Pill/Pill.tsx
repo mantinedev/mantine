@@ -36,7 +36,7 @@ export interface PillProps extends BoxProps, StylesApiProps<PillFactory>, Elemen
   onRemove?: () => void;
 
   /** Props passed down to the remove button */
-  removeButtonProps?: CloseButtonProps & React.ComponentPropsWithoutRef<'button'>;
+  removeButtonProps?: CloseButtonProps & React.ComponentProps<'button'>;
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem.  @default `'xl'` */
   radius?: MantineRadius;

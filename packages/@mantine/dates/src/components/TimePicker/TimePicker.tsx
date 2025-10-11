@@ -134,16 +134,16 @@ export interface TimePickerProps
   clearButtonProps?: CloseButtonProps & ElementProps<'button'> & DataAttributes;
 
   /** Props passed down to hours input */
-  hoursInputProps?: React.ComponentPropsWithoutRef<'input'> & DataAttributes;
+  hoursInputProps?: React.ComponentProps<'input'> & DataAttributes;
 
   /** Props passed down to minutes input */
-  minutesInputProps?: React.ComponentPropsWithoutRef<'input'> & DataAttributes;
+  minutesInputProps?: React.ComponentProps<'input'> & DataAttributes;
 
   /** Props passed down to seconds input */
-  secondsInputProps?: React.ComponentPropsWithoutRef<'input'> & DataAttributes;
+  secondsInputProps?: React.ComponentProps<'input'> & DataAttributes;
 
   /** Props passed down to am/pm select */
-  amPmSelectProps?: React.ComponentPropsWithoutRef<'select'> & DataAttributes;
+  amPmSelectProps?: React.ComponentProps<'select'> & DataAttributes;
 
   /** If set, the value cannot be updated */
   readOnly?: boolean;
@@ -152,7 +152,7 @@ export interface TimePickerProps
   disabled?: boolean;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'> & DataAttributes;
+  hiddenInputProps?: React.ComponentProps<'input'> & DataAttributes;
 
   /** A function to transform paste values, by default time in 24h format can be parsed on paste for example `23:34:22` */
   pasteSplit?: TimePickerPasteSplit;

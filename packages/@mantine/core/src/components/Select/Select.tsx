@@ -81,7 +81,7 @@ export interface SelectProps
   clearButtonProps?: InputClearButtonProps;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: Omit<React.ComponentPropsWithoutRef<'input'>, 'value'>;
+  hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'>;
 
   /** A function to render content of the option, replaces the default content of the option */
   renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;

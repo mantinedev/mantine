@@ -58,7 +58,7 @@ export interface DateInputProps
   clearable?: boolean;
 
   /** Props passed down to the clear button */
-  clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
+  clearButtonProps?: React.ComponentProps<'button'>;
 
   /** `dayjs` format to display input value, `"MMMM D, YYYY"` by default  */
   valueFormat?: string;

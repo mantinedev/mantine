@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { assignRef, useIsomorphicEffect } from '@mantine/hooks';
 import { Factory, factory, useProps } from '../../core';
 
-function createPortalNode(props: React.ComponentPropsWithoutRef<'div'>) {
+function createPortalNode(props: React.ComponentProps<'div'>) {
   const node = document.createElement('div');
   node.setAttribute('data-portal', 'true');
   typeof props.className === 'string' &&
@@ -13,7 +13,7 @@ function createPortalNode(props: React.ComponentPropsWithoutRef<'div'>) {
   return node;
 }
 
-export interface BasePortalProps extends React.ComponentPropsWithoutRef<'div'> {
+export interface BasePortalProps extends React.ComponentProps<'div'> {
   /** Element inside which portal should be created, by default a new div element is created and appended to the `document.body` */
   target?: HTMLElement | string;
 

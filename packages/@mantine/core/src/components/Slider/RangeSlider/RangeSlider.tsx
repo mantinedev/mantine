@@ -125,13 +125,13 @@ export interface RangeSliderProps
   thumbToLabel?: string;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+  hiddenInputProps?: React.ComponentProps<'input'>;
 
   /** Determines whether the selection should be only allowed from the given marks array @default `false` */
   restrictToMarks?: boolean;
 
   /** Props passed down to thumb element based on the thumb index */
-  thumbProps?: (index: 0 | 1) => React.ComponentPropsWithoutRef<'div'>;
+  thumbProps?: (index: 0 | 1) => React.ComponentProps<'div'>;
 
   /** Determines whether the other thumb should be pushed by the current thumb dragging when `minRange`/`maxRange` is reached @default `true` */
   pushOnOverlap?: boolean;

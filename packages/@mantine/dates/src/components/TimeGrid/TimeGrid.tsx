@@ -61,7 +61,7 @@ export interface TimeGridProps
   simpleGridProps?: SimpleGridProps;
 
   /** A function to pass props down to control based on the time value */
-  getControlProps?: (time: string) => React.ComponentPropsWithoutRef<'button'> & DataAttributes;
+  getControlProps?: (time: string) => React.ComponentProps<'button'> & DataAttributes;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;

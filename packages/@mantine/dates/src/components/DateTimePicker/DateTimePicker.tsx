@@ -69,7 +69,7 @@ export interface DateTimePickerProps
   timePickerProps?: Omit<TimePickerProps, 'defaultValue' | 'value'>;
 
   /** Props passed down to the submit button */
-  submitButtonProps?: ActionIconProps & React.ComponentPropsWithoutRef<'button'>;
+  submitButtonProps?: ActionIconProps & React.ComponentProps<'button'>;
 
   /** Determines whether the seconds input should be displayed @default `false` */
   withSeconds?: boolean;

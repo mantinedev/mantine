@@ -18,7 +18,7 @@ export interface ModalBaseContentProps extends BoxProps, ElementProps<'div'> {
 }
 
 interface _ModalBaseContentProps extends ModalBaseContentProps {
-  innerProps: React.ComponentPropsWithoutRef<'div'>;
+  innerProps: React.ComponentProps<'div'>;
 }
 
 export function ModalBaseContent({

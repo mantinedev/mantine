@@ -33,7 +33,7 @@ export function FocusTrap({
   return cloneElement(children, { [refProp]: ref });
 }
 
-export function FocusTrapInitialFocus(props: React.ComponentPropsWithoutRef<'span'>) {
+export function FocusTrapInitialFocus(props: React.ComponentProps<'span'>) {
   return <VisuallyHidden tabIndex={-1} data-autofocus {...props} />;
 }
 

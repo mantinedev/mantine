@@ -72,7 +72,7 @@ export interface ScatterChartProps
     | { x?: GridChartBaseProps['valueFormatter']; y?: GridChartBaseProps['valueFormatter'] };
 
   /** Props passed down to recharts `ScatterChart` component */
-  scatterChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsScatterChart>;
+  scatterChartProps?: React.ComponentProps<typeof ReChartsScatterChart>;
 
   /** Props passed down to recharts `Scatter` component */
   scatterProps?: Partial<Omit<ScatterProps, 'ref'>>;

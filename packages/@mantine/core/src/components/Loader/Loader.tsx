@@ -2,6 +2,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  ElementProps,
   factory,
   Factory,
   getSize,
@@ -26,7 +27,7 @@ export type LoaderCssVariables = {
 export interface LoaderProps
   extends BoxProps,
     StylesApiProps<LoaderFactory>,
-    Omit<React.ComponentPropsWithoutRef<'svg'>, keyof BoxProps> {
+    ElementProps<'svg', 'display' | 'opacity'> {
   /** Controls `width` and `height` of the loader. `Loader` has predefined `xs`-`xl` values. Numbers are converted to rem. @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 
@@ -45,7 +46,7 @@ export interface LoaderProps
 
 export type LoaderFactory = Factory<{
   props: LoaderProps;
-  ref: HTMLSpanElement;
+  ref: SVGSVGElement;
   stylesNames: LoaderStylesNames;
   vars: LoaderCssVariables;
   staticComponents: {

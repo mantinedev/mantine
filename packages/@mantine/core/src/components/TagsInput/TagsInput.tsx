@@ -90,7 +90,7 @@ export interface TagsInputProps
   clearButtonProps?: InputClearButtonProps;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: Omit<React.ComponentPropsWithoutRef<'input'>, 'value'>;
+  hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'>;
 
   /** Divider used to separate values in the hidden input `value` attribute @default `','` */
   hiddenInputValuesDivider?: string;

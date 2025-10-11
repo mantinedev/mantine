@@ -1,4 +1,4 @@
-export function StarIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
+export function StarIcon(props: React.ComponentProps<'svg'>) {
   const { width, height, style, ...others } = props;
   return (
     <svg

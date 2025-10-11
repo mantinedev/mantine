@@ -80,7 +80,7 @@ export interface BarChartProps
   cursorFill?: MantineColor;
 
   /** Props passed down to recharts `BarChart` component */
-  barChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsBarChart>;
+  barChartProps?: React.ComponentProps<typeof ReChartsBarChart>;
 
   /** Additional components that are rendered inside recharts `BarChart` component */
   children?: React.ReactNode;

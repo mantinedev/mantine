@@ -56,7 +56,7 @@ export interface AvatarProps extends BoxProps, StylesApiProps<AvatarFactory> {
   alt?: string;
 
   /** Attributes passed down to `img` element */
-  imageProps?: React.ComponentPropsWithoutRef<'img'>;
+  imageProps?: React.ComponentProps<'img'>;
 
   /** Avatar placeholder, displayed when `src={null}` or when the image cannot be loaded */
   children?: React.ReactNode;

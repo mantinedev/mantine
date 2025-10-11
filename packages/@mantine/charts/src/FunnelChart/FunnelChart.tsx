@@ -86,7 +86,7 @@ export interface FunnelChartProps
   children?: React.ReactNode;
 
   /** Props passed down to recharts `FunnelChart` component */
-  funnelChartProps?: React.ComponentPropsWithoutRef<typeof RechartsFunnelChart>;
+  funnelChartProps?: React.ComponentProps<typeof RechartsFunnelChart>;
 }
 
 export type FunnelChartFactory = Factory<{

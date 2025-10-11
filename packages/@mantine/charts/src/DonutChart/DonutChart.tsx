@@ -97,7 +97,7 @@ export interface DonutChartProps
   children?: React.ReactNode;
 
   /** Props passed down to recharts `PieChart` component */
-  pieChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsPieChart>;
+  pieChartProps?: React.ComponentProps<typeof ReChartsPieChart>;
 
   /** Type of labels to display, `'value'` by default */
   labelsType?: 'value' | 'percent';

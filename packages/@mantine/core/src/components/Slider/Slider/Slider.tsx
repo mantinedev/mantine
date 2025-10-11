@@ -113,13 +113,13 @@ export interface SliderProps
   inverted?: boolean;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+  hiddenInputProps?: React.ComponentProps<'input'>;
 
   /** Determines whether the selection should be only allowed from the given marks array @default `false` */
   restrictToMarks?: boolean;
 
   /** Props passed down to thumb element */
-  thumbProps?: React.ComponentPropsWithoutRef<'div'>;
+  thumbProps?: React.ComponentProps<'div'>;
 }
 
 export type SliderFactory = Factory<{

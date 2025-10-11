@@ -67,7 +67,7 @@ export interface AngleSliderProps
   restrictToMarks?: boolean;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'>;
+  hiddenInputProps?: React.ComponentProps<'input'>;
 
   /** Hidden input name, use with uncontrolled component */
   name?: string;

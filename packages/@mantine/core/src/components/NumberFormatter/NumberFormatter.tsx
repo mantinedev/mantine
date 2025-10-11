@@ -1,7 +1,7 @@
 import { NumericFormat } from 'react-number-format';
 import { ExtendComponent, Factory, MantineThemeComponent, useProps } from '../../core';
 
-export interface NumberFormatterProps extends React.ComponentPropsWithoutRef<'span'> {
+export interface NumberFormatterProps extends React.ComponentProps<'span'> {
   /** Value to format */
   value?: number | string;
 

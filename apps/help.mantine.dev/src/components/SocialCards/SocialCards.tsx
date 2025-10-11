@@ -21,7 +21,7 @@ function XIcon({ size, style, ...others }: any) {
   );
 }
 
-interface CardBaseProps extends React.ComponentPropsWithoutRef<'a'> {
+interface CardBaseProps extends React.ComponentProps<'a'> {
   icon: 'discord' | 'twitter' | 'github' | 'mantine';
   title: string;
   description: string;

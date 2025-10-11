@@ -49,7 +49,7 @@ export interface FileInputProps<Multiple = false>
   clearable?: boolean;
 
   /** Props passed down to the clear button */
-  clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
+  clearButtonProps?: React.ComponentProps<'button'>;
 
   /** If set, the input value cannot be changed  */
   readOnly?: boolean;
@@ -58,7 +58,7 @@ export interface FileInputProps<Multiple = false>
   capture?: boolean | 'user' | 'environment';
 
   /** Props passed down to the hidden input element which is used to capture files */
-  fileInputProps?: React.ComponentPropsWithoutRef<'input'>;
+  fileInputProps?: React.ComponentProps<'input'>;
 
   /** Input placeholder */
   placeholder?: React.ReactNode;

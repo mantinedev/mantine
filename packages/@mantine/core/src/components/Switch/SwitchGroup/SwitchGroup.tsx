@@ -20,7 +20,7 @@ export interface SwitchGroupProps extends Omit<InputWrapperProps, 'onChange'> {
   onChange?: (value: string[]) => void;
 
   /** Props passed down to the `Input.Wrapper` */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
+  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
   /** Controls size of the `Input.Wrapper` @default `'sm'` */
   size?: MantineSize | (string & {});
@@ -32,7 +32,7 @@ export interface SwitchGroupProps extends Omit<InputWrapperProps, 'onChange'> {
   name?: string;
 
   /** Props passed down to the hidden input for uncontrolled forms */
-  hiddenInputProps?: React.ComponentPropsWithoutRef<'input'> & DataAttributes;
+  hiddenInputProps?: React.ComponentProps<'input'> & DataAttributes;
 
   /** Separator for values in the hidden input for uncontrolled forms @default `','` */
   hiddenInputValuesSeparator?: string;

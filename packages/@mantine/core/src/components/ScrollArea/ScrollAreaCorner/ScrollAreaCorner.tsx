@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useScrollAreaContext } from '../ScrollArea.context';
 import { useResizeObserver } from '../use-resize-observer';
 
-interface ScrollAreaCornerProps extends React.ComponentPropsWithoutRef<'div'> {}
+interface ScrollAreaCornerProps extends React.ComponentProps<'div'> {}
 
 export function Corner(props: ScrollAreaCornerProps) {
   const { style, ...others } = props;

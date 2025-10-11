@@ -22,7 +22,7 @@ import type { DatePickerProps } from '@mantine/dates';
 ```
 
 Note that there are two variations of props types: for polymorphic components and for regular components.
-Regular component props types include `React.ComponentPropsWithoutRef<'X'>`, where `X` is the root element
+Regular component props types include `React.ComponentProps<'X'>`, where `X` is the root element
 type, for example `'div'`.
 
 Example of extending regular component props:
@@ -30,7 +30,7 @@ Example of extending regular component props:
 ```tsx
 import { Group, GroupProps } from '@mantine/core';
 
-// Interface includes `React.ComponentPropsWithoutRef<'div'>`
+// Interface includes `React.ComponentProps<'div'>`
 interface MyGroupProps extends GroupProps {
   spacing: number;
 }
@@ -40,7 +40,7 @@ function MyGroup({ spacing, ...others }: MyGroupProps) {
 }
 ```
 
-[Polymorphic component](/guides/polymorphic) props types don't include `React.ComponentPropsWithoutRef<'X'>`
+[Polymorphic component](/guides/polymorphic) props types don't include `React.ComponentProps<'X'>`
 because their root element depends on the `component` prop value.
 
 Example of extending [polymorphic component](/guides/polymorphic) props:
@@ -61,22 +61,22 @@ function MyButton({ height, ...others }: MyButtonProps) {
 
 ## ElementProps type
 
-`ElementProps` is a utility type similar to `React.ComponentPropsWithoutRef`, but with additional
+`ElementProps` is a utility type similar to `React.ComponentProps`, but with additional
 features. It replaces the native element's `style` prop with Mantine's [style prop](/styles/style) and
 allows omitting properties that are passed as a second type.
 
 ```tsx
 import { ButtonProps, ElementProps } from '@mantine/core';
 
-// Equivalent of `React.ComponentPropsWithoutRef<'button'>`
+// Equivalent of `React.ComponentProps<'button'>`
 type ButtonElementProps = ElementProps<'button'>;
 
-// Equivalent of `Omit<React.ComponentPropsWithoutRef<'button'>, 'color' | 'onClick'>`
+// Equivalent of `Omit<React.ComponentProps<'button'>, 'color' | 'onClick'>`
 type OmitColor = ElementProps<'button', 'color' | 'onClick'>;
 
 // Removes all Mantine component props from React component props
 // to avoid props types conflicts
-// Equivalent of `Omit<React.ComponentPropsWithoutRef<'button'>, keyof ButtonProps>`
+// Equivalent of `Omit<React.ComponentProps<'button'>, keyof ButtonProps>`
 type OmitButtonProps = ElementProps<'button', keyof ButtonProps>;
 ```
 

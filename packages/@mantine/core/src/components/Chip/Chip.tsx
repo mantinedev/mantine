@@ -72,7 +72,7 @@ export interface ChipProps
   id?: string;
 
   /** Props passed down to the root element */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
+  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
   /** Any element or component to replace default icon */
   icon?: React.ReactNode;

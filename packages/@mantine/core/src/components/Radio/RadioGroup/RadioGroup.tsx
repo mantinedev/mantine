@@ -21,7 +21,7 @@ export interface RadioGroupProps
   onChange?: (value: string) => void;
 
   /** Props passed down to the `Input.Wrapper` */
-  wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
+  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
   /** Controls size of the `Input.Wrapper` @default `'sm'` */
   size?: MantineSize;

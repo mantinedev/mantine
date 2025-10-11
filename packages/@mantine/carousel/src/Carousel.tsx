@@ -67,10 +67,10 @@ export interface CarouselProps
   getEmblaApi?: (embla: EmblaCarouselType) => void;
 
   /** Props passed down to next control */
-  nextControlProps?: React.ComponentPropsWithoutRef<'button'>;
+  nextControlProps?: React.ComponentProps<'button'>;
 
   /** Props passed down to previous control */
-  previousControlProps?: React.ComponentPropsWithoutRef<'button'>;
+  previousControlProps?: React.ComponentProps<'button'>;
 
   /** Controls size of the next and previous controls @default `26` */
   controlSize?: React.CSSProperties['width'];

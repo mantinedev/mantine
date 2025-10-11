@@ -105,7 +105,7 @@ export interface LineChartProps
   strokeWidth?: number;
 
   /** Props passed down to recharts `LineChart` component */
-  lineChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsLineChart>;
+  lineChartProps?: React.ComponentProps<typeof ReChartsLineChart>;
 
   /** Determines whether points with `null` values should be connected @default `true` */
   connectNulls?: boolean;

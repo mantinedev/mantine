@@ -74,7 +74,7 @@ export function MdxPolymorphic(props: MdxPolymorphicProps) {
           not extend HTML element props of the default element. For example,{' '}
           <MdxCode>{props.component}Props</MdxCode> does not extend{' '}
           <MdxCode>
-            React.ComponentPropsWithoutRef{"'<'"}div{"'>'"}
+            React.ComponentProps{"'<'"}div{"'>'"}
           </MdxCode>{' '}
           although <MdxCode>{props.defaultElement}</MdxCode> is the default element.
         </MdxParagraph>

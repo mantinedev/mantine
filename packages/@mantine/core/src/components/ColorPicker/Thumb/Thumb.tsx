@@ -1,6 +1,6 @@
 import { Box } from '../../../core';
 
-export interface ThumbProps extends React.ComponentPropsWithoutRef<'div'> {
+export interface ThumbProps extends React.ComponentProps<'div'> {
   variant?: string;
   position: { x: number; y: number };
 }

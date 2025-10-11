@@ -33,7 +33,7 @@ export interface FileButtonProps<Multiple extends boolean = false> {
   capture?: boolean | 'user' | 'environment';
 
   /** Passes down props to the input element used to capture files */
-  inputProps?: React.ComponentPropsWithoutRef<'input'>;
+  inputProps?: React.ComponentProps<'input'>;
 }
 
 export function FileButton<Multiple extends boolean = false>(props: FileButtonProps<Multiple>) {

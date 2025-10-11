@@ -72,7 +72,7 @@ export interface RadialBarChartProps
   radialBarProps?: Omit<RadialBarProps, 'ref'>;
 
   /** Props passed down to recharts RadarChartChart component */
-  radialBarChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsRadialBarChart>;
+  radialBarChartProps?: React.ComponentProps<typeof ReChartsRadialBarChart>;
 
   /** Props passed down to recharts Legend component */
   legendProps?: Omit<LegendProps, 'ref'>;

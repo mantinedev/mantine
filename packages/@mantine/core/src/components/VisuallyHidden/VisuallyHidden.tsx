@@ -15,11 +15,11 @@ export type VisuallyHiddenStylesNames = 'root';
 export interface VisuallyHiddenProps
   extends BoxProps,
     StylesApiProps<VisuallyHiddenFactory>,
-    ElementProps<'div'> {}
+    ElementProps<'span'> {}
 
 export type VisuallyHiddenFactory = Factory<{
   props: VisuallyHiddenProps;
-  ref: HTMLDivElement;
+  ref: HTMLSpanElement;
   stylesNames: VisuallyHiddenStylesNames;
 }>;
 

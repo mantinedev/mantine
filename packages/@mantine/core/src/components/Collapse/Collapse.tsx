@@ -10,9 +10,7 @@ import {
 } from '../../core';
 import { useCollapse } from './use-collapse';
 
-export interface CollapseProps
-  extends BoxProps,
-    Omit<React.ComponentPropsWithRef<'div'>, keyof BoxProps> {
+export interface CollapseProps extends BoxProps, Omit<React.ComponentProps<'div'>, keyof BoxProps> {
   /** Opened state */
   in: boolean;
 

@@ -151,11 +151,11 @@ function Demo() {
 
 ## Wrapping polymorphic components
 
-Non-polymorphic components include `React.ComponentPropsWithoutRef<'x'>` as part of their props type,
+Non-polymorphic components include `React.ComponentProps<'x'>` as part of their props type,
 where `x` is the root element of the component. For example, the [Container](/core/container) component
-is not polymorphic – its root element is always `div`, so its props type includes `React.ComponentPropsWithoutRef<'div'>`.
+is not polymorphic – its root element is always `div`, so its props type includes `React.ComponentProps<'div'>`.
 
-Polymorphic components don't include `React.ComponentPropsWithoutRef<'x'>` as part of their props type
+Polymorphic components don't include `React.ComponentProps<'x'>` as part of their props type
 because their root element can be changed, and thus the props type can be inferred only after the component was rendered.
 
 Example of creating a non-polymorphic wrapper component for Mantine polymorphic component:

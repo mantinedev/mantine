@@ -1,4 +1,4 @@
-export interface SvgLoaderProps extends React.ComponentPropsWithoutRef<any> {}
+export interface SvgLoaderProps extends React.ComponentProps<any> {}
 
 export type MantineLoaderComponent = React.FC<React.HTMLAttributes<any> & React.RefAttributes<any>>;
 

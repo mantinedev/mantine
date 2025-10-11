@@ -128,7 +128,7 @@ export interface CompositeChartProps
   maxBarWidth?: number;
 
   /** Props passed down to recharts `AreaChart` component */
-  composedChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsCompositeChart>;
+  composedChartProps?: React.ComponentProps<typeof ReChartsCompositeChart>;
 }
 
 export type CompositeChartFactory = Factory<{

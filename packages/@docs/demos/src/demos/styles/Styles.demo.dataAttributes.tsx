@@ -8,7 +8,7 @@ import { Button, ButtonProps, Group } from '@mantine/core';
 import { IconArrowRight } from '@tabler/icons-react';
 import classes from './Demo.module.css';
 
-function SendFilesButton(props: ButtonProps & React.ComponentPropsWithoutRef<'button'>) {
+function SendFilesButton(props: ButtonProps & React.ComponentProps<'button'>) {
   return <Button {...props} radius="md" classNames={classes} />;
 }
 
@@ -80,7 +80,7 @@ const cssCode = `
 }
 `;
 
-function SendFilesButton(props: ButtonProps & React.ComponentPropsWithoutRef<'button'>) {
+function SendFilesButton(props: ButtonProps & React.ComponentProps<'button'>) {
   return <Button {...props} radius="md" classNames={classes} />;
 }
 

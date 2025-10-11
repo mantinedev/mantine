@@ -101,7 +101,7 @@ export interface AreaChartProps
   strokeWidth?: number;
 
   /** Props passed down to recharts `AreaChart` component */
-  areaChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsAreaChart>;
+  areaChartProps?: React.ComponentProps<typeof ReChartsAreaChart>;
 
   /** Controls fill opacity of all areas @default `0.2` */
   fillOpacity?: number;

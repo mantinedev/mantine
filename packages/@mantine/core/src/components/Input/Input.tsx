@@ -32,7 +32,7 @@ import {
 import classes from './Input.module.css';
 
 // Required to be a separate type for docgen script
-type WrapperProps = React.ComponentPropsWithoutRef<'div'> & DataAttributes;
+type WrapperProps = React.ComponentProps<'div'> & DataAttributes;
 
 export interface __BaseInputProps extends __InputWrapperProps, __InputProps {
   /** Props passed down to the root element */
@@ -70,7 +70,7 @@ export interface __InputProps {
   leftSectionWidth?: React.CSSProperties['width'];
 
   /** Props passed down to the `leftSection` element */
-  leftSectionProps?: React.ComponentPropsWithoutRef<'div'>;
+  leftSectionProps?: React.ComponentProps<'div'>;
 
   /** Sets `pointer-events` styles on the `leftSection` element @default `'none'` */
   leftSectionPointerEvents?: React.CSSProperties['pointerEvents'];
@@ -82,7 +82,7 @@ export interface __InputProps {
   rightSectionWidth?: React.CSSProperties['width'];
 
   /** Props passed down to the `rightSection` element */
-  rightSectionProps?: React.ComponentPropsWithoutRef<'div'>;
+  rightSectionProps?: React.ComponentProps<'div'>;
 
   /** Sets `pointer-events` styles on the `rightSection` element @default `'none'` */
   rightSectionPointerEvents?: React.CSSProperties['pointerEvents'];

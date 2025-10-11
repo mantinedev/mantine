@@ -19,7 +19,7 @@ function getClampedThickness(thickness: number, size: number) {
   return Math.min(thickness || 12, (size || 120) / 4);
 }
 
-interface RingProgressSection extends React.ComponentPropsWithRef<'circle'> {
+interface RingProgressSection extends React.ComponentProps<'circle'> {
   value: number;
   color: MantineColor;
   tooltip?: React.ReactNode;

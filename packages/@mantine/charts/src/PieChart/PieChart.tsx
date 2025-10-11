@@ -92,7 +92,7 @@ export interface PieChartProps
   children?: React.ReactNode;
 
   /** Props passed down to recharts `PieChart` component */
-  pieChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsPieChart>;
+  pieChartProps?: React.ComponentProps<typeof ReChartsPieChart>;
 
   /** Controls labels position relative to the segment @default `'outside'` */
   labelsPosition?: 'inside' | 'outside';

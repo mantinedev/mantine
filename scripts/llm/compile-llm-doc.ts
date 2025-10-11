@@ -1259,7 +1259,7 @@ function Demo() {
 
 **Polymorphic components with TypeScript**
 
-Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, ${component}Props does not extend React.ComponentPropsWithoutRef<'${defaultElement}'> although ${defaultElement} is the default element.
+Note that polymorphic components props types are different from regular components – they do not extend HTML element props of the default element. For example, ${component}Props does not extend React.ComponentProps<'${defaultElement}'> although ${defaultElement} is the default element.
 
 If you want to create a wrapper for a polymorphic component that is not polymorphic (does not support component prop), then your component props interface should extend HTML element props.`;
 

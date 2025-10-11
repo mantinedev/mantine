@@ -1,4 +1,4 @@
-interface ExpandIconProps extends React.ComponentPropsWithoutRef<'svg'> {
+interface ExpandIconProps extends React.ComponentProps<'svg'> {
   expanded: boolean;
 }
 

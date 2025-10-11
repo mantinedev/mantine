@@ -92,7 +92,7 @@ export interface HeatmapProps
   tooltipProps?: Partial<TooltipFloatingProps>;
 
   /** Props passed down to each rect depending on its date and associated value */
-  getRectProps?: (input: HeatmapRectData) => React.ComponentPropsWithoutRef<'rect'>;
+  getRectProps?: (input: HeatmapRectData) => React.ComponentProps<'rect'>;
 
   /** If set, inserts a spacer column between months @default `false` */
   splitMonths?: boolean;

@@ -43,7 +43,7 @@ export interface DateInputSharedProps
   clearable?: boolean;
 
   /** Props passed down to the clear button */
-  clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
+  clearButtonProps?: React.ComponentProps<'button'>;
 
   /** If set, the component value cannot be changed by the user */
   readOnly?: boolean;
