@@ -211,6 +211,36 @@ export function ShikiAdapter() {
   );
 }
 
+async function loadShikiWithTheme() {
+  const { createHighlighter } = await import('shiki');
+  const shiki = await createHighlighter({
+    langs: ['tsx', 'scss', 'html', 'bash', 'json'],
+    themes: ['nord'],
+  });
+
+  return shiki;
+}
+
+const shikiAdapterWithTheme = createShikiAdapter(loadShikiWithTheme);
+
+export function ShikiAdapterWithTheme() {
+  return (
+    <div style={{ padding: 40 }}>
+      <CodeHighlightAdapterProvider adapter={shikiAdapterWithTheme}>
+        <CodeHighlight
+          code={tsxCode}
+          withExpandButton
+          defaultExpanded={false}
+          radius="md"
+          withBorder
+          language="tsx"
+          codeColorScheme="nord"
+        />
+      </CodeHighlightAdapterProvider>
+    </div>
+  );
+}
+
 const highlightJSAdapter = createHighlightJsAdapter(hljs);
 
 export function HighlightJsAdapter() {
