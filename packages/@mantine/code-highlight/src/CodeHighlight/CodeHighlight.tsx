@@ -83,7 +83,7 @@ export interface CodeHighlightSettings {
   /** Extra controls to display in the controls list */
   controls?: React.ReactNode[];
 
-  /** Set to change contrast of controls and other elements if you prefer to use dark code color scheme in light mode or light code color scheme in dark mode */
+  /** Set to use dark or light color scheme. When using shiki adapter, you can use loaded themes here */
   codeColorScheme?: 'dark' | 'light' | (string & {});
 }
 
