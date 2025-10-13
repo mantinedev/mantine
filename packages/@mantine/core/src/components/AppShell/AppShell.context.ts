@@ -1,7 +1,7 @@
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { AppShellFactory } from './AppShell';
 
-export interface AppShellContext {
+export interface AppShellContextValue {
   getStyles: GetStylesApi<AppShellFactory>;
   withBorder: boolean | undefined;
   zIndex: string | number | undefined;
@@ -9,6 +9,6 @@ export interface AppShellContext {
   offsetScrollbars: boolean | undefined;
 }
 
-export const [AppShellProvider, useAppShellContext] = createSafeContext<AppShellContext>(
+export const [AppShellProvider, useAppShellContext] = createSafeContext<AppShellContextValue>(
   'AppShell was not found in tree'
 );

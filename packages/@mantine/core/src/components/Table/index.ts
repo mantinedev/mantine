@@ -9,6 +9,7 @@ export {
   TableThead,
 } from './Table.components';
 export { TableScrollContainer } from './TableScrollContainer';
+export { useTableContext } from './Table.context';
 
 export type {
   TableProps,
@@ -29,3 +30,4 @@ export type {
 } from './Table.components';
 
 export type { TableScrollContainerProps } from './TableScrollContainer';
+export type { TableContextValue } from './Table.context';

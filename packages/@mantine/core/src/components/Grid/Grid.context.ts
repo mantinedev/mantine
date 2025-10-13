@@ -3,7 +3,7 @@ import type { GridFactory } from './Grid';
 
 export type GridBreakpoints = Record<MantineSize, string>;
 
-interface GridContextValue {
+export interface GridContextValue {
   getStyles: GetStylesApi<GridFactory>;
   grow: boolean | undefined;
   columns: number;

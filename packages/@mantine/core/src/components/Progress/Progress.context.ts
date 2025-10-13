@@ -1,7 +1,7 @@
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { ProgressRootFactory } from './ProgressRoot/ProgressRoot';
 
-interface ProgressContextValue {
+export interface ProgressContextValue {
   getStyles: GetStylesApi<ProgressRootFactory>;
   autoContrast: boolean | undefined;
 }

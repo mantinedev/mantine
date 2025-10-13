@@ -5,6 +5,7 @@ export { AppShellHeader } from './AppShellHeader/AppShellHeader';
 export { AppShellNavbar } from './AppShellNavbar/AppShellNavbar';
 export { AppShellSection } from './AppShellSection/AppShellSection';
 export { AppShellMain } from './AppShellMain/AppShellMain';
+export { useAppShellContext } from './AppShell.context';
 
 export type {
   AppShellAsideConfiguration,
@@ -28,3 +29,4 @@ export type { AppShellHeaderProps } from './AppShellHeader/AppShellHeader';
 export type { AppShellNavbarProps } from './AppShellNavbar/AppShellNavbar';
 export type { AppShellSectionProps } from './AppShellSection/AppShellSection';
 export type { AppShellMainProps } from './AppShellMain/AppShellMain';
+export type { AppShellContextValue } from './AppShell.context';

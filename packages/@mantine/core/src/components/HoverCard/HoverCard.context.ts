@@ -1,6 +1,6 @@
 import { createSafeContext } from '../../core';
 
-interface HoverCardContext {
+export interface HoverCardContextValue {
   openDropdown: () => void;
   closeDropdown: () => void;
   getReferenceProps?: () => any;
@@ -9,6 +9,6 @@ interface HoverCardContext {
   floating?: (node: HTMLElement | null) => void;
 }
 
-export const [HoverCardContext, useHoverCardContext] = createSafeContext<HoverCardContext>(
+export const [HoverCardContext, useHoverCardContext] = createSafeContext<HoverCardContextValue>(
   'HoverCard component was not found in the tree'
 );

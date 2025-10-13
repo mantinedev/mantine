@@ -9,6 +9,7 @@ export {
 } from './PaginationEdges/PaginationEdges';
 export { PaginationItems } from './PaginationItems/PaginationItems';
 export { PaginationRoot } from './PaginationRoot/PaginationRoot';
+export { usePaginationContext } from './Pagination.context';
 
 export type {
   PaginationCssVariables,
@@ -21,3 +22,4 @@ export type { PaginationControlProps } from './PaginationControl/PaginationContr
 export type { PaginationDotsProps } from './PaginationDots/PaginationDots';
 export type { PaginationEdgeProps } from './PaginationEdges/PaginationEdges';
 export type { PaginationItemsProps } from './PaginationItems/PaginationItems';
+export type { PaginationContextValue } from './Pagination.context';

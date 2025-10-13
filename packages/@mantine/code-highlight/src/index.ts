@@ -2,6 +2,7 @@ export { CodeHighlight } from './CodeHighlight/CodeHighlight.js';
 export { InlineCodeHighlight } from './CodeHighlight/InlineCodeHighlight.js';
 export { CodeHighlightTabs } from './CodeHighlightTabs/CodeHighlightTabs.js';
 export { CodeHighlightControl } from './CodeHighlight/CodeHighlightControl/CodeHighlightControl.js';
+export { useCodeHighlightContext } from './CodeHighlight/CodeHighlight.context.js';
 
 export {
   CodeHighlightAdapterProvider,
@@ -38,3 +39,5 @@ export type {
 } from './CodeHighlight/InlineCodeHighlight';
 
 export type { CodeHighlightControlProps } from './CodeHighlight/CodeHighlightControl/CodeHighlightControl';
+
+export type { CodeHighlightContextValue } from './CodeHighlight/CodeHighlight.context';
