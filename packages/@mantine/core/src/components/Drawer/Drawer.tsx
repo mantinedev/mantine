@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { use, useEffect } from 'react';
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
 import { ModalBaseCloseButtonProps, ModalBaseOverlayProps } from '../ModalBase';
 import { DrawerBody } from './DrawerBody';
@@ -12,7 +12,7 @@ import {
   DrawerRootProps,
   DrawerRootStylesNames,
 } from './DrawerRoot';
-import { DrawerStack, useDrawerStackContext } from './DrawerStack';
+import { DrawerStack, DrawerStackContext } from './DrawerStack';
 import { DrawerTitle } from './DrawerTitle';
 import classes from './Drawer.module.css';
 
@@ -86,7 +86,7 @@ export const Drawer = factory<DrawerFactory>((_props) => {
     ...others
   } = useProps('Drawer', defaultProps, _props);
 
-  const ctx = useDrawerStackContext();
+  const ctx = use(DrawerStackContext);
   const hasHeader = !!title || withCloseButton;
   const stackProps =
     ctx && stackId

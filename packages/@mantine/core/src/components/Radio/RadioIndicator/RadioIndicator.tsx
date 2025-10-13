@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   Box,
   BoxProps,
@@ -18,7 +19,7 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { useRadioCardContext } from '../RadioCard/RadioCard.context';
+import { RadioCardContext } from '../RadioCard/RadioCard';
 import { RadioIcon, RadioIconProps } from '../RadioIcon';
 import classes from './RadioIndicator.module.css';
 
@@ -135,7 +136,7 @@ export const RadioIndicator = factory<RadioIndicatorFactory>((_props) => {
     rootSelector: 'indicator',
   });
 
-  const ctx = useRadioCardContext();
+  const ctx = use(RadioCardContext);
   const _checked = typeof checked === 'boolean' ? checked : ctx?.checked || false;
 
   return (

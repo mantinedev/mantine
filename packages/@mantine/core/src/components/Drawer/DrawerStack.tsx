@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { createOptionalContext, getDefaultZIndex } from '../../core';
+import { createContext, useState } from 'react';
+import { getDefaultZIndex } from '../../core';
 
 interface DrawerStackContext {
   stack: string[];
@@ -10,9 +10,7 @@ interface DrawerStackContext {
   maxZIndex: string | number;
 }
 
-const [DrawerStackProvider, useDrawerStackContext] = createOptionalContext<DrawerStackContext>();
-
-export { useDrawerStackContext };
+export const DrawerStackContext = createContext<DrawerStackContext | null>(null);
 
 export interface DrawerStackProps {
   children: React.ReactNode;
@@ -23,7 +21,7 @@ export function DrawerStack({ children }: DrawerStackProps) {
   const [maxZIndex, setMaxZIndex] = useState<number | string>(getDefaultZIndex('modal'));
 
   return (
-    <DrawerStackProvider
+    <DrawerStackContext
       value={{
         stack,
         addModal: (id, zIndex) => {
@@ -41,7 +39,7 @@ export function DrawerStack({ children }: DrawerStackProps) {
       }}
     >
       {children}
-    </DrawerStackProvider>
+    </DrawerStackContext>
   );
 }
 

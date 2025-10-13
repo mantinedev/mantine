@@ -1,3 +1,4 @@
+import { use } from 'react';
 import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
@@ -9,8 +10,8 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { useInputWrapperContext } from '../../Input';
-import { usePillsInputContext } from '../PillsInput.context';
+import { InputWrapperContext } from '../../Input';
+import { PillsInputContext } from '../PillsInput.context';
 import classes from '../PillsInput.module.css';
 
 export type PillsInputFieldStylesNames = 'field';
@@ -54,8 +55,8 @@ export const PillsInputField = factory<PillsInputFieldFactory>((_props) => {
     ref,
     ...others
   } = props;
-  const ctx = usePillsInputContext();
-  const inputWrapperCtx = useInputWrapperContext();
+  const ctx = use(PillsInputContext);
+  const inputWrapperCtx = use(InputWrapperContext);
 
   const getStyles = useStyles<PillsInputFieldFactory>({
     name: 'PillsInputField',

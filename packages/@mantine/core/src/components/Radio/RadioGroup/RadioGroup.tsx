@@ -1,8 +1,17 @@
+import { createContext } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../../core';
 import { InputsGroupFieldset } from '../../../utils/InputsGroupFieldset';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
-import { RadioGroupProvider } from '../RadioGroup.context';
+
+export interface RadioGroupContextValue {
+  size: MantineSize | undefined;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement> | string) => void;
+  name: string;
+}
+
+export const RadioGroupContext = createContext<RadioGroupContextValue | null>(null);
 
 export type RadioGroupStylesNames = InputWrapperStylesNames;
 
@@ -56,7 +65,7 @@ export const RadioGroup = factory<RadioGroupFactory>((props) => {
     !readOnly && setValue(typeof event === 'string' ? event : event.currentTarget.value);
 
   return (
-    <RadioGroupProvider value={{ value: _value, onChange: handleChange, size, name: _name }}>
+    <RadioGroupContext value={{ value: _value, onChange: handleChange, size, name: _name }}>
       <Input.Wrapper
         size={size}
         {...wrapperProps}
@@ -66,7 +75,7 @@ export const RadioGroup = factory<RadioGroupFactory>((props) => {
       >
         <InputsGroupFieldset role="radiogroup">{children}</InputsGroupFieldset>
       </Input.Wrapper>
-    </RadioGroupProvider>
+    </RadioGroupContext>
   );
 });
 

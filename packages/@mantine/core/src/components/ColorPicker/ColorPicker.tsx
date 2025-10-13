@@ -16,7 +16,7 @@ import {
 } from '../../core';
 import { ColorSwatch } from '../ColorSwatch';
 import { AlphaSlider } from './AlphaSlider/AlphaSlider';
-import { ColorPickerProvider } from './ColorPicker.context';
+import { ColorPickerContext } from './ColorPicker.context';
 import { ColorFormat, HsvaColor } from './ColorPicker.types';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
 import { HueSlider } from './HueSlider/HueSlider';
@@ -224,7 +224,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props) => {
   }, [format]);
 
   return (
-    <ColorPickerProvider value={{ getStyles, unstyled }}>
+    <ColorPickerContext value={{ getStyles, unstyled }}>
       <Box
         {...getStyles('wrapper')}
         size={size}
@@ -309,7 +309,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props) => {
           />
         )}
       </Box>
-    </ColorPickerProvider>
+    </ColorPickerContext>
   );
 });
 

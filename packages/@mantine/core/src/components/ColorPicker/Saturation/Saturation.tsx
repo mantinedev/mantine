@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { use, useEffect, useRef, useState } from 'react';
 import { clampUseMovePosition, useMove, UseMovePosition } from '@mantine/hooks';
 import { Box, ElementProps, MantineSize } from '../../../core';
-import { useColorPickerContext } from '../ColorPicker.context';
+import { ColorPickerContext } from '../ColorPicker.context';
 import { HsvaColor } from '../ColorPicker.types';
 import { convertHsvaTo } from '../converters';
 import { Thumb } from '../Thumb/Thumb';
@@ -31,7 +31,7 @@ export function Saturation({
   onScrubEnd,
   ...others
 }: SaturationProps) {
-  const { getStyles } = useColorPickerContext()!;
+  const { getStyles } = use(ColorPickerContext)!;
 
   const [position, setPosition] = useState({ x: value.s / 100, y: 1 - value.v / 100 });
   const positionRef = useRef(position);

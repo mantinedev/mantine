@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   Box,
   BoxProps,
@@ -12,7 +13,7 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { useInputWrapperContext } from '../InputWrapper.context';
+import { InputWrapperContext } from '../InputWrapper.context';
 import classes from '../Input.module.css';
 
 export type InputDescriptionStylesNames = 'description';
@@ -59,7 +60,7 @@ export const InputDescription = factory<InputDescriptionFactory>((_props) => {
     attributes,
     ...others
   } = useProps('InputDescription', null, props);
-  const ctx = useInputWrapperContext();
+  const ctx = use(InputWrapperContext);
 
   const _getStyles = useStyles<InputDescriptionFactory>({
     name: ['InputWrapper', __staticSelector],

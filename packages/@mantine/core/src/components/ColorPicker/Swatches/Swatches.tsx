@@ -1,7 +1,8 @@
+import { use } from 'react';
 import { Box, ElementProps, luminance } from '../../../core';
 import { CheckIcon } from '../../Checkbox';
 import { ColorSwatch } from '../../ColorSwatch';
-import { useColorPickerContext } from '../ColorPicker.context';
+import { ColorPickerContext } from '../ColorPicker.context';
 
 export interface SwatchesProps extends ElementProps<'div'> {
   size?: string | number;
@@ -25,7 +26,7 @@ export function Swatches({
   value,
   ...others
 }: SwatchesProps) {
-  const ctx = useColorPickerContext()!;
+  const ctx = use(ColorPickerContext)!;
 
   const colors = data.map((color, index) => (
     <ColorSwatch

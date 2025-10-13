@@ -1,12 +1,10 @@
 export { Radio } from './Radio';
-export { RadioGroup } from './RadioGroup/RadioGroup';
+export { RadioGroup, RadioGroupContext } from './RadioGroup/RadioGroup';
 export { RadioIcon } from './RadioIcon';
-export { RadioCard } from './RadioCard/RadioCard';
-export { useRadioCardContext } from './RadioCard/RadioCard.context';
+export { RadioCard, RadioCardContext } from './RadioCard/RadioCard';
 export { RadioIndicator } from './RadioIndicator/RadioIndicator';
 
 export type { RadioIconProps } from './RadioIcon';
-export type { RadioCardContextValue } from './RadioCard/RadioCard.context';
 
 export type {
   RadioCssVariables,
@@ -20,6 +18,7 @@ export type {
   RadioGroupFactory,
   RadioGroupProps,
   RadioGroupStylesNames,
+  RadioGroupContextValue,
 } from './RadioGroup/RadioGroup';
 
 export type {
@@ -27,6 +26,7 @@ export type {
   RadioCardFactory,
   RadioCardProps,
   RadioCardStylesNames,
+  RadioCardContextValue,
 } from './RadioCard/RadioCard';
 
 export type {

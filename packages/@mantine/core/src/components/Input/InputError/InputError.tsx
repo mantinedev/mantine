@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   Box,
   BoxProps,
@@ -12,7 +13,7 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { useInputWrapperContext } from '../InputWrapper.context';
+import { InputWrapperContext } from '../InputWrapper.context';
 import classes from '../Input.module.css';
 
 export type InputErrorStylesNames = 'error';
@@ -74,7 +75,7 @@ export const InputError = factory<InputErrorFactory>((_props) => {
     varsResolver,
   });
 
-  const ctx = useInputWrapperContext();
+  const ctx = use(InputWrapperContext);
   const getStyles = (__inheritStyles && ctx?.getStyles) || _getStyles;
 
   return (

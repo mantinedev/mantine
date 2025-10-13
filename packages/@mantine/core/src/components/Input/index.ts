@@ -6,7 +6,7 @@ export { InputLabel } from './InputLabel/InputLabel';
 export { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
 export { InputClearButton } from './InputClearButton/InputClearButton';
 export { useInputProps } from './use-input-props';
-export { useInputWrapperContext } from './InputWrapper.context';
+export { InputWrapperContext } from './InputWrapper.context';
 export type {
   __InputProps,
   __BaseInputProps,

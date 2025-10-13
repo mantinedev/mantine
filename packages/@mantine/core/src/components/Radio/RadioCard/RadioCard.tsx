@@ -1,3 +1,4 @@
+import { createContext, use } from 'react';
 import {
   BoxProps,
   createVarsResolver,
@@ -12,9 +13,14 @@ import {
   useStyles,
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
-import { useRadioGroupContext } from '../RadioGroup.context';
-import { RadioCardProvider } from './RadioCard.context';
+import { RadioGroupContext } from '../RadioGroup/RadioGroup';
 import classes from './RadioCard.module.css';
+
+export interface RadioCardContextValue {
+  checked: boolean;
+}
+
+export const RadioCardContext = createContext<RadioCardContextValue | null>(null);
 
 export type RadioCardStylesNames = 'card';
 export type RadioCardCssVariables = {
@@ -94,7 +100,7 @@ export const RadioCard = factory<RadioCardFactory>((_props) => {
   });
 
   const { dir } = useDirection();
-  const ctx = useRadioGroupContext();
+  const ctx = use(RadioGroupContext);
   const _checked = typeof checked === 'boolean' ? checked : ctx?.value === value || false;
   const _name = name || ctx?.name;
 
@@ -137,7 +143,7 @@ export const RadioCard = factory<RadioCardFactory>((_props) => {
   };
 
   return (
-    <RadioCardProvider value={{ checked: _checked }}>
+    <RadioCardContext value={{ checked: _checked }}>
       <UnstyledButton
         mod={[{ 'with-border': withBorder, checked: _checked }, mod]}
         {...getStyles('card')}
@@ -151,7 +157,7 @@ export const RadioCard = factory<RadioCardFactory>((_props) => {
         }}
         onKeyDown={handleKeyDown}
       />
-    </RadioCardProvider>
+    </RadioCardContext>
   );
 });
 

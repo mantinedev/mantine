@@ -1,3 +1,4 @@
+import { use } from 'react';
 import { useDisclosure, useId } from '@mantine/hooks';
 import { ExtendComponent, Factory, useProps } from '../../../core';
 import { FloatingAxesOffsets, FloatingPosition, useDelayedHover } from '../../../utils/Floating';
@@ -6,7 +7,7 @@ import { TransitionOverride } from '../../Transition';
 import { MenuSubDropdown } from '../MenuSubDropdown/MenuSubDropdown';
 import { MenuSubItem } from '../MenuSubItem/MenuSubItem';
 import { MenuSubTarget } from '../MenuSubTarget/MenuSubTarget';
-import { SubMenuProvider, useSubMenuContext } from './MenuSub.context';
+import { SubMenuContext } from './MenuSub.context';
 
 export type MenuSubFactory = Factory<{
   props: MenuSubProps;
@@ -47,7 +48,7 @@ export function MenuSub(_props: MenuSubProps) {
   const { children, closeDelay, ...others } = useProps('MenuSub', defaultProps, _props);
   const id = useId();
   const [opened, { open, close }] = useDisclosure(false);
-  const ctx = useSubMenuContext();
+  const ctx = use(SubMenuContext);
 
   const { openDropdown, closeDropdown } = useDelayedHover({
     open,
@@ -70,7 +71,7 @@ export function MenuSub(_props: MenuSubProps) {
     }, 16);
 
   return (
-    <SubMenuProvider
+    <SubMenuContext
       value={{
         opened,
         close: closeDropdown,
@@ -83,7 +84,7 @@ export function MenuSub(_props: MenuSubProps) {
       <Popover opened={opened} withinPortal={false} withArrow={false} id={id} {...others}>
         {children}
       </Popover>
-    </SubMenuProvider>
+    </SubMenuContext>
   );
 }
 

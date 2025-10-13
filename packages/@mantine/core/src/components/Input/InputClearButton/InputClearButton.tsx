@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   BoxProps,
   ElementProps,
@@ -9,7 +10,7 @@ import {
   useResolvedStylesApi,
 } from '../../../core';
 import { CloseButton, CloseButtonStylesNames } from '../../CloseButton';
-import { useInputContext } from '../Input.context';
+import { InputContext } from '../Input.context';
 
 export interface InputClearButtonProps
   extends BoxProps,
@@ -28,7 +29,7 @@ export type InputClearButtonFactory = Factory<{
 export const InputClearButton = factory<InputClearButtonFactory>((_props) => {
   const props = useProps('InputClearButton', null, _props);
   const { size, variant, vars, classNames, styles, ...others } = props;
-  const ctx = useInputContext();
+  const ctx = use(InputContext);
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<InputClearButtonFactory>({
     classNames,

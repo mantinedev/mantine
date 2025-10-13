@@ -1,3 +1,4 @@
+import { use } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
@@ -19,8 +20,7 @@ import {
   useStyles,
 } from '../../core';
 import { CheckIcon } from '../Checkbox';
-import { useChipGroupContext } from './ChipGroup.context';
-import { ChipGroup } from './ChipGroup/ChipGroup';
+import { ChipGroup, ChipGroupContext } from './ChipGroup/ChipGroup';
 import classes from './Chip.module.css';
 
 export type ChipStylesNames = 'root' | 'input' | 'iconWrapper' | 'checkIcon' | 'label';
@@ -168,7 +168,7 @@ export const Chip = factory<ChipFactory>((_props) => {
     varsResolver,
   });
 
-  const ctx = useChipGroupContext();
+  const ctx = use(ChipGroupContext);
   const uuid = useId(id);
   const { styleProps, rest } = extractStyleProps(others);
 

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { use, useRef, useState } from 'react';
 import {
   clampUseMovePosition,
   useDidUpdate,
@@ -19,7 +19,7 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { useColorPickerContext } from '../ColorPicker.context';
+import { ColorPickerContext } from '../ColorPicker.context';
 import { Thumb } from '../Thumb/Thumb';
 import classes from '../ColorPicker.module.css';
 
@@ -91,7 +91,7 @@ export const ColorSlider = factory<ColorSliderFactory>((_props) => {
     attributes,
   });
 
-  const ctxGetStyles = useColorPickerContext()?.getStyles;
+  const ctxGetStyles = use(ColorPickerContext)?.getStyles;
   const getStyles = ctxGetStyles || _getStyles;
 
   const theme = useMantineTheme();

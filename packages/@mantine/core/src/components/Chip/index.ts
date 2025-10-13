@@ -1,5 +1,5 @@
 export { Chip } from './Chip';
-export { ChipGroup } from './ChipGroup/ChipGroup';
+export { ChipGroup, ChipGroupContext } from './ChipGroup/ChipGroup';
 
 export type {
   ChipCssVariables,
@@ -8,4 +8,4 @@ export type {
   ChipStylesNames,
   ChipVariant,
 } from './Chip';
-export type { ChipGroupProps } from './ChipGroup/ChipGroup';
+export type { ChipGroupProps, ChipGroupContextValue } from './ChipGroup/ChipGroup';

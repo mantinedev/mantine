@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { createOptionalContext, getDefaultZIndex } from '../../core';
+import { createContext, useState } from 'react';
+import { getDefaultZIndex } from '../../core';
 
 interface ModalStackContext {
   stack: string[];
@@ -10,9 +10,7 @@ interface ModalStackContext {
   maxZIndex: string | number;
 }
 
-const [ModalStackProvider, useModalStackContext] = createOptionalContext<ModalStackContext>();
-
-export { useModalStackContext };
+export const ModalStackContext = createContext<ModalStackContext | null>(null);
 
 export interface ModalStackProps {
   children: React.ReactNode;
@@ -23,7 +21,7 @@ export function ModalStack({ children }: ModalStackProps) {
   const [maxZIndex, setMaxZIndex] = useState<number | string>(getDefaultZIndex('modal'));
 
   return (
-    <ModalStackProvider
+    <ModalStackContext
       value={{
         stack,
         addModal: (id, zIndex) => {
@@ -41,7 +39,7 @@ export function ModalStack({ children }: ModalStackProps) {
       }}
     >
       {children}
-    </ModalStackProvider>
+    </ModalStackContext>
   );
 }
 

@@ -1,3 +1,4 @@
+import { createContext, use } from 'react';
 import {
   Box,
   BoxProps,
@@ -11,9 +12,15 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { usePillsInputContext } from '../../PillsInput/PillsInput.context';
-import { PillGroupProvider } from '../PillGroup.context';
+import { PillsInputContext } from '../../PillsInput/PillsInput.context';
 import classes from '../Pill.module.css';
+
+export interface PillGroupContextValue {
+  size: MantineSize | (string & {}) | undefined;
+  disabled: boolean | undefined;
+}
+
+export const PillGroupContext = createContext<PillGroupContextValue | null>(null);
 
 export type PillGroupStylesNames = 'group';
 export type PillGroupCssVariables = {
@@ -62,7 +69,7 @@ export const PillGroup = factory<PillGroupFactory>((_props) => {
     attributes,
     ...others
   } = props;
-  const pillsInputCtx = usePillsInputContext();
+  const pillsInputCtx = use(PillsInputContext);
   const _size = pillsInputCtx?.size || size || undefined;
 
   const getStyles = useStyles<PillGroupFactory>({
@@ -82,9 +89,9 @@ export const PillGroup = factory<PillGroupFactory>((_props) => {
   });
 
   return (
-    <PillGroupProvider value={{ size: _size, disabled }}>
+    <PillGroupContext value={{ size: _size, disabled }}>
       <Box size={_size} {...getStyles('group')} {...others} />
-    </PillGroupProvider>
+    </PillGroupContext>
   );
 });
 

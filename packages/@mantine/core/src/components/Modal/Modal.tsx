@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { use, useEffect } from 'react';
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
 import { ModalBaseCloseButtonProps, ModalBaseOverlayProps } from '../ModalBase';
 import { ModalBody } from './ModalBody';
@@ -12,7 +12,7 @@ import {
   ModalRootProps,
   ModalRootStylesNames,
 } from './ModalRoot';
-import { ModalStack, useModalStackContext } from './ModalStack';
+import { ModalStack, ModalStackContext } from './ModalStack';
 import { ModalTitle } from './ModalTitle';
 import classes from './Modal.module.css';
 
@@ -89,7 +89,7 @@ export const Modal = factory<ModalFactory>((_props) => {
     zIndex,
     ...others
   } = useProps('Modal', defaultProps, _props);
-  const ctx = useModalStackContext();
+  const ctx = use(ModalStackContext);
   const hasHeader = !!title || withCloseButton;
   const stackProps =
     ctx && stackId

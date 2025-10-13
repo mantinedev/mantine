@@ -1,6 +1,14 @@
+import { createContext } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { useProps } from '../../../core';
-import { ChipGroupProvider } from '../ChipGroup.context';
+
+export interface ChipGroupContextValue {
+  isChipSelected: (value: string) => boolean;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  multiple: boolean | undefined;
+}
+
+export const ChipGroupContext = createContext<ChipGroupContextValue | null>(null);
 
 export interface ChipGroupProps<T extends boolean = false> {
   /** If set, multiple values can be selected */
@@ -42,9 +50,9 @@ export function ChipGroup<T extends boolean>(props: ChipGroupProps<T>) {
   };
 
   return (
-    <ChipGroupProvider value={{ isChipSelected, onChange: handleChange, multiple }}>
+    <ChipGroupContext value={{ isChipSelected, onChange: handleChange, multiple }}>
       {children}
-    </ChipGroupProvider>
+    </ChipGroupContext>
   );
 }
 

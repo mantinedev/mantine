@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   Box,
   BoxProps,
@@ -14,9 +15,8 @@ import {
   useStyles,
 } from '../../core';
 import { CloseButton, CloseButtonProps } from '../CloseButton';
-import { usePillsInputContext } from '../PillsInput/PillsInput.context';
-import { usePillGroupContext } from './PillGroup.context';
-import { PillGroup } from './PillGroup/PillGroup';
+import { PillsInputContext } from '../PillsInput/PillsInput.context';
+import { PillGroup, PillGroupContext } from './PillGroup/PillGroup';
 import classes from './Pill.module.css';
 
 export type PillStylesNames = 'root' | 'label' | 'remove';
@@ -91,8 +91,8 @@ export const Pill = factory<PillFactory>((_props) => {
     ...others
   } = props;
 
-  const ctx = usePillGroupContext();
-  const pillsInputCtx = usePillsInputContext();
+  const ctx = use(PillGroupContext);
+  const pillsInputCtx = use(PillsInputContext);
   const _size = size || ctx?.size || undefined;
   const _variant = pillsInputCtx?.variant === 'filled' ? 'contrast' : variant || 'default';
 

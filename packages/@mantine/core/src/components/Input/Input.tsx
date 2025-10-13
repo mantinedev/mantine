@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   Box,
   BoxProps,
@@ -23,7 +24,7 @@ import { InputDescription } from './InputDescription/InputDescription';
 import { InputError } from './InputError/InputError';
 import { InputLabel } from './InputLabel/InputLabel';
 import { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
-import { useInputWrapperContext } from './InputWrapper.context';
+import { InputWrapperContext } from './InputWrapper.context';
 import {
   __InputWrapperProps,
   InputWrapper,
@@ -225,7 +226,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
   } = props;
 
   const { styleProps, rest } = extractStyleProps(others);
-  const ctx = useInputWrapperContext();
+  const ctx = use(InputWrapperContext);
   const stylesCtx: InputStylesCtx = { offsetBottom: ctx?.offsetBottom, offsetTop: ctx?.offsetTop };
 
   const getStyles = useStyles<InputFactory>({

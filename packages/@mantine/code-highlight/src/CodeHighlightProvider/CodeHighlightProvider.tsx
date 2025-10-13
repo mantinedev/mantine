@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
-import { createOptionalContext } from '@mantine/core';
+import { createContext, use, useEffect, useMemo, useState } from 'react';
 import { plainTextAdapter } from './adapters/plain-text-adapter';
 
 interface HighlighterInput {
@@ -29,11 +28,10 @@ interface CodeHighlightProviderContext {
   highlight: Highlighter;
 }
 
-export const [CodeHighlightProvider, useCodeHighlight] =
-  createOptionalContext<CodeHighlightProviderContext>({
-    adapter: plainTextAdapter,
-    highlight: plainTextAdapter.getHighlighter(null),
-  });
+export const CodeHighlightContext = createContext<CodeHighlightProviderContext>({
+  adapter: plainTextAdapter,
+  highlight: plainTextAdapter.getHighlighter(null),
+});
 
 export interface CodeHighlightAdapterProviderProps {
   adapter: CodeHighlightAdapter;
@@ -53,10 +51,10 @@ export function CodeHighlightAdapterProvider({
     }
   }, [adapter]);
 
-  return <CodeHighlightProvider value={{ adapter, highlight }}>{children}</CodeHighlightProvider>;
+  return <CodeHighlightContext value={{ adapter, highlight }}>{children}</CodeHighlightContext>;
 }
 
 export function useHighlight() {
-  const ctx = useCodeHighlight();
+  const ctx = use(CodeHighlightContext);
   return ctx?.highlight || plainTextAdapter.getHighlighter(null);
 }

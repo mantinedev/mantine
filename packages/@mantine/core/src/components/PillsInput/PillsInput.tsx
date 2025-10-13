@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '../../core';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
-import { PillsInputProvider } from './PillsInput.context';
+import { PillsInputContext } from './PillsInput.context';
 import { PillsInputField } from './PillsInputField/PillsInputField';
 
 export interface PillsInputProps
@@ -44,7 +44,7 @@ export const PillsInput = factory<PillsInputFactory>((_props) => {
   const fieldRef = useRef<HTMLInputElement>(null);
 
   return (
-    <PillsInputProvider value={{ fieldRef, size, disabled, hasError: !!error, variant }}>
+    <PillsInputContext value={{ fieldRef, size, disabled, hasError: !!error, variant }}>
       <InputBase
         size={size}
         error={error}
@@ -72,7 +72,7 @@ export const PillsInput = factory<PillsInputFactory>((_props) => {
       >
         {children}
       </InputBase>
-    </PillsInputProvider>
+    </PillsInputContext>
   );
 });
 

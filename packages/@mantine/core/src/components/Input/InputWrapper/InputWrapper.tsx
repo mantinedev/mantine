@@ -33,7 +33,7 @@ import {
   InputLabelProps,
   InputLabelStylesNames,
 } from '../InputLabel/InputLabel';
-import { InputWrapperProvider } from '../InputWrapper.context';
+import { InputWrapperContext } from '../InputWrapper.context';
 import { getInputOffsets } from './get-input-offsets/get-input-offsets';
 import classes from '../Input.module.css';
 
@@ -246,7 +246,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
   });
 
   return (
-    <InputWrapperProvider
+    <InputWrapperContext
       value={{
         getStyles,
         describedBy,
@@ -264,7 +264,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
       >
         {content}
       </Box>
-    </InputWrapperProvider>
+    </InputWrapperContext>
   );
 });
 
