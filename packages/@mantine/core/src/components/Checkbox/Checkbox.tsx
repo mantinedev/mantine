@@ -192,7 +192,16 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
 
   useEffect(() => {
     if (ref && 'current' in ref && ref.current) {
+      // Set native indeterminate property for accessibility and testing
       ref.current.indeterminate = indeterminate || false;
+
+      // Manually sync data-indeterminate attribute with indeterminate state
+      // This is necessary because mod prop system cannot reliably remove attributes
+      if (indeterminate) {
+        ref.current.setAttribute('data-indeterminate', '');
+      } else {
+        ref.current.removeAttribute('data-indeterminate');
+      }
     }
   }, [indeterminate, ref]);
 
@@ -225,7 +234,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
           ref={ref}
           checked={checked}
           disabled={disabled}
-          mod={{ error: !!error, indeterminate }}
+          mod={{ error: !!error }}
           {...getStyles('input', { focusable: true, variant })}
           onChange={onChange}
           {...rest}
