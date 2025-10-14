@@ -4,8 +4,8 @@ import {
   BoxProps,
   ElementProps,
   extractStyleProps,
+  factory,
   Factory,
-  genericFactory,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -38,14 +38,14 @@ export type TagsInputStylesNames =
   | 'pillsList'
   | 'inputField';
 
-export interface TagsInputProps<Value extends string = string>
+export interface TagsInputProps
   extends BoxProps,
     __BaseInputProps,
-    Omit<ComboboxLikeProps<Value>, 'data' | 'onOptionSubmit'>,
+    Omit<ComboboxLikeProps, 'data' | 'onOptionSubmit'>,
     StylesApiProps<TagsInputFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
   /** Data displayed in the dropdown. Values must be unique. */
-  data?: ComboboxGenericData<Value>;
+  data?: ComboboxGenericData;
 
   /** Controlled component value */
   value?: string[];
@@ -96,9 +96,7 @@ export interface TagsInputProps<Value extends string = string>
   hiddenInputValuesDivider?: string;
 
   /** A function to render content of the option, replaces the default content of the option */
-  renderOption?: (
-    input: ComboboxLikeRenderOptionInput<ComboboxGenericItem<Value>>
-  ) => React.ReactNode;
+  renderOption?: (input: ComboboxLikeRenderOptionInput<ComboboxGenericItem>) => React.ReactNode;
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
@@ -117,7 +115,6 @@ export type TagsInputFactory = Factory<{
   props: TagsInputProps;
   ref: HTMLInputElement;
   stylesNames: TagsInputStylesNames;
-  signature: <Value extends string = string>(props: TagsInputProps<Value>) => React.JSX.Element;
 }>;
 
 const defaultProps = {
@@ -128,7 +125,7 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<TagsInputProps>;
 
-export const TagsInput = genericFactory<TagsInputFactory>((_props) => {
+export const TagsInput = factory<TagsInputFactory>((_props) => {
   const props = useProps('TagsInput', defaultProps, _props);
   const {
     classNames,

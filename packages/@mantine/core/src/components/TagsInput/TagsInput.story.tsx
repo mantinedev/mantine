@@ -7,7 +7,7 @@ export default { title: 'TagsInput' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <TagsInput<'react' | 'angular'>
+      <TagsInput
         data={['react', 'angular']}
         placeholder="Select something"
         onChange={console.log}
