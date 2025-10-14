@@ -42,11 +42,11 @@ export function WithinDisabledFieldset() {
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <SegmentedControl<number | boolean | null>
+      <SegmentedControl<number | boolean>
         data={[
           { value: 1, label: '1' },
           { value: true, label: 'true' },
-          { value: null, label: 'null' },
+          { value: false, label: 'false' },
         ]}
         onChange={(val) => console.log(val)}
       />

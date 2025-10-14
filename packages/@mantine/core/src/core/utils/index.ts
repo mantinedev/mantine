@@ -31,3 +31,5 @@ export { getEnv } from './get-env/get-env';
 export { memoize } from './memoize/memoize';
 export { findClosestNumber } from './find-closest-number/find-closest-number';
 export { getRefProp } from './get-ref-prop/get-ref-prop';
+export { isPrimitive } from './primitive/primitive';
+export type { Primitive } from './primitive/primitive';

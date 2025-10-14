@@ -19,9 +19,11 @@ import {
   getRadius,
   getSize,
   getThemeColor,
+  isPrimitive,
   MantineColor,
   MantineRadius,
   MantineSize,
+  Primitive,
   StylesApiProps,
   useMantineTheme,
   useProps,
@@ -52,12 +54,6 @@ export interface SegmentedControlItem<Value = string> {
   value: Value;
   label: React.ReactNode;
   disabled?: boolean;
-}
-
-type Primitive = string | number | boolean | bigint | null;
-
-function isPrimitive(value: unknown): value is Primitive {
-  return value === null || (typeof value !== 'object' && typeof value !== 'function');
 }
 
 export interface SegmentedControlProps<Value extends Primitive = string>
