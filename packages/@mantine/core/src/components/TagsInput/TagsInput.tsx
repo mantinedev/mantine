@@ -4,8 +4,8 @@ import {
   BoxProps,
   ElementProps,
   extractStyleProps,
-  factory,
   Factory,
+  genericFactory,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -13,11 +13,11 @@ import {
 } from '../../core';
 import {
   Combobox,
+  ComboboxGenericData,
+  ComboboxGenericItem,
   ComboboxLikeProps,
   ComboboxLikeRenderOptionInput,
   ComboboxLikeStylesNames,
-  ComboboxStringData,
-  ComboboxStringItem,
   getOptionsLockup,
   getParsedComboboxData,
   OptionsDropdown,
@@ -38,14 +38,14 @@ export type TagsInputStylesNames =
   | 'pillsList'
   | 'inputField';
 
-export interface TagsInputProps
+export interface TagsInputProps<Value extends string = string>
   extends BoxProps,
     __BaseInputProps,
-    Omit<ComboboxLikeProps, 'data'>,
+    Omit<ComboboxLikeProps<Value>, 'data' | 'onOptionSubmit'>,
     StylesApiProps<TagsInputFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
   /** Data displayed in the dropdown. Values must be unique. */
-  data?: ComboboxStringData;
+  data?: ComboboxGenericData<Value>;
 
   /** Controlled component value */
   value?: string[];
@@ -96,7 +96,9 @@ export interface TagsInputProps
   hiddenInputValuesDivider?: string;
 
   /** A function to render content of the option, replaces the default content of the option */
-  renderOption?: (input: ComboboxLikeRenderOptionInput<ComboboxStringItem>) => React.ReactNode;
+  renderOption?: (
+    input: ComboboxLikeRenderOptionInput<ComboboxGenericItem<Value>>
+  ) => React.ReactNode;
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
@@ -106,12 +108,16 @@ export interface TagsInputProps
 
   /** Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. */
   isDuplicate?: (value: string, currentValues: string[]) => boolean;
+
+  /** Called when option is submitted from dropdown with mouse click or `Enter` key */
+  onOptionSubmit?: (value: string) => void;
 }
 
 export type TagsInputFactory = Factory<{
   props: TagsInputProps;
   ref: HTMLInputElement;
   stylesNames: TagsInputStylesNames;
+  signature: <Value extends string = string>(props: TagsInputProps<Value>) => React.JSX.Element;
 }>;
 
 const defaultProps = {
@@ -122,7 +128,7 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<TagsInputProps>;
 
-export const TagsInput = factory<TagsInputFactory>((_props) => {
+export const TagsInput = genericFactory<TagsInputFactory>((_props) => {
   const props = useProps('TagsInput', defaultProps, _props);
   const {
     classNames,
@@ -244,7 +250,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
   const getStyles = useStyles<TagsInputFactory>({
     name: 'TagsInput',
     classes: {} as any,
-    props,
+    props: props as any,
     classNames,
     styles,
     unstyled,
@@ -395,7 +401,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
           handleSearchChange('');
-          _value.length < maxTags && setValue([..._value, optionsLockup[val].label]);
+          _value.length < maxTags && setValue([..._value, optionsLockup[val].value]);
 
           combobox.resetSelectedOption();
         }}

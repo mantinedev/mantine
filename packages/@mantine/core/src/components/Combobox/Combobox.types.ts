@@ -1,40 +1,47 @@
+import { Primitive } from '../../core';
 import type { ComboboxProps, ComboboxStylesNames } from './Combobox';
 import type { OptionsFilter } from './OptionsDropdown/OptionsDropdown';
 
-export interface ComboboxStringItem {
-  value: string;
+export interface ComboboxGenericItem<Value extends Primitive = string> {
+  value: Value;
   disabled?: boolean;
 }
 
-export interface ComboboxItem extends ComboboxStringItem {
+export interface ComboboxItem<Value extends Primitive = string> extends ComboboxGenericItem<Value> {
   label: string;
 }
 
-export interface ComboboxItemGroup<T = ComboboxItem | string> {
+export interface ComboboxItemGroup<T> {
   group: string;
   items: T[];
 }
 
-export interface ComboboxParsedItemGroup {
+export interface ComboboxParsedItemGroup<Value extends Primitive = string> {
   group: string;
-  items: ComboboxItem[];
+  items: ComboboxItem<Value>[];
 }
 
-export type ComboboxStringData =
-  | Array<string | ComboboxStringItem | ComboboxItemGroup<string | ComboboxStringItem>>
-  | ReadonlyArray<string | ComboboxStringItem | ComboboxItemGroup<string | ComboboxStringItem>>;
+export type ComboboxGenericData<Value extends Primitive = string> =
+  | Array<
+      Value | ComboboxGenericItem<Value> | ComboboxItemGroup<Value | ComboboxGenericItem<Value>>
+    >
+  | ReadonlyArray<
+      Value | ComboboxGenericItem<Value> | ComboboxItemGroup<Value | ComboboxGenericItem<Value>>
+    >;
 
-export type ComboboxData =
-  | Array<string | ComboboxItem | ComboboxItemGroup>
-  | ReadonlyArray<string | ComboboxItem | ComboboxItemGroup>;
+export type ComboboxData<Value extends Primitive = string> =
+  | Array<Value | ComboboxItem<Value> | ComboboxItemGroup<Value | ComboboxGenericItem<Value>>>
+  | ReadonlyArray<
+      Value | ComboboxItem<Value> | ComboboxItemGroup<Value | ComboboxGenericItem<Value>>
+    >;
 
 export type ComboboxParsedItem = ComboboxItem | ComboboxParsedItemGroup;
 
 export type ComboboxLikeStylesNames = Exclude<ComboboxStylesNames, 'header' | 'footer' | 'search'>;
 
-export interface ComboboxLikeProps {
+export interface ComboboxLikeProps<Value extends Primitive = string> {
   /** Data used to generate options. Values must be unique, otherwise an error will be thrown and component will not render. */
-  data?: ComboboxData;
+  data?: ComboboxData<Value>;
 
   /** Controlled dropdown opened state */
   dropdownOpened?: boolean;
@@ -52,7 +59,7 @@ export interface ComboboxLikeProps {
   selectFirstOptionOnChange?: boolean;
 
   /** Called when option is submitted from dropdown with mouse click or `Enter` key */
-  onOptionSubmit?: (value: string) => void;
+  onOptionSubmit?: (value: Value) => void;
 
   /** Props passed down to `Combobox` component */
   comboboxProps?: ComboboxProps;

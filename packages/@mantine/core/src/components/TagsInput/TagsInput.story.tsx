@@ -7,20 +7,10 @@ export default { title: 'TagsInput' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <TagsInput
-        data={[
-          'React',
-          'Angular',
-          'Svelte',
-          'Vue',
-          'Ember',
-          'Backbone',
-          'Preact',
-          'Inferno',
-          'Aurelia',
-          'Meteor',
-        ]}
+      <TagsInput<'react' | 'angular'>
+        data={['react', 'angular']}
         placeholder="Select something"
+        onChange={console.log}
       />
     </div>
   );

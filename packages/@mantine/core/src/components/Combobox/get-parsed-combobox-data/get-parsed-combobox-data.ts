@@ -1,40 +1,41 @@
+import { Primitive } from '../../../core';
 import {
   ComboboxData,
+  ComboboxGenericData,
+  ComboboxGenericItem,
   ComboboxItem,
   ComboboxItemGroup,
   ComboboxParsedItem,
   ComboboxParsedItemGroup,
-  ComboboxStringData,
-  ComboboxStringItem,
 } from '../Combobox.types';
 
-function parseItem(
-  item: string | ComboboxItem | ComboboxStringItem | ComboboxItemGroup
-): ComboboxItem | ComboboxParsedItemGroup {
+function parseItem<Value extends Primitive = string>(
+  item: Primitive | ComboboxItem<Value> | ComboboxGenericItem<Value> | ComboboxItemGroup<Value>
+): ComboboxItem<Value> | ComboboxParsedItemGroup<Value> {
   if (typeof item === 'string') {
-    return { value: item, label: item };
+    return { value: item as Value, label: item };
   }
 
-  if ('value' in item && !('label' in item)) {
-    return { value: item.value, label: item.value, disabled: item.disabled };
+  if (typeof item === 'object' && 'value' in item && !('label' in item)) {
+    return { value: item.value, label: `${item.value}`, disabled: item.disabled };
   }
 
-  if (typeof item === 'number') {
-    return { value: (item as number).toString(), label: (item as number).toString() };
-  }
-
-  if ('group' in item) {
+  if (typeof item === 'object' && 'group' in item) {
     return {
       group: item.group,
-      items: item.items.map((i) => parseItem(i) as ComboboxItem),
+      items: item.items.map((i) => parseItem(i) as ComboboxItem<Value>),
     };
+  }
+
+  if (typeof item === 'number' || typeof item === 'bigint' || typeof item === 'boolean') {
+    return { value: item as Value, label: `${item}` };
   }
 
   return item;
 }
 
-export function getParsedComboboxData(
-  data: ComboboxData | ComboboxStringData | undefined
+export function getParsedComboboxData<Value extends Primitive = string>(
+  data: ComboboxData<Value> | ComboboxGenericData<Value> | undefined
 ): ComboboxParsedItem[] {
   if (!data) {
     return [];
