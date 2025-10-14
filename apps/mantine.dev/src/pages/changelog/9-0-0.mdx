@@ -22,10 +22,13 @@ All funds are used to improve Mantine and create new features and components.
 This changelog covers breaking changes and new features in Mantine 9.0.
 To migrate your application to Mantine 9.0, follow [8.x → 9.x migration guide](/guides/8x-to-9x).
 
-## React 19
+## Peer dependencies requirements updates
 
-Starting from Mantine 9.0.0, React 19 is required. None of Mantine component
-will work with React 18, most of `@mantine/hooks` require React 19 as well.
+Starting from Mantine 9.0, the following dependencies are required:
+
+- React 19+ for all `@mantine/*` packages
+- Tiptap 3+ for `@mantine/tiptap` ([migration guide](/guides/tiptap-3-migration))
+- Recharts 3+ for `@mantine/charts` (no migration required)
 
 ## use-floating-window hook
 
@@ -59,16 +62,6 @@ When the limit is reached, the remaining controls are disabled and cannot be sel
 
 <Demo data={CheckboxDemos.maxSelectedValues} />
 
-## Tiptap 3 only
-
-Starting from Mantine 9.0, Tiptap 3 is required for [@mantine/tiptap](/core/tiptap).
-You can follow the [migration guide](/guides/tiptap-3-migration) to update Tiptap in your project.
-
-## Recharts 3 only
-
-Starting from Mantine 9.0, Recharts 3 is required for [@mantine/charts](/charts/getting-started/).
-There are no breaking changes required on your side besides updating Recharts package.
-
 ## use-form TransformedValues type argument
 
 [use-form](/form/use-form) now supports passing second type argument `TransformedValues` to define the type of
@@ -100,6 +93,31 @@ function Demo() {
       locationId: Number(values.locationId),
     }),
   });
+}
+```
+
+## Generic components
+
+[SegmentedControl](/core/segmented-control), [RadioGroup](/core/radio/#radiogroup-with-formdata)
+now support generic value type. You can pass primitive values (numbers, strings, boolean, null)
+as the type argument. The generic type is used for `value`, `defaultValue`, `onChange` and other props.
+
+For example, generic type can now be used with [SegmentedControl](/core/segmented-control)
+to specify string union:
+
+```tsx
+import { SegmentedControl } from '@mantine/core';
+
+function Demo() {
+  return (
+    <SegmentedControl<'orange' | 'grape' | 'apple'>
+      data={[
+        { value: 'orange', label: 'Orange' },
+        { value: 'grape', label: 'Grape' },
+        { value: 'apple', label: 'Apple' },
+      ]}
+    />
+  );
 }
 ```
 

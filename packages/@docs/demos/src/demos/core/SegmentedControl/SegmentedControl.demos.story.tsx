@@ -42,3 +42,8 @@ export const Demo_readOnly = {
   name: '⭐ Demo: readOnly',
   render: renderDemo(demos.readOnly),
 };
+
+export const Demo_generic = {
+  name: '⭐ Demo: generic',
+  render: renderDemo(demos.generic),
+};

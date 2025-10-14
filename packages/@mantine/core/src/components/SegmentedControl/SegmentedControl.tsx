@@ -13,7 +13,7 @@ import {
   createVarsResolver,
   ElementProps,
   Factory,
-  factory,
+  genericFactory,
   getContrastColor,
   getFontSize,
   getRadius,
@@ -48,27 +48,33 @@ export type SegmentedControlCssVariables = {
     | '--sc-transition-timing-function';
 };
 
-export interface SegmentedControlItem {
-  value: string;
+export interface SegmentedControlItem<Value = string> {
+  value: Value;
   label: React.ReactNode;
   disabled?: boolean;
 }
 
-export interface SegmentedControlProps
+type Primitive = string | number | boolean | bigint | null;
+
+function isPrimitive(value: unknown): value is Primitive {
+  return value === null || (typeof value !== 'object' && typeof value !== 'function');
+}
+
+export interface SegmentedControlProps<Value extends Primitive = string>
   extends BoxProps,
     StylesApiProps<SegmentedControlFactory>,
-    ElementProps<'div', 'onChange'> {
+    ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   /** Data based on which controls are rendered */
-  data: (string | SegmentedControlItem)[];
+  data: (Value | SegmentedControlItem<Value>)[];
 
   /** Controlled component value */
-  value?: string;
+  value?: Value;
 
   /** Uncontrolled component default value */
-  defaultValue?: string;
+  defaultValue?: Value;
 
   /** Called when value changes */
-  onChange?: (value: string) => void;
+  onChange?: (value: Value) => void;
 
   /** Determines whether the component is disabled */
   disabled?: boolean;
@@ -112,6 +118,9 @@ export type SegmentedControlFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: SegmentedControlStylesNames;
   vars: SegmentedControlCssVariables;
+  signature: <Value extends Primitive = string>(
+    props: SegmentedControlProps<Value>
+  ) => React.JSX.Element | null;
 }>;
 
 const defaultProps = {
@@ -133,7 +142,7 @@ const varsResolver = createVarsResolver<SegmentedControlFactory>(
   })
 );
 
-export const SegmentedControl = factory<SegmentedControlFactory>((_props) => {
+export const SegmentedControl = genericFactory<SegmentedControlFactory>((_props) => {
   const props = useProps('SegmentedControl', defaultProps, _props);
   const {
     classNames,
@@ -167,7 +176,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props) => {
 
   const getStyles = useStyles<SegmentedControlFactory>({
     name: 'SegmentedControl',
-    props,
+    props: props as any,
     classes,
     className,
     style,
@@ -181,9 +190,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props) => {
 
   const theme = useMantineTheme();
 
-  const _data = data.map((item) =>
-    typeof item === 'string' ? { label: item, value: item } : item
-  );
+  const _data = data.map((item) => (isPrimitive(item) ? { label: `${item}`, value: item } : item));
 
   const initialized = useMounted();
   const [key, setKey] = useState(randomId());
@@ -209,14 +216,14 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props) => {
     <Box
       {...getStyles('control')}
       mod={{ active: _value === item.value, orientation }}
-      key={item.value}
+      key={`${item.value}`}
     >
       <input
         {...getStyles('input')}
         disabled={disabled || item.disabled}
         type="radio"
         name={uuid}
-        value={item.value}
+        value={`${item.value}`}
         id={`${uuid}-${item.value}`}
         checked={_value === item.value}
         onChange={() => !readOnly && handleValueChange(item.value)}
@@ -233,7 +240,7 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props) => {
           'read-only': readOnly,
         }}
         htmlFor={`${uuid}-${item.value}`}
-        ref={(node) => setElementRef(node, item.value)}
+        ref={(node) => setElementRef(node, `${item.value}`)}
         __vars={{
           '--sc-label-color':
             color !== undefined ? getContrastColor({ color, theme, autoContrast }) : undefined,
@@ -274,9 +281,9 @@ export const SegmentedControl = factory<SegmentedControlFactory>((_props) => {
       role="radiogroup"
       data-disabled={disabled}
     >
-      {typeof _value === 'string' && (
+      {typeof _value !== 'undefined' && (
         <FloatingIndicator
-          target={refs[_value]}
+          target={refs[`${_value}`]}
           parent={parent}
           component="span"
           transitionDuration="var(--sc-transition-duration)"

@@ -36,7 +36,7 @@ function Demo() {
 
 `SegmentedControl` supports two different data formats:
 
-1. An array of strings – used when `value` and `label` are the same
+1. An array of primitive values – used when `value` and `label` are the same
 2. An array of objects – used when `value` and `label` are different
 
 ```tsx
@@ -56,6 +56,31 @@ function ArrayOfObjects() {
         { value: 'Angular', label: 'Angular' },
         { value: 'Svelte', label: 'Svelte' },
         { value: 'Vue', label: 'Vue' },
+      ]}
+    />
+  );
+}
+```
+
+## Generic value type
+
+`SegmentedControl` supports generic value type. You can pass primitive values (numbers, strings, boolean, null)
+as the type argument. The generic type is used for `value`, `defaultValue`, `onChange` and `data` props.
+
+<Demo data={SegmentedControlDemos.generic} />
+
+Example with strings union:
+
+```tsx
+import { SegmentedControl } from '@mantine/core';
+
+function Demo() {
+  return (
+    <SegmentedControl<'orange' | 'grape' | 'apple'>
+      data={[
+        { value: 'orange', label: 'Orange' },
+        { value: 'grape', label: 'Grape' },
+        { value: 'apple', label: 'Apple' },
       ]}
     />
   );
