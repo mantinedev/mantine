@@ -8,12 +8,10 @@ import {
   BoxProps,
   createVarsResolver,
   ElementProps,
-  ExtendComponent,
   Factory,
+  genericFactory,
   getSpacing,
-  getWithProps,
   MantineSpacing,
-  MantineThemeComponent,
   StylesApiProps,
   useProps,
   useStyles,
@@ -57,6 +55,7 @@ export type OverflowListFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: OverflowListStylesNames;
   vars: OverflowListCssVariables;
+  signature: <T = any>(props: OverflowListProps<T>) => React.JSX.Element;
 }>;
 
 const defaultProps = {
@@ -70,7 +69,7 @@ const varsResolver = createVarsResolver<OverflowListFactory>((_, { gap }) => ({
   },
 }));
 
-export function OverflowList<T>(_props: OverflowListProps<T>) {
+export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
   const props = useProps('OverflowList', defaultProps, _props);
   const {
     classNames,
@@ -225,10 +224,7 @@ export function OverflowList<T>(_props: OverflowListProps<T>) {
       {clonedOverflowElement}
     </Box>
   );
-}
+});
 
-const extendOverflowList = (c: ExtendComponent<OverflowListFactory>): MantineThemeComponent => c;
-OverflowList.extend = extendOverflowList;
-OverflowList.withProps = getWithProps<OverflowListProps, OverflowListProps>(OverflowList as any);
 OverflowList.displayName = '@mantine/core/OverflowList';
 OverflowList.classes = classes;

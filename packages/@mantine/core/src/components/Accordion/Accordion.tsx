@@ -4,13 +4,11 @@ import {
   BoxProps,
   createVarsResolver,
   ElementProps,
-  ExtendComponent,
   Factory,
+  genericFactory,
   getRadius,
   getSafeId,
-  getWithProps,
   MantineRadius,
-  MantineThemeComponent,
   rem,
   StylesApiProps,
   useProps,
@@ -90,6 +88,15 @@ export type AccordionFactory = Factory<{
   stylesNames: AccordionStylesNames;
   vars: AccordionCssVariables;
   variant: AccordionVariant;
+  signature: <Multiple extends boolean = false>(
+    props: AccordionProps<Multiple>
+  ) => React.JSX.Element;
+  staticComponents: {
+    Item: typeof AccordionItem;
+    Panel: typeof AccordionPanel;
+    Control: typeof AccordionControl;
+    Chevron: typeof AccordionChevron;
+  };
 }>;
 
 const defaultProps = {
@@ -112,8 +119,8 @@ const varsResolver = createVarsResolver<AccordionFactory>(
   })
 );
 
-export function Accordion<Multiple extends boolean = false>(_props: AccordionProps<Multiple>) {
-  const props = useProps('Accordion', defaultProps as AccordionProps<Multiple>, _props);
+export const Accordion = genericFactory<AccordionFactory>((_props) => {
+  const props = useProps('Accordion', defaultProps as any, _props);
   const {
     classNames,
     className,
@@ -153,7 +160,7 @@ export function Accordion<Multiple extends boolean = false>(_props: AccordionPro
     Array.isArray(_value) ? _value.includes(itemValue) : itemValue === _value;
 
   const handleItemChange = (itemValue: string) => {
-    const nextValue: AccordionValue<Multiple> = Array.isArray(_value)
+    const nextValue = Array.isArray(_value)
       ? _value.includes(itemValue)
         ? _value.filter((selectedValue) => selectedValue !== itemValue)
         : [..._value, itemValue]
@@ -207,12 +214,8 @@ export function Accordion<Multiple extends boolean = false>(_props: AccordionPro
       </Box>
     </AccordionProvider>
   );
-}
+});
 
-const extendAccordion = (c: ExtendComponent<AccordionFactory>): MantineThemeComponent => c;
-
-Accordion.extend = extendAccordion;
-Accordion.withProps = getWithProps<AccordionProps, AccordionProps>(Accordion as any);
 Accordion.classes = classes;
 Accordion.displayName = '@mantine/core/Accordion';
 Accordion.Item = AccordionItem;

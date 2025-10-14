@@ -1,4 +1,4 @@
-export { factory, getWithProps } from './factory';
+export { factory, genericFactory, getWithProps } from './factory';
 export { polymorphicFactory } from './polymorphic-factory';
 export { createPolymorphicComponent, polymorphic } from './create-polymorphic-component';
 export type {
@@ -7,6 +7,7 @@ export type {
   MantineComponent,
   MantineComponentStaticProperties,
   FactoryComponentWithProps,
+  PlaceholderPolymorphicProps,
 } from './factory';
 export type { MantinePolymorphicComponent } from './polymorphic-factory';
 export type { PolymorphicComponentProps, PolymorphicRef } from './create-polymorphic-component';

@@ -11,8 +11,12 @@ export interface FactoryPayload {
   vars?: any;
   variant?: string;
   staticComponents?: Record<string, any>;
+
   // Compound components cannot have classNames, styles and vars on MantineProvider
   compound?: boolean;
+
+  // Component signature, used only for generic components
+  signature?: any;
 }
 
 export interface ExtendCompoundComponent<Payload extends FactoryPayload> {
@@ -47,13 +51,16 @@ export type MantineComponentStaticProperties<Payload extends FactoryPayload> =
     StaticComponents<Payload['staticComponents']> &
     FactoryComponentWithProps<Payload>;
 
+export interface PlaceholderPolymorphicProps {
+  component?: any;
+  renderRoot?: (props: Record<string, any>) => React.ReactNode;
+}
+
 export type FactoryComponentWithProps<Payload extends FactoryPayload> = {
-  withProps: (props: Partial<Payload['props']>) => React.NamedExoticComponent<
-    Payload['props'] &
-      React.RefAttributes<Payload['ref']> & {
-        component?: any;
-        renderRoot?: (props: Record<string, any>) => React.ReactNode;
-      }
+  withProps: (
+    props: Partial<Payload['props']>
+  ) => React.NamedExoticComponent<
+    Payload['props'] & React.RefAttributes<Payload['ref']> & PlaceholderPolymorphicProps
   >;
 };
 
@@ -93,4 +100,9 @@ export function factory<Payload extends FactoryPayload>(
   };
 
   return Component as MantineComponent<Payload>;
+}
+
+export function genericFactory<Payload extends FactoryPayload>(ui: Payload['signature']) {
+  return factory(ui as any) as Payload['signature'] &
+    MantineComponentStaticProperties<Payload> & { displayName?: string };
 }
