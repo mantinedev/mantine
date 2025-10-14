@@ -21,7 +21,7 @@ export function createPackageConfig(packagePath: string): RollupOptions {
   }));
 
   const plugins = [
-    nodeResolve({ extensions: ['.ts', '.tsx', '.js', '.jsx'] }),
+    nodeResolve({ extensions: ['.ts', '.tsx', '.js', '.jsx'], preferBuiltins: true }),
     esbuild({
       tsconfig: getPath('tsconfig.json'),
     }),
