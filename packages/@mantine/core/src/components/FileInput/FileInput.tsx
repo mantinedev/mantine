@@ -3,8 +3,8 @@ import { useMergedRef, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
   ElementProps,
-  factory,
   Factory,
+  genericFactory,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -72,6 +72,9 @@ export type FileInputFactory = Factory<{
   ref: HTMLButtonElement;
   stylesNames: __InputStylesNames | 'placeholder';
   variant: InputVariant;
+  signature: <Multiple extends boolean = false>(
+    props: FileInputProps<Multiple>
+  ) => React.JSX.Element;
 }>;
 
 const DefaultValue: FileInputProps['valueComponent'] = ({ value }) => (
@@ -84,7 +87,7 @@ const defaultProps = {
   valueComponent: DefaultValue,
 } satisfies Partial<FileInputProps>;
 
-const _FileInput = factory<FileInputFactory>((_props) => {
+export const FileInput = genericFactory<FileInputFactory>((_props) => {
   const props = useProps('FileInput', defaultProps, _props);
   const {
     unstyled,
@@ -194,13 +197,5 @@ const _FileInput = factory<FileInputFactory>((_props) => {
   );
 });
 
-_FileInput.classes = InputBase.classes;
-_FileInput.displayName = '@mantine/core/FileInput';
-
-type FileInputComponent = (<Multiple extends boolean = false>(
-  props: FileInputProps<Multiple> & {
-    ref?: React.ForwardedRef<HTMLButtonElement>;
-  }
-) => React.JSX.Element) & { extend: typeof _FileInput.extend };
-
-export const FileInput: FileInputComponent = _FileInput as any;
+FileInput.classes = InputBase.classes;
+FileInput.displayName = '@mantine/core/FileInput';
