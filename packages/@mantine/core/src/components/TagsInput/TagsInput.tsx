@@ -41,7 +41,7 @@ export type TagsInputStylesNames =
 export interface TagsInputProps
   extends BoxProps,
     __BaseInputProps,
-    Omit<ComboboxLikeProps, 'data' | 'onOptionSubmit'>,
+    Omit<ComboboxLikeProps, 'data'>,
     StylesApiProps<TagsInputFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
   /** Data displayed in the dropdown. Values must be unique. */
@@ -106,9 +106,6 @@ export interface TagsInputProps
 
   /** Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. */
   isDuplicate?: (value: string, currentValues: string[]) => boolean;
-
-  /** Called when option is submitted from dropdown with mouse click or `Enter` key */
-  onOptionSubmit?: (value: string) => void;
 }
 
 export type TagsInputFactory = Factory<{

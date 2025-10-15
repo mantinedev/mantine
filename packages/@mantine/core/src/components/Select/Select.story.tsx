@@ -7,23 +7,13 @@ export default { title: 'Select' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Select
-        data={[
-          'React',
-          'Angular',
-          'Svelte',
-          'Vue',
-          'Ember',
-          'Backbone',
-          'Preact',
-          'Inferno',
-          'Aurelia',
-          'Meteor',
-        ]}
+      <Select<'React' | 'Angular' | 'Svelte' | number>
+        data={['React', 'Angular', 'Svelte', 100]}
         placeholder="Select something"
         searchable
         autoSelectOnBlur
         rightSection="right"
+        onChange={console.log}
       />
     </div>
   );

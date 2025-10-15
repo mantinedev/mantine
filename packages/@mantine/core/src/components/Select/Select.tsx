@@ -4,8 +4,9 @@ import {
   BoxProps,
   ElementProps,
   Factory,
-  factory,
+  genericFactory,
   MantineColor,
+  Primitive,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -32,20 +33,20 @@ import { ScrollAreaProps } from '../ScrollArea';
 
 export type SelectStylesNames = __InputStylesNames | ComboboxLikeStylesNames;
 
-export interface SelectProps
+export interface SelectProps<Value extends Primitive = string>
   extends BoxProps,
     __BaseInputProps,
-    ComboboxLikeProps,
+    ComboboxLikeProps<Value>,
     StylesApiProps<SelectFactory>,
     ElementProps<'input', 'onChange' | 'size' | 'value' | 'defaultValue'> {
   /** Controlled component value */
-  value?: string | null;
+  value?: Value | null;
 
   /** Uncontrolled component default value */
-  defaultValue?: string | null;
+  defaultValue?: Value | null;
 
   /** Called when value changes */
-  onChange?: (value: string | null, option: ComboboxItem) => void;
+  onChange?: (value: Value | null, option: ComboboxItem<Value>) => void;
 
   /** Called when the clear button is clicked */
   onClear?: () => void;
@@ -101,6 +102,7 @@ export type SelectFactory = Factory<{
   ref: HTMLInputElement;
   stylesNames: SelectStylesNames;
   variant: InputVariant;
+  signature: <Value extends Primitive = string>(props: SelectProps<Value>) => React.JSX.Element;
 }>;
 
 const defaultProps = {
@@ -109,7 +111,7 @@ const defaultProps = {
   checkIconPosition: 'left',
 } satisfies Partial<SelectProps>;
 
-export const Select = factory<SelectFactory>((_props) => {
+export const Select = genericFactory<SelectFactory>((_props) => {
   const props = useProps('Select', defaultProps, _props);
   const {
     classNames,
@@ -254,8 +256,8 @@ export const Select = factory<SelectFactory>((_props) => {
 
   useEffect(() => {
     if (_value) {
-      if (_value in optionsLockup) {
-        retainedSelectedOptions.current[_value] = optionsLockup[_value];
+      if (`${_value}` in optionsLockup) {
+        retainedSelectedOptions.current[`${_value}`] = optionsLockup[`${_value}`];
       }
     }
   }, [optionsLockup, _value]);
@@ -286,7 +288,7 @@ export const Select = factory<SelectFactory>((_props) => {
         attributes={attributes}
         keepMounted={autoSelectOnBlur}
         onOptionSubmit={(val) => {
-          onOptionSubmit?.(val);
+          onOptionSubmit?.(val as any);
           const optionLockup = allowDeselect
             ? optionsLockup[val].value === _value
               ? null
@@ -295,7 +297,7 @@ export const Select = factory<SelectFactory>((_props) => {
 
           const nextValue = optionLockup ? optionLockup.value : null;
 
-          nextValue !== _value && setValue(nextValue, optionLockup);
+          nextValue !== _value && setValue(nextValue as any, optionLockup);
           !controlled &&
             handleSearchChange(typeof nextValue === 'string' ? optionLockup?.label || '' : '');
           combobox.closeDropdown();

@@ -1,4 +1,5 @@
 import cx from 'clsx';
+import { Primitive } from '../../../core';
 import { CheckIcon } from '../../Checkbox';
 import { ScrollArea, ScrollAreaProps } from '../../ScrollArea/ScrollArea';
 import { Combobox } from '../Combobox';
@@ -21,13 +22,13 @@ export type OptionsData = (ComboboxItem | OptionsGroup)[];
 interface OptionProps {
   data: ComboboxItem | OptionsGroup;
   withCheckIcon?: boolean;
-  value?: string | string[] | null;
+  value?: Primitive | Primitive[] | null;
   checkIconPosition?: 'left' | 'right';
   unstyled: boolean | undefined;
   renderOption?: (input: ComboboxLikeRenderOptionInput<any>) => React.ReactNode;
 }
 
-function isValueChecked(value: string | string[] | undefined | null, optionValue: string) {
+function isValueChecked(value: Primitive | Primitive[] | undefined | null, optionValue: Primitive) {
   return Array.isArray(value) ? value.includes(optionValue) : value === optionValue;
 }
 
@@ -96,7 +97,7 @@ export interface OptionsDropdownProps {
   hiddenWhenEmpty?: boolean;
   filterOptions?: boolean;
   withCheckIcon?: boolean;
-  value?: string | string[] | null;
+  value?: Primitive | Primitive[] | null;
   checkIconPosition?: 'left' | 'right';
   nothingFoundMessage?: React.ReactNode;
   unstyled: boolean | undefined;

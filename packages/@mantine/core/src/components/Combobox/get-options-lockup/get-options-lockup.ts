@@ -1,6 +1,6 @@
 import { ComboboxItem, ComboboxParsedItem } from '../Combobox.types';
 
-export function getOptionsLockup(options: ComboboxParsedItem[]): Record<string, ComboboxItem> {
+export function getOptionsLockup(options: ComboboxParsedItem[]): Record<PropertyKey, ComboboxItem> {
   return options.reduce<Record<string, ComboboxItem>>((acc, item) => {
     if ('group' in item) {
       return { ...acc, ...getOptionsLockup(item.items) };
@@ -12,7 +12,7 @@ export function getOptionsLockup(options: ComboboxParsedItem[]): Record<string, 
   }, {});
 }
 
-export function getLabelsLockup(options: ComboboxParsedItem[]): Record<string, string> {
+export function getLabelsLockup(options: ComboboxParsedItem[]): Record<PropertyKey, string> {
   return options.reduce<Record<string, string>>((acc, item) => {
     if ('group' in item) {
       return { ...acc, ...getLabelsLockup(item.items) };
