@@ -8,6 +8,26 @@ export default Layout(MDX_DATA.OverflowList);
 
 <Demo data={OverflowListDemos.usage} />
 
+## Data type
+
+`OverflowList` data prop supports an array of any type. By default, `OverflowList` infers
+data type from the data array automatically. To specify data type explicitly, pass
+generic type argument to the component:
+
+```tsx
+import { OverflowList } from '@mantine/core';
+
+function Demo() {
+  return (
+    <OverflowList<{ value: string; label: string }>
+      data={[{ value: '1', label: 'Item 1' }]}
+      renderItem={(item) => <div key={item.value}>{item.label}</div>}
+      renderOverflow={(items) => <div>+{items.length} more</div>}
+    />
+  );
+}
+```
+
 ## Max rows
 
 Use `maxRows` to limit visible rows count. By default, 1 row is visible.
