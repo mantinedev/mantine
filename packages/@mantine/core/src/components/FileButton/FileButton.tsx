@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { assignRef, useMergedRef } from '@mantine/hooks';
-import { useProps } from '../../core';
+import { Factory, genericFactory, useProps } from '../../core';
 
 export interface FileButtonProps<Multiple extends boolean = false> {
   ref?: React.Ref<HTMLInputElement>;
@@ -36,7 +36,14 @@ export interface FileButtonProps<Multiple extends boolean = false> {
   inputProps?: React.ComponentProps<'input'>;
 }
 
-export function FileButton<Multiple extends boolean = false>(props: FileButtonProps<Multiple>) {
+export type FileButtonFactory = Factory<{
+  props: FileButtonProps;
+  signature: <Multiple extends boolean = false>(
+    props: FileButtonProps<Multiple>
+  ) => React.JSX.Element;
+}>;
+
+export const FileButton = genericFactory<FileButtonFactory>((props) => {
   const {
     onChange,
     children,
@@ -96,6 +103,6 @@ export function FileButton<Multiple extends boolean = false>(props: FileButtonPr
       {children({ onClick, ...others })}
     </>
   );
-}
+});
 
 FileButton.displayName = '@mantine/core/FileButton';
