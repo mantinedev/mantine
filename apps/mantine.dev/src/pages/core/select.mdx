@@ -119,6 +119,21 @@ To remove the check icon, set `withCheckIcon={false}`.
 
 <Demo data={SelectDemos.checkIcon} />
 
+## Value type
+
+`Select` supports primitive values (strings, numbers, booleans) as value type. `Select` automatically
+infers the value type. If you want to set the value type explicitly, pass type argument:
+
+```tsx
+import { Select } from '@mantine/core';
+
+type SelectValue = 'React' | 'Angular' | 'Svelte' | number;
+
+function Demo() {
+  return <Select<SelectValue> data={['React', 'Angular', 'Svelte', 100]} />;
+}
+```
+
 <ComboboxData component="Select" />
 
 <ComboboxFiltering component="Select" />

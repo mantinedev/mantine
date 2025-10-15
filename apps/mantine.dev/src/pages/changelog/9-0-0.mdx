@@ -98,7 +98,7 @@ function Demo() {
 
 ## Generic components
 
-[SegmentedControl](/core/segmented-control), [RadioGroup](/core/radio/#radiogroup-with-formdata)
+[SegmentedControl](/core/segmented-control), [Select](/core/select)
 now support generic value type. You can pass primitive values (numbers, strings, boolean, null)
 as the type argument. The generic type is used for `value`, `defaultValue`, `onChange` and other props.
 
@@ -125,6 +125,7 @@ function Demo() {
 
 - `@mantine/form` package no longer exports schema resolvers, use [dedicated packages](/form/schema-validation/) instead
 - `createPolymorphicComponent` function was renamed to shorter `polymorphic` for convenience
+- [Select](/core/select) component now supports primitive value types (numbers, booleans, strings) for data and value
 - [Accordion](/core/accordion) component now supports `ref` prop
 - [Text](/core/text) and [Anchor](/core/anchor) components no longer accept `color` prop, use `c` style prop instead
 - [PasswordInput](/core/password-input) component visibility toggle icon was updated
