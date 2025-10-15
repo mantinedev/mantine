@@ -1,5 +1,5 @@
 export { getParsedComboboxData } from './get-parsed-combobox-data/get-parsed-combobox-data';
-export { getOptionsLockup, getLabelsLockup } from './get-options-lockup/get-options-lockup';
+export { getOptionsLockup } from './get-options-lockup/get-options-lockup';
 export { ComboboxChevron } from './ComboboxChevron/ComboboxChevron';
 export { Combobox } from './Combobox';
 export { ComboboxDropdown } from './ComboboxDropdown/ComboboxDropdown';

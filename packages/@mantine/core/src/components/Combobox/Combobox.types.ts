@@ -35,7 +35,9 @@ export type ComboboxData<Value extends Primitive = string> =
       Value | ComboboxItem<Value> | ComboboxItemGroup<Value | ComboboxGenericItem<Value>>
     >;
 
-export type ComboboxParsedItem = ComboboxItem | ComboboxParsedItemGroup;
+export type ComboboxParsedItem<Value extends Primitive = string> =
+  | ComboboxItem<Value>
+  | ComboboxParsedItemGroup<Value>;
 
 export type ComboboxLikeStylesNames = Exclude<ComboboxStylesNames, 'header' | 'footer' | 'search'>;
 

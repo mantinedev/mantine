@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import console from 'console';
 import { Box } from '../../core';
 import { Button } from '../Button';
 import { Group } from '../Group';
@@ -10,7 +11,19 @@ export default { title: 'MultiSelect' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <MultiSelect
+      <MultiSelect<
+        | 'React'
+        | 'Angular'
+        | 'Svelte'
+        | 'Vue'
+        | 'Ember'
+        | 'Backbone'
+        | 'Preact'
+        | 'Inferno'
+        | 'Aurelia'
+        | 'Meteor'
+        | number
+      >
         data={[
           'React',
           'Angular',
@@ -22,10 +35,12 @@ export function Usage() {
           'Inferno',
           'Aurelia',
           'Meteor',
+          100,
         ]}
         placeholder="Select something"
         searchable
         selectFirstOptionOnChange
+        onChange={console.log}
       />
     </div>
   );

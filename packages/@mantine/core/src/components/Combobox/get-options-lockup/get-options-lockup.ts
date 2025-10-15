@@ -1,24 +1,15 @@
+import { Primitive } from '../../../core';
 import { ComboboxItem, ComboboxParsedItem } from '../Combobox.types';
 
-export function getOptionsLockup(options: ComboboxParsedItem[]): Record<PropertyKey, ComboboxItem> {
-  return options.reduce<Record<string, ComboboxItem>>((acc, item) => {
+export function getOptionsLockup<Value extends Primitive = string>(
+  options: ComboboxParsedItem<Value>[]
+): Record<PropertyKey, ComboboxItem<Value>> {
+  return options.reduce<Record<string, ComboboxItem<Value>>>((acc, item) => {
     if ('group' in item) {
       return { ...acc, ...getOptionsLockup(item.items) };
     }
 
-    acc[(item as any).value] = item;
-
-    return acc;
-  }, {});
-}
-
-export function getLabelsLockup(options: ComboboxParsedItem[]): Record<PropertyKey, string> {
-  return options.reduce<Record<string, string>>((acc, item) => {
-    if ('group' in item) {
-      return { ...acc, ...getLabelsLockup(item.items) };
-    }
-
-    acc[(item as any).label] = item as any;
+    acc[`${item.value}`] = item;
 
     return acc;
   }, {});

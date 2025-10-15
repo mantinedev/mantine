@@ -95,6 +95,20 @@ To remove selected options from the list of available options, set the `hidePick
 
 <ComboboxData component="MultiSelect" />
 
+## Value type
+
+`MultiSelect` supports primitive values (strings, numbers, booleans) as value type. `MultiSelect` automatically
+infers the value type. If you want to set the value type explicitly, pass type argument:
+
+```tsx
+import { MultiSelect } from '@mantine/core';
+
+type MultiSelectValue = 'React' | 'Angular' | 'Svelte' | number;
+
+function Demo() {
+  return <MultiSelect<MultiSelectValue> data={['React', 'Angular', 'Svelte', 100]} />;
+}
+
 <ComboboxFiltering component="MultiSelect" />
 
 <Demo data={MultiSelectDemos.search} />

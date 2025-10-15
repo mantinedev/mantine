@@ -4,9 +4,10 @@ import {
   BoxProps,
   ElementProps,
   extractStyleProps,
-  factory,
   Factory,
+  genericFactory,
   MantineColor,
+  Primitive,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -37,23 +38,23 @@ export type MultiSelectStylesNames =
   | 'pillsList'
   | 'inputField';
 
-export interface MultiSelectProps
+export interface MultiSelectProps<Value extends Primitive = string>
   extends BoxProps,
     __BaseInputProps,
-    ComboboxLikeProps,
+    ComboboxLikeProps<Value>,
     StylesApiProps<MultiSelectFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
   /** Controlled component value */
-  value?: string[];
+  value?: Value[];
 
   /** Uncontrolled component default value */
-  defaultValue?: string[];
+  defaultValue?: Value[];
 
   /** Called when value changes */
-  onChange?: (value: string[]) => void;
+  onChange?: (value: Value[]) => void;
 
   /** Called with `value` of the removed item */
-  onRemove?: (value: string) => void;
+  onRemove?: (value: Value) => void;
 
   /** Called when the clear button is clicked */
   onClear?: () => void;
@@ -114,6 +115,9 @@ export type MultiSelectFactory = Factory<{
   props: MultiSelectProps;
   ref: HTMLInputElement;
   stylesNames: MultiSelectStylesNames;
+  signature: <Value extends Primitive = string>(
+    props: MultiSelectProps<Value>
+  ) => React.JSX.Element;
 }>;
 
 const defaultProps = {
@@ -125,7 +129,7 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<MultiSelectProps>;
 
-export const MultiSelect = factory<MultiSelectFactory>((_props) => {
+export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
   const props = useProps('MultiSelect', defaultProps, _props);
   const {
     classNames,
@@ -247,7 +251,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props) => {
   const getStyles = useStyles<MultiSelectFactory>({
     name: 'MultiSelect',
     classes: {} as any,
-    props,
+    props: props as any,
     classNames,
     styles,
     unstyled,
@@ -275,11 +279,11 @@ export const MultiSelect = factory<MultiSelectFactory>((_props) => {
   };
 
   const values = _value.map((item, index) => {
-    const optionData = optionsLockup[item] || retainedSelectedOptions.current[item];
+    const optionData = optionsLockup[`${item}`] || retainedSelectedOptions.current[`${item}`];
     return (
       <Pill
         key={`${item}-${index}`}
-        withRemoveButton={!readOnly && !optionsLockup[item]?.disabled}
+        withRemoveButton={!readOnly && !optionsLockup[`${item}`]?.disabled}
         onRemove={() => {
           setValue(_value.filter((i) => item !== i));
           onRemove?.(item);
@@ -301,8 +305,8 @@ export const MultiSelect = factory<MultiSelectFactory>((_props) => {
 
   useEffect(() => {
     _value.forEach((val) => {
-      if (val in optionsLockup) {
-        retainedSelectedOptions.current[val] = optionsLockup[val];
+      if (`${val}` in optionsLockup) {
+        retainedSelectedOptions.current[`${val}`] = optionsLockup[`${val}`];
       }
     });
   }, [optionsLockup, _value]);
@@ -333,17 +337,17 @@ export const MultiSelect = factory<MultiSelectFactory>((_props) => {
         __staticSelector="MultiSelect"
         attributes={attributes}
         onOptionSubmit={(val) => {
-          onOptionSubmit?.(val);
+          onOptionSubmit?.(val as any);
           if (clearSearchOnChange) {
             handleSearchChange('');
           }
           combobox.updateSelectedOptionIndex('selected');
 
-          if (_value.includes(optionsLockup[val].value)) {
-            setValue(_value.filter((v) => v !== optionsLockup[val].value));
-            onRemove?.(optionsLockup[val].value);
+          if (_value.includes(optionsLockup[`${val}`].value as any)) {
+            setValue(_value.filter((v) => v !== optionsLockup[`${val}`].value));
+            onRemove?.(optionsLockup[`${val}`].value as any);
           } else if (_value.length < maxValues) {
-            setValue([..._value, optionsLockup[val].value]);
+            setValue([..._value, optionsLockup[`${val}`].value] as any);
           }
         }}
         {...comboboxProps}
