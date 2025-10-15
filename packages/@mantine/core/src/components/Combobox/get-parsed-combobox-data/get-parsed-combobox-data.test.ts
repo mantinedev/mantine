@@ -49,7 +49,7 @@ describe('@mantine/core/Combobox/getParsedComboboxData', () => {
 
   it('returns parsed mixed data', () => {
     expect(
-      getParsedComboboxData([
+      getParsedComboboxData<string>([
         { value: 'value', label: 'label' },
         'value-2',
         {

@@ -11,11 +11,11 @@ import {
 } from '../../core';
 import {
   Combobox,
+  ComboboxGenericData,
+  ComboboxGenericItem,
   ComboboxLikeProps,
   ComboboxLikeRenderOptionInput,
   ComboboxLikeStylesNames,
-  ComboboxStringData,
-  ComboboxStringItem,
   getOptionsLockup,
   getParsedComboboxData,
   OptionsDropdown,
@@ -31,7 +31,7 @@ import { InputBase } from '../InputBase';
 import { ScrollAreaProps } from '../ScrollArea';
 
 export type RenderAutocompleteOption = (
-  input: ComboboxLikeRenderOptionInput<ComboboxStringItem>
+  input: ComboboxLikeRenderOptionInput<ComboboxGenericItem>
 ) => React.ReactNode;
 
 export type AutocompleteStylesNames = __InputStylesNames | ComboboxLikeStylesNames;
@@ -43,7 +43,7 @@ export interface AutocompleteProps
     StylesApiProps<AutocompleteFactory>,
     ElementProps<'input', 'onChange' | 'size'> {
   /** Data used to display options. Values must be unique. */
-  data?: ComboboxStringData;
+  data?: ComboboxGenericData;
 
   /** Controlled component value */
   value?: string;

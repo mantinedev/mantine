@@ -212,7 +212,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
   const _id = useId(id);
   const parsedData = getParsedComboboxData(data);
   const optionsLockup = getOptionsLockup(parsedData);
-  const retainedSelectedOptions = useRef<Record<string, ComboboxItem>>({});
+  const retainedSelectedOptions = useRef<Record<string, ComboboxItem<Primitive>>>({});
 
   const combobox = useCombobox({
     opened: dropdownOpened,

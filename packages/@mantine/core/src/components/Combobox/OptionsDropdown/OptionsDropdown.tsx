@@ -14,13 +14,13 @@ export type OptionsFilter = (input: FilterOptionsInput) => ComboboxParsedItem[];
 
 export interface OptionsGroup {
   group: string;
-  items: ComboboxItem[];
+  items: ComboboxItem<Primitive>[];
 }
 
-export type OptionsData = (ComboboxItem | OptionsGroup)[];
+export type OptionsData = (ComboboxItem<Primitive> | OptionsGroup)[];
 
 interface OptionProps {
-  data: ComboboxItem | OptionsGroup;
+  data: ComboboxItem<Primitive> | OptionsGroup;
   withCheckIcon?: boolean;
   value?: Primitive | Primitive[] | null;
   checkIconPosition?: 'left' | 'right';
@@ -75,7 +75,7 @@ function Option({
     <Option
       data={item}
       value={value}
-      key={item.value}
+      key={`${item.value}`}
       unstyled={unstyled}
       withCheckIcon={withCheckIcon}
       checkIconPosition={checkIconPosition}
@@ -142,7 +142,7 @@ export function OptionsDropdown({
   const options = filteredData.map((item) => (
     <Option
       data={item}
-      key={isOptionsGroup(item) ? item.group : item.value}
+      key={isOptionsGroup(item) ? item.group : `${item.value}`}
       withCheckIcon={withCheckIcon}
       value={value}
       checkIconPosition={checkIconPosition}

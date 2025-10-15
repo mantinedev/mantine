@@ -30,7 +30,7 @@ export const NativeSelect = factory<NativeSelectFactory>((props) => {
     props
   );
 
-  const options = getParsedComboboxData(data).map((item, index) => (
+  const options = getParsedComboboxData<string>(data).map((item, index) => (
     <NativeSelectOption key={index} data={item} />
   ));
 

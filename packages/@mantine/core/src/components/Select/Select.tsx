@@ -170,7 +170,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
   } = props;
 
   const parsedData = useMemo(() => getParsedComboboxData(data), [data]);
-  const retainedSelectedOptions = useRef<Record<string, ComboboxItem>>({});
+  const retainedSelectedOptions = useRef<Record<string, ComboboxItem<Primitive>>>({});
   const optionsLockup = useMemo(() => getOptionsLockup(parsedData), [parsedData]);
   const _id = useId(id);
 
@@ -361,7 +361,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
           />
         </Combobox.Target>
         <OptionsDropdown
-          data={parsedData}
+          data={parsedData as any}
           hidden={readOnly || disabled}
           filter={filter}
           search={search}

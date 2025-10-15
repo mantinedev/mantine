@@ -2,7 +2,7 @@ import { Primitive } from '../../core';
 import { ComboboxParsedItem, isOptionsGroup } from '../Combobox';
 
 interface FilterPickedTagsInput {
-  data: ComboboxParsedItem[];
+  data: ComboboxParsedItem<Primitive>[];
   value: Primitive[];
 }
 
@@ -13,7 +13,7 @@ function normalizeValue(value: Primitive) {
 export function filterPickedValues({ data, value }: FilterPickedTagsInput) {
   const normalizedValue = value.map(normalizeValue);
 
-  const filtered = data.reduce<ComboboxParsedItem[]>((acc, item) => {
+  const filtered = data.reduce<ComboboxParsedItem<Primitive>[]>((acc, item) => {
     if (isOptionsGroup(item)) {
       acc.push({
         group: item.group,

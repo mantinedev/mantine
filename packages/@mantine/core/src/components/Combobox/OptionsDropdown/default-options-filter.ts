@@ -1,8 +1,9 @@
+import { Primitive } from '../../../core';
 import { ComboboxItem, ComboboxParsedItem } from '../Combobox.types';
 import { isOptionsGroup } from './is-options-group';
 
 export interface FilterOptionsInput {
-  options: ComboboxParsedItem[];
+  options: ComboboxParsedItem<Primitive>[];
   search: string;
   limit: number;
 }
@@ -11,9 +12,9 @@ export function defaultOptionsFilter({
   options,
   search,
   limit,
-}: FilterOptionsInput): ComboboxParsedItem[] {
+}: FilterOptionsInput): ComboboxParsedItem<Primitive>[] {
   const parsedSearch = search.trim().toLowerCase();
-  const result: ComboboxParsedItem[] = [];
+  const result: ComboboxParsedItem<Primitive>[] = [];
 
   for (let i = 0; i < options.length; i += 1) {
     const item = options[i];

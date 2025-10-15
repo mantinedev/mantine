@@ -10,7 +10,11 @@ import {
 } from '../Combobox.types';
 
 function parseItem<Value extends Primitive = string>(
-  item: Primitive | ComboboxItem<Value> | ComboboxGenericItem<Value> | ComboboxItemGroup<Value>
+  item:
+    | Primitive
+    | ComboboxItem<Value>
+    | ComboboxGenericItem<Value>
+    | ComboboxItemGroup<Value | ComboboxGenericItem<Value> | ComboboxItem<Value>>
 ): ComboboxItem<Value> | ComboboxParsedItemGroup<Value> {
   if (typeof item === 'string') {
     return { value: item as Value, label: item };
@@ -23,7 +27,7 @@ function parseItem<Value extends Primitive = string>(
   if (typeof item === 'object' && 'group' in item) {
     return {
       group: item.group,
-      items: item.items.map((i) => parseItem(i) as ComboboxItem<Value>),
+      items: item.items.map((i) => parseItem<Value>(i) as ComboboxItem<Value>),
     };
   }
 
@@ -36,10 +40,10 @@ function parseItem<Value extends Primitive = string>(
 
 export function getParsedComboboxData<Value extends Primitive = string>(
   data: ComboboxData<Value> | ComboboxGenericData<Value> | undefined
-): ComboboxParsedItem[] {
+): ComboboxParsedItem<Value>[] {
   if (!data) {
     return [];
   }
 
-  return data.map((item) => parseItem(item as ComboboxItem));
+  return data.map((item) => parseItem<Value>(item));
 }

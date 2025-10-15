@@ -30,9 +30,15 @@ export type ComboboxGenericData<Value extends Primitive = string> =
     >;
 
 export type ComboboxData<Value extends Primitive = string> =
-  | Array<Value | ComboboxItem<Value> | ComboboxItemGroup<Value | ComboboxGenericItem<Value>>>
+  | Array<
+      | Value
+      | ComboboxItem<Value>
+      | ComboboxItemGroup<Value | ComboboxGenericItem<Value> | ComboboxItem<Value>>
+    >
   | ReadonlyArray<
-      Value | ComboboxItem<Value> | ComboboxItemGroup<Value | ComboboxGenericItem<Value>>
+      | Value
+      | ComboboxItem<Value>
+      | ComboboxItemGroup<Value | ComboboxGenericItem<Value> | ComboboxItem<Value>>
     >;
 
 export type ComboboxParsedItem<Value extends Primitive = string> =

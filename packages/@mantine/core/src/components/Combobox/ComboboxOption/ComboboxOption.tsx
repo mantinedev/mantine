@@ -6,6 +6,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  Primitive,
   useProps,
 } from '../../../core';
 import { useComboboxContext } from '../Combobox.context';
@@ -18,7 +19,7 @@ export interface ComboboxOptionProps
     CompoundStylesApiProps<ComboboxOptionFactory>,
     ElementProps<'div'> {
   /** Option value */
-  value: string;
+  value: Primitive;
 
   /** Current active state */
   active?: boolean;
@@ -73,7 +74,7 @@ export const ComboboxOption = factory<ComboboxOptionFactory>((_props) => {
       role="option"
       onClick={(event) => {
         if (!disabled) {
-          ctx.onOptionSubmit?.(props.value, props);
+          ctx.onOptionSubmit?.(props.value as any, props);
           onClick?.(event);
         } else {
           event.preventDefault();
