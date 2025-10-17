@@ -29,16 +29,16 @@ export function MagnifyingGlassIcon(props: PhosphorIconProps) {
         r="80"
         fill="none"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="16"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="16"
       />
       <path
         fill="none"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="16"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="16"
         d="M168.57 168.57L224 224"
       />
     </PhosphorIconSvg>

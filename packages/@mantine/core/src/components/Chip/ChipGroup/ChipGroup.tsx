@@ -2,14 +2,6 @@ import { createContext } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import { Factory, genericFactory, useProps } from '../../../core';
 
-export interface ChipGroupContextValue<Value extends string = string> {
-  isChipSelected: (value: Value) => boolean;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  multiple: boolean | undefined;
-}
-
-export const ChipGroupContext = createContext<ChipGroupContextValue | null>(null);
-
 export interface ChipGroupProps<Multiple extends boolean = false, Value extends string = string> {
   /** If set, multiple values can be selected */
   multiple?: Multiple;
@@ -64,3 +56,11 @@ export const ChipGroup = genericFactory<ChipGroupFactory>((props) => {
 });
 
 ChipGroup.displayName = '@mantine/core/ChipGroup';
+
+export interface ChipGroupContextValue<Value extends string = string> {
+  isChipSelected: (value: Value) => boolean;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  multiple: boolean | undefined;
+}
+
+export const ChipGroupContext = createContext<ChipGroupContextValue | null>(null);
