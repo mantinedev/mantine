@@ -41,8 +41,8 @@ export interface DatePickerPreset<Type extends DatePickerType> {
   value: Type extends 'range'
     ? [DateStringValue | null, DateStringValue | null]
     : Type extends 'multiple'
-      ? DateStringValue[]
-      : DateStringValue | null;
+    ? DateStringValue[]
+    : DateStringValue | null;
   label: React.ReactNode;
 }
 
@@ -54,7 +54,8 @@ export type DatePickerStylesNames =
   | CalendarStylesNames
   | 'presetsList'
   | 'presetButton'
-  | 'datePickerRoot';
+  | 'datePickerRoot'
+  | 'dropdown';
 
 export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
   extends PickerBaseProps<Type>,
@@ -65,20 +66,10 @@ export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
     Omit<CalendarSettings, 'hasNextLevel'>,
     Pick<CalendarProps, 'enableKeyboardNavigation'> {
   maxLevel?: CalendarLevel;
-
-  /** Initial displayed level (uncontrolled) */
   defaultLevel?: CalendarLevel;
-
-  /** Current displayed level (controlled) */
   level?: CalendarLevel;
-
-  /** Called when level changes */
   onLevelChange?: (level: CalendarLevel) => void;
-
-  /** Predefined values to pick from */
   presets?: DatePickerPreset<Type>[];
-
-  /** If defined, called with preset value, suppresses `onChange` call */
   __onPresetSelect?: (
     preset: Type extends 'range'
       ? [DateStringValue | null, DateStringValue | null]
@@ -113,9 +104,8 @@ const defaultProps = {
 
 type DatePickerComponent = (<Type extends DatePickerType = 'default'>(
   props: DatePickerProps<Type> & { ref?: React.ForwardedRef<HTMLDivElement> }
-) => React.JSX.Element) & {
-  displayName?: string;
-} & MantineComponentStaticProperties<DatePickerFactory>;
+) => React.JSX.Element) &
+  MantineComponentStaticProperties<DatePickerFactory>;
 
 export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_props, ref) => {
   const props = useProps('DatePicker', defaultProps, _props);
@@ -157,7 +147,7 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     styles,
     unstyled,
     attributes,
-    rootSelector: presets ? 'datePickerRoot' : undefined,
+    rootSelector: 'datePickerRoot',
     varsResolver,
     vars,
   });
@@ -179,49 +169,58 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     styles,
     props,
   });
+  const mergedStyles = { ...resolvedStyles, ...styles } as Record<string, any>;
 
   const calendar = (
-    <Calendar
-      ref={ref}
-      classNames={resolvedClassNames}
-      styles={resolvedStyles}
-      __staticSelector={__staticSelector || 'DatePicker'}
-      onMouseLeave={onRootMouseLeave}
-      size={size}
-      {...calendarProps}
-      {...(!presets ? others : {})}
-      __stopPropagation={__stopPropagation}
-      __setDateRef={setDateRef}
-      __setLevelRef={setLevelRef}
-      minLevel={calendarProps.minLevel || 'month'}
-      __onDayMouseEnter={(_event, date) => {
-        onHoveredDateChange(date);
-        __onDayMouseEnter?.(_event, date);
-      }}
-      __onDayClick={(_event, date) => {
-        onDateChange(date);
-        __onDayClick?.(_event, date);
-      }}
-      getDayProps={(date) => ({
-        ...getControlProps(date),
-        ...calendarProps.getDayProps?.(date),
-      })}
-      getMonthControlProps={(date) => ({
-        selected: typeof _value === 'string' ? isSameMonth(date, _value) : false,
-        ...calendarProps.getMonthControlProps?.(date),
-      })}
-      getYearControlProps={(date) => ({
-        selected: typeof _value === 'string' ? dayjs(date).isSame(_value, 'year') : false,
-        ...calendarProps.getYearControlProps?.(date),
-      })}
-      hideOutsideDates={calendarProps.hideOutsideDates ?? calendarProps.numberOfColumns !== 1}
-      {...(!presets ? { className, style, attributes } : {})}
-    />
+    <div
+      style={
+        {
+          ...(mergedStyles?.dropdown || {}),
+        } as React.CSSProperties
+      }
+    >
+      <Calendar
+        ref={ref}
+        classNames={resolvedClassNames}
+        styles={mergedStyles}
+        __staticSelector={__staticSelector || 'DatePicker'}
+        onMouseLeave={onRootMouseLeave}
+        size={size}
+        {...calendarProps}
+        {...(!presets ? others : {})}
+        __stopPropagation={__stopPropagation}
+        __setDateRef={setDateRef}
+        __setLevelRef={setLevelRef}
+        minLevel={calendarProps.minLevel || 'month'}
+        __onDayMouseEnter={(_event, date) => {
+          onHoveredDateChange(date);
+          __onDayMouseEnter?.(_event, date);
+        }}
+        __onDayClick={(_event, date) => {
+          onDateChange(date);
+          __onDayClick?.(_event, date);
+        }}
+        getDayProps={(date) => ({
+          ...getControlProps(date),
+          ...calendarProps.getDayProps?.(date),
+        })}
+        getMonthControlProps={(date) => ({
+          selected: typeof _value === 'string' ? isSameMonth(date, _value) : false,
+          ...calendarProps.getMonthControlProps?.(date),
+        })}
+        getYearControlProps={(date) => ({
+          selected: typeof _value === 'string' ? dayjs(date).isSame(_value, 'year') : false,
+          ...calendarProps.getYearControlProps?.(date),
+        })}
+        hideOutsideDates={
+          calendarProps.hideOutsideDates ?? calendarProps.numberOfColumns !== 1
+        }
+        {...(!presets ? { className, style, attributes } : {})}
+      />
+    </div>
   );
 
-  if (!presets) {
-    return calendar;
-  }
+  if (!presets) return calendar;
 
   const handlePresetSelect = (
     val: DateStringValue | null | [DateStringValue | null, DateStringValue | null]
@@ -247,12 +246,39 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
   ));
 
   return (
-    <Box {...getStyles('datePickerRoot')} size={size} {...others}>
-      <div {...getStyles('presetsList')}>{presetButtons}</div>
+    <Box
+      {...getStyles('datePickerRoot')}
+      style={{
+        ...getStyles('datePickerRoot').style,
+        ...(mergedStyles?.datePickerRoot || {}),
+        background: 'transparent',
+        boxShadow: 'none',
+        border: 'none',
+        backdropFilter: 'none',
+        WebkitBackdropFilter: 'none',
+        ['--popover-bg' as any]: 'transparent',
+        ['--mantine-color-body' as any]: 'transparent',
+        ['--popover-shadow' as any]: 'none',
+        ['--mantine-shadow-md' as any]: 'none',
+      }}
+      size={size}
+      {...others}
+    >
+      {presets && (
+        <div
+          {...getStyles('presetsList')}
+          style={{
+            ...getStyles('presetsList').style,
+            ...(mergedStyles?.presetsList || {}),
+          }}
+        >
+          {presetButtons}
+        </div>
+      )}
       {calendar}
     </Box>
   );
 }) as any;
 
 DatePicker.classes = Calendar.classes;
-DatePicker.displayName = '@mantine/dates/DatePicker';
+(DatePicker as any).displayName = '@mantine/dates/DatePicker';

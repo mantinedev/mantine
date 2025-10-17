@@ -14,11 +14,12 @@ import {
   PopoverProps,
   StylesApiProps,
   useInputProps,
+  useResolvedStylesApi,
 } from '@mantine/core';
 import { useClickOutside, useDidUpdate } from '@mantine/hooks';
 import { useUncontrolledDates } from '../../hooks';
 import { CalendarLevel, DateStringValue, DateValue } from '../../types';
-import { Calendar, CalendarBaseProps, CalendarStylesNames, pickCalendarProps } from '../Calendar';
+import { Calendar, CalendarBaseProps, pickCalendarProps } from '../Calendar';
 import { useDatesContext } from '../DatesProvider';
 import { DecadeLevelSettings } from '../DecadeLevel';
 import { HiddenDatesInput } from '../HiddenDatesInput';
@@ -27,8 +28,16 @@ import { MonthLevelSettings } from '../MonthLevel';
 import { YearLevelSettings } from '../YearLevel';
 import { dateStringParser } from './date-string-parser/date-string-parser';
 import { isDateValid } from './is-date-valid/is-date-valid';
+import { DatePicker } from '../DatePicker';
 
-export type DateInputStylesNames = __InputStylesNames | CalendarStylesNames;
+export type DateInputStylesNames =
+  | 'root'
+  | 'wrapper'
+  | 'input'
+  | 'dropdown'
+  | 'datePickerRoot'
+  | 'presetsList'
+  | 'presetButton';
 
 export interface DateInputProps
   extends BoxProps,
@@ -39,46 +48,19 @@ export interface DateInputProps
     MonthLevelSettings,
     StylesApiProps<DateInputFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
-  /** A function to parse user input and convert it to date string value */
   dateParser?: (value: string) => DateStringValue | Date | null;
-
-  /** Controlled component value */
   value?: DateValue | Date;
-
-  /** Uncontrolled component default value */
   defaultValue?: DateValue | Date;
-
-  /** Called when value changes */
   onChange?: (value: DateStringValue | null) => void;
-
-  /** Props passed down to the `Popover` component */
   popoverProps?: Partial<Omit<PopoverProps, 'children'>>;
-
-  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default `false` */
   clearable?: boolean;
-
-  /** Props passed down to the clear button */
   clearButtonProps?: React.ComponentPropsWithoutRef<'button'>;
-
-  /** `dayjs` format to display input value, `"MMMM D, YYYY"` by default  */
   valueFormat?: string;
-
-  /** If set to `false`, invalid user input is preserved and is not corrected on blur */
   fixOnBlur?: boolean;
-
-  /** If set, the value can be deselected by deleting everything from the input or by clicking the selected date in the dropdown. By default, `true` if `clearable` prop is set, `false` otherwise. */
   allowDeselect?: boolean;
-
-  /** Max level that user can go up to @default `'decade'` */
   maxLevel?: CalendarLevel;
-
-  /** Initial displayed level (uncontrolled) */
   defaultLevel?: CalendarLevel;
-
-  /** Current displayed level (controlled) */
   level?: CalendarLevel;
-
-  /** Called when the level changes */
   onLevelChange?: (level: CalendarLevel) => void;
 }
 
@@ -139,6 +121,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
   const [dropdownOpened, setDropdownOpened] = useState(false);
   const { calendarProps, others } = pickCalendarProps(rest);
   const ctx = useDatesContext();
+
   const defaultDateParser = (val: string): DateStringValue | null => {
     const parsedDate = dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
     return Number.isNaN(parsedDate.getTime())
@@ -167,9 +150,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
   });
 
   useEffect(() => {
-    if (controlled && value !== null) {
-      setDate(value);
-    }
+    if (controlled && value !== null) setDate(value);
   }, [controlled, value]);
 
   const [inputValue, setInputValue] = useState(formatValue(_value));
@@ -211,9 +192,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
   };
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Escape') {
-      setDropdownOpened(false);
-    }
+    if (event.key === 'Escape') setDropdownOpened(false);
     onKeyDown?.(event);
   };
 
@@ -222,7 +201,6 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     selected: dayjs(_value).isSame(day, 'day'),
     onClick: (event: any) => {
       getDayProps?.(day).onClick?.(event);
-
       const val = _allowDeselect ? (dayjs(_value).isSame(day, 'day') ? null : day) : day;
       setValue(val);
       !controlled && val && setInputValue(formatValue(val));
@@ -253,6 +231,14 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
     _dropdownRef.current,
   ]);
 
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<DateInputFactory>({
+    classNames,
+    styles,
+    props,
+  });
+
+  const rootStyle = (resolvedStyles as any)?.datePickerRoot || {};
+
   return (
     <>
       <Input.Wrapper {...wrapperProps} __staticSelector="DateInput" ref={_wrapperRef}>
@@ -263,6 +249,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
           disabled={readOnly || disabled}
           withRoles={false}
           unstyled={unstyled}
+          withinPortal={false}
           {...popoverProps}
         >
           <Popover.Target>
@@ -287,36 +274,67 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
               __staticSelector="DateInput"
             />
           </Popover.Target>
-          <Popover.Dropdown
-            onMouseDown={(event) => event.preventDefault()}
-            data-dates-dropdown
-            ref={_dropdownRef}
-          >
-            <Calendar
-              __staticSelector="DateInput"
-              {...calendarProps}
-              classNames={classNames}
-              styles={styles}
-              unstyled={unstyled}
-              __preventFocus
-              minDate={minDate}
-              maxDate={maxDate}
-              locale={locale}
-              getDayProps={_getDayProps}
-              size={inputProps.size as MantineSize}
-              date={_date}
-              onDateChange={setDate}
-              getMonthControlProps={(date) => ({
-                selected: typeof _value === 'string' ? isSameMonth(date, _value) : false,
-                ...getMonthControlProps?.(date),
-              })}
-              getYearControlProps={(date) => ({
-                selected: typeof _value === 'string' ? dayjs(date).isSame(_value, 'year') : false,
-                ...getYearControlProps?.(date),
-              })}
-              attributes={wrapperProps.attributes}
-            />
-          </Popover.Dropdown>
+
+          {!rootStyle?.display?.includes('none') && (
+            <Popover.Dropdown
+              ref={_dropdownRef}
+              data-dates-dropdown
+              onMouseDown={(event) => event.preventDefault()}
+              style={{
+                background: 'transparent',
+                boxShadow: 'none',
+                border: 'none',
+                padding: 0,
+                margin: 0,
+                backdropFilter: 'none',
+                WebkitBackdropFilter: 'none',
+                ['--popover-bg' as any]: 'transparent',
+                ['--mantine-color-body' as any]: 'transparent',
+                ['--popover-shadow' as any]: 'none',
+                ['--mantine-shadow-md' as any]: 'none',
+              }}
+            >
+              <div
+                style={{
+                  border: rootStyle?.border?.replace('!important', '') || '4px solid transparent',
+                  background:
+                    rootStyle?.backgroundColor?.replace('!important', '') ||
+                    rootStyle?.background?.replace('!important', '') ||
+                    'transparent',
+                  boxShadow: rootStyle?.boxShadow?.replace('!important', '') || 'none',
+                  borderRadius: rootStyle?.borderRadius?.replace('!important', '') || '8px',
+                  padding: rootStyle?.padding?.replace('!important', '') || '6px',
+                  transform: rootStyle?.transform?.replace('!important', '') || 'none',
+                  transition: 'all 0.15s ease-in-out',
+                }}
+              >
+                <DatePicker
+                  __staticSelector="DatePicker"
+                  {...calendarProps}
+                  classNames={resolvedClassNames}
+                  styles={resolvedStyles}
+                  unstyled={unstyled}
+                  __preventFocus
+                  minDate={minDate}
+                  maxDate={maxDate}
+                  locale={locale}
+                  getDayProps={_getDayProps}
+                  size={inputProps.size as MantineSize}
+                  value={_date}
+                  onChange={setDate}
+                  getMonthControlProps={(date) => ({
+                    selected: typeof _value === 'string' ? isSameMonth(date, _value) : false,
+                    ...getMonthControlProps?.(date),
+                  })}
+                  getYearControlProps={(date) => ({
+                    selected: typeof _value === 'string' ? dayjs(date).isSame(_value, 'year') : false,
+                    ...getYearControlProps?.(date),
+                  })}
+                  attributes={wrapperProps.attributes}
+                />
+              </div>
+            </Popover.Dropdown>
+          )}
         </Popover>
       </Input.Wrapper>
       <HiddenDatesInput name={name} form={form} value={_value} type="default" />
@@ -325,4 +343,4 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
 });
 
 DateInput.classes = { ...Input.classes, ...Calendar.classes };
-DateInput.displayName = '@mantine/dates/DateInput';
+(DateInput as any).displayName = '@mantine/dates/DateInput';
