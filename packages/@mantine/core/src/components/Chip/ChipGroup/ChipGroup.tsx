@@ -1,33 +1,40 @@
 import { createContext } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { useProps } from '../../../core';
+import { Factory, genericFactory, useProps } from '../../../core';
 
-export interface ChipGroupContextValue {
-  isChipSelected: (value: string) => boolean;
+export interface ChipGroupContextValue<Value extends string = string> {
+  isChipSelected: (value: Value) => boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   multiple: boolean | undefined;
 }
 
 export const ChipGroupContext = createContext<ChipGroupContextValue | null>(null);
 
-export interface ChipGroupProps<T extends boolean = false> {
+export interface ChipGroupProps<Multiple extends boolean = false, Value extends string = string> {
   /** If set, multiple values can be selected */
-  multiple?: T;
+  multiple?: Multiple;
 
   /** Controlled component value */
-  value?: T extends true ? string[] : string | null;
+  value?: Multiple extends true ? Value[] : Value | null;
 
   /** Uncontrolled component initial value */
-  defaultValue?: T extends true ? string[] : string | null;
+  defaultValue?: Multiple extends true ? Value[] : Value | null;
 
   /** Called when value changes. If `multiple` prop is set, called with an array of selected values. If not, called with a string value of selected chip. */
-  onChange?: (value: T extends true ? string[] : string) => void;
+  onChange?: (value: Multiple extends true ? Value[] : Value) => void;
 
   /** `Chip` components and any other elements */
   children?: React.ReactNode;
 }
 
-export function ChipGroup<T extends boolean>(props: ChipGroupProps<T>) {
+export type ChipGroupFactory = Factory<{
+  props: ChipGroupProps;
+  signature: <Multiple extends boolean = false, Value extends string = string>(
+    props: ChipGroupProps<Multiple, Value>
+  ) => React.JSX.Element;
+}>;
+
+export const ChipGroup = genericFactory<ChipGroupFactory>((props) => {
   const { value, defaultValue, onChange, multiple, children } = useProps('ChipGroup', null, props);
 
   const [_value, setValue] = useUncontrolled<string | null | string[]>({
@@ -54,6 +61,6 @@ export function ChipGroup<T extends boolean>(props: ChipGroupProps<T>) {
       {children}
     </ChipGroupContext>
   );
-}
+});
 
 ChipGroup.displayName = '@mantine/core/ChipGroup';

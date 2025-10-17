@@ -47,7 +47,7 @@ export interface ChipProps
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `'xl'` */
   radius?: MantineRadius;
 
-  /** Controls various properties related to component size @default `'sm'` */
+  /** Controls various properties related to the component size @default `'sm'` */
   size?: MantineSize;
 
   /** Chip input type @default `'checkbox'` */
@@ -56,31 +56,31 @@ export interface ChipProps
   /** `label` element associated with the input */
   children: React.ReactNode;
 
-  /** Checked state for controlled component */
+  /** Controlled checked state */
   checked?: boolean;
 
-  /** Default checked state for uncontrolled component */
+  /** Uncontrolled checked state initial value */
   defaultChecked?: boolean;
 
   /** Calls when checked state changes */
   onChange?: (checked: boolean) => void;
 
-  /** Controls components colors based on `variant` prop. Key of `theme.colors` or any valid CSS color. @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color. @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** Unique input id */
+  /** Unique input id, generated randomly if not provided */
   id?: string;
 
   /** Props passed down to the root element */
   wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
-  /** Any element or component to replace default icon */
+  /** Any element or component to replace the default icon */
   icon?: React.ReactNode;
 
   /** Assigns ref of the root element */
   rootRef?: React.ForwardedRef<HTMLDivElement>;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts text color based on the chip background color for `filled` variant */
   autoContrast?: boolean;
 }
 
@@ -214,10 +214,10 @@ export const Chip = factory<ChipFactory>((_props) => {
         {...rest}
       />
 
-      <label
+      <Box
+        component="label"
         htmlFor={uuid}
-        data-checked={_checked || undefined}
-        data-disabled={disabled || undefined}
+        mod={{ checked: _checked, disabled }}
         {...getStyles('label', { variant: variant || 'filled' })}
       >
         {_checked && (
@@ -226,7 +226,7 @@ export const Chip = factory<ChipFactory>((_props) => {
           </span>
         )}
         <span>{children}</span>
-      </label>
+      </Box>
     </Box>
   );
 });

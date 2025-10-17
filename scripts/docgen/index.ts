@@ -17,5 +17,7 @@ generateDeclarations({
     'number | MantineSize | (string & {}) | undefined': 'MantineSize | number',
     '(Omit<DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>, "ref"> & DataAttributes) | undefined':
       'React.ComponentProps<"div">',
+    '(ClassAttributes<HTMLDivElement> & HTMLAttributes<HTMLDivElement> & DataAttributes) | undefined':
+      'React.ComponentProps<"div">',
   },
 });
