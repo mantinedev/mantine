@@ -24,7 +24,7 @@ export interface FileButtonProps<Multiple extends boolean = false> {
   form?: string;
 
   /** Reference of the function that should be called when value changes to null or empty array */
-  resetRef?: React.ForwardedRef<() => void>;
+  resetRef?: React.Ref<() => void>;
 
   /** Disables file picker */
   disabled?: boolean;

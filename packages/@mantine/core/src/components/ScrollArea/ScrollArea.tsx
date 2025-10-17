@@ -58,7 +58,7 @@ export interface ScrollAreaProps
   offsetScrollbars?: boolean | 'x' | 'y' | 'present';
 
   /** Assigns viewport element (scrollable container) ref */
-  viewportRef?: React.ForwardedRef<HTMLDivElement>;
+  viewportRef?: React.Ref<HTMLDivElement>;
 
   /** Props passed down to the viewport element */
   viewportProps?: React.ComponentProps<'div'>;

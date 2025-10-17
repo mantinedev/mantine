@@ -64,7 +64,7 @@ export interface FileInputProps<Multiple = false>
   placeholder?: React.ReactNode;
 
   /** Reference of the function that should be called when value changes to null or empty array */
-  resetRef?: React.ForwardedRef<() => void>;
+  resetRef?: React.Ref<() => void>;
 }
 
 export type FileInputFactory = Factory<{

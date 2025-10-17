@@ -156,7 +156,7 @@ export interface NumberInputProps
   allowDecimal?: boolean;
 
   /** Increment/decrement handlers */
-  handlersRef?: React.ForwardedRef<NumberInputHandlers | undefined>;
+  handlersRef?: React.Ref<NumberInputHandlers | undefined>;
 
   /** Value set to the input when increment/decrement buttons are clicked or up/down arrows pressed if the input is empty @default `0` */
   startValue?: number;

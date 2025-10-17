@@ -5,6 +5,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  Primitive,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -19,6 +20,7 @@ import {
   getOptionsLockup,
   getParsedComboboxData,
   OptionsDropdown,
+  OptionsFilter,
   useCombobox,
 } from '../Combobox';
 import {
@@ -232,7 +234,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
       <OptionsDropdown
         data={parsedData}
         hidden={readOnly || disabled}
-        filter={filter}
+        filter={filter as OptionsFilter<Primitive> | undefined}
         search={_value}
         limit={limit}
         hiddenWhenEmpty

@@ -2,8 +2,8 @@ import { Primitive } from '../../../core';
 import { ComboboxItem, ComboboxParsedItem } from '../Combobox.types';
 import { isOptionsGroup } from './is-options-group';
 
-export interface FilterOptionsInput {
-  options: ComboboxParsedItem<Primitive>[];
+export interface FilterOptionsInput<Value extends Primitive = Primitive> {
+  options: ComboboxParsedItem<Value>[];
   search: string;
   limit: number;
 }

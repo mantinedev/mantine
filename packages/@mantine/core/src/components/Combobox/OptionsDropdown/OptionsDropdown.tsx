@@ -10,7 +10,9 @@ import { isOptionsGroup } from './is-options-group';
 import { validateOptions } from './validate-options';
 import classes from '../Combobox.module.css';
 
-export type OptionsFilter = (input: FilterOptionsInput) => ComboboxParsedItem[];
+export type OptionsFilter<Value extends Primitive = string> = (
+  input: FilterOptionsInput<Value>
+) => ComboboxParsedItem<Value>[];
 
 export interface OptionsGroup {
   group: string;
@@ -88,7 +90,7 @@ function Option({
 
 export interface OptionsDropdownProps {
   data: OptionsData;
-  filter: OptionsFilter | undefined;
+  filter: OptionsFilter<Primitive> | undefined;
   search: string | undefined;
   limit: number | undefined;
   withScrollArea: boolean | undefined;

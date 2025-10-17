@@ -73,7 +73,7 @@ export interface ComboboxLikeProps<Value extends Primitive = string> {
   comboboxProps?: ComboboxProps;
 
   /** Function based on which items are filtered and sorted */
-  filter?: OptionsFilter;
+  filter?: OptionsFilter<Value>;
 
   /** Maximum number of options displayed at a time, `Infinity` by default */
   limit?: number;

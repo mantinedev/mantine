@@ -78,7 +78,7 @@ export interface ChipProps
   icon?: React.ReactNode;
 
   /** Assigns ref of the root element */
-  rootRef?: React.ForwardedRef<HTMLDivElement>;
+  rootRef?: React.Ref<HTMLDivElement>;
 
   /** If set, adjusts text color based on the chip background color for `filled` variant */
   autoContrast?: boolean;

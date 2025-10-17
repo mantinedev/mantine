@@ -72,7 +72,7 @@ export interface RadioProps
   radius?: MantineRadius;
 
   /** Assigns ref of the root element */
-  rootRef?: React.ForwardedRef<HTMLDivElement>;
+  rootRef?: React.Ref<HTMLDivElement>;
 
   /** Key of `theme.colors` or any valid CSS color to set icon color, by default value depends on `theme.autoContrast` */
   iconColor?: MantineColor;

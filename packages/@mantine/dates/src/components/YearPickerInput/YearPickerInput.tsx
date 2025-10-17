@@ -43,7 +43,7 @@ const defaultProps = {
 } satisfies Partial<YearPickerInputProps>;
 
 type YearPickerInputComponent = (<Type extends DatePickerType = 'default'>(
-  props: YearPickerInputProps<Type> & { ref?: React.ForwardedRef<HTMLButtonElement> }
+  props: YearPickerInputProps<Type> & { ref?: React.Ref<HTMLButtonElement> }
 ) => React.JSX.Element) & {
   displayName?: string;
 } & MantineComponentStaticProperties<YearPickerInputFactory>;

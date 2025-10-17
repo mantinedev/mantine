@@ -2,7 +2,7 @@ import { createRef, useRef } from 'react';
 import { render } from '@testing-library/react';
 import { useMergedRef } from './use-merged-ref';
 
-function TestComponent({ refs }: { refs: React.ForwardedRef<HTMLButtonElement>[] }) {
+function TestComponent({ refs }: { refs: React.Ref<HTMLButtonElement>[] }) {
   const ref = useRef<HTMLButtonElement>(null);
   return <button ref={useMergedRef(...refs, ref)} type="button" />;
 }

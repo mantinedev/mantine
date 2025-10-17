@@ -14,7 +14,7 @@ export interface FocusTrapProps {
   refProp?: string;
 
   /** Ref to combine with the focus trap ref */
-  innerRef?: React.ForwardedRef<any>;
+  innerRef?: React.Ref<any>;
 }
 
 export function FocusTrap({

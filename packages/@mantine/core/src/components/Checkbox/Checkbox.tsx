@@ -78,7 +78,7 @@ export interface CheckboxProps
   icon?: CheckboxIconComponent;
 
   /** Root element ref */
-  rootRef?: React.ForwardedRef<HTMLDivElement>;
+  rootRef?: React.Ref<HTMLDivElement>;
 
   /** Key of `theme.colors` or any valid CSS color to set icon color. By default, depends on `theme.autoContrast`. */
   iconColor?: MantineColor;

@@ -71,7 +71,7 @@ export interface DropzoneProps
   accept?: Accept | string[];
 
   /** A ref function which when called opens the file system file picker */
-  openRef?: React.ForwardedRef<() => void | undefined>;
+  openRef?: React.Ref<() => void | undefined>;
 
   /** Determines whether multiple files can be dropped to the dropzone or selected from file system picker @default `true` */
   multiple?: boolean;

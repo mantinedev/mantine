@@ -20,6 +20,7 @@ import {
   getOptionsLockup,
   getParsedComboboxData,
   OptionsDropdown,
+  OptionsFilter,
   useCombobox,
 } from '../Combobox';
 import {
@@ -363,7 +364,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
         <OptionsDropdown
           data={parsedData as any}
           hidden={readOnly || disabled}
-          filter={filter}
+          filter={filter as OptionsFilter<Primitive> | undefined}
           search={search}
           limit={limit}
           hiddenWhenEmpty={!nothingFoundMessage}

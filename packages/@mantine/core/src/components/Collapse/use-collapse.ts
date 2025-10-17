@@ -33,7 +33,7 @@ interface GetCollapseProps {
   style?: CSSProperties;
   onTransitionEnd?: (e: TransitionEvent) => void;
   refKey?: string;
-  ref?: React.ForwardedRef<HTMLDivElement>;
+  ref?: React.Ref<HTMLDivElement>;
 }
 
 const collapsedHeight = 0;

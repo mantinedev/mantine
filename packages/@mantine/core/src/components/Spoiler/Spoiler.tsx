@@ -33,7 +33,7 @@ export interface SpoilerProps
   showLabel: React.ReactNode;
 
   /** Get ref of spoiler toggle button */
-  controlRef?: React.ForwardedRef<HTMLButtonElement>;
+  controlRef?: React.Ref<HTMLButtonElement>;
 
   /** Initial spoiler state, `true` to wrap content in spoiler, `false` to show content without spoiler, opened state is updated on mount */
   initialState?: boolean;

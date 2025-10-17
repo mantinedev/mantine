@@ -21,10 +21,10 @@ export interface RadioGroupProps<Value extends string = string>
   children: React.ReactNode;
 
   /** Controlled component value */
-  value?: Value;
+  value?: Value | null;
 
   /** Uncontrolled component default value */
-  defaultValue?: Value;
+  defaultValue?: Value | null;
 
   /** Called when value changes */
   onChange?: (value: Value) => void;
@@ -55,11 +55,11 @@ export const RadioGroup = genericFactory<RadioGroupFactory>(((props: RadioGroupP
 
   const _name = useId(name);
 
-  const [_value, setValue] = useUncontrolled({
+  const [_value, setValue] = useUncontrolled<string | null>({
     value,
     defaultValue,
     finalValue: '',
-    onChange,
+    onChange: onChange as any,
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement> | string) =>

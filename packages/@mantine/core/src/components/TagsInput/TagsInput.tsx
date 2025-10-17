@@ -6,6 +6,7 @@ import {
   extractStyleProps,
   factory,
   Factory,
+  Primitive,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -21,6 +22,7 @@ import {
   getOptionsLockup,
   getParsedComboboxData,
   OptionsDropdown,
+  OptionsFilter,
   useCombobox,
 } from '../Combobox';
 import { __BaseInputProps, __InputStylesNames, InputClearButtonProps } from '../Input';
@@ -475,7 +477,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
         <OptionsDropdown
           data={filterPickedTags({ data: parsedData, value: _value })}
           hidden={readOnly || disabled}
-          filter={filter}
+          filter={filter as OptionsFilter<Primitive> | undefined}
           search={_searchValue}
           limit={limit}
           hiddenWhenEmpty
