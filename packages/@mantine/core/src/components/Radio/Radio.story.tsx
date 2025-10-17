@@ -67,7 +67,7 @@ export function RadioGroup() {
 
 export function Sizes() {
   const items = (['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
-    <Radio.Group defaultValue="ng" key={size} size={size}>
+    <Radio.Group<'react' | 'ng'> defaultValue="ng" key={size} size={size}>
       <Radio label="React" value="react" />
       <Radio label="Angular" value="ng" />
       <Radio label="Svelte" value="sv" disabled />

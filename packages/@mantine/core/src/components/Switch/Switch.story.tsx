@@ -61,7 +61,7 @@ export function IconInsideThumb() {
 
 export function SwitchGroup() {
   return (
-    <Switch.Group
+    <Switch.Group<'one' | 'two' | 'three'>
       defaultValue={['one', 'three']}
       m={4}
       label="Switch Group"

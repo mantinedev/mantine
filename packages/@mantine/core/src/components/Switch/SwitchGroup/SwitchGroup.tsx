@@ -1,32 +1,33 @@
 import { createContext } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../../core';
+import { DataAttributes, Factory, genericFactory, MantineSize, useProps } from '../../../core';
 import { InputsGroupFieldset } from '../../../utils/InputsGroupFieldset';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
 
-export interface SwitchGroupContextValue {
-  value: string[];
+export interface SwitchGroupContextValue<Value extends string = string> {
+  value: Value[];
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   size: MantineSize | (string & {}) | undefined;
-  isDisabled?: (value: string) => boolean;
+  isDisabled?: (value: Value) => boolean;
 }
 
 export const SwitchGroupContext = createContext<SwitchGroupContextValue | null>(null);
 
 export type SwitchGroupStylesNames = InputWrapperStylesNames;
 
-export interface SwitchGroupProps extends Omit<InputWrapperProps, 'onChange'> {
+export interface SwitchGroupProps<Value extends string = string>
+  extends Omit<InputWrapperProps, 'onChange'> {
   /** `Switch` components */
   children: React.ReactNode;
 
   /** Controlled component value */
-  value?: string[];
+  value?: Value[];
 
   /** Default value for uncontrolled component */
-  defaultValue?: string[];
+  defaultValue?: Value[];
 
   /** Called when value changes */
-  onChange?: (value: string[]) => void;
+  onChange?: (value: Value[]) => void;
 
   /** Props passed down to the `Input.Wrapper` */
   wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
@@ -54,13 +55,16 @@ export type SwitchGroupFactory = Factory<{
   props: SwitchGroupProps;
   ref: HTMLDivElement;
   stylesNames: SwitchGroupStylesNames;
+  signature: <Value extends string = string>(props: SwitchGroupProps<Value>) => React.JSX.Element;
 }>;
 
 const defaultProps = {
   hiddenInputValuesSeparator: ',',
 } satisfies Partial<SwitchGroupProps>;
 
-export const SwitchGroup = factory<SwitchGroupFactory>((props) => {
+export const SwitchGroup = genericFactory<SwitchGroupFactory>(((
+  props: SwitchGroupProps<string>
+) => {
   const {
     value,
     defaultValue,
@@ -127,7 +131,7 @@ export const SwitchGroup = factory<SwitchGroupFactory>((props) => {
       </Input.Wrapper>
     </SwitchGroupContext>
   );
-});
+}) as any);
 
 SwitchGroup.classes = Input.Wrapper.classes;
 SwitchGroup.displayName = '@mantine/core/SwitchGroup';

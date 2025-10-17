@@ -1,32 +1,33 @@
 import { createContext } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../../core';
+import { DataAttributes, Factory, genericFactory, MantineSize, useProps } from '../../../core';
 import { InputsGroupFieldset } from '../../../utils/InputsGroupFieldset';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
 
-export interface CheckboxGroupContextValue {
-  value: string[];
+export interface CheckboxGroupContextValue<Value extends string = string> {
+  value: Value[];
   onChange: (event: React.ChangeEvent<HTMLInputElement> | string) => void;
   size: MantineSize | (string & {}) | undefined;
-  isDisabled?: (value: string) => boolean;
+  isDisabled?: (value: Value) => boolean;
 }
 
 export const CheckboxGroupContext = createContext<CheckboxGroupContextValue | null>(null);
 
 export type CheckboxGroupStylesNames = InputWrapperStylesNames;
 
-export interface CheckboxGroupProps extends Omit<InputWrapperProps, 'onChange'> {
+export interface CheckboxGroupProps<Value extends string = string>
+  extends Omit<InputWrapperProps, 'onChange'> {
   /** `Checkbox` components and any other elements */
   children: React.ReactNode;
 
   /** Controlled component value */
-  value?: string[];
+  value?: Value[];
 
   /** Default value for uncontrolled component */
-  defaultValue?: string[];
+  defaultValue?: Value[];
 
   /** Called with an array of selected checkboxes values when value changes */
-  onChange?: (value: string[]) => void;
+  onChange?: (value: Value[]) => void;
 
   /** Props passed down to the root element (`Input.Wrapper` component) */
   wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
@@ -54,13 +55,16 @@ export type CheckboxGroupFactory = Factory<{
   props: CheckboxGroupProps;
   ref: HTMLDivElement;
   stylesNames: CheckboxGroupStylesNames;
+  signature: <Value extends string = string>(props: CheckboxGroupProps<Value>) => React.JSX.Element;
 }>;
 
 const defaultProps = {
   hiddenInputValuesSeparator: ',',
 } satisfies Partial<CheckboxGroupProps>;
 
-export const CheckboxGroup = factory<CheckboxGroupFactory>((props) => {
+export const CheckboxGroup = genericFactory<CheckboxGroupFactory>(((
+  props: CheckboxGroupProps<string>
+) => {
   const {
     value,
     defaultValue,
@@ -127,7 +131,7 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((props) => {
       </Input.Wrapper>
     </CheckboxGroupContext>
   );
-});
+}) as any);
 
 CheckboxGroup.classes = Input.Wrapper.classes;
 CheckboxGroup.displayName = '@mantine/core/CheckboxGroup';

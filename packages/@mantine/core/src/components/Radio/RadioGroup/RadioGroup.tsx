@@ -1,12 +1,12 @@
 import { createContext } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
-import { DataAttributes, factory, Factory, MantineSize, useProps } from '../../../core';
+import { DataAttributes, Factory, genericFactory, MantineSize, useProps } from '../../../core';
 import { InputsGroupFieldset } from '../../../utils/InputsGroupFieldset';
 import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
 
-export interface RadioGroupContextValue {
+export interface RadioGroupContextValue<Value extends string = string> {
   size: MantineSize | undefined;
-  value: string;
+  value: Value | null;
   onChange: (event: React.ChangeEvent<HTMLInputElement> | string) => void;
   name: string;
 }
@@ -15,19 +15,19 @@ export const RadioGroupContext = createContext<RadioGroupContextValue | null>(nu
 
 export type RadioGroupStylesNames = InputWrapperStylesNames;
 
-export interface RadioGroupProps
+export interface RadioGroupProps<Value extends string = string>
   extends Omit<InputWrapperProps, 'onChange' | 'value' | 'defaultValue'> {
   /** `Radio` components and any other elements */
   children: React.ReactNode;
 
   /** Controlled component value */
-  value?: string | null;
+  value?: Value;
 
   /** Uncontrolled component default value */
-  defaultValue?: string | null;
+  defaultValue?: Value;
 
   /** Called when value changes */
-  onChange?: (value: string) => void;
+  onChange?: (value: Value) => void;
 
   /** Props passed down to the `Input.Wrapper` */
   wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
@@ -46,17 +46,18 @@ export type RadioGroupFactory = Factory<{
   props: RadioGroupProps;
   ref: HTMLDivElement;
   stylesNames: RadioGroupStylesNames;
+  signature: <Value extends string = string>(props: RadioGroupProps<Value>) => React.JSX.Element;
 }>;
 
-export const RadioGroup = factory<RadioGroupFactory>((props) => {
+export const RadioGroup = genericFactory<RadioGroupFactory>(((props: RadioGroupProps<string>) => {
   const { value, defaultValue, onChange, size, wrapperProps, children, name, readOnly, ...others } =
     useProps('RadioGroup', null, props);
 
   const _name = useId(name);
 
   const [_value, setValue] = useUncontrolled({
-    value: value as string,
-    defaultValue: defaultValue as string,
+    value,
+    defaultValue,
     finalValue: '',
     onChange,
   });
@@ -77,7 +78,7 @@ export const RadioGroup = factory<RadioGroupFactory>((props) => {
       </Input.Wrapper>
     </RadioGroupContext>
   );
-});
+}) as any);
 
 RadioGroup.classes = Input.Wrapper.classes;
 RadioGroup.displayName = '@mantine/core/RadioGroup';
