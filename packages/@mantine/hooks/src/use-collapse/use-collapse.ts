@@ -16,16 +16,24 @@ export function getElementHeight(elementRef: React.RefObject<HTMLElement | null>
 }
 
 export interface UseCollapseInput {
+  /** Expanded state  */
   expanded: boolean;
+
+  /** Transition duration in milliseconds, by default calculated based on content height */
   transitionDuration?: number;
+
+  /** Transition timing function, `ease` by default */
   transitionTimingFunction?: string;
+
+  /** Called when transition ends */
   onTransitionEnd?: () => void;
+
+  /** If true, collapsed content is kept in the DOM and hidden with `display: none` styles */
   keepMounted?: boolean;
 }
 
 interface GetCollapsePropsInput {
   style?: CSSProperties;
-  refKey?: string;
   ref?: React.Ref<HTMLDivElement>;
 }
 

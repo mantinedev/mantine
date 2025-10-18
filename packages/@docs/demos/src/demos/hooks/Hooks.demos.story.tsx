@@ -392,3 +392,8 @@ export const Demo_useSelectionDemo = {
   name: '⭐ Demo: useSelectionDemo',
   render: renderDemo(demos.useSelectionDemo),
 };
+
+export const Demo_useCollapseDemo = {
+  name: '⭐ Demo: useCollapseDemo',
+  render: renderDemo(demos.useCollapseDemo),
+};

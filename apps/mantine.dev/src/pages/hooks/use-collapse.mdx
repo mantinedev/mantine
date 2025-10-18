@@ -1,0 +1,64 @@
+import { HooksDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useCollapse);
+
+## Usage
+
+`use-collapse` is the hook version of [Collapse](/core/collapse) component.
+It allows animation of height from `0` to `auto` and vice versa.
+
+<Demo data={HooksDemos.useCollapseDemo} />
+
+## ref prop
+
+`getCollapseProps` return value now includes `ref` prop. It must be passed to the collapsible element
+to make the hook work correctly.
+
+## Definition
+
+```tsx
+export interface UseCollapseInput {
+  /** Expanded state  */
+  expanded: boolean;
+
+  /** Transition duration in milliseconds, by default calculated based on content height */
+  transitionDuration?: number;
+
+  /** Transition timing function, `ease` by default */
+  transitionTimingFunction?: string;
+
+  /** Called when transition ends */
+  onTransitionEnd?: () => void;
+
+  /** If true, collapsed content is kept in the DOM and hidden with `display: none` styles */
+  keepMounted?: boolean;
+}
+
+interface GetCollapsePropsInput {
+  style?: CSSProperties;
+  ref?: React.Ref<HTMLDivElement>;
+}
+
+interface GetCollapsePropsReturnValue {
+  'aria-hidden': boolean;
+  inert: boolean;
+  ref: React.RefCallback<HTMLDivElement>;
+  onTransitionEnd: (event: React.TransitionEvent<Element>) => void;
+  style: React.CSSProperties;
+}
+
+type UseCollapseReturnValue = (input?: GetCollapsePropsInput) => GetCollapsePropsReturnValue;
+
+function useCollapse({ transitionDuration, transitionTimingFunction, onTransitionEnd, expanded, keepMounted, }: UseCollapseInput): UseCollapseReturnValue
+```
+
+## Exported types
+
+The `UseCollapseInput`, and `UseCollapseReturnValue` types are exported from the `@mantine/hooks` package;
+you can import them in your application:
+
+```tsx
+import type { UseCollapseInput, UseCollapseReturnValue } from '@mantine/hooks';
+```

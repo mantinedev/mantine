@@ -140,6 +140,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
     category: 'UI and Dom',
     pages: [
       MDX_DATA.useClickOutside,
+      MDX_DATA.useCollapse,
       MDX_DATA.useColorScheme,
       MDX_DATA.useElementSize,
       MDX_DATA.useEventListener,
