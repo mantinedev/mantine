@@ -134,6 +134,7 @@
     "@rollup/plugin-alias": "^5.1.1",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-replace": "^6.0.2",
+    "@storybook/addon-themes": "^9.1.13",
     "@storybook/nextjs": "^9.1.8",
     "@testing-library/dom": "10.4.1",
     "@testing-library/jest-dom": "6.8.0",

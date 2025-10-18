@@ -6283,6 +6283,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/addon-themes@npm:^9.1.13":
+  version: 9.1.13
+  resolution: "@storybook/addon-themes@npm:9.1.13"
+  dependencies:
+    ts-dedent: "npm:^2.0.0"
+  peerDependencies:
+    storybook: ^9.1.13
+  checksum: 10c0/a1911f61b1ad8b0d0b36b2505fd9c1b54aebc738d09dac702e8161a6d95ebad8194216011035129d3c4c3174dd4a15c2b858d0c94ded984ae71813dde831d7f1
+  languageName: node
+  linkType: hard
+
 "@storybook/builder-webpack5@npm:9.1.8":
   version: 9.1.8
   resolution: "@storybook/builder-webpack5@npm:9.1.8"
@@ -17024,6 +17035,7 @@ __metadata:
     "@rollup/plugin-node-resolve": "npm:^16.0.1"
     "@rollup/plugin-replace": "npm:^6.0.2"
     "@shikijs/transformers": "npm:^3.12.2"
+    "@storybook/addon-themes": "npm:^9.1.13"
     "@storybook/nextjs": "npm:^9.1.8"
     "@tabler/icons-react": "npm:^3.34.1"
     "@testing-library/dom": "npm:10.4.1"
