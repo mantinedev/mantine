@@ -11,10 +11,10 @@ import {
 import { useCollapse } from './use-collapse';
 
 export interface CollapseProps extends BoxProps, Omit<React.ComponentProps<'div'>, keyof BoxProps> {
-  /** Opened state */
+  /** Expanded state */
   in: boolean;
 
-  /** Called each time transition ends */
+  /** Called each time the transition ends */
   onTransitionEnd?: () => void;
 
   /** Transition duration in ms @default `200` */
@@ -23,10 +23,10 @@ export interface CollapseProps extends BoxProps, Omit<React.ComponentProps<'div'
   /** Transition timing function @default `ease` */
   transitionTimingFunction?: string;
 
-  /** Determines whether opacity should be animated @default `true` */
+  /** Determines whether the opacity is animated @default `true` */
   animateOpacity?: boolean;
 
-  /** Keep element in DOM when collapsed, useful for nested collapses */
+  /** Determines whether the element is kept in the DOM when collapsed @default `false` */
   keepMounted?: boolean;
 }
 

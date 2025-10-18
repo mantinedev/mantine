@@ -17,9 +17,7 @@ export function getElementHeight(
   return el?.current ? el.current.scrollHeight : 'auto';
 }
 
-const raf = typeof window !== 'undefined' && window.requestAnimationFrame;
-
-interface UseCollapse {
+interface UseCollapseInput {
   opened: boolean;
   transitionDuration?: number;
   transitionTimingFunction?: string;
@@ -49,44 +47,42 @@ export function useCollapse({
   onTransitionEnd = () => {},
   opened,
   keepMounted = false,
-}: UseCollapse): (props: GetCollapseProps) => Record<string, any> {
+}: UseCollapseInput): (props: GetCollapseProps) => Record<string, any> {
   const el = useRef<HTMLElement | null>(null);
   const collapsedStyles = getCollapsedStyles(keepMounted);
   const [styles, setStylesRaw] = useState<CSSProperties>(opened ? {} : collapsedStyles);
-  const setStyles = (newStyles: {} | ((oldStyles: {}) => {})): void => {
+  const setStyles = (newStyles: React.SetStateAction<CSSProperties>) => {
     flushSync(() => setStylesRaw(newStyles));
   };
 
-  const mergeStyles = (newStyles: {}): void => {
+  const mergeStyles = (newStyles: CSSProperties) => {
     setStyles((oldStyles) => ({ ...oldStyles, ...newStyles }));
   };
 
-  function getTransitionStyles(height: number | string): {
-    transition: string;
-  } {
-    const _duration = transitionDuration || getAutoHeightDuration(height);
+  const getTransitionStyles = (height: number | string) => {
+    const duration = transitionDuration || getAutoHeightDuration(height);
     return {
-      transition: `height ${_duration}ms ${transitionTimingFunction}, opacity ${_duration}ms ${transitionTimingFunction}`,
+      transition: `height ${duration}ms ${transitionTimingFunction}, opacity ${duration}ms ${transitionTimingFunction}`,
     };
-  }
+  };
 
   useDidUpdate(() => {
-    if (typeof raf === 'function') {
-      if (opened) {
-        raf(() => {
-          mergeStyles({ willChange: 'height', display: 'block', overflow: 'hidden' });
-          raf(() => {
-            const height = getElementHeight(el);
-            mergeStyles({ ...getTransitionStyles(height), height });
-          });
-        });
-      } else {
-        raf(() => {
+    if (opened) {
+      window.requestAnimationFrame(() => {
+        mergeStyles({ willChange: 'height', display: 'block', overflow: 'hidden' });
+        window.requestAnimationFrame(() => {
           const height = getElementHeight(el);
-          mergeStyles({ ...getTransitionStyles(height), willChange: 'height', height });
-          raf(() => mergeStyles({ height: collapsedHeight, overflow: 'hidden' }));
+          mergeStyles({ ...getTransitionStyles(height), height });
         });
-      }
+      });
+    } else {
+      window.requestAnimationFrame(() => {
+        const height = getElementHeight(el);
+        mergeStyles({ ...getTransitionStyles(height), willChange: 'height', height });
+        window.requestAnimationFrame(() =>
+          mergeStyles({ height: collapsedHeight, overflow: 'hidden' })
+        );
+      });
     }
   }, [opened]);
 
@@ -111,7 +107,7 @@ export function useCollapse({
     }
   };
 
-  function getCollapseProps({ style = {}, refKey = 'ref', ...rest }: GetCollapseProps = {}) {
+  const getCollapseProps = ({ style = {}, refKey = 'ref', ...rest }: GetCollapseProps = {}) => {
     return {
       'aria-hidden': !opened,
       inert: !opened,
@@ -120,7 +116,7 @@ export function useCollapse({
       onTransitionEnd: handleTransitionEnd,
       style: { boxSizing: 'border-box', ...style, ...styles },
     };
-  }
+  };
 
   return getCollapseProps;
 }
