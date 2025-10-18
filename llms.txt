@@ -3339,6 +3339,14 @@ Autocomplete component supports Styles API. With Styles API, you can customize s
 | description | .mantine-Autocomplete-description | Description element |
 | error | .mantine-Autocomplete-error | Error element |
 
+**Autocomplete data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| option | data-combobox-selected | Option is selected | - |
+| option | data-combobox-active | Options was activated by keyboard | - |
+| option | data-combobox-disabled | Option is disabled | - |
+
 
 --------------------------------------------------------------------------------
 
@@ -16715,6 +16723,14 @@ MultiSelect component supports Styles API. With Styles API, you can customize st
 | inputField | .mantine-MultiSelect-inputField | Input field |
 | pillsList | .mantine-MultiSelect-pillsList | List of pills, also contains input field |
 
+**MultiSelect data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| option | data-combobox-selected | Option is selected | - |
+| option | data-combobox-active | Options was activated by keyboard | - |
+| option | data-combobox-disabled | Option is disabled | - |
+
 
 --------------------------------------------------------------------------------
 
@@ -17358,6 +17374,8 @@ function Demo() {
 | leftSection | React.ReactNode | - | Section displayed on the left side of the label |
 | noWrap | boolean | - | If set, label and description do not wrap to the next line |
 | onChange | (opened: boolean) => void | - | Called when open state changes |
+| onClick | MouseEventHandler<HTMLElement> | - | Called when the root element is clicked |
+| onKeyDown | KeyboardEventHandler<HTMLElement> | - | Called on keydown of the root element |
 | opened | boolean | - | Controlled nested items collapse state |
 | rightSection | React.ReactNode | - | Section displayed on the right side of the label |
 
@@ -23798,6 +23816,27 @@ function Demo() {
 ```
 
 
+## Prevent horizontal infinite scrolling
+
+If you experience horizontal infinite scrolling in the dropdown, set the `shift` middleware `padding` to `0`:
+
+```tsx
+import { Select } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Select
+      data={['React', 'Angular', 'Vue']}
+      comboboxProps={{
+        middlewares: {
+          shift: { padding: 0 }
+        }
+      }}
+    />
+  );
+}
+```
+
 ## Dropdown animation
 
 By default, dropdown animations are disabled. To enable them, you can set `transitionProps`,
@@ -24146,6 +24185,14 @@ Select component supports Styles API. With Styles API, you can customize styles 
 | required | .mantine-Select-required | Required asterisk element, rendered inside label |
 | description | .mantine-Select-description | Description element |
 | error | .mantine-Select-error | Error element |
+
+**Select data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| option | data-combobox-selected | Option is selected | - |
+| option | data-combobox-active | Options was activated by keyboard | - |
+| option | data-combobox-disabled | Option is disabled | - |
 
 
 --------------------------------------------------------------------------------
@@ -29070,6 +29117,13 @@ TagsInput component supports Styles API. With Styles API, you can customize styl
 | inputField | .mantine-TagsInput-inputField | Input field |
 | pillsList | .mantine-TagsInput-pillsList | List of pills, also contains input field |
 
+**TagsInput data attributes**
+
+| Selector | Attribute | Condition | Value |
+|----------|-----------|-----------|-------|
+| option | data-combobox-active | Options was activated by keyboard | - |
+| option | data-combobox-disabled | Option is disabled | - |
+
 
 --------------------------------------------------------------------------------
 
@@ -32765,8 +32819,8 @@ Import: import { UseFetch } from '@mantine/hooks';
 
 ## Usage
 
-`useFetch` hook sends a GET request to the specified URL and returns the response data, loading state, error,
-`refetch` and `abort` functions.
+`useFetch` hook sends a fetch request to the specified URL and returns the response data, loading state, error,
+`refetch` and `abort` functions. You can pass other parameters that fetch takes like method, headers etc.
 
 
 
@@ -36645,10 +36699,9 @@ function Demo() {
 | excludeDate | (date: string) => boolean | - | Callback function to determine whether the day should be disabled |
 | firstDayOfWeek | 0 | 1 | 2 | 3 | 4 | 5 | 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |
 | getDayAriaLabel | (date: string) => string | - | Assigns <code>aria-label</code> to <code>Day</code> components based on date |
-| getDayProps | (date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars"> | - | Passes props down to <code>Day</code> components |
-| getMonthControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down month picker control |
-| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
-| hasNextLevel | boolean | - | Determines whether next level button should be enabled |
+| getDayProps | (date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars"> & DataAttributes | - | Passes props down to <code>Day</code> components |
+| getMonthControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down month picker control |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |
 | headerControlsOrder | ("next" | "previous" | "level")[] | - | Controls order |
 | hideOutsideDates | boolean | - | Determines whether outside dates should be hidden |
 | hideWeekdays | boolean | - | Determines whether weekdays row should be hidden |
@@ -36966,9 +37019,9 @@ DateInput provides better accessibility support when used in forms. Make sure to
 | firstDayOfWeek | 0 | 1 | 2 | 3 | 4 | 5 | 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |
 | fixOnBlur | boolean | - | If set to <code>false</code>, invalid user input is preserved and is not corrected on blur |
 | getDayAriaLabel | (date: string) => string | - | Assigns <code>aria-label</code> to <code>Day</code> components based on date |
-| getDayProps | (date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars"> | - | Passes props down to <code>Day</code> components |
-| getMonthControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down month picker control |
-| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
+| getDayProps | (date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars"> & DataAttributes | - | Passes props down to <code>Day</code> components |
+| getMonthControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down month picker control |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |
 | hasNextLevel | boolean | - | Determines whether next level button should be enabled |
 | headerControlsOrder | ("next" | "previous" | "level")[] | - | Controls order |
 | hideOutsideDates | boolean | - | Determines whether outside dates should be hidden |
@@ -37302,9 +37355,9 @@ DatePickerInput provides better accessibility support when used in forms. Make s
 | excludeDate | (date: string) => boolean | - | Callback function to determine whether the day should be disabled |
 | firstDayOfWeek | 0 | 1 | 2 | 3 | 4 | 5 | 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |
 | getDayAriaLabel | (date: string) => string | - | Assigns <code>aria-label</code> to <code>Day</code> components based on date |
-| getDayProps | (date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars"> | - | Passes props down to <code>Day</code> components |
-| getMonthControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down month picker control |
-| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
+| getDayProps | (date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars"> & DataAttributes | - | Passes props down to <code>Day</code> components |
+| getMonthControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down month picker control |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |
 | headerControlsOrder | ("next" | "previous" | "level")[] | - | Controls order |
 | hideOutsideDates | boolean | - | Determines whether outside dates should be hidden |
 | hideWeekdays | boolean | - | Determines whether weekdays row should be hidden |
@@ -37771,7 +37824,7 @@ function Demo() {
 ```
 
 
-## Add props to year and month control
+## Add props to day, year and month control
 
 You can add props to year, month and day controls with `getYearControlProps`, `getMonthControlProps` and `getDayProps` functions. All functions accept date as single argument,
 props returned from the function will be added to year/month/day control. For example, it can be used to disable specific
@@ -38031,9 +38084,9 @@ Note that the following events will only trigger if focus is on date control.
 | excludeDate | (date: string) => boolean | - | Callback function to determine whether the day should be disabled |
 | firstDayOfWeek | 0 | 1 | 2 | 3 | 4 | 5 | 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |
 | getDayAriaLabel | (date: string) => string | - | Assigns <code>aria-label</code> to <code>Day</code> components based on date |
-| getDayProps | (date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars"> | - | Passes props down to <code>Day</code> components |
-| getMonthControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down month picker control |
-| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
+| getDayProps | (date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars"> & DataAttributes | - | Passes props down to <code>Day</code> components |
+| getMonthControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down month picker control |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |
 | headerControlsOrder | ("next" | "previous" | "level")[] | - | Controls order |
 | hideOutsideDates | boolean | - | Determines whether outside dates should be hidden |
 | hideWeekdays | boolean | - | Determines whether weekdays row should be hidden |
@@ -38387,9 +38440,9 @@ DateTimePicker provides better accessibility support when used in forms. Make su
 | excludeDate | (date: string) => boolean | - | Callback function to determine whether the day should be disabled |
 | firstDayOfWeek | 0 | 1 | 2 | 3 | 4 | 5 | 6 | - | Number 0-6, where 0 – Sunday and 6 – Saturday. |
 | getDayAriaLabel | (date: string) => string | - | Assigns <code>aria-label</code> to <code>Day</code> components based on date |
-| getDayProps | (date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars"> | - | Passes props down to <code>Day</code> components |
-| getMonthControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down month picker control |
-| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
+| getDayProps | (date: string) => Omit<Partial<DayProps>, "classNames" | "styles" | "vars"> & DataAttributes | - | Passes props down to <code>Day</code> components |
+| getMonthControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down month picker control |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |
 | headerControlsOrder | ("next" | "previous" | "level")[] | - | Controls order |
 | hideOutsideDates | boolean | - | Determines whether outside dates should be hidden |
 | hideWeekdays | boolean | - | Determines whether weekdays row should be hidden |
@@ -38975,8 +39028,8 @@ MonthPickerInput provides better accessibility support when used in forms. Make 
 | dropdownType | "popover" | "modal" | - | Type of the dropdown |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
 | errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
-| getMonthControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down month picker control |
-| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
+| getMonthControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down month picker control |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |
 | inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
@@ -39383,8 +39436,8 @@ Note that the following events will only trigger if focus is on month control.
 | defaultDate | string | Date | - | Initial displayed date in uncontrolled mode |
 | defaultLevel | "month" | "year" | "decade" | - | Initial displayed level (uncontrolled) |
 | defaultValue | DateValue | DatesRangeValue<DateValue> | DateValue[] | - | Default value for uncontrolled component |
-| getMonthControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down month picker control |
-| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
+| getMonthControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down month picker control |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |
 | level | "month" | "year" | "decade" | - | Current displayed level (controlled) |
 | locale | string | - | Dayjs locale, defaults to value defined in DatesProvider |
 | maxDate | string | Date | - | Maximum possible date in <code>YYYY-MM-DD</code> format or Date object |
@@ -40723,7 +40776,7 @@ YearPickerInput provides better accessibility support when used in forms. Make s
 | dropdownType | "popover" | "modal" | - | Type of the dropdown |
 | error | React.ReactNode | - | Contents of <code>Input.Error</code> component. If not set, error is not displayed. |
 | errorProps | InputErrorProps & DataAttributes | - | Props passed down to the <code>Input.Error</code> component |
-| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |
 | inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
 | inputSize | string | - | <code>size</code> attribute passed down to the input element |
 | inputWrapperOrder | ("input" | "label" | "description" | "error")[] | - | Controls order of the elements |
@@ -41050,7 +41103,7 @@ Note that the following events will only trigger if focus is on year control.
 | decadeLabelFormat | string | ((startOfDecade: string, endOfDecade: string) => ReactNode) | - | <code>dayjs</code> format for decade label or a function that returns decade label based on the date value |
 | defaultDate | string | Date | - | Initial displayed date in uncontrolled mode |
 | defaultValue | DateValue | DatesRangeValue<DateValue> | DateValue[] | - | Default value for uncontrolled component |
-| getYearControlProps | (date: string) => Partial<PickerControlProps> | - | Passes props down to year picker control based on date |
+| getYearControlProps | (date: string) => Partial<PickerControlProps> & DataAttributes | - | Passes props down to year picker control based on date |
 | locale | string | - | Dayjs locale, defaults to value defined in DatesProvider |
 | maxDate | string | Date | - | Maximum possible date in <code>YYYY-MM-DD</code> format or Date object |
 | minDate | string | Date | - | Minimum possible date in <code>YYYY-MM-DD</code> format or Date object |
@@ -65471,6 +65524,7 @@ async function loadShiki() {
   const { createHighlighter } = await import('shiki');
   const shiki = await createHighlighter({
     langs: ['tsx', 'scss', 'html', 'bash', 'json'],
+    // You can load supported themes here
     themes: [],
   });
 
@@ -66026,7 +66080,7 @@ function Demo() {
 |------|------|---------|-------------|
 | background | MantineColor | - | Controls background color of the code. By default, the value depends on color scheme. |
 | code | string | required | Code to highlight |
-| codeColorScheme | "dark" | "light" | - | Set to change contrast of controls and other elements if you prefer to use dark code color scheme in light mode or light code color scheme in dark mode |
+| codeColorScheme | (string & {}) | "dark" | "light" | - | Set to use dark or light color scheme. When using shiki adapter, you can use loaded themes here |
 | collapseCodeLabel | string | - | Label for collapse button |
 | controls | ReactNode[] | - | Extra controls to display in the controls list |
 | copiedLabel | string | - | Label for copy button in copied state |
@@ -68277,6 +68331,7 @@ function Demo() {
 | removeScrollProps | RemoveScrollProps | - | Props passed down to react-remove-scroll, can be used to customize scroll lock behavior |
 | returnFocus | boolean | - | If set, focus is returned to the last active element when <code>onClose</code> is called |
 | scrollAreaComponent | ScrollAreaComponent | - | Scroll area component |
+| scrollAreaProps | Partial<ScrollAreaAutosizeProps> | - | Props passed down to the <code>ScrollArea</code> component |
 | scrollable | boolean | - | Determines whether the actions list should be scrollable. If not set, <code>maxHeight</code> is ignored |
 | searchProps | SpotlightSearchProps | - | Props passed down to the <code>Spotlight.Search</code> |
 | shadow | MantineShadow | - | Key of <code>theme.shadows</code> or any valid CSS box-shadow value |
