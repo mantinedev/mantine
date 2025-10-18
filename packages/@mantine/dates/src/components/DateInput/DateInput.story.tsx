@@ -17,7 +17,12 @@ export default { title: 'DateInput' };
 export function Usage() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
-      <DateInput placeholder="Enter date" defaultValue="2022-04-11" allowDeselect />
+      <DateInput
+        placeholder="Enter date"
+        defaultValue="2022-04-11"
+        allowDeselect
+        popoverProps={{ opened: true }}
+      />
     </div>
   );
 }

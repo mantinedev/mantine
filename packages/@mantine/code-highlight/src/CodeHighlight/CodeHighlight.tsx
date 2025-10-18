@@ -83,8 +83,8 @@ export interface CodeHighlightSettings {
   /** Extra controls to display in the controls list */
   controls?: React.ReactNode[];
 
-  /** Set to change contrast of controls and other elements if you prefer to use dark code color scheme in light mode or light code color scheme in dark mode */
-  codeColorScheme?: 'dark' | 'light';
+  /** Set to use dark or light color scheme. When using shiki adapter, you can use loaded themes here */
+  codeColorScheme?: 'dark' | 'light' | (string & {});
 }
 
 export interface CodeHighlightProps
@@ -190,7 +190,11 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props, ref) => {
 
   const colorScheme = useComputedColorScheme();
   const highlight = useHighlight();
-  const highlightedCode = highlight({ code: code.trim(), language, colorScheme });
+  const highlightedCode = highlight({
+    code: code.trim(),
+    language,
+    colorScheme: codeColorScheme ?? colorScheme,
+  });
 
   const codeContent = highlightedCode.isHighlighted
     ? { dangerouslySetInnerHTML: { __html: highlightedCode.highlightedCode } }

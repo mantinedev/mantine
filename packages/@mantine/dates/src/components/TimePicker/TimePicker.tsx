@@ -326,7 +326,7 @@ export const TimePicker = factory<TimePickerFactory>((_props, ref) => {
         withSeconds: !!withSeconds,
       });
 
-      if (timeString.valid && min && max) {
+      if (timeString.valid && (min || max)) {
         const clamped = clampTime(timeString.value, min, max);
 
         if (clamped.timeString !== timeString.value) {

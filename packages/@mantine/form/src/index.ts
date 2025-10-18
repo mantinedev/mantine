@@ -12,11 +12,5 @@ export { superstructResolver } from './resolvers/superstruct-resolver/superstruc
 export { yupResolver } from './resolvers/yup-resolver/yup-resolver';
 export { joiResolver } from './resolvers/joi-resolver/joi-resolver';
 
-export type {
-  FormErrors,
-  UseFormReturnType,
-  TransformedValues,
-  UseFormInput,
-  FormValidateInput,
-} from './types';
+export type * from './types';
 export type { UseFieldInput, UseFieldReturnType } from './use-field';
