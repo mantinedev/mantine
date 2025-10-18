@@ -42,7 +42,7 @@ export const AccordionPanel = factory<AccordionPanelFactory>((props) => {
     <Collapse
       {...ctx.getStyles('panel', { className, classNames, style, styles })}
       {...others}
-      in={ctx.isItemActive(value)}
+      expanded={ctx.isItemActive(value)}
       transitionDuration={ctx.transitionDuration ?? 200}
       role="region"
       id={ctx.getRegionId(value)}

@@ -11,7 +11,7 @@ import {
 
 export interface CollapseProps extends BoxProps, Omit<React.ComponentProps<'div'>, keyof BoxProps> {
   /** Expanded state */
-  in: boolean;
+  expanded: boolean;
 
   /** Called each time the transition ends */
   onTransitionEnd?: () => void;
@@ -43,7 +43,7 @@ const defaultProps = {
 export const Collapse = factory<CollapseFactory>((props) => {
   const {
     children,
-    in: opened,
+    expanded,
     transitionDuration,
     transitionTimingFunction,
     style,
@@ -60,7 +60,7 @@ export const Collapse = factory<CollapseFactory>((props) => {
   const duration = reduceMotion ? 0 : transitionDuration;
 
   const getCollapseProps = useCollapse({
-    expanded: opened,
+    expanded,
     transitionDuration: duration,
     transitionTimingFunction,
     onTransitionEnd,
@@ -68,7 +68,7 @@ export const Collapse = factory<CollapseFactory>((props) => {
   });
 
   if (duration === 0) {
-    return opened ? <Box {...others}>{children}</Box> : null;
+    return expanded ? <Box {...others}>{children}</Box> : null;
   }
 
   return (
@@ -76,7 +76,7 @@ export const Collapse = factory<CollapseFactory>((props) => {
       {...others}
       {...getCollapseProps({
         style: {
-          opacity: opened || !animateOpacity ? 1 : 0,
+          opacity: expanded || !animateOpacity ? 1 : 0,
           transition: animateOpacity ? `opacity ${duration}ms ${transitionTimingFunction}` : 'none',
           ...getStyleObject(style, theme),
         },

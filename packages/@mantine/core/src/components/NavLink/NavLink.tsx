@@ -229,7 +229,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
         )}
       </UnstyledButton>
       {withChildren && (
-        <Collapse in={_opened} {...getStyles('collapse')}>
+        <Collapse expanded={_opened} {...getStyles('collapse')}>
           <div {...getStyles('children')}>{children}</div>
         </Collapse>
       )}

@@ -214,3 +214,29 @@ useMutationObserverTarget(
 - `UseScrollSpyReturnType` → `UseScrollSpyReturnValue`
 - `StateHistory` → `UseStateHistoryValue`
 - `OS` → `UseOSReturnValue`
+
+## Collapse in -> expanded
+
+The [Collapse](/core/collapse) component now uses the `expanded` prop instead of `in`:
+
+```tsx
+import { Collapse } from '@mantine/core';
+
+// ❌ No longer works
+function Demo() {
+  return (
+    <Collapse in={false}>
+      {/* ... */}
+    </Collapse>
+  );
+}
+
+// ✅ Use the expanded prop
+function Demo() {
+  return (
+    <Collapse expanded={false}>
+      {/* ... */}
+    </Collapse>
+  );
+}
+```

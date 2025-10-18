@@ -19,9 +19,9 @@ export function NestedCollapseWithControl() {
   return (
     <Box maw={400} mx="auto" mt={100}>
       <Button onClick={() => setShow((pre) => !pre)}>Toggle</Button>
-      <Collapse in={show} keepMounted>
+      <Collapse expanded={show} keepMounted>
         <SegmentedControl value={value} onChange={setValue} data={['a', 'b']} />
-        <Collapse in={value === 'b'}>
+        <Collapse expanded={value === 'b'}>
           1<br />2<br />3<br />4<br />5<br />
         </Collapse>
       </Collapse>
@@ -36,7 +36,7 @@ export function StackedCollapse() {
     <Box maw={400} mx="auto" mt={100}>
       <Stack bg="gray" m="lg">
         <Button onClick={() => setIsOpen((o) => !o)}>Toggle</Button>
-        <Collapse in={isOpen}>
+        <Collapse expanded={isOpen}>
           <Text>Text</Text>
         </Collapse>
       </Stack>
