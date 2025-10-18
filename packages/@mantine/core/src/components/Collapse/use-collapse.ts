@@ -11,46 +11,39 @@ function getAutoHeightDuration(height: number | string) {
   return Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10);
 }
 
-export function getElementHeight(
-  el: React.RefObject<HTMLElement | null> | { current?: { scrollHeight: number } }
-) {
-  return el?.current ? el.current.scrollHeight : 'auto';
+export function getElementHeight(elementRef: React.RefObject<HTMLElement | null>) {
+  return elementRef.current ? elementRef.current.scrollHeight : 'auto';
 }
 
 interface UseCollapseInput {
-  opened: boolean;
+  expanded: boolean;
   transitionDuration?: number;
   transitionTimingFunction?: string;
   onTransitionEnd?: () => void;
   keepMounted?: boolean;
 }
 
-interface GetCollapseProps {
-  [key: string]: unknown;
-
+interface GetCollapsePropsInput {
   style?: CSSProperties;
-  onTransitionEnd?: (e: TransitionEvent) => void;
   refKey?: string;
   ref?: React.Ref<HTMLDivElement>;
 }
-
-const collapsedHeight = 0;
-const getCollapsedStyles = (keepMounted: boolean): CSSProperties => ({
-  height: 0,
-  overflow: 'hidden',
-  ...(keepMounted ? {} : { display: 'none' }),
-});
 
 export function useCollapse({
   transitionDuration,
   transitionTimingFunction = 'ease',
   onTransitionEnd = () => {},
-  opened,
+  expanded,
   keepMounted = false,
-}: UseCollapseInput): (props: GetCollapseProps) => Record<string, any> {
-  const el = useRef<HTMLElement | null>(null);
-  const collapsedStyles = getCollapsedStyles(keepMounted);
-  const [styles, setStylesRaw] = useState<CSSProperties>(opened ? {} : collapsedStyles);
+}: UseCollapseInput): (input?: GetCollapsePropsInput) => Record<string, any> {
+  const collapsedStyles = {
+    height: 0,
+    overflow: 'hidden',
+    ...(keepMounted ? {} : { display: 'none' }),
+  };
+
+  const elementRef = useRef<HTMLElement>(null);
+  const [styles, setStylesRaw] = useState<CSSProperties>(expanded ? {} : collapsedStyles);
   const setStyles = (newStyles: React.SetStateAction<CSSProperties>) => {
     flushSync(() => setStylesRaw(newStyles));
   };
@@ -67,32 +60,30 @@ export function useCollapse({
   };
 
   useDidUpdate(() => {
-    if (opened) {
+    if (expanded) {
       window.requestAnimationFrame(() => {
         mergeStyles({ willChange: 'height', display: 'block', overflow: 'hidden' });
         window.requestAnimationFrame(() => {
-          const height = getElementHeight(el);
+          const height = getElementHeight(elementRef);
           mergeStyles({ ...getTransitionStyles(height), height });
         });
       });
     } else {
       window.requestAnimationFrame(() => {
-        const height = getElementHeight(el);
+        const height = getElementHeight(elementRef);
         mergeStyles({ ...getTransitionStyles(height), willChange: 'height', height });
-        window.requestAnimationFrame(() =>
-          mergeStyles({ height: collapsedHeight, overflow: 'hidden' })
-        );
+        window.requestAnimationFrame(() => mergeStyles({ height: 0, overflow: 'hidden' }));
       });
     }
-  }, [opened]);
+  }, [expanded]);
 
-  const handleTransitionEnd = (e: React.TransitionEvent): void => {
-    if (e.target !== el.current || e.propertyName !== 'height') {
+  const handleTransitionEnd = (event: React.TransitionEvent): void => {
+    if (event.target !== elementRef.current || event.propertyName !== 'height') {
       return;
     }
 
-    if (opened) {
-      const height = getElementHeight(el);
+    if (expanded) {
+      const height = getElementHeight(elementRef);
 
       if (height === styles.height) {
         setStyles({});
@@ -101,22 +92,17 @@ export function useCollapse({
       }
 
       onTransitionEnd();
-    } else if (styles.height === collapsedHeight) {
+    } else if (styles.height === 0) {
       setStyles(collapsedStyles);
       onTransitionEnd();
     }
   };
 
-  const getCollapseProps = ({ style = {}, refKey = 'ref', ...rest }: GetCollapseProps = {}) => {
-    return {
-      'aria-hidden': !opened,
-      inert: !opened,
-      ...rest,
-      [refKey]: mergeRefs(el, rest[refKey] as any),
-      onTransitionEnd: handleTransitionEnd,
-      style: { boxSizing: 'border-box', ...style, ...styles },
-    };
-  };
-
-  return getCollapseProps;
+  return (input?: GetCollapsePropsInput) => ({
+    'aria-hidden': !expanded,
+    inert: !expanded,
+    [input?.refKey || 'ref']: mergeRefs(elementRef, input?.ref),
+    onTransitionEnd: handleTransitionEnd,
+    style: { boxSizing: 'border-box', ...input?.style, ...styles },
+  });
 }

@@ -61,7 +61,7 @@ export const Collapse = factory<CollapseFactory>((props) => {
   const duration = reduceMotion ? 0 : transitionDuration;
 
   const getCollapseProps = useCollapse({
-    opened,
+    expanded: opened,
     transitionDuration: duration,
     transitionTimingFunction,
     onTransitionEnd,
@@ -74,6 +74,7 @@ export const Collapse = factory<CollapseFactory>((props) => {
 
   return (
     <Box
+      {...others}
       {...getCollapseProps({
         style: {
           opacity: opened || !animateOpacity ? 1 : 0,
@@ -81,7 +82,6 @@ export const Collapse = factory<CollapseFactory>((props) => {
           ...getStyleObject(style, theme),
         },
         ref,
-        ...others,
       })}
     >
       {children}
