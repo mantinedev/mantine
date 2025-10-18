@@ -171,12 +171,18 @@ export function MinMax() {
       />
       <div>{value}</div>
       <TimePicker
-        min="10:30"
-        max="18:30"
+        min="12:00"
+        max="18:00"
         format="24h"
         value={value}
         onChange={setValue}
         label="24h format"
+        withDropdown
+        presets={getTimeRange({
+          startTime: '06:00:00',
+          endTime: '22:00:00',
+          interval: '00:30:00',
+        })}
       />
       <div>{value}</div>
     </div>
