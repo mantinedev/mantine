@@ -1,4 +1,4 @@
-import { CollapseDemos } from '@docs/demos';
+import { CollapseDemos, HooksDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -21,3 +21,10 @@ Set the following props to control the transition:
 ## Nested Collapse components
 
 <Demo data={CollapseDemos.nested} />
+
+## use-collapse hook
+
+[use-collapse](/hooks/use-collapse) is the hook version of the `Collapse` component.
+It allows more flexible usage and control over the collapse behavior.
+
+<Demo data={HooksDemos.useCollapseDemo} />
