@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { CSSProperties, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
-import { mergeRefs, useDidUpdate } from '@mantine/hooks';
-import { CSSProperties } from '../../core';
+import { useDidUpdate } from '../use-did-update/use-did-update';
+import { mergeRefs } from '../use-merged-ref/use-merged-ref';
 
 function getAutoHeightDuration(height: number | string) {
   if (!height || typeof height === 'string') {
@@ -15,7 +15,7 @@ export function getElementHeight(elementRef: React.RefObject<HTMLElement | null>
   return elementRef.current ? elementRef.current.scrollHeight : 'auto';
 }
 
-interface UseCollapseInput {
+export interface UseCollapseInput {
   expanded: boolean;
   transitionDuration?: number;
   transitionTimingFunction?: string;
@@ -29,13 +29,23 @@ interface GetCollapsePropsInput {
   ref?: React.Ref<HTMLDivElement>;
 }
 
+interface GetCollapsePropsReturnValue {
+  'aria-hidden': boolean;
+  inert: boolean;
+  ref: React.RefCallback<HTMLDivElement>;
+  onTransitionEnd: (event: React.TransitionEvent<Element>) => void;
+  style: React.CSSProperties;
+}
+
+export type UseCollapseReturnValue = (input?: GetCollapsePropsInput) => GetCollapsePropsReturnValue;
+
 export function useCollapse({
   transitionDuration,
   transitionTimingFunction = 'ease',
   onTransitionEnd = () => {},
   expanded,
   keepMounted = false,
-}: UseCollapseInput): (input?: GetCollapsePropsInput) => Record<string, any> {
+}: UseCollapseInput): UseCollapseReturnValue {
   const collapsedStyles = {
     height: 0,
     overflow: 'hidden',
@@ -98,11 +108,13 @@ export function useCollapse({
     }
   };
 
-  return (input?: GetCollapsePropsInput) => ({
+  const getCollapseProps: UseCollapseReturnValue = (input) => ({
     'aria-hidden': !expanded,
     inert: !expanded,
-    [input?.refKey || 'ref']: mergeRefs(elementRef, input?.ref),
+    ref: mergeRefs(elementRef, input?.ref),
     onTransitionEnd: handleTransitionEnd,
     style: { boxSizing: 'border-box', ...input?.style, ...styles },
   });
+
+  return getCollapseProps;
 }

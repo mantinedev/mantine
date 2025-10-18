@@ -80,6 +80,7 @@ export { useFileDialog } from './use-file-dialog/use-file-dialog.js';
 export { useLongPress } from './use-long-press/use-long-press.js';
 export { useSelection } from './use-selection/use-selection.js';
 export { useFloatingWindow } from './use-floating-window/use-floating-window.js';
+export { useCollapse } from './use-collapse/use-collapse.js';
 
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
 export type { UseClipboardOptions, UseClipboardReturnValue } from './use-clipboard/use-clipboard';
@@ -202,3 +203,4 @@ export type {
   UseResizeObserverReturnValue,
   ObserverRect,
 } from './use-resize-observer/use-resize-observer';
+export type { UseCollapseInput, UseCollapseReturnValue } from './use-collapse/use-collapse';

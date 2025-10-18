@@ -1,4 +1,4 @@
-import { useReducedMotion } from '@mantine/hooks';
+import { useCollapse, useReducedMotion } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -8,7 +8,6 @@ import {
   useMantineTheme,
   useProps,
 } from '../../core';
-import { useCollapse } from './use-collapse';
 
 export interface CollapseProps extends BoxProps, Omit<React.ComponentProps<'div'>, keyof BoxProps> {
   /** Expanded state */
