@@ -206,6 +206,12 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.indeterminate = indeterminate || false;
+
+      if (indeterminate) {
+        inputRef.current.setAttribute('data-indeterminate', '');
+      } else {
+        inputRef.current.removeAttribute('data-indeterminate');
+      }
     }
   }, [indeterminate]);
 
@@ -238,7 +244,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
           ref={useMergedRef(inputRef, ref)}
           checked={checked}
           disabled={finalDisabled}
-          mod={{ error: !!error, indeterminate, 'with-error-styles': withErrorStyles }}
+          mod={{ error: !!error, 'with-error-styles': withErrorStyles }}
           {...getStyles('input', { focusable: true, variant })}
           onChange={onChange}
           {...rest}

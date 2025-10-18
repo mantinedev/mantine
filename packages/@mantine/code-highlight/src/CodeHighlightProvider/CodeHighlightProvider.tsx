@@ -2,7 +2,7 @@ import { createContext, use, useEffect, useMemo, useState } from 'react';
 import { plainTextAdapter } from './adapters/plain-text-adapter';
 
 interface HighlighterInput {
-  colorScheme: 'light' | 'dark';
+  colorScheme: 'light' | 'dark' | (string & {});
   code: string;
   language?: string;
 }

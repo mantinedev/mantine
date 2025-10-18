@@ -21,7 +21,7 @@ export function stripShikiCodeBlocks(data: string) {
 }
 
 interface CreateShikiAdapterOptions {
-  forceColorScheme?: 'dark' | 'light';
+  forceColorScheme?: 'dark' | 'light' | (string & {});
 }
 
 export const createShikiAdapter = (
@@ -35,15 +35,25 @@ export const createShikiAdapter = (
         return ({ code }) => ({ highlightedCode: code, isHighlighted: false });
       }
 
-      return ({ code, language, colorScheme }) => ({
-        isHighlighted: true,
-        highlightedCode: stripShikiCodeBlocks(
-          ctx.codeToHtml(code, {
-            lang: language,
-            theme: forceColorScheme || ((colorScheme === 'light' ? light : dark) as any),
-          })
-        ),
-      });
+      return ({ code, language, colorScheme }) => {
+        let _colorScheme: any = colorScheme;
+
+        if (colorScheme === 'light') {
+          _colorScheme = light;
+        } else if (colorScheme === 'dark') {
+          _colorScheme = dark;
+        }
+
+        return {
+          isHighlighted: true,
+          highlightedCode: stripShikiCodeBlocks(
+            ctx.codeToHtml(code, {
+              lang: language,
+              theme: forceColorScheme || _colorScheme,
+            })
+          ),
+        };
+      };
     },
   };
 };

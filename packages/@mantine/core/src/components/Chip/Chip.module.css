@@ -5,7 +5,7 @@
   --chip-size-lg: 36px;
   --chip-size-xl: 40px;
 
-  --chip-icon-size-xs: 10px;
+  --chip-icon-size-xs: 9px;
   --chip-icon-size-sm: 12px;
   --chip-icon-size-md: 14px;
   --chip-icon-size-lg: 16px;
@@ -17,7 +17,7 @@
   --chip-padding-lg: 28px;
   --chip-padding-xl: 32px;
 
-  --chip-checked-padding-xs: 7.5px;
+  --chip-checked-padding-xs: 8.2px;
   --chip-checked-padding-sm: 10px;
   --chip-checked-padding-md: 11.7px;
   --chip-checked-padding-lg: 13.5px;

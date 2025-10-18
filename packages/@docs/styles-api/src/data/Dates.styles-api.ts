@@ -224,7 +224,10 @@ export const DatePickerInputStylesApi: StylesApiData<DatePickerInputFactory> = {
 export const DateInputStylesApi: StylesApiData<DateInputFactory> = {
   selectors: {
     ...InputBaseStylesApi.selectors,
-    ...DatePickerStylesApi.selectors,
+    ...CalendarHeaderStylesApi.selectors,
+    ...DecadeLevelGroupStylesApi.selectors,
+    ...YearLevelGroupStylesApi.selectors,
+    ...MonthLevelGroupStylesApi.selectors,
   },
 
   vars: {},

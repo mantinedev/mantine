@@ -200,7 +200,7 @@ const varsResolver = createVarsResolver<NumberInputFactory>((_, { size }) => ({
 }));
 
 function clampAndSanitizeInput(sanitizedValue: string | number, max?: number, min?: number) {
-  const replaced = sanitizedValue.toString().replace(/^0+/, '');
+  const replaced = sanitizedValue.toString().replace(/^0+(?=\d)/, '');
   const parsedValue = parseFloat(replaced);
   if (Number.isNaN(parsedValue)) {
     return replaced;

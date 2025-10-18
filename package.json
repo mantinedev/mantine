@@ -1,6 +1,6 @@
 {
   "name": "mantine-a91763c0e2",
-  "version": "8.3.4",
+  "version": "8.3.5",
   "description": "Mantine Components Monorepo",
   "packageManager": "yarn@4.10.3",
   "license": "MIT",
@@ -33,7 +33,7 @@
     "docs:codegen": "tsx scripts/codegen",
     "docs:build": "npm run docs:docgen && npm run compile:llm && cd apps/mantine.dev && npm run build",
     "docs:build:alpha": "npm run docs:docgen && cd apps/mantine.dev && npm run build:alpha",
-    "docs:deploy": "npm run docs:sponsors && npm run docs:build && gh-pages -d apps/mantine.dev/out -t true",
+    "docs:deploy": "npm run docs:sponsors && npm run docs:build && gh-pages -d apps/mantine.dev/out",
     "docs:deploy:alpha": "npm run docs:build:alpha && wrangler pages deploy apps/mantine.dev/out --branch master --project-name alpha-mantine-dev",
     "docs:deploy:v7": "npm run docs:build:alpha && wrangler pages deploy apps/mantine.dev/out --branch master --project-name v7-mantine-docs",
     "docs:count": "tsx scripts/docs/count",
