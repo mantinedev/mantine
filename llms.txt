@@ -37117,9 +37117,6 @@ DateInput component supports Styles API. With Styles API, you can customize styl
 | weekday | .mantine-DateInput-weekday | Weekday th element |
 | day | .mantine-DateInput-day | Month day control |
 | weekNumber | .mantine-DateInput-weekNumber | Week number td element |
-| datePickerRoot | .mantine-DateInput-datePickerRoot | Date picker root element, contains calendar and presets |
-| presetsList | .mantine-DateInput-presetsList | Presets wrapper element |
-| presetButton | .mantine-DateInput-presetButton | Preset button |
 
 
 --------------------------------------------------------------------------------
