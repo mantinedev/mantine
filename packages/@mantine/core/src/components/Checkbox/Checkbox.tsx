@@ -195,7 +195,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
       ref.current.indeterminate = indeterminate || false;
 
       if (indeterminate) {
-        ref.current.setAttribute('data-indeterminate', '');
+        ref.current.setAttribute('data-indeterminate', 'true');
       } else {
         ref.current.removeAttribute('data-indeterminate');
       }
