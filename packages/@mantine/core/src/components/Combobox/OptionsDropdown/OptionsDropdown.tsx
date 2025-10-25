@@ -41,9 +41,13 @@ function Option({
 }: OptionProps) {
   if (!isOptionsGroup(data)) {
     const checked = isValueChecked(value, data.value);
-    const check = withCheckIcon && checked && (
-      <CheckIcon className={classes.optionsDropdownCheckIcon} />
-    );
+    const check =
+      withCheckIcon &&
+      (checked ? (
+        <CheckIcon className={classes.optionsDropdownCheckIcon} />
+      ) : (
+        <div className={classes.optionsDropdownCheckPlaceholder} />
+      ));
 
     const defaultContent = (
       <>
