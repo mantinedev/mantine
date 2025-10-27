@@ -11,6 +11,7 @@ export const ModalStylesApi: StylesApiData<ModalFactory> = {
     title: 'Modal title (h2 tag), displayed in the header',
     body: 'Modal body, displayed after header',
     close: 'Close button',
+    footer: 'Modal footer',
   },
 
   vars: {
