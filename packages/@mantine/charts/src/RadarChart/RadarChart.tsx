@@ -265,9 +265,9 @@ export const RadarChart = factory<RadarChartFactory>((_props, ref) => {
                 stroke: 'var(--chart-grid-color)',
                 strokeWidth: 1,
               }}
-              content={({ label, payload }) => (
+              content={({ label, payload, labelFormatter }) => (
                 <ChartTooltip
-                  label={label}
+                  label={labelFormatter && payload ? labelFormatter(label, payload) : label}
                   payload={payload}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
