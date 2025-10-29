@@ -3,6 +3,7 @@ export { axisProps } from './LineChart.demo.axisProps';
 export { color } from './LineChart.demo.color';
 export { colorSchemeColor } from './LineChart.demo.colorSchemeColor';
 export { connectNulls } from './LineChart.demo.connectNulls';
+export { curveType } from './LineChart.demo.curveType';
 export { customTooltip } from './LineChart.demo.customTooltip';
 export { dotProps } from './LineChart.demo.dotProps';
 export { gridColor } from './LineChart.demo.gridColor';
