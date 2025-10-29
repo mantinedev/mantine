@@ -1,6 +1,6 @@
 {
   "name": "@mantine/code-highlight",
-  "version": "8.3.5",
+  "version": "8.3.6",
   "description": "Code highlight with Mantine theme",
   "homepage": "https://mantine.dev/x/code-highlight/",
   "license": "MIT",
@@ -45,8 +45,8 @@
     "directory": "packages/@mantine/code-highlight"
   },
   "peerDependencies": {
-    "@mantine/core": "8.3.5",
-    "@mantine/hooks": "8.3.5",
+    "@mantine/core": "8.3.6",
+    "@mantine/hooks": "8.3.6",
     "react": "^18.x || ^19.x",
     "react-dom": "^18.x || ^19.x"
   },
