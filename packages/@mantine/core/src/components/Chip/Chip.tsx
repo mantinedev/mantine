@@ -223,7 +223,7 @@ export const Chip = factory<ChipFactory>((_props, ref) => {
       >
         {_checked && (
           <span {...getStyles('iconWrapper')}>
-            {icon || <CheckIcon {...getStyles('checkIcon')} />}
+            {icon === undefined ? <CheckIcon {...getStyles('checkIcon')} /> : icon}
           </span>
         )}
         <span>{children}</span>
