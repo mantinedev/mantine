@@ -40428,6 +40428,7 @@ Keyboard interactions:
 | hiddenInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to the hidden input |
 | hoursInputLabel | string | - | <code>aria-label</code> of hours input |
 | hoursInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to hours input |
+| hoursPlaceholder | string | - | Hours input placeholder, |
 | hoursRef | Ref<HTMLInputElement> | - | A ref object to get node reference of the hours input |
 | hoursStep | number | - | Number by which hours are incremented/decremented |
 | inputContainer | (children: ReactNode) => ReactNode | - | Input container component |
@@ -40444,6 +40445,7 @@ Keyboard interactions:
 | min | string | - | Min possible time value in <code>hh:mm:ss</code> format |
 | minutesInputLabel | string | - | <code>aria-label</code> of minutes input |
 | minutesInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to minutes input |
+| minutesPlaceholder | string | - | Minutes input placeholder, |
 | minutesRef | Ref<HTMLInputElement> | - | A ref object to get node reference of the minutes input |
 | minutesStep | number | - | Number by which minutes are incremented/decremented |
 | name | string | - | <code>name</code> prop passed down to the hidden input |
@@ -40465,6 +40467,7 @@ Keyboard interactions:
 | scrollAreaProps | ScrollAreaProps | - | Props passed down to all underlying <code>ScrollArea</code> components |
 | secondsInputLabel | string | - | <code>aria-label</code> of seconds input |
 | secondsInputProps | React.ComponentPropsWithoutRef<"input"> | - | Props passed down to seconds input |
+| secondsPlaceholder | string | - | Seconds input placeholder, |
 | secondsRef | Ref<HTMLInputElement> | - | A ref object to get node reference of the seconds input |
 | secondsStep | number | - | Number by which seconds are incremented/decremented |
 | size | MantineSize | (string & {}) | - | Controls input <code>height</code> and horizontal <code>padding</code> |
@@ -41633,6 +41636,70 @@ function Demo() {
         { name: 'Apples', label: 'Apples sales', color: 'indigo.6' },
         { name: 'Oranges', label: 'Oranges sales', color: 'blue.6' },
         { name: 'Tomatoes', label: 'Tomatoes sales', color: 'teal.6' },
+      ]}
+    />
+  );
+}
+
+// data.ts
+export const data = [
+  {
+    date: 'Mar 22',
+    Apples: 2890,
+    Oranges: 2338,
+    Tomatoes: 2452,
+  },
+  {
+    date: 'Mar 23',
+    Apples: 2756,
+    Oranges: 2103,
+    Tomatoes: 2402,
+  },
+  {
+    date: 'Mar 24',
+    Apples: 3322,
+    Oranges: 986,
+    Tomatoes: 1821,
+  },
+  {
+    date: 'Mar 25',
+    Apples: 3470,
+    Oranges: 2108,
+    Tomatoes: 2809,
+  },
+  {
+    date: 'Mar 26',
+    Apples: 3129,
+    Oranges: 1726,
+    Tomatoes: 2290,
+  },
+];
+```
+
+
+## Set curve type per line
+
+You can set individual curve types for each line in the `series` array. If you
+do not set a curve type for a line, the series will fall back to `curveType` prop, or
+`monotone` if `curveType` is not set.
+
+#### Example: curveType
+
+```tsx
+// Demo.tsx
+import { AreaChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return (
+    <AreaChart
+      h={300}
+      data={data}
+      dataKey="date"
+      series={[
+        { name: 'Apples', color: 'indigo.6', curveType: 'linear' },
+        { name: 'Oranges', color: 'blue.6', curveType: 'bump' },
+        { name: 'Tomatoes', color: 'teal.6', curveType: 'stepAfter' },
       ]}
     />
   );
@@ -48291,9 +48358,9 @@ export const data = ${JSON.stringify(data, null, 2)};
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | colors | string[] | - | Colors array, used to calculate color for each value, by default 4 shades of green colors are used |
-| data | Record<string, number> | required | Heatmap data, key is date in <code>YYYY-MM-DD</code> format |
+| data | Record<string, number> | required | Heatmap data, key is date in <code>YYYY-MM-DD</code> format (interpreted as a UTC calendar day) |
 | domain | [number, number] | - | Heatmap domain, array of 2 numbers, min and max values, calculated from data by default |
-| endDate | string | Date | - | Heatmap end date. Current date by default. |
+| endDate | string | Date | - | Heatmap end date. Current date by default. Date is normalized to UTC midnight of the intended calendar day. |
 | firstDayOfWeek | 0 | 2 | 1 | 3 | 4 | 5 | 6 | - | First day of week, 0 – Sunday, 1 – Monday. |
 | fontSize | number | - | Font size of month and weekday labels |
 | gap | number | - | Gap between rects in px |
@@ -48304,7 +48371,7 @@ export const data = ${JSON.stringify(data, null, 2)};
 | rectRadius | number | - | Rect radius in px |
 | rectSize | number | - | Size of day rect in px |
 | splitMonths | boolean | - | If set, inserts a spacer column between months |
-| startDate | string | Date | - | Heatmap start date. Current date - 1 year by default. |
+| startDate | string | Date | - | Heatmap start date. Current date - 1 year by default. Date is normalized to UTC midnight of the intended calendar day. |
 | tooltipProps | Partial<TooltipFloatingProps> | - | Props passed down to the <code>Tooltip.Floating</code> component |
 | weekdayLabels | string[] | - | Weekday labels, array of 7 elements, can be used for localization |
 | weekdaysLabelsWidth | number | - | Width of weekday labels column |
@@ -49100,6 +49167,72 @@ function Demo() {
         { name: 'Oranges', color: 'blue.6' },
         { name: 'Tomatoes', color: 'teal.6' },
       ]}
+    />
+  );
+}
+
+// data.ts
+export const data = [
+  {
+    date: 'Mar 22',
+    Apples: 2890,
+    Oranges: 2338,
+    Tomatoes: 2452,
+  },
+  {
+    date: 'Mar 23',
+    Apples: 2756,
+    Oranges: 2103,
+    Tomatoes: 2402,
+  },
+  {
+    date: 'Mar 24',
+    Apples: 3322,
+    Oranges: 986,
+    Tomatoes: 1821,
+  },
+  {
+    date: 'Mar 25',
+    Apples: 3470,
+    Oranges: 2108,
+    Tomatoes: 2809,
+  },
+  {
+    date: 'Mar 26',
+    Apples: 3129,
+    Oranges: 1726,
+    Tomatoes: 2290,
+  },
+];
+```
+
+
+## Set curve type per line
+
+You can set individual curve types for each line in the `series` array. If you
+do not set a curve type for a line, the series will fall back to `curveType` prop, or
+`monotone` if `curveType` is not set.
+
+#### Example: curveType
+
+```tsx
+// Demo.tsx
+import { LineChart } from '@mantine/charts';
+import { data } from './data';
+
+
+function Demo() {
+  return (
+    <LineChart
+      h={300}
+      data={data}
+      dataKey="date"
+      series={[
+        { name: 'Apples', color: 'indigo.6', curveType: 'linear' },
+        { name: 'Oranges', color: 'blue.6', curveType: 'bump' },
+        { name: 'Tomatoes', color: 'teal.6', curveType: 'stepAfter' },
+      ]}
+      
     />
   );
 }
@@ -49981,7 +50114,7 @@ export const data = [
 ```
 
 
-## Dashed line line
+## Dashed line
 
 Set `strokeDasharray` property in `series` to change line style to dashed:
 
