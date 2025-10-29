@@ -7,9 +7,14 @@ import {
   Factory,
   getSize,
   MantineSize,
+  MantineResponsiveSize,
   StylesApiProps,
   useProps,
   useStyles,
+  useMantineTheme,
+  InlineStyles,
+  isResponsiveSize,
+  createResponsiveSizeVariables,
 } from '../../core';
 import classes from './Container.module.css';
 
@@ -23,7 +28,7 @@ export interface ContainerProps
     StylesApiProps<ContainerFactory>,
     ElementProps<'div'> {
   /** `max-width` of the container, value is not responsive – it is the same for all screen sizes. Numbers are converted to rem. Ignored when `fluid` prop is set. @default `'md'` */
-  size?: MantineSize | (string & {}) | number;
+  size?: MantineResponsiveSize | (string & {}) | number;
 
   /** If set, the container takes 100% width of its parent and `size` prop is ignored. @default `false` */
   fluid?: boolean;
@@ -58,8 +63,21 @@ export const Container = factory<ContainerFactory>((_props, ref) => {
     mod,
     attributes,
     strategy,
+    size,
     ...others
   } = props;
+
+  const theme = useMantineTheme();
+
+  // Handle responsive size properties (only if not fluid)
+  const sizeVars = isResponsiveSize(size) && !fluid
+    ? createResponsiveSizeVariables({ 
+        size, 
+        property: '--container-size', 
+        getter: (s) => getSize(s, 'container-size'), 
+        theme 
+      })
+    : { base: {}, media: [] };
 
   const getStyles = useStyles<ContainerFactory>({
     name: 'Container',
@@ -71,17 +89,28 @@ export const Container = factory<ContainerFactory>((_props, ref) => {
     styles,
     unstyled,
     attributes,
-    vars,
+    vars: {
+      ...vars,
+      ...sizeVars.base,
+    },
     varsResolver,
   });
 
   return (
-    <Box
-      ref={ref}
-      mod={[{ fluid, strategy: strategy || 'block' }, mod]}
-      {...getStyles('root')}
-      {...others}
-    />
+    <>
+      {sizeVars.media.length > 0 && (
+        <InlineStyles
+          selector={`.${getStyles('root').className.split(' ')[0]}`}
+          media={sizeVars.media}
+        />
+      )}
+      <Box
+        ref={ref}
+        mod={[{ fluid, strategy: strategy || 'block' }, mod]}
+        {...getStyles('root')}
+        {...others}
+      />
+    </>
   );
 });
 
