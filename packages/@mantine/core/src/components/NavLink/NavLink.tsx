@@ -83,6 +83,9 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
 
   /** Called on keydown of the root element */
   onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
+
+  /** If set to `false`, child `NavLinks` are unmounted when collapsed */
+  keepMounted?: boolean;
 }
 
 export type NavLinkFactory = PolymorphicFactory<{
@@ -144,6 +147,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
     attributes,
     onClick,
     onKeyDown,
+    keepMounted,
     ...others
   } = props;
 
@@ -229,7 +233,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
         )}
       </UnstyledButton>
       {withChildren && (
-        <Collapse expanded={_opened} {...getStyles('collapse')}>
+        <Collapse expanded={_opened} keepMounted={keepMounted} {...getStyles('collapse')}>
           <div {...getStyles('children')}>{children}</div>
         </Collapse>
       )}
