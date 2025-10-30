@@ -18,6 +18,10 @@
   margin-bottom: var(--mantine-spacing-sm);
   color: var(--mantine-color-bright);
   padding-inline-start: var(--mantine-spacing-xs);
+
+  @mixin smaller-than $docs-mdx-breakpoint {
+    font-size: var(--mantine-font-size-xl);
+  }
 }
 
 .section {

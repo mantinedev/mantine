@@ -18,10 +18,11 @@
     background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-5));
   }
 
-  @mixin smaller-than $docs-mdx-breakpoint {
+  @mixin smaller-than $mantine-breakpoint-xs {
     font-size: var(--mantine-font-size-sm);
     padding-left: var(--mantine-spacing-md);
     padding-right: var(--mantine-spacing-md);
+    flex: 1;
   }
 
   &[data-active] {
@@ -46,7 +47,7 @@
 .tabIcon {
   color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-1));
 
-  @mixin smaller-than $docs-mdx-breakpoint {
+  @mixin smaller-than $mantine-breakpoint-xs {
     display: none;
   }
 }
