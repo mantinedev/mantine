@@ -150,6 +150,7 @@ function Demo() {
 - [use-resize-observer](/hooks/use-resize-observer) now uses the new callback ref approach. The new approach makes hook usable with dynamic node changes. This change might be breaking, validate hook usage in your application.
 - [use-mouse](/hooks/use-mouse) hook now uses the new callback ref approach to resolve the issue with stale refs. The previous hook functionality was split into two hooks: `use-mouse` (for ref) and `use-mouse-position` (for document).
 - [use-mutation-observer](/hooks/use-mutation-observer) hook now uses the new callback ref approach. The new approach makes hook usable with dynamic node changes. Additionally, a new `useMutationObserverTarget` hook was added for observing external target elements.
+- [use-disclosure](/hooks/use-disclosure) hook now supports new `set` handler
 - `@mantine/hooks` types were renamed for consistency:
   - `UseScrollSpyReturnType` → `UseScrollSpyReturnValue`
   - `StateHistory` → `UseStateHistoryValue`

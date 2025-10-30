@@ -6,6 +6,7 @@ export interface UseDisclosureOptions {
 }
 
 export interface UseDisclosureHandlers {
+  set: (value: boolean) => void;
   open: () => void;
   close: () => void;
   toggle: () => void;
@@ -43,5 +44,5 @@ export function useDisclosure(
     opened ? close() : open();
   }, [close, open, opened]);
 
-  return [opened, { open, close, toggle }];
+  return [opened, { open, close, toggle, set: setOpened }];
 }
