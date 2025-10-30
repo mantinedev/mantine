@@ -19,6 +19,12 @@ export interface AccordionPanelProps
     ElementProps<'div'> {
   /** Called when the panel animation completes */
   onTransitionEnd?: () => void;
+
+  /** Called when the panel animation starts */
+  onTransitionStart?: () => void;
+
+  /** If set to `false`, the panel is unmounted when collapsed, overrides context value */
+  keepMounted?: boolean;
 }
 
 export type AccordionPanelFactory = Factory<{
@@ -29,7 +35,7 @@ export type AccordionPanelFactory = Factory<{
 }>;
 
 export const AccordionPanel = factory<AccordionPanelFactory>((props) => {
-  const { classNames, className, style, styles, vars, children, ...others } = useProps(
+  const { classNames, className, style, styles, vars, children, keepMounted, ...others } = useProps(
     'AccordionPanel',
     null,
     props
@@ -47,6 +53,7 @@ export const AccordionPanel = factory<AccordionPanelFactory>((props) => {
       role="region"
       id={ctx.getRegionId(value)}
       aria-labelledby={ctx.getControlId(value)}
+      keepMounted={keepMounted ?? ctx.keepMounted}
     >
       <div {...ctx.getStyles('content', { classNames, styles })}>{children}</div>
     </Collapse>

@@ -80,6 +80,9 @@ export interface AccordionProps<Multiple extends boolean = false>
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default `theme.defaultRadius` */
   radius?: MantineRadius;
+
+  /** If set to `false`, panels are unmounted when collapsed */
+  keepMounted?: boolean;
 }
 
 export type AccordionFactory = Factory<{
@@ -145,6 +148,7 @@ export const Accordion = genericFactory<AccordionFactory>((_props) => {
     radius,
     chevronIconSize,
     attributes,
+    keepMounted,
     ...others
   } = props;
 
@@ -207,6 +211,7 @@ export const Accordion = genericFactory<AccordionFactory>((_props) => {
         getStyles,
         variant,
         unstyled,
+        keepMounted,
       }}
     >
       <Box {...getStyles('root')} id={uid} {...others} variant={variant} data-accordion>

@@ -16,6 +16,7 @@ export interface AccordionContextValue {
   getStyles: GetStylesApi<AccordionFactory>;
   variant: string | undefined;
   unstyled: boolean | undefined;
+  keepMounted: boolean | undefined;
 }
 
 export const [AccordionProvider, useAccordionContext] = createSafeContext<AccordionContextValue>(

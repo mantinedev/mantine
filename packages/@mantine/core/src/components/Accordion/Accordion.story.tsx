@@ -40,7 +40,7 @@ export function Variants() {
         mt="xl"
         variant="default"
         radius="md"
-        chevron={null}
+        keepMounted={false}
       >
         {_items}
       </Accordion>
