@@ -458,9 +458,9 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
                 strokeWidth: 1,
                 strokeDasharray,
               }}
-              content={({ label, payload }) => (
+              content={({ label, payload, labelFormatter }) => (
                 <ChartTooltip
-                  label={label}
+                  label={labelFormatter && payload ? labelFormatter(label, payload) : label}
                   payload={payload}
                   unit={unit}
                   classNames={resolvedClassNames}
