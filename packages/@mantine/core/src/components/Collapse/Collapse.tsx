@@ -59,7 +59,7 @@ export const Collapse = factory<CollapseFactory>((props) => {
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const duration = reduceMotion ? 0 : transitionDuration;
 
-  const getCollapseProps = useCollapse({
+  const { getCollapseProps } = useCollapse({
     expanded,
     transitionDuration: duration,
     transitionTimingFunction,

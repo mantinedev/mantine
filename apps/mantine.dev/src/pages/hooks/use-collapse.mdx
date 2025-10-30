@@ -49,9 +49,15 @@ interface GetCollapsePropsReturnValue {
   style: React.CSSProperties;
 }
 
-type UseCollapseReturnValue = (input?: GetCollapsePropsInput) => GetCollapsePropsReturnValue;
+interface UseCollapseReturnValue {
+  /** Whether the collapse transition is currently running */
+  isTransitioning: boolean;
 
-function useCollapse({ transitionDuration, transitionTimingFunction, onTransitionEnd, expanded, keepMounted, }: UseCollapseInput): UseCollapseReturnValue
+  /** Props to pass down to the collapsible element */
+  getCollapseProps: (input?: GetCollapsePropsInput) => GetCollapsePropsReturnValue;
+}
+
+function useCollapse(input: UseCollapseInput): UseCollapseReturnValue;
 ```
 
 ## Exported types

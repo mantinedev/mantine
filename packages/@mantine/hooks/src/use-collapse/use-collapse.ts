@@ -45,7 +45,10 @@ interface GetCollapsePropsReturnValue {
   style: React.CSSProperties;
 }
 
-export type UseCollapseReturnValue = (input?: GetCollapsePropsInput) => GetCollapsePropsReturnValue;
+export interface UseCollapseReturnValue {
+  isTransitioning: boolean;
+  getCollapseProps: (input?: GetCollapsePropsInput) => GetCollapsePropsReturnValue;
+}
 
 export function useCollapse({
   transitionDuration,
@@ -62,6 +65,7 @@ export function useCollapse({
 
   const elementRef = useRef<HTMLElement>(null);
   const [styles, setStylesRaw] = useState<CSSProperties>(expanded ? {} : collapsedStyles);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const setStyles = (newStyles: React.SetStateAction<CSSProperties>) => {
     flushSync(() => setStylesRaw(newStyles));
   };
@@ -80,6 +84,7 @@ export function useCollapse({
   useDidUpdate(() => {
     if (expanded) {
       window.requestAnimationFrame(() => {
+        setIsTransitioning(true);
         mergeStyles({ willChange: 'height', display: 'block', overflow: 'hidden' });
         window.requestAnimationFrame(() => {
           const height = getElementHeight(elementRef);
@@ -88,6 +93,7 @@ export function useCollapse({
       });
     } else {
       window.requestAnimationFrame(() => {
+        setIsTransitioning(true);
         const height = getElementHeight(elementRef);
         mergeStyles({ ...getTransitionStyles(height), willChange: 'height', height });
         window.requestAnimationFrame(() => mergeStyles({ height: 0, overflow: 'hidden' }));
@@ -109,20 +115,23 @@ export function useCollapse({
         mergeStyles({ height });
       }
 
+      setIsTransitioning(false);
       onTransitionEnd();
     } else if (styles.height === 0) {
       setStyles(collapsedStyles);
+      setIsTransitioning(false);
       onTransitionEnd();
     }
   };
 
-  const getCollapseProps: UseCollapseReturnValue = (input) => ({
-    'aria-hidden': !expanded,
-    inert: !expanded,
-    ref: mergeRefs(elementRef, input?.ref),
-    onTransitionEnd: handleTransitionEnd,
-    style: { boxSizing: 'border-box', ...input?.style, ...styles },
-  });
-
-  return getCollapseProps;
+  return {
+    isTransitioning,
+    getCollapseProps: (input) => ({
+      'aria-hidden': !expanded,
+      inert: !expanded,
+      ref: mergeRefs(elementRef, input?.ref),
+      onTransitionEnd: handleTransitionEnd,
+      style: { boxSizing: 'border-box', ...input?.style, ...styles },
+    }),
+  };
 }
