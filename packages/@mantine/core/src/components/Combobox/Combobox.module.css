@@ -209,3 +209,9 @@
     opacity: 1;
   }
 }
+
+.optionsDropdownCheckPlaceholder {
+  width: 0.8em;
+  min-width: 0.8em;
+  height: 0.8em;
+}
