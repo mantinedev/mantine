@@ -28,6 +28,9 @@ export interface UseCollapseInput {
   /** Called when transition ends */
   onTransitionEnd?: () => void;
 
+  /** Called when transition starts */
+  onTransitionStart?: () => void;
+
   /** If true, collapsed content is kept in the DOM and hidden with `display: none` styles */
   keepMounted?: boolean;
 }
@@ -45,17 +48,23 @@ interface GetCollapsePropsReturnValue {
   style: React.CSSProperties;
 }
 
+export type UseCollapseState = 'entering' | 'entered' | 'exiting' | 'exited';
+
 export interface UseCollapseReturnValue {
-  isTransitioning: boolean;
+  /** Current transition state */
+  state: UseCollapseState;
+
+  /** Props to pass down to the collapsible element */
   getCollapseProps: (input?: GetCollapsePropsInput) => GetCollapsePropsReturnValue;
 }
 
 export function useCollapse({
   transitionDuration,
   transitionTimingFunction = 'ease',
-  onTransitionEnd = () => {},
+  onTransitionEnd,
+  onTransitionStart,
   expanded,
-  keepMounted = false,
+  keepMounted,
 }: UseCollapseInput): UseCollapseReturnValue {
   const collapsedStyles = {
     height: 0,
@@ -65,7 +74,7 @@ export function useCollapse({
 
   const elementRef = useRef<HTMLElement>(null);
   const [styles, setStylesRaw] = useState<CSSProperties>(expanded ? {} : collapsedStyles);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [state, setState] = useState<UseCollapseState>(expanded ? 'entered' : 'exited');
   const setStyles = (newStyles: React.SetStateAction<CSSProperties>) => {
     flushSync(() => setStylesRaw(newStyles));
   };
@@ -82,9 +91,15 @@ export function useCollapse({
   };
 
   useDidUpdate(() => {
+    const shouldTransition = transitionDuration !== 0;
+
+    if (shouldTransition) {
+      onTransitionStart?.();
+    }
+
     if (expanded) {
       window.requestAnimationFrame(() => {
-        setIsTransitioning(true);
+        flushSync(() => setState('entering'));
         mergeStyles({ willChange: 'height', display: 'block', overflow: 'hidden' });
         window.requestAnimationFrame(() => {
           const height = getElementHeight(elementRef);
@@ -93,13 +108,13 @@ export function useCollapse({
       });
     } else {
       window.requestAnimationFrame(() => {
-        setIsTransitioning(true);
+        flushSync(() => setState('exiting'));
         const height = getElementHeight(elementRef);
         mergeStyles({ ...getTransitionStyles(height), willChange: 'height', height });
         window.requestAnimationFrame(() => mergeStyles({ height: 0, overflow: 'hidden' }));
       });
     }
-  }, [expanded]);
+  }, [expanded, onTransitionStart]);
 
   const handleTransitionEnd = (event: React.TransitionEvent): void => {
     if (event.target !== elementRef.current || event.propertyName !== 'height') {
@@ -115,17 +130,17 @@ export function useCollapse({
         mergeStyles({ height });
       }
 
-      setIsTransitioning(false);
-      onTransitionEnd();
+      setState('entered');
+      onTransitionEnd?.();
     } else if (styles.height === 0) {
       setStyles(collapsedStyles);
-      setIsTransitioning(false);
-      onTransitionEnd();
+      setState('exited');
+      onTransitionEnd?.();
     }
   };
 
   return {
-    isTransitioning,
+    state,
     getCollapseProps: (input) => ({
       'aria-hidden': !expanded,
       inert: !expanded,

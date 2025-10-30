@@ -19,7 +19,7 @@ to make the hook work correctly.
 ## Definition
 
 ```tsx
-export interface UseCollapseInput {
+interface UseCollapseInput {
   /** Expanded state  */
   expanded: boolean;
 
@@ -31,6 +31,9 @@ export interface UseCollapseInput {
 
   /** Called when transition ends */
   onTransitionEnd?: () => void;
+
+  /** Called when transition starts */
+  onTransitionStart?: () => void;
 
   /** If true, collapsed content is kept in the DOM and hidden with `display: none` styles */
   keepMounted?: boolean;
@@ -49,6 +52,13 @@ interface GetCollapsePropsReturnValue {
   style: React.CSSProperties;
 }
 
+type UseCollapseState = 'entering' | 'entered' | 'exiting' | 'exited';
+
+interface UseCollapseReturnValue {
+  state: UseCollapseState;
+  getCollapseProps: (input?: GetCollapsePropsInput) => GetCollapsePropsReturnValue;
+}
+
 interface UseCollapseReturnValue {
   /** Whether the collapse transition is currently running */
   isTransitioning: boolean;
@@ -62,9 +72,9 @@ function useCollapse(input: UseCollapseInput): UseCollapseReturnValue;
 
 ## Exported types
 
-The `UseCollapseInput`, and `UseCollapseReturnValue` types are exported from the `@mantine/hooks` package;
+The `UseCollapseInput`, `UseCollapseState`, and `UseCollapseReturnValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx
-import type { UseCollapseInput, UseCollapseReturnValue } from '@mantine/hooks';
+import type { UseCollapseInput, UseCollapseState, UseCollapseReturnValue } from '@mantine/hooks';
 ```

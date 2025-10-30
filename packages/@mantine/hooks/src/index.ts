@@ -203,4 +203,8 @@ export type {
   UseResizeObserverReturnValue,
   ObserverRect,
 } from './use-resize-observer/use-resize-observer';
-export type { UseCollapseInput, UseCollapseReturnValue } from './use-collapse/use-collapse';
+export type {
+  UseCollapseInput,
+  UseCollapseReturnValue,
+  UseCollapseState,
+} from './use-collapse/use-collapse';

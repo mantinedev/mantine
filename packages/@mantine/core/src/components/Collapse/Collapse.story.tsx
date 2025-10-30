@@ -1,49 +1,43 @@
-import { useEffect, useState } from 'react';
-import { Box } from '../../core';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '../Button';
-import { SegmentedControl } from '../SegmentedControl';
-import { Stack } from '../Stack';
 import { Text } from '../Text';
 import { Collapse } from './Collapse';
 
 export default { title: 'Collapse' };
 
-export function NestedCollapseWithControl() {
-  const [show, setShow] = useState(false);
-  const [value, setValue] = useState('a');
-
+function Component() {
+  const random = useRef(Math.random());
   useEffect(() => {
-    setValue('b');
+    console.log('mounted');
+    return () => {
+      console.log('unmounted');
+    };
   }, []);
 
   return (
-    <Box maw={400} mx="auto" mt={100}>
-      <Button onClick={() => setShow((pre) => !pre)}>Toggle</Button>
-      <Collapse expanded={show} keepMounted>
-        <SegmentedControl value={value} onChange={setValue} data={['a', 'b']} />
-        <Collapse expanded={value === 'b'}>
-          1<br />2<br />3<br />4<br />5<br />
-        </Collapse>
-      </Collapse>
-    </Box>
+    <Text>
+      {random.current}: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+      exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+      occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+      laborum.
+    </Text>
   );
 }
 
-export function StackedCollapse() {
-  const [isOpen, setIsOpen] = useState(false);
+export function Usage() {
+  const [opened, setOpened] = useState(false);
 
   return (
-    <Box maw={400} mx="auto" mt={100}>
-      <Stack bg="gray" m="lg">
-        <Button onClick={() => setIsOpen((o) => !o)}>Toggle</Button>
-        <Collapse expanded={isOpen}>
-          <Text>Text</Text>
-        </Collapse>
-      </Stack>
-      <Text>
-        See that the grey box extends below the button even when the collapse is closed. Previously
-        there would be no stack gap above closed collapses.
-      </Text>
-    </Box>
+    <div style={{ maxWidth: 400, background: 'pink' }}>
+      <Button onClick={() => setOpened((o) => !o)} mb="md">
+        Toggle content
+      </Button>
+
+      <Collapse expanded={opened} keepMounted={false}>
+        <Component />
+      </Collapse>
+    </div>
   );
 }

@@ -13,8 +13,11 @@ export interface CollapseProps extends BoxProps, Omit<React.ComponentProps<'div'
   /** Expanded state */
   expanded: boolean;
 
-  /** Called each time the transition ends */
+  /** Called when the transition ends */
   onTransitionEnd?: () => void;
+
+  /** Called when transition starts */
+  onTransitionStart?: () => void;
 
   /** Transition duration in ms @default `200` */
   transitionDuration?: number;
@@ -48,6 +51,7 @@ export const Collapse = factory<CollapseFactory>((props) => {
     transitionTimingFunction,
     style,
     onTransitionEnd,
+    onTransitionStart,
     animateOpacity,
     keepMounted,
     ref,
@@ -59,12 +63,13 @@ export const Collapse = factory<CollapseFactory>((props) => {
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const duration = reduceMotion ? 0 : transitionDuration;
 
-  const { getCollapseProps } = useCollapse({
+  const collapse = useCollapse({
     expanded,
     transitionDuration: duration,
     transitionTimingFunction,
     onTransitionEnd,
-    keepMounted,
+    onTransitionStart,
+    keepMounted: false,
   });
 
   if (duration === 0) {
@@ -74,7 +79,7 @@ export const Collapse = factory<CollapseFactory>((props) => {
   return (
     <Box
       {...others}
-      {...getCollapseProps({
+      {...collapse.getCollapseProps({
         style: {
           opacity: expanded || !animateOpacity ? 1 : 0,
           transition: animateOpacity ? `opacity ${duration}ms ${transitionTimingFunction}` : 'none',
@@ -83,7 +88,7 @@ export const Collapse = factory<CollapseFactory>((props) => {
         ref,
       })}
     >
-      {children}
+      {keepMounted === false ? collapse.state !== 'exited' && children : children}
     </Box>
   );
 });
