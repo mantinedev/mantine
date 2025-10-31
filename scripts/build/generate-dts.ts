@@ -3,7 +3,7 @@ import fs from 'fs-extra';
 import { $ } from 'zx';
 
 export async function generateDts(packagePath: string) {
-  await $`yarn tsc --project ${path.join(packagePath, 'tsconfig.build.json')}`;
+  await $({ cwd: packagePath })`npx tsc --project tsconfig.build.json`;
 
   // Duplicate the type definitions for ESM
   await fs.copy(
