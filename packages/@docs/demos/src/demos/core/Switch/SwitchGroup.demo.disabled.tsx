@@ -1,41 +1,41 @@
-import { Group, Radio } from '@mantine/core';
+import { Group, Switch } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { Radio, Group } from '@mantine/core';
+import { Switch, Group } from '@mantine/core';
 
 function Demo() {
   return (
-    <Radio.Group
+    <Switch.Group
       disabled
-      name="favoriteFramework"
       label="Select your favorite framework/library"
       description="This is anonymous"
     >
       <Group mt="xs">
-        <Radio label="React" value="react" />
-        <Radio label="Angular" value="nu" />
-        <Radio label="Svelte" value="sv" />
+        <Switch value="react" label="React" />
+        <Switch value="svelte" label="Svelte" />
+        <Switch value="ng" label="Angular" />
+        <Switch value="vue" label="Vue" />
       </Group>
-    </Radio.Group>
+    </Switch.Group>
   );
 }
 `;
 
 function Demo() {
   return (
-    <Radio.Group
+    <Switch.Group
       disabled
-      name="favoriteFramework"
       label="Select your favorite framework/library"
       description="This is anonymous"
     >
       <Group mt="xs">
-        <Radio label="React" value="react" />
-        <Radio label="Angular" value="nu" />
-        <Radio label="Svelte" value="sv" />
+        <Switch value="react" label="React" />
+        <Switch value="svelte" label="Svelte" />
+        <Switch value="ng" label="Angular" />
+        <Switch value="vue" label="Vue" />
       </Group>
-    </Radio.Group>
+    </Switch.Group>
   );
 }
 

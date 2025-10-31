@@ -1,6 +1,5 @@
 export { groupConfigurator } from './Radio.demo.groupConfigurator';
 export { configurator } from './Radio.demo.configurator';
-export { disabled } from './Radio.demo.disabled';
 export { groupDisabled } from './RadioGroup.demo.disabled';
 export { icon } from './Radio.demo.icon';
 export { iconColor } from './Radio.demo.iconColor';
@@ -10,3 +9,4 @@ export { states } from './Radio.demo.states';
 export { card } from './Radio.demo.card';
 export { cardGroup } from './Radio.demo.cardGroup';
 export { indicator } from './Radio.demo.indicator';
+export { disabled } from './Radio.demo.disabled';
