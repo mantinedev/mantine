@@ -12,6 +12,10 @@
   z-index: 1000;
 }
 
+.footer {
+  z-index: 1000;
+}
+
 .content {
   flex: var(--drawer-flex, 0 0 var(--drawer-size));
   height: var(--drawer-height, calc(100% - var(--drawer-offset) * 2));

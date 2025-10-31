@@ -19,6 +19,10 @@ function Demo() {
             <Modal.CloseButton />
           </Modal.Header>
           <Modal.Body>Modal content</Modal.Body>
+           <Modal.Footer>
+            <Button onClick={close}>Close</Button>
+            <Button>Confirm</Button>
+          </Modal.Footer>
         </Modal.Content>
       </Modal.Root>
 
@@ -33,6 +37,10 @@ function Demo() {
 function Demo() {
   const [opened, { open, close }] = useDisclosure(false);
 
+  const content = Array(100)
+    .fill(0)
+    .map((_, index) => <p key={index}>Modal content</p>);
+
   return (
     <>
       <Modal.Root opened={opened} onClose={close}>
@@ -42,7 +50,11 @@ function Demo() {
             <Modal.Title>Modal title</Modal.Title>
             <Modal.CloseButton />
           </Modal.Header>
-          <Modal.Body>Modal content</Modal.Body>
+          <Modal.Body>{content}</Modal.Body>
+          <Modal.Footer>
+            <Button onClick={close}>Close</Button>
+            <Button>Confirm</Button>
+          </Modal.Footer>
         </Modal.Content>
       </Modal.Root>
 
