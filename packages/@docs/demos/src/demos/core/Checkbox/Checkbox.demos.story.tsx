@@ -28,6 +28,11 @@ export const Demo_groupConfigurator = {
   render: renderDemo(demos.groupConfigurator),
 };
 
+export const Demo_groupDisabled = {
+  name: '⭐ Demo: group disabled',
+  render: renderDemo(demos.groupDisabled),
+};
+
 export const Demo_anchor = {
   name: '⭐ Demo: anchor',
   render: renderDemo(demos.anchor),

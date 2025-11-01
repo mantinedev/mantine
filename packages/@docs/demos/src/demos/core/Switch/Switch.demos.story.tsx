@@ -3,6 +3,11 @@ import * as demos from './index';
 
 export default { title: 'Switch' };
 
+export const Demo_states = {
+  name: '⭐ Demo: states',
+  render: renderDemo(demos.states),
+};
+
 export const Demo_configurator = {
   name: '⭐ Demo: configurator',
   render: renderDemo(demos.configurator),
@@ -26,6 +31,11 @@ export const Demo_iconLabels = {
 export const Demo_groupConfigurator = {
   name: '⭐ Demo: groupConfigurator',
   render: renderDemo(demos.groupConfigurator),
+};
+
+export const Demo_groupDisabled = {
+  name: '⭐ Demo: group disabled',
+  render: renderDemo(demos.groupDisabled),
 };
 
 export const Demo_stylesApi = {

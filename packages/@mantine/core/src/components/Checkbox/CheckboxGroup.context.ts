@@ -5,6 +5,7 @@ interface CheckboxGroupContextValue {
   value: string[];
   onChange: (event: React.ChangeEvent<HTMLInputElement> | string) => void;
   size: MantineSize | (string & {}) | undefined;
+  disabled?: boolean;
 }
 
 const CheckboxGroupContext = createContext<CheckboxGroupContextValue | null>(null);

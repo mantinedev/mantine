@@ -12,3 +12,4 @@ export { tooltip } from './Checkbox.demo.tooltip';
 export { customSize } from './Checkbox.demo.customSize';
 export { cardGroup } from './Checkbox.demo.cardGroup';
 export { indicator } from './Checkbox.demo.indicator';
+export { groupDisabled } from './CheckboxGroup.demo.disabled';

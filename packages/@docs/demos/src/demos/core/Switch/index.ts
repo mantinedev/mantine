@@ -6,3 +6,5 @@ export { groupConfigurator } from './Switch.demo.groupConfigurator';
 export { stylesApi } from './Switch.demo.stylesApi';
 export { tooltip } from './Switch.demo.tooltip';
 export { styles } from './Switch.demo.styles';
+export { states } from './Switch.demo.states';
+export { groupDisabled } from './SwitchGroup.demo.disabled';
