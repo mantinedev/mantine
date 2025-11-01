@@ -38,9 +38,6 @@ export interface ModalProps extends ModalRootProps {
 
   /** Props passed down to the close button */
   closeButtonProps?: ModalBaseCloseButtonProps;
-
-  /** Id of the modal in the `Modal.Stack` */
-  stackId?: string;
 }
 
 export type ModalFactory = Factory<{
@@ -87,6 +84,7 @@ export const Modal = factory<ModalFactory>((_props, ref) => {
     stackId,
     ...others
   } = useProps('Modal', defaultProps, _props);
+
   const hasHeader = !!title || withCloseButton;
 
   return (

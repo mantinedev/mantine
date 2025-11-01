@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import {
   createVarsResolver,
   factory,
@@ -12,10 +11,15 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { ModalBase, ModalBaseProps, ModalBaseStylesNames } from '../ModalBase';
+import {
+  ModalBase,
+  ModalBaseProps,
+  ModalBaseStylesNames,
+  useModalBaseStackContext,
+  useModalStackProps,
+} from '../ModalBase';
 import { ScrollArea } from '../ScrollArea';
 import { ModalProvider, ScrollAreaComponent } from './Modal.context';
-import { useModalStackContext } from './ModalStack';
 import classes from './Modal.module.css';
 
 export type ModalRootStylesNames = ModalBaseStylesNames;
@@ -104,25 +108,6 @@ export const ModalRoot = factory<ModalRootFactory>((_props, ref) => {
     ...others
   } = props;
 
-  const ctx = useModalStackContext();
-
-  const stackProps =
-    ctx && stackId
-      ? {
-          closeOnEscape: ctx.currentId === stackId,
-          trapFocus: ctx.currentId === stackId,
-          zIndex: ctx.getZIndex(stackId),
-        }
-      : {};
-
-  useEffect(() => {
-    if (ctx && stackId) {
-      opened
-        ? ctx.addModal(stackId, zIndex || getDefaultZIndex('modal'))
-        : ctx.removeModal(stackId);
-    }
-  }, [opened, stackId, zIndex]);
-
   const getStyles = useStyles<ModalRootFactory>({
     name: __staticSelector,
     classes,
@@ -137,6 +122,9 @@ export const ModalRoot = factory<ModalRootFactory>((_props, ref) => {
     varsResolver,
   });
 
+  const modalStackCtx = useModalBaseStackContext();
+  const stackProps = useModalStackProps({ stackCtx: modalStackCtx, opened, stackId, zIndex });
+
   return (
     <ModalProvider value={{ yOffset, scrollAreaComponent, getStyles, fullScreen, stackId, opened }}>
       <ModalBase
@@ -147,7 +135,7 @@ export const ModalRoot = factory<ModalRootFactory>((_props, ref) => {
         data-centered={centered || undefined}
         data-offset-scrollbars={scrollAreaComponent === ScrollArea.Autosize || undefined}
         unstyled={unstyled}
-        zIndex={ctx && stackId ? ctx.getZIndex(stackId) : zIndex}
+        zIndex={modalStackCtx && stackId ? modalStackCtx.getZIndex(stackId) : zIndex}
         {...others}
         {...stackProps}
       />
