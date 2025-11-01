@@ -7,6 +7,8 @@ export interface DrawerContextValue {
   scrollAreaComponent: ScrollAreaComponent | undefined;
   getStyles: GetStylesApi<DrawerRootFactory>;
   radius: MantineRadius | undefined;
+  stackId?: string;
+  opened: boolean;
 }
 
 export const [DrawerProvider, useDrawerContext] = createSafeContext<DrawerContextValue>(

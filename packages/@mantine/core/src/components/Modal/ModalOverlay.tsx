@@ -1,8 +1,7 @@
-import { use } from 'react';
 import { CompoundStylesApiProps, factory, Factory, useProps } from '../../core';
 import { ModalBaseOverlay, ModalBaseOverlayProps } from '../ModalBase';
+import { useModalBaseStackContext } from '../ModalBase/ModalBaseStack';
 import { useModalContext } from './Modal.context';
-import { ModalStackContext } from './ModalStack';
 import classes from './Modal.module.css';
 
 export type ModalOverlayStylesNames = 'overlay';
@@ -25,7 +24,7 @@ export const ModalOverlay = factory<ModalOverlayFactory>((_props) => {
   const { classNames, className, style, styles, vars, withOverlay, ...others } = props;
 
   const ctx = useModalContext();
-  const modalStackCtx = use(ModalStackContext);
+  const modalStackCtx = useModalBaseStackContext();
 
   const overlayVisible =
     withOverlay === false

@@ -1,14 +1,18 @@
 import { CompoundStylesApiProps, factory, Factory, useProps } from '../../core';
-import { ModalBaseContent, ModalBaseContentProps, NativeScrollArea } from '../ModalBase';
+import {
+  ModalBaseContent,
+  ModalBaseContentProps,
+  NativeScrollArea,
+  useModalBaseStackContext,
+} from '../ModalBase';
 import { useDrawerContext } from './Drawer.context';
 import classes from './Drawer.module.css';
 
 export type DrawerContentStylesNames = 'content' | 'inner';
 
 export interface DrawerContentProps
-  extends ModalBaseContentProps, CompoundStylesApiProps<DrawerContentFactory> {
-  __hidden?: boolean;
-}
+  extends ModalBaseContentProps,
+    CompoundStylesApiProps<DrawerContentFactory> {}
 
 export type DrawerContentFactory = Factory<{
   props: DrawerContentProps;
@@ -19,11 +23,14 @@ export type DrawerContentFactory = Factory<{
 
 export const DrawerContent = factory<DrawerContentFactory>((_props) => {
   const props = useProps('DrawerContent', null, _props);
-  const { classNames, className, style, styles, vars, children, radius, __hidden, ...others } =
-    props;
+  const { classNames, className, style, styles, vars, children, radius, ...others } = props;
 
   const ctx = useDrawerContext();
+  const drawerStackCtx = useModalBaseStackContext();
   const Scroll: React.FC<any> = ctx.scrollAreaComponent || NativeScrollArea;
+
+  const __hidden =
+    ctx && ctx.opened && drawerStackCtx ? ctx.stackId !== drawerStackCtx.currentId : false;
 
   return (
     <ModalBaseContent

@@ -1,8 +1,11 @@
-import { use } from 'react';
 import { CompoundStylesApiProps, factory, Factory, rem, useProps } from '../../core';
-import { ModalBaseContent, ModalBaseContentProps, NativeScrollArea } from '../ModalBase';
+import {
+  ModalBaseContent,
+  ModalBaseContentProps,
+  NativeScrollArea,
+  useModalBaseStackContext,
+} from '../ModalBase';
 import { useModalContext } from './Modal.context';
-import { ModalStackContext } from './ModalStack';
 import classes from './Modal.module.css';
 
 export type ModalContentStylesNames = 'content' | 'inner';
@@ -23,7 +26,7 @@ export const ModalContent = factory<ModalContentFactory>((_props) => {
   const { classNames, className, style, styles, vars, children, ...others } = props;
 
   const ctx = useModalContext();
-  const modalStackCtx = use(ModalStackContext);
+  const modalStackCtx = useModalBaseStackContext();
   const Scroll: React.FC<any> = ctx.scrollAreaComponent || NativeScrollArea;
 
   const __hidden =
