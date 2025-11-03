@@ -5469,6 +5469,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@mantine/schedule@workspace:packages/@mantine/schedule":
+  version: 0.0.0-use.local
+  resolution: "@mantine/schedule@workspace:packages/@mantine/schedule"
+  dependencies:
+    "@mantine-tests/core": "workspace:*"
+    "@mantine/core": "workspace:*"
+    "@mantine/hooks": "workspace:*"
+  peerDependencies:
+    "@mantine/core": ">=7.0.0"
+    "@mantine/hooks": ">=7.0.0"
+    react: ^18.x || ^19.x
+    react-dom: ^18.x || ^19.x
+  languageName: unknown
+  linkType: soft
+
 "@mantine/spotlight@workspace:*, @mantine/spotlight@workspace:packages/@mantine/spotlight":
   version: 0.0.0-use.local
   resolution: "@mantine/spotlight@workspace:packages/@mantine/spotlight"
