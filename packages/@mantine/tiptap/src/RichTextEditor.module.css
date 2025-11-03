@@ -309,7 +309,6 @@
   gap: var(--mantine-spacing-sm);
   top: var(--rte-sticky-offset, 0px);
   background-color: var(--mantine-color-body);
-  z-index: 1;
   border-start-end-radius: var(--mantine-radius-default);
   border-start-start-radius: var(--mantine-radius-default);
   border-bottom: 1px solid;
