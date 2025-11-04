@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import {
   Box,
   BoxProps,
@@ -11,7 +12,7 @@ import {
 import { getMonthDays } from '@mantine/dates-utils';
 import classes from './MonthView.module.css';
 
-export type MonthViewStylesNames = 'root';
+export type MonthViewStylesNames = 'root' | 'week' | 'day';
 
 export interface MonthViewProps
   extends BoxProps,
@@ -33,8 +34,6 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
   const props = useProps('MonthView', defaultProps, _props);
   const { classNames, className, style, styles, unstyled, vars, month, ...others } = props;
 
-  const weeks = getMonthDays({ month, firstDayOfWeek: 1, consistentWeeks: false });
-
   const getStyles = useStyles<MonthViewFactory>({
     name: 'MonthView',
     classes,
@@ -47,9 +46,25 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     vars,
   });
 
+  const weeks = getMonthDays({ month, firstDayOfWeek: 1, consistentWeeks: false }).map(
+    (week, index) => {
+      const days = week.map((day) => (
+        <div {...getStyles('day')} key={day}>
+          {dayjs(day).format('D')}
+        </div>
+      ));
+
+      return (
+        <div {...getStyles('week')} key={index}>
+          {days}
+        </div>
+      );
+    }
+  );
+
   return (
     <Box {...getStyles('root')} {...others}>
-      MonthView
+      {weeks}
     </Box>
   );
 });

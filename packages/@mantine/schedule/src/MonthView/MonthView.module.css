@@ -1,0 +1,10 @@
+.week {
+  display: flex;
+}
+
+.day {
+  flex: 1;
+  padding: 4px;
+  border: 1px solid #eee;
+  text-align: center;
+}
