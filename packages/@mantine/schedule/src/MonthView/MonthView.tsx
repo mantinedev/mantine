@@ -8,6 +8,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { getMonthDays } from '@mantine/dates-utils';
 import classes from './MonthView.module.css';
 
 export type MonthViewStylesNames = 'root';
@@ -15,7 +16,10 @@ export type MonthViewStylesNames = 'root';
 export interface MonthViewProps
   extends BoxProps,
     StylesApiProps<MonthViewFactory>,
-    ElementProps<'div'> {}
+    ElementProps<'div'> {
+  /** Month to display, date string in `YYYY-MM-DD` format */
+  month: string;
+}
 
 export type MonthViewFactory = Factory<{
   props: MonthViewProps;
@@ -27,7 +31,9 @@ const defaultProps = {} satisfies Partial<MonthViewProps>;
 
 export const MonthView = factory<MonthViewFactory>((_props) => {
   const props = useProps('MonthView', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, ...others } = props;
+  const { classNames, className, style, styles, unstyled, vars, month, ...others } = props;
+
+  const weeks = getMonthDays({ month, firstDayOfWeek: 1, consistentWeeks: false });
 
   const getStyles = useStyles<MonthViewFactory>({
     name: 'MonthView',
