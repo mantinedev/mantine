@@ -1,3 +1,5 @@
+import cx from 'clsx';
+import { RemoveScroll } from 'react-remove-scroll';
 import {
   Box,
   BoxProps,
@@ -50,7 +52,12 @@ export const AppShellAside = factory<AppShellAsideFactory>((_props, ref) => {
       component="aside"
       ref={ref}
       mod={[{ 'with-border': withBorder ?? ctx.withBorder }, mod]}
-      {...ctx.getStyles('aside', { className, classNames, styles, style })}
+      {...ctx.getStyles('aside', {
+        className: cx({ [RemoveScroll.classNames.zeroRight]: ctx.offsetScrollbars }, className),
+        classNames,
+        styles,
+        style,
+      })}
       {...others}
       __vars={{ '--app-shell-aside-z-index': `calc(${zIndex ?? ctx.zIndex} + 1)` }}
     />
