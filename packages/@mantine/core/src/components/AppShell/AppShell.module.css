@@ -90,7 +90,7 @@
 .footer {
   position: fixed;
   inset-inline: 0;
-  transition-property: transform;
+  transition-property: transform, inset-inline-start, inset-inline-end;
   background-color: var(--mantine-color-body);
 
   :where([data-layout='alt']) & {
