@@ -12,7 +12,7 @@ export type MenuSubFactory = Factory<{
   props: MenuSubProps;
 }>;
 
-interface MenuSubProps extends __PopoverProps {
+export interface MenuSubProps extends __PopoverProps {
   children: React.ReactNode;
 
   /** Called with current state when dropdown opens or closes */
