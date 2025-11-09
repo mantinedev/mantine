@@ -7,9 +7,14 @@ import {
   Factory,
   getSize,
   MantineSize,
+  MantineResponsiveSize,
   StylesApiProps,
   useProps,
   useStyles,
+  useMantineTheme,
+  InlineStyles,
+  isResponsiveSize,
+  createResponsiveSizeVariables,
 } from '../../core';
 import classes from './Kbd.module.css';
 
@@ -20,7 +25,7 @@ export type KbdCssVariables = {
 
 export interface KbdProps extends BoxProps, StylesApiProps<KbdFactory>, ElementProps<'kbd'> {
   /** Controls `font-size` and `padding` @default `'sm'` */
-  size?: MantineSize | number | (string & {});
+  size?: MantineResponsiveSize | number | (string & {});
 }
 
 export type KbdFactory = Factory<{
@@ -36,7 +41,14 @@ const varsResolver = createVarsResolver<KbdFactory>((_, { size }) => ({
 
 export const Kbd = factory<KbdFactory>((_props, ref) => {
   const props = useProps('Kbd', null, _props);
-  const { classNames, className, style, styles, unstyled, vars, attributes, ...others } = props;
+  const { classNames, className, style, styles, unstyled, vars, attributes, size, ...others } = props;
+
+  const theme = useMantineTheme();
+
+  // Handle responsive size properties
+  const sizeVars = isResponsiveSize(size) 
+    ? createResponsiveSizeVariables({ size, property: '--kbd-fz', getter: (s) => getSize(s, 'kbd-fz'), theme })
+    : { base: {}, media: [] };
 
   const getStyles = useStyles<KbdFactory>({
     name: 'Kbd',
@@ -48,11 +60,24 @@ export const Kbd = factory<KbdFactory>((_props, ref) => {
     styles,
     unstyled,
     attributes,
-    vars,
+    vars: {
+      ...vars,
+      ...sizeVars.base,
+    },
     varsResolver,
   });
 
-  return <Box component="kbd" ref={ref} {...getStyles('root')} {...others} />;
+  return (
+    <>
+      {sizeVars.media.length > 0 && (
+        <InlineStyles
+          selector={`.${getStyles('root').className.split(' ')[0]}`}
+          media={sizeVars.media}
+        />
+      )}
+      <Box component="kbd" ref={ref} {...getStyles('root')} {...others} />
+    </>
+  );
 });
 
 Kbd.classes = classes;
