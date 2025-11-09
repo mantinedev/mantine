@@ -5834,6 +5834,10 @@ function Demo() {
 ```
 
 
+## Checkbox.Group disabled
+
+
+
 ## Controlled Checkbox.Group
 
 ```tsx
@@ -21185,6 +21189,10 @@ function Demo() {
 ```
 
 
+## Radio.Group disabled state
+
+
+
 ## Controlled Radio.Group
 
 ```tsx
@@ -26314,6 +26322,26 @@ function Demo() {
 }
 ```
 
+## States
+
+#### Example: states
+
+```tsx
+import { Switch, Stack } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Stack>
+      <Switch value="value" label="Default switch" />
+      <Switch checked value="value" label="Checked switch" />
+      <Switch disabled value="value" label="Disabled switch" />
+      <Switch checked disabled value="value" label="Disabled checked switch" />
+    </Stack>
+  );
+}
+```
+
+
 ## Inner Labels
 
 #### Example: labels
@@ -26457,6 +26485,10 @@ function Demo() {
   );
 }
 ```
+
+
+## Switch.Group disabled
+
 
 
 ## Controlled Switch.Group
