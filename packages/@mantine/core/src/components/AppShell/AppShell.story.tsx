@@ -1,6 +1,7 @@
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
 import { Group } from '../Group';
+import { Modal } from '../Modal';
 import { AppShell } from './AppShell';
 
 export default { title: 'AppShell' };
@@ -17,6 +18,7 @@ export function Usage() {
   const [asideMobileOpened, { toggle: toggleAsideMobile }] = useDisclosure(false);
   const [headerOpened, { toggle: toggleHeader }] = useDisclosure(true);
   const [footerOpened, { toggle: toggleFooter }] = useDisclosure(true);
+  const [modalOpened, { toggle: toggleModal }] = useDisclosure(false);
 
   return (
     <AppShell
@@ -46,7 +48,9 @@ export function Usage() {
         <AppShell.Section grow>Grow section</AppShell.Section>
         <AppShell.Section>Last section</AppShell.Section>
       </AppShell.Navbar>
-      <AppShell.Header>Header</AppShell.Header>
+      <AppShell.Header>
+        <Group justify="center">Header</Group>
+      </AppShell.Header>
       <AppShell.Main>
         <Group>
           <Button onClick={toggleHeader}>Toggle header</Button>
@@ -56,8 +60,14 @@ export function Usage() {
 
           <Button onClick={toggleAside}>Toggle aside</Button>
           <Button onClick={toggleAsideMobile}>Toggle aside mobile</Button>
+
+          <Button onClick={toggleModal}>Open modal</Button>
         </Group>
         <p>{longContent}</p>
+
+        <Modal opened={modalOpened} onClose={toggleModal} title="Modal inside AppShell">
+          <p>Dialog Content</p>
+        </Modal>
       </AppShell.Main>
 
       <AppShell.Aside>Aside</AppShell.Aside>
@@ -71,6 +81,8 @@ export function AltLayout() {
   const [opened, { toggle }] = useDisclosure(true);
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure(false);
   const [headerOpened, { toggle: toggleHeader }] = useDisclosure(true);
+  const [modalOpened, { toggle: toggleModal }] = useDisclosure(false);
+
   return (
     <AppShell
       padding="md"
@@ -91,17 +103,24 @@ export function AltLayout() {
     >
       <AppShell.Aside>Aside</AppShell.Aside>
       <AppShell.Header>
-        <Group justify="flex-end">
+        <Group justify="space-between">
+          <Button>Left</Button>
+          <Button>Center</Button>
           <Button>Button hidden by the aside</Button>
         </Group>
       </AppShell.Header>
-      <AppShell.Main>
+      <AppShell.Main style={{ height: '200vh' }}>
         <Group>
           <Button onClick={toggleHeader}>Toggle header</Button>
           <Button onClick={toggle}>Toggle navbar</Button>
           <Button onClick={toggleMobile}>Toggle navbar mobile</Button>
+          <Button onClick={toggleModal}>Open modal</Button>
         </Group>
         <p>Other content</p>
+
+        <Modal opened={modalOpened} onClose={toggleModal} title="Modal inside AppShell">
+          <p>Dialog Content</p>
+        </Modal>
       </AppShell.Main>
 
       <AppShell.Footer>Footer</AppShell.Footer>
