@@ -298,6 +298,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props, ref) => {
             swatchesPerRow={swatchesPerRow}
             focusable={focusable}
             setValue={setValue}
+            value={_value}
             onChangeEnd={(color) => {
               const convertedColor = convertHsvaTo(format, parseColor(color));
               onColorSwatchClick?.(convertedColor);

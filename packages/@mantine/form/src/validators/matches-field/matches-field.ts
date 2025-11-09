@@ -1,8 +1,8 @@
-export function matchesField(field: string, error?: React.ReactNode) {
+export function matchesField<T>(field: keyof T, error?: React.ReactNode) {
   const _error = error || true;
 
-  return (value: unknown, values: Record<string, unknown>): React.ReactNode => {
-    if (!values || !(field in values)) {
+  return (value: unknown, values: T): React.ReactNode => {
+    if (!values || !(field in (values as any))) {
       return _error;
     }
 

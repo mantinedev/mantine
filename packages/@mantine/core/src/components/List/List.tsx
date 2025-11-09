@@ -113,8 +113,8 @@ export const List = factory<ListFactory>((_props, ref) => {
     <ListProvider value={{ center, icon, getStyles }}>
       <Box<any>
         {...getStyles('root', { style: { listStyleType } })}
-        component={type === 'unordered' ? ('ul' as const) : ('ol' as const)}
-        mod={[{ 'with-padding': withPadding }, mod]}
+        component={type === 'unordered' ? 'ul' : 'ol'}
+        mod={[{ 'with-padding': withPadding, type: listStyleType }, mod]}
         ref={ref}
         {...others}
       >

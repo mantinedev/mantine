@@ -3,7 +3,7 @@ import { createOptionalContext } from '@mantine/core';
 import { plainTextAdapter } from './adapters/plain-text-adapter';
 
 interface HighlighterInput {
-  colorScheme: 'light' | 'dark';
+  colorScheme: 'light' | 'dark' | (string & {});
   code: string;
   language?: string;
 }

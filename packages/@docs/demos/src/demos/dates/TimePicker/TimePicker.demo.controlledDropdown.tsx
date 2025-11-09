@@ -16,6 +16,7 @@ function Demo() {
 
   return (
     <TimePicker
+      withDropdown
       rightSection={
         <ActionIcon onClick={() => setDropdownOpened(true)} variant="default">
           <IconClock size={18} stroke={1.5} />
@@ -43,6 +44,7 @@ function Demo() {
 
   return (
     <TimePicker
+      withDropdown
       rightSection={
         <ActionIcon onClick={() => setDropdownOpened(true)} variant="default">
           <IconClock size={18} stroke={1.5} />

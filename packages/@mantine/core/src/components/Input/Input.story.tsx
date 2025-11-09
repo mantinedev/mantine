@@ -6,7 +6,7 @@ export function WithinDisabledFieldset() {
   return (
     <fieldset disabled style={{ padding: 40 }}>
       <legend>Disabled fieldset</legend>
-      <Input size="lg" placeholder="Disabled input within fieldset" />
+      <Input size="lg" placeholder="Disabled input within fieldset" rightSection={null} />
       <Input size="lg" placeholder="Disabled input" disabled mt="md" />
     </fieldset>
   );

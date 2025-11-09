@@ -83,6 +83,10 @@
   margin-inline: -2px;
   display: flex;
   flex-wrap: wrap;
+
+  &:only-child {
+    margin-top: 0;
+  }
 }
 
 .saturation {

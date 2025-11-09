@@ -1,22 +1,42 @@
 function formatDate(date: Date): string {
-  return date.toISOString().split('T')[0];
+  const y = date.getUTCFullYear();
+  const m = String(date.getUTCMonth() + 1).padStart(2, '0');
+  const d = String(date.getUTCDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 }
 
 function addDays(date: Date, days: number): Date {
   return new Date(date.getTime() + days * 86400000);
 }
 
-function startOfWeek(date: Date, firstDayOfWeek: number): Date {
+function toUtcMidnight(input: Date | string): Date {
+  if (typeof input === 'string') {
+    const m = input.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (m) {
+      const year = Number(m[1]);
+      const month = Number(m[2]) - 1; // 0-indexed
+      const day = Number(m[3]);
+      return new Date(Date.UTC(year, month, day));
+    }
+
+    const d = new Date(input);
+    return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
+  }
+
+  return new Date(Date.UTC(input.getFullYear(), input.getMonth(), input.getDate()));
+}
+
+function startOfWeekUtc(date: Date, firstDayOfWeek: number): Date {
   let value = new Date(date);
-  while (value.getDay() !== firstDayOfWeek) {
+  while (value.getUTCDay() !== firstDayOfWeek) {
     value = addDays(value, -1);
   }
 
   return value;
 }
 
-function endOfWeek(date: Date, firstDayOfWeek: number): Date {
-  const day = date.getDay();
+function endOfWeekUtc(date: Date, firstDayOfWeek: number): Date {
+  const day = date.getUTCDay();
   const diff = (day < firstDayOfWeek ? 7 : 0) + day - firstDayOfWeek;
   return addDays(date, 6 - diff);
 }
@@ -34,12 +54,15 @@ export function getDatesRange({
   withOutsideDates = true,
   firstDayOfWeek = 1,
 }: HeatmapOptions = {}): (string | null)[][] {
-  const start = startDate
-    ? new Date(startDate)
-    : new Date(new Date().getFullYear() - 1, new Date().getMonth(), new Date().getDate());
-  const end = endDate ? new Date(endDate) : new Date();
-  const startWeek = startOfWeek(start, firstDayOfWeek);
-  const endWeek = endOfWeek(end, firstDayOfWeek);
+  const now = new Date();
+  const defaultStartLocal = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+  const defaultEndLocal = now;
+
+  const start = startDate ? toUtcMidnight(startDate) : toUtcMidnight(defaultStartLocal);
+  const end = endDate ? toUtcMidnight(endDate) : toUtcMidnight(defaultEndLocal);
+
+  const startWeek = startOfWeekUtc(start, firstDayOfWeek);
+  const endWeek = endOfWeekUtc(end, firstDayOfWeek);
   const dates: (string | null)[][] = [];
 
   let current = startWeek;

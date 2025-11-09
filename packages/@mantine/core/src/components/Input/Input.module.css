@@ -73,6 +73,28 @@
 
   &[data-with-right-section] {
     --input-padding-inline-end: var(--input-right-section-size);
+
+    &:has([data-combined-clear-section]) {
+      .wrapper[data-size='xs'] & {
+        --input-padding-inline-end: 41px;
+      }
+
+      .wrapper[data-size='sm'] & {
+        --input-padding-inline-end: 50px;
+      }
+
+      .wrapper[data-size='md'] & {
+        --input-padding-inline-end: 60px;
+      }
+
+      .wrapper[data-size='lg'] & {
+        --input-padding-inline-end: 72px;
+      }
+
+      .wrapper[data-size='xl'] & {
+        --input-padding-inline-end: 89px;
+      }
+    }
   }
 
   @mixin light {
@@ -148,7 +170,7 @@
   height: var(--input-size);
   min-height: var(--input-height);
   line-height: var(--input-line-height);
-  font-size: var(--input-fz, var(--input-fz, var(--mantine-font-size-sm)));
+  font-size: var(--_input-fz, var(--input-fz, var(--mantine-font-size-md)));
   border-radius: var(--input-radius);
   padding-inline-start: var(--input-padding-inline-start);
   padding-inline-end: var(--input-padding-inline-end);
@@ -165,7 +187,7 @@
   /* Used as data attribute in JsonInput component, does not have associated prop on the Input component */
   &[data-monospace] {
     --input-font-family: var(--mantine-font-family-monospace);
-    --input-fz: calc(var(--input-fz, var(--mantine-font-size-sm)) - rem(2px));
+    --_input-fz: calc(var(--input-fz) - rem(2px));
   }
 
   &:focus,
@@ -237,6 +259,28 @@
     --section-end: var(--right-section-end);
     --section-size: var(--input-right-section-size);
     --section-border-radius: var(--right-section-border-radius);
+
+    &:has([data-combined-clear-section]) {
+      .wrapper[data-size='xs'] & {
+        --section-size: 41px;
+      }
+
+      .wrapper[data-size='sm'] & {
+        --section-size: 50px;
+      }
+
+      .wrapper[data-size='md'] & {
+        --section-size: 60px;
+      }
+
+      .wrapper[data-size='lg'] & {
+        --section-size: 72px;
+      }
+
+      .wrapper[data-size='xl'] & {
+        --section-size: 89px;
+      }
+    }
   }
 
   &[data-position='left'] {
@@ -264,7 +308,7 @@
 .label {
   display: inline-block;
   font-weight: 500;
-  word-break: break-word;
+  overflow-wrap: break-word;
   cursor: default;
   -webkit-tap-highlight-color: transparent;
   font-size: var(--input-label-size, var(--mantine-font-size-sm));

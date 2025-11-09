@@ -8,9 +8,7 @@ export function WithTooltip() {
   return (
     <div style={{ padding: 40 }}>
       <Tooltip label="Tooltip" refProp="rootRef" position="bottom-start">
-        <Chip defaultChecked color="red">
-          With tooltip
-        </Chip>
+        <Chip icon={null}>With tooltip</Chip>
       </Tooltip>
     </div>
   );
@@ -42,14 +40,14 @@ export function AutoContrast() {
 
 export function Usage() {
   return (
-    <div style={{ padding: 40, display: 'flex', gap: 40 }}>
-      <Chip type="checkbox" variant="light" defaultChecked>
+    <div style={{ padding: 40, display: 'flex', gap: 4 }}>
+      <Chip type="checkbox" variant="light" defaultChecked size="xs">
         Light
       </Chip>
-      <Chip type="checkbox" defaultChecked>
+      <Chip type="checkbox" defaultChecked size="xs">
         Filled
       </Chip>
-      <Chip type="checkbox" variant="outline" defaultChecked>
+      <Chip type="checkbox" variant="outline" defaultChecked size="xs">
         Outline
       </Chip>
     </div>

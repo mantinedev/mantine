@@ -12,12 +12,14 @@
   --mantine-color-white: #fff;
   --mantine-color-black: #000;
   --mantine-line-height: 1.55;
-  --mantine-font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial,
-    sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  --mantine-font-family-monospace: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    Liberation Mono, Courier New, monospace;
-  --mantine-font-family-headings: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica,
-    Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  --mantine-font-family:
+    -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji;
+  --mantine-font-family-monospace:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+  --mantine-font-family-headings:
+    -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji;
   --mantine-heading-font-weight: 700;
   --mantine-heading-text-wrap: wrap;
   --mantine-radius-default: calc(0.25rem * var(--mantine-scale));
@@ -46,30 +48,35 @@
   --mantine-line-height-md: 1.55;
   --mantine-line-height-lg: 1.6;
   --mantine-line-height-xl: 1.65;
-  --mantine-shadow-xs: 0 calc(0.0625rem * var(--mantine-scale))
-      calc(0.1875rem * var(--mantine-scale)) rgba(0, 0, 0, 0.05),
+  --mantine-shadow-xs:
+    0 calc(0.0625rem * var(--mantine-scale)) calc(0.1875rem * var(--mantine-scale))
+      rgba(0, 0, 0, 0.05),
     0 calc(0.0625rem * var(--mantine-scale)) calc(0.125rem * var(--mantine-scale))
       rgba(0, 0, 0, 0.1);
-  --mantine-shadow-sm: 0 calc(0.0625rem * var(--mantine-scale))
-      calc(0.1875rem * var(--mantine-scale)) rgba(0, 0, 0, 0.05),
+  --mantine-shadow-sm:
+    0 calc(0.0625rem * var(--mantine-scale)) calc(0.1875rem * var(--mantine-scale))
+      rgba(0, 0, 0, 0.05),
     rgba(0, 0, 0, 0.05) 0 calc(0.625rem * var(--mantine-scale))
       calc(0.9375rem * var(--mantine-scale)) calc(-0.3125rem * var(--mantine-scale)),
     rgba(0, 0, 0, 0.04) 0 calc(0.4375rem * var(--mantine-scale))
       calc(0.4375rem * var(--mantine-scale)) calc(-0.3125rem * var(--mantine-scale));
-  --mantine-shadow-md: 0 calc(0.0625rem * var(--mantine-scale))
-      calc(0.1875rem * var(--mantine-scale)) rgba(0, 0, 0, 0.05),
+  --mantine-shadow-md:
+    0 calc(0.0625rem * var(--mantine-scale)) calc(0.1875rem * var(--mantine-scale))
+      rgba(0, 0, 0, 0.05),
     rgba(0, 0, 0, 0.05) 0 calc(1.25rem * var(--mantine-scale))
       calc(1.5625rem * var(--mantine-scale)) calc(-0.3125rem * var(--mantine-scale)),
     rgba(0, 0, 0, 0.04) 0 calc(0.625rem * var(--mantine-scale))
       calc(0.625rem * var(--mantine-scale)) calc(-0.3125rem * var(--mantine-scale));
-  --mantine-shadow-lg: 0 calc(0.0625rem * var(--mantine-scale))
-      calc(0.1875rem * var(--mantine-scale)) rgba(0, 0, 0, 0.05),
+  --mantine-shadow-lg:
+    0 calc(0.0625rem * var(--mantine-scale)) calc(0.1875rem * var(--mantine-scale))
+      rgba(0, 0, 0, 0.05),
     rgba(0, 0, 0, 0.05) 0 calc(1.75rem * var(--mantine-scale))
       calc(1.4375rem * var(--mantine-scale)) calc(-0.4375rem * var(--mantine-scale)),
     rgba(0, 0, 0, 0.04) 0 calc(0.75rem * var(--mantine-scale)) calc(0.75rem * var(--mantine-scale))
       calc(-0.4375rem * var(--mantine-scale));
-  --mantine-shadow-xl: 0 calc(0.0625rem * var(--mantine-scale))
-      calc(0.1875rem * var(--mantine-scale)) rgba(0, 0, 0, 0.05),
+  --mantine-shadow-xl:
+    0 calc(0.0625rem * var(--mantine-scale)) calc(0.1875rem * var(--mantine-scale))
+      rgba(0, 0, 0, 0.05),
     rgba(0, 0, 0, 0.05) 0 calc(2.25rem * var(--mantine-scale)) calc(1.75rem * var(--mantine-scale))
       calc(-0.4375rem * var(--mantine-scale)),
     rgba(0, 0, 0, 0.04) 0 calc(1.0625rem * var(--mantine-scale))

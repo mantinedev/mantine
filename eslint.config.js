@@ -1,3 +1,4 @@
+const path = require('path');
 const mantine = require('eslint-config-mantine');
 const jest = require('eslint-plugin-jest');
 const tseslint = require('typescript-eslint');
@@ -7,7 +8,7 @@ module.exports = tseslint.config(
   {
     languageOptions: {
       parserOptions: {
-        project: './tsconfig.eslint.json',
+        project: path.resolve(__dirname, 'tsconfig.eslint.json'),
       },
     },
   },

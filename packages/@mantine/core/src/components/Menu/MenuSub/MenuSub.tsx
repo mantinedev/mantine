@@ -12,8 +12,11 @@ export type MenuSubFactory = Factory<{
   props: MenuSubProps;
 }>;
 
-interface MenuSubProps extends __PopoverProps {
+export interface MenuSubProps extends __PopoverProps {
   children: React.ReactNode;
+
+  /** Called with current state when dropdown opens or closes */
+  onChange?: (opened: boolean) => void;
 
   /** Close delay in ms */
   closeDelay?: number;
@@ -77,7 +80,7 @@ export function MenuSub(_props: MenuSubProps) {
         parentContext: ctx,
       }}
     >
-      <Popover opened={opened} {...others} withinPortal={false} withArrow={false} id={id}>
+      <Popover opened={opened} withinPortal={false} withArrow={false} id={id} {...others}>
         {children}
       </Popover>
     </SubMenuProvider>

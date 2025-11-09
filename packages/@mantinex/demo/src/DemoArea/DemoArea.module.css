@@ -19,7 +19,8 @@
 
   &[data-striped] {
     border-top-left-radius: calc(var(--mantine-radius-md) - 1px);
-    background: repeating-linear-gradient(
+    background:
+      repeating-linear-gradient(
         45deg,
         transparent 0,
         transparent 10px,

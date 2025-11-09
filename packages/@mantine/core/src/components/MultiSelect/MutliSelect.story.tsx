@@ -31,6 +31,29 @@ export function Usage() {
   );
 }
 
+export function RetainSelectedValues() {
+  const [data, setData] = useState([
+    { value: '1', label: 'React' },
+    { value: '2', label: 'Angular' },
+    { value: '3', label: 'Svelte' },
+  ]);
+
+  const updateData = () => {
+    setData([
+      { value: '4', label: 'Vue' },
+      { value: '5', label: 'Ember' },
+      { value: '6', label: 'Backbone' },
+    ]);
+  };
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={updateData}>Update data</Button>
+      <MultiSelect data={data} label="Retain data" defaultValue={['1', '2']} mt="md" />
+    </div>
+  );
+}
+
 export function Disabled() {
   return (
     <div style={{ padding: 40 }}>

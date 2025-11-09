@@ -44,7 +44,7 @@
     "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
   }
 }

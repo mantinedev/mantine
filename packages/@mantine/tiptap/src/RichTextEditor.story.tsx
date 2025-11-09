@@ -1,17 +1,16 @@
-// import { IconColorPicker } from '@tabler/icons-react';
 import { useState } from 'react';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { Color } from '@tiptap/extension-color';
 import Highlight from '@tiptap/extension-highlight';
 import Placeholder from '@tiptap/extension-placeholder';
 import SubScript from '@tiptap/extension-subscript';
-import Superscript from '@tiptap/extension-superscript';
-import TaskItem from '@tiptap/extension-task-item';
+import { Superscript } from '@tiptap/extension-superscript';
+import { TaskItem } from '@tiptap/extension-task-item';
 import TipTapTaskList from '@tiptap/extension-task-list';
-import TextAlign from '@tiptap/extension-text-align';
-import TextStyle from '@tiptap/extension-text-style';
-import Underline from '@tiptap/extension-underline';
-import { BubbleMenu, FloatingMenu, useEditor } from '@tiptap/react';
+import { TextAlign } from '@tiptap/extension-text-align';
+import { TextStyle } from '@tiptap/extension-text-style';
+import { useEditor } from '@tiptap/react';
+import { BubbleMenu, FloatingMenu } from '@tiptap/react/menus';
 import StarterKit from '@tiptap/starter-kit';
 import css from 'highlight.js/lib/languages/css';
 import js from 'highlight.js/lib/languages/javascript';
@@ -49,8 +48,6 @@ function BasicEditor({
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Underline,
-      Link,
       Superscript,
       SubScript,
       TextStyle,
@@ -61,6 +58,7 @@ function BasicEditor({
       }),
     ],
     content: content || htmlContent,
+    shouldRerenderOnTransaction: true,
   });
 
   return (

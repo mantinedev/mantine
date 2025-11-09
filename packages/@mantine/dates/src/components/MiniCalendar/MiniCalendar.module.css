@@ -1,0 +1,119 @@
+.root {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  font-size: var(--mini-calendar-font-size);
+}
+
+.days {
+  display: flex;
+  font-size: inherit;
+}
+
+.day {
+  display: flex;
+  min-width: 3em;
+  gap: 0.5em;
+  font-size: inherit;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+  padding: 0.75em;
+  border-radius: var(--mantine-radius-default);
+
+  &:where([data-selected]) {
+    color: var(--mantine-primary-color-contrast);
+    background-color: var(--mantine-primary-color-filled);
+
+    @mixin hover {
+      &:where(:not([data-disabled], [data-static])) {
+        background-color: var(--mantine-primary-color-filled-hover);
+      }
+    }
+  }
+
+  &:where([data-disabled]) {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  @mixin where-light {
+    @mixin hover {
+      &:where(:not([data-disabled], [data-selected])) {
+        background-color: var(--mantine-color-gray-1);
+      }
+    }
+  }
+
+  @mixin where-dark {
+    @mixin hover {
+      &:where(:not([data-disabled], [data-selected])) {
+        background-color: var(--mantine-color-dark-5);
+      }
+    }
+  }
+}
+
+.dayMonth {
+  font-size: 0.75em;
+  font-weight: 500;
+  opacity: 0.65;
+}
+
+.dayNumber {
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+.control {
+  align-self: stretch;
+  font-size: inherit;
+  width: 2em;
+  border-radius: var(--mantine-radius-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mantine-color-bright);
+
+  &:where([data-disabled]) {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  & [data-chevron] {
+    font-size: inherit;
+    width: 60%;
+  }
+
+  &[data-direction='previous'] [data-chevron] {
+    transform: rotate(90deg);
+
+    @mixin rtl {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &[data-direction='next'] [data-chevron] {
+    transform: rotate(-90deg);
+
+    @mixin rtl {
+      transform: rotate(90deg);
+    }
+  }
+
+  @mixin where-light {
+    @mixin hover {
+      &:where(:not([data-disabled])) {
+        background-color: var(--mantine-color-gray-1);
+      }
+    }
+  }
+
+  @mixin where-dark {
+    @mixin hover {
+      &:where(:not([data-disabled])) {
+        background-color: var(--mantine-color-dark-5);
+      }
+    }
+  }
+}

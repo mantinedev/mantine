@@ -1,5 +1,5 @@
-export { ModalsProvider } from './ModalsProvider';
-export { useModals } from './use-modals/use-modals';
+export { ModalsProvider } from './ModalsProvider.js';
+export { useModals } from './use-modals/use-modals.js';
 export {
   openModal,
   closeModal,
@@ -17,4 +17,5 @@ export type {
   MantineModalsOverride,
   MantineModals,
   MantineModal,
-} from './context.js';
+} from './context';
+export type { ConfirmModalProps } from './ConfirmModal';

@@ -137,8 +137,8 @@ export const Alert = factory<AlertFactory>((_props, ref) => {
       ref={ref}
       {...others}
       role="alert"
-      aria-describedby={bodyId}
-      aria-labelledby={titleId}
+      aria-describedby={children ? bodyId : undefined}
+      aria-labelledby={title ? titleId : undefined}
     >
       <div {...getStyles('wrapper')}>
         {icon && <div {...getStyles('icon')}>{icon}</div>}

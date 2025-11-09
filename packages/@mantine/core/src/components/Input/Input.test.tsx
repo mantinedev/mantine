@@ -173,9 +173,11 @@ describe('@mantine/core/Input', () => {
     expect(screen.queryByText('clear')).not.toBeInTheDocument();
   });
 
-  it('does not display __clearSection if rightSection is set', () => {
-    render(<Input __clearable __clearSection="clear" rightSection="right" />);
-    expect(screen.queryByText('clear')).not.toBeInTheDocument();
+  it('displays __clearSection next to rightSection', () => {
+    render(
+      <Input __clearable __clearSection={<span>clear</span>} rightSection={<span>right</span>} />
+    );
+    expect(screen.getByText('clear')).toBeInTheDocument();
     expect(screen.getByText('right')).toBeInTheDocument();
   });
 
@@ -184,28 +186,32 @@ describe('@mantine/core/Input', () => {
       <Input
         __clearable={false}
         __clearSection="clear"
-        __defaultRightSection="default-right-section"
+        __defaultRightSection={<span>default-right-section</span>}
       />
     );
     expect(screen.getByText('default-right-section')).toBeInTheDocument();
     expect(screen.queryByText('clear')).not.toBeInTheDocument();
 
     rerender(
-      <Input __clearable __clearSection="clear" __defaultRightSection="default-right-section" />
+      <Input
+        __clearable
+        __clearSection="clear"
+        __defaultRightSection={<span>default-right-section</span>}
+      />
     );
-    expect(screen.queryByText('default-right-section')).not.toBeInTheDocument();
+    expect(screen.queryByText('default-right-section')).toBeInTheDocument();
     expect(screen.getByText('clear')).toBeInTheDocument();
 
     rerender(
       <Input
-        rightSection="right-section"
+        rightSection={<span>right-section</span>}
         __clearable
         __clearSection="clear"
-        __defaultRightSection="default-right-section"
+        __defaultRightSection={<span>default-right-section</span>}
       />
     );
     expect(screen.queryByText('default-right-section')).not.toBeInTheDocument();
-    expect(screen.queryByText('clear')).not.toBeInTheDocument();
+    expect(screen.queryByText('clear')).toBeInTheDocument();
     expect(screen.getByText('right-section')).toBeInTheDocument();
   });
 

@@ -1,3 +1,30 @@
+<div align="center">
+	<a href="https://go.warp.dev/mantine" target="_blank">
+		<sup>Special thanks to:</sup>
+		<br>
+		<img alt="Warp sponsorship" width="400" src="https://github.com/warpdotdev/brand-assets/blob/main/Github/Sponsor/Warp-Github-LG-02.png">
+		<br>
+		<h>Warp, built for coding with multiple AI agents</b>
+		<br>
+		<sup>Available for macOS, Linux and Windows</sup>
+	</a>
+</div>
+
+<br>
+
+<br>
+<div align="center">
+	<a href="https://formengine.io/?utm_source=github&utm_medium=hero-banner&utm_campaign=mantine-readme" target="_blank">
+		<sup>Special thanks to:</sup>
+		<br>
+		<img alt="Warp sponsorship" width="400" src="https://formengine.io/ads-images/banner2.png?v=1">
+		<br>
+		<h>Drag and Drop React Complex Form Builder Library</b>
+		<br>
+		<sup>Build and customize complex React forms in minutes.<td> Seamlessly integrate a no-code form designer for your end-users or your internal tools</sup>
+	</a>
+</div>
+
 # Mantine
 
 [![NPM](https://img.shields.io/npm/l/@mantine/core)](https://github.com/mantinedev/mantine/blob/master/LICENSE)
@@ -20,8 +47,8 @@
 
 ## Packages
 
-- `@mantine/hooks` – collection of 50+ hooks for state and UI management
-- `@mantine/core` – core components library – 100+ components
+- [`@mantine/hooks`](https://mantine.dev/hooks/package/) – collection of 50+ hooks for state and UI management
+- [`@mantine/core`](https://mantine.dev/core/package/) – core components library – 100+ components
 - [`@mantine/form`](https://mantine.dev/form/use-form) – forms management library
 - [`@mantine/charts`](https://mantine.dev/charts/getting-started/) – recharts based charts library
 - [`@mantine/notifications`](https://mantine.dev/x/notifications) – a fully featured notifications system

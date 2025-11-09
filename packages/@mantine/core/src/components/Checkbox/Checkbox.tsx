@@ -99,6 +99,7 @@ export type CheckboxFactory = Factory<{
 const defaultProps = {
   labelPosition: 'right',
   icon: CheckboxIcon,
+  variant: 'filled',
 } satisfies Partial<CheckboxProps>;
 
 const varsResolver = createVarsResolver<CheckboxFactory>(
@@ -176,15 +177,14 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
   const { styleProps, rest } = extractStyleProps(others);
   const uuid = useId(id);
 
-  const contextProps = ctx
-    ? {
-        checked: ctx.value.includes(rest.value as string),
-        onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-          ctx.onChange(event);
-          onChange?.(event);
-        },
-      }
-    : {};
+  const withContextProps = {
+    checked: ctx?.value.includes(rest.value as string) ?? checked,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+      ctx?.onChange(event);
+      onChange?.(event);
+    },
+    disabled: ctx?.disabled ?? disabled,
+  };
 
   const fallbackRef = useRef<HTMLInputElement>(null);
   const ref = forwardedRef || fallbackRef;
@@ -192,6 +192,12 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
   useEffect(() => {
     if (ref && 'current' in ref && ref.current) {
       ref.current.indeterminate = indeterminate || false;
+
+      if (indeterminate) {
+        ref.current.setAttribute('data-indeterminate', 'true');
+      } else {
+        ref.current.removeAttribute('data-indeterminate');
+      }
     }
   }, [indeterminate, ref]);
 
@@ -206,11 +212,11 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
       label={label}
       description={description}
       error={error}
-      disabled={disabled}
+      disabled={withContextProps.disabled}
       classNames={classNames}
       styles={styles}
       unstyled={unstyled}
-      data-checked={contextProps.checked || checked || undefined}
+      data-checked={withContextProps.checked || checked || undefined}
       variant={variant}
       ref={rootRef}
       mod={mod}
@@ -222,13 +228,10 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
           component="input"
           id={uuid}
           ref={ref}
-          checked={checked}
-          disabled={disabled}
           mod={{ error: !!error, indeterminate }}
           {...getStyles('input', { focusable: true, variant })}
-          onChange={onChange}
           {...rest}
-          {...contextProps}
+          {...withContextProps}
           type="checkbox"
         />
 

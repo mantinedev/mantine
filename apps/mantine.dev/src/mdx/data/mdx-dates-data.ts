@@ -152,4 +152,15 @@ export const MDX_DATES_DATA: Record<string, Frontmatter> = {
     source: '@mantine/dates/src/components/TimeValue/TimeValue.tsx',
     docs: 'dates/time-value.mdx',
   },
+
+  MiniCalendar: {
+    title: 'MiniCalendar',
+    package: '@mantine/dates',
+    slug: '/dates/mini-calendar',
+    props: ['MiniCalendar'],
+    styles: ['MiniCalendar'],
+    description: 'Compact calendar to display a small number of days in a row',
+    source: '@mantine/dates/src/components/MiniCalendar/MiniCalendar.tsx',
+    docs: 'dates/mini-calendar.mdx',
+  },
 };

@@ -12,7 +12,6 @@ const sharedStyles = {
   transitionDuration: '625ms',
   transitionTimingFunction: 'ease',
   WebkitBackfaceVisibility: 'hidden',
-  willChange: 'transform, opacity',
 };
 
 describe('@mantine/core/Transition/get-transition-styles', () => {

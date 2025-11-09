@@ -10,7 +10,8 @@ export function NothingFound() {
       </Title>
 
       <Text className={classes.description}>
-        Join Mantine community of 10,000+ developers on Discord or ask your questions on GitHub:{' '}
+        Join Mantine community of 10,000+ developers on Discord or ask your questions on
+        GitHub:{' '}
       </Text>
 
       <SocialCards />

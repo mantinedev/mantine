@@ -58,6 +58,7 @@ describe('@mantine/core/AppShell/assign-aside-variables', () => {
           '--app-shell-aside-width': '100%',
           '--app-shell-aside-transform-rtl': 'translateX(calc(var(--app-shell-aside-width) * -1))',
           '--app-shell-aside-transform': 'translateX(var(--app-shell-aside-width))',
+          '--app-shell-aside-scroll-locked-visibility': 'hidden',
         },
       });
     });
@@ -93,6 +94,7 @@ describe('@mantine/core/AppShell/assign-aside-variables', () => {
           '--app-shell-aside-offset': '0px !important',
           '--app-shell-aside-transform-rtl': 'translateX(calc(var(--app-shell-aside-width) * -1))',
           '--app-shell-aside-transform': 'translateX(var(--app-shell-aside-width))',
+          '--app-shell-aside-scroll-locked-visibility': 'hidden',
         },
       });
     });

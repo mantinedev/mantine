@@ -140,8 +140,9 @@ export function createStorage<T>(type: StorageType, hookName: string) {
 
     const removeStorageValue = useCallback(() => {
       removeItem(key);
+      setValue(defaultValue as T);
       window.dispatchEvent(new CustomEvent(eventName, { detail: { key, value: defaultValue } }));
-    }, []);
+    }, [key, defaultValue]);
 
     useWindowEvent('storage', (event) => {
       if (sync) {

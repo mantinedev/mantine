@@ -27,6 +27,9 @@ export interface CheckboxGroupProps extends Omit<InputWrapperProps, 'onChange'> 
 
   /** If set, value cannot be changed */
   readOnly?: boolean;
+
+  /** Sets `disabled` attribute, prevents interactions */
+  disabled?: boolean;
 }
 
 export type CheckboxGroupFactory = Factory<{
@@ -36,8 +39,17 @@ export type CheckboxGroupFactory = Factory<{
 }>;
 
 export const CheckboxGroup = factory<CheckboxGroupFactory>((props, ref) => {
-  const { value, defaultValue, onChange, size, wrapperProps, children, readOnly, ...others } =
-    useProps('CheckboxGroup', null, props);
+  const {
+    value,
+    defaultValue,
+    onChange,
+    size,
+    wrapperProps,
+    children,
+    readOnly,
+    disabled,
+    ...others
+  } = useProps('CheckboxGroup', null, props);
 
   const [_value, setValue] = useUncontrolled({
     value,
@@ -57,7 +69,7 @@ export const CheckboxGroup = factory<CheckboxGroupFactory>((props, ref) => {
   };
 
   return (
-    <CheckboxGroupProvider value={{ value: _value, onChange: handleChange, size }}>
+    <CheckboxGroupProvider value={{ value: _value, onChange: handleChange, size, disabled }}>
       <Input.Wrapper
         size={size}
         ref={ref}

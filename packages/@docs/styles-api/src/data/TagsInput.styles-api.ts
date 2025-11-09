@@ -14,4 +14,13 @@ export const TagsInputStylesApi: StylesApiData<TagsInputFactory> = {
   },
 
   vars: {},
+
+  modifiers: [
+    {
+      modifier: 'data-combobox-active',
+      selector: 'option',
+      condition: 'Options was activated by keyboard',
+    },
+    { modifier: 'data-combobox-disabled', selector: 'option', condition: 'Option is disabled' },
+  ],
 };

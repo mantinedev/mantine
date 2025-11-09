@@ -2,7 +2,6 @@ import Highlight from '@tiptap/extension-highlight';
 import SubScript from '@tiptap/extension-subscript';
 import Superscript from '@tiptap/extension-superscript';
 import TextAlign from '@tiptap/extension-text-align';
-import Underline from '@tiptap/extension-underline';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Link, RichTextEditor } from '@mantine/tiptap';
@@ -16,7 +15,6 @@ import { RichTextEditor, Link } from '@mantine/tiptap';
 import { useEditor } from '@tiptap/react';
 import Highlight from '@tiptap/extension-highlight';
 import StarterKit from '@tiptap/starter-kit';
-import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
@@ -26,9 +24,9 @@ const content =
 
 function Demo() {
   const editor = useEditor({
+    shouldRerenderOnTransaction: true,
     extensions: [
-      StarterKit,
-      Underline,
+      StarterKit.configure({ link: false }),
       Link,
       Superscript,
       SubScript,
@@ -94,9 +92,10 @@ function Demo() {
 // Demo requires to have props as it is used on the home page
 function Demo({ stickyOffset = 'var(--docs-header-height)' }: { stickyOffset: string | number }) {
   const editor = useEditor({
+    immediatelyRender: false,
+    shouldRerenderOnTransaction: true,
     extensions: [
-      StarterKit,
-      Underline,
+      StarterKit.configure({ link: false }),
       Link,
       Superscript,
       SubScript,

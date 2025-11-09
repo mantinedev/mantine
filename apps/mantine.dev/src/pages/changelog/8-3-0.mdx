@@ -1,0 +1,63 @@
+import { ProgressDemos, HeatmapDemos, MiniCalendarDemos, SelectDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog830);
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds are used to improve Mantine and create new features and components.
+
+<SponsorButton />
+
+## MiniCalendar component
+
+New [MiniCalendar](/dates/mini-calendar) component:
+
+<Demo data={MiniCalendarDemos.usage} />
+
+## Progress vertical orientation
+
+[Progress](/core/progress) now supports vertical orientation:
+
+<Demo data={ProgressDemos.vertical} />
+
+## Heatmap splitMonths
+
+[Heatmap](/charts/heatmap) now supports `splitMonths` prop to visually separate months with a spacer column and render only days that belong to each month in its columns.
+
+<Demo data={HeatmapDemos.splitMonths} />
+
+## Improved clearable prop handling
+
+[Select](/core/select), [MultiSelect](/core/multi-select), and other components with
+`clearable` prop now allow displaying the clear button next to the right section:
+
+<Demo data={SelectDemos.clearable} />
+
+## Tiptap 3 support
+
+[@mantine/tiptap](/x/tiptap) now supports [Tiptap 3](https://tiptap.dev/docs). It is
+recommended to update all `@tiptap/*` packages to version 3.2.0 or later.
+
+Your application might require some modifications related to Tiptap 3.
+If you want to update your application to TipTap 3, follow
+[migration guide](/guides/tiptap-3-migration).
+
+## LLMs.txt
+
+You can now use LLMs.txt file with Cursor and other IDEs.
+The file is automatically updated with each release and includes
+every demo and documentation page from mantine.dev. It is about 1.8mb.
+You can find the latest version of LLMs.txt [here](https://mantine.dev/llms.txt)
+and further documentation [here](/guides/llms).
+
+## Other changes
+
+- [MultiSelect](/core/multi-select) now supports `clearSearchOnChange` prop to clear search input when an item is selected.
+- [Reordering list items example](/form/recipes/#list-items-reordering) now uses [dnd-kit](https://dndkit.com/) instead of `@hello-pangea/dnd`
+- [TimePicker](/dates/time-picker) now supports `reverseTimeControlsList` prop to reverse the order of time controls in the dropdown. Use this option if you want the order of controls to match keyboard controls (up and down arrow) direction.
+- [DirectionProvider](/styles/rtl) now automatically subscribes to the `dir` attribute mutations of the root element (usually `<html />`)  and updates internal state automatically.
+- [Select](/core/select) and [MultiSelect](/core/multi-select) now retain references to selected options that are no longer present in `data` prop.
+- Active color swatch now has check icon in [ColorPicker](/core/color-picker) and [ColorInput](/core/color-input) components.

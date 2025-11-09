@@ -8,7 +8,7 @@ import { NumberInput, NumberInputHandlers } from './NumberInput';
 export default { title: 'NumberInput' };
 
 export function Usage() {
-  const [value, setValue] = useState<number | string>('133');
+  const [value, setValue] = useState<number | string>('0');
   return (
     <div style={{ padding: 40 }}>
       <NumberInput
@@ -17,7 +17,7 @@ export function Usage() {
         label="Number input"
         placeholder="Number input"
         onChange={setValue}
-        // onValueChange={console.log}
+        onValueChange={console.log}
       />
       {typeof value === 'number' ? `${value} number` : `${value === '' ? 'empty' : value} string`}
       <Button onClick={() => setValue(245.32)}>Set value to float</Button>

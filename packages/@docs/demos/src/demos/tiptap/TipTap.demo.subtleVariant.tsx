@@ -1,5 +1,4 @@
 import Highlight from '@tiptap/extension-highlight';
-import Underline from '@tiptap/extension-underline';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { RichTextEditor } from '@mantine/tiptap';
@@ -9,7 +8,6 @@ const content = '<p>Subtle rich text editor variant</p>';
 
 const code = `
 import Highlight from '@tiptap/extension-highlight';
-import Underline from '@tiptap/extension-underline';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { RichTextEditor } from '@mantine/tiptap';
@@ -18,7 +16,8 @@ const content = '<p>Subtle rich text editor variant</p>';
 
 function Demo() {
   const editor = useEditor({
-    extensions: [StarterKit, Underline, Highlight],
+    shouldRerenderOnTransaction: true,
+    extensions: [StarterKit, Highlight],
     content,
   });
 
@@ -44,7 +43,9 @@ function Demo() {
 
 function Demo() {
   const editor = useEditor({
-    extensions: [StarterKit, Underline, Highlight],
+    immediatelyRender: false,
+    shouldRerenderOnTransaction: true,
+    extensions: [StarterKit, Highlight],
     content,
   });
 

@@ -57,9 +57,9 @@
   }
 
   &:where(
-      [data-with-left-section][data-with-right-section],
-      [data-variant='dot'][data-with-right-section]
-    ) {
+    [data-with-left-section][data-with-right-section],
+    [data-variant='dot'][data-with-right-section]
+  ) {
     grid-template-columns: auto 1fr auto;
   }
 

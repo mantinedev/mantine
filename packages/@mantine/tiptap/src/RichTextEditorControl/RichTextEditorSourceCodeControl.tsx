@@ -18,7 +18,7 @@ export const RichTextEditorSourceCodeControl = forwardRef<
 
   const handleStateChange = () => {
     if (isSourceCodeModeActive) {
-      editor?.commands.setContent(editor.getText(), true);
+      editor?.commands.setContent(editor.getText(), { emitUpdate: true });
     } else {
       editor?.commands.setContent(`<textarea>${editor.getHTML()}</textarea>`);
     }

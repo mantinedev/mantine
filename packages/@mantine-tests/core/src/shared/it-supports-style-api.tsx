@@ -94,7 +94,7 @@ export function itSupportsStylesApi<
       const { container } = render(
         <options.component
           {...options.props}
-          data-test="orange"
+          data-test="rgb(250, 128, 114)"
           classNames={classNames}
           styles={styles}
         />
@@ -102,7 +102,7 @@ export function itSupportsStylesApi<
 
       options.selectors.forEach((selector) => {
         expect(container.querySelector(`.${classNames[selector]}`)).toHaveStyle({
-          ...styles(DEFAULT_THEME, { 'data-test': 'orange' })[selector],
+          ...styles(DEFAULT_THEME, { 'data-test': 'rgb(250, 128, 114)' })[selector],
         });
       });
     });
@@ -198,19 +198,22 @@ export function itSupportsStylesApi<
           return acc;
         }, {});
 
-      const { container } = render(<options.component {...options.props} data-test="orange" />, {
-        components: {
-          [options.providerName]: {
-            styles: styles as any,
-            classNames: classNames as any,
+      const { container } = render(
+        <options.component {...options.props} data-test="rgb(250, 128, 114)" />,
+        {
+          components: {
+            [options.providerName]: {
+              styles: styles as any,
+              classNames: classNames as any,
+            },
           },
-        },
-      });
+        }
+      );
 
       options.selectors.forEach((selector) => {
         try {
           expect(container.querySelector(`.${classNames[selector]}`)).toHaveStyle({
-            ...styles(DEFAULT_THEME, { 'data-test': 'orange' })[selector],
+            ...styles(DEFAULT_THEME, { 'data-test': 'rgb(250, 128, 114)' })[selector],
           });
         } catch (e) {
           throw new Error(`Missing selector: .test-${options.providerName}-${selector}`);

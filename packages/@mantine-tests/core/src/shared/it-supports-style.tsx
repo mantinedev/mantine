@@ -10,11 +10,11 @@ interface Options<Props = any> {
 export function itSupportsStyle<Props>(options: Options<Props>, name = 'supports style') {
   it(`${name}: object`, () => {
     const { container } = render(
-      <options.component {...options.props} style={{ color: 'salmon' }} />
+      <options.component {...options.props} style={{ color: 'rgb(250, 128, 114)' }} />
     );
 
     expect(container.querySelector(options.selector || '*:not(style)')).toHaveStyle({
-      color: 'salmon',
+      color: 'rgb(250, 128, 114)',
     });
   });
 
@@ -35,12 +35,12 @@ export function itSupportsStyle<Props>(options: Options<Props>, name = 'supports
     const { container } = render(
       <options.component
         {...options.props}
-        style={[{ color: 'salmon' }, { background: 'olive' }]}
+        style={[{ color: 'rgb(250, 128, 114)' }, { background: 'olive' }]}
       />
     );
 
     expect(container.querySelector(options.selector || '*:not(style)')).toHaveStyle({
-      color: 'salmon',
+      color: 'rgb(250, 128, 114)',
       background: 'olive',
     });
   });

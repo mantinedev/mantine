@@ -90,6 +90,7 @@ export type DateTimePickerFactory = Factory<{
 
 const defaultProps = {
   dropdownType: 'popover',
+  size: 'sm',
 } satisfies Partial<DateTimePickerProps>;
 
 export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
@@ -118,6 +119,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     defaultTimeValue,
     presets,
     attributes,
+    onDropdownClose,
     ...rest
   } = props;
 
@@ -212,6 +214,7 @@ export const DateTimePicker = factory<DateTimePickerFactory>((_props, ref) => {
     if (_value && _value !== clamped) {
       setValue(clampDate(minDate, maxDate, _value));
     }
+    onDropdownClose?.();
   };
 
   return (

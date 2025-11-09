@@ -57,6 +57,7 @@ export function assignAsideVariables({
     minMediaStyles[breakpointValue]['--app-shell-aside-transform'] = collapsedAsideTransform;
     minMediaStyles[breakpointValue]['--app-shell-aside-transform-rtl'] = collapsedAsideTransformRtl;
     minMediaStyles[breakpointValue]['--app-shell-aside-offset'] = '0px !important';
+    minMediaStyles[breakpointValue]['--app-shell-aside-scroll-locked-visibility'] = 'hidden';
   }
 
   if (aside?.collapsed?.mobile) {
@@ -66,5 +67,6 @@ export function assignAsideVariables({
     maxMediaStyles[breakpointValue]['--app-shell-aside-offset'] = '0px';
     maxMediaStyles[breakpointValue]['--app-shell-aside-transform'] = collapsedAsideTransform;
     maxMediaStyles[breakpointValue]['--app-shell-aside-transform-rtl'] = collapsedAsideTransformRtl;
+    maxMediaStyles[breakpointValue]['--app-shell-aside-scroll-locked-visibility'] = 'hidden';
   }
 }

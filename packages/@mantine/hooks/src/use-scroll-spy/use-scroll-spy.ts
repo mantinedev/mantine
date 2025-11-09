@@ -21,14 +21,14 @@ function getHeadingsData(
   return result;
 }
 
-function getActiveElement(rects: DOMRect[]) {
+function getActiveElement(rects: DOMRect[], offset: number = 0) {
   if (rects.length === 0) {
     return -1;
   }
 
   const closest = rects.reduce(
     (acc, item, index) => {
-      if (Math.abs(acc.position) < Math.abs(item.y)) {
+      if (Math.abs(acc.position - offset) < Math.abs(item.y - offset)) {
         return acc;
       }
 
@@ -77,6 +77,9 @@ export interface UseScrollSpyOptions {
 
   /** Host element to attach scroll event listener, if not provided, `window` is used */
   scrollHost?: HTMLElement;
+
+  /** Offset from the top of the viewport to use when determining the active heading, `0` by default */
+  offset?: number;
 }
 
 export interface UseScrollSpyReturnType {
@@ -97,6 +100,7 @@ export function useScrollSpy({
   selector = 'h1, h2, h3, h4, h5, h6',
   getDepth = getDefaultDepth,
   getValue = getDefaultValue,
+  offset = 0,
   scrollHost,
 }: UseScrollSpyOptions = {}): UseScrollSpyReturnType {
   const [active, setActive] = useState(-1);
@@ -106,7 +110,10 @@ export function useScrollSpy({
 
   const handleScroll = () => {
     setActive(
-      getActiveElement(headingsRef.current.map((d) => d.getNode().getBoundingClientRect()))
+      getActiveElement(
+        headingsRef.current.map((d) => d.getNode().getBoundingClientRect()),
+        offset
+      )
     );
   };
 
@@ -119,7 +126,12 @@ export function useScrollSpy({
     headingsRef.current = headings;
     setInitialized(true);
     setData(headings);
-    setActive(getActiveElement(headings.map((d) => d.getNode().getBoundingClientRect())));
+    setActive(
+      getActiveElement(
+        headings.map((d) => d.getNode().getBoundingClientRect()),
+        offset
+      )
+    );
   };
 
   useEffect(() => {
@@ -127,7 +139,7 @@ export function useScrollSpy({
     const _scrollHost = scrollHost || window;
     _scrollHost.addEventListener('scroll', handleScroll);
     return () => _scrollHost.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [scrollHost]);
 
   return {
     reinitialize: initialize,

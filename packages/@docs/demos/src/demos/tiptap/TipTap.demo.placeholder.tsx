@@ -12,6 +12,7 @@ import Placeholder from '@tiptap/extension-placeholder';
 
 function Demo() {
   const editor = useEditor({
+    shouldRerenderOnTransaction: true,
     extensions: [StarterKit, Placeholder.configure({ placeholder: 'This is placeholder' })],
     content: '',
   });
@@ -26,6 +27,8 @@ function Demo() {
 
 function Demo() {
   const editor = useEditor({
+    shouldRerenderOnTransaction: true,
+    immediatelyRender: false,
     extensions: [StarterKit, Placeholder.configure({ placeholder: 'This is placeholder' })],
     content: '',
   });

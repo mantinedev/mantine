@@ -25,6 +25,7 @@ function InsertStarControl() {
 
 function Demo() {
   const editor = useEditor({
+    shouldRerenderOnTransaction: true,
     extensions: [StarterKit],
     content: '<p>Click control to insert star emoji</p>',
   });
@@ -56,6 +57,8 @@ function InsertStarControl() {
 
 function Demo() {
   const editor = useEditor({
+    immediatelyRender: false,
+    shouldRerenderOnTransaction: true,
     extensions: [StarterKit],
     content: '<p>Click control to insert star emoji</p>',
   });

@@ -1,4 +1,10 @@
-import { factory, Factory, getDefaultZIndex, useProps } from '@mantine/core';
+import {
+  factory,
+  Factory,
+  getDefaultZIndex,
+  ScrollAreaAutosizeProps,
+  useProps,
+} from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { defaultSpotlightFilter } from './default-spotlight-filter';
 import { isActionsGroup } from './is-actions-group';
@@ -50,6 +56,9 @@ export interface SpotlightProps extends SpotlightRootProps {
 
   /** Maximum number of actions displayed at a time @default `Infinity` */
   limit?: number;
+
+  /** Props passed down to the `ScrollArea` component */
+  scrollAreaProps?: Partial<ScrollAreaAutosizeProps>;
 }
 
 export type SpotlightFactory = Factory<{
@@ -95,6 +104,7 @@ export const Spotlight = factory<SpotlightFactory>((_props, ref) => {
     nothingFound,
     highlightQuery,
     limit,
+    scrollAreaProps,
     ...others
   } = props;
 
@@ -124,7 +134,7 @@ export const Spotlight = factory<SpotlightFactory>((_props, ref) => {
   return (
     <SpotlightRoot {...others} query={_query} onQueryChange={setQuery} ref={ref}>
       <SpotlightSearch {...searchProps} />
-      <SpotlightActionsList>
+      <SpotlightActionsList {...(scrollAreaProps as any)}>
         {filteredActions}
         {filteredActions.length === 0 && nothingFound && (
           <SpotlightEmpty>{nothingFound}</SpotlightEmpty>

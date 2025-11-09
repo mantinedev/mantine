@@ -1,16 +1,17 @@
 import path from 'node:path';
 import chalk from 'chalk';
 import fs from 'fs-extra';
-import { argv } from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import yargs from 'yargs/yargs';
 import { $ } from 'zx';
 import { getPath } from '../utils/get-path';
 import { createLogger } from '../utils/signale';
 
 const logger = createLogger('plop');
 
-const _argv: any = argv;
-const packageName = _argv._[0];
-const description = _argv._[1];
+const parsed = yargs(hideBin(process.argv)).parseSync();
+const packageName = parsed._[0] as string | undefined;
+const description = parsed._.slice(1).join(' ');
 
 if (!packageName) {
   logger.error('Package name is missing');
@@ -40,7 +41,9 @@ const tsconfigBuild = fs.readFileSync(
 );
 
 function replacePlaceholders(content: string) {
-  return content.replaceAll('{{package}}', packageName).replaceAll('{{description}}', description);
+  return content
+    .replaceAll('{{package}}', packageName || '')
+    .replaceAll('{{description}}', description || '');
 }
 
 fs.ensureDirSync(packagePath);

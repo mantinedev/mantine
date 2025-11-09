@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import {
   Box,
   BoxProps,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -35,7 +36,7 @@ export interface YearsListSettings extends ControlsGroupSettings {
   yearsListFormat?: string;
 
   /** Passes props down to year picker control based on date */
-  getYearControlProps?: (date: DateStringValue) => Partial<PickerControlProps>;
+  getYearControlProps?: (date: DateStringValue) => Partial<PickerControlProps> & DataAttributes;
 
   /** Component size */
   size?: MantineSize;

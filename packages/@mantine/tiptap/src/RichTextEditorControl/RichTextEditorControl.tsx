@@ -121,10 +121,10 @@ export function createControl({
         title={_label}
         active={isActive?.name ? editor?.isActive(isActive.name, isActive.attributes) : false}
         ref={ref}
-        onClick={() => (editor as any)?.chain().focus()[operation.name](operation.attributes).run()}
         icon={props.icon || icon}
         disabled={isDisabled?.(editor) || false}
         {...props}
+        onClick={() => (editor as any)?.chain().focus()[operation.name](operation.attributes).run()}
       />
     );
   });
