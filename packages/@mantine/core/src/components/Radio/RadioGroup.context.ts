@@ -5,6 +5,7 @@ interface RadioGroupContextValue {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement> | string) => void;
   name: string;
+  disabled?: boolean;
 }
 
 export const [RadioGroupProvider, useRadioGroupContext] =

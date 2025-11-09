@@ -250,3 +250,20 @@ export function ControlledEmptyString() {
     </div>
   );
 }
+
+export function WithPlaceholders() {
+  return (
+    <div style={{ padding: 40 }}>
+      <TimePicker
+        label="Enter time"
+        withSeconds
+        minutesStep={5}
+        secondsStep={5}
+        withDropdown
+        hoursPlaceholder="09"
+        minutesPlaceholder="50"
+        secondsPlaceholder="11"
+      />
+    </div>
+  );
+}

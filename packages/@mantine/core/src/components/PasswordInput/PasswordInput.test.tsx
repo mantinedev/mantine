@@ -1,4 +1,11 @@
-import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
+import userEvent from '@testing-library/user-event';
+import {
+  inputDefaultProps,
+  inputStylesApiSelectors,
+  render,
+  screen,
+  tests,
+} from '@mantine-tests/core';
 import { __InputStylesNames } from '../Input';
 import { PasswordInput, PasswordInputProps } from './PasswordInput';
 
@@ -60,5 +67,61 @@ describe('@mantine/core/PasswordInput', () => {
     component: PasswordInput,
     props: defaultProps,
     selector: 'input',
+  });
+
+  it('sets aria-pressed="false" on visibility toggle button when password is hidden', () => {
+    render(
+      <PasswordInput
+        label="Password"
+        visibilityToggleButtonProps={{ 'aria-label': 'Toggle password visibility' }}
+      />
+    );
+    const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
+    expect(toggleButton).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  it('sets aria-pressed="true" on visibility toggle button when password is visible', () => {
+    render(
+      <PasswordInput
+        label="Password"
+        defaultVisible
+        visibilityToggleButtonProps={{ 'aria-label': 'Toggle password visibility' }}
+      />
+    );
+    const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
+    expect(toggleButton).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('toggles aria-pressed attribute when visibility toggle button is clicked', async () => {
+    const user = userEvent.setup();
+    render(
+      <PasswordInput
+        label="Password"
+        visibilityToggleButtonProps={{ 'aria-label': 'Toggle password visibility' }}
+      />
+    );
+    const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
+
+    expect(toggleButton).toHaveAttribute('aria-pressed', 'false');
+
+    await user.click(toggleButton);
+    expect(toggleButton).toHaveAttribute('aria-pressed', 'true');
+
+    await user.click(toggleButton);
+    expect(toggleButton).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  it('allows aria-pressed to be overridden via visibilityToggleButtonProps', () => {
+    render(
+      <PasswordInput
+        label="Password"
+        visibilityToggleButtonProps={{
+          'aria-label': 'Toggle password visibility',
+          'aria-pressed': 'mixed' as any,
+        }}
+      />
+    );
+    const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
+    expect(toggleButton).toHaveAttribute('aria-pressed', 'mixed');
   });
 });

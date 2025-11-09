@@ -16,14 +16,14 @@ export function getColumns(
     return datesRange.map((week, weekIndex) => {
       // Determine month for labeling purposes: pick first non-null day
       const firstDay = week.find((d) => d !== null)! as string;
-      const month = new Date(firstDay).getMonth();
+      const month = new Date(firstDay).getUTCMonth();
       return { type: 'column', month, weekIndex } as HeatmapColumn;
     });
   }
 
   const tmp: HeatmapColumn[] = [];
   datesRange.forEach((week, weekIndex) => {
-    const months = week.map((d) => (d ? new Date(d).getMonth() : null));
+    const months = week.map((d) => (d ? new Date(d).getUTCMonth() : null));
     let firstMonth: number | null = null;
     let boundaryIndex: number | null = null;
     for (let i = 0; i < months.length; i += 1) {

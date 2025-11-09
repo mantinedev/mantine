@@ -66,6 +66,14 @@ property in `series` object:
 
 <Demo data={AreaChartDemos.seriesLabels} />
 
+## Set curve type per line
+
+You can set individual curve types for each line in the `series` array. If you
+do not set a curve type for a line, the series will fall back to `curveType` prop, or
+`monotone` if `curveType` is not set.
+
+<Demo data={AreaChartDemos.curveType} />
+
 ## Connect nulls
 
 Use `connectNulls` prop to specify whether to connect a data point across null

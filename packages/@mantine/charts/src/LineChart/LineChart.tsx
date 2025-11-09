@@ -57,6 +57,7 @@ export type LineChartCurveType =
 
 export interface LineChartSeries extends ChartSeries {
   strokeDasharray?: string | number;
+  curveType?: LineChartCurveType;
 }
 
 export type LineChartStylesNames =
@@ -286,7 +287,7 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
         fillOpacity={dimmed ? 0 : fillOpacity}
         strokeOpacity={dimmed ? 0.5 : fillOpacity}
         connectNulls={connectNulls}
-        type={curveType}
+        type={item.curveType ?? curveType}
         strokeDasharray={item.strokeDasharray}
         yAxisId={item.yAxisId || 'left'}
         label={withPointLabels ? <PointLabel valueFormatter={valueFormatter} /> : undefined}
@@ -457,9 +458,9 @@ export const LineChart = factory<LineChartFactory>((_props, ref) => {
                 strokeWidth: 1,
                 strokeDasharray,
               }}
-              content={({ label, payload }) => (
+              content={({ label, payload, labelFormatter }) => (
                 <ChartTooltip
-                  label={label}
+                  label={labelFormatter && payload ? labelFormatter(label, payload) : label}
                   payload={payload}
                   unit={unit}
                   classNames={resolvedClassNames}
