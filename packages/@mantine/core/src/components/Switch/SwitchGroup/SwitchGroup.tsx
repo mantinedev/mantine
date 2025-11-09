@@ -27,6 +27,9 @@ export interface SwitchGroupProps extends Omit<InputWrapperProps, 'onChange'> {
 
   /** If set, value cannot be changed */
   readOnly?: boolean;
+
+  /** Sets `disabled` attribute, prevents interactions */
+  disabled?: boolean;
 }
 
 export type SwitchGroupFactory = Factory<{
@@ -36,8 +39,17 @@ export type SwitchGroupFactory = Factory<{
 }>;
 
 export const SwitchGroup = factory<SwitchGroupFactory>((props, ref) => {
-  const { value, defaultValue, onChange, size, wrapperProps, children, readOnly, ...others } =
-    useProps('SwitchGroup', null, props);
+  const {
+    value,
+    defaultValue,
+    onChange,
+    size,
+    wrapperProps,
+    children,
+    readOnly,
+    disabled,
+    ...others
+  } = useProps('SwitchGroup', null, props);
 
   const [_value, setValue] = useUncontrolled({
     value,
@@ -57,7 +69,7 @@ export const SwitchGroup = factory<SwitchGroupFactory>((props, ref) => {
   };
 
   return (
-    <SwitchGroupProvider value={{ value: _value, onChange: handleChange, size }}>
+    <SwitchGroupProvider value={{ value: _value, onChange: handleChange, size, disabled }}>
       <Input.Wrapper
         size={size}
         ref={ref}
