@@ -17,4 +17,5 @@ export type {
   MantineModalsOverride,
   MantineModals,
   MantineModal,
-} from './context.js';
+} from './context';
+export type { ConfirmModalProps } from './ConfirmModal';
