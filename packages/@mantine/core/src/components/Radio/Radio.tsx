@@ -153,6 +153,7 @@ export const Radio = factory<RadioFactory>((_props) => {
     mod,
     attributes,
     withErrorStyles,
+    checked,
     ...others
   } = props;
 
@@ -178,16 +179,15 @@ export const Radio = factory<RadioFactory>((_props) => {
   const { styleProps, rest } = extractStyleProps(others);
   const uuid = useId(id);
 
-  const contextProps = ctx
-    ? {
-        checked: ctx.value === rest.value,
-        name: rest.name ?? ctx.name,
-        onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-          ctx.onChange(event);
-          onChange?.(event);
-        },
-      }
-    : {};
+  const withContextProps = {
+    checked: ctx?.value === rest.value || checked || undefined,
+    name: ctx?.name ?? rest.name,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+      ctx?.onChange(event);
+      onChange?.(event);
+    },
+    disabled: ctx?.disabled ?? disabled,
+  };
 
   return (
     <InlineInput
@@ -200,11 +200,11 @@ export const Radio = factory<RadioFactory>((_props) => {
       label={label}
       description={description}
       error={error}
-      disabled={disabled}
+      disabled={withContextProps.disabled}
       classNames={classNames}
       styles={styles}
       unstyled={unstyled}
-      data-checked={contextProps.checked || undefined}
+      data-checked={withContextProps.checked}
       variant={variant}
       ref={rootRef}
       mod={mod}
@@ -214,13 +214,11 @@ export const Radio = factory<RadioFactory>((_props) => {
       <Box {...getStyles('inner')} mod={{ 'label-position': labelPosition }}>
         <Box
           {...getStyles('radio', { focusable: true, variant })}
-          onChange={onChange}
           {...rest}
-          {...contextProps}
+          {...withContextProps}
           component="input"
           mod={{ error: !!error, 'with-error-styles': withErrorStyles }}
           id={uuid}
-          disabled={disabled}
           type="radio"
         />
         <Icon {...getStyles('icon')} aria-hidden />

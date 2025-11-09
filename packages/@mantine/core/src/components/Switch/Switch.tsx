@@ -169,17 +169,18 @@ export const Switch = factory<SwitchFactory>((_props) => {
   const { styleProps, rest } = extractStyleProps(others);
   const uuid = useId(id);
 
-  const contextProps = ctx
-    ? {
-        checked: ctx.value.includes(rest.value as string),
-        onChange: ctx.onChange,
-      }
-    : {};
+  const withContextProps = {
+    checked: ctx?.value.includes(rest.value as string) ?? checked,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+      ctx?.onChange(event);
+      onChange?.(event);
+    },
+  };
 
   const _disabled = disabled || ctx?.isDisabled?.(rest.value as string);
 
   const [_checked, handleChange] = useUncontrolled({
-    value: contextProps.checked ?? checked,
+    value: withContextProps.checked ?? checked,
     defaultValue: defaultChecked,
     finalValue: false,
   });
@@ -201,7 +202,7 @@ export const Switch = factory<SwitchFactory>((_props) => {
       classNames={classNames}
       styles={styles}
       unstyled={unstyled}
-      data-checked={contextProps.checked || checked || undefined}
+      data-checked={withContextProps.checked}
       variant={variant}
       ref={rootRef}
       mod={mod}
@@ -210,11 +211,12 @@ export const Switch = factory<SwitchFactory>((_props) => {
     >
       <input
         {...rest}
+        {...withContextProps}
         disabled={_disabled}
         checked={_checked}
-        data-checked={contextProps.checked || checked || undefined}
+        data-checked={withContextProps.checked}
         onChange={(event) => {
-          ctx ? contextProps.onChange?.(event) : onChange?.(event);
+          withContextProps.onChange?.(event);
           handleChange(event.currentTarget.checked);
         }}
         id={uuid}

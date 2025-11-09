@@ -7,3 +7,5 @@ export { stylesApi } from './Switch.demo.stylesApi';
 export { tooltip } from './Switch.demo.tooltip';
 export { styles } from './Switch.demo.styles';
 export { maxSelectedValues } from './Switch.demo.maxSelectedValues';
+export { states } from './Switch.demo.states';
+export { groupDisabled } from './SwitchGroup.demo.disabled';

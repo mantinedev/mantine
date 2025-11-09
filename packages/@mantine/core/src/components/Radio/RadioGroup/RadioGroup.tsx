@@ -9,6 +9,7 @@ export interface RadioGroupContextValue<Value extends string = string> {
   value: Value | null;
   onChange: (event: React.ChangeEvent<HTMLInputElement> | string) => void;
   name: string;
+  disabled: boolean | undefined;
 }
 
 export const RadioGroupContext = createContext<RadioGroupContextValue | null>(null);
@@ -40,6 +41,9 @@ export interface RadioGroupProps<Value extends string = string>
 
   /** If set, value cannot be changed */
   readOnly?: boolean;
+
+  /** Sets `disabled` attribute, prevents interactions */
+  disabled?: boolean;
 }
 
 export type RadioGroupFactory = Factory<{
@@ -50,8 +54,18 @@ export type RadioGroupFactory = Factory<{
 }>;
 
 export const RadioGroup = genericFactory<RadioGroupFactory>(((props: RadioGroupProps<string>) => {
-  const { value, defaultValue, onChange, size, wrapperProps, children, name, readOnly, ...others } =
-    useProps('RadioGroup', null, props);
+  const {
+    value,
+    defaultValue,
+    onChange,
+    size,
+    wrapperProps,
+    children,
+    name,
+    readOnly,
+    disabled,
+    ...others
+  } = useProps('RadioGroup', null, props);
 
   const _name = useId(name);
 
@@ -66,7 +80,9 @@ export const RadioGroup = genericFactory<RadioGroupFactory>(((props: RadioGroupP
     !readOnly && setValue(typeof event === 'string' ? event : event.currentTarget.value);
 
   return (
-    <RadioGroupContext value={{ value: _value, onChange: handleChange, size, name: _name }}>
+    <RadioGroupContext
+      value={{ value: _value, onChange: handleChange, size, name: _name, disabled }}
+    >
       <Input.Wrapper
         size={size}
         {...wrapperProps}

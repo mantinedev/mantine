@@ -508,9 +508,9 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
                 strokeWidth: 1,
                 strokeDasharray,
               }}
-              content={({ label, payload }) => (
+              content={({ label, payload, labelFormatter }) => (
                 <ChartTooltip
-                  label={label}
+                  label={labelFormatter && payload ? labelFormatter(label, payload) : label}
                   payload={payload}
                   unit={unit}
                   classNames={resolvedClassNames}

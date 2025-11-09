@@ -75,6 +75,10 @@
   &:where([data-with-border]) {
     border-inline-start: 1px solid var(--app-shell-border-color);
   }
+
+  :where([data-scroll-locked]) & {
+    visibility: var(--app-shell-aside-scroll-locked-visibility);
+  }
 }
 
 .main {
@@ -90,12 +94,12 @@
 .footer {
   position: fixed;
   inset-inline: 0;
-  transition-property: transform, left, right;
+  transition-property: transform, margin-inline-start, margin-inline-end;
   background-color: var(--mantine-color-body);
 
   :where([data-layout='alt']) & {
-    inset-inline-start: var(--app-shell-navbar-offset, 0rem);
-    inset-inline-end: var(--app-shell-aside-offset, 0rem);
+    margin-inline-start: var(--app-shell-navbar-offset, 0rem);
+    margin-inline-end: var(--app-shell-aside-offset, 0rem);
   }
 }
 

@@ -16,3 +16,4 @@ export { presetsGroups } from './TimePicker.demo.presetsGroups';
 export { presetsRange } from './TimePicker.demo.presetsRange';
 export { dropdownPosition } from './TimePicker.demo.dropdownPosition';
 export { dropdownWidth } from './TimePicker.demo.dropdownWidth';
+export { withPlaceholders } from './TimePicker.demo.withPlaceholders';

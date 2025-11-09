@@ -190,15 +190,13 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
   const { styleProps, rest } = extractStyleProps(others);
   const uuid = useId(id);
 
-  const contextProps = ctx
-    ? {
-        checked: ctx.value.includes(rest.value as string),
-        onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-          ctx.onChange(event);
-          onChange?.(event);
-        },
-      }
-    : {};
+  const withContextProps = {
+    checked: ctx?.value.includes(rest.value as string) ?? checked,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+      ctx?.onChange(event);
+      onChange?.(event);
+    },
+  };
 
   const isDisabledByGroup = ctx?.isDisabled?.(rest.value as string) ?? false;
   const finalDisabled = disabled || isDisabledByGroup;
@@ -208,7 +206,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
       inputRef.current.indeterminate = indeterminate || false;
 
       if (indeterminate) {
-        inputRef.current.setAttribute('data-indeterminate', '');
+        inputRef.current.setAttribute('data-indeterminate', 'true');
       } else {
         inputRef.current.removeAttribute('data-indeterminate');
       }
@@ -230,7 +228,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
       classNames={classNames}
       styles={styles}
       unstyled={unstyled}
-      data-checked={contextProps.checked || checked || undefined}
+      data-checked={withContextProps.checked || checked || undefined}
       variant={variant}
       ref={rootRef}
       mod={mod}
@@ -242,13 +240,11 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
           component="input"
           id={uuid}
           ref={useMergedRef(inputRef, ref)}
-          checked={checked}
-          disabled={finalDisabled}
-          mod={{ error: !!error, 'with-error-styles': withErrorStyles }}
+          mod={{ error: !!error, indeterminate }}
           {...getStyles('input', { focusable: true, variant })}
-          onChange={onChange}
           {...rest}
-          {...contextProps}
+          {...withContextProps}
+          disabled={finalDisabled}
           type="checkbox"
           onClick={(event) => {
             if (readOnly) {

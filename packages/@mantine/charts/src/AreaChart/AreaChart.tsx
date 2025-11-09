@@ -48,6 +48,7 @@ function valueToPercent(value: number) {
 export interface AreaChartSeries extends ChartSeries {
   strokeDasharray?: string | number;
   color: MantineColor;
+  curveType?: AreaChartCurveType;
 }
 
 export type AreaChartType = 'default' | 'stacked' | 'percent' | 'split';
@@ -295,7 +296,7 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
           activeDot={false}
           dot={false}
           name={item.name}
-          type={curveType}
+          type={item.curveType ?? curveType}
           dataKey={item.name}
           fill={type === 'split' ? `url(#${splitId})` : `url(#${id})`}
           strokeWidth={strokeWidth}
@@ -464,9 +465,9 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
                 strokeWidth: 1,
                 strokeDasharray,
               }}
-              content={({ label, payload }) => (
+              content={({ label, payload, labelFormatter }) => (
                 <ChartTooltip
-                  label={label}
+                  label={labelFormatter && payload ? labelFormatter(label, payload) : label}
                   payload={payload}
                   unit={unit}
                   classNames={resolvedClassNames}

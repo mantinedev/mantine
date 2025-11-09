@@ -31,16 +31,16 @@ export interface HeatmapProps
   extends BoxProps,
     StylesApiProps<HeatmapFactory>,
     ElementProps<'svg', 'display' | 'opacity' | 'viewBox' | 'width' | 'height'> {
-  /** Heatmap data, key is date in `YYYY-MM-DD` format */
+  /** Heatmap data, key is date in `YYYY-MM-DD` format (interpreted as a UTC calendar day) */
   data: Record<string, number>;
 
   /** Heatmap domain, array of 2 numbers, min and max values, calculated from data by default */
   domain?: [number, number];
 
-  /** Heatmap start date. Current date - 1 year by default. */
+  /** Heatmap start date. Current date - 1 year by default. Date is normalized to UTC midnight of the intended calendar day. */
   startDate?: Date | string;
 
-  /** Heatmap end date. Current date by default. */
+  /** Heatmap end date. Current date by default. Date is normalized to UTC midnight of the intended calendar day. */
   endDate?: Date | string;
 
   /** If set, month labels are displayed @default `false` */

@@ -39,7 +39,7 @@ export function HeatmapSplitWeeks({
           if (!date) {
             return null;
           }
-          if (new Date(date).getMonth() !== col.month) {
+          if (new Date(date).getUTCMonth() !== col.month) {
             return null;
           }
 

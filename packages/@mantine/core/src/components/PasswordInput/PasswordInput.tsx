@@ -157,6 +157,7 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
       disabled={disabled}
       radius={radius}
       aria-hidden={!visibilityToggleButtonProps}
+      aria-pressed={_visible}
       tabIndex={-1}
       {...visibilityToggleButtonProps}
       variant={visibilityToggleButtonProps?.variant ?? 'subtle'}

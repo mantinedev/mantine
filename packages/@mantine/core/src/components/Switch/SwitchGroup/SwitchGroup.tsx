@@ -49,6 +49,9 @@ export interface SwitchGroupProps<Value extends string = string>
 
   /** Maximum number of switches that can be selected. When the limit is reached, unselected switches will be disabled */
   maxSelectedValues?: number;
+
+  /** Sets `disabled` attribute, prevents interactions */
+  disabled?: boolean;
 }
 
 export type SwitchGroupFactory = Factory<{
@@ -77,6 +80,7 @@ export const SwitchGroup = genericFactory<SwitchGroupFactory>(((
     hiddenInputValuesSeparator,
     hiddenInputProps,
     maxSelectedValues,
+    disabled,
     ...others
   } = useProps('SwitchGroup', defaultProps, props);
 
@@ -106,6 +110,10 @@ export const SwitchGroup = genericFactory<SwitchGroupFactory>(((
   };
 
   const isDisabled = (switchValue: string) => {
+    if (disabled) {
+      return true;
+    }
+
     if (!maxSelectedValues) {
       return false;
     }

@@ -18,6 +18,11 @@ export const Demo_disabled = {
   render: renderDemo(demos.disabled),
 };
 
+export const Demo_group_disabled = {
+  name: '⭐ Demo: group disabled',
+  render: renderDemo(demos.groupDisabled),
+};
+
 export const Demo_icon = {
   name: '⭐ Demo: icon',
   render: renderDemo(demos.icon),

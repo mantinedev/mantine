@@ -306,10 +306,10 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
                 strokeWidth: 1,
                 strokeDasharray,
               }}
-              content={({ label, payload }) => (
+              content={({ label, payload, labelFormatter }) => (
                 <ChartTooltip
                   type="scatter"
-                  label={label}
+                  label={labelFormatter && payload ? labelFormatter(label, payload) : label}
                   payload={
                     labels
                       ? payload?.map((item) => ({

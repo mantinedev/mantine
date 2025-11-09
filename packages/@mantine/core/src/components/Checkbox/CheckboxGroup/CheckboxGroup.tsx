@@ -48,7 +48,11 @@ export interface CheckboxGroupProps<Value extends string = string>
   hiddenInputValuesSeparator?: string;
 
   /** Maximum number of checkboxes that can be selected. When the limit is reached, unselected checkboxes will be disabled */
+
   maxSelectedValues?: number;
+
+  /** Sets `disabled` attribute, prevents interactions */
+  disabled?: boolean;
 }
 
 export type CheckboxGroupFactory = Factory<{
@@ -77,6 +81,7 @@ export const CheckboxGroup = genericFactory<CheckboxGroupFactory>(((
     hiddenInputValuesSeparator,
     hiddenInputProps,
     maxSelectedValues,
+    disabled,
     ...others
   } = useProps('CheckboxGroup', defaultProps, props);
 
@@ -106,6 +111,10 @@ export const CheckboxGroup = genericFactory<CheckboxGroupFactory>(((
   };
 
   const isDisabled = (checkboxValue: string) => {
+    if (disabled) {
+      return true;
+    }
+
     if (!maxSelectedValues) {
       return false;
     }

@@ -180,6 +180,15 @@ export interface TimePickerProps
 
   /** If set, the time controls list are reversed, @default `false` */
   reverseTimeControlsList?: boolean;
+
+  /** Hours input placeholder, @default `--` */
+  hoursPlaceholder?: string;
+
+  /** Minutes input placeholder, @default `--` */
+  minutesPlaceholder?: string;
+
+  /** Seconds input placeholder, @default `--` */
+  secondsPlaceholder?: string;
 }
 
 export type TimePickerFactory = Factory<{
@@ -198,6 +207,9 @@ const defaultProps = {
   amPmLabels: { am: 'AM', pm: 'PM' },
   pasteSplit: getParsedTime,
   maxDropdownContentHeight: 200,
+  hoursPlaceholder: '--',
+  minutesPlaceholder: '--',
+  secondsPlaceholder: '--',
 } satisfies Partial<TimePickerProps>;
 
 const varsResolver = createVarsResolver<TimePickerFactory>((_theme, { size }) => ({
@@ -262,6 +274,9 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
     scrollAreaProps,
     attributes,
     reverseTimeControlsList,
+    hoursPlaceholder,
+    minutesPlaceholder,
+    secondsPlaceholder,
     ...others
   } = props;
 
@@ -429,6 +444,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                     }
                     hoursInputProps?.onBlur?.(event);
                   }}
+                  placeholder={hoursPlaceholder}
                 />
                 <span>:</span>
                 <SpinInput
@@ -457,6 +473,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                     handleFocus(event);
                     minutesInputProps?.onFocus?.(event);
                   }}
+                  placeholder={minutesPlaceholder}
                 />
 
                 {withSeconds && (
@@ -486,6 +503,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                         handleFocus(event);
                         secondsInputProps?.onFocus?.(event);
                       }}
+                      placeholder={secondsPlaceholder}
                     />
                   </>
                 )}

@@ -11,6 +11,7 @@ interface SpinInputProps extends Omit<React.ComponentProps<'input'>, 'onChange' 
   onNextInput?: () => void;
   onPreviousInput?: () => void;
   allowTemporaryZero?: boolean;
+  placeholder?: string;
 }
 
 const getMaxDigit = (max: number) => Number(max.toFixed(0)[0]);
@@ -27,6 +28,7 @@ export function SpinInput({
   onFocus,
   readOnly,
   allowTemporaryZero = false,
+  placeholder = '--',
   ...others
 }: SpinInputProps) {
   const maxDigit = getMaxDigit(max);
@@ -115,7 +117,7 @@ export function SpinInput({
       aria-valuenow={value === null ? 0 : value}
       data-empty={value === null || undefined}
       inputMode="numeric"
-      placeholder="--"
+      placeholder={placeholder}
       value={value === null ? '' : padTime(value)}
       onChange={(event) => handleChange(event.currentTarget.value)}
       onKeyDown={handleKeyDown}

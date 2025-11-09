@@ -10,6 +10,10 @@
   padding: 0;
   padding-inline-start: var(--list-marker-gap);
 
+  &[data-type='none'] {
+    --list-marker-gap: 0;
+  }
+
   &:where([data-with-padding]) {
     padding-inline-start: calc(var(--list-marker-gap) + var(--mantine-spacing-md));
   }

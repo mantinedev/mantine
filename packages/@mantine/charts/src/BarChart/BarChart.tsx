@@ -457,9 +457,9 @@ export const BarChart = factory<BarChartFactory>((_props) => {
                 strokeDasharray,
                 fill: 'var(--chart-cursor-fill)',
               }}
-              content={({ label, payload }) => (
+              content={({ label, payload, labelFormatter }) => (
                 <ChartTooltip
-                  label={label}
+                  label={labelFormatter && payload ? labelFormatter(label, payload) : label}
                   payload={payload}
                   type={type === 'waterfall' ? 'scatter' : undefined}
                   unit={unit}

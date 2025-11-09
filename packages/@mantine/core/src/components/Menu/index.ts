@@ -5,6 +5,10 @@ export { MenuLabel } from './MenuLabel/MenuLabel';
 export { MenuDropdown } from './MenuDropdown/MenuDropdown';
 export { MenuTarget } from './MenuTarget/MenuTarget';
 export { useMenuContext } from './Menu.context';
+export { MenuSub } from './MenuSub/MenuSub';
+export { MenuSubDropdown } from './MenuSubDropdown/MenuSubDropdown';
+export { MenuSubItem } from './MenuSubItem/MenuSubItem';
+export { MenuSubTarget } from './MenuSubTarget/MenuSubTarget';
 
 export type { MenuFactory, MenuProps, MenuStylesNames } from './Menu';
 export type { MenuDividerProps } from './MenuDivider/MenuDivider';
@@ -13,3 +17,7 @@ export type { MenuLabelProps } from './MenuLabel/MenuLabel';
 export type { MenuDropdownProps } from './MenuDropdown/MenuDropdown';
 export type { MenuTargetProps } from './MenuTarget/MenuTarget';
 export type { MenuContextValue } from './Menu.context';
+export type { MenuSubProps } from './MenuSub/MenuSub';
+export type { MenuSubDropdownProps } from './MenuSubDropdown/MenuSubDropdown';
+export type { MenuSubItemProps } from './MenuSubItem/MenuSubItem';
+export type { MenuSubTargetProps } from './MenuSubTarget/MenuSubTarget';
