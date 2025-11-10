@@ -1,4 +1,4 @@
-.root {
+.monthView {
   --cells-per-row: 7;
 
   &[data-with-week-numbers] {

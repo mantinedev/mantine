@@ -15,7 +15,7 @@ import classes from './MonthView.module.css';
 
 dayjs.extend(weekOfYear);
 
-export type MonthViewStylesNames = 'root' | 'week' | 'day' | 'weekNumber';
+export type MonthViewStylesNames = 'monthView' | 'week' | 'day' | 'weekNumber';
 
 export interface MonthViewProps
   extends BoxProps,
@@ -61,6 +61,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     styles,
     unstyled,
     vars,
+    rootSelector: 'monthView',
   });
 
   const weeks = getMonthDays({ month, firstDayOfWeek: 1, consistentWeeks: false }).map(
@@ -81,11 +82,15 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
   );
 
   return (
-    <Box mod={[{ 'with-week-numbers': withWeekNumbers }, mod]} {...getStyles('root')} {...others}>
+    <Box
+      mod={[{ 'with-week-numbers': withWeekNumbers }, mod]}
+      {...getStyles('monthView')}
+      {...others}
+    >
       {weeks}
     </Box>
   );
 });
 
-MonthView.displayName = '@mantine/core/MonthView';
+MonthView.displayName = '@mantine/schedule/MonthView';
 MonthView.classes = classes;
