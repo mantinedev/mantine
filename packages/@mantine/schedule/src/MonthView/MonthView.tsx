@@ -14,6 +14,7 @@ import {
   getMonthDays,
   getWeekdaysNames,
   getWeekNumber,
+  isSameMonth,
   useDatesContext,
 } from '@mantine/dates-utils';
 import { DateLabelFormat } from '../../../dates-utils/lib/types';
@@ -79,6 +80,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     locale,
     weekdayFormat,
     firstDayOfWeek,
+    weekendDays,
     ...others
   } = props;
 
@@ -111,11 +113,19 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
   const weeks = getMonthDays({ month, firstDayOfWeek: 1, consistentWeeks: false }).map(
     (week, index) => {
-      const days = week.map((day) => (
-        <div {...getStyles('day')} key={day}>
-          {dayjs(day).format('D')}
-        </div>
-      ));
+      const days = week.map((date) => {
+        const outside = !isSameMonth(date, month);
+        const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(date).day());
+        const ariaLabel = dayjs(date)
+          .locale(locale || ctx.locale)
+          .format('D MMMM YYYY');
+
+        return (
+          <Box {...getStyles('day')} key={date} aria-label={ariaLabel} mod={{ outside, weekend }}>
+            {dayjs(date).format('D')}
+          </Box>
+        );
+      });
 
       return (
         <div {...getStyles('week')} key={index}>
@@ -128,7 +138,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
   return (
     <Box
-      mod={[{ 'with-week-numbers': withWeekNumbers }, mod]}
+      mod={[{ 'with-week-numbers': withWeekNumbers, 'with-weekdays': withWeekDays }, mod]}
       {...getStyles('monthView')}
       {...others}
     >

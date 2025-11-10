@@ -1,5 +1,8 @@
 .monthView {
   --cells-per-row: 7;
+  --border-color: var(--mantine-color-gray-4);
+  --month-view-border: 1px solid var(--border-color);
+  --day-base-color: var(--mantine-color-text);
 
   &[data-with-week-numbers] {
     --cells-per-row: 8;
@@ -21,25 +24,59 @@
 .weekNumber {
   flex: 0 0 calc(100% / var(--cells-per-row));
   padding: 4px;
-  border: 1px solid #ccc;
+  border-top: var(--month-view-border);
+  border-bottom: none;
+  border-left: var(--month-view-border);
+  border-right: none;
   background-color: #f5f5f5;
   font-weight: bold;
   text-align: center;
+
+  .week:last-child & {
+    border-bottom: var(--month-view-border);
+  }
 }
 
 .weekday {
   flex: 0 0 calc(100% / 7);
   padding: 4px;
-  border: 1px solid #ccc;
+  border-top: var(--month-view-border);
+  border-bottom: none;
+  border-left: var(--month-view-border);
+  border-right: none;
   background-color: #f0f0f0;
   font-weight: bold;
   text-align: center;
   text-transform: capitalize;
+
+  &:last-child {
+    border-right: var(--month-view-border);
+  }
 }
 
 .day {
   flex: 0 0 calc(100% / var(--cells-per-row));
   padding: 4px;
-  border: 1px solid #eee;
+  border-top: var(--month-view-border);
+  border-bottom: none;
+  border-left: var(--month-view-border);
+  border-right: none;
   text-align: center;
+  color: var(--day-base-color);
+
+  &:last-child {
+    border-right: var(--month-view-border);
+  }
+
+  .week:last-child & {
+    border-bottom: var(--month-view-border);
+  }
+
+  &:where([data-weekend]) {
+    color: var(--mantine-color-red-6);
+  }
+
+  &:where([data-outside]) {
+    color: alpha(var(--day-base-color), 0.4);
+  }
 }

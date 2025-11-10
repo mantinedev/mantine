@@ -7,6 +7,7 @@ export { getWeekNumber } from './get-week-number/get-week-number.js';
 export { getMonthDays } from './get-month-days/get-month-days.js';
 export { isAfterMinDate } from './is-after-min-date/is-after-min-date.js';
 export { isBeforeMaxDate } from './is-before-max-date/is-before-max-date.js';
+export { isSameMonth } from './is-same-month/is-same-month.js';
 
 export type { DateStringValue, DateTimeStringValue, DayOfWeek } from './types';
 export type { DatesProviderProps, DatesProviderSettings } from './DatesProvider/DatesProvider';
