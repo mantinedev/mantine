@@ -9,3 +9,11 @@ export function Usage() {
     </div>
   );
 }
+
+export function WithWeekNumbers() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MonthView month="2025-11-01" withWeekNumbers />
+    </div>
+  );
+}

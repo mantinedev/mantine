@@ -1,9 +1,24 @@
 .week {
   display: flex;
+
+  --cells-per-row: 7;
+
+  &[data-with-week-numbers] {
+    --cells-per-row: 8;
+  }
+}
+
+.weekNumber {
+  flex: 0 0 calc(100% / var(--cells-per-row));
+  padding: 4px;
+  border: 1px solid #ccc;
+  background-color: #f5f5f5;
+  font-weight: bold;
+  text-align: center;
 }
 
 .day {
-  flex: 1;
+  flex: 0 0 calc(100% / var(--cells-per-row));
   padding: 4px;
   border: 1px solid #eee;
   text-align: center;

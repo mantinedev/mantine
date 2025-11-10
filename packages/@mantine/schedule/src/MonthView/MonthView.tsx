@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
 import {
   Box,
   BoxProps,
@@ -12,7 +13,9 @@ import {
 import { getMonthDays } from '@mantine/dates-utils';
 import classes from './MonthView.module.css';
 
-export type MonthViewStylesNames = 'root' | 'week' | 'day';
+dayjs.extend(weekOfYear);
+
+export type MonthViewStylesNames = 'root' | 'week' | 'day' | 'weekNumber';
 
 export interface MonthViewProps
   extends BoxProps,
@@ -20,6 +23,9 @@ export interface MonthViewProps
     ElementProps<'div'> {
   /** Month to display, date string in `YYYY-MM-DD` format */
   month: string;
+
+  /** If set, week numbers are displayed @default `false` */
+  withWeekNumbers?: boolean;
 }
 
 export type MonthViewFactory = Factory<{
@@ -32,7 +38,18 @@ const defaultProps = {} satisfies Partial<MonthViewProps>;
 
 export const MonthView = factory<MonthViewFactory>((_props) => {
   const props = useProps('MonthView', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, month, ...others } = props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    month,
+    withWeekNumbers,
+    mod,
+    ...others
+  } = props;
 
   const getStyles = useStyles<MonthViewFactory>({
     name: 'MonthView',
@@ -56,6 +73,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
       return (
         <div {...getStyles('week')} key={index}>
+          {withWeekNumbers && <div {...getStyles('weekNumber')}>{dayjs(week[0]).week()}</div>}
           {days}
         </div>
       );
@@ -63,7 +81,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
   );
 
   return (
-    <Box {...getStyles('root')} {...others}>
+    <Box mod={[{ 'with-week-numbers': withWeekNumbers }, mod]} {...getStyles('root')} {...others}>
       {weeks}
     </Box>
   );
