@@ -1,11 +1,13 @@
-.week {
-  display: flex;
-
+.root {
   --cells-per-row: 7;
 
   &[data-with-week-numbers] {
     --cells-per-row: 8;
   }
+}
+
+.week {
+  display: flex;
 }
 
 .weekNumber {
