@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
 import {
   Box,
   BoxProps,
@@ -10,12 +9,23 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { getMonthDays } from '@mantine/dates-utils';
+import {
+  DayOfWeek,
+  getMonthDays,
+  getWeekdaysNames,
+  getWeekNumber,
+  useDatesContext,
+} from '@mantine/dates-utils';
+import { DateLabelFormat } from '../../../dates-utils/lib/types';
 import classes from './MonthView.module.css';
 
-dayjs.extend(weekOfYear);
-
-export type MonthViewStylesNames = 'monthView' | 'week' | 'day' | 'weekNumber';
+export type MonthViewStylesNames =
+  | 'monthView'
+  | 'week'
+  | 'day'
+  | 'weekNumber'
+  | 'weekday'
+  | 'weekdays';
 
 export interface MonthViewProps
   extends BoxProps,
@@ -24,8 +34,23 @@ export interface MonthViewProps
   /** Month to display, date string in `YYYY-MM-DD` format */
   month: string;
 
-  /** If set, week numbers are displayed @default `false` */
+  /** If set, week numbers are displayed in the first column @default `false` */
   withWeekNumbers?: boolean;
+
+  /** If set, weekdays names are displayed in the first row @default `true` */
+  withWeekDays?: boolean;
+
+  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
+  locale?: string;
+
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default `1` – Monday */
+  firstDayOfWeek?: DayOfWeek;
+
+  /** `dayjs` format for weekdays names @default `'dd'` */
+  weekdayFormat?: DateLabelFormat;
+
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
+  weekendDays?: DayOfWeek[];
 }
 
 export type MonthViewFactory = Factory<{
@@ -34,7 +59,9 @@ export type MonthViewFactory = Factory<{
   stylesNames: MonthViewStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<MonthViewProps>;
+const defaultProps = {
+  withWeekDays: true,
+} satisfies Partial<MonthViewProps>;
 
 export const MonthView = factory<MonthViewFactory>((_props) => {
   const props = useProps('MonthView', defaultProps, _props);
@@ -45,9 +72,13 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     styles,
     unstyled,
     vars,
+    mod,
     month,
     withWeekNumbers,
-    mod,
+    withWeekDays,
+    locale,
+    weekdayFormat,
+    firstDayOfWeek,
     ...others
   } = props;
 
@@ -64,6 +95,20 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     rootSelector: 'monthView',
   });
 
+  const ctx = useDatesContext();
+
+  const weekdays = withWeekDays
+    ? getWeekdaysNames({
+        locale: ctx.getLocale(locale),
+        format: weekdayFormat,
+        firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+      }).map((day, index) => (
+        <div {...getStyles('weekday')} key={index}>
+          {day}
+        </div>
+      ))
+    : null;
+
   const weeks = getMonthDays({ month, firstDayOfWeek: 1, consistentWeeks: false }).map(
     (week, index) => {
       const days = week.map((day) => (
@@ -74,7 +119,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
       return (
         <div {...getStyles('week')} key={index}>
-          {withWeekNumbers && <div {...getStyles('weekNumber')}>{dayjs(week[0]).week()}</div>}
+          {withWeekNumbers && <div {...getStyles('weekNumber')}>{getWeekNumber(week)}</div>}
           {days}
         </div>
       );
@@ -87,6 +132,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       {...getStyles('monthView')}
       {...others}
     >
+      {weekdays && <div {...getStyles('weekdays')}>{weekdays}</div>}
       {weeks}
     </Box>
   );

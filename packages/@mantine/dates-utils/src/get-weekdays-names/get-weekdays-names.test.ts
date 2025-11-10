@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 
 import 'dayjs/locale/ru';
 
-import { getWeekdayNames } from './get-weekdays-names';
+import { getWeekdaysNames } from './get-weekdays-names';
 
 describe('@mantine/dates/get-weekday-names', () => {
   afterEach(() => {
@@ -10,7 +10,7 @@ describe('@mantine/dates/get-weekday-names', () => {
   });
 
   it('returns correct weekday names for given locale', () => {
-    expect(getWeekdayNames({ locale: 'en' })).toStrictEqual([
+    expect(getWeekdaysNames({ locale: 'en' })).toStrictEqual([
       'Mo',
       'Tu',
       'We',
@@ -19,7 +19,7 @@ describe('@mantine/dates/get-weekday-names', () => {
       'Sa',
       'Su',
     ]);
-    expect(getWeekdayNames({ locale: 'ru' })).toStrictEqual([
+    expect(getWeekdaysNames({ locale: 'ru' })).toStrictEqual([
       'пн',
       'вт',
       'ср',
@@ -31,7 +31,7 @@ describe('@mantine/dates/get-weekday-names', () => {
   });
 
   it('supports custom format', () => {
-    expect(getWeekdayNames({ locale: 'en', format: 'dddd' })).toStrictEqual([
+    expect(getWeekdaysNames({ locale: 'en', format: 'dddd' })).toStrictEqual([
       'Monday',
       'Tuesday',
       'Wednesday',
@@ -44,11 +44,11 @@ describe('@mantine/dates/get-weekday-names', () => {
 
   it('supports custom format function', () => {
     expect(
-      getWeekdayNames({ locale: 'en', format: (date) => dayjs(date).format('dd')[0] })
+      getWeekdaysNames({ locale: 'en', format: (date) => dayjs(date).format('dd')[0] })
     ).toStrictEqual(['M', 'T', 'W', 'T', 'F', 'S', 'S']);
 
     expect(
-      getWeekdayNames({
+      getWeekdaysNames({
         locale: 'ru',
         format: (date) => dayjs(date).locale('ru').format('dd')[0].toUpperCase(),
       })
@@ -56,7 +56,7 @@ describe('@mantine/dates/get-weekday-names', () => {
   });
 
   it('supports custom first day of week', () => {
-    expect(getWeekdayNames({ locale: 'en', firstDayOfWeek: 0 })).toStrictEqual([
+    expect(getWeekdaysNames({ locale: 'en', firstDayOfWeek: 0 })).toStrictEqual([
       'Su',
       'Mo',
       'Tu',
@@ -65,7 +65,7 @@ describe('@mantine/dates/get-weekday-names', () => {
       'Fr',
       'Sa',
     ]);
-    expect(getWeekdayNames({ locale: 'en', firstDayOfWeek: 6 })).toStrictEqual([
+    expect(getWeekdaysNames({ locale: 'en', firstDayOfWeek: 6 })).toStrictEqual([
       'Sa',
       'Su',
       'Mo',
@@ -79,7 +79,7 @@ describe('@mantine/dates/get-weekday-names', () => {
   it('respects the locale globally set for dayjs', () => {
     dayjs.locale('ru');
 
-    expect(getWeekdayNames({ locale: 'en', firstDayOfWeek: 0 })).toStrictEqual([
+    expect(getWeekdaysNames({ locale: 'en', firstDayOfWeek: 0 })).toStrictEqual([
       'Su',
       'Mo',
       'Tu',
@@ -89,7 +89,7 @@ describe('@mantine/dates/get-weekday-names', () => {
       'Sa',
     ]);
 
-    expect(getWeekdayNames({ locale: 'en', firstDayOfWeek: 1 })).toStrictEqual([
+    expect(getWeekdaysNames({ locale: 'en', firstDayOfWeek: 1 })).toStrictEqual([
       'Mo',
       'Tu',
       'We',

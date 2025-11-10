@@ -6,3 +6,6 @@ export type DateTimeStringValue = string;
 
 /** Day of the week, 0 – Sunday, 1 – Monday, etc. */
 export type DayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
+/** string – dayjs format, callback function – custom formatter */
+export type DateLabelFormat = string | ((date: DateStringValue) => React.ReactNode);

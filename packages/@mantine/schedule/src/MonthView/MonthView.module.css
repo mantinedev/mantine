@@ -6,6 +6,14 @@
   }
 }
 
+.weekdays {
+  display: flex;
+
+  :where([data-with-week-numbers='true']) & {
+    padding-inline-start: calc(100% / var(--cells-per-row));
+  }
+}
+
 .week {
   display: flex;
 }
@@ -17,6 +25,16 @@
   background-color: #f5f5f5;
   font-weight: bold;
   text-align: center;
+}
+
+.weekday {
+  flex: 0 0 calc(100% / 7);
+  padding: 4px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  text-align: center;
+  text-transform: capitalize;
 }
 
 .day {
