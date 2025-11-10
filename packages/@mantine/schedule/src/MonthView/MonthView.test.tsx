@@ -1,3 +1,6 @@
+import 'dayjs/locale/ru';
+
+import { DatesProvider } from '@mantine/dates-utils';
 import { render, tests } from '@mantine-tests/core';
 import { MonthView, MonthViewProps, MonthViewStylesNames } from './MonthView';
 
@@ -33,5 +36,56 @@ describe('@mantine/core/MonthView', () => {
     expect(weekNumbers.length).toStrictEqual(5);
     expect(weekNumbers[0].textContent).toStrictEqual('44');
     expect(weekNumbers[weekNumbers.length - 1].textContent).toStrictEqual('48');
+  });
+
+  it('renders weekdays names when withWeekDays is true', () => {
+    const { container } = render(<MonthView {...defaultProps} withWeekDays />);
+    const weekdays = container.querySelectorAll('.mantine-MonthView-weekday');
+    expect(weekdays.length).toStrictEqual(7);
+    expect(weekdays[0].textContent).toStrictEqual('Mo');
+    expect(weekdays[weekdays.length - 1].textContent).toStrictEqual('Su');
+  });
+
+  it('supports custom firstDayOfWeek (prop)', () => {
+    const { container } = render(<MonthView {...defaultProps} withWeekDays firstDayOfWeek={0} />);
+    const weekdays = container.querySelectorAll('.mantine-MonthView-weekday');
+    expect(weekdays.length).toStrictEqual(7);
+    expect(weekdays[0].textContent).toStrictEqual('Su');
+    expect(weekdays[weekdays.length - 1].textContent).toStrictEqual('Sa');
+  });
+
+  it('supports custom firstDayOfWeek (DatesProvider)', () => {
+    const { container } = render(
+      <DatesProvider settings={{ firstDayOfWeek: 0 }}>
+        <MonthView {...defaultProps} withWeekDays />
+      </DatesProvider>
+    );
+    const weekdays = container.querySelectorAll('.mantine-MonthView-weekday');
+    expect(weekdays.length).toStrictEqual(7);
+    expect(weekdays[0].textContent).toStrictEqual('Su');
+    expect(weekdays[weekdays.length - 1].textContent).toStrictEqual('Sa');
+  });
+
+  it('supports locale (prop)', () => {
+    const { container } = render(<MonthView {...defaultProps} withWeekDays locale="ru" />);
+    const weekdays = container.querySelectorAll('.mantine-MonthView-weekday');
+    expect(weekdays[0].textContent).toStrictEqual('пн');
+  });
+
+  it('supports locale (DatesProvider)', () => {
+    const { container } = render(
+      <DatesProvider settings={{ locale: 'ru' }}>
+        <MonthView {...defaultProps} withWeekDays />
+      </DatesProvider>
+    );
+    const weekdays = container.querySelectorAll('.mantine-MonthView-weekday');
+    expect(weekdays[0].textContent).toStrictEqual('пн');
+  });
+
+  it('does not render weekdays names when withWeekDays is false', () => {
+    const { container } = render(<MonthView {...defaultProps} withWeekDays={false} />);
+    const weekdays = container.querySelectorAll('.mantine-MonthView-weekday');
+    expect(weekdays.length).toStrictEqual(0);
+    expect(container.querySelector('.mantine-MonthView-weekdays')).not.toBeInTheDocument();
   });
 });
