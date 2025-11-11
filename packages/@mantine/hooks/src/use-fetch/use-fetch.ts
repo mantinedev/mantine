@@ -1,7 +1,16 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
+
+type UseFetchFormat =
+  | "arrayBuffer"
+  | "blob"
+  | "bytes"
+  | "formData"
+  | "json"
+  | "text";
 
 export interface UseFetchOptions extends RequestInit {
   autoInvoke?: boolean;
+  convert?: UseFetchFormat;
 }
 
 export interface UseFetchReturnValue<T> {
@@ -14,7 +23,7 @@ export interface UseFetchReturnValue<T> {
 
 export function useFetch<T>(
   url: string,
-  { autoInvoke = true, ...options }: UseFetchOptions = {}
+  { autoInvoke = true, convert, ...options }: UseFetchOptions = {}
 ): UseFetchReturnValue<T> {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(false);
@@ -31,7 +40,7 @@ export function useFetch<T>(
     setLoading(true);
 
     return fetch(url, { signal: controller.current.signal, ...options })
-      .then((res) => res.json())
+      .then((res) => (convert ? res[convert] : res.json()))
       .then((res) => {
         setData(res);
         setLoading(false);
@@ -40,7 +49,7 @@ export function useFetch<T>(
       .catch((err) => {
         setLoading(false);
 
-        if (err.name !== 'AbortError') {
+        if (err.name !== "AbortError") {
           setError(err);
         }
 
@@ -50,7 +59,7 @@ export function useFetch<T>(
 
   const abort = useCallback(() => {
     if (controller.current) {
-      controller.current?.abort('');
+      controller.current?.abort("");
     }
   }, []);
 
@@ -61,7 +70,7 @@ export function useFetch<T>(
 
     return () => {
       if (controller.current) {
-        controller.current.abort('');
+        controller.current.abort("");
       }
     };
   }, [refetch, autoInvoke]);
