@@ -13,6 +13,7 @@ import {
   PolymorphicFactory,
   rem,
   StylesApiProps,
+  useDirection,
   useProps,
   useStyles,
 } from '../../core';
@@ -167,6 +168,7 @@ export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
     ...others
   } = props;
 
+  const { dir } = useDirection();
   const getStyles = useStyles<ButtonFactory>({
     name: 'Button',
     props,
@@ -183,6 +185,11 @@ export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
 
   const hasLeftSection = !!leftSection;
   const hasRightSection = !!rightSection;
+
+  // In RTL, swap the sections visually
+  const shouldSwapSections = dir === 'rtl';
+  const startSection = shouldSwapSections ? rightSection : leftSection;
+  const endSection = shouldSwapSections ? leftSection : rightSection;
 
   return (
     <UnstyledButton
@@ -218,9 +225,9 @@ export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
       )}
 
       <span {...getStyles('inner')}>
-        {leftSection && (
+        {startSection && (
           <Box component="span" {...getStyles('section')} mod={{ position: 'left' }}>
-            {leftSection}
+            {startSection}
           </Box>
         )}
 
@@ -228,9 +235,9 @@ export const Button = polymorphicFactory<ButtonFactory>((_props, ref) => {
           {children}
         </Box>
 
-        {rightSection && (
+        {endSection && (
           <Box component="span" {...getStyles('section')} mod={{ position: 'right' }}>
-            {rightSection}
+            {endSection}
           </Box>
         )}
       </span>
