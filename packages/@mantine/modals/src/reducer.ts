@@ -110,7 +110,7 @@ export function modalsReducer(
               ...newProps,
               innerProps: {
                 ...modal.props.innerProps,
-                ...(newProps as Partial<OpenContextModal<any>>).innerProps,
+                ...(newProps as Partial<OpenContextModal>).innerProps,
               },
             },
           };
