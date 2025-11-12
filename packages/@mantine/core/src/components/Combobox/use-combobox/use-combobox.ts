@@ -259,7 +259,7 @@ export function useCombobox({
         }
       }, 0);
     },
-    [scrollBehavior]
+    []
   );
 
   const resetSelectedOption = useCallback(() => {
