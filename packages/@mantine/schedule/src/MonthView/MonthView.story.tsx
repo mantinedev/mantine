@@ -12,6 +12,14 @@ export function Usage() {
   );
 }
 
+export function Radius() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MonthView month="2025-11-01" radius="md" withWeekNumbers withWeekDays={false} />
+    </div>
+  );
+}
+
 export function FirstDayOfWeek() {
   return (
     <div style={{ padding: 40 }}>

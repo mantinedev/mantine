@@ -2,9 +2,10 @@
   --week-numbers-offset: 0rem;
   --border-color: var(--mantine-color-gray-3);
   --month-view-border: 1px solid var(--border-color);
+  --month-view-radius: var(--schedule-radius, var(--mantine-radius-default));
   --day-base-color: var(--mantine-color-text);
 
-  &[data-with-week-numbers] {
+  &:where([data-with-week-numbers]) {
     --week-numbers-offset: 42px;
   }
 }
@@ -24,16 +25,25 @@
   justify-content: center;
   font-size: var(--mantine-font-size-sm);
   padding: 4px;
-  border-top: var(--month-view-border);
-  border-bottom: none;
-  border-left: var(--month-view-border);
-  border-right: none;
+  border-block-start: var(--month-view-border);
+  border-block-end: none;
+  border-inline-start: var(--month-view-border);
+  border-inline-end: none;
   font-weight: 500;
   cursor: default;
   user-select: none;
 
-  .week:last-child & {
-    border-bottom: var(--month-view-border);
+  :where(.week:first-child) & {
+    border-start-start-radius: var(--month-view-radius);
+
+    :where([data-with-weekdays] .monthView) & {
+      border-start-start-radius: 0;
+    }
+  }
+
+  :where(.week:last-child) & {
+    border-block-end: var(--month-view-border);
+    border-end-start-radius: var(--month-view-radius);
   }
 }
 
@@ -41,10 +51,10 @@
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
   height: 36px;
   font-size: var(--mantine-font-size-sm);
-  border-top: var(--month-view-border);
-  border-bottom: none;
-  border-left: var(--month-view-border);
-  border-right: none;
+  border-block-start: var(--month-view-border);
+  border-block-end: none;
+  border-inline-start: var(--month-view-border);
+  border-inline-end: none;
   font-weight: 500;
   text-align: center;
   text-transform: capitalize;
@@ -54,15 +64,25 @@
   cursor: default;
   user-select: none;
 
-  &:last-child {
-    border-right: var(--month-view-border);
+  &:where(:first-child) {
+    border-start-start-radius: var(--month-view-radius);
+
+    :where([data-with-week-numbers] .monthView) & {
+      border-start-start-radius: 0;
+    }
+  }
+
+  &:where(:last-child) {
+    border-inline-end: var(--month-view-border);
+    border-start-end-radius: var(--month-view-radius);
   }
 }
 
 .weekdaysCorner {
   flex: 0 0 var(--week-numbers-offset);
-  border-top: var(--month-view-border);
-  border-left: var(--month-view-border);
+  border-block-start: var(--month-view-border);
+  border-inline-start: var(--month-view-border);
+  border-start-start-radius: var(--month-view-radius);
 }
 
 .day {
@@ -70,20 +90,55 @@
   height: 100px;
   padding: 8px;
   font-size: var(--mantine-font-size-sm);
-  border-top: var(--month-view-border);
-  border-bottom: none;
-  border-left: var(--month-view-border);
-  border-right: none;
+  border-block-start: var(--month-view-border);
+  border-block-end: none;
+  border-inline-start: var(--month-view-border);
+  border-inline-end: none;
   color: var(--day-base-color);
   cursor: pointer;
   user-select: none;
 
   &:where(:last-child) {
-    border-right: var(--month-view-border);
+    border-inline-end: var(--month-view-border);
+
+    :where(.week:last-child) & {
+      border-block-end: var(--month-view-border);
+      border-end-end-radius: var(--month-view-radius);
+    }
+
+    :where(.week:first-child) & {
+      border-start-end-radius: var(--month-view-radius);
+
+      :where(:not([data-with-weekdays])) .monthView & {
+        border-start-end-radius: var(--month-view-radius);
+      }
+    }
+  }
+
+  &:where(:first-child) {
+    :where(.week:first-child) & {
+      border-start-start-radius: var(--month-view-radius);
+
+      :where([data-with-week-numbers]) .monthView & {
+        border-start-start-radius: 0;
+      }
+
+      :where([data-with-weekdays]) .monthView & {
+        border-start-start-radius: 0;
+      }
+    }
+
+    :where(.week:last-child) & {
+      border-end-start-radius: var(--month-view-radius);
+    }
+
+    :where([data-with-week-numbers]) .week:last-child & {
+      border-end-start-radius: 0;
+    }
   }
 
   :where(.week:last-child) & {
-    border-bottom: var(--month-view-border);
+    border-block-end: var(--month-view-border);
   }
 
   &:where([data-weekend]) {
