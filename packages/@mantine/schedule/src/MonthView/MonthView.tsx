@@ -26,7 +26,8 @@ export type MonthViewStylesNames =
   | 'day'
   | 'weekNumber'
   | 'weekday'
-  | 'weekdays';
+  | 'weekdays'
+  | 'weekdaysCorner';
 
 export interface MonthViewProps
   extends BoxProps,
@@ -47,7 +48,7 @@ export interface MonthViewProps
   /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default `1` – Monday */
   firstDayOfWeek?: DayOfWeek;
 
-  /** `dayjs` format for weekdays names @default `'dd'` */
+  /** `dayjs` format for weekdays names @default `'ddd'` */
   weekdayFormat?: DateLabelFormat;
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
@@ -62,6 +63,7 @@ export type MonthViewFactory = Factory<{
 
 const defaultProps = {
   withWeekDays: true,
+  weekdayFormat: 'ddd',
 } satisfies Partial<MonthViewProps>;
 
 export const MonthView = factory<MonthViewFactory>((_props) => {
@@ -144,7 +146,13 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       {...getStyles('monthView')}
       {...others}
     >
-      {weekdays && <div {...getStyles('weekdays')}>{weekdays}</div>}
+      {weekdays && (
+        <div {...getStyles('weekdays')}>
+          {withWeekNumbers && <div {...getStyles('weekdaysCorner')} />}
+          {weekdays}
+        </div>
+      )}
+
       {weeks}
     </Box>
   );

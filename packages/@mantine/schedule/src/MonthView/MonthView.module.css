@@ -11,10 +11,6 @@
 
 .weekdays {
   display: flex;
-
-  :where([data-with-week-numbers]) & {
-    padding-inline-start: var(--week-numbers-offset);
-  }
 }
 
 .week {
@@ -33,6 +29,8 @@
   border-left: var(--month-view-border);
   border-right: none;
   font-weight: 500;
+  cursor: default;
+  user-select: none;
 
   .week:last-child & {
     border-bottom: var(--month-view-border);
@@ -40,7 +38,7 @@
 }
 
 .weekday {
-  flex: 0 0 calc(100% / 7);
+  flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
   height: 36px;
   font-size: var(--mantine-font-size-sm);
   border-top: var(--month-view-border);
@@ -53,10 +51,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: default;
+  user-select: none;
 
   &:last-child {
     border-right: var(--month-view-border);
   }
+}
+
+.weekdaysCorner {
+  flex: 0 0 var(--week-numbers-offset);
+  border-top: var(--month-view-border);
+  border-left: var(--month-view-border);
 }
 
 .day {
@@ -69,6 +75,8 @@
   border-left: var(--month-view-border);
   border-right: none;
   color: var(--day-base-color);
+  cursor: pointer;
+  user-select: none;
 
   &:where(:last-child) {
     border-right: var(--month-view-border);
@@ -84,5 +92,15 @@
 
   &:where([data-outside]) {
     color: alpha(var(--day-base-color), 0.4);
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
   }
 }
