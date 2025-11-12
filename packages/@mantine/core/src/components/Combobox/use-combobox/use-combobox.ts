@@ -1,10 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
-import {
-  findElementBySelector,
-  findElementsBySelector,
-  getRootElement,
-} from '../../../core/utils';
+import { findElementBySelector, findElementsBySelector, getRootElement } from '../../../core/utils';
 import { getFirstIndex, getNextIndex, getPreviousIndex } from './get-index/get-index';
 
 export type ComboboxDropdownEventSource = 'keyboard' | 'mouse' | 'unknown';
@@ -219,41 +215,32 @@ export function useCombobox({
     return selectOption(0);
   }, [selectOption]);
 
-  const selectNextOption = useCallback(
-    () => {
-      const root = getRootElement(targetRef.current);
-      const items = findElementsBySelector<HTMLDivElement>(
-        `#${listId.current} [data-combobox-option]`,
-        root
-      );
-      return selectOption(getNextIndex(selectedOptionIndex.current, items, loop));
-    },
-    [selectOption, loop]
-  );
+  const selectNextOption = useCallback(() => {
+    const root = getRootElement(targetRef.current);
+    const items = findElementsBySelector<HTMLDivElement>(
+      `#${listId.current} [data-combobox-option]`,
+      root
+    );
+    return selectOption(getNextIndex(selectedOptionIndex.current, items, loop));
+  }, [selectOption, loop]);
 
-  const selectPreviousOption = useCallback(
-    () => {
-      const root = getRootElement(targetRef.current);
-      const items = findElementsBySelector<HTMLDivElement>(
-        `#${listId.current} [data-combobox-option]`,
-        root
-      );
-      return selectOption(getPreviousIndex(selectedOptionIndex.current, items, loop));
-    },
-    [selectOption, loop]
-  );
+  const selectPreviousOption = useCallback(() => {
+    const root = getRootElement(targetRef.current);
+    const items = findElementsBySelector<HTMLDivElement>(
+      `#${listId.current} [data-combobox-option]`,
+      root
+    );
+    return selectOption(getPreviousIndex(selectedOptionIndex.current, items, loop));
+  }, [selectOption, loop]);
 
-  const selectFirstOption = useCallback(
-    () => {
-      const root = getRootElement(targetRef.current);
-      const items = findElementsBySelector<HTMLDivElement>(
-        `#${listId.current} [data-combobox-option]`,
-        root
-      );
-      return selectOption(getFirstIndex(items));
-    },
-    [selectOption]
-  );
+  const selectFirstOption = useCallback(() => {
+    const root = getRootElement(targetRef.current);
+    const items = findElementsBySelector<HTMLDivElement>(
+      `#${listId.current} [data-combobox-option]`,
+      root
+    );
+    return selectOption(getFirstIndex(items));
+  }, [selectOption]);
 
   const updateSelectedOptionIndex = useCallback(
     (target: 'active' | 'selected' = 'selected', options?: { scrollIntoView?: boolean }) => {
@@ -263,9 +250,7 @@ export function useCombobox({
           `#${listId.current} [data-combobox-option]`,
           root
         );
-        const index = items.findIndex((option) =>
-          option.hasAttribute(`data-combobox-${target}`)
-        );
+        const index = items.findIndex((option) => option.hasAttribute(`data-combobox-${target}`));
 
         selectedOptionIndex.current = index;
 

@@ -11,29 +11,24 @@ export function findElementBySelector<T extends HTMLElement>(
   root: Document | Element | ShadowRoot = document
 ): T | null {
   // Directly try to find the element in the current root
+  // querySelector searches all descendants in this root, but cannot cross shadow boundaries
   const element = root.querySelector<T>(selector);
   if (element) {
     return element;
   }
 
-  // Iterate through all children of the current root
-  const children = root instanceof ShadowRoot ? root.host.children : root.children;
-  for (let i = 0; i < children.length; i += 1) {
-    const child = children[i];
+  // Find all elements in the current root to check for shadow roots
+  // We need to search all descendants, not just direct children
+  const allElements = root.querySelectorAll('*');
+  for (let i = 0; i < allElements.length; i += 1) {
+    const el = allElements[i];
 
-    // Recursively search in the child's shadow root if it exists
-    if (child.shadowRoot) {
-      const shadowElement = findElementBySelector<T>(selector, child.shadowRoot);
+    // Check if this element has a shadow root
+    if ((el as Element).shadowRoot) {
+      const shadowElement = findElementBySelector<T>(selector, (el as Element).shadowRoot!);
       if (shadowElement) {
         return shadowElement;
       }
-    }
-
-    // Also search recursively in the child itself if it does not have a shadow root
-    // or the element wasn't found in its shadow root
-    const nestedElement = findElementBySelector<T>(selector, child);
-    if (nestedElement) {
-      return nestedElement;
     }
   }
 
@@ -55,22 +50,20 @@ export function findElementsBySelector<T extends HTMLElement>(
   const results: T[] = [];
 
   // Collect all matching elements in the current root
+  // querySelectorAll gets all descendants in this root, but cannot cross shadow boundaries
   const elements = root.querySelectorAll<T>(selector);
   results.push(...Array.from(elements));
 
-  // Iterate through all children of the current root
-  const children = root instanceof ShadowRoot ? root.host.children : root.children;
-  for (let i = 0; i < children.length; i += 1) {
-    const child = children[i];
+  // Find all elements in the current root to check for shadow roots
+  // We need to search all descendants, not just direct children
+  const allElements = root.querySelectorAll('*');
+  for (let i = 0; i < allElements.length; i += 1) {
+    const el = allElements[i];
 
-    // Recursively search in the child's shadow root if it exists
-    if (child.shadowRoot) {
-      const shadowElements = findElementsBySelector<T>(selector, child.shadowRoot);
+    // Check if this element has a shadow root
+    if ((el as Element).shadowRoot) {
+      const shadowElements = findElementsBySelector<T>(selector, (el as Element).shadowRoot!);
       results.push(...shadowElements);
-    } else {
-      // Search recursively in the child itself
-      const nestedElements = findElementsBySelector<T>(selector, child);
-      results.push(...nestedElements);
     }
   }
 
@@ -94,4 +87,3 @@ export function getRootElement(
   const root = targetElement.getRootNode();
   return root instanceof ShadowRoot || root instanceof Document ? root : document;
 }
-
