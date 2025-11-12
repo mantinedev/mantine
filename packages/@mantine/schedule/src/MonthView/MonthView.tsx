@@ -97,6 +97,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     weekdayFormat,
     firstDayOfWeek,
     weekendDays,
+    radius,
     ...others
   } = props;
 
