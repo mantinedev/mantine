@@ -1,19 +1,19 @@
 .monthView {
-  --cells-per-row: 7;
-  --border-color: var(--mantine-color-gray-4);
+  --week-numbers-offset: 0rem;
+  --border-color: var(--mantine-color-gray-3);
   --month-view-border: 1px solid var(--border-color);
   --day-base-color: var(--mantine-color-text);
 
   &[data-with-week-numbers] {
-    --cells-per-row: 8;
+    --week-numbers-offset: 42px;
   }
 }
 
 .weekdays {
   display: flex;
 
-  :where([data-with-week-numbers='true']) & {
-    padding-inline-start: calc(100% / var(--cells-per-row));
+  :where([data-with-week-numbers]) & {
+    padding-inline-start: var(--week-numbers-offset);
   }
 }
 
@@ -22,15 +22,17 @@
 }
 
 .weekNumber {
-  flex: 0 0 calc(100% / var(--cells-per-row));
+  flex: 0 0 var(--week-numbers-offset);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--mantine-font-size-sm);
   padding: 4px;
   border-top: var(--month-view-border);
   border-bottom: none;
   border-left: var(--month-view-border);
   border-right: none;
-  background-color: #f5f5f5;
-  font-weight: bold;
-  text-align: center;
+  font-weight: 500;
 
   .week:last-child & {
     border-bottom: var(--month-view-border);
@@ -39,15 +41,18 @@
 
 .weekday {
   flex: 0 0 calc(100% / 7);
-  padding: 4px;
+  height: 36px;
+  font-size: var(--mantine-font-size-sm);
   border-top: var(--month-view-border);
   border-bottom: none;
   border-left: var(--month-view-border);
   border-right: none;
-  background-color: #f0f0f0;
-  font-weight: bold;
+  font-weight: 500;
   text-align: center;
   text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:last-child {
     border-right: var(--month-view-border);
@@ -55,20 +60,21 @@
 }
 
 .day {
-  flex: 0 0 calc(100% / var(--cells-per-row));
-  padding: 4px;
+  flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
+  height: 100px;
+  padding: 8px;
+  font-size: var(--mantine-font-size-sm);
   border-top: var(--month-view-border);
   border-bottom: none;
   border-left: var(--month-view-border);
   border-right: none;
-  text-align: center;
   color: var(--day-base-color);
 
-  &:last-child {
+  &:where(:last-child) {
     border-right: var(--month-view-border);
   }
 
-  .week:last-child & {
+  :where(.week:last-child) & {
     border-bottom: var(--month-view-border);
   }
 

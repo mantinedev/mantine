@@ -111,30 +111,32 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       ))
     : null;
 
-  const weeks = getMonthDays({ month, firstDayOfWeek: 1, consistentWeeks: false }).map(
-    (week, index) => {
-      const days = week.map((date) => {
-        const outside = !isSameMonth(date, month);
-        const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(date).day());
-        const ariaLabel = dayjs(date)
-          .locale(locale || ctx.locale)
-          .format('D MMMM YYYY');
-
-        return (
-          <Box {...getStyles('day')} key={date} aria-label={ariaLabel} mod={{ outside, weekend }}>
-            {dayjs(date).format('D')}
-          </Box>
-        );
-      });
+  const weeks = getMonthDays({
+    month,
+    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+    consistentWeeks: false,
+  }).map((week, index) => {
+    const days = week.map((date) => {
+      const outside = !isSameMonth(date, month);
+      const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(date).day());
+      const ariaLabel = dayjs(date)
+        .locale(locale || ctx.locale)
+        .format('D MMMM YYYY');
 
       return (
-        <div {...getStyles('week')} key={index}>
-          {withWeekNumbers && <div {...getStyles('weekNumber')}>{getWeekNumber(week)}</div>}
-          {days}
-        </div>
+        <Box {...getStyles('day')} key={date} aria-label={ariaLabel} mod={{ outside, weekend }}>
+          {dayjs(date).format('D')}
+        </Box>
       );
-    }
-  );
+    });
+
+    return (
+      <div {...getStyles('week')} key={index}>
+        {withWeekNumbers && <div {...getStyles('weekNumber')}>{getWeekNumber(week)}</div>}
+        {days}
+      </div>
+    );
+  });
 
   return (
     <Box

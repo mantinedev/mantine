@@ -12,10 +12,18 @@ export function Usage() {
   );
 }
 
+export function FirstDayOfWeek() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MonthView month="2025-11-01" firstDayOfWeek={0} />
+    </div>
+  );
+}
+
 export function WithWeekNumbers() {
   return (
     <div style={{ padding: 40 }}>
-      <MonthView month="2025-12-01" withWeekNumbers />
+      <MonthView month="2025-11-01" withWeekNumbers />
     </div>
   );
 }
