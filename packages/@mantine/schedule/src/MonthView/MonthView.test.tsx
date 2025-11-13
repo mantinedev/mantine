@@ -39,6 +39,14 @@ describe('@mantine/core/MonthView', () => {
     expect(days[days.length - 1].textContent).toStrictEqual('7'); // Dec 7
   });
 
+  it('supports consistentWeeks={false} prop', () => {
+    const { container } = render(<MonthView {...defaultProps} consistentWeeks={false} />);
+    const days = container.querySelectorAll('.mantine-MonthView-day');
+    expect(days.length).toStrictEqual(35);
+    expect(days[0].textContent).toStrictEqual('27'); // Oct 27
+    expect(days[days.length - 1].textContent).toStrictEqual('30'); // Nov 30
+  });
+
   it('renders week numbers when withWeekNumbers is true', () => {
     const { container } = render(<MonthView {...defaultProps} withWeekNumbers />);
     const weekNumbers = container.querySelectorAll('.mantine-MonthView-weekNumber');

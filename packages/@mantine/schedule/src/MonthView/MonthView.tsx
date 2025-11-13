@@ -72,6 +72,9 @@ export interface MonthViewProps
 
   /** Called with first day of the week when week number is clicked */
   onWeekNumberClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** If set, always renders 6 weeks in the month view @default true */
+  consistentWeeks?: boolean;
 }
 
 export type MonthViewFactory = Factory<{
@@ -83,6 +86,7 @@ export type MonthViewFactory = Factory<{
 
 const defaultProps = {
   withWeekDays: true,
+  consistentWeeks: true,
   weekdayFormat: 'ddd',
 } satisfies Partial<MonthViewProps>;
 
@@ -108,6 +112,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     getWeekNumberProps,
     onDayClick,
     onWeekNumberClick,
+    consistentWeeks,
     ...others
   } = props;
 
@@ -141,7 +146,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
   const weeks = getMonthDays({
     month: dayjs(month).format('YYYY-MM-DD'),
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
-    consistentWeeks: true,
+    consistentWeeks,
   }).map((week, index) => {
     const days = week.map((date) => {
       const outside = !isSameMonth(date, month);
