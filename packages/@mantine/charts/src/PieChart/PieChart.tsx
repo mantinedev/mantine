@@ -7,7 +7,7 @@ import {
   PieChart as ReChartsPieChart,
   ResponsiveContainer,
   Tooltip,
-  TooltipProps
+  TooltipProps,
 } from 'recharts';
 import {
   Box,
@@ -108,7 +108,6 @@ export interface PieChartProps
   cellProps?:
     | ((series: PieChartCell) => Partial<Omit<CellProps, 'ref'>>)
     | Partial<Omit<CellProps, 'ref'>>;
-
 }
 
 export type PieChartFactory = Factory<{
