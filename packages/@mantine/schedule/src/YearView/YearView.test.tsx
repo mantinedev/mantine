@@ -211,4 +211,18 @@ describe('@mantine/schedule/YearView', () => {
     expect(screen.getByRole('button', { name: 'Week 4' })).not.toHaveClass('test-class');
     expect(screen.getByRole('button', { name: 'Week 4' })).not.toHaveStyle({ color: '#E00999' });
   });
+
+  it('sets data-today attribute on today date when highlightToday is true', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-01-15'));
+    const { container, rerender } = render(<YearView {...defaultProps} highlightToday />);
+    const today = container.querySelector('.mantine-YearView-yearViewDay[data-today]')!;
+    expect(today).toBeInTheDocument();
+    expect(today.textContent).toStrictEqual('15');
+
+    rerender(<YearView {...defaultProps} highlightToday={false} />);
+    expect(
+      container.querySelector('.mantine-YearView-yearViewDay[data-today]')
+    ).not.toBeInTheDocument();
+    jest.useRealTimers();
+  });
 });

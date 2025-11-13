@@ -106,7 +106,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--year-view-radius);
+  border-radius: 100%;
   aspect-ratio: 1;
 
   &:where([data-weekend]) {
@@ -118,12 +118,23 @@
   }
 
   @mixin hover {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
+    &:where(:not([data-today])) {
+      @mixin where-light {
+        background-color: var(--mantine-color-gray-0);
+      }
 
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-6);
+      @mixin where-dark {
+        background-color: var(--mantine-color-dark-6);
+      }
+    }
+  }
+
+  &:where([data-today]) {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
+
+    @mixin hover {
+      background-color: var(--mantine-primary-color-filled-hover);
     }
   }
 }

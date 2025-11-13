@@ -42,6 +42,9 @@ export interface YearViewProps
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
+
+  /** If set, highlights the current day @default true */
+  highlightToday?: boolean;
 }
 
 export type YearViewFactory = Factory<{
@@ -54,6 +57,7 @@ export type YearViewFactory = Factory<{
 const defaultProps = {
   monthLabelFormat: 'MMMM',
   withWeekDays: true,
+  highlightToday: true,
 } satisfies Partial<YearViewProps>;
 
 const varsResolver = createVarsResolver<YearViewFactory>((_theme, { radius }) => ({
@@ -79,6 +83,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
     onWeekNumberClick,
     getDayProps,
     getWeekNumberProps,
+    highlightToday,
 
     // System props
     classNames,
@@ -128,6 +133,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
           onMonthClick={onMonthClick}
           onDayClick={onDayClick}
           onWeekNumberClick={onWeekNumberClick}
+          highlightToday={highlightToday}
         />
       ));
 

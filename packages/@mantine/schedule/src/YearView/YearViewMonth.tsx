@@ -47,6 +47,9 @@ export interface YearViewMonthSettings {
 
   /** Called with the first day of the month when month label is clicked */
   onMonthClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** If set, highlights the current day @default true */
+  highlightToday?: boolean;
 }
 
 export interface YearViewMonthProps extends YearViewMonthSettings {
@@ -72,6 +75,7 @@ export function YearViewMonth({
   onWeekNumberClick,
   onMonthClick,
   getWeekNumberProps,
+  highlightToday,
 }: YearViewMonthProps) {
   const ctx = useDatesContext();
 
@@ -100,6 +104,7 @@ export function YearViewMonth({
         .format('MMMM D, YYYY');
 
       const dayProps = getDayProps?.(new Date(date)) || {};
+      const today = dayjs(date).isSame(dayjs(), 'day') && highlightToday;
 
       return (
         <UnstyledButton
@@ -107,7 +112,7 @@ export function YearViewMonth({
           {...dayProps}
           {...getStyles('yearViewDay', { className: dayProps.className, style: dayProps.style })}
           key={date}
-          mod={{ outside, weekend }}
+          mod={[{ outside, weekend, today }, dayProps.mod]}
           onClick={(event) => {
             onDayClick?.(dayjs(date).startOf('day').toDate(), event);
             dayProps.onClick?.(event);
