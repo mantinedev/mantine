@@ -2,12 +2,9 @@ import dayjs from 'dayjs';
 import {
   Box,
   BoxProps,
-  createVarsResolver,
   ElementProps,
   factory,
   Factory,
-  getRadius,
-  MantineRadius,
   StylesApiProps,
   useProps,
   useStyles,
@@ -57,25 +54,19 @@ export interface MonthViewProps
   /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default `1` – Monday */
   firstDayOfWeek?: DayOfWeek;
 
-  /** `dayjs` format for weekdays names @default `'ddd'` */
+  /** `dayjs` format for weekdays names. By default, the first letter of the weekday. */
   weekdayFormat?: DateLabelFormat;
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
-
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
-  radius?: MantineRadius;
 }
 
 export type MonthViewFactory = Factory<{
   props: MonthViewProps;
   ref: HTMLDivElement;
   stylesNames: MonthViewStylesNames;
+  vars: MonthViewCssVariables;
 }>;
-
-const varsResolver = createVarsResolver<MonthViewFactory>((_theme, { radius }) => ({
-  monthView: { '--month-view-radius': radius ? getRadius(radius) : undefined },
-}));
 
 const defaultProps = {
   withWeekDays: true,
@@ -99,7 +90,6 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     weekdayFormat,
     firstDayOfWeek,
     weekendDays,
-    radius,
     __staticSelector,
     ...others
   } = props;
@@ -114,7 +104,6 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     styles,
     unstyled,
     vars,
-    varsResolver,
     rootSelector: 'monthView',
   });
 

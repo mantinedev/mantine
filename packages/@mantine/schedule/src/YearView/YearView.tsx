@@ -12,7 +12,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { getMonthsByQuarter } from '@mantine/dates-utils';
+import { getMonthsByQuarter, useDatesContext } from '@mantine/dates-utils';
 import { YearViewMonth, YearViewMonthSettings } from './YearViewMonth';
 import classes from './YearView.module.css';
 
@@ -28,7 +28,6 @@ export type YearViewStylesNames =
   | 'yearViewMonthCaption'
   | 'yearViewQuarter';
 
-export type YearViewVariant = string;
 export type YearViewCssVariables = {
   yearView: '--year-view-radius';
 };
@@ -50,13 +49,11 @@ export type YearViewFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: YearViewStylesNames;
   vars: YearViewCssVariables;
-  variant: YearViewVariant;
 }>;
 
 const defaultProps = {
   monthLabelFormat: 'MMMM',
   withWeekDays: true,
-  weekdayFormat: (date) => dayjs(date).format('dd').slice(0, 1),
 } satisfies Partial<YearViewProps>;
 
 const varsResolver = createVarsResolver<YearViewFactory>((_theme, { radius }) => ({
@@ -66,13 +63,6 @@ const varsResolver = createVarsResolver<YearViewFactory>((_theme, { radius }) =>
 export const YearView = factory<YearViewFactory>((_props) => {
   const props = useProps('YearView', defaultProps, _props);
   const {
-    classNames,
-    className,
-    style,
-    styles,
-    unstyled,
-    vars,
-
     // YearView props
     year,
 
@@ -85,8 +75,17 @@ export const YearView = factory<YearViewFactory>((_props) => {
     weekdayFormat,
     weekendDays,
 
+    // System props
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
     ...others
   } = props;
+
+  const ctx = useDatesContext();
 
   const getStyles = useStyles<YearViewFactory>({
     name: 'YearView',
@@ -114,7 +113,10 @@ export const YearView = factory<YearViewFactory>((_props) => {
           withWeekDays={withWeekDays}
           locale={locale}
           firstDayOfWeek={firstDayOfWeek}
-          weekdayFormat={weekdayFormat}
+          weekdayFormat={
+            weekdayFormat ||
+            ((date) => dayjs(date).locale(ctx.getLocale(locale)).format('dd').slice(0, 1))
+          }
           weekendDays={weekendDays}
         />
       ));

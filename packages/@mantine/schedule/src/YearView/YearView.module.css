@@ -118,4 +118,5 @@
   margin-bottom: 5px;
   font-size: var(--mantine-font-size-md);
   font-weight: 500;
+  text-transform: capitalize;
 }
