@@ -12,7 +12,7 @@ const defaultProps: YearViewProps = {
 describe('@mantine/schedule/YearView', () => {
   tests.itSupportsSystemProps<YearViewProps, YearViewStylesNames>({
     component: YearView,
-    props: defaultProps,
+    props: { ...defaultProps, withWeekNumbers: true },
     styleProps: true,
     extend: true,
     variant: true,
@@ -20,7 +20,18 @@ describe('@mantine/schedule/YearView', () => {
     classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/schedule/YearView',
-    stylesApiSelectors: ['yearView'],
+    stylesApiSelectors: [
+      'yearView',
+      'yearViewDay',
+      'yearViewMonth',
+      'yearViewMonthCaption',
+      'yearViewQuarter',
+      'yearViewWeek',
+      'yearViewWeekNumber',
+      'yearViewWeekday',
+      'yearViewWeekdays',
+      'yearViewWeekdaysCorner',
+    ],
   });
 
   it('renders months of the given year', () => {
