@@ -103,9 +103,10 @@ export function YearViewMonth({
 
       return (
         <UnstyledButton
-          {...getStyles('yearViewDay')}
-          key={date}
           aria-label={ariaLabel}
+          {...dayProps}
+          {...getStyles('yearViewDay', { className: dayProps.className, style: dayProps.style })}
+          key={date}
           mod={{ outside, weekend }}
           onClick={(event) => {
             onDayClick?.(dayjs(date).startOf('day').toDate(), event);
@@ -130,7 +131,10 @@ export function YearViewMonth({
               onWeekNumberClick?.(dayjs(week[0]).startOf('day').toDate(), event);
               weekNumberProps.onClick?.(event);
             }}
-            {...getStyles('yearViewWeekNumber')}
+            {...getStyles('yearViewWeekNumber', {
+              className: weekNumberProps.className,
+              style: weekNumberProps.style,
+            })}
           >
             {weekNumber}
           </UnstyledButton>

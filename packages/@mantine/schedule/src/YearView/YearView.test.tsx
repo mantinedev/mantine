@@ -1,7 +1,7 @@
 import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
-import { DatesProvider } from '@mantine/dates-utils';
+import { DatesProvider, getWeekNumber } from '@mantine/dates-utils';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { YearView, YearViewProps, YearViewStylesNames } from './YearView';
 
@@ -133,5 +133,82 @@ describe('@mantine/schedule/YearView', () => {
     render(<YearView {...defaultProps} withWeekNumbers onWeekNumberClick={spy} />);
     await userEvent.click(screen.getByRole('button', { name: 'Week 3' }));
     expect(spy).toHaveBeenCalledWith(new Date('2025-01-13 00:00:00'), expect.any(Object));
+  });
+
+  it('supports getDayProps prop', () => {
+    render(
+      <YearView
+        {...defaultProps}
+        getDayProps={(date) =>
+          dayjs(date).date() === 1 ? { 'data-first-day-of-month': 'true' } : {}
+        }
+      />
+    );
+
+    expect(screen.getByRole('button', { name: 'January 1, 2025' })).toHaveAttribute(
+      'data-first-day-of-month'
+    );
+
+    expect(screen.getByRole('button', { name: 'January 2, 2025' })).not.toHaveAttribute(
+      'data-first-day-of-month'
+    );
+  });
+
+  it('adds className and style props to days with getDayProps', () => {
+    render(
+      <YearView
+        {...defaultProps}
+        getDayProps={(date) =>
+          dayjs(date).date() === 1 ? { className: 'test-class', style: { color: '#E00999' } } : {}
+        }
+      />
+    );
+
+    expect(screen.getByRole('button', { name: 'January 1, 2025' })).toHaveClass('test-class');
+    expect(screen.getByRole('button', { name: 'January 1, 2025' })).toHaveStyle({
+      color: '#E00999',
+    });
+
+    expect(screen.getByRole('button', { name: 'January 2, 2025' })).not.toHaveClass('test-class');
+    expect(screen.getByRole('button', { name: 'January 2, 2025' })).not.toHaveStyle({
+      color: '#E00999',
+    });
+  });
+
+  it('supports getWeekNumberProps prop', () => {
+    render(
+      <YearView
+        {...defaultProps}
+        withWeekNumbers
+        getWeekNumberProps={(date) =>
+          getWeekNumber([dayjs(date).format('YYYY-MM-DD')]) === 3
+            ? { 'data-first-week': 'true' }
+            : {}
+        }
+      />
+    );
+
+    expect(screen.getByRole('button', { name: 'Week 3' })).toHaveAttribute('data-first-week');
+    expect(screen.getByRole('button', { name: 'Week 4' })).not.toHaveAttribute('data-first-week');
+  });
+
+  it('adds className and style props to week numbers with getWeekNumberProps', () => {
+    render(
+      <YearView
+        {...defaultProps}
+        withWeekNumbers
+        getWeekNumberProps={(date) =>
+          getWeekNumber([dayjs(date).format('YYYY-MM-DD')]) === 3
+            ? { className: 'test-class', style: { color: '#E00999' } }
+            : {}
+        }
+      />
+    );
+
+    expect(screen.getByRole('button', { name: 'Week 3' })).toHaveClass('test-class');
+    expect(screen.getByRole('button', { name: 'Week 3' })).toHaveStyle({ color: '#E00999' });
+
+    expect(screen.getByRole('button', { name: 'Week 4' })).not.toHaveClass('test-class');
+    expect(screen.getByRole('button', { name: 'Week 4' })).not.toHaveStyle({ color: '#E00999' });
   });
 });

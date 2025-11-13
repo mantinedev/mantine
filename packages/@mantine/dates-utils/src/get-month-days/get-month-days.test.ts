@@ -10,11 +10,13 @@ describe('@mantine/dates/get-month-days', () => {
     });
     expect(monthDays).toHaveLength(4);
 
-    expect(monthDays[0][1]).toStrictEqual('2021-02-02');
-    expect(monthDays[0][2]).toStrictEqual('2021-02-03');
-    expect(monthDays[1][0]).toStrictEqual('2021-02-08');
-    expect(monthDays[2][0]).toStrictEqual('2021-02-15');
-    expect(monthDays[monthDays.length - 1][monthDays[0].length - 1]).toStrictEqual('2021-02-28');
+    expect(monthDays[0][1]).toStrictEqual('2021-02-02 00:00:00');
+    expect(monthDays[0][2]).toStrictEqual('2021-02-03 00:00:00');
+    expect(monthDays[1][0]).toStrictEqual('2021-02-08 00:00:00');
+    expect(monthDays[2][0]).toStrictEqual('2021-02-15 00:00:00');
+    expect(monthDays[monthDays.length - 1][monthDays[0].length - 1]).toStrictEqual(
+      '2021-02-28 00:00:00'
+    );
   });
 
   it('returns all month days for given date, first day of week - sunday', () => {
@@ -25,11 +27,11 @@ describe('@mantine/dates/get-month-days', () => {
     });
     expect(monthDays).toHaveLength(5);
 
-    expect(monthDays[0][2]).toStrictEqual('2021-02-02');
-    expect(monthDays[0][3]).toStrictEqual('2021-02-03');
-    expect(monthDays[1][1]).toStrictEqual('2021-02-08');
-    expect(monthDays[2][1]).toStrictEqual('2021-02-15');
-    expect(monthDays[monthDays.length - 1][0]).toStrictEqual('2021-02-28');
+    expect(monthDays[0][2]).toStrictEqual('2021-02-02 00:00:00');
+    expect(monthDays[0][3]).toStrictEqual('2021-02-03 00:00:00');
+    expect(monthDays[1][1]).toStrictEqual('2021-02-08 00:00:00');
+    expect(monthDays[2][1]).toStrictEqual('2021-02-15 00:00:00');
+    expect(monthDays[monthDays.length - 1][0]).toStrictEqual('2021-02-28 00:00:00');
   });
 
   it('returns outside days for given month', () => {
@@ -41,9 +43,11 @@ describe('@mantine/dates/get-month-days', () => {
     });
 
     expect(monthDays).toHaveLength(5);
-    expect(monthDays[0][0]).toStrictEqual('2021-03-29');
-    expect(monthDays[0][1]).toStrictEqual('2021-03-30');
-    expect(monthDays[monthDays.length - 1][monthDays[0].length - 1]).toStrictEqual('2021-05-02');
+    expect(monthDays[0][0]).toStrictEqual('2021-03-29 00:00:00');
+    expect(monthDays[0][1]).toStrictEqual('2021-03-30 00:00:00');
+    expect(monthDays[monthDays.length - 1][monthDays[0].length - 1]).toStrictEqual(
+      '2021-05-02 00:00:00'
+    );
   });
 
   it('returns outside days for given month, first day of the week - sunday', () => {
@@ -54,9 +58,11 @@ describe('@mantine/dates/get-month-days', () => {
     });
 
     expect(monthDays).toHaveLength(5);
-    expect(monthDays[0][0]).toStrictEqual('2021-03-28');
-    expect(monthDays[0][1]).toStrictEqual('2021-03-29');
-    expect(monthDays[monthDays.length - 1][monthDays[0].length - 1]).toStrictEqual('2021-05-01');
+    expect(monthDays[0][0]).toStrictEqual('2021-03-28 00:00:00');
+    expect(monthDays[0][1]).toStrictEqual('2021-03-29 00:00:00');
+    expect(monthDays[monthDays.length - 1][monthDays[0].length - 1]).toStrictEqual(
+      '2021-05-01 00:00:00'
+    );
   });
 
   it('supports consistent 6 weeks when consistentWeeks is set', () => {
@@ -67,7 +73,9 @@ describe('@mantine/dates/get-month-days', () => {
     });
 
     expect(monthDays).toHaveLength(6);
-    expect(monthDays[0][0]).toStrictEqual('2021-02-01');
-    expect(monthDays[monthDays.length - 1][monthDays[0].length - 1]).toStrictEqual('2021-03-14');
+    expect(monthDays[0][0]).toStrictEqual('2021-02-01 00:00:00');
+    expect(monthDays[monthDays.length - 1][monthDays[0].length - 1]).toStrictEqual(
+      '2021-03-14 00:00:00'
+    );
   });
 });

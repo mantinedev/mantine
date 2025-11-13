@@ -78,6 +78,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
     onDayClick,
     onWeekNumberClick,
     getDayProps,
+    getWeekNumberProps,
 
     // System props
     classNames,
@@ -122,6 +123,8 @@ export const YearView = factory<YearViewFactory>((_props) => {
             ((date) => dayjs(date).locale(ctx.getLocale(locale)).format('dd').slice(0, 1))
           }
           weekendDays={weekendDays}
+          getDayProps={getDayProps}
+          getWeekNumberProps={getWeekNumberProps}
           onMonthClick={onMonthClick}
           onDayClick={onDayClick}
           onWeekNumberClick={onWeekNumberClick}

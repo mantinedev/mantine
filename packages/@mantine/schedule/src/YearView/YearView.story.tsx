@@ -1,5 +1,6 @@
 import 'dayjs/locale/ru';
 
+import dayjs from 'dayjs';
 import { YearView } from './YearView';
 
 export default { title: 'schedule/YearView' };
@@ -7,7 +8,15 @@ export default { title: 'schedule/YearView' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <YearView year="2025-11-01" />
+      <YearView
+        year="2025-11-01"
+        getDayProps={(date) => {
+          if (dayjs(date).date() === 1) {
+            console.log('Getting props for', date);
+          }
+          return dayjs(date).date() === 1 ? { 'data-first-day-of-month': 'true' } : {};
+        }}
+      />
     </div>
   );
 }
