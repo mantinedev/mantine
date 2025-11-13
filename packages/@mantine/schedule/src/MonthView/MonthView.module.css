@@ -10,15 +10,15 @@
   }
 }
 
-.weekdays {
+.monthViewWeekdays {
   display: flex;
 }
 
-.week {
+.monthViewWeek {
   display: flex;
 }
 
-.weekNumber {
+.monthViewWeekNumber {
   flex: 0 0 var(--week-numbers-offset);
   display: flex;
   align-items: center;
@@ -33,7 +33,7 @@
   cursor: pointer;
   user-select: none;
 
-  :where(.week:first-child) & {
+  :where(.monthViewWeek:first-child) & {
     border-start-start-radius: var(--month-view-radius);
 
     :where([data-with-weekdays] .monthView) & {
@@ -41,7 +41,7 @@
     }
   }
 
-  :where(.week:last-child) & {
+  :where(.monthViewWeek:last-child) & {
     border-block-end: var(--month-view-border);
     border-end-start-radius: var(--month-view-radius);
   }
@@ -57,7 +57,7 @@
   }
 }
 
-.weekday {
+.monthViewWeekday {
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
   height: 36px;
   font-size: var(--mantine-font-size-sm);
@@ -88,27 +88,25 @@
   }
 }
 
-.weekdaysCorner {
+.monthViewWeekdaysCorner {
   flex: 0 0 var(--week-numbers-offset);
   border-block-start: var(--month-view-border);
   border-inline-start: var(--month-view-border);
   border-start-start-radius: var(--month-view-radius);
 }
 
-.day {
+.monthViewDay {
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
   min-width: 54px;
   height: 100px;
-  padding: 6px;
+  padding: 4px;
   font-weight: 500;
-  font-size: var(--mantine-font-size-sm);
   border-block-start: var(--month-view-border);
   border-block-end: none;
   border-inline-start: var(--month-view-border);
   border-inline-end: none;
   color: var(--day-base-color);
   cursor: pointer;
-  user-select: none;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -116,12 +114,12 @@
   &:where(:last-child) {
     border-inline-end: var(--month-view-border);
 
-    :where(.week:last-child) & {
+    :where(.monthViewWeek:last-child) & {
       border-block-end: var(--month-view-border);
       border-end-end-radius: var(--month-view-radius);
     }
 
-    :where(.week:first-child) & {
+    :where(.monthViewWeek:first-child) & {
       border-start-end-radius: var(--month-view-radius);
 
       :where(:not([data-with-weekdays])) .monthView & {
@@ -131,7 +129,7 @@
   }
 
   &:where(:first-child) {
-    :where(.week:first-child) & {
+    :where(.monthViewWeek:first-child) & {
       border-start-start-radius: var(--month-view-radius);
 
       :where([data-with-week-numbers]) .monthView & {
@@ -143,16 +141,16 @@
       }
     }
 
-    :where(.week:last-child) & {
+    :where(.monthViewWeek:last-child) & {
       border-end-start-radius: var(--month-view-radius);
     }
 
-    :where([data-with-week-numbers]) .week:last-child & {
+    :where([data-with-week-numbers]) .monthViewWeek:last-child & {
       border-end-start-radius: 0;
     }
   }
 
-  :where(.week:last-child) & {
+  :where(.monthViewWeek:last-child) & {
     border-block-end: var(--month-view-border);
   }
 
@@ -172,5 +170,21 @@
     @mixin where-dark {
       background-color: var(--mantine-color-dark-6);
     }
+  }
+}
+
+.monthViewDayLabel {
+  width: 28px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  font-size: var(--mantine-font-size-sm);
+  user-select: none;
+
+  &:where([data-today]) {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
   }
 }

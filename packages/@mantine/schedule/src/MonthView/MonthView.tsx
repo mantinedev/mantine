@@ -23,12 +23,13 @@ import classes from './MonthView.module.css';
 
 export type MonthViewStylesNames =
   | 'monthView'
-  | 'week'
-  | 'day'
-  | 'weekNumber'
-  | 'weekday'
-  | 'weekdays'
-  | 'weekdaysCorner';
+  | 'monthViewWeek'
+  | 'monthViewDay'
+  | 'monthViewDayLabel'
+  | 'monthViewWeekNumber'
+  | 'monthViewWeekday'
+  | 'monthViewWeekdays'
+  | 'monthViewWeekdaysCorner';
 
 export type MonthViewCssVariables = {
   monthView: '--month-view-radius';
@@ -75,6 +76,9 @@ export interface MonthViewProps
 
   /** If set, always renders 6 weeks in the month view @default true */
   consistentWeeks?: boolean;
+
+  /** If set, highlights the current day @default true */
+  highlightToday?: boolean;
 }
 
 export type MonthViewFactory = Factory<{
@@ -87,6 +91,7 @@ export type MonthViewFactory = Factory<{
 const defaultProps = {
   withWeekDays: true,
   consistentWeeks: true,
+  highlightToday: true,
   weekdayFormat: 'ddd',
 } satisfies Partial<MonthViewProps>;
 
@@ -113,6 +118,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     onDayClick,
     onWeekNumberClick,
     consistentWeeks,
+    highlightToday,
     ...others
   } = props;
 
@@ -137,7 +143,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         format: weekdayFormat,
         firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
       }).map((day, index) => (
-        <div {...getStyles('weekday')} key={index}>
+        <div {...getStyles('monthViewWeekday')} key={index}>
           {day}
         </div>
       ))
@@ -156,20 +162,23 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         .format('MMMM D, YYYY');
 
       const dayProps = getDayProps?.(new Date(date)) || {};
+      const today = dayjs(date).isSame(dayjs(), 'day') && highlightToday;
 
       return (
         <UnstyledButton
           aria-label={ariaLabel}
           {...dayProps}
-          {...getStyles('day', { className: dayProps.className, style: dayProps.style })}
+          {...getStyles('monthViewDay', { className: dayProps.className, style: dayProps.style })}
           key={date}
-          mod={{ outside, weekend }}
           onClick={(event) => {
             onDayClick?.(dayjs(date).startOf('day').toDate(), event);
             dayProps.onClick?.(event);
           }}
+          mod={[{ outside, weekend, today }, dayProps.mod]}
         >
-          {dayjs(date).format('D')}
+          <span data-today={today || undefined} {...getStyles('monthViewDayLabel')}>
+            {dayjs(date).format('D')}
+          </span>
         </UnstyledButton>
       );
     });
@@ -178,7 +187,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     const weekNumber = getWeekNumber(week);
 
     return (
-      <div {...getStyles('week')} key={index}>
+      <div {...getStyles('monthViewWeek')} key={index}>
         {withWeekNumbers && (
           <UnstyledButton
             key={weekNumber}
@@ -188,7 +197,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
               onWeekNumberClick?.(dayjs(week[0]).startOf('day').toDate(), event);
               weekNumberProps.onClick?.(event);
             }}
-            {...getStyles('weekNumber', {
+            {...getStyles('monthViewWeekNumber', {
               className: weekNumberProps.className,
               style: weekNumberProps.style,
             })}
@@ -209,8 +218,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       {...others}
     >
       {weekdays && (
-        <div {...getStyles('weekdays')}>
-          {withWeekNumbers && <div {...getStyles('weekdaysCorner')} />}
+        <div {...getStyles('monthViewWeekdays')}>
+          {withWeekNumbers && <div {...getStyles('monthViewWeekdaysCorner')} />}
           {weekdays}
         </div>
       )}

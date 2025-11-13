@@ -20,7 +20,16 @@ describe('@mantine/core/MonthView', () => {
     classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/schedule/MonthView',
-    stylesApiSelectors: ['monthView', 'week', 'day', 'weekNumber'],
+    stylesApiSelectors: [
+      'monthView',
+      'monthViewDay',
+      'monthViewDayLabel',
+      'monthViewWeek',
+      'monthViewWeekNumber',
+      'monthViewWeekday',
+      'monthViewWeekdays',
+      'monthViewWeekdaysCorner',
+    ],
   });
 
   it('renders days of the month (date string)', () => {
@@ -234,5 +243,17 @@ describe('@mantine/core/MonthView', () => {
 
     expect(screen.getByRole('button', { name: 'Week 45' })).not.toHaveClass('test-class');
     expect(screen.getByRole('button', { name: 'Week 45' })).not.toHaveStyle({ color: '#E00999' });
+  });
+
+  it('sets data-today attribute on today date when highlightToday is true', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-15'));
+    const { container, rerender } = render(<MonthView {...defaultProps} highlightToday />);
+    const today = container.querySelector('.mantine-MonthView-day[data-today]')!;
+    expect(today).toBeInTheDocument();
+    expect(today.textContent).toStrictEqual('15');
+
+    rerender(<MonthView {...defaultProps} highlightToday={false} />);
+    expect(container.querySelector('.mantine-MonthView-day[data-today]')).not.toBeInTheDocument();
+    jest.useRealTimers();
   });
 });
