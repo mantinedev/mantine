@@ -25,6 +25,7 @@
 .yearViewMonth {
   --week-numbers-offset: 0rem;
   --day-base-color: var(--mantine-color-text);
+  --day-dimmed-color: alpha(var(--day-base-color), 0.5);
 
   &:where([data-with-week-numbers]) {
     --week-numbers-offset: 28px;
@@ -52,15 +53,28 @@
 }
 
 .yearViewWeekNumber {
-  flex: 0 0 var(--week-numbers-offset);
+  flex: 0 0 calc(var(--week-numbers-offset) - rem(4px));
+  margin-inline-end: rem(4px);
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   font-size: var(--mantine-font-size-xs);
+  border-radius: var(--year-view-radius);
   padding: 4px;
   font-weight: 500;
-  cursor: default;
+  cursor: pointer;
   user-select: none;
+  color: var(--day-dimmed-color);
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
 }
 
 .yearViewWeekday {
@@ -75,6 +89,7 @@
   justify-content: center;
   cursor: default;
   user-select: none;
+  color: var(--day-dimmed-color);
 }
 
 .yearViewWeekdaysCorner {
@@ -99,7 +114,7 @@
   }
 
   &:where([data-outside]) {
-    color: alpha(var(--day-base-color), 0.4);
+    color: var(--day-dimmed-color);
   }
 
   @mixin hover {
