@@ -12,6 +12,14 @@ export function Usage() {
   );
 }
 
+export function WeekendDays() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MonthView month="2025-11-01" weekendDays={[1, 2]} />
+    </div>
+  );
+}
+
 export function Radius() {
   return (
     <div style={{ padding: 40 }}>

@@ -109,4 +109,30 @@ describe('@mantine/core/MonthView', () => {
     expect(weekdays[0].textContent).toStrictEqual('Monday');
     expect(weekdays[weekdays.length - 1].textContent).toStrictEqual('Sunday');
   });
+
+  it('supports weekendDays prop', () => {
+    const { container } = render(<MonthView {...defaultProps} withWeekDays weekendDays={[1, 2]} />);
+    const days = container.querySelectorAll('.mantine-MonthView-day');
+    expect(days[0]).toHaveAttribute('data-weekend'); // Oct 27, Monday
+    expect(days[1]).toHaveAttribute('data-weekend'); // Oct 28, Tuesday
+    expect(days[2]).not.toHaveAttribute('data-weekend'); // Oct 29, Wednesday
+    expect(days[days.length - 1]).not.toHaveAttribute('data-weekend'); // Nov 30, Sunday
+  });
+
+  it('allows setting empty array to weekendDays prop', () => {
+    const { container } = render(<MonthView {...defaultProps} withWeekDays weekendDays={[]} />);
+    const days = container.querySelectorAll('.mantine-MonthView-day');
+    days.forEach((day) => {
+      expect(day).not.toHaveAttribute('data-weekend');
+    });
+  });
+
+  it('supports __staticSelector prop', () => {
+    const { container } = render(
+      <MonthView {...defaultProps} __staticSelector="Test" withWeekDays withWeekNumbers />
+    );
+
+    expect(container.querySelector('.mantine-Test-monthView')).toBeInTheDocument();
+    expect(container.querySelector('.mantine-MonthView-monthView')).not.toBeInTheDocument();
+  });
 });

@@ -40,6 +40,8 @@ export interface MonthViewProps
   extends BoxProps,
     StylesApiProps<MonthViewFactory>,
     ElementProps<'div'> {
+  __staticSelector?: string;
+
   /** Month to display, Date object or date string in `YYYY-MM-DD` format */
   month: Date | string;
 
@@ -98,11 +100,12 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     firstDayOfWeek,
     weekendDays,
     radius,
+    __staticSelector,
     ...others
   } = props;
 
   const getStyles = useStyles<MonthViewFactory>({
-    name: 'MonthView',
+    name: __staticSelector || 'MonthView',
     classes,
     props,
     className,
