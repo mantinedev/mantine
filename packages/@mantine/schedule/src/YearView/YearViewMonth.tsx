@@ -33,6 +33,9 @@ export interface YearViewMonthSettings {
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
 
+  /** Props passed down to the week number button */
+  getWeekNumberProps?: (weekStartDate: Date) => Record<string, any>;
+
   /** Props passed down to the day button */
   getDayProps?: (date: Date) => Record<string, any>;
 
@@ -68,6 +71,7 @@ export function YearViewMonth({
   onDayClick,
   onWeekNumberClick,
   onMonthClick,
+  getWeekNumberProps,
 }: YearViewMonthProps) {
   const ctx = useDatesContext();
 
@@ -93,7 +97,7 @@ export function YearViewMonth({
       const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(date).day());
       const ariaLabel = dayjs(date)
         .locale(locale || ctx.locale)
-        .format('D MMMM YYYY');
+        .format('MMMM D, YYYY');
 
       const dayProps = getDayProps?.(new Date(date)) || {};
 
@@ -104,7 +108,7 @@ export function YearViewMonth({
           aria-label={ariaLabel}
           mod={{ outside, weekend }}
           onClick={(event) => {
-            onDayClick?.(new Date(date), event);
+            onDayClick?.(dayjs(date).startOf('day').toDate(), event);
             dayProps.onClick?.(event);
           }}
         >
@@ -113,14 +117,22 @@ export function YearViewMonth({
       );
     });
 
+    const weekNumberProps = getWeekNumberProps?.(new Date(week[0])) || {};
+    const weekNumber = getWeekNumber(week);
+
     return (
       <div {...getStyles('yearViewWeek')} key={index}>
         {withWeekNumbers && (
           <UnstyledButton
-            onClick={(event) => onWeekNumberClick?.(new Date(week[0]), event)}
+            aria-label={`Week ${weekNumber}`}
+            {...weekNumberProps}
+            onClick={(event) => {
+              onWeekNumberClick?.(dayjs(week[0]).startOf('day').toDate(), event);
+              weekNumberProps.onClick?.(event);
+            }}
             {...getStyles('yearViewWeekNumber')}
           >
-            {getWeekNumber(week)}
+            {weekNumber}
           </UnstyledButton>
         )}
 

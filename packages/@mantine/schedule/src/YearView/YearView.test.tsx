@@ -2,7 +2,7 @@ import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
 import { DatesProvider } from '@mantine/dates-utils';
-import { render, tests } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { YearView, YearViewProps, YearViewStylesNames } from './YearView';
 
 const defaultProps: YearViewProps = {
@@ -112,5 +112,26 @@ describe('@mantine/schedule/YearView', () => {
   it('supports hiding weekdays with withWeekDays={false}', () => {
     const { container } = render(<YearView {...defaultProps} withWeekDays={false} />);
     expect(container.querySelectorAll('.mantine-YearView-yearViewWeekday')).toHaveLength(0);
+  });
+
+  it('supports onDayClick prop', async () => {
+    const spy = jest.fn();
+    render(<YearView {...defaultProps} onDayClick={spy} />);
+    await userEvent.click(screen.getByRole('button', { name: 'January 1, 2025' }));
+    expect(spy).toHaveBeenCalledWith(new Date('2025-01-01 00:00:00'), expect.any(Object));
+  });
+
+  it('supports onMonthClick prop', async () => {
+    const spy = jest.fn();
+    render(<YearView {...defaultProps} onMonthClick={spy} />);
+    await userEvent.click(screen.getByRole('button', { name: 'January' }));
+    expect(spy).toHaveBeenCalledWith(new Date('2025-01-01 00:00:00'), expect.any(Object));
+  });
+
+  it('supports onWeekNumberClick prop', async () => {
+    const spy = jest.fn();
+    render(<YearView {...defaultProps} withWeekNumbers onWeekNumberClick={spy} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Week 3' }));
+    expect(spy).toHaveBeenCalledWith(new Date('2025-01-13 00:00:00'), expect.any(Object));
   });
 });
