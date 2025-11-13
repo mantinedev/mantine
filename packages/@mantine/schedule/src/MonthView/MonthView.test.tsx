@@ -2,7 +2,7 @@ import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
 import { DatesProvider, getWeekNumber } from '@mantine/dates-utils';
-import { render, screen, tests } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { MonthView, MonthViewProps, MonthViewStylesNames } from './MonthView';
 
 const defaultProps: MonthViewProps = {
@@ -135,6 +135,20 @@ describe('@mantine/core/MonthView', () => {
 
     expect(container.querySelector('.mantine-Test-monthView')).toBeInTheDocument();
     expect(container.querySelector('.mantine-MonthView-monthView')).not.toBeInTheDocument();
+  });
+
+  it('supports onDayClick prop', async () => {
+    const spy = jest.fn();
+    render(<MonthView {...defaultProps} onDayClick={spy} />);
+    await userEvent.click(screen.getByRole('button', { name: 'November 1, 2025' }));
+    expect(spy).toHaveBeenCalledWith(new Date('2025-11-01 00:00:00'), expect.any(Object));
+  });
+
+  it('supports onWeekNumberClick prop', async () => {
+    const spy = jest.fn();
+    render(<MonthView {...defaultProps} withWeekNumbers onWeekNumberClick={spy} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Week 44' }));
+    expect(spy).toHaveBeenCalledWith(new Date('2025-10-27 00:00:00'), expect.any(Object));
   });
 
   it('supports getDayProps prop', () => {
