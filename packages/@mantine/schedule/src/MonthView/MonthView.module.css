@@ -87,6 +87,7 @@
 
 .day {
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
+  min-width: 54px;
   height: 100px;
   padding: 8px;
   font-size: var(--mantine-font-size-sm);
