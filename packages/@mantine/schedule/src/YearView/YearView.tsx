@@ -51,7 +51,7 @@ export type YearViewFactory = Factory<{
 const defaultProps = {
   monthLabelFormat: 'MMMM',
   withWeekDays: true,
-  weekdayFormat: 'dd',
+  weekdayFormat: (date) => dayjs(date).format('dd').slice(0, 1),
 } satisfies Partial<YearViewProps>;
 
 const varsResolver = createVarsResolver<YearViewFactory>(() => ({

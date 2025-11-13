@@ -1,0 +1,109 @@
+.yearViewQuarter {
+  display: flex;
+
+  &:where(:first-of-type) :where(.yearViewMonth:first-of-type) {
+    border-start-start-radius: var(--month-view-radius);
+  }
+
+  &:where(:first-of-type) :where(.yearViewMonth:last-of-type) {
+    border-start-end-radius: var(--month-view-radius);
+  }
+
+  &:where(:last-of-type) :where(.yearViewMonth:first-of-type) {
+    border-end-start-radius: var(--month-view-radius);
+  }
+
+  &:where(:last-of-type) :where(.yearViewMonth:last-of-type) {
+    border-end-end-radius: var(--month-view-radius);
+  }
+}
+
+.yearViewMonth {
+  --week-numbers-offset: 0rem;
+  --month-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+  --day-base-color: var(--mantine-color-text);
+
+  &:where([data-with-week-numbers]) {
+    --week-numbers-offset: 28px;
+  }
+
+  flex: 1;
+  border: 1px solid red;
+  padding: var(--mantine-spacing-md);
+
+  &:where(:not(:last-of-type)) {
+    border-right: none;
+  }
+
+  :where(.yearViewQuarter:not(:last-of-type)) & {
+    border-bottom: none;
+  }
+}
+
+.yearViewWeekdays {
+  display: flex;
+}
+
+.yearViewWeek {
+  display: flex;
+}
+
+.yearViewWeekNumber {
+  flex: 0 0 var(--week-numbers-offset);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: var(--mantine-font-size-xs);
+  padding: 4px;
+  font-weight: 500;
+  cursor: default;
+  user-select: none;
+}
+
+.yearViewWeekday {
+  flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
+  height: 36px;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 500;
+  text-align: center;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  user-select: none;
+}
+
+.yearViewWeekdaysCorner {
+  flex: 0 0 var(--week-numbers-offset);
+}
+
+.yearViewDay {
+  flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
+  padding: 4px;
+  font-size: var(--mantine-font-size-xs);
+  color: var(--day-base-color);
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:where([data-weekend]) {
+    color: var(--mantine-color-red-6);
+  }
+
+  &:where([data-outside]) {
+    color: alpha(var(--day-base-color), 0.4);
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+}

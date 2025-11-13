@@ -70,7 +70,7 @@ export function YearViewMonth({
   const weeks = getMonthDays({
     month: dayjs(month).format('YYYY-MM-DD'),
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
-    consistentWeeks: false,
+    consistentWeeks: true,
   }).map((week, index) => {
     const days = week.map((date) => {
       const outside = !isSameMonth(date, month);
