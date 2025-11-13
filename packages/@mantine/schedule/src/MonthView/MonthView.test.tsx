@@ -22,8 +22,16 @@ describe('@mantine/core/MonthView', () => {
     stylesApiSelectors: ['monthView', 'week', 'day', 'weekNumber'],
   });
 
-  it('renders days of the month', () => {
+  it('renders days of the month (date string)', () => {
     const { container } = render(<MonthView {...defaultProps} />);
+    const days = container.querySelectorAll('.mantine-MonthView-day');
+    expect(days.length).toStrictEqual(35);
+    expect(days[0].textContent).toStrictEqual('27'); // Oct 27
+    expect(days[days.length - 1].textContent).toStrictEqual('30'); // Nov 30
+  });
+
+  it('renders days of the month (Date object)', () => {
+    const { container } = render(<MonthView month={new Date(2025, 10, 5)} />);
     const days = container.querySelectorAll('.mantine-MonthView-day');
     expect(days.length).toStrictEqual(35);
     expect(days[0].textContent).toStrictEqual('27'); // Oct 27

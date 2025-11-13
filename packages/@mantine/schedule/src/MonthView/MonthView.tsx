@@ -40,8 +40,8 @@ export interface MonthViewProps
   extends BoxProps,
     StylesApiProps<MonthViewFactory>,
     ElementProps<'div'> {
-  /** Month to display, date string in `YYYY-MM-DD` format */
-  month: string;
+  /** Month to display, Date object or date string in `YYYY-MM-DD` format */
+  month: Date | string;
 
   /** If set, week numbers are displayed in the first column @default `false` */
   withWeekNumbers?: boolean;
@@ -130,7 +130,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     : null;
 
   const weeks = getMonthDays({
-    month,
+    month: dayjs(month).format('YYYY-MM-DD'),
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
     consistentWeeks: false,
   }).map((week, index) => {
