@@ -31,7 +31,7 @@
   }
 
   flex: 1;
-  border: 1px solid red;
+  border: 1px solid var(--mantine-color-gray-3);
   padding: var(--mantine-spacing-md);
 
   &:where(:not(:last-of-type)) {
@@ -91,6 +91,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: var(--year-view-radius);
+  aspect-ratio: 1;
 
   &:where([data-weekend]) {
     color: var(--mantine-color-red-6);
@@ -109,4 +111,11 @@
       background-color: var(--mantine-color-dark-6);
     }
   }
+}
+
+.yearViewMonthCaption {
+  padding-inline-start: calc(var(--week-numbers-offset) + rem(12px));
+  margin-bottom: 5px;
+  font-size: var(--mantine-font-size-md);
+  font-weight: 500;
 }
