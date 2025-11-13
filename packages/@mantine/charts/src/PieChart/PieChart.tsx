@@ -1,12 +1,13 @@
 import {
   Cell,
+  CellProps,
   Pie,
   PieLabel,
   PieProps,
   PieChart as ReChartsPieChart,
   ResponsiveContainer,
   Tooltip,
-  TooltipProps, CellProps,
+  TooltipProps
 } from 'recharts';
 import {
   Box,
@@ -26,7 +27,6 @@ import {
 } from '@mantine/core';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip/ChartTooltip';
 import classes from './PieChart.module.css';
-import { DonutChartCell } from '../DonutChart';
 
 export interface PieChartCell {
   key?: string | number;
@@ -106,7 +106,7 @@ export interface PieChartProps
 
   /** Props passed down to recharts `Cell` component */
   cellProps?:
-    | ((series: DonutChartCell) => Partial<Omit<CellProps, 'ref'>>)
+    | ((series: PieChartCell) => Partial<Omit<CellProps, 'ref'>>)
     | Partial<Omit<CellProps, 'ref'>>;
 
 }
