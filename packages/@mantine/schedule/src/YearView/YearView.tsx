@@ -6,6 +6,8 @@ import {
   ElementProps,
   factory,
   Factory,
+  getRadius,
+  MantineRadius,
   StylesApiProps,
   useProps,
   useStyles,
@@ -28,7 +30,7 @@ export type YearViewStylesNames =
 
 export type YearViewVariant = string;
 export type YearViewCssVariables = {
-  yearView: '--test';
+  yearView: '--year-view-radius';
 };
 
 export interface YearViewProps
@@ -38,6 +40,9 @@ export interface YearViewProps
     ElementProps<'div'> {
   /** Year to display, Date object or date string in `YYYY-MM-DD` format */
   year: Date | string;
+
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  radius?: MantineRadius;
 }
 
 export type YearViewFactory = Factory<{
@@ -54,10 +59,8 @@ const defaultProps = {
   weekdayFormat: (date) => dayjs(date).format('dd').slice(0, 1),
 } satisfies Partial<YearViewProps>;
 
-const varsResolver = createVarsResolver<YearViewFactory>(() => ({
-  yearView: {
-    '--test': 'test',
-  },
+const varsResolver = createVarsResolver<YearViewFactory>((_theme, { radius }) => ({
+  yearView: { '--year-view-radius': radius ? getRadius(radius) : undefined },
 }));
 
 export const YearView = factory<YearViewFactory>((_props) => {

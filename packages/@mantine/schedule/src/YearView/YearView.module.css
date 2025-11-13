@@ -1,26 +1,29 @@
+.yearView {
+  --year-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+}
+
 .yearViewQuarter {
   display: flex;
 
   &:where(:first-of-type) :where(.yearViewMonth:first-of-type) {
-    border-start-start-radius: var(--month-view-radius);
+    border-start-start-radius: var(--year-view-radius);
   }
 
   &:where(:first-of-type) :where(.yearViewMonth:last-of-type) {
-    border-start-end-radius: var(--month-view-radius);
+    border-start-end-radius: var(--year-view-radius);
   }
 
   &:where(:last-of-type) :where(.yearViewMonth:first-of-type) {
-    border-end-start-radius: var(--month-view-radius);
+    border-end-start-radius: var(--year-view-radius);
   }
 
   &:where(:last-of-type) :where(.yearViewMonth:last-of-type) {
-    border-end-end-radius: var(--month-view-radius);
+    border-end-end-radius: var(--year-view-radius);
   }
 }
 
 .yearViewMonth {
   --week-numbers-offset: 0rem;
-  --month-view-radius: var(--schedule-radius, var(--mantine-radius-default));
   --day-base-color: var(--mantine-color-text);
 
   &:where([data-with-week-numbers]) {
