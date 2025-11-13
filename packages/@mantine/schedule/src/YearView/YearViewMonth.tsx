@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Box, GetStylesApi } from '@mantine/core';
+import { Box, GetStylesApi, UnstyledButton } from '@mantine/core';
 import {
   DayOfWeek,
   getMonthDays,
@@ -32,6 +32,18 @@ export interface YearViewMonthSettings {
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
+
+  /** Props passed down to the day button */
+  getDayProps?: (date: Date) => Record<string, any>;
+
+  /** Called when day is clicked */
+  onDayClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** Called with first day of the week when week number is clicked */
+  onWeekNumberClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** Called with the first day of the month when month label is clicked */
+  onMonthClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export interface YearViewMonthProps extends YearViewMonthSettings {
@@ -52,6 +64,10 @@ export function YearViewMonth({
   firstDayOfWeek,
   weekdayFormat,
   weekendDays,
+  getDayProps,
+  onDayClick,
+  onWeekNumberClick,
+  onMonthClick,
 }: YearViewMonthProps) {
   const ctx = useDatesContext();
 
@@ -79,21 +95,35 @@ export function YearViewMonth({
         .locale(locale || ctx.locale)
         .format('D MMMM YYYY');
 
+      const dayProps = getDayProps?.(new Date(date)) || {};
+
       return (
-        <Box
+        <UnstyledButton
           {...getStyles('yearViewDay')}
           key={date}
           aria-label={ariaLabel}
           mod={{ outside, weekend }}
+          onClick={(event) => {
+            onDayClick?.(new Date(date), event);
+            dayProps.onClick?.(event);
+          }}
         >
           {dayjs(date).format('D')}
-        </Box>
+        </UnstyledButton>
       );
     });
 
     return (
       <div {...getStyles('yearViewWeek')} key={index}>
-        {withWeekNumbers && <div {...getStyles('yearViewWeekNumber')}>{getWeekNumber(week)}</div>}
+        {withWeekNumbers && (
+          <UnstyledButton
+            onClick={(event) => onWeekNumberClick?.(new Date(week[0]), event)}
+            {...getStyles('yearViewWeekNumber')}
+          >
+            {getWeekNumber(week)}
+          </UnstyledButton>
+        )}
+
         {days}
       </div>
     );
@@ -104,9 +134,12 @@ export function YearViewMonth({
       mod={[{ 'with-week-numbers': withWeekNumbers, 'with-weekdays': withWeekDays }]}
       {...getStyles('yearViewMonth')}
     >
-      <div {...getStyles('yearViewMonthCaption')}>
+      <UnstyledButton
+        onClick={(event) => onMonthClick?.(dayjs(month).startOf('month').toDate(), event)}
+        {...getStyles('yearViewMonthCaption')}
+      >
         {dayjs(month).locale(ctx.getLocale(locale)).format(monthLabelFormat)}
-      </div>
+      </UnstyledButton>
 
       {weekdays && (
         <div {...getStyles('yearViewWeekdays')}>

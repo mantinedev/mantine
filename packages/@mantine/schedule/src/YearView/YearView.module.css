@@ -114,9 +114,20 @@
 }
 
 .yearViewMonthCaption {
-  padding-inline-start: calc(var(--week-numbers-offset) + rem(12px));
-  margin-bottom: 5px;
+  padding-inline: calc(var(--week-numbers-offset) + rem(12px));
+  padding-block: 5px;
   font-size: var(--mantine-font-size-md);
   font-weight: 500;
   text-transform: capitalize;
+  border-radius: var(--year-view-radius);
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
 }
