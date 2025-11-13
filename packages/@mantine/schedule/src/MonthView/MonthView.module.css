@@ -30,7 +30,7 @@
   border-inline-start: var(--month-view-border);
   border-inline-end: none;
   font-weight: 500;
-  cursor: default;
+  cursor: pointer;
   user-select: none;
 
   :where(.week:first-child) & {
@@ -44,6 +44,16 @@
   :where(.week:last-child) & {
     border-block-end: var(--month-view-border);
     border-end-start-radius: var(--month-view-radius);
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
   }
 }
 
@@ -89,7 +99,8 @@
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
   min-width: 54px;
   height: 100px;
-  padding: 8px;
+  padding: 6px;
+  font-weight: 500;
   font-size: var(--mantine-font-size-sm);
   border-block-start: var(--month-view-border);
   border-block-end: none;
@@ -98,6 +109,9 @@
   color: var(--day-base-color);
   cursor: pointer;
   user-select: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
 
   &:where(:last-child) {
     border-inline-end: var(--month-view-border);

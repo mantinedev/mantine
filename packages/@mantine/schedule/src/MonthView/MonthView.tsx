@@ -6,6 +6,7 @@ import {
   factory,
   Factory,
   StylesApiProps,
+  UnstyledButton,
   useProps,
   useStyles,
 } from '@mantine/core';
@@ -59,6 +60,18 @@ export interface MonthViewProps
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
+
+  /** Props passed down to the week number button */
+  getWeekNumberProps?: (weekStartDate: Date) => Record<string, any>;
+
+  /** Props passed down to the day button */
+  getDayProps?: (date: Date) => Record<string, any>;
+
+  /** Called when day is clicked */
+  onDayClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** Called with first day of the week when week number is clicked */
+  onWeekNumberClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export type MonthViewFactory = Factory<{
@@ -91,6 +104,10 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     firstDayOfWeek,
     weekendDays,
     __staticSelector,
+    getDayProps,
+    getWeekNumberProps,
+    onDayClick,
+    onWeekNumberClick,
     ...others
   } = props;
 
@@ -124,25 +141,57 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
   const weeks = getMonthDays({
     month: dayjs(month).format('YYYY-MM-DD'),
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
-    consistentWeeks: false,
+    consistentWeeks: true,
   }).map((week, index) => {
     const days = week.map((date) => {
       const outside = !isSameMonth(date, month);
       const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(date).day());
       const ariaLabel = dayjs(date)
         .locale(locale || ctx.locale)
-        .format('D MMMM YYYY');
+        .format('MMMM D, YYYY');
+
+      const dayProps = getDayProps?.(new Date(date)) || {};
 
       return (
-        <Box {...getStyles('day')} key={date} aria-label={ariaLabel} mod={{ outside, weekend }}>
+        <UnstyledButton
+          aria-label={ariaLabel}
+          {...dayProps}
+          {...getStyles('day', { className: dayProps.className, style: dayProps.style })}
+          key={date}
+          mod={{ outside, weekend }}
+          onClick={(event) => {
+            onDayClick?.(dayjs(date).startOf('day').toDate(), event);
+            dayProps.onClick?.(event);
+          }}
+        >
           {dayjs(date).format('D')}
-        </Box>
+        </UnstyledButton>
       );
     });
 
+    const weekNumberProps = getWeekNumberProps?.(new Date(week[0])) || {};
+    const weekNumber = getWeekNumber(week);
+
     return (
       <div {...getStyles('week')} key={index}>
-        {withWeekNumbers && <div {...getStyles('weekNumber')}>{getWeekNumber(week)}</div>}
+        {withWeekNumbers && (
+          <UnstyledButton
+            key={weekNumber}
+            aria-label={`Week ${weekNumber}`}
+            {...weekNumberProps}
+            onClick={(event) => {
+              onWeekNumberClick?.(dayjs(week[0]).startOf('day').toDate(), event);
+              weekNumberProps.onClick?.(event);
+            }}
+            {...getStyles('weekNumber', {
+              className: weekNumberProps.className,
+              style: weekNumberProps.style,
+            })}
+          >
+            {weekNumber}
+          </UnstyledButton>
+        )}
+
         {days}
       </div>
     );

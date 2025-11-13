@@ -125,6 +125,7 @@ export function YearViewMonth({
       <div {...getStyles('yearViewWeek')} key={index}>
         {withWeekNumbers && (
           <UnstyledButton
+            key={weekNumber}
             aria-label={`Week ${weekNumber}`}
             {...weekNumberProps}
             onClick={(event) => {

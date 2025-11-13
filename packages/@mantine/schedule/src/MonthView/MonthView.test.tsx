@@ -1,7 +1,8 @@
 import 'dayjs/locale/ru';
 
-import { DatesProvider } from '@mantine/dates-utils';
-import { render, tests } from '@mantine-tests/core';
+import dayjs from 'dayjs';
+import { DatesProvider, getWeekNumber } from '@mantine/dates-utils';
+import { render, screen, tests } from '@mantine-tests/core';
 import { MonthView, MonthViewProps, MonthViewStylesNames } from './MonthView';
 
 const defaultProps: MonthViewProps = {
@@ -25,25 +26,25 @@ describe('@mantine/core/MonthView', () => {
   it('renders days of the month (date string)', () => {
     const { container } = render(<MonthView {...defaultProps} />);
     const days = container.querySelectorAll('.mantine-MonthView-day');
-    expect(days.length).toStrictEqual(35);
+    expect(days.length).toStrictEqual(42);
     expect(days[0].textContent).toStrictEqual('27'); // Oct 27
-    expect(days[days.length - 1].textContent).toStrictEqual('30'); // Nov 30
+    expect(days[days.length - 1].textContent).toStrictEqual('7'); // Dec 7
   });
 
   it('renders days of the month (Date object)', () => {
     const { container } = render(<MonthView month={new Date(2025, 10, 5)} />);
     const days = container.querySelectorAll('.mantine-MonthView-day');
-    expect(days.length).toStrictEqual(35);
+    expect(days.length).toStrictEqual(42);
     expect(days[0].textContent).toStrictEqual('27'); // Oct 27
-    expect(days[days.length - 1].textContent).toStrictEqual('30'); // Nov 30
+    expect(days[days.length - 1].textContent).toStrictEqual('7'); // Dec 7
   });
 
   it('renders week numbers when withWeekNumbers is true', () => {
     const { container } = render(<MonthView {...defaultProps} withWeekNumbers />);
     const weekNumbers = container.querySelectorAll('.mantine-MonthView-weekNumber');
-    expect(weekNumbers.length).toStrictEqual(5);
+    expect(weekNumbers.length).toStrictEqual(6);
     expect(weekNumbers[0].textContent).toStrictEqual('44');
-    expect(weekNumbers[weekNumbers.length - 1].textContent).toStrictEqual('48');
+    expect(weekNumbers[weekNumbers.length - 1].textContent).toStrictEqual('49');
   });
 
   it('renders weekdays names when withWeekDays is true', () => {
@@ -134,5 +135,82 @@ describe('@mantine/core/MonthView', () => {
 
     expect(container.querySelector('.mantine-Test-monthView')).toBeInTheDocument();
     expect(container.querySelector('.mantine-MonthView-monthView')).not.toBeInTheDocument();
+  });
+
+  it('supports getDayProps prop', () => {
+    render(
+      <MonthView
+        {...defaultProps}
+        getDayProps={(date) =>
+          dayjs(date).date() === 1 ? { 'data-first-day-of-month': 'true' } : {}
+        }
+      />
+    );
+
+    expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveAttribute(
+      'data-first-day-of-month'
+    );
+
+    expect(screen.getByRole('button', { name: 'November 2, 2025' })).not.toHaveAttribute(
+      'data-first-day-of-month'
+    );
+  });
+
+  it('adds className and style props to days with getDayProps', () => {
+    render(
+      <MonthView
+        {...defaultProps}
+        getDayProps={(date) =>
+          dayjs(date).date() === 1 ? { className: 'test-class', style: { color: '#E00999' } } : {}
+        }
+      />
+    );
+
+    expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveClass('test-class');
+    expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveStyle({
+      color: '#E00999',
+    });
+
+    expect(screen.getByRole('button', { name: 'November 2, 2025' })).not.toHaveClass('test-class');
+    expect(screen.getByRole('button', { name: 'November 2, 2025' })).not.toHaveStyle({
+      color: '#E00999',
+    });
+  });
+
+  it('supports getWeekNumberProps prop', () => {
+    render(
+      <MonthView
+        {...defaultProps}
+        withWeekNumbers
+        getWeekNumberProps={(date) =>
+          getWeekNumber([dayjs(date).format('YYYY-MM-DD')]) === 44
+            ? { 'data-first-week': 'true' }
+            : {}
+        }
+      />
+    );
+
+    expect(screen.getByRole('button', { name: 'Week 44' })).toHaveAttribute('data-first-week');
+    expect(screen.getByRole('button', { name: 'Week 45' })).not.toHaveAttribute('data-first-week');
+  });
+
+  it('adds className and style props to week numbers with getWeekNumberProps', () => {
+    render(
+      <MonthView
+        {...defaultProps}
+        withWeekNumbers
+        getWeekNumberProps={(date) =>
+          getWeekNumber([dayjs(date).format('YYYY-MM-DD')]) === 44
+            ? { className: 'test-class', style: { color: '#E00999' } }
+            : {}
+        }
+      />
+    );
+
+    expect(screen.getByRole('button', { name: 'Week 44' })).toHaveClass('test-class');
+    expect(screen.getByRole('button', { name: 'Week 44' })).toHaveStyle({ color: '#E00999' });
+
+    expect(screen.getByRole('button', { name: 'Week 45' })).not.toHaveClass('test-class');
+    expect(screen.getByRole('button', { name: 'Week 45' })).not.toHaveStyle({ color: '#E00999' });
   });
 });
