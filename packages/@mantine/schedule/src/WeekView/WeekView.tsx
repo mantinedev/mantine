@@ -71,7 +71,7 @@ export interface WeekViewProps
   /** If set to false, weekend days are hidden @default `true` */
   withWeekendDays?: boolean;
 
-  /** `weekday` – highlights today in the weekday row, `column` – highlights today in the entire column @default `'column'` */
+  /** `weekday` – highlights today in the weekday row, `column` – highlights today in the entire column @default `'weekday'` */
   highlightToday?: WeekViewHighlightToday;
 
   /** If set, displays a line indicating the current time @default `true` */
@@ -79,6 +79,9 @@ export interface WeekViewProps
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
+
+  /** Makes the current day twice larger @default false */
+  emphasizeToday?: boolean;
 }
 
 export type WeekViewFactory = Factory<{
@@ -90,7 +93,7 @@ export type WeekViewFactory = Factory<{
 
 const defaultProps = {
   withWeekendDays: true,
-  highlightToday: 'column',
+  highlightToday: 'weekday',
   withCurrentTimeLine: true,
   startTime: '00:00:00',
   endTime: '23:59:59',
@@ -124,6 +127,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     radius,
     highlightToday,
     withCurrentTimeLine,
+    emphasizeToday,
     ...others
   } = props;
 
@@ -145,7 +149,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
 
   const labels = slots.map((interval) => {
-    const intervalTime = dayjs(`${week} ${interval.startTime}`);
+    const intervalTime = dayjs(`${dayjs(week).format('YYYY-MM-DD')} ${interval.startTime}`);
     const label =
       typeof slotLabelFormat === 'function'
         ? slotLabelFormat(intervalTime.format('YYYY-MM-DD HH:mm:ss'))
@@ -174,6 +178,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       slots={slots}
       getStyles={getStyles}
       weekdayFormat={weekdayFormat}
+      highlightToday={highlightToday}
+      weekendDays={weekendDays}
+      emphasizeToday={emphasizeToday}
     />
   ));
 

@@ -11,7 +11,7 @@
 }
 
 .weekViewSlotLabels {
-  flex: 0 0 80px;
+  flex: 0 0 70px;
 }
 
 .weekViewSlotLabel {
@@ -21,8 +21,10 @@
   padding: 4px;
   padding-inline-end: 8px;
   font-size: var(--mantine-font-size-sm);
+  user-select: none;
+  cursor: default;
 
-  &[data-hour-start] {
+  &:where([data-hour-start]) {
     border-top-color: var(--mantine-color-gray-3);
   }
 }
@@ -30,21 +32,56 @@
 .weekViewDay {
   flex: 1;
   border-inline-start: 1px solid var(--mantine-color-gray-3);
+
+  &:where([data-emphasize]) {
+    flex: 2;
+  }
 }
 
 .weekViewDayLabel {
   height: 60px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   line-height: 1;
-  gap: 4px;
+  font-weight: 500;
+  user-select: none;
+  cursor: pointer;
+
+  :where(.weekViewDay[data-weekend]) & {
+    color: var(--mantine-color-error);
+  }
+
+  :where(.weekViewDay[data-today]) & {
+    gap: 6px;
+    background-color: var(--mantine-primary-color-light);
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
 }
 
 .weekViewDayNumber {
-  font-weight: 500;
   text-align: center;
+  width: 26px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  font-size: var(--mantine-font-size-sm);
+
+  :where(.weekViewDay[data-today]) & {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
+  }
 }
 
 .weekViewDayWeekday {
@@ -52,12 +89,29 @@
   font-size: var(--mantine-font-size-sm);
 }
 
+.weekViewDaySlots {
+  &:where([data-today]) {
+    background-color: var(--mantine-primary-color-light);
+  }
+}
+
 .weekViewDaySlot {
   border-top: 1px solid var(--mantine-color-gray-1);
   min-height: 60px;
   padding: 4px;
+  cursor: pointer;
 
-  &[data-hour-start] {
+  &:where([data-hour-start]) {
     border-top-color: var(--mantine-color-gray-3);
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
   }
 }

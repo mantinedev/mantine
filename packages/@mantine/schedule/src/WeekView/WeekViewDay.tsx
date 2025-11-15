@@ -1,6 +1,12 @@
 import dayjs from 'dayjs';
 import { Box, GetStylesApi } from '@mantine/core';
-import { DateLabelFormat, DateStringValue, DayTimeInterval } from '@mantine/dates-utils';
+import {
+  DateLabelFormat,
+  DateStringValue,
+  DayOfWeek,
+  DayTimeInterval,
+  useDatesContext,
+} from '@mantine/dates-utils';
 import type { WeekViewFactory, WeekViewHighlightToday } from './WeekView';
 
 export interface WeekViewDayProps {
@@ -18,6 +24,12 @@ export interface WeekViewDayProps {
 
   /** `dayjs` format for weekdays names. @default `'ddd'` */
   weekdayFormat?: DateLabelFormat;
+
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
+  weekendDays?: DayOfWeek[];
+
+  /** Makes the current day twice larger @default false */
+  emphasizeToday?: boolean;
 }
 
 export function WeekViewDay({
@@ -26,7 +38,11 @@ export function WeekViewDay({
   highlightToday,
   weekdayFormat,
   getStyles,
+  weekendDays,
+  emphasizeToday,
 }: WeekViewDayProps) {
+  const ctx = useDatesContext();
+  const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek);
   const today = dayjs(day).isSame(dayjs(), 'day') && !!highlightToday;
 
   const items = slots.map((slot) => (
@@ -34,23 +50,23 @@ export function WeekViewDay({
       key={slot.startTime}
       {...getStyles('weekViewDaySlot')}
       mod={{ 'hour-start': slot.isHourStart }}
-    >
-      &nbsp;
-    </Box>
+    />
   ));
 
   return (
-    <Box {...getStyles('weekViewDay')} mod={{ today }}>
-      <div {...getStyles('weekViewDayLabel')}>
-        <div {...getStyles('weekViewDayWeekday')}>
+    <Box {...getStyles('weekViewDay')} mod={{ today, weekend, emphasize: today && emphasizeToday }}>
+      <Box {...getStyles('weekViewDayLabel')}>
+        <Box {...getStyles('weekViewDayWeekday')}>
           {typeof weekdayFormat === 'function'
             ? weekdayFormat(dayjs(day).format('YYYY-MM-DD'))
             : dayjs(day).format(weekdayFormat)}
-        </div>
+        </Box>
         <div {...getStyles('weekViewDayNumber')}>{dayjs(day).date()}</div>
-      </div>
+      </Box>
 
-      <div {...getStyles('weekViewDaySlots')}>{items}</div>
+      <Box mod={{ today: today && highlightToday === 'column' }} {...getStyles('weekViewDaySlots')}>
+        {items}
+      </Box>
     </Box>
   );
 }
