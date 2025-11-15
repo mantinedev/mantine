@@ -174,8 +174,10 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
   const { styleProps, rest } = extractStyleProps(others);
   const uuid = useId(id);
 
+  const contextChecked = ctx ? ctx.value === rest.value : undefined;
+
   const withContextProps = {
-    checked: ctx?.value === rest.value || checked || undefined,
+    checked: contextChecked ?? checked,
     name: ctx?.name ?? rest.name,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
       ctx?.onChange(event);
@@ -199,7 +201,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
       classNames={classNames}
       styles={styles}
       unstyled={unstyled}
-      data-checked={withContextProps.checked}
+      data-checked={(contextChecked ?? checked) || undefined}
       variant={variant}
       ref={rootRef}
       mod={mod}

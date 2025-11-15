@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import { Checkbox } from '../Checkbox';
 import { Stack } from '../Stack';
 import { Radio } from './Radio';
-import { useState } from 'react';
 
 export default { title: 'Radio' };
 
@@ -55,7 +55,7 @@ export function Unstyled() {
 }
 
 export function RadioGroup() {
-  const [lib, setLib] = useState("react");
+  const [lib, setLib] = useState('react');
 
   return (
     <div style={{ padding: 20 }}>
