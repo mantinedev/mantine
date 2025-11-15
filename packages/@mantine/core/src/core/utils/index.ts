@@ -32,4 +32,10 @@ export { memoize } from './memoize/memoize';
 export { findClosestNumber } from './find-closest-number/find-closest-number';
 export { getRefProp } from './get-ref-prop/get-ref-prop';
 export { isPrimitive } from './primitive/primitive';
+export {
+  findElementBySelector,
+  findElementsBySelector,
+  getRootElement,
+} from './find-element-in-shadow-dom/find-element-in-shadow-dom';
+
 export type { Primitive } from './primitive/primitive';

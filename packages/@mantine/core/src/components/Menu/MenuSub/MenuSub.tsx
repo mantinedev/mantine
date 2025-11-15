@@ -19,6 +19,9 @@ export interface MenuSubProps extends __PopoverProps {
   /** Called with current state when dropdown opens or closes */
   onChange?: (opened: boolean) => void;
 
+  /** Open delay in ms */
+  openDelay?: number;
+
   /** Close delay in ms */
   closeDelay?: number;
 
@@ -36,6 +39,7 @@ const defaultProps = {
   offset: 0,
   position: 'right-start',
   transitionProps: { duration: 0 },
+  openDelay: 0,
   middlewares: {
     shift: {
       // Enable crossAxis shift to keep submenu dropdown within viewport bounds when positioned horizontally
@@ -45,7 +49,7 @@ const defaultProps = {
 } satisfies Partial<MenuSubProps>;
 
 export function MenuSub(_props: MenuSubProps) {
-  const { children, closeDelay, ...others } = useProps('MenuSub', defaultProps, _props);
+  const { children, closeDelay, openDelay, ...others } = useProps('MenuSub', defaultProps, _props);
   const id = useId();
   const [opened, { open, close }] = useDisclosure(false);
   const ctx = use(SubMenuContext);
@@ -54,7 +58,7 @@ export function MenuSub(_props: MenuSubProps) {
     open,
     close,
     closeDelay,
-    openDelay: 0,
+    openDelay,
   });
 
   const focusFirstItem = () =>

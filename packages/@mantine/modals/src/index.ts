@@ -3,6 +3,7 @@ export { useModals } from './use-modals/use-modals.js';
 export {
   openModal,
   closeModal,
+  closeContextModal,
   closeAllModals,
   openConfirmModal,
   openContextModal,

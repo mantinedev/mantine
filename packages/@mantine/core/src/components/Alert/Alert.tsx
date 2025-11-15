@@ -107,6 +107,7 @@ export const Alert = factory<AlertFactory>((_props) => {
     closeButtonLabel,
     variant,
     autoContrast,
+    role,
     attributes,
     ...others
   } = props;
@@ -135,7 +136,7 @@ export const Alert = factory<AlertFactory>((_props) => {
       {...getStyles('root', { variant })}
       variant={variant}
       {...others}
-      role="alert"
+      role={role || 'alert'}
       aria-describedby={children ? bodyId : undefined}
       aria-labelledby={title ? titleId : undefined}
     >

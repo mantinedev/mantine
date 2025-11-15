@@ -16,13 +16,15 @@ describe('@mantine/modals/use-modals', () => {
     const hook = renderHook(() => useModals(), { wrapper });
     const { current } = hook.result;
 
-    expect(current.closeAll).toBeDefined();
-    expect(current.closeModal).toBeDefined();
-    expect(current.closeContextModal).toBeDefined();
     expect(current.modals).toBeDefined();
+    expect(current.openModal).toBeDefined();
     expect(current.openConfirmModal).toBeDefined();
     expect(current.openContextModal).toBeDefined();
-    expect(current.openModal).toBeDefined();
+    expect(current.closeModal).toBeDefined();
+    expect(current.closeAllModals).toBeDefined();
+    expect(current.closeContextModal).toBeDefined();
+    expect(current.updateModal).toBeDefined();
+    expect(current.updateContextModal).toBeDefined();
   });
 
   it('correctly passes innerProps to a context modal', () => {
@@ -41,7 +43,8 @@ describe('@mantine/modals/use-modals', () => {
       const modals = useModals();
 
       useEffect(() => {
-        modals.openContextModal('contextTest', {
+        modals.openContextModal({
+          modalKey: 'contextTest',
           innerProps: { text: testContent },
           transitionProps: { duration: 0 },
         });

@@ -104,7 +104,7 @@ export interface NumberInputProps
   /** If set, negative values are allowed @default `true` */
   allowNegative?: boolean;
 
-  /** Characters which when pressed result in a decimal separator @default `['.']` */
+  /** Characters which when pressed result in a decimal separator @default `['.', ',']` */
   allowedDecimalSeparators?: string[];
 
   /** Limits the number of digits that can be entered after the decimal point @default `Infinity` */
@@ -191,6 +191,7 @@ const defaultProps = {
   allowLeadingZeros: true,
   trimLeadingZeroesOnBlur: true,
   startValue: 0,
+  allowedDecimalSeparators: ['.', ','],
 } satisfies Partial<NumberInputProps>;
 
 const varsResolver = createVarsResolver<NumberInputFactory>((_, { size }) => ({
@@ -247,6 +248,7 @@ export const NumberInput = factory<NumberInputFactory>((_props) => {
     allowLeadingZeros,
     withKeyboardEvents,
     trimLeadingZeroesOnBlur,
+    allowedDecimalSeparators,
     attributes,
     ref,
     ...others
@@ -506,6 +508,7 @@ export const NumberInput = factory<NumberInputFactory>((_props) => {
       allowNegative={allowNegative}
       className={cx(classes.root, className)}
       size={size}
+      inputMode="decimal"
       {...others}
       readOnly={readOnly}
       disabled={disabled}
@@ -525,6 +528,7 @@ export const NumberInput = factory<NumberInputFactory>((_props) => {
       rightSectionPointerEvents={rightSectionPointerEvents ?? (disabled ? 'none' : undefined)}
       rightSectionWidth={rightSectionWidth ?? `var(--ni-right-section-width-${size || 'sm'})`}
       allowLeadingZeros={allowLeadingZeros}
+      allowedDecimalSeparators={allowedDecimalSeparators}
       onBlur={handleBlur}
       attributes={attributes}
       isAllowed={(val) => {
