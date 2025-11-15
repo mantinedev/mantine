@@ -14382,7 +14382,7 @@ function Demo() {
       <Menu.Dropdown>
         <Menu.Item>Dashboard</Menu.Item>
 
-        <Menu.Sub>
+        <Menu.Sub openDelay={120} closeDelay={150}>
           <Menu.Sub.Target>
             <Menu.Sub.Item>Products</Menu.Sub.Item>
           </Menu.Sub.Target>
@@ -31193,6 +31193,7 @@ function Demo() {
 
 Data passed to the `data` prop should follow these rules:
 
+* Data must be a stable reference (memoized)
 * Data must be an array
 * Each item in the array represents a node in the tree
 * Each node must be an object with `value` and `label` keys
@@ -47544,6 +47545,7 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| cellProps | ((series: DonutChartCell) => Partial<Omit<Props, "ref">>) | Partial<Omit<Props, "ref">> | - | Props passed down to recharts <code>Cell</code> component |
 | chartLabel | string | number | - | Chart label, displayed in the center of the chart |
 | children | React.ReactNode | - | Additional elements rendered inside <code>PieChart</code> component |
 | data | DonutChartCell[] | required | Data used to render chart |
@@ -50730,6 +50732,7 @@ export const data = [
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| cellProps | Partial<Omit<Props, "ref">> | ((series: PieChartCell) => Partial<Omit<Props, "ref">>) | - | Props passed down to recharts <code>Cell</code> component |
 | children | React.ReactNode | - | Additional elements rendered inside <code>PieChart</code> component |
 | data | PieChartCell[] | required | Data used to render chart |
 | endAngle | number | - | Controls angle at which charts ends. Set to <code>0</code> to render the chart as semicircle. |
@@ -55436,7 +55439,7 @@ yarn rw dev
 
 # Setup Mantine in Storybook
 
-Note that this guide covers only Storybook 7.0+ integration. If you are using older version of Storybook,
+Note that this guide covers only Storybook 10.0+ integration. If you are using older version of Storybook,
 it will not work for you.
 
 ## Add Storybook to your application
@@ -55452,20 +55455,14 @@ npx storybook@latest init
 
 ## Configure addons
 
-Note that `@storybook/addon-styling-webpack` is required only if you are
-not using Vite. **If you are using Vite, do not install `@storybook/addon-styling-webpack` and do not add it to the addons section in `main.ts` file**.
-
-Install Storybook addons:
-
-* [storybook-dark-mode](https://storybook.js.org/addons/storybook-dark-mode/)
-* [@storybook/addon-styling-webpack](https://storybook.js.org/addons/@storybook/addon-styling-webpack)
+Install `@storybook/addon-themes` Storybook addon:
 
 ```bash
-yarn add storybook-dark-mode @storybook/addon-styling-webpack
+yarn add @storybook/addon-themes
 ```
 
 ```bash
-npm install storybook-dark-mode @storybook/addon-styling-webpack
+npm install @storybook/addon-themes
 ```
 
 Add addons to `.storybook/main.ts`:
@@ -55475,11 +55472,7 @@ import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
   // ... other config properties
-  addons: [
-    // ... other addons
-    '@storybook/addon-styling-webpack', // Add this line only if you are not using Vite
-    'storybook-dark-mode',
-  ],
+  addons: ['@storybook/addon-themes'],
 };
 
 export default config;
@@ -55523,42 +55516,43 @@ the following content:
 // All packages except `@mantine/hooks` require styles imports
 import '@mantine/core/styles.css';
 
-import { useEffect } from 'react';
-import { addons } from '@storybook/preview-api';
-import { DARK_MODE_EVENT_NAME } from 'storybook-dark-mode';
-import {
-  MantineProvider,
-  useMantineColorScheme,
-} from '@mantine/core';
-// theme.ts file from previous step
-import { theme } from '../src/theme';
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import { theme } from '../theme';
 
-const channel = addons.getChannel();
+export const parameters = {
+  layout: 'fullscreen',
+  options: {
+    showPanel: false,
+    storySort: (a, b) => a.title.localeCompare(b.title, undefined, { numeric: true }),
+  },
+  backgrounds: { disable: true },
+};
 
-function ColorSchemeWrapper({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const { setColorScheme } = useMantineColorScheme();
-  const handleColorScheme = (value: boolean) =>
-    setColorScheme(value ? 'dark' : 'light');
-
-  useEffect(() => {
-    channel.on(DARK_MODE_EVENT_NAME, handleColorScheme);
-    return () => channel.off(DARK_MODE_EVENT_NAME, handleColorScheme);
-  }, [channel]);
-
-  return <>{children}</>;
-}
+export const globalTypes = {
+  theme: {
+    name: 'Theme',
+    description: 'Mantine color scheme',
+    defaultValue: 'light',
+    toolbar: {
+      icon: 'mirror',
+      items: [
+        { value: 'light', title: 'Light' },
+        { value: 'dark', title: 'Dark' },
+      ],
+    },
+  },
+};
 
 export const decorators = [
-  (renderStory: any) => (
-    <ColorSchemeWrapper>{renderStory()}</ColorSchemeWrapper>
-  ),
-  (renderStory: any) => (
-    <MantineProvider theme={theme}>{renderStory()}</MantineProvider>
-  ),
+  (renderStory: any, context: any) => {
+    const scheme = (context.globals.theme || 'light') as 'light' | 'dark';
+    return (
+      <MantineProvider theme={theme} forceColorScheme={scheme}>
+        <ColorSchemeScript />
+        {renderStory()}
+      </MantineProvider>
+    );
+  },
 ];
 ```
 
@@ -66778,7 +66772,7 @@ function Demo() {
 | preventDropOnDocument | boolean | - | If <code>false</code>, allow dropped items to take over the current browser window |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | rejectColor | MantineColor | - | Key of <code>theme.colors</code> or any valid CSS color to set colors of <code>Dropzone.Reject</code> |
-| useFsAccessApi | boolean | - | Set to true to use the File System Access API to open the file picker instead of using an <input type="file"> click event |
+| useFsAccessApi | boolean | - | Set to true to use the File System Access API to open the file picker instead of using an <code>input type="file"</code> click event |
 | validator | <T extends File>(file: T) => FileError | FileError[] | null | - | Custom validation function. It must return null if there's no errors. |
 
 
