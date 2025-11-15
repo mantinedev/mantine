@@ -10,11 +10,21 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { DayOfWeek, getDayTimeIntervals } from '@mantine/dates-utils';
-import { DateLabelFormat } from '../../../dates-utils/lib/types';
+import { DateLabelFormat, DayOfWeek, getDayTimeIntervals, getWeekDays } from '@mantine/dates-utils';
+import { WeekViewDay } from './WeekViewDay';
 import classes from './WeekView.module.css';
 
-export type WeekViewStylesNames = 'weekView' | 'weekViewSlotLabels' | 'weekViewSlotLabel';
+export type WeekViewHighlightToday = 'weekday' | 'column' | false;
+
+export type WeekViewStylesNames =
+  | 'weekView'
+  | 'weekViewSlotLabels'
+  | 'weekViewSlotLabel'
+  | 'weekViewDayLabel'
+  | 'weekViewWeekday'
+  | 'weekViewDay'
+  | 'weekViewDayNumber';
+
 export type WeekViewCssVariables = {
   weekView: '--test';
 };
@@ -47,11 +57,11 @@ export interface WeekViewProps
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
 
-  /** If set to false, weekend days will not be displayed @default `true` */
+  /** If set to false, weekend days are hidden @default `true` */
   withWeekendDays?: boolean;
 
   /** `weekday` – highlights today in the weekday row, `column` – highlights today in the entire column @default `'column'` */
-  highlightToday?: 'weekday' | 'column' | false;
+  highlightToday?: WeekViewHighlightToday;
 
   /** If set, displays a line indicating the current time @default `true` */
   withCurrentTimeLine?: boolean;
@@ -94,6 +104,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     week,
     intervalMinutes,
     slotLabelFormat,
+    withWeekendDays,
+    weekendDays,
+    firstDayOfWeek,
     ...others
   } = props;
 
@@ -111,11 +124,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     rootSelector: 'weekView',
   });
 
-  const slotsLabels = getDayTimeIntervals({
-    startTime,
-    endTime,
-    intervalMinutes,
-  }).map((interval) => {
+  const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
+
+  const labels = slots.map((interval) => {
     const intervalTime = dayjs(`${week} ${interval.startTime}`);
     const label =
       typeof slotLabelFormat === 'function'
@@ -133,9 +144,14 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     );
   });
 
+  const days = getWeekDays({ week, withWeekendDays, weekendDays, firstDayOfWeek }).map((day) => (
+    <WeekViewDay key={day} day={day} slots={slots} getStyles={getStyles} />
+  ));
+
   return (
     <Box {...getStyles('weekView')} {...others}>
-      <div {...getStyles('weekViewSlotLabels')}>{slotsLabels}</div>
+      <div {...getStyles('weekViewSlotLabels')}>{labels}</div>
+      {days}
     </Box>
   );
 });

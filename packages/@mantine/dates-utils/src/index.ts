@@ -10,7 +10,8 @@ export { isBeforeMaxDate } from './is-before-max-date/is-before-max-date.js';
 export { isSameMonth } from './is-same-month/is-same-month.js';
 export { getMonthsByQuarter } from './get-months-by-quarter/get-months-by-quarter.js';
 export { getDayTimeIntervals } from './get-day-time-intervals/get-day-time-intervals.js';
+export { getWeekDays } from './get-week-days/get-week-days.js';
 
-export type { DateStringValue, DateTimeStringValue, DayOfWeek } from './types';
+export type { DateStringValue, DateTimeStringValue, DayOfWeek, DateLabelFormat } from './types';
 export type { DatesProviderProps, DatesProviderSettings } from './DatesProvider/DatesProvider';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';

@@ -11,6 +11,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import {
+  DateLabelFormat,
   DayOfWeek,
   getMonthDays,
   getWeekdaysNames,
@@ -18,7 +19,6 @@ import {
   isSameMonth,
   useDatesContext,
 } from '@mantine/dates-utils';
-import { DateLabelFormat } from '../../../dates-utils/lib/types';
 import classes from './MonthView.module.css';
 
 export type MonthViewStylesNames =

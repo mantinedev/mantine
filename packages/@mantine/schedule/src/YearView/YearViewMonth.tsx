@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { Box, GetStylesApi, UnstyledButton } from '@mantine/core';
 import {
+  DateLabelFormat,
   DayOfWeek,
   getMonthDays,
   getWeekdaysNames,
@@ -8,7 +9,6 @@ import {
   isSameMonth,
   useDatesContext,
 } from '@mantine/dates-utils';
-import { DateLabelFormat } from '../../../dates-utils/lib/types';
 import type { YearViewFactory } from './YearView';
 
 export interface YearViewMonthSettings {

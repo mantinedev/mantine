@@ -1,3 +1,11 @@
+.weekView {
+  display: flex;
+}
+
+.weekViewSlotLabels {
+  flex: 0 0 80px;
+}
+
 .weekViewSlotLabel {
   border-top: 1px solid var(--mantine-color-gray-1);
   text-align: right;
