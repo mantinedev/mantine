@@ -1,0 +1,10 @@
+.weekViewSlotLabel {
+  border-top: 1px solid var(--mantine-color-gray-1);
+  text-align: right;
+  min-height: 60px;
+  padding: 4px;
+
+  &[data-hour-start] {
+    border-top-color: var(--mantine-color-gray-3);
+  }
+}

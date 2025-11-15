@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import {
   Box,
   BoxProps,
@@ -13,7 +14,7 @@ import { DayOfWeek, getDayTimeIntervals } from '@mantine/dates-utils';
 import { DateLabelFormat } from '../../../dates-utils/lib/types';
 import classes from './WeekView.module.css';
 
-export type WeekViewStylesNames = 'weekView';
+export type WeekViewStylesNames = 'weekView' | 'weekViewSlotLabels' | 'weekViewSlotLabel';
 export type WeekViewCssVariables = {
   weekView: '--test';
 };
@@ -31,8 +32,11 @@ export interface WeekViewProps
   /** End time for the day view, in `HH:mm:ss` format @default `23:59:59` */
   endTime?: string;
 
-  /** Number of minutes for each interval in the day view @default `30` */
+  /** Number of minutes for each interval in the day view @default `60` */
   intervalMinutes?: number;
+
+  /** Dayjs format for slot labels or a callback function that returns formatted value @default `HH:mm`  */
+  slotLabelFormat?: DateLabelFormat;
 
   /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default `1` – Monday */
   firstDayOfWeek?: DayOfWeek;
@@ -66,6 +70,8 @@ const defaultProps = {
   withCurrentTimeLine: true,
   startTime: '00:00:00',
   endTime: '23:59:59',
+  slotLabelFormat: 'HH:mm',
+  intervalMinutes: 60,
 } satisfies Partial<WeekViewProps>;
 
 const varsResolver = createVarsResolver<WeekViewFactory>(() => ({
@@ -87,6 +93,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     endTime,
     week,
     intervalMinutes,
+    slotLabelFormat,
     ...others
   } = props;
 
@@ -108,15 +115,27 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     startTime,
     endTime,
     intervalMinutes,
-  }).map((interval) => (
-    <div key={interval.startTime}>
-      {interval.startTime} - {interval.endTime}
-    </div>
-  ));
+  }).map((interval) => {
+    const intervalTime = dayjs(`${week} ${interval.startTime}`);
+    const label =
+      typeof slotLabelFormat === 'function'
+        ? slotLabelFormat(intervalTime.format('YYYY-MM-DD HH:mm:ss'))
+        : intervalTime.format(slotLabelFormat);
+
+    return (
+      <Box
+        {...getStyles('weekViewSlotLabel')}
+        key={interval.startTime}
+        mod={{ 'hour-start': interval.isHourStart }}
+      >
+        {label}
+      </Box>
+    );
+  });
 
   return (
     <Box {...getStyles('weekView')} {...others}>
-      {slotsLabels}
+      <div {...getStyles('weekViewSlotLabels')}>{slotsLabels}</div>
     </Box>
   );
 });
