@@ -18,7 +18,6 @@ export function Usage() {
         placeholder="Number input"
         onChange={setValue}
         onValueChange={console.log}
-        decimalSeparator=","
       />
       {typeof value === 'number' ? `${value} number` : `${value === '' ? 'empty' : value} string`}
       <Button onClick={() => setValue(245.32)}>Set value to float</Button>

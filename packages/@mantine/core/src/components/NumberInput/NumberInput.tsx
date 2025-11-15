@@ -248,6 +248,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
     allowLeadingZeros,
     withKeyboardEvents,
     trimLeadingZeroesOnBlur,
+    allowedDecimalSeparators,
     attributes,
     ...others
   } = props;
@@ -526,6 +527,7 @@ export const NumberInput = factory<NumberInputFactory>((_props, ref) => {
       rightSectionPointerEvents={rightSectionPointerEvents ?? (disabled ? 'none' : undefined)}
       rightSectionWidth={rightSectionWidth ?? `var(--ni-right-section-width-${size || 'sm'})`}
       allowLeadingZeros={allowLeadingZeros}
+      allowedDecimalSeparators={allowedDecimalSeparators}
       onBlur={handleBlur}
       attributes={attributes}
       isAllowed={(val) => {
