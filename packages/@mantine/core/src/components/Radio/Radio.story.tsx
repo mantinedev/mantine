@@ -1,6 +1,7 @@
 import { Checkbox } from '../Checkbox';
 import { Stack } from '../Stack';
 import { Radio } from './Radio';
+import { useState } from 'react';
 
 export default { title: 'Radio' };
 
@@ -54,9 +55,11 @@ export function Unstyled() {
 }
 
 export function RadioGroup() {
+  const [lib, setLib] = useState("react");
+
   return (
     <div style={{ padding: 20 }}>
-      <Radio.Group defaultValue="ng" readOnly>
+      <Radio.Group defaultValue={lib} onChange={setLib}>
         <Radio label="React" value="react" />
         <Radio label="Angular" value="ng" />
         <Radio label="Svelte" value="sv" />
