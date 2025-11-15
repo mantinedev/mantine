@@ -1,11 +1,3 @@
-/**
- * Recursively searches for an element by selector in the current root and all nested shadow DOMs.
- * Adapted from the Spotlight component's shadow DOM handling pattern.
- *
- * @param selector - The CSS selector to search for
- * @param root - The root element to start searching from (Document, Element, or ShadowRoot)
- * @returns The found element or null
- */
 export function findElementBySelector<T extends HTMLElement>(
   selector: string,
   root: Document | Element | ShadowRoot = document
@@ -32,17 +24,9 @@ export function findElementBySelector<T extends HTMLElement>(
     }
   }
 
-  // Return null if the element isn't found in the current root or any of its shadow DOMs
   return null;
 }
 
-/**
- * Returns all elements matching the selector, searching through shadow DOM boundaries.
- *
- * @param selector - The CSS selector to search for
- * @param root - The root element to start searching from
- * @returns NodeList of matching elements
- */
 export function findElementsBySelector<T extends HTMLElement>(
   selector: string,
   root: Document | Element | ShadowRoot = document
@@ -73,9 +57,6 @@ export function findElementsBySelector<T extends HTMLElement>(
 /**
  * Gets the appropriate root element (Document or ShadowRoot) for DOM queries
  * based on the provided target element reference.
- *
- * @param targetElement - The target element to find the root from
- * @returns The root node (Document or ShadowRoot), defaulting to document
  */
 export function getRootElement(
   targetElement: HTMLElement | null | undefined
