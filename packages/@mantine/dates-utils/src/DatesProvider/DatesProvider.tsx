@@ -1,12 +1,17 @@
 import { createContext } from 'react';
 import { DayOfWeek } from '../types';
 
+export interface ScheduleLabels {
+  week: string;
+}
+
 export interface DatesProviderValue {
   locale: string;
   firstDayOfWeek: DayOfWeek;
   weekendDays: DayOfWeek[];
   labelSeparator: string;
   consistentWeeks: boolean;
+  labels: ScheduleLabels;
 }
 
 export type DatesProviderSettings = Partial<DatesProviderValue>;
@@ -17,6 +22,9 @@ export const DATES_PROVIDER_DEFAULT_SETTINGS: DatesProviderValue = {
   weekendDays: [0, 6],
   labelSeparator: '–',
   consistentWeeks: false,
+  labels: {
+    week: 'Week',
+  },
 };
 
 export const DatesProviderContext = createContext(DATES_PROVIDER_DEFAULT_SETTINGS);

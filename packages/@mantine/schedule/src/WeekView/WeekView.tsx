@@ -17,6 +17,7 @@ import {
   DayOfWeek,
   getDayTimeIntervals,
   getWeekDays,
+  getWeekNumber,
   useDatesContext,
 } from '@mantine/dates-utils';
 import { WeekViewDay } from './WeekViewDay';
@@ -34,7 +35,9 @@ export type WeekViewStylesNames =
   | 'weekViewDay'
   | 'weekViewDayNumber'
   | 'weekViewDaySlot'
-  | 'weekViewDaySlots';
+  | 'weekViewDaySlots'
+  | 'weekViewWeekLabel'
+  | 'weekViewWeekNumber';
 
 export type WeekViewCssVariables = {
   weekView: '--week-view-radius';
@@ -148,7 +151,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
 
-  const labels = slots.map((interval) => {
+  const timeValues = slots.map((interval) => {
     const intervalTime = dayjs(`${dayjs(week).format('YYYY-MM-DD')} ${interval.startTime}`);
     const label =
       typeof slotLabelFormat === 'function'
@@ -187,8 +190,11 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   return (
     <Box {...getStyles('weekView')} {...others}>
       <div {...getStyles('weekViewSlotLabels')}>
-        <div {...getStyles('weekViewCorner')} />
-        {labels}
+        <div {...getStyles('weekViewCorner')}>
+          <div {...getStyles('weekViewWeekLabel')}>{ctx.labels.week}</div>
+          <div {...getStyles('weekViewWeekNumber')}>{getWeekNumber(week)}</div>
+        </div>
+        {timeValues}
       </div>
       {days}
     </Box>
