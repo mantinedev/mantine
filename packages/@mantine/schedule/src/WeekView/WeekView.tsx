@@ -12,7 +12,13 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { DateLabelFormat, DayOfWeek, getDayTimeIntervals, getWeekDays } from '@mantine/dates-utils';
+import {
+  DateLabelFormat,
+  DayOfWeek,
+  getDayTimeIntervals,
+  getWeekDays,
+  useDatesContext,
+} from '@mantine/dates-utils';
 import { WeekViewDay } from './WeekViewDay';
 import classes from './WeekView.module.css';
 
@@ -116,6 +122,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     firstDayOfWeek,
     weekdayFormat,
     radius,
+    highlightToday,
+    withCurrentTimeLine,
     ...others
   } = props;
 
@@ -133,6 +141,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     rootSelector: 'weekView',
   });
 
+  const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
 
   const labels = slots.map((interval) => {
@@ -153,7 +162,12 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     );
   });
 
-  const days = getWeekDays({ week, withWeekendDays, weekendDays, firstDayOfWeek }).map((day) => (
+  const days = getWeekDays({
+    week,
+    withWeekendDays,
+    weekendDays: ctx.getWeekendDays(weekendDays),
+    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+  }).map((day) => (
     <WeekViewDay
       key={day}
       day={day}

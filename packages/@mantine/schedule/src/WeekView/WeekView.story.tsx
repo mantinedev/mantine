@@ -17,3 +17,11 @@ export function Radius() {
     </div>
   );
 }
+
+export function NoWeekends() {
+  return (
+    <div style={{ padding: 40 }}>
+      <WeekView week="2025-11-03" withWeekendDays={false} />
+    </div>
+  );
+}
