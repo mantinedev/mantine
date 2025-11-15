@@ -1,5 +1,13 @@
 .weekView {
+  --week-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+
   display: flex;
+  border: 1px solid var(--mantine-color-gray-3);
+  border-radius: var(--week-view-radius);
+}
+
+.weekViewCorner {
+  height: 60px;
 }
 
 .weekViewSlotLabels {
@@ -9,6 +17,43 @@
 .weekViewSlotLabel {
   border-top: 1px solid var(--mantine-color-gray-1);
   text-align: right;
+  min-height: 60px;
+  padding: 4px;
+  padding-inline-end: 8px;
+  font-size: var(--mantine-font-size-sm);
+
+  &[data-hour-start] {
+    border-top-color: var(--mantine-color-gray-3);
+  }
+}
+
+.weekViewDay {
+  flex: 1;
+  border-inline-start: 1px solid var(--mantine-color-gray-3);
+}
+
+.weekViewDayLabel {
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  gap: 4px;
+}
+
+.weekViewDayNumber {
+  font-weight: 500;
+  text-align: center;
+}
+
+.weekViewDayWeekday {
+  text-align: center;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.weekViewDaySlot {
+  border-top: 1px solid var(--mantine-color-gray-1);
   min-height: 60px;
   padding: 4px;
 

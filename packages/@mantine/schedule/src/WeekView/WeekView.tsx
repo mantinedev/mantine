@@ -6,6 +6,8 @@ import {
   ElementProps,
   factory,
   Factory,
+  getRadius,
+  MantineRadius,
   StylesApiProps,
   useProps,
   useStyles,
@@ -18,15 +20,18 @@ export type WeekViewHighlightToday = 'weekday' | 'column' | false;
 
 export type WeekViewStylesNames =
   | 'weekView'
+  | 'weekViewCorner'
   | 'weekViewSlotLabels'
   | 'weekViewSlotLabel'
   | 'weekViewDayLabel'
-  | 'weekViewWeekday'
+  | 'weekViewDayWeekday'
   | 'weekViewDay'
-  | 'weekViewDayNumber';
+  | 'weekViewDayNumber'
+  | 'weekViewDaySlot'
+  | 'weekViewDaySlots';
 
 export type WeekViewCssVariables = {
-  weekView: '--test';
+  weekView: '--week-view-radius';
 };
 
 export interface WeekViewProps
@@ -65,6 +70,9 @@ export interface WeekViewProps
 
   /** If set, displays a line indicating the current time @default `true` */
   withCurrentTimeLine?: boolean;
+
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  radius?: MantineRadius;
 }
 
 export type WeekViewFactory = Factory<{
@@ -82,12 +90,11 @@ const defaultProps = {
   endTime: '23:59:59',
   slotLabelFormat: 'HH:mm',
   intervalMinutes: 60,
+  weekdayFormat: 'ddd',
 } satisfies Partial<WeekViewProps>;
 
-const varsResolver = createVarsResolver<WeekViewFactory>(() => ({
-  weekView: {
-    '--test': 'test',
-  },
+const varsResolver = createVarsResolver<WeekViewFactory>((_theme, { radius }) => ({
+  weekView: { '--week-view-radius': radius ? getRadius(radius) : undefined },
 }));
 
 export const WeekView = factory<WeekViewFactory>((_props) => {
@@ -107,6 +114,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     withWeekendDays,
     weekendDays,
     firstDayOfWeek,
+    weekdayFormat,
+    radius,
     ...others
   } = props;
 
@@ -145,12 +154,21 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   });
 
   const days = getWeekDays({ week, withWeekendDays, weekendDays, firstDayOfWeek }).map((day) => (
-    <WeekViewDay key={day} day={day} slots={slots} getStyles={getStyles} />
+    <WeekViewDay
+      key={day}
+      day={day}
+      slots={slots}
+      getStyles={getStyles}
+      weekdayFormat={weekdayFormat}
+    />
   ));
 
   return (
     <Box {...getStyles('weekView')} {...others}>
-      <div {...getStyles('weekViewSlotLabels')}>{labels}</div>
+      <div {...getStyles('weekViewSlotLabels')}>
+        <div {...getStyles('weekViewCorner')} />
+        {labels}
+      </div>
       {days}
     </Box>
   );

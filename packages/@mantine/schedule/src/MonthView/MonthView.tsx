@@ -2,9 +2,12 @@ import dayjs from 'dayjs';
 import {
   Box,
   BoxProps,
+  createVarsResolver,
   ElementProps,
   factory,
   Factory,
+  getRadius,
+  MantineRadius,
   StylesApiProps,
   UnstyledButton,
   useProps,
@@ -79,6 +82,9 @@ export interface MonthViewProps
 
   /** If set, highlights the current day @default true */
   highlightToday?: boolean;
+
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  radius?: MantineRadius;
 }
 
 export type MonthViewFactory = Factory<{
@@ -87,6 +93,10 @@ export type MonthViewFactory = Factory<{
   stylesNames: MonthViewStylesNames;
   vars: MonthViewCssVariables;
 }>;
+
+const varsResolver = createVarsResolver<MonthViewFactory>((_theme, { radius }) => ({
+  monthView: { '--month-view-radius': radius ? getRadius(radius) : undefined },
+}));
 
 const defaultProps = {
   withWeekDays: true,
@@ -119,6 +129,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     onWeekNumberClick,
     consistentWeeks,
     highlightToday,
+    radius,
     ...others
   } = props;
 
@@ -132,6 +143,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     styles,
     unstyled,
     vars,
+    varsResolver,
     rootSelector: 'monthView',
   });
 

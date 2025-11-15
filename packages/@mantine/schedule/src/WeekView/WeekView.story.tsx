@@ -9,3 +9,11 @@ export function Usage() {
     </div>
   );
 }
+
+export function Radius() {
+  return (
+    <div style={{ padding: 40 }}>
+      <WeekView week="2025-11-03" radius="md" />
+    </div>
+  );
+}
