@@ -67,7 +67,7 @@ function Demo() {
       <Menu.Dropdown>
         <Menu.Item>Dashboard</Menu.Item>
 
-        <Menu.Sub openDelay={120} closeDelay={150}>
+        <Menu.Sub>
           <Menu.Sub.Target>
             <Menu.Sub.Item>Products</Menu.Sub.Item>
           </Menu.Sub.Target>
