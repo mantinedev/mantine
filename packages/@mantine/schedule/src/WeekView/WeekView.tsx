@@ -197,14 +197,20 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
   });
 
+  const currentWeekdayIndex = withCurrentTimeIndicator
+    ? weekdays.findIndex((day) => dayjs(day).isSame(dayjs(), 'date'))
+    : -1;
+
   const weekdaysLabels = weekdays.map((day) => (
     <Box {...getStyles('weekViewDayLabel')} key={day}>
-      <Box {...getStyles('weekViewDayWeekday')}>
+      <Box {...getStyles('weekViewDayWeekday')} key="weekday">
         {typeof weekdayFormat === 'function'
           ? weekdayFormat(dayjs(day).format('YYYY-MM-DD'))
           : dayjs(day).locale(ctx.getLocale(locale)).format(weekdayFormat)}
       </Box>
-      <div {...getStyles('weekViewDayNumber')}>{dayjs(day).date()}</div>
+      <div {...getStyles('weekViewDayNumber')} key="date">
+        {dayjs(day).date()}
+      </div>
     </Box>
   ));
 
@@ -221,7 +227,14 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   ));
 
   return (
-    <Box {...getStyles('weekView')} {...others}>
+    <Box
+      {...getStyles('weekView')}
+      __vars={{
+        '--indicator-offset-index':
+          currentWeekdayIndex === -1 ? undefined : `${currentWeekdayIndex + 1}`,
+      }}
+      {...others}
+    >
       <ScrollArea.Autosize
         scrollbarSize={4}
         {...scrollAreaProps}
@@ -235,7 +248,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         }}
       >
         <Box {...getStyles('weekViewHeader')} mod={{ scrolled }}>
-          <div {...getStyles('weekViewCorner')}>
+          <div {...getStyles('weekViewCorner')} key="corner">
             {withWeekNumber && (
               <>
                 <div {...getStyles('weekViewWeekLabel')}>{ctx.labels.week}</div>
@@ -248,7 +261,12 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         </Box>
         <div {...getStyles('weekViewInner')}>
           <div {...getStyles('weekViewSlotLabels')}>{timeValues}</div>
-          {withCurrentTimeIndicator && <CurrentTimeIndicator />}
+          {withCurrentTimeIndicator && currentWeekdayIndex !== -1 && (
+            <CurrentTimeIndicator
+              startOffset="calc(100% - (100% / 7) * (7 - var(--indicator-offset-index) + 1) + ((7 - var(--indicator-offset-index) + 1) * var(--indicator-labels-offset)))"
+              endOffset="calc((100% / 7) * (7 - var(--indicator-offset-index)) - (7 - var(--indicator-offset-index)) * var(--indicator-labels-offset))"
+            />
+          )}
           {days}
         </div>
       </ScrollArea.Autosize>

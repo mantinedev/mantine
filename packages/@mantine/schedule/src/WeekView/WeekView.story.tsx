@@ -37,7 +37,7 @@ export function SlotLabelFormat() {
 }
 
 export function ScrollAreaProps() {
-  return <WeekView week="2025-11-03" scrollAreaProps={{ mah: 600 }} />;
+  return <WeekView week={new Date()} scrollAreaProps={{ mah: 600 }} />;
 }
 
 export function WithWeekNumber() {

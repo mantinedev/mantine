@@ -38,6 +38,12 @@ export interface CurrentTimeIndicatorProps
     ElementProps<'div'> {
   /** Key of `theme.colors` or any valid CSS color value @default `'red'` */
   color?: MantineColor;
+
+  /** Offset from the left side */
+  startOffset?: string;
+
+  /** Offset from the right side */
+  endOffset?: string;
 }
 
 export type CurrentTimeIndicatorFactory = Factory<{
@@ -57,7 +63,18 @@ const varsResolver = createVarsResolver<CurrentTimeIndicatorFactory>((theme, { c
 
 export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props) => {
   const props = useProps('CurrentTimeIndicator', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, ...others } = props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    startOffset,
+    endOffset,
+    color,
+    ...others
+  } = props;
 
   const getStyles = useStyles<CurrentTimeIndicatorFactory>({
     name: 'CurrentTimeIndicator',
@@ -79,7 +96,11 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
   return (
     <Box
       {...getStyles('currentTimeIndicator')}
-      __vars={{ '--top-offset': `${offsetPercent}%` }}
+      __vars={{
+        '--top-offset': `${offsetPercent}%`,
+        '--start-offset': startOffset,
+        '--end-offset': endOffset,
+      }}
       {...others}
     >
       <div {...getStyles('currentTimeIndicatorThumb')} />
