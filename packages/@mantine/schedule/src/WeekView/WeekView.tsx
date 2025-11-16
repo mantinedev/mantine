@@ -94,6 +94,9 @@ export interface WeekViewProps
 
   /** Props passed down to the `ScrollArea.Autosize` component */
   scrollAreaProps?: ScrollAreaAutosizeProps;
+
+  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
+  locale?: string;
 }
 
 export type WeekViewFactory = Factory<{
@@ -141,6 +144,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     withCurrentTimeLine,
     emphasizeToday,
     scrollAreaProps,
+    locale,
     ...others
   } = props;
 
@@ -167,7 +171,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     const label =
       typeof slotLabelFormat === 'function'
         ? slotLabelFormat(intervalTime.format('YYYY-MM-DD HH:mm:ss'))
-        : intervalTime.format(slotLabelFormat);
+        : intervalTime.locale(ctx.getLocale(locale)).format(slotLabelFormat);
 
     return (
       <Box
@@ -192,7 +196,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       <Box {...getStyles('weekViewDayWeekday')}>
         {typeof weekdayFormat === 'function'
           ? weekdayFormat(dayjs(day).format('YYYY-MM-DD'))
-          : dayjs(day).format(weekdayFormat)}
+          : dayjs(day).locale(ctx.getLocale(locale)).format(weekdayFormat)}
       </Box>
       <div {...getStyles('weekViewDayNumber')}>{dayjs(day).date()}</div>
     </Box>

@@ -1,9 +1,15 @@
+import 'dayjs/locale/ru';
+
 import { WeekView } from './WeekView';
 
 export default { title: 'schedule/WeekView' };
 
 export function Usage() {
   return <WeekView week={new Date()} />;
+}
+
+export function Locale() {
+  return <WeekView week={new Date()} locale="ru" />;
 }
 
 export function HighlightToday() {

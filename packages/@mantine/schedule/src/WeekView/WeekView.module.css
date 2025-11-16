@@ -136,6 +136,7 @@
 .weekViewDayWeekday {
   text-align: center;
   font-size: var(--mantine-font-size-sm);
+  text-transform: capitalize;
 }
 
 .weekViewDaySlots {
