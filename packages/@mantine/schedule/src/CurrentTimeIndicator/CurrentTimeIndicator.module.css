@@ -11,7 +11,7 @@
     position: absolute;
     inset: 0;
     background-color: var(--indicator-color, var(--mantine-color-red-7));
-    opacity: 0.4;
+    opacity: 0.2;
   }
 }
 
@@ -19,7 +19,20 @@
   height: 100%;
   position: absolute;
   top: 0;
-  background-color: blue;
+  background-color: var(--indicator-color, var(--mantine-color-red-7));
   inset-inline-start: var(--start-offset);
   inset-inline-end: var(--end-offset);
+}
+
+.currentTimeIndicatorThumb {
+  --thumb-size: 12px;
+
+  position: absolute;
+  top: calc(-1 * (var(--thumb-size) / 2 - 1px));
+  width: var(--thumb-size);
+  height: var(--thumb-size);
+  border-radius: 50%;
+  border: 1px solid var(--mantine-color-body);
+  background-color: var(--indicator-color, var(--mantine-color-red-7));
+  inset-inline-start: calc(var(--start-offset) - (var(--thumb-size) / 2 - 1px));
 }
