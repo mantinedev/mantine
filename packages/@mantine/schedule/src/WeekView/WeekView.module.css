@@ -16,7 +16,7 @@
 }
 
 .weekViewSlotLabels {
-  flex: 0 0 70px;
+  flex: 0 0 80px;
 }
 
 .weekViewSlotLabel {
@@ -28,6 +28,8 @@
   font-size: var(--mantine-font-size-sm);
   user-select: none;
   cursor: default;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
 
   &:where([data-hour-start]) {
     border-top-color: var(--mantine-color-gray-3);

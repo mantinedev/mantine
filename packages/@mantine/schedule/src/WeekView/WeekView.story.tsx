@@ -3,49 +3,29 @@ import { WeekView } from './WeekView';
 export default { title: 'schedule/WeekView' };
 
 export function Usage() {
-  return (
-    <div>
-      <WeekView week={new Date()} />
-    </div>
-  );
+  return <WeekView week={new Date()} />;
 }
 
 export function HighlightToday() {
-  return (
-    <div>
-      <WeekView week={new Date()} highlightToday="weekday" />
-    </div>
-  );
+  return <WeekView week={new Date()} highlightToday="weekday" />;
 }
 
 export function EmphasizeToday() {
-  return (
-    <div>
-      <WeekView week={new Date()} emphasizeToday />
-    </div>
-  );
+  return <WeekView week={new Date()} emphasizeToday />;
 }
 
 export function Radius() {
-  return (
-    <div>
-      <WeekView week="2025-11-03" radius="md" />
-    </div>
-  );
+  return <WeekView week="2025-11-03" radius="md" />;
 }
 
 export function NoWeekends() {
-  return (
-    <div>
-      <WeekView week="2025-11-03" withWeekendDays={false} />
-    </div>
-  );
+  return <WeekView week="2025-11-03" withWeekendDays={false} />;
 }
 
 export function FirstDayOfWeek() {
-  return (
-    <div>
-      <WeekView week="2025-11-03" firstDayOfWeek={0} />
-    </div>
-  );
+  return <WeekView week="2025-11-03" firstDayOfWeek={0} />;
+}
+
+export function SlotLabelFormat() {
+  return <WeekView week="2025-11-03" slotLabelFormat="hh:mm a" />;
 }
