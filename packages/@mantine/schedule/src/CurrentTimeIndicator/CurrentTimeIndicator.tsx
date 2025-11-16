@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -11,7 +13,15 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { useInterval } from '@mantine/hooks';
 import classes from './CurrentTimeIndicator.module.css';
+
+function getOffsetPercent() {
+  const startOf = dayjs().startOf('date');
+  const now = dayjs();
+  const diffInMinutes = now.diff(startOf, 'minute');
+  return (diffInMinutes / 1440) * 100;
+}
 
 export type CurrentTimeIndicatorStylesNames =
   | 'currentTimeIndicator'
@@ -63,8 +73,15 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
     rootSelector: 'currentTimeIndicator',
   });
 
+  const [offsetPercent, setOffsetPercent] = useState(getOffsetPercent());
+  useInterval(() => setOffsetPercent(getOffsetPercent()), 1000 * 60 * 2, { autoInvoke: true });
+
   return (
-    <Box {...getStyles('currentTimeIndicator')} {...others}>
+    <Box
+      {...getStyles('currentTimeIndicator')}
+      __vars={{ '--top-offset': `${offsetPercent}%` }}
+      {...others}
+    >
       <div {...getStyles('currentTimeIndicatorThumb')} />
       <div {...getStyles('currentTimeIndicatorLine')} />
     </Box>

@@ -23,6 +23,7 @@ import {
   getWeekNumber,
   useDatesContext,
 } from '@mantine/dates-utils';
+import { CurrentTimeIndicator } from '../CurrentTimeIndicator/CurrentTimeIndicator';
 import { WeekViewDay } from './WeekViewDay';
 import classes from './WeekView.module.css';
 
@@ -84,7 +85,7 @@ export interface WeekViewProps
   highlightToday?: WeekViewHighlightToday;
 
   /** If set, displays a line indicating the current time @default `true` */
-  withCurrentTimeLine?: boolean;
+  withCurrentTimeIndicator?: boolean;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
@@ -112,7 +113,7 @@ export type WeekViewFactory = Factory<{
 const defaultProps = {
   withWeekendDays: true,
   highlightToday: 'weekday',
-  withCurrentTimeLine: true,
+  withCurrentTimeIndicator: true,
   startTime: '00:00:00',
   endTime: '23:59:59',
   slotLabelFormat: 'HH:mm',
@@ -145,7 +146,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     weekdayFormat,
     radius,
     highlightToday,
-    withCurrentTimeLine,
+    withCurrentTimeIndicator,
     emphasizeToday,
     scrollAreaProps,
     locale,
@@ -247,6 +248,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         </Box>
         <div {...getStyles('weekViewInner')}>
           <div {...getStyles('weekViewSlotLabels')}>{timeValues}</div>
+          {withCurrentTimeIndicator && <CurrentTimeIndicator />}
           {days}
         </div>
       </ScrollArea.Autosize>

@@ -1,0 +1,10 @@
+.currentTimeIndicator {
+  position: absolute;
+  /* left: calc(100% - 100% / 7 + 12px); */
+  left: 0;
+  right: 0;
+  top: var(--top-offset);
+  height: 2px;
+  background-color: var(--indicator-color, var(--mantine-color-red-7));
+  z-index: 2;
+}
