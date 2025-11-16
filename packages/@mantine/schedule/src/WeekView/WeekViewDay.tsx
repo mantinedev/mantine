@@ -1,12 +1,6 @@
 import dayjs from 'dayjs';
 import { Box, GetStylesApi } from '@mantine/core';
-import {
-  DateLabelFormat,
-  DateStringValue,
-  DayOfWeek,
-  DayTimeInterval,
-  useDatesContext,
-} from '@mantine/dates-utils';
+import { DateStringValue, DayOfWeek, DayTimeInterval, useDatesContext } from '@mantine/dates-utils';
 import type { WeekViewFactory, WeekViewHighlightToday } from './WeekView';
 
 export interface WeekViewDayProps {
@@ -22,9 +16,6 @@ export interface WeekViewDayProps {
   /** `weekday` – highlights today in the weekday row, `column` – highlights today in the entire column */
   highlightToday?: WeekViewHighlightToday;
 
-  /** `dayjs` format for weekdays names. @default `'ddd'` */
-  weekdayFormat?: DateLabelFormat;
-
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
 
@@ -36,7 +27,6 @@ export function WeekViewDay({
   day,
   slots,
   highlightToday,
-  weekdayFormat,
   getStyles,
   weekendDays,
   emphasizeToday,
@@ -55,15 +45,6 @@ export function WeekViewDay({
 
   return (
     <Box {...getStyles('weekViewDay')} mod={{ today, weekend, emphasize: today && emphasizeToday }}>
-      <Box {...getStyles('weekViewDayLabel')}>
-        <Box {...getStyles('weekViewDayWeekday')}>
-          {typeof weekdayFormat === 'function'
-            ? weekdayFormat(dayjs(day).format('YYYY-MM-DD'))
-            : dayjs(day).format(weekdayFormat)}
-        </Box>
-        <div {...getStyles('weekViewDayNumber')}>{dayjs(day).date()}</div>
-      </Box>
-
       <Box mod={{ today: today && highlightToday === 'column' }} {...getStyles('weekViewDaySlots')}>
         {items}
       </Box>

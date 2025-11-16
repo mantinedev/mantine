@@ -27,5 +27,9 @@ export function FirstDayOfWeek() {
 }
 
 export function SlotLabelFormat() {
-  return <WeekView week="2025-11-03" slotLabelFormat="hh:mm a" />;
+  return <WeekView week="2025-11-03" slotLabelFormat="h:mm a" />;
+}
+
+export function ScrollAreaProps() {
+  return <WeekView week="2025-11-03" scrollAreaProps={{ mah: 600 }} />;
 }

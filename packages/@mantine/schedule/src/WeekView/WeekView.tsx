@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -8,6 +9,8 @@ import {
   Factory,
   getRadius,
   MantineRadius,
+  ScrollArea,
+  ScrollAreaAutosizeProps,
   StylesApiProps,
   useProps,
   useStyles,
@@ -27,6 +30,9 @@ export type WeekViewHighlightToday = 'weekday' | 'column' | false;
 
 export type WeekViewStylesNames =
   | 'weekView'
+  | 'weekViewHeader'
+  | 'weekViewInner'
+  | 'weekViewScrollArea'
   | 'weekViewCorner'
   | 'weekViewSlotLabels'
   | 'weekViewSlotLabel'
@@ -85,6 +91,9 @@ export interface WeekViewProps
 
   /** Makes the current day twice larger @default false */
   emphasizeToday?: boolean;
+
+  /** Props passed down to the `ScrollArea.Autosize` component */
+  scrollAreaProps?: ScrollAreaAutosizeProps;
 }
 
 export type WeekViewFactory = Factory<{
@@ -131,6 +140,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     highlightToday,
     withCurrentTimeLine,
     emphasizeToday,
+    scrollAreaProps,
     ...others
   } = props;
 
@@ -148,6 +158,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     rootSelector: 'weekView',
   });
 
+  const [scrolled, setScrolled] = useState(false);
   const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
 
@@ -169,18 +180,30 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     );
   });
 
-  const days = getWeekDays({
+  const weekdays = getWeekDays({
     week,
     withWeekendDays,
     weekendDays: ctx.getWeekendDays(weekendDays),
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
-  }).map((day) => (
+  });
+
+  const weekdaysLabels = weekdays.map((day) => (
+    <Box {...getStyles('weekViewDayLabel')} key={day}>
+      <Box {...getStyles('weekViewDayWeekday')}>
+        {typeof weekdayFormat === 'function'
+          ? weekdayFormat(dayjs(day).format('YYYY-MM-DD'))
+          : dayjs(day).format(weekdayFormat)}
+      </Box>
+      <div {...getStyles('weekViewDayNumber')}>{dayjs(day).date()}</div>
+    </Box>
+  ));
+
+  const days = weekdays.map((day) => (
     <WeekViewDay
       key={day}
       day={day}
       slots={slots}
       getStyles={getStyles}
-      weekdayFormat={weekdayFormat}
       highlightToday={highlightToday}
       weekendDays={weekendDays}
       emphasizeToday={emphasizeToday}
@@ -189,14 +212,31 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 
   return (
     <Box {...getStyles('weekView')} {...others}>
-      <div {...getStyles('weekViewSlotLabels')}>
-        <div {...getStyles('weekViewCorner')}>
-          <div {...getStyles('weekViewWeekLabel')}>{ctx.labels.week}</div>
-          <div {...getStyles('weekViewWeekNumber')}>{getWeekNumber(week)}</div>
+      <ScrollArea.Autosize
+        scrollbarSize={4}
+        {...scrollAreaProps}
+        {...getStyles('weekViewScrollArea', {
+          className: scrollAreaProps?.className,
+          style: scrollAreaProps?.style,
+        })}
+        onScrollPositionChange={(position) => {
+          scrollAreaProps?.onScrollPositionChange?.(position);
+          setScrolled(position.y !== 0);
+        }}
+      >
+        <Box {...getStyles('weekViewHeader')} mod={{ scrolled }}>
+          <div {...getStyles('weekViewCorner')}>
+            <div {...getStyles('weekViewWeekLabel')}>{ctx.labels.week}</div>
+            <div {...getStyles('weekViewWeekNumber')}>{getWeekNumber(week)}</div>
+          </div>
+
+          {weekdaysLabels}
+        </Box>
+        <div {...getStyles('weekViewInner')}>
+          <div {...getStyles('weekViewSlotLabels')}>{timeValues}</div>
+          {days}
         </div>
-        {timeValues}
-      </div>
-      {days}
+      </ScrollArea.Autosize>
     </Box>
   );
 });

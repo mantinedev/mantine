@@ -1,13 +1,45 @@
 .weekView {
   --week-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+  --week-view-slots-label-width: 80px;
+  --week-view-min-slot-width: 80px;
+  --week-view-slot-height: 60px;
 
-  display: flex;
   border: 1px solid var(--mantine-color-gray-3);
   border-radius: var(--week-view-radius);
 }
 
+.weekViewInner {
+  display: flex;
+  position: relative;
+}
+
+.weekViewScrollArea {
+  :where(:global(.mantine-ScrollArea-scrollbar)) {
+    z-index: 2;
+  }
+}
+
+.weekViewHeader {
+  display: flex;
+  border-start-start-radius: var(--week-view-radius);
+  border-start-end-radius: var(--week-view-radius);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--mantine-color-body);
+  border-bottom: 1px solid var(--mantine-color-gray-3);
+  margin-bottom: -1px;
+  transition: box-shadow 100ms ease;
+
+  &:where([data-scrolled]) {
+    box-shadow: var(--mantine-shadow-sm);
+  }
+}
+
 .weekViewCorner {
-  height: 60px;
+  height: var(--week-view-slot-height);
+  flex: 0 0 var(--week-view-slots-label-width);
+  min-width: var(--week-view-slots-label-width);
   line-height: 1;
   display: flex;
   flex-direction: column;
@@ -16,13 +48,15 @@
 }
 
 .weekViewSlotLabels {
-  flex: 0 0 80px;
+  flex: 0 0 var(--week-view-slots-label-width);
+  min-width: var(--week-view-slots-label-width);
+  background-color: var(--mantine-color-body);
 }
 
 .weekViewSlotLabel {
   border-top: 1px solid var(--mantine-color-gray-1);
   text-align: right;
-  min-height: 60px;
+  height: var(--week-view-slot-height);
   padding: 4px;
   padding-inline-end: 8px;
   font-size: var(--mantine-font-size-sm);
@@ -46,7 +80,8 @@
 }
 
 .weekViewDayLabel {
-  height: 60px;
+  height: var(--week-view-slot-height);
+  min-width: var(--week-view-min-slot-width);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,6 +89,13 @@
   font-weight: 500;
   user-select: none;
   cursor: pointer;
+  flex: 1;
+  border-inline-start: 1px solid var(--mantine-color-gray-3);
+  padding-inline-start: 5px;
+
+  &:where([data-emphasize]) {
+    flex: 2;
+  }
 
   :where(.weekViewDay[data-weekend]) & {
     color: var(--mantine-color-error);
@@ -104,7 +146,8 @@
 
 .weekViewDaySlot {
   border-top: 1px solid var(--mantine-color-gray-1);
-  min-height: 60px;
+  height: var(--week-view-slot-height);
+  min-width: var(--week-view-min-slot-width);
   padding: 4px;
   cursor: pointer;
 
