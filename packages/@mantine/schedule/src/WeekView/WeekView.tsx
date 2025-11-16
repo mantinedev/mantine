@@ -97,6 +97,9 @@ export interface WeekViewProps
 
   /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
   locale?: string;
+
+  /** If set, the week number is displayed at the top left corner @default `true` */
+  withWeekNumber?: boolean;
 }
 
 export type WeekViewFactory = Factory<{
@@ -115,6 +118,7 @@ const defaultProps = {
   slotLabelFormat: 'HH:mm',
   intervalMinutes: 60,
   weekdayFormat: 'ddd',
+  withWeekNumber: true,
 } satisfies Partial<WeekViewProps>;
 
 const varsResolver = createVarsResolver<WeekViewFactory>((_theme, { radius }) => ({
@@ -145,6 +149,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     emphasizeToday,
     scrollAreaProps,
     locale,
+    withWeekNumber,
     ...others
   } = props;
 
@@ -230,8 +235,12 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       >
         <Box {...getStyles('weekViewHeader')} mod={{ scrolled }}>
           <div {...getStyles('weekViewCorner')}>
-            <div {...getStyles('weekViewWeekLabel')}>{ctx.labels.week}</div>
-            <div {...getStyles('weekViewWeekNumber')}>{getWeekNumber(week)}</div>
+            {withWeekNumber && (
+              <>
+                <div {...getStyles('weekViewWeekLabel')}>{ctx.labels.week}</div>
+                <div {...getStyles('weekViewWeekNumber')}>{getWeekNumber(week)}</div>
+              </>
+            )}
           </div>
 
           {weekdaysLabels}
