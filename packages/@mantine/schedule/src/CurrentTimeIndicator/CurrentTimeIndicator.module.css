@@ -1,5 +1,4 @@
 .currentTimeIndicator {
-  --time-bubble-width: 64px;
   --time-bubble-height: 18px;
   --thumb-size: 12px;
   --_indicator-color: var(--indicator-color, var(--mantine-color-red-7));

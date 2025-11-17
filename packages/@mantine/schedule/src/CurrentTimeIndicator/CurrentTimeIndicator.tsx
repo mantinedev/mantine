@@ -119,6 +119,11 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
   const ctx = useDatesContext();
   const [offsetPercent, setOffsetPercent] = useState(getOffsetPercent());
   useInterval(() => setOffsetPercent(getOffsetPercent()), 1000 * 60, { autoInvoke: true });
+  const formattedTime = withTimeBubble
+    ? typeof currentTimeFormat === 'function'
+      ? currentTimeFormat(dayjs().format('YYYY-MM-DD HH:mm:ss'))
+      : dayjs().locale(ctx.getLocale(locale)).format(currentTimeFormat)
+    : '';
 
   return (
     <Box
@@ -128,15 +133,16 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
         '--start-offset': startOffset,
         '--end-offset': endOffset,
         '--time-bubble-start-offset': timeBubbleStartOffset,
+
+        // Adjust time bubble width for formats including AM/PM
+        '--time-bubble-width': formattedTime?.toString().toLowerCase().includes('m')
+          ? '64px'
+          : '46px',
       }}
       {...others}
     >
       {withTimeBubble && (
-        <div {...getStyles('currentTimeIndicatorTimeBubble')}>
-          {typeof currentTimeFormat === 'function'
-            ? currentTimeFormat(dayjs().format('YYYY-MM-DD HH:mm:ss'))
-            : dayjs().locale(ctx.getLocale(locale)).format(currentTimeFormat)}
-        </div>
+        <div {...getStyles('currentTimeIndicatorTimeBubble')}>{formattedTime}</div>
       )}
 
       {withThumb && <div {...getStyles('currentTimeIndicatorThumb')} />}
