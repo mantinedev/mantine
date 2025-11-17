@@ -13,7 +13,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { DateLabelFormat } from '@mantine/dates-utils';
+import { DateLabelFormat, useDatesContext } from '@mantine/dates-utils';
 import { useInterval } from '@mantine/hooks';
 import classes from './CurrentTimeIndicator.module.css';
 
@@ -55,6 +55,9 @@ export interface CurrentTimeIndicatorProps
 
   /** Format of the time displayed in the time bubble @default `'HH:mm'` */
   currentTimeFormat?: DateLabelFormat;
+
+  /** Locale passed down to dayjs during formatting */
+  locale?: string;
 }
 
 export type CurrentTimeIndicatorFactory = Factory<{
@@ -91,6 +94,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
     withTimeBubble,
     withThumb,
     currentTimeFormat,
+    locale,
     ...others
   } = props;
 
@@ -108,6 +112,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
     rootSelector: 'currentTimeIndicator',
   });
 
+  const ctx = useDatesContext();
   const [offsetPercent, setOffsetPercent] = useState(getOffsetPercent());
   useInterval(() => setOffsetPercent(getOffsetPercent()), 1000 * 60, { autoInvoke: true });
 
@@ -125,10 +130,12 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
         <div {...getStyles('currentTimeIndicatorTimeBubble')}>
           {typeof currentTimeFormat === 'function'
             ? currentTimeFormat(dayjs().format('YYYY-MM-DD HH:mm:ss'))
-            : dayjs().format(currentTimeFormat)}
+            : dayjs().locale(ctx.getLocale(locale)).format(currentTimeFormat)}
         </div>
       )}
+
       {withThumb && <div {...getStyles('currentTimeIndicatorThumb')} />}
+
       <div {...getStyles('currentTimeIndicatorLine')} />
     </Box>
   );

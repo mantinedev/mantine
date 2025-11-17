@@ -40,7 +40,7 @@
 }
 
 .currentTimeIndicatorTimeBubble {
-  --time-bubble-width: 60px;
+  --time-bubble-width: 64px;
   --time-bubble-height: 18px;
 
   position: absolute;
@@ -60,4 +60,5 @@
   inset-inline-start: calc(var(--week-view-slots-label-width) - var(--time-bubble-width));
   top: calc(-1 * (var(--time-bubble-height) / 2 - 1px));
   z-index: 2;
+  text-transform: uppercase;
 }
