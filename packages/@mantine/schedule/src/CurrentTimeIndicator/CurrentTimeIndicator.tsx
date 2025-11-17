@@ -47,6 +47,9 @@ export interface CurrentTimeIndicatorProps
   /** Offset from the right side */
   endOffset?: string;
 
+  /** Offset for the time bubble */
+  timeBubbleStartOffset?: string;
+
   /** If set, displays a bubble with the current time @default `@true` */
   withTimeBubble?: boolean;
 
@@ -95,6 +98,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
     withThumb,
     currentTimeFormat,
     locale,
+    timeBubbleStartOffset,
     ...others
   } = props;
 
@@ -123,6 +127,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
         '--top-offset': `${offsetPercent}%`,
         '--start-offset': startOffset,
         '--end-offset': endOffset,
+        '--time-bubble-start-offset': timeBubbleStartOffset,
       }}
       {...others}
     >

@@ -273,6 +273,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
             <CurrentTimeIndicator
               startOffset="calc(100% - (100% / var(--number-of-days)) * (var(--number-of-days) - var(--indicator-offset-index) + 1) + ((var(--number-of-days) - var(--indicator-offset-index) + 1) * var(--indicator-labels-offset)))"
               endOffset="calc((100% / var(--number-of-days)) * (var(--number-of-days) - var(--indicator-offset-index)) - (var(--number-of-days) - var(--indicator-offset-index)) * var(--indicator-labels-offset))"
+              timeBubbleStartOffset="calc(var(--week-view-slots-label-width) - var(--time-bubble-width))"
               currentTimeFormat={slotLabelFormat}
               withTimeBubble={withCurrentTimeBubble}
               withThumb={withCurrentTimeBubble ? currentWeekdayIndex !== 0 : true}

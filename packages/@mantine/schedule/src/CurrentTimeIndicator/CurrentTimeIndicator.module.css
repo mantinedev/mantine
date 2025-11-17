@@ -1,4 +1,7 @@
 .currentTimeIndicator {
+  --time-bubble-width: 64px;
+  --time-bubble-height: 18px;
+  --thumb-size: 12px;
   --_indicator-color: var(--indicator-color, var(--mantine-color-red-7));
 
   position: absolute;
@@ -27,8 +30,6 @@
 }
 
 .currentTimeIndicatorThumb {
-  --thumb-size: 12px;
-
   position: absolute;
   top: calc(-1 * (var(--thumb-size) / 2 - 1px));
   width: var(--thumb-size);
@@ -40,9 +41,6 @@
 }
 
 .currentTimeIndicatorTimeBubble {
-  --time-bubble-width: 64px;
-  --time-bubble-height: 18px;
-
   position: absolute;
   height: var(--time-bubble-height);
   width: var(--time-bubble-width);
@@ -57,7 +55,7 @@
   box-shadow: var(--mantine-shadow-sm);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
-  inset-inline-start: calc(var(--week-view-slots-label-width) - var(--time-bubble-width));
+  inset-inline-start: var(--time-bubble-start-offset);
   top: calc(-1 * (var(--time-bubble-height) / 2 - 1px));
   z-index: 2;
   text-transform: uppercase;
