@@ -8,6 +8,16 @@ export function Usage() {
   return <WeekView week={new Date()} />;
 }
 
+export function StartEndTime() {
+  return <WeekView week={new Date()} startTime="08:00:00" endTime="12:00:00" />;
+}
+
+export function IntervalMinutes() {
+  return (
+    <WeekView week={new Date()} startTime="08:00:00" endTime="12:00:00" intervalMinutes={15} />
+  );
+}
+
 export function Locale() {
   return <WeekView week={new Date()} locale="ru" />;
 }

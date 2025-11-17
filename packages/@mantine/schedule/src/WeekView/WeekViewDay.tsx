@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Box, GetStylesApi } from '@mantine/core';
+import { Box, GetStylesApi, UnstyledButton } from '@mantine/core';
 import { DateStringValue, DayOfWeek, DayTimeInterval, useDatesContext } from '@mantine/dates-utils';
 import type { WeekViewFactory, WeekViewHighlightToday } from './WeekView';
 
@@ -36,10 +36,11 @@ export function WeekViewDay({
   const today = dayjs(day).isSame(dayjs(), 'day') && !!highlightToday;
 
   const items = slots.map((slot) => (
-    <Box
+    <UnstyledButton
       key={slot.startTime}
       {...getStyles('weekViewDaySlot')}
       mod={{ 'hour-start': slot.isHourStart }}
+      aria-label={`${ctx.labels.timeSlot} ${dayjs(day).format('YYYY-MM-DD')} ${slot.startTime} - ${slot.endTime}`}
     />
   ));
 

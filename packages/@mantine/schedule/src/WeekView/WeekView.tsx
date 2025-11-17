@@ -12,6 +12,7 @@ import {
   ScrollArea,
   ScrollAreaAutosizeProps,
   StylesApiProps,
+  UnstyledButton,
   useProps,
   useStyles,
 } from '@mantine/core';
@@ -215,7 +216,15 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     : -1;
 
   const weekdaysLabels = weekdays.map((day) => (
-    <Box {...getStyles('weekViewDayLabel')} key={day}>
+    <UnstyledButton
+      {...getStyles('weekViewDayLabel')}
+      key={day}
+      aria-label={`${ctx.labels.weekday} ${dayjs(day).format('YYYY-MM-DD')}`}
+      mod={{
+        today: dayjs(day).isSame(dayjs(), 'day'),
+        weekend: ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek),
+      }}
+    >
       <Box {...getStyles('weekViewDayWeekday')} key="weekday">
         {typeof weekdayFormat === 'function'
           ? weekdayFormat(dayjs(day).format('YYYY-MM-DD'))
@@ -224,7 +233,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       <div {...getStyles('weekViewDayNumber')} key="date">
         {dayjs(day).date()}
       </div>
-    </Box>
+    </UnstyledButton>
   ));
 
   const days = weekdays.map((day) => (
@@ -239,7 +248,13 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     />
   ));
 
-  const allDaySlots = weekdays.map((day) => <Box key={day} {...getStyles('weekViewDaySlot')} />);
+  const allDaySlots = weekdays.map((day) => (
+    <UnstyledButton
+      aria-label={`${ctx.labels.allDay} ${dayjs(day).format('YYYY-MM-DD')}`}
+      key={day}
+      {...getStyles('weekViewDaySlot')}
+    />
+  ));
 
   return (
     <Box

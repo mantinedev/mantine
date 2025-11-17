@@ -99,11 +99,11 @@
     flex: 2;
   }
 
-  :where(.weekViewDay[data-weekend]) & {
+  &:where([data-weekend]) {
     color: var(--mantine-color-error);
   }
 
-  :where(.weekViewDay[data-today]) & {
+  &:where([data-today]) {
     gap: 6px;
     background-color: var(--mantine-primary-color-light);
   }
@@ -129,7 +129,7 @@
   border-radius: 100%;
   font-size: var(--mantine-font-size-sm);
 
-  :where(.weekViewDay[data-today]) & {
+  :where(.weekViewDayLabel[data-today]) & {
     background-color: var(--mantine-primary-color-filled);
     color: var(--mantine-primary-color-contrast);
   }
@@ -148,6 +148,8 @@
 }
 
 .weekViewDaySlot {
+  display: block;
+  width: 100%;
   border-top: 1px solid var(--mantine-color-gray-1);
   height: var(--week-view-slot-height);
   min-width: var(--week-view-min-slot-width);

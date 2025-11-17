@@ -4,6 +4,8 @@ import { DayOfWeek } from '../types';
 export interface ScheduleLabels {
   week: string;
   allDay: string;
+  weekday: string;
+  timeSlot: string;
 }
 
 export interface DatesProviderValue {
@@ -26,6 +28,8 @@ export const DATES_PROVIDER_DEFAULT_SETTINGS: DatesProviderValue = {
   labels: {
     week: 'Week',
     allDay: 'All day',
+    weekday: 'Weekday',
+    timeSlot: 'Time slot',
   },
 };
 

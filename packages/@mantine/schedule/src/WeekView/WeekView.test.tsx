@@ -1,8 +1,10 @@
-import { tests } from '@mantine-tests/core';
+import dayjs from 'dayjs';
+import { DatesProvider } from '@mantine/dates-utils';
+import { render, screen, tests } from '@mantine-tests/core';
 import { WeekView, WeekViewProps, WeekViewStylesNames } from './WeekView';
 
 const defaultProps: WeekViewProps = {
-  week: '2025-11-03',
+  week: '2025-11-03 00:00:00',
 };
 
 describe('@mantine/schedule/WeekView', () => {
@@ -16,6 +18,162 @@ describe('@mantine/schedule/WeekView', () => {
     classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/schedule/WeekView',
-    stylesApiSelectors: ['weekView'],
+    stylesApiSelectors: [
+      'weekView',
+      'weekViewHeader',
+      'weekViewInner',
+      'weekViewAllDaySlots',
+      'weekViewAllDaySlotsLabel',
+      'weekViewScrollArea',
+      'weekViewCorner',
+      'weekViewSlotLabels',
+      'weekViewSlotLabel',
+      'weekViewDayLabel',
+      'weekViewDayWeekday',
+      'weekViewDay',
+      'weekViewDayNumber',
+      'weekViewDaySlot',
+      'weekViewDaySlots',
+      'weekViewWeekLabel',
+      'weekViewWeekNumber',
+    ],
+  });
+
+  it('renders view of the given week', () => {
+    const { container } = render(<WeekView {...defaultProps} />);
+    expect(container.querySelectorAll('.mantine-WeekView-weekViewDay')).toHaveLength(7);
+    expect(screen.getByRole('button', { name: 'Weekday 2025-11-03' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'All day 2025-11-05' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Time slot 2025-11-09 10:00:00 - 11:00:00' })
+    ).toBeInTheDocument();
+  });
+
+  it('supports custom start and end time', () => {
+    const { container } = render(
+      <WeekView {...defaultProps} startTime="08:00:00" endTime="12:00:00" withAllDaySlots={false} />
+    );
+    // 7 days * 4 slots = 28 regular slots, all-day slots are disabled
+    expect(container.querySelectorAll('.mantine-WeekView-weekViewDaySlot')).toHaveLength(28);
+    expect(
+      screen.getByRole('button', { name: 'Time slot 2025-11-06 08:00:00 - 09:00:00' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Time slot 2025-11-09 11:00:00 - 12:00:00' })
+    ).toBeInTheDocument();
+  });
+
+  it('supports custom intervalMinutes prop', () => {
+    const { container } = render(
+      <WeekView
+        {...defaultProps}
+        startTime="08:00:00"
+        endTime="12:00:00"
+        withAllDaySlots={false}
+        intervalMinutes={15}
+      />
+    );
+
+    // 7 days * 16 slots = 112 regular slots, all-day slots are disabled
+    expect(container.querySelectorAll('.mantine-WeekView-weekViewDaySlot')).toHaveLength(112);
+    expect(
+      screen.getByRole('button', { name: 'Time slot 2025-11-04 08:00:00 - 08:15:00' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Time slot 2025-11-07 11:45:00 - 12:00:00' })
+    ).toBeInTheDocument();
+  });
+
+  it('supports custom slotLabelFormat (dayjs string)', () => {
+    render(
+      <WeekView
+        {...defaultProps}
+        startTime="08:00:00"
+        endTime="12:00:00"
+        withAllDaySlots={false}
+        slotLabelFormat="h:mm A"
+      />
+    );
+
+    expect(screen.getByText('8:00 AM')).toBeInTheDocument();
+    expect(screen.getByText('11:00 AM')).toBeInTheDocument();
+  });
+
+  it('supports custom slotLabelFormat (function)', () => {
+    render(
+      <WeekView
+        {...defaultProps}
+        startTime="08:00:00"
+        endTime="12:00:00"
+        withAllDaySlots={false}
+        slotLabelFormat={(date) => `Test ${dayjs(date).format('HH:mm A')}`}
+      />
+    );
+
+    expect(screen.getByText('Test 08:00 AM')).toBeInTheDocument();
+    expect(screen.getByText('Test 11:00 AM')).toBeInTheDocument();
+  });
+
+  it('supports custom firstDayOfWeek (prop)', () => {
+    const { container } = render(<WeekView {...defaultProps} firstDayOfWeek={0} />);
+    expect(
+      container
+        .querySelectorAll('.mantine-WeekView-weekViewDayLabel')[0]
+        ?.getAttribute('aria-label')
+    ).toBe('Weekday 2025-11-02');
+  });
+
+  it('supports custom firstDayOfWeek (DatesProvider)', () => {
+    const { container } = render(
+      <DatesProvider settings={{ firstDayOfWeek: 0 }}>
+        <WeekView {...defaultProps} />
+      </DatesProvider>
+    );
+
+    expect(
+      container
+        .querySelectorAll('.mantine-WeekView-weekViewDayLabel')[0]
+        ?.getAttribute('aria-label')
+    ).toBe('Weekday 2025-11-02');
+  });
+
+  it('supports custom weekdayFormat (dayjs string)', () => {
+    const { container } = render(<WeekView {...defaultProps} weekdayFormat="dddd" />);
+    expect(container.querySelector('.mantine-WeekView-weekViewDayWeekday')).toHaveTextContent(
+      'Monday'
+    );
+  });
+
+  it('supports custom weekdayFormat (function)', () => {
+    const { container } = render(
+      <WeekView
+        {...defaultProps}
+        weekdayFormat={(date) => `Test ${dayjs(date).format('DD.MM.YYYY')}`}
+      />
+    );
+    expect(container.querySelector('.mantine-WeekView-weekViewDayWeekday')).toHaveTextContent(
+      'Test 03.11.2025'
+    );
+  });
+
+  it('supports weekendDays (prop)', () => {
+    const { container } = render(<WeekView {...defaultProps} weekendDays={[1, 2]} />);
+    const weekends = container.querySelectorAll('.mantine-WeekView-weekViewDayLabel[data-weekend]');
+    expect(weekends).toHaveLength(2);
+    expect(weekends[0]?.getAttribute('aria-label')).toBe('Weekday 2025-11-03');
+    expect(weekends[1]?.getAttribute('aria-label')).toBe('Weekday 2025-11-04');
+  });
+
+  it('supports weekendDays (DatesProvider)', () => {
+    const { container } = render(
+      <DatesProvider settings={{ weekendDays: [1, 2] }}>
+        <WeekView {...defaultProps} />
+      </DatesProvider>
+    );
+
+    const weekends = container.querySelectorAll('.mantine-WeekView-weekViewDayLabel[data-weekend]');
+    expect(weekends).toHaveLength(2);
+    expect(weekends[0]?.getAttribute('aria-label')).toBe('Weekday 2025-11-03');
+    expect(weekends[1]?.getAttribute('aria-label')).toBe('Weekday 2025-11-04');
   });
 });
