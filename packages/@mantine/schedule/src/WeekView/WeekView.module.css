@@ -180,3 +180,20 @@
   text-align: center;
   font-size: var(--mantine-font-size-lg);
 }
+
+.weekViewAllDaySlots {
+  display: flex;
+
+  & > .weekViewDaySlot {
+    flex: 1;
+    border-inline-start: 1px solid var(--mantine-color-gray-3);
+    height: 36px;
+  }
+}
+
+.weekViewAllDaySlotsLabel {
+  flex: 0 0 var(--week-view-slots-label-width);
+  text-align: right;
+  padding: 4px 8px;
+  font-size: var(--mantine-font-size-sm);
+}

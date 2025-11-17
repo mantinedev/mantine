@@ -3,6 +3,7 @@ import { DayOfWeek } from '../types';
 
 export interface ScheduleLabels {
   week: string;
+  allDay: string;
 }
 
 export interface DatesProviderValue {
@@ -24,6 +25,7 @@ export const DATES_PROVIDER_DEFAULT_SETTINGS: DatesProviderValue = {
   consistentWeeks: false,
   labels: {
     week: 'Week',
+    allDay: 'All day',
   },
 };
 

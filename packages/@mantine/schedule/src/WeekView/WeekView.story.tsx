@@ -43,3 +43,7 @@ export function ScrollAreaProps() {
 export function WithWeekNumber() {
   return <WeekView week={new Date()} withWeekNumber={false} />;
 }
+
+export function WithAllDaySlots() {
+  return <WeekView week={new Date()} withAllDaySlots={false} />;
+}

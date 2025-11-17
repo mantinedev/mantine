@@ -33,6 +33,8 @@ export type WeekViewStylesNames =
   | 'weekView'
   | 'weekViewHeader'
   | 'weekViewInner'
+  | 'weekViewAllDaySlots'
+  | 'weekViewAllDaySlotsLabel'
   | 'weekViewScrollArea'
   | 'weekViewCorner'
   | 'weekViewSlotLabels'
@@ -104,6 +106,9 @@ export interface WeekViewProps
 
   /** If set, the time indicator displays the current time in the bubble @default `true` */
   withCurrentTimeBubble?: boolean;
+
+  /** If set, displays all-day slots at the top of the view @default `true` */
+  withAllDaySlots?: boolean;
 }
 
 export type WeekViewFactory = Factory<{
@@ -124,6 +129,7 @@ const defaultProps = {
   weekdayFormat: 'ddd',
   withWeekNumber: true,
   withCurrentTimeBubble: true,
+  withAllDaySlots: true,
 } satisfies Partial<WeekViewProps>;
 
 const varsResolver = createVarsResolver<WeekViewFactory>((_theme, { radius }) => ({
@@ -157,6 +163,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     withWeekNumber,
     mod,
     withCurrentTimeBubble,
+    withAllDaySlots,
     ...others
   } = props;
 
@@ -232,6 +239,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     />
   ));
 
+  const allDaySlots = weekdays.map((day) => <Box key={day} {...getStyles('weekViewDaySlot')} />);
+
   return (
     <Box
       {...getStyles('weekView')}
@@ -267,8 +276,17 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 
           {weekdaysLabels}
         </Box>
+
+        {withAllDaySlots && (
+          <div {...getStyles('weekViewAllDaySlots')}>
+            <div {...getStyles('weekViewAllDaySlotsLabel')}>{ctx.labels.allDay}</div>
+            {allDaySlots}
+          </div>
+        )}
+
         <div {...getStyles('weekViewInner')}>
           <div {...getStyles('weekViewSlotLabels')}>{timeValues}</div>
+
           {withCurrentTimeIndicator && currentWeekdayIndex !== -1 && (
             <CurrentTimeIndicator
               startOffset="calc(100% - (100% / var(--number-of-days)) * (var(--number-of-days) - var(--indicator-offset-index) + 1) + ((var(--number-of-days) - var(--indicator-offset-index) + 1) * var(--indicator-labels-offset)))"
