@@ -84,9 +84,6 @@ export interface WeekViewProps
   /** `weekday` – highlights today in the weekday row, `column` – highlights today in the entire column @default `'weekday'` */
   highlightToday?: WeekViewHighlightToday;
 
-  /** If set, displays a line indicating the current time @default `true` */
-  withCurrentTimeIndicator?: boolean;
-
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
@@ -101,6 +98,12 @@ export interface WeekViewProps
 
   /** If set, the week number is displayed at the top left corner @default `true` */
   withWeekNumber?: boolean;
+
+  /** If set, displays a line indicating the current time @default `true` */
+  withCurrentTimeIndicator?: boolean;
+
+  /** If set, the time indicator displays the current time in the bubble @default `true` */
+  withCurrentTimeBubble?: boolean;
 }
 
 export type WeekViewFactory = Factory<{
@@ -120,6 +123,7 @@ const defaultProps = {
   intervalMinutes: 60,
   weekdayFormat: 'ddd',
   withWeekNumber: true,
+  withCurrentTimeBubble: true,
 } satisfies Partial<WeekViewProps>;
 
 const varsResolver = createVarsResolver<WeekViewFactory>((_theme, { radius }) => ({
@@ -152,6 +156,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     locale,
     withWeekNumber,
     mod,
+    withCurrentTimeBubble,
     ...others
   } = props;
 
@@ -268,6 +273,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
             <CurrentTimeIndicator
               startOffset="calc(100% - (100% / var(--number-of-days)) * (var(--number-of-days) - var(--indicator-offset-index) + 1) + ((var(--number-of-days) - var(--indicator-offset-index) + 1) * var(--indicator-labels-offset)))"
               endOffset="calc((100% / var(--number-of-days)) * (var(--number-of-days) - var(--indicator-offset-index)) - (var(--number-of-days) - var(--indicator-offset-index)) * var(--indicator-labels-offset))"
+              currentTimeFormat={slotLabelFormat}
+              withTimeBubble={withCurrentTimeBubble}
+              withThumb={withCurrentTimeBubble ? currentWeekdayIndex !== 0 : true}
             />
           )}
           {days}

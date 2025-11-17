@@ -1,4 +1,6 @@
 .currentTimeIndicator {
+  --_indicator-color: var(--indicator-color, var(--mantine-color-red-7));
+
   position: absolute;
   left: 0;
   right: 0;
@@ -10,7 +12,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-color: var(--indicator-color, var(--mantine-color-red-7));
+    background-color: var(--_indicator-color);
     opacity: 0.2;
   }
 }
@@ -19,7 +21,7 @@
   height: 100%;
   position: absolute;
   top: 0;
-  background-color: var(--indicator-color, var(--mantine-color-red-7));
+  background-color: var(--_indicator-color);
   inset-inline-start: var(--start-offset);
   inset-inline-end: var(--end-offset);
 }
@@ -33,6 +35,29 @@
   height: var(--thumb-size);
   border-radius: 50%;
   border: 1px solid var(--mantine-color-body);
-  background-color: var(--indicator-color, var(--mantine-color-red-7));
+  background-color: var(--_indicator-color);
   inset-inline-start: calc(var(--start-offset) - (var(--thumb-size) / 2 - 1px));
+}
+
+.currentTimeIndicatorTimeBubble {
+  --time-bubble-width: 60px;
+  --time-bubble-height: 18px;
+
+  position: absolute;
+  height: var(--time-bubble-height);
+  width: var(--time-bubble-width);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1000px;
+  background-color: var(--_indicator-color);
+  color: var(--mantine-color-white);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 700;
+  box-shadow: var(--mantine-shadow-sm);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  inset-inline-start: calc(var(--week-view-slots-label-width) - var(--time-bubble-width));
+  top: calc(-1 * (var(--time-bubble-height) / 2 - 1px));
+  z-index: 2;
 }

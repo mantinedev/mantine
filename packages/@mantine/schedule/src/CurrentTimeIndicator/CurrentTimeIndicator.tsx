@@ -13,6 +13,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { DateLabelFormat } from '@mantine/dates-utils';
 import { useInterval } from '@mantine/hooks';
 import classes from './CurrentTimeIndicator.module.css';
 
@@ -26,7 +27,8 @@ function getOffsetPercent() {
 export type CurrentTimeIndicatorStylesNames =
   | 'currentTimeIndicator'
   | 'currentTimeIndicatorLine'
-  | 'currentTimeIndicatorThumb';
+  | 'currentTimeIndicatorThumb'
+  | 'currentTimeIndicatorTimeBubble';
 
 export type CurrentTimeIndicatorCssVariables = {
   currentTimeIndicator: '--indicator-color';
@@ -44,6 +46,15 @@ export interface CurrentTimeIndicatorProps
 
   /** Offset from the right side */
   endOffset?: string;
+
+  /** If set, displays a bubble with the current time @default `@true` */
+  withTimeBubble?: boolean;
+
+  /** If set, displays thumb next to the line @default `true` */
+  withThumb?: boolean;
+
+  /** Format of the time displayed in the time bubble @default `'HH:mm'` */
+  currentTimeFormat?: DateLabelFormat;
 }
 
 export type CurrentTimeIndicatorFactory = Factory<{
@@ -53,7 +64,11 @@ export type CurrentTimeIndicatorFactory = Factory<{
   vars: CurrentTimeIndicatorCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<CurrentTimeIndicatorProps>;
+const defaultProps = {
+  withTimeBubble: true,
+  withThumb: true,
+  currentTimeFormat: 'HH:mm',
+} satisfies Partial<CurrentTimeIndicatorProps>;
 
 const varsResolver = createVarsResolver<CurrentTimeIndicatorFactory>((theme, { color }) => ({
   currentTimeIndicator: {
@@ -73,6 +88,9 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
     startOffset,
     endOffset,
     color,
+    withTimeBubble,
+    withThumb,
+    currentTimeFormat,
     ...others
   } = props;
 
@@ -91,7 +109,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
   });
 
   const [offsetPercent, setOffsetPercent] = useState(getOffsetPercent());
-  useInterval(() => setOffsetPercent(getOffsetPercent()), 1000 * 60 * 2, { autoInvoke: true });
+  useInterval(() => setOffsetPercent(getOffsetPercent()), 1000 * 60, { autoInvoke: true });
 
   return (
     <Box
@@ -103,7 +121,14 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
       }}
       {...others}
     >
-      <div {...getStyles('currentTimeIndicatorThumb')} />
+      {withTimeBubble && (
+        <div {...getStyles('currentTimeIndicatorTimeBubble')}>
+          {typeof currentTimeFormat === 'function'
+            ? currentTimeFormat(dayjs().format('YYYY-MM-DD HH:mm:ss'))
+            : dayjs().format(currentTimeFormat)}
+        </div>
+      )}
+      {withThumb && <div {...getStyles('currentTimeIndicatorThumb')} />}
       <div {...getStyles('currentTimeIndicatorLine')} />
     </Box>
   );
