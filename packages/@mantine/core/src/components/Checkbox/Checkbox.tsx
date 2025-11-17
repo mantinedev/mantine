@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useId } from '@mantine/hooks';
 import {
   Box,
@@ -188,18 +188,6 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
 
   const fallbackRef = useRef<HTMLInputElement>(null);
   const ref = forwardedRef || fallbackRef;
-
-  useEffect(() => {
-    if (ref && 'current' in ref && ref.current) {
-      ref.current.indeterminate = indeterminate || false;
-
-      if (indeterminate) {
-        ref.current.setAttribute('data-indeterminate', 'true');
-      } else {
-        ref.current.removeAttribute('data-indeterminate');
-      }
-    }
-  }, [indeterminate, ref]);
 
   return (
     <InlineInput
