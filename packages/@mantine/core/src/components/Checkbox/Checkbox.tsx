@@ -228,7 +228,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
           component="input"
           id={uuid}
           ref={ref}
-          mod={{ error: !!error, indeterminate }}
+          mod={{ error: !!error }}
           {...getStyles('input', { focusable: true, variant })}
           {...rest}
           {...withContextProps}
