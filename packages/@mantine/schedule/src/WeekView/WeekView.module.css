@@ -3,7 +3,7 @@
   --week-view-slots-label-width: 80px;
   --week-view-min-slot-width: 80px;
   --week-view-slot-height: 60px;
-  --indicator-labels-offset: calc(var(--week-view-slots-label-width) / 7);
+  --indicator-labels-offset: calc(var(--week-view-slots-label-width) / var(--number-of-days));
 
   border: 1px solid var(--mantine-color-gray-3);
   border-radius: var(--week-view-radius);
@@ -52,6 +52,7 @@
   flex: 0 0 var(--week-view-slots-label-width);
   min-width: var(--week-view-slots-label-width);
   background-color: var(--mantine-color-body);
+  border-end-start-radius: var(--week-view-radius);
 }
 
 .weekViewSlotLabel {

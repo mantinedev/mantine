@@ -21,19 +21,19 @@ export function EmphasizeToday() {
 }
 
 export function Radius() {
-  return <WeekView week="2025-11-03" radius="md" />;
+  return <WeekView week={new Date()} radius="md" />;
 }
 
 export function NoWeekends() {
-  return <WeekView week="2025-11-03" withWeekendDays={false} />;
+  return <WeekView week={new Date()} withWeekendDays={false} />;
 }
 
 export function FirstDayOfWeek() {
-  return <WeekView week="2025-11-03" firstDayOfWeek={0} />;
+  return <WeekView week={new Date()} firstDayOfWeek={0} />;
 }
 
 export function SlotLabelFormat() {
-  return <WeekView week="2025-11-03" slotLabelFormat="h:mm a" />;
+  return <WeekView week={new Date()} slotLabelFormat="h:mm a" />;
 }
 
 export function ScrollAreaProps() {
@@ -41,5 +41,5 @@ export function ScrollAreaProps() {
 }
 
 export function WithWeekNumber() {
-  return <WeekView week="2025-11-03" withWeekNumber={false} />;
+  return <WeekView week={new Date()} withWeekNumber={false} />;
 }

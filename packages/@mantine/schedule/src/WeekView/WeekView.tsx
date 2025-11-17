@@ -151,6 +151,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     scrollAreaProps,
     locale,
     withWeekNumber,
+    mod,
     ...others
   } = props;
 
@@ -232,7 +233,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       __vars={{
         '--indicator-offset-index':
           currentWeekdayIndex === -1 ? undefined : `${currentWeekdayIndex + 1}`,
+        '--number-of-days': withWeekendDays ? '7' : `${7 - ctx.getWeekendDays(weekendDays).length}`,
       }}
+      mod={[{ 'with-weekends': withWeekendDays }, mod]}
       {...others}
     >
       <ScrollArea.Autosize
@@ -263,8 +266,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           <div {...getStyles('weekViewSlotLabels')}>{timeValues}</div>
           {withCurrentTimeIndicator && currentWeekdayIndex !== -1 && (
             <CurrentTimeIndicator
-              startOffset="calc(100% - (100% / 7) * (7 - var(--indicator-offset-index) + 1) + ((7 - var(--indicator-offset-index) + 1) * var(--indicator-labels-offset)))"
-              endOffset="calc((100% / 7) * (7 - var(--indicator-offset-index)) - (7 - var(--indicator-offset-index)) * var(--indicator-labels-offset))"
+              startOffset="calc(100% - (100% / var(--number-of-days)) * (var(--number-of-days) - var(--indicator-offset-index) + 1) + ((var(--number-of-days) - var(--indicator-offset-index) + 1) * var(--indicator-labels-offset)))"
+              endOffset="calc((100% / var(--number-of-days)) * (var(--number-of-days) - var(--indicator-offset-index)) - (var(--number-of-days) - var(--indicator-offset-index)) * var(--indicator-labels-offset))"
             />
           )}
           {days}
