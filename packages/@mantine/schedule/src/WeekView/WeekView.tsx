@@ -4,6 +4,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -24,7 +25,10 @@ import {
   getWeekNumber,
   useDatesContext,
 } from '@mantine/dates-utils';
-import { CurrentTimeIndicator } from '../CurrentTimeIndicator/CurrentTimeIndicator';
+import {
+  CurrentTimeIndicator,
+  CurrentTimeIndicatorStylesNames,
+} from '../CurrentTimeIndicator/CurrentTimeIndicator';
 import { WeekViewDay } from './WeekViewDay';
 import classes from './WeekView.module.css';
 
@@ -48,7 +52,8 @@ export type WeekViewStylesNames =
   | 'weekViewDaySlot'
   | 'weekViewDaySlots'
   | 'weekViewWeekLabel'
-  | 'weekViewWeekNumber';
+  | 'weekViewWeekNumber'
+  | CurrentTimeIndicatorStylesNames;
 
 export type WeekViewCssVariables = {
   weekView: '--week-view-radius';
@@ -58,6 +63,8 @@ export interface WeekViewProps
   extends BoxProps,
     StylesApiProps<WeekViewFactory>,
     ElementProps<'div'> {
+  __staticSelector?: string;
+
   /** Week to display, Date object or date string in `YYYY-MM-DD` format */
   week: Date | string;
 
@@ -92,7 +99,7 @@ export interface WeekViewProps
   radius?: MantineRadius;
 
   /** Props passed down to the `ScrollArea.Autosize` component */
-  scrollAreaProps?: ScrollAreaAutosizeProps;
+  scrollAreaProps?: ScrollAreaAutosizeProps & DataAttributes;
 
   /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
   locale?: string;
@@ -162,11 +169,12 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     mod,
     withCurrentTimeBubble,
     withAllDaySlots,
+    __staticSelector,
     ...others
   } = props;
 
   const getStyles = useStyles<WeekViewFactory>({
-    name: 'WeekView',
+    name: __staticSelector || 'WeekView',
     classes,
     props,
     className,
@@ -307,6 +315,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
               withTimeBubble={withCurrentTimeBubble}
               withThumb={withCurrentTimeBubble ? currentWeekdayIndex !== 0 : true}
               locale={locale}
+              __staticSelector={__staticSelector || 'WeekView'}
             />
           )}
           {days}

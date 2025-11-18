@@ -38,6 +38,8 @@ export interface CurrentTimeIndicatorProps
   extends BoxProps,
     StylesApiProps<CurrentTimeIndicatorFactory>,
     ElementProps<'div'> {
+  __staticSelector?: string;
+
   /** Key of `theme.colors` or any valid CSS color value @default `'red'` */
   color?: MantineColor;
 
@@ -99,11 +101,12 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
     currentTimeFormat,
     locale,
     timeBubbleStartOffset,
+    __staticSelector,
     ...others
   } = props;
 
   const getStyles = useStyles<CurrentTimeIndicatorFactory>({
-    name: 'CurrentTimeIndicator',
+    name: __staticSelector || 'CurrentTimeIndicator',
     classes,
     props,
     className,

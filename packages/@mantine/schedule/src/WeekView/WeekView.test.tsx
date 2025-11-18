@@ -1,3 +1,5 @@
+import 'dayjs/locale/ru';
+
 import dayjs from 'dayjs';
 import { DatesProvider } from '@mantine/dates-utils';
 import { render, screen, tests } from '@mantine-tests/core';
@@ -220,5 +222,84 @@ describe('@mantine/schedule/WeekView', () => {
     ).not.toBeInTheDocument();
 
     jest.useRealTimers();
+  });
+
+  it('passes props down to ScrollArea', () => {
+    const { container } = render(
+      <WeekView {...defaultProps} scrollAreaProps={{ 'data-test': 'scroll-area', mah: 500 }} />
+    );
+
+    expect(container.querySelector('[data-test="scroll-area"]')).toBeInTheDocument();
+  });
+
+  it('supports locale (prop)', () => {
+    const { container } = render(<WeekView {...defaultProps} locale="ru" />);
+    expect(container.querySelector('.mantine-WeekView-weekViewDayWeekday')).toHaveTextContent(
+      'пнд'
+    );
+  });
+
+  it('supports locale (DatesProvider)', () => {
+    const { container } = render(
+      <DatesProvider settings={{ locale: 'ru' }}>
+        <WeekView {...defaultProps} />
+      </DatesProvider>
+    );
+    expect(container.querySelector('.mantine-WeekView-weekViewDayWeekday')).toHaveTextContent(
+      'пнд'
+    );
+  });
+
+  it('supports withWeekNumber={false}', () => {
+    const { rerender } = render(<WeekView {...defaultProps} withWeekNumber={false} />);
+    expect(screen.queryByText('Week')).not.toBeInTheDocument();
+
+    rerender(<WeekView {...defaultProps} withWeekNumber />);
+    expect(screen.getByText('Week')).toBeInTheDocument();
+  });
+
+  it('displays current time indicator', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-05 10:30:00'));
+    const { container, rerender } = render(<WeekView {...defaultProps} withCurrentTimeIndicator />);
+
+    expect(container.querySelector('.mantine-WeekView-currentTimeIndicator')).toBeInTheDocument();
+
+    rerender(<WeekView {...defaultProps} withCurrentTimeIndicator={false} />);
+    expect(
+      container.querySelector('.mantine-WeekView-currentTimeIndicator')
+    ).not.toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  it('supports withCurrentTimeBubble={false}', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-05 10:30:00'));
+    const { container, rerender } = render(
+      <WeekView {...defaultProps} withCurrentTimeIndicator withCurrentTimeBubble={false} />
+    );
+
+    expect(
+      container.querySelector('.mantine-WeekView-currentTimeIndicatorTimeBubble')
+    ).not.toBeInTheDocument();
+
+    rerender(<WeekView {...defaultProps} withCurrentTimeIndicator withCurrentTimeBubble />);
+    expect(
+      container.querySelector('.mantine-WeekView-currentTimeIndicatorTimeBubble')
+    ).toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  it('supports withAllDaySlots={false}', () => {
+    const { container, rerender } = render(<WeekView {...defaultProps} withAllDaySlots={false} />);
+    expect(
+      container.querySelector('.mantine-WeekView-weekViewAllDaySlots')
+    ).not.toBeInTheDocument();
+
+    rerender(<WeekView {...defaultProps} withAllDaySlots />);
+    expect(container.querySelector('.mantine-WeekView-weekViewAllDaySlots')).toBeInTheDocument();
+  });
+
+  it('supports __staticSelector prop', () => {
+    const { container } = render(<WeekView {...defaultProps} __staticSelector="CustomWeekView" />);
+    expect(container.querySelector('.mantine-CustomWeekView-weekView')).toBeInTheDocument();
   });
 });
