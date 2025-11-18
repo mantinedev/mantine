@@ -256,4 +256,11 @@ describe('@mantine/core/MonthView', () => {
     expect(container.querySelector('.mantine-MonthView-day[data-today]')).not.toBeInTheDocument();
     jest.useRealTimers();
   });
+
+  it('supports withOutsideDays={false} prop', () => {
+    const { container } = render(<MonthView month="2025-11-01" withOutsideDays={false} />);
+    const days = container.querySelectorAll('button.mantine-MonthView-monthViewDay');
+    expect(days.length).toStrictEqual(30);
+    expect(days[0].textContent).toStrictEqual('1');
+  });
 });

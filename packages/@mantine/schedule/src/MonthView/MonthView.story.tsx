@@ -12,6 +12,14 @@ export function Usage() {
   );
 }
 
+export function NoOutsideDays() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MonthView month="2025-11-01" withOutsideDays={false} />
+    </div>
+  );
+}
+
 export function WeekendDays() {
   return (
     <div style={{ padding: 40 }}>

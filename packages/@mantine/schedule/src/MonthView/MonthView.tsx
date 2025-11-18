@@ -85,6 +85,9 @@ export interface MonthViewProps
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
+
+  /** If set, days from the previous and next months are displayed to fill the weeks @default `true` */
+  withOutsideDays?: boolean;
 }
 
 export type MonthViewFactory = Factory<{
@@ -102,6 +105,7 @@ const defaultProps = {
   withWeekDays: true,
   consistentWeeks: true,
   highlightToday: true,
+  withOutsideDays: true,
   weekdayFormat: 'ddd',
 } satisfies Partial<MonthViewProps>;
 
@@ -130,6 +134,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     consistentWeeks,
     highlightToday,
     radius,
+    withOutsideDays,
     ...others
   } = props;
 
@@ -164,7 +169,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
   const weeks = getMonthDays({
     month: dayjs(month).format('YYYY-MM-DD'),
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
-    consistentWeeks,
+    consistentWeeks: consistentWeeks && withOutsideDays,
   }).map((week, index) => {
     const days = week.map((date) => {
       const outside = !isSameMonth(date, month);
@@ -175,6 +180,12 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
       const dayProps = getDayProps?.(new Date(date)) || {};
       const today = dayjs(date).isSame(dayjs(), 'day') && highlightToday;
+
+      if (outside && !withOutsideDays) {
+        return (
+          <div key={date} data-static {...getStyles('monthViewDay', { style: dayProps.style })} />
+        );
+      }
 
       return (
         <UnstyledButton

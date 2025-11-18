@@ -162,13 +162,19 @@
     color: alpha(var(--day-base-color), 0.4);
   }
 
-  @mixin hover {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
+  &:where([data-static]) {
+    cursor: default;
+  }
 
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-6);
+  @mixin hover {
+    &:where(:not([data-static])) {
+      @mixin where-light {
+        background-color: var(--mantine-color-gray-0);
+      }
+
+      @mixin where-dark {
+        background-color: var(--mantine-color-dark-6);
+      }
     }
   }
 }
