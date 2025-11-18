@@ -26,10 +26,6 @@ export function HighlightToday() {
   return <WeekView week={new Date()} highlightToday="weekday" />;
 }
 
-export function EmphasizeToday() {
-  return <WeekView week={new Date()} emphasizeToday />;
-}
-
 export function Radius() {
   return <WeekView week={new Date()} radius="md" />;
 }

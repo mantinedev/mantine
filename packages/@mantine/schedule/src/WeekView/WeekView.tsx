@@ -35,6 +35,7 @@ export type WeekViewStylesNames =
   | 'weekViewHeader'
   | 'weekViewInner'
   | 'weekViewAllDaySlots'
+  | 'weekViewAllDaySlot'
   | 'weekViewAllDaySlotsLabel'
   | 'weekViewScrollArea'
   | 'weekViewCorner'
@@ -89,9 +90,6 @@ export interface WeekViewProps
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
-
-  /** Makes the current day twice larger @default false */
-  emphasizeToday?: boolean;
 
   /** Props passed down to the `ScrollArea.Autosize` component */
   scrollAreaProps?: ScrollAreaAutosizeProps;
@@ -158,7 +156,6 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     radius,
     highlightToday,
     withCurrentTimeIndicator,
-    emphasizeToday,
     scrollAreaProps,
     locale,
     withWeekNumber,
@@ -221,7 +218,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       key={day}
       aria-label={`${ctx.labels.weekday} ${dayjs(day).format('YYYY-MM-DD')}`}
       mod={{
-        today: dayjs(day).isSame(dayjs(), 'day'),
+        today: dayjs(day).isSame(dayjs(), 'day') && !!highlightToday,
         weekend: ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek),
       }}
     >
@@ -244,7 +241,6 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       getStyles={getStyles}
       highlightToday={highlightToday}
       weekendDays={weekendDays}
-      emphasizeToday={emphasizeToday}
     />
   ));
 

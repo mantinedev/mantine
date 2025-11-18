@@ -176,4 +176,49 @@ describe('@mantine/schedule/WeekView', () => {
     expect(weekends[0]?.getAttribute('aria-label')).toBe('Weekday 2025-11-03');
     expect(weekends[1]?.getAttribute('aria-label')).toBe('Weekday 2025-11-04');
   });
+
+  it('supports withWeekendDays={false}', () => {
+    const { container, rerender } = render(<WeekView {...defaultProps} withWeekendDays={false} />);
+    const days = container.querySelectorAll('.mantine-WeekView-weekViewDayLabel');
+    expect(days).toHaveLength(5);
+    expect(days[0]?.getAttribute('aria-label')).toBe('Weekday 2025-11-03');
+    expect(days[4]?.getAttribute('aria-label')).toBe('Weekday 2025-11-07');
+
+    rerender(<WeekView {...defaultProps} withWeekendDays={false} weekendDays={[1, 2, 3]} />);
+    const daysWithCustomWeekend = container.querySelectorAll('.mantine-WeekView-weekViewDayLabel');
+    expect(daysWithCustomWeekend).toHaveLength(4);
+    expect(daysWithCustomWeekend[0].getAttribute('aria-label')).toBe('Weekday 2025-11-06');
+    expect(daysWithCustomWeekend[daysWithCustomWeekend.length - 1].getAttribute('aria-label')).toBe(
+      'Weekday 2025-11-09'
+    );
+  });
+
+  it('highlights today based on highlightToday prop', () => {
+    jest.useFakeTimers().setSystemTime(new Date(defaultProps.week));
+    const { container, rerender } = render(<WeekView {...defaultProps} highlightToday="weekday" />);
+    expect(
+      container.querySelector('.mantine-WeekView-weekViewDayLabel[data-today]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('.mantine-WeekView-weekViewDaySlots[data-today]')
+    ).not.toBeInTheDocument();
+
+    rerender(<WeekView {...defaultProps} highlightToday="column" />);
+    expect(
+      container.querySelector('.mantine-WeekView-weekViewDayLabel[data-today]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('.mantine-WeekView-weekViewDaySlots[data-today]')
+    ).toBeInTheDocument();
+
+    rerender(<WeekView {...defaultProps} highlightToday={false} />);
+    expect(
+      container.querySelector('.mantine-WeekView-weekViewDayLabel[data-today]')
+    ).not.toBeInTheDocument();
+    expect(
+      container.querySelector('.mantine-WeekView-weekViewDaySlots[data-today]')
+    ).not.toBeInTheDocument();
+
+    jest.useRealTimers();
+  });
 });

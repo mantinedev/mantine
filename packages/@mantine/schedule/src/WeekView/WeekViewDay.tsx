@@ -18,9 +18,6 @@ export interface WeekViewDayProps {
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
-
-  /** Makes the current day twice larger @default false */
-  emphasizeToday?: boolean;
 }
 
 export function WeekViewDay({
@@ -29,11 +26,10 @@ export function WeekViewDay({
   highlightToday,
   getStyles,
   weekendDays,
-  emphasizeToday,
 }: WeekViewDayProps) {
   const ctx = useDatesContext();
   const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek);
-  const today = dayjs(day).isSame(dayjs(), 'day') && !!highlightToday;
+  const today = dayjs(day).isSame(dayjs(), 'day') && highlightToday === 'column';
 
   const items = slots.map((slot) => (
     <UnstyledButton
@@ -45,8 +41,8 @@ export function WeekViewDay({
   ));
 
   return (
-    <Box {...getStyles('weekViewDay')} mod={{ today, weekend, emphasize: today && emphasizeToday }}>
-      <Box mod={{ today: today && highlightToday === 'column' }} {...getStyles('weekViewDaySlots')}>
+    <Box {...getStyles('weekViewDay')} mod={{ today, weekend }}>
+      <Box mod={{ today }} {...getStyles('weekViewDaySlots')}>
         {items}
       </Box>
     </Box>
