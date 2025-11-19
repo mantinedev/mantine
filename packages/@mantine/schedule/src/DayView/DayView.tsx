@@ -58,6 +58,9 @@ export interface DayViewProps
 
   /** Dayjs format for slot labels or a callback function that returns formatted value @default `HH:mm`  */
   slotLabelFormat?: DateLabelFormat;
+
+  /** Date format in the header @default `MMMM D, YYYY` */
+  headerFormat?: DateLabelFormat;
 }
 
 export type DayViewFactory = Factory<{
@@ -73,6 +76,7 @@ const defaultProps = {
   intervalMinutes: 15,
   withAllDaySlot: true,
   slotLabelFormat: 'HH:mm',
+  headerFormat: 'MMMM D, YYYY',
 } satisfies Partial<DayViewProps>;
 
 const varsResolver = createVarsResolver<DayViewFactory>((_theme, { radius }) => ({
@@ -98,6 +102,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     day,
     locale,
     slotLabelFormat,
+    headerFormat,
     ...others
   } = props;
 
@@ -147,7 +152,9 @@ export const DayView = factory<DayViewFactory>((_props) => {
   return (
     <Box {...getStyles('dayView')} {...others}>
       <div {...getStyles('dayViewHeader')}>
-        {dayjs(day).locale(ctx.getLocale(locale)).format('MMMM D, YYYY')}
+        {typeof headerFormat === 'function'
+          ? headerFormat(dayjs(day).format('YYYY-MM-DD'))
+          : dayjs(day).locale(ctx.getLocale(locale)).format(headerFormat)}
       </div>
 
       <div {...getStyles('dayViewInner')}>
