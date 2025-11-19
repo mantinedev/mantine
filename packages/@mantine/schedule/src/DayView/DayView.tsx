@@ -14,6 +14,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { DateLabelFormat, getDayTimeIntervals, useDatesContext } from '@mantine/dates-utils';
+import { CurrentTimeIndicator } from '../CurrentTimeIndicator/CurrentTimeIndicator';
 import classes from './DayView.module.css';
 
 export type DayViewStylesNames =
@@ -61,6 +62,12 @@ export interface DayViewProps
 
   /** Date format in the header @default `MMMM D, YYYY` */
   headerFormat?: DateLabelFormat;
+
+  /** If set, displays a line indicating the current time. By default, displayed only for the current day. */
+  withCurrentTimeIndicator?: boolean;
+
+  /** If set, the time indicator displays the current time in the bubble @default `true` */
+  withCurrentTimeBubble?: boolean;
 }
 
 export type DayViewFactory = Factory<{
@@ -77,6 +84,7 @@ const defaultProps = {
   withAllDaySlot: true,
   slotLabelFormat: 'HH:mm',
   headerFormat: 'MMMM D, YYYY',
+  withCurrentTimeBubble: true,
 } satisfies Partial<DayViewProps>;
 
 const varsResolver = createVarsResolver<DayViewFactory>((_theme, { radius }) => ({
@@ -103,6 +111,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
     locale,
     slotLabelFormat,
     headerFormat,
+    withCurrentTimeIndicator = dayjs(day).isSame(dayjs(), 'day'),
+    withCurrentTimeBubble,
     ...others
   } = props;
 
@@ -158,6 +168,20 @@ export const DayView = factory<DayViewFactory>((_props) => {
       </div>
 
       <div {...getStyles('dayViewInner')}>
+        {withCurrentTimeIndicator && (
+          <CurrentTimeIndicator
+            startOffset="var(--day-view-slot-labels-width)"
+            endOffset="0rem"
+            topOffset="var(--all-day-slot-height)"
+            timeBubbleStartOffset="calc(var(--day-view-slot-labels-width) - var(--time-bubble-width))"
+            currentTimeFormat={slotLabelFormat}
+            withTimeBubble={withCurrentTimeBubble}
+            withThumb={!withCurrentTimeBubble}
+            locale={locale}
+            __staticSelector={__staticSelector || 'DayView'}
+          />
+        )}
+
         <div {...getStyles('dayViewSlotLabels')}>
           {withAllDaySlot && (
             <Box {...getStyles('dayViewSlotLabel')} mod={{ 'all-day': true }}>

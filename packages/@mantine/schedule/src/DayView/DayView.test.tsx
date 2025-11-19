@@ -90,6 +90,48 @@ describe('@mantine/schedule/DayView', () => {
     expect(screen.getByText('Date: 2025-11-03')).toBeInTheDocument();
   });
 
+  it('displays current time indicator based on withCurrentTimeIndicator prop', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-03T10:30:00Z'));
+
+    const { container, rerender } = render(<DayView {...defaultProps} withCurrentTimeIndicator />);
+    expect(container.querySelector('.mantine-DayView-currentTimeIndicator')).toBeInTheDocument();
+
+    rerender(<DayView {...defaultProps} withCurrentTimeIndicator={false} />);
+    expect(
+      container.querySelector('.mantine-DayView-currentTimeIndicator')
+    ).not.toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  it('displays time bubble in the current time indicator based on withCurrentTimeBubble prop', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-03 10:30:00'));
+
+    const { container, rerender } = render(
+      <DayView
+        {...defaultProps}
+        withCurrentTimeIndicator
+        withCurrentTimeBubble
+        slotLabelFormat="h:mm A"
+      />
+    );
+    expect(
+      container.querySelector('.mantine-DayView-currentTimeIndicatorTimeBubble')
+    ).toHaveTextContent('10:30 AM');
+
+    rerender(
+      <DayView
+        {...defaultProps}
+        withCurrentTimeIndicator
+        withCurrentTimeBubble={false}
+        slotLabelFormat="h:mm A"
+      />
+    );
+    expect(
+      container.querySelector('.mantine-DayView-currentTimeIndicatorTimeBubble')
+    ).not.toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
   it('supports __staticSelector prop', () => {
     const { container } = render(<DayView {...defaultProps} __staticSelector="TestDayView" />);
     expect(container.querySelector('.mantine-TestDayView-dayView')).toBeInTheDocument();

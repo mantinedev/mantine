@@ -49,6 +49,9 @@ export interface CurrentTimeIndicatorProps
   /** Offset from the right side */
   endOffset?: string;
 
+  /** Extra configurable offset from the top */
+  topOffset?: string;
+
   /** Offset for the time bubble */
   timeBubbleStartOffset?: string;
 
@@ -76,6 +79,7 @@ const defaultProps = {
   withTimeBubble: true,
   withThumb: true,
   currentTimeFormat: 'HH:mm',
+  topOffset: '0rem',
 } satisfies Partial<CurrentTimeIndicatorProps>;
 
 const varsResolver = createVarsResolver<CurrentTimeIndicatorFactory>((theme, { color }) => ({
@@ -102,6 +106,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
     locale,
     timeBubbleStartOffset,
     __staticSelector,
+    topOffset,
     ...others
   } = props;
 
@@ -132,7 +137,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
     <Box
       {...getStyles('currentTimeIndicator')}
       __vars={{
-        '--top-offset': `${offsetPercent}%`,
+        '--top-offset': `calc(${offsetPercent}% + ${topOffset})`,
         '--start-offset': startOffset,
         '--end-offset': endOffset,
         '--time-bubble-start-offset': timeBubbleStartOffset,

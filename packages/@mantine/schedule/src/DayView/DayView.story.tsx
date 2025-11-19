@@ -5,7 +5,7 @@ export default { title: 'schedule/DayView' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <DayView day="2025-11-03" />
+      <DayView day={new Date()} />
     </div>
   );
 }
@@ -13,7 +13,7 @@ export function Usage() {
 export function Radius() {
   return (
     <div style={{ padding: 40 }}>
-      <DayView day="2025-11-03" radius="md" />
+      <DayView day={new Date()} radius="md" />
     </div>
   );
 }
