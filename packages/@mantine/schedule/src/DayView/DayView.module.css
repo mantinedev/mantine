@@ -1,0 +1,51 @@
+.dayView {
+  --slot-height: 16px;
+}
+
+.dayViewInner {
+  display: flex;
+}
+
+.dayViewSlotLabels {
+  width: 80px;
+}
+
+.dayViewSlotLabel {
+  height: calc(var(--slot-height) * 4);
+  border-top: 1px solid var(--mantine-color-gray-3);
+  font-size: var(--mantine-font-size-sm);
+
+  &:where([data-all-day]) {
+    height: calc(var(--slot-height) * 3);
+  }
+}
+
+.dayViewSlots {
+  flex: 1;
+}
+
+.dayViewSlot {
+  display: block;
+  width: 100%;
+  border-top: 1px dotted var(--mantine-color-gray-3);
+  height: var(--slot-height);
+
+  &:where([data-hour-start]) {
+    border-top: 1px solid var(--mantine-color-gray-3);
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
+
+  &:where([data-all-day]) {
+    height: calc(var(--slot-height) * 3);
+    border-top-style: solid;
+  }
+}

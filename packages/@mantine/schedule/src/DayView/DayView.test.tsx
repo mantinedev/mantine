@@ -2,7 +2,7 @@ import { tests } from '@mantine-tests/core';
 import { DayView, DayViewProps, DayViewStylesNames } from './DayView';
 
 const defaultProps: DayViewProps = {
-  week: '2025-11-03',
+  day: '2025-11-03',
 };
 
 describe('@mantine/schedule/DayView', () => {
@@ -18,4 +18,6 @@ describe('@mantine/schedule/DayView', () => {
     displayName: '@mantine/schedule/DayView',
     stylesApiSelectors: ['dayView'],
   });
+
+  it('renders day view for the given date', () => {});
 });
