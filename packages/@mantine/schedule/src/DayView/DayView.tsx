@@ -31,6 +31,8 @@ export interface DayViewProps
   extends BoxProps,
     StylesApiProps<DayViewFactory>,
     ElementProps<'div'> {
+  __staticSelector?: string;
+
   /** Day to display, Date object or date string in `YYYY-MM-DD` format */
   day: Date | string;
 
@@ -79,6 +81,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     styles,
     unstyled,
     vars,
+    __staticSelector,
     startTime,
     endTime,
     intervalMinutes,
@@ -89,7 +92,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
   } = props;
 
   const getStyles = useStyles<DayViewFactory>({
-    name: 'DayView',
+    name: __staticSelector || 'DayView',
     classes,
     props,
     className,

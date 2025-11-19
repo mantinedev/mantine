@@ -2,6 +2,10 @@
   --slot-height: 16px;
 }
 
+.dayViewHeader {
+  text-transform: capitalize;
+}
+
 .dayViewInner {
   display: flex;
 }
