@@ -1,9 +1,20 @@
 .dayView {
   --slot-height: 16px;
+  --day-view-slot-labels-width: 80px;
+  --day-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+
+  border: 1px solid var(--mantine-color-gray-3);
+  border-radius: var(--day-view-radius);
 }
 
 .dayViewHeader {
   text-transform: capitalize;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
 }
 
 .dayViewInner {
@@ -11,13 +22,16 @@
 }
 
 .dayViewSlotLabels {
-  width: 80px;
+  width: var(--day-view-slot-labels-width);
 }
 
 .dayViewSlotLabel {
   height: calc(var(--slot-height) * 4);
   border-top: 1px solid var(--mantine-color-gray-3);
   font-size: var(--mantine-font-size-sm);
+  text-align: right;
+  padding: 4px 8px;
+  font-variant-numeric: tabular-nums;
 
   &:where([data-all-day]) {
     height: calc(var(--slot-height) * 3);

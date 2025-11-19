@@ -6,12 +6,14 @@ import {
   ElementProps,
   factory,
   Factory,
+  getRadius,
+  MantineRadius,
   StylesApiProps,
   UnstyledButton,
   useProps,
   useStyles,
 } from '@mantine/core';
-import { getDayTimeIntervals, useDatesContext } from '@mantine/dates-utils';
+import { DateLabelFormat, getDayTimeIntervals, useDatesContext } from '@mantine/dates-utils';
 import classes from './DayView.module.css';
 
 export type DayViewStylesNames =
@@ -24,7 +26,7 @@ export type DayViewStylesNames =
   | 'dayViewSlotLabels';
 
 export type DayViewCssVariables = {
-  dayView: '--test';
+  dayView: '--day-view-radius';
 };
 
 export interface DayViewProps
@@ -50,6 +52,12 @@ export interface DayViewProps
 
   /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
   locale?: string;
+
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  radius?: MantineRadius;
+
+  /** Dayjs format for slot labels or a callback function that returns formatted value @default `HH:mm`  */
+  slotLabelFormat?: DateLabelFormat;
 }
 
 export type DayViewFactory = Factory<{
@@ -64,11 +72,12 @@ const defaultProps = {
   endTime: '23:59:59',
   intervalMinutes: 15,
   withAllDaySlot: true,
+  slotLabelFormat: 'HH:mm',
 } satisfies Partial<DayViewProps>;
 
-const varsResolver = createVarsResolver<DayViewFactory>(() => ({
+const varsResolver = createVarsResolver<DayViewFactory>((_theme, { radius }) => ({
   dayView: {
-    '--test': 'test',
+    '--day-view-radius': radius !== undefined ? getRadius(radius) : undefined,
   },
 }));
 
@@ -88,6 +97,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     withAllDaySlot,
     day,
     locale,
+    slotLabelFormat,
     ...others
   } = props;
 
@@ -119,9 +129,15 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
   const slotsLabels = slots.reduce<React.ReactNode[]>((acc, slot) => {
     if (slot.isHourStart) {
+      const slotTime = dayjs(`${dayjs(day).format('YYYY-MM-DD')} ${slot.startTime}`);
+      const label =
+        typeof slotLabelFormat === 'function'
+          ? slotLabelFormat(slotTime.format('YYYY-MM-DD HH:mm:ss'))
+          : slotTime.locale(ctx.getLocale(locale)).format(slotLabelFormat);
+
       acc.push(
         <Box {...getStyles('dayViewSlotLabel')} key={slot.startTime}>
-          {slot.startTime}
+          {label}
         </Box>
       );
     }
