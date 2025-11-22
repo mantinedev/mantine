@@ -231,7 +231,7 @@ describe('@mantine/dates/DatePicker', () => {
     // Initially showing April 2022
     expect(screen.getByLabelText('month-level').textContent).toBe('April 2022');
 
-    // Update value to a date in a different year/month
+    // Update value to a date in a different year/month (first date)
     rerender(
       <DatePicker
         defaultDate="2022-04-11"
@@ -244,5 +244,19 @@ describe('@mantine/dates/DatePicker', () => {
 
     // Should navigate to July 2027
     expect(screen.getByLabelText('month-level').textContent).toBe('July 2027');
+
+    // Update value with only second date (edge case)
+    rerender(
+      <DatePicker
+        defaultDate="2022-04-11"
+        type="range"
+        value={[null, '2025-03-15']}
+        onChange={() => {}}
+        ariaLabels={{ monthLevelControl: 'month-level' }}
+      />
+    );
+
+    // Should navigate to March 2025 (using second date since first is null)
+    expect(screen.getByLabelText('month-level').textContent).toBe('March 2025');
   });
 });
