@@ -211,5 +211,5 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
   );
 });
 
-PickerInputBase.classes = classes;
+PickerInputBase.classes = { ...classes, placeholder: Input.classes.placeholder };
 PickerInputBase.displayName = '@mantine/dates/PickerInputBase';
