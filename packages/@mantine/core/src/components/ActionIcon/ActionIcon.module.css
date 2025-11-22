@@ -52,7 +52,7 @@
     cursor: not-allowed;
     border: 1px solid transparent;
     color: var(--mantine-color-disabled-color);
-    background-color: var(--mantine-color-disabled);
+    background: var(--mantine-color-disabled);
 
     &:active {
       transform: none;
