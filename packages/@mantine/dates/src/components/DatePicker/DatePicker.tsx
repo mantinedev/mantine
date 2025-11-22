@@ -23,6 +23,7 @@ import {
   DateValue,
   PickerBaseProps,
 } from '../../types';
+import { toDateString } from '../../utils';
 import {
   Calendar,
   CalendarBaseProps,
@@ -183,9 +184,10 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
   // Sync navigation date when value changes in controlled mode
   useEffect(() => {
     if (value !== undefined) {
-      const dateToNavigate = Array.isArray(_value) ? _value[0] : _value;
-      if (dateToNavigate) {
-        setDateRef.current?.(dateToNavigate);
+      const dateToNavigate = Array.isArray(value) ? value[0] : value;
+      const dateString = toDateString(dateToNavigate);
+      if (dateString) {
+        setDateRef.current?.(dateString);
       }
     }
   }, [value]);
