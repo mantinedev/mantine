@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  Box,
   Button,
   Checkbox,
   Group,
@@ -299,6 +300,53 @@ export function ReorderWithErrors() {
         </Button>
         <Button type="submit">Submit</Button>
       </Group>
+    </form>
+  );
+}
+
+export function NestedFormWithEventAccess() {
+  const [outerValue, setOuterValue] = useState('');
+  const [innerValue, setInnerValue] = useState('');
+
+  const innerForm = useForm({
+    mode: 'uncontrolled',
+    initialValues: { innerField: '' },
+  });
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        setOuterValue(`Outer form submitted with: ${(e.target as any).outerField?.value || ''}`);
+      }}
+      style={{ padding: 40 }}
+    >
+      <TextInput label="Outer Form Field" name="outerField" mb="md" />
+
+      {/* Inner form - event.stopPropagation() prevents parent form submission */}
+      <form
+        onSubmit={innerForm.onSubmit((values, event) => {
+          // Access the event as the second parameter to prevent parent form submission
+          event?.stopPropagation();
+          setInnerValue(`Inner form submitted with: ${values.innerField}`);
+        })}
+        style={{ border: '1px solid #ccc', padding: 20, marginBottom: 20 }}
+      >
+        <TextInput
+          label="Inner Form Field (nested form)"
+          {...innerForm.getInputProps('innerField')}
+        />
+        <Button type="submit" mt="md">
+          Submit Inner Form
+        </Button>
+      </form>
+
+      <Button type="submit">Submit Outer Form</Button>
+
+      <Box mt="md">
+        <div>Outer form result: {outerValue || 'Not submitted'}</div>
+        <div>Inner form result: {innerValue || 'Not submitted'}</div>
+      </Box>
     </form>
   );
 }

@@ -2,7 +2,11 @@ import { act, renderHook } from '@testing-library/react';
 import { FormMode } from '../../types';
 import { useForm } from '../../use-form';
 
-const getFormEvent = () => ({ preventDefault: jest.fn() }) as any;
+const getFormEvent = () => ({
+  preventDefault: jest.fn(),
+  stopPropagation: jest.fn(),
+  nativeEvent: { preventDefault: jest.fn() },
+}) as any;
 
 function tests(mode: FormMode) {
   it('calls handleSubmit with values and event when all values are valid', () => {
@@ -76,6 +80,25 @@ function tests(mode: FormMode) {
     const handleSubmit = jest.fn();
     act(() => hook.result.current.onSubmit(handleSubmit)());
     expect(handleSubmit).toHaveBeenCalledWith({ a: 1 }, undefined);
+  });
+
+  it('allows event manipulation in handleSubmit (e.g., stopPropagation)', () => {
+    const hook = renderHook(() =>
+      useForm({ mode, initialValues: { field: 'value' } })
+    );
+
+    const event = getFormEvent();
+    const handleSubmit = jest.fn((values, e) => {
+      // User can access the event to call stopPropagation or other event methods
+      e?.stopPropagation();
+      e?.nativeEvent.preventDefault();
+    });
+
+    act(() => hook.result.current.onSubmit(handleSubmit)(event));
+
+    expect(handleSubmit).toHaveBeenCalledWith({ field: 'value' }, event);
+    expect(event.stopPropagation).toHaveBeenCalled();
+    expect(event.nativeEvent.preventDefault).toHaveBeenCalled();
   });
 }
 
