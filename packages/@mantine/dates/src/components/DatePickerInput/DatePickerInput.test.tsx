@@ -128,6 +128,7 @@ describe('@mantine/dates/DatePickerInput', () => {
       />
     );
     const placeholder = container.querySelector('.mantine-DatePickerInput-placeholder');
+    expect(placeholder).toBeInTheDocument();
     expect(placeholder).toHaveClass('custom-placeholder-class');
     expect(placeholder).toHaveTextContent('Select date');
   });
