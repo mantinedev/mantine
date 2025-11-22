@@ -183,9 +183,12 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
 
   // Sync navigation date when value changes in controlled mode
   useEffect(() => {
+    // Only update navigation when component is in controlled mode (value !== undefined)
     if (value !== undefined) {
-      // For range arrays, use the first non-null date
-      const dateToNavigate = Array.isArray(value) ? value.find((d) => d != null) : value;
+      // For range arrays, use the first non-null/non-undefined date
+      const dateToNavigate = Array.isArray(value)
+        ? value.find((d) => d != null) // != null checks both null and undefined
+        : value;
       const dateString = toDateString(dateToNavigate);
       if (dateString) {
         setDateRef.current?.(dateString);
