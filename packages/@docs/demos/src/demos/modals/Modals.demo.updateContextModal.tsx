@@ -77,7 +77,7 @@ function Demo() {
     <Button
       onClick={() => {
         const modalId = modals.openContextModal({
-          modalKey: 'asyncDemonstration',
+          modal: 'asyncDemonstration',
           title: 'Processing...',
           closeOnEscape: false,
           closeOnClickOutside: false,
@@ -90,7 +90,6 @@ function Demo() {
 
         setTimeout(() => {
           modals.updateContextModal({
-            modalKey: 'asyncDemonstration',
             modalId,
             title: 'Processing Complete!',
             closeOnEscape: true,

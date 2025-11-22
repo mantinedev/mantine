@@ -27,7 +27,7 @@ export function Usage() {
   const showContextModal = () =>
     openContextModal({
       modalId: 'context-modal',
-      modalKey: 'hello',
+      modal: 'hello',
       title: 'Context modal',
       centered: true,
       onClose: () => console.log('context modal closed'),
@@ -160,7 +160,7 @@ function CloseAllApp() {
       centered: true,
       onClose: () => {
         console.log('Close modal', modalId);
-        modals.closeAllModals();
+        modals.closeAll();
       },
     });
   };
@@ -195,8 +195,7 @@ function UpdateContextModal() {
   const modals = useModals();
 
   const handleOpenAsyncConfirmModal = () => {
-    const modalId = modals.openContextModal({
-      modalKey: 'asyncProcessing',
+    const modalId = modals.openContextModal('asyncProcessing', {
       title: 'Processing...',
       innerProps: {
         modalBody: 'You cannot close the modal during this operation.',
@@ -210,7 +209,6 @@ function UpdateContextModal() {
 
     setTimeout(() => {
       modals.updateContextModal({
-        modalKey: 'asyncProcessing',
         modalId,
         title: 'Processing Complete!',
         closeButtonProps: { disabled: false },

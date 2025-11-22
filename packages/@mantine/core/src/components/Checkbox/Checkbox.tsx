@@ -240,7 +240,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
           component="input"
           id={uuid}
           ref={useMergedRef(inputRef, ref)}
-          mod={{ error: !!error, indeterminate }}
+          mod={{ error: !!error }}
           {...getStyles('input', { focusable: true, variant })}
           {...rest}
           {...withContextProps}

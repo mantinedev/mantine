@@ -1,4 +1,4 @@
-import type { FormPathValue, LooseKeys } from './paths.types';
+import type { FormArrayElement, FormPathValue, LooseKeys } from './paths.types';
 import type { formRootRule } from './validate/validate-values';
 
 export type GetInputPropsType = 'input' | 'checkbox';
@@ -140,14 +140,14 @@ export type ReorderListItem<Values> = <Field extends LooseKeys<Values>>(
 
 export type InsertListItem<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
-  item: unknown,
+  item: FormArrayElement<Values, Field>,
   index?: number
 ) => void;
 
 export type ReplaceListItem<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   index: number,
-  item: unknown
+  item: FormArrayElement<Values, Field>
 ) => void;
 
 export type RemoveListItem<Values> = <Field extends LooseKeys<Values>>(

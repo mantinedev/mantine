@@ -1,5 +1,5 @@
 import { createContext, ReactNode } from 'react';
-import { DataAttributes, ModalProps } from '@mantine/core';
+import { ModalProps } from '@mantine/core';
 import type { ConfirmModalProps } from './ConfirmModal';
 
 export type ModalSettings = Partial<Omit<ModalProps, 'opened'>> & { modalId?: string };
@@ -7,14 +7,10 @@ export type ModalSettings = Partial<Omit<ModalProps, 'opened'>> & { modalId?: st
 export type ConfirmLabels = Record<'confirm' | 'cancel', ReactNode>;
 
 export interface OpenConfirmModal extends ModalSettings, ConfirmModalProps {}
-
-export type ContextModalInnerProps<
-  TKey extends MantineModal,
-  P = Parameters<MantineModals[TKey]>[0]['innerProps'],
-> = keyof NonNullable<P> extends never ? { innerProps?: never } : { innerProps: P };
-
-export type OpenContextModal<TKey extends MantineModal = string> = ModalSettings &
-  ContextModalInnerProps<TKey>;
+export interface OpenContextModal<CustomProps extends Record<string, any> = {}>
+  extends ModalSettings {
+  innerProps: CustomProps;
+}
 
 export interface ContextModalProps<T extends Record<string, any> = {}> {
   context: ModalsContextProps;
@@ -33,24 +29,27 @@ export interface ModalsContextProps {
   openModal: (props: ModalSettings) => string;
   openConfirmModal: (props: OpenConfirmModal) => string;
   openContextModal: <TKey extends MantineModal>(
-    props: { modalKey: TKey } & OpenContextModal<TKey> & DataAttributes
+    modal: TKey,
+    props: OpenContextModal<Parameters<MantineModals[TKey]>[0]['innerProps']>
   ) => string;
-  closeModal: (modalId: string, canceled?: boolean) => void;
-  closeContextModal: <TKey extends MantineModal>(modalKey: TKey, canceled?: boolean) => void;
-  closeAllModals: () => void;
-  updateModal: (props: { modalId: string } & Partial<OpenConfirmModal>) => void;
-  updateContextModal: <TKey extends MantineModal>(
-    props: { modalKey: TKey } & Partial<OpenContextModal<TKey>>
-  ) => void;
+  closeModal: (id: string, canceled?: boolean) => void;
+  closeContextModal: <TKey extends MantineModal>(id: TKey, canceled?: boolean) => void;
+  closeAll: () => void;
+  updateModal: (payload: { modalId: string } & Partial<OpenConfirmModal>) => void;
+  updateContextModal: (payload: { modalId: string } & Partial<OpenContextModal<any>>) => void;
 }
 
 export interface MantineModalsOverride {}
 
-export type MantineModals = MantineModalsOverride extends {
-  modals: infer CustomModals;
+export type MantineModalsOverwritten = MantineModalsOverride extends {
+  modals: Record<string, React.FC<ContextModalProps<any>>>;
 }
-  ? CustomModals
-  : Record<string, React.FC<ContextModalProps<any>>>;
+  ? MantineModalsOverride
+  : {
+      modals: Record<string, React.FC<ContextModalProps<any>>>;
+    };
+
+export type MantineModals = MantineModalsOverwritten['modals'];
 
 export type MantineModal = keyof MantineModals;
 

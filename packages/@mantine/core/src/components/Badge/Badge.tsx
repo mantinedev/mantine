@@ -82,7 +82,7 @@ export type BadgeFactory = PolymorphicFactory<{
 }>;
 
 const varsResolver = createVarsResolver<BadgeFactory>(
-  (theme, { radius, color, gradient, variant, size, autoContrast }) => {
+  (theme, { radius, color, gradient, variant, size, autoContrast, circle }) => {
     const colors = theme.variantColorResolver({
       color: color || theme.primaryColor,
       theme,
@@ -96,7 +96,7 @@ const varsResolver = createVarsResolver<BadgeFactory>(
         '--badge-height': getSize(size, 'badge-height'),
         '--badge-padding-x': getSize(size, 'badge-padding-x'),
         '--badge-fz': getSize(size, 'badge-fz'),
-        '--badge-radius': radius === undefined ? undefined : getRadius(radius),
+        '--badge-radius': circle || radius === undefined ? undefined : getRadius(radius),
         '--badge-bg': color || variant ? colors.background : undefined,
         '--badge-color': color || variant ? colors.color : undefined,
         '--badge-bd': color || variant ? colors.border : undefined,
