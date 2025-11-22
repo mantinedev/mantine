@@ -5,6 +5,7 @@ export { ModalBaseContent } from './ModalBaseContent';
 export { ModalBaseHeader } from './ModalBaseHeader';
 export { ModalBaseOverlay } from './ModalBaseOverlay';
 export { ModalBaseTitle } from './ModalBaseTitle';
+export { ModalBaseFooter } from './ModalBaseFooter';
 export { NativeScrollArea } from './NativeScrollArea';
 
 export type { ModalBaseProps } from './ModalBase';
@@ -14,6 +15,7 @@ export type { ModalBaseContentProps } from './ModalBaseContent';
 export type { ModalBaseHeaderProps } from './ModalBaseHeader';
 export type { ModalBaseOverlayProps } from './ModalBaseOverlay';
 export type { ModalBaseTitleProps } from './ModalBaseTitle';
+export type { ModalBaseFooterProps } from './ModalBaseFooter.tsx';
 
 export type ModalBaseStylesNames =
   | 'body'
@@ -23,4 +25,5 @@ export type ModalBaseStylesNames =
   | 'root'
   | 'content'
   | 'close'
-  | 'inner';
+  | 'inner'
+  | 'footer';
