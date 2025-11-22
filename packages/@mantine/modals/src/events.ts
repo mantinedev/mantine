@@ -1,8 +1,29 @@
-import { createUseExternalEvents } from '@mantine/core';
+import { createUseExternalEvents, DataAttributes } from '@mantine/core';
 import { randomId } from '@mantine/hooks';
-import { ModalsContextProps } from './context';
+import {
+  MantineModal,
+  MantineModals,
+  ModalSettings,
+  OpenConfirmModal,
+  OpenContextModal,
+} from './context';
 
-type ModalsEvents = Omit<ModalsContextProps, 'modals' | 'modalProps'>;
+type ModalsEvents = {
+  openModal: (payload: ModalSettings) => string;
+  openConfirmModal: (payload: OpenConfirmModal) => string;
+  openContextModal: <TKey extends MantineModal>(
+    payload: OpenContextModal<Parameters<MantineModals[TKey]>[0]['innerProps']> & {
+      modal: TKey;
+    } & DataAttributes
+  ) => string;
+  closeModal: (id: string) => void;
+  closeContextModal: <TKey extends MantineModal>(id: TKey) => void;
+  closeAllModals: () => void;
+  updateModal: (
+    payload: { modalId: string } & Partial<ModalSettings> & Partial<OpenConfirmModal>
+  ) => void;
+  updateContextModal: (payload: { modalId: string } & Partial<OpenContextModal<any>>) => void;
+};
 
 export const [useModalsEvents, createEvent] =
   createUseExternalEvents<ModalsEvents>('mantine-modals');
@@ -19,41 +40,44 @@ export const openConfirmModal: ModalsEvents['openConfirmModal'] = (payload) => {
   return id;
 };
 
-export const openContextModal: ModalsEvents['openContextModal'] = (payload) => {
+export const openContextModal: ModalsEvents['openContextModal'] = <TKey extends MantineModal>(
+  payload: OpenContextModal<Parameters<MantineModals[TKey]>[0]['innerProps']> & {
+    modal: TKey;
+  } & DataAttributes
+) => {
   const id = payload.modalId || randomId();
   createEvent('openContextModal')({ ...payload, modalId: id });
   return id;
 };
 
-export const closeModal: ModalsEvents['closeModal'] = createEvent('closeModal');
+export const closeModal = createEvent('closeModal');
 
-export const closeContextModal: ModalsEvents['closeContextModal'] = (id) =>
-  createEvent('closeContextModal')(id);
+export const closeContextModal: ModalsEvents['closeContextModal'] = <TKey extends MantineModal>(
+  id: TKey
+) => createEvent('closeContextModal')(id);
 
-export const closeAllModals: ModalsEvents['closeAllModals'] = createEvent('closeAllModals');
+export const closeAllModals = createEvent('closeAllModals');
 
-export const updateModal: ModalsEvents['updateModal'] = (payload) =>
+export const updateModal = (payload: { modalId: string } & Partial<ModalSettings>) =>
   createEvent('updateModal')(payload);
 
-export const updateContextModal: ModalsEvents['updateContextModal'] = (payload) =>
+export const updateContextModal = (payload: { modalId: string } & Partial<OpenContextModal<any>>) =>
   createEvent('updateContextModal')(payload);
 
 export const modals: {
   open: ModalsEvents['openModal'];
+  close: ModalsEvents['closeModal'];
+  closeAll: ModalsEvents['closeAllModals'];
   openConfirmModal: ModalsEvents['openConfirmModal'];
   openContextModal: ModalsEvents['openContextModal'];
-  close: ModalsEvents['closeModal'];
-  closeContext: ModalsEvents['closeContextModal'];
-  closeAll: ModalsEvents['closeAllModals'];
   updateModal: ModalsEvents['updateModal'];
   updateContextModal: ModalsEvents['updateContextModal'];
 } = {
   open: openModal,
+  close: closeModal,
+  closeAll: closeAllModals,
   openConfirmModal,
   openContextModal,
-  close: closeModal,
-  closeContext: closeContextModal,
-  closeAll: closeAllModals,
   updateModal,
   updateContextModal,
 };
