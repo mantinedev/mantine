@@ -31,7 +31,7 @@ function Demo() {
     <Button
       onClick={() =>
         modals.openContextModal({
-          modalKey: 'demonstration',
+          modal: 'demonstration',
           title: 'Test modal from context',
           innerProps: {
             modalBody:
