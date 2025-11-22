@@ -72,4 +72,9 @@ export type PathValue<T, TPath extends string> = T extends any
 export type FormPathValue<T, TPath extends string> =
   PathValue<T, TPath> extends never ? any : PathValue<T, TPath>;
 
+export type ArrayElement<T> = T extends readonly (infer U)[] ? U : never;
+
+export type FormArrayElement<T, TPath extends string> =
+  ArrayElement<FormPathValue<T, TPath>> extends never ? any : ArrayElement<FormPathValue<T, TPath>>;
+
 export type LooseKeys<T> = Path<T> | ArrayPath<T> | (string & {});

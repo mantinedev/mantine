@@ -52,7 +52,7 @@ function tests(mode: FormMode) {
     expect(hook.result.current.isDirty('a.0')).toBe(false);
     expect(hook.result.current.isDirty('a')).toBe(false);
 
-    act(() => hook.result.current.insertListItem('a', [{ b: 3 }]));
+    act(() => hook.result.current.insertListItem('a', { b: 3 }));
     expect(hook.result.current.isDirty('a.2')).toBe(true);
     expect(hook.result.current.isDirty('a')).toBe(true);
 
