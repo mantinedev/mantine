@@ -189,4 +189,60 @@ describe('@mantine/dates/DatePicker', () => {
     const { container } = render(<DatePicker {...defaultProps} __staticSelector="Calendar" />);
     expect(container.querySelector('.mantine-Calendar-month')).toBeInTheDocument();
   });
+
+  it('navigates to correct month when value changes in controlled mode', () => {
+    const { rerender } = render(
+      <DatePicker
+        defaultDate="2022-04-11"
+        value={null}
+        onChange={() => {}}
+        ariaLabels={{ monthLevelControl: 'month-level' }}
+      />
+    );
+
+    // Initially showing April 2022
+    expect(screen.getByLabelText('month-level').textContent).toBe('April 2022');
+
+    // Update value to a date in a different year/month
+    rerender(
+      <DatePicker
+        defaultDate="2022-04-11"
+        value="2027-07-21"
+        onChange={() => {}}
+        ariaLabels={{ monthLevelControl: 'month-level' }}
+      />
+    );
+
+    // Should navigate to July 2027
+    expect(screen.getByLabelText('month-level').textContent).toBe('July 2027');
+  });
+
+  it('navigates to correct month when value changes in controlled mode (type="range")', () => {
+    const { rerender } = render(
+      <DatePicker
+        defaultDate="2022-04-11"
+        type="range"
+        value={[null, null]}
+        onChange={() => {}}
+        ariaLabels={{ monthLevelControl: 'month-level' }}
+      />
+    );
+
+    // Initially showing April 2022
+    expect(screen.getByLabelText('month-level').textContent).toBe('April 2022');
+
+    // Update value to a date in a different year/month
+    rerender(
+      <DatePicker
+        defaultDate="2022-04-11"
+        type="range"
+        value={['2027-07-21', null]}
+        onChange={() => {}}
+        ariaLabels={{ monthLevelControl: 'month-level' }}
+      />
+    );
+
+    // Should navigate to July 2027
+    expect(screen.getByLabelText('month-level').textContent).toBe('July 2027');
+  });
 });

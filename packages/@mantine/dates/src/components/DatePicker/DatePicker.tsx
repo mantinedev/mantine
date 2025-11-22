@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -179,6 +179,16 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
     styles,
     props,
   });
+
+  // Sync navigation date when value changes in controlled mode
+  useEffect(() => {
+    if (value !== undefined && _value) {
+      const dateToNavigate = Array.isArray(_value) ? _value[0] : _value;
+      if (dateToNavigate) {
+        setDateRef.current?.(dateToNavigate);
+      }
+    }
+  }, [value, _value]);
 
   const calendar = (
     <Calendar
