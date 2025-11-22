@@ -21,6 +21,7 @@ export type OptionsData = (ComboboxItem | OptionsGroup)[];
 interface OptionProps {
   data: ComboboxItem | OptionsGroup;
   withCheckIcon?: boolean;
+  withAlignedLabels?: boolean;
   value?: string | string[] | null;
   checkIconPosition?: 'left' | 'right';
   unstyled: boolean | undefined;
@@ -34,6 +35,7 @@ function isValueChecked(value: string | string[] | undefined | null, optionValue
 function Option({
   data,
   withCheckIcon,
+  withAlignedLabels,
   value,
   checkIconPosition,
   unstyled,
@@ -41,9 +43,13 @@ function Option({
 }: OptionProps) {
   if (!isOptionsGroup(data)) {
     const checked = isValueChecked(value, data.value);
-    const check = withCheckIcon && checked && (
-      <CheckIcon className={classes.optionsDropdownCheckIcon} />
-    );
+    const check =
+      withCheckIcon &&
+      (checked ? (
+        <CheckIcon className={classes.optionsDropdownCheckIcon} />
+      ) : withAlignedLabels ? (
+        <div className={classes.optionsDropdownCheckPlaceholder} />
+      ) : null);
 
     const defaultContent = (
       <>
@@ -77,6 +83,7 @@ function Option({
       key={item.value}
       unstyled={unstyled}
       withCheckIcon={withCheckIcon}
+      withAlignedLabels={withAlignedLabels}
       checkIconPosition={checkIconPosition}
       renderOption={renderOption}
     />
@@ -96,6 +103,7 @@ export interface OptionsDropdownProps {
   hiddenWhenEmpty?: boolean;
   filterOptions?: boolean;
   withCheckIcon?: boolean;
+  withAlignedLabels?: boolean;
   value?: string | string[] | null;
   checkIconPosition?: 'left' | 'right';
   nothingFoundMessage?: React.ReactNode;
@@ -117,6 +125,7 @@ export function OptionsDropdown({
   withScrollArea = true,
   filterOptions = true,
   withCheckIcon = false,
+  withAlignedLabels = false,
   value,
   checkIconPosition,
   nothingFoundMessage,
@@ -143,6 +152,7 @@ export function OptionsDropdown({
       data={item}
       key={isOptionsGroup(item) ? item.group : item.value}
       withCheckIcon={withCheckIcon}
+      withAlignedLabels={withAlignedLabels}
       value={value}
       checkIconPosition={checkIconPosition}
       unstyled={unstyled}

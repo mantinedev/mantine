@@ -56,6 +56,9 @@ export interface SelectProps
   /** If set, the check icon is displayed near the selected option label @default `true` */
   withCheckIcon?: boolean;
 
+  /** If set, unchecked labels are aligned with the checked one @default `false` */
+  withAlignedLabels?: boolean;
+
   /** Position of the check icon relative to the option label @default `'left'` */
   checkIconPosition?: 'left' | 'right';
 
@@ -141,6 +144,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     rightSection,
     checkIconPosition,
     withCheckIcon,
+    withAlignedLabels,
     nothingFoundMessage,
     name,
     form,
@@ -372,6 +376,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
           value={_value}
           checkIconPosition={checkIconPosition}
           withCheckIcon={withCheckIcon}
+          withAlignedLabels={withAlignedLabels}
           nothingFoundMessage={nothingFoundMessage}
           unstyled={unstyled}
           labelId={others.label ? `${_id}-label` : undefined}
