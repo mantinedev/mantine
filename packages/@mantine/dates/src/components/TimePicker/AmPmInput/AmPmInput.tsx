@@ -76,11 +76,15 @@ export const AmPmInput = forwardRef<HTMLSelectElement, AmPmInputProps>(
     };
 
     if (inputType === 'input') {
+      const displayValue = value || '--';
+      const inputSize = displayValue.length + 1;
+
       return (
         <input
           {...ctx.getStyles('field', { className, style })}
           ref={ref as any}
-          value={value || '--'}
+          value={displayValue}
+          size={inputSize}
           onChange={(event) => !readOnly && onChange(event.target.value || null)}
           onClick={((event: any) => event.stopPropagation()) as any}
           onKeyDown={handleKeyDown as any}

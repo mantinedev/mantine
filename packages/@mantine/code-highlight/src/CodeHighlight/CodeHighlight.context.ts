@@ -3,7 +3,7 @@ import type { CodeHighlightFactory } from './CodeHighlight';
 
 interface CodeHighlightContext {
   getStyles: GetStylesApi<CodeHighlightFactory>;
-  codeColorScheme: 'light' | 'dark' | undefined;
+  codeColorScheme: 'light' | 'dark' | (string & {}) | undefined;
 }
 
 export const [CodeHighlightContextProvider, useCodeHighlightContext] =

@@ -13,6 +13,7 @@ interface SpinInputProps
   onNextInput?: () => void;
   onPreviousInput?: () => void;
   allowTemporaryZero?: boolean;
+  placeholder?: string;
 }
 
 const getMaxDigit = (max: number) => Number(max.toFixed(0)[0]);
@@ -31,6 +32,7 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
       onFocus,
       readOnly,
       allowTemporaryZero = false,
+      placeholder = '--',
       ...others
     },
     ref
@@ -122,7 +124,7 @@ export const SpinInput = forwardRef<HTMLInputElement, SpinInputProps>(
         aria-valuenow={value === null ? 0 : value}
         data-empty={value === null || undefined}
         inputMode="numeric"
-        placeholder="--"
+        placeholder={placeholder}
         value={value === null ? '' : padTime(value)}
         onChange={(event) => handleChange(event.currentTarget.value)}
         onKeyDown={handleKeyDown}

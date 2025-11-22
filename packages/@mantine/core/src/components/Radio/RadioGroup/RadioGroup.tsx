@@ -31,6 +31,9 @@ export interface RadioGroupProps
 
   /** If set, value cannot be changed */
   readOnly?: boolean;
+
+  /** Sets `disabled` attribute, prevents interactions */
+  disabled?: boolean;
 }
 
 export type RadioGroupFactory = Factory<{
@@ -40,8 +43,18 @@ export type RadioGroupFactory = Factory<{
 }>;
 
 export const RadioGroup = factory<RadioGroupFactory>((props, ref) => {
-  const { value, defaultValue, onChange, size, wrapperProps, children, name, readOnly, ...others } =
-    useProps('RadioGroup', null, props);
+  const {
+    value,
+    defaultValue,
+    onChange,
+    size,
+    wrapperProps,
+    children,
+    name,
+    readOnly,
+    disabled,
+    ...others
+  } = useProps('RadioGroup', null, props);
 
   const _name = useId(name);
 
@@ -56,7 +69,9 @@ export const RadioGroup = factory<RadioGroupFactory>((props, ref) => {
     !readOnly && setValue(typeof event === 'string' ? event : event.currentTarget.value);
 
   return (
-    <RadioGroupProvider value={{ value: _value, onChange: handleChange, size, name: _name }}>
+    <RadioGroupProvider
+      value={{ value: _value, onChange: handleChange, size, name: _name, disabled }}
+    >
       <Input.Wrapper
         size={size}
         ref={ref}

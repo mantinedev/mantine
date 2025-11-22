@@ -9,7 +9,6 @@ import { unified } from 'unified';
 import { visit } from 'unist-util-visit';
 
 interface CompilerConfig {
-  outputPath: string;
   rootDir: string;
   mdxPaths: {
     docs: string;
@@ -23,7 +22,6 @@ interface CompilerConfig {
 }
 
 const config: CompilerConfig = {
-  outputPath: './LLM.md',
   rootDir: process.cwd(),
   mdxPaths: {
     docs: './apps/mantine.dev/src/pages',
@@ -1837,23 +1835,21 @@ Additional information about ${component} component.`;
   private async writeOutput() {
     const outputContent = this.output.join('\n');
 
-    // Write to LLM.md in root
-    // await fs.writeFile(this.config.outputPath, outputContent, 'utf-8');
-
     // Write to llms.txt in public folder if publicPath is configured
     if (this.config.publicPath) {
       const llmsTxtPath = path.join(this.config.publicPath, 'llms.txt');
       await fs.writeFile(llmsTxtPath, outputContent, 'utf-8');
     }
 
-    await fs.stat(this.config.outputPath);
     // Output files generated
   }
 }
 
 // Run the compiler
 const compiler = new MantineLLMCompiler(config);
-compiler.compile().catch(() => {
+compiler.compile().catch((error) => {
+  // eslint-disable-next-line no-console
+  console.error('Failed to compile LLM documentation.', error);
   // Handle compilation error
   process.exit(1);
 });

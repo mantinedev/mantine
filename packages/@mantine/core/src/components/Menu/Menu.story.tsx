@@ -219,7 +219,7 @@ export function WithSubMenu() {
         <Menu.Dropdown>
           <Menu.Item>Item 1</Menu.Item>
           <Menu.Item>Item 2</Menu.Item>
-          <Menu.Sub closeDelay={100}>
+          <Menu.Sub openDelay={1200} closeDelay={100}>
             <Menu.Sub.Target>
               <Menu.Sub.Item>Sub Menu item</Menu.Sub.Item>
             </Menu.Sub.Target>
@@ -227,7 +227,7 @@ export function WithSubMenu() {
             <Menu.Sub.Dropdown>
               <Menu.Item closeMenuOnClick={false}>Sub 1</Menu.Item>
               <Menu.Item closeMenuOnClick={false}>Sub 2</Menu.Item>
-              <Menu.Sub closeDelay={100}>
+              <Menu.Sub openDelay={120} closeDelay={100}>
                 <Menu.Sub.Target>
                   <Menu.Sub.Item>Sub Menu item</Menu.Sub.Item>
                 </Menu.Sub.Target>

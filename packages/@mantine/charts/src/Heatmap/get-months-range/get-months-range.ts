@@ -17,7 +17,7 @@ export function getMonthsRange(weeksData: (string | null)[][]) {
   weeksData.forEach((week) => {
     // it is guaranteed that week has at least 1 day
     const day = week[0] === null ? week[week.length - 1]! : week[0];
-    const month = new Date(day).getMonth();
+    const month = new Date(day).getUTCMonth();
 
     if (current !== month) {
       current = month;

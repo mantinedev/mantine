@@ -56,7 +56,9 @@ export function SingleButton() {
           },
         }}
       >
-        <ActionIcon loading>$$</ActionIcon>
+        <ActionIcon variant="gradient" disabled>
+          $$
+        </ActionIcon>
       </MantineThemeProvider>
     </div>
   );

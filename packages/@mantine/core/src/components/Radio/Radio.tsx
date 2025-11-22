@@ -148,6 +148,7 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
     onChange,
     mod,
     attributes,
+    checked,
     ...others
   } = props;
 
@@ -173,16 +174,17 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
   const { styleProps, rest } = extractStyleProps(others);
   const uuid = useId(id);
 
-  const contextProps = ctx
-    ? {
-        checked: ctx.value === rest.value,
-        name: rest.name ?? ctx.name,
-        onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-          ctx.onChange(event);
-          onChange?.(event);
-        },
-      }
-    : {};
+  const contextChecked = ctx ? ctx.value === rest.value : undefined;
+
+  const withContextProps = {
+    checked: contextChecked ?? checked,
+    name: ctx?.name ?? rest.name,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+      ctx?.onChange(event);
+      onChange?.(event);
+    },
+    disabled: ctx?.disabled ?? disabled,
+  };
 
   return (
     <InlineInput
@@ -195,11 +197,11 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
       label={label}
       description={description}
       error={error}
-      disabled={disabled}
+      disabled={withContextProps.disabled}
       classNames={classNames}
       styles={styles}
       unstyled={unstyled}
-      data-checked={contextProps.checked || undefined}
+      data-checked={(contextChecked ?? checked) || undefined}
       variant={variant}
       ref={rootRef}
       mod={mod}
@@ -209,14 +211,12 @@ export const Radio = factory<RadioFactory>((_props, ref) => {
       <Box {...getStyles('inner')} mod={{ 'label-position': labelPosition }}>
         <Box
           {...getStyles('radio', { focusable: true, variant })}
-          onChange={onChange}
           {...rest}
-          {...contextProps}
+          {...withContextProps}
           component="input"
           mod={{ error: !!error }}
           ref={ref}
           id={uuid}
-          disabled={disabled}
           type="radio"
         />
         <Icon {...getStyles('icon')} aria-hidden />

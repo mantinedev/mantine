@@ -115,7 +115,7 @@ or there is no data available. If the `nothingFoundMessage` prop is not set, the
 ## Checked option icon
 
 Set `checkIconPosition` prop to `left` or `right` to control position of check icon in active option.
-To remove the check icon, set `withCheckIcon={false}`.
+To remove the check icon, set `withCheckIcon={false}`. To align unchecked labels with the checked one, set `withAlignedLabels` prop.
 
 <Demo data={SelectDemos.checkIcon} />
 
@@ -200,6 +200,27 @@ dropdown width is equal to the input width.
 To change dropdown offset, set `offset` prop in `comboboxProps`:
 
 <Demo data={SelectDemos.dropdownOffset} />
+
+## Prevent horizontal infinite scrolling
+
+If you experience horizontal infinite scrolling in the dropdown, set the `shift` middleware `padding` to `0`:
+
+```tsx
+import { Select } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Select
+      data={['React', 'Angular', 'Vue']}
+      comboboxProps={{
+        middlewares: {
+          shift: { padding: 0 }
+        }
+      }}
+    />
+  );
+}
+```
 
 ## Dropdown animation
 
