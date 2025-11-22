@@ -22,7 +22,7 @@ import { DateFormatter } from '../../utils';
 import { HiddenDatesInput, HiddenDatesInputValue } from '../HiddenDatesInput';
 import classes from './PickerInputBase.module.css';
 
-export type PickerInputBaseStylesNames = __InputStylesNames;
+export type PickerInputBaseStylesNames = __InputStylesNames | 'placeholder';
 
 export interface DateInputSharedProps
   extends Omit<__BaseInputProps, 'size'>,
@@ -119,6 +119,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
     type,
     onDropdownClose,
     withTime,
+    __staticSelector,
     ...others
   } = useInputProps('PickerInputBase', { size: 'sm' }, _props);
 
@@ -192,8 +193,9 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
                 <Input.Placeholder
                   error={inputProps.error}
                   unstyled={unstyled}
-                  className={(classNames as any)?.placeholder}
-                  style={(styles as any)?.placeholder}
+                  classNames={classNames}
+                  styles={styles}
+                  __staticSelector={__staticSelector}
                 >
                   {placeholder}
                 </Input.Placeholder>

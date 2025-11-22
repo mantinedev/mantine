@@ -118,4 +118,17 @@ describe('@mantine/dates/DatePickerInput', () => {
     expectValue(container, 'April 11, 2022');
     expect(spy).toHaveBeenCalledWith('2022-04-01');
   });
+
+  it('applies custom classNames to placeholder', () => {
+    const { container } = render(
+      <DatePickerInput
+        {...defaultProps}
+        placeholder="Select date"
+        classNames={{ placeholder: 'custom-placeholder-class' }}
+      />
+    );
+    const placeholder = container.querySelector('.mantine-DatePickerInput-placeholder');
+    expect(placeholder).toHaveClass('custom-placeholder-class');
+    expect(placeholder).toHaveTextContent('Select date');
+  });
 });
