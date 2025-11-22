@@ -15892,7 +15892,7 @@ function Demo() {
 ## Checked option icon
 
 Set `checkIconPosition` prop to `left` or `right` to control position of check icon in active option.
-To remove the check icon, set `withCheckIcon={false}`.
+To remove the check icon, set `withCheckIcon={false}`. To align unchecked labels with checked ones, set `withAlignedLabels` prop.
 
 #### Example: checkIcon
 
@@ -16700,6 +16700,7 @@ function Demo() {
 | selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, <code>false</code> by default |
 | size | MantineSize | (string & {}) | - | Controls input <code>height</code> and horizontal <code>padding</code> |
 | value | string[] | - | Controlled component value |
+| withAlignedLabels | boolean | - | If set, unchecked labels are aligned with checked ones |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input. |
 | withCheckIcon | boolean | - | If set, the check icon is displayed near the selected option label |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the <code>error</code> prop is set |
@@ -23398,7 +23399,7 @@ function Demo() {
 ## Checked option icon
 
 Set `checkIconPosition` prop to `left` or `right` to control position of check icon in active option.
-To remove the check icon, set `withCheckIcon={false}`.
+To remove the check icon, set `withCheckIcon={false}`. To align unchecked labels with the checked one, set `withAlignedLabels` prop.
 
 #### Example: checkIcon
 
@@ -24170,6 +24171,7 @@ function Demo() {
 | selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, <code>false</code> by default |
 | size | MantineSize | (string & {}) | - | Controls input <code>height</code> and horizontal <code>padding</code> |
 | value | string | null | - | Controlled component value |
+| withAlignedLabels | boolean | - | If set, unchecked labels are aligned with the checked one |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input. |
 | withCheckIcon | boolean | - | If set, the check icon is displayed near the selected option label |
 | withErrorStyles | boolean | - | Determines whether the input should have red border and red text color when the <code>error</code> prop is set |
@@ -59514,7 +59516,7 @@ Font smoothing variables are controlled by `theme.fontSmoothing` [theme](https:/
   ]}
 />
 
-If you need to override font smoothing values, the best way is to disable `theme.fontSmoothing` and set [global styles](https://mantine.dev/styles/global)
+If you need to override font smoothing values, the best way is to disable `theme.fontSmoothing` and set [global styles](https://mantine.dev/styles/global-styles/#add-global-styles-in-your-application)
 on the body element:
 
 ```tsx
