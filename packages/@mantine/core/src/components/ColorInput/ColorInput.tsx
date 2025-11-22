@@ -38,6 +38,7 @@ export type ColorInputStylesNames =
 
 export type ColorInputCssVariables = {
   eyeDropperIcon: '--ci-eye-dropper-icon-size';
+  eyeDropperButton: '--ci-button-size';
   colorPreview: '--ci-preview-size';
 };
 
@@ -93,6 +94,10 @@ const defaultProps = {
 const varsResolver = createVarsResolver<ColorInputFactory>((_, { size }) => ({
   eyeDropperIcon: {
     '--ci-eye-dropper-icon-size': getSize(size, 'ci-eye-dropper-icon-size'),
+  },
+
+  eyeDropperButton: {
+    '--ci-button-size': getSize(size, 'ci-button-size'),
   },
 
   colorPreview: {
@@ -172,7 +177,6 @@ export const ColorInput = factory<ColorInputFactory>((_props, ref) => {
       })}
       variant="subtle"
       color="gray"
-      size={inputProps.size}
       unstyled={unstyled}
       onClick={() =>
         openEyeDropper()
