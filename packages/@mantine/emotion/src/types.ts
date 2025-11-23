@@ -67,5 +67,5 @@ export type InterpolationPrimitive =
 export type CSSInterpolation = InterpolationPrimitive | ArrayCSSInterpolation;
 
 export interface CSSOthersObject {
-  [propertiesName: string]: CSSInterpolation;
+  [propertiesName: string]: any;
 }

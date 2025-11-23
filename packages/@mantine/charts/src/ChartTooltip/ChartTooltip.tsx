@@ -41,7 +41,10 @@ function updateChartTooltipPayload(payload: Record<string, any>[]): Record<strin
   });
 }
 
-export function getFilteredChartTooltipPayload(payload: Record<string, any>[], segmentId?: string) {
+export function getFilteredChartTooltipPayload(
+  payload: readonly Record<string, any>[] | Record<string, any>[],
+  segmentId?: string
+) {
   const duplicatesFilter = updateChartTooltipPayload(
     payload.filter((item) => item.fill !== 'none' || !item.color)
   );
@@ -85,7 +88,7 @@ export interface ChartTooltipProps
   label?: React.ReactNode;
 
   /** Chart data provided by recharts */
-  payload: Record<string, any>[] | undefined;
+  payload: readonly Record<string, any>[] | Record<string, any>[] | undefined;
 
   /** Data units, provided by parent component */
   unit?: string;

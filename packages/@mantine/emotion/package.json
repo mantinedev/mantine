@@ -41,6 +41,7 @@
     "react-dom": "^18.x || ^19.x"
   },
   "dependencies": {
+    "csstype": "^3.2.3",
     "html-react-parser": "^5.2.6"
   },
   "devDependencies": {
