@@ -10,7 +10,7 @@ import {
 
 const defaultProps: CurrentTimeIndicatorProps = {};
 
-describe('@mantine/core/CurrentTimeIndicator', () => {
+describe('@mantine/schedule/CurrentTimeIndicator', () => {
   tests.itSupportsSystemProps<CurrentTimeIndicatorProps, CurrentTimeIndicatorStylesNames>({
     component: CurrentTimeIndicator,
     props: defaultProps,
