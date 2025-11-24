@@ -140,24 +140,30 @@ export type SetCalculatedFieldDirty<out Values> = <
   value: FormPathValue<TValues, Field>
 ) => void;
 
-export type ReorderListItem<Values> = <Field extends LooseKeys<Values>>(
+export type ReorderListItem<out Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   payload: ReorderPayload
 ) => void;
 
-export type InsertListItem<Values> = <Field extends LooseKeys<Values>>(
+export type InsertListItem<out Values> = <
+  Field extends LooseKeys<Values>,
+  Element extends FormArrayElement<Values, Field>,
+>(
   path: Field,
-  item: FormArrayElement<Values, Field>,
+  item: Element,
   index?: number
 ) => void;
 
-export type ReplaceListItem<Values> = <Field extends LooseKeys<Values>>(
+export type ReplaceListItem<out Values> = <
+  Field extends LooseKeys<Values>,
+  Element extends FormArrayElement<Values, Field>,
+>(
   path: Field,
   index: number,
-  item: FormArrayElement<Values, Field>
+  item: Element
 ) => void;
 
-export type RemoveListItem<Values> = <Field extends LooseKeys<Values>>(
+export type RemoveListItem<out Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   index: number
 ) => void;
