@@ -192,8 +192,9 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props, ref) => 
                 <Input.Placeholder
                   error={inputProps.error}
                   unstyled={unstyled}
-                  className={(classNames as any)?.placeholder}
-                  style={(styles as any)?.placeholder}
+                  classNames={classNames}
+                  styles={styles}
+                  __staticSelector={inputProps.__staticSelector}
                 >
                   {placeholder}
                 </Input.Placeholder>

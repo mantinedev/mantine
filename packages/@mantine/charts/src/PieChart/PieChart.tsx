@@ -1,5 +1,6 @@
 import {
   Cell,
+  CellProps,
   Pie,
   PieLabel,
   PieProps,
@@ -102,6 +103,11 @@ export interface PieChartProps
 
   /** A function to format values inside the tooltip */
   valueFormatter?: (value: number) => string;
+
+  /** Props passed down to recharts `Cell` component */
+  cellProps?:
+    | ((series: PieChartCell) => Partial<Omit<CellProps, 'ref'>>)
+    | Partial<Omit<CellProps, 'ref'>>;
 }
 
 export type PieChartFactory = Factory<{
@@ -218,6 +224,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
     labelsType,
     strokeColor,
     attributes,
+    cellProps,
     ...others
   } = props;
 
@@ -249,6 +256,7 @@ export const PieChart = factory<PieChartFactory>((_props, ref) => {
       fill={getThemeColor(item.color, theme)}
       stroke="var(--chart-stroke-color, var(--mantine-color-body))"
       strokeWidth={strokeWidth}
+      {...(typeof cellProps === 'function' ? cellProps(item) : cellProps)}
     />
   ));
 

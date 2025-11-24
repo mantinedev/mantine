@@ -15,6 +15,7 @@ has minimal styling by default, you can customize styles with [Styles API](/styl
 
 Data passed to the `data` prop should follow these rules:
 
+- Data must be a stable reference (memoized)
 - Data must be an array
 - Each item in the array represents a node in the tree
 - Each node must be an object with `value` and `label` keys
