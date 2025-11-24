@@ -2,10 +2,17 @@ import { createContext } from 'react';
 import { DayOfWeek } from '../types';
 
 export interface ScheduleLabels {
+  day: string;
   week: string;
+  month: string;
+  year: string;
   allDay: string;
   weekday: string;
   timeSlot: string;
+  today: string;
+  next: string;
+  previous: string;
+  more: string;
 }
 
 export interface DatesProviderValue {
@@ -26,6 +33,13 @@ export const DATES_PROVIDER_DEFAULT_SETTINGS: DatesProviderValue = {
   labelSeparator: '–',
   consistentWeeks: false,
   labels: {
+    today: 'Today',
+    next: 'Next',
+    previous: 'Previous',
+    more: 'More',
+    day: 'Day',
+    month: 'Month',
+    year: 'Year',
     week: 'Week',
     allDay: 'All day',
     weekday: 'Weekday',
