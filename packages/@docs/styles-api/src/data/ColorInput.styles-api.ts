@@ -19,6 +19,10 @@ export const ColorInputStylesApi: StylesApiData<ColorInputFactory> = {
       '--ci-preview-size': 'Controls `width` and `height` of color preview',
     },
 
+    eyeDropperButton: {
+      '--ci-button-size': 'Controls `width` and `height` of the eye dropper button',
+    },
+
     eyeDropperIcon: {
       '--ci-eye-dropper-icon-size': 'Controls width and height of the eye dropper icon',
     },
