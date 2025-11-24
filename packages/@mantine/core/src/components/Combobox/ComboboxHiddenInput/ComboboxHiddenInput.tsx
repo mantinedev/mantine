@@ -16,7 +16,7 @@ export function ComboboxHiddenInput({
   return (
     <input
       type="hidden"
-      value={Array.isArray(value) ? value.join(valuesDivider) : `${value}` || ''}
+      value={Array.isArray(value) ? value.join(valuesDivider) : value ? `${value}` : ''}
       {...others}
     />
   );
