@@ -1,1 +1,1 @@
-export const TEST_PACKAGE = true;
+export * from './types';

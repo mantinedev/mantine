@@ -1,0 +1,170 @@
+import dayjs from 'dayjs';
+import { Box, GetStylesApi, UnstyledButton } from '@mantine/core';
+import { DateLabelFormat, DayOfWeek } from '../../types';
+import { getMonthDays, getWeekdaysNames, getWeekNumber, isSameMonth } from '../../utils';
+import { useScheduleContext } from '../Schedule/Schedule.context';
+import type { YearViewFactory } from './YearView';
+
+export interface YearViewMonthSettings {
+  /** `dayjs` format for month label  @default `'MMMM'` */
+  monthLabelFormat?: string;
+
+  /** If set, show week numbers */
+  withWeekNumbers?: boolean;
+
+  /** If set, weekdays names are displayed in the first row @default `true` */
+  withWeekDays?: boolean;
+
+  /** Locale passed down to dayjs, overrides value defined on `ScheduleProvider` */
+  locale?: string;
+
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday @default `0` */
+  firstDayOfWeek?: DayOfWeek;
+
+  /** `dayjs` format for weekdays names  @default `'d'` */
+  weekdayFormat?: DateLabelFormat;
+
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `ScheduleProvider`. */
+  weekendDays?: DayOfWeek[];
+
+  /** Props passed down to the week number button */
+  getWeekNumberProps?: (weekStartDate: Date) => Record<string, any>;
+
+  /** Props passed down to the day button */
+  getDayProps?: (date: Date) => Record<string, any>;
+
+  /** Called when day is clicked */
+  onDayClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** Called with first day of the week when week number is clicked */
+  onWeekNumberClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** Called with the first day of the month when month label is clicked */
+  onMonthClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** If set, highlights the current day @default true */
+  highlightToday?: boolean;
+}
+
+export interface YearViewMonthProps extends YearViewMonthSettings {
+  /** Month to display, Date object or date string in `YYYY-MM-DD` format */
+  month: Date | string;
+
+  /** `useStyles` return value of `YearView` */
+  getStyles: GetStylesApi<YearViewFactory>;
+}
+
+export function YearViewMonth({
+  month,
+  getStyles,
+  monthLabelFormat,
+  withWeekNumbers,
+  withWeekDays,
+  locale,
+  firstDayOfWeek,
+  weekdayFormat,
+  weekendDays,
+  getDayProps,
+  onDayClick,
+  onWeekNumberClick,
+  onMonthClick,
+  getWeekNumberProps,
+  highlightToday,
+}: YearViewMonthProps) {
+  const ctx = useScheduleContext();
+
+  const weekdays = withWeekDays
+    ? getWeekdaysNames({
+        locale: ctx.getLocale(locale),
+        format: weekdayFormat,
+        firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+      }).map((day, index) => (
+        <div {...getStyles('yearViewWeekday')} key={index}>
+          {day}
+        </div>
+      ))
+    : null;
+
+  const weeks = getMonthDays({
+    month: dayjs(month).format('YYYY-MM-DD'),
+    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+    consistentWeeks: true,
+  }).map((week, index) => {
+    const days = week.map((date) => {
+      const outside = !isSameMonth(date, month);
+      const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(date).day());
+      const ariaLabel = dayjs(date)
+        .locale(locale || ctx.locale)
+        .format('MMMM D, YYYY');
+
+      const dayProps = getDayProps?.(new Date(date)) || {};
+      const today = dayjs(date).isSame(dayjs(), 'day') && highlightToday;
+
+      return (
+        <UnstyledButton
+          aria-label={ariaLabel}
+          {...dayProps}
+          {...getStyles('yearViewDay', { className: dayProps.className, style: dayProps.style })}
+          key={date}
+          mod={[{ outside, weekend, today }, dayProps.mod]}
+          onClick={(event) => {
+            onDayClick?.(dayjs(date).startOf('day').toDate(), event);
+            dayProps.onClick?.(event);
+          }}
+        >
+          {dayjs(date).format('D')}
+        </UnstyledButton>
+      );
+    });
+
+    const weekNumberProps = getWeekNumberProps?.(new Date(week[0])) || {};
+    const weekNumber = getWeekNumber(week);
+
+    return (
+      <div {...getStyles('yearViewWeek')} key={index}>
+        {withWeekNumbers && (
+          <UnstyledButton
+            key={weekNumber}
+            aria-label={`Week ${weekNumber}`}
+            {...weekNumberProps}
+            onClick={(event) => {
+              onWeekNumberClick?.(dayjs(week[0]).startOf('day').toDate(), event);
+              weekNumberProps.onClick?.(event);
+            }}
+            {...getStyles('yearViewWeekNumber', {
+              className: weekNumberProps.className,
+              style: weekNumberProps.style,
+            })}
+          >
+            {weekNumber}
+          </UnstyledButton>
+        )}
+
+        {days}
+      </div>
+    );
+  });
+
+  return (
+    <Box
+      mod={[{ 'with-week-numbers': withWeekNumbers, 'with-weekdays': withWeekDays }]}
+      {...getStyles('yearViewMonth')}
+    >
+      <UnstyledButton
+        onClick={(event) => onMonthClick?.(dayjs(month).startOf('month').toDate(), event)}
+        {...getStyles('yearViewMonthCaption')}
+      >
+        {dayjs(month).locale(ctx.getLocale(locale)).format(monthLabelFormat)}
+      </UnstyledButton>
+
+      {weekdays && (
+        <div {...getStyles('yearViewWeekdays')}>
+          {withWeekNumbers && <div {...getStyles('yearViewWeekdaysCorner')} />}
+          {weekdays}
+        </div>
+      )}
+
+      {weeks}
+    </Box>
+  );
+}
