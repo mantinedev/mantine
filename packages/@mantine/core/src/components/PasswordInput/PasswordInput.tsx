@@ -30,7 +30,7 @@ export type PasswordInputCssVariables = {
 
 export interface PasswordInputProps
   extends BoxProps,
-    __BaseInputProps,
+    Omit<__BaseInputProps, 'pointer'>,
     StylesApiProps<PasswordInputFactory>,
     ElementProps<'input', 'size'> {
   /** A component to replace the visibility toggle icon */
