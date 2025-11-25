@@ -4,10 +4,10 @@ interface ModalsState {
   modals: ModalState[];
 
   /**
-   * Modal that is currently open or was the last open one.
-   * Keeping the last one is necessary for providing a clean exit transition.
+   * Modals that are currently visible/rendered.
+   * Changed from single modal to array to support multiple visible modals.
    */
-  current: ModalState | null;
+  current: ModalState[];
 }
 
 interface OpenAction {
@@ -46,9 +46,13 @@ export function modalsReducer(
 ): ModalsState {
   switch (action.type) {
     case 'OPEN': {
+      const shouldReplace = action.modal.props.shouldReplaceExistingModal ?? true;
+
       return {
-        current: action.modal,
         modals: [...state.modals, action.modal],
+        current: shouldReplace
+          ? [action.modal]
+          : [...state.current, action.modal],
       };
     }
     case 'CLOSE': {
@@ -60,10 +64,16 @@ export function modalsReducer(
       handleCloseModal(modal, action.canceled);
 
       const remainingModals = state.modals.filter((m) => m.id !== action.modalId);
+      const remainingCurrent = state.current.filter((m) => m.id !== action.modalId);
 
       return {
-        current: remainingModals[remainingModals.length - 1] || state.current,
         modals: remainingModals,
+        current:
+          remainingCurrent.length > 0
+            ? remainingCurrent
+            : remainingModals.length > 0
+              ? [remainingModals[remainingModals.length - 1]]
+              : [],
       };
     }
     case 'CLOSE_ALL': {
@@ -80,8 +90,8 @@ export function modalsReducer(
         });
 
       return {
-        current: state.current,
         modals: [],
+        current: [],
       };
     }
     case 'UPDATE': {
@@ -119,15 +129,16 @@ export function modalsReducer(
         return modal;
       });
 
-      const currentModal =
-        state.current?.id === modalId
-          ? updatedModals.find((modal) => modal.id === modalId) || state.current
-          : state.current;
+      const updatedCurrent = state.current.map((modal) =>
+        modal.id === modalId
+          ? updatedModals.find((m) => m.id === modalId) || modal
+          : modal
+      );
 
       return {
         ...state,
         modals: updatedModals,
-        current: currentModal,
+        current: updatedCurrent,
       };
     }
     default: {
