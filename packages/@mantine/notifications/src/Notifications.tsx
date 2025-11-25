@@ -217,37 +217,27 @@ export const Notifications = factory<NotificationsFactory>((_props, ref) => {
 
   return (
     <OptionalPortal withinPortal={withinPortal} {...portalProps}>
-      <Box {...getStyles('root')} data-position="top-center" ref={ref} {...others}>
-        <TransitionGroup>{groupedComponents['top-center']}</TransitionGroup>
-      </Box>
+      {positions.map((pos, index) => {
+        const hasNotifications = grouped[pos].length > 0;
+        if (!hasNotifications) return null;
 
-      <Box {...getStyles('root')} data-position="top-left" {...others}>
-        <TransitionGroup>{groupedComponents['top-left']}</TransitionGroup>
-      </Box>
+        const isFullWidth = pos === 'top-right' || pos === 'bottom-right';
+        const isFirstContainer = index === 0;
 
-      <Box
-        {...getStyles('root', { className: RemoveScroll.classNames.fullWidth })}
-        data-position="top-right"
-        {...others}
-      >
-        <TransitionGroup>{groupedComponents['top-right']}</TransitionGroup>
-      </Box>
-
-      <Box
-        {...getStyles('root', { className: RemoveScroll.classNames.fullWidth })}
-        data-position="bottom-right"
-        {...others}
-      >
-        <TransitionGroup>{groupedComponents['bottom-right']}</TransitionGroup>
-      </Box>
-
-      <Box {...getStyles('root')} data-position="bottom-left" {...others}>
-        <TransitionGroup>{groupedComponents['bottom-left']}</TransitionGroup>
-      </Box>
-
-      <Box {...getStyles('root')} data-position="bottom-center" {...others}>
-        <TransitionGroup>{groupedComponents['bottom-center']}</TransitionGroup>
-      </Box>
+        return (
+          <Box
+            key={pos}
+            {...getStyles('root', {
+              className: isFullWidth ? RemoveScroll.classNames.fullWidth : undefined,
+            })}
+            data-position={pos}
+            ref={isFirstContainer ? ref : undefined}
+            {...others}
+          >
+            <TransitionGroup>{groupedComponents[pos]}</TransitionGroup>
+          </Box>
+        );
+      })}
     </OptionalPortal>
   );
 });
