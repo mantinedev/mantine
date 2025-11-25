@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { MonthsList } from './MonthsList';
+import { DateStringValue } from '../../types';
 
 export default { title: 'MonthsList' };
 
@@ -32,6 +33,18 @@ export function MaxDate() {
   return (
     <div style={{ padding: 40, width: 320 }}>
       <MonthsList year="2022-01-01" maxDate="2022-10-01" />
+    </div>
+  );
+}
+
+export function WithGetMonthControlPropsChildren() {
+  return (
+    <div style={{ padding: 40, width: 320 }}>
+      <MonthsList year="2022-01-01" getMonthControlProps={(date: DateStringValue) => {
+        return {
+          children: <strong>{date}</strong>
+        }
+      }} />
     </div>
   );
 }
