@@ -1,4 +1,5 @@
 import {
+  AccordionChevron,
   BoxProps,
   createVarsResolver,
   ElementProps,
@@ -6,10 +7,12 @@ import {
   Factory,
   StylesApiProps,
   UnstyledButton,
+  useDirection,
   useProps,
   useStyles,
 } from '@mantine/core';
-import classes from './ScheduleHeaderControl.module.css';
+import { useScheduleContext } from '../Schedule/Schedule.context';
+import classes from './ScheduleHeader.module.css';
 
 export type ScheduleHeaderControlStylesNames = 'headerControl';
 export type ScheduleHeaderControlVariant = string;
@@ -55,7 +58,7 @@ export const ScheduleHeaderControl = factory<ScheduleHeaderControlFactory>((_pro
   } = props;
 
   const getStyles = useStyles<ScheduleHeaderControlFactory>({
-    name: __staticSelector || 'ScheduleHeaderControl',
+    name: __staticSelector || 'ScheduleHeader',
     classes,
     props,
     className,
@@ -73,3 +76,28 @@ export const ScheduleHeaderControl = factory<ScheduleHeaderControlFactory>((_pro
 
 ScheduleHeaderControl.displayName = '@mantine/core/ScheduleHeaderControl';
 ScheduleHeaderControl.classes = classes;
+
+export function ScheduleHeaderNext(props: ScheduleHeaderControlProps) {
+  const { dir } = useDirection();
+  const ctx = useScheduleContext();
+
+  return (
+    <ScheduleHeaderControl aria-label={ctx.labels.next} {...props}>
+      <AccordionChevron transform={`rotate(${dir === 'rtl' ? 90 : -90} 0 0)`} />
+    </ScheduleHeaderControl>
+  );
+}
+
+export function ScheduleHeaderPrevious(props: ScheduleHeaderControlProps) {
+  const { dir } = useDirection();
+  const ctx = useScheduleContext();
+
+  return (
+    <ScheduleHeaderControl aria-label={ctx.labels.previous} {...props}>
+      <AccordionChevron transform={`rotate(${dir === 'rtl' ? -90 : 90} 0 0)`} />
+    </ScheduleHeaderControl>
+  );
+}
+
+ScheduleHeaderNext.displayName = '@mantine/schedule/ScheduleHeaderNext';
+ScheduleHeaderPrevious.displayName = '@mantine/schedule/ScheduleHeaderPrevious';

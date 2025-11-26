@@ -1,3 +1,21 @@
 .scheduleHeader {
   display: flex;
 }
+
+.headerControl {
+  --control-size: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--control-size);
+  height: var(--control-size);
+  border-radius: var(--schedule-radius, var(--mantine-radius-default));
+  border: 1px solid var(--mantine-color-default-border);
+  color: var(--mantine-color-default-color);
+  background: var(--mantine-color-default);
+
+  @mixin hover {
+    background-color: var(--mantine-color-default-hover);
+  }
+}

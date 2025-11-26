@@ -9,6 +9,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { ScheduleHeaderNext, ScheduleHeaderPrevious } from './ScheduleHeaderControl';
 import classes from './ScheduleHeader.module.css';
 
 export type ScheduleHeaderStylesNames = 'scheduleHeader';
@@ -57,7 +58,12 @@ export const ScheduleHeader = factory<ScheduleHeaderFactory>((_props) => {
     rootSelector: 'scheduleHeader',
   });
 
-  return <Box {...getStyles('scheduleHeader')} {...others} />;
+  return (
+    <Box {...getStyles('scheduleHeader')} {...others}>
+      <ScheduleHeaderPrevious />
+      <ScheduleHeaderNext />
+    </Box>
+  );
 });
 
 ScheduleHeader.displayName = '@mantine/schedule/ScheduleHeader';
