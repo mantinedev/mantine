@@ -83,7 +83,7 @@ export type NumberInputCssVariables = {
 
 export interface NumberInputProps
   extends BoxProps,
-    __BaseInputProps,
+    Omit<__BaseInputProps, 'pointer'>,
     StylesApiProps<NumberInputFactory>,
     ElementProps<'input', 'size' | 'type' | 'onChange'> {
   /** Controlled component value */
