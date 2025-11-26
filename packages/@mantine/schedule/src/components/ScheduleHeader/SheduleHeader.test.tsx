@@ -16,11 +16,11 @@ describe('@mantine/schedule/ScheduleHeader', () => {
     classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/schedule/ScheduleHeader',
-    stylesApiSelectors: ['scheduleHeader'],
+    stylesApiSelectors: ['header'],
   });
 
   it('supports __staticSelector prop', () => {
     const { container } = render(<ScheduleHeader __staticSelector="Test" className="test-class" />);
-    expect(container.querySelector('.mantine-Test-scheduleHeader')).toHaveClass('test-class');
+    expect(container.querySelector('.mantine-Test-header')).toHaveClass('test-class');
   });
 });

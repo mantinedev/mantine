@@ -28,6 +28,9 @@ export interface ScheduleHeaderControlProps
 
   /** Applies active styles */
   active?: boolean;
+
+  /** Removes inline padding */
+  square?: boolean;
 }
 
 export type ScheduleHeaderControlFactory = Factory<{
@@ -56,9 +59,10 @@ export const ScheduleHeaderControl = factory<ScheduleHeaderControlFactory>((_pro
     unstyled,
     vars,
     __staticSelector,
+    mod,
     attributes,
     active,
-    mod,
+    square,
     ...others
   } = props;
 
@@ -79,7 +83,7 @@ export const ScheduleHeaderControl = factory<ScheduleHeaderControlFactory>((_pro
   return (
     <UnstyledButton
       {...getStyles('headerControl', { active: true })}
-      mod={[{ active }, mod]}
+      mod={[{ active, square }, mod]}
       {...others}
     />
   );
@@ -93,7 +97,7 @@ export function ScheduleHeaderNext(props: ScheduleHeaderControlProps) {
   const ctx = useScheduleContext();
 
   return (
-    <ScheduleHeaderControl data-type="next" aria-label={ctx.labels.next} {...props}>
+    <ScheduleHeaderControl data-type="next" aria-label={ctx.labels.next} square {...props}>
       <AccordionChevron transform={`rotate(${dir === 'rtl' ? 90 : -90} 0 0)`} />
     </ScheduleHeaderControl>
   );
@@ -104,7 +108,7 @@ export function ScheduleHeaderPrevious(props: ScheduleHeaderControlProps) {
   const ctx = useScheduleContext();
 
   return (
-    <ScheduleHeaderControl data-type="previous" aria-label={ctx.labels.previous} {...props}>
+    <ScheduleHeaderControl data-type="previous" aria-label={ctx.labels.previous} square {...props}>
       <AccordionChevron transform={`rotate(${dir === 'rtl' ? -90 : 90} 0 0)`} />
     </ScheduleHeaderControl>
   );
@@ -114,7 +118,7 @@ export function ScheduleHeaderToday(props: ScheduleHeaderControlProps) {
   const ctx = useScheduleContext();
 
   return (
-    <ScheduleHeaderControl data-type="today" active {...props}>
+    <ScheduleHeaderControl data-type="today" {...props}>
       {ctx.labels.today}
     </ScheduleHeaderControl>
   );

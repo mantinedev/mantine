@@ -10,14 +10,23 @@ import {
   useStyles,
 } from '@mantine/core';
 import {
+  ScheduleHeaderControlStylesNames,
   ScheduleHeaderNext,
   ScheduleHeaderPrevious,
   ScheduleHeaderToday,
 } from './ScheduleHeaderControl';
-import { ScheduleHeaderViewSelect } from './ScheduleHeaderViewSelect';
+import {
+  ScheduleHeaderViewSelect,
+  ScheduleHeaderViewSelectStylesNames,
+} from './ScheduleHeaderViewSelect';
 import classes from './ScheduleHeader.module.css';
 
-export type ScheduleHeaderStylesNames = 'scheduleHeader';
+export type CombinedScheduleHeaderStylesNames =
+  | ScheduleHeaderStylesNames
+  | ScheduleHeaderViewSelectStylesNames
+  | ScheduleHeaderControlStylesNames;
+
+export type ScheduleHeaderStylesNames = 'header';
 export type ScheduleHeaderCssVariables = {
   scheduleHeader: '--test';
 };
@@ -66,22 +75,10 @@ export const ScheduleHeader = factory<ScheduleHeaderFactory>((_props) => {
     unstyled,
     vars,
     varsResolver,
-    rootSelector: 'scheduleHeader',
+    rootSelector: 'header',
   });
 
-  return (
-    <Box {...getStyles('scheduleHeader')} {...others}>
-      <ScheduleHeaderPrevious />
-      <ScheduleHeaderNext />
-      <ScheduleHeaderToday />
-
-      <ScheduleHeaderViewSelect
-        views={['day', 'week', 'month', 'year']}
-        value="month"
-        onChange={() => {}}
-      />
-    </Box>
-  );
+  return <Box {...getStyles('header')} {...others} />;
 });
 
 ScheduleHeader.displayName = '@mantine/schedule/ScheduleHeader';

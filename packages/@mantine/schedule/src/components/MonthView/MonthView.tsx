@@ -11,11 +11,16 @@ import {
   StylesApiProps,
   UnstyledButton,
   useProps,
+  useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
 import { DateLabelFormat, DayOfWeek } from '../../types';
 import { getMonthDays, getWeekdaysNames, getWeekNumber, isSameMonth } from '../../utils';
 import { useScheduleContext } from '../Schedule/Schedule.context';
+import {
+  CombinedScheduleHeaderStylesNames,
+  ScheduleHeader,
+} from '../ScheduleHeader/ScheduleHeader';
 import classes from './MonthView.module.css';
 
 export type MonthViewStylesNames =
@@ -26,7 +31,8 @@ export type MonthViewStylesNames =
   | 'monthViewWeekNumber'
   | 'monthViewWeekday'
   | 'monthViewWeekdays'
-  | 'monthViewWeekdaysCorner';
+  | 'monthViewWeekdaysCorner'
+  | CombinedScheduleHeaderStylesNames;
 
 export type MonthViewCssVariables = {
   monthView: '--month-view-radius';
@@ -148,6 +154,18 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     rootSelector: 'monthView',
   });
 
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<MonthViewFactory>({
+    classNames,
+    styles,
+    props,
+  });
+
+  const stylesApiProps = {
+    classNames: resolvedClassNames,
+    styles: resolvedStyles,
+    __staticSelector: __staticSelector || 'MonthView',
+  };
+
   const ctx = useScheduleContext();
 
   const weekdays = withWeekDays
@@ -236,6 +254,12 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       {...getStyles('monthView')}
       {...others}
     >
+      <ScheduleHeader {...stylesApiProps}>
+        <ScheduleHeader.Next {...stylesApiProps} />
+        <ScheduleHeader.Previous {...stylesApiProps} />
+        <ScheduleHeader.Today {...stylesApiProps} />
+      </ScheduleHeader>
+
       {weekdays && (
         <div {...getStyles('monthViewWeekdays')}>
           {withWeekNumbers && <div {...getStyles('monthViewWeekdaysCorner')} />}

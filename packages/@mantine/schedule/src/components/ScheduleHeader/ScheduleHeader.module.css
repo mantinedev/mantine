@@ -3,6 +3,7 @@
 
   display: flex;
   gap: var(--schedule-header-gap);
+  margin-bottom: var(--schedule-header-gap);
 }
 
 .headerControl {
@@ -19,10 +20,13 @@
   background: var(--mantine-color-default);
   font-size: var(--mantine-font-size-sm);
   font-weight: 600;
-  padding-inline: 7px;
 
   @mixin hover {
     background-color: var(--mantine-color-default-hover);
+  }
+
+  &:where(:not([data-square])) {
+    padding-inline: 12px;
   }
 
   &:where([data-active]) {
