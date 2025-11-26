@@ -40,7 +40,7 @@ const varsResolver = createVarsResolver<ScheduleFactory>(() => ({
 
 export const Schedule = factory<ScheduleFactory>((_props) => {
   const props = useProps('Schedule', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, ...others } = props;
+  const { classNames, className, style, styles, unstyled, vars, attributes, ...others } = props;
 
   const getStyles = useStyles<ScheduleFactory>({
     name: 'Schedule',
@@ -51,6 +51,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

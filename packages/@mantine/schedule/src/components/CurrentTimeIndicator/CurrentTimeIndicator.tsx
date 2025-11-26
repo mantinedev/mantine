@@ -98,6 +98,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
     styles,
     unstyled,
     vars,
+    attributes,
     startOffset,
     endOffset,
     color,
@@ -122,6 +123,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
     unstyled,
     vars,
     varsResolver,
+    attributes,
     rootSelector: 'currentTimeIndicator',
   });
 

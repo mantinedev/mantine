@@ -145,6 +145,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     style,
     styles,
     unstyled,
+    attributes,
     vars,
     startTime,
     endTime,
@@ -179,6 +180,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     unstyled,
     vars,
     varsResolver,
+    attributes,
     rootSelector: 'weekView',
   });
 

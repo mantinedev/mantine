@@ -93,6 +93,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
     styles,
     unstyled,
     vars,
+    attributes,
     ...others
   } = props;
 
@@ -109,6 +110,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
     unstyled,
     vars,
     varsResolver,
+    attributes,
     rootSelector: 'yearView',
   });
 
