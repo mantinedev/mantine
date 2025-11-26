@@ -302,9 +302,7 @@ function MultipleModalsDemo() {
                         modals.openModal({
                           title: 'Third Modal',
                           children: (
-                            <Text size="sm">
-                              Three modals stacked! Each has its own overlay.
-                            </Text>
+                            <Text size="sm">Three modals stacked! Each has its own overlay.</Text>
                           ),
                           shouldReplaceExistingModal: false,
                         });

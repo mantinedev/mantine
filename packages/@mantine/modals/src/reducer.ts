@@ -50,9 +50,7 @@ export function modalsReducer(
 
       return {
         modals: [...state.modals, action.modal],
-        current: shouldReplace
-          ? [action.modal]
-          : [...state.current, action.modal],
+        current: shouldReplace ? [action.modal] : [...state.current, action.modal],
       };
     }
     case 'CLOSE': {
@@ -130,9 +128,7 @@ export function modalsReducer(
       });
 
       const updatedCurrent = state.current.map((modal) =>
-        modal.id === modalId
-          ? updatedModals.find((m) => m.id === modalId) || modal
-          : modal
+        modal.id === modalId ? updatedModals.find((m) => m.id === modalId) || modal : modal
       );
 
       return {
