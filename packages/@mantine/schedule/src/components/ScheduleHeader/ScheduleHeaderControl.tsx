@@ -25,6 +25,9 @@ export interface ScheduleHeaderControlProps
     StylesApiProps<ScheduleHeaderControlFactory>,
     ElementProps<'button'> {
   __staticSelector?: string;
+
+  /** Applies active styles */
+  active?: boolean;
 }
 
 export type ScheduleHeaderControlFactory = Factory<{
@@ -54,6 +57,8 @@ export const ScheduleHeaderControl = factory<ScheduleHeaderControlFactory>((_pro
     vars,
     __staticSelector,
     attributes,
+    active,
+    mod,
     ...others
   } = props;
 
@@ -71,7 +76,13 @@ export const ScheduleHeaderControl = factory<ScheduleHeaderControlFactory>((_pro
     varsResolver,
   });
 
-  return <UnstyledButton {...getStyles('headerControl')} {...others} />;
+  return (
+    <UnstyledButton
+      {...getStyles('headerControl', { active: true })}
+      mod={[{ active }, mod]}
+      {...others}
+    />
+  );
 });
 
 ScheduleHeaderControl.displayName = '@mantine/core/ScheduleHeaderControl';
@@ -82,7 +93,7 @@ export function ScheduleHeaderNext(props: ScheduleHeaderControlProps) {
   const ctx = useScheduleContext();
 
   return (
-    <ScheduleHeaderControl aria-label={ctx.labels.next} {...props}>
+    <ScheduleHeaderControl data-type="next" aria-label={ctx.labels.next} {...props}>
       <AccordionChevron transform={`rotate(${dir === 'rtl' ? 90 : -90} 0 0)`} />
     </ScheduleHeaderControl>
   );
@@ -93,11 +104,22 @@ export function ScheduleHeaderPrevious(props: ScheduleHeaderControlProps) {
   const ctx = useScheduleContext();
 
   return (
-    <ScheduleHeaderControl aria-label={ctx.labels.previous} {...props}>
+    <ScheduleHeaderControl data-type="previous" aria-label={ctx.labels.previous} {...props}>
       <AccordionChevron transform={`rotate(${dir === 'rtl' ? -90 : 90} 0 0)`} />
+    </ScheduleHeaderControl>
+  );
+}
+
+export function ScheduleHeaderToday(props: ScheduleHeaderControlProps) {
+  const ctx = useScheduleContext();
+
+  return (
+    <ScheduleHeaderControl data-type="today" active {...props}>
+      {ctx.labels.today}
     </ScheduleHeaderControl>
   );
 }
 
 ScheduleHeaderNext.displayName = '@mantine/schedule/ScheduleHeaderNext';
 ScheduleHeaderPrevious.displayName = '@mantine/schedule/ScheduleHeaderPrevious';
+ScheduleHeaderToday.displayName = '@mantine/schedule/ScheduleHeaderToday';

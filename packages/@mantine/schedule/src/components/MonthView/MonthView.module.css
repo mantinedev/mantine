@@ -29,7 +29,7 @@
   border-block-end: none;
   border-inline-start: var(--month-view-border);
   border-inline-end: none;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   user-select: none;
 
@@ -65,7 +65,7 @@
   border-block-end: none;
   border-inline-start: var(--month-view-border);
   border-inline-end: none;
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
   text-transform: capitalize;
   display: flex;
@@ -100,7 +100,7 @@
   min-width: 54px;
   height: 100px;
   padding: 4px;
-  font-weight: 500;
+  font-weight: 600;
   border-block-start: var(--month-view-border);
   border-block-end: none;
   border-inline-start: var(--month-view-border);

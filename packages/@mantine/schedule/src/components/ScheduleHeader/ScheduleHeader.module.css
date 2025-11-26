@@ -1,5 +1,8 @@
 .scheduleHeader {
+  --schedule-header-gap: 8px;
+
   display: flex;
+  gap: var(--schedule-header-gap);
 }
 
 .headerControl {
@@ -14,8 +17,27 @@
   border: 1px solid var(--mantine-color-default-border);
   color: var(--mantine-color-default-color);
   background: var(--mantine-color-default);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 600;
+  padding-inline: 7px;
 
   @mixin hover {
     background-color: var(--mantine-color-default-hover);
   }
+
+  &:where([data-active]) {
+    background-color: var(--mantine-primary-color-filled);
+    border-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
+
+    @mixin hover {
+      background-color: var(--mantine-primary-color-filled-hover);
+      border-color: var(--mantine-primary-color-filled-hover);
+    }
+  }
+}
+
+.headerViewSelect {
+  display: flex;
+  gap: var(--schedule-header-gap);
 }

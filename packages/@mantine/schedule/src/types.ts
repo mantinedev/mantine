@@ -9,3 +9,6 @@ export type DayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 /** string – dayjs format, callback function – custom formatter */
 export type DateLabelFormat = string | ((date: DateStringValue) => React.ReactNode);
+
+/** View level used by Schedule component */
+export type ScheduleViewLevel = 'day' | 'week' | 'month' | 'year';

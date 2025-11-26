@@ -9,7 +9,12 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { ScheduleHeaderNext, ScheduleHeaderPrevious } from './ScheduleHeaderControl';
+import {
+  ScheduleHeaderNext,
+  ScheduleHeaderPrevious,
+  ScheduleHeaderToday,
+} from './ScheduleHeaderControl';
+import { ScheduleHeaderViewSelect } from './ScheduleHeaderViewSelect';
 import classes from './ScheduleHeader.module.css';
 
 export type ScheduleHeaderStylesNames = 'scheduleHeader';
@@ -29,6 +34,12 @@ export type ScheduleHeaderFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: ScheduleHeaderStylesNames;
   vars: ScheduleHeaderCssVariables;
+  staticComponents: {
+    Previous: typeof ScheduleHeaderPrevious;
+    Next: typeof ScheduleHeaderNext;
+    Today: typeof ScheduleHeaderToday;
+    ViewSelect: typeof ScheduleHeaderViewSelect;
+  };
 }>;
 
 const defaultProps = {} satisfies Partial<ScheduleHeaderProps>;
@@ -62,9 +73,20 @@ export const ScheduleHeader = factory<ScheduleHeaderFactory>((_props) => {
     <Box {...getStyles('scheduleHeader')} {...others}>
       <ScheduleHeaderPrevious />
       <ScheduleHeaderNext />
+      <ScheduleHeaderToday />
+
+      <ScheduleHeaderViewSelect
+        views={['day', 'week', 'month', 'year']}
+        value="month"
+        onChange={() => {}}
+      />
     </Box>
   );
 });
 
 ScheduleHeader.displayName = '@mantine/schedule/ScheduleHeader';
 ScheduleHeader.classes = classes;
+ScheduleHeader.Next = ScheduleHeaderNext;
+ScheduleHeader.Previous = ScheduleHeaderPrevious;
+ScheduleHeader.Today = ScheduleHeaderToday;
+ScheduleHeader.ViewSelect = ScheduleHeaderViewSelect;

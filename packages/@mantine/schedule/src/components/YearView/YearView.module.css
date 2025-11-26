@@ -61,7 +61,7 @@
   font-size: var(--mantine-font-size-xs);
   border-radius: var(--year-view-radius);
   padding: 4px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   user-select: none;
   color: var(--day-dimmed-color);
@@ -81,7 +81,7 @@
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
   height: 36px;
   font-size: var(--mantine-font-size-xs);
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
   text-transform: capitalize;
   display: flex;
@@ -143,7 +143,7 @@
   padding-inline: calc(var(--week-numbers-offset) + rem(12px));
   padding-block: 5px;
   font-size: var(--mantine-font-size-md);
-  font-weight: 500;
+  font-weight: 600;
   text-transform: capitalize;
   border-radius: var(--year-view-radius);
 
