@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
 import {
+  Box,
   BoxProps,
   ElementProps,
   extractStyleProps,
@@ -106,6 +107,12 @@ export interface TagsInputProps
 
   /** Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. */
   isDuplicate?: (value: string, currentValues: string[]) => boolean;
+
+  /** If set, allows editing existing tags by double-clicking on them @default `false` */
+  allowTagEdit?: boolean;
+
+  /** Called when a tag is edited. Receives old value, new value, and index. */
+  onTagEdit?: (oldValue: string, newValue: string, index: number) => void;
 }
 
 export type TagsInputFactory = Factory<{
@@ -196,6 +203,8 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     scrollAreaProps,
     acceptValueOnBlur,
     isDuplicate,
+    allowTagEdit,
+    onTagEdit,
     attributes,
     ...others
   } = props;
@@ -235,6 +244,11 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     onChange: onSearchChange,
   });
 
+  // Edit mode state
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editingValue, setEditingValue] = useState<string>('');
+  const editInputRef = useRef<HTMLInputElement>(null);
+
   const handleSearchChange = (value: string) => {
     setSearchValue(value);
     combobox.resetSelectedOption();
@@ -258,7 +272,7 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
   const handleValueSelect = (val: string) => {
     const isDuplicated = isDuplicate
       ? isDuplicate(val, _value)
-      : _value.some((tag) => tag.toLowerCase() === val.toLowerCase());
+      : _value.some((tag: string) => tag.toLowerCase() === val.toLowerCase());
 
     if (isDuplicated) {
       onDuplicate?.(val);
@@ -270,6 +284,79 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
       if (val.length > 0) {
         setValue([..._value, val]);
       }
+    }
+  };
+
+  const handlePillDoubleClick = (index: number) => {
+    if (!allowTagEdit || readOnly || disabled) {
+      return;
+    }
+    setEditingIndex(index);
+    setEditingValue(_value[index]);
+  };
+
+  const handleEditCancel = () => {
+    setEditingIndex(null);
+    setEditingValue('');
+    inputRef.current?.focus();
+  };
+
+  const handleEditComplete = () => {
+    if (editingIndex === null) {
+      return;
+    }
+
+    const trimmedValue = editingValue.trim();
+    const oldValue = _value[editingIndex];
+
+    // If empty, remove the tag
+    if (trimmedValue.length === 0) {
+      const newValues = _value.filter((_: string, i: number) => i !== editingIndex);
+      setValue(newValues);
+      onRemove?.(oldValue);
+      setEditingIndex(null);
+      setEditingValue('');
+      inputRef.current?.focus();
+      return;
+    }
+
+    // If value unchanged, just cancel
+    if (trimmedValue === oldValue) {
+      handleEditCancel();
+      return;
+    }
+
+    // Check for duplicates (excluding current index)
+    const otherValues = _value.filter((_: string, i: number) => i !== editingIndex);
+    const isDuplicated = isDuplicate
+      ? isDuplicate(trimmedValue, otherValues)
+      : otherValues.some((tag: string) => tag.toLowerCase() === trimmedValue.toLowerCase());
+
+    if (isDuplicated && !allowDuplicates) {
+      onDuplicate?.(trimmedValue);
+      handleEditCancel();
+      return;
+    }
+
+    // Update the value
+    const newValues = [..._value];
+    newValues[editingIndex] = trimmedValue;
+    setValue(newValues);
+    onTagEdit?.(oldValue, trimmedValue, editingIndex);
+    setEditingIndex(null);
+    setEditingValue('');
+    inputRef.current?.focus();
+  };
+
+  const handleEditKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && !event.nativeEvent.isComposing) {
+      event.preventDefault();
+      handleEditComplete();
+    }
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      handleEditCancel();
     }
   };
 
@@ -342,24 +429,77 @@ export const TagsInput = factory<TagsInputFactory>((_props, ref) => {
     }
   };
 
-  const values = _value.map((item, index) => (
-    <Pill
-      key={`${item}-${index}`}
-      withRemoveButton={!readOnly}
-      onRemove={() => {
-        const next_value = _value.slice();
-        next_value.splice(index, 1);
-        setValue(next_value);
-        onRemove?.(item);
-      }}
-      unstyled={unstyled}
-      disabled={disabled}
-      attributes={attributes}
-      {...getStyles('pill')}
-    >
-      {item}
-    </Pill>
-  ));
+  // Focus edit input when entering edit mode
+  useEffect(() => {
+    if (editingIndex !== null && editInputRef.current) {
+      editInputRef.current.focus();
+      editInputRef.current.select();
+    }
+  }, [editingIndex]);
+
+  const values = _value.map((item: string, index: number) => {
+    const isEditing = editingIndex === index;
+
+    if (isEditing) {
+      return (
+        <Box
+          component="input"
+          key={`${item}-${index}-edit`}
+          ref={editInputRef}
+          type="text"
+          value={editingValue}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setEditingValue(e.currentTarget.value)
+          }
+          onKeyDown={handleEditKeyDown}
+          onBlur={handleEditComplete}
+          __vars={{
+            '--pill-edit-border-color': 'var(--mantine-primary-color-filled)',
+            '--pill-edit-bg': 'var(--mantine-color-body)',
+            '--pill-edit-radius': 'var(--pill-radius, 1000rem)',
+            '--pill-edit-height': 'var(--pill-height, 22px)',
+          }}
+          style={{
+            fontSize: 'inherit',
+            fontFamily: 'inherit',
+            border: '1px solid var(--pill-edit-border-color)',
+            borderRadius: 'var(--pill-edit-radius)',
+            height: 'var(--pill-edit-height)',
+            padding: '0 0.8em',
+            outline: 'none',
+            minWidth: '60px',
+            maxWidth: '200px',
+            backgroundColor: 'var(--pill-edit-bg)',
+            color: 'inherit',
+          }}
+        />
+      );
+    }
+
+    return (
+      <Pill
+        key={`${item}-${index}`}
+        withRemoveButton={!readOnly && editingIndex === null}
+        onRemove={() => {
+          const next_value = _value.slice();
+          next_value.splice(index, 1);
+          setValue(next_value);
+          onRemove?.(item);
+        }}
+        onDoubleClick={() => handlePillDoubleClick(index)}
+        unstyled={unstyled}
+        disabled={disabled}
+        attributes={attributes}
+        {...getStyles('pill')}
+        style={{
+          ...getStyles('pill').style,
+          cursor: allowTagEdit && !readOnly && !disabled ? 'pointer' : undefined,
+        }}
+      >
+        {item}
+      </Pill>
+    );
+  });
 
   useEffect(() => {
     if (selectFirstOptionOnChange) {

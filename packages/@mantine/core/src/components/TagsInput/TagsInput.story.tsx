@@ -146,3 +146,67 @@ export function WithData() {
     </div>
   );
 }
+
+export function EditableTags() {
+  const [value, setValue] = useState<string[]>(['React', 'Angular', 'Vue']);
+  return (
+    <div style={{ padding: 40 }}>
+      <TagsInput
+        label="Editable tags (double-click to edit)"
+        description="Double-click on a tag to edit it. Press Enter to save, Escape to cancel."
+        value={value}
+        onChange={setValue}
+        allowTagEdit
+        onTagEdit={(oldValue, newValue, index) => {
+          console.log(`Tag edited: "${oldValue}" → "${newValue}" at index ${index}`);
+        }}
+        placeholder="Enter tags"
+      />
+      <div style={{ marginTop: 16 }}>
+        Current values: {JSON.stringify(value)}
+      </div>
+    </div>
+  );
+}
+
+export function EditableTagsWithDuplicateCheck() {
+  const [value, setValue] = useState<string[]>(['React', 'Angular', 'Vue']);
+  const [duplicateAttempt, setDuplicateAttempt] = useState<string | null>(null);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <TagsInput
+        label="Editable tags with duplicate check"
+        description="Try editing a tag to match another existing tag"
+        value={value}
+        onChange={setValue}
+        allowTagEdit
+        onDuplicate={(val) => {
+          setDuplicateAttempt(val);
+          setTimeout(() => setDuplicateAttempt(null), 2000);
+        }}
+        placeholder="Enter tags"
+      />
+      {duplicateAttempt && (
+        <div style={{ marginTop: 8, color: 'red' }}>
+          Duplicate detected: &quot;{duplicateAttempt}&quot;
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function EditableTagsWithAllowDuplicates() {
+  return (
+    <div style={{ padding: 40 }}>
+      <TagsInput
+        label="Editable tags allowing duplicates"
+        description="Duplicates are allowed when editing"
+        defaultValue={['React', 'Angular', 'Vue']}
+        allowTagEdit
+        allowDuplicates
+        placeholder="Enter tags"
+      />
+    </div>
+  );
+}
