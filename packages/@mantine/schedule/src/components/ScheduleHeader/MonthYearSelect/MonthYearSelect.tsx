@@ -1,5 +1,4 @@
 import {
-  Box,
   BoxProps,
   createVarsResolver,
   ElementProps,
@@ -18,8 +17,11 @@ import { useScheduleContext } from '../../Schedule/Schedule.context';
 import { ScheduleHeaderControl } from '../ScheduleHeaderControl';
 import classes from './MonthYearSelect.module.css';
 
-export type MonthYearSelectStylesNames = 'root';
-export type MonthYearSelectVariant = string;
+export type MonthYearSelectStylesNames =
+  | 'monthYearSelectTarget'
+  | 'monthYearSelectDropdown'
+  | 'monthYearSelectControl';
+
 export type MonthYearSelectCssVariables = {
   root: '--test';
 };
@@ -27,7 +29,7 @@ export type MonthYearSelectCssVariables = {
 export interface MonthYearSelectProps
   extends BoxProps,
     StylesApiProps<MonthYearSelectFactory>,
-    ElementProps<'div'> {
+    ElementProps<'button'> {
   __staticSelector?: string;
 
   /** Locale passed down to dayjs, overrides value defined on `ScheduleProvider` */
@@ -42,6 +44,12 @@ export interface MonthYearSelectProps
   /** End year for year selection, calculated from the current date by default */
   endYear?: number;
 
+  /** Current year value (e.g. `2025`) */
+  yearValue?: number;
+
+  /** Current month value (0-11) */
+  monthValue?: number;
+
   /** Called with year value (e.g. `2025`) when year is selected in the dropdown */
   onYearChange?: (year: number) => void;
 
@@ -54,10 +62,9 @@ export interface MonthYearSelectProps
 
 export type MonthYearSelectFactory = Factory<{
   props: MonthYearSelectProps;
-  ref: HTMLDivElement;
+  ref: HTMLButtonElement;
   stylesNames: MonthYearSelectStylesNames;
   vars: MonthYearSelectCssVariables;
-  variant: MonthYearSelectVariant;
 }>;
 
 const defaultProps = {} satisfies Partial<MonthYearSelectProps>;
@@ -71,6 +78,7 @@ const varsResolver = createVarsResolver<MonthYearSelectFactory>(() => ({
 export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
   const props = useProps('MonthYearSelect', defaultProps, _props);
   const {
+    __staticSelector,
     classNames,
     className,
     style,
@@ -85,11 +93,13 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
     onMonthChange,
     locale,
     monthsListFormat,
+    monthValue,
+    yearValue,
     ...others
   } = props;
 
   const getStyles = useStyles<MonthYearSelectFactory>({
-    name: 'MonthYearSelect',
+    name: __staticSelector || 'MonthYearSelect',
     classes,
     props,
     className,
@@ -100,6 +110,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
     attributes,
     vars,
     varsResolver,
+    rootSelector: 'monthYearSelectTarget',
   });
 
   const today = new Date();
@@ -109,7 +120,12 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
     startYear: startYear || today.getFullYear() - 5,
     endYear: endYear || today.getFullYear() + 5,
   }).map((year) => (
-    <UnstyledButton key={year} onClick={() => onYearChange?.(year)}>
+    <UnstyledButton
+      key={year}
+      onClick={() => onYearChange?.(year)}
+      mod={{ type: 'year', active: year === yearValue }}
+      {...getStyles('monthYearSelectControl')}
+    >
       {year}
     </UnstyledButton>
   ));
@@ -118,31 +134,45 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
     locale: ctx.getLocale(locale),
     format: monthsListFormat || 'MMMM',
   }).map((month) => (
-    <UnstyledButton key={month.name} onClick={() => onMonthChange?.(month.month)}>
+    <UnstyledButton
+      key={month.name}
+      onClick={() => onMonthChange?.(month.month)}
+      mod={{ type: 'month', active: month.month === monthValue }}
+      {...getStyles('monthYearSelectControl')}
+    >
       {month.name}
     </UnstyledButton>
   ));
 
   return (
-    <Box {...getStyles('root')} {...others}>
-      <Popover position="bottom-start" transitionProps={{ duration: 0 }} {...popoverProps}>
-        <Popover.Target>
-          <ScheduleHeaderControl>Hello</ScheduleHeaderControl>
-        </Popover.Target>
-        <Popover.Dropdown>
-          <div>
-            <div>{ctx.labels.month}</div>
-            {months}
-          </div>
-          <div>
-            <div>{ctx.labels.year}</div>
-            {years}
-          </div>
-        </Popover.Dropdown>
-      </Popover>
-    </Box>
+    <Popover
+      position="bottom-start"
+      transitionProps={{ duration: 0 }}
+      __staticSelector={__staticSelector}
+      {...popoverProps}
+    >
+      <Popover.Target>
+        <ScheduleHeaderControl
+          {...getStyles('monthYearSelectTarget')}
+          __staticSelector={__staticSelector}
+          {...others}
+        >
+          Hello
+        </ScheduleHeaderControl>
+      </Popover.Target>
+      <Popover.Dropdown {...getStyles('monthYearSelectDropdown')}>
+        <div>
+          <div>{ctx.labels.month}</div>
+          {months}
+        </div>
+        <div>
+          <div>{ctx.labels.year}</div>
+          {years}
+        </div>
+      </Popover.Dropdown>
+    </Popover>
   );
 });
 
-MonthYearSelect.displayName = '@mantine/core/MonthYearSelect';
+MonthYearSelect.displayName = '@mantine/schedule/MonthYearSelect';
 MonthYearSelect.classes = classes;

@@ -78,6 +78,7 @@ export const ScheduleHeaderControl = factory<ScheduleHeaderControlFactory>((_pro
     attributes,
     vars,
     varsResolver,
+    rootSelector: 'headerControl',
   });
 
   return (
