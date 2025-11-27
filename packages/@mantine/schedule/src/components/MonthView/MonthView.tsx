@@ -181,7 +181,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     : null;
 
   const weeks = getMonthDays({
-    month: dayjs(month).format('YYYY-MM-DD'),
+    month: dayjs(month).format('YYYY-MM-DD 00:00:00'),
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
     consistentWeeks: consistentWeeks && withOutsideDays,
   }).map((week, index) => {

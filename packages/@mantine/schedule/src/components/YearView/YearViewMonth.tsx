@@ -1,13 +1,19 @@
 import dayjs from 'dayjs';
 import { Box, GetStylesApi, UnstyledButton } from '@mantine/core';
 import { DateLabelFormat, DayOfWeek } from '../../types';
-import { getMonthDays, getWeekdaysNames, getWeekNumber, isSameMonth } from '../../utils';
+import {
+  formatDate,
+  getMonthDays,
+  getWeekdaysNames,
+  getWeekNumber,
+  isSameMonth,
+} from '../../utils';
 import { useScheduleContext } from '../Schedule/Schedule.context';
 import type { YearViewFactory } from './YearView';
 
 export interface YearViewMonthSettings {
   /** `dayjs` format for month label  @default `'MMMM'` */
-  monthLabelFormat?: string;
+  monthLabelFormat?: DateLabelFormat;
 
   /** If set, show week numbers */
   withWeekNumbers?: boolean;
@@ -57,7 +63,7 @@ export interface YearViewMonthProps extends YearViewMonthSettings {
 export function YearViewMonth({
   month,
   getStyles,
-  monthLabelFormat,
+  monthLabelFormat = 'MMMM',
   withWeekNumbers,
   withWeekDays,
   locale,
@@ -154,7 +160,7 @@ export function YearViewMonth({
         onClick={(event) => onMonthClick?.(dayjs(month).startOf('month').toDate(), event)}
         {...getStyles('yearViewMonthCaption')}
       >
-        {dayjs(month).locale(ctx.getLocale(locale)).format(monthLabelFormat)}
+        {formatDate({ locale: ctx.getLocale(locale), date: month, format: monthLabelFormat })}
       </UnstyledButton>
 
       {weekdays && (

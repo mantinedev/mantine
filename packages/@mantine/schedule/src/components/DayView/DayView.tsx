@@ -14,7 +14,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { DateLabelFormat } from '../../types';
-import { getDayTimeIntervals } from '../../utils';
+import { formatDate, getDayTimeIntervals } from '../../utils';
 import { CurrentTimeIndicator } from '../CurrentTimeIndicator/CurrentTimeIndicator';
 import { useScheduleContext } from '../Schedule/Schedule.context';
 import classes from './DayView.module.css';
@@ -149,10 +149,11 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const slotsLabels = slots.reduce<React.ReactNode[]>((acc, slot) => {
     if (slot.isHourStart) {
       const slotTime = dayjs(`${dayjs(day).format('YYYY-MM-DD')} ${slot.startTime}`);
-      const label =
-        typeof slotLabelFormat === 'function'
-          ? slotLabelFormat(slotTime.format('YYYY-MM-DD HH:mm:ss'))
-          : slotTime.locale(ctx.getLocale(locale)).format(slotLabelFormat);
+      const label = formatDate({
+        locale: ctx.getLocale(locale),
+        date: slotTime,
+        format: slotLabelFormat,
+      });
 
       acc.push(
         <Box {...getStyles('dayViewSlotLabel')} key={slot.startTime}>
@@ -166,9 +167,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
   return (
     <Box {...getStyles('dayView')} {...others}>
       <div {...getStyles('dayViewHeader')}>
-        {typeof headerFormat === 'function'
-          ? headerFormat(dayjs(day).format('YYYY-MM-DD'))
-          : dayjs(day).locale(ctx.getLocale(locale)).format(headerFormat)}
+        {formatDate({ locale: ctx.getLocale(locale), date: day, format: headerFormat })}
       </div>
 
       <div {...getStyles('dayViewInner')}>

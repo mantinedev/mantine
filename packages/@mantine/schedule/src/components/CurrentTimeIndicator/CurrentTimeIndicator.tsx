@@ -15,6 +15,7 @@ import {
 } from '@mantine/core';
 import { useInterval } from '@mantine/hooks';
 import { DateLabelFormat } from '../../types';
+import { formatDate } from '../../utils';
 import { useScheduleContext } from '../Schedule/Schedule.context';
 import classes from './CurrentTimeIndicator.module.css';
 
@@ -131,9 +132,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
   const [offsetPercent, setOffsetPercent] = useState(getOffsetPercent());
   useInterval(() => setOffsetPercent(getOffsetPercent()), 1000 * 60, { autoInvoke: true });
   const formattedTime = withTimeBubble
-    ? typeof currentTimeFormat === 'function'
-      ? currentTimeFormat(dayjs().format('YYYY-MM-DD HH:mm:ss'))
-      : dayjs().locale(ctx.getLocale(locale)).format(currentTimeFormat)
+    ? formatDate({ locale: ctx.getLocale(locale), date: dayjs(), format: currentTimeFormat })
     : '';
 
   return (

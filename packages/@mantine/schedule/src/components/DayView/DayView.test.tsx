@@ -87,7 +87,7 @@ describe('@mantine/schedule/DayView', () => {
 
   it('supports custom headerFormat (function)', () => {
     render(<DayView {...defaultProps} headerFormat={(date) => `Date: ${date}`} />);
-    expect(screen.getByText('Date: 2025-11-03')).toBeInTheDocument();
+    expect(screen.getByText('Date: 2025-11-03 00:00:00')).toBeInTheDocument();
   });
 
   it('displays current time indicator based on withCurrentTimeIndicator prop', () => {

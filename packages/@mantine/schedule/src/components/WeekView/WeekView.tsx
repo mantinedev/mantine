@@ -18,7 +18,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { DateLabelFormat, DayOfWeek } from '../../types';
-import { getDayTimeIntervals, getWeekDays, getWeekNumber } from '../../utils';
+import { formatDate, getDayTimeIntervals, getWeekDays, getWeekNumber } from '../../utils';
 import {
   CurrentTimeIndicator,
   CurrentTimeIndicatorStylesNames,
@@ -190,10 +190,11 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 
   const timeValues = slots.map((interval) => {
     const intervalTime = dayjs(`${dayjs(week).format('YYYY-MM-DD')} ${interval.startTime}`);
-    const label =
-      typeof slotLabelFormat === 'function'
-        ? slotLabelFormat(intervalTime.format('YYYY-MM-DD HH:mm:ss'))
-        : intervalTime.locale(ctx.getLocale(locale)).format(slotLabelFormat);
+    const label = formatDate({
+      date: intervalTime,
+      locale: ctx.getLocale(locale),
+      format: slotLabelFormat,
+    });
 
     return (
       <Box
@@ -228,9 +229,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       }}
     >
       <Box {...getStyles('weekViewDayWeekday')} key="weekday">
-        {typeof weekdayFormat === 'function'
-          ? weekdayFormat(dayjs(day).format('YYYY-MM-DD'))
-          : dayjs(day).locale(ctx.getLocale(locale)).format(weekdayFormat)}
+        {formatDate({ locale: ctx.getLocale(locale), date: day, format: weekdayFormat })}
       </Box>
       <div {...getStyles('weekViewDayNumber')} key="date">
         {dayjs(day).date()}
