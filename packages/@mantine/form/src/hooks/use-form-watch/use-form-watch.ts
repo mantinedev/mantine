@@ -5,20 +5,18 @@ import { FormFieldSubscriber, Watch } from '../../types';
 import { $FormStatus } from '../use-form-status/use-form-status';
 import { SetValuesSubscriberPayload } from '../use-form-values/use-form-values';
 
-interface UseFormWatchInput<Values extends Record<string, any>> {
+interface UseFormWatchInput<out Values extends Record<PropertyKey, any>> {
   $status: $FormStatus<Values>;
   cascadeUpdates?: boolean;
 }
 
-export function useFormWatch<Values extends Record<string, any>>({
-  $status,
-  cascadeUpdates,
-}: UseFormWatchInput<Values>) {
-  const subscribers = useRef<Record<LooseKeys<Values>, FormFieldSubscriber<Values, any>[]>>(
-    {} as any
-  );
+export function useFormWatch<
+  Values extends Record<PropertyKey, any>,
+  Field extends LooseKeys<Values> = LooseKeys<Values>,
+>({ $status, cascadeUpdates }: UseFormWatchInput<Values>) {
+  const subscribers = useRef<Record<Field, FormFieldSubscriber<Values, Field>[]>>({} as any);
 
-  const watch: Watch<Values> = useCallback((path, callback) => {
+  const watch: Watch<Values, Field> = useCallback((path, callback) => {
     useEffect(() => {
       subscribers.current[path] = subscribers.current[path] || [];
       subscribers.current[path].push(callback);
@@ -29,7 +27,7 @@ export function useFormWatch<Values extends Record<string, any>>({
     }, [callback]);
   }, []);
 
-  const getFieldSubscribers = useCallback((path: LooseKeys<Values>) => {
+  const getFieldSubscribers = useCallback((path: Field) => {
     const result: ((input: SetValuesSubscriberPayload<Values>) => void)[] =
       subscribers.current[path]?.map(
         (callback) => (input: SetValuesSubscriberPayload<Values>) =>
