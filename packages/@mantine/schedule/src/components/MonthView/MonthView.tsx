@@ -255,8 +255,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       {...others}
     >
       <ScheduleHeader {...stylesApiProps}>
-        <ScheduleHeader.Next {...stylesApiProps} />
         <ScheduleHeader.Previous {...stylesApiProps} />
+        <ScheduleHeader.Next {...stylesApiProps} />
         <ScheduleHeader.Today {...stylesApiProps} />
       </ScheduleHeader>
 
