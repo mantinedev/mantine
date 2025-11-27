@@ -162,9 +162,7 @@ export function EditableTags() {
         }}
         placeholder="Enter tags"
       />
-      <div style={{ marginTop: 16 }}>
-        Current values: {JSON.stringify(value)}
-      </div>
+      <div style={{ marginTop: 16 }}>Current values: {JSON.stringify(value)}</div>
     </div>
   );
 }
