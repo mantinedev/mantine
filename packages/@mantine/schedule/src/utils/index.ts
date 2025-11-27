@@ -11,4 +11,5 @@ export { getDayTimeIntervals } from './get-day-time-intervals/get-day-time-inter
 export { getWeekDays } from './get-week-days/get-week-days';
 export { getMonthsList } from './get-months-list/get-months-list';
 export { getYearsList } from './get-years-list/get-years-list';
+export { formatDate } from './format-date/format-date';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';

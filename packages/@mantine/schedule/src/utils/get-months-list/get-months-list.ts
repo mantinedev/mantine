@@ -1,8 +1,10 @@
 import dayjs from 'dayjs';
+import { DateLabelFormat } from '../../types';
+import { formatDate } from '../format-date/format-date';
 
 interface GetMonthsListInput {
   locale: string;
-  format: string;
+  format: DateLabelFormat;
 }
 
 interface MonthData {
@@ -15,7 +17,7 @@ export function getMonthsList({ locale, format }: GetMonthsListInput) {
   const date = dayjs().locale(locale).startOf('year');
 
   for (let i = 0; i < 12; i++) {
-    months.push({ month: i + 1, name: date.add(i, 'month').format(format) });
+    months.push({ month: i, name: formatDate({ date: date.add(i, 'month'), format, locale }) });
   }
 
   return months;
