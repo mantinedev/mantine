@@ -10,4 +10,5 @@ export { getMonthsByQuarter } from './get-months-by-quarter/get-months-by-quarte
 export { getDayTimeIntervals } from './get-day-time-intervals/get-day-time-intervals';
 export { getWeekDays } from './get-week-days/get-week-days';
 export { getMonthsList } from './get-months-list/get-months-list';
+export { getYearsList } from './get-years-list/get-years-list';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';
