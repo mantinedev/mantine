@@ -1,6 +1,6 @@
 import { getStartOfWeek } from './get-start-of-week';
 
-describe('@mantine/dates/get-start-of-week', () => {
+describe('@mantine/schedule/get-start-of-week', () => {
   it('returns start of week without first day of week param', () => {
     expect(getStartOfWeek('2021-02-05')).toStrictEqual('2021-02-01');
   });

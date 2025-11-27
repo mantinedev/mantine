@@ -1,6 +1,6 @@
 import { getMonthsByQuarter } from './get-months-by-quarter';
 
-describe('@mantine/dates/get-months-by-quarter', () => {
+describe('@mantine/schedule/get-months-by-quarter', () => {
   it('returns correct months data based on year input', () => {
     expect(getMonthsByQuarter('2022-06-11')).toStrictEqual([
       ['2022-01-01', '2022-02-01', '2022-03-01'],

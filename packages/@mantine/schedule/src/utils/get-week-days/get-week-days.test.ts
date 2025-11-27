@@ -1,6 +1,6 @@
 import { getWeekDays } from './get-week-days';
 
-describe('@mantine/dates/get-week-days', () => {
+describe('@mantine/schedule/get-week-days', () => {
   it('returns 7 days for a week starting from Monday (default)', () => {
     // January 15, 2024 is a Monday
     const days = getWeekDays({

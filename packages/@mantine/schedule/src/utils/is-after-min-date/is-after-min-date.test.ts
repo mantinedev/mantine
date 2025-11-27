@@ -1,6 +1,6 @@
 import { isAfterMinDate } from './is-after-min-date';
 
-describe('@mantine/dates/is-after-min-date', () => {
+describe('@mantine/schedule/is-after-min-date', () => {
   it('correctly detects dates that are after given minDate', () => {
     expect(isAfterMinDate('2022-04-15', '2022-04-12')).toBe(true);
     expect(isAfterMinDate('2022-05-15', '2022-04-12')).toBe(true);

@@ -1,6 +1,6 @@
 import { getDayTimeIntervals } from './get-day-time-intervals';
 
-describe('@mantine/dates/get-day-time-intervals', () => {
+describe('@mantine/schedule/get-day-time-intervals', () => {
   it('returns intervals with default 30 minute duration', () => {
     const intervals = getDayTimeIntervals({
       startTime: '09:00:00',

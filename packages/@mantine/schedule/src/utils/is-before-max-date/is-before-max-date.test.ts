@@ -1,6 +1,6 @@
 import { isBeforeMaxDate } from './is-before-max-date';
 
-describe('@mantine/dates/is-before-max-date', () => {
+describe('@mantine/schedule/is-before-max-date', () => {
   it('correctly detects dates that are before given maxDate', () => {
     expect(isBeforeMaxDate('2022-04-15', '2022-04-12')).toBe(false);
     expect(isBeforeMaxDate('2022-05-15', '2022-04-12')).toBe(false);

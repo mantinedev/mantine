@@ -1,6 +1,6 @@
 import { getMonthDays } from './get-month-days';
 
-describe('@mantine/dates/get-month-days', () => {
+describe('@mantine/schedule/get-month-days', () => {
   it('returns all month days for given date', () => {
     // February 2021 is ideal month (4 weeks, month starts on monday and ends on sunday)
     const monthDays = getMonthDays({

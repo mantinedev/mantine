@@ -9,4 +9,5 @@ export { isSameMonth } from './is-same-month/is-same-month';
 export { getMonthsByQuarter } from './get-months-by-quarter/get-months-by-quarter';
 export { getDayTimeIntervals } from './get-day-time-intervals/get-day-time-intervals';
 export { getWeekDays } from './get-week-days/get-week-days';
+export { getMonthsList } from './get-months-list/get-months-list';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';

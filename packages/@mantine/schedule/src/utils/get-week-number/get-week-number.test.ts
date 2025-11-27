@@ -1,6 +1,6 @@
 import { getWeekNumber } from './get-week-number';
 
-describe('@mantine/dates/get-week-number', () => {
+describe('@mantine/schedule/get-week-number', () => {
   describe('array format', () => {
     it('should return the correct ISO week number for a given week', () => {
       const week = [

@@ -1,6 +1,6 @@
 import { getEndOfWeek } from './get-end-of-week';
 
-describe('@mantine/dates/get-end-of-week', () => {
+describe('@mantine/schedule/get-end-of-week', () => {
   it('returns end of week without first day of week param', () => {
     expect(getEndOfWeek('2021-02-05')).toBe('2021-02-07');
   });
