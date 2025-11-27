@@ -13,7 +13,7 @@ import {
   useFloating,
   UseFloatingReturn,
 } from '@floating-ui/react';
-import { useDidUpdate, useUncontrolled } from '@mantine/hooks';
+import { useDidUpdate, useIsomorphicEffect, useUncontrolled } from '@mantine/hooks';
 import { useMantineEnv } from '../../core';
 import { FloatingAxesOffsets, FloatingPosition, FloatingStrategy } from '../../utils/Floating';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
@@ -190,7 +190,7 @@ export function usePopover(options: UsePopoverOptions) {
     previouslyOpened.current = _opened;
   }, [_opened, options.onClose, options.onOpen]);
 
-  useDidUpdate(() => {
+  useIsomorphicEffect(() => {
     let timeout: number = -1;
 
     if (_opened) {
