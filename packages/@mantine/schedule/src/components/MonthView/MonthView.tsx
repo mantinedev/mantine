@@ -24,6 +24,10 @@ import {
 } from '../../utils';
 import { useScheduleContext } from '../Schedule/Schedule.context';
 import {
+  MonthYearSelectProps,
+  MonthYearSelectStylesNames,
+} from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
+import {
   CombinedScheduleHeaderStylesNames,
   ScheduleHeader,
 } from '../ScheduleHeader/ScheduleHeader';
@@ -38,7 +42,8 @@ export type MonthViewStylesNames =
   | 'monthViewWeekday'
   | 'monthViewWeekdays'
   | 'monthViewWeekdaysCorner'
-  | CombinedScheduleHeaderStylesNames;
+  | CombinedScheduleHeaderStylesNames
+  | MonthYearSelectStylesNames;
 
 export type MonthViewCssVariables = {
   monthView: '--month-view-radius';
@@ -97,6 +102,12 @@ export interface MonthViewProps
 
   /** If set, days from the previous and next months are displayed to fill the weeks @default `true` */
   withOutsideDays?: boolean;
+
+  /** If set, the header is displayed @default `true` */
+  withHeader?: boolean;
+
+  /** Props passed down to `MonthYearSelect` component in the header */
+  monthYearSelectProps?: Partial<MonthYearSelectProps>;
 }
 
 export type MonthViewFactory = Factory<{
@@ -115,6 +126,7 @@ const defaultProps = {
   consistentWeeks: true,
   highlightToday: true,
   withOutsideDays: true,
+  withHeader: true,
   weekdayFormat: 'ddd',
 } satisfies Partial<MonthViewProps>;
 
@@ -146,6 +158,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     highlightToday,
     radius,
     withOutsideDays,
+    withHeader,
+    monthYearSelectProps,
     ...others
   } = props;
 
@@ -196,19 +210,19 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
     consistentWeeks: consistentWeeks && withOutsideDays,
   }).map((week, index) => {
-    const days = week.map((date) => {
-      const outside = !isSameMonth(date, date);
-      const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(date).day());
-      const ariaLabel = dayjs(date)
+    const days = week.map((day) => {
+      const outside = !isSameMonth(date, day);
+      const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day());
+      const ariaLabel = dayjs(day)
         .locale(locale || ctx.locale)
         .format('MMMM D, YYYY');
 
-      const dayProps = getDayProps?.(new Date(date)) || {};
-      const today = dayjs(date).isSame(dayjs(), 'day') && highlightToday;
+      const dayProps = getDayProps?.(new Date(day)) || {};
+      const today = dayjs(day).isSame(dayjs(), 'day') && highlightToday;
 
       if (outside && !withOutsideDays) {
         return (
-          <div key={date} data-static {...getStyles('monthViewDay', { style: dayProps.style })} />
+          <div key={day} data-static {...getStyles('monthViewDay', { style: dayProps.style })} />
         );
       }
 
@@ -217,15 +231,15 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           aria-label={ariaLabel}
           {...dayProps}
           {...getStyles('monthViewDay', { className: dayProps.className, style: dayProps.style })}
-          key={date}
+          key={day}
           onClick={(event) => {
-            onDayClick?.(dayjs(date).startOf('day').toDate(), event);
+            onDayClick?.(dayjs(day).startOf('day').toDate(), event);
             dayProps.onClick?.(event);
           }}
           mod={[{ outside, weekend, today }, dayProps.mod]}
         >
           <span data-today={today || undefined} {...getStyles('monthViewDayLabel')}>
-            {dayjs(date).format('D')}
+            {dayjs(day).format('D')}
           </span>
         </UnstyledButton>
       );
@@ -265,27 +279,37 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       {...getStyles('monthView')}
       {...others}
     >
-      <ScheduleHeader {...stylesApiProps}>
-        <ScheduleHeader.Previous
-          {...stylesApiProps}
-          onClick={() => onDateChange?.(toDateString(dayjs(date).subtract(1, 'month')))}
-        />
-        <ScheduleHeader.MonthYearSelect
-          {...stylesApiProps}
-          yearValue={dayjs(date).get('year')}
-          monthValue={dayjs(date).get('month')}
-          onYearChange={(year) => onDateChange?.(toDateString(dayjs(date).set('year', year)))}
-          onMonthChange={(month) => onDateChange?.(toDateString(dayjs(date).set('month', month)))}
-        />
-        <ScheduleHeader.Next
-          {...stylesApiProps}
-          onClick={() => onDateChange?.(toDateString(dayjs(date).add(1, 'month')))}
-        />
-        <ScheduleHeader.Today
-          {...stylesApiProps}
-          onClick={() => onDateChange?.(toDateString(dayjs()))}
-        />
-      </ScheduleHeader>
+      {withHeader && (
+        <ScheduleHeader {...stylesApiProps}>
+          <ScheduleHeader.Previous
+            {...stylesApiProps}
+            onClick={() => onDateChange?.(toDateString(dayjs(date).subtract(1, 'month')))}
+          />
+          <ScheduleHeader.MonthYearSelect
+            {...stylesApiProps}
+            yearValue={dayjs(date).get('year')}
+            monthValue={dayjs(date).get('month')}
+            onYearChange={(year) => onDateChange?.(toDateString(dayjs(date).set('year', year)))}
+            onMonthChange={(month) => onDateChange?.(toDateString(dayjs(date).set('month', month)))}
+            {...monthYearSelectProps}
+          />
+          <ScheduleHeader.Next
+            {...stylesApiProps}
+            onClick={() => onDateChange?.(toDateString(dayjs(date).add(1, 'month')))}
+          />
+          <ScheduleHeader.Today
+            {...stylesApiProps}
+            onClick={() => onDateChange?.(toDateString(dayjs()))}
+          />
+
+          <ScheduleHeader.ViewSelect
+            value="month"
+            onChange={() => {}}
+            views={['day', 'week', 'month', 'year']}
+            {...stylesApiProps}
+          />
+        </ScheduleHeader>
+      )}
 
       {weekdays && (
         <div {...getStyles('monthViewWeekdays')}>

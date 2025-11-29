@@ -66,11 +66,12 @@ export const ScheduleHeaderViewSelect = factory<ScheduleHeaderViewSelectFactory>
     value,
     onChange,
     views,
+    __staticSelector,
     ...others
   } = props;
 
   const getStyles = useStyles<ScheduleHeaderViewSelectFactory>({
-    name: 'ScheduleHeaderViewSelect',
+    name: __staticSelector || 'ScheduleHeaderViewSelect',
     classes,
     props,
     className,
@@ -96,6 +97,7 @@ export const ScheduleHeaderViewSelect = factory<ScheduleHeaderViewSelectFactory>
       onClick={() => onChange(view)}
       classNames={resolvedClassNames}
       styles={resolvedStyles}
+      __staticSelector={__staticSelector || 'ScheduleHeaderViewSelect'}
     >
       {ctx.labels[view]}
     </ScheduleHeaderControl>
@@ -108,5 +110,5 @@ export const ScheduleHeaderViewSelect = factory<ScheduleHeaderViewSelectFactory>
   );
 });
 
-ScheduleHeaderViewSelect.displayName = '@mantine/core/ScheduleHeaderViewSelect';
+ScheduleHeaderViewSelect.displayName = '@mantine/schedule/ScheduleHeaderViewSelect';
 ScheduleHeaderViewSelect.classes = classes;

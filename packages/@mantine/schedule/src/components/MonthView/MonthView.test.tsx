@@ -13,7 +13,11 @@ const defaultProps: MonthViewProps = {
 describe('@mantine/core/MonthView', () => {
   tests.itSupportsSystemProps<MonthViewProps, MonthViewStylesNames>({
     component: MonthView,
-    props: { ...defaultProps, withWeekNumbers: true },
+    props: {
+      ...defaultProps,
+      withWeekNumbers: true,
+      monthYearSelectProps: { popoverProps: { opened: true } },
+    },
     styleProps: true,
     extend: true,
     variant: true,
@@ -21,7 +25,9 @@ describe('@mantine/core/MonthView', () => {
     classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/schedule/MonthView',
+    providerStylesApi: false,
     stylesApiSelectors: [
+      // MonthView
       'monthView',
       'monthViewDay',
       'monthViewDayLabel',
@@ -30,6 +36,18 @@ describe('@mantine/core/MonthView', () => {
       'monthViewWeekday',
       'monthViewWeekdays',
       'monthViewWeekdaysCorner',
+
+      // ScheduleHeader
+      'header',
+      'headerViewSelect',
+      'headerControl',
+
+      // MonthYearSelect
+      'monthYearSelectTarget',
+      'monthYearSelectDropdown',
+      'monthYearSelectControl',
+      'monthYearSelectList',
+      'monthYearSelectLabel',
     ],
   });
 
