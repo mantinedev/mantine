@@ -169,4 +169,52 @@ describe('@mantine/schedule/MonthYearSelect', () => {
       'data-year-test'
     );
   });
+
+  it('supports keyboard navigation for year controls', async () => {
+    render(<MonthYearSelect {...defaultProps} startYear={2020} endYear={2023} />);
+    await userEvent.click(screen.getByRole('button', { name: /select year 2023/i }));
+    expect(screen.getByRole('button', { name: /select year 2023/i })).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(screen.getByRole('button', { name: /select year 2020/i })).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowUp}');
+    expect(screen.getByRole('button', { name: /select year 2023/i })).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowUp}');
+    expect(screen.getByRole('button', { name: /select year 2022/i })).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(screen.getByRole('button', { name: /select year 2023/i })).toHaveFocus();
+
+    await userEvent.keyboard('{Home}');
+    expect(screen.getByRole('button', { name: /select year 2020/i })).toHaveFocus();
+
+    await userEvent.keyboard('{End}');
+    expect(screen.getByRole('button', { name: /select year 2023/i })).toHaveFocus();
+  });
+
+  it('supports keyboard navigation for month controls', async () => {
+    render(<MonthYearSelect {...defaultProps} />);
+    await userEvent.click(screen.getByRole('button', { name: /select month december/i }));
+    expect(screen.getByRole('button', { name: /select month december/i })).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(screen.getByRole('button', { name: /select month january/i })).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowUp}');
+    expect(screen.getByRole('button', { name: /select month december/i })).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowUp}');
+    expect(screen.getByRole('button', { name: /select month november/i })).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(screen.getByRole('button', { name: /select month december/i })).toHaveFocus();
+
+    await userEvent.keyboard('{Home}');
+    expect(screen.getByRole('button', { name: /select month january/i })).toHaveFocus();
+
+    await userEvent.keyboard('{End}');
+    expect(screen.getByRole('button', { name: /select month december/i })).toHaveFocus();
+  });
 });
