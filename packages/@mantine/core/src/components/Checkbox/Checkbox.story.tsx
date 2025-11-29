@@ -109,7 +109,19 @@ export function CheckboxGroup() {
 export function CursorPointer() {
   return (
     <MantineThemeProvider theme={{ cursorType: 'pointer' }}>
-      <Checkbox label="Hello" value="1" />
+      <Stack style={{ padding: 40 }}>
+        <Checkbox label="Without description" value="1" />
+        <Checkbox
+          label="With description"
+          description="Description should have default cursor, not pointer"
+          value="2"
+        />
+        <Checkbox
+          label="With error"
+          error="Error should have default cursor, not pointer"
+          value="3"
+        />
+      </Stack>
     </MantineThemeProvider>
   );
 }
