@@ -1,13 +1,22 @@
 import 'dayjs/locale/ru';
 
+import { useState } from 'react';
 import { MonthYearSelect } from './MonthYearSelect';
 
 export default { title: 'schedule/MonthYearSelect' };
 
 export function Usage() {
+  const [year, setYear] = useState(2025);
+  const [month, setMonth] = useState(10);
+
   return (
     <div style={{ padding: 40 }}>
-      <MonthYearSelect yearValue={2025} monthValue={10} popoverProps={{ opened: true }} />
+      <MonthYearSelect
+        yearValue={year}
+        monthValue={month}
+        onYearChange={setYear}
+        onMonthChange={setMonth}
+      />
     </div>
   );
 }

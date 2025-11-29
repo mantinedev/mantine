@@ -1,5 +1,6 @@
 import {
   BoxProps,
+  createScopedKeydownHandler,
   createVarsResolver,
   DataAttributes,
   ElementProps,
@@ -136,11 +137,11 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
 
   const today = new Date();
   const ctx = useScheduleContext();
+  const _startYear = startYear ?? today.getFullYear() - 5;
+  const _endYear = endYear ?? today.getFullYear() + 5;
+  const hasActiveYear = yearValue >= _startYear && yearValue <= _endYear;
 
-  const years = getYearsList({
-    startYear: startYear || today.getFullYear() - 5,
-    endYear: endYear || today.getFullYear() + 5,
-  }).map((year) => {
+  const years = getYearsList({ startYear: _startYear, endYear: _endYear }).map((year, index) => {
     const controlProps = getYearControlProps?.(year);
     return (
       <UnstyledButton
@@ -148,7 +149,16 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
         onClick={() => onYearChange?.(year)}
         mod={{ type: 'year', active: year === yearValue }}
         aria-label={`${ctx.labels.selectYear} ${year}`}
+        tabIndex={hasActiveYear ? (year === yearValue ? 0 : -1) : index === 0 ? 0 : -1}
         {...controlProps}
+        onKeyDown={createScopedKeydownHandler({
+          siblingSelector: '[data-type="year"]:not(:disabled)',
+          parentSelector: '[data-list]',
+          activateOnFocus: false,
+          loop: true,
+          orientation: 'vertical',
+          onKeyDown: controlProps?.onKeyDown,
+        })}
         {...getStyles('monthYearSelectControl', {
           className: controlProps?.className,
           style: controlProps?.style,
@@ -169,6 +179,15 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
         key={month.name}
         onClick={() => onMonthChange?.(month.month)}
         mod={{ type: 'month', active: month.month === monthValue }}
+        tabIndex={month.month === monthValue ? 0 : -1}
+        onKeyDown={createScopedKeydownHandler({
+          siblingSelector: '[data-type="month"]:not(:disabled)',
+          parentSelector: '[data-list]',
+          activateOnFocus: false,
+          loop: true,
+          orientation: 'vertical',
+          onKeyDown: controlProps?.onKeyDown,
+        })}
         {...controlProps}
         {...getStyles('monthYearSelectControl', {
           className: controlProps?.className,
@@ -184,9 +203,9 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
   return (
     <Popover
       position="bottom-start"
-      transitionProps={{ duration: 0 }}
       __staticSelector={__staticSelector}
       trapFocus
+      transitionProps={{ transition: 'pop-top-left', duration: 180 }}
       radius={radius || 'var(--schedule-radius, var(--mantine-radius-default))'}
       {...popoverProps}
     >
@@ -206,11 +225,11 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
       </Popover.Target>
 
       <Popover.Dropdown {...getStyles('monthYearSelectDropdown')}>
-        <div {...getStyles('monthYearSelectList')}>
+        <div data-list {...getStyles('monthYearSelectList')}>
           <div {...getStyles('monthYearSelectLabel')}>{ctx.labels.month}</div>
           {months}
         </div>
-        <div {...getStyles('monthYearSelectList')}>
+        <div data-list {...getStyles('monthYearSelectList')}>
           <div {...getStyles('monthYearSelectLabel')}>{ctx.labels.year}</div>
           {years}
         </div>
