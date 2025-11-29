@@ -67,7 +67,7 @@ export const ScheduleHeaderControl = factory<ScheduleHeaderControlFactory>((_pro
   } = props;
 
   const getStyles = useStyles<ScheduleHeaderControlFactory>({
-    name: __staticSelector || 'ScheduleHeader',
+    name: __staticSelector || 'ScheduleHeaderControl',
     classes,
     props,
     className,
@@ -90,7 +90,7 @@ export const ScheduleHeaderControl = factory<ScheduleHeaderControlFactory>((_pro
   );
 });
 
-ScheduleHeaderControl.displayName = '@mantine/core/ScheduleHeaderControl';
+ScheduleHeaderControl.displayName = '@mantine/schedule/ScheduleHeaderControl';
 ScheduleHeaderControl.classes = classes;
 
 export function ScheduleHeaderNext(props: ScheduleHeaderControlProps) {
