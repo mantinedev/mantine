@@ -91,7 +91,11 @@ export interface BubbleChartProps
   /** Z axis range */
   range: [number, number];
 
-  /** Color of the chart items. Key of `theme.colors` or any valid CSS color. @default `blue.6` */
+  /**
+   * Color of the chart items. Key of `theme.colors` or any valid CSS color.
+   *
+   * @default `blue.6`
+   */
   color?: MantineColor;
 
   /** Props passed down to the `XAxis` recharts component */
@@ -109,7 +113,11 @@ export interface BubbleChartProps
   /** Props passed down to the `Scatter` component */
   scatterProps?: Partial<Omit<ScatterProps, 'ref'>>;
 
-  /** Color of the text displayed inside the chart @default `'dimmed'` */
+  /**
+   * Color of the text displayed inside the chart
+   *
+   * @default `'dimmed'`
+   */
   textColor?: MantineColor;
 
   /** Color of the grid and cursor lines, by default depends on color scheme */
@@ -118,7 +126,11 @@ export interface BubbleChartProps
   /** Chart label displayed next to the x axis */
   label?: string;
 
-  /** Determines whether the tooltip should be displayed @default `true` */
+  /**
+   * Determines whether the tooltip should be displayed
+   *
+   * @default `true`
+   */
   withTooltip?: boolean;
 
   /** Function to format z axis values */

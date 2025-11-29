@@ -26,7 +26,11 @@ export interface MonthPickerInputProps<Type extends DatePickerType = 'default'>
     DateInputSharedProps,
     MonthPickerBaseProps<Type>,
     StylesApiProps<MonthPickerInputFactory> {
-  /** `dayjs` format for input value @default `"MMMM YYYY"` */
+  /**
+   * `dayjs` format for input value
+   *
+   * @default `"MMMM YYYY"`
+   */
   valueFormat?: string;
 }
 

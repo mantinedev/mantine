@@ -23,7 +23,11 @@ export interface AvatarGroupProps
   extends BoxProps,
     StylesApiProps<AvatarGroupFactory>,
     ElementProps<'div'> {
-  /** Negative space between Avatar components @default `'sm'` */
+  /**
+   * Negative space between Avatar components
+   *
+   * @default `'sm'`
+   */
   spacing?: MantineSpacing;
 }
 

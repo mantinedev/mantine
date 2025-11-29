@@ -30,7 +30,11 @@ export interface DialogProps
   /** If set, dialog is not unmounted from the DOM when hidden, `display: none` styles are applied instead */
   keepMounted?: boolean;
 
-  /** If set, the close button is displayed @default `true` */
+  /**
+   * If set, the close button is displayed
+   *
+   * @default `true`
+   */
   withCloseButton?: boolean;
 
   /** Called when the close button is clicked */
@@ -42,10 +46,18 @@ export interface DialogProps
   /** Opened state */
   opened: boolean;
 
-  /** Props passed down to the underlying `Transition` component @default `{ transition: 'pop-top-right', duration: 200 }` */
+  /**
+   * Props passed down to the underlying `Transition` component
+   *
+   * @default `{ transition: 'pop-top-right', duration: 200 }`
+   */
   transitionProps?: TransitionOverride;
 
-  /** Controls `width` of the dialog @default `'md'` */
+  /**
+   * Controls `width` of the dialog
+   *
+   * @default `'md'`
+   */
   size?: MantineSize | (string & {}) | number;
 }
 

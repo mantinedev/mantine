@@ -29,7 +29,11 @@ export interface FloatingIndicatorProps
   /** Parent element with relative position based on which indicator position is calculated */
   parent: HTMLElement | null | undefined;
 
-  /** Transition duration in ms @default `150` */
+  /**
+   * Transition duration in ms
+   *
+   * @default `150`
+   */
   transitionDuration?: number | string;
 
   /** If set, the indicator is displayed after transition ends.

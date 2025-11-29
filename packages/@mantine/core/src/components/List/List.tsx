@@ -30,22 +30,42 @@ export interface ListProps
   /** `List.Item` components */
   children?: React.ReactNode;
 
-  /** List type @default `'unordered'` */
+  /**
+   * List type
+   *
+   * @default `'unordered'`
+   */
   type?: 'ordered' | 'unordered';
 
-  /** Determines whether list items should be offset with padding @default `false` */
+  /**
+   * Determines whether list items should be offset with padding
+   *
+   * @default `false`
+   */
   withPadding?: boolean;
 
-  /** Controls `font-size` and `line-height` @default `'md'` */
+  /**
+   * Controls `font-size` and `line-height`
+   *
+   * @default `'md'`
+   */
   size?: MantineSize;
 
   /** Icon to replace list item dot */
   icon?: React.ReactNode;
 
-  /** Key of `theme.spacing` or any valid CSS value to set spacing between items @default `0` */
+  /**
+   * Key of `theme.spacing` or any valid CSS value to set spacing between items
+   *
+   * @default `0`
+   */
   spacing?: MantineSpacing;
 
-  /** Determines whether items must be centered with their icon @default `false` */
+  /**
+   * Determines whether items must be centered with their icon
+   *
+   * @default `false`
+   */
   center?: boolean;
 
   /** Controls `list-style-type`, by default inferred from `type` */

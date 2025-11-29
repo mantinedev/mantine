@@ -13,7 +13,11 @@ export interface HighlightProps extends Omit<TextProps, 'color'> {
   /** Substring or a list of substrings to highlight in `children` */
   highlight: string | string[];
 
-  /** Key of `theme.colors` or any valid CSS color, passed to `Mark` component `color` prop @default `yellow` */
+  /**
+   * Key of `theme.colors` or any valid CSS color, passed to `Mark` component `color` prop
+   *
+   * @default `yellow`
+   */
   color?: MantineColor | string;
 
   /** Styles applied to `mark` elements */

@@ -22,7 +22,11 @@ export interface SwitchGroupProps extends Omit<InputWrapperProps, 'onChange'> {
   /** Props passed down to the `Input.Wrapper` */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 
-  /** Controls size of the `Input.Wrapper` @default `'sm'` */
+  /**
+   * Controls size of the `Input.Wrapper`
+   *
+   * @default `'sm'`
+   */
   size?: MantineSize | (string & {});
 
   /** If set, value cannot be changed */

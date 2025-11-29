@@ -47,25 +47,49 @@ export interface RadialBarChartProps
   /** Size of bars in px, `20` by default */
   barSize?: number;
 
-  /** Determines whether empty bars area should be visible @default `true` */
+  /**
+   * Determines whether empty bars area should be visible
+   *
+   * @default `true`
+   */
   withBackground?: boolean;
 
-  /** Determines whether labels should be displayed @default `false` */
+  /**
+   * Determines whether labels should be displayed
+   *
+   * @default `false`
+   */
   withLabels?: boolean;
 
-  /** Determines whether the legend should be displayed @default `false` */
+  /**
+   * Determines whether the legend should be displayed
+   *
+   * @default `false`
+   */
   withLegend?: boolean;
 
-  /** Determines whether the tooltip should be displayed when one of the bars is hovered @default `true` */
+  /**
+   * Determines whether the tooltip should be displayed when one of the bars is hovered
+   *
+   * @default `true`
+   */
   withTooltip?: boolean;
 
   /** Color of the empty background, by default depends on the color scheme */
   emptyBackgroundColor?: string;
 
-  /** Angle at which chart starts @default `90` */
+  /**
+   * Angle at which chart starts
+   *
+   * @default `90`
+   */
   startAngle?: number;
 
-  /** Angle at which chart ends @default `-270` */
+  /**
+   * Angle at which chart ends
+   *
+   * @default `-270`
+   */
   endAngle?: number;
 
   /** Props passed down to recharts RadialBar component */

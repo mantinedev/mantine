@@ -72,7 +72,11 @@ export interface __InputProps {
   /** Props passed down to the `leftSection` element */
   leftSectionProps?: React.ComponentPropsWithoutRef<'div'>;
 
-  /** Sets `pointer-events` styles on the `leftSection` element @default `'none'` */
+  /**
+   * Sets `pointer-events` styles on the `leftSection` element
+   *
+   * @default `'none'`
+   */
   leftSectionPointerEvents?: React.CSSProperties['pointerEvents'];
 
   /** Content section displayed on the right side of the input */
@@ -84,25 +88,45 @@ export interface __InputProps {
   /** Props passed down to the `rightSection` element */
   rightSectionProps?: React.ComponentPropsWithoutRef<'div'>;
 
-  /** Sets `pointer-events` styles on the `rightSection` element @default `'none'` */
+  /**
+   * Sets `pointer-events` styles on the `rightSection` element
+   *
+   * @default `'none'`
+   */
   rightSectionPointerEvents?: React.CSSProperties['pointerEvents'];
 
   /** Sets `required` attribute on the `input` element */
   required?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
+  /**
+   * Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem
+   *
+   * @default `theme.defaultRadius`
+   */
   radius?: MantineRadius;
 
   /** Sets `disabled` attribute on the `input` element */
   disabled?: boolean;
 
-  /** Controls input `height` and horizontal `padding` @default `'sm'` */
+  /**
+   * Controls input `height` and horizontal `padding`
+   *
+   * @default `'sm'`
+   */
   size?: MantineSize | (string & {});
 
-  /** Determines whether the input should have `cursor: pointer` style @default `false` */
+  /**
+   * Determines whether the input should have `cursor: pointer` style
+   *
+   * @default `false`
+   */
   pointer?: boolean;
 
-  /** Determines whether the input should have red border and red text color when the `error` prop is set @default `true` */
+  /**
+   * Determines whether the input should have red border and red text color when the `error` prop is set
+   *
+   * @default `true`
+   */
   withErrorStyles?: boolean;
 
   /** `size` attribute passed down to the input element */
@@ -127,13 +151,21 @@ export interface InputProps extends BoxProps, __InputProps, StylesApiProps<Input
   /** Determines whether the input should have error styles and `aria-invalid` attribute */
   error?: React.ReactNode;
 
-  /** Determines whether the input can have multiple lines, for example when `component="textarea"` @default `false` */
+  /**
+   * Determines whether the input can have multiple lines, for example when `component="textarea"`
+   *
+   * @default `false`
+   */
   multiline?: boolean;
 
   /** Input element id */
   id?: string;
 
-  /** Determines whether `aria-` and other accessibility attributes should be added to the input @default `true` */
+  /**
+   * Determines whether `aria-` and other accessibility attributes should be added to the input
+   *
+   * @default `true`
+   */
   withAria?: boolean;
 
   /** Props passed down to the root element of the `Input` component */

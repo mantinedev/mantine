@@ -70,25 +70,49 @@ export interface MultiSelectProps
   /** Maximum number of values, no limit if not set */
   maxValues?: number;
 
-  /** Allows searching @default `false` */
+  /**
+   * Allows searching
+   *
+   * @default `false`
+   */
   searchable?: boolean;
 
   /** Message displayed when no option matches the current search query while the `searchable` prop is set or there is no data */
   nothingFoundMessage?: React.ReactNode;
 
-  /** If set, the check icon is displayed near the selected option label @default `true` */
+  /**
+   * If set, the check icon is displayed near the selected option label
+   *
+   * @default `true`
+   */
   withCheckIcon?: boolean;
 
-  /** If set, unchecked labels are aligned with checked ones @default `false` */
+  /**
+   * If set, unchecked labels are aligned with checked ones
+   *
+   * @default `false`
+   */
   withAlignedLabels?: boolean;
 
-  /** Position of the check icon relative to the option label @default `'left'` */
+  /**
+   * Position of the check icon relative to the option label
+   *
+   * @default `'left'`
+   */
   checkIconPosition?: 'left' | 'right';
 
-  /** If set, picked options are removed from the options list @default `false` */
+  /**
+   * If set, picked options are removed from the options list
+   *
+   * @default `false`
+   */
   hidePickedOptions?: boolean;
 
-  /** If set, the clear button is displayed in the right section when the component has value @default `false` */
+  /**
+   * If set, the clear button is displayed in the right section when the component has value
+   *
+   * @default `false`
+   */
   clearable?: boolean;
 
   /** Props passed down to the clear button */
@@ -97,7 +121,11 @@ export interface MultiSelectProps
   /** Props passed down to the hidden input */
   hiddenInputProps?: Omit<React.ComponentPropsWithoutRef<'input'>, 'value'>;
 
-  /** Divider used to separate values in the hidden input `value` attribute @default `','` */
+  /**
+   * Divider used to separate values in the hidden input `value` attribute
+   *
+   * @default `','`
+   */
   hiddenInputValuesDivider?: string;
 
   /** A function to render content of the option, replaces the default content of the option */

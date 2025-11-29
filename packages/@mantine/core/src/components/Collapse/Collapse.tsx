@@ -19,13 +19,25 @@ export interface CollapseProps
   /** Called each time transition ends */
   onTransitionEnd?: () => void;
 
-  /** Transition duration in ms @default `200` */
+  /**
+   * Transition duration in ms
+   *
+   * @default `200`
+   */
   transitionDuration?: number;
 
-  /** Transition timing function @default `ease` */
+  /**
+   * Transition timing function
+   *
+   * @default `ease`
+   */
   transitionTimingFunction?: string;
 
-  /** Determines whether opacity should be animated @default `true` */
+  /**
+   * Determines whether opacity should be animated
+   *
+   * @default `true`
+   */
   animateOpacity?: boolean;
 
   /** Keep element in DOM when collapsed, useful for nested collapses */

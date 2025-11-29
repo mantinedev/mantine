@@ -71,10 +71,18 @@ export interface TagsInputProps
   /** Called when search changes */
   onSearchChange?: (value: string) => void;
 
-  /** Maximum number of tags @default `Infinity` */
+  /**
+   * Maximum number of tags
+   *
+   * @default `Infinity`
+   */
   maxTags?: number;
 
-  /** If set, duplicate tags are allowed @default `false` */
+  /**
+   * If set, duplicate tags are allowed
+   *
+   * @default `false`
+   */
   allowDuplicates?: boolean;
 
   /** Called when user tries to submit a duplicated tag */
@@ -83,7 +91,11 @@ export interface TagsInputProps
   /** Characters that should trigger tags split, `[',']` by default */
   splitChars?: string[];
 
-  /** If set, the clear button is displayed in the right section when the component has value @default `false` */
+  /**
+   * If set, the clear button is displayed in the right section when the component has value
+   *
+   * @default `false`
+   */
   clearable?: boolean;
 
   /** Props passed down to the clear button */
@@ -92,7 +104,11 @@ export interface TagsInputProps
   /** Props passed down to the hidden input */
   hiddenInputProps?: Omit<React.ComponentPropsWithoutRef<'input'>, 'value'>;
 
-  /** Divider used to separate values in the hidden input `value` attribute @default `','` */
+  /**
+   * Divider used to separate values in the hidden input `value` attribute
+   *
+   * @default `','`
+   */
   hiddenInputValuesDivider?: string;
 
   /** A function to render content of the option, replaces the default content of the option */
@@ -101,7 +117,11 @@ export interface TagsInputProps
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** If set, the value typed in by the user but not submitted is accepted when the input is blurred @default `true` */
+  /**
+   * If set, the value typed in by the user but not submitted is accepted when the input is blurred
+   *
+   * @default `true`
+   */
   acceptValueOnBlur?: boolean;
 
   /** Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. */

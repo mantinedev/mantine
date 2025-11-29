@@ -77,7 +77,11 @@ export interface StepperProps
   /** Step icon displayed when step is in progress, default value is `step index + 1` */
   progressIcon?: React.ReactNode | StepFragmentComponent;
 
-  /** Key of `theme.colors` or any valid CSS color, controls colors of active and progress steps @default `theme.primaryColor` */
+  /**
+   * Key of `theme.colors` or any valid CSS color, controls colors of active and progress steps
+   *
+   * @default `theme.primaryColor`
+   */
   color?: MantineColor;
 
   /** Controls size of the step icon, by default icon size is inferred from `size` prop */
@@ -86,22 +90,42 @@ export interface StepperProps
   /** Key of `theme.spacing` or any valid CSS value to set `padding-top` of the content */
   contentPadding?: MantineSpacing;
 
-  /** Stepper orientation @default `'horizontal'` */
+  /**
+   * Stepper orientation
+   *
+   * @default `'horizontal'`
+   */
   orientation?: 'vertical' | 'horizontal';
 
-  /** Icon position relative to the step body @default `'left'` */
+  /**
+   * Icon position relative to the step body
+   *
+   * @default `'left'`
+   */
   iconPosition?: 'right' | 'left';
 
   /** Controls size of various Stepper elements */
   size?: MantineSize;
 
-  /** Key of `theme.radius` or any valid CSS value to set steps border-radius @default `"xl"` */
+  /**
+   * Key of `theme.radius` or any valid CSS value to set steps border-radius
+   *
+   * @default `"xl"`
+   */
   radius?: MantineRadius;
 
-  /** If set, next steps can be selected @default `true` */
+  /**
+   * If set, next steps can be selected
+   *
+   * @default `true`
+   */
   allowNextStepsSelect?: boolean;
 
-  /** Determines whether steps should wrap to the next line if no space is available @default `true` */
+  /**
+   * Determines whether steps should wrap to the next line if no space is available
+   *
+   * @default `true`
+   */
   wrap?: boolean;
 
   /** If set, adjusts text color based on background color for `filled` variant */

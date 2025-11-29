@@ -81,19 +81,39 @@ export interface LineChartProps
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: LineChartSeries[];
 
-  /** Controls styles of the line @default `'default'` */
+  /**
+   * Controls styles of the line
+   *
+   * @default `'default'`
+   */
   type?: LineChartType;
 
-  /** Data used to generate gradient stops @default `[{ offset: 0, color: 'red' }, { offset: 100, color: 'blue' }]` */
+  /**
+   * Data used to generate gradient stops
+   *
+   * @default `[{ offset: 0, color: 'red' }, { offset: 100, color: 'blue' }]`
+   */
   gradientStops?: LineChartGradientStop[];
 
-  /** Type of the curve @default `'monotone'` */
+  /**
+   * Type of the curve
+   *
+   * @default `'monotone'`
+   */
   curveType?: LineChartCurveType;
 
-  /** Controls fill opacity of all lines @default `1` */
+  /**
+   * Controls fill opacity of all lines
+   *
+   * @default `1`
+   */
   fillOpacity?: number;
 
-  /** Determines whether dots should be displayed @default `true` */
+  /**
+   * Determines whether dots should be displayed
+   *
+   * @default `true`
+   */
   withDots?: boolean;
 
   /** Props passed down to all dots. Ignored if `withDots={false}` is set. */
@@ -102,13 +122,21 @@ export interface LineChartProps
   /** Props passed down to all active dots. Ignored if `withDots={false}` is set. */
   activeDotProps?: MantineChartDotProps;
 
-  /** Stroke width for the chart lines @default `2` */
+  /**
+   * Stroke width for the chart lines
+   *
+   * @default `2`
+   */
   strokeWidth?: number;
 
   /** Props passed down to recharts `LineChart` component */
   lineChartProps?: React.ComponentPropsWithoutRef<typeof ReChartsLineChart>;
 
-  /** Determines whether points with `null` values should be connected @default `true` */
+  /**
+   * Determines whether points with `null` values should be connected
+   *
+   * @default `true`
+   */
   connectNulls?: boolean;
 
   /** Additional components that are rendered inside recharts `LineChart` component */
@@ -119,7 +147,11 @@ export interface LineChartProps
     | ((series: LineChartSeries) => Partial<Omit<LineProps, 'ref'>>)
     | Partial<Omit<LineProps, 'ref'>>;
 
-  /** Determines whether each point should have associated label @default `false` */
+  /**
+   * Determines whether each point should have associated label
+   *
+   * @default `false`
+   */
   withPointLabels?: boolean;
 }
 

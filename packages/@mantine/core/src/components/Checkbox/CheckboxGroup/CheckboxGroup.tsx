@@ -22,7 +22,11 @@ export interface CheckboxGroupProps extends Omit<InputWrapperProps, 'onChange'> 
   /** Props passed down to the root element (`Input.Wrapper` component) */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 
-  /** Controls size of the `Input.Wrapper` @default `'sm'` */
+  /**
+   * Controls size of the `Input.Wrapper`
+   *
+   * @default `'sm'`
+   */
   size?: MantineSize | (string & {});
 
   /** If set, value cannot be changed */

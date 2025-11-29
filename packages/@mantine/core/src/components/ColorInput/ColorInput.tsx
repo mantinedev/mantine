@@ -51,22 +51,38 @@ export interface ColorInputProps
   /** If input is not allowed, the user can only pick value with color picker and swatches */
   disallowInput?: boolean;
 
-  /** If set, the input value resets to the last known valid value when the input loses focus @default `true` */
+  /**
+   * If set, the input value resets to the last known valid value when the input loses focus
+   *
+   * @default `true`
+   */
   fixOnBlur?: boolean;
 
   /** Props passed down to the `Popover` component */
   popoverProps?: PopoverProps;
 
-  /** If set, the preview color swatch is displayed in the left section of the input @default `true` */
+  /**
+   * If set, the preview color swatch is displayed in the left section of the input
+   *
+   * @default `true`
+   */
   withPreview?: boolean;
 
-  /** If set, the eye dropper button is displayed in the right section @default `true` */
+  /**
+   * If set, the eye dropper button is displayed in the right section
+   *
+   * @default `true`
+   */
   withEyeDropper?: boolean;
 
   /** An icon to replace the default eye dropper icon */
   eyeDropperIcon?: React.ReactNode;
 
-  /** If set, the dropdown is closed when one of the color swatches is clicked @default `false` */
+  /**
+   * If set, the dropdown is closed when one of the color swatches is clicked
+   *
+   * @default `false`
+   */
   closeOnColorSwatchClick?: boolean;
 
   /** Props passed down to the eye dropper button */

@@ -31,7 +31,11 @@ export interface RadioCardProps
   /** Adds border to the root element */
   withBorder?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
+  /**
+   * Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem
+   *
+   * @default `theme.defaultRadius`
+   */
   radius?: MantineRadius;
 
   /** Value of the checkbox, used with `Radio.Group` */

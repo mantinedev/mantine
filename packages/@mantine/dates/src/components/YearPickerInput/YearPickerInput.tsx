@@ -23,7 +23,11 @@ export interface YearPickerInputProps<Type extends DatePickerType = 'default'>
     DateInputSharedProps,
     YearPickerBaseProps<Type>,
     StylesApiProps<YearPickerInputFactory> {
-  /** `dayjs` format to display input value @default `"YYYY"` */
+  /**
+   * `dayjs` format to display input value
+   *
+   * @default `"YYYY"`
+   */
   valueFormat?: string;
 }
 

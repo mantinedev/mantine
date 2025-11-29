@@ -43,25 +43,45 @@ export interface IndicatorProps
   extends BoxProps,
     StylesApiProps<IndicatorFactory>,
     ElementProps<'div'> {
-  /** Indicator position relative to the target element @default `'top-end'` */
+  /**
+   * Indicator position relative to the target element
+   *
+   * @default `'top-end'`
+   */
   position?: IndicatorPosition;
 
   /** Indicator offset relative to the target element, usually used for elements with border-radius */
   offset?: number;
 
-  /** Determines whether the indicator container should be an inline element @default `false` */
+  /**
+   * Determines whether the indicator container should be an inline element
+   *
+   * @default `false`
+   */
   inline?: boolean;
 
-  /** Indicator width and height @default `10` */
+  /**
+   * Indicator width and height
+   *
+   * @default `10`
+   */
   size?: number | string;
 
   /** Label displayed inside the indicator, for example, notification count */
   label?: React.ReactNode;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `100` */
+  /**
+   * Key of `theme.radius` or any valid CSS value to set `border-radius`
+   *
+   * @default `100`
+   */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color value @default `theme.primaryColor` */
+  /**
+   * Key of `theme.colors` or any valid CSS color value
+   *
+   * @default `theme.primaryColor`
+   */
   color?: MantineColor;
 
   /** Adds border to the root element */
@@ -70,10 +90,18 @@ export interface IndicatorProps
   /** If set, the indicator is hidden */
   disabled?: boolean;
 
-  /** If set, the indicator has processing animation @default `false` */
+  /**
+   * If set, the indicator has processing animation
+   *
+   * @default `false`
+   */
   processing?: boolean;
 
-  /** Indicator z-index @default `200` */
+  /**
+   * Indicator z-index
+   *
+   * @default `200`
+   */
   zIndex?: string | number;
 
   /** If set, adjusts text color based on background color for `filled` variant */
