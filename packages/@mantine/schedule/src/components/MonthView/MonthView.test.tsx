@@ -7,7 +7,7 @@ import { ScheduleProvider } from '../Schedule/Schedule.context';
 import { MonthView, MonthViewProps, MonthViewStylesNames } from './MonthView';
 
 const defaultProps: MonthViewProps = {
-  month: '2025-11-05',
+  date: '2025-11-05',
 };
 
 describe('@mantine/core/MonthView', () => {
@@ -42,7 +42,7 @@ describe('@mantine/core/MonthView', () => {
   });
 
   it('renders days of the month (Date object)', () => {
-    const { container } = render(<MonthView month={new Date(2025, 10, 5)} />);
+    const { container } = render(<MonthView date={new Date(2025, 10, 5)} />);
     const days = container.querySelectorAll('.mantine-MonthView-monthViewDay');
     expect(days.length).toStrictEqual(42);
     expect(days[0].textContent).toStrictEqual('27'); // Oct 27
@@ -261,7 +261,7 @@ describe('@mantine/core/MonthView', () => {
   });
 
   it('supports withOutsideDays={false} prop', () => {
-    const { container } = render(<MonthView month="2025-11-01" withOutsideDays={false} />);
+    const { container } = render(<MonthView date="2025-11-01" withOutsideDays={false} />);
     const days = container.querySelectorAll('button.mantine-MonthView-monthViewDay');
     expect(days.length).toStrictEqual(30);
     expect(days[0].textContent).toStrictEqual('1');

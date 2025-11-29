@@ -14,8 +14,14 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { DateLabelFormat, DayOfWeek } from '../../types';
-import { getMonthDays, getWeekdaysNames, getWeekNumber, isSameMonth } from '../../utils';
+import { DateLabelFormat, DateStringValue, DayOfWeek } from '../../types';
+import {
+  getMonthDays,
+  getWeekdaysNames,
+  getWeekNumber,
+  isSameMonth,
+  toDateString,
+} from '../../utils';
 import { useScheduleContext } from '../Schedule/Schedule.context';
 import {
   CombinedScheduleHeaderStylesNames,
@@ -44,8 +50,11 @@ export interface MonthViewProps
     ElementProps<'div'> {
   __staticSelector?: string;
 
-  /** Month to display, Date object or date string in `YYYY-MM-DD` format */
-  month: Date | string;
+  /** Date to display, Date object or date string in `YYYY-MM-DD 00:00:00` format */
+  date: Date | string;
+
+  /** Called with the new date value when a date is selected */
+  onDateChange?: (value: DateStringValue) => void;
 
   /** If set, week numbers are displayed in the first column @default `false` */
   withWeekNumbers?: boolean;
@@ -120,7 +129,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     attributes,
     vars,
     mod,
-    month,
+    date,
+    onDateChange,
     withWeekNumbers,
     withWeekDays,
     locale,
@@ -181,12 +191,12 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     : null;
 
   const weeks = getMonthDays({
-    month: dayjs(month).format('YYYY-MM-DD 00:00:00'),
+    month: dayjs(date).format('YYYY-MM-DD 00:00:00'),
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
     consistentWeeks: consistentWeeks && withOutsideDays,
   }).map((week, index) => {
     const days = week.map((date) => {
-      const outside = !isSameMonth(date, month);
+      const outside = !isSameMonth(date, date);
       const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(date).day());
       const ariaLabel = dayjs(date)
         .locale(locale || ctx.locale)
@@ -255,9 +265,25 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       {...others}
     >
       <ScheduleHeader {...stylesApiProps}>
-        <ScheduleHeader.Previous {...stylesApiProps} />
-        <ScheduleHeader.Next {...stylesApiProps} />
-        <ScheduleHeader.Today {...stylesApiProps} />
+        <ScheduleHeader.Previous
+          {...stylesApiProps}
+          onClick={() => onDateChange?.(toDateString(dayjs(date).subtract(1, 'month')))}
+        />
+        <ScheduleHeader.MonthYearSelect
+          {...stylesApiProps}
+          yearValue={dayjs(date).get('year')}
+          monthValue={dayjs(date).get('month')}
+          onYearChange={(year) => onDateChange?.(toDateString(dayjs(date).set('year', year)))}
+          onMonthChange={(month) => onDateChange?.(toDateString(dayjs(date).set('month', month)))}
+        />
+        <ScheduleHeader.Next
+          {...stylesApiProps}
+          onClick={() => onDateChange?.(toDateString(dayjs(date).add(1, 'month')))}
+        />
+        <ScheduleHeader.Today
+          {...stylesApiProps}
+          onClick={() => onDateChange?.(toDateString(dayjs()))}
+        />
       </ScheduleHeader>
 
       {weekdays && (

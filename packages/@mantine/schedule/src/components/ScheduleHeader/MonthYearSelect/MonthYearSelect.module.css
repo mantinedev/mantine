@@ -1,5 +1,6 @@
 .monthYearSelectTarget {
   text-transform: capitalize;
+  min-width: 140px;
 }
 
 .monthYearSelectDropdown {

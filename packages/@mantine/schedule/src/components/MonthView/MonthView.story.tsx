@@ -1,13 +1,16 @@
 import 'dayjs/locale/ru';
 
+import { useState } from 'react';
 import { MonthView } from './MonthView';
 
 export default { title: 'schedule/MonthView' };
 
 export function Usage() {
+  const [date, setDate] = useState('2025-11-01 00:00:00');
+
   return (
     <div style={{ padding: 40 }}>
-      <MonthView month="2025-11-01" />
+      <MonthView date={date} onDateChange={setDate} />
     </div>
   );
 }
@@ -15,7 +18,7 @@ export function Usage() {
 export function NoOutsideDays() {
   return (
     <div style={{ padding: 40 }}>
-      <MonthView month="2025-11-01" withOutsideDays={false} />
+      <MonthView date="2025-11-01" withOutsideDays={false} />
     </div>
   );
 }
@@ -23,7 +26,7 @@ export function NoOutsideDays() {
 export function WeekendDays() {
   return (
     <div style={{ padding: 40 }}>
-      <MonthView month="2025-11-01" weekendDays={[1, 2]} />
+      <MonthView date="2025-11-01" weekendDays={[1, 2]} />
     </div>
   );
 }
@@ -31,7 +34,7 @@ export function WeekendDays() {
 export function Radius() {
   return (
     <div style={{ padding: 40 }}>
-      <MonthView month="2025-11-01" radius="md" withWeekNumbers withWeekDays={false} />
+      <MonthView date="2025-11-01" radius="md" withWeekNumbers withWeekDays={false} />
     </div>
   );
 }
@@ -39,7 +42,7 @@ export function Radius() {
 export function FirstDayOfWeek() {
   return (
     <div style={{ padding: 40 }}>
-      <MonthView month="2025-11-01" firstDayOfWeek={0} />
+      <MonthView date="2025-11-01" firstDayOfWeek={0} />
     </div>
   );
 }
@@ -47,7 +50,7 @@ export function FirstDayOfWeek() {
 export function WithWeekNumbers() {
   return (
     <div style={{ padding: 40 }}>
-      <MonthView month="2025-11-01" withWeekNumbers />
+      <MonthView date="2025-11-01" withWeekNumbers />
     </div>
   );
 }
@@ -55,7 +58,7 @@ export function WithWeekNumbers() {
 export function Locale() {
   return (
     <div style={{ padding: 40 }}>
-      <MonthView month="2025-11-01" locale="ru" />
+      <MonthView date="2025-11-01" locale="ru" />
     </div>
   );
 }
