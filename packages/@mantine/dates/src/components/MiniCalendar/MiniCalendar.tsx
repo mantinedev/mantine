@@ -57,10 +57,18 @@ export interface MiniCalendarProps
   /** Minimum date that can be selected, date object or date string in `YYYY-MM-DD` format */
   minDate?: Date | string;
 
-  /** Number of days to display in the calendar @default 7 */
+  /**
+   * Number of days to display in the calendar
+   *
+   * @default 7
+   */
   numberOfDays?: number;
 
-  /** Dayjs format string for month label @default `MMM` */
+  /**
+   * Dayjs format string for month label
+   *
+   * @default `MMM`
+   */
   monthLabelFormat?: string;
 
   /** Called when the next button is clicked */
@@ -72,7 +80,11 @@ export interface MiniCalendarProps
   /** Props passed down to the day component */
   getDayProps?: (date: string) => Record<string, any>;
 
-  /** Component size @default 'sm' */
+  /**
+   * Component size
+   *
+   * @default 'sm'
+   */
   size?: MantineSize;
 
   /** Props passed to previous control button */

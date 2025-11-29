@@ -66,10 +66,18 @@ export interface AutocompleteProps
   /** Props passed to the clear button */
   clearButtonProps?: InputClearButtonProps;
 
-  /** If set, the clear button is displayed when the component has a value @default `false` */
+  /**
+   * If set, the clear button is displayed when the component has a value
+   *
+   * @default `false`
+   */
   clearable?: boolean;
 
-  /** If set, the highlighted option is selected when the input loses focus @default `false` */
+  /**
+   * If set, the highlighted option is selected when the input loses focus
+   *
+   * @default `false`
+   */
   autoSelectOnBlur?: boolean;
 }
 

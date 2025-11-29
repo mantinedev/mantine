@@ -38,31 +38,59 @@ export interface SemiCircleProgressProps
   /** Progress value from `0` to `100` */
   value: number;
 
-  /** Diameter of the svg in px @default `200` */
+  /**
+   * Diameter of the svg in px
+   *
+   * @default `200`
+   */
   size?: number;
 
-  /** Circle thickness in px @default `12` */
+  /**
+   * Circle thickness in px
+   *
+   * @default `12`
+   */
   thickness?: number;
 
-  /** Orientation of the circle @default `'up'` */
+  /**
+   * Orientation of the circle
+   *
+   * @default `'up'`
+   */
   orientation?: 'up' | 'down';
 
-  /** Direction from which the circle is filled @default `'left-to-right'` */
+  /**
+   * Direction from which the circle is filled
+   *
+   * @default `'left-to-right'`
+   */
   fillDirection?: 'right-to-left' | 'left-to-right';
 
-  /** Key of `theme.colors` or any valid CSS color value @default `theme.primaryColor` */
+  /**
+   * Key of `theme.colors` or any valid CSS color value
+   *
+   * @default `theme.primaryColor`
+   */
   filledSegmentColor?: MantineColor;
 
   /** Key of `theme.colors` or any valid CSS color value, by default the value is determined based on the color scheme value */
   emptySegmentColor?: MantineColor;
 
-  /** Transition duration of filled section styles changes in ms @default `0` */
+  /**
+   * Transition duration of filled section styles changes in ms
+   *
+   * @default `0`
+   */
   transitionDuration?: number;
 
   /** Label rendered inside the circle */
   label?: React.ReactNode;
 
-  /** Label position relative to the circle center @default `'bottom'` */
+  /**
+   * Label position relative to the circle center
+   *
+   * @default `'bottom'`
+   */
   labelPosition?: 'center' | 'bottom';
 }
 

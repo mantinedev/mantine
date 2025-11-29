@@ -65,7 +65,11 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
   /** If set, arrow key presses loop though items (first to last and last to first) */
   loop?: boolean;
 
-  /** If set, the dropdown is closed when the `Escape` key is pressed @default `true` */
+  /**
+   * If set, the dropdown is closed when the `Escape` key is pressed
+   *
+   * @default `true`
+   */
   closeOnEscape?: boolean;
 
   /** Event trigger to open menu */
@@ -80,16 +84,28 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
   /** If set, the dropdown is closed on outside clicks */
   closeOnClickOutside?: boolean;
 
-  /** Events that trigger outside clicks @default `['mousedown', 'touchstart', 'keydown']` */
+  /**
+   * Events that trigger outside clicks
+   *
+   * @default `['mousedown', 'touchstart', 'keydown']`
+   */
   clickOutsideEvents?: string[];
 
   /** Id base to create accessibility connections */
   id?: string;
 
-  /** Set the `tabindex` on all menu items @default `-1` */
+  /**
+   * Set the `tabindex` on all menu items
+   *
+   * @default `-1`
+   */
   menuItemTabIndex?: -1 | 0;
 
-  /** If set, focus placeholder element is added before items @default `true` */
+  /**
+   * If set, focus placeholder element is added before items
+   *
+   * @default `true`
+   */
   withInitialFocusPlaceholder?: boolean;
 }
 

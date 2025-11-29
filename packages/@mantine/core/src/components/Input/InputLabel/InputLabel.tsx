@@ -28,10 +28,18 @@ export interface InputLabelProps
   /** If set, the required asterisk is displayed next to the label */
   required?: boolean;
 
-  /** Controls label `font-size` @default `'sm'` */
+  /**
+   * Controls label `font-size`
+   *
+   * @default `'sm'`
+   */
   size?: MantineFontSize;
 
-  /** Root element of the label @default `'label'` */
+  /**
+   * Root element of the label
+   *
+   * @default `'label'`
+   */
   labelElement?: 'label' | 'div';
 }
 

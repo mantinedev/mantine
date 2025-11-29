@@ -73,7 +73,11 @@ export interface TimePickerProps
   /** Called when the value changes */
   onChange?: (value: string) => void;
 
-  /** Determines whether the clear button should be displayed @default `false` */
+  /**
+   * Determines whether the clear button should be displayed
+   *
+   * @default `false`
+   */
   clearable?: boolean;
 
   /** `name` prop passed down to the hidden input */
@@ -91,16 +95,32 @@ export interface TimePickerProps
   /** Time format, `'24h'` by default */
   format?: TimePickerFormat;
 
-  /** Number by which hours are incremented/decremented @default `1` */
+  /**
+   * Number by which hours are incremented/decremented
+   *
+   * @default `1`
+   */
   hoursStep?: number;
 
-  /** Number by which minutes are incremented/decremented @default `1` */
+  /**
+   * Number by which minutes are incremented/decremented
+   *
+   * @default `1`
+   */
   minutesStep?: number;
 
-  /** Number by which seconds are incremented/decremented @default `1` */
+  /**
+   * Number by which seconds are incremented/decremented
+   *
+   * @default `1`
+   */
   secondsStep?: number;
 
-  /** Determines whether the seconds input should be displayed @default `false` */
+  /**
+   * Determines whether the seconds input should be displayed
+   *
+   * @default `false`
+   */
   withSeconds?: boolean;
 
   /** `aria-label` of hours input */
@@ -115,10 +135,18 @@ export interface TimePickerProps
   /** `aria-label` of am/pm input */
   amPmInputLabel?: string;
 
-  /** Labels used for am/pm values @default `{ am: 'AM', pm: 'PM' }` */
+  /**
+   * Labels used for am/pm values
+   *
+   * @default `{ am: 'AM', pm: 'PM' }`
+   */
   amPmLabels?: TimePickerAmPmLabels;
 
-  /** Determines whether the dropdown with time controls list should be visible when the input has focus @default `false` */
+  /**
+   * Determines whether the dropdown with time controls list should be visible when the input has focus
+   *
+   * @default `false`
+   */
   withDropdown?: boolean;
 
   /** Props passed down to `Popover` component */
@@ -172,22 +200,42 @@ export interface TimePickerProps
   /** Time presets to display in the dropdown */
   presets?: TimePickerPresets;
 
-  /** Maximum height of the content displayed in the dropdown in px @default `200` */
+  /**
+   * Maximum height of the content displayed in the dropdown in px
+   *
+   * @default `200`
+   */
   maxDropdownContentHeight?: number;
 
   /** Props passed down to all underlying `ScrollArea` components */
   scrollAreaProps?: ScrollAreaProps;
 
-  /** If set, the time controls list are reversed, @default `false` */
+  /**
+   * If set, the time controls list are reversed,
+   *
+   * @default `false`
+   */
   reverseTimeControlsList?: boolean;
 
-  /** Hours input placeholder, @default `--` */
+  /**
+   * Hours input placeholder,
+   *
+   * @default `--`
+   */
   hoursPlaceholder?: string;
 
-  /** Minutes input placeholder, @default `--` */
+  /**
+   * Minutes input placeholder,
+   *
+   * @default `--`
+   */
   minutesPlaceholder?: string;
 
-  /** Seconds input placeholder, @default `--` */
+  /**
+   * Seconds input placeholder,
+   *
+   * @default `--`
+   */
   secondsPlaceholder?: string;
 }
 

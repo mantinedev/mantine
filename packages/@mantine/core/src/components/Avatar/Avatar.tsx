@@ -37,16 +37,32 @@ export type AvatarCssVariables = {
 };
 
 export interface AvatarProps extends BoxProps, StylesApiProps<AvatarFactory> {
-  /** Width and height of the avatar, numbers are converted to rem @default `'md'` */
+  /**
+   * Width and height of the avatar, numbers are converted to rem
+   *
+   * @default `'md'`
+   */
   size?: MantineSize | (string & {}) | number;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius @default `'1000px'` */
+  /**
+   * Key of `theme.radius` or any valid CSS value to set border-radius
+   *
+   * @default `'1000px'`
+   */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color @default `'gray'` */
+  /**
+   * Key of `theme.colors` or any valid CSS color
+   *
+   * @default `'gray'`
+   */
   color?: MantineColor | 'initials';
 
-  /** Gradient configuration for `variant="gradient"` @default `theme.defaultGradient` */
+  /**
+   * Gradient configuration for `variant="gradient"`
+   *
+   * @default `theme.defaultGradient`
+   */
   gradient?: MantineGradient;
 
   /** Image url, if the image cannot be loaded or `src={null}`, then placeholder is displayed instead */

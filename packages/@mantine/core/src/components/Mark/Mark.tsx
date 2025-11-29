@@ -19,7 +19,11 @@ export type MarkCssVariables = {
 };
 
 export interface MarkProps extends BoxProps, StylesApiProps<MarkFactory>, ElementProps<'mark'> {
-  /** Key of `theme.colors` or any valid CSS color @default `yellow` */
+  /**
+   * Key of `theme.colors` or any valid CSS color
+   *
+   * @default `yellow`
+   */
   color?: MantineColor;
 }
 

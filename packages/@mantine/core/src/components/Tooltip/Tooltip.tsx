@@ -37,7 +37,11 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Open delay in ms */
   openDelay?: number;
 
-  /** Close delay in ms @default `0` */
+  /**
+   * Close delay in ms
+   *
+   * @default `0`
+   */
   closeDelay?: number;
 
   /** Controlled opened state */
@@ -46,28 +50,60 @@ export interface TooltipProps extends TooltipBaseProps {
   /** Uncontrolled tooltip initial opened state */
   defaultOpened?: boolean;
 
-  /** Space between target element and tooltip in px @default `5` */
+  /**
+   * Space between target element and tooltip in px
+   *
+   * @default `5`
+   */
   offset?: number | FloatingAxesOffsets;
 
-  /** If set, the tooltip has an arrow @default `false` */
+  /**
+   * If set, the tooltip has an arrow
+   *
+   * @default `false`
+   */
   withArrow?: boolean;
 
-  /** Arrow size in px @default `4` */
+  /**
+   * Arrow size in px
+   *
+   * @default `4`
+   */
   arrowSize?: number;
 
-  /** Arrow offset in px @default `5` */
+  /**
+   * Arrow offset in px
+   *
+   * @default `5`
+   */
   arrowOffset?: number;
 
-  /** Arrow `border-radius` in px @default `0` */
+  /**
+   * Arrow `border-radius` in px
+   *
+   * @default `0`
+   */
   arrowRadius?: number;
 
-  /** Arrow position relative to the tooltip @default `side` */
+  /**
+   * Arrow position relative to the tooltip
+   *
+   * @default `side`
+   */
   arrowPosition?: ArrowPosition;
 
-  /** Props passed down to the `Transition` component that used to animate tooltip presence, use to configure duration and animation type @default `{ duration: 100, transition: 'fade' }` */
+  /**
+   * Props passed down to the `Transition` component that used to animate tooltip presence, use to configure duration and animation type
+   *
+   * @default `{ duration: 100, transition: 'fade' }`
+   */
   transitionProps?: TransitionOverride;
 
-  /** Determines which events will be used to show tooltip @default `{ hover: true, focus: false, touch: false }` */
+  /**
+   * Determines which events will be used to show tooltip
+   *
+   * @default `{ hover: true, focus: false, touch: false }`
+   */
   events?: { hover: boolean; focus: boolean; touch: boolean };
 
   /** @deprecated: Do not use, will be removed in 9.0 */
@@ -79,7 +115,11 @@ export interface TooltipProps extends TooltipBaseProps {
   /** If set, the tooltip is not unmounted from the DOM when hidden, `display: none` styles are applied instead */
   keepMounted?: boolean;
 
-  /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) @default `'absolute'` */
+  /**
+   * Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy)
+   *
+   * @default `'absolute'`
+   */
   floatingStrategy?: FloatingStrategy;
 
   /** If set, adjusts text color based on background color for `filled` variant */

@@ -18,7 +18,11 @@ export interface TimeInputProps
     __BaseInputProps,
     StylesApiProps<TimeInputFactory>,
     ElementProps<'input', 'size'> {
-  /** Determines whether seconds input should be displayed @default `false` */
+  /**
+   * Determines whether seconds input should be displayed
+   *
+   * @default `false`
+   */
   withSeconds?: boolean;
 
   /** Minimum possible string time, if `withSeconds` is true, time should be in format HH:mm:ss, otherwise HH:mm */

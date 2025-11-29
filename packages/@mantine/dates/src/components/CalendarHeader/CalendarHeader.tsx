@@ -58,19 +58,35 @@ export interface CalendarHeaderSettings {
   /** Disables previous control */
   previousDisabled?: boolean;
 
-  /** Determines whether next level button should be enabled @default `true` */
+  /**
+   * Determines whether next level button should be enabled
+   *
+   * @default `true`
+   */
   hasNextLevel?: boolean;
 
-  /** Determines whether next control should be rendered @default `true` */
+  /**
+   * Determines whether next control should be rendered
+   *
+   * @default `true`
+   */
   withNext?: boolean;
 
-  /** Determines whether previous control should be rendered @default `true` */
+  /**
+   * Determines whether previous control should be rendered
+   *
+   * @default `true`
+   */
   withPrevious?: boolean;
 
   /** Component size */
   size?: MantineSize;
 
-  /** Controls order @default `['previous', 'level', 'next']` */
+  /**
+   * Controls order
+   *
+   * @default `['previous', 'level', 'next']`
+   */
   headerControlsOrder?: ('previous' | 'next' | 'level')[];
 }
 

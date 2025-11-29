@@ -46,19 +46,35 @@ export interface CheckboxProps
   /** `label` associated with the checkbox */
   label?: React.ReactNode;
 
-  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default `theme.primaryColor` */
+  /**
+   * Key of `theme.colors` or any valid CSS color to set input background color in checked state
+   *
+   * @default `theme.primaryColor`
+   */
   color?: MantineColor;
 
-  /** Controls size of the component @default `'sm'` */
+  /**
+   * Controls size of the component
+   *
+   * @default `'sm'`
+   */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /**
+   * Key of `theme.radius` or any valid CSS value to set `border-radius`
+   *
+   * @default `theme.defaultRadius`
+   */
   radius?: MantineRadius;
 
   /** Props passed down to the root element */
   wrapperProps?: React.ComponentPropsWithoutRef<'div'> & DataAttributes;
 
-  /** Position of the label relative to the input @default `'right'` */
+  /**
+   * Position of the label relative to the input
+   *
+   * @default `'right'`
+   */
   labelPosition?: 'left' | 'right';
 
   /** Description displayed below the label */

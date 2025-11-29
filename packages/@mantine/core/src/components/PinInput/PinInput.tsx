@@ -42,16 +42,32 @@ export interface PinInputProps
   /** Hidden input `form` attribute */
   form?: string;
 
-  /** Key of `theme.spacing` or any valid CSS value to set `gap` between inputs, numbers are converted to rem @default `'md'` */
+  /**
+   * Key of `theme.spacing` or any valid CSS value to set `gap` between inputs, numbers are converted to rem
+   *
+   * @default `'md'`
+   */
   gap?: MantineSpacing;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
+  /**
+   * Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem
+   *
+   * @default `theme.defaultRadius`
+   */
   radius?: MantineRadius;
 
-  /** Controls inputs `width` and `height` @default `'sm'` */
+  /**
+   * Controls inputs `width` and `height`
+   *
+   * @default `'sm'`
+   */
   size?: MantineSize;
 
-  /** If set, the first input is focused when component is mounted @default `false` */
+  /**
+   * If set, the first input is focused when component is mounted
+   *
+   * @default `false`
+   */
   autoFocus?: boolean;
 
   /** Controlled component value */
@@ -66,13 +82,25 @@ export interface PinInputProps
   /** Called when all inputs have value */
   onComplete?: (value: string) => void;
 
-  /** Inputs placeholder @default `'○'` */
+  /**
+   * Inputs placeholder
+   *
+   * @default `'○'`
+   */
   placeholder?: string;
 
-  /** Determines whether focus should be moved automatically to the next input once filled @default `true` */
+  /**
+   * Determines whether focus should be moved automatically to the next input once filled
+   *
+   * @default `true`
+   */
   manageFocus?: boolean;
 
-  /** Determines whether `autocomplete="one-time-code"` attribute should be set on all inputs @default `true` */
+  /**
+   * Determines whether `autocomplete="one-time-code"` attribute should be set on all inputs
+   *
+   * @default `true`
+   */
   oneTimeCode?: boolean;
 
   /** Base id used to generate unique ids for inputs */
@@ -84,13 +112,25 @@ export interface PinInputProps
   /** Sets `aria-invalid` attribute and applies error styles to all inputs */
   error?: boolean;
 
-  /** Determines which values can be entered @default `'alphanumeric'` */
+  /**
+   * Determines which values can be entered
+   *
+   * @default `'alphanumeric'`
+   */
   type?: 'alphanumeric' | 'number' | RegExp;
 
-  /** Changes input type to `"password"` @default `false` */
+  /**
+   * Changes input type to `"password"`
+   *
+   * @default `false`
+   */
   mask?: boolean;
 
-  /** Number of inputs @default `4` */
+  /**
+   * Number of inputs
+   *
+   * @default `4`
+   */
   length?: number;
 
   /** If set, the user cannot edit the value */

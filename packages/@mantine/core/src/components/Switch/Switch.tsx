@@ -58,13 +58,21 @@ export interface SwitchProps
   /** Inner label when the `Switch` is in checked state */
   onLabel?: React.ReactNode;
 
-  /** Key of `theme.colors` or any valid CSS color to set input color in checked state @default `theme.primaryColor` */
+  /**
+   * Key of `theme.colors` or any valid CSS color to set input color in checked state
+   *
+   * @default `theme.primaryColor`
+   */
   color?: MantineColor;
 
   /** Controls size of all elements */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` @default `'xl'` */
+  /**
+   * Key of `theme.radius` or any valid CSS value to set `border-radius,`
+   *
+   * @default `'xl'`
+   */
   radius?: MantineRadius;
 
   /** Props passed down to the root element */
@@ -73,7 +81,11 @@ export interface SwitchProps
   /** Icon inside the thumb of the switch */
   thumbIcon?: React.ReactNode;
 
-  /** Position of the label relative to the input @default `'right'` */
+  /**
+   * Position of the label relative to the input
+   *
+   * @default `'right'`
+   */
   labelPosition?: 'left' | 'right';
 
   /** Description displayed below the label */
@@ -85,7 +97,11 @@ export interface SwitchProps
   /** Assigns ref of the root element */
   rootRef?: React.ForwardedRef<HTMLDivElement>;
 
-  /** If set, the indicator will be displayed inside thumb @default `true` */
+  /**
+   * If set, the indicator will be displayed inside thumb
+   *
+   * @default `true`
+   */
   withThumbIndicator?: boolean;
 }
 

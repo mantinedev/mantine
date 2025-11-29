@@ -46,10 +46,18 @@ export interface FunnelChartProps
   /** Data used to render chart */
   data: FunnelChartCell[];
 
-  /** Determines whether the tooltip should be displayed when a section is hovered @default `true` */
+  /**
+   * Determines whether the tooltip should be displayed when a section is hovered
+   *
+   * @default `true`
+   */
   withTooltip?: boolean;
 
-  /** Tooltip animation duration in ms @default `0` */
+  /**
+   * Tooltip animation duration in ms
+   *
+   * @default `0`
+   */
   tooltipAnimationDuration?: number;
 
   /** Props passed down to `Tooltip` recharts component */
@@ -61,25 +69,49 @@ export interface FunnelChartProps
   /** Controls color of the segments stroke, by default depends on color scheme */
   strokeColor?: MantineColor;
 
-  /** Controls text color of all labels @default `'white'` */
+  /**
+   * Controls text color of all labels
+   *
+   * @default `'white'`
+   */
   labelColor?: MantineColor;
 
-  /** Controls chart width and height @default `300` */
+  /**
+   * Controls chart width and height
+   *
+   * @default `300`
+   */
   size?: number;
 
-  /** Controls width of segments stroke @default `1` */
+  /**
+   * Controls width of segments stroke
+   *
+   * @default `1`
+   */
   strokeWidth?: number;
 
-  /** Determines whether each segment should have associated label @default `false` */
+  /**
+   * Determines whether each segment should have associated label
+   *
+   * @default `false`
+   */
   withLabels?: boolean;
 
-  /** Controls labels position relative to the segment @default `'right'` */
+  /**
+   * Controls labels position relative to the segment
+   *
+   * @default `'right'`
+   */
   labelsPosition?: 'right' | 'left' | 'inside';
 
   /** A function to format values inside the tooltip and labels */
   valueFormatter?: (value: number) => string;
 
-  /** Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment. @default `'all'` */
+  /**
+   * Determines which data is displayed in the tooltip. `'all'` – display all values, `'segment'` – display only hovered segment.
+   *
+   * @default `'all'`
+   */
   tooltipDataSource?: 'segment' | 'all';
 
   /** Additional elements rendered inside `FunnelChart` component */

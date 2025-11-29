@@ -24,7 +24,11 @@ export interface AngleSliderProps
   extends BoxProps,
     StylesApiProps<AngleSliderFactory>,
     ElementProps<'div', 'onChange'> {
-  /** Step between values @default `1` */
+  /**
+   * Step between values
+   *
+   * @default `1`
+   */
   step?: number;
 
   /** Controlled component value */
@@ -45,13 +49,21 @@ export interface AngleSliderProps
   /** Called in `onMouseUp` and `onTouchEnd` */
   onScrubEnd?: () => void;
 
-  /** If set, the label is displayed inside the slider @default `true` */
+  /**
+   * If set, the label is displayed inside the slider
+   *
+   * @default `true`
+   */
   withLabel?: boolean;
 
   /** Array of marks displayed on the slider */
   marks?: { value: number; label?: string }[];
 
-  /** Slider size in px @default `60px` */
+  /**
+   * Slider size in px
+   *
+   * @default `60px`
+   */
   size?: number;
 
   /** Size of the thumb in px. Calculated based on the `size` value by default. */
@@ -63,7 +75,11 @@ export interface AngleSliderProps
   /** Sets `data-disabled` attribute, disables interactions */
   disabled?: boolean;
 
-  /** If set, the selection is allowed only from the given marks array @default `false` */
+  /**
+   * If set, the selection is allowed only from the given marks array
+   *
+   * @default `false`
+   */
   restrictToMarks?: boolean;
 
   /** Props passed down to the hidden input */

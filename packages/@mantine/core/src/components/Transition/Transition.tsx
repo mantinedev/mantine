@@ -10,13 +10,25 @@ export interface TransitionProps {
   /** Transition name or object */
   transition?: MantineTransition;
 
-  /** Transition duration in ms @default `250` */
+  /**
+   * Transition duration in ms
+   *
+   * @default `250`
+   */
   duration?: number;
 
-  /** Exit transition duration in ms @default `250` */
+  /**
+   * Exit transition duration in ms
+   *
+   * @default `250`
+   */
   exitDuration?: number;
 
-  /** Transition timing function @default `theme.transitionTimingFunction` */
+  /**
+   * Transition timing function
+   *
+   * @default `theme.transitionTimingFunction`
+   */
   timingFunction?: string;
 
   /** Determines whether component should be mounted to the DOM */

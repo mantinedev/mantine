@@ -30,13 +30,25 @@ export interface BlockquoteProps
   /** Blockquote icon, displayed at the top left side */
   icon?: React.ReactNode;
 
-  /** Controls icon `width` and `height`, numbers are converted to rem @default `40` */
+  /**
+   * Controls icon `width` and `height`, numbers are converted to rem
+   *
+   * @default `40`
+   */
   iconSize?: number | string;
 
-  /** Key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
+  /**
+   * Key of `theme.colors` or any valid CSS color
+   *
+   * @default `theme.primaryColor`
+   */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /**
+   * Key of `theme.radius` or any valid CSS value to set `border-radius`
+   *
+   * @default `theme.defaultRadius`
+   */
   radius?: MantineRadius;
 
   /** Reference to a cited quote */

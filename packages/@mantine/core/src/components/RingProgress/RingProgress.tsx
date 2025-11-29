@@ -37,10 +37,18 @@ export interface RingProgressProps
   /** Label displayed in the center of the ring */
   label?: React.ReactNode;
 
-  /** Ring thickness @default 12 */
+  /**
+   * Ring thickness
+   *
+   * @default 12
+   */
   thickness?: number;
 
-  /** Width and height of the progress ring @default 120 */
+  /**
+   * Width and height of the progress ring
+   *
+   * @default 120
+   */
   size?: number;
 
   /** Sets whether the edges of the progress circle are rounded */
@@ -52,7 +60,11 @@ export interface RingProgressProps
   /** Color of the root section, key of theme.colors or CSS color value */
   rootColor?: MantineColor;
 
-  /** Transition duration of filled section styles changes in ms @default `0` */
+  /**
+   * Transition duration of filled section styles changes in ms
+   *
+   * @default `0`
+   */
   transitionDuration?: number;
 }
 

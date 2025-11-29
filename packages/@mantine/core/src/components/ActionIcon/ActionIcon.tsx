@@ -53,16 +53,32 @@ export interface ActionIconProps extends BoxProps, StylesApiProps<ActionIconFact
   /** Props passed down to the `Loader` component. Ignored when `loading` prop is not set. */
   loaderProps?: LoaderProps;
 
-  /** Controls width and height of the button. Numbers are converted to rem. @default `'md'`. */
+  /**
+   * Controls width and height of the button. Numbers are converted to rem.
+   *
+   * @default `'md'`.
+   */
   size?: MantineSize | `input-${MantineSize}` | (string & {}) | number;
 
-  /** Key of `theme.colors` or any valid CSS color. @default `theme.primaryColor`. */
+  /**
+   * Key of `theme.colors` or any valid CSS color.
+   *
+   * @default `theme.primaryColor`.
+   */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default `theme.defaultRadius` */
+  /**
+   * Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem.
+   *
+   * @default `theme.defaultRadius`
+   */
   radius?: MantineRadius;
 
-  /** Gradient values used with `variant="gradient"`. @default `theme.defaultGradient`. */
+  /**
+   * Gradient values used with `variant="gradient"`.
+   *
+   * @default `theme.defaultGradient`.
+   */
   gradient?: MantineGradient;
 
   /** Sets `disabled` attribute, prevents interactions */

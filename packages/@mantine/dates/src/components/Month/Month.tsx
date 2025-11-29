@@ -65,10 +65,18 @@ export interface MonthSettings {
   /** `dayjs` locale, the default value is defined by `DatesProvider` */
   locale?: string;
 
-  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default `1` – Monday */
+  /**
+   * Number 0-6, where 0 – Sunday and 6 – Saturday.
+   *
+   * @default `1` – Monday
+   */
   firstDayOfWeek?: DayOfWeek;
 
-  /** `dayjs` format for weekdays names @default `'dd'` */
+  /**
+   * `dayjs` format for weekdays names
+   *
+   * @default `'dd'`
+   */
   weekdayFormat?: DateLabelFormat;
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
@@ -91,10 +99,18 @@ export interface MonthSettings {
   /** Controls day value rendering */
   renderDay?: RenderDay;
 
-  /** Determines whether outside dates should be hidden @default `false` */
+  /**
+   * Determines whether outside dates should be hidden
+   *
+   * @default `false`
+   */
   hideOutsideDates?: boolean;
 
-  /** Determines whether weekdays row should be hidden @default `false` */
+  /**
+   * Determines whether weekdays row should be hidden
+   *
+   * @default `false`
+   */
   hideWeekdays?: boolean;
 
   /** Assigns `aria-label` to `Day` components based on date */
@@ -103,13 +119,25 @@ export interface MonthSettings {
   /** Controls size */
   size?: MantineSize;
 
-  /** Determines whether controls should be separated by space @default `true` */
+  /**
+   * Determines whether controls should be separated by space
+   *
+   * @default `true`
+   */
   withCellSpacing?: boolean;
 
-  /** Determines whether today should be highlighted with a border @default `false` */
+  /**
+   * Determines whether today should be highlighted with a border
+   *
+   * @default `false`
+   */
   highlightToday?: boolean;
 
-  /** Determines whether week numbers should be displayed @default `false` */
+  /**
+   * Determines whether week numbers should be displayed
+   *
+   * @default `false`
+   */
   withWeekNumbers?: boolean;
 }
 

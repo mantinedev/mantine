@@ -62,19 +62,35 @@ export interface __ColorPickerProps {
   /** Called when the user stops dragging one of the sliders or changes the value with keyboard */
   onChangeEnd?: (value: string) => void;
 
-  /** Color format @default `'hex'` */
+  /**
+   * Color format
+   *
+   * @default `'hex'`
+   */
   format?: ColorFormat;
 
-  /** Determines whether the color picker should be displayed @default `true` */
+  /**
+   * Determines whether the color picker should be displayed
+   *
+   * @default `true`
+   */
   withPicker?: boolean;
 
   /** A list of colors used to display swatches list below the color picker */
   swatches?: string[];
 
-  /** Number of swatches per row @default `7` */
+  /**
+   * Number of swatches per row
+   *
+   * @default `7`
+   */
   swatchesPerRow?: number;
 
-  /** Controls size of hue, alpha and saturation sliders @default `'md'` */
+  /**
+   * Controls size of hue, alpha and saturation sliders
+   *
+   * @default `'md'`
+   */
   size?: MantineSize | (string & {});
 }
 
@@ -85,10 +101,18 @@ export interface ColorPickerProps
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   __staticSelector?: string;
 
-  /** If set, the component takes 100% width of its container @default `false` */
+  /**
+   * If set, the component takes 100% width of its container
+   *
+   * @default `false`
+   */
   fullWidth?: boolean;
 
-  /** If set, interactive elements (sliders thumbs and swatches) are focusable with keyboard @default `true` */
+  /**
+   * If set, interactive elements (sliders thumbs and swatches) are focusable with keyboard
+   *
+   * @default `true`
+   */
   focusable?: boolean;
 
   /** Saturation slider `aria-label` */

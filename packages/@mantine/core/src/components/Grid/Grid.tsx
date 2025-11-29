@@ -23,25 +23,53 @@ export type GridCssVariables = {
 };
 
 export interface GridProps extends BoxProps, StylesApiProps<GridFactory>, ElementProps<'div'> {
-  /** Gutter between columns, key of `theme.spacing` or any valid CSS value @default `'md'` */
+  /**
+   * Gutter between columns, key of `theme.spacing` or any valid CSS value
+   *
+   * @default `'md'`
+   */
   gutter?: StyleProp<MantineSpacing>;
 
-  /** If set, columns in the last row expand to fill all available space @default `false` */
+  /**
+   * If set, columns in the last row expand to fill all available space
+   *
+   * @default `false`
+   */
   grow?: boolean;
 
-  /** Sets `justify-content` @default `flex-start` */
+  /**
+   * Sets `justify-content`
+   *
+   * @default `flex-start`
+   */
   justify?: React.CSSProperties['justifyContent'];
 
-  /** Sets `align-items` @default `stretch` */
+  /**
+   * Sets `align-items`
+   *
+   * @default `stretch`
+   */
   align?: React.CSSProperties['alignItems'];
 
-  /** Number of columns in each row @default `12` */
+  /**
+   * Number of columns in each row
+   *
+   * @default `12`
+   */
   columns?: number;
 
-  /** Sets `overflow` CSS property on the root element @default `'visible'` */
+  /**
+   * Sets `overflow` CSS property on the root element
+   *
+   * @default `'visible'`
+   */
   overflow?: React.CSSProperties['overflow'];
 
-  /** Type of queries used for responsive styles @default `'media'` */
+  /**
+   * Type of queries used for responsive styles
+   *
+   * @default `'media'`
+   */
   type?: 'media' | 'container';
 
   /** Breakpoints values, only used with `type="container"` */

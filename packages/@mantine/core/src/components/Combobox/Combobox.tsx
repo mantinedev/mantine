@@ -58,13 +58,25 @@ export interface ComboboxProps extends __PopoverProps, StylesApiProps<ComboboxFa
   /** Called when item is selected with the `Enter` key or by clicking it */
   onOptionSubmit?: (value: string, optionProps: ComboboxOptionProps) => void;
 
-  /** Controls items `font-size` and `padding` @default `'sm'` */
+  /**
+   * Controls items `font-size` and `padding`
+   *
+   * @default `'sm'`
+   */
   size?: MantineSize | (string & {});
 
-  /** Controls `padding` of the dropdown @default `4` */
+  /**
+   * Controls `padding` of the dropdown
+   *
+   * @default `4`
+   */
   dropdownPadding?: React.CSSProperties['padding'];
 
-  /** Determines whether selection should be reset when option is hovered @default `false` */
+  /**
+   * Determines whether selection should be reset when option is hovered
+   *
+   * @default `false`
+   */
   resetSelectionOnOptionHover?: boolean;
 
   /** Determines whether the `Combobox` value can be changed */

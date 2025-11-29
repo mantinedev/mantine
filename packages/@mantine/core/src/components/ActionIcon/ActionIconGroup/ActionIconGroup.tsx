@@ -20,10 +20,18 @@ export interface ActionIconGroupProps extends BoxProps, StylesApiProps<ActionIco
   /** `ActionIcon` and `ActionIcon.GroupSection` components only */
   children?: React.ReactNode;
 
-  /** Group orientation @default `'horizontal'` */
+  /**
+   * Group orientation
+   *
+   * @default `'horizontal'`
+   */
   orientation?: 'horizontal' | 'vertical';
 
-  /** `border-width` of the child components. @default `1` */
+  /**
+   * `border-width` of the child components.
+   *
+   * @default `1`
+   */
   borderWidth?: number | string;
 }
 

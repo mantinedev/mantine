@@ -19,7 +19,11 @@ export interface PillsInputFieldProps
   extends BoxProps,
     StylesApiProps<PillsInputFieldFactory>,
     ElementProps<'input', 'type'> {
-  /** Controls input styles when focused. If `auto` the input is hidden when not focused. If `visible` the input will always remain visible. @default `'visible'` */
+  /**
+   * Controls input styles when focused. If `auto` the input is hidden when not focused. If `visible` the input will always remain visible.
+   *
+   * @default `'visible'`
+   */
   type?: 'auto' | 'visible' | 'hidden';
 
   /** If set, cursor is changed to pointer */

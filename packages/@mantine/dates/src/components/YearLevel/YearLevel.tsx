@@ -20,7 +20,11 @@ import { MonthsList, MonthsListSettings, MonthsListStylesNames } from '../Months
 export type YearLevelStylesNames = MonthsListStylesNames | CalendarHeaderStylesNames;
 
 export interface YearLevelBaseSettings extends MonthsListSettings {
-  /** dayjs label format to display year label or a function that returns year label based on year value @default `"YYYY"` */
+  /**
+   * dayjs label format to display year label or a function that returns year label based on year value
+   *
+   * @default `"YYYY"`
+   */
   yearLabelFormat?: DateLabelFormat;
 }
 

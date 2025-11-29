@@ -23,7 +23,11 @@ export interface DrawerProps extends DrawerRootProps {
   /** Drawer title */
   title?: React.ReactNode;
 
-  /** If set, the overlay is displayed @default `true` */
+  /**
+   * If set, the overlay is displayed
+   *
+   * @default `true`
+   */
   withOverlay?: boolean;
 
   /** Props passed down to the `Overlay` component, can be used to configure opacity, `background-color`, styles and other properties */
@@ -32,7 +36,11 @@ export interface DrawerProps extends DrawerRootProps {
   /** Drawer content */
   children?: React.ReactNode;
 
-  /** If set, the close button is displayed @default `true` */
+  /**
+   * If set, the close button is displayed
+   *
+   * @default `true`
+   */
   withCloseButton?: boolean;
 
   /** Props passed down to the close button */
