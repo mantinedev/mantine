@@ -5,6 +5,8 @@ import {
   ElementProps,
   factory,
   Factory,
+  getRadius,
+  MantineRadius,
   StylesApiProps,
   UnstyledButton,
   useDirection,
@@ -17,7 +19,7 @@ import classes from './ScheduleHeader.module.css';
 export type ScheduleHeaderControlStylesNames = 'headerControl';
 export type ScheduleHeaderControlVariant = string;
 export type ScheduleHeaderControlCssVariables = {
-  control: '--test';
+  headerControl: '--control-radius';
 };
 
 export interface ScheduleHeaderControlProps
@@ -31,6 +33,9 @@ export interface ScheduleHeaderControlProps
 
   /** Removes inline padding */
   square?: boolean;
+
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  radius?: MantineRadius;
 }
 
 export type ScheduleHeaderControlFactory = Factory<{
@@ -43,9 +48,9 @@ export type ScheduleHeaderControlFactory = Factory<{
 
 const defaultProps = {} satisfies Partial<ScheduleHeaderControlProps>;
 
-const varsResolver = createVarsResolver<ScheduleHeaderControlFactory>(() => ({
-  control: {
-    '--test': 'test',
+const varsResolver = createVarsResolver<ScheduleHeaderControlFactory>((_theme, { radius }) => ({
+  headerControl: {
+    '--control-radius': radius === undefined ? undefined : getRadius(radius),
   },
 }));
 
@@ -63,6 +68,7 @@ export const ScheduleHeaderControl = factory<ScheduleHeaderControlFactory>((_pro
     attributes,
     active,
     square,
+    radius,
     ...others
   } = props;
 

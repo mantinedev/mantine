@@ -5,7 +5,12 @@ export default { title: 'schedule/MonthYearSelect' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <MonthYearSelect className="test" />
+      <MonthYearSelect
+        yearValue={2025}
+        monthValue={10}
+        popoverProps={{ opened: true }}
+        radius="md"
+      />
     </div>
   );
 }

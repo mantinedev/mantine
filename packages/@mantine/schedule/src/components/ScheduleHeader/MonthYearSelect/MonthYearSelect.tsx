@@ -4,6 +4,8 @@ import {
   ElementProps,
   factory,
   Factory,
+  getRadius,
+  MantineRadius,
   Popover,
   PopoverProps,
   StylesApiProps,
@@ -12,7 +14,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { DateLabelFormat } from '../../../types';
-import { getMonthsList, getYearsList } from '../../../utils';
+import { formatDate, getMonthsList, getYearsList } from '../../../utils';
 import { useScheduleContext } from '../../Schedule/Schedule.context';
 import { ScheduleHeaderControl } from '../ScheduleHeaderControl';
 import classes from './MonthYearSelect.module.css';
@@ -20,10 +22,12 @@ import classes from './MonthYearSelect.module.css';
 export type MonthYearSelectStylesNames =
   | 'monthYearSelectTarget'
   | 'monthYearSelectDropdown'
-  | 'monthYearSelectControl';
+  | 'monthYearSelectControl'
+  | 'monthYearSelectList'
+  | 'monthYearSelectLabel';
 
 export type MonthYearSelectCssVariables = {
-  root: '--test';
+  monthYearSelectDropdown: '--control-radius';
 };
 
 export interface MonthYearSelectProps
@@ -45,10 +49,10 @@ export interface MonthYearSelectProps
   endYear?: number;
 
   /** Current year value (e.g. `2025`) */
-  yearValue?: number;
+  yearValue: number;
 
   /** Current month value (0-11) */
-  monthValue?: number;
+  monthValue: number;
 
   /** Called with year value (e.g. `2025`) when year is selected in the dropdown */
   onYearChange?: (year: number) => void;
@@ -58,6 +62,12 @@ export interface MonthYearSelectProps
 
   /** Format for displaying months in the dropdown, dayjs format or custom formatter function @default `'MMM'` */
   monthsListFormat?: DateLabelFormat;
+
+  /** Format for displaying month label in the control, dayjs format @default `'MMMM YYYY'` */
+  labelFormat?: DateLabelFormat;
+
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  radius?: MantineRadius;
 }
 
 export type MonthYearSelectFactory = Factory<{
@@ -69,9 +79,9 @@ export type MonthYearSelectFactory = Factory<{
 
 const defaultProps = {} satisfies Partial<MonthYearSelectProps>;
 
-const varsResolver = createVarsResolver<MonthYearSelectFactory>(() => ({
-  root: {
-    '--test': 'test',
+const varsResolver = createVarsResolver<MonthYearSelectFactory>((_theme, { radius }) => ({
+  monthYearSelectDropdown: {
+    '--control-radius': radius === undefined ? undefined : getRadius(radius),
   },
 }));
 
@@ -95,6 +105,8 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
     monthsListFormat,
     monthValue,
     yearValue,
+    labelFormat,
+    radius,
     ...others
   } = props;
 
@@ -149,24 +161,32 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
       position="bottom-start"
       transitionProps={{ duration: 0 }}
       __staticSelector={__staticSelector}
+      trapFocus
+      radius={radius || 'var(--schedule-radius, var(--mantine-radius-default))'}
       {...popoverProps}
     >
       <Popover.Target>
         <ScheduleHeaderControl
           {...getStyles('monthYearSelectTarget')}
           __staticSelector={__staticSelector}
+          radius={radius}
           {...others}
         >
-          Hello
+          {formatDate({
+            locale: ctx.getLocale(locale),
+            date: new Date(yearValue, monthValue),
+            format: labelFormat || 'MMMM YYYY',
+          })}
         </ScheduleHeaderControl>
       </Popover.Target>
+
       <Popover.Dropdown {...getStyles('monthYearSelectDropdown')}>
-        <div>
-          <div>{ctx.labels.month}</div>
+        <div {...getStyles('monthYearSelectList')}>
+          <div {...getStyles('monthYearSelectLabel')}>{ctx.labels.month}</div>
           {months}
         </div>
-        <div>
-          <div>{ctx.labels.year}</div>
+        <div {...getStyles('monthYearSelectList')}>
+          <div {...getStyles('monthYearSelectLabel')}>{ctx.labels.year}</div>
           {years}
         </div>
       </Popover.Dropdown>

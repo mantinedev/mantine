@@ -1,0 +1,34 @@
+.monthYearSelectDropdown {
+  display: flex;
+  gap: var(--mantine-spacing-xs);
+}
+
+.monthYearSelectLabel {
+  font-weight: 600;
+  font-size: var(--mantine-font-size-sm);
+  padding-inline: 8px;
+  margin-bottom: 6px;
+}
+
+.monthYearSelectControl {
+  display: block;
+  width: 100%;
+  padding: 6px 8px;
+  font-size: var(--mantine-font-size-sm);
+  line-height: 1;
+  border-radius: var(--schedule-radius, var(--control-radius, var(--mantine-radius-default)));
+  font-variant-numeric: tabular-nums;
+
+  @mixin hover {
+    background-color: var(--mantine-color-default-hover);
+  }
+
+  &:where([data-active]) {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
+
+    @mixin hover {
+      background-color: var(--mantine-primary-color-filled-hover);
+    }
+  }
+}

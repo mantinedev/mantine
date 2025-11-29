@@ -7,6 +7,8 @@ import {
 
 const defaultProps: MonthYearSelectProps = {
   popoverProps: { opened: true },
+  yearValue: 2025,
+  monthValue: 10,
 };
 
 describe('@mantine/schedule/MonthYearSelect', () => {
@@ -24,6 +26,8 @@ describe('@mantine/schedule/MonthYearSelect', () => {
       'monthYearSelectDropdown',
       'monthYearSelectTarget',
       'monthYearSelectControl',
+      'monthYearSelectLabel',
+      'monthYearSelectList',
     ],
   });
 
