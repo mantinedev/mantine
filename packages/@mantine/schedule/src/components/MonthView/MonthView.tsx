@@ -174,6 +174,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     classNames: resolvedClassNames,
     styles: resolvedStyles,
     __staticSelector: __staticSelector || 'MonthView',
+    radius,
   };
 
   const ctx = useScheduleContext();

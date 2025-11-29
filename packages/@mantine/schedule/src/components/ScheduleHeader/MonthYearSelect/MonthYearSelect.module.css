@@ -5,7 +5,7 @@
 
 .monthYearSelectDropdown {
   display: flex;
-  gap: var(--mantine-spacing-xs);
+  gap: var(--mantine-spacing-sm);
   padding: var(--mantine-spacing-sm);
 }
 
