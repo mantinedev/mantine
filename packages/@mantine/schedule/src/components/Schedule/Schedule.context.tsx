@@ -13,6 +13,8 @@ export interface ScheduleLabels {
   next: string;
   previous: string;
   more: string;
+  selectMonth: string;
+  selectYear: string;
 }
 
 export interface ScheduleContextValue {
@@ -45,6 +47,8 @@ const defaultScheduleContextValue: ScheduleContextValue = {
     allDay: 'All day',
     weekday: 'Weekday',
     timeSlot: 'Time slot',
+    selectMonth: 'Select month',
+    selectYear: 'Select year',
   },
 };
 

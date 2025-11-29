@@ -1,6 +1,11 @@
+.monthYearSelectTarget {
+  text-transform: capitalize;
+}
+
 .monthYearSelectDropdown {
   display: flex;
   gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-sm);
 }
 
 .monthYearSelectLabel {
@@ -18,6 +23,7 @@
   line-height: 1;
   border-radius: var(--schedule-radius, var(--control-radius, var(--mantine-radius-default)));
   font-variant-numeric: tabular-nums;
+  text-transform: capitalize;
 
   @mixin hover {
     background-color: var(--mantine-color-default-hover);

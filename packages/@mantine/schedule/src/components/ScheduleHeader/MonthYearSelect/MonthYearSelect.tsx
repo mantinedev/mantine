@@ -1,6 +1,7 @@
 import {
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -68,6 +69,12 @@ export interface MonthYearSelectProps
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
+
+  /** Props passed down to year controls */
+  getYearControlProps?: (year: number) => React.ComponentProps<'button'> & DataAttributes;
+
+  /** Props passed down to month controls */
+  getMonthControlProps?: (month: number) => React.ComponentProps<'button'> & DataAttributes;
 }
 
 export type MonthYearSelectFactory = Factory<{
@@ -107,6 +114,8 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
     yearValue,
     labelFormat,
     radius,
+    getMonthControlProps,
+    getYearControlProps,
     ...others
   } = props;
 
@@ -131,30 +140,46 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
   const years = getYearsList({
     startYear: startYear || today.getFullYear() - 5,
     endYear: endYear || today.getFullYear() + 5,
-  }).map((year) => (
-    <UnstyledButton
-      key={year}
-      onClick={() => onYearChange?.(year)}
-      mod={{ type: 'year', active: year === yearValue }}
-      {...getStyles('monthYearSelectControl')}
-    >
-      {year}
-    </UnstyledButton>
-  ));
+  }).map((year) => {
+    const controlProps = getYearControlProps?.(year);
+    return (
+      <UnstyledButton
+        key={year}
+        onClick={() => onYearChange?.(year)}
+        mod={{ type: 'year', active: year === yearValue }}
+        aria-label={`${ctx.labels.selectYear} ${year}`}
+        {...controlProps}
+        {...getStyles('monthYearSelectControl', {
+          className: controlProps?.className,
+          style: controlProps?.style,
+        })}
+      >
+        {year}
+      </UnstyledButton>
+    );
+  });
 
   const months = getMonthsList({
     locale: ctx.getLocale(locale),
     format: monthsListFormat || 'MMMM',
-  }).map((month) => (
-    <UnstyledButton
-      key={month.name}
-      onClick={() => onMonthChange?.(month.month)}
-      mod={{ type: 'month', active: month.month === monthValue }}
-      {...getStyles('monthYearSelectControl')}
-    >
-      {month.name}
-    </UnstyledButton>
-  ));
+  }).map((month) => {
+    const controlProps = getMonthControlProps?.(month.month);
+    return (
+      <UnstyledButton
+        key={month.name}
+        onClick={() => onMonthChange?.(month.month)}
+        mod={{ type: 'month', active: month.month === monthValue }}
+        {...controlProps}
+        {...getStyles('monthYearSelectControl', {
+          className: controlProps?.className,
+          style: controlProps?.style,
+        })}
+        aria-label={`${ctx.labels.selectMonth} ${month.name}`}
+      >
+        {month.name}
+      </UnstyledButton>
+    );
+  });
 
   return (
     <Popover
