@@ -9,6 +9,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { MonthYearSelect } from './MonthYearSelect/MonthYearSelect';
 import {
   ScheduleHeaderControlStylesNames,
   ScheduleHeaderNext,
@@ -48,6 +49,7 @@ export type ScheduleHeaderFactory = Factory<{
     Next: typeof ScheduleHeaderNext;
     Today: typeof ScheduleHeaderToday;
     ViewSelect: typeof ScheduleHeaderViewSelect;
+    MonthYearSelect: typeof MonthYearSelect;
   };
 }>;
 
@@ -87,3 +89,4 @@ ScheduleHeader.Next = ScheduleHeaderNext;
 ScheduleHeader.Previous = ScheduleHeaderPrevious;
 ScheduleHeader.Today = ScheduleHeaderToday;
 ScheduleHeader.ViewSelect = ScheduleHeaderViewSelect;
+ScheduleHeader.MonthYearSelect = MonthYearSelect;
