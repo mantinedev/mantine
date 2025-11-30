@@ -3,6 +3,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -31,6 +32,7 @@ import {
   CombinedScheduleHeaderStylesNames,
   ScheduleHeader,
 } from '../ScheduleHeader/ScheduleHeader';
+import { ViewSelectProps } from '../ScheduleHeader/ScheduleHeaderViewSelect';
 import classes from './MonthView.module.css';
 
 export type MonthViewStylesNames =
@@ -112,8 +114,17 @@ export interface MonthViewProps
   /** Called when view level select button is clicked */
   onViewChange?: (view: ScheduleViewLevel) => void;
 
-  /** A list of views to display @default `['day', 'week', 'month', 'year']` */
-  views?: readonly ScheduleViewLevel[];
+  /** Props passed to previous month control */
+  previousControlProps?: React.ComponentProps<'button'> & DataAttributes;
+
+  /** Props passed to next month control */
+  nextControlProps?: React.ComponentProps<'button'> & DataAttributes;
+
+  /** Props passed to today control */
+  todayControlProps?: React.ComponentProps<'button'> & DataAttributes;
+
+  /** Props passed to view level select */
+  viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
 }
 
 export type MonthViewFactory = Factory<{
@@ -167,7 +178,10 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     withHeader,
     monthYearSelectProps,
     onViewChange,
-    views,
+    todayControlProps,
+    nextControlProps,
+    previousControlProps,
+    viewSelectProps,
     ...others
   } = props;
 
@@ -291,31 +305,45 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         <ScheduleHeader {...stylesApiProps}>
           <ScheduleHeader.Previous
             {...stylesApiProps}
-            onClick={() => onDateChange?.(toDateString(dayjs(date).subtract(1, 'month')))}
+            onClick={() =>
+              onDateChange?.(toDateString(dayjs(date).subtract(1, 'month').startOf('month')))
+            }
+            {...previousControlProps}
           />
+
           <ScheduleHeader.MonthYearSelect
             {...stylesApiProps}
             yearValue={dayjs(date).get('year')}
             monthValue={dayjs(date).get('month')}
-            onYearChange={(year) => onDateChange?.(toDateString(dayjs(date).set('year', year)))}
-            onMonthChange={(month) => onDateChange?.(toDateString(dayjs(date).set('month', month)))}
+            onYearChange={(year) =>
+              onDateChange?.(toDateString(dayjs(date).set('year', year).startOf('month')))
+            }
+            onMonthChange={(month) =>
+              onDateChange?.(toDateString(dayjs(date).set('month', month).startOf('month')))
+            }
             {...monthYearSelectProps}
           />
+
           <ScheduleHeader.Next
             {...stylesApiProps}
-            onClick={() => onDateChange?.(toDateString(dayjs(date).add(1, 'month')))}
+            onClick={() =>
+              onDateChange?.(toDateString(dayjs(date).add(1, 'month').startOf('month')))
+            }
+            {...nextControlProps}
           />
+
           <ScheduleHeader.Today
             {...stylesApiProps}
             onClick={() => onDateChange?.(toDateString(dayjs()))}
+            {...todayControlProps}
           />
 
           <ScheduleHeader.ViewSelect
             value="month"
             onChange={onViewChange}
-            views={views}
             ml="auto"
             {...stylesApiProps}
+            {...viewSelectProps}
           />
         </ScheduleHeader>
       )}

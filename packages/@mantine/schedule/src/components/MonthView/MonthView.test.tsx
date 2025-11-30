@@ -2,7 +2,7 @@ import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
-import { getWeekNumber } from '../../utils';
+import { getWeekNumber, toDateString } from '../../utils';
 import { ScheduleProvider } from '../Schedule/Schedule.context';
 import { MonthView, MonthViewProps, MonthViewStylesNames } from './MonthView';
 
@@ -283,5 +283,68 @@ describe('@mantine/core/MonthView', () => {
     const days = container.querySelectorAll('button.mantine-MonthView-monthViewDay');
     expect(days.length).toStrictEqual(30);
     expect(days[0].textContent).toStrictEqual('1');
+  });
+
+  it('does renders header based on withHeader prop', () => {
+    const { container, rerender } = render(<MonthView {...defaultProps} withHeader={false} />);
+    expect(container.querySelector('.mantine-MonthView-header')).not.toBeInTheDocument();
+
+    rerender(<MonthView {...defaultProps} withHeader />);
+    expect(container.querySelector('.mantine-MonthView-header')).toBeInTheDocument();
+  });
+
+  it('supports todayControlProps, nextControlProps, previousControlProps and viewSelectProps props', () => {
+    const { container } = render(
+      <MonthView
+        {...defaultProps}
+        todayControlProps={{ 'data-today-prop': 'test' }}
+        nextControlProps={{ 'data-next-prop': 'test' }}
+        previousControlProps={{ 'data-previous-prop': 'test' }}
+        viewSelectProps={{ 'data-view-select-prop': 'test' }}
+      />
+    );
+
+    expect(
+      container.querySelector('button.mantine-MonthView-headerControl[data-today-prop]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('button.mantine-MonthView-headerControl[data-next-prop]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('button.mantine-MonthView-headerControl[data-previous-prop]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('.mantine-MonthView-viewSelect[data-view-select-prop]')
+    ).toBeInTheDocument();
+  });
+
+  it('calls onDateChange when navigating with header controls', async () => {
+    const spy = jest.fn();
+    render(
+      <MonthView
+        {...defaultProps}
+        onDateChange={spy}
+        monthYearSelectProps={{ popoverProps: { opened: true }, startYear: 2020, endYear: 2030 }}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'Previous' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2025-10-01')));
+
+    await userEvent.click(screen.getByRole('button', { name: 'Next' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2025-12-01')));
+
+    await userEvent.click(screen.getByRole('button', { name: 'Select month January' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2025-01-01')));
+
+    await userEvent.click(screen.getByRole('button', { name: 'Select year 2026' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2026-11-01')));
+  });
+
+  it('calls onViewChange when view button is clicked', async () => {
+    const spy = jest.fn();
+    render(<MonthView {...defaultProps} onViewChange={spy} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Switch to day view' }));
+    expect(spy).toHaveBeenCalledWith('day');
   });
 });
