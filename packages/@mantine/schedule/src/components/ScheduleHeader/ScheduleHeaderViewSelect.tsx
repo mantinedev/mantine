@@ -28,7 +28,7 @@ export interface ScheduleHeaderViewSelectProps
   __staticSelector?: string;
 
   /** A list of views to display */
-  views: ScheduleViewLevel[];
+  views: readonly ScheduleViewLevel[];
 
   /** Selected view type */
   value: ScheduleViewLevel;
@@ -89,6 +89,13 @@ export const ScheduleHeaderViewSelect = factory<ScheduleHeaderViewSelectFactory>
   const { resolvedClassNames, resolvedStyles } =
     useResolvedStylesApi<ScheduleHeaderViewSelectFactory>({ classNames, styles, props });
 
+  const labels: Record<ScheduleViewLevel, string> = {
+    day: ctx.labels.switchToDayView,
+    week: ctx.labels.switchToWeekView,
+    month: ctx.labels.switchToMonthView,
+    year: ctx.labels.switchToYearView,
+  };
+
   const items = views.map((view) => (
     <ScheduleHeaderControl
       key={view}
@@ -98,6 +105,7 @@ export const ScheduleHeaderViewSelect = factory<ScheduleHeaderViewSelectFactory>
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       __staticSelector={__staticSelector || 'ScheduleHeaderViewSelect'}
+      aria-label={labels[view]}
     >
       {ctx.labels[view]}
     </ScheduleHeaderControl>

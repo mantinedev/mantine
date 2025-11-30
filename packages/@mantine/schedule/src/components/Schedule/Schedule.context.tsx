@@ -15,6 +15,10 @@ export interface ScheduleLabels {
   more: string;
   selectMonth: string;
   selectYear: string;
+  switchToDayView: string;
+  switchToWeekView: string;
+  switchToMonthView: string;
+  switchToYearView: string;
 }
 
 export interface ScheduleContextValue {
@@ -49,6 +53,10 @@ const defaultScheduleContextValue: ScheduleContextValue = {
     timeSlot: 'Time slot',
     selectMonth: 'Select month',
     selectYear: 'Select year',
+    switchToDayView: 'Switch to day view',
+    switchToWeekView: 'Switch to week view',
+    switchToMonthView: 'Switch to month view',
+    switchToYearView: 'Switch to year view',
   },
 };
 
