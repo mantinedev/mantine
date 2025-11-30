@@ -1,5 +1,7 @@
 function transformModKey(key: string) {
-  return key.startsWith('data-') ? key : `data-${key}`;
+  const cleanKey = key.startsWith('data-') ? key.slice(5) : key;
+  const kebabKey = cleanKey.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+  return `data-${kebabKey}`;
 }
 
 export function getMod(props: Record<string, any>) {

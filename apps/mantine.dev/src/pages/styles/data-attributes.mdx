@@ -128,7 +128,10 @@ How to read the table:
 ## mod prop
 
 All components support the `mod` prop, which allows adding data attributes to
-the root element:
+the root element. CamelCase keys are converted to kebab-case. If a key starts with `data-`,
+the prefix is not duplicated.
+
+Examples of using `mod` prop:
 
 ```tsx
 import { Box } from '@mantine/core';
@@ -138,6 +141,9 @@ import { Box } from '@mantine/core';
 
 <Box mod={{ opened: true }} />;
 // -> <div data-opened />
+
+<Box mod={{ someValue: 'hello' }} />;
+// -> <div data-some-value="hello" />
 
 <Box mod={{ opened: false }} />;
 // -> <div />

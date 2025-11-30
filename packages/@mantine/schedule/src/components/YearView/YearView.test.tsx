@@ -25,6 +25,7 @@ describe('@mantine/schedule/YearView', () => {
     classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/schedule/YearView',
+    providerStylesApi: false,
     stylesApiSelectors: [
       'yearView',
       'yearViewDay',
