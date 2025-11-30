@@ -41,8 +41,3 @@
     }
   }
 }
-
-.viewSelect {
-  display: flex;
-  gap: calc(var(--schedule-header-gap, 8px) / 2);
-}

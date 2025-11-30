@@ -32,7 +32,7 @@ import {
   CombinedScheduleHeaderStylesNames,
   ScheduleHeader,
 } from '../ScheduleHeader/ScheduleHeader';
-import { ViewSelectProps } from '../ScheduleHeader/ScheduleHeaderViewSelect';
+import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import classes from './MonthView.module.css';
 
 export type MonthViewStylesNames =

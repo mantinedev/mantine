@@ -16,7 +16,7 @@ import {
   ScheduleHeaderPrevious,
   ScheduleHeaderToday,
 } from './ScheduleHeaderControl';
-import { ViewSelect, ViewSelectStylesNames } from './ScheduleHeaderViewSelect';
+import { ViewSelect, ViewSelectStylesNames } from './ViewSelect/ViewSelect';
 import classes from './ScheduleHeader.module.css';
 
 export type CombinedScheduleHeaderStylesNames =

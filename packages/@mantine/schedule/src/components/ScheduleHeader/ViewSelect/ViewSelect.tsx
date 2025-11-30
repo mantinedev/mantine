@@ -10,10 +10,10 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { ScheduleViewLevel } from '../../types';
-import { useScheduleContext } from '../Schedule/Schedule.context';
-import { ScheduleHeaderControl } from './ScheduleHeaderControl';
-import classes from './ScheduleHeader.module.css';
+import { ScheduleViewLevel } from '../../../types';
+import { useScheduleContext } from '../../Schedule/Schedule.context';
+import { ScheduleHeaderControl } from '../ScheduleHeaderControl';
+import classes from './ViewSelect.module.css';
 
 export type ViewSelectStylesNames = 'viewSelect';
 
@@ -43,11 +43,12 @@ export type ViewSelectFactory = Factory<{
 }>;
 
 const defaultProps = {
+  __staticSelector: 'ViewSelect',
   views: ['day', 'week', 'month', 'year'],
 } satisfies Partial<ViewSelectProps>;
 
 export const ViewSelect = factory<ViewSelectFactory>((_props) => {
-  const props = useProps('ScheduleHeaderViewSelect', defaultProps, _props);
+  const props = useProps('ViewSelect', defaultProps, _props);
   const {
     classNames,
     className,
@@ -65,7 +66,7 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
   } = props;
 
   const getStyles = useStyles<ViewSelectFactory>({
-    name: __staticSelector || 'ScheduleHeaderViewSelect',
+    name: __staticSelector,
     classes,
     props,
     className,
@@ -100,7 +101,7 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
       onClick={() => onChange?.(view)}
       classNames={resolvedClassNames}
       styles={resolvedStyles}
-      __staticSelector={__staticSelector || 'ScheduleHeaderViewSelect'}
+      __staticSelector={__staticSelector}
       aria-label={labels[view]}
       radius={radius}
     >

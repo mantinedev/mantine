@@ -1,5 +1,5 @@
 import { render, screen, tests } from '@mantine-tests/core';
-import { ViewSelect, ViewSelectProps, ViewSelectStylesNames } from './ScheduleHeaderViewSelect';
+import { ViewSelect, ViewSelectProps, ViewSelectStylesNames } from './ViewSelect';
 
 const defaultProps: ViewSelectProps = {
   views: ['day', 'week', 'month', 'year'],
@@ -7,7 +7,7 @@ const defaultProps: ViewSelectProps = {
   onChange: () => {},
 };
 
-describe('@mantine/schedule/ScheduleHeaderViewSelect', () => {
+describe('@mantine/schedule/ViewSelect', () => {
   tests.itSupportsSystemProps<ViewSelectProps, ViewSelectStylesNames>({
     component: ViewSelect,
     props: defaultProps,
@@ -18,7 +18,7 @@ describe('@mantine/schedule/ScheduleHeaderViewSelect', () => {
     size: true,
     classes: true,
     refType: HTMLDivElement,
-    displayName: '@mantine/schedule/ScheduleHeaderViewSelect',
+    displayName: '@mantine/schedule/ViewSelect',
     stylesApiSelectors: ['viewSelect'],
   });
 
