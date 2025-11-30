@@ -217,4 +217,16 @@ describe('@mantine/schedule/MonthYearSelect', () => {
     await userEvent.keyboard('{End}');
     expect(screen.getByRole('button', { name: /select month december/i })).toHaveFocus();
   });
+
+  it('does not render months list if withMonths is set to false', () => {
+    const { container } = render(<MonthYearSelect {...defaultProps} withMonths={false} />);
+    expect(
+      container.querySelectorAll(
+        '.mantine-MonthYearSelect-monthYearSelectControl[data-type="month"]'
+      )
+    ).toHaveLength(0);
+    expect(
+      container.querySelector('.mantine-MonthYearSelect-monthYearSelectLabel')
+    ).not.toBeInTheDocument();
+  });
 });

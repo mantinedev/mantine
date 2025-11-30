@@ -1,12 +1,24 @@
 .monthYearSelectTarget {
   text-transform: capitalize;
-  min-width: 140px;
+  min-width: 80px;
+
+  &:where([data-with-months]) {
+    min-width: 140px;
+  }
+}
+
+.monthYearSelectList {
+  flex: 1;
 }
 
 .monthYearSelectDropdown {
   display: flex;
   gap: var(--mantine-spacing-sm);
-  padding: var(--mantine-spacing-sm);
+  padding: 8px 4px;
+
+  &:where([data-with-months]) {
+    padding: var(--mantine-spacing-sm);
+  }
 }
 
 .monthYearSelectLabel {
@@ -18,6 +30,7 @@
 
 .monthYearSelectControl {
   display: block;
+  text-align: center;
   width: 100%;
   padding: 6px 8px;
   font-size: var(--mantine-font-size-sm);

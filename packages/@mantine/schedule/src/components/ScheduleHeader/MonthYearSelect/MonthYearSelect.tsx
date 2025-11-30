@@ -51,10 +51,10 @@ export interface MonthYearSelectProps
   endYear?: number;
 
   /** Current year value (e.g. `2025`) */
-  yearValue: number;
+  yearValue?: number;
 
   /** Current month value (0-11) */
-  monthValue: number;
+  monthValue?: number;
 
   /** Called with year value (e.g. `2025`) when year is selected in the dropdown */
   onYearChange?: (year: number) => void;
@@ -76,6 +76,9 @@ export interface MonthYearSelectProps
 
   /** Props passed down to month controls */
   getMonthControlProps?: (month: number) => React.ComponentProps<'button'> & DataAttributes;
+
+  /** If set to false, months are not displayed in the dropdown @default true */
+  withMonths?: boolean;
 }
 
 export type MonthYearSelectFactory = Factory<{
@@ -87,6 +90,7 @@ export type MonthYearSelectFactory = Factory<{
 
 const defaultProps = {
   __staticSelector: 'MonthYearSelect',
+  withMonths: true,
 } satisfies Partial<MonthYearSelectProps>;
 
 const varsResolver = createVarsResolver<MonthYearSelectFactory>((_theme, { radius }) => ({
@@ -119,6 +123,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
     radius,
     getMonthControlProps,
     getYearControlProps,
+    withMonths,
     ...others
   } = props;
 
@@ -141,7 +146,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
   const ctx = useScheduleContext();
   const _startYear = startYear ?? today.getFullYear() - 5;
   const _endYear = endYear ?? today.getFullYear() + 5;
-  const hasActiveYear = yearValue >= _startYear && yearValue <= _endYear;
+  const hasActiveYear = yearValue !== undefined && yearValue >= _startYear && yearValue <= _endYear;
 
   const years = getYearsList({ startYear: _startYear, endYear: _endYear }).map((year, index) => {
     const controlProps = getYearControlProps?.(year);
@@ -171,36 +176,38 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
     );
   });
 
-  const months = getMonthsList({
-    locale: ctx.getLocale(locale),
-    format: monthsListFormat || 'MMMM',
-  }).map((month) => {
-    const controlProps = getMonthControlProps?.(month.month);
-    return (
-      <UnstyledButton
-        key={month.name}
-        onClick={() => onMonthChange?.(month.month)}
-        mod={{ type: 'month', active: month.month === monthValue }}
-        tabIndex={month.month === monthValue ? 0 : -1}
-        onKeyDown={createScopedKeydownHandler({
-          siblingSelector: '[data-type="month"]:not(:disabled)',
-          parentSelector: '[data-list]',
-          activateOnFocus: false,
-          loop: true,
-          orientation: 'vertical',
-          onKeyDown: controlProps?.onKeyDown,
-        })}
-        {...controlProps}
-        {...getStyles('monthYearSelectControl', {
-          className: controlProps?.className,
-          style: controlProps?.style,
-        })}
-        aria-label={`${ctx.labels.selectMonth} ${month.name}`}
-      >
-        {month.name}
-      </UnstyledButton>
-    );
-  });
+  const months = withMonths
+    ? getMonthsList({
+        locale: ctx.getLocale(locale),
+        format: monthsListFormat || 'MMMM',
+      }).map((month) => {
+        const controlProps = getMonthControlProps?.(month.month);
+        return (
+          <UnstyledButton
+            key={month.name}
+            onClick={() => onMonthChange?.(month.month)}
+            mod={{ type: 'month', active: month.month === monthValue }}
+            tabIndex={month.month === monthValue ? 0 : -1}
+            onKeyDown={createScopedKeydownHandler({
+              siblingSelector: '[data-type="month"]:not(:disabled)',
+              parentSelector: '[data-list]',
+              activateOnFocus: false,
+              loop: true,
+              orientation: 'vertical',
+              onKeyDown: controlProps?.onKeyDown,
+            })}
+            {...controlProps}
+            {...getStyles('monthYearSelectControl', {
+              className: controlProps?.className,
+              style: controlProps?.style,
+            })}
+            aria-label={`${ctx.labels.selectMonth} ${month.name}`}
+          >
+            {month.name}
+          </UnstyledButton>
+        );
+      })
+    : null;
 
   return (
     <Popover
@@ -211,6 +218,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
       radius={radius || 'var(--schedule-radius, var(--mantine-radius-default))'}
       shadow="md"
       offset={3}
+      width={withMonths ? undefined : 'target'}
       {...popoverProps}
     >
       <Popover.Target>
@@ -218,23 +226,29 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
           {...getStyles('monthYearSelectTarget')}
           __staticSelector={__staticSelector}
           radius={radius}
+          data-with-months={withMonths || undefined}
           {...others}
         >
           {formatDate({
             locale: ctx.getLocale(locale),
-            date: new Date(yearValue, monthValue),
-            format: labelFormat || 'MMMM YYYY',
+            date: new Date(yearValue ?? today.getFullYear(), monthValue ?? today.getMonth()),
+            format: labelFormat || (withMonths ? 'MMMM YYYY' : 'YYYY'),
           })}
         </HeaderControl>
       </Popover.Target>
 
-      <Popover.Dropdown {...getStyles('monthYearSelectDropdown')}>
+      <Popover.Dropdown
+        data-with-months={withMonths || undefined}
+        {...getStyles('monthYearSelectDropdown')}
+      >
+        {withMonths && (
+          <div data-list {...getStyles('monthYearSelectList')}>
+            <div {...getStyles('monthYearSelectLabel')}>{ctx.labels.month}</div>
+            {months}
+          </div>
+        )}
         <div data-list {...getStyles('monthYearSelectList')}>
-          <div {...getStyles('monthYearSelectLabel')}>{ctx.labels.month}</div>
-          {months}
-        </div>
-        <div data-list {...getStyles('monthYearSelectList')}>
-          <div {...getStyles('monthYearSelectLabel')}>{ctx.labels.year}</div>
+          {withMonths && <div {...getStyles('monthYearSelectLabel')}>{ctx.labels.year}</div>}
           {years}
         </div>
       </Popover.Dropdown>

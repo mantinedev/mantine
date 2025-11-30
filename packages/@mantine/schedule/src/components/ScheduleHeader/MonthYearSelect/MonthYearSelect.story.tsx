@@ -46,3 +46,11 @@ export function Locale() {
     </div>
   );
 }
+
+export function WithoutMonths() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MonthYearSelect yearValue={2025} withMonths={false} />
+    </div>
+  );
+}
