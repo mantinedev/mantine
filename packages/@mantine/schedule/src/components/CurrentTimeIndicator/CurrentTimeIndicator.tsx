@@ -78,6 +78,7 @@ export type CurrentTimeIndicatorFactory = Factory<{
 }>;
 
 const defaultProps = {
+  __staticSelector: 'CurrentTimeIndicator',
   withTimeBubble: true,
   withThumb: true,
   currentTimeFormat: 'HH:mm',
@@ -114,7 +115,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
   } = props;
 
   const getStyles = useStyles<CurrentTimeIndicatorFactory>({
-    name: __staticSelector || 'CurrentTimeIndicator',
+    name: __staticSelector,
     classes,
     props,
     className,

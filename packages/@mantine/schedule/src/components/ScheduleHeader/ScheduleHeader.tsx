@@ -9,20 +9,20 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { MonthYearSelect } from './MonthYearSelect/MonthYearSelect';
 import {
-  ScheduleHeaderControlStylesNames,
+  HeaderControlStylesNames,
   ScheduleHeaderNext,
   ScheduleHeaderPrevious,
   ScheduleHeaderToday,
-} from './ScheduleHeaderControl';
+} from './HeaderControl/HeaderControl';
+import { MonthYearSelect } from './MonthYearSelect/MonthYearSelect';
 import { ViewSelect, ViewSelectStylesNames } from './ViewSelect/ViewSelect';
 import classes from './ScheduleHeader.module.css';
 
 export type CombinedScheduleHeaderStylesNames =
   | ScheduleHeaderStylesNames
   | ViewSelectStylesNames
-  | ScheduleHeaderControlStylesNames;
+  | HeaderControlStylesNames;
 
 export type ScheduleHeaderStylesNames = 'header';
 export type ScheduleHeaderCssVariables = {
@@ -50,7 +50,9 @@ export type ScheduleHeaderFactory = Factory<{
   };
 }>;
 
-const defaultProps = {} satisfies Partial<ScheduleHeaderProps>;
+const defaultProps = {
+  __staticSelector: 'ScheduleHeader',
+} satisfies Partial<ScheduleHeaderProps>;
 
 const varsResolver = createVarsResolver<ScheduleHeaderFactory>(() => ({
   scheduleHeader: {
@@ -64,7 +66,7 @@ export const ScheduleHeader = factory<ScheduleHeaderFactory>((_props) => {
     props;
 
   const getStyles = useStyles<ScheduleHeaderFactory>({
-    name: __staticSelector || 'ScheduleHeader',
+    name: __staticSelector,
     classes,
     props,
     className,

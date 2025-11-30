@@ -120,6 +120,7 @@ export type WeekViewFactory = Factory<{
 }>;
 
 const defaultProps = {
+  __staticSelector: 'WeekView',
   withWeekendDays: true,
   highlightToday: 'weekday',
   withCurrentTimeIndicator: true,
@@ -170,7 +171,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   } = props;
 
   const getStyles = useStyles<WeekViewFactory>({
-    name: __staticSelector || 'WeekView',
+    name: __staticSelector,
     classes,
     props,
     className,
@@ -311,7 +312,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
               withTimeBubble={withCurrentTimeBubble}
               withThumb={withCurrentTimeBubble ? currentWeekdayIndex !== 0 : true}
               locale={locale}
-              __staticSelector={__staticSelector || 'WeekView'}
+              __staticSelector={__staticSelector}
             />
           )}
           {days}

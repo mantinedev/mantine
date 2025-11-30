@@ -139,6 +139,7 @@ const varsResolver = createVarsResolver<MonthViewFactory>((_theme, { radius }) =
 }));
 
 const defaultProps = {
+  __staticSelector: 'MonthView',
   withWeekDays: true,
   consistentWeeks: true,
   highlightToday: true,
@@ -186,7 +187,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
   } = props;
 
   const getStyles = useStyles<MonthViewFactory>({
-    name: __staticSelector || 'MonthView',
+    name: __staticSelector,
     classes,
     props,
     className,
@@ -209,7 +210,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
   const stylesApiProps = {
     classNames: resolvedClassNames,
     styles: resolvedStyles,
-    __staticSelector: __staticSelector || 'MonthView',
+    __staticSelector,
     radius,
   };
 

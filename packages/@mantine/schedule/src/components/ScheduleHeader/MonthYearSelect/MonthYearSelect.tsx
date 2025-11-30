@@ -18,7 +18,7 @@ import {
 import { DateLabelFormat } from '../../../types';
 import { formatDate, getMonthsList, getYearsList } from '../../../utils';
 import { useScheduleContext } from '../../Schedule/Schedule.context';
-import { ScheduleHeaderControl } from '../ScheduleHeaderControl';
+import { HeaderControl } from '../HeaderControl/HeaderControl';
 import classes from './MonthYearSelect.module.css';
 
 export type MonthYearSelectStylesNames =
@@ -85,7 +85,9 @@ export type MonthYearSelectFactory = Factory<{
   vars: MonthYearSelectCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<MonthYearSelectProps>;
+const defaultProps = {
+  __staticSelector: 'MonthYearSelect',
+} satisfies Partial<MonthYearSelectProps>;
 
 const varsResolver = createVarsResolver<MonthYearSelectFactory>((_theme, { radius }) => ({
   monthYearSelectDropdown: {
@@ -121,7 +123,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
   } = props;
 
   const getStyles = useStyles<MonthYearSelectFactory>({
-    name: __staticSelector || 'MonthYearSelect',
+    name: __staticSelector,
     classes,
     props,
     className,
@@ -212,7 +214,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
       {...popoverProps}
     >
       <Popover.Target>
-        <ScheduleHeaderControl
+        <HeaderControl
           {...getStyles('monthYearSelectTarget')}
           __staticSelector={__staticSelector}
           radius={radius}
@@ -223,7 +225,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
             date: new Date(yearValue, monthValue),
             format: labelFormat || 'MMMM YYYY',
           })}
-        </ScheduleHeaderControl>
+        </HeaderControl>
       </Popover.Target>
 
       <Popover.Dropdown {...getStyles('monthYearSelectDropdown')}>

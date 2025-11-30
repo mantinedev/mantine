@@ -6,38 +6,3 @@
   gap: var(--schedule-header-gap);
   margin-bottom: var(--schedule-header-gap);
 }
-
-.headerControl {
-  --control-size: 32px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: var(--control-size);
-  height: var(--control-size);
-  border-radius: var(--schedule-radius, var(--control-radius, var(--mantine-radius-default)));
-  border: 1px solid var(--mantine-color-default-border);
-  color: var(--mantine-color-default-color);
-  background: var(--mantine-color-default);
-  font-size: var(--mantine-font-size-sm);
-  font-weight: 600;
-
-  @mixin hover {
-    background-color: var(--mantine-color-default-hover);
-  }
-
-  &:where(:not([data-square])) {
-    padding-inline: 12px;
-  }
-
-  &:where([data-active]) {
-    background-color: var(--mantine-primary-color-filled);
-    border-color: var(--mantine-primary-color-filled);
-    color: var(--mantine-primary-color-contrast);
-
-    @mixin hover {
-      background-color: var(--mantine-primary-color-filled-hover);
-      border-color: var(--mantine-primary-color-filled-hover);
-    }
-  }
-}

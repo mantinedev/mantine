@@ -12,7 +12,7 @@ import {
 } from '@mantine/core';
 import { ScheduleViewLevel } from '../../../types';
 import { useScheduleContext } from '../../Schedule/Schedule.context';
-import { ScheduleHeaderControl } from '../ScheduleHeaderControl';
+import { HeaderControl } from '../HeaderControl/HeaderControl';
 import classes from './ViewSelect.module.css';
 
 export type ViewSelectStylesNames = 'viewSelect';
@@ -94,7 +94,7 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
   };
 
   const items = views.map((view) => (
-    <ScheduleHeaderControl
+    <HeaderControl
       key={view}
       data-type={view}
       active={value === view}
@@ -106,7 +106,7 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
       radius={radius}
     >
       {ctx.labels[view]}
-    </ScheduleHeaderControl>
+    </HeaderControl>
   ));
 
   return (

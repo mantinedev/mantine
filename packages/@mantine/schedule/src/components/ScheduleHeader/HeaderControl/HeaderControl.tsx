@@ -13,18 +13,17 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { useScheduleContext } from '../Schedule/Schedule.context';
-import classes from './ScheduleHeader.module.css';
+import { useScheduleContext } from '../../Schedule/Schedule.context';
+import classes from './HeaderControl.module.css';
 
-export type ScheduleHeaderControlStylesNames = 'headerControl';
-export type ScheduleHeaderControlVariant = string;
-export type ScheduleHeaderControlCssVariables = {
+export type HeaderControlStylesNames = 'headerControl';
+export type HeaderControlCssVariables = {
   headerControl: '--control-radius';
 };
 
-export interface ScheduleHeaderControlProps
+export interface HeaderControlProps
   extends BoxProps,
-    StylesApiProps<ScheduleHeaderControlFactory>,
+    StylesApiProps<HeaderControlFactory>,
     ElementProps<'button'> {
   __staticSelector?: string;
 
@@ -38,24 +37,25 @@ export interface ScheduleHeaderControlProps
   radius?: MantineRadius;
 }
 
-export type ScheduleHeaderControlFactory = Factory<{
-  props: ScheduleHeaderControlProps;
+export type HeaderControlFactory = Factory<{
+  props: HeaderControlProps;
   ref: HTMLButtonElement;
-  stylesNames: ScheduleHeaderControlStylesNames;
-  vars: ScheduleHeaderControlCssVariables;
-  variant: ScheduleHeaderControlVariant;
+  stylesNames: HeaderControlStylesNames;
+  vars: HeaderControlCssVariables;
 }>;
 
-const defaultProps = {} satisfies Partial<ScheduleHeaderControlProps>;
+const defaultProps = {
+  __staticSelector: 'HeaderControl',
+} satisfies Partial<HeaderControlProps>;
 
-const varsResolver = createVarsResolver<ScheduleHeaderControlFactory>((_theme, { radius }) => ({
+const varsResolver = createVarsResolver<HeaderControlFactory>((_theme, { radius }) => ({
   headerControl: {
     '--control-radius': radius === undefined ? undefined : getRadius(radius),
   },
 }));
 
-export const ScheduleHeaderControl = factory<ScheduleHeaderControlFactory>((_props) => {
-  const props = useProps('ScheduleHeaderControl', defaultProps, _props);
+export const HeaderControl = factory<HeaderControlFactory>((_props) => {
+  const props = useProps('HeaderControl', defaultProps, _props);
   const {
     classNames,
     className,
@@ -72,8 +72,8 @@ export const ScheduleHeaderControl = factory<ScheduleHeaderControlFactory>((_pro
     ...others
   } = props;
 
-  const getStyles = useStyles<ScheduleHeaderControlFactory>({
-    name: __staticSelector || 'ScheduleHeaderControl',
+  const getStyles = useStyles<HeaderControlFactory>({
+    name: __staticSelector,
     classes,
     props,
     className,
@@ -96,38 +96,38 @@ export const ScheduleHeaderControl = factory<ScheduleHeaderControlFactory>((_pro
   );
 });
 
-ScheduleHeaderControl.displayName = '@mantine/schedule/ScheduleHeaderControl';
-ScheduleHeaderControl.classes = classes;
+HeaderControl.displayName = '@mantine/schedule/HeaderControl';
+HeaderControl.classes = classes;
 
-export function ScheduleHeaderNext(props: ScheduleHeaderControlProps) {
+export function ScheduleHeaderNext(props: HeaderControlProps) {
   const { dir } = useDirection();
   const ctx = useScheduleContext();
 
   return (
-    <ScheduleHeaderControl data-type="next" aria-label={ctx.labels.next} square {...props}>
+    <HeaderControl data-type="next" aria-label={ctx.labels.next} square {...props}>
       <AccordionChevron transform={`rotate(${dir === 'rtl' ? 90 : -90} 0 0)`} />
-    </ScheduleHeaderControl>
+    </HeaderControl>
   );
 }
 
-export function ScheduleHeaderPrevious(props: ScheduleHeaderControlProps) {
+export function ScheduleHeaderPrevious(props: HeaderControlProps) {
   const { dir } = useDirection();
   const ctx = useScheduleContext();
 
   return (
-    <ScheduleHeaderControl data-type="previous" aria-label={ctx.labels.previous} square {...props}>
+    <HeaderControl data-type="previous" aria-label={ctx.labels.previous} square {...props}>
       <AccordionChevron transform={`rotate(${dir === 'rtl' ? -90 : 90} 0 0)`} />
-    </ScheduleHeaderControl>
+    </HeaderControl>
   );
 }
 
-export function ScheduleHeaderToday(props: ScheduleHeaderControlProps) {
+export function ScheduleHeaderToday(props: HeaderControlProps) {
   const ctx = useScheduleContext();
 
   return (
-    <ScheduleHeaderControl data-type="today" {...props}>
+    <HeaderControl data-type="today" {...props}>
       {ctx.labels.today}
-    </ScheduleHeaderControl>
+    </HeaderControl>
   );
 }
 

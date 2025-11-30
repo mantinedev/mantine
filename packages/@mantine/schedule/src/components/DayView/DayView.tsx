@@ -80,6 +80,7 @@ export type DayViewFactory = Factory<{
 }>;
 
 const defaultProps = {
+  __staticSelector: 'DayView',
   startTime: '00:00:00',
   endTime: '23:59:59',
   intervalMinutes: 15,
@@ -120,7 +121,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
   } = props;
 
   const getStyles = useStyles<DayViewFactory>({
-    name: __staticSelector || 'DayView',
+    name: __staticSelector,
     classes,
     props,
     className,
@@ -181,7 +182,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
             withTimeBubble={withCurrentTimeBubble}
             withThumb={!withCurrentTimeBubble}
             locale={locale}
-            __staticSelector={__staticSelector || 'DayView'}
+            __staticSelector={__staticSelector}
           />
         )}
 
