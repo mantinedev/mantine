@@ -14,7 +14,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { DateLabelFormat, DateStringValue, DayOfWeek } from '../../types';
+import { DateLabelFormat, DateStringValue, DayOfWeek, ScheduleViewLevel } from '../../types';
 import {
   getMonthDays,
   getWeekdaysNames,
@@ -108,6 +108,12 @@ export interface MonthViewProps
 
   /** Props passed down to `MonthYearSelect` component in the header */
   monthYearSelectProps?: Partial<MonthYearSelectProps>;
+
+  /** Called when view level select button is clicked */
+  onViewChange?: (view: ScheduleViewLevel) => void;
+
+  /** A list of views to display @default `['day', 'week', 'month', 'year']` */
+  views?: readonly ScheduleViewLevel[];
 }
 
 export type MonthViewFactory = Factory<{
@@ -160,6 +166,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     withOutsideDays,
     withHeader,
     monthYearSelectProps,
+    onViewChange,
+    views,
     ...others
   } = props;
 
@@ -304,8 +312,9 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
           <ScheduleHeader.ViewSelect
             value="month"
-            onChange={() => {}}
-            views={['day', 'week', 'month', 'year']}
+            onChange={onViewChange}
+            views={views}
+            ml="auto"
             {...stylesApiProps}
           />
         </ScheduleHeader>

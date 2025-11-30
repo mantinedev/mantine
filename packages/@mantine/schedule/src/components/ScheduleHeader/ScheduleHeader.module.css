@@ -2,6 +2,7 @@
   --schedule-header-gap: 8px;
 
   display: flex;
+  flex-wrap: wrap;
   gap: var(--schedule-header-gap);
   margin-bottom: var(--schedule-header-gap);
 }
@@ -41,7 +42,7 @@
   }
 }
 
-.headerViewSelect {
+.viewSelect {
   display: flex;
-  gap: var(--schedule-header-gap);
+  gap: calc(var(--schedule-header-gap, 8px) / 2);
 }

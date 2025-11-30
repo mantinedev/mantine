@@ -16,15 +16,12 @@ import {
   ScheduleHeaderPrevious,
   ScheduleHeaderToday,
 } from './ScheduleHeaderControl';
-import {
-  ScheduleHeaderViewSelect,
-  ScheduleHeaderViewSelectStylesNames,
-} from './ScheduleHeaderViewSelect';
+import { ViewSelect, ViewSelectStylesNames } from './ScheduleHeaderViewSelect';
 import classes from './ScheduleHeader.module.css';
 
 export type CombinedScheduleHeaderStylesNames =
   | ScheduleHeaderStylesNames
-  | ScheduleHeaderViewSelectStylesNames
+  | ViewSelectStylesNames
   | ScheduleHeaderControlStylesNames;
 
 export type ScheduleHeaderStylesNames = 'header';
@@ -48,7 +45,7 @@ export type ScheduleHeaderFactory = Factory<{
     Previous: typeof ScheduleHeaderPrevious;
     Next: typeof ScheduleHeaderNext;
     Today: typeof ScheduleHeaderToday;
-    ViewSelect: typeof ScheduleHeaderViewSelect;
+    ViewSelect: typeof ViewSelect;
     MonthYearSelect: typeof MonthYearSelect;
   };
 }>;
@@ -88,5 +85,5 @@ ScheduleHeader.classes = classes;
 ScheduleHeader.Next = ScheduleHeaderNext;
 ScheduleHeader.Previous = ScheduleHeaderPrevious;
 ScheduleHeader.Today = ScheduleHeaderToday;
-ScheduleHeader.ViewSelect = ScheduleHeaderViewSelect;
+ScheduleHeader.ViewSelect = ViewSelect;
 ScheduleHeader.MonthYearSelect = MonthYearSelect;

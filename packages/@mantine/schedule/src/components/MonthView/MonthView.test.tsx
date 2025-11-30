@@ -39,7 +39,7 @@ describe('@mantine/core/MonthView', () => {
 
       // ScheduleHeader
       'header',
-      'headerViewSelect',
+      'viewSelect',
       'headerControl',
 
       // MonthYearSelect

@@ -1,19 +1,15 @@
 import { render, screen, tests } from '@mantine-tests/core';
-import {
-  ScheduleHeaderViewSelect,
-  ScheduleHeaderViewSelectProps,
-  ScheduleHeaderViewSelectStylesNames,
-} from './ScheduleHeaderViewSelect';
+import { ViewSelect, ViewSelectProps, ViewSelectStylesNames } from './ScheduleHeaderViewSelect';
 
-const defaultProps: ScheduleHeaderViewSelectProps = {
+const defaultProps: ViewSelectProps = {
   views: ['day', 'week', 'month', 'year'],
   value: 'month',
   onChange: () => {},
 };
 
 describe('@mantine/schedule/ScheduleHeaderViewSelect', () => {
-  tests.itSupportsSystemProps<ScheduleHeaderViewSelectProps, ScheduleHeaderViewSelectStylesNames>({
-    component: ScheduleHeaderViewSelect,
+  tests.itSupportsSystemProps<ViewSelectProps, ViewSelectStylesNames>({
+    component: ViewSelect,
     props: defaultProps,
     polymorphic: true,
     styleProps: true,
@@ -23,27 +19,25 @@ describe('@mantine/schedule/ScheduleHeaderViewSelect', () => {
     classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/schedule/ScheduleHeaderViewSelect',
-    stylesApiSelectors: ['headerViewSelect'],
+    stylesApiSelectors: ['viewSelect'],
   });
 
   it('supports __staticSelector prop', () => {
-    const { container } = render(
-      <ScheduleHeaderViewSelect {...defaultProps} __staticSelector="Test" />
-    );
-    expect(container.querySelector('.mantine-Test-headerViewSelect')).toBeInTheDocument();
+    const { container } = render(<ViewSelect {...defaultProps} __staticSelector="Test" />);
+    expect(container.querySelector('.mantine-Test-viewSelect')).toBeInTheDocument();
   });
 
   it('renders given views controls', () => {
     const allViews = ['day', 'week', 'month', 'year'] as const;
     const partialViews = ['day', 'month'] as const;
 
-    const { rerender } = render(<ScheduleHeaderViewSelect {...defaultProps} views={allViews} />);
+    const { rerender } = render(<ViewSelect {...defaultProps} views={allViews} />);
     expect(screen.getAllByRole('button', { name: /Switch to/ })).toHaveLength(allViews.length);
     allViews.forEach((view) => {
       expect(screen.getByRole('button', { name: `Switch to ${view} view` })).toBeInTheDocument();
     });
 
-    rerender(<ScheduleHeaderViewSelect {...defaultProps} views={partialViews} />);
+    rerender(<ViewSelect {...defaultProps} views={partialViews} />);
     expect(screen.getAllByRole('button', { name: /Switch to/ })).toHaveLength(partialViews.length);
     partialViews.forEach((view) => {
       expect(screen.getByRole('button', { name: `Switch to ${view} view` })).toBeInTheDocument();
@@ -51,9 +45,7 @@ describe('@mantine/schedule/ScheduleHeaderViewSelect', () => {
   });
 
   it('highlights the selected view control', () => {
-    render(
-      <ScheduleHeaderViewSelect {...defaultProps} views={['day', 'week', 'month']} value="week" />
-    );
+    render(<ViewSelect {...defaultProps} views={['day', 'week', 'month']} value="week" />);
     const weekControl = screen.getByRole('button', { name: 'Switch to week view' });
     expect(weekControl).toHaveAttribute('data-active');
   });
@@ -61,12 +53,7 @@ describe('@mantine/schedule/ScheduleHeaderViewSelect', () => {
   it('calls onChange when a view control is clicked', () => {
     const spy = jest.fn();
     render(
-      <ScheduleHeaderViewSelect
-        {...defaultProps}
-        views={['day', 'week', 'month']}
-        value="day"
-        onChange={spy}
-      />
+      <ViewSelect {...defaultProps} views={['day', 'week', 'month']} value="day" onChange={spy} />
     );
 
     const weekControl = screen.getByRole('button', { name: 'Switch to week view' });

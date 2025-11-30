@@ -1,10 +1,10 @@
 import {
   Box,
   BoxProps,
-  createVarsResolver,
   ElementProps,
   factory,
   Factory,
+  MantineRadius,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -15,45 +15,38 @@ import { useScheduleContext } from '../Schedule/Schedule.context';
 import { ScheduleHeaderControl } from './ScheduleHeaderControl';
 import classes from './ScheduleHeader.module.css';
 
-export type ScheduleHeaderViewSelectStylesNames = 'headerViewSelect';
-export type ScheduleHeaderViewSelectVariant = string;
-export type ScheduleHeaderViewSelectCssVariables = {
-  root: '--test';
-};
+export type ViewSelectStylesNames = 'viewSelect';
 
-export interface ScheduleHeaderViewSelectProps
+export interface ViewSelectProps
   extends BoxProps,
-    StylesApiProps<ScheduleHeaderViewSelectFactory>,
+    StylesApiProps<ViewSelectFactory>,
     ElementProps<'div', 'value' | 'onChange'> {
   __staticSelector?: string;
 
-  /** A list of views to display */
-  views: readonly ScheduleViewLevel[];
+  /** A list of views to display @default `['day', 'week', 'month', 'year']` */
+  views?: readonly ScheduleViewLevel[];
 
   /** Selected view type */
-  value: ScheduleViewLevel;
+  value?: ScheduleViewLevel;
 
   /** Called when view type changes */
-  onChange: (value: ScheduleViewLevel) => void;
+  onChange?: (value: ScheduleViewLevel) => void;
+
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  radius?: MantineRadius;
 }
 
-export type ScheduleHeaderViewSelectFactory = Factory<{
-  props: ScheduleHeaderViewSelectProps;
+export type ViewSelectFactory = Factory<{
+  props: ViewSelectProps;
   ref: HTMLDivElement;
-  stylesNames: ScheduleHeaderViewSelectStylesNames;
-  vars: ScheduleHeaderViewSelectCssVariables;
-  variant: ScheduleHeaderViewSelectVariant;
+  stylesNames: ViewSelectStylesNames;
 }>;
 
-const defaultProps = {} satisfies Partial<ScheduleHeaderViewSelectProps>;
+const defaultProps = {
+  views: ['day', 'week', 'month', 'year'],
+} satisfies Partial<ViewSelectProps>;
 
-const varsResolver = createVarsResolver<ScheduleHeaderViewSelectFactory>(() => ({
-  root: {
-    '--test': 'test',
-  },
-}));
-
-export const ScheduleHeaderViewSelect = factory<ScheduleHeaderViewSelectFactory>((_props) => {
+export const ViewSelect = factory<ViewSelectFactory>((_props) => {
   const props = useProps('ScheduleHeaderViewSelect', defaultProps, _props);
   const {
     classNames,
@@ -67,10 +60,11 @@ export const ScheduleHeaderViewSelect = factory<ScheduleHeaderViewSelectFactory>
     onChange,
     views,
     __staticSelector,
+    radius,
     ...others
   } = props;
 
-  const getStyles = useStyles<ScheduleHeaderViewSelectFactory>({
+  const getStyles = useStyles<ViewSelectFactory>({
     name: __staticSelector || 'ScheduleHeaderViewSelect',
     classes,
     props,
@@ -81,13 +75,15 @@ export const ScheduleHeaderViewSelect = factory<ScheduleHeaderViewSelectFactory>
     unstyled,
     attributes,
     vars,
-    varsResolver,
-    rootSelector: 'headerViewSelect',
+    rootSelector: 'viewSelect',
   });
 
   const ctx = useScheduleContext();
-  const { resolvedClassNames, resolvedStyles } =
-    useResolvedStylesApi<ScheduleHeaderViewSelectFactory>({ classNames, styles, props });
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<ViewSelectFactory>({
+    classNames,
+    styles,
+    props,
+  });
 
   const labels: Record<ScheduleViewLevel, string> = {
     day: ctx.labels.switchToDayView,
@@ -101,22 +97,23 @@ export const ScheduleHeaderViewSelect = factory<ScheduleHeaderViewSelectFactory>
       key={view}
       data-type={view}
       active={value === view}
-      onClick={() => onChange(view)}
+      onClick={() => onChange?.(view)}
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       __staticSelector={__staticSelector || 'ScheduleHeaderViewSelect'}
       aria-label={labels[view]}
+      radius={radius}
     >
       {ctx.labels[view]}
     </ScheduleHeaderControl>
   ));
 
   return (
-    <Box {...getStyles('headerViewSelect')} {...others}>
+    <Box {...getStyles('viewSelect')} {...others}>
       {items}
     </Box>
   );
 });
 
-ScheduleHeaderViewSelect.displayName = '@mantine/schedule/ScheduleHeaderViewSelect';
-ScheduleHeaderViewSelect.classes = classes;
+ViewSelect.displayName = '@mantine/schedule/ViewSelect';
+ViewSelect.classes = classes;
