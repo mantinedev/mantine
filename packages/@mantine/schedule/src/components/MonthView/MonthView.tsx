@@ -24,10 +24,7 @@ import {
   toDateString,
 } from '../../utils';
 import { useScheduleContext } from '../Schedule/Schedule.context';
-import {
-  MonthYearSelectProps,
-  MonthYearSelectStylesNames,
-} from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
+import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
 import {
   CombinedScheduleHeaderStylesNames,
   ScheduleHeader,
@@ -44,8 +41,7 @@ export type MonthViewStylesNames =
   | 'monthViewWeekday'
   | 'monthViewWeekdays'
   | 'monthViewWeekdaysCorner'
-  | CombinedScheduleHeaderStylesNames
-  | MonthYearSelectStylesNames;
+  | CombinedScheduleHeaderStylesNames;
 
 export type MonthViewCssVariables = {
   monthView: '--month-view-radius';

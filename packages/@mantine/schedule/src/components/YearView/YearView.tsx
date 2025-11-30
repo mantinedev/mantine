@@ -3,6 +3,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -10,15 +11,24 @@ import {
   MantineRadius,
   StylesApiProps,
   useProps,
+  useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { getMonthsByQuarter } from '../../utils';
+import { DateStringValue, ScheduleViewLevel } from '../../types';
+import { getMonthsByQuarter, toDateString } from '../../utils';
 import { useScheduleContext } from '../Schedule/Schedule.context';
+import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
+import {
+  CombinedScheduleHeaderStylesNames,
+  ScheduleHeader,
+} from '../ScheduleHeader/ScheduleHeader';
+import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { YearViewMonth, YearViewMonthSettings } from './YearViewMonth';
 import classes from './YearView.module.css';
 
 export type YearViewStylesNames =
   | 'yearView'
+  | 'yearViewMonths'
   | 'yearViewMonth'
   | 'yearViewWeekday'
   | 'yearViewDay'
@@ -27,7 +37,8 @@ export type YearViewStylesNames =
   | 'yearViewWeekdays'
   | 'yearViewWeekdaysCorner'
   | 'yearViewMonthCaption'
-  | 'yearViewQuarter';
+  | 'yearViewQuarter'
+  | CombinedScheduleHeaderStylesNames;
 
 export type YearViewCssVariables = {
   yearView: '--year-view-radius';
@@ -38,14 +49,40 @@ export interface YearViewProps
     BoxProps,
     StylesApiProps<YearViewFactory>,
     ElementProps<'div'> {
-  /** Year to display, Date object or date string in `YYYY-MM-DD` format */
-  year: Date | string;
+  __staticSelector?: string;
+
+  /** Date to display, Date object or date string in `YYYY-MM-DD 00:00:00` format */
+  date: Date | string;
+
+  /** Called with the new date value when a date is selected */
+  onDateChange?: (value: DateStringValue) => void;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
   /** If set, highlights the current day @default true */
   highlightToday?: boolean;
+
+  /** If set, the header is displayed @default `true` */
+  withHeader?: boolean;
+
+  /** Props passed down to `MonthYearSelect` component in the header */
+  monthYearSelectProps?: Partial<MonthYearSelectProps>;
+
+  /** Called when view level select button is clicked */
+  onViewChange?: (view: ScheduleViewLevel) => void;
+
+  /** Props passed to previous month control */
+  previousControlProps?: React.ComponentProps<'button'> & DataAttributes;
+
+  /** Props passed to next month control */
+  nextControlProps?: React.ComponentProps<'button'> & DataAttributes;
+
+  /** Props passed to today control */
+  todayControlProps?: React.ComponentProps<'button'> & DataAttributes;
+
+  /** Props passed to view level select */
+  viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
 }
 
 export type YearViewFactory = Factory<{
@@ -56,9 +93,11 @@ export type YearViewFactory = Factory<{
 }>;
 
 const defaultProps = {
+  __staticSelector: 'YearView',
   monthLabelFormat: 'MMMM',
   withWeekDays: true,
   highlightToday: true,
+  withHeader: true,
 } satisfies Partial<YearViewProps>;
 
 const varsResolver = createVarsResolver<YearViewFactory>((_theme, { radius }) => ({
@@ -69,7 +108,8 @@ export const YearView = factory<YearViewFactory>((_props) => {
   const props = useProps('YearView', defaultProps, _props);
   const {
     // YearView props
-    year,
+    date,
+    onDateChange,
 
     // YearViewMonth settings
     monthLabelFormat,
@@ -86,7 +126,17 @@ export const YearView = factory<YearViewFactory>((_props) => {
     getWeekNumberProps,
     highlightToday,
 
+    // ScheduleHeader props
+    withHeader,
+    monthYearSelectProps,
+    onViewChange,
+    previousControlProps,
+    nextControlProps,
+    todayControlProps,
+    viewSelectProps,
+
     // System props
+    __staticSelector,
     classNames,
     className,
     style,
@@ -94,13 +144,14 @@ export const YearView = factory<YearViewFactory>((_props) => {
     unstyled,
     vars,
     attributes,
+    radius,
     ...others
   } = props;
 
   const ctx = useScheduleContext();
 
   const getStyles = useStyles<YearViewFactory>({
-    name: 'YearView',
+    name: __staticSelector,
     classes,
     props,
     className,
@@ -114,7 +165,20 @@ export const YearView = factory<YearViewFactory>((_props) => {
     rootSelector: 'yearView',
   });
 
-  const months = getMonthsByQuarter(dayjs(year).format('YYYY-MM-DD')).map(
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<YearViewFactory>({
+    classNames,
+    styles,
+    props,
+  });
+
+  const stylesApiProps = {
+    classNames: resolvedClassNames,
+    styles: resolvedStyles,
+    __staticSelector,
+    radius,
+  };
+
+  const months = getMonthsByQuarter(dayjs(date).format('YYYY-MM-DD')).map(
     (quarter, quarterIndex) => {
       const months = quarter.map((month) => (
         <YearViewMonth
@@ -150,7 +214,50 @@ export const YearView = factory<YearViewFactory>((_props) => {
 
   return (
     <Box {...getStyles('yearView')} {...others}>
-      {months}
+      {withHeader && (
+        <ScheduleHeader {...stylesApiProps}>
+          <ScheduleHeader.Previous
+            {...stylesApiProps}
+            onClick={() =>
+              onDateChange?.(toDateString(dayjs(date).subtract(1, 'year').startOf('year')))
+            }
+            {...previousControlProps}
+          />
+
+          <ScheduleHeader.MonthYearSelect
+            {...stylesApiProps}
+            withMonths={false}
+            yearValue={dayjs(date).get('year')}
+            monthValue={dayjs(date).get('month')}
+            onYearChange={(year) =>
+              onDateChange?.(toDateString(dayjs(date).set('year', year).startOf('year')))
+            }
+            {...monthYearSelectProps}
+          />
+
+          <ScheduleHeader.Next
+            {...stylesApiProps}
+            onClick={() => onDateChange?.(toDateString(dayjs(date).add(1, 'year').startOf('year')))}
+            {...nextControlProps}
+          />
+
+          <ScheduleHeader.Today
+            {...stylesApiProps}
+            onClick={() => onDateChange?.(toDateString(dayjs()))}
+            {...todayControlProps}
+          />
+
+          <ScheduleHeader.ViewSelect
+            value="year"
+            onChange={onViewChange}
+            ml="auto"
+            {...stylesApiProps}
+            {...viewSelectProps}
+          />
+        </ScheduleHeader>
+      )}
+
+      <div {...getStyles('yearViewMonths')}>{months}</div>
     </Box>
   );
 });

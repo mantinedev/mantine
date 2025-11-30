@@ -15,14 +15,15 @@ import {
   ScheduleHeaderPrevious,
   ScheduleHeaderToday,
 } from './HeaderControl/HeaderControl';
-import { MonthYearSelect } from './MonthYearSelect/MonthYearSelect';
+import { MonthYearSelect, MonthYearSelectStylesNames } from './MonthYearSelect/MonthYearSelect';
 import { ViewSelect, ViewSelectStylesNames } from './ViewSelect/ViewSelect';
 import classes from './ScheduleHeader.module.css';
 
 export type CombinedScheduleHeaderStylesNames =
   | ScheduleHeaderStylesNames
   | ViewSelectStylesNames
-  | HeaderControlStylesNames;
+  | HeaderControlStylesNames
+  | MonthYearSelectStylesNames;
 
 export type ScheduleHeaderStylesNames = 'header';
 export type ScheduleHeaderCssVariables = {

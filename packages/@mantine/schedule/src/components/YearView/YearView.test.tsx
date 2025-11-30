@@ -2,18 +2,22 @@ import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
-import { getWeekNumber } from '../../utils';
+import { getWeekNumber, toDateString } from '../../utils';
 import { ScheduleProvider } from '../Schedule/Schedule.context';
 import { YearView, YearViewProps, YearViewStylesNames } from './YearView';
 
 const defaultProps: YearViewProps = {
-  year: '2025-11-01',
+  date: '2025-11-01 00:00:00',
 };
 
 describe('@mantine/schedule/YearView', () => {
   tests.itSupportsSystemProps<YearViewProps, YearViewStylesNames>({
     component: YearView,
-    props: { ...defaultProps, withWeekNumbers: true },
+    props: {
+      ...defaultProps,
+      withWeekNumbers: true,
+      monthYearSelectProps: { popoverProps: { opened: true } },
+    },
     styleProps: true,
     extend: true,
     variant: true,
@@ -32,6 +36,17 @@ describe('@mantine/schedule/YearView', () => {
       'yearViewWeekday',
       'yearViewWeekdays',
       'yearViewWeekdaysCorner',
+
+      // ScheduleHeader
+      'header',
+      'viewSelect',
+      'headerControl',
+
+      // MonthYearSelect
+      'monthYearSelectTarget',
+      'monthYearSelectDropdown',
+      'monthYearSelectControl',
+      'monthYearSelectList',
     ],
   });
 
@@ -236,5 +251,65 @@ describe('@mantine/schedule/YearView', () => {
       container.querySelector('.mantine-YearView-yearViewDay[data-today]')
     ).not.toBeInTheDocument();
     jest.useRealTimers();
+  });
+
+  it('renders header based on withHeader prop', () => {
+    const { container, rerender } = render(<YearView {...defaultProps} withHeader={false} />);
+    expect(container.querySelector('.mantine-YearView-header')).not.toBeInTheDocument();
+
+    rerender(<YearView {...defaultProps} withHeader />);
+    expect(container.querySelector('.mantine-YearView-header')).toBeInTheDocument();
+  });
+
+  it('supports todayControlProps, nextControlProps, previousControlProps and viewSelectProps props', () => {
+    const { container } = render(
+      <YearView
+        {...defaultProps}
+        todayControlProps={{ 'data-today-prop': 'test' }}
+        nextControlProps={{ 'data-next-prop': 'test' }}
+        previousControlProps={{ 'data-previous-prop': 'test' }}
+        viewSelectProps={{ 'data-view-select-prop': 'test' }}
+      />
+    );
+
+    expect(
+      container.querySelector('button.mantine-YearView-headerControl[data-today-prop]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('button.mantine-YearView-headerControl[data-next-prop]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('button.mantine-YearView-headerControl[data-previous-prop]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('.mantine-YearView-viewSelect[data-view-select-prop]')
+    ).toBeInTheDocument();
+  });
+
+  it('calls onDateChange when navigating with header controls', async () => {
+    const spy = jest.fn();
+    render(
+      <YearView
+        {...defaultProps}
+        onDateChange={spy}
+        monthYearSelectProps={{ popoverProps: { opened: true }, startYear: 2020, endYear: 2030 }}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'Previous' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2024-01-01')));
+
+    await userEvent.click(screen.getByRole('button', { name: 'Next' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2026-01-01')));
+
+    await userEvent.click(screen.getByRole('button', { name: 'Select year 2026' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2026-01-01')));
+  });
+
+  it('calls onViewChange when view button is clicked', async () => {
+    const spy = jest.fn();
+    render(<YearView {...defaultProps} onViewChange={spy} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Switch to day view' }));
+    expect(spy).toHaveBeenCalledWith('day');
   });
 });

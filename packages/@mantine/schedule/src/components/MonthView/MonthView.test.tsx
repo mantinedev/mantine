@@ -285,7 +285,7 @@ describe('@mantine/core/MonthView', () => {
     expect(days[0].textContent).toStrictEqual('1');
   });
 
-  it('does renders header based on withHeader prop', () => {
+  it('renders header based on withHeader prop', () => {
     const { container, rerender } = render(<MonthView {...defaultProps} withHeader={false} />);
     expect(container.querySelector('.mantine-MonthView-header')).not.toBeInTheDocument();
 
