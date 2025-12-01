@@ -4,6 +4,7 @@ import {
   OverflowListDemos,
   CardDemos,
   CheckboxDemos,
+  CollapseDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -144,6 +145,8 @@ function Demo() {
 - `mod` prop now converts camelCase keys to kebab-case for data attributes in all components
 - `@mantine/form` package no longer exports schema resolvers, use [dedicated packages](/form/schema-validation/) instead
 - `createPolymorphicComponent` function was renamed to shorter `polymorphic` for convenience
+- [Tree](/core/tree) component now supports controlled state via `expandedState`, `selectedState` and `checkedState` props.
+- [Tree](/core/tree) component no longer defines `data-hovered` attribute for hover state, you need to apply hover styles with `&:hover` instead. This change improves rendering performance by [resolving this issue](https://github.com/mantinedev/mantine/issues/7266).
 - [Collapse](/core/collapse) component now uses `expanded` prop instead of `in`
 - [Collapse](/core/collapse), [NavLink](/core/nav-link) and [Accordion.Panel](/core/accordion) now support `keepMounted={false}` prop to unmount collapsed content
 - [Select](/core/select) and [MultiSelect](/core/multi-select) components now support primitive value types (numbers, booleans, strings) for data and value
