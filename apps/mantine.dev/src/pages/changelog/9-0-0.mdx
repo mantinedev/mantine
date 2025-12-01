@@ -30,12 +30,22 @@ Starting from Mantine 9.0, the following dependencies are required:
 - Tiptap 3+ for `@mantine/tiptap` ([migration guide](/guides/tiptap-3-migration))
 - Recharts 3+ for `@mantine/charts` (no migration required)
 
-## use-collapse hook
+## Collapse horizontal orientation
+
+[Collapse](/core/collapse) component now supports horizontal orientation:
+
+<Demo data={CollapseDemos.horizontal} />
+
+## use-collapse and use-horizontal-collapse hooks
 
 New `use-collapse` hook is the hook version of [Collapse](/core/collapse) component.
 It allows animation of height from `0` to `auto` and vice versa.
 
 <Demo data={HooksDemos.useCollapseDemo} />
+
+`use-horizontal-collapse` works the same way as `use-collapse` but animates width instead of height:
+
+<Demo data={HooksDemos.useHorizontalCollapseDemo} />
 
 ## use-floating-window hook
 

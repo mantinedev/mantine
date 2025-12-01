@@ -81,6 +81,7 @@ export { useLongPress } from './use-long-press/use-long-press.js';
 export { useSelection } from './use-selection/use-selection.js';
 export { useFloatingWindow } from './use-floating-window/use-floating-window.js';
 export { useCollapse } from './use-collapse/use-collapse.js';
+export { useHorizontalCollapse } from './use-collapse/use-horizontal-collapse.js';
 
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
 export type { UseClipboardOptions, UseClipboardReturnValue } from './use-clipboard/use-clipboard';
@@ -208,3 +209,8 @@ export type {
   UseCollapseReturnValue,
   UseCollapseState,
 } from './use-collapse/use-collapse';
+export type {
+  UseHorizontalCollapseInput,
+  UseHorizontalCollapseReturnValue,
+  UseHorizontalCollapseState,
+} from './use-collapse/use-horizontal-collapse';

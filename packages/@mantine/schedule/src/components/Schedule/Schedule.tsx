@@ -69,7 +69,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
 
   return (
     <Box {...getStyles('root')} {...others}>
-      <MonthView {...stylesApiProps} month={new Date()} />
+      <MonthView {...stylesApiProps} date={new Date()} />
     </Box>
   );
 });

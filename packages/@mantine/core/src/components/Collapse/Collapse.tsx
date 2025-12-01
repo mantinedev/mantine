@@ -1,4 +1,4 @@
-import { useCollapse, useReducedMotion } from '@mantine/hooks';
+import { useCollapse, useHorizontalCollapse, useReducedMotion } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -10,6 +10,9 @@ import {
 } from '../../core';
 
 export interface CollapseProps extends BoxProps, Omit<React.ComponentProps<'div'>, keyof BoxProps> {
+  /** Collapse orientation @default `'vertical'` */
+  orientation?: 'vertical' | 'horizontal';
+
   /** Expanded state */
   expanded: boolean;
 
@@ -41,6 +44,7 @@ const defaultProps = {
   transitionDuration: 200,
   transitionTimingFunction: 'ease',
   animateOpacity: true,
+  orientation: 'vertical',
 } satisfies Partial<CollapseProps>;
 
 export const Collapse = factory<CollapseFactory>((props) => {
@@ -55,6 +59,7 @@ export const Collapse = factory<CollapseFactory>((props) => {
     animateOpacity,
     keepMounted,
     ref,
+    orientation,
     ...others
   } = useProps('Collapse', defaultProps, props);
 
@@ -62,8 +67,9 @@ export const Collapse = factory<CollapseFactory>((props) => {
   const shouldReduceMotion = useReducedMotion();
   const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
   const duration = reduceMotion ? 0 : transitionDuration;
+  const hook = orientation === 'horizontal' ? useHorizontalCollapse : useCollapse;
 
-  const collapse = useCollapse({
+  const collapse = hook({
     expanded,
     transitionDuration: duration,
     transitionTimingFunction,

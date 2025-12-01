@@ -79,3 +79,4 @@ export { useFloatingWindowAxisDemo } from './use-floating-window.demo.axis';
 export { useLongPressDemo } from './use-long-press.demo.usage';
 export { useSelectionDemo } from './use-selection.demo.usage';
 export { useCollapseDemo } from './use-collapse.demo.usage';
+export { useHorizontalCollapseDemo } from './use-horizontal-collapse.demo.usage';

@@ -397,3 +397,8 @@ export const Demo_useCollapseDemo = {
   name: '⭐ Demo: useCollapseDemo',
   render: renderDemo(demos.useCollapseDemo),
 };
+
+export const Demo_useHorizontalCollapseDemo = {
+  name: '⭐ Demo: useHorizontalCollapseDemo',
+  render: renderDemo(demos.useHorizontalCollapseDemo),
+};
