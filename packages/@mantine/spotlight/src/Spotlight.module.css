@@ -30,6 +30,7 @@
   padding: var(--spotlight-actions-list-padding);
   max-height: calc(100% - 3.125rem);
   margin-inline-end: calc(var(--spotlight-actions-list-padding) * -1);
+  width: 100%;
 
   @mixin where-light {
     border-color: var(--mantine-color-gray-2);
