@@ -229,4 +229,41 @@ describe('@mantine/schedule/MonthYearSelect', () => {
       container.querySelector('.mantine-MonthYearSelect-monthYearSelectLabel')
     ).not.toBeInTheDocument();
   });
+
+  it('closes/opens the dropdown when target is clicked', async () => {
+    const { container } = render(<MonthYearSelect />);
+    expect(
+      container.querySelector('.mantine-MonthYearSelect-monthYearSelectDropdown')
+    ).not.toBeInTheDocument();
+
+    await userEvent.click(
+      container.querySelector('.mantine-MonthYearSelect-monthYearSelectTarget')!
+    );
+    expect(
+      container.querySelector('.mantine-MonthYearSelect-monthYearSelectDropdown')
+    ).toBeInTheDocument();
+
+    await userEvent.click(
+      container.querySelector('.mantine-MonthYearSelect-monthYearSelectTarget')!
+    );
+    expect(
+      container.querySelector('.mantine-MonthYearSelect-monthYearSelectDropdown')
+    ).not.toBeInTheDocument();
+  });
+
+  it('closes the dropdown after year selection if withMonths is false', async () => {
+    const { container } = render(<MonthYearSelect withMonths={false} />);
+    await userEvent.click(container.querySelector('button')!);
+    expect(
+      container.querySelector('.mantine-MonthYearSelect-monthYearSelectDropdown')
+    ).toBeInTheDocument();
+
+    await userEvent.click(
+      container.querySelector('.mantine-MonthYearSelect-monthYearSelectControl[data-type="year"]')!
+    );
+
+    expect(
+      container.querySelector('.mantine-MonthYearSelect-monthYearSelectDropdown')
+    ).not.toBeInTheDocument();
+  });
 });

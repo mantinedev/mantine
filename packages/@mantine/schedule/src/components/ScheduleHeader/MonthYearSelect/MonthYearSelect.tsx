@@ -15,6 +15,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { DateLabelFormat } from '../../../types';
 import { formatDate, getMonthsList, getYearsList } from '../../../utils';
 import { useScheduleContext } from '../../Schedule/Schedule.context';
@@ -142,6 +143,8 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
     rootSelector: 'monthYearSelectTarget',
   });
 
+  const [opened, handlers] = useDisclosure(false);
+
   const today = new Date();
   const ctx = useScheduleContext();
   const _startYear = startYear ?? today.getFullYear() - 5;
@@ -153,7 +156,12 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
     return (
       <UnstyledButton
         key={year}
-        onClick={() => onYearChange?.(year)}
+        onClick={() => {
+          onYearChange?.(year);
+          if (!withMonths) {
+            handlers.close();
+          }
+        }}
         mod={{ type: 'year', active: year === yearValue }}
         aria-label={`${ctx.labels.selectYear} ${year}`}
         tabIndex={hasActiveYear ? (year === yearValue ? 0 : -1) : index === 0 ? 0 : -1}
@@ -214,11 +222,13 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
       position="bottom-start"
       __staticSelector={__staticSelector}
       trapFocus
-      transitionProps={{ transition: 'pop-top-left', duration: 120 }}
+      transitionProps={{ transition: 'pop', duration: 120 }}
       radius={radius || 'var(--schedule-radius, var(--mantine-radius-default))'}
       shadow="md"
       offset={3}
       width={withMonths ? undefined : 'target'}
+      opened={opened}
+      onChange={handlers.set}
       {...popoverProps}
     >
       <Popover.Target>
@@ -227,6 +237,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
           __staticSelector={__staticSelector}
           radius={radius}
           data-with-months={withMonths || undefined}
+          onClick={handlers.toggle}
           {...others}
         >
           {formatDate({
