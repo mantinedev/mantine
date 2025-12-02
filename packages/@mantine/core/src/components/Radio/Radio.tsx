@@ -210,6 +210,7 @@ export const Radio = factory<RadioFactory>((_props) => {
       variant={variant}
       ref={rootRef}
       mod={mod}
+      attributes={attributes}
       {...styleProps}
       {...wrapperProps}
     >

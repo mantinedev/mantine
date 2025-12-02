@@ -214,7 +214,8 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
         ...calendarProps.getYearControlProps?.(date),
       })}
       hideOutsideDates={calendarProps.hideOutsideDates ?? calendarProps.numberOfColumns !== 1}
-      {...(!presets ? { className, style, attributes } : {})}
+      attributes={attributes}
+      {...(!presets ? { className, style } : {})}
     />
   );
 

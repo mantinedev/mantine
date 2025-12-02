@@ -78,6 +78,7 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
     styles,
     unstyled,
     vars,
+    attributes,
     data,
     renderOverflow,
     renderItem,
@@ -96,6 +97,7 @@ export const OverflowList = genericFactory<OverflowListFactory>((_props) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

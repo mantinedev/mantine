@@ -206,6 +206,7 @@ export const Switch = factory<SwitchFactory>((_props) => {
       variant={variant}
       ref={rootRef}
       mod={mod}
+      attributes={attributes}
       {...styleProps}
       {...wrapperProps}
     >

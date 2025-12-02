@@ -6,11 +6,9 @@ import {
   ModalProps,
   ModalStylesNames,
   rem,
-  resolveClassNames,
-  resolveStyles,
   StylesApiProps,
-  useMantineTheme,
   useProps,
+  useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
 import { useDidUpdate, useHotkeys } from '@mantine/hooks';
@@ -137,7 +135,6 @@ export const SpotlightRoot = factory<SpotlightRootFactory>((_props) => {
     ...others
   } = props;
 
-  const theme = useMantineTheme();
   const { opened, query: storeQuery } = useSpotlight(store);
   const _query = typeof query === 'string' ? query : storeQuery;
   const setQuery = (q: string) => {
@@ -155,6 +152,12 @@ export const SpotlightRoot = factory<SpotlightRootFactory>((_props) => {
     styles,
     unstyled,
     attributes,
+  });
+
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<SpotlightRootFactory>({
+    classNames,
+    styles,
+    props,
   });
 
   useHotkeys(getHotkeys(shortcut, store), tagsToIgnore, triggerOnContentEditable);
@@ -185,13 +188,9 @@ export const SpotlightRoot = factory<SpotlightRootFactory>((_props) => {
         onClose={() => spotlightActions.close(store)}
         className={className}
         style={style}
-        classNames={resolveClassNames({
-          theme,
-          classNames: [classes, classNames],
-          props,
-          stylesCtx: undefined,
-        })}
-        styles={resolveStyles({ theme, styles, props, stylesCtx: undefined })}
+        classNames={resolvedClassNames}
+        styles={resolvedStyles}
+        attributes={attributes}
         transitionProps={{
           ...transitionProps,
           onExited: () => {

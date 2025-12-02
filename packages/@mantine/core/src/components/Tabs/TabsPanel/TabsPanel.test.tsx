@@ -25,6 +25,7 @@ describe('@mantine/core/TabsPanel', () => {
     stylesApiName: 'Tabs',
     stylesApiSelectors: ['panel'],
     providerStylesApi: false,
+    compound: true,
   });
 
   tests.itThrowsContextError({

@@ -49,8 +49,19 @@ const varsResolver = createVarsResolver<ComboboxChevronFactory>((theme, { size, 
 
 export const ComboboxChevron = factory<ComboboxChevronFactory>((_props) => {
   const props = useProps('ComboboxChevron', defaultProps, _props);
-  const { size, error, style, className, classNames, styles, unstyled, vars, mod, ...others } =
-    props;
+  const {
+    size,
+    error,
+    style,
+    className,
+    classNames,
+    styles,
+    unstyled,
+    vars,
+    attributes,
+    mod,
+    ...others
+  } = props;
 
   const getStyles = useStyles<ComboboxChevronFactory>({
     name: 'ComboboxChevron',
@@ -63,6 +74,7 @@ export const ComboboxChevron = factory<ComboboxChevronFactory>((_props) => {
     unstyled,
     vars,
     varsResolver,
+    attributes,
     rootSelector: 'chevron',
   });
 

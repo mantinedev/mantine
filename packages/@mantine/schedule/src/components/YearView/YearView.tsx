@@ -174,6 +174,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
   const stylesApiProps = {
     classNames: resolvedClassNames,
     styles: resolvedStyles,
+    attributes,
     __staticSelector,
     radius,
   };

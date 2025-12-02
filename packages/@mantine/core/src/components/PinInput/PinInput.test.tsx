@@ -23,6 +23,7 @@ describe('@mantine/core/PinInput', () => {
     displayName: '@mantine/core/PinInput',
     stylesApiSelectors: ['root', 'pinInput', 'input'],
     providerStylesApi: false,
+    attributes: false,
   });
 
   it('renders correct number of inputs based on length prop', () => {

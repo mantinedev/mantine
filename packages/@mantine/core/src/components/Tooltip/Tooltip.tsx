@@ -231,6 +231,8 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
     return null;
   }
 
+  const tooltipStyles = getStyles('tooltip');
+
   if (target) {
     const transition = getTransitionProps(transitionProps, { duration: 100, transition: 'fade' });
     return (
@@ -248,11 +250,12 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
                 data-fixed={floatingStrategy === 'fixed' || undefined}
                 variant={variant}
                 mod={[{ multiline }, mod]}
+                {...tooltipStyles}
                 {...tooltip.getFloatingProps({
                   ref: tooltip.floating,
-                  className: getStyles('tooltip').className,
+                  className: tooltipStyles.className,
                   style: {
-                    ...getStyles('tooltip').style,
+                    ...tooltipStyles.style,
                     ...transitionStyles,
                     zIndex: zIndex as React.CSSProperties['zIndex'],
                     top: tooltip.y ?? 0,

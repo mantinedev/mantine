@@ -10,7 +10,7 @@ const defaultProps: MonthViewProps = {
   date: '2025-11-05',
 };
 
-describe('@mantine/core/MonthView', () => {
+describe('@mantine/schedule/MonthView', () => {
   tests.itSupportsSystemProps<MonthViewProps, MonthViewStylesNames>({
     component: MonthView,
     props: {

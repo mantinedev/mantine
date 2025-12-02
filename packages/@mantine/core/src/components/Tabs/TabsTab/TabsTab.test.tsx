@@ -27,6 +27,7 @@ describe('@mantine/core/TabsTab', () => {
     stylesApiName: 'Tabs',
     stylesApiSelectors: ['tab', 'tabLabel', 'tabSection'],
     providerStylesApi: false,
+    compound: true,
   });
 
   tests.itSupportsFocusEvents({

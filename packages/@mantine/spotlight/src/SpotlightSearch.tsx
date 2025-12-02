@@ -34,7 +34,7 @@ const defaultProps = {
 } satisfies Partial<SpotlightSearchProps>;
 
 export const SpotlightSearch = factory<SpotlightSearchFactory>((props) => {
-  const { classNames, styles, onKeyDown, onChange, vars, value, ...others } = useProps(
+  const { classNames, styles, onKeyDown, onChange, vars, value, attributes, ...others } = useProps(
     'SpotlightSearch',
     defaultProps,
     props
@@ -67,6 +67,7 @@ export const SpotlightSearch = factory<SpotlightSearchFactory>((props) => {
 
   return (
     <Input
+      {...inputStyles}
       classNames={[{ input: inputStyles.className }, classNames] as any}
       styles={[{ input: inputStyles.style }, styles] as any}
       {...others}

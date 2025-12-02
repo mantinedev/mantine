@@ -43,6 +43,7 @@ describe('@mantine/core/Table', () => {
       stylesApiName: 'Table',
       stylesApiSelectors: ['th'],
       providerStylesApi: false,
+      compound: true,
     });
 
     it('sets data-with-column-border attribute when withColumnBorders prop is set on Table component', () => {
@@ -74,6 +75,7 @@ describe('@mantine/core/Table', () => {
       stylesApiName: 'Table',
       stylesApiSelectors: ['td'],
       providerStylesApi: false,
+      compound: true,
     });
 
     it('sets data-with-column-border attribute when withColumnBorders prop is set on Table component', () => {
@@ -105,6 +107,7 @@ describe('@mantine/core/Table', () => {
       stylesApiName: 'Table',
       stylesApiSelectors: ['tr'],
       providerStylesApi: false,
+      compound: true,
     });
 
     it('sets data-with-row-border attribute when withRowBorders prop is set on Table component', () => {
@@ -154,6 +157,7 @@ describe('@mantine/core/Table', () => {
       stylesApiName: 'Table',
       stylesApiSelectors: ['thead'],
       providerStylesApi: false,
+      compound: true,
     });
 
     it('sets data-sticky attribute when stickyHeader prop is set on Table component', () => {
@@ -183,6 +187,7 @@ describe('@mantine/core/Table', () => {
       stylesApiName: 'Table',
       stylesApiSelectors: ['tbody'],
       providerStylesApi: false,
+      compound: true,
     });
   });
 
@@ -202,6 +207,7 @@ describe('@mantine/core/Table', () => {
       stylesApiName: 'Table',
       stylesApiSelectors: ['tfoot'],
       providerStylesApi: false,
+      compound: true,
     });
   });
 
@@ -221,6 +227,7 @@ describe('@mantine/core/Table', () => {
       stylesApiName: 'Table',
       stylesApiSelectors: ['caption'],
       providerStylesApi: false,
+      compound: true,
     });
 
     it('sets data-side attribute based on value set on Table component', () => {

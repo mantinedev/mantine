@@ -206,6 +206,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
   const stylesApiProps = {
     classNames: resolvedClassNames,
     styles: resolvedStyles,
+    attributes,
     __staticSelector,
     radius,
   };

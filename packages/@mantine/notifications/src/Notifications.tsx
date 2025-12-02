@@ -123,6 +123,7 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     styles,
     unstyled,
     vars,
+    attributes,
     position,
     autoClose,
     transitionDuration,
@@ -155,6 +156,7 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     classNames,
     styles,
     unstyled,
+    attributes,
     vars,
     varsResolver,
   });

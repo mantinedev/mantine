@@ -6,7 +6,7 @@ export default { title: 'Calendar' };
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
-      <Calendar />
+      <Calendar attributes={{ day: { 'data-test-id': 'day' } }} />
     </div>
   );
 }

@@ -113,6 +113,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props) => {
     styles,
     unstyled,
     vars,
+    attributes,
     date,
     defaultDate,
     onDateChange,
@@ -143,6 +144,7 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props) => {
     unstyled,
     vars,
     varsResolver,
+    attributes,
   });
 
   const ctx = useDatesContext();

@@ -241,6 +241,7 @@ export const Month = factory<MonthFactory>((_props) => {
             __staticSelector={__staticSelector || 'Month'}
             classNames={resolvedClassNames}
             styles={resolvedStyles}
+            attributes={attributes}
             unstyled={unstyled}
             data-mantine-stop-propagation={__stopPropagation || undefined}
             highlightToday={highlightToday}
@@ -303,11 +304,12 @@ export const Month = factory<MonthFactory>((_props) => {
             locale={locale}
             firstDayOfWeek={firstDayOfWeek}
             weekdayFormat={weekdayFormat}
+            withWeekNumbers={withWeekNumbers}
             size={size}
             classNames={resolvedClassNames}
             styles={resolvedStyles}
             unstyled={unstyled}
-            withWeekNumbers={withWeekNumbers}
+            attributes={attributes}
           />
         </thead>
       )}

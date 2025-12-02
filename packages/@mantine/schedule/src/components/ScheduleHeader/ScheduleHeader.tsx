@@ -63,8 +63,17 @@ const varsResolver = createVarsResolver<ScheduleHeaderFactory>(() => ({
 
 export const ScheduleHeader = factory<ScheduleHeaderFactory>((_props) => {
   const props = useProps('ScheduleHeader', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, __staticSelector, ...others } =
-    props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    attributes,
+    __staticSelector,
+    ...others
+  } = props;
 
   const getStyles = useStyles<ScheduleHeaderFactory>({
     name: __staticSelector,
@@ -77,6 +86,7 @@ export const ScheduleHeader = factory<ScheduleHeaderFactory>((_props) => {
     unstyled,
     vars,
     varsResolver,
+    attributes,
     rootSelector: 'header',
   });
 

@@ -48,6 +48,7 @@ interface Options<Props extends Record<string, any>, StylesApiSelectors extends 
   sizeSelector?: string;
   providerStylesApi?: boolean;
   compound?: boolean;
+  attributes?: boolean;
 }
 
 export function itSupportsSystemProps<

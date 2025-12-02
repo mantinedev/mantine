@@ -28,6 +28,7 @@ describe('@mantine/core/PopoverDropdown', () => {
     stylesApiName: 'Popover',
     stylesApiSelectors: ['dropdown', 'arrow'],
     providerStylesApi: false,
+    compound: true,
   });
 
   tests.itThrowsContextError({

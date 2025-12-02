@@ -232,6 +232,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
       variant={variant}
       ref={rootRef}
       mod={mod}
+      attributes={attributes}
       {...styleProps}
       {...wrapperProps}
     >

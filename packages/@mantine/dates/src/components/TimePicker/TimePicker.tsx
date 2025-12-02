@@ -406,6 +406,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
             className={className}
             classNames={resolvedClassNames}
             styles={resolvedStyles}
+            attributes={attributes}
             __staticSelector="TimePicker"
             {...others}
           >
