@@ -12,7 +12,7 @@
   transition:
     color 100ms ease,
     background-color 100ms ease;
-  font-weight: 500;
+  font-weight: 600;
   border-radius: var(--mantine-radius-md);
 
   &[data-active] {

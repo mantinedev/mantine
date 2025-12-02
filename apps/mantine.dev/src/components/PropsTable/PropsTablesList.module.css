@@ -14,7 +14,7 @@
 
 .title {
   font-family: var(--docs-font-primary);
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: var(--mantine-spacing-sm);
   color: var(--mantine-color-bright);
   padding-inline-start: var(--mantine-spacing-xs);

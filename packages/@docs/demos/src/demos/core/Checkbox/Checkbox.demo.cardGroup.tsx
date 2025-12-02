@@ -24,7 +24,7 @@ const cssCode = `.root {
 }
 
 .label {
-  font-weight: 500;
+  font-weight: 600;
   font-size: var(--mantine-font-size-sm);
   line-height: 1.3;
   color: var(--mantine-color-bright);

@@ -23,7 +23,7 @@ const cssCode = `
 
 .tab {
   z-index: 1;
-  font-weight: 500;
+  font-weight: 600;
   transition: color 100ms ease;
   color: var(--mantine-color-gray-7);
 

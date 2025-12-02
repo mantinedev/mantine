@@ -6,7 +6,7 @@
 
 .tab {
   font-size: var(--mantine-font-size-md);
-  font-weight: 500;
+  font-weight: 600;
   height: 42px;
   padding-inline-start: var(--mantine-spacing-sm);
   padding-inline-end: var(--mantine-spacing-lg);

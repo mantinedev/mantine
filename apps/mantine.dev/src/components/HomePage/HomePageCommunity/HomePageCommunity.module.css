@@ -38,7 +38,7 @@
 .reviewTitle {
   display: block;
   font-size: var(--mantine-font-size-lg);
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: var(--mantine-spacing-sm);
   color: var(--mantine-color-bright);
 }
@@ -82,7 +82,7 @@
 }
 
 .reviewAuthor {
-  font-weight: 500;
+  font-weight: 600;
 
   @mixin hover {
     text-decoration: underline;
@@ -118,7 +118,7 @@
 }
 
 .statValue {
-  font-weight: 500;
+  font-weight: 600;
   font-size: 28px;
 
   @mixin smaller-than $mantine-breakpoint-md {

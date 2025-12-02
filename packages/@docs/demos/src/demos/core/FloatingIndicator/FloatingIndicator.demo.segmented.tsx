@@ -62,7 +62,7 @@ const cssCode = `.root {
   border-radius: var(--mantine-radius-md);
   font-size: var(--mantine-font-size-sm);
   transition: color 100ms ease;
-  font-weight: 500;
+  font-weight: 600;
 
   @mixin hover {
     color: light-dark(var(--mantine-color-black), var(--mantine-color-white));

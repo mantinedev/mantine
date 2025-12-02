@@ -15,7 +15,7 @@
 }
 
 .itemTitle {
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1;
   margin-bottom: calc(var(--mantine-spacing-xs) / 2);
 }

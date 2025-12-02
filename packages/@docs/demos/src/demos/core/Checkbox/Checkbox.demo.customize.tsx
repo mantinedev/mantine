@@ -8,7 +8,7 @@ const cssCode = `
   border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-md);
-  font-weight: 500;
+  font-weight: 600;
   transition:
     color 100ms ease,
     background-color 100ms ease,

@@ -4,7 +4,7 @@
 
 .label {
   color: var(--mantine-color-dimmed);
-  font-weight: 500;
+  font-weight: 600;
   font-size: var(--mantine-font-size-xs);
   padding: calc(var(--mantine-spacing-xs) / 2) var(--mantine-spacing-sm);
   cursor: default;

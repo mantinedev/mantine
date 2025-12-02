@@ -29,7 +29,7 @@
   }
 
   &:where([data-variant='vertical']) :where(.th) {
-    font-weight: 500;
+    font-weight: 600;
 
     @mixin where-light {
       background-color: var(--mantine-color-gray-0);

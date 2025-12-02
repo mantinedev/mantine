@@ -7,6 +7,6 @@
   {
     "fileName": "SelectedAnimation.module.css",
     "language": "css",
-    "code": "  transition:\n    transform 100ms ease,\n    box-shadow 100ms ease;\n\n  &[data-combobox-selected] {\n    font-weight: 500;\n    transform: scale(1.1);\n    box-shadow: var(--mantine-shadow-lg);\n  }\n}\n"
+    "code": "  transition:\n    transform 100ms ease,\n    box-shadow 100ms ease;\n\n  &[data-combobox-selected] {\n    font-weight: 600;\n    transform: scale(1.1);\n    box-shadow: var(--mantine-shadow-lg);\n  }\n}\n"
   }
 ]
