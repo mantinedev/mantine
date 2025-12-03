@@ -28,7 +28,7 @@
   border-top: 1px solid;
   flex: 1;
   padding: var(--spotlight-actions-list-padding);
-  max-height: calc(100% - 3.125rem);
+  max-height: calc(100vh - 15rem);
   margin-inline-end: calc(var(--spotlight-actions-list-padding) * -1);
   width: 100%;
 
