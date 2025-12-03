@@ -62,10 +62,10 @@ export interface __ColorPickerProps {
   /** Called when the user stops dragging one of the sliders or changes the value with keyboard */
   onChangeEnd?: (value: string) => void;
 
-  /** Color format @default `'hex'` */
+  /** Color format. `hexa`, `rgba`, `hsla` values render alpha channel slider @default `'hex'` */
   format?: ColorFormat;
 
-  /** Determines whether the color picker should be displayed @default `true` */
+  /** If `false`, the component displays only swatches @default `true` */
   withPicker?: boolean;
 
   /** A list of colors used to display swatches list below the color picker */
@@ -74,7 +74,7 @@ export interface __ColorPickerProps {
   /** Number of swatches per row @default `7` */
   swatchesPerRow?: number;
 
-  /** Controls size of hue, alpha and saturation sliders @default `'md'` */
+  /** Component size @default `'md'` */
   size?: MantineSize | (string & {});
 }
 

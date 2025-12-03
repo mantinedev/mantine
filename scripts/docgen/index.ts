@@ -19,5 +19,6 @@ generateDeclarations({
       'React.ComponentProps<"div">',
     '(ClassAttributes<HTMLDivElement> & HTMLAttributes<HTMLDivElement> & DataAttributes) | undefined':
       'React.ComponentProps<"div">',
+    'ColorFormat | undefined': "'hex' | 'hexa' | 'rgba' | 'rgb' | 'hsl' | 'hsla'",
   },
 });
