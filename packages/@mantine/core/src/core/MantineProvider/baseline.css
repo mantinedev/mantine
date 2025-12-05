@@ -1,4 +1,5 @@
-:root {
+:root,
+:host {
   color-scheme: var(--mantine-color-scheme);
 }
 
@@ -20,7 +21,8 @@ select {
   text-transform: none;
 }
 
-body {
+body,
+:host {
   margin: 0;
   font-family: var(--mantine-font-family);
   font-size: var(--mantine-font-size-md);
