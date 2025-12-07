@@ -20,6 +20,38 @@ function Demo() {
 }
 ```
 
+## Uncontrolled
+
+`RangeSlider` can be used with uncontrolled forms the same way as a native input element.
+Set the `name` attribute to include range slider value in `FormData` object on form submission.
+To control the initial value in uncontrolled forms, use the `defaultValue` prop.
+
+Example usage of uncontrolled `RangeSlider` with `FormData`:
+
+```tsx
+import { RangeSlider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Range slider value:', formData.get('range'));
+      }}
+    >
+      <RangeSlider
+        name="range"
+        defaultValue={[20, 80]}
+        min={0}
+        max={100}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
 ## Disabled
 
 <Demo data={RangeSliderDemos.disabled} />

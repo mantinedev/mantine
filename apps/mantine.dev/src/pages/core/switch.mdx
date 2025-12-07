@@ -25,6 +25,33 @@ function Demo() {
 }
 ```
 
+## Uncontrolled
+
+`Switch` can be used with uncontrolled forms the same way as a native `input[type="checkbox"]`.
+Set the `name` attribute to include switch value in `FormData` object on form submission.
+To control the initial checked state in uncontrolled forms, use `defaultChecked` prop.
+
+Example usage of uncontrolled `Switch` with `FormData`:
+
+```tsx
+import { Switch } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Switch value:', !!formData.get('notifications'));
+      }}
+    >
+      <Switch label="Enable notifications" name="notifications" defaultChecked />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
 ## States
 
 <Demo data={SwitchDemos.states} />

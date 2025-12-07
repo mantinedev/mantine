@@ -8,6 +8,49 @@ export default Layout(MDX_DATA.PinInput);
 
 <Demo data={PinInputDemos.configurator} />
 
+## Controlled
+
+```tsx
+import { useState } from 'react';
+import { PinInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('');
+  return <PinInput value={value} onChange={setValue} />;
+}
+```
+
+## Uncontrolled
+
+`PinInput` can be used with uncontrolled forms the same way as a native input element.
+Set the `name` attribute to include pin input value in `FormData` object on form submission.
+To control the initial value in uncontrolled forms, use the `defaultValue` prop.
+
+Example usage of uncontrolled `PinInput` with `FormData`:
+
+```tsx
+import { PinInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('PIN value:', formData.get('pin'));
+      }}
+    >
+      <PinInput
+        name="pin"
+        length={4}
+        oneTimeCode
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
 ## Regex type
 
 You can use a regular expression to validate user input. Characters that do not match the given expression

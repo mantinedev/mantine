@@ -23,6 +23,38 @@ function Demo() {
 }
 ```
 
+## Uncontrolled
+
+`JsonInput` can be used with uncontrolled forms the same way as a native `textarea` element.
+Set the `name` attribute to include json input value in `FormData` object on form submission.
+To control the initial value in uncontrolled forms, use the `defaultValue` prop.
+
+Example usage of uncontrolled `JsonInput` with `FormData`:
+
+```tsx
+import { JsonInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('JSON input value:', formData.get('data'));
+      }}
+    >
+      <JsonInput
+        label="Enter JSON"
+        name="data"
+        defaultValue="{}"
+        formatOnBlur
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
 ## Input props
 
 <InputFeatures component="JsonInput" element="textarea" />

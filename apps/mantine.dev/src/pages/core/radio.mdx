@@ -25,6 +25,34 @@ function Demo() {
 }
 ```
 
+## Uncontrolled
+
+`Radio` can be used with uncontrolled forms the same way as a native `input[type="radio"]`.
+Set the `name` and `value` attributes to include radio value in `FormData` object on form submission.
+To control the initial checked state in uncontrolled forms, use `defaultChecked` prop.
+
+Example usage of uncontrolled `Radio` with `FormData`:
+
+```tsx
+import { Radio } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Radio value:', formData.get('option'));
+      }}
+    >
+      <Radio name="option" value="option1" label="Option 1" />
+      <Radio name="option" value="option2" label="Option 2" defaultChecked />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
 ## States
 
 <Demo data={RadioDemos.states} />

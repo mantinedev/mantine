@@ -20,6 +20,33 @@ function Demo() {
 }
 ```
 
+## Uncontrolled
+
+`Slider` can be used with uncontrolled forms the same way as a native input element.
+Set the `name` attribute to include slider value in `FormData` object on form submission.
+To control the initial value in uncontrolled forms, use the `defaultValue` prop.
+
+Example usage of uncontrolled `Slider` with `FormData`:
+
+```tsx
+import { Slider } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Slider value:', formData.get('volume'));
+      }}
+    >
+      <Slider name="volume" defaultValue={40} min={0} max={100} />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
 ## Disabled
 
 <Demo data={SliderDemos.disabled} />

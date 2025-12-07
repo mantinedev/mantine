@@ -25,6 +25,39 @@ function Demo() {
 }
 ```
 
+## Uncontrolled
+
+`NumberInput` can be used with uncontrolled forms the same way as a native `input[type="number"]`.
+Set the `name` attribute to include number input value in `FormData` object on form submission.
+To control the initial value in uncontrolled forms, use the `defaultValue` prop.
+
+Example usage of uncontrolled `NumberInput` with `FormData`:
+
+```tsx
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Number input value:', formData.get('quantity'));
+      }}
+    >
+      <NumberInput
+        label="Enter quantity"
+        name="quantity"
+        defaultValue="1"
+        min="1"
+        max="100"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
 ## Value type
 
 The `value`, `defaultValue`, and `onChange` props can be either string or number. In all cases

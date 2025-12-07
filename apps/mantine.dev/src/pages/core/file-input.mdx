@@ -36,6 +36,34 @@ function Demo() {
 }
 ```
 
+## Uncontrolled
+
+`FileInput` can be used with uncontrolled forms the same way as a native `input[type="file"]`.
+Set the `name` attribute to include file input value in `FormData` object on form submission.
+To control the initial value in uncontrolled forms, use the `defaultValue` prop.
+
+Example usage of uncontrolled `FileInput` with `FormData`:
+
+```tsx
+import { FileInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const files = formData.getAll('file');
+        console.log('File input value:', files);
+      }}
+    >
+      <FileInput label="Upload your file" name="file" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
 ## Multiple
 
 Set `multiple` to allow the user to pick more than one file:

@@ -27,6 +27,33 @@ function Demo() {
 }
 ```
 
+## Uncontrolled
+
+`Textarea` can be used with uncontrolled forms the same way as a native `textarea` element.
+Set the `name` attribute to include textarea value in `FormData` object on form submission.
+To control the initial value in uncontrolled forms, use the `defaultValue` prop.
+
+Example usage of uncontrolled `Textarea` with `FormData`:
+
+```tsx
+import { Textarea } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Textarea value:', formData.get('message'));
+      }}
+    >
+      <Textarea label="Enter your message" name="message" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
 ## Autosize
 
 Autosize textarea uses the [react-textarea-autosize](https://www.npmjs.com/package/react-textarea-autosize) package.
