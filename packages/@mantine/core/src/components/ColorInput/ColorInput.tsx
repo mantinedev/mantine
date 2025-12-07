@@ -90,6 +90,7 @@ const defaultProps = {
   popoverProps: { transitionProps: { transition: 'fade', duration: 0 } },
   withEyeDropper: true,
   size: 'sm',
+  leftSectionPointerEvents: 'none',
 } satisfies Partial<ColorInputProps>;
 
 const varsResolver = createVarsResolver<ColorInputFactory>((_, { size }) => ({
