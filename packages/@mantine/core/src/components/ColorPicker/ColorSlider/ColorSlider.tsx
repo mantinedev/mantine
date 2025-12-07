@@ -60,6 +60,11 @@ export interface ColorSliderProps
   thumbColor?: string;
 }
 
+export type ColorSliderOptions = Omit<
+  ColorSliderProps,
+  'maxValue' | 'overlays' | 'round' | 'thumbColor'
+>;
+
 export type ColorSliderFactory = Factory<{
   props: ColorSliderProps;
   ref: HTMLDivElement;
@@ -102,6 +107,7 @@ export const ColorSlider = factory<ColorSliderFactory>((_props) => {
     styles,
     unstyled,
     attributes,
+    rootSelector: 'slider',
   });
 
   const ctxGetStyles = use(ColorPickerContext)?.getStyles;
@@ -160,6 +166,7 @@ export const ColorSlider = factory<ColorSliderFactory>((_props) => {
       {...others}
       ref={useMergedRef(sliderRef, ref)}
       {...getStyles('slider')}
+      size={size}
       role="slider"
       aria-valuenow={value}
       aria-valuemax={maxValue}
@@ -182,3 +189,4 @@ export const ColorSlider = factory<ColorSliderFactory>((_props) => {
 });
 
 ColorSlider.displayName = '@mantine/core/ColorSlider';
+ColorSlider.classes = classes;

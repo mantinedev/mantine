@@ -1,18 +1,34 @@
-import { rem, useProps } from '../../../core';
-import { ColorSlider, ColorSliderProps } from '../ColorSlider/ColorSlider';
+import { Factory, factory, rem, useProps } from '../../../core';
+import {
+  ColorSlider,
+  ColorSliderOptions,
+  ColorSliderStylesNames,
+} from '../ColorSlider/ColorSlider';
 import { round } from '../converters/parsers';
 
-export interface AlphaSliderProps
-  extends Omit<ColorSliderProps, 'maxValue' | 'overlays' | 'round' | 'thumbColor'> {
+export interface AlphaSliderProps extends ColorSliderOptions {
   color: string;
 }
 
-export function AlphaSlider(props: AlphaSliderProps) {
-  const { value, onChange, onChangeEnd, color, ...others } = useProps('AlphaSlider', null, props);
+export type AlphaSliderFactory = Factory<{
+  props: AlphaSliderProps;
+  ref: HTMLDivElement;
+  stylesNames: ColorSliderStylesNames;
+}>;
+
+const defaultProps = {
+  __staticSelector: 'AlphaSlider',
+} satisfies Partial<AlphaSliderProps>;
+
+export const AlphaSlider = factory<AlphaSliderFactory>((props: AlphaSliderProps) => {
+  const { value, onChange, onChangeEnd, color, ...others } = useProps(
+    'AlphaSlider',
+    defaultProps,
+    props
+  );
 
   return (
     <ColorSlider
-      __staticSelector="AlphaSlider"
       {...others}
       value={value}
       onChange={(val) => onChange?.(round(val, 2))}
@@ -38,6 +54,7 @@ export function AlphaSlider(props: AlphaSliderProps) {
       ]}
     />
   );
-}
+});
 
 AlphaSlider.displayName = '@mantine/core/AlphaSlider';
+AlphaSlider.classes = ColorSlider.classes;
