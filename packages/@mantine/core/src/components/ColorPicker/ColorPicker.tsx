@@ -4,6 +4,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -102,6 +103,12 @@ export interface ColorPickerProps
 
   /** Called when one of the color swatches is clicked */
   onColorSwatchClick?: (color: string) => void;
+
+  /** Hidden input `name` attribute, if not set, the input will not be rendered */
+  name?: string;
+
+  /** Props spread to the hidden input */
+  hiddenInputProps?: React.ComponentProps<'input'> & DataAttributes;
 }
 
 export type ColorPickerFactory = Factory<{
@@ -157,6 +164,8 @@ export const ColorPicker = factory<ColorPickerFactory>((_props) => {
     __staticSelector,
     mod,
     attributes,
+    name,
+    hiddenInputProps,
     ...others
   } = props;
 
@@ -231,6 +240,8 @@ export const ColorPicker = factory<ColorPickerFactory>((_props) => {
         mod={[{ 'full-width': fullWidth }, mod]}
         {...others}
       >
+        {name && <input type="hidden" name={name} value={_value} {...hiddenInputProps} />}
+
         {withPicker && (
           <>
             <Saturation

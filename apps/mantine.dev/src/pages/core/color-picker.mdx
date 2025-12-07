@@ -8,6 +8,52 @@ export default Layout(MDX_DATA.ColorPicker);
 
 <Demo data={ColorPickerDemos.usage} />
 
+## Controlled
+
+The `ColorPicker` value must be a string; other types are not supported.
+The `onChange` function is called with a string value as a single argument.
+
+```tsx
+import { useState } from 'react';
+import { ColorPicker } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('#ffffff');
+  return <ColorPicker value={value} onChange={setValue} />;
+}
+```
+
+## Uncontrolled
+
+`ColorPicker` can be used with uncontrolled forms the same way as a native `input` element.
+Set the `name` attribute to include color picker value in `FormData` object on form submission.
+To control the initial value in uncontrolled forms, use the `defaultValue` prop.
+
+Example usage of uncontrolled `ColorPicker` with `FormData`:
+
+```tsx
+import { ColorPicker } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Color value:', formData.get('color'));
+      }}
+    >
+      <ColorPicker
+        name="color"
+        defaultValue="#FF0000"
+        format="hex"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
 ## Color format
 
 `ColorPicker` supports hex, hexa, rgb, rgba, hsl and hsla color formats.

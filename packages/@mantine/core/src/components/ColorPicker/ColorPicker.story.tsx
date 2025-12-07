@@ -16,6 +16,21 @@ export function SeparateAlphaSlider() {
   );
 }
 
+export function Uncontrolled() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('value:', formData.get('color'));
+      }}
+    >
+      <ColorPicker name="color" defaultValue="#FF0000" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
 export function SeparateHueSlider() {
   const [value, onChange] = useState(255);
 

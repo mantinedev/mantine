@@ -86,4 +86,13 @@ describe('@mantine/core/ColorPicker', () => {
     await userEvent.click(container.querySelectorAll('.mantine-ColorSwatch-root')[0]);
     expect(spy).toHaveBeenCalledWith('#ffffff');
   });
+
+  it('renders hidden input with given name and value', () => {
+    const { container } = render(
+      <ColorPicker name="color" value="#ff0000" format="hex" withPicker={false} />
+    );
+    const input = container.querySelector('input[name="color"]') as HTMLInputElement;
+    expect(input).toBeInTheDocument();
+    expect(input.value).toBe('#ff0000');
+  });
 });
