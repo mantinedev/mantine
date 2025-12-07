@@ -1,13 +1,15 @@
 import { rem, useProps } from '../../../core';
 import { ColorSlider, ColorSliderProps } from '../ColorSlider/ColorSlider';
 
-export interface HueSliderProps extends Omit<ColorSliderProps, 'maxValue' | 'overlays' | 'round'> {}
+export interface HueSliderProps
+  extends Omit<ColorSliderProps, 'maxValue' | 'overlays' | 'round' | 'thumbColor'> {}
 
 export function HueSlider(props: HueSliderProps) {
   const { value, onChange, onChangeEnd, color, ...others } = useProps('HueSlider', {}, props);
 
   return (
     <ColorSlider
+      __staticSelector="HueSlider"
       {...others}
       value={value}
       onChange={onChange}

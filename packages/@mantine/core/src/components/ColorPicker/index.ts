@@ -3,6 +3,8 @@ export { AlphaSlider } from './AlphaSlider/AlphaSlider';
 export { HueSlider } from './HueSlider/HueSlider';
 export * from './converters';
 
+export type { ColorSliderFactory } from './ColorSlider/ColorSlider';
+
 export type {
   ColorPickerCssVariables,
   ColorPickerFactory,

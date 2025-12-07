@@ -110,6 +110,10 @@ const FILES_PATHS = getPaths([
   // List
   'packages/@mantine/core/src/components/List/ListItem/ListItem.tsx',
 
+  // ColorPicker
+  'packages/@mantine/core/src/components/ColorPicker/AlphaSlider/AlphaSlider.tsx',
+  'packages/@mantine/core/src/components/ColorPicker/HueSlider/HueSlider.tsx',
+
   // Spotlight
   'packages/@mantine/spotlight/src/Spotlight.tsx',
   'packages/@mantine/spotlight/src/SpotlightAction.tsx',

@@ -1,4 +1,4 @@
-import type { ColorPickerFactory } from '@mantine/core';
+import type { ColorPickerFactory, ColorSliderFactory } from '@mantine/core';
 import type { StylesApiData } from '../types';
 
 export const ColorPickerStylesApi: StylesApiData<ColorPickerFactory> = {
@@ -27,3 +27,15 @@ export const ColorPickerStylesApi: StylesApiData<ColorPickerFactory> = {
     },
   },
 };
+
+export const HueSliderStylesApi: StylesApiData<ColorSliderFactory> = {
+  selectors: {
+    slider: 'Root element',
+    sliderOverlay: 'Element used to display various overlays over hue slider',
+    thumb: 'Thumb of the hue slider',
+  },
+
+  vars: {},
+};
+
+export const AlphaSliderStylesApi: StylesApiData<ColorSliderFactory> = HueSliderStylesApi;

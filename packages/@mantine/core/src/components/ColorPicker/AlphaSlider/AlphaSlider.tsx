@@ -3,7 +3,7 @@ import { ColorSlider, ColorSliderProps } from '../ColorSlider/ColorSlider';
 import { round } from '../converters/parsers';
 
 export interface AlphaSliderProps
-  extends Omit<ColorSliderProps, 'maxValue' | 'overlays' | 'round'> {
+  extends Omit<ColorSliderProps, 'maxValue' | 'overlays' | 'round' | 'thumbColor'> {
   color: string;
 }
 
@@ -12,6 +12,7 @@ export function AlphaSlider(props: AlphaSliderProps) {
 
   return (
     <ColorSlider
+      __staticSelector="AlphaSlider"
       {...others}
       value={value}
       onChange={(val) => onChange?.(round(val, 2))}

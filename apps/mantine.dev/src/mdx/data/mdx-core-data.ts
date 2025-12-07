@@ -1140,4 +1140,26 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/OverflowList/OverflowList.tsx',
     docs: 'core/overflow-list.mdx',
   },
+
+  HueSlider: {
+    title: 'HueSlider',
+    package: '@mantine/core',
+    slug: '/core/hue-slider',
+    props: ['HueSlider'],
+    styles: ['HueSlider'],
+    description: 'Slider component for selecting hue channel in color pickers (0 – 360 degrees)',
+    source: '@mantine/core/src/components/ColorPicker/HueSlider/HueSlider.tsx',
+    docs: 'core/hue-slider.mdx',
+  },
+
+  AlphaSlider: {
+    title: 'AlphaSlider',
+    package: '@mantine/core',
+    slug: '/core/alpha-slider',
+    props: ['AlphaSlider'],
+    styles: ['AlphaSlider'],
+    description: 'Slider component for selecting alpha channel in color pickers (0 – 1)',
+    source: '@mantine/core/src/components/ColorPicker/AlphaSlider/AlphaSlider.tsx',
+    docs: 'core/alpha-slider.mdx',
+  },
 };

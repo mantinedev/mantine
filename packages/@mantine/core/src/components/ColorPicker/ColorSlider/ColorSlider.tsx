@@ -26,12 +26,25 @@ import classes from '../ColorPicker.module.css';
 export type ColorSliderStylesNames = 'slider' | 'sliderOverlay' | 'thumb';
 
 export interface __ColorSliderProps extends ElementProps<'div', 'onChange'> {
+  /** Controlled component value */
   value: number;
+
+  /** Called when value changes */
   onChange?: (value: number) => void;
+
+  /** Called when user stops dragging the slider or uses keyboard to change value */
   onChangeEnd?: (value: number) => void;
+
+  /** Called when user starts dragging the slider */
   onScrubStart?: () => void;
+
+  /** Called when user stops dragging the slider */
   onScrubEnd?: () => void;
+
+  /** Slider size @default `'md'` */
   size?: MantineSize | (string & {});
+
+  /** If set, slider thumb can be focused @default `true` */
   focusable?: boolean;
 }
 

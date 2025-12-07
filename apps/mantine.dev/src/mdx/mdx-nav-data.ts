@@ -260,6 +260,8 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
     pages: [
       MDX_DATA.Input,
       MDX_DATA.ColorPicker,
+      MDX_DATA.AlphaSlider,
+      MDX_DATA.HueSlider,
       MDX_DATA.NativeSelect,
       MDX_DATA.SegmentedControl,
       MDX_DATA.Slider,
