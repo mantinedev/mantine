@@ -1,0 +1,175 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.ControlledVsUncontrolled);
+
+# Controlled vs Uncontrolled
+
+All Mantine inputs support both controlled and uncontrolled modes. This guide will
+help you understand the difference between these two modes and when to use each of them.
+
+## Controlled components
+
+A controlled component is a form element whose value is controlled by React state.
+The component's value is set by state, and changes are handled through event handlers that update that state.
+React becomes the single source of truth for the form data.
+
+Example of a controlled `TextInput` component:
+
+```tsx
+import { useState } from 'react';
+import { TextInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('');
+
+  return (
+    <TextInput
+      label="Controlled TextInput"
+      value={value}
+      onChange={(event) => setValue(event.currentTarget.value)}
+    />
+  );
+}
+```
+
+In this example, the input's value is always synchronized with the component's state.
+Every keystroke triggers a state update,which causes a re-render with the new value.
+
+## Uncontrolled components
+
+An uncontrolled component manages its own state internally through the DOM (or internal state),
+similar to traditional HTML form elements. React doesn't control the value directly.
+Instead, you use refs or DOM methods to access the current value when needed, typically on form submission.
+
+Example of an uncontrolled `TextInput` component:
+
+```tsx
+import { useRef } from 'react';
+import { TextInput, Button } from '@mantine/core';
+
+function Demo() {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (inputRef.current) {
+      alert(`Input value: ${inputRef.current.value}`);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <TextInput label="Uncontrolled TextInput" ref={inputRef} />
+      <Button type="submit">Submit</Button>
+    </form>
+  );
+}
+```
+
+Here, the input maintains its own state. React only reads the value when explicitly requested through the ref.
+
+## Key differences
+
+The primary difference lies in where the state lives. Controlled components store state in React,
+while uncontrolled components store it in the DOM. This fundamental distinction affects how you interact with the component throughout its lifecycle.
+
+With controlled components, you explicitly define the value prop and handle every change.
+With uncontrolled components, you set a defaultValue and let the DOM handle updates, only accessing the value when needed.
+
+Controlled components require an onChange handler to remain interactive, whereas uncontrolled components work
+without any change handlers, just like standard HTML inputs.
+
+## When to use which
+
+Use controlled components when:
+- You need to validate or manipulate input values in real-time.
+- You want to enforce specific formats or constraints on user input.
+- You require immediate feedback or dynamic UI updates based on input changes.
+
+Use uncontrolled components when:
+- You want to simplify your code and reduce boilerplate for simple forms.
+- You don't need to validate or manipulate input values until form submission.
+- You are working with large forms where performance is a concern, and you want to minimize re-renders.
+
+## FormData and uncontrolled components
+
+Uncontrolled forms are often used with the [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) API,
+which allows you to easily collect form values without managing state for each input. All Mantine components
+support uncontrolled usage with `FormData`.
+
+Example of using uncontrolled `Checkbox` with `FormData`:
+
+```tsx
+import { Checkbox } from '@mantine/core';
+
+function Demo() {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        console.log('Checkbox value:', !!formData.get('terms'));
+      }}
+    >
+      <Checkbox label="Accept terms and conditions" name="terms" defaultChecked />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## Uncontrolled use-form
+
+[@mantine/form](/form/use-form) supports uncontrolled mode which allows building large
+forms with good performance. If you are working on complex forms with many fields, `useForm`
+hook in uncontrolled mode is a great choice.
+
+Example of uncontrolled mode with `useForm`:
+
+```tsx
+import { useState } from 'react';
+import { Button, Code, Text, TextInput } from '@mantine/core';
+import { hasLength, isEmail, useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '', email: '' },
+    validate: {
+      name: hasLength({ min: 3 }, 'Must be at least 3 characters'),
+      email: isEmail('Invalid email'),
+    },
+  });
+
+  const [submittedValues, setSubmittedValues] = useState<typeof form.values | null>(null);
+
+  return (
+    <form onSubmit={form.onSubmit(setSubmittedValues)}>
+      <TextInput
+        {...form.getInputProps('name')}
+        key={form.key('name')}
+        label="Name"
+        placeholder="Name"
+      />
+      <TextInput
+        {...form.getInputProps('email')}
+        key={form.key('email')}
+        mt="md"
+        label="Email"
+        placeholder="Email"
+      />
+      <Button type="submit" mt="md">
+        Submit
+      </Button>
+
+      <Text mt="md">Form values:</Text>
+      <Code block>{JSON.stringify(form.values, null, 2)}</Code>
+
+      <Text mt="md">Submitted values:</Text>
+      <Code block>{submittedValues ? JSON.stringify(submittedValues, null, 2) : '–'}</Code>
+    </form>
+  );
+}
+```

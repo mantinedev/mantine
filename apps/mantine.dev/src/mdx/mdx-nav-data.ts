@@ -118,6 +118,7 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.StyleProps,
       MDX_DATA.ColorFunctions,
       MDX_DATA.Rtl,
+      MDX_DATA.UnstyledComponents,
     ],
   },
   {
@@ -126,7 +127,7 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
   },
   {
     category: 'Other',
-    pages: [MDX_DATA.Polymorphic, MDX_DATA.StylesPerformance, MDX_DATA.UnstyledComponents],
+    pages: [MDX_DATA.StylesPerformance, MDX_DATA.Polymorphic, MDX_DATA.ControlledVsUncontrolled],
   },
 ];
 

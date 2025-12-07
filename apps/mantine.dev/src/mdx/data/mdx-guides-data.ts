@@ -130,4 +130,11 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
     search: 'LLM, AI, ChatGPT, Claude, Copilot, Cursor, Windsurf, documentation',
     hideHeader: true,
   },
+
+  ControlledVsUncontrolled: {
+    title: 'Controlled vs Uncontrolled',
+    slug: '/guides/controlled-vs-uncontrolled',
+    search: 'Controlled vs Uncontrolled components in React',
+    hideHeader: true,
+  },
 };
