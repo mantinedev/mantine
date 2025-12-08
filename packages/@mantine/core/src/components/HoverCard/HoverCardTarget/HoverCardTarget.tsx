@@ -1,4 +1,4 @@
-import { cloneElement, forwardRef } from 'react';
+import { Children, cloneElement, forwardRef } from 'react';
 import { createEventHandler, isElement, useProps } from '../../../core';
 import { Popover, PopoverTargetProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';
@@ -20,7 +20,8 @@ export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((pr
     props
   );
 
-  if (!isElement(children)) {
+  const _children = Children.toArray(children);
+  if (_children.length !== 1 || !isElement(_children[0])) {
     throw new Error(
       'HoverCard.Target component children should be an element or a component that accepts ref. Fragments, strings, numbers and other primitive values are not supported'
     );
@@ -35,7 +36,7 @@ export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((pr
     return (
       <Popover.Target refProp={refProp} ref={ref} {...others}>
         {cloneElement(
-          children as React.ReactElement,
+          _children[0],
           eventPropsWrapperName
             ? { [eventPropsWrapperName]: { ...referenceProps, ref: ctx.reference } }
             : { ...referenceProps, ref: ctx.reference }
@@ -44,15 +45,21 @@ export const HoverCardTarget = forwardRef<HTMLElement, HoverCardTargetProps>((pr
     );
   }
 
-  const onMouseEnter = createEventHandler((children.props as any).onMouseEnter, ctx.openDropdown);
-  const onMouseLeave = createEventHandler((children.props as any).onMouseLeave, ctx.closeDropdown);
+  const onMouseEnter = createEventHandler(
+    (_children[0].props as any).onMouseEnter,
+    ctx.openDropdown
+  );
+  const onMouseLeave = createEventHandler(
+    (_children[0].props as any).onMouseLeave,
+    ctx.closeDropdown
+  );
 
   const eventListeners = { onMouseEnter, onMouseLeave };
 
   return (
     <Popover.Target refProp={refProp} ref={ref} {...others}>
       {cloneElement(
-        children as React.ReactElement,
+        _children[0],
         eventPropsWrapperName ? { [eventPropsWrapperName]: eventListeners } : eventListeners
       )}
     </Popover.Target>

@@ -1,4 +1,4 @@
-import { cloneElement, forwardRef } from 'react';
+import { Children, cloneElement, forwardRef } from 'react';
 import { createEventHandler, isElement, useProps } from '../../../core';
 import { Popover } from '../../Popover';
 import { useMenuContext } from '../Menu.context';
@@ -18,14 +18,15 @@ const defaultProps = {
 export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) => {
   const { children, refProp, ...others } = useProps('MenuTarget', defaultProps, props);
 
-  if (!isElement(children)) {
+  const _children = Children.toArray(children);
+  if (_children.length !== 1 || !isElement(_children[0])) {
     throw new Error(
       'Menu.Target component children should be an element or a component that accepts ref. Fragments, strings, numbers and other primitive values are not supported'
     );
   }
 
   const ctx = useMenuContext();
-  const _childrenProps = children.props as any;
+  const _childrenProps = _children[0].props as any;
 
   const onClick = createEventHandler(_childrenProps.onClick, () => {
     if (ctx.trigger === 'click') {
@@ -53,7 +54,7 @@ export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) 
 
   return (
     <Popover.Target refProp={refProp} popupType="menu" ref={ref} {...others}>
-      {cloneElement(children, {
+      {cloneElement(_children[0], {
         onClick,
         onMouseEnter,
         onMouseLeave,
