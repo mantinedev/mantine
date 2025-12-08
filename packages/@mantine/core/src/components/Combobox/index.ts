@@ -28,6 +28,7 @@ export type {
   ComboboxDropdownEventSource,
   UseComboboxOptions,
 } from './use-combobox/use-combobox';
+export type { UseVirtualizedComboboxOptions } from './use-combobox/use-virtualized-combobox';
 export type {
   ComboboxItem,
   ComboboxData,

@@ -15,3 +15,4 @@ export { noDropdown } from './Combobox.demo.noDropdown';
 export { groups } from './Combobox.demo.groups';
 export { stylesApi } from './Combobox.demo.stylesApi';
 export { dropdownPosition } from './Combobox.demo.dropdownPosition';
+export { virtualized } from './Combobox.demo.virtualized';

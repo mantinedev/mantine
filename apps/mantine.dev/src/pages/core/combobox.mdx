@@ -328,3 +328,62 @@ of `Combobox.Target`:
 <StylesApiSelectors component="Combobox" />
 
 <Demo data={ComboboxDemos.stylesApi} />
+
+## Virtualization
+
+`useVirtualizedCombobox` hook can be used to create comboboxes with virtualized options list.
+Note that due to the nature of virtualization, the hook requires some additional configuration
+compared to the `useCombobox` hook. In `useVirtualizedCombobox` hook all operations related to
+option indexing do not rely on the actual DOM structure, instead, you need to preserve values in
+React state and pass them to the hook.
+
+Hook options:
+
+```tsx
+export interface UseVirtualizedComboboxOptions {
+  /** Default value for `dropdownOpened`, `false` by default */
+  defaultOpened?: boolean;
+
+  /** Controlled `dropdownOpened` state */
+  opened?: boolean;
+
+  /** Called when `dropdownOpened` state changes */
+  onOpenedChange?: (opened: boolean) => void;
+
+  /** Called when dropdown closes */
+  onDropdownClose?: (eventSource?: ComboboxDropdownEventSource) => void;
+
+  /** Called when dropdown opens */
+  onDropdownOpen?: (eventSource?: ComboboxDropdownEventSource) => void;
+
+  /** Determines whether arrow key presses should loop though items (first to last and last to first), `true` by default */
+  loop?: boolean;
+
+  /** Function to determine whether the option is disabled */
+  isOptionDisabled?: (optionIndex: number) => boolean;
+
+  /** Total number of options in the virtualized list. Required for proper keyboard navigation and index calculations. */
+  totalOptionsCount: number;
+
+  /** Function that returns the id of the option at the given index. Required for setting aria attributes and element references. */
+  getOptionId: (index: number) => string | null;
+
+  /** Current selected option index. Must be controlled by parent component. */
+  selectedOptionIndex: number;
+
+  /** Callback to update the selected option index. Called when user navigates or selects options. */
+  setSelectedOptionIndex: (index: number) => void;
+
+  /** Currently active/highlighted option index. Used to determine which option to select when selectActiveOption is called. */
+  activeOptionIndex?: number;
+
+  /** Called when the selected option is submitted (e.g., via Enter key or clicking). Receives the selected option index. */
+  onSelectedOptionSubmit: (index: number) => void;
+}
+```
+
+`useVirtualizedCombobox` does not depend on any specific virtualization library. During the
+development, it was tested with [react-virtuoso](https://virtuoso.dev/).
+Example of implementation with `useVirtualizedCombobox` and [react-virtuoso](https://virtuoso.dev/):
+
+<Demo data={ComboboxDemos.virtualized} />

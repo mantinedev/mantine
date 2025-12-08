@@ -60,7 +60,7 @@ export interface ComboboxStore {
    *  when options list changes based on search query.
    */
   updateSelectedOptionIndex: (
-    target?: 'active' | 'selected',
+    target?: 'active' | 'selected' | number,
     options?: { scrollIntoView?: boolean }
   ) => void;
 
@@ -84,25 +84,25 @@ export interface ComboboxStore {
 }
 
 export interface UseComboboxOptions {
-  /** Default value for `dropdownOpened`, `false` by default */
+  /** Default value for `dropdownOpened`, `false` by default. Used when the component is uncontrolled */
   defaultOpened?: boolean;
 
-  /** Controlled `dropdownOpened` state */
+  /** Controlled `dropdownOpened` state. When set, the dropdown opened state is controlled by the parent component */
   opened?: boolean;
 
-  /** Called when `dropdownOpened` state changes */
+  /** Called when `dropdownOpened` state changes. Required for controlled mode */
   onOpenedChange?: (opened: boolean) => void;
 
-  /** Called when dropdown closes with event source: keyboard, mouse or unknown */
+  /** Called when dropdown closes with event source: keyboard, mouse or unknown. Useful for analytics or side effects on dropdown closure */
   onDropdownClose?: (eventSource: ComboboxDropdownEventSource) => void;
 
-  /** Called when dropdown opens with event source: keyboard, mouse or unknown */
+  /** Called when dropdown opens with event source: keyboard, mouse or unknown. Useful for analytics or side effects on dropdown opening */
   onDropdownOpen?: (eventSource: ComboboxDropdownEventSource) => void;
 
-  /** Determines whether arrow key presses should loop though items (first to last and last to first), `true` by default */
+  /** Determines whether arrow key presses should loop through items (first to last and last to first). Defaults to `true` */
   loop?: boolean;
 
-  /** `behavior` passed down to `element.scrollIntoView`, `'instant'` by default */
+  /** `behavior` passed down to `element.scrollIntoView`. Controls the scrolling animation when options are scrolled into view. Defaults to `'instant'` */
   scrollBehavior?: ScrollBehavior;
 }
 
@@ -242,8 +242,23 @@ export function useCombobox({
     return selectOption(getFirstIndex(items));
   }, [selectOption]);
 
-  const updateSelectedOptionIndex = useCallback(
-    (target: 'active' | 'selected' = 'selected', options?: { scrollIntoView?: boolean }) => {
+  const updateSelectedOptionIndex: ComboboxStore['updateSelectedOptionIndex'] = useCallback(
+    (target = 'selected', options) => {
+      if (typeof target === 'number') {
+        selectedOptionIndex.current = target;
+        const root = getRootElement(targetRef.current);
+
+        const items = findElementsBySelector<HTMLDivElement>(
+          `#${listId.current} [data-combobox-option]`,
+          root
+        );
+
+        if (options?.scrollIntoView) {
+          items[target]?.scrollIntoView({ block: 'nearest', behavior: scrollBehavior });
+        }
+        return;
+      }
+
       selectedIndexUpdateTimeout.current = window.setTimeout(() => {
         const root = getRootElement(targetRef.current);
         const items = findElementsBySelector<HTMLDivElement>(

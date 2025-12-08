@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Virtuoso } from 'react-virtuoso';
+import { ListRange, Virtuoso } from 'react-virtuoso';
 import { ScrollArea } from '../ScrollArea';
 import { TextInput } from '../TextInput';
 import { Combobox } from './Combobox';
@@ -22,6 +22,10 @@ export function Virtualized() {
   const [value, setValue] = useState('');
   const virtuoso = useRef<any>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
+  const visibleRangeRef = useRef<ListRange>({
+    startIndex: 0,
+    endIndex: 0,
+  });
 
   const store = useVirtualizedCombobox({
     opened,
@@ -32,7 +36,9 @@ export function Virtualized() {
     selectedOptionIndex,
     setSelectedOptionIndex: (index) => {
       setSelectedOptionIndex(index);
-      if (index !== -1) {
+      const isVisible =
+        index >= visibleRangeRef.current.startIndex && index <= visibleRangeRef.current.endIndex;
+      if (index !== -1 && !isVisible) {
         virtuoso.current.scrollToIndex({ index, align: 'end' });
       }
     },
@@ -67,6 +73,7 @@ export function Virtualized() {
             <ScrollArea.Autosize
               mah={300}
               type="scroll"
+              scrollbarSize={4}
               viewportRef={viewportRef}
               onMouseDown={(event) => event.preventDefault()}
             >
@@ -75,6 +82,9 @@ export function Virtualized() {
                 ref={virtuoso}
                 style={{ height: 400 }}
                 customScrollParent={viewportRef.current!}
+                rangeChanged={(range) => {
+                  visibleRangeRef.current = range;
+                }}
                 itemContent={(index, item) => (
                   <Combobox.Option
                     value={item.value}

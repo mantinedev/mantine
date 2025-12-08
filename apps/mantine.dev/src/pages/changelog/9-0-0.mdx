@@ -3,6 +3,7 @@ import {
   FloatingWindowDemos,
   OverflowListDemos,
   CardDemos,
+  ComboboxDemos,
   CheckboxDemos,
   CollapseDemos,
 } from '@docs/demos';
@@ -139,6 +140,13 @@ function Demo() {
   );
 }
 ```
+
+## Combobox virtualization
+
+[Combobox](/core/combobox) component now supports [virtualization](/core/combobox/#virtualization).
+Example of implementation with `useVirtualizedCombobox` and [react-virtuoso](https://virtuoso.dev/):
+
+<Demo data={ComboboxDemos.virtualized} />
 
 ## Documentation updates
 
