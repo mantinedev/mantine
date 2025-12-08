@@ -1,5 +1,5 @@
-import { Children, cloneElement, forwardRef } from 'react';
-import { createEventHandler, isElement, useProps } from '../../../core';
+import { cloneElement, forwardRef } from 'react';
+import { createEventHandler, getSingleElementChild, useProps } from '../../../core';
 import { Popover } from '../../Popover';
 import { useMenuContext } from '../Menu.context';
 
@@ -18,17 +18,17 @@ const defaultProps = {
 export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) => {
   const { children, refProp, ...others } = useProps('MenuTarget', defaultProps, props);
 
-  const _children = Children.toArray(children);
-  if (_children.length !== 1 || !isElement(_children[0])) {
+  const child = getSingleElementChild(children);
+  if (!child) {
     throw new Error(
       'Menu.Target component children should be an element or a component that accepts ref. Fragments, strings, numbers and other primitive values are not supported'
     );
   }
 
   const ctx = useMenuContext();
-  const _childrenProps = _children[0].props as any;
+  const _childProps = child.props as any;
 
-  const onClick = createEventHandler(_childrenProps.onClick, () => {
+  const onClick = createEventHandler(_childProps.onClick, () => {
     if (ctx.trigger === 'click') {
       ctx.toggleDropdown();
     } else if (ctx.trigger === 'click-hover') {
@@ -40,11 +40,11 @@ export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) 
   });
 
   const onMouseEnter = createEventHandler(
-    _childrenProps.onMouseEnter,
+    _childProps.onMouseEnter,
     () => (ctx.trigger === 'hover' || ctx.trigger === 'click-hover') && ctx.openDropdown()
   );
 
-  const onMouseLeave = createEventHandler(_childrenProps.onMouseLeave, () => {
+  const onMouseLeave = createEventHandler(_childProps.onMouseLeave, () => {
     if (ctx.trigger === 'hover') {
       ctx.closeDropdown();
     } else if (ctx.trigger === 'click-hover' && !ctx.openedViaClick) {
@@ -54,7 +54,7 @@ export const MenuTarget = forwardRef<HTMLElement, MenuTargetProps>((props, ref) 
 
   return (
     <Popover.Target refProp={refProp} popupType="menu" ref={ref} {...others}>
-      {cloneElement(_children[0], {
+      {cloneElement(child, {
         onClick,
         onMouseEnter,
         onMouseLeave,

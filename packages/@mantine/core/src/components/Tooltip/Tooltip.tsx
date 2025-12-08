@@ -1,4 +1,4 @@
-import { Children, cloneElement, useEffect, useRef } from 'react';
+import { cloneElement, useEffect, useRef } from 'react';
 import cx from 'clsx';
 import { useMergedRef } from '@mantine/hooks';
 import {
@@ -9,7 +9,7 @@ import {
   getDefaultZIndex,
   getRadius,
   getRefProp,
-  isElement,
+  getSingleElementChild,
   useDirection,
   useProps,
   useStyles,
@@ -234,8 +234,8 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
     varsResolver,
   });
 
-  const _children = Children.toArray(children);
-  if (!target && (_children.length !== 1 || !isElement(_children[0]))) {
+  const child = getSingleElementChild(children);
+  if (!target && !child) {
     return null;
   }
 
@@ -290,8 +290,8 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
   }
 
   // fallback to children-based approach
-  const _childrenProps = (_children[0] as React.ReactElement).props as any;
-  const targetRef = useMergedRef(tooltip.reference, getRefProp(_children[0]), ref);
+  const childProps = child!.props as any;
+  const targetRef = useMergedRef(tooltip.reference, getRefProp(child), ref);
   const transition = getTransitionProps(transitionProps, { duration: 100, transition: 'fade' });
 
   return (
@@ -340,7 +340,7 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
       </OptionalPortal>
 
       {cloneElement(
-        _children[0] as React.ReactElement,
+        child!,
         tooltip.getReferenceProps({
           onClick,
           onMouseEnter,
@@ -348,8 +348,8 @@ export const Tooltip = factory<TooltipFactory>((_props, ref) => {
           onMouseMove: props.onMouseMove,
           onPointerDown: props.onPointerDown,
           onPointerEnter: props.onPointerEnter,
-          ..._childrenProps,
-          className: cx(className, _childrenProps.className),
+          ...childProps,
+          className: cx(className, childProps.className),
           [refProp]: targetRef,
         })
       )}
