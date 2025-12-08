@@ -282,4 +282,10 @@ export const COMBOBOX_EXAMPLES_DATA: ComboboxExample[] = [
     description: 'Transfer list with search',
     type: 'other',
   },
+  {
+    id: 'VirtualizedOptions',
+    name: 'Virtualized options',
+    description: 'Virtualized options list with react-virtuoso',
+    type: 'other',
+  },
 ];
