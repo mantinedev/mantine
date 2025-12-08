@@ -20,5 +20,7 @@ generateDeclarations({
     '(ClassAttributes<HTMLDivElement> & HTMLAttributes<HTMLDivElement> & DataAttributes) | undefined':
       'React.ComponentProps<"div">',
     'ColorFormat | undefined': "'hex' | 'hexa' | 'rgba' | 'rgb' | 'hsl' | 'hsla'",
+    'ArrowPosition | undefined': "'center' | 'side'",
+    'PopoverWidth | undefined': "'target' | React.CSSProperties['width'] | null",
   },
 });

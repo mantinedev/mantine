@@ -49,12 +49,12 @@ export function PropsTable({ component, query }: PropsTableProps) {
               highlight={query}
               component="span"
               data-deprecated={prop.description.includes('@deprecated') || undefined}
+              title={prop.name}
             >
               {prop.name}
             </Highlight>
-
             {prop.required && (
-              <Text component="sup" c="red" className={classes.propName}>
+              <Text component="sup" c="red">
                 {' '}
                 *
               </Text>
