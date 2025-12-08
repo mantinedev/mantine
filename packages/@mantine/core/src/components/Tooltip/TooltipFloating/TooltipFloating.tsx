@@ -8,9 +8,9 @@ import {
   getDefaultZIndex,
   getRadius,
   getRefProp,
+  getSingleElementChild,
   getStyleObject,
   getThemeColor,
-  isElement,
   useMantineTheme,
   useProps,
   useStyles,
@@ -100,23 +100,24 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => 
     defaultOpened,
   });
 
-  if (!isElement(children)) {
+  const child = getSingleElementChild(children);
+  if (!child) {
     throw new Error(
       '[@mantine/core] Tooltip.Floating component children should be an element or a component that accepts ref, fragments, strings, numbers and other primitive values are not supported'
     );
   }
 
-  const targetRef = useMergedRef(boundaryRef, getRefProp(children), ref);
-  const _childrenProps = children.props as any;
+  const targetRef = useMergedRef(boundaryRef, getRefProp(child), ref);
+  const childProps = child.props as any;
 
   const onMouseEnter = (event: React.MouseEvent<unknown, MouseEvent>) => {
-    _childrenProps.onMouseEnter?.(event);
+    childProps.onMouseEnter?.(event);
     handleMouseMove(event);
     setOpened(true);
   };
 
   const onMouseLeave = (event: React.MouseEvent<unknown, MouseEvent>) => {
-    _childrenProps.onMouseLeave?.(event);
+    childProps.onMouseLeave?.(event);
     setOpened(false);
   };
 
@@ -142,8 +143,8 @@ export const TooltipFloating = factory<TooltipFloatingFactory>((_props, ref) => 
         </Box>
       </OptionalPortal>
 
-      {cloneElement(children, {
-        ..._childrenProps,
+      {cloneElement(child, {
+        ...childProps,
         [refProp]: targetRef,
         onMouseEnter,
         onMouseLeave,

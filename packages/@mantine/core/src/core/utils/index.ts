@@ -37,3 +37,4 @@ export {
   findElementsBySelector,
   getRootElement,
 } from './find-element-in-shadow-dom/find-element-in-shadow-dom';
+export { getSingleElementChild } from './get-single-element-child/get-single-element-child';
