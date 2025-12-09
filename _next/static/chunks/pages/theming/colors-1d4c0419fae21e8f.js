@@ -41,7 +41,7 @@ function Demo() {
   );
 }
 
-`};var h=r(55729),u=r(55377),p=r(10705);let m={type:"configurator",component:function(e){let[o,r]=(0,h.useState)(void 0),{colorScheme:t}=(0,u.C)();return(0,h.useEffect)(()=>{r(t)},[t]),(0,n.jsx)("div",{id:"primary-color-demo-root","data-mantine-color-scheme":o,children:(0,n.jsx)(p.y,{cssVariablesSelector:"#primary-color-demo-root",getRootElement:()=>document.createElement("div"),theme:{primaryShade:e.primaryShade},children:(0,n.jsxs)(l.Y,{children:[(0,n.jsx)(c.$,{children:"Filled"}),(0,n.jsx)(c.$,{variant:"light",children:"Light"}),(0,n.jsx)(c.$,{variant:"outline",children:"Outline"})]})})})},code:e=>`
+`};var h=r(55729),u=r(55377),p=r(14900);let m={type:"configurator",component:function(e){let[o,r]=(0,h.useState)(void 0),{colorScheme:t}=(0,u.C)();return(0,h.useEffect)(()=>{r(t)},[t]),(0,n.jsx)("div",{id:"primary-color-demo-root","data-mantine-color-scheme":o,children:(0,n.jsx)(p.y,{cssVariablesSelector:"#primary-color-demo-root",getRootElement:()=>document.createElement("div"),theme:{primaryShade:e.primaryShade},children:(0,n.jsxs)(l.Y,{children:[(0,n.jsx)(c.$,{children:"Filled"}),(0,n.jsx)(c.$,{variant:"light",children:"Light"}),(0,n.jsx)(c.$,{variant:"outline",children:"Outline"})]})})})},code:e=>`
 import { MantineProvider, Button, Group } from '@mantine/core';
 
 function Demo() {

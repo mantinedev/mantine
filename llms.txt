@@ -18187,7 +18187,6 @@ NumberInput provides better accessibility support when used in forms. Make sure 
 | min | number | - | Minimum possible value |
 | onChange | (value: string | number) => void | - | Called when value changes |
 | onValueChange | OnValueChange | - | Called when value changes with <code>react-number-format</code> payload |
-| pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | prefix | string | - | Prefix added before the input value |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
@@ -19351,7 +19350,6 @@ function Demo() {
 | leftSectionProps | React.ComponentPropsWithoutRef<"div"> | - | Props passed down to the <code>leftSection</code> element |
 | leftSectionWidth | React.CSSProperties["width"] | - | Left section width, used to set <code>width</code> of the section and input <code>padding-left</code>, by default equals to the input height |
 | onVisibilityChange | (visible: boolean) => void | - | Called when visibility changes |
-| pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
 | rightSection | React.ReactNode | - | Content section displayed on the right side of the input |
@@ -22315,9 +22313,9 @@ Description: Area with custom scrollbars
   * `always` – same as `auto`, but scrollbars are always visible regardless of whether the content is overflowing
   * `never` – scrollbars are always hidden
 * `offsetScrollbars` – adds padding to offset scrollbars with the following options:
+  * `true` – adds padding to offset both scrollbars
   * `x` – adds padding to offset horizontal scrollbar only
   * `y` – adds padding to offset vertical scrollbar only
-  * `xy` – adds padding to offset both scrollbars
   * `present` – adds padding only when scrollbars are visible
 * `scrollbarSize` – scrollbar size, controls scrollbar and thumb width/height
 * `scrollHideDelay` – delay in ms to hide scrollbars, applicable only when type is `hover` or `scroll`
@@ -57391,7 +57389,7 @@ interface MantineProviderProps {
   /** Forces color scheme value, if set, MantineProvider ignores `colorSchemeManager` and `defaultColorScheme` */
   forceColorScheme?: 'light' | 'dark';
 
-  /** CSS selector to which CSS variables should be added, `:root` by default */
+  /** CSS selector to which CSS variables should be added, by default variables are applied to `:root` and `:host` */
   cssVariablesSelector?: string;
 
   /** Determines whether theme CSS variables should be added to given `cssVariablesSelector`, `true` by default */
@@ -57496,8 +57494,9 @@ function Demo() {
 ### cssVariablesSelector
 
 `cssVariablesSelector` is a CSS selector to which [CSS variables](https://mantine.dev/styles/css-variables/) should be added.
-By default, it is `:root`. `MantineProvider` generates CSS variables based on given [theme override](https://mantine.dev/theming/theme-object/)
-and `cssVariablesResolver`, then these variables are rendered into `<style />` tag next to your application.
+By default, variables are applied to `:root` and `:host`. `MantineProvider` generates CSS variables based
+on given [theme override](https://mantine.dev/theming/theme-object/) and `cssVariablesResolver`, then these variables are
+rendered into `<style />` tag next to your application.
 You can learn more about Mantine CSS variables in the [CSS variables guide](https://mantine.dev/styles/css-variables/).
 
 ```tsx
@@ -60784,6 +60783,33 @@ function Demo() {
       </Button>
     </>
   );
+}
+```
+
+### mergeSx function
+
+You can use the `mergeSx` function to merge multiple `sx` props into one. This
+can be useful for merging `sx` prop provided to a custom component with its
+own `sx`, like so:
+
+```tsx
+import { Box } from '@mantine/core'
+import { EmotionSx, mergeSx } from '@mantine/emotion'
+
+interface MyCustomBoxProps {
+  sx?: EmotionSx
+}
+
+function MyCustomBox({ sx }: MyCustomBoxProps) {
+  return (
+    <Box sx={mergeSx(theme => ({ ... }), sx)}>...</Box>
+  )
+}
+
+function App() {
+  return (
+    <MyCustomBox sx={(theme) => ({ ... })} />
+  )
 }
 ```
 
