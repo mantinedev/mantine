@@ -60,8 +60,8 @@
     "@tiptap/pm": "^3.13.0",
     "@tiptap/react": "^3.13.0",
     "@tiptap/starter-kit": "^3.13.0",
-    "@types/node": "^24.3.0",
-    "@types/react": "19.1.12",
+    "@types/node": "^24.10.2",
+    "@types/react": "19.2.7",
     "chroma-js": "^3.2.0",
     "dayjs": "^1.11.19",
     "embla-carousel": "^8.6.0",
@@ -79,10 +79,10 @@
     "recharts": "^3.5.1",
     "rehype-slug": "^6.0.0",
     "shiki": "^3.19.0",
-    "typescript": "5.9.2"
+    "typescript": "5.9.3"
   },
   "devDependencies": {
-    "@types/chroma-js": "^3.1.1",
+    "@types/chroma-js": "^3.1.2",
     "@types/github-slugger": "^2.0.0"
   }
 }
