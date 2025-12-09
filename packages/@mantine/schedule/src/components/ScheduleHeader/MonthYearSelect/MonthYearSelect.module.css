@@ -30,7 +30,6 @@
 
 .monthYearSelectControl {
   display: block;
-  text-align: center;
   width: 100%;
   padding: 6px 8px;
   font-size: var(--mantine-font-size-sm);
@@ -38,6 +37,10 @@
   border-radius: var(--schedule-radius, var(--control-radius, var(--mantine-radius-default)));
   font-variant-numeric: tabular-nums;
   text-transform: capitalize;
+
+  &:where([data-type='year']) {
+    text-align: center;
+  }
 
   @mixin hover {
     background-color: var(--mantine-color-default-hover);
