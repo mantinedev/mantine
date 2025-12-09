@@ -1,7 +1,8 @@
 import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
-import { render, screen, tests } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { toDateString } from '../../utils';
 import { ScheduleProvider } from '../Schedule/Schedule.context';
 import { WeekView, WeekViewProps, WeekViewStylesNames } from './WeekView';
 
@@ -22,6 +23,7 @@ describe('@mantine/schedule/WeekView', () => {
     displayName: '@mantine/schedule/WeekView',
     stylesApiSelectors: [
       'weekView',
+      'weekViewRoot',
       'weekViewHeader',
       'weekViewInner',
       'weekViewAllDaySlots',
@@ -251,11 +253,11 @@ describe('@mantine/schedule/WeekView', () => {
   });
 
   it('supports withWeekNumber={false}', () => {
-    const { rerender } = render(<WeekView {...defaultProps} withWeekNumber={false} />);
-    expect(screen.queryByText('Week')).not.toBeInTheDocument();
+    const { container, rerender } = render(<WeekView {...defaultProps} withWeekNumber={false} />);
+    expect(container.querySelector('.mantine-WeekView-weekViewWeekLabel')).not.toBeInTheDocument();
 
     rerender(<WeekView {...defaultProps} withWeekNumber />);
-    expect(screen.getByText('Week')).toBeInTheDocument();
+    expect(container.querySelector('.mantine-WeekView-weekViewWeekLabel')).toBeInTheDocument();
   });
 
   it('displays current time indicator', () => {
@@ -301,5 +303,59 @@ describe('@mantine/schedule/WeekView', () => {
   it('supports __staticSelector prop', () => {
     const { container } = render(<WeekView {...defaultProps} __staticSelector="CustomWeekView" />);
     expect(container.querySelector('.mantine-CustomWeekView-weekView')).toBeInTheDocument();
+  });
+
+  it('renders header based on withHeader prop', () => {
+    const { container, rerender } = render(<WeekView {...defaultProps} withHeader={false} />);
+    expect(container.querySelector('.mantine-WeekView-header')).not.toBeInTheDocument();
+
+    rerender(<WeekView {...defaultProps} withHeader />);
+    expect(container.querySelector('.mantine-WeekView-header')).toBeInTheDocument();
+  });
+
+  it('supports todayControlProps, nextControlProps, previousControlProps and viewSelectProps props', () => {
+    const { container } = render(
+      <WeekView
+        {...defaultProps}
+        todayControlProps={{ 'data-today-prop': 'test' }}
+        nextControlProps={{ 'data-next-prop': 'test' }}
+        previousControlProps={{ 'data-previous-prop': 'test' }}
+        viewSelectProps={{ 'data-view-select-prop': 'test' }}
+      />
+    );
+
+    expect(
+      container.querySelector('button.mantine-WeekView-headerControl[data-today-prop]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('button.mantine-WeekView-headerControl[data-next-prop]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('button.mantine-WeekView-headerControl[data-previous-prop]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('.mantine-WeekView-viewSelect[data-view-select-prop]')
+    ).toBeInTheDocument();
+  });
+
+  it('calls onDateChange when navigating with header controls', async () => {
+    const spy = jest.fn();
+    render(<WeekView {...defaultProps} onDateChange={spy} />);
+
+    await userEvent.click(screen.getByRole('button', { name: 'Previous' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2025-10-27 00:00:00')));
+
+    await userEvent.click(screen.getByRole('button', { name: 'Next' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2025-11-10 00:00:00')));
+
+    await userEvent.click(screen.getByRole('button', { name: 'Today' }));
+    expect(spy).toHaveBeenCalledWith(expect.any(String));
+  });
+
+  it('calls onViewChange when view button is clicked', async () => {
+    const spy = jest.fn();
+    render(<WeekView {...defaultProps} onViewChange={spy} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Switch to day view' }));
+    expect(spy).toHaveBeenCalledWith('day');
   });
 });

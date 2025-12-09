@@ -230,7 +230,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     vars,
     varsResolver,
     attributes,
-    rootSelector: 'weekViewRoot',
+    rootSelector: 'weekView',
   });
 
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<WeekViewFactory>({
@@ -320,7 +320,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   ));
 
   return (
-    <Box {...getStyles('weekView')}>
+    <Box {...getStyles('weekView')} {...others}>
       {withHeader && (
         <ScheduleHeader {...stylesApiProps}>
           <ScheduleHeader.Previous
@@ -373,7 +373,6 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
             : `${7 - ctx.getWeekendDays(weekendDays).length}`,
         }}
         mod={[{ 'with-weekends': withWeekendDays }, mod]}
-        {...others}
       >
         <ScrollArea.Autosize
           scrollbarSize={4}
