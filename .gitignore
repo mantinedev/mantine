@@ -57,3 +57,4 @@ apps/mantine.dev/src/.docgen/
 apps/mantine.dev/public/llms.txt
 .samples
 *storybook.log
+apps/help.mantine.dev/next-env.d.ts
