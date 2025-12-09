@@ -23,15 +23,15 @@
     "@mantinex/mantine-meta": "workspace:*",
     "@mdx-js/react": "^3.0.0",
     "@next/mdx": "^14.0.2",
-    "@tabler/icons-react": "^3.34.1",
-    "dayjs": "^1.11.18",
+    "@tabler/icons-react": "^3.35.0",
+    "dayjs": "^1.11.19",
     "fuse.js": "^7.1.0",
     "next": "15.5.2",
-    "react": "19.1.1",
-    "react-dom": "19.1.1",
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
     "react-imask": "^7.6.1",
     "rehype-slug": "^6.0.0",
-    "shiki": "^3.12.2"
+    "shiki": "^3.19.0"
   },
   "devDependencies": {
     "@mdx-js/loader": "^3.0.0",

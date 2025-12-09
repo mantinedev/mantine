@@ -42,13 +42,13 @@
   },
   "dependencies": {
     "csstype": "^3.2.3",
-    "html-react-parser": "^5.2.6"
+    "html-react-parser": "^5.2.10"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "react": "19.1.1",
-    "react-dom": "19.1.1"
+    "react": "19.2.1",
+    "react-dom": "19.2.1"
   }
 }

@@ -8,8 +8,7 @@ export type ConfiguratorStringControlOptions = ConfiguratorControl<
 >;
 
 export interface ConfiguratorStringControlProps
-  extends BoxProps,
-    ElementProps<'input', 'onChange' | 'value' | 'size'> {
+  extends BoxProps, ElementProps<'input', 'onChange' | 'value' | 'size'> {
   value: string;
   onChange: (value: string) => void;
   prop: string;

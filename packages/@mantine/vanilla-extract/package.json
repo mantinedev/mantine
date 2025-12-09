@@ -38,7 +38,7 @@
     "@mantine/core": "8.3.10"
   },
   "devDependencies": {
-    "react": "19.1.1",
-    "react-dom": "19.1.1"
+    "react": "19.2.1",
+    "react-dom": "19.2.1"
   }
 }
