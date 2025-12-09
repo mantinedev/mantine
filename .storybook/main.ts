@@ -1,10 +1,12 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { StorybookConfig } from '@storybook/nextjs';
 import fg from 'fast-glob';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const { argv } = yargs(hideBin(process.argv));
 
 if (argv instanceof Promise) {
@@ -14,10 +16,6 @@ if (argv instanceof Promise) {
 const getPath = (storyPath: string) => path.resolve(process.cwd(), storyPath).replace(/\\/g, '/');
 const getGlobPaths = (paths: string[]) =>
   paths.reduce<string[]>((acc, path) => [...acc, ...fg.sync(path)], []);
-
-function getAbsolutePath(value: string) {
-  return path.dirname(require.resolve(path.join(value, 'package.json')));
-}
 
 function getStoryPaths(fileName: string | number = '*') {
   return getGlobPaths([
@@ -38,9 +36,9 @@ const config: StorybookConfig = {
     enableCrashReports: false,
   },
   stories: storiesPath,
-  addons: ['@storybook/addon-themes'],
+  addons: [],
   framework: {
-    name: getAbsolutePath('@storybook/nextjs'),
+    name: '@storybook/nextjs',
     options: {},
   },
   webpackFinal: async (config) => {
