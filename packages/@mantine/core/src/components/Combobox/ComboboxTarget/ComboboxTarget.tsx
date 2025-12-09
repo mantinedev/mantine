@@ -1,6 +1,6 @@
 import { cloneElement } from 'react';
 import { useMergedRef } from '@mantine/hooks';
-import { factory, Factory, isElement, useProps } from '../../../core';
+import { factory, Factory, getSingleElementChild, useProps } from '../../../core';
 import { Popover } from '../../Popover';
 import { useComboboxContext } from '../Combobox.context';
 import { useComboboxTargetProps } from '../use-combobox-target-props/use-combobox-target-props';
@@ -59,7 +59,8 @@ export const ComboboxTarget = factory<ComboboxTargetFactory>((props) => {
     ...others
   } = useProps('ComboboxTarget', defaultProps, props);
 
-  if (!isElement(children)) {
+  const child = getSingleElementChild(children);
+  if (!child) {
     throw new Error(
       'Combobox.Target component children should be an element or a component that accepts ref. Fragments, strings, numbers and other primitive values are not supported'
     );
@@ -72,11 +73,11 @@ export const ComboboxTarget = factory<ComboboxTargetFactory>((props) => {
     withAriaAttributes,
     withKeyboardNavigation,
     withExpandedAttribute,
-    onKeyDown: (children.props as any).onKeyDown,
+    onKeyDown: (child.props as any).onKeyDown,
     autoComplete,
   });
 
-  const clonedElement = cloneElement(children, {
+  const clonedElement = cloneElement(child, {
     ...targetProps,
     ...others,
   });

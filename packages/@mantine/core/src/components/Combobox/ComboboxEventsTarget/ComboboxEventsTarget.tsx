@@ -1,6 +1,6 @@
 import { cloneElement } from 'react';
 import { useMergedRef } from '@mantine/hooks';
-import { factory, Factory, getRefProp, isElement, useProps } from '../../../core';
+import { factory, Factory, getRefProp, getSingleElementChild, useProps } from '../../../core';
 import { useComboboxContext } from '../Combobox.context';
 import { useComboboxTargetProps } from '../use-combobox-target-props/use-combobox-target-props';
 
@@ -58,7 +58,8 @@ export const ComboboxEventsTarget = factory<ComboboxEventsTargetFactory>((props)
     ...others
   } = useProps('ComboboxEventsTarget', defaultProps, props);
 
-  if (!isElement(children)) {
+  const child = getSingleElementChild(children);
+  if (!child) {
     throw new Error(
       'Combobox.EventsTarget component children should be an element or a component that accepts ref. Fragments, strings, numbers and other primitive values are not supported'
     );
@@ -70,14 +71,14 @@ export const ComboboxEventsTarget = factory<ComboboxEventsTargetFactory>((props)
     withAriaAttributes,
     withKeyboardNavigation,
     withExpandedAttribute,
-    onKeyDown: (children.props as any).onKeyDown,
+    onKeyDown: (child.props as any).onKeyDown,
     autoComplete,
   });
 
-  return cloneElement(children, {
+  return cloneElement(child, {
     ...targetProps,
     ...others,
-    [refProp]: useMergedRef(ref, ctx.store.targetRef, getRefProp(children)),
+    [refProp]: useMergedRef(ref, ctx.store.targetRef, getRefProp(child)),
   });
 });
 

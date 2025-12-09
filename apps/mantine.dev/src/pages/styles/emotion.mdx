@@ -446,6 +446,34 @@ function Demo() {
 }
 ```
 
+### mergeSx function
+
+You can use the `mergeSx` function to merge multiple `sx` props into one. This
+can be useful for merging `sx` prop provided to a custom component with its
+own `sx`, like so:
+
+```tsx
+import { Box } from '@mantine/core'
+import { EmotionSx, mergeSx } from '@mantine/emotion'
+
+interface MyCustomBoxProps {
+  sx?: EmotionSx
+}
+
+function MyCustomBox({ sx }: MyCustomBoxProps) {
+  return (
+    <Box sx={mergeSx(theme => ({ ... }), sx)}>...</Box>
+  )
+}
+
+function App() {
+  return (
+    <MyCustomBox sx={(theme) => ({ ... })} />
+  )
+}
+```
+
+
 ## styles prop
 
 `styles` prop works similar to `sx` prop, but it allows adding styles to all

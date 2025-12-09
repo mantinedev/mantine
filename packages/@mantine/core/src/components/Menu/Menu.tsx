@@ -198,6 +198,7 @@ export function Menu(_props: MenuProps) {
       }}
     >
       <Popover
+        returnFocus
         {...others}
         opened={_opened}
         onChange={toggleDropdown}

@@ -1,5 +1,5 @@
 import { cloneElement } from 'react';
-import { createEventHandler, isElement, useProps } from '../../../core';
+import { createEventHandler, getSingleElementChild, useProps } from '../../../core';
 import { Popover } from '../../Popover';
 import { useMenuContext } from '../Menu.context';
 
@@ -18,16 +18,17 @@ const defaultProps = {
 export function MenuTarget(props: MenuTargetProps) {
   const { children, refProp, ...others } = useProps('MenuTarget', defaultProps, props);
 
-  if (!isElement(children)) {
+  const child = getSingleElementChild(children);
+  if (!child) {
     throw new Error(
       'Menu.Target component children should be an element or a component that accepts ref. Fragments, strings, numbers and other primitive values are not supported'
     );
   }
 
   const ctx = useMenuContext();
-  const _childrenProps = children.props as any;
+  const _childProps = child.props as any;
 
-  const onClick = createEventHandler(_childrenProps.onClick, () => {
+  const onClick = createEventHandler(_childProps.onClick, () => {
     if (ctx.trigger === 'click') {
       ctx.toggleDropdown();
     } else if (ctx.trigger === 'click-hover') {
@@ -39,11 +40,11 @@ export function MenuTarget(props: MenuTargetProps) {
   });
 
   const onMouseEnter = createEventHandler(
-    _childrenProps.onMouseEnter,
+    _childProps.onMouseEnter,
     () => (ctx.trigger === 'hover' || ctx.trigger === 'click-hover') && ctx.openDropdown()
   );
 
-  const onMouseLeave = createEventHandler(_childrenProps.onMouseLeave, () => {
+  const onMouseLeave = createEventHandler(_childProps.onMouseLeave, () => {
     if (ctx.trigger === 'hover') {
       ctx.closeDropdown();
     } else if (ctx.trigger === 'click-hover' && !ctx.openedViaClick) {
@@ -53,7 +54,7 @@ export function MenuTarget(props: MenuTargetProps) {
 
   return (
     <Popover.Target refProp={refProp} popupType="menu" {...others}>
-      {cloneElement(children, {
+      {cloneElement(child, {
         onClick,
         onMouseEnter,
         onMouseLeave,

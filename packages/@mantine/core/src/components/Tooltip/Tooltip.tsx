@@ -9,7 +9,7 @@ import {
   getDefaultZIndex,
   getRadius,
   getRefProp,
-  isElement,
+  getSingleElementChild,
   useDirection,
   useProps,
   useStyles,
@@ -227,7 +227,8 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
     varsResolver,
   });
 
-  if (!target && !isElement(children)) {
+  const child = getSingleElementChild(children);
+  if (!target && !child) {
     return null;
   }
 
@@ -285,9 +286,8 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
   }
 
   // fallback to children-based approach
-  const _children = children as React.ReactElement;
-  const _childrenProps = _children.props as any;
-  const targetRef = useMergedRef(tooltip.reference, getRefProp(_children), ref);
+  const childProps = child!.props as any;
+  const targetRef = useMergedRef(tooltip.reference, getRefProp(child), ref);
   const transition = getTransitionProps(transitionProps, { duration: 100, transition: 'fade' });
 
   return (
@@ -336,7 +336,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
       </OptionalPortal>
 
       {cloneElement(
-        _children,
+        child!,
         tooltip.getReferenceProps({
           onClick,
           onMouseEnter,
@@ -344,8 +344,8 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
           onMouseMove: props.onMouseMove,
           onPointerDown: props.onPointerDown,
           onPointerEnter: props.onPointerEnter,
-          className: cx(className, _childrenProps.className),
-          ..._childrenProps,
+          ...childProps,
+          className: cx(className, childProps.className),
           [refProp]: targetRef,
         })
       )}

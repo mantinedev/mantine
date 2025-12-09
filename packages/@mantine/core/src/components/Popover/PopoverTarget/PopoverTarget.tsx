@@ -1,7 +1,7 @@
 import { cloneElement } from 'react';
 import cx from 'clsx';
 import { useMergedRef } from '@mantine/hooks';
-import { factory, Factory, getRefProp, isElement, useProps } from '../../../core';
+import { factory, Factory, getRefProp, getSingleElementChild, useProps } from '../../../core';
 import { usePopoverContext } from '../Popover.context';
 
 export interface PopoverTargetProps {
@@ -33,7 +33,8 @@ export const PopoverTarget = factory<PopoverTargetFactory>((props) => {
     props
   );
 
-  if (!isElement(children)) {
+  const child = getSingleElementChild(children);
+  if (!child) {
     throw new Error(
       'Popover.Target component children should be an element or a component that accepts ref. Fragments, strings, numbers and other primitive values are not supported'
     );
@@ -41,7 +42,7 @@ export const PopoverTarget = factory<PopoverTargetFactory>((props) => {
 
   const forwardedProps: any = others;
   const ctx = usePopoverContext();
-  const targetRef = useMergedRef(ctx.reference, getRefProp(children), ref);
+  const targetRef = useMergedRef(ctx.reference, getRefProp(child), ref);
 
   const accessibleProps = ctx.withRoles
     ? {
@@ -52,21 +53,18 @@ export const PopoverTarget = factory<PopoverTargetFactory>((props) => {
       }
     : {};
 
-  return cloneElement(children, {
+  const childProps = child.props as any;
+  return cloneElement(child, {
     ...forwardedProps,
     ...accessibleProps,
     ...ctx.targetProps,
-    className: cx(
-      ctx.targetProps.className,
-      forwardedProps.className,
-      (children.props as any).className
-    ),
+    className: cx(ctx.targetProps.className, forwardedProps.className, childProps.className),
     [refProp]: targetRef,
     ...(!ctx.controlled
       ? {
           onClick: () => {
             ctx.onToggle();
-            (children.props as any).onClick?.();
+            childProps.onClick?.();
           },
         }
       : null),

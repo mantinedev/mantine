@@ -1,5 +1,5 @@
 import { cloneElement, use } from 'react';
-import { createEventHandler, isElement, useProps } from '../../../core';
+import { createEventHandler, getSingleElementChild, useProps } from '../../../core';
 import { Popover, PopoverTargetProps } from '../../Popover';
 import { useHoverCardContext } from '../HoverCard.context';
 import { HoverCardGroupContext } from '../HoverCardGroup/HoverCardGroup';
@@ -20,7 +20,8 @@ export function HoverCardTarget(props: HoverCardTargetProps) {
     props
   );
 
-  if (!isElement(children)) {
+  const child = getSingleElementChild(children);
+  if (!child) {
     throw new Error(
       'HoverCard.Target component children should be an element or a component that accepts ref. Fragments, strings, numbers and other primitive values are not supported'
     );
@@ -35,7 +36,7 @@ export function HoverCardTarget(props: HoverCardTargetProps) {
     return (
       <Popover.Target refProp={refProp} {...others}>
         {cloneElement(
-          children as React.ReactElement,
+          child,
           eventPropsWrapperName
             ? { [eventPropsWrapperName]: { ...referenceProps, ref: ctx.reference } }
             : { ...referenceProps, ref: ctx.reference }
@@ -44,15 +45,15 @@ export function HoverCardTarget(props: HoverCardTargetProps) {
     );
   }
 
-  const onMouseEnter = createEventHandler((children.props as any).onMouseEnter, ctx.openDropdown);
-  const onMouseLeave = createEventHandler((children.props as any).onMouseLeave, ctx.closeDropdown);
+  const onMouseEnter = createEventHandler((child.props as any).onMouseEnter, ctx.openDropdown);
+  const onMouseLeave = createEventHandler((child.props as any).onMouseLeave, ctx.closeDropdown);
 
   const eventListeners = { onMouseEnter, onMouseLeave };
 
   return (
     <Popover.Target refProp={refProp} {...others}>
       {cloneElement(
-        children as React.ReactElement,
+        child,
         eventPropsWrapperName ? { [eventPropsWrapperName]: eventListeners } : eventListeners
       )}
     </Popover.Target>

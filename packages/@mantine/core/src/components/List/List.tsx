@@ -114,7 +114,7 @@ export const List = factory<ListFactory>((_props) => {
       <Box<any>
         {...getStyles('root', { style: { listStyleType } })}
         component={type === 'unordered' ? 'ul' : 'ol'}
-        mod={[{ 'with-padding': withPadding, type: listStyleType }, mod]}
+        mod={[{ 'with-padding': withPadding, type: icon ? 'none' : listStyleType }, mod]}
         {...others}
       >
         {children}
