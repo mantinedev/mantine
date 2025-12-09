@@ -26,9 +26,7 @@ export type OverflowListCssVariables = {
 };
 
 export interface OverflowListProps<T = any>
-  extends BoxProps,
-    StylesApiProps<OverflowListFactory>,
-    ElementProps<'div', 'children'> {
+  extends BoxProps, StylesApiProps<OverflowListFactory>, ElementProps<'div', 'children'> {
   /** Array of items to display */
   data: T[];
 

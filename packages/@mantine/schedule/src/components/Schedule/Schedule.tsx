@@ -19,9 +19,7 @@ export type ScheduleCssVariables = {
 };
 
 export interface ScheduleProps
-  extends BoxProps,
-    StylesApiProps<ScheduleFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, StylesApiProps<ScheduleFactory>, ElementProps<'div'> {}
 
 export type ScheduleFactory = Factory<{
   props: ScheduleProps;

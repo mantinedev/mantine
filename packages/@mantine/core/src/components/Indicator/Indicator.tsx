@@ -40,9 +40,7 @@ export type IndicatorCssVariables = {
 };
 
 export interface IndicatorProps
-  extends BoxProps,
-    StylesApiProps<IndicatorFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<IndicatorFactory>, ElementProps<'div'> {
   /** Indicator position relative to the target element @default `'top-end'` */
   position?: IndicatorPosition;
 

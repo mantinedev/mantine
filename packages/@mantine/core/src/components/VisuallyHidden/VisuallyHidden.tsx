@@ -13,9 +13,7 @@ import classes from './VisuallyHidden.module.css';
 export type VisuallyHiddenStylesNames = 'root';
 
 export interface VisuallyHiddenProps
-  extends BoxProps,
-    StylesApiProps<VisuallyHiddenFactory>,
-    ElementProps<'span'> {}
+  extends BoxProps, StylesApiProps<VisuallyHiddenFactory>, ElementProps<'span'> {}
 
 export type VisuallyHiddenFactory = Factory<{
   props: VisuallyHiddenProps;

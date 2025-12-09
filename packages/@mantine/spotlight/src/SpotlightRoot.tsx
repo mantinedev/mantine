@@ -31,7 +31,8 @@ export type SpotlightRootStylesNames =
   | 'actionsGroup';
 
 export interface SpotlightRootProps
-  extends StylesApiProps<SpotlightRootFactory>,
+  extends
+    StylesApiProps<SpotlightRootFactory>,
     Omit<
       ModalProps,
       | 'styles'

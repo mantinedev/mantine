@@ -6,8 +6,7 @@ import classes from './Modal.module.css';
 export type ModalContentStylesNames = 'content' | 'inner';
 
 export interface ModalContentProps
-  extends ModalBaseContentProps,
-    CompoundStylesApiProps<ModalContentFactory> {
+  extends ModalBaseContentProps, CompoundStylesApiProps<ModalContentFactory> {
   __hidden?: boolean;
 }
 

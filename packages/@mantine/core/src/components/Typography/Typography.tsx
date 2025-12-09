@@ -13,9 +13,7 @@ import classes from './Typography.module.css';
 export type TypographyStylesNames = 'root';
 
 export interface TypographyProps
-  extends BoxProps,
-    StylesApiProps<TypographyFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, StylesApiProps<TypographyFactory>, ElementProps<'div'> {}
 
 export type TypographyFactory = Factory<{
   props: TypographyProps;

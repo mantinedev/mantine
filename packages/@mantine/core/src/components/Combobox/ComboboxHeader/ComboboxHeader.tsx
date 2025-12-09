@@ -13,9 +13,7 @@ import classes from '../Combobox.module.css';
 export type ComboboxHeaderStylesNames = 'header';
 
 export interface ComboboxHeaderProps
-  extends BoxProps,
-    CompoundStylesApiProps<ComboboxHeaderFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<ComboboxHeaderFactory>, ElementProps<'div'> {}
 
 export type ComboboxHeaderFactory = Factory<{
   props: ComboboxHeaderProps;

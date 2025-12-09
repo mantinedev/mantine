@@ -34,9 +34,7 @@ export type MonthYearSelectCssVariables = {
 };
 
 export interface MonthYearSelectProps
-  extends BoxProps,
-    StylesApiProps<MonthYearSelectFactory>,
-    ElementProps<'button'> {
+  extends BoxProps, StylesApiProps<MonthYearSelectFactory>, ElementProps<'button'> {
   __staticSelector?: string;
 
   /** Locale passed down to dayjs, overrides value defined on `ScheduleProvider` */

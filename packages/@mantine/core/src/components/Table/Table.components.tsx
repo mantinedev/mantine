@@ -13,7 +13,8 @@ import { TableContextValue, useTableContext } from './Table.context';
 import classes from './Table.module.css';
 
 export interface TableElementProps<Selector extends string>
-  extends BoxProps,
+  extends
+    BoxProps,
     CompoundStylesApiProps<Omit<TableFactory, 'stylesNames'> & { stylesNames: Selector }> {}
 
 export interface TableThProps extends TableElementProps<'th'>, ElementProps<'th'> {}

@@ -13,9 +13,7 @@ import classes from './Spotlight.module.css';
 export type SpotlightFooterStylesNames = 'footer';
 
 export interface SpotlightFooterProps
-  extends BoxProps,
-    CompoundStylesApiProps<SpotlightFooterFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<SpotlightFooterFactory>, ElementProps<'div'> {}
 
 export type SpotlightFooterFactory = Factory<{
   props: SpotlightFooterProps;

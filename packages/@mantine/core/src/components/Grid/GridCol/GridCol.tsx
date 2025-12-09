@@ -18,9 +18,7 @@ export type GridColStylesNames = 'col';
 export type ColSpan = number | 'auto' | 'content';
 
 export interface GridColProps
-  extends BoxProps,
-    CompoundStylesApiProps<GridColFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<GridColFactory>, ElementProps<'div'> {
   /** Column span @default `12` */
   span?: StyleProp<ColSpan>;
 

@@ -18,9 +18,7 @@ import classes from './ViewSelect.module.css';
 export type ViewSelectStylesNames = 'viewSelect';
 
 export interface ViewSelectProps
-  extends BoxProps,
-    StylesApiProps<ViewSelectFactory>,
-    ElementProps<'div', 'value' | 'onChange'> {
+  extends BoxProps, StylesApiProps<ViewSelectFactory>, ElementProps<'div', 'value' | 'onChange'> {
   __staticSelector?: string;
 
   /** A list of views to display @default `['day', 'week', 'month', 'year']` */

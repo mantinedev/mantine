@@ -13,9 +13,7 @@ import classes from '../Tabs.module.css';
 export type TabsListStylesNames = 'list';
 
 export interface TabsListProps
-  extends BoxProps,
-    CompoundStylesApiProps<TabsListFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<TabsListFactory>, ElementProps<'div'> {
   /** `Tabs.Tab` components */
   children: React.ReactNode;
 

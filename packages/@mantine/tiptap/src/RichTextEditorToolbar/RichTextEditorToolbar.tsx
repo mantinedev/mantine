@@ -14,9 +14,7 @@ import classes from '../RichTextEditor.module.css';
 export type RichTextEditorToolbarStylesNames = 'toolbar';
 
 export interface RichTextEditorToolbarProps
-  extends BoxProps,
-    CompoundStylesApiProps<RichTextEditorToolbarFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<RichTextEditorToolbarFactory>, ElementProps<'div'> {
   /** Determines whether `position: sticky` styles should be added to the toolbar @default `false` */
   sticky?: boolean;
 

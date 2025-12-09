@@ -45,9 +45,7 @@ export type CarouselCssVariables = {
 };
 
 export interface CarouselProps
-  extends BoxProps,
-    StylesApiProps<CarouselFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<CarouselFactory>, ElementProps<'div'> {
   /** Options passed down to embla carousel */
   emblaOptions?: EmblaOptionsType;
 

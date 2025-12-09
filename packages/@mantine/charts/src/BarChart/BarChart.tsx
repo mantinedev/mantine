@@ -60,10 +60,7 @@ export type BarChartCssVariables = {
 };
 
 export interface BarChartProps
-  extends BoxProps,
-    GridChartBaseProps,
-    StylesApiProps<BarChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, GridChartBaseProps, StylesApiProps<BarChartFactory>, ElementProps<'div'> {
   /** Data used to display chart. */
   data: Record<string, any>[];
 

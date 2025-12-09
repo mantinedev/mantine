@@ -13,9 +13,7 @@ import classes from '../Combobox.module.css';
 export type ComboboxEmptyStylesNames = 'empty';
 
 export interface ComboboxEmptyProps
-  extends BoxProps,
-    CompoundStylesApiProps<ComboboxEmptyFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<ComboboxEmptyFactory>, ElementProps<'div'> {}
 
 export type ComboboxEmptyFactory = Factory<{
   props: ComboboxEmptyProps;

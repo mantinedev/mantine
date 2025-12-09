@@ -17,10 +17,7 @@ export interface CSS {
 }
 
 export interface CSSObject
-  extends CSSPropertiesWithMultiValues,
-    CSSPseudos,
-    CSSOthersObject,
-    CSSTssSpecials {}
+  extends CSSPropertiesWithMultiValues, CSSPseudos, CSSOthersObject, CSSTssSpecials {}
 
 export type CSSTssSpecials = {
   ref?: string;

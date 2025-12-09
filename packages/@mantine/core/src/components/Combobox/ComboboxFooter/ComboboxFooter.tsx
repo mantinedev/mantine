@@ -13,9 +13,7 @@ import classes from '../Combobox.module.css';
 export type ComboboxFooterStylesNames = 'footer';
 
 export interface ComboboxFooterProps
-  extends BoxProps,
-    CompoundStylesApiProps<ComboboxFooterFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<ComboboxFooterFactory>, ElementProps<'div'> {}
 
 export type ComboboxFooterFactory = Factory<{
   props: ComboboxFooterProps;

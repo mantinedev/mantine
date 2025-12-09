@@ -13,9 +13,7 @@ import classes from './Spotlight.module.css';
 export type SpotlightActionsGroupStylesNames = 'actionsGroup';
 
 export interface SpotlightActionsGroupProps
-  extends BoxProps,
-    CompoundStylesApiProps<SpotlightActionsGroupFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<SpotlightActionsGroupFactory>, ElementProps<'div'> {
   /** `Spotlight.Action` components */
   children?: React.ReactNode;
 

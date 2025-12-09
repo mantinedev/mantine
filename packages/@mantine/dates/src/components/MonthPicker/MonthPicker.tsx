@@ -21,7 +21,8 @@ export type MonthPickerStylesNames = DecadeLevelGroupStylesNames | YearLevelGrou
 type MonthPickerLevel = Exclude<CalendarLevel, 'month'>;
 
 export interface MonthPickerBaseProps<Type extends DatePickerType = 'default'>
-  extends PickerBaseProps<Type>,
+  extends
+    PickerBaseProps<Type>,
     DecadeLevelBaseSettings,
     YearLevelBaseSettings,
     Omit<CalendarBaseProps, 'onNextMonth' | 'onPreviousMonth' | 'hasNextLevel'> {
@@ -39,7 +40,8 @@ export interface MonthPickerBaseProps<Type extends DatePickerType = 'default'>
 }
 
 export interface MonthPickerProps<Type extends DatePickerType = 'default'>
-  extends BoxProps,
+  extends
+    BoxProps,
     MonthPickerBaseProps<Type>,
     StylesApiProps<MonthPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {

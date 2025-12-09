@@ -80,10 +80,7 @@ export interface __InputWrapperProps {
 }
 
 export interface InputWrapperProps
-  extends __InputWrapperProps,
-    BoxProps,
-    StylesApiProps<InputWrapperFactory>,
-    ElementProps<'div'> {
+  extends __InputWrapperProps, BoxProps, StylesApiProps<InputWrapperFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
   /** Props passed to Styles API context, replaces Input.Wrapper props */

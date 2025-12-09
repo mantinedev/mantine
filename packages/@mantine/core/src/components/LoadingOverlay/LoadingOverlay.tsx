@@ -22,9 +22,7 @@ export type LoadingOverlayCssVariables = {
 };
 
 export interface LoadingOverlayProps
-  extends BoxProps,
-    StylesApiProps<LoadingOverlayFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<LoadingOverlayFactory>, ElementProps<'div'> {
   /** Props passed down to `Transition` component @default `{ transition: 'fade', duration: 0 }` */
   transitionProps?: TransitionOverride;
 

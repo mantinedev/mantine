@@ -41,7 +41,8 @@ export type CodeHighlightTabsStylesNames =
   | CodeHighlightStylesNames;
 
 export interface CodeHighlightTabsProps
-  extends CodeHighlightSettings,
+  extends
+    CodeHighlightSettings,
     BoxProps,
     StylesApiProps<CodeHighlightTabsFactory>,
     ElementProps<'div'> {

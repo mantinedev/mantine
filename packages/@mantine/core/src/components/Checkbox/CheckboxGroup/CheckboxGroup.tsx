@@ -15,8 +15,10 @@ export const CheckboxGroupContext = createContext<CheckboxGroupContextValue | nu
 
 export type CheckboxGroupStylesNames = InputWrapperStylesNames;
 
-export interface CheckboxGroupProps<Value extends string = string>
-  extends Omit<InputWrapperProps, 'onChange'> {
+export interface CheckboxGroupProps<Value extends string = string> extends Omit<
+  InputWrapperProps,
+  'onChange'
+> {
   /** `Checkbox` components and any other elements */
   children: React.ReactNode;
 

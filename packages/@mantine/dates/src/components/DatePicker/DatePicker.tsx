@@ -57,7 +57,8 @@ export type DatePickerStylesNames =
   | 'datePickerRoot';
 
 export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
-  extends PickerBaseProps<Type>,
+  extends
+    PickerBaseProps<Type>,
     DecadeLevelBaseSettings,
     YearLevelBaseSettings,
     MonthLevelBaseSettings,
@@ -87,7 +88,8 @@ export interface DatePickerBaseProps<Type extends DatePickerType = 'default'>
 }
 
 export interface DatePickerProps<Type extends DatePickerType = 'default'>
-  extends BoxProps,
+  extends
+    BoxProps,
     DatePickerBaseProps<Type>,
     StylesApiProps<DatePickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {}

@@ -33,9 +33,7 @@ export type MiniCalendarCssVariables = {
 };
 
 export interface MiniCalendarProps
-  extends BoxProps,
-    StylesApiProps<MiniCalendarFactory>,
-    ElementProps<'div', 'onChange'> {
+  extends BoxProps, StylesApiProps<MiniCalendarFactory>, ElementProps<'div', 'onChange'> {
   /** Controlled component date value, start date of the interval */
   date?: Date | string;
 

@@ -14,9 +14,7 @@ import classes from '../RichTextEditor.module.css';
 export type RichTextEditorControlStylesNames = 'control';
 
 export interface RichTextEditorControlProps
-  extends BoxProps,
-    CompoundStylesApiProps<RichTextEditorControlFactory>,
-    ElementProps<'button'> {
+  extends BoxProps, CompoundStylesApiProps<RichTextEditorControlFactory>, ElementProps<'button'> {
   /** Determines whether the control should have active state @default `false` */
   active?: boolean;
 

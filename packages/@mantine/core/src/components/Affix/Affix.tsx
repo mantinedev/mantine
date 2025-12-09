@@ -42,10 +42,7 @@ export interface AffixBaseProps {
 }
 
 export interface AffixProps
-  extends BoxProps,
-    AffixBaseProps,
-    StylesApiProps<AffixFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, AffixBaseProps, StylesApiProps<AffixFactory>, ElementProps<'div'> {}
 
 export type AffixFactory = Factory<{
   props: AffixProps;

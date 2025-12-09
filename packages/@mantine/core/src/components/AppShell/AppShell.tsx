@@ -43,9 +43,7 @@ export type AppShellCssVariables = {
 };
 
 export interface AppShellProps
-  extends BoxProps,
-    StylesApiProps<AppShellFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<AppShellFactory>, ElementProps<'div'> {
   /** If set, the associated components have a border @default `true` */
   withBorder?: boolean;
 

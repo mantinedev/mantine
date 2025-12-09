@@ -28,9 +28,7 @@ export type CheckboxCardCssVariables = {
 };
 
 export interface CheckboxCardProps
-  extends BoxProps,
-    StylesApiProps<CheckboxCardFactory>,
-    ElementProps<'button', 'onChange'> {
+  extends BoxProps, StylesApiProps<CheckboxCardFactory>, ElementProps<'button', 'onChange'> {
   /** Controlled component value */
   checked?: boolean;
 

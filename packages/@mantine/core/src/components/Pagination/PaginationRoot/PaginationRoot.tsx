@@ -34,7 +34,8 @@ export type PaginationRootCssVariables = {
 };
 
 export interface PaginationRootProps
-  extends BoxProps,
+  extends
+    BoxProps,
     StylesApiProps<PaginationRootFactory>,
     ElementProps<'div', 'value' | 'onChange'> {
   /** `height` and `min-width` of controls @default `'md'` */

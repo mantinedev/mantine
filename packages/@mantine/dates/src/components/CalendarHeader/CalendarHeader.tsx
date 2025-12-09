@@ -75,7 +75,8 @@ export interface CalendarHeaderSettings {
 }
 
 export interface CalendarHeaderProps
-  extends BoxProps,
+  extends
+    BoxProps,
     CalendarHeaderSettings,
     StylesApiProps<CalendarHeaderFactory>,
     ElementProps<'div'> {

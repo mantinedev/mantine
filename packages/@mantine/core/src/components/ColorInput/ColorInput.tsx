@@ -43,7 +43,8 @@ export type ColorInputCssVariables = {
 };
 
 export interface ColorInputProps
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     __ColorPickerProps,
     StylesApiProps<ColorInputFactory>,

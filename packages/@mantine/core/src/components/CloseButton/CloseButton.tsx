@@ -45,9 +45,7 @@ export interface __CloseButtonProps {
 }
 
 export interface CloseButtonProps
-  extends __CloseButtonProps,
-    BoxProps,
-    StylesApiProps<CloseButtonFactory> {
+  extends __CloseButtonProps, BoxProps, StylesApiProps<CloseButtonFactory> {
   __staticSelector?: string;
 }
 

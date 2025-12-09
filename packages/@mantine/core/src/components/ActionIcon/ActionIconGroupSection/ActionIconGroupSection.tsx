@@ -31,9 +31,7 @@ export type ActionIconGroupSectionCssVariables = {
 };
 
 export interface ActionIconGroupSectionProps
-  extends BoxProps,
-    StylesApiProps<ActionIconGroupSectionFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<ActionIconGroupSectionFactory>, ElementProps<'div'> {
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 

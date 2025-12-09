@@ -16,7 +16,8 @@ import classes from '../AppShell.module.css';
 export type AppShellAsideStylesNames = 'aside';
 
 export interface AppShellAsideProps
-  extends BoxProps,
+  extends
+    BoxProps,
     AppShellCompoundProps,
     StylesApiProps<AppShellAsideFactory>,
     ElementProps<'aside'> {}

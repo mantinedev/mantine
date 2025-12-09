@@ -21,7 +21,8 @@ export type ComboboxChevronCSSVariables = {
 };
 
 export interface ComboboxChevronProps
-  extends BoxProps,
+  extends
+    BoxProps,
     StylesApiProps<ComboboxChevronFactory>,
     ElementProps<'svg', 'opacity' | 'display'> {
   size?: MantineSize | (string & {});

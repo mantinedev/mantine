@@ -17,7 +17,8 @@ import classes from '../Tabs.module.css';
 export type TabsTabStylesNames = 'tab' | 'tabSection' | 'tabLabel';
 
 export interface TabsTabProps
-  extends Omit<UnstyledButtonProps, 'classNames' | 'styles' | 'vars'>,
+  extends
+    Omit<UnstyledButtonProps, 'classNames' | 'styles' | 'vars'>,
     CompoundStylesApiProps<TabsTabFactory>,
     ElementProps<'button'> {
   /** Value of associated panel */

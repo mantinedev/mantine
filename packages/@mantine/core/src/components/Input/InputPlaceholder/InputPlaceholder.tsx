@@ -13,9 +13,7 @@ import classes from '../Input.module.css';
 export type InputPlaceholderStylesNames = 'placeholder';
 
 export interface InputPlaceholderProps
-  extends BoxProps,
-    StylesApiProps<InputPlaceholderFactory>,
-    ElementProps<'span'> {
+  extends BoxProps, StylesApiProps<InputPlaceholderFactory>, ElementProps<'span'> {
   __staticSelector?: string;
 
   /** If set, the placeholder has error styles @default `false` */

@@ -20,9 +20,7 @@ export type SpoilerCssVariables = {
 };
 
 export interface SpoilerProps
-  extends BoxProps,
-    StylesApiProps<SpoilerFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<SpoilerFactory>, ElementProps<'div'> {
   /** Maximum height of the visible content, when this point is reached spoiler appears @default `100` */
   maxHeight?: number;
 

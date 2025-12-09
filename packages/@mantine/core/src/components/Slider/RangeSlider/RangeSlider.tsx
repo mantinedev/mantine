@@ -40,7 +40,8 @@ import classes from '../Slider.module.css';
 export type RangeSliderValue = [number, number];
 
 export interface RangeSliderProps
-  extends BoxProps,
+  extends
+    BoxProps,
     StylesApiProps<RangeSliderFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   /** Key of `theme.colors` or any valid CSS color, controls color of track and thumb @default `theme.primaryColor` */

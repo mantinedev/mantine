@@ -37,9 +37,7 @@ export type RichTextEditorStylesNames =
   | 'linkEditorExternalControl';
 
 export interface RichTextEditorProps
-  extends BoxProps,
-    StylesApiProps<RichTextEditorFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<RichTextEditorFactory>, ElementProps<'div'> {
   /** Tiptap editor instance */
   editor: Editor | null;
 

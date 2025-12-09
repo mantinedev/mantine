@@ -56,9 +56,7 @@ export type StepperCssVariables = {
 };
 
 export interface StepperProps
-  extends BoxProps,
-    StylesApiProps<StepperFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<StepperFactory>, ElementProps<'div'> {
   /** `Stepper.Step` components */
   children: React.ReactNode;
 

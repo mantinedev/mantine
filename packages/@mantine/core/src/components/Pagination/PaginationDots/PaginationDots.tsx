@@ -14,9 +14,7 @@ import classes from '../Pagination.module.css';
 export type PaginationDotsStylesNames = 'dots';
 
 export interface PaginationDotsProps
-  extends BoxProps,
-    CompoundStylesApiProps<PaginationDotsFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<PaginationDotsFactory>, ElementProps<'div'> {
   /** Custom dots icon component, must accept svg element props and size prop */
   icon?: React.FC<PaginationIconProps>;
 }

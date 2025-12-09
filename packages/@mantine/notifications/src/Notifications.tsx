@@ -46,9 +46,7 @@ export type NotificationsCssVariables = {
 };
 
 export interface NotificationsProps
-  extends BoxProps,
-    StylesApiProps<NotificationsFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<NotificationsFactory>, ElementProps<'div'> {
   /** Notifications default position @default `'bottom-right'` */
   position?: NotificationPosition;
 

@@ -14,9 +14,7 @@ import classes from '../Accordion.module.css';
 export type AccordionPanelStylesNames = 'panel' | 'content';
 
 export interface AccordionPanelProps
-  extends BoxProps,
-    CompoundStylesApiProps<AccordionPanelFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<AccordionPanelFactory>, ElementProps<'div'> {
   /** Called when the panel animation completes */
   onTransitionEnd?: () => void;
 

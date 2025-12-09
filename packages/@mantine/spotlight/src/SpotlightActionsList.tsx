@@ -15,9 +15,7 @@ import classes from './Spotlight.module.css';
 export type SpotlightActionsListStylesNames = 'actionsList' | 'actionsListInner';
 
 export interface SpotlightActionsListProps
-  extends BoxProps,
-    CompoundStylesApiProps<SpotlightActionsListFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<SpotlightActionsListFactory>, ElementProps<'div'> {}
 
 export type SpotlightActionsListFactory = Factory<{
   props: SpotlightActionsListProps;

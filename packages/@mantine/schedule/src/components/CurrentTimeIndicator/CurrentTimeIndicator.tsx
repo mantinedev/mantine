@@ -37,9 +37,7 @@ export type CurrentTimeIndicatorCssVariables = {
 };
 
 export interface CurrentTimeIndicatorProps
-  extends BoxProps,
-    StylesApiProps<CurrentTimeIndicatorFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<CurrentTimeIndicatorFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
   /** Key of `theme.colors` or any valid CSS color value @default `'red'` */

@@ -17,9 +17,7 @@ export interface TooltipMiddlewares {
 }
 
 export interface TooltipBaseProps
-  extends BoxProps,
-    StylesApiProps<TooltipFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<TooltipFactory>, ElementProps<'div'> {
   /** Target element, must support `ref` prop and `...others` */
   children?: React.ReactNode;
 

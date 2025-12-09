@@ -50,7 +50,8 @@ export type ScatterChartCssVariables = {
 };
 
 export interface ScatterChartProps
-  extends Omit<GridChartBaseProps, 'dataKey' | 'data' | 'unit' | 'valueFormatter'>,
+  extends
+    Omit<GridChartBaseProps, 'dataKey' | 'data' | 'unit' | 'valueFormatter'>,
     BoxProps,
     StylesApiProps<ScatterChartFactory>,
     ElementProps<'div'> {

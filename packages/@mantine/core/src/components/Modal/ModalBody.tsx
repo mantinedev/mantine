@@ -6,8 +6,7 @@ import classes from './Modal.module.css';
 export type ModalBodyStylesNames = 'body';
 
 export interface ModalBodyProps
-  extends ModalBaseBodyProps,
-    CompoundStylesApiProps<ModalBodyFactory> {}
+  extends ModalBaseBodyProps, CompoundStylesApiProps<ModalBodyFactory> {}
 
 export type ModalBodyFactory = Factory<{
   props: ModalBodyProps;

@@ -13,9 +13,7 @@ import classes from './Spotlight.module.css';
 export type SpotlightEmptyStylesNames = 'empty';
 
 export interface SpotlightEmptyProps
-  extends BoxProps,
-    CompoundStylesApiProps<SpotlightEmptyFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<SpotlightEmptyFactory>, ElementProps<'div'> {}
 
 export type SpotlightEmptyFactory = Factory<{
   props: SpotlightEmptyProps;

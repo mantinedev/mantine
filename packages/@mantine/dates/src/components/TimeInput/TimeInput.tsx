@@ -14,7 +14,8 @@ import {
 import classes from './TimeInput.module.css';
 
 export interface TimeInputProps
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     StylesApiProps<TimeInputFactory>,
     ElementProps<'input', 'size'> {

@@ -6,8 +6,7 @@ import classes from './Modal.module.css';
 export type ModalOverlayStylesNames = 'overlay';
 
 export interface ModalOverlayProps
-  extends ModalBaseOverlayProps,
-    CompoundStylesApiProps<ModalOverlayFactory> {}
+  extends ModalBaseOverlayProps, CompoundStylesApiProps<ModalOverlayFactory> {}
 
 export type ModalOverlayFactory = Factory<{
   props: ModalOverlayProps;

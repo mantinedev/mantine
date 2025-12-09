@@ -45,10 +45,7 @@ export type YearViewCssVariables = {
 };
 
 export interface YearViewProps
-  extends YearViewMonthSettings,
-    BoxProps,
-    StylesApiProps<YearViewFactory>,
-    ElementProps<'div'> {
+  extends YearViewMonthSettings, BoxProps, StylesApiProps<YearViewFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
   /** Date to display, Date object or date string in `YYYY-MM-DD 00:00:00` format */

@@ -20,9 +20,7 @@ export type FieldsetCSSVariables = {
 };
 
 export interface FieldsetProps
-  extends BoxProps,
-    StylesApiProps<FieldsetFactory>,
-    ElementProps<'fieldset'> {
+  extends BoxProps, StylesApiProps<FieldsetFactory>, ElementProps<'fieldset'> {
   /** Fieldset legend */
   legend?: React.ReactNode;
 

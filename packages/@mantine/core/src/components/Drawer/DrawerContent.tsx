@@ -6,8 +6,7 @@ import classes from './Drawer.module.css';
 export type DrawerContentStylesNames = 'content' | 'inner';
 
 export interface DrawerContentProps
-  extends ModalBaseContentProps,
-    CompoundStylesApiProps<DrawerContentFactory> {
+  extends ModalBaseContentProps, CompoundStylesApiProps<DrawerContentFactory> {
   __hidden?: boolean;
 }
 

@@ -12,8 +12,7 @@ import classes from './UnstyledButton.module.css';
 export type UnstyledButtonStylesNames = 'root';
 
 export interface UnstyledButtonProps
-  extends Omit<BoxComponentProps, 'vars' | 'variant'>,
-    StylesApiProps<UnstyledButtonFactory> {
+  extends Omit<BoxComponentProps, 'vars' | 'variant'>, StylesApiProps<UnstyledButtonFactory> {
   __staticSelector?: string;
 }
 

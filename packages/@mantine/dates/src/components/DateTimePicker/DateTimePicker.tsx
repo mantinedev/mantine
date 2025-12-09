@@ -42,7 +42,8 @@ export type DateTimePickerStylesNames =
   | CalendarStylesNames;
 
 export interface DateTimePickerProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<
       DateInputSharedProps,
       'classNames' | 'styles' | 'closeOnChange' | 'size' | 'valueFormatter'

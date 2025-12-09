@@ -15,9 +15,7 @@ import classes from '../Combobox.module.css';
 export type ComboboxOptionStylesNames = 'option';
 
 export interface ComboboxOptionProps
-  extends BoxProps,
-    CompoundStylesApiProps<ComboboxOptionFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<ComboboxOptionFactory>, ElementProps<'div'> {
   /** Option value */
   value: Primitive;
 

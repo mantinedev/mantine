@@ -6,8 +6,7 @@ import classes from './Drawer.module.css';
 export type DrawerHeaderStylesNames = 'header';
 
 export interface DrawerHeaderProps
-  extends ModalBaseHeaderProps,
-    CompoundStylesApiProps<DrawerHeaderFactory> {}
+  extends ModalBaseHeaderProps, CompoundStylesApiProps<DrawerHeaderFactory> {}
 
 export type DrawerHeaderFactory = Factory<{
   props: DrawerHeaderProps;

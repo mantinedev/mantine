@@ -16,9 +16,7 @@ import classes from '../Accordion.module.css';
 export type AccordionControlStylesNames = 'control' | 'chevron' | 'label' | 'itemTitle' | 'icon';
 
 export interface AccordionControlProps
-  extends BoxProps,
-    CompoundStylesApiProps<AccordionControlFactory>,
-    ElementProps<'button'> {
+  extends BoxProps, CompoundStylesApiProps<AccordionControlFactory>, ElementProps<'button'> {
   /** Sets `disabled` attribute, prevents interactions */
   disabled?: boolean;
 

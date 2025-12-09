@@ -69,7 +69,8 @@ export type CompositeChartCssVariables = {
 };
 
 export interface CompositeChartProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<GridChartBaseProps, 'orientation'>,
     StylesApiProps<CompositeChartFactory>,
     ElementProps<'div'> {

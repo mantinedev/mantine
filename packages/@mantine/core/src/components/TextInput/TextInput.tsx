@@ -3,7 +3,8 @@ import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
 import { InputBase } from '../InputBase';
 
 export interface TextInputProps
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     StylesApiProps<TextInputFactory>,
     ElementProps<'input', 'size'> {}

@@ -41,7 +41,8 @@ export type TagsInputStylesNames =
   | 'inputField';
 
 export interface TagsInputProps
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     Omit<ComboboxLikeProps, 'data'>,
     StylesApiProps<TagsInputFactory>,

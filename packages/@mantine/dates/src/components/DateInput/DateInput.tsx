@@ -31,7 +31,8 @@ import { isDateValid } from './is-date-valid/is-date-valid';
 export type DateInputStylesNames = __InputStylesNames | CalendarStylesNames;
 
 export interface DateInputProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<__BaseInputProps, 'size'>,
     CalendarBaseProps,
     DecadeLevelSettings,

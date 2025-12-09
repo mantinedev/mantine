@@ -13,9 +13,7 @@ import classes from '../Tabs.module.css';
 export type TabsPanelStylesNames = 'panel';
 
 export interface TabsPanelProps
-  extends BoxProps,
-    CompoundStylesApiProps<TabsPanelFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<TabsPanelFactory>, ElementProps<'div'> {
   /** Panel content */
   children: React.ReactNode;
 

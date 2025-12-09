@@ -14,9 +14,7 @@ import classes from '../Accordion.module.css';
 export type AccordionItemStylesNames = 'item';
 
 export interface AccordionItemProps
-  extends BoxProps,
-    CompoundStylesApiProps<AccordionItemFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<AccordionItemFactory>, ElementProps<'div'> {
   /** Value that is used to manage the accordion state */
   value: string;
 }

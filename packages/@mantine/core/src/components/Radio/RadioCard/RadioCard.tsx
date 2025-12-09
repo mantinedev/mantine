@@ -28,9 +28,7 @@ export type RadioCardCssVariables = {
 };
 
 export interface RadioCardProps
-  extends BoxProps,
-    StylesApiProps<RadioCardFactory>,
-    ElementProps<'button', 'onChange'> {
+  extends BoxProps, StylesApiProps<RadioCardFactory>, ElementProps<'button', 'onChange'> {
   /** Checked state */
   checked?: boolean;
 

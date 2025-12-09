@@ -20,9 +20,7 @@ export type FloatingIndicatorCssVariables = {
 };
 
 export interface FloatingIndicatorProps
-  extends BoxProps,
-    StylesApiProps<FloatingIndicatorFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<FloatingIndicatorFactory>, ElementProps<'div'> {
   /** Target element over which indicator is displayed */
   target: HTMLElement | null | undefined;
 

@@ -28,9 +28,7 @@ export type SparklineCssVariables = {
 };
 
 export interface SparklineProps
-  extends BoxProps,
-    StylesApiProps<SparklineFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<SparklineFactory>, ElementProps<'div'> {
   /** Data used to render the chart */
   data: (number | null)[];
 

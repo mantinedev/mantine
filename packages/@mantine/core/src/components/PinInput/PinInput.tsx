@@ -33,9 +33,7 @@ export type PinInputCssVariables = {
 };
 
 export interface PinInputProps
-  extends BoxProps,
-    StylesApiProps<PinInputFactory>,
-    ElementProps<'div', 'onChange' | 'ref'> {
+  extends BoxProps, StylesApiProps<PinInputFactory>, ElementProps<'div', 'onChange' | 'ref'> {
   ref?: React.Ref<HTMLInputElement>;
 
   /** Hidden input `name` attribute */

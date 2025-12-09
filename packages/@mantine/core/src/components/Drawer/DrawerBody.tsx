@@ -6,8 +6,7 @@ import classes from './Drawer.module.css';
 export type DrawerBodyStylesNames = 'body';
 
 export interface DrawerBodyProps
-  extends ModalBaseBodyProps,
-    CompoundStylesApiProps<DrawerBodyFactory> {}
+  extends ModalBaseBodyProps, CompoundStylesApiProps<DrawerBodyFactory> {}
 
 export type DrawerBodyFactory = Factory<{
   props: DrawerBodyProps;

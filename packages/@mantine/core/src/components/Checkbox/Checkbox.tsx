@@ -41,9 +41,7 @@ export type CheckboxIconComponent = React.FC<{
 }>;
 
 export interface CheckboxProps
-  extends BoxProps,
-    StylesApiProps<CheckboxFactory>,
-    ElementProps<'input', 'size' | 'children'> {
+  extends BoxProps, StylesApiProps<CheckboxFactory>, ElementProps<'input', 'size' | 'children'> {
   /** Unique input id */
   id?: string;
 

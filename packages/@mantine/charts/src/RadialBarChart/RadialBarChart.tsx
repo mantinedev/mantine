@@ -35,9 +35,7 @@ export type RadialBarChartCssVariables = {
 };
 
 export interface RadialBarChartProps
-  extends BoxProps,
-    StylesApiProps<RadialBarChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<RadialBarChartFactory>, ElementProps<'div'> {
   /** Chart data */
   data: Record<string, any>[];
 

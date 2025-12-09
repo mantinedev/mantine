@@ -9,7 +9,8 @@ import { LevelsGroup, LevelsGroupStylesNames } from '../LevelsGroup';
 export type DecadeLevelGroupStylesNames = LevelsGroupStylesNames | DecadeLevelStylesNames;
 
 export interface DecadeLevelGroupProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<StylesApiProps<DecadeLevelGroupFactory>, 'classNames' | 'styles'>,
     Omit<
       DecadeLevelSettings,

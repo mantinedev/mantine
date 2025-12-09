@@ -79,9 +79,7 @@ export interface BubbleChartDataKey {
 }
 
 export interface BubbleChartProps
-  extends BoxProps,
-    StylesApiProps<BubbleChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<BubbleChartFactory>, ElementProps<'div'> {
   /** Chart data */
   data: Record<string, any>[];
 

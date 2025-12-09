@@ -6,8 +6,7 @@ import classes from './Drawer.module.css';
 export type DrawerOverlayStylesNames = 'overlay';
 
 export interface DrawerOverlayProps
-  extends ModalBaseOverlayProps,
-    CompoundStylesApiProps<DrawerOverlayFactory> {}
+  extends ModalBaseOverlayProps, CompoundStylesApiProps<DrawerOverlayFactory> {}
 
 export type DrawerOverlayFactory = Factory<{
   props: DrawerOverlayProps;

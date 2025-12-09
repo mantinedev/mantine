@@ -17,7 +17,8 @@ import classes from './Spotlight.module.css';
 export type SpotlightSearchStylesNames = InputStylesNames;
 
 export interface SpotlightSearchProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<InputProps, 'classNames' | 'styles' | 'vars' | 'variant'>,
     CompoundStylesApiProps<SpotlightSearchFactory>,
     ElementProps<'input', 'size'> {}

@@ -27,7 +27,8 @@ export interface MonthLevelBaseSettings extends MonthSettings {
 export interface MonthLevelSettings extends MonthLevelBaseSettings, CalendarHeaderSettings {}
 
 export interface MonthLevelProps
-  extends BoxProps,
+  extends
+    BoxProps,
     MonthLevelSettings,
     Omit<StylesApiProps<MonthLevelFactory>, 'classNames' | 'styles'>,
     ElementProps<'div'> {

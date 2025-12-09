@@ -22,9 +22,7 @@ export type InputDescriptionCssVariables = {
 };
 
 export interface InputDescriptionProps
-  extends BoxProps,
-    StylesApiProps<InputDescriptionFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<InputDescriptionFactory>, ElementProps<'div'> {
   __staticSelector?: string;
   __inheritStyles?: boolean;
 

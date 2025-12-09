@@ -40,9 +40,7 @@ export type FunnelChartCssVariables = {
 };
 
 export interface FunnelChartProps
-  extends BoxProps,
-    StylesApiProps<FunnelChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<FunnelChartFactory>, ElementProps<'div'> {
   /** Data used to render chart */
   data: FunnelChartCell[];
 

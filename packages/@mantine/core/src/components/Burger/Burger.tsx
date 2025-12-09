@@ -28,9 +28,7 @@ export type BurgerCssVariables = {
 };
 
 export interface BurgerProps
-  extends BoxProps,
-    StylesApiProps<BurgerFactory>,
-    ElementProps<'button'> {
+  extends BoxProps, StylesApiProps<BurgerFactory>, ElementProps<'button'> {
   /** Controls burger `width` and `height`, numbers are converted to rem @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 

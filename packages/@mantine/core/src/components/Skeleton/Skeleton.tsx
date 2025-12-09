@@ -19,9 +19,7 @@ export type SkeletonCssVariables = {
 };
 
 export interface SkeletonProps
-  extends BoxProps,
-    StylesApiProps<SkeletonFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<SkeletonFactory>, ElementProps<'div'> {
   /** Determines whether Skeleton overlay should be displayed @default `true` */
   visible?: boolean;
 

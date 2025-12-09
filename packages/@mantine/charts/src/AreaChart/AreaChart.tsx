@@ -73,10 +73,7 @@ export type AreaChartCSSVariables = {
 };
 
 export interface AreaChartProps
-  extends BoxProps,
-    GridChartBaseProps,
-    StylesApiProps<AreaChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, GridChartBaseProps, StylesApiProps<AreaChartFactory>, ElementProps<'div'> {
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: AreaChartSeries[];
 

@@ -28,11 +28,11 @@ export interface DecadeLevelBaseSettings extends YearsListSettings {
 }
 
 export interface DecadeLevelSettings
-  extends DecadeLevelBaseSettings,
-    Omit<CalendarHeaderSettings, 'onLevelClick' | 'hasNextLevel'> {}
+  extends DecadeLevelBaseSettings, Omit<CalendarHeaderSettings, 'onLevelClick' | 'hasNextLevel'> {}
 
 export interface DecadeLevelProps
-  extends BoxProps,
+  extends
+    BoxProps,
     DecadeLevelSettings,
     Omit<StylesApiProps<DecadeLevelFactory>, 'classNames' | 'styles'>,
     ElementProps<'div'> {

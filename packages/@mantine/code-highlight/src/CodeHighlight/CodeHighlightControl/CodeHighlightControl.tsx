@@ -11,8 +11,7 @@ import {
 import { useCodeHighlightContext } from '../CodeHighlight.context';
 
 export interface CodeHighlightControlProps
-  extends BoxProps,
-    StylesApiProps<CodeHighlightControlFactory> {
+  extends BoxProps, StylesApiProps<CodeHighlightControlFactory> {
   /** Control icon */
   children?: React.ReactNode;
 

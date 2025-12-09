@@ -16,7 +16,8 @@ import classes from '../AppShell.module.css';
 export type AppShellFooterStylesNames = 'footer';
 
 export interface AppShellFooterProps
-  extends BoxProps,
+  extends
+    BoxProps,
     AppShellCompoundProps,
     StylesApiProps<AppShellFooterFactory>,
     ElementProps<'footer'> {}

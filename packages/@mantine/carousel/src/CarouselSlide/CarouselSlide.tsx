@@ -13,9 +13,7 @@ import classes from '../Carousel.module.css';
 export type CarouselSlideStylesNames = 'slide';
 
 export interface CarouselSlideProps
-  extends BoxProps,
-    CompoundStylesApiProps<CarouselSlideFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<CarouselSlideFactory>, ElementProps<'div'> {}
 
 export type CarouselSlideFactory = Factory<{
   props: CarouselSlideProps;

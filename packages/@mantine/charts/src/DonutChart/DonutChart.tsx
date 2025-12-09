@@ -40,9 +40,7 @@ export type DonutChartCssVariables = {
 };
 
 export interface DonutChartProps
-  extends BoxProps,
-    StylesApiProps<DonutChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<DonutChartFactory>, ElementProps<'div'> {
   /** Data used to render chart */
   data: DonutChartCell[];
 

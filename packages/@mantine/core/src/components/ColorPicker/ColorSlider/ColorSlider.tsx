@@ -49,7 +49,8 @@ export interface __ColorSliderProps extends ElementProps<'div', 'onChange'> {
 }
 
 export interface ColorSliderProps
-  extends BoxProps,
+  extends
+    BoxProps,
     StylesApiProps<ColorSliderFactory>,
     __ColorSliderProps,
     ElementProps<'div', 'onChange'> {

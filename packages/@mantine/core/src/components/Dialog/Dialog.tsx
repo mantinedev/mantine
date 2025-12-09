@@ -22,7 +22,8 @@ export type DialogCssVariables = {
 };
 
 export interface DialogProps
-  extends BoxProps,
+  extends
+    BoxProps,
     AffixBaseProps,
     PaperBaseProps,
     StylesApiProps<DialogFactory>,

@@ -35,9 +35,7 @@ export function getFilteredChartLegendPayload(payload: readonly Record<string, a
 export type ChartLegendStylesNames = 'legendItem' | 'legendItemColor' | 'legendItemName' | 'legend';
 
 export interface ChartLegendProps
-  extends BoxProps,
-    StylesApiProps<ChartLegendFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<ChartLegendFactory>, ElementProps<'div'> {
   /** Chart data provided by recharts */
   payload: readonly Record<string, any>[] | undefined;
 

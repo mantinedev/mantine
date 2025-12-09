@@ -12,8 +12,7 @@ import classes from '../AppShell.module.css';
 export type AppShellSectionStylesNames = 'section';
 
 export interface AppShellSectionProps
-  extends BoxProps,
-    CompoundStylesApiProps<AppShellSectionFactory> {
+  extends BoxProps, CompoundStylesApiProps<AppShellSectionFactory> {
   /** If set, the section expands to take all available space */
   grow?: boolean;
 }

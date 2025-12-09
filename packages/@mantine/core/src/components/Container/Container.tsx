@@ -19,9 +19,7 @@ export type ContainerCssVariables = {
 };
 
 export interface ContainerProps
-  extends BoxProps,
-    StylesApiProps<ContainerFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<ContainerFactory>, ElementProps<'div'> {
   /** `max-width` of the container, value is not responsive – it is the same for all screen sizes. Numbers are converted to rem. Ignored when `fluid` prop is set. @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 

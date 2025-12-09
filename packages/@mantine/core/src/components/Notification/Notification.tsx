@@ -30,9 +30,7 @@ export type NotificationCssVariables = {
 };
 
 export interface NotificationProps
-  extends BoxProps,
-    StylesApiProps<NotificationFactory>,
-    ElementProps<'div', 'title'> {
+  extends BoxProps, StylesApiProps<NotificationFactory>, ElementProps<'div', 'title'> {
   variant?: string;
 
   /** Called when the close button is clicked */

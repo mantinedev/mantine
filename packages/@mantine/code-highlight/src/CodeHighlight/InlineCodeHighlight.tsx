@@ -21,9 +21,7 @@ export type InlineCodeHighlightCssVariables = {
 };
 
 export interface InlineCodeHighlightProps
-  extends BoxProps,
-    StylesApiProps<InlineCodeHighlightFactory>,
-    ElementProps<'code'> {
+  extends BoxProps, StylesApiProps<InlineCodeHighlightFactory>, ElementProps<'code'> {
   /** Code to highlight */
   code: string;
 

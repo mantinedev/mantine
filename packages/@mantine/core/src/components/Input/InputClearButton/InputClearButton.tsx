@@ -13,9 +13,7 @@ import { CloseButton, CloseButtonStylesNames } from '../../CloseButton';
 import { InputContext } from '../Input.context';
 
 export interface InputClearButtonProps
-  extends BoxProps,
-    StylesApiProps<InputClearButtonFactory>,
-    ElementProps<'button'> {
+  extends BoxProps, StylesApiProps<InputClearButtonFactory>, ElementProps<'button'> {
   /** Size of the button, by default value is based on input context */
   size?: MantineSize | (string & {});
 }

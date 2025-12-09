@@ -23,9 +23,7 @@ export type WeekdaysRowCssVariables = {
 };
 
 export interface WeekdaysRowProps
-  extends BoxProps,
-    StylesApiProps<WeekdaysRowFactory>,
-    ElementProps<'tr'> {
+  extends BoxProps, StylesApiProps<WeekdaysRowFactory>, ElementProps<'tr'> {
   __staticSelector?: string;
 
   /** Controls size */

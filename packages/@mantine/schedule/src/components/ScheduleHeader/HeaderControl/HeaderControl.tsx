@@ -22,9 +22,7 @@ export type HeaderControlCssVariables = {
 };
 
 export interface HeaderControlProps
-  extends BoxProps,
-    StylesApiProps<HeaderControlFactory>,
-    ElementProps<'button'> {
+  extends BoxProps, StylesApiProps<HeaderControlFactory>, ElementProps<'button'> {
   __staticSelector?: string;
 
   /** Applies active styles */

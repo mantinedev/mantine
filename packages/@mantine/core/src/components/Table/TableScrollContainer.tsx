@@ -19,9 +19,7 @@ export type TableScrollContainerCssVariables = {
 };
 
 export interface TableScrollContainerProps
-  extends BoxProps,
-    StylesApiProps<TableScrollContainerFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<TableScrollContainerFactory>, ElementProps<'div'> {
   /** `min-width` of the `Table` at which it should become scrollable */
   minWidth: React.CSSProperties['minWidth'];
 

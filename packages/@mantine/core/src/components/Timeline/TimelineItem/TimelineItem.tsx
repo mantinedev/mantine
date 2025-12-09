@@ -23,9 +23,7 @@ export type TimelineItemStylesNames =
   | 'itemTitle';
 
 export interface TimelineItemProps
-  extends BoxProps,
-    CompoundStylesApiProps<TimelineItemFactory>,
-    ElementProps<'div', 'title'> {
+  extends BoxProps, CompoundStylesApiProps<TimelineItemFactory>, ElementProps<'div', 'title'> {
   __active?: boolean;
   __lineActive?: boolean;
   __align?: 'right' | 'left';

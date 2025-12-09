@@ -71,10 +71,7 @@ export type LineChartCssVariables = {
 };
 
 export interface LineChartProps
-  extends BoxProps,
-    GridChartBaseProps,
-    StylesApiProps<LineChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, GridChartBaseProps, StylesApiProps<LineChartFactory>, ElementProps<'div'> {
   /** Data used to display chart */
   data: Record<string, any>[];
 

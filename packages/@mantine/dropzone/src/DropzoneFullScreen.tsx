@@ -20,7 +20,8 @@ import classes from './Dropzone.module.css';
 export type DropzoneFullScreenStylesNames = DropzoneStylesNames | 'fullScreen';
 
 export interface DropzoneFullScreenProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<DropzoneProps, 'styles' | 'classNames' | 'vars' | 'variant' | 'attributes'>,
     StylesApiProps<DropzoneFullScreenFactory>,
     ElementProps<'div', 'onDragLeave' | 'onDragOver' | 'onDrop' | 'onDragEnter'> {

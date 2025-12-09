@@ -19,7 +19,8 @@ import { YearPicker, YearPickerBaseProps, YearPickerStylesNames } from '../YearP
 export type YearPickerInputStylesNames = __InputStylesNames | 'placeholder' | YearPickerStylesNames;
 
 export interface YearPickerInputProps<Type extends DatePickerType = 'default'>
-  extends BoxProps,
+  extends
+    BoxProps,
     DateInputSharedProps,
     YearPickerBaseProps<Type>,
     StylesApiProps<YearPickerInputFactory> {

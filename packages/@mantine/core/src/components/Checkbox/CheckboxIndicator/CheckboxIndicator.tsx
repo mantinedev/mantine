@@ -31,9 +31,7 @@ export type CheckboxIndicatorCssVariables = {
 };
 
 export interface CheckboxIndicatorProps
-  extends BoxProps,
-    StylesApiProps<CheckboxIndicatorFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<CheckboxIndicatorFactory>, ElementProps<'div'> {
   /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default `theme.primaryColor` */
   color?: MantineColor;
 

@@ -29,7 +29,8 @@ export type RichTextEditorLinkControlStylesNames =
   | 'linkEditorExternalControl';
 
 export interface RichTextEditorLinkControlProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<RichTextEditorControlBaseProps, 'classNames' | 'styles' | 'vars'>,
     CompoundStylesApiProps<RichTextEditorLinkControlFactory> {
   /** Props passed down to Popover component */

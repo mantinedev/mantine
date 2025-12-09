@@ -25,9 +25,7 @@ export type LoaderCssVariables = {
 };
 
 export interface LoaderProps
-  extends BoxProps,
-    StylesApiProps<LoaderFactory>,
-    ElementProps<'svg', 'display' | 'opacity'> {
+  extends BoxProps, StylesApiProps<LoaderFactory>, ElementProps<'svg', 'display' | 'opacity'> {
   /** Controls `width` and `height` of the loader. `Loader` has predefined `xs`-`xl` values. Numbers are converted to rem. @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 

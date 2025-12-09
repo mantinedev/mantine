@@ -14,9 +14,7 @@ import classes from '../Combobox.module.css';
 export type ComboboxGroupStylesNames = 'group' | 'groupLabel';
 
 export interface ComboboxGroupProps
-  extends BoxProps,
-    CompoundStylesApiProps<ComboboxGroupFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<ComboboxGroupFactory>, ElementProps<'div'> {
   /** Group label */
   label?: React.ReactNode;
 }

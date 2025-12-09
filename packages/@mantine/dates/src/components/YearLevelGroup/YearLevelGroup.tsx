@@ -9,7 +9,8 @@ import { YearLevel, YearLevelSettings, YearLevelStylesNames } from '../YearLevel
 export type YearLevelGroupStylesNames = YearLevelStylesNames | LevelsGroupStylesNames;
 
 export interface YearLevelGroupProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<YearLevelSettings, 'withPrevious' | 'withNext' | '__onControlKeyDown' | '__getControlRef'>,
     Omit<StylesApiProps<YearLevelGroupFactory>, 'classNames' | 'styles'>,
     ElementProps<'div'> {

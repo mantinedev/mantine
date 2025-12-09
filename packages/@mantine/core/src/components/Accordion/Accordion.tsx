@@ -39,7 +39,8 @@ export type AccordionCssVariables = {
 };
 
 export interface AccordionProps<Multiple extends boolean = false>
-  extends BoxProps,
+  extends
+    BoxProps,
     StylesApiProps<AccordionFactory>,
     ElementProps<'div', 'value' | 'defaultValue' | 'onChange'> {
   /** If set, multiple items can be opened at the same time */

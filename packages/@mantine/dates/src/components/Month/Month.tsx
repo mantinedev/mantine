@@ -114,10 +114,7 @@ export interface MonthSettings {
 }
 
 export interface MonthProps
-  extends BoxProps,
-    MonthSettings,
-    StylesApiProps<MonthFactory>,
-    ElementProps<'table'> {
+  extends BoxProps, MonthSettings, StylesApiProps<MonthFactory>, ElementProps<'table'> {
   __staticSelector?: string;
 
   /** Month to display, value `YYYY-MM-DD` */

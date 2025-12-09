@@ -21,9 +21,7 @@ export type BreadcrumbsCssVariables = {
 };
 
 export interface BreadcrumbsProps
-  extends BoxProps,
-    StylesApiProps<BreadcrumbsFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<BreadcrumbsFactory>, ElementProps<'div'> {
   /** Separator between children @default `'/'` */
   separator?: React.ReactNode;
 

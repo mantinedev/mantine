@@ -80,7 +80,8 @@ export interface __ColorPickerProps {
 }
 
 export interface ColorPickerProps
-  extends BoxProps,
+  extends
+    BoxProps,
     __ColorPickerProps,
     StylesApiProps<ColorPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {

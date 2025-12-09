@@ -46,10 +46,7 @@ export interface YearsListSettings extends ControlsGroupSettings {
 }
 
 export interface YearsListProps
-  extends BoxProps,
-    YearsListSettings,
-    StylesApiProps<YearsListFactory>,
-    ElementProps<'table'> {
+  extends BoxProps, YearsListSettings, StylesApiProps<YearsListFactory>, ElementProps<'table'> {
   __staticSelector?: string;
 
   /** Decade value to display */

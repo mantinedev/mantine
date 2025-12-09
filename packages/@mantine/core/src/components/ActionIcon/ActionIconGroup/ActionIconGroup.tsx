@@ -18,9 +18,7 @@ export type ActionIconGroupCssVariables = {
 };
 
 export interface ActionIconGroupProps
-  extends BoxProps,
-    StylesApiProps<ActionIconGroupFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<ActionIconGroupFactory>, ElementProps<'div'> {
   /** `ActionIcon` and `ActionIcon.GroupSection` components only */
   children?: React.ReactNode;
 

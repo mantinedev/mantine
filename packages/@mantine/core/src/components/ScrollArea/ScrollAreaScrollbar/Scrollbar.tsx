@@ -19,8 +19,7 @@ export interface ScrollbarPrivateProps {
 }
 
 interface ScrollbarProps
-  extends ScrollbarPrivateProps,
-    Omit<React.ComponentProps<'div'>, 'onResize'> {}
+  extends ScrollbarPrivateProps, Omit<React.ComponentProps<'div'>, 'onResize'> {}
 
 export function Scrollbar(props: ScrollbarProps) {
   const {

@@ -13,9 +13,7 @@ import classes from '../Menu.module.css';
 export type MenuLabelStylesNames = 'label';
 
 export interface MenuLabelProps
-  extends BoxProps,
-    CompoundStylesApiProps<MenuLabelFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<MenuLabelFactory>, ElementProps<'div'> {}
 
 export type MenuLabelFactory = Factory<{
   props: MenuLabelProps;

@@ -15,8 +15,10 @@ export const SwitchGroupContext = createContext<SwitchGroupContextValue | null>(
 
 export type SwitchGroupStylesNames = InputWrapperStylesNames;
 
-export interface SwitchGroupProps<Value extends string = string>
-  extends Omit<InputWrapperProps, 'onChange'> {
+export interface SwitchGroupProps<Value extends string = string> extends Omit<
+  InputWrapperProps,
+  'onChange'
+> {
   /** `Switch` components */
   children: React.ReactNode;
 

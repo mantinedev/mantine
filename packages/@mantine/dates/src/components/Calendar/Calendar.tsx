@@ -52,7 +52,8 @@ type OmittedSettings =
   | 'hasNextLevel';
 
 export interface CalendarSettings
-  extends Omit<DecadeLevelSettings, OmittedSettings>,
+  extends
+    Omit<DecadeLevelSettings, OmittedSettings>,
     Omit<YearLevelSettings, OmittedSettings>,
     Omit<MonthLevelSettings, OmittedSettings> {
   /** Initial displayed level in uncontrolled mode */
@@ -139,7 +140,8 @@ export interface CalendarBaseProps {
 }
 
 export interface CalendarProps
-  extends BoxProps,
+  extends
+    BoxProps,
     CalendarSettings,
     CalendarBaseProps,
     StylesApiProps<CalendarFactory>,

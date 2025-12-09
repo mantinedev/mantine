@@ -14,9 +14,7 @@ import classes from '../RichTextEditor.module.css';
 
 export type RichTextEditorContentStylesNames = 'root';
 export interface RichTextEditorContentProps
-  extends BoxProps,
-    CompoundStylesApiProps<RichTextEditorContentFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<RichTextEditorContentFactory>, ElementProps<'div'> {}
 
 export type RichTextEditorContentFactory = Factory<{
   props: RichTextEditorContentProps;

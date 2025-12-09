@@ -6,7 +6,8 @@ import { PillsInputContext } from './PillsInput.context';
 import { PillsInputField } from './PillsInputField/PillsInputField';
 
 export interface PillsInputProps
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     StylesApiProps<PillsInputFactory>,
     ElementProps<'div', 'size'> {

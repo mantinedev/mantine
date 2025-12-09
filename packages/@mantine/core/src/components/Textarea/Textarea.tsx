@@ -12,7 +12,8 @@ import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
 
 export interface TextareaProps
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     StylesApiProps<TextareaFactory>,
     ElementProps<'textarea', 'size'> {

@@ -22,9 +22,7 @@ export type InputErrorCssVariables = {
 };
 
 export interface InputErrorProps
-  extends BoxProps,
-    StylesApiProps<InputErrorFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<InputErrorFactory>, ElementProps<'div'> {
   __staticSelector?: string;
   __inheritStyles?: boolean;
 

@@ -57,7 +57,8 @@ export interface SegmentedControlItem<Value = string> {
 }
 
 export interface SegmentedControlProps<Value extends Primitive = string>
-  extends BoxProps,
+  extends
+    BoxProps,
     StylesApiProps<SegmentedControlFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   /** Data based on which controls are rendered */

@@ -13,9 +13,7 @@ import classes from '../List.module.css';
 export type ListItemStylesNames = 'item' | 'itemWrapper' | 'itemIcon' | 'itemLabel';
 
 export interface ListItemProps
-  extends BoxProps,
-    CompoundStylesApiProps<ListItemFactory>,
-    ElementProps<'li'> {
+  extends BoxProps, CompoundStylesApiProps<ListItemFactory>, ElementProps<'li'> {
   /** Icon to replace item bullet */
   icon?: React.ReactNode;
 

@@ -18,9 +18,7 @@ import classes from '../Progress.module.css';
 export type ProgressSectionStylesNames = 'section';
 
 export interface ProgressSectionProps
-  extends BoxProps,
-    CompoundStylesApiProps<ProgressSectionFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<ProgressSectionFactory>, ElementProps<'div'> {
   /** Value of the section in 0–100 range */
   value: number;
 

@@ -40,9 +40,7 @@ export type StepperStepStylesNames =
   | 'stepDescription';
 
 export interface StepperStepProps
-  extends BoxProps,
-    CompoundStylesApiProps<StepperStepFactory>,
-    ElementProps<'button'> {
+  extends BoxProps, CompoundStylesApiProps<StepperStepFactory>, ElementProps<'button'> {
   /** Step index, controlled by Stepper component */
   step?: number;
 

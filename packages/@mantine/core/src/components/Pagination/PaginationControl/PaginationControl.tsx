@@ -13,9 +13,7 @@ import classes from '../Pagination.module.css';
 export type PaginationControlStylesNames = 'control';
 
 export interface PaginationControlProps
-  extends BoxProps,
-    CompoundStylesApiProps<PaginationControlFactory>,
-    ElementProps<'button'> {
+  extends BoxProps, CompoundStylesApiProps<PaginationControlFactory>, ElementProps<'button'> {
   /** Applies active styles, adds `data-active` attribute */
   active?: boolean;
 

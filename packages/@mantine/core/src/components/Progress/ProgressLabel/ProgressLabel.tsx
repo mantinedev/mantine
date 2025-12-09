@@ -13,9 +13,7 @@ import classes from '../Progress.module.css';
 export type ProgressLabelStylesNames = 'label';
 
 export interface ProgressLabelProps
-  extends BoxProps,
-    CompoundStylesApiProps<ProgressLabelFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<ProgressLabelFactory>, ElementProps<'div'> {}
 
 export type ProgressLabelFactory = Factory<{
   props: ProgressLabelProps;

@@ -39,9 +39,7 @@ export type RatingCssVariables = {
 };
 
 export interface RatingProps
-  extends BoxProps,
-    StylesApiProps<RatingFactory>,
-    ElementProps<'div', 'onChange'> {
+  extends BoxProps, StylesApiProps<RatingFactory>, ElementProps<'div', 'onChange'> {
   /** Uncontrolled component default value */
   defaultValue?: number;
 

@@ -17,7 +17,8 @@ import { DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
 export type YearPickerStylesNames = DecadeLevelGroupStylesNames;
 
 export interface YearPickerBaseProps<Type extends DatePickerType = 'default'>
-  extends PickerBaseProps<Type>,
+  extends
+    PickerBaseProps<Type>,
     DecadeLevelBaseSettings,
     Omit<
       CalendarBaseProps,
@@ -25,7 +26,8 @@ export interface YearPickerBaseProps<Type extends DatePickerType = 'default'>
     > {}
 
 export interface YearPickerProps<Type extends DatePickerType = 'default'>
-  extends BoxProps,
+  extends
+    BoxProps,
     YearPickerBaseProps<Type>,
     StylesApiProps<YearPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {

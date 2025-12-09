@@ -21,9 +21,7 @@ export type AngleSliderCssVariables = {
 };
 
 export interface AngleSliderProps
-  extends BoxProps,
-    StylesApiProps<AngleSliderFactory>,
-    ElementProps<'div', 'onChange'> {
+  extends BoxProps, StylesApiProps<AngleSliderFactory>, ElementProps<'div', 'onChange'> {
   /** Step between values @default `1` */
   step?: number;
 

@@ -6,8 +6,7 @@ import classes from './Drawer.module.css';
 export type DrawerCloseButtonStylesNames = 'close';
 
 export interface DrawerCloseButtonProps
-  extends ModalBaseCloseButtonProps,
-    CompoundStylesApiProps<DrawerCloseButtonFactory> {}
+  extends ModalBaseCloseButtonProps, CompoundStylesApiProps<DrawerCloseButtonFactory> {}
 
 export type DrawerCloseButtonFactory = Factory<{
   props: DrawerCloseButtonProps;

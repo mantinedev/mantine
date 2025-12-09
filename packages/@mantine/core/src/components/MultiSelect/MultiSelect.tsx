@@ -40,7 +40,8 @@ export type MultiSelectStylesNames =
   | 'inputField';
 
 export interface MultiSelectProps<Value extends Primitive = string>
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     ComboboxLikeProps<Value>,
     StylesApiProps<MultiSelectFactory>,

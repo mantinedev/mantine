@@ -30,7 +30,8 @@ export type TimeGridCssVariables = {
 };
 
 export interface TimeGridProps
-  extends BoxProps,
+  extends
+    BoxProps,
     StylesApiProps<TimeGridFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   /** Time data in 24h format to be displayed in the grid, for example `['10:00', '18:30', '22:00']`. Time values must be unique. */

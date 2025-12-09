@@ -41,9 +41,7 @@ export type ChipCssVariables = {
 };
 
 export interface ChipProps
-  extends BoxProps,
-    StylesApiProps<ChipFactory>,
-    ElementProps<'input', 'size' | 'onChange'> {
+  extends BoxProps, StylesApiProps<ChipFactory>, ElementProps<'input', 'size' | 'onChange'> {
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `'xl'` */
   radius?: MantineRadius;
 

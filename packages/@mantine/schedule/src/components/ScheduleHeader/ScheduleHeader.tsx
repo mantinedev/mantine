@@ -31,9 +31,7 @@ export type ScheduleHeaderCssVariables = {
 };
 
 export interface ScheduleHeaderProps
-  extends BoxProps,
-    StylesApiProps<ScheduleHeaderFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<ScheduleHeaderFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 }
 

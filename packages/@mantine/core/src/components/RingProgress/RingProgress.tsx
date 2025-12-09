@@ -31,9 +31,7 @@ export type RingProgressCssVariables = {
 };
 
 export interface RingProgressProps
-  extends BoxProps,
-    StylesApiProps<RingProgressFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<RingProgressFactory>, ElementProps<'div'> {
   /** Label displayed in the center of the ring */
   label?: React.ReactNode;
 

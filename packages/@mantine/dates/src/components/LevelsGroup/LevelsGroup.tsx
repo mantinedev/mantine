@@ -14,9 +14,7 @@ import classes from './LevelsGroup.module.css';
 export type LevelsGroupStylesNames = 'levelsGroup';
 
 export interface LevelsGroupProps
-  extends BoxProps,
-    StylesApiProps<LevelsGroupFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<LevelsGroupFactory>, ElementProps<'div'> {
   __staticSelector?: string;
   size?: MantineSize;
 }

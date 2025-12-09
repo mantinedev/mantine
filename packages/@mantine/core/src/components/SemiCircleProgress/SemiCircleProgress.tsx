@@ -32,9 +32,7 @@ export type SemiCircleProgressCssVariables = {
 };
 
 export interface SemiCircleProgressProps
-  extends BoxProps,
-    StylesApiProps<SemiCircleProgressFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<SemiCircleProgressFactory>, ElementProps<'div'> {
   /** Progress value from `0` to `100` */
   value: number;
 

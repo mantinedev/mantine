@@ -30,9 +30,7 @@ export type ButtonGroupSectionCssVariables = {
 };
 
 export interface ButtonGroupSectionProps
-  extends BoxProps,
-    StylesApiProps<ButtonGroupSectionFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<ButtonGroupSectionFactory>, ElementProps<'div'> {
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
 

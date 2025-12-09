@@ -29,7 +29,8 @@ export type PasswordInputCssVariables = {
 };
 
 export interface PasswordInputProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<__BaseInputProps, 'pointer'>,
     StylesApiProps<PasswordInputFactory>,
     ElementProps<'input', 'size'> {

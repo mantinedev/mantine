@@ -27,9 +27,7 @@ export type TimelineCssVariables = {
 };
 
 export interface TimelineProps
-  extends BoxProps,
-    StylesApiProps<TimelineFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<TimelineFactory>, ElementProps<'div'> {
   /** `Timeline.Item` components */
   children?: React.ReactNode;
 

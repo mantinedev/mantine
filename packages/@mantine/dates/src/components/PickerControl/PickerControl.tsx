@@ -20,9 +20,7 @@ export type PickerControlCssVariables = {
 };
 
 export interface PickerControlProps
-  extends BoxProps,
-    StylesApiProps<PickerControlFactory>,
-    ElementProps<'button'> {
+  extends BoxProps, StylesApiProps<PickerControlFactory>, ElementProps<'button'> {
   __staticSelector?: string;
 
   /** Control children */

@@ -23,9 +23,7 @@ export type InlineInputStylesNames =
   | 'error';
 
 export interface InlineInputProps
-  extends BoxProps,
-    StylesApiProps<InlineInputFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<InlineInputFactory>, ElementProps<'div'> {
   __staticSelector: string;
   __stylesApiProps: Record<string, any>;
   label: React.ReactNode;

@@ -32,9 +32,7 @@ export type ScrollAreaCssVariables = {
 };
 
 export interface ScrollAreaProps
-  extends BoxProps,
-    StylesApiProps<ScrollAreaFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<ScrollAreaFactory>, ElementProps<'div'> {
   /** Scrollbar size, any valid CSS value for width/height, numbers are converted to rem, default value is 0.75rem */
   scrollbarSize?: number | string;
 

@@ -35,9 +35,7 @@ export type RadioIndicatorCssVariables = {
 };
 
 export interface RadioIndicatorProps
-  extends BoxProps,
-    StylesApiProps<RadioIndicatorFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<RadioIndicatorFactory>, ElementProps<'div'> {
   /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default `theme.primaryColor` */
   color?: MantineColor;
 

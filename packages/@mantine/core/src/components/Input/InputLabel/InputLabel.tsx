@@ -21,9 +21,7 @@ export type InputLabelCssVariables = {
 };
 
 export interface InputLabelProps
-  extends BoxProps,
-    StylesApiProps<InputLabelFactory>,
-    ElementProps<'label'> {
+  extends BoxProps, StylesApiProps<InputLabelFactory>, ElementProps<'label'> {
   __staticSelector?: string;
 
   /** If set, the required asterisk is displayed next to the label */

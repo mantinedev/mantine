@@ -13,9 +13,7 @@ import classes from '../AppShell.module.css';
 export type AppShellMainStylesNames = 'main';
 
 export interface AppShellMainProps
-  extends BoxProps,
-    CompoundStylesApiProps<AppShellMainFactory>,
-    ElementProps<'main'> {}
+  extends BoxProps, CompoundStylesApiProps<AppShellMainFactory>, ElementProps<'main'> {}
 
 export type AppShellMainFactory = Factory<{
   props: AppShellMainProps;

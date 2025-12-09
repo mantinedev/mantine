@@ -27,7 +27,8 @@ export interface YearLevelBaseSettings extends MonthsListSettings {
 export interface YearLevelSettings extends YearLevelBaseSettings, CalendarHeaderSettings {}
 
 export interface YearLevelProps
-  extends BoxProps,
+  extends
+    BoxProps,
     YearLevelSettings,
     Omit<StylesApiProps<YearLevelFactory>, 'classNames' | 'styles'>,
     ElementProps<'div'> {

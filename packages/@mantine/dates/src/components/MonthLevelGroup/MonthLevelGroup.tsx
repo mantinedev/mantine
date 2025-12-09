@@ -9,7 +9,8 @@ import { MonthLevel, MonthLevelSettings, MonthLevelStylesNames } from '../MonthL
 export type MonthLevelGroupStylesNames = MonthLevelStylesNames | LevelsGroupStylesNames;
 
 export interface MonthLevelGroupProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<MonthLevelSettings, 'withPrevious' | 'withNext' | '__onDayKeyDown' | '__getDayRef'>,
     Omit<StylesApiProps<MonthLevelGroupFactory>, 'classNames' | 'styles'>,
     ElementProps<'div'> {

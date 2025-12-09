@@ -51,9 +51,7 @@ export interface TableOfContentsGetControlPropsPayload {
 }
 
 export interface TableOfContentsProps
-  extends BoxProps,
-    StylesApiProps<TableOfContentsFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<TableOfContentsFactory>, ElementProps<'div'> {
   /** Key of `theme.colors` or any valid CSS color value @default `theme.primaryColor` */
   color?: MantineColor;
 

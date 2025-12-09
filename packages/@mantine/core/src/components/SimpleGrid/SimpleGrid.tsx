@@ -17,9 +17,7 @@ import classes from './SimpleGrid.module.css';
 export type SimpleGridStylesNames = 'root' | 'container';
 
 export interface SimpleGridProps
-  extends BoxProps,
-    StylesApiProps<SimpleGridFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<SimpleGridFactory>, ElementProps<'div'> {
   /** Number of columns @default `1` */
   cols?: StyleProp<number>;
 

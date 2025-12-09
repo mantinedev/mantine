@@ -24,9 +24,7 @@ export type ListCssVariables = {
 };
 
 export interface ListProps
-  extends BoxProps,
-    StylesApiProps<ListFactory>,
-    ElementProps<'ol', 'type'> {
+  extends BoxProps, StylesApiProps<ListFactory>, ElementProps<'ol', 'type'> {
   /** `List.Item` components */
   children?: React.ReactNode;
 

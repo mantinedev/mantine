@@ -35,7 +35,8 @@ export type TabsCssVariables = {
 };
 
 export interface TabsProps
-  extends BoxProps,
+  extends
+    BoxProps,
     StylesApiProps<TabsFactory>,
     ElementProps<'div', 'defaultValue' | 'value' | 'onChange'> {
   /** Uncontrolled component default value */

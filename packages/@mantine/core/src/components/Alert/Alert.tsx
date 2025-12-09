@@ -31,9 +31,7 @@ export type AlertCssVariables = {
 };
 
 export interface AlertProps
-  extends BoxProps,
-    StylesApiProps<AlertFactory>,
-    ElementProps<'div', 'title'> {
+  extends BoxProps, StylesApiProps<AlertFactory>, ElementProps<'div', 'title'> {
   /** Key of `theme.radius` or any valid CSS value to set border-radius @default `theme.defaultRadius` */
   radius?: MantineRadius;
 

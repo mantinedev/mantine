@@ -41,9 +41,7 @@ export type PieChartCssVariables = {
 };
 
 export interface PieChartProps
-  extends BoxProps,
-    StylesApiProps<PieChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<PieChartFactory>, ElementProps<'div'> {
   /** Data used to render chart */
   data: PieChartCell[];
 

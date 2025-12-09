@@ -55,9 +55,7 @@ export type WeekViewCssVariables = {
 };
 
 export interface WeekViewProps
-  extends BoxProps,
-    StylesApiProps<WeekViewFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<WeekViewFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
   /** Week to display, Date object or date string in `YYYY-MM-DD` format */

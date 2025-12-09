@@ -19,9 +19,7 @@ import { usePopoverContext } from '../Popover.context';
 import classes from '../Popover.module.css';
 
 export interface PopoverDropdownProps
-  extends BoxProps,
-    CompoundStylesApiProps<PopoverDropdownFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<PopoverDropdownFactory>, ElementProps<'div'> {}
 
 export type PopoverDropdownFactory = Factory<{
   props: PopoverDropdownProps;

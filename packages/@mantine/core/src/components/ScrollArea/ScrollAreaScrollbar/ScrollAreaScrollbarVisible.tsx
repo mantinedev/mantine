@@ -10,8 +10,10 @@ import { getScrollPositionFromPointer, getThumbOffsetFromScroll, getThumbRatio }
 import { ScrollAreaScrollbarX } from './ScrollbarX';
 import { ScrollAreaScrollbarY } from './ScrollbarY';
 
-export interface ScrollAreaScrollbarVisibleProps
-  extends Omit<ScrollAreaScrollbarAxisProps, keyof ScrollAreaScrollbarAxisPrivateProps> {
+export interface ScrollAreaScrollbarVisibleProps extends Omit<
+  ScrollAreaScrollbarAxisProps,
+  keyof ScrollAreaScrollbarAxisPrivateProps
+> {
   orientation?: 'horizontal' | 'vertical';
 }
 

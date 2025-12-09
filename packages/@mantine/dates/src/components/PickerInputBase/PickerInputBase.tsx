@@ -25,7 +25,8 @@ import classes from './PickerInputBase.module.css';
 export type PickerInputBaseStylesNames = __InputStylesNames;
 
 export interface DateInputSharedProps
-  extends Omit<__BaseInputProps, 'size'>,
+  extends
+    Omit<__BaseInputProps, 'size'>,
     ElementProps<'button', 'defaultValue' | 'value' | 'onChange' | 'type'> {
   /** Determines whether the dropdown is closed when date is selected, not applicable with `type="multiple"` @default `true` */
   closeOnChange?: boolean;
@@ -65,7 +66,8 @@ export interface DateInputSharedProps
 }
 
 export interface PickerInputBaseProps
-  extends BoxProps,
+  extends
+    BoxProps,
     DateInputSharedProps,
     Omit<StylesApiProps<PickerInputBaseFactory>, 'classNames' | 'styles'> {
   classNames?: Partial<Record<string, string>>;

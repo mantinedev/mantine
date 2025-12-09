@@ -22,9 +22,7 @@ export type SpotlightActionStylesNames =
   | 'actionBody';
 
 export interface SpotlightActionProps
-  extends BoxProps,
-    CompoundStylesApiProps<SpotlightActionFactory>,
-    ElementProps<'button'> {
+  extends BoxProps, CompoundStylesApiProps<SpotlightActionFactory>, ElementProps<'button'> {
   /** Action label, pass string to use in default filter */
   label?: string;
 

@@ -22,9 +22,7 @@ export type DividerCssVariables = {
 };
 
 export interface DividerProps
-  extends BoxProps,
-    StylesApiProps<DividerFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<DividerFactory>, ElementProps<'div'> {
   /** Key of `theme.colors` or any valid CSS color value, by default value depends on color scheme */
   color?: MantineColor;
 

@@ -35,7 +35,8 @@ import { ScrollAreaProps } from '../ScrollArea';
 export type SelectStylesNames = __InputStylesNames | ComboboxLikeStylesNames;
 
 export interface SelectProps<Value extends Primitive = string>
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     ComboboxLikeProps<Value>,
     StylesApiProps<SelectFactory>,

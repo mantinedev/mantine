@@ -48,9 +48,7 @@ export type MonthViewCssVariables = {
 };
 
 export interface MonthViewProps
-  extends BoxProps,
-    StylesApiProps<MonthViewFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<MonthViewFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
   /** Date to display, Date object or date string in `YYYY-MM-DD 00:00:00` format */

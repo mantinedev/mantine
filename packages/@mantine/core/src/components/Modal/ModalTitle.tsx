@@ -6,8 +6,7 @@ import classes from './Modal.module.css';
 export type ModalTitleStylesNames = 'title';
 
 export interface ModalTitleProps
-  extends ModalBaseTitleProps,
-    CompoundStylesApiProps<ModalTitleFactory> {}
+  extends ModalBaseTitleProps, CompoundStylesApiProps<ModalTitleFactory> {}
 
 export type ModalTitleFactory = Factory<{
   props: ModalTitleProps;

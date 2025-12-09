@@ -33,9 +33,7 @@ export type DayViewCssVariables = {
 };
 
 export interface DayViewProps
-  extends BoxProps,
-    StylesApiProps<DayViewFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<DayViewFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
   /** Day to display, Date object or date string in `YYYY-MM-DD` format */

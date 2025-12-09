@@ -53,9 +53,7 @@ export type RadarChartCssVariables = {
 };
 
 export interface RadarChartProps
-  extends BoxProps,
-    StylesApiProps<RadarChartFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<RadarChartFactory>, ElementProps<'div'> {
   /** Data used in the chart */
   data: Record<string, any>[];
 

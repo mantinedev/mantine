@@ -24,9 +24,7 @@ export type BlockquoteCssVariables = {
 };
 
 export interface BlockquoteProps
-  extends BoxProps,
-    StylesApiProps<BlockquoteFactory>,
-    ElementProps<'blockquote', 'cite'> {
+  extends BoxProps, StylesApiProps<BlockquoteFactory>, ElementProps<'blockquote', 'cite'> {
   /** Blockquote icon, displayed at the top left side */
   icon?: React.ReactNode;
 

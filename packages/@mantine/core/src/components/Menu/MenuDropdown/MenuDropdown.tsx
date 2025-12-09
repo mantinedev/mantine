@@ -16,9 +16,7 @@ import classes from '../Menu.module.css';
 export type MenuDropdownStylesNames = 'dropdown';
 
 export interface MenuDropdownProps
-  extends BoxProps,
-    CompoundStylesApiProps<MenuDropdownFactory>,
-    ElementProps<'div'> {}
+  extends BoxProps, CompoundStylesApiProps<MenuDropdownFactory>, ElementProps<'div'> {}
 
 export type MenuDropdownFactory = Factory<{
   props: MenuDropdownProps;

@@ -28,7 +28,8 @@ interface HeatmapRectData {
 }
 
 export interface HeatmapProps
-  extends BoxProps,
+  extends
+    BoxProps,
     StylesApiProps<HeatmapFactory>,
     ElementProps<'svg', 'display' | 'opacity' | 'viewBox' | 'width' | 'height'> {
   /** Heatmap data, key is date in `YYYY-MM-DD` format (interpreted as a UTC calendar day) */

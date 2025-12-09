@@ -16,8 +16,10 @@ export const RadioGroupContext = createContext<RadioGroupContextValue | null>(nu
 
 export type RadioGroupStylesNames = InputWrapperStylesNames;
 
-export interface RadioGroupProps<Value extends string = string>
-  extends Omit<InputWrapperProps, 'onChange' | 'value' | 'defaultValue'> {
+export interface RadioGroupProps<Value extends string = string> extends Omit<
+  InputWrapperProps,
+  'onChange' | 'value' | 'defaultValue'
+> {
   /** `Radio` components and any other elements */
   children: React.ReactNode;
 

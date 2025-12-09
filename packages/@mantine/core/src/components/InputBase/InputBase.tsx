@@ -8,9 +8,7 @@ import {
 import { __BaseInputProps, __InputStylesNames, Input, InputVariant, useInputProps } from '../Input';
 
 export interface InputBaseProps
-  extends BoxProps,
-    __BaseInputProps,
-    StylesApiProps<InputBaseFactory> {
+  extends BoxProps, __BaseInputProps, StylesApiProps<InputBaseFactory> {
   __staticSelector?: string;
   __stylesApiProps?: Record<string, any>;
 

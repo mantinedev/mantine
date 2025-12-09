@@ -40,9 +40,7 @@ export type DropzoneCssVariables = {
 };
 
 export interface DropzoneProps
-  extends BoxProps,
-    StylesApiProps<DropzoneFactory>,
-    ElementProps<'div', 'onDrop'> {
+  extends BoxProps, StylesApiProps<DropzoneFactory>, ElementProps<'div', 'onDrop'> {
   /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Accept` @default `theme.primaryColor` */
   acceptColor?: MantineColor;
 

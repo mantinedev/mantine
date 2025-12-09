@@ -88,7 +88,8 @@ export interface CodeHighlightSettings {
 }
 
 export interface CodeHighlightProps
-  extends CodeHighlightSettings,
+  extends
+    CodeHighlightSettings,
     BoxProps,
     StylesApiProps<CodeHighlightFactory>,
     ElementProps<'div'> {

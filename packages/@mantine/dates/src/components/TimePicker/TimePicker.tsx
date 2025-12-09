@@ -60,7 +60,8 @@ export type TimePickerCssVariables = {
 };
 
 export interface TimePickerProps
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     StylesApiProps<TimePickerFactory>,
     ElementProps<'div', 'onChange' | 'defaultValue'> {

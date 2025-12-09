@@ -22,9 +22,7 @@ export type TitleCssVariables = {
 };
 
 export interface TitleProps
-  extends BoxProps,
-    StylesApiProps<TitleFactory>,
-    ElementProps<'h1', 'color'> {
+  extends BoxProps, StylesApiProps<TitleFactory>, ElementProps<'h1', 'color'> {
   /** Heading order (1-6), controls `font-size` style if `size` prop is not set @default `1` */
   order?: TitleOrder;
 

@@ -15,9 +15,7 @@ import classes from '../Combobox.module.css';
 export type ComboboxOptionsStylesNames = 'options';
 
 export interface ComboboxOptionsProps
-  extends BoxProps,
-    CompoundStylesApiProps<ComboboxOptionsFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, CompoundStylesApiProps<ComboboxOptionsFactory>, ElementProps<'div'> {
   /** Id of the element that labels the options list */
   labelledBy?: string;
 }

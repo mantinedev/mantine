@@ -32,9 +32,7 @@ export type ThemeIconCssVariables = {
 };
 
 export interface ThemeIconProps
-  extends BoxProps,
-    StylesApiProps<ThemeIconFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<ThemeIconFactory>, ElementProps<'div'> {
   /** Controls width and height of the button. Numbers are converted to rem. @default `'md'` */
   size?: MantineSize | (string & {}) | number;
 

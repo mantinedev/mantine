@@ -22,7 +22,8 @@ import classes from './FloatingWindow.module.css';
 export type FloatingWindowStylesNames = 'root';
 
 export interface FloatingWindowProps
-  extends UseFloatingWindowOptions,
+  extends
+    UseFloatingWindowOptions,
     PaperBaseProps,
     BoxProps,
     StylesApiProps<FloatingWindowFactory>,

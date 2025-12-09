@@ -5,7 +5,8 @@ import { InputBase } from '../InputBase';
 import { NativeSelectOption } from './NativeSelectOption';
 
 export interface NativeSelectProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<__BaseInputProps, 'pointer'>,
     StylesApiProps<NativeSelectFactory>,
     ElementProps<'select', 'size'> {

@@ -19,7 +19,8 @@ import { DateInputSharedProps, PickerInputBase } from '../PickerInputBase';
 export type DatePickerInputStylesNames = __InputStylesNames | 'placeholder' | DatePickerStylesNames;
 
 export interface DatePickerInputProps<Type extends DatePickerType = 'default'>
-  extends BoxProps,
+  extends
+    BoxProps,
     DateInputSharedProps,
     DatePickerBaseProps<Type>,
     StylesApiProps<DatePickerInputFactory> {

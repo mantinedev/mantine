@@ -15,7 +15,8 @@ import { __BaseInputProps, __InputStylesNames, Input, InputVariant } from '../In
 import { InputBase } from '../InputBase/InputBase';
 
 export interface FileInputProps<Multiple = false>
-  extends BoxProps,
+  extends
+    BoxProps,
     __BaseInputProps,
     StylesApiProps<FileInputFactory>,
     ElementProps<'button', 'value' | 'defaultValue' | 'onChange' | 'placeholder'> {

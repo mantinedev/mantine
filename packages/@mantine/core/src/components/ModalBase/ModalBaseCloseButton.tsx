@@ -5,9 +5,7 @@ import { useModalBaseContext } from './ModalBase.context';
 import classes from './ModalBase.module.css';
 
 export interface ModalBaseCloseButtonProps
-  extends __CloseButtonProps,
-    BoxProps,
-    ElementProps<'button'> {}
+  extends __CloseButtonProps, BoxProps, ElementProps<'button'> {}
 
 export function ModalBaseCloseButton({ className, onClick, ...others }: ModalBaseCloseButtonProps) {
   const ctx = useModalBaseContext();

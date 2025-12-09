@@ -17,9 +17,7 @@ import classes from '../PillsInput.module.css';
 export type PillsInputFieldStylesNames = 'field';
 
 export interface PillsInputFieldProps
-  extends BoxProps,
-    StylesApiProps<PillsInputFieldFactory>,
-    ElementProps<'input', 'type'> {
+  extends BoxProps, StylesApiProps<PillsInputFieldFactory>, ElementProps<'input', 'type'> {
   /** Controls input styles when focused. If `auto` the input is hidden when not focused. If `visible` the input will always remain visible. @default `'visible'` */
   type?: 'auto' | 'visible' | 'hidden';
 

@@ -6,8 +6,7 @@ import classes from './Modal.module.css';
 export type ModalHeaderStylesNames = 'header';
 
 export interface ModalHeaderProps
-  extends ModalBaseHeaderProps,
-    CompoundStylesApiProps<ModalHeaderFactory> {}
+  extends ModalBaseHeaderProps, CompoundStylesApiProps<ModalHeaderFactory> {}
 
 export type ModalHeaderFactory = Factory<{
   props: ModalHeaderProps;

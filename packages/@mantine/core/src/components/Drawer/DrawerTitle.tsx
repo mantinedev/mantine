@@ -6,8 +6,7 @@ import classes from './Drawer.module.css';
 export type DrawerTitleStylesNames = 'title';
 
 export interface DrawerTitleProps
-  extends ModalBaseTitleProps,
-    CompoundStylesApiProps<DrawerTitleFactory> {}
+  extends ModalBaseTitleProps, CompoundStylesApiProps<DrawerTitleFactory> {}
 
 export type DrawerTitleFactory = Factory<{
   props: DrawerTitleProps;

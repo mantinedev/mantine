@@ -15,7 +15,8 @@ import classes from '../AppShell.module.css';
 export type AppShellNavbarStylesNames = 'navbar';
 
 export interface AppShellNavbarProps
-  extends BoxProps,
+  extends
+    BoxProps,
     AppShellCompoundProps,
     StylesApiProps<AppShellNavbarFactory>,
     ElementProps<'div'> {}

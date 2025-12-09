@@ -16,7 +16,8 @@ import classes from '../AppShell.module.css';
 export type AppShellHeaderStylesNames = 'header';
 
 export interface AppShellHeaderProps
-  extends BoxProps,
+  extends
+    BoxProps,
     AppShellCompoundProps,
     StylesApiProps<AppShellHeaderFactory>,
     ElementProps<'header'> {}

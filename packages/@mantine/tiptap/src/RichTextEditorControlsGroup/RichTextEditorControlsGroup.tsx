@@ -12,7 +12,8 @@ import classes from '../RichTextEditor.module.css';
 
 export type RichTextEditorControlsGroupStylesNames = 'controlsGroup';
 export interface RichTextEditorControlsGroupProps
-  extends BoxProps,
+  extends
+    BoxProps,
     CompoundStylesApiProps<RichTextEditorControlsGroupFactory>,
     ElementProps<'div'> {}
 

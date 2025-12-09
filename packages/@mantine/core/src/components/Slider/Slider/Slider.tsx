@@ -37,9 +37,7 @@ import {
 import classes from '../Slider.module.css';
 
 export interface SliderProps
-  extends BoxProps,
-    StylesApiProps<SliderFactory>,
-    ElementProps<'div', 'onChange'> {
+  extends BoxProps, StylesApiProps<SliderFactory>, ElementProps<'div', 'onChange'> {
   /** Key of `theme.colors` or any valid CSS color, controls color of track and thumb @default `theme.primaryColor` */
   color?: MantineColor;
 

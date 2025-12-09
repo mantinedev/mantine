@@ -81,9 +81,7 @@ export type ChartTooltipStylesNames =
   | 'tooltipBody';
 
 export interface ChartTooltipProps
-  extends BoxProps,
-    StylesApiProps<ChartTooltipFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<ChartTooltipFactory>, ElementProps<'div'> {
   /** Main tooltip label */
   label?: React.ReactNode;
 

@@ -39,8 +39,7 @@ export interface __ProgressRootProps extends BoxProps, ElementProps<'div'> {
 }
 
 export interface ProgressRootProps
-  extends __ProgressRootProps,
-    StylesApiProps<ProgressRootFactory> {}
+  extends __ProgressRootProps, StylesApiProps<ProgressRootFactory> {}
 
 export type ProgressRootFactory = Factory<{
   props: ProgressRootProps;

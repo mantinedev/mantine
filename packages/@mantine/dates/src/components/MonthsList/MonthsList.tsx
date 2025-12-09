@@ -38,10 +38,7 @@ export interface MonthsListSettings extends ControlsGroupSettings {
 }
 
 export interface MonthsListProps
-  extends BoxProps,
-    MonthsListSettings,
-    StylesApiProps<MonthsListFactory>,
-    ElementProps<'table'> {
+  extends BoxProps, MonthsListSettings, StylesApiProps<MonthsListFactory>, ElementProps<'table'> {
   __staticSelector?: string;
 
   /** Prevents focus shift when buttons are clicked */

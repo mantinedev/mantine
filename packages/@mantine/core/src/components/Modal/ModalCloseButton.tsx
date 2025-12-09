@@ -6,8 +6,7 @@ import classes from './Modal.module.css';
 export type ModalCloseButtonStylesNames = 'close';
 
 export interface ModalCloseButtonProps
-  extends ModalBaseCloseButtonProps,
-    CompoundStylesApiProps<ModalCloseButtonFactory> {}
+  extends ModalBaseCloseButtonProps, CompoundStylesApiProps<ModalCloseButtonFactory> {}
 
 export type ModalCloseButtonFactory = Factory<{
   props: ModalCloseButtonProps;

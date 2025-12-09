@@ -39,7 +39,8 @@ export type RenderAutocompleteOption = (
 export type AutocompleteStylesNames = __InputStylesNames | ComboboxLikeStylesNames;
 
 export interface AutocompleteProps
-  extends BoxProps,
+  extends
+    BoxProps,
     Omit<__BaseInputProps, 'pointer'>,
     Omit<ComboboxLikeProps, 'data'>,
     StylesApiProps<AutocompleteFactory>,

@@ -28,9 +28,7 @@ export type PillGroupCssVariables = {
 };
 
 export interface PillGroupProps
-  extends BoxProps,
-    StylesApiProps<PillGroupFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<PillGroupFactory>, ElementProps<'div'> {
   /** Controls spacing between pills, by default controlled by `size` */
   gap?: MantineSize | (string & {}) | number;
 
