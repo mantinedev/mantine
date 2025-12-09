@@ -160,6 +160,14 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
   const ctx = useCheckboxGroupContext();
   const _size = size || ctx?.size;
 
+  const descriptionId = useId();
+  const errorId = useId();
+
+  const ariaDescribedBy =
+    [description ? descriptionId : null, error && typeof error !== 'boolean' ? errorId : null]
+      .filter(Boolean)
+      .join(' ') || undefined;
+
   const getStyles = useStyles<CheckboxFactory>({
     name: 'Checkbox',
     props,
@@ -220,6 +228,8 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
       variant={variant}
       ref={rootRef}
       mod={mod}
+      descriptionId={descriptionId}
+      errorId={errorId}
       {...styleProps}
       {...wrapperProps}
     >
@@ -233,6 +243,7 @@ export const Checkbox = factory<CheckboxFactory>((_props, forwardedRef) => {
           {...rest}
           {...withContextProps}
           type="checkbox"
+          aria-describedby={ariaDescribedBy}
         />
 
         <Icon indeterminate={indeterminate} {...getStyles('icon')} />
