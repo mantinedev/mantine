@@ -178,7 +178,7 @@
     "lodash": "^4.17.21",
     "mantine-docgen-script": "^1.6.0",
     "new-github-release-url": "^2.0.0",
-    "next": "15.5.2",
+    "next": "16.0.8",
     "open": "^11.0.0",
     "postcss": "^8.5.6",
     "postcss-loader": "^8.2.0",

@@ -15,9 +15,6 @@ const nextConfig = {
   reactStrictMode: true,
   trailingSlash: true,
   output: 'export',
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   typescript: {
     ignoreBuildErrors: true,
   },

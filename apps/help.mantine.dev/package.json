@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 4817",
-    "build": "next build && touch out/.nojekyll && echo 'help.mantine.dev' > out/CNAME",
+    "dev": "next dev --port 4817 --webpack",
+    "build": "next build --webpack && touch out/.nojekyll && echo 'help.mantine.dev' > out/CNAME",
     "start": "next start",
     "typecheck": "tsc --noEmit"
   },
@@ -26,7 +26,7 @@
     "@tabler/icons-react": "^3.35.0",
     "dayjs": "^1.11.19",
     "fuse.js": "^7.1.0",
-    "next": "15.5.2",
+    "next": "16.0.8",
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "react-imask": "^7.6.1",

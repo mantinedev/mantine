@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build && echo 'mantine.dev' > out/CNAME && echo '' > out/.nojekyll",
+    "build": "next build --webpack && echo 'mantine.dev' > out/CNAME && echo '' > out/.nojekyll",
     "build:alpha": "next build && echo 'alpha.mantine.dev' > out/CNAME && echo '' > out/.nojekyll",
     "build:v7": "next build && echo 'v7.mantine.dev' > out/CNAME && echo '' > out/.nojekyll",
     "clean": "rm -rf .next",
-    "dev": "next dev -p 7545",
+    "dev": "next dev -p 7545 --webpack",
     "postbuild": "next-sitemap",
     "start": "next start",
     "typecheck": "tsc --noEmit"
@@ -70,7 +70,7 @@
     "github-slugger": "^2.0.0",
     "highlight.js": "^11.11.1",
     "lowlight": "^3.3.0",
-    "next": "15.5.2",
+    "next": "16.0.8",
     "next-sitemap": "^4.2.3",
     "react": "19.2.1",
     "react-dom": "19.2.1",

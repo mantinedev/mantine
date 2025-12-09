@@ -12,12 +12,10 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'export',
   pageExtensions: ['ts', 'tsx', 'mdx'],
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   typescript: {
     ignoreBuildErrors: true,
   },
+  turbopack: {},
 };
 
 export default withMDX(nextConfig);
