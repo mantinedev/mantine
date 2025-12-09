@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallbackRef } from '../utils';
 
 function containsRelatedTarget(event: FocusEvent) {
   if (event.currentTarget instanceof HTMLElement && event.relatedTarget instanceof HTMLElement) {
@@ -26,30 +27,27 @@ export function useFocusWithin<T extends HTMLElement = any>({
   const focusedRef = useRef(false);
   const previousNode = useRef<T | null>(null);
 
+  const onFocusRef = useCallbackRef(onFocus);
+  const onBlurRef = useCallbackRef(onBlur);
+
   const _setFocused = useCallback((value: boolean) => {
     setFocused(value);
     focusedRef.current = value;
   }, []);
 
-  const handleFocusIn = useCallback(
-    (event: FocusEvent) => {
-      if (!focusedRef.current) {
-        _setFocused(true);
-        onFocus?.(event);
-      }
-    },
-    [onFocus]
-  );
+  const handleFocusIn = useCallback((event: FocusEvent) => {
+    if (!focusedRef.current) {
+      _setFocused(true);
+      onFocusRef(event);
+    }
+  }, []);
 
-  const handleFocusOut = useCallback(
-    (event: FocusEvent) => {
-      if (focusedRef.current && !containsRelatedTarget(event)) {
-        _setFocused(false);
-        onBlur?.(event);
-      }
-    },
-    [onBlur]
-  );
+  const handleFocusOut = useCallback((event: FocusEvent) => {
+    if (focusedRef.current && !containsRelatedTarget(event)) {
+      _setFocused(false);
+      onBlurRef(event);
+    }
+  }, []);
 
   const callbackRef: React.RefCallback<T | null> = useCallback(
     (node) => {
