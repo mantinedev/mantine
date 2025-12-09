@@ -33,6 +33,9 @@ export interface HeaderControlProps
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
+
+  /** If set to `false`, the control will not be clickable  */
+  interactive?: boolean;
 }
 
 export type HeaderControlFactory = Factory<{
@@ -44,6 +47,7 @@ export type HeaderControlFactory = Factory<{
 
 const defaultProps = {
   __staticSelector: 'HeaderControl',
+  interactive: true,
 } satisfies Partial<HeaderControlProps>;
 
 const varsResolver = createVarsResolver<HeaderControlFactory>((_theme, { radius }) => ({
@@ -67,6 +71,7 @@ export const HeaderControl = factory<HeaderControlFactory>((_props) => {
     active,
     square,
     radius,
+    interactive,
     ...others
   } = props;
 
@@ -87,8 +92,9 @@ export const HeaderControl = factory<HeaderControlFactory>((_props) => {
 
   return (
     <UnstyledButton
-      {...getStyles('headerControl', { active: true })}
-      mod={[{ active, square }, mod]}
+      {...getStyles('headerControl', { active: interactive })}
+      mod={[{ active, square, interactive }, mod]}
+      tabIndex={interactive ? undefined : -1}
       {...others}
     />
   );

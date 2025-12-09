@@ -10,6 +10,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import {
+  HeaderControl,
   HeaderControlStylesNames,
   ScheduleHeaderNext,
   ScheduleHeaderPrevious,
@@ -41,6 +42,7 @@ export type ScheduleHeaderFactory = Factory<{
   stylesNames: ScheduleHeaderStylesNames;
   vars: ScheduleHeaderCssVariables;
   staticComponents: {
+    Control: typeof HeaderControl;
     Previous: typeof ScheduleHeaderPrevious;
     Next: typeof ScheduleHeaderNext;
     Today: typeof ScheduleHeaderToday;
@@ -93,6 +95,7 @@ export const ScheduleHeader = factory<ScheduleHeaderFactory>((_props) => {
 
 ScheduleHeader.displayName = '@mantine/schedule/ScheduleHeader';
 ScheduleHeader.classes = classes;
+ScheduleHeader.Control = HeaderControl;
 ScheduleHeader.Next = ScheduleHeaderNext;
 ScheduleHeader.Previous = ScheduleHeaderPrevious;
 ScheduleHeader.Today = ScheduleHeaderToday;

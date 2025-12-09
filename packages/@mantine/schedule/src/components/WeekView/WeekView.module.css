@@ -1,4 +1,4 @@
-.weekView {
+.weekViewRoot {
   --week-view-radius: var(--schedule-radius, var(--mantine-radius-default));
   --week-view-slots-label-width: 80px;
   --week-view-min-slot-width: 80px;

@@ -6,7 +6,7 @@ import { ScheduleProvider } from '../Schedule/Schedule.context';
 import { WeekView, WeekViewProps, WeekViewStylesNames } from './WeekView';
 
 const defaultProps: WeekViewProps = {
-  week: '2025-11-03 00:00:00',
+  date: '2025-11-03 00:00:00',
 };
 
 describe('@mantine/schedule/WeekView', () => {
@@ -196,7 +196,7 @@ describe('@mantine/schedule/WeekView', () => {
   });
 
   it('highlights today based on highlightToday prop', () => {
-    jest.useFakeTimers().setSystemTime(new Date(defaultProps.week));
+    jest.useFakeTimers().setSystemTime(new Date(defaultProps.date));
     const { container, rerender } = render(<WeekView {...defaultProps} highlightToday="weekday" />);
     expect(
       container.querySelector('.mantine-WeekView-weekViewDayLabel[data-today]')

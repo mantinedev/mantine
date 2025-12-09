@@ -13,4 +13,6 @@ export { getMonthsList } from './get-months-list/get-months-list';
 export { getYearsList } from './get-years-list/get-years-list';
 export { formatDate } from './format-date/format-date';
 export { toDateString } from './to-date-string/to-date-string';
+export { nextWeek } from './next-week/next-week';
+export { previousWeek } from './previous-week/previous-week';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';
