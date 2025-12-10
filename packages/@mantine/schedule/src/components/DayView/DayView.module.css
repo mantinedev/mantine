@@ -1,6 +1,6 @@
 .dayView {
-  --slot-height: 16px;
-  --all-day-slot-height: calc(var(--slot-height) * 3);
+  --slot-height: 64px; /* total height of 1 hour slot */
+  --all-day-slot-height: 42px;
   --day-view-slot-labels-width: 80px;
   --day-view-radius: var(--schedule-radius, var(--mantine-radius-default));
   border-radius: var(--day-view-radius);
@@ -27,7 +27,7 @@
 }
 
 .dayViewSlotLabel {
-  height: calc(var(--slot-height) * 4);
+  height: var(--slot-height);
   border-top: 1px solid var(--mantine-color-gray-3);
   font-size: var(--mantine-font-size-sm);
   text-align: right;
@@ -48,7 +48,7 @@
   display: block;
   width: 100%;
   border-top: 1px dotted var(--mantine-color-gray-3);
-  height: var(--slot-height);
+  height: calc(var(--slot-height) * var(--slot-size));
 
   &:where([data-hour-start]) {
     border-top: 1px solid var(--mantine-color-gray-3);

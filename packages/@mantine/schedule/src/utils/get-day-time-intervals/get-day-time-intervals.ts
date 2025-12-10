@@ -1,3 +1,5 @@
+import { clampIntervalMinutes } from '../clamp-interval-minutes/clamp-interval-minutes';
+
 export interface DayTimeInterval {
   /** Start time of the interval in HH:mm:ss format */
   startTime: string;
@@ -19,15 +21,17 @@ export interface GetDayTimeIntervalsInput {
   /** End time in HH:mm:ss format, end of the day by default */
   endTime?: string;
 
-  /** Interval in minutes, 30 by default */
+  /** Interval in minutes, 60 by default */
   intervalMinutes?: number;
 }
 
 export function getDayTimeIntervals({
   startTime,
   endTime,
-  intervalMinutes = 30,
+  intervalMinutes: _intervalMinutes = 60,
 }: GetDayTimeIntervalsInput): DayTimeInterval[] {
+  const intervalMinutes = clampIntervalMinutes(_intervalMinutes);
+
   // Parse time strings in HH:mm:ss format
   const parseTimeString = (
     timeStr: string

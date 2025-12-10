@@ -1,3 +1,5 @@
+import { MantineColor } from '@mantine/core';
+
 /** Date value used by all Mantine components, format: `YYYY-MM-DD` */
 export type DateStringValue = string;
 
@@ -28,6 +30,9 @@ export interface ScheduleEventData<
 
   /** Event end date/time */
   end: Date | DateTimeStringValue;
+
+  /** Event background color. Key of `theme.colors` or any valid CSS color. */
+  color: MantineColor;
 
   /** Additional event data, defined by the user, not used internally by the library */
   payload: Payload;

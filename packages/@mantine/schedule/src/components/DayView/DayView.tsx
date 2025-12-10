@@ -15,8 +15,13 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { DateLabelFormat, DateStringValue, ScheduleViewLevel } from '../../types';
-import { formatDate, getDayTimeIntervals, toDateString } from '../../utils';
+import {
+  DateLabelFormat,
+  DateStringValue,
+  ScheduleEventData,
+  ScheduleViewLevel,
+} from '../../types';
+import { clampIntervalMinutes, formatDate, getDayTimeIntervals, toDateString } from '../../utils';
 import {
   CurrentTimeIndicator,
   CurrentTimeIndicatorStylesNames,
@@ -53,6 +58,9 @@ export interface DayViewProps
 
   /** Called when date is changed */
   onDateChange?: (date: DateStringValue) => void;
+
+  /** Events to display */
+  events?: ScheduleEventData[];
 
   /** Time slots start time, in `HH:mm:ss` format @default `00:00:00` */
   startTime?: string;
@@ -183,6 +191,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
       {...getStyles('dayViewSlot')}
       key={slot.startTime}
       mod={{ 'hour-start': slot.isHourStart }}
+      __vars={{ '--slot-size': `${clampIntervalMinutes(intervalMinutes) / 60}` }}
       aria-label={`${ctx.labels.timeSlot} ${slot.startTime} - ${slot.endTime}`}
     />
   ));
