@@ -85,7 +85,8 @@ export const AmPmInput = forwardRef<HTMLSelectElement, AmPmInputProps>(
           ref={ref as any}
           value={displayValue}
           size={inputSize}
-          onChange={(event) => !readOnly && onChange(event.target.value || null)}
+          readOnly
+          onChange={() => {}}
           onClick={((event: any) => event.stopPropagation()) as any}
           onKeyDown={handleKeyDown as any}
           onMouseDown={(event) => {
