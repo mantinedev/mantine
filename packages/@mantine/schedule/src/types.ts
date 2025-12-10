@@ -12,3 +12,23 @@ export type DateLabelFormat = string | ((date: DateStringValue) => string);
 
 /** View level used by Schedule component */
 export type ScheduleViewLevel = 'day' | 'week' | 'month' | 'year';
+
+/** Event data object used in all `@mantine/schedule` components */
+export interface ScheduleEventData<
+  Payload extends Record<PropertyKey, any> = Record<PropertyKey, any>,
+> {
+  /** Unique event id, used for key and identification */
+  id: string | number;
+
+  /** Event title, displayed in month, week and day views */
+  title: string;
+
+  /** Event start date/time */
+  start: Date | DateTimeStringValue;
+
+  /** Event end date/time */
+  end: Date | DateTimeStringValue;
+
+  /** Additional event data, defined by the user, not used internally by the library */
+  payload: Payload;
+}
