@@ -1,6 +1,8 @@
 import 'dayjs/locale/ru';
 
-import { render, screen, tests } from '@mantine-tests/core';
+import dayjs from 'dayjs';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { toDateString } from '../../utils';
 import { ScheduleProvider } from '../Schedule/Schedule.context';
 import { DayView, DayViewProps, DayViewStylesNames } from './DayView';
 
@@ -135,5 +137,59 @@ describe('@mantine/schedule/DayView', () => {
   it('supports __staticSelector prop', () => {
     const { container } = render(<DayView {...defaultProps} __staticSelector="TestDayView" />);
     expect(container.querySelector('.mantine-TestDayView-dayView')).toBeInTheDocument();
+  });
+
+  it('hides header when withHeader={false}', () => {
+    const { container, rerender } = render(<DayView {...defaultProps} withHeader={false} />);
+    expect(container.querySelector('.mantine-DayView-header')).not.toBeInTheDocument();
+
+    rerender(<DayView {...defaultProps} withHeader />);
+    expect(container.querySelector('.mantine-DayView-header')).toBeInTheDocument();
+  });
+
+  it('calls onDateChange when navigating with header controls', async () => {
+    const spy = jest.fn();
+    render(<DayView {...defaultProps} onDateChange={spy} />);
+
+    await userEvent.click(screen.getByRole('button', { name: 'Previous' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2025-11-02')));
+
+    await userEvent.click(screen.getByRole('button', { name: 'Next' }));
+    expect(spy).toHaveBeenCalledWith(toDateString(dayjs('2025-11-04')));
+
+    await userEvent.click(screen.getByRole('button', { name: 'Today' }));
+    expect(spy).toHaveBeenCalledWith(expect.any(String));
+  });
+
+  it('calls onViewChange when view button is clicked', async () => {
+    const spy = jest.fn();
+    render(<DayView {...defaultProps} onViewChange={spy} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Switch to week view' }));
+    expect(spy).toHaveBeenCalledWith('week');
+  });
+
+  it('supports previousControlProps, nextControlProps, todayControlProps and viewSelectProps props', () => {
+    const { container } = render(
+      <DayView
+        {...defaultProps}
+        previousControlProps={{ 'data-previous-prop': 'test' }}
+        nextControlProps={{ 'data-next-prop': 'test' }}
+        todayControlProps={{ 'data-today-prop': 'test' }}
+        viewSelectProps={{ 'data-view-select-prop': 'test' }}
+      />
+    );
+
+    expect(
+      container.querySelector('button.mantine-DayView-headerControl[data-previous-prop]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('button.mantine-DayView-headerControl[data-next-prop]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('button.mantine-DayView-headerControl[data-today-prop]')
+    ).toBeInTheDocument();
+    expect(
+      container.querySelector('.mantine-DayView-viewSelect[data-view-select-prop]')
+    ).toBeInTheDocument();
   });
 });
