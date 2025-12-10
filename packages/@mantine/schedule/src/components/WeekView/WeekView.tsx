@@ -418,7 +418,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
                 withTimeBubble={withCurrentTimeBubble}
                 withThumb={withCurrentTimeBubble ? currentWeekdayIndex !== 0 : true}
                 locale={locale}
-                __staticSelector={__staticSelector}
+                startTime={startTime}
+                endTime={endTime}
+                {...stylesApiProps}
               />
             )}
             {days}

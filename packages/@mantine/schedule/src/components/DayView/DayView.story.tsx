@@ -13,7 +13,7 @@ export function Usage() {
 export function CustomTimeRange() {
   return (
     <div style={{ padding: 40 }}>
-      <DayView date={new Date()} startTime="10:00:00" endTime="16:00:00" />
+      <DayView date={new Date()} startTime="10:00:00" endTime="18:00:00" />
     </div>
   );
 }

@@ -16,4 +16,5 @@ export { toDateString } from './to-date-string/to-date-string';
 export { nextWeek } from './next-week/next-week';
 export { previousWeek } from './previous-week/previous-week';
 export { clampIntervalMinutes } from './clamp-interval-minutes/clamp-interval-minutes';
+export { getCurrentTimePercent } from './get-current-time-percent/get-current-time-percent';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';

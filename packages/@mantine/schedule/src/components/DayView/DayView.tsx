@@ -282,12 +282,14 @@ export const DayView = factory<DayViewFactory>((_props) => {
           <CurrentTimeIndicator
             startOffset="var(--day-view-slot-labels-width)"
             endOffset="0rem"
-            topOffset="var(--all-day-slot-height)"
+            topOffset="0rem"
             timeBubbleStartOffset="calc(var(--day-view-slot-labels-width) - var(--time-bubble-width))"
             currentTimeFormat={slotLabelFormat}
             withTimeBubble={withCurrentTimeBubble}
             withThumb={!withCurrentTimeBubble}
             locale={locale}
+            startTime={startTime}
+            endTime={endTime}
             {...stylesApiProps}
           />
         )}

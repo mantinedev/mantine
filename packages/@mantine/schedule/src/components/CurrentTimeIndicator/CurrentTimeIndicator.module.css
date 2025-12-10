@@ -4,6 +4,7 @@
   --_indicator-color: var(--indicator-color, var(--mantine-color-red-7));
 
   position: absolute;
+  pointer-events: none;
   left: 0;
   right: 0;
   top: var(--top-offset);

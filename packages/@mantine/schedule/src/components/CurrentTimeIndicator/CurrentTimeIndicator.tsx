@@ -15,16 +15,9 @@ import {
 } from '@mantine/core';
 import { useInterval } from '@mantine/hooks';
 import { DateLabelFormat } from '../../types';
-import { formatDate } from '../../utils';
+import { formatDate, getCurrentTimePercent } from '../../utils';
 import { useScheduleContext } from '../Schedule/Schedule.context';
 import classes from './CurrentTimeIndicator.module.css';
-
-function getOffsetPercent() {
-  const startOf = dayjs().startOf('date');
-  const now = dayjs();
-  const diffInMinutes = now.diff(startOf, 'minute');
-  return (diffInMinutes / 1440) * 100;
-}
 
 export type CurrentTimeIndicatorStylesNames =
   | 'currentTimeIndicator'
@@ -66,6 +59,12 @@ export interface CurrentTimeIndicatorProps
 
   /** Locale passed down to dayjs during formatting */
   locale?: string;
+
+  /** Start time of the day */
+  startTime?: string;
+
+  /** End time of the day */
+  endTime?: string;
 }
 
 export type CurrentTimeIndicatorFactory = Factory<{
@@ -109,6 +108,8 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
     timeBubbleStartOffset,
     __staticSelector,
     topOffset,
+    startTime,
+    endTime,
     ...others
   } = props;
 
@@ -128,8 +129,10 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
   });
 
   const ctx = useScheduleContext();
-  const [offsetPercent, setOffsetPercent] = useState(getOffsetPercent());
-  useInterval(() => setOffsetPercent(getOffsetPercent()), 1000 * 60, { autoInvoke: true });
+  const [offsetPercent, setOffsetPercent] = useState(getCurrentTimePercent({ startTime, endTime }));
+  useInterval(() => setOffsetPercent(getCurrentTimePercent({ startTime, endTime })), 1000 * 60, {
+    autoInvoke: true,
+  });
   const formattedTime = withTimeBubble
     ? formatDate({ locale: ctx.getLocale(locale), date: dayjs(), format: currentTimeFormat })
     : '';
