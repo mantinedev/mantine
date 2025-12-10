@@ -3,6 +3,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -11,12 +12,21 @@ import {
   StylesApiProps,
   UnstyledButton,
   useProps,
+  useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { DateLabelFormat } from '../../types';
-import { formatDate, getDayTimeIntervals } from '../../utils';
-import { CurrentTimeIndicator } from '../CurrentTimeIndicator/CurrentTimeIndicator';
+import { DateLabelFormat, DateStringValue, ScheduleViewLevel } from '../../types';
+import { formatDate, getDayTimeIntervals, toDateString } from '../../utils';
+import {
+  CurrentTimeIndicator,
+  CurrentTimeIndicatorStylesNames,
+} from '../CurrentTimeIndicator/CurrentTimeIndicator';
 import { useScheduleContext } from '../Schedule/Schedule.context';
+import {
+  CombinedScheduleHeaderStylesNames,
+  ScheduleHeader,
+} from '../ScheduleHeader/ScheduleHeader';
+import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import classes from './DayView.module.css';
 
 export type DayViewStylesNames =
@@ -26,7 +36,9 @@ export type DayViewStylesNames =
   | 'dayViewSlot'
   | 'dayViewSlots'
   | 'dayViewSlotLabel'
-  | 'dayViewSlotLabels';
+  | 'dayViewSlotLabels'
+  | CurrentTimeIndicatorStylesNames
+  | CombinedScheduleHeaderStylesNames;
 
 export type DayViewCssVariables = {
   dayView: '--day-view-radius';
@@ -37,7 +49,10 @@ export interface DayViewProps
   __staticSelector?: string;
 
   /** Day to display, Date object or date string in `YYYY-MM-DD` format */
-  day: Date | string;
+  date: Date | string;
+
+  /** Called when date is changed */
+  onDateChange?: (date: DateStringValue) => void;
 
   /** Time slots start time, in `HH:mm:ss` format @default `00:00:00` */
   startTime?: string;
@@ -68,6 +83,24 @@ export interface DayViewProps
 
   /** If set, the time indicator displays the current time in the bubble @default `true` */
   withCurrentTimeBubble?: boolean;
+
+  /** If set, the header is displayed @default `true` */
+  withHeader?: boolean;
+
+  /** Called when view level select button is clicked */
+  onViewChange?: (view: ScheduleViewLevel) => void;
+
+  /** Props passed to previous month control */
+  previousControlProps?: React.ComponentProps<'button'> & DataAttributes;
+
+  /** Props passed to next month control */
+  nextControlProps?: React.ComponentProps<'button'> & DataAttributes;
+
+  /** Props passed to today control */
+  todayControlProps?: React.ComponentProps<'button'> & DataAttributes;
+
+  /** Props passed to view level select */
+  viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
 }
 
 export type DayViewFactory = Factory<{
@@ -86,6 +119,7 @@ const defaultProps = {
   slotLabelFormat: 'HH:mm',
   headerFormat: 'MMMM D, YYYY',
   withCurrentTimeBubble: true,
+  withHeader: true,
 } satisfies Partial<DayViewProps>;
 
 const varsResolver = createVarsResolver<DayViewFactory>((_theme, { radius }) => ({
@@ -109,12 +143,20 @@ export const DayView = factory<DayViewFactory>((_props) => {
     endTime,
     intervalMinutes,
     withAllDaySlot,
-    day,
+    date,
     locale,
     slotLabelFormat,
     headerFormat,
-    withCurrentTimeIndicator = dayjs(day).isSame(dayjs(), 'day'),
+    withCurrentTimeIndicator = dayjs(date).isSame(dayjs(), 'day'),
     withCurrentTimeBubble,
+    withHeader,
+    radius,
+    onDateChange,
+    onViewChange,
+    previousControlProps,
+    nextControlProps,
+    todayControlProps,
+    viewSelectProps,
     ...others
   } = props;
 
@@ -147,7 +189,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
   const slotsLabels = slots.reduce<React.ReactNode[]>((acc, slot) => {
     if (slot.isHourStart) {
-      const slotTime = dayjs(`${dayjs(day).format('YYYY-MM-DD')} ${slot.startTime}`);
+      const slotTime = dayjs(`${dayjs(date).format('YYYY-MM-DD')} ${slot.startTime}`);
       const label = formatDate({
         locale: ctx.getLocale(locale),
         date: slotTime,
@@ -163,11 +205,55 @@ export const DayView = factory<DayViewFactory>((_props) => {
     return acc;
   }, []);
 
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<DayViewFactory>({
+    classNames,
+    styles,
+    props,
+  });
+
+  const stylesApiProps = {
+    classNames: resolvedClassNames,
+    styles: resolvedStyles,
+    attributes,
+    __staticSelector,
+    radius,
+  };
+
   return (
     <Box {...getStyles('dayView')} {...others}>
-      <div {...getStyles('dayViewHeader')}>
-        {formatDate({ locale: ctx.getLocale(locale), date: day, format: headerFormat })}
-      </div>
+      {withHeader && (
+        <ScheduleHeader {...stylesApiProps}>
+          <ScheduleHeader.Previous
+            {...stylesApiProps}
+            onClick={() => onDateChange?.(toDateString(dayjs(date).subtract(1, 'day')))}
+            {...previousControlProps}
+          />
+
+          <ScheduleHeader.Control {...stylesApiProps} interactive={false} miw={140}>
+            {formatDate({ locale: ctx.getLocale(locale), date, format: headerFormat })}
+          </ScheduleHeader.Control>
+
+          <ScheduleHeader.Next
+            {...stylesApiProps}
+            onClick={() => onDateChange?.(toDateString(dayjs(date).add(1, 'day')))}
+            {...nextControlProps}
+          />
+
+          <ScheduleHeader.Today
+            {...stylesApiProps}
+            onClick={() => onDateChange?.(toDateString(dayjs()))}
+            {...todayControlProps}
+          />
+
+          <ScheduleHeader.ViewSelect
+            value="week"
+            onChange={onViewChange}
+            ml="auto"
+            {...stylesApiProps}
+            {...viewSelectProps}
+          />
+        </ScheduleHeader>
+      )}
 
       <div {...getStyles('dayViewInner')}>
         {withCurrentTimeIndicator && (
@@ -180,7 +266,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
             withTimeBubble={withCurrentTimeBubble}
             withThumb={!withCurrentTimeBubble}
             locale={locale}
-            __staticSelector={__staticSelector}
+            {...stylesApiProps}
           />
         )}
 

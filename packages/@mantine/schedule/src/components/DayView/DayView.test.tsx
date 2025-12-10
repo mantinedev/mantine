@@ -5,7 +5,7 @@ import { ScheduleProvider } from '../Schedule/Schedule.context';
 import { DayView, DayViewProps, DayViewStylesNames } from './DayView';
 
 const defaultProps: DayViewProps = {
-  day: '2025-11-03',
+  date: '2025-11-03',
 };
 
 describe('@mantine/schedule/DayView', () => {

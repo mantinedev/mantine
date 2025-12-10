@@ -3,8 +3,6 @@
   --all-day-slot-height: calc(var(--slot-height) * 3);
   --day-view-slot-labels-width: 80px;
   --day-view-radius: var(--schedule-radius, var(--mantine-radius-default));
-
-  border: 1px solid var(--mantine-color-gray-3);
   border-radius: var(--day-view-radius);
 }
 
@@ -19,6 +17,7 @@
 }
 
 .dayViewInner {
+  border: 1px solid var(--mantine-color-gray-3);
   display: flex;
   position: relative;
 }
@@ -37,6 +36,7 @@
 
   &:where([data-all-day]) {
     height: var(--all-day-slot-height);
+    border-top: 0;
   }
 }
 
@@ -66,6 +66,6 @@
 
   &:where([data-all-day]) {
     height: var(--all-day-slot-height);
-    border-top-style: solid;
+    border-top: 0;
   }
 }
