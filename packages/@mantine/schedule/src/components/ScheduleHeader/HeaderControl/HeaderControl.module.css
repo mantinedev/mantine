@@ -4,6 +4,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: default;
+  user-select: none;
   min-width: var(--control-size);
   height: var(--control-size);
   border-radius: var(--schedule-radius, var(--control-radius, var(--mantine-radius-default)));
@@ -13,8 +15,12 @@
   font-size: var(--mantine-font-size-sm);
   font-weight: 600;
 
-  @mixin hover {
-    background-color: var(--mantine-color-default-hover);
+  &:where([data-interactive]) {
+    cursor: pointer;
+
+    @mixin hover {
+      background-color: var(--mantine-color-default-hover);
+    }
   }
 
   &:where(:not([data-square])) {

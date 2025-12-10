@@ -331,8 +331,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
             {...previousControlProps}
           />
 
-          <ScheduleHeader.Control {...stylesApiProps} interactive={false}>
-            {`${formatDate({ locale: ctx.getLocale(locale), date: weekdays[0], format: weekLabelFormat })} - ${formatDate(
+          <ScheduleHeader.Control {...stylesApiProps} interactive={false} miw={140}>
+            {`${formatDate({ locale: ctx.getLocale(locale), date: weekdays[0], format: weekLabelFormat })} – ${formatDate(
               {
                 locale: ctx.getLocale(locale),
                 date: weekdays[weekdays.length - 1],
