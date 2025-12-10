@@ -10,10 +10,18 @@ export function Usage() {
   );
 }
 
+export function CustomTimeRange() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DayView date={new Date()} startTime="10:00:00" endTime="16:00:00" />
+    </div>
+  );
+}
+
 export function CustomInterval() {
   return (
     <div style={{ padding: 40 }}>
-      <DayView date={new Date()} intervalMinutes={12} />
+      <DayView date={new Date()} intervalMinutes={12} slotHeight={120} allDaySlotHeight={220} />
     </div>
   );
 }

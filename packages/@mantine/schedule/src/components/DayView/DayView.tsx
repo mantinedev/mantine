@@ -9,6 +9,7 @@ import {
   Factory,
   getRadius,
   MantineRadius,
+  rem,
   StylesApiProps,
   UnstyledButton,
   useProps,
@@ -46,7 +47,7 @@ export type DayViewStylesNames =
   | CombinedScheduleHeaderStylesNames;
 
 export type DayViewCssVariables = {
-  dayView: '--day-view-radius';
+  dayView: '--day-view-radius' | '--day-view-slot-height' | '--day-view-all-day-slot-height';
 };
 
 export interface DayViewProps
@@ -109,6 +110,12 @@ export interface DayViewProps
 
   /** Props passed to view level select */
   viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
+
+  /** Height of 1hr slot @default `64px` */
+  slotHeight?: React.CSSProperties['height'];
+
+  /** Height of all-day slot @default `42px` */
+  allDaySlotHeight?: React.CSSProperties['height'];
 }
 
 export type DayViewFactory = Factory<{
@@ -130,11 +137,15 @@ const defaultProps = {
   withHeader: true,
 } satisfies Partial<DayViewProps>;
 
-const varsResolver = createVarsResolver<DayViewFactory>((_theme, { radius }) => ({
-  dayView: {
-    '--day-view-radius': radius !== undefined ? getRadius(radius) : undefined,
-  },
-}));
+const varsResolver = createVarsResolver<DayViewFactory>(
+  (_theme, { radius, slotHeight, allDaySlotHeight }) => ({
+    dayView: {
+      '--day-view-radius': radius !== undefined ? getRadius(radius) : undefined,
+      '--day-view-slot-height': rem(slotHeight),
+      '--day-view-all-day-slot-height': rem(allDaySlotHeight),
+    },
+  })
+);
 
 export const DayView = factory<DayViewFactory>((_props) => {
   const props = useProps('DayView', defaultProps, _props);
@@ -165,6 +176,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
     nextControlProps,
     todayControlProps,
     viewSelectProps,
+    slotHeight,
+    allDaySlotHeight,
     ...others
   } = props;
 
