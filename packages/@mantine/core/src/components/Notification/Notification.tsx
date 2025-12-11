@@ -33,8 +33,6 @@ export interface NotificationProps
   extends BoxProps,
     StylesApiProps<NotificationFactory>,
     ElementProps<'div', 'title'> {
-  variant?: string;
-
   /** Called when the close button is clicked */
   onClose?: () => void;
 
@@ -105,7 +103,6 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
     style,
     styles,
     unstyled,
-    variant,
     vars,
     mod,
     loaderProps,
@@ -133,7 +130,6 @@ export const Notification = factory<NotificationFactory>((_props, ref) => {
       {...getStyles('root')}
       mod={[{ 'data-with-icon': !!icon || loading, 'data-with-border': withBorder }, mod]}
       ref={ref}
-      variant={variant}
       role={role || 'alert'}
       {...others}
     >
