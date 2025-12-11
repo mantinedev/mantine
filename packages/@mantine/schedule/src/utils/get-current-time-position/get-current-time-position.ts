@@ -5,7 +5,7 @@ interface GetCurrentTimePercentInput {
   endTime?: string;
 }
 
-export function getCurrentTimePercent(input?: GetCurrentTimePercentInput) {
+export function getCurrentTimePosition(input?: GetCurrentTimePercentInput) {
   const now = dayjs();
 
   if (!input?.startTime || !input?.endTime) {

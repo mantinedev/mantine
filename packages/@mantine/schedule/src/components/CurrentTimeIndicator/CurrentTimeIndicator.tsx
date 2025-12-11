@@ -15,7 +15,7 @@ import {
 } from '@mantine/core';
 import { useInterval } from '@mantine/hooks';
 import { DateLabelFormat } from '../../types';
-import { formatDate, getCurrentTimePercent, isInTimeRange } from '../../utils';
+import { formatDate, getCurrentTimePosition, isInTimeRange } from '../../utils';
 import { useScheduleContext } from '../Schedule/Schedule.context';
 import classes from './CurrentTimeIndicator.module.css';
 
@@ -129,8 +129,10 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
   });
 
   const ctx = useScheduleContext();
-  const [offsetPercent, setOffsetPercent] = useState(getCurrentTimePercent({ startTime, endTime }));
-  useInterval(() => setOffsetPercent(getCurrentTimePercent({ startTime, endTime })), 1000 * 60, {
+  const [offsetPercent, setOffsetPercent] = useState(
+    getCurrentTimePosition({ startTime, endTime })
+  );
+  useInterval(() => setOffsetPercent(getCurrentTimePosition({ startTime, endTime })), 1000 * 60, {
     autoInvoke: true,
   });
   const formattedTime = withTimeBubble
