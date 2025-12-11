@@ -107,4 +107,67 @@ describe('@mantine/schedule/CurrentTimeIndicator', () => {
     ).toHaveTextContent('Current time is: 2025-11-17 14:30:00');
     jest.useRealTimers();
   });
+
+  it('returns null when current time is outside the specified time range (before)', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-17 08:00:00').getTime());
+    const { container } = render(<CurrentTimeIndicator startTime="09:00:00" endTime="17:00:00" />);
+    expect(
+      container.querySelector('.mantine-CurrentTimeIndicator-currentTimeIndicator')
+    ).not.toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  it('returns null when current time is outside the specified time range (after)', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-17 18:00:00').getTime());
+    const { container } = render(<CurrentTimeIndicator startTime="09:00:00" endTime="17:00:00" />);
+    expect(
+      container.querySelector('.mantine-CurrentTimeIndicator-currentTimeIndicator')
+    ).not.toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  it('renders indicator when current time is within the specified time range', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-17 12:30:00').getTime());
+    const { container } = render(<CurrentTimeIndicator startTime="09:00:00" endTime="17:00:00" />);
+    expect(
+      container.querySelector('.mantine-CurrentTimeIndicator-currentTimeIndicator')
+    ).toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  it('returns null when current time equals start time boundary', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-17 09:00:00').getTime());
+    const { container } = render(<CurrentTimeIndicator startTime="09:00:00" endTime="17:00:00" />);
+    expect(
+      container.querySelector('.mantine-CurrentTimeIndicator-currentTimeIndicator')
+    ).not.toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  it('returns null when current time equals end time boundary', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-17 17:00:00').getTime());
+    const { container } = render(<CurrentTimeIndicator startTime="09:00:00" endTime="17:00:00" />);
+    expect(
+      container.querySelector('.mantine-CurrentTimeIndicator-currentTimeIndicator')
+    ).not.toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  it('renders indicator when current time is just after start boundary', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-17 09:00:01').getTime());
+    const { container } = render(<CurrentTimeIndicator startTime="09:00:00" endTime="17:00:00" />);
+    expect(
+      container.querySelector('.mantine-CurrentTimeIndicator-currentTimeIndicator')
+    ).toBeInTheDocument();
+    jest.useRealTimers();
+  });
+
+  it('renders indicator when current time is just before end boundary', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-17 16:59:59').getTime());
+    const { container } = render(<CurrentTimeIndicator startTime="09:00:00" endTime="17:00:00" />);
+    expect(
+      container.querySelector('.mantine-CurrentTimeIndicator-currentTimeIndicator')
+    ).toBeInTheDocument();
+    jest.useRealTimers();
+  });
 });

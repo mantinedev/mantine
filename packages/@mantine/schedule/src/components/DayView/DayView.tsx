@@ -37,10 +37,10 @@ import classes from './DayView.module.css';
 
 export type DayViewStylesNames =
   | 'dayView'
-  | 'dayViewHeader'
   | 'dayViewInner'
   | 'dayViewSlot'
   | 'dayViewSlots'
+  | 'dayViewTimeSlots'
   | 'dayViewSlotLabel'
   | 'dayViewSlotLabels'
   | CurrentTimeIndicatorStylesNames
@@ -278,22 +278,6 @@ export const DayView = factory<DayViewFactory>((_props) => {
       )}
 
       <div {...getStyles('dayViewInner')}>
-        {withCurrentTimeIndicator && (
-          <CurrentTimeIndicator
-            startOffset="var(--day-view-slot-labels-width)"
-            endOffset="0rem"
-            topOffset="0rem"
-            timeBubbleStartOffset="calc(var(--day-view-slot-labels-width) - var(--time-bubble-width))"
-            currentTimeFormat={slotLabelFormat}
-            withTimeBubble={withCurrentTimeBubble}
-            withThumb={!withCurrentTimeBubble}
-            locale={locale}
-            startTime={startTime}
-            endTime={endTime}
-            {...stylesApiProps}
-          />
-        )}
-
         <div {...getStyles('dayViewSlotLabels')}>
           {withAllDaySlot && (
             <Box {...getStyles('dayViewSlotLabel')} mod={{ 'all-day': true }}>
@@ -312,7 +296,24 @@ export const DayView = factory<DayViewFactory>((_props) => {
             />
           )}
 
-          {items}
+          <div {...getStyles('dayViewTimeSlots')}>
+            {withCurrentTimeIndicator && (
+              <CurrentTimeIndicator
+                startOffset="calc(var(--day-view-slot-labels-width) * -1)"
+                endOffset="0rem"
+                topOffset="0rem"
+                timeBubbleStartOffset="calc(var(--day-view-slot-labels-width) * -1 + 30px)"
+                currentTimeFormat={slotLabelFormat}
+                withTimeBubble={withCurrentTimeBubble}
+                withThumb={!withCurrentTimeBubble}
+                locale={locale}
+                startTime={startTime}
+                endTime={endTime}
+                {...stylesApiProps}
+              />
+            )}
+            {items}
+          </div>
         </div>
       </div>
     </Box>

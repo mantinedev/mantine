@@ -15,7 +15,7 @@ import {
 } from '@mantine/core';
 import { useInterval } from '@mantine/hooks';
 import { DateLabelFormat } from '../../types';
-import { formatDate, getCurrentTimePercent } from '../../utils';
+import { formatDate, getCurrentTimePercent, isInTimeRange } from '../../utils';
 import { useScheduleContext } from '../Schedule/Schedule.context';
 import classes from './CurrentTimeIndicator.module.css';
 
@@ -136,6 +136,10 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
   const formattedTime = withTimeBubble
     ? formatDate({ locale: ctx.getLocale(locale), date: dayjs(), format: currentTimeFormat })
     : '';
+
+  if (!isInTimeRange({ date: dayjs().toDate(), startTime, endTime })) {
+    return null;
+  }
 
   return (
     <Box

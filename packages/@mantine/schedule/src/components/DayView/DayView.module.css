@@ -19,6 +19,9 @@
 .dayViewInner {
   border: 1px solid var(--mantine-color-gray-3);
   display: flex;
+}
+
+.dayViewTimeSlots {
   position: relative;
 }
 
