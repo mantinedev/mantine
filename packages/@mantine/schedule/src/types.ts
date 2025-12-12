@@ -15,10 +15,10 @@ export type DateLabelFormat = string | ((date: DateStringValue) => string);
 /** View level used by Schedule component */
 export type ScheduleViewLevel = 'day' | 'week' | 'month' | 'year';
 
-/** Event data object used in all `@mantine/schedule` components */
-export interface ScheduleEventData<
-  Payload extends Record<PropertyKey, any> = Record<PropertyKey, any>,
-> {
+export type EventPayload = Record<PropertyKey, any>;
+
+/** Event data object passed to all `@mantine/schedule` components */
+export interface ScheduleEventData<Payload extends EventPayload = EventPayload> {
   /** Unique event id, used for key and identification */
   id: string | number;
 
@@ -36,4 +36,34 @@ export interface ScheduleEventData<
 
   /** Additional event data, defined by the user, not used internally by the library */
   payload: Payload;
+}
+
+export interface EventPositionData {
+  /** All day events */
+  allDay: boolean;
+
+  /** Event top position in %, represents start time */
+  top: number;
+
+  /** Event height in %, represents duration (end time - start time) */
+  height: number;
+
+  /** Event width in %, represents event size in overlap group */
+  width: number;
+
+  /** Event left offset in %, represents event position in overlap group */
+  offset: number;
+
+  /** Number of events in the overlap group */
+  overlaps: number;
+
+  /** Column index in the overlap group, 1-based */
+  column: number;
+}
+
+/** Event data with calculated position for day and week views */
+export interface DayPositionedEventData<
+  Payload extends EventPayload = EventPayload,
+> extends ScheduleEventData<Payload> {
+  position: EventPositionData;
 }

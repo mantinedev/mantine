@@ -1,22 +1,12 @@
 import dayjs from 'dayjs';
 import { ScheduleEventData } from '../../types';
 
-interface GetEventPositionInput {
+interface GetDayPosition {
   event: ScheduleEventData;
   startTime?: string;
   endTime?: string;
 }
-
-export interface EventPositionData {
-  start: string;
-  height: string;
-}
-
-export function getEventPosition({
-  event,
-  startTime,
-  endTime,
-}: GetEventPositionInput): EventPositionData {
+export function getDayPosition({ event, startTime, endTime }: GetDayPosition) {
   const eventStart = dayjs(event.start);
   const eventEnd = dayjs(event.end);
 
@@ -36,8 +26,8 @@ export function getEventPosition({
     const endPercent = (eventEndMinutes / totalMinutes) * 100;
 
     return {
-      start: `${startPercent}%`,
-      height: `${endPercent - startPercent}%`,
+      top: startPercent,
+      height: endPercent - startPercent,
     };
   }
 
@@ -49,7 +39,7 @@ export function getEventPosition({
   const endPercent = (eventEndMinutes / 1440) * 100;
 
   return {
-    start: `${startPercent}%`,
-    height: `${endPercent - startPercent}%`,
+    top: startPercent,
+    height: endPercent - startPercent,
   };
 }
