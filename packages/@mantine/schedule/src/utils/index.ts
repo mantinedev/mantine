@@ -21,5 +21,6 @@ export { isInTimeRange } from './is-in-time-range/is-in-time-range';
 export { isAllDayEvent } from './is-all-day-event/is-all-day-event';
 export { validateEvent } from './validate-event/validate-event';
 export { getEventPosition } from './get-event-position/get-event-position';
+export { sortEvents } from './sort-events/sort-events';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';
 export type { EventPositionData } from './get-event-position/get-event-position';

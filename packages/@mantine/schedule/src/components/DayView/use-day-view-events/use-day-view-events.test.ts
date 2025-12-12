@@ -204,4 +204,46 @@ describe('@mantine/schedule/use-day-view-events', () => {
     // 11:00 is 660 minutes into the day / 1440 = 45.83%
     expect(parseFloat(event.position.height)).toBeCloseTo(4.16, 1);
   });
+
+  it('returns events sorted by start time, then by duration (longer first)', () => {
+    const events: ScheduleEventData[] = [
+      {
+        id: 'event-1',
+        title: 'Event 1',
+        start: `${testDate} 14:00:00`,
+        end: `${testDate} 15:00:00`,
+        color: 'blue',
+        payload: {},
+      },
+      {
+        id: 'event-2',
+        title: 'Event 2',
+        start: `${testDate} 10:00:00`,
+        end: `${testDate} 12:00:00`, // 2 hours (longer)
+        color: 'red',
+        payload: {},
+      },
+      {
+        id: 'event-3',
+        title: 'Event 3',
+        start: `${testDate} 10:00:00`,
+        end: `${testDate} 11:00:00`, // 1 hour (shorter, same start as event-2)
+        color: 'green',
+        payload: {},
+      },
+    ];
+
+    const result = filterDayViewEvents({
+      events,
+      date: testDate,
+      startTime: undefined,
+      endTime: undefined,
+    });
+
+    expect(result).toHaveLength(3);
+    // Should be sorted: event-2 (10:00, 2h), event-3 (10:00, 1h), event-1 (14:00, 1h)
+    expect(result[0].id).toBe('event-2');
+    expect(result[1].id).toBe('event-3');
+    expect(result[2].id).toBe('event-1');
+  });
 });

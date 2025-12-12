@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import { DateStringValue, ScheduleEventData } from '../../../types';
-import { EventPositionData, getEventPosition, validateEvent } from '../../../utils';
+import { EventPositionData, getEventPosition, sortEvents, validateEvent } from '../../../utils';
 
 interface UseDayViewEventsInput {
   events: ScheduleEventData[] | undefined;
@@ -39,7 +39,7 @@ export function filterDayViewEvents({ events, date, startTime, endTime }: UseDay
     }
   }
 
-  return filteredEvents;
+  return sortEvents(filteredEvents);
 }
 
 export function useDayViewEvents({ events, date, startTime, endTime }: UseDayViewEventsInput) {
