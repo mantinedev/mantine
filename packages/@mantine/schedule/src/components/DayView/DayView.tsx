@@ -28,6 +28,7 @@ import {
   CurrentTimeIndicatorStylesNames,
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
 import { useScheduleContext } from '../Schedule/Schedule.context';
+import { ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import {
   CombinedScheduleHeaderStylesNames,
   ScheduleHeader,
@@ -200,9 +201,24 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
   const ctx = useScheduleContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
-  const eventsData = useDayViewEvents({ events, date, startTime, endTime });
 
-  console.log(eventsData);
+  const eventsData = useDayViewEvents({ events, date, startTime, endTime });
+  const eventsNodes = eventsData
+    .filter((event) => !event.position.allDay)
+    .map((event) => (
+      <ScheduleEvent
+        key={event.id}
+        style={{
+          top: `${event.position.top}%`,
+          height: `${event.position.height}%`,
+          left: `${event.position.offset}%`,
+          width: `${event.position.width}%`,
+          position: 'absolute',
+        }}
+      >
+        {event.title}
+      </ScheduleEvent>
+    ));
 
   const items = slots.map((slot) => (
     <UnstyledButton
@@ -302,6 +318,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
           )}
 
           <div {...getStyles('dayViewTimeSlots')}>
+            {eventsNodes}
+
             {withCurrentTimeIndicator && (
               <CurrentTimeIndicator
                 startOffset="calc(var(--day-view-slot-labels-width) * -1)"
