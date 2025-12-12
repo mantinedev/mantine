@@ -44,7 +44,7 @@ describe('@mantine/schedule/use-day-view-events', () => {
     expect(result[1].id).toBe('event-2');
     expect(result[0].position).toBeDefined();
     expect(result[0].position).toHaveProperty('start');
-    expect(result[0].position).toHaveProperty('end');
+    expect(result[0].position).toHaveProperty('height');
   });
 
   it('throws error for duplicated event ids', () => {
@@ -183,7 +183,7 @@ describe('@mantine/schedule/use-day-view-events', () => {
     const event = result[0] as ScheduleEventDayViewData;
     expect(event.position).toBeDefined();
     expect(event.position.start).toBe('12.5%');
-    expect(event.position.end).toBe('25%');
+    expect(event.position.height).toBe('12.5%');
   });
 
   it('calculates position relative to full day when start and end times are not provided', () => {
@@ -202,6 +202,6 @@ describe('@mantine/schedule/use-day-view-events', () => {
     // 10:00 is 600 minutes into the day / 1440 = 41.67%
     expect(parseFloat(event.position.start)).toBeCloseTo(41.67, 1);
     // 11:00 is 660 minutes into the day / 1440 = 45.83%
-    expect(parseFloat(event.position.end)).toBeCloseTo(45.83, 1);
+    expect(parseFloat(event.position.height)).toBeCloseTo(4.16, 1);
   });
 });

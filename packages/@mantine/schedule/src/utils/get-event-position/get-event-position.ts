@@ -9,7 +9,7 @@ interface GetEventPositionInput {
 
 export interface EventPositionData {
   start: string;
-  end: string;
+  height: string;
 }
 
 export function getEventPosition({
@@ -32,9 +32,12 @@ export function getEventPosition({
     const eventStartMinutes = eventStart.diff(boundaryStart, 'minute');
     const eventEndMinutes = eventEnd.diff(boundaryStart, 'minute');
 
+    const startPercent = (eventStartMinutes / totalMinutes) * 100;
+    const endPercent = (eventEndMinutes / totalMinutes) * 100;
+
     return {
-      start: `${(eventStartMinutes / totalMinutes) * 100}%`,
-      end: `${(eventEndMinutes / totalMinutes) * 100}%`,
+      start: `${startPercent}%`,
+      height: `${endPercent - startPercent}%`,
     };
   }
 
@@ -42,8 +45,11 @@ export function getEventPosition({
   const eventStartMinutes = eventStart.diff(startOfDay, 'minute');
   const eventEndMinutes = eventEnd.diff(startOfDay, 'minute');
 
+  const startPercent = (eventStartMinutes / 1440) * 100;
+  const endPercent = (eventEndMinutes / 1440) * 100;
+
   return {
-    start: `${(eventStartMinutes / 1440) * 100}%`,
-    end: `${(eventEndMinutes / 1440) * 100}%`,
+    start: `${startPercent}%`,
+    height: `${endPercent - startPercent}%`,
   };
 }

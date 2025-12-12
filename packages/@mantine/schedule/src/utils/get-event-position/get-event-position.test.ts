@@ -15,7 +15,7 @@ describe('@mantine/schedule/get-event-position', () => {
     const result = getEventPosition({ event });
     expect(result).toEqual({
       start: '25%',
-      end: '50%',
+      height: '25%',
     });
   });
 
@@ -31,7 +31,7 @@ describe('@mantine/schedule/get-event-position', () => {
 
     const result = getEventPosition({ event });
     expect(result.start).toBe('0%');
-    expect(parseFloat(result.end)).toBeCloseTo(8.33, 1);
+    expect(parseFloat(result.height)).toBeCloseTo(8.33, 1);
   });
 
   it('calculates event position at the end of the day', () => {
@@ -46,7 +46,7 @@ describe('@mantine/schedule/get-event-position', () => {
 
     const result = getEventPosition({ event });
     expect(parseFloat(result.start)).toBeCloseTo(91.67, 1);
-    expect(parseFloat(result.end)).toBeCloseTo(99.93, 1);
+    expect(parseFloat(result.height)).toBeCloseTo(8.26, 1);
   });
 
   it('calculates event position relative to custom time boundaries', () => {
@@ -66,7 +66,7 @@ describe('@mantine/schedule/get-event-position', () => {
     });
     expect(result).toEqual({
       start: '50%',
-      end: '75%',
+      height: '25%',
     });
   });
 
@@ -87,7 +87,7 @@ describe('@mantine/schedule/get-event-position', () => {
     });
     expect(result).toEqual({
       start: '0%',
-      end: '25%',
+      height: '25%',
     });
   });
 
@@ -108,7 +108,7 @@ describe('@mantine/schedule/get-event-position', () => {
     });
     expect(result).toEqual({
       start: '75%',
-      end: '100%',
+      height: '25%',
     });
   });
 
@@ -125,7 +125,7 @@ describe('@mantine/schedule/get-event-position', () => {
     const result = getEventPosition({ event });
     expect(result).toEqual({
       start: '25%',
-      end: '50%',
+      height: '25%',
     });
   });
 
@@ -159,6 +159,6 @@ describe('@mantine/schedule/get-event-position', () => {
 
     const result = getEventPosition({ event });
     expect(result.start).toBe('0%');
-    expect(parseFloat(result.end)).toBeGreaterThan(99);
+    expect(parseFloat(result.height)).toBeGreaterThan(99);
   });
 });
