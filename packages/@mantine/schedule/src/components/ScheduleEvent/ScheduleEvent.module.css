@@ -1,0 +1,8 @@
+.event {
+  background-color: var(--event-bg);
+  color: var(--event-color);
+  border-radius: var(--event-radius);
+  font-weight: 600;
+  font-size: var(--mantine-font-size-sm);
+  padding: 4px;
+}
