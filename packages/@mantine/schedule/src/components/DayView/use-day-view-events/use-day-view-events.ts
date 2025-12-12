@@ -1,24 +1,35 @@
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import { DateStringValue, ScheduleEventData } from '../../../types';
-import { validateEvent } from '../../../utils';
+import { EventPositionData, getEventPosition, validateEvent } from '../../../utils';
 
 interface UseDayViewEventsInput {
   events: ScheduleEventData[] | undefined;
   date: Date | DateStringValue;
+  startTime: string | undefined;
+  endTime: string | undefined;
 }
 
-export function filterDayViewEvents({ events, date }: UseDayViewEventsInput) {
+export interface ScheduleEventDayViewData extends ScheduleEventData {
+  /** Event position data relative to the day start */
+  position: EventPositionData;
+}
+
+export function filterDayViewEvents({ events, date, startTime, endTime }: UseDayViewEventsInput) {
   if (events === undefined) {
     return [];
   }
 
   const ids = new Set<string | number>();
-  const filteredEvents: ScheduleEventData[] = [];
+  const filteredEvents: ScheduleEventDayViewData[] = [];
 
   for (const event of events) {
     if (dayjs(event.start).isSame(dayjs(date), 'day')) {
-      filteredEvents.push(validateEvent(event));
+      const eventData = validateEvent(event);
+      filteredEvents.push({
+        ...eventData,
+        position: getEventPosition({ event: eventData, startTime, endTime }),
+      });
 
       if (!ids.has(event.id)) {
         ids.add(event.id);
@@ -31,8 +42,8 @@ export function filterDayViewEvents({ events, date }: UseDayViewEventsInput) {
   return filteredEvents;
 }
 
-export function useDayViewEvents({ events, date }: UseDayViewEventsInput) {
+export function useDayViewEvents({ events, date, startTime, endTime }: UseDayViewEventsInput) {
   return useMemo(() => {
-    return filterDayViewEvents({ events, date });
-  }, [events, date]);
+    return filterDayViewEvents({ events, date, startTime, endTime });
+  }, [events, date, startTime, endTime]);
 }

@@ -1,11 +1,11 @@
 import dayjs from 'dayjs';
 
-interface GetCurrentTimePercentInput {
+interface GetCurrentTimePositionInput {
   startTime?: string;
   endTime?: string;
 }
 
-export function getCurrentTimePosition(input?: GetCurrentTimePercentInput) {
+export function getCurrentTimePosition(input?: GetCurrentTimePositionInput) {
   const now = dayjs();
 
   if (!input?.startTime || !input?.endTime) {

@@ -200,7 +200,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
   const ctx = useScheduleContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
-  const eventsData = useDayViewEvents({ events, date });
+  const eventsData = useDayViewEvents({ events, date, startTime, endTime });
 
   console.log(eventsData);
 
