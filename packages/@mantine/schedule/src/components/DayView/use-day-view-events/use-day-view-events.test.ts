@@ -1,0 +1,134 @@
+import { ScheduleEventData } from '../../../types';
+import { filterDayViewEvents } from './use-day-view-events';
+
+describe('@mantine/schedule/use-day-view-events', () => {
+  const testDate = '2024-12-12';
+  const validEvent: ScheduleEventData = {
+    id: 'event-1',
+    title: 'Test Event',
+    start: `${testDate} 10:00:00`,
+    end: `${testDate} 11:00:00`,
+    color: 'blue',
+    payload: {},
+  };
+
+  it('returns only events that belong to the given date', () => {
+    const events: ScheduleEventData[] = [
+      validEvent,
+      {
+        id: 'event-2',
+        title: 'Another Event',
+        start: `${testDate} 14:00:00`,
+        end: `${testDate} 15:00:00`,
+        color: 'red',
+        payload: {},
+      },
+      {
+        id: 'event-3',
+        title: 'Different Day Event',
+        start: '2024-12-13 10:00:00',
+        end: '2024-12-13 11:00:00',
+        color: 'green',
+        payload: {},
+      },
+    ];
+
+    const result = filterDayViewEvents({ events, date: testDate });
+    expect(result).toHaveLength(2);
+    expect(result[0].id).toBe('event-1');
+    expect(result[1].id).toBe('event-2');
+  });
+
+  it('throws error for duplicated event ids', () => {
+    const events: ScheduleEventData[] = [
+      validEvent,
+      {
+        id: 'event-1', // Duplicate id
+        title: 'Duplicate Event',
+        start: `${testDate} 14:00:00`,
+        end: `${testDate} 15:00:00`,
+        color: 'red',
+        payload: {},
+      },
+    ];
+
+    expect(() => filterDayViewEvents({ events, date: testDate })).toThrow(
+      '[@mantine/schedule] DayView: Duplicated event ids found: event-1'
+    );
+  });
+
+  it('throws error if event has invalid end date', () => {
+    const events: ScheduleEventData[] = [
+      {
+        id: 'event-1',
+        title: 'Invalid Event',
+        start: `${testDate} 10:00:00`,
+        end: 'invalid-end-date',
+        color: 'blue',
+        payload: {},
+      },
+    ];
+
+    expect(() => filterDayViewEvents({ events, date: testDate })).toThrow(
+      '[@mantine/schedule] Invalid end date for event id: event-1'
+    );
+  });
+
+  it('skips events with invalid start date (unparseable dates do not match any day)', () => {
+    const events: ScheduleEventData[] = [
+      {
+        id: 'event-1',
+        title: 'Invalid Start Date Event',
+        start: 'invalid-start-date',
+        end: `${testDate} 11:00:00`,
+        color: 'blue',
+        payload: {},
+      },
+      {
+        id: 'event-2',
+        title: 'Valid Event',
+        start: `${testDate} 10:00:00`,
+        end: `${testDate} 11:00:00`,
+        color: 'blue',
+        payload: {},
+      },
+    ];
+
+    // Events with invalid start dates won't match the day filter
+    // because dayjs('invalid-start-date').isSame(...) returns false
+    // So they are filtered out before validation
+    const result = filterDayViewEvents({ events, date: testDate });
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe('event-2');
+  });
+
+  it('filters out events from different dates and returns empty array when no events match', () => {
+    const events: ScheduleEventData[] = [
+      {
+        id: 'event-1',
+        title: 'Event on different date',
+        start: '2024-12-13 10:00:00',
+        end: '2024-12-13 11:00:00',
+        color: 'blue',
+        payload: {},
+      },
+    ];
+
+    const result = filterDayViewEvents({ events, date: testDate });
+    expect(result).toHaveLength(0);
+  });
+
+  it('accepts Date object as input date', () => {
+    const dateObject = new Date(testDate);
+    const events: ScheduleEventData[] = [validEvent];
+
+    const result = filterDayViewEvents({ events, date: dateObject });
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe('event-1');
+  });
+
+  it('returns empty array when no events are provided', () => {
+    const result = filterDayViewEvents({ events: undefined, date: testDate });
+    expect(result).toHaveLength(0);
+  });
+});

@@ -33,6 +33,7 @@ import {
   ScheduleHeader,
 } from '../ScheduleHeader/ScheduleHeader';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
+import { useDayViewEvents } from './use-day-view-events/use-day-view-events';
 import classes from './DayView.module.css';
 
 export type DayViewStylesNames =
@@ -55,7 +56,7 @@ export interface DayViewProps
   __staticSelector?: string;
 
   /** Day to display, Date object or date string in `YYYY-MM-DD` format */
-  date: Date | string;
+  date: Date | DateStringValue;
 
   /** Called when date is changed */
   onDateChange?: (date: DateStringValue) => void;
@@ -178,6 +179,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     viewSelectProps,
     slotHeight,
     allDaySlotHeight,
+    events,
     ...others
   } = props;
 
@@ -198,6 +200,9 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
   const ctx = useScheduleContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
+  const eventsData = useDayViewEvents({ events, date });
+
+  console.log(eventsData);
 
   const items = slots.map((slot) => (
     <UnstyledButton

@@ -39,6 +39,14 @@ const regularEvents: ScheduleEventData[] = [
     color: 'red',
     payload: {},
   },
+  {
+    id: 5,
+    title: 'Tomorrow event, do not show',
+    start: dayjs(today).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    end: dayjs(today).add(1, 'day').format('YYYY-MM-DD HH:mm:ss'),
+    color: 'red',
+    payload: {},
+  },
 ];
 
 const overlappingEvents: ScheduleEventData[] = [
