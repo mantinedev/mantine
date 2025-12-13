@@ -1,4 +1,4 @@
-import { tests } from '@mantine-tests/core';
+import { render, screen, tests } from '@mantine-tests/core';
 import { ScheduleEvent, ScheduleEventProps, ScheduleEventStylesNames } from './ScheduleEvent';
 
 const defaultProps: ScheduleEventProps = {
@@ -17,7 +17,6 @@ describe('@mantine/schedule/ScheduleEvent', () => {
     component: ScheduleEvent,
     props: defaultProps,
     styleProps: true,
-    children: true,
     extend: true,
     variant: true,
     size: true,
@@ -25,5 +24,27 @@ describe('@mantine/schedule/ScheduleEvent', () => {
     refType: HTMLDivElement,
     displayName: '@mantine/schedule/ScheduleEvent',
     stylesApiSelectors: ['event', 'eventInner'],
+  });
+
+  it('renders event title', () => {
+    render(<ScheduleEvent {...defaultProps} />);
+    expect(screen.getByText('Test event')).toBeInTheDocument();
+  });
+
+  it('supports renderEventBody prop', () => {
+    render(
+      <ScheduleEvent
+        {...defaultProps}
+        renderEventBody={(event) => (
+          <div>
+            <strong>{event.title}</strong>
+            <div>Custom body</div>
+          </div>
+        )}
+      />
+    );
+
+    expect(screen.getByText('Test event')).toBeInTheDocument();
+    expect(screen.getByText('Custom body')).toBeInTheDocument();
   });
 });

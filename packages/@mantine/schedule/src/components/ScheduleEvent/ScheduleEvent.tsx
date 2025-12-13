@@ -32,6 +32,9 @@ export interface ScheduleEventProps
 
   /** If set, event has `95%` width, allowing time slot selection under the event @default `false` */
   truncate?: boolean;
+
+  /** Function to customize event body, `event` object is passed as first argument */
+  renderEventBody?: (event: ScheduleEventData<any>) => React.ReactNode;
 }
 
 export type ScheduleEventFactory = Factory<{
@@ -81,6 +84,7 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
     color,
     __staticSelector,
     event,
+    renderEventBody,
     ...others
   } = props;
 
@@ -102,7 +106,13 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
   return (
     <Box {...getStyles('event')} {...others}>
       <Box mod={{ truncate }} {...getStyles('eventInner')}>
-        {event.title}
+        {typeof renderEventBody === 'function' ? (
+          renderEventBody(event)
+        ) : (
+          <>
+            <div>{event.title}</div>
+          </>
+        )}
       </Box>
     </Box>
   );
