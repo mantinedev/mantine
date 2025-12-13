@@ -16,7 +16,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { ScheduleEventData } from '../../types';
 import { useScheduleContext } from '../Schedule/Schedule.context';
-import { ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
+import { RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import classes from './MoreEvents.module.css';
 
 export type MoreEventsDropdownType = 'popover' | 'modal';
@@ -48,6 +48,9 @@ export interface MoreEventsProps
 
   /** Called when the dropdown is closed */
   onDropdownClose?: () => void;
+
+  /** Function to customize event body, `event` object is passed as first argument */
+  renderEventBody?: RenderEventBody;
 }
 
 export type MoreEventsFactory = Factory<{
@@ -79,6 +82,7 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
     onDropdownClose,
     children,
     modalTitle,
+    renderEventBody,
     ...others
   } = props;
 
@@ -107,7 +111,13 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
   const eventsList = (
     <div {...getStyles('moreEventsList')}>
       {events.map((event) => (
-        <ScheduleEvent key={event.id} radius={radius} event={event} size="md">
+        <ScheduleEvent
+          key={event.id}
+          radius={radius}
+          event={event}
+          size="md"
+          renderEventBody={renderEventBody}
+        >
           {event.title}
         </ScheduleEvent>
       ))}

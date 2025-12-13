@@ -15,10 +15,13 @@ import { ScheduleEventData } from '../../types';
 import classes from './ScheduleEvent.module.css';
 
 export type ScheduleEventStylesNames = 'event' | 'eventInner';
+
 export type ScheduleEventVariant = 'filled' | 'light';
 export type ScheduleEventCssVariables = {
   event: '--event-bg' | '--event-color' | '--event-radius';
 };
+
+export type RenderEventBody = (event: ScheduleEventData<any>) => React.ReactNode;
 
 export interface ScheduleEventProps
   extends BoxProps, StylesApiProps<ScheduleEventFactory>, ElementProps<'div'> {
@@ -37,7 +40,7 @@ export interface ScheduleEventProps
   size?: 'sm' | 'md' | (string & {});
 
   /** Function to customize event body, `event` object is passed as first argument */
-  renderEventBody?: (event: ScheduleEventData<any>) => React.ReactNode;
+  renderEventBody?: RenderEventBody;
 }
 
 export type ScheduleEventFactory = Factory<{

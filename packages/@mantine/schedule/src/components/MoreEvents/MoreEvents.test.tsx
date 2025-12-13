@@ -96,4 +96,28 @@ describe('@mantine/schedule/MoreEvents', () => {
     await userEvent.click(document.querySelector('.mantine-CloseButton-root')!);
     expect(spy).toHaveBeenCalledTimes(1);
   });
+
+  it('supports renderEventBody prop', async () => {
+    render(
+      <MoreEvents
+        {...defaultProps}
+        moreEventsCount={4}
+        dropdownType="modal"
+        modalTitle="March 13, 2025 events"
+        renderEventBody={(event) => (
+          <div>
+            <strong>{event.title}</strong>
+            <div>Custom body</div>
+          </div>
+        )}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: '+4 more' }));
+
+    events.forEach((event) => {
+      expect(screen.getByText(event.title)).toBeInTheDocument();
+      expect(screen.getAllByText('Custom body')).toHaveLength(events.length);
+    });
+  });
 });
