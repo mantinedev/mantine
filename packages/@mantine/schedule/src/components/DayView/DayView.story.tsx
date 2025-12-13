@@ -92,6 +92,49 @@ const overlappingEvents: ScheduleEventData[] = [
   },
 ];
 
+const allDayEvents: ScheduleEventData[] = [
+  {
+    id: 1,
+    title: 'Conference Day',
+    start: `${today} 00:00:00`,
+    end: dayjs(today).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    color: 'red',
+    payload: {},
+  },
+  {
+    id: 2,
+    title: 'Holiday',
+    start: `${today} 00:00:00`,
+    end: dayjs(today).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    color: 'pink',
+    payload: {},
+  },
+  {
+    id: 3,
+    title: 'Team Building',
+    start: `${today} 00:00:00`,
+    end: dayjs(today).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    color: 'orange',
+    payload: {},
+  },
+  {
+    id: 4,
+    title: 'Product Launch',
+    start: `${today} 00:00:00`,
+    end: dayjs(today).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    color: 'green',
+    payload: {},
+  },
+  {
+    id: 5,
+    title: 'Year Kickoff',
+    start: `${today} 00:00:00`,
+    end: dayjs(today).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    color: 'blue',
+    payload: {},
+  },
+];
+
 export function Usage() {
   return (
     <div style={{ padding: 40 }}>
@@ -116,6 +159,14 @@ export function OverlappingEvents() {
   return (
     <div style={{ padding: 40 }}>
       <DayView date={new Date()} events={overlappingEvents} />
+    </div>
+  );
+}
+
+export function MultipleAllDayEvents() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DayView date={new Date()} events={allDayEvents} />
     </div>
   );
 }
