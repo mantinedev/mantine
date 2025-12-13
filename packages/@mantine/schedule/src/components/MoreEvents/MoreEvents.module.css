@@ -1,0 +1,14 @@
+.moreEventsButton {
+  color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-sm);
+}
+
+.moreEventsDropdown {
+  padding: 4px;
+}
+
+.moreEventsList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
