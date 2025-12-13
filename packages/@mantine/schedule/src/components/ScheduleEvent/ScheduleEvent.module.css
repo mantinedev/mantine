@@ -4,8 +4,8 @@
 }
 
 .eventInner {
-  /* background-color: var(--event-bg); */
-  /* color: var(--event-color); */
+  background-color: var(--event-bg);
+  color: var(--event-color);
   pointer-events: all;
   border-radius: var(--event-radius);
   border: 1px solid transparent;
@@ -17,8 +17,8 @@
   cursor: pointer;
   user-select: none;
 
-  background-color: var(--mantine-color-blue-1);
-  color: var(--mantine-color-blue-9);
+  /* background-color: var(--mantine-color-blue-1);
+  color: var(--mantine-color-blue-9); */
 
   &:where([data-truncate]) {
     width: 95%;

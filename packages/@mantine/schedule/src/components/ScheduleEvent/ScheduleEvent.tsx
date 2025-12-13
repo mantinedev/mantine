@@ -60,7 +60,7 @@ const varsResolver = createVarsResolver<ScheduleEventFactory>(
     const colors = theme.variantColorResolver({
       color: event.color || theme.primaryColor,
       theme,
-      variant: variant || 'filled',
+      variant: variant || 'light',
       autoContrast: true,
     });
 
