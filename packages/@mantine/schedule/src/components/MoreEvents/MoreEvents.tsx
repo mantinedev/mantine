@@ -137,6 +137,7 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
         disabled={popoverProps?.disabled || dropdownType === 'modal'}
         radius={radius}
         transitionProps={{ transition: 'pop', duration: 120 }}
+        offset={-46}
         {...popoverProps}
         onChange={(_opened) => {
           if (!_opened) {

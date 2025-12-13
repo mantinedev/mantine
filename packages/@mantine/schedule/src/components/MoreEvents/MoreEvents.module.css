@@ -1,6 +1,13 @@
 .moreEventsButton {
   color: var(--mantine-color-dimmed);
-  font-size: var(--mantine-font-size-sm);
+  font-size: 13px;
+  pointer-events: all;
+  flex: 1;
+
+  @mixin hover {
+    color: var(--mantine-color-bright);
+    text-decoration: underline;
+  }
 }
 
 .moreEventsDropdown {

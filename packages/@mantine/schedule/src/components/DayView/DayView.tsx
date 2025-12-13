@@ -33,6 +33,7 @@ import {
   CurrentTimeIndicator,
   CurrentTimeIndicatorStylesNames,
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
+import { MoreEvents, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
 import { useScheduleContext } from '../Schedule/Schedule.context';
 import { ScheduleEvent, ScheduleEventStylesNames } from '../ScheduleEvent/ScheduleEvent';
 import {
@@ -53,6 +54,7 @@ export type DayViewStylesNames =
   | 'dayViewTimeSlots'
   | 'dayViewSlotLabel'
   | 'dayViewSlotLabels'
+  | MoreEventsStylesNames
   | ScheduleEventStylesNames
   | CombinedScheduleHeaderStylesNames
   | CurrentTimeIndicatorStylesNames
@@ -126,7 +128,7 @@ export interface DayViewProps
   /** Height of 1hr slot @default `64px` */
   slotHeight?: React.CSSProperties['height'];
 
-  /** Height of all-day slot @default `42px` */
+  /** Height of all-day slot @default `44px` */
   allDaySlotHeight?: React.CSSProperties['height'];
 
   /** If true, events will have 95% width allowing time slot selection under the event @default false */
@@ -340,7 +342,16 @@ export const DayView = factory<DayViewFactory>((_props) => {
         <div {...getStyles('dayViewSlots')}>
           {withAllDaySlot && (
             <div {...getStyles('dayViewAllDay')}>
-              <div {...getStyles('dayViewAllDayEvents')}>{allDayEventsNodes}</div>
+              <div {...getStyles('dayViewAllDayEvents')}>
+                {allDayEventsNodes}
+                {allDayEventsCount.hiddenEventsCount > 0 && (
+                  <MoreEvents
+                    events={eventsData.allDayEvents}
+                    moreEventsCount={allDayEventsCount.hiddenEventsCount}
+                    {...stylesApiProps}
+                  />
+                )}
+              </div>
               <UnstyledButton
                 {...getStyles('dayViewSlot')}
                 mod={{ 'all-day': true }}

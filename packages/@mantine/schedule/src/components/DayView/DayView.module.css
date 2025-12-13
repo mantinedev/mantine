@@ -1,6 +1,6 @@
 .dayView {
   --slot-height: var(--day-view-slot-height, 64px); /* total height of 1 hour slot */
-  --all-day-slot-height: var(--day-view-all-day-slot-height, 42px); /* height of all day slot */
+  --all-day-slot-height: var(--day-view-all-day-slot-height, 44px); /* height of all day slot */
   --day-view-slot-labels-width: 80px;
   --day-view-radius: var(--schedule-radius, var(--mantine-radius-default));
   border-radius: var(--day-view-radius);
