@@ -14,7 +14,7 @@ import {
 } from '@mantine/core';
 import classes from './ScheduleEvent.module.css';
 
-export type ScheduleEventStylesNames = 'event';
+export type ScheduleEventStylesNames = 'event' | 'eventInner';
 export type ScheduleEventVariant = 'filled' | 'light';
 export type ScheduleEventCssVariables = {
   event: '--event-bg' | '--event-color' | '--event-radius';
@@ -27,6 +27,9 @@ export interface ScheduleEventProps
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius @default `theme.defaultRadius` */
   radius?: MantineRadius;
+
+  /** If set, event has `95%` width, allowing time slot selection under the event @default `false` */
+  truncate?: boolean;
 }
 
 export type ScheduleEventFactory = Factory<{
@@ -44,7 +47,7 @@ const varsResolver = createVarsResolver<ScheduleEventFactory>(
     const colors = theme.variantColorResolver({
       color: color || theme.primaryColor,
       theme,
-      variant: variant || 'light',
+      variant: variant || 'filled',
       autoContrast: true,
     });
 
@@ -60,7 +63,20 @@ const varsResolver = createVarsResolver<ScheduleEventFactory>(
 
 export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
   const props = useProps('ScheduleEvent', defaultProps, _props);
-  const { classNames, className, style, styles, unstyled, vars, attributes, ...others } = props;
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    attributes,
+    children,
+    truncate,
+    radius,
+    color,
+    ...others
+  } = props;
 
   const getStyles = useStyles<ScheduleEventFactory>({
     name: 'ScheduleEvent',
@@ -77,7 +93,13 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
     rootSelector: 'event',
   });
 
-  return <Box {...getStyles('event')} {...others} />;
+  return (
+    <Box {...getStyles('event')} {...others}>
+      <Box mod={{ truncate }} {...getStyles('eventInner')}>
+        {children}
+      </Box>
+    </Box>
+  );
 });
 
 ScheduleEvent.displayName = '@mantine/schedule/ScheduleEvent';

@@ -51,6 +51,22 @@ const regularEvents: ScheduleEventData[] = [
 
 const overlappingEvents: ScheduleEventData[] = [
   {
+    id: 0,
+    title: 'Team Meeting',
+    start: `${today} 11:00:00`,
+    end: `${today} 12:00:00`,
+    color: 'green',
+    payload: {},
+  },
+  {
+    id: 4,
+    title: 'Team Meeting 2',
+    start: `${today} 10:00:00`,
+    end: `${today} 16:00:00`,
+    color: 'green',
+    payload: {},
+  },
+  {
     id: 1,
     title: 'Workshop Session 1',
     start: `${today} 10:00:00`,

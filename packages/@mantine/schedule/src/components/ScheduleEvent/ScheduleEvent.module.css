@@ -1,8 +1,25 @@
 .event {
-  background-color: var(--event-bg);
-  color: var(--event-color);
+  padding: 1px;
+  pointer-events: none;
+}
+
+.eventInner {
+  /* background-color: var(--event-bg); */
+  /* color: var(--event-color); */
+  pointer-events: all;
   border-radius: var(--event-radius);
+  border: 1px solid transparent;
   font-weight: 600;
   font-size: var(--mantine-font-size-sm);
-  padding: 4px;
+  padding: 4px 6px;
+  height: 100%;
+  cursor: pointer;
+  user-select: none;
+
+  background-color: var(--mantine-color-blue-1);
+  color: var(--mantine-color-blue-9);
+
+  &:where([data-truncate]) {
+    width: 95%;
+  }
 }

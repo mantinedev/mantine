@@ -118,6 +118,9 @@ export interface DayViewProps
 
   /** Height of all-day slot @default `42px` */
   allDaySlotHeight?: React.CSSProperties['height'];
+
+  /** If true, events will have 95% width allowing time slot selection under the event @default false */
+  truncateEvents?: boolean;
 }
 
 export type DayViewFactory = Factory<{
@@ -181,6 +184,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     slotHeight,
     allDaySlotHeight,
     events,
+    truncateEvents,
     ...others
   } = props;
 
@@ -208,10 +212,11 @@ export const DayView = factory<DayViewFactory>((_props) => {
     .map((event) => (
       <ScheduleEvent
         key={event.id}
+        truncate={truncateEvents}
         style={{
           top: `${event.position.top}%`,
           height: `${event.position.height}%`,
-          left: `${event.position.offset}%`,
+          insetInlineStart: `${event.position.offset}%`,
           width: `${event.position.width}%`,
           position: 'absolute',
         }}
