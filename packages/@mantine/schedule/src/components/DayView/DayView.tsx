@@ -47,6 +47,7 @@ export type DayViewStylesNames =
   | 'dayViewTimeSlots'
   | 'dayViewSlotLabel'
   | 'dayViewSlotLabels'
+  | CombinedScheduleHeaderStylesNames
   | CurrentTimeIndicatorStylesNames
   | CombinedScheduleHeaderStylesNames;
 

@@ -21,7 +21,19 @@ describe('@mantine/schedule/DayView', () => {
     classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/schedule/DayView',
-    stylesApiSelectors: ['dayView'],
+    providerStylesApi: false,
+    stylesApiSelectors: [
+      'dayView',
+      'dayViewAllDay',
+      'dayViewAllDayEvents',
+      'dayViewSlot',
+      'dayViewSlots',
+      'dayViewTimeSlots',
+      'dayViewInner',
+      'header',
+      'headerControl',
+      'viewSelect',
+    ],
   });
 
   it('renders day view for the given date', () => {
@@ -191,5 +203,34 @@ describe('@mantine/schedule/DayView', () => {
     expect(
       container.querySelector('.mantine-DayView-viewSelect[data-view-select-prop]')
     ).toBeInTheDocument();
+  });
+
+  it('renders given events', () => {
+    render(
+      <DayView
+        {...defaultProps}
+        events={[
+          {
+            id: 1,
+            title: 'Test event 1',
+            color: 'blue',
+            start: `${defaultProps.date} 10:00:00`,
+            end: `${defaultProps.date} 11:00:00`,
+            payload: {},
+          },
+          {
+            id: 2,
+            title: 'Test event 2',
+            color: 'blue',
+            start: `${defaultProps.date} 13:00:00`,
+            end: `${defaultProps.date} 14:00:00`,
+            payload: {},
+          },
+        ]}
+      />
+    );
+
+    expect(screen.getByText('Test event 1')).toBeInTheDocument();
+    expect(screen.getByText('Test event 2')).toBeInTheDocument();
   });
 });
