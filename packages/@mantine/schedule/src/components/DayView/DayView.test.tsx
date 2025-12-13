@@ -8,6 +8,16 @@ import { DayView, DayViewProps, DayViewStylesNames } from './DayView';
 
 const defaultProps: DayViewProps = {
   date: '2025-11-03',
+  events: [
+    {
+      id: 1,
+      title: 'Morning Standup',
+      start: `2025-11-03 09:00:00`,
+      end: `2025-11-03 09:30:00`,
+      color: 'blue',
+      payload: {},
+    },
+  ],
 };
 
 describe('@mantine/schedule/DayView', () => {
@@ -33,6 +43,8 @@ describe('@mantine/schedule/DayView', () => {
       'header',
       'headerControl',
       'viewSelect',
+      'event',
+      'eventInner',
     ],
   });
 

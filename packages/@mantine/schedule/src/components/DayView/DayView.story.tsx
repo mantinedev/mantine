@@ -103,7 +103,11 @@ export function Usage() {
 export function RegularEvents() {
   return (
     <div style={{ padding: 40 }}>
-      <DayView date={new Date()} events={regularEvents} />
+      <DayView
+        date={new Date()}
+        events={regularEvents}
+        attributes={{ event: { 'data-test-id': '1' } }}
+      />
     </div>
   );
 }
@@ -141,7 +145,7 @@ export function CustomInterval() {
 export function Radius() {
   return (
     <div style={{ padding: 40 }}>
-      <DayView date={new Date()} radius="md" />
+      <DayView date={new Date()} radius="md" events={overlappingEvents} />
     </div>
   );
 }

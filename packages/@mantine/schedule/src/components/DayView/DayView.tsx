@@ -28,7 +28,7 @@ import {
   CurrentTimeIndicatorStylesNames,
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
 import { useScheduleContext } from '../Schedule/Schedule.context';
-import { ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
+import { ScheduleEvent, ScheduleEventStylesNames } from '../ScheduleEvent/ScheduleEvent';
 import {
   CombinedScheduleHeaderStylesNames,
   ScheduleHeader,
@@ -47,6 +47,7 @@ export type DayViewStylesNames =
   | 'dayViewTimeSlots'
   | 'dayViewSlotLabel'
   | 'dayViewSlotLabels'
+  | ScheduleEventStylesNames
   | CombinedScheduleHeaderStylesNames
   | CurrentTimeIndicatorStylesNames
   | CombinedScheduleHeaderStylesNames;
@@ -206,6 +207,20 @@ export const DayView = factory<DayViewFactory>((_props) => {
     rootSelector: 'dayView',
   });
 
+  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<DayViewFactory>({
+    classNames,
+    styles,
+    props,
+  });
+
+  const stylesApiProps = {
+    classNames: resolvedClassNames,
+    styles: resolvedStyles,
+    attributes,
+    __staticSelector,
+    radius,
+  };
+
   const ctx = useScheduleContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
 
@@ -215,7 +230,9 @@ export const DayView = factory<DayViewFactory>((_props) => {
     <ScheduleEvent
       key={event.id}
       truncate={truncateEvents}
+      {...stylesApiProps}
       style={{
+        ...stylesApiProps.styles?.event,
         top: `${event.position.top}%`,
         height: `${event.position.height}%`,
         insetInlineStart: `${event.position.offset}%`,
@@ -228,7 +245,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
   ));
 
   const allDayEventsNodes = eventsData.allDayEvents.map((event) => (
-    <ScheduleEvent key={event.id} truncate={truncateEvents}>
+    <ScheduleEvent key={event.id} truncate={truncateEvents} {...stylesApiProps}>
       {event.title}
     </ScheduleEvent>
   ));
@@ -260,20 +277,6 @@ export const DayView = factory<DayViewFactory>((_props) => {
     }
     return acc;
   }, []);
-
-  const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<DayViewFactory>({
-    classNames,
-    styles,
-    props,
-  });
-
-  const stylesApiProps = {
-    classNames: resolvedClassNames,
-    styles: resolvedStyles,
-    attributes,
-    __staticSelector,
-    radius,
-  };
 
   return (
     <Box {...getStyles('dayView')} {...others}>

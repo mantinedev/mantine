@@ -6,6 +6,7 @@ interface GetDayPosition {
   startTime?: string;
   endTime?: string;
 }
+
 export function getDayPosition({ event, startTime, endTime }: GetDayPosition) {
   const eventStart = dayjs(event.start);
   const eventEnd = dayjs(event.end);

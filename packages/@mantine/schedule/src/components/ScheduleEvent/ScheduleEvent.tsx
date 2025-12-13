@@ -22,6 +22,8 @@ export type ScheduleEventCssVariables = {
 
 export interface ScheduleEventProps
   extends BoxProps, StylesApiProps<ScheduleEventFactory>, ElementProps<'div'> {
+  __staticSelector?: string;
+
   /** Background color, key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
   color?: MantineColor;
 
@@ -40,7 +42,9 @@ export type ScheduleEventFactory = Factory<{
   variant: ScheduleEventVariant;
 }>;
 
-const defaultProps = {} satisfies Partial<ScheduleEventProps>;
+const defaultProps = {
+  __staticSelector: 'ScheduleEvent',
+} satisfies Partial<ScheduleEventProps>;
 
 const varsResolver = createVarsResolver<ScheduleEventFactory>(
   (theme, { color, variant, radius }) => {
@@ -75,11 +79,12 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
     truncate,
     radius,
     color,
+    __staticSelector,
     ...others
   } = props;
 
   const getStyles = useStyles<ScheduleEventFactory>({
-    name: 'ScheduleEvent',
+    name: __staticSelector,
     classes,
     props,
     className,

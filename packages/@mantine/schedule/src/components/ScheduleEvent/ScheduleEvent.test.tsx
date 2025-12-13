@@ -15,6 +15,6 @@ describe('@mantine/schedule/ScheduleEvent', () => {
     classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/schedule/ScheduleEvent',
-    stylesApiSelectors: ['event'],
+    stylesApiSelectors: ['event', 'eventInner'],
   });
 });
