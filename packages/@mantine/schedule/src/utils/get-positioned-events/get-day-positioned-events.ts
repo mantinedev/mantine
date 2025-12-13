@@ -36,10 +36,17 @@ function columnHasConflict({
   });
 }
 
-interface GetPositionedEventsInput {
+interface GetDayPositionedEventsInput {
+  /** Date at which events are positioned, used to check if events are all-day */
   date: Date | DateStringValue;
+
+  /** List of all events that belong to the given date, extra events must be filtered out before passing to the function */
   events: ScheduleEventData[];
+
+  /** Start time of the day view, used to calculate event positions */
   startTime?: string;
+
+  /** End time of the day view, used to calculate event positions */
   endTime?: string;
 }
 
@@ -48,7 +55,7 @@ export function getDayPositionedEvents({
   startTime,
   endTime,
   date,
-}: GetPositionedEventsInput) {
+}: GetDayPositionedEventsInput) {
   const columns: ScheduleEventData[][] = [];
   const positioned: DayPositionedEventData[] = [];
 

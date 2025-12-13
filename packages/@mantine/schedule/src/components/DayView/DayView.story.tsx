@@ -119,7 +119,13 @@ export function OverlappingEvents() {
 export function CustomTimeRange() {
   return (
     <div style={{ padding: 40 }}>
-      <DayView date={new Date()} startTime="08:00:00" endTime="13:00:00" />
+      <DayView
+        date={new Date()}
+        startTime="08:00:00"
+        endTime="13:00:00"
+        events={regularEvents}
+        withAllDaySlot={false}
+      />
     </div>
   );
 }

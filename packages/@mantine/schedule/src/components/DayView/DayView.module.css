@@ -4,6 +4,7 @@
   --day-view-slot-labels-width: 80px;
   --day-view-radius: var(--schedule-radius, var(--mantine-radius-default));
   border-radius: var(--day-view-radius);
+  overflow: hidden;
 }
 
 .dayViewHeader {
@@ -19,6 +20,7 @@
 .dayViewInner {
   border: 1px solid var(--mantine-color-gray-3);
   display: flex;
+  border-radius: var(--day-view-radius);
 }
 
 .dayViewTimeSlots {
