@@ -33,6 +33,9 @@ export interface ScheduleEventProps
   /** If set, event has `95%` width, allowing time slot selection under the event @default `false` */
   truncate?: boolean;
 
+  /** Event size @default `'sm'` */
+  size?: 'sm' | 'md' | (string & {});
+
   /** Function to customize event body, `event` object is passed as first argument */
   renderEventBody?: (event: ScheduleEventData<any>) => React.ReactNode;
 }
@@ -85,6 +88,7 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
     __staticSelector,
     event,
     renderEventBody,
+    size,
     ...others
   } = props;
 
@@ -104,8 +108,8 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
   });
 
   return (
-    <Box {...getStyles('event')} {...others}>
-      <Box mod={{ truncate }} {...getStyles('eventInner')}>
+    <Box {...getStyles('event')} size={size} {...others}>
+      <Box mod={{ truncate, size }} {...getStyles('eventInner')}>
         {typeof renderEventBody === 'function' ? (
           renderEventBody(event)
         ) : (
