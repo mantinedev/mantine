@@ -21,10 +21,15 @@
   border: 1px solid var(--mantine-color-gray-3);
   display: flex;
   border-radius: var(--day-view-radius);
+  overflow: hidden;
 }
 
 .dayViewTimeSlots {
   position: relative;
+
+  &:where(:first-of-type) .dayViewSlot:first-of-type {
+    border-top-color: transparent;
+  }
 }
 
 .dayViewSlotLabels {
@@ -41,6 +46,10 @@
 
   &:where([data-all-day]) {
     height: var(--all-day-slot-height);
+    border-top: 0;
+  }
+
+  &:where(:first-of-type) {
     border-top: 0;
   }
 }
