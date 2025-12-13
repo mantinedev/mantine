@@ -33,7 +33,7 @@ import {
   CurrentTimeIndicator,
   CurrentTimeIndicatorStylesNames,
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
-import { MoreEvents, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
+import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
 import { useScheduleContext } from '../Schedule/Schedule.context';
 import { ScheduleEvent, ScheduleEventStylesNames } from '../ScheduleEvent/ScheduleEvent';
 import {
@@ -133,6 +133,9 @@ export interface DayViewProps
 
   /** If true, events will have 95% width allowing time slot selection under the event @default false */
   truncateEvents?: boolean;
+
+  /** Props passed down to `MoreEvents` component */
+  moreEventsProps?: Partial<MoreEventsProps>;
 }
 
 export type DayViewFactory = Factory<{
@@ -197,6 +200,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     allDaySlotHeight,
     events,
     truncateEvents,
+    moreEventsProps,
     ...others
   } = props;
 
@@ -349,6 +353,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
                     events={eventsData.allDayEvents}
                     moreEventsCount={allDayEventsCount.hiddenEventsCount}
                     {...stylesApiProps}
+                    {...moreEventsProps}
                   />
                 )}
               </div>

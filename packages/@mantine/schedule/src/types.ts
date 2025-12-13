@@ -15,6 +15,7 @@ export type DateLabelFormat = string | ((date: DateStringValue) => string);
 /** View level used by Schedule component */
 export type ScheduleViewLevel = 'day' | 'week' | 'month' | 'year';
 
+/** Payload type for ScheduleEventData, defined in user application */
 export type EventPayload = Record<PropertyKey, any>;
 
 /** Event data object passed to all `@mantine/schedule` components */

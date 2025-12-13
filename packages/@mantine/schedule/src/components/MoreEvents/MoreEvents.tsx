@@ -19,6 +19,8 @@ import { useScheduleContext } from '../Schedule/Schedule.context';
 import { ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import classes from './MoreEvents.module.css';
 
+export type MoreEventsDropdownType = 'popover' | 'modal';
+
 export type MoreEventsStylesNames = 'moreEventsButton' | 'moreEventsList' | 'moreEventsDropdown';
 
 export interface MoreEventsProps
@@ -36,7 +38,7 @@ export interface MoreEventsProps
   modalTitle?: string;
 
   /** Type of dropdown to use for displaying more events @default `'popover'` */
-  dropdownType?: 'popover' | 'modal';
+  dropdownType?: MoreEventsDropdownType;
 
   /** Props passed down to `Popover` component */
   popoverProps?: Partial<Omit<PopoverProps, 'children'>>;

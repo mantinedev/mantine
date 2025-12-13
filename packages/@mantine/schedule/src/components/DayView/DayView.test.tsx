@@ -20,6 +20,33 @@ const defaultProps: DayViewProps = {
   ],
 };
 
+const allDayEvents = [
+  {
+    id: 1,
+    title: 'All-day event 1',
+    color: 'blue',
+    start: '2025-11-03',
+    end: '2025-11-04',
+    payload: {},
+  },
+  {
+    id: 2,
+    title: 'All-day event 2',
+    color: 'blue',
+    start: '2025-11-03',
+    end: '2025-11-04',
+    payload: {},
+  },
+  {
+    id: 3,
+    title: 'All-day event 3',
+    color: 'red',
+    start: '2025-11-03',
+    end: '2025-11-04',
+    payload: {},
+  },
+];
+
 describe('@mantine/schedule/DayView', () => {
   tests.itSupportsSystemProps<DayViewProps, DayViewStylesNames>({
     component: DayView,
@@ -367,39 +394,21 @@ describe('@mantine/schedule/DayView', () => {
   });
 
   it('MoreEvents receives correct events data', async () => {
+    render(<DayView {...defaultProps} events={allDayEvents} />);
+    await userEvent.click(screen.getByRole('button', { name: /more/ }));
+    expect(screen.getByText('All-day event 3')).toBeInTheDocument();
+  });
+
+  it('passes props down to MoreEvents component with moreEventsProps', async () => {
     render(
       <DayView
         {...defaultProps}
-        events={[
-          {
-            id: 1,
-            title: 'All-day event 1',
-            color: 'blue',
-            start: '2025-11-03',
-            end: '2025-11-04',
-            payload: {},
-          },
-          {
-            id: 2,
-            title: 'All-day event 2',
-            color: 'blue',
-            start: '2025-11-03',
-            end: '2025-11-04',
-            payload: {},
-          },
-          {
-            id: 3,
-            title: 'All-day event 3',
-            color: 'red',
-            start: '2025-11-03',
-            end: '2025-11-04',
-            payload: {},
-          },
-        ]}
+        events={allDayEvents}
+        moreEventsProps={{ dropdownType: 'modal', modalTitle: 'All-day events test' }}
       />
     );
 
     await userEvent.click(screen.getByRole('button', { name: /more/ }));
-    expect(screen.getByText('All-day event 3')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'All-day events test' })).toBeInTheDocument();
   });
 });
