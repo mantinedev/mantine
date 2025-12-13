@@ -40,6 +40,8 @@ import classes from './DayView.module.css';
 export type DayViewStylesNames =
   | 'dayView'
   | 'dayViewInner'
+  | 'dayViewAllDay'
+  | 'dayViewAllDayEvents'
   | 'dayViewSlot'
   | 'dayViewSlots'
   | 'dayViewTimeSlots'
@@ -207,23 +209,28 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
 
   const eventsData = useDayViewEvents({ events, date, startTime, endTime });
-  const eventsNodes = eventsData
-    .filter((event) => !event.position.allDay)
-    .map((event) => (
-      <ScheduleEvent
-        key={event.id}
-        truncate={truncateEvents}
-        style={{
-          top: `${event.position.top}%`,
-          height: `${event.position.height}%`,
-          insetInlineStart: `${event.position.offset}%`,
-          width: `${event.position.width}%`,
-          position: 'absolute',
-        }}
-      >
-        {event.title}
-      </ScheduleEvent>
-    ));
+
+  const eventsNodes = eventsData.regularEvents.map((event) => (
+    <ScheduleEvent
+      key={event.id}
+      truncate={truncateEvents}
+      style={{
+        top: `${event.position.top}%`,
+        height: `${event.position.height}%`,
+        insetInlineStart: `${event.position.offset}%`,
+        width: `${event.position.width}%`,
+        position: 'absolute',
+      }}
+    >
+      {event.title}
+    </ScheduleEvent>
+  ));
+
+  const allDayEventsNodes = eventsData.allDayEvents.map((event) => (
+    <ScheduleEvent key={event.id} truncate={truncateEvents}>
+      {event.title}
+    </ScheduleEvent>
+  ));
 
   const items = slots.map((slot) => (
     <UnstyledButton
@@ -315,11 +322,14 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
         <div {...getStyles('dayViewSlots')}>
           {withAllDaySlot && (
-            <UnstyledButton
-              {...getStyles('dayViewSlot')}
-              mod={{ 'all-day': true }}
-              aria-label={`${ctx.labels.timeSlot} ${ctx.labels.allDay}`}
-            />
+            <div {...getStyles('dayViewAllDay')}>
+              <div {...getStyles('dayViewAllDayEvents')}>{allDayEventsNodes}</div>
+              <UnstyledButton
+                {...getStyles('dayViewSlot')}
+                mod={{ 'all-day': true }}
+                aria-label={`${ctx.labels.timeSlot} ${ctx.labels.allDay}`}
+              />
+            </div>
           )}
 
           <div {...getStyles('dayViewTimeSlots')}>

@@ -10,8 +10,9 @@
   border-radius: var(--event-radius);
   border: 1px solid transparent;
   font-weight: 600;
-  font-size: var(--mantine-font-size-sm);
-  padding: 4px 6px;
+  font-size: 12px;
+  line-height: 1;
+  padding: 3px 4px;
   height: 100%;
   cursor: pointer;
   user-select: none;

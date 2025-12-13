@@ -22,5 +22,5 @@ export { isAllDayEvent } from './is-all-day-event/is-all-day-event';
 export { validateEvent } from './validate-event/validate-event';
 export { sortEvents } from './sort-events/sort-events';
 export { isEventsOverlap } from './is-events-overlap/is-events-overlap';
-export { getPositionedEvents } from './get-positioned-events/get-positioned-events';
+export { getDayPositionedEvents } from './get-positioned-events/get-day-positioned-events';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';

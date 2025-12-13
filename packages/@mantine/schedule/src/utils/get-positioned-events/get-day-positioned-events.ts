@@ -43,7 +43,7 @@ interface GetPositionedEventsInput {
   endTime?: string;
 }
 
-export function getPositionedEvents({
+export function getDayPositionedEvents({
   events,
   startTime,
   endTime,

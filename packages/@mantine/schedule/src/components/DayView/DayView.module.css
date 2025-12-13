@@ -72,3 +72,15 @@
     border-top: 0;
   }
 }
+
+.dayViewAllDay {
+  position: relative;
+  height: var(--all-day-slot-height);
+}
+
+.dayViewAllDayEvents {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
