@@ -6,12 +6,12 @@ import {
   factory,
   Factory,
   getRadius,
-  MantineColor,
   MantineRadius,
   StylesApiProps,
   useProps,
   useStyles,
 } from '@mantine/core';
+import { ScheduleEventData } from '../../types';
 import classes from './ScheduleEvent.module.css';
 
 export type ScheduleEventStylesNames = 'event' | 'eventInner';
@@ -24,8 +24,8 @@ export interface ScheduleEventProps
   extends BoxProps, StylesApiProps<ScheduleEventFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
-  /** Background color, key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
-  color?: MantineColor;
+  /** Event to display */
+  event: ScheduleEventData;
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius @default `theme.defaultRadius` */
   radius?: MantineRadius;
@@ -47,9 +47,9 @@ const defaultProps = {
 } satisfies Partial<ScheduleEventProps>;
 
 const varsResolver = createVarsResolver<ScheduleEventFactory>(
-  (theme, { color, variant, radius }) => {
+  (theme, { event, variant, radius }) => {
     const colors = theme.variantColorResolver({
-      color: color || theme.primaryColor,
+      color: event.color || theme.primaryColor,
       theme,
       variant: variant || 'filled',
       autoContrast: true,
@@ -80,6 +80,7 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
     radius,
     color,
     __staticSelector,
+    event,
     ...others
   } = props;
 
@@ -101,7 +102,7 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
   return (
     <Box {...getStyles('event')} {...others}>
       <Box mod={{ truncate }} {...getStyles('eventInner')}>
-        {children}
+        {event.title}
       </Box>
     </Box>
   );

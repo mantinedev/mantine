@@ -107,7 +107,7 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
   const eventsList = (
     <div {...getStyles('moreEventsList')}>
       {events.map((event) => (
-        <ScheduleEvent key={event.id} color={event.color} radius={radius}>
+        <ScheduleEvent key={event.id} radius={radius} event={event}>
           {event.title}
         </ScheduleEvent>
       ))}

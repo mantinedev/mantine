@@ -240,6 +240,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
   const eventsNodes = eventsData.regularEvents.map((event) => (
     <ScheduleEvent
+      event={event}
       key={event.id}
       truncate={truncateEvents}
       {...stylesApiProps}
@@ -251,9 +252,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
         width: `${event.position.width}%`,
         position: 'absolute',
       }}
-    >
-      {event.title}
-    </ScheduleEvent>
+    />
   ));
 
   const allDayEventsCount = getVisibleEvents({
@@ -264,9 +263,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const allDayEventsNodes = eventsData.allDayEvents
     .slice(0, allDayEventsCount.visibleEventsCount)
     .map((event) => (
-      <ScheduleEvent key={event.id} truncate={truncateEvents} {...stylesApiProps}>
-        {event.title}
-      </ScheduleEvent>
+      <ScheduleEvent key={event.id} truncate={truncateEvents} event={event} {...stylesApiProps} />
     ));
 
   const items = slots.map((slot) => (
