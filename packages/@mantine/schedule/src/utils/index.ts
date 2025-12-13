@@ -23,4 +23,5 @@ export { validateEvent } from './validate-event/validate-event';
 export { sortEvents } from './sort-events/sort-events';
 export { isEventsOverlap } from './is-events-overlap/is-events-overlap';
 export { getDayPositionedEvents } from './get-positioned-events/get-day-positioned-events';
+export { getVisibleEvents } from './get-visible-events/get-visible-events';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';

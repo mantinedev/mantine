@@ -22,7 +22,13 @@ import {
   ScheduleEventData,
   ScheduleViewLevel,
 } from '../../types';
-import { clampIntervalMinutes, formatDate, getDayTimeIntervals, toDateString } from '../../utils';
+import {
+  clampIntervalMinutes,
+  formatDate,
+  getDayTimeIntervals,
+  getVisibleEvents,
+  toDateString,
+} from '../../utils';
 import {
   CurrentTimeIndicator,
   CurrentTimeIndicatorStylesNames,
@@ -244,11 +250,18 @@ export const DayView = factory<DayViewFactory>((_props) => {
     </ScheduleEvent>
   ));
 
-  const allDayEventsNodes = eventsData.allDayEvents.map((event) => (
-    <ScheduleEvent key={event.id} truncate={truncateEvents} {...stylesApiProps}>
-      {event.title}
-    </ScheduleEvent>
-  ));
+  const allDayEventsCount = getVisibleEvents({
+    maxEvents: 2,
+    totalEvents: eventsData.allDayEvents.length,
+  });
+
+  const allDayEventsNodes = eventsData.allDayEvents
+    .slice(0, allDayEventsCount.visibleEventsCount)
+    .map((event) => (
+      <ScheduleEvent key={event.id} truncate={truncateEvents} {...stylesApiProps}>
+        {event.title}
+      </ScheduleEvent>
+    ));
 
   const items = slots.map((slot) => (
     <UnstyledButton

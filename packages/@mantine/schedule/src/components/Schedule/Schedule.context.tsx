@@ -19,6 +19,7 @@ export interface ScheduleLabels {
   switchToWeekView: string;
   switchToMonthView: string;
   switchToYearView: string;
+  moreLabel: (hiddenEventsCount: number) => string;
 }
 
 export interface ScheduleContextValue {
@@ -57,6 +58,7 @@ const defaultScheduleContextValue: ScheduleContextValue = {
     switchToWeekView: 'Switch to week view',
     switchToMonthView: 'Switch to month view',
     switchToYearView: 'Switch to year view',
+    moreLabel: (hiddenEventsCount: number) => `+${hiddenEventsCount} more`,
   },
 };
 
