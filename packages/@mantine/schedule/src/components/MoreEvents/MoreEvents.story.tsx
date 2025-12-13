@@ -70,7 +70,12 @@ export function WithPopover() {
 export function WithModal() {
   return (
     <div style={{ padding: 40 }}>
-      <MoreEvents events={sampleEvents} moreEventsCount={4} dropdownType="modal" />
+      <MoreEvents
+        events={sampleEvents}
+        moreEventsCount={4}
+        dropdownType="modal"
+        modalTitle="March 13, 2025 events"
+      />
     </div>
   );
 }

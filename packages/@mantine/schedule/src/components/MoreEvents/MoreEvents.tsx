@@ -32,6 +32,9 @@ export interface MoreEventsProps
   /** Key of `theme.radius` or any valid CSS value to set border-radius @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
+  /** Title for the Modal component, ignored if `dropdownType` is not 'modal' */
+  modalTitle?: string;
+
   /** Type of dropdown to use for displaying more events @default `'popover'` */
   dropdownType?: 'popover' | 'modal';
 
@@ -73,6 +76,7 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
     modalProps,
     onDropdownClose,
     children,
+    modalTitle,
     ...others
   } = props;
 
@@ -114,9 +118,9 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
         <Modal
           opened={dropdownOpened}
           onClose={handleClose}
-          withCloseButton={false}
           unstyled={unstyled}
           radius={radius}
+          title={modalTitle}
           {...modalProps}
         >
           {eventsList}
@@ -132,12 +136,8 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
         unstyled={unstyled}
         disabled={popoverProps?.disabled || dropdownType === 'modal'}
         radius={radius}
-        transitionProps={{ transition: 'pop' }}
+        transitionProps={{ transition: 'pop', duration: 120 }}
         {...popoverProps}
-        onClose={() => {
-          onDropdownClose?.();
-          popoverProps?.onClose?.();
-        }}
         onChange={(_opened) => {
           if (!_opened) {
             popoverProps?.onChange?.(_opened);

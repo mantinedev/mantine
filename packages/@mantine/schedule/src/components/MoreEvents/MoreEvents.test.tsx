@@ -1,4 +1,4 @@
-import { tests } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { ScheduleEventData } from '../../types';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from './MoreEvents';
 
@@ -55,5 +55,45 @@ describe('@mantine/schedule/MoreEvents', () => {
     refType: HTMLButtonElement,
     displayName: '@mantine/schedule/MoreEvents',
     stylesApiSelectors: ['moreEventsButton', 'moreEventsList'],
+  });
+
+  it('renders correct more events count', () => {
+    render(<MoreEvents {...defaultProps} moreEventsCount={50} />);
+    expect(screen.getByText('+50 more')).toBeInTheDocument();
+  });
+
+  it('opens popover with events on click', async () => {
+    render(<MoreEvents {...defaultProps} />);
+    await userEvent.click(screen.getByRole('button', { name: '+2 more' }));
+
+    events.forEach((event) => {
+      expect(screen.getByText(event.title)).toBeInTheDocument();
+    });
+  });
+
+  it('calls onDropdownClose when popover is closed', async () => {
+    const spy = jest.fn();
+    render(<MoreEvents {...defaultProps} onDropdownClose={spy} />);
+    await userEvent.click(screen.getByRole('button', { name: '+2 more' }));
+    await userEvent.click(document.body);
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('opens modal when dropdownType is set to modal', async () => {
+    render(<MoreEvents {...defaultProps} dropdownType="modal" modalTitle="Test title" />);
+    await userEvent.click(screen.getByRole('button', { name: '+2 more' }));
+
+    expect(screen.getByRole('heading', { name: 'Test title' })).toBeInTheDocument();
+    events.forEach((event) => {
+      expect(screen.getByText(event.title)).toBeInTheDocument();
+    });
+  });
+
+  it('calls onDropdownClose when modal is closed', async () => {
+    const spy = jest.fn();
+    render(<MoreEvents {...defaultProps} dropdownType="modal" onDropdownClose={spy} />);
+    await userEvent.click(screen.getByRole('button', { name: '+2 more' }));
+    await userEvent.click(document.querySelector('.mantine-CloseButton-root')!);
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 });
