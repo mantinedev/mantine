@@ -411,4 +411,31 @@ describe('@mantine/schedule/DayView', () => {
     await userEvent.click(screen.getByRole('button', { name: /more/ }));
     expect(screen.getByRole('heading', { name: 'All-day events test' })).toBeInTheDocument();
   });
+
+  it('supports renderEventBody prop', () => {
+    render(
+      <DayView
+        {...defaultProps}
+        events={[
+          {
+            id: 1,
+            title: 'Test event',
+            color: 'blue',
+            start: `${defaultProps.date} 10:00:00`,
+            end: `${defaultProps.date} 11:00:00`,
+            payload: {},
+          },
+        ]}
+        renderEventBody={(event) => (
+          <div>
+            <strong>{event.title}</strong>
+            <div>Custom body</div>
+          </div>
+        )}
+      />
+    );
+
+    expect(screen.getByText('Test event')).toBeInTheDocument();
+    expect(screen.queryAllByText('Custom body').length).toBeGreaterThan(0);
+  });
 });

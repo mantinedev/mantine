@@ -35,7 +35,11 @@ import {
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
 import { useScheduleContext } from '../Schedule/Schedule.context';
-import { ScheduleEvent, ScheduleEventStylesNames } from '../ScheduleEvent/ScheduleEvent';
+import {
+  RenderEventBody,
+  ScheduleEvent,
+  ScheduleEventStylesNames,
+} from '../ScheduleEvent/ScheduleEvent';
 import {
   CombinedScheduleHeaderStylesNames,
   ScheduleHeader,
@@ -136,6 +140,9 @@ export interface DayViewProps
 
   /** Props passed down to `MoreEvents` component */
   moreEventsProps?: Partial<MoreEventsProps>;
+
+  /** Function to customize event body, `event` object is passed as first argument */
+  renderEventBody?: RenderEventBody;
 }
 
 export type DayViewFactory = Factory<{
@@ -201,6 +208,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     events,
     truncateEvents,
     moreEventsProps,
+    renderEventBody,
     ...others
   } = props;
 
@@ -243,6 +251,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
       event={event}
       key={event.id}
       truncate={truncateEvents}
+      renderEventBody={renderEventBody}
       {...stylesApiProps}
       style={{
         ...stylesApiProps.styles?.event,
@@ -263,7 +272,13 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const allDayEventsNodes = eventsData.allDayEvents
     .slice(0, allDayEventsCount.visibleEventsCount)
     .map((event) => (
-      <ScheduleEvent key={event.id} truncate={truncateEvents} event={event} {...stylesApiProps} />
+      <ScheduleEvent
+        key={event.id}
+        truncate={truncateEvents}
+        event={event}
+        renderEventBody={renderEventBody}
+        {...stylesApiProps}
+      />
     ));
 
   const items = slots.map((slot) => (
@@ -349,6 +364,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
                   <MoreEvents
                     events={eventsData.allDayEvents}
                     moreEventsCount={allDayEventsCount.hiddenEventsCount}
+                    renderEventBody={renderEventBody}
                     {...stylesApiProps}
                     {...moreEventsProps}
                   />
