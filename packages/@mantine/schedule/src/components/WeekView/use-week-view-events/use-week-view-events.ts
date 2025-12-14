@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { DateStringValue, DayOfWeek, ScheduleEventData } from '../../../types';
-import { getWeekPositionedEvents, isSameWeek, validateEvent } from '../../../utils';
+import { getWeekPositionedEvents, isWithinWeek, validateEvent } from '../../../utils';
 
 interface UseWeekViewEventsInput {
   /** Date (week start) at which events are positioned, used to check if events are all-day */
@@ -35,7 +35,7 @@ export function useWeekViewEvents({
     const filteredEvents: ScheduleEventData[] = [];
 
     for (const event of events) {
-      if (isSameWeek({ date: event.start, targetWeek: date, firstDayOfWeek })) {
+      if (isWithinWeek({ event, targetWeek: date, firstDayOfWeek })) {
         filteredEvents.push(validateEvent(event));
 
         if (!ids.has(event.id)) {

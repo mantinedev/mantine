@@ -13,6 +13,14 @@ const weekStart = _weekStart.format('YYYY-MM-DD');
 
 const regularEvents: ScheduleEventData[] = [
   {
+    id: 0,
+    title: 'Design conference',
+    start: `${_weekStart.subtract(6, 'day').format('YYYY-MM-DD')} 12:00:00`,
+    end: `${_weekStart.add(4, 'day').format('YYYY-MM-DD')} 14:00:00`,
+    color: 'red',
+    payload: {},
+  },
+  {
     id: 1,
     title: 'Team lunch',
     start: `${weekStart} 12:00:00`,

@@ -30,7 +30,7 @@ const createAllDayEvent = (id: string | number, date: string): ScheduleEventData
 };
 
 describe('@mantine/schedule/get-week-positioned-events', () => {
-  it('returns empty object for empty events', () => {
+  it('returns empty arrays for empty events', () => {
     const result = getWeekPositionedEvents({
       events: [],
       date: testDate,
@@ -39,8 +39,9 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       endTime: '17:00',
     });
 
-    expect(Object.keys(result).length).toBe(7);
-    Object.values(result).forEach((dayEvents) => {
+    expect(result.allDayEvents).toHaveLength(0);
+    expect(Object.keys(result.regularEvents)).toHaveLength(7);
+    Object.values(result.regularEvents).forEach((dayEvents) => {
       expect(dayEvents).toHaveLength(0);
     });
   });
@@ -56,9 +57,9 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       endTime: '17:00',
     });
 
-    expect(result[monday]).toHaveLength(1);
-    expect(result[monday][0].id).toBe(1);
-    expect(result[monday][0].position.allDay).toBe(false);
+    expect(result.regularEvents[monday]).toHaveLength(1);
+    expect(result.regularEvents[monday][0].id).toBe(1);
+    expect(result.regularEvents[monday][0].position.allDay).toBe(false);
   });
 
   it('respects firstDayOfWeek for week calculation', () => {
@@ -78,8 +79,8 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
     });
 
     // Results might differ based on which Sunday/Monday is considered start
-    expect(Object.keys(resultSundayStart)).toHaveLength(7);
-    expect(Object.keys(resultMondayStart)).toHaveLength(7);
+    expect(Object.keys(resultSundayStart.regularEvents)).toHaveLength(7);
+    expect(Object.keys(resultMondayStart.regularEvents)).toHaveLength(7);
   });
 
   it('marks all-day events correctly', () => {
@@ -91,13 +92,12 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       firstDayOfWeek: 1,
     });
 
-    expect(result[monday]).toHaveLength(1);
-    expect(result[monday][0].position.allDay).toBe(true);
+    expect(result.allDayEvents).toHaveLength(1);
+    expect(result.allDayEvents[0].position.allDay).toBe(true);
   });
 
   it('handles multiday events spanning multiple days', () => {
     const monday = dayjs(weekStartForTest).format('YYYY-MM-DD');
-    const tuesday = dayjs(weekStartForTest).add(1, 'day').format('YYYY-MM-DD');
     const wednesday = dayjs(weekStartForTest).add(2, 'day').format('YYYY-MM-DD');
 
     const events = [createEvent(1, `${monday} 10:00:00`, `${wednesday} 15:00:00`)];
@@ -109,9 +109,10 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       endTime: '17:00',
     });
 
-    expect(result[monday]).toHaveLength(1);
-    expect(result[tuesday]).toHaveLength(1);
-    expect(result[wednesday]).toHaveLength(1);
+    // Multiday events should be in allDayEvents, not split per day
+    expect(result.allDayEvents).toHaveLength(1);
+    expect(result.allDayEvents[0].id).toBe(1);
+    expect(result.allDayEvents[0].position.weekOffset).toBe(0);
   });
 
   it('calculates weekOffset correctly for events starting at week start', () => {
@@ -123,7 +124,7 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       firstDayOfWeek: 1,
     });
 
-    expect(result[monday][0].position.weekOffset).toBe(0);
+    expect(result.regularEvents[monday][0].position.weekOffset).toBe(0);
   });
 
   it('calculates weekOffset correctly for events mid-week', () => {
@@ -136,7 +137,7 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
     });
 
     // Wednesday is 2 days into the week, so weekOffset should be (2/7)*100
-    expect(result[wednesday][0].position.weekOffset).toBeCloseTo((2 / 7) * 100, 1);
+    expect(result.regularEvents[wednesday][0].position.weekOffset).toBeCloseTo((2 / 7) * 100, 1);
   });
 
   it('marks hangingStart when event starts before week', () => {
@@ -150,7 +151,9 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       firstDayOfWeek: 1,
     });
 
-    expect(result[monday][0].position.hangingStart).toBe(true);
+    // Multiday events go to allDayEvents
+    expect(result.allDayEvents).toHaveLength(1);
+    expect(result.allDayEvents[0].position.hangingStart).toBe(true);
   });
 
   it('marks hangingEnd when event ends after week', () => {
@@ -164,7 +167,9 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       firstDayOfWeek: 1,
     });
 
-    expect(result[saturday][0].position.hangingEnd).toBe(true);
+    // Multiday events go to allDayEvents
+    expect(result.allDayEvents).toHaveLength(1);
+    expect(result.allDayEvents[0].position.hangingEnd).toBe(true);
   });
 
   it('handles overlapping events correctly', () => {
@@ -181,14 +186,14 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       endTime: '17:00',
     });
 
-    expect(result[monday]).toHaveLength(2);
-    expect(result[monday][0].position.overlaps).toBe(2);
-    expect(result[monday][1].position.overlaps).toBe(2);
-    expect(result[monday][0].position.width).toBe(50);
-    expect(result[monday][1].position.width).toBe(50);
+    expect(result.regularEvents[monday]).toHaveLength(2);
+    expect(result.regularEvents[monday][0].position.overlaps).toBe(2);
+    expect(result.regularEvents[monday][1].position.overlaps).toBe(2);
+    expect(result.regularEvents[monday][0].position.width).toBe(50);
+    expect(result.regularEvents[monday][1].position.width).toBe(50);
   });
 
-  it('separates all-day and regular events into different columns', () => {
+  it('separates all-day and regular events into different collections', () => {
     const monday = dayjs(weekStartForTest).format('YYYY-MM-DD');
     const events = [
       createAllDayEvent(1, monday),
@@ -200,12 +205,10 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       firstDayOfWeek: 1,
     });
 
-    expect(result[monday]).toHaveLength(2);
-    // All-day and regular events should be in different columns
-    const allDayEvent = result[monday].find((e) => e.position.allDay);
-    const regularEvent = result[monday].find((e) => !e.position.allDay);
-    expect(allDayEvent).toBeDefined();
-    expect(regularEvent).toBeDefined();
+    expect(result.allDayEvents).toHaveLength(1);
+    expect(result.regularEvents[monday]).toHaveLength(1);
+    expect(result.allDayEvents[0].id).toBe(1);
+    expect(result.regularEvents[monday][0].id).toBe(2);
   });
 
   it('handles multiday events with hanging start and end', () => {
@@ -219,13 +222,12 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       firstDayOfWeek: 1,
     });
 
-    // Event should appear on all days of the week
-    const weekDays = getWeekDays({ week: testDate, firstDayOfWeek: 1 });
-    for (const day of weekDays) {
-      expect(result[day]).toHaveLength(1);
-      expect(result[day][0].position.hangingStart).toBe(true);
-      expect(result[day][0].position.hangingEnd).toBe(true);
-    }
+    // Multiday events are stored in allDayEvents as a single event
+    expect(result.allDayEvents).toHaveLength(1);
+    expect(result.allDayEvents[0].position.hangingStart).toBe(true);
+    expect(result.allDayEvents[0].position.hangingEnd).toBe(true);
+    // weekOffset should be 0 because event starts before week, so display from week start
+    expect(result.allDayEvents[0].position.weekOffset).toBe(0);
   });
 
   it('sorts events by start time before positioning', () => {
@@ -240,8 +242,8 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       firstDayOfWeek: 1,
     });
 
-    expect(result[monday][0].id).toBe(1);
-    expect(result[monday][1].id).toBe(2);
+    expect(result.regularEvents[monday][0].id).toBe(1);
+    expect(result.regularEvents[monday][1].id).toBe(2);
   });
 
   it('preserves event data in positioned events', () => {
@@ -259,9 +261,9 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       firstDayOfWeek: 1,
     });
 
-    expect(result[monday][0].title).toBe('Event 1');
-    expect(result[monday][0].color).toBe('blue');
-    expect(result[monday][0].payload).toEqual(payload);
+    expect(result.regularEvents[monday][0].title).toBe('Event 1');
+    expect(result.regularEvents[monday][0].color).toBe('blue');
+    expect(result.regularEvents[monday][0].payload).toEqual(payload);
   });
 
   it('handles non-overlapping events on same day', () => {
@@ -276,14 +278,13 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       firstDayOfWeek: 1,
     });
 
-    expect(result[monday]).toHaveLength(2);
-    expect(result[monday][0].position.overlaps).toBe(1);
-    expect(result[monday][1].position.overlaps).toBe(1);
+    expect(result.regularEvents[monday]).toHaveLength(2);
+    expect(result.regularEvents[monday][0].position.overlaps).toBe(1);
+    expect(result.regularEvents[monday][1].position.overlaps).toBe(1);
   });
 
   it('calculates correct weekOffset and width for multiday events', () => {
     const monday = dayjs(weekStartForTest).format('YYYY-MM-DD');
-    const tuesday = dayjs(weekStartForTest).add(1, 'day').format('YYYY-MM-DD');
     const wednesday = dayjs(weekStartForTest).add(2, 'day').format('YYYY-MM-DD');
 
     // 3-day event: Mon to Wed (spanning 3 days out of 7)
@@ -294,14 +295,11 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       firstDayOfWeek: 1,
     });
 
-    // All days should have the event
-    expect(result[monday][0].position.weekOffset).toBe(0);
-    expect(result[tuesday][0].position.weekOffset).toBeCloseTo((1 / 7) * 100, 1);
-    expect(result[wednesday][0].position.weekOffset).toBeCloseTo((2 / 7) * 100, 1);
-
-    // hangingStart and hangingEnd should both be false
-    expect(result[monday][0].position.hangingStart).toBe(false);
-    expect(result[wednesday][0].position.hangingEnd).toBe(false);
+    // Multiday events should be in allDayEvents
+    expect(result.allDayEvents).toHaveLength(1);
+    expect(result.allDayEvents[0].position.weekOffset).toBe(0);
+    expect(result.allDayEvents[0].position.hangingStart).toBe(false);
+    expect(result.allDayEvents[0].position.hangingEnd).toBe(false);
   });
 
   it('handles triple overlap correctly', () => {
@@ -317,8 +315,8 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
       firstDayOfWeek: 1,
     });
 
-    expect(result[monday]).toHaveLength(3);
-    result[monday].forEach((e) => {
+    expect(result.regularEvents[monday]).toHaveLength(3);
+    result.regularEvents[monday].forEach((e) => {
       expect(e.position.overlaps).toBe(3);
       expect(e.position.width).toBeCloseTo(100 / 3, 5);
     });
@@ -343,8 +341,8 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
     });
 
     // Position should be different based on time boundaries
-    expect(resultWithBounds[monday][0].position.top).not.toBe(
-      resultWithoutBounds[monday][0].position.top
+    expect(resultWithBounds.regularEvents[monday][0].position.top).not.toBe(
+      resultWithoutBounds.regularEvents[monday][0].position.top
     );
   });
 
@@ -361,8 +359,25 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
     });
 
     // No events should appear in the current week
-    Object.values(result).forEach((dayEvents) => {
+    expect(result.allDayEvents).toHaveLength(0);
+    Object.values(result.regularEvents).forEach((dayEvents) => {
       expect(dayEvents).toHaveLength(0);
     });
+  });
+
+  it('handles overlapping all-day events', () => {
+    const monday = dayjs(weekStartForTest).format('YYYY-MM-DD');
+    const events = [createAllDayEvent(1, monday), createAllDayEvent(2, monday)];
+    const result = getWeekPositionedEvents({
+      events,
+      date: testDate,
+      firstDayOfWeek: 1,
+    });
+
+    expect(result.allDayEvents).toHaveLength(2);
+    expect(result.allDayEvents[0].position.overlaps).toBe(2);
+    expect(result.allDayEvents[1].position.overlaps).toBe(2);
+    expect(result.allDayEvents[0].position.width).toBe(50);
+    expect(result.allDayEvents[1].position.width).toBe(50);
   });
 });
