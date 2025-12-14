@@ -78,7 +78,7 @@ export interface DayViewProps
   /** Called when date is changed */
   onDateChange?: (date: DateStringValue) => void;
 
-  /** Events to display */
+  /** Events to display, must be a stable reference */
   events?: ScheduleEventData[];
 
   /** Time slots start time, in `HH:mm:ss` format @default `00:00:00` */

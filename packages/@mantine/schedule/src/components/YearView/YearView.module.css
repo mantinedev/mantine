@@ -116,6 +116,7 @@
   justify-content: center;
   border-radius: 100%;
   aspect-ratio: 1;
+  position: relative;
 
   &:where([data-weekend]) {
     color: var(--mantine-color-red-6);
@@ -164,4 +165,21 @@
       background-color: var(--mantine-color-dark-6);
     }
   }
+}
+
+.yearViewDayIndicators {
+  position: absolute;
+  bottom: 4px;
+  inset-inline: 0;
+  display: flex;
+  justify-content: center;
+  padding-inline-start: 2px;
+}
+
+.yearViewDayIndicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  margin-inline-start: -2px;
+  border: 1px solid var(--mantine-color-body);
 }

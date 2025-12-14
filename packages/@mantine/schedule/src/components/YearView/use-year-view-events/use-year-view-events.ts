@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { DateStringValue, ScheduleEventData } from '../../../types';
 import { isMultidayEvent, validateEvent } from '../../../utils';
 
-type GroupedEvents = Record<DateStringValue, ScheduleEventData[]>;
+export type GroupedEvents = Record<DateStringValue, ScheduleEventData[]>;
 
 function groupEventByDate(event: ScheduleEventData, groupedEvents: GroupedEvents) {
   if (isMultidayEvent(event)) {

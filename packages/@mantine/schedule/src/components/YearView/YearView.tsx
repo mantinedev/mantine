@@ -14,7 +14,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { DateStringValue, ScheduleViewLevel } from '../../types';
+import { DateStringValue, ScheduleEventData, ScheduleViewLevel } from '../../types';
 import { getMonthsByQuarter, toDateString } from '../../utils';
 import { useScheduleContext } from '../Schedule/Schedule.context';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
@@ -23,6 +23,7 @@ import {
   ScheduleHeader,
 } from '../ScheduleHeader/ScheduleHeader';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
+import { useYearViewEvents } from './use-year-view-events/use-year-view-events';
 import { YearViewMonth, YearViewMonthSettings } from './YearViewMonth';
 import classes from './YearView.module.css';
 
@@ -38,6 +39,8 @@ export type YearViewStylesNames =
   | 'yearViewWeekdaysCorner'
   | 'yearViewMonthCaption'
   | 'yearViewQuarter'
+  | 'yearViewDayIndicators'
+  | 'yearViewDayIndicator'
   | CombinedScheduleHeaderStylesNames;
 
 export type YearViewCssVariables = {
@@ -53,6 +56,9 @@ export interface YearViewProps
 
   /** Called with the new date value when a date is selected */
   onDateChange?: (value: DateStringValue) => void;
+
+  /** Events to display, must be a stable reference */
+  events?: ScheduleEventData[];
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
@@ -107,6 +113,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
     // YearView props
     date,
     onDateChange,
+    events,
 
     // YearViewMonth settings
     monthLabelFormat,
@@ -176,6 +183,8 @@ export const YearView = factory<YearViewFactory>((_props) => {
     radius,
   };
 
+  const groupedEvents = useYearViewEvents({ date, events });
+
   const months = getMonthsByQuarter(dayjs(date).format('YYYY-MM-DD')).map(
     (quarter, quarterIndex) => {
       const months = quarter.map((month) => (
@@ -199,6 +208,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
           onDayClick={onDayClick}
           onWeekNumberClick={onWeekNumberClick}
           highlightToday={highlightToday}
+          groupedEvents={groupedEvents}
         />
       ));
 

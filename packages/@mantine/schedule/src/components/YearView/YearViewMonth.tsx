@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Box, GetStylesApi, UnstyledButton } from '@mantine/core';
+import { Box, GetStylesApi, getThemeColor, UnstyledButton, useMantineTheme } from '@mantine/core';
 import { DateLabelFormat, DayOfWeek } from '../../types';
 import {
   formatDate,
@@ -9,6 +9,7 @@ import {
   isSameMonth,
 } from '../../utils';
 import { useScheduleContext } from '../Schedule/Schedule.context';
+import { GroupedEvents } from './use-year-view-events/use-year-view-events';
 import type { YearViewFactory } from './YearView';
 
 export interface YearViewMonthSettings {
@@ -58,6 +59,9 @@ export interface YearViewMonthProps extends YearViewMonthSettings {
 
   /** `useStyles` return value of `YearView` */
   getStyles: GetStylesApi<YearViewFactory>;
+
+  /** Events grouped by date */
+  groupedEvents?: GroupedEvents;
 }
 
 export function YearViewMonth({
@@ -76,8 +80,11 @@ export function YearViewMonth({
   onMonthClick,
   getWeekNumberProps,
   highlightToday,
+  groupedEvents,
 }: YearViewMonthProps) {
   const ctx = useScheduleContext();
+  const theme = useMantineTheme();
+  const today = dayjs();
 
   const weekdays = withWeekDays
     ? getWeekdaysNames({
@@ -104,7 +111,17 @@ export function YearViewMonth({
         .format('MMMM D, YYYY');
 
       const dayProps = getDayProps?.(new Date(date)) || {};
-      const today = dayjs(date).isSame(dayjs(), 'day') && highlightToday;
+      const isToday = dayjs(date).isSame(today, 'day') && highlightToday;
+      const dayEvents = groupedEvents?.[dayjs(date).format('YYYY-MM-DD')] || [];
+
+      const indicators = dayEvents.slice(0, 3).map((event) => (
+        <div
+          {...getStyles('yearViewDayIndicator', {
+            style: { backgroundColor: getThemeColor(event.color, theme) },
+          })}
+          key={event.id}
+        />
+      ));
 
       return (
         <UnstyledButton
@@ -112,13 +129,15 @@ export function YearViewMonth({
           {...dayProps}
           {...getStyles('yearViewDay', { className: dayProps.className, style: dayProps.style })}
           key={date}
-          mod={[{ outside, weekend, today }, dayProps.mod]}
+          mod={[{ outside, weekend, today: isToday }, dayProps.mod]}
           onClick={(event) => {
             onDayClick?.(dayjs(date).startOf('day').toDate(), event);
             dayProps.onClick?.(event);
           }}
         >
           {dayjs(date).format('D')}
+
+          <div {...getStyles('yearViewDayIndicators')}>{indicators}</div>
         </UnstyledButton>
       );
     });
