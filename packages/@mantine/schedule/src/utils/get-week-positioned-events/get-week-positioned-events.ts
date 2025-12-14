@@ -73,7 +73,6 @@ export function getWeekPositionedEvents({
   endTime,
   firstDayOfWeek = 1,
 }: GetWeekPositionedEventsInput): GroupedWeekEvents {
-  console.log({ receivedEVents: events });
   const weekDays = getWeekDays({ week: date, firstDayOfWeek });
   const weekStartDate = dayjs(weekDays[0]);
   const weekEndDate = dayjs(weekDays[6]);

@@ -8,7 +8,8 @@ import { WeekView } from './WeekView';
 
 export default { title: 'schedule/WeekView' };
 
-const weekStart = dayjs(getStartOfWeek(new Date(), 1)).format('YYYY-MM-DD');
+const _weekStart = dayjs(getStartOfWeek(new Date(), 1));
+const weekStart = _weekStart.format('YYYY-MM-DD');
 
 const regularEvents: ScheduleEventData[] = [
   {
@@ -19,9 +20,23 @@ const regularEvents: ScheduleEventData[] = [
     color: 'red',
     payload: {},
   },
+  {
+    id: 2,
+    title: 'Daily standup',
+    start: `${_weekStart.add(1, 'day').format('YYYY-MM-DD')} 15:00:00`,
+    end: `${_weekStart.add(1, 'day').format('YYYY-MM-DD')} 15:15:00`,
+    color: 'blue',
+    payload: {},
+  },
+  {
+    id: 3,
+    title: 'Team dinner',
+    start: `${_weekStart.add(1, 'day').format('YYYY-MM-DD')} 18:00:00`,
+    end: `${_weekStart.add(1, 'day').format('YYYY-MM-DD')} 22:00:00`,
+    color: 'cyan',
+    payload: {},
+  },
 ];
-
-console.log(regularEvents);
 
 export function Usage() {
   const [date, setDate] = useState(toDateString(new Date()));
