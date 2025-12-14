@@ -5,8 +5,16 @@
   --week-view-slot-height: 60px;
   --indicator-labels-offset: calc(var(--week-view-slots-label-width) / var(--number-of-days));
 
-  border: 1px solid var(--mantine-color-gray-3);
+  border: 1px solid var(--week-view-border-color);
   border-radius: var(--week-view-radius);
+
+  @mixin where-light {
+    --week-view-border-color: var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    --week-view-border-color: var(--mantine-color-dark-4);
+  }
 }
 
 .weekViewInner {
@@ -28,7 +36,7 @@
   top: 0;
   z-index: 3;
   background-color: var(--mantine-color-body);
-  border-bottom: 1px solid var(--mantine-color-gray-3);
+  border-bottom: 1px solid var(--week-view-border-color);
   margin-bottom: -1px;
   transition: box-shadow 100ms ease;
 
@@ -56,7 +64,7 @@
 }
 
 .weekViewSlotLabel {
-  border-top: 1px solid var(--mantine-color-gray-1);
+  border-top: 1px solid var(--week-view-border-color);
   text-align: right;
   height: var(--week-view-slot-height);
   padding: 4px;
@@ -66,15 +74,11 @@
   cursor: default;
   font-variant-numeric: tabular-nums;
   text-transform: uppercase;
-
-  &:where([data-hour-start]) {
-    border-top-color: var(--mantine-color-gray-3);
-  }
 }
 
 .weekViewDay {
   flex: 1;
-  border-inline-start: 1px solid var(--mantine-color-gray-3);
+  border-inline-start: 1px solid var(--week-view-border-color);
 
   &:where([data-emphasize]) {
     flex: 2;
@@ -92,7 +96,7 @@
   user-select: none;
   cursor: pointer;
   flex: 1;
-  border-inline-start: 1px solid var(--mantine-color-gray-3);
+  border-inline-start: 1px solid var(--week-view-border-color);
   padding-inline-start: 5px;
 
   &:where([data-emphasize]) {
@@ -150,15 +154,11 @@
 .weekViewDaySlot {
   display: block;
   width: 100%;
-  border-top: 1px solid var(--mantine-color-gray-1);
+  border-top: 1px solid var(--week-view-border-color);
   height: var(--week-view-slot-height);
   min-width: var(--week-view-min-slot-width);
   padding: 4px;
   cursor: pointer;
-
-  &:where([data-hour-start]) {
-    border-top-color: var(--mantine-color-gray-3);
-  }
 
   @mixin hover {
     @mixin where-light {
@@ -188,7 +188,7 @@
 
   & > .weekViewDaySlot {
     flex: 1;
-    border-inline-start: 1px solid var(--mantine-color-gray-3);
+    border-inline-start: 1px solid var(--week-view-border-color);
     height: 36px;
   }
 }

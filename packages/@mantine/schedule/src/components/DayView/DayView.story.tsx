@@ -79,7 +79,7 @@ const overlappingEvents: ScheduleEventData[] = [
     title: 'Workshop Session 2',
     start: `${today} 11:00:00`,
     end: `${today} 12:30:00`,
-    color: 'purple',
+    color: 'violet',
     payload: {},
   },
   {

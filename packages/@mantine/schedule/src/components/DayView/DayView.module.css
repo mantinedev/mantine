@@ -5,6 +5,14 @@
   --day-view-radius: var(--schedule-radius, var(--mantine-radius-default));
   border-radius: var(--day-view-radius);
   overflow: hidden;
+
+  @mixin where-light {
+    --day-view-border-color: var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    --day-view-border-color: var(--mantine-color-dark-4);
+  }
 }
 
 .dayViewHeader {
@@ -18,7 +26,7 @@
 }
 
 .dayViewInner {
-  border: 1px solid var(--mantine-color-gray-3);
+  border: 1px solid var(--day-view-border-color);
   display: flex;
   border-radius: var(--day-view-radius);
   overflow: hidden;
@@ -38,7 +46,7 @@
 
 .dayViewSlotLabel {
   height: var(--slot-height);
-  border-top: 1px solid var(--mantine-color-gray-3);
+  border-top: 1px solid var(--day-view-border-color);
   font-size: var(--mantine-font-size-sm);
   text-align: right;
   padding: 4px 8px;
@@ -61,11 +69,11 @@
 .dayViewSlot {
   display: block;
   width: 100%;
-  border-top: 1px dotted var(--mantine-color-gray-3);
+  border-top: 1px dotted var(--day-view-border-color);
   height: calc(var(--slot-height) * var(--slot-size));
 
   &:where([data-hour-start]) {
-    border-top: 1px solid var(--mantine-color-gray-3);
+    border-top: 1px solid var(--day-view-border-color);
   }
 
   @mixin hover {

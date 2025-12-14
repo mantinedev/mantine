@@ -1,5 +1,13 @@
 .yearView {
   --year-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+
+  @mixin where-light {
+    --year-view-border-color: var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    --year-view-border-color: var(--mantine-color-dark-4);
+  }
 }
 
 .yearViewQuarter {
@@ -32,7 +40,7 @@
   }
 
   flex: 1;
-  border: 1px solid var(--mantine-color-gray-3);
+  border: 1px solid var(--year-view-border-color);
   padding: var(--mantine-spacing-md);
 
   &:where(:not(:last-of-type)) {

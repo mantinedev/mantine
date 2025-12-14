@@ -1,12 +1,19 @@
 .monthView {
   --week-numbers-offset: 0rem;
-  --border-color: var(--mantine-color-gray-3);
-  --month-view-border: 1px solid var(--border-color);
+  --month-view-border: 1px solid var(--month-view-border-color);
   --month-view-radius: var(--schedule-radius, var(--mantine-radius-default));
   --day-base-color: var(--mantine-color-text);
 
   &:where([data-with-week-numbers]) {
     --week-numbers-offset: 42px;
+  }
+
+  @mixin where-light {
+    --month-view-border-color: var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    --month-view-border-color: var(--mantine-color-dark-4);
   }
 }
 

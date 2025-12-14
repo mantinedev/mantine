@@ -33,7 +33,7 @@ const sampleEvents: ScheduleEventData[] = [
     title: 'Code Review',
     start: new Date(2025, 11, 13, 16, 0),
     end: new Date(2025, 11, 13, 17, 0),
-    color: 'purple',
+    color: 'violet',
     payload: {},
   },
 ];
