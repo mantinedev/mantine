@@ -1,4 +1,8 @@
+import dayjs from 'dayjs';
 import { MantineColor } from '@mantine/core';
+
+/** Date value type used by internal package utils */
+export type AnyDateValue = DateStringValue | Date | dayjs.Dayjs;
 
 /** Date value used by all Mantine components, format: `YYYY-MM-DD` */
 export type DateStringValue = string;

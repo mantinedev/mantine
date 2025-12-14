@@ -26,4 +26,5 @@ export { getDayPositionedEvents } from './get-day-positioned-events/get-day-posi
 export { getVisibleEvents } from './get-visible-events/get-visible-events';
 export { isMultidayEvent } from './is-multiday-event/is-multiday-event';
 export { getWeekPositionedEvents } from './get-week-positioned-events/get-week-positioned-events';
+export { isSameWeek } from './is-same-week/is-same-week';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';
