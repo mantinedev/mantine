@@ -17,9 +17,6 @@
   cursor: pointer;
   user-select: none;
 
-  /* background-color: var(--mantine-color-blue-1);
-  color: var(--mantine-color-blue-9); */
-
   &:where([data-truncate]) {
     width: 95%;
   }
@@ -27,5 +24,9 @@
   &:where([data-size='md']) {
     font-size: 14px;
     padding: 4px 6px;
+  }
+
+  @mixin hover {
+    background-color: var(--event-hover);
   }
 }

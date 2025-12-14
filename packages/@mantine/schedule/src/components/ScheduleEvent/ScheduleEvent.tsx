@@ -18,7 +18,7 @@ export type ScheduleEventStylesNames = 'event' | 'eventInner';
 
 export type ScheduleEventVariant = 'filled' | 'light';
 export type ScheduleEventCssVariables = {
-  event: '--event-bg' | '--event-color' | '--event-radius';
+  event: '--event-bg' | '--event-color' | '--event-radius' | '--event-hover';
 };
 
 export type RenderEventBody = (event: ScheduleEventData<any>) => React.ReactNode;
@@ -67,6 +67,7 @@ const varsResolver = createVarsResolver<ScheduleEventFactory>(
     return {
       event: {
         '--event-bg': colors.background,
+        '--event-hover': colors.hover,
         '--event-color': colors.color,
         '--event-radius': getRadius(radius),
       },
