@@ -313,4 +313,112 @@ describe('@mantine/schedule/YearView', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Switch to day view' }));
     expect(spy).toHaveBeenCalledWith('day');
   });
+
+  it('renders event indicators for events on specific days', () => {
+    const events = [
+      {
+        id: '1',
+        title: 'Event 1',
+        start: '2025-11-05 10:00:00',
+        end: '2025-11-05 11:00:00',
+        color: 'red',
+        payload: {},
+      },
+      {
+        id: '2',
+        title: 'Event 2',
+        start: '2025-11-05 14:00:00',
+        end: '2025-11-05 15:00:00',
+        color: 'blue',
+        payload: {},
+      },
+      {
+        id: '3',
+        title: 'Event 3',
+        start: '2025-11-10 09:00:00',
+        end: '2025-11-10 10:00:00',
+        color: 'green',
+        payload: {},
+      },
+    ];
+    const { container } = render(<YearView {...defaultProps} events={events} />);
+    const indicators = container.querySelectorAll('.mantine-YearView-yearViewDayIndicator');
+    expect(indicators.length).toBeGreaterThan(0);
+  });
+
+  it('renders indicator for each day a multiday event spans', () => {
+    const events = [
+      {
+        id: '1',
+        title: 'Conference',
+        start: '2025-11-05',
+        end: '2025-11-07',
+        color: 'blue',
+        payload: {},
+      },
+    ];
+    render(<YearView {...defaultProps} events={events} />);
+    // The event appears on 3 days (Nov 5, 6, 7), with 1 indicator per day in this case
+    // But since each day button has its own indicators container, we need to count per day
+    const nov5Button = screen.getAllByRole('button', { name: 'November 5, 2025' })[0];
+    const nov5Indicators = nov5Button.querySelectorAll('.mantine-YearView-yearViewDayIndicator');
+    expect(nov5Indicators).toHaveLength(1);
+
+    const nov6Button = screen.getAllByRole('button', { name: 'November 6, 2025' })[0];
+    const nov6Indicators = nov6Button.querySelectorAll('.mantine-YearView-yearViewDayIndicator');
+    expect(nov6Indicators).toHaveLength(1);
+
+    const nov7Button = screen.getAllByRole('button', { name: 'November 7, 2025' })[0];
+    const nov7Indicators = nov7Button.querySelectorAll('.mantine-YearView-yearViewDayIndicator');
+    expect(nov7Indicators).toHaveLength(1);
+  });
+
+  it('shows maximum 3 indicators per day when multiple events exist', () => {
+    const events = [
+      {
+        id: '1',
+        title: 'Event 1',
+        start: '2025-11-05 08:00:00',
+        end: '2025-11-05 09:00:00',
+        color: 'red',
+        payload: {},
+      },
+      {
+        id: '2',
+        title: 'Event 2',
+        start: '2025-11-05 10:00:00',
+        end: '2025-11-05 11:00:00',
+        color: 'blue',
+        payload: {},
+      },
+      {
+        id: '3',
+        title: 'Event 3',
+        start: '2025-11-05 12:00:00',
+        end: '2025-11-05 13:00:00',
+        color: 'green',
+        payload: {},
+      },
+      {
+        id: '4',
+        title: 'Event 4',
+        start: '2025-11-05 14:00:00',
+        end: '2025-11-05 15:00:00',
+        color: 'yellow',
+        payload: {},
+      },
+      {
+        id: '5',
+        title: 'Event 5',
+        start: '2025-11-05 16:00:00',
+        end: '2025-11-05 17:00:00',
+        color: 'pink',
+        payload: {},
+      },
+    ];
+    render(<YearView {...defaultProps} events={events} />);
+    const nov5Buttons = screen.getAllByRole('button', { name: 'November 5, 2025' });
+    const indicators = nov5Buttons[0].querySelectorAll('.mantine-YearView-yearViewDayIndicator');
+    expect(indicators).toHaveLength(3);
+  });
 });
