@@ -22,7 +22,7 @@ export { isAllDayEvent } from './is-all-day-event/is-all-day-event';
 export { validateEvent } from './validate-event/validate-event';
 export { sortEvents } from './sort-events/sort-events';
 export { isEventsOverlap } from './is-events-overlap/is-events-overlap';
-export { getDayPositionedEvents } from './get-positioned-events/get-day-positioned-events';
+export { getDayPositionedEvents } from './get-day-positioned-events/get-day-positioned-events';
 export { getVisibleEvents } from './get-visible-events/get-visible-events';
 export { isMultidayEvent } from './is-multiday-event/is-multiday-event';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';
