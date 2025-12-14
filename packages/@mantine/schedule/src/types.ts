@@ -39,7 +39,7 @@ export interface ScheduleEventData<Payload extends EventPayload = EventPayload> 
   payload: Payload;
 }
 
-export interface EventPositionData {
+export interface DayEventPositionData {
   /** All day events */
   allDay: boolean;
 
@@ -62,9 +62,27 @@ export interface EventPositionData {
   column: number;
 }
 
-/** Event data with calculated position for day and week views */
+/** Event data with calculated position for day view */
 export interface DayPositionedEventData<
   Payload extends EventPayload = EventPayload,
 > extends ScheduleEventData<Payload> {
-  position: EventPositionData;
+  position: DayEventPositionData;
+}
+
+export interface WeekEventPositionData extends DayEventPositionData {
+  /** Week offset in %, represents event start position from the first day of the week */
+  weekOffset: number;
+
+  /** Indicates that the event starts before the current week and continues into it */
+  hangingStart: boolean;
+
+  /** Indicates that the event continues after the current week */
+  hangingEnd: boolean;
+}
+
+/** Event data with calculated position for week view */
+export interface WeekPositionedEventData<
+  Payload extends EventPayload = EventPayload,
+> extends ScheduleEventData<Payload> {
+  position: WeekEventPositionData;
 }
