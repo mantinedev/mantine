@@ -9,7 +9,6 @@ import { getDayPosition } from '../get-day-positioned-events/get-day-position';
 import { getWeekDays } from '../get-week-days/get-week-days';
 import { isAllDayEvent } from '../is-all-day-event/is-all-day-event';
 import { isEventsOverlap } from '../is-events-overlap/is-events-overlap';
-import { isMultidayEvent } from '../is-multiday-event/is-multiday-event';
 import { sortEvents } from '../sort-events/sort-events';
 
 interface GetWeekPositionedEventsInput {
@@ -89,7 +88,6 @@ export function getWeekPositionedEvents({
   for (const event of sorted) {
     const eventStartDate = dayjs(event.start).startOf('day');
     const eventEndDate = dayjs(event.end).startOf('day');
-    const isMultiday = isMultidayEvent(event);
 
     // Determine which days in the week this event appears
     const eventWeekDays = weekDays.filter((day) => {

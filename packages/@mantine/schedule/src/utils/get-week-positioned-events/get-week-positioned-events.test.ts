@@ -29,7 +29,7 @@ const createAllDayEvent = (id: string | number, date: string): ScheduleEventData
   };
 };
 
-describe('getWeekPositionedEvents', () => {
+describe('@mantine/schedule/get-week-positioned-events', () => {
   it('returns empty object for empty events', () => {
     const result = getWeekPositionedEvents({
       events: [],

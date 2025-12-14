@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useMemo } from 'react';
 import { DateStringValue, ScheduleEventData } from '../../../types';
 import { isMultidayEvent, validateEvent } from '../../../utils';
 
@@ -37,25 +38,27 @@ interface UseYearViewEventsInput {
 }
 
 export function useYearViewEvents({ date, events }: UseYearViewEventsInput) {
-  const groupedEvents: GroupedEvents = {};
+  return useMemo(() => {
+    const groupedEvents: GroupedEvents = {};
 
-  if (events === undefined) {
-    return groupedEvents;
-  }
+    if (events === undefined) {
+      return groupedEvents;
+    }
 
-  const ids = new Set<string | number>();
+    const ids = new Set<string | number>();
 
-  for (const event of events) {
-    if (dayjs(event.start).isSame(dayjs(date), 'year')) {
-      groupEventByDate(validateEvent(event), groupedEvents);
+    for (const event of events) {
+      if (dayjs(event.start).isSame(dayjs(date), 'year')) {
+        groupEventByDate(validateEvent(event), groupedEvents);
 
-      if (!ids.has(event.id)) {
-        ids.add(event.id);
-      } else {
-        throw new Error(`[@mantine/schedule] YearView: Duplicated event ids found: ${event.id}`);
+        if (!ids.has(event.id)) {
+          ids.add(event.id);
+        } else {
+          throw new Error(`[@mantine/schedule] YearView: Duplicated event ids found: ${event.id}`);
+        }
       }
     }
-  }
 
-  return groupedEvents;
+    return groupedEvents;
+  }, [date, events]);
 }

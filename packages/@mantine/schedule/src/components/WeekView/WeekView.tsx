@@ -18,7 +18,13 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { DateLabelFormat, DateStringValue, DayOfWeek, ScheduleViewLevel } from '../../types';
+import {
+  DateLabelFormat,
+  DateStringValue,
+  DayOfWeek,
+  ScheduleEventData,
+  ScheduleViewLevel,
+} from '../../types';
 import {
   formatDate,
   getDayTimeIntervals,
@@ -38,6 +44,7 @@ import {
   ScheduleHeader,
 } from '../ScheduleHeader/ScheduleHeader';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
+import { useWeekViewEvents } from './use-week-view-events/use-week-view-events';
 import { WeekViewDay } from './WeekViewDay';
 import classes from './WeekView.module.css';
 
@@ -148,6 +155,9 @@ export interface WeekViewProps
 
   /** Format for week label @default `'MMM DD'` */
   weekLabelFormat?: DateLabelFormat;
+
+  /** List of events to display in the week view */
+  events?: ScheduleEventData[];
 }
 
 export type WeekViewFactory = Factory<{
@@ -215,6 +225,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     todayControlProps,
     viewSelectProps,
     weekLabelFormat,
+    events,
     ...others
   } = props;
 
@@ -250,6 +261,16 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const [scrolled, setScrolled] = useState(false);
   const ctx = useScheduleContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
+
+  const weekEvents = useWeekViewEvents({
+    date,
+    events,
+    startTime,
+    endTime,
+    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+  });
+
+  console.log(weekEvents);
 
   const timeValues = slots.map((interval) => {
     const intervalTime = dayjs(`${dayjs(date).format('YYYY-MM-DD')} ${interval.startTime}`);
