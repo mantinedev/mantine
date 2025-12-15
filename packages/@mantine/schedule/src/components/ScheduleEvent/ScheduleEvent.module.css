@@ -1,6 +1,7 @@
 .event {
   padding: 1px;
   pointer-events: none;
+  container-type: size;
 }
 
 .eventInner {
@@ -28,5 +29,13 @@
 
   @mixin hover {
     background-color: var(--event-hover);
+  }
+
+  @container (max-height: 30px) {
+    font-size: 9px;
+    padding-block: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }
