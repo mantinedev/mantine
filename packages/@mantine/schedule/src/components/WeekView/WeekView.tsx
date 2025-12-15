@@ -39,6 +39,7 @@ import {
   CurrentTimeIndicatorStylesNames,
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
 import { useScheduleContext } from '../Schedule/Schedule.context';
+import { ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import {
   CombinedScheduleHeaderStylesNames,
   ScheduleHeader,
@@ -270,8 +271,6 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
   });
 
-  console.log(weekEvents);
-
   const timeValues = slots.map((interval) => {
     const intervalTime = dayjs(`${dayjs(date).format('YYYY-MM-DD')} ${interval.startTime}`);
     const label = formatDate({
@@ -321,16 +320,34 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     </UnstyledButton>
   ));
 
-  const days = weekdays.map((day) => (
-    <WeekViewDay
-      key={day}
-      day={day}
-      slots={slots}
-      getStyles={getStyles}
-      highlightToday={highlightToday}
-      weekendDays={weekendDays}
-    />
-  ));
+  const days = weekdays.map((day) => {
+    const dayEvents = (weekEvents.regularEvents[day] || []).map((event) => (
+      <ScheduleEvent
+        key={event.id}
+        event={event}
+        style={{
+          position: 'absolute',
+          top: `${event.position.top}%`,
+          left: `${event.position.offset}%`,
+          width: `${event.position.width}%`,
+          height: `${event.position.height}%`,
+        }}
+      />
+    ));
+
+    return (
+      <WeekViewDay
+        key={day}
+        day={day}
+        slots={slots}
+        getStyles={getStyles}
+        highlightToday={highlightToday}
+        weekendDays={weekendDays}
+      >
+        {dayEvents}
+      </WeekViewDay>
+    );
+  });
 
   const allDaySlots = weekdays.map((day) => (
     <UnstyledButton

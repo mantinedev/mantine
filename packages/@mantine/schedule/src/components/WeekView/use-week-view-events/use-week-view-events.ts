@@ -28,7 +28,7 @@ export function useWeekViewEvents({
 }: UseWeekViewEventsInput) {
   return useMemo(() => {
     if (events === undefined) {
-      return {};
+      return { allDayEvents: [], regularEvents: {} };
     }
 
     const ids = new Set<string | number>();

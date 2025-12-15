@@ -98,5 +98,7 @@ export function WithAllDaySlots() {
 }
 
 export function RegularEvents() {
-  return <WeekView date={new Date()} events={regularEvents} />;
+  return (
+    <WeekView date={new Date()} events={regularEvents} startTime="10:00:00" endTime="22:00:00" />
+  );
 }

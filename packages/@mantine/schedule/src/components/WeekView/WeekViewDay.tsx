@@ -20,6 +20,9 @@ export interface WeekViewDayProps {
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `ScheduleProvider`. */
   weekendDays?: DayOfWeek[];
+
+  /** Events list */
+  children?: React.ReactNode;
 }
 
 export function WeekViewDay({
@@ -28,6 +31,7 @@ export function WeekViewDay({
   highlightToday,
   getStyles,
   weekendDays,
+  children,
 }: WeekViewDayProps) {
   const ctx = useScheduleContext();
   const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek);
@@ -45,6 +49,7 @@ export function WeekViewDay({
   return (
     <Box {...getStyles('weekViewDay')} mod={{ today, weekend }}>
       <Box mod={{ today }} {...getStyles('weekViewDaySlots')}>
+        {children}
         {items}
       </Box>
     </Box>

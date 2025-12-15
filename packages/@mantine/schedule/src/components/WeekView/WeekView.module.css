@@ -146,6 +146,8 @@
 }
 
 .weekViewDaySlots {
+  position: relative;
+
   &:where([data-today]) {
     background-color: var(--mantine-primary-color-light);
   }
