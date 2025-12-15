@@ -187,12 +187,7 @@
 
 .weekViewAllDaySlots {
   display: flex;
-
-  & > .weekViewDaySlot {
-    flex: 1;
-    border-inline-start: 1px solid var(--week-view-border-color);
-    height: 36px;
-  }
+  height: 48px;
 }
 
 .weekViewAllDaySlotsLabel {
@@ -200,4 +195,17 @@
   text-align: right;
   padding: 4px 8px;
   font-size: var(--mantine-font-size-sm);
+}
+
+.weekViewAllDaySlotsList {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  & > .weekViewDaySlot {
+    flex: 1;
+    border-inline-start: 1px solid var(--week-view-border-color);
+    height: 100%;
+  }
 }

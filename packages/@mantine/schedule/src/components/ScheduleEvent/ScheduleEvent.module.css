@@ -31,7 +31,7 @@
     background-color: var(--event-hover);
   }
 
-  @container (max-height: 30px) {
+  @container (max-height: 18px) {
     font-size: 9px;
     padding-block: 0px;
     display: flex;

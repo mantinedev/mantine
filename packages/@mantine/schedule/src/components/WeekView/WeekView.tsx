@@ -56,7 +56,9 @@ export type WeekViewStylesNames =
   | 'weekViewRoot'
   | 'weekViewHeader'
   | 'weekViewInner'
+  | 'weekViewAllDaySlotsEvents'
   | 'weekViewAllDaySlots'
+  | 'weekViewAllDaySlotsList'
   | 'weekViewAllDaySlot'
   | 'weekViewAllDaySlotsLabel'
   | 'weekViewScrollArea'
@@ -357,6 +359,20 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     />
   ));
 
+  const allDayEvents = weekEvents.allDayEvents.map((event) => (
+    <ScheduleEvent
+      key={event.id}
+      event={event}
+      style={{
+        position: 'absolute',
+        top: 1,
+        left: `calc(${event.position.offset}% + 1px)`,
+        width: `calc(${event.position.width}% - 1px)`,
+        height: 22,
+      }}
+    />
+  ));
+
   return (
     <Box {...getStyles('weekView')} {...others}>
       {withHeader && (
@@ -440,7 +456,10 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           {withAllDaySlots && (
             <div {...getStyles('weekViewAllDaySlots')}>
               <div {...getStyles('weekViewAllDaySlotsLabel')}>{ctx.labels.allDay}</div>
-              {allDaySlots}
+              <div {...getStyles('weekViewAllDaySlotsList')}>
+                <div {...getStyles('weekViewAllDaySlotsEvents')}>{allDayEvents}</div>
+                {allDaySlots}
+              </div>
             </div>
           )}
 
