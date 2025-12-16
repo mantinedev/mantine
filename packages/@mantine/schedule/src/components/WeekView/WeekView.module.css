@@ -21,6 +21,7 @@
 .weekViewInner {
   display: flex;
   position: relative;
+  overflow: hidden;
 }
 
 .weekViewScrollArea {
@@ -218,7 +219,8 @@
     height: 100%;
   }
 
-  @mixin hover {
+  &:hover,
+  &:focus-within {
     .weekViewAllDaySlotsEvents {
       overflow: visible;
 

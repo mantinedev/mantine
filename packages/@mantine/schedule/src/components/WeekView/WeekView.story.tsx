@@ -55,7 +55,7 @@ const regularEvents: ScheduleEventData[] = [
   {
     id: 1,
     title: 'Team lunch',
-    start: `${weekStart} 12:00:00`,
+    start: `${weekStart} 06:00:00`,
     end: `${weekStart} 14:00:00`,
     color: 'red',
     payload: {},
