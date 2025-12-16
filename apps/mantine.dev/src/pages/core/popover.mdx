@@ -191,27 +191,6 @@ events, for example, `mouseup` and `touchend`:
 
 <Demo data={PopoverDemos.clickOutsideEvents} />
 
-## onOpen and onClose
-
-`onOpen` and `onClose` callbacks are called when dropdown opens and closes.
-
-```tsx
-import { Popover } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Popover
-      withinPortal={false}
-      onOpen={() => console.log('opened')}
-      onClose={() => console.log('closed')}
-    >
-      <Popover.Target>{/* Target */}</Popover.Target>
-      <Popover.Dropdown>{/* Dropdown */}</Popover.Dropdown>
-    </Popover>
-  );
-}
-```
-
 ## onDismiss
 
 If you need to control opened state, but still want to close popover on outside clicks
