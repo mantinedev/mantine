@@ -74,8 +74,11 @@ export interface DayPositionedEventData<
 }
 
 export interface WeekEventPositionData extends DayEventPositionData {
-  /** Week offset in %, represents event start position from the first day of the week */
-  weekOffset: number;
+  /** Week offset in %, represents event start position from the first day of the week (for regular events only) */
+  weekOffset?: number;
+
+  /** Row index for all-day events, used for vertical stacking */
+  row?: number;
 
   /** Indicates that the event starts before the current week and continues into it */
   hangingStart: boolean;

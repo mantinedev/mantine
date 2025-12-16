@@ -363,9 +363,10 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     <ScheduleEvent
       key={event.id}
       event={event}
+      h="calc(50% - 2px)"
       style={{
         position: 'absolute',
-        top: 1,
+        top: `calc(${event.position.row! * 50}% + 1px)`,
         left: `calc(${event.position.offset}% + 1px)`,
         width: `calc(${event.position.width}% - 1px)`,
         height: 22,

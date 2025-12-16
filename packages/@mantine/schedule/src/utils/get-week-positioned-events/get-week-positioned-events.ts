@@ -155,16 +155,16 @@ export function getWeekPositionedEvents({
       ? { top: 0, height: 100 }
       : getDayPosition({ event, startTime, endTime });
 
-    // Calculate week offset based on where the event starts (or week start if it started before)
-    let displayStartDate = eventStartDate;
-    if (hangingStart) {
-      displayStartDate = weekStartDate;
-    }
-    const dayInWeek = displayStartDate.diff(weekStartDate, 'day');
-    const weekOffset = (dayInWeek / 7) * 100;
-
     // Add positioned event to collection
     if (allDay) {
+      // Calculate week offset based on where the event starts (or week start if it started before)
+      let displayStartDate = eventStartDate;
+      if (hangingStart) {
+        displayStartDate = weekStartDate;
+      }
+      const dayInWeek = displayStartDate.diff(weekStartDate, 'day');
+      const weekOffset = (dayInWeek / 7) * 100;
+
       // All-day events (including multiday) are stored separately, only once
       grouped.allDayEvents.push({
         ...event,
@@ -173,9 +173,9 @@ export function getWeekPositionedEvents({
           allDay,
           column,
           width: 0,
-          offset: 0,
+          offset: weekOffset,
           overlaps: 0,
-          weekOffset,
+          row: 0,
           hangingStart,
           hangingEnd,
         },
@@ -198,6 +198,7 @@ export function getWeekPositionedEvents({
             offset: 0,
             overlaps: 0,
             weekOffset: dayWeekOffset,
+            row: 0,
             hangingStart,
             hangingEnd,
           },
@@ -226,22 +227,80 @@ export function getWeekPositionedEvents({
     }
   }
 
-  // Calculate column widths for all-day events
+  // Calculate row positions and widths for all-day events
   if (grouped.allDayEvents.length > 0) {
-    const allDayColumns = new Set<number>();
-    let maxColumn = 0;
+    // First, assign rows based on overlapping events
+    const eventRows = new Map<ScheduleEventData, number>();
+    const assignedRows = new Set<number>();
 
     for (const event of grouped.allDayEvents) {
-      allDayColumns.add(event.position.column);
-      maxColumn = Math.max(maxColumn, event.position.column);
+      let row = 0;
+
+      // Find the first available row that doesn't conflict with this event
+      while (true) {
+        let hasConflict = false;
+
+        // Check if any event in this row conflicts with the current event
+        for (const [otherEvent, otherRow] of eventRows.entries()) {
+          if (otherRow === row && isEventsOverlap(event, otherEvent)) {
+            hasConflict = true;
+            break;
+          }
+        }
+
+        if (!hasConflict) {
+          break;
+        }
+
+        row++;
+      }
+
+      eventRows.set(event, row);
+      assignedRows.add(row);
     }
 
-    const overlaps = maxColumn + 1;
-
+    // Update row values in positioned events
     for (const event of grouped.allDayEvents) {
-      event.position.overlaps = overlaps;
-      event.position.width = 100 / overlaps;
-      event.position.offset = (event.position.column * 100) / overlaps;
+      event.position.row = eventRows.get(event)!;
+    }
+
+    const rowCount = Math.max(...assignedRows) + 1;
+
+    // Calculate widths for all-day events
+    for (const event of grouped.allDayEvents) {
+      const eventStartDate = dayjs(event.start).startOf('day');
+      const eventEndDate = dayjs(event.end).startOf('day');
+
+      // Determine actual end date (adjust if end time is midnight)
+      const actualEndDate =
+        dayjs(event.end).hour() === 0 && dayjs(event.end).minute() === 0
+          ? eventEndDate.subtract(1, 'day')
+          : eventEndDate;
+
+      // Check if this is truly a multiday event (spans more than one day)
+      const isMultiday = actualEndDate.isAfter(eventStartDate);
+
+      if (isMultiday) {
+        // For multiday events, calculate span within the week (do not divide by rowCount)
+        let displayStartDate = eventStartDate;
+        if (eventStartDate.isBefore(weekStartDate)) {
+          displayStartDate = weekStartDate;
+        }
+
+        let displayEndDate = actualEndDate;
+        if (actualEndDate.isAfter(weekEndDate)) {
+          displayEndDate = weekEndDate;
+        }
+
+        // Calculate how many days this event spans within the week
+        const daysSpanned = displayEndDate.diff(displayStartDate, 'day') + 1;
+        event.position.width = (daysSpanned / 7) * 100;
+      } else {
+        // For single-day all-day events, divide by row count for stacking
+        event.position.width = 100 / rowCount;
+      }
+
+      event.position.overlaps = rowCount;
     }
   }
 

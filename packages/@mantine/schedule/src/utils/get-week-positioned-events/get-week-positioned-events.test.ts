@@ -112,7 +112,7 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
     // Multiday events should be in allDayEvents, not split per day
     expect(result.allDayEvents).toHaveLength(1);
     expect(result.allDayEvents[0].id).toBe(1);
-    expect(result.allDayEvents[0].position.weekOffset).toBe(0);
+    expect(result.allDayEvents[0].position.offset).toBe(0);
   });
 
   it('calculates weekOffset correctly for events starting at week start', () => {
@@ -125,6 +125,7 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
     });
 
     expect(result.regularEvents[monday][0].position.weekOffset).toBe(0);
+    expect(result.regularEvents[monday][0].position.row).toBe(0);
   });
 
   it('calculates weekOffset correctly for events mid-week', () => {
@@ -138,6 +139,7 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
 
     // Wednesday is 2 days into the week, so weekOffset should be (2/7)*100
     expect(result.regularEvents[wednesday][0].position.weekOffset).toBeCloseTo((2 / 7) * 100, 1);
+    expect(result.regularEvents[wednesday][0].position.row).toBe(0);
   });
 
   it('marks hangingStart when event starts before week', () => {
@@ -209,6 +211,7 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
     expect(result.regularEvents[monday]).toHaveLength(1);
     expect(result.allDayEvents[0].id).toBe(1);
     expect(result.regularEvents[monday][0].id).toBe(2);
+    expect(result.regularEvents[monday][0].position.row).toBe(0);
   });
 
   it('handles multiday events with hanging start and end', () => {
@@ -226,8 +229,8 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
     expect(result.allDayEvents).toHaveLength(1);
     expect(result.allDayEvents[0].position.hangingStart).toBe(true);
     expect(result.allDayEvents[0].position.hangingEnd).toBe(true);
-    // weekOffset should be 0 because event starts before week, so display from week start
-    expect(result.allDayEvents[0].position.weekOffset).toBe(0);
+    // offset should be 0 because event starts before week, so display from week start
+    expect(result.allDayEvents[0].position.offset).toBe(0);
   });
 
   it('sorts events by start time before positioning', () => {
@@ -297,7 +300,7 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
 
     // Multiday events should be in allDayEvents
     expect(result.allDayEvents).toHaveLength(1);
-    expect(result.allDayEvents[0].position.weekOffset).toBe(0);
+    expect(result.allDayEvents[0].position.offset).toBe(0);
     expect(result.allDayEvents[0].position.hangingStart).toBe(false);
     expect(result.allDayEvents[0].position.hangingEnd).toBe(false);
   });
