@@ -35,10 +35,10 @@ interface GetWeekPositionedEventsInput {
 }
 
 /** Events grouped by week day date (YYYY-MM-DD) and by columns */
-type GroupedWeekEvents = {
+interface GroupedWeekEvents {
   allDayEvents: WeekPositionedEventData[];
   regularEvents: Record<DateStringValue, WeekPositionedEventData[]>;
-};
+}
 
 interface ColumnHasConflictOptions {
   columns: Map<string, ScheduleEventData[]>;

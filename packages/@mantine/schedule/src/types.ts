@@ -93,3 +93,24 @@ export interface WeekPositionedEventData<
 > extends ScheduleEventData<Payload> {
   position: WeekEventPositionData;
 }
+
+export interface MonthEventPositionData {
+  /** Start offset % from the start of the week (inset-inline-start) */
+  startOffset: number;
+
+  /** Event width in % */
+  width: number;
+
+  /** Week index in the month, 0-based */
+  weekIndex: number;
+
+  /** Event row index in the week, 0-based */
+  row: number;
+}
+
+/** Event data with calculated position for month view */
+export interface MonthPositionedEventData<
+  Payload extends EventPayload = EventPayload,
+> extends ScheduleEventData<Payload> {
+  position: MonthEventPositionData;
+}
