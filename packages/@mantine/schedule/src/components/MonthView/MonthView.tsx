@@ -228,6 +228,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     date,
     events,
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+    withOutsideDays,
+    consistentWeeks,
   });
 
   const weekdays = withWeekDays
@@ -318,7 +320,10 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           </UnstyledButton>
         )}
 
-        <div {...getStyles('monthViewEvents')}>{events}</div>
+        <div {...getStyles('monthViewEvents')} key="week-events">
+          {events}
+        </div>
+
         {days}
       </div>
     );

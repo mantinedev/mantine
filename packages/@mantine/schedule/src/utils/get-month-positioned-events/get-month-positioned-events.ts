@@ -16,6 +16,12 @@ interface GetMonthPositionedEventsInput {
 
   /** First day of the week, 0 - Sunday, 1 - Monday, etc., used to calculate events positions */
   firstDayOfWeek?: DayOfWeek;
+
+  /** Range of dates for which events should be displayed (includes outside days if withOutsideDays is true) */
+  range?: {
+    start: DateStringValue;
+    end: DateStringValue;
+  };
 }
 
 /** Events grouped by week index (index within month) */
@@ -27,19 +33,20 @@ export function getMonthPositionedEvents({
   date,
   events,
   firstDayOfWeek = 1,
+  range,
 }: GetMonthPositionedEventsInput): GroupedMonthEvents {
   const grouped: GroupedMonthEvents = {};
 
-  // Get the start date of the month
-  const monthStart = dayjs(date).startOf('month');
-  const monthEnd = monthStart.endOf('month');
+  // Determine the range for which to display events
+  const rangeStart = range ? dayjs(range.start) : dayjs(date).startOf('month');
+  const rangeEnd = range ? dayjs(range.end) : dayjs(date).startOf('month').endOf('month');
 
-  // Get all weeks in the month with padding days
+  // Get all weeks in the range with padding days
   const weeks: DateStringValue[][] = [];
-  const startOfFirstWeekStr = getStartOfWeek(monthStart.format('YYYY-MM-DD'), firstDayOfWeek);
+  const startOfFirstWeekStr = getStartOfWeek(rangeStart.format('YYYY-MM-DD'), firstDayOfWeek);
   let currentDate = dayjs(startOfFirstWeekStr);
 
-  while (currentDate.isBefore(monthEnd) || currentDate.isSame(monthEnd, 'day')) {
+  while (currentDate.isBefore(rangeEnd) || currentDate.isSame(rangeEnd, 'day')) {
     const week: DateStringValue[] = [];
     for (let i = 0; i < 7; i++) {
       week.push(currentDate.format('YYYY-MM-DD'));

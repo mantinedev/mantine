@@ -1,5 +1,6 @@
 import 'dayjs/locale/ru';
 
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { ScheduleEventData } from '../../types';
 import { MonthView } from './MonthView';
@@ -100,9 +101,9 @@ const events: ScheduleEventData[] = [
   // 2-week long event
   {
     id: 12,
-    title: 'Hackathon - 2 Weeks',
+    title: 'Hackathon - 5 Weeks',
     start: '2025-11-17 09:00:00',
-    end: '2025-11-30 17:00:00',
+    end: `${dayjs('2025-11-17').add(5, 'week').format('YYYY-MM-DD')} 17:00:00`,
     color: 'indigo',
     payload: {},
   },

@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
-import { DateStringValue, DayOfWeek } from '../../types';
+import { AnyDateValue, DateStringValue, DayOfWeek } from '../../types';
 import { getEndOfWeek } from '../get-end-of-week/get-end-of-week';
 import { getStartOfWeek } from '../get-start-of-week/get-start-of-week';
 
 interface GetMonthDaysInput {
-  month: DateStringValue;
+  month: AnyDateValue;
   firstDayOfWeek: DayOfWeek | undefined;
   consistentWeeks: boolean | undefined;
 }

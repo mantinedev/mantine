@@ -1,9 +1,10 @@
+import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import { DateStringValue, DayOfWeek, ScheduleEventData } from '../../../types';
 import {
   getMonthPositionedEvents,
+  getMonthRange,
   GroupedMonthEvents,
-  isSameMonth,
   validateEvent,
 } from '../../../utils';
 
@@ -16,12 +17,20 @@ interface UseMonthViewEventsInput {
 
   /** First day of the week, 0 - Sunday, 1 - Monday, etc., used to calculate events positions */
   firstDayOfWeek?: DayOfWeek;
+
+  /** If true, events for outside days are included */
+  withOutsideDays?: boolean;
+
+  /** If true, month will show events for consistent number of weeks (6) */
+  consistentWeeks?: boolean;
 }
 
 export function filterMonthViewEvents({
   date,
   events,
   firstDayOfWeek = 1,
+  withOutsideDays,
+  consistentWeeks,
 }: UseMonthViewEventsInput): GroupedMonthEvents {
   if (events === undefined) {
     return {};
@@ -30,8 +39,18 @@ export function filterMonthViewEvents({
   const ids = new Set<string | number>();
   const filteredEvents: ScheduleEventData[] = [];
 
+  const range = getMonthRange({
+    month: date,
+    withOutsideDays,
+    consistentWeeks,
+    firstDayOfWeek,
+  });
+
   for (const event of events) {
-    if (isSameMonth(date, event.start) || isSameMonth(date, event.end)) {
+    if (
+      dayjs(event.end).isAfter(range.start, 'day') ||
+      dayjs(event.start).isBefore(range.end, 'day')
+    ) {
       filteredEvents.push(validateEvent(event));
 
       if (!ids.has(event.id)) {
@@ -46,6 +65,7 @@ export function filterMonthViewEvents({
     date,
     events: filteredEvents,
     firstDayOfWeek,
+    range,
   });
 }
 
@@ -53,6 +73,8 @@ export function useMonthViewEvents({
   date,
   events,
   firstDayOfWeek = 1,
+  withOutsideDays,
+  consistentWeeks,
 }: UseMonthViewEventsInput): GroupedMonthEvents {
   return useMemo(
     () =>
@@ -60,7 +82,9 @@ export function useMonthViewEvents({
         date,
         events,
         firstDayOfWeek,
+        withOutsideDays,
+        consistentWeeks,
       }),
-    [date, events, firstDayOfWeek]
+    [date, events, firstDayOfWeek, withOutsideDays, consistentWeeks]
   );
 }
