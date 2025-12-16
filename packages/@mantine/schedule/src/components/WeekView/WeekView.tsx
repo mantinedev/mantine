@@ -365,16 +365,19 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     <ScheduleEvent
       key={event.id}
       event={event}
-      h="calc(50% - 2px)"
       style={{
         position: 'absolute',
+        zIndex: 2,
         top: `calc(${event.position.row * 50}% + 1px)`,
         left: `calc(${event.position.offset}% + 1px)`,
         width: `calc(${event.position.width}% - 1px)`,
-        height: 22,
+        height: 'calc(50% - 2px)',
       }}
     />
   ));
+
+  // Extra rows show on hover = total rows - 2 visible rows (starts from 0, so -1)
+  const extraRows = Math.max(...weekEvents.allDayEvents.map((event) => event.position.row), 1) - 1;
 
   return (
     <Box {...getStyles('weekView')} {...others}>
@@ -460,7 +463,12 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
             <div {...getStyles('weekViewAllDaySlots')}>
               <div {...getStyles('weekViewAllDaySlotsLabel')}>{ctx.labels.allDay}</div>
               <div {...getStyles('weekViewAllDaySlotsList')}>
-                <div {...getStyles('weekViewAllDaySlotsEvents')}>{allDayEvents}</div>
+                <Box
+                  {...getStyles('weekViewAllDaySlotsEvents')}
+                  __vars={{ '--extra-rows': `${extraRows}` }}
+                >
+                  {allDayEvents}
+                </Box>
                 {allDaySlots}
               </div>
             </div>

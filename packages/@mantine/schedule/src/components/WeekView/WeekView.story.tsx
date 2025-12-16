@@ -45,6 +45,14 @@ const regularEvents: ScheduleEventData[] = [
     payload: {},
   },
   {
+    id: 7,
+    title: '4 level overlap',
+    start: `${_weekStart.add(1, 'day').format('YYYY-MM-DD')} 12:00:00`,
+    end: `${_weekStart.add(2, 'day').format('YYYY-MM-DD')} 14:00:00`,
+    color: 'orange',
+    payload: {},
+  },
+  {
     id: 1,
     title: 'Team lunch',
     start: `${weekStart} 12:00:00`,

@@ -1,4 +1,5 @@
 .weekViewRoot {
+  --week-view-all-day-slots-height: 48px;
   --week-view-radius: var(--schedule-radius, var(--mantine-radius-default));
   --week-view-slots-label-width: 80px;
   --week-view-min-slot-width: 80px;
@@ -187,7 +188,7 @@
 
 .weekViewAllDaySlots {
   display: flex;
-  height: 48px;
+  height: var(--week-view-all-day-slots-height);
 }
 
 .weekViewAllDaySlotsLabel {
@@ -195,6 +196,13 @@
   text-align: right;
   padding: 4px 8px;
   font-size: var(--mantine-font-size-sm);
+}
+
+.weekViewAllDaySlotsEvents {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 .weekViewAllDaySlotsList {
@@ -207,5 +215,21 @@
     flex: 1;
     border-inline-start: 1px solid var(--week-view-border-color);
     height: 100%;
+  }
+
+  @mixin hover {
+    .weekViewAllDaySlotsEvents {
+      overflow: visible;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 100%;
+        height: calc(var(--week-view-all-day-slots-height) / 2 * var(--extra-rows));
+        inset-inline: 0;
+        z-index: 1;
+        pointer-events: all;
+      }
+    }
   }
 }
