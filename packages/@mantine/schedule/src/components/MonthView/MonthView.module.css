@@ -23,6 +23,7 @@
 
 .monthViewWeek {
   display: flex;
+  position: relative;
 }
 
 .monthViewWeekNumber {
@@ -200,4 +201,12 @@
     background-color: var(--mantine-primary-color-filled);
     color: var(--mantine-primary-color-contrast);
   }
+}
+
+.monthViewEvents {
+  position: absolute;
+  inset-inline: 0;
+  top: 30px;
+  bottom: 20px;
+  pointer-events: none;
 }

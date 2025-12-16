@@ -37,7 +37,7 @@ const events: ScheduleEventData[] = [
     title: 'Conference',
     start: '2025-11-10 08:00:00',
     end: '2025-11-12 17:00:00',
-    color: 'purple',
+    color: 'violet',
     payload: {},
   },
   {

@@ -30,6 +30,7 @@ import {
   toDateString,
 } from '../../utils';
 import { useScheduleContext } from '../Schedule/Schedule.context';
+import { ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
 import {
   CombinedScheduleHeaderStylesNames,
@@ -48,6 +49,7 @@ export type MonthViewStylesNames =
   | 'monthViewWeekday'
   | 'monthViewWeekdays'
   | 'monthViewWeekdaysCorner'
+  | 'monthViewEvents'
   | CombinedScheduleHeaderStylesNames;
 
 export type MonthViewCssVariables = {
@@ -228,8 +230,6 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
   });
 
-  console.log(monthEvents);
-
   const weekdays = withWeekDays
     ? getWeekdaysNames({
         locale: ctx.getLocale(locale),
@@ -284,6 +284,19 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
     const weekNumberProps = getWeekNumberProps?.(new Date(week[0])) || {};
     const weekNumber = getWeekNumber(week);
+    const events = (monthEvents[index] || []).map((event) => (
+      <ScheduleEvent
+        key={event.id}
+        event={event}
+        style={{
+          position: 'absolute',
+          top: `calc(${event.position.row * 50}% + 1px)`,
+          left: `calc(${event.position.startOffset}% + 1px)`,
+          width: `calc(${event.position.width}% - 1px)`,
+          height: `calc(50% - 2px)`,
+        }}
+      />
+    ));
 
     return (
       <div {...getStyles('monthViewWeek')} key={index}>
@@ -305,6 +318,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           </UnstyledButton>
         )}
 
+        <div {...getStyles('monthViewEvents')}>{events}</div>
         {days}
       </div>
     );
