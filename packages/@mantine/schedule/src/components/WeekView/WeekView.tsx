@@ -271,6 +271,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     startTime,
     endTime,
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+    weekendDays: ctx.getWeekendDays(weekendDays),
+    withWeekendDays,
   });
 
   const timeValues = slots.map((interval) => {

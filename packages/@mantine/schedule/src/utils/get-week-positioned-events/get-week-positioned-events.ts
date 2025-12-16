@@ -26,6 +26,12 @@ interface GetWeekPositionedEventsInput {
 
   /** First day of the week, 0 - Sunday, 1 - Monday, etc., used to calculate events positions */
   firstDayOfWeek?: DayOfWeek;
+
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday */
+  weekendDays?: DayOfWeek[];
+
+  /** If set to false, weekend days are hidden @default `true` */
+  withWeekendDays?: boolean;
 }
 
 /** Events grouped by week day date (YYYY-MM-DD) and by columns */
@@ -39,7 +45,7 @@ interface ColumnHasConflictOptions {
   columnIndex: number;
   event: ScheduleEventData;
   allDay: boolean;
-  weekDays: DateStringValue[];
+  allWeekDays: DateStringValue[];
 }
 
 function columnHasConflict({
@@ -47,7 +53,7 @@ function columnHasConflict({
   columnIndex,
   event,
   allDay,
-  weekDays,
+  allWeekDays,
 }: ColumnHasConflictOptions): boolean {
   const columnKey = `col-${columnIndex}`;
   if (!columns.has(columnKey)) {
@@ -57,7 +63,7 @@ function columnHasConflict({
   const columnEvents = columns.get(columnKey)!;
 
   return columnEvents.some((e) => {
-    const eAllDay = weekDays.some((day) => isAllDayEvent({ event: e, date: day }));
+    const eAllDay = allWeekDays.some((day) => isAllDayEvent({ event: e, date: day }));
     const hasTimeConflict = isEventsOverlap(e, event);
 
     // For all-day events, check if they overlap in days
@@ -80,17 +86,26 @@ export function getWeekPositionedEvents({
   startTime,
   endTime,
   firstDayOfWeek = 1,
+  weekendDays = [0, 6],
+  withWeekendDays = true,
 }: GetWeekPositionedEventsInput): GroupedWeekEvents {
-  const weekDays = getWeekDays({ week: date, firstDayOfWeek });
-  const weekStartDate = dayjs(weekDays[0]);
-  const weekEndDate = dayjs(weekDays[6]);
+  const allWeekDays = getWeekDays({ week: date, firstDayOfWeek });
+
+  // Filter out weekend days if needed
+  const visibleWeekDays = withWeekendDays
+    ? allWeekDays
+    : allWeekDays.filter((day) => !weekendDays.includes(dayjs(day).day() as DayOfWeek));
+
+  const visibleDaysCount = visibleWeekDays.length;
+  const weekStartDate = dayjs(allWeekDays[0]);
+  const weekEndDate = dayjs(allWeekDays[6]);
 
   const grouped: GroupedWeekEvents = {
     allDayEvents: [],
     regularEvents: {},
   };
 
-  weekDays.forEach((day) => {
+  visibleWeekDays.forEach((day) => {
     grouped.regularEvents[day] = [];
   });
 
@@ -113,7 +128,7 @@ export function getWeekPositionedEvents({
     const isMultiday = actualEndDate.isAfter(eventStartDate);
 
     // Determine which days in the week this event appears
-    const eventWeekDays = weekDays.filter((day) => {
+    const eventWeekDays = allWeekDays.filter((day) => {
       const dayDate = dayjs(day).startOf('day');
       return (
         (dayDate.isAfter(eventStartDate) || dayDate.isSame(eventStartDate)) &&
@@ -139,7 +154,7 @@ export function getWeekPositionedEvents({
     const columnMap = allDay ? allDayColumns : columns;
 
     while (
-      columnHasConflict({ columns: columnMap, columnIndex: column, event, allDay, weekDays })
+      columnHasConflict({ columns: columnMap, columnIndex: column, event, allDay, allWeekDays })
     ) {
       column++;
     }
@@ -157,13 +172,25 @@ export function getWeekPositionedEvents({
 
     // Add positioned event to collection
     if (allDay) {
-      // Calculate week offset based on where the event starts (or week start if it started before)
+      // Calculate offset based on where the event starts (or week start if it started before)
       let displayStartDate = eventStartDate;
       if (hangingStart) {
         displayStartDate = weekStartDate;
       }
-      const dayInWeek = displayStartDate.diff(weekStartDate, 'day');
-      const weekOffset = (dayInWeek / 7) * 100;
+
+      // If display start date is not visible, use the first visible day
+      if (!visibleWeekDays.some((day) => dayjs(day).isSame(displayStartDate, 'day'))) {
+        displayStartDate = dayjs(visibleWeekDays[0]);
+      }
+
+      // Count visible days from week start to event start
+      const visibleDaysBeforeEvent =
+        visibleWeekDays.filter(
+          (day) =>
+            dayjs(day).isBefore(displayStartDate) || dayjs(day).isSame(displayStartDate, 'day')
+        ).length - 1;
+
+      const offset = (visibleDaysBeforeEvent / visibleDaysCount) * 100;
 
       // All-day events (including multiday) are stored separately, only once
       grouped.allDayEvents.push({
@@ -173,7 +200,7 @@ export function getWeekPositionedEvents({
           allDay,
           column,
           width: 0,
-          offset: weekOffset,
+          offset,
           overlaps: 0,
           row: 0,
           hangingStart,
@@ -183,10 +210,15 @@ export function getWeekPositionedEvents({
     } else {
       // Regular single-day events are grouped by day
       for (const day of eventWeekDays) {
-        // Calculate week offset per day (position from start of week)
-        const dayDate = dayjs(day).startOf('day');
-        const dayOffsetInWeek = dayDate.diff(weekStartDate, 'day');
-        const dayWeekOffset = (dayOffsetInWeek / 7) * 100;
+        // Calculate offset per day (position from start of visible week)
+        const visibleDayIndex = visibleWeekDays.indexOf(day);
+
+        if (visibleDayIndex === -1) {
+          // Day is not visible (weekend), skip it
+          continue;
+        }
+
+        const dayWeekOffset = (visibleDayIndex / visibleDaysCount) * 100;
 
         grouped.regularEvents[day].push({
           ...event,
@@ -208,7 +240,7 @@ export function getWeekPositionedEvents({
   }
 
   // Calculate overlaps and widths for each day (only for regular events)
-  for (const day of weekDays) {
+  for (const day of visibleWeekDays) {
     const dayEvents = grouped.regularEvents[day];
     const dayColumns = new Set<number>();
     let maxColumn = 0;
@@ -281,7 +313,7 @@ export function getWeekPositionedEvents({
       const isMultiday = actualEndDate.isAfter(eventStartDate);
 
       if (isMultiday) {
-        // For multiday events, calculate span within the week (do not divide by rowCount)
+        // For multiday events, calculate span within visible days (do not divide by rowCount)
         let displayStartDate = eventStartDate;
         if (eventStartDate.isBefore(weekStartDate)) {
           displayStartDate = weekStartDate;
@@ -292,9 +324,14 @@ export function getWeekPositionedEvents({
           displayEndDate = weekEndDate;
         }
 
-        // Calculate how many days this event spans within the week
-        const daysSpanned = displayEndDate.diff(displayStartDate, 'day') + 1;
-        event.position.width = (daysSpanned / 7) * 100;
+        // Count visible days spanned by this event
+        const visibleDaysSpanned = visibleWeekDays.filter(
+          (day) =>
+            (dayjs(day).isAfter(displayStartDate) || dayjs(day).isSame(displayStartDate, 'day')) &&
+            (dayjs(day).isBefore(displayEndDate) || dayjs(day).isSame(displayEndDate, 'day'))
+        ).length;
+
+        event.position.width = (visibleDaysSpanned / visibleDaysCount) * 100;
       } else {
         // For single-day all-day events, divide by row count for stacking
         event.position.width = 100 / rowCount;

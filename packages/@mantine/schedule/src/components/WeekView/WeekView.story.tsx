@@ -23,9 +23,25 @@ const regularEvents: ScheduleEventData[] = [
   {
     id: 4,
     title: 'Design Workshop',
+    start: `${_weekStart.add(2, 'day').format('YYYY-MM-DD')} 12:00:00`,
+    end: `${_weekStart.add(4, 'day').format('YYYY-MM-DD')} 14:00:00`,
+    color: 'cyan',
+    payload: {},
+  },
+  {
+    id: 5,
+    title: 'Design Conference',
     start: `${_weekStart.add(1, 'day').format('YYYY-MM-DD')} 12:00:00`,
     end: `${_weekStart.add(3, 'day').format('YYYY-MM-DD')} 14:00:00`,
-    color: 'cyan',
+    color: 'green',
+    payload: {},
+  },
+  {
+    id: 6,
+    title: '3 level overlap',
+    start: `${_weekStart.add(1, 'day').format('YYYY-MM-DD')} 12:00:00`,
+    end: `${_weekStart.add(3, 'day').format('YYYY-MM-DD')} 14:00:00`,
+    color: 'violet',
     payload: {},
   },
   {
@@ -108,5 +124,30 @@ export function WithAllDaySlots() {
 export function RegularEvents() {
   return (
     <WeekView date={new Date()} events={regularEvents} startTime="10:00:00" endTime="22:00:00" />
+  );
+}
+
+export function RegularEventsSunday() {
+  return (
+    <WeekView
+      date={new Date()}
+      events={regularEvents}
+      startTime="10:00:00"
+      endTime="22:00:00"
+      firstDayOfWeek={0}
+    />
+  );
+}
+
+export function RegularEventsNoWeekends() {
+  return (
+    <WeekView
+      date={new Date()}
+      events={regularEvents}
+      startTime="10:00:00"
+      endTime="22:00:00"
+      firstDayOfWeek={0}
+      withWeekendDays={false}
+    />
   );
 }

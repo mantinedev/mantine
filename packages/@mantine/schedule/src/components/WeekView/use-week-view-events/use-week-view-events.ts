@@ -17,6 +17,12 @@ interface UseWeekViewEventsInput {
 
   /** First day of the week, 0 - Sunday, 1 - Monday, etc., used to calculate events positions */
   firstDayOfWeek?: DayOfWeek;
+
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday */
+  weekendDays?: DayOfWeek[];
+
+  /** If set to false, weekend days are hidden @default `true` */
+  withWeekendDays?: boolean;
 }
 
 export function useWeekViewEvents({
@@ -25,6 +31,8 @@ export function useWeekViewEvents({
   startTime,
   endTime,
   firstDayOfWeek = 1,
+  weekendDays,
+  withWeekendDays = true,
 }: UseWeekViewEventsInput) {
   return useMemo(() => {
     if (events === undefined) {
@@ -52,6 +60,8 @@ export function useWeekViewEvents({
       startTime,
       endTime,
       firstDayOfWeek,
+      weekendDays,
+      withWeekendDays,
     });
-  }, [date, events, startTime, endTime, firstDayOfWeek]);
+  }, [date, events, startTime, endTime, firstDayOfWeek, weekendDays, withWeekendDays]);
 }
