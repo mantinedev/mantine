@@ -21,7 +21,10 @@ export function getDayPosition({ event, startTime, endTime }: GetDayPosition) {
 
     const totalMinutes = boundaryEnd.diff(boundaryStart, 'minute');
     const eventStartMinutes = eventStart.diff(boundaryStart, 'minute');
-    const eventEndMinutes = eventEnd.diff(boundaryStart, 'minute');
+
+    // Clip event end to boundary end if it extends beyond
+    const clippedEventEnd = eventEnd.isAfter(boundaryEnd) ? boundaryEnd : eventEnd;
+    const eventEndMinutes = clippedEventEnd.diff(boundaryStart, 'minute');
 
     const startPercent = (eventStartMinutes / totalMinutes) * 100;
     const endPercent = (eventEndMinutes / totalMinutes) * 100;

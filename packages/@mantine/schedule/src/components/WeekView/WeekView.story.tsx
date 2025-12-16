@@ -96,7 +96,7 @@ const regularEvents: ScheduleEventData[] = [
     id: 10,
     title: 'Team dinner 4',
     start: `${_weekStart.add(1, 'day').format('YYYY-MM-DD')} 21:00:00`,
-    end: `${_weekStart.add(1, 'day').format('YYYY-MM-DD')} 23:00:00`,
+    end: `${_weekStart.add(1, 'day').format('YYYY-MM-DD')} 23:59:59`,
     color: 'cyan',
     payload: {},
   },
