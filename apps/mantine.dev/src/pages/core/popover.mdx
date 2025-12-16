@@ -36,6 +36,36 @@ Controlled example with mouse events:
 
 <Demo data={PopoverDemos.hover} demoProps={{ toggle: false }} />
 
+## Context
+
+`Popover.Context` is a render prop component that gives you access to popover state and handlers.
+It can be used to build custom interactions (hover, focus, etc.) while still using `Popover.Target`
+and `Popover.Dropdown` components.
+
+```tsx
+import { Popover } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Popover withinPortal={false} transitionProps={{ duration: 0 }}>
+      <Popover.Target>
+        <Popover.Context>
+          {({ onOpen, onClose }) => (
+            <button type="button" onMouseEnter={onOpen} onMouseLeave={onClose}>
+              Target
+            </button>
+          )}
+        </Popover.Context>
+      </Popover.Target>
+
+      <Popover.Dropdown>Dropdown</Popover.Dropdown>
+    </Popover>
+  );
+}
+```
+
+Use `context.onOpen`, `context.onClose` and `context.onToggle` handlers to control popover state.
+
 ## Focus trap
 
 If you need to use interactive elements (inputs, buttons, etc.) inside `Popover.Dropdown`, set `trapFocus` prop:
@@ -160,6 +190,27 @@ By default, `Popover` listens to `mousedown` and `touchstart` events. You can ch
 events, for example, `mouseup` and `touchend`:
 
 <Demo data={PopoverDemos.clickOutsideEvents} />
+
+## onOpen and onClose
+
+`onOpen` and `onClose` callbacks are called when dropdown opens and closes.
+
+```tsx
+import { Popover } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Popover
+      withinPortal={false}
+      onOpen={() => console.log('opened')}
+      onClose={() => console.log('closed')}
+    >
+      <Popover.Target>{/* Target */}</Popover.Target>
+      <Popover.Dropdown>{/* Dropdown */}</Popover.Dropdown>
+    </Popover>
+  );
+}
+```
 
 ## onDismiss
 

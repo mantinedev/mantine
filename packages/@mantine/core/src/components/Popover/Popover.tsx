@@ -27,7 +27,7 @@ import {
 import { Overlay, OverlayProps } from '../Overlay';
 import { BasePortalProps, OptionalPortal } from '../Portal';
 import { Transition, TransitionOverride } from '../Transition';
-import { PopoverContextProvider } from './Popover.context';
+import { PopoverContextProvider, usePopoverContext, type PopoverContext } from './Popover.context';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
 import { PopoverDropdown } from './PopoverDropdown/PopoverDropdown';
 import { PopoverTarget } from './PopoverTarget/PopoverTarget';
@@ -170,6 +170,15 @@ export type PopoverFactory = Factory<{
   stylesNames: PopoverStylesNames;
   vars: PopoverCssVariables;
 }>;
+
+export interface PopoverContextProps {
+  children: (context: PopoverContext) => React.ReactNode;
+}
+
+export function PopoverContext({ children }: PopoverContextProps) {
+  const context = usePopoverContext();
+  return <>{children(context)}</>;
+}
 
 const defaultProps = {
   position: 'bottom',
@@ -379,6 +388,7 @@ export function Popover(_props: PopoverProps) {
         closeOnEscape,
         onDismiss,
         onClose: popover.onClose,
+        onOpen: popover.onOpen,
         onToggle: popover.onToggle,
         getTargetId: () => `${uid}-target`,
         getDropdownId: () => `${uid}-dropdown`,
@@ -426,5 +436,6 @@ export function Popover(_props: PopoverProps) {
 
 Popover.Target = PopoverTarget;
 Popover.Dropdown = PopoverDropdown;
+Popover.Context = PopoverContext;
 Popover.displayName = '@mantine/core/Popover';
 Popover.extend = (input: ExtendComponent<PopoverFactory>) => input;
