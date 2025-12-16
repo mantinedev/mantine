@@ -148,6 +148,7 @@
 
 .weekViewDaySlots {
   position: relative;
+  overflow: hidden;
 
   &:where([data-today]) {
     background-color: var(--mantine-primary-color-light);

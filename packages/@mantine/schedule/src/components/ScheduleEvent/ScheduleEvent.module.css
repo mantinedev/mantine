@@ -17,6 +17,7 @@
   height: 100%;
   cursor: pointer;
   user-select: none;
+  overflow: hidden;
 
   &:where([data-truncate]) {
     width: 95%;
