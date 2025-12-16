@@ -143,4 +143,81 @@ describe('filterDayViewEvents', () => {
     });
     expect(result).toEqual({ allDayEvents: [], regularEvents: [] });
   });
+
+  it('filters out events that end before startTime', () => {
+    const events: ScheduleEventData[] = [
+      createEvent(1, `${testDate} 06:00:00`, `${testDate} 09:00:00`),
+      createEvent(2, `${testDate} 10:00:00`, `${testDate} 11:00:00`),
+    ];
+    const result = filterDayViewEvents({
+      events,
+      date: testDate,
+      startTime: '10:00',
+      endTime: '18:00',
+    });
+    // Event 1 ends before startTime, so it should be filtered out
+    expect(result.regularEvents).toHaveLength(1);
+    expect(result.regularEvents[0].id).toBe(2);
+  });
+
+  it('filters out events that start at or after endTime', () => {
+    const events: ScheduleEventData[] = [
+      createEvent(1, `${testDate} 10:00:00`, `${testDate} 12:00:00`),
+      createEvent(2, `${testDate} 18:00:00`, `${testDate} 19:00:00`),
+    ];
+    const result = filterDayViewEvents({
+      events,
+      date: testDate,
+      startTime: '10:00',
+      endTime: '18:00',
+    });
+    // Event 2 starts at endTime, so it should be filtered out
+    expect(result.regularEvents).toHaveLength(1);
+    expect(result.regularEvents[0].id).toBe(1);
+  });
+
+  it('includes events that partially overlap with time window', () => {
+    const events: ScheduleEventData[] = [
+      createEvent(1, `${testDate} 08:00:00`, `${testDate} 12:00:00`),
+      createEvent(2, `${testDate} 16:00:00`, `${testDate} 20:00:00`),
+    ];
+    const result = filterDayViewEvents({
+      events,
+      date: testDate,
+      startTime: '10:00',
+      endTime: '18:00',
+    });
+    // Both events partially overlap with the time window
+    expect(result.regularEvents).toHaveLength(2);
+  });
+
+  it('includes all-day events regardless of time range', () => {
+    const events: ScheduleEventData[] = [
+      createAllDayEvent(1),
+      createEvent(2, `${testDate} 06:00:00`, `${testDate} 08:00:00`),
+    ];
+    const result = filterDayViewEvents({
+      events,
+      date: testDate,
+      startTime: '10:00',
+      endTime: '18:00',
+    });
+    // All-day event should be included, regular event should be filtered out
+    expect(result.allDayEvents).toHaveLength(1);
+    expect(result.regularEvents).toHaveLength(0);
+  });
+
+  it('includes events with exact boundary times', () => {
+    const events: ScheduleEventData[] = [
+      createEvent(1, `${testDate} 10:00:00`, `${testDate} 18:00:00`),
+    ];
+    const result = filterDayViewEvents({
+      events,
+      date: testDate,
+      startTime: '10:00',
+      endTime: '18:00',
+    });
+    // Event that spans exact window boundaries should be included
+    expect(result.regularEvents).toHaveLength(1);
+  });
 });

@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import { DateStringValue, DayPositionedEventData, ScheduleEventData } from '../../../types';
-import { getDayPositionedEvents, validateEvent } from '../../../utils';
+import { getDayPositionedEvents, isEventInTimeRange, validateEvent } from '../../../utils';
 
 interface UseDayViewEventsInput {
   events: ScheduleEventData[] | undefined;
@@ -20,6 +20,10 @@ export function filterDayViewEvents({ events, date, startTime, endTime }: UseDay
 
   for (const event of events) {
     if (dayjs(event.start).isSame(dayjs(date), 'day')) {
+      if (!isEventInTimeRange({ event, startTime, endTime })) {
+        continue;
+      }
+
       filteredEvents.push(validateEvent(event));
 
       if (!ids.has(event.id)) {
