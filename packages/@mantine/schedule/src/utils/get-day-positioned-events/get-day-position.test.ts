@@ -62,9 +62,13 @@ describe('@mantine/schedule/get-day-position', () => {
       endTime: '17:00',
     });
 
-    // Event starts before boundary, so negative top
-    expect(result.top).toBeLessThan(0);
-    expect(result.height).toBeGreaterThan(0);
+    // Event starts before boundary, so top is clamped to 0
+    // Event end: 10:00, which is 1 hour into the window = 60 minutes
+    // Time window: 09:00 to 17:00 = 8 hours = 480 minutes
+    // top: 0 / 480 * 100 = 0%
+    // height: (60 - 0) / 480 * 100 = 60 / 480 * 100 = 12.5%
+    expect(result.top).toBe(0);
+    expect(result.height).toBeCloseTo(12.5, 1);
   });
 
   it('handles event ending after boundary', () => {
@@ -175,5 +179,77 @@ describe('@mantine/schedule/get-day-position', () => {
     // height: (360 - 300) / 480 * 100 = 60 / 480 * 100 = 12.5%
     expect(result.top).toBeCloseTo(62.5, 1);
     expect(result.height).toBeCloseTo(12.5, 1);
+  });
+
+  it('clamps event start time to boundary when event starts before startTime', () => {
+    // Event from 06:00 to 14:00, but visible window starts at 10:00
+    const event = createEvent(`${testDate} 06:00:00`, `${testDate} 14:00:00`);
+    const result = getDayPosition({
+      event,
+      startTime: '10:00',
+      endTime: '22:00',
+    });
+
+    // Time window: 10:00 to 22:00 = 12 hours = 720 minutes
+    // Event start clamped to: 10:00, which is 0 hours into the window = 0 minutes
+    // Event end: 14:00, which is 4 hours into the window = 240 minutes
+    // top: 0 / 720 * 100 = 0%
+    // height: (240 - 0) / 720 * 100 = 240 / 720 * 100 = 33.33% (only 4 visible hours)
+    expect(result.top).toBeCloseTo(0, 1);
+    expect(result.height).toBeCloseTo(33.33, 1);
+  });
+
+  it('clamps event start time when event partially overlaps boundary', () => {
+    // Event from 08:00 to 11:00, visible window starts at 09:00
+    const event = createEvent(`${testDate} 08:00:00`, `${testDate} 11:00:00`);
+    const result = getDayPosition({
+      event,
+      startTime: '09:00',
+      endTime: '17:00',
+    });
+
+    // Time window: 09:00 to 17:00 = 8 hours = 480 minutes
+    // Event start clamped to: 09:00, which is 0 hours into the window = 0 minutes
+    // Event end: 11:00, which is 2 hours into the window = 120 minutes
+    // top: 0 / 480 * 100 = 0%
+    // height: (120 - 0) / 480 * 100 = 120 / 480 * 100 = 25% (only 2 visible hours)
+    expect(result.top).toBeCloseTo(0, 1);
+    expect(result.height).toBeCloseTo(25, 1);
+  });
+
+  it('does not clamp when event starts after boundary', () => {
+    // Event from 12:00 to 14:00, visible window starts at 09:00
+    const event = createEvent(`${testDate} 12:00:00`, `${testDate} 14:00:00`);
+    const result = getDayPosition({
+      event,
+      startTime: '09:00',
+      endTime: '17:00',
+    });
+
+    // Time window: 09:00 to 17:00 = 8 hours = 480 minutes
+    // Event start: 12:00, which is 3 hours into the window = 180 minutes
+    // Event end: 14:00, which is 5 hours into the window = 300 minutes (no clamping needed)
+    // top: 180 / 480 * 100 = 37.5%
+    // height: (300 - 180) / 480 * 100 = 120 / 480 * 100 = 25%
+    expect(result.top).toBeCloseTo(37.5, 1);
+    expect(result.height).toBeCloseTo(25, 1);
+  });
+
+  it('clamps both start and end when event extends beyond both boundaries', () => {
+    // Event from 06:00 to 23:00, visible window is 10:00 to 22:00
+    const event = createEvent(`${testDate} 06:00:00`, `${testDate} 23:00:00`);
+    const result = getDayPosition({
+      event,
+      startTime: '10:00',
+      endTime: '22:00',
+    });
+
+    // Time window: 10:00 to 22:00 = 12 hours = 720 minutes
+    // Event start clamped to: 10:00, which is 0 hours into the window = 0 minutes
+    // Event end clamped to: 22:00, which is 12 hours into the window = 720 minutes
+    // top: 0 / 720 * 100 = 0%
+    // height: (720 - 0) / 720 * 100 = 100%
+    expect(result.top).toBeCloseTo(0, 1);
+    expect(result.height).toBeCloseTo(100, 1);
   });
 });
