@@ -368,7 +368,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       h="calc(50% - 2px)"
       style={{
         position: 'absolute',
-        top: `calc(${event.position.row! * 50}% + 1px)`,
+        top: `calc(${event.position.row * 50}% + 1px)`,
         left: `calc(${event.position.offset}% + 1px)`,
         width: `calc(${event.position.width}% - 1px)`,
         height: 22,

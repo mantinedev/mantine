@@ -78,7 +78,7 @@ export interface WeekEventPositionData extends DayEventPositionData {
   weekOffset?: number;
 
   /** Row index for all-day events, used for vertical stacking */
-  row?: number;
+  row: number;
 
   /** Indicates that the event starts before the current week and continues into it */
   hangingStart: boolean;
