@@ -242,17 +242,19 @@ export function getWeekPositionedEvents({
   // Calculate overlaps and widths for each day (only for regular events)
   for (const day of visibleWeekDays) {
     const dayEvents = grouped.regularEvents[day];
-    const dayColumns = new Set<number>();
-    let maxColumn = 0;
 
     for (const event of dayEvents) {
-      dayColumns.add(event.position.column);
-      maxColumn = Math.max(maxColumn, event.position.column);
-    }
+      // Find all events that overlap with this event in time
+      let maxOverlappingColumn = event.position.column;
 
-    const overlaps = maxColumn + 1;
+      for (const otherEvent of dayEvents) {
+        // If events overlap in time, track the max column
+        if (isEventsOverlap(event, otherEvent)) {
+          maxOverlappingColumn = Math.max(maxOverlappingColumn, otherEvent.position.column);
+        }
+      }
 
-    for (const event of dayEvents) {
+      const overlaps = maxOverlappingColumn + 1;
       event.position.overlaps = overlaps;
       event.position.width = 100 / overlaps;
       event.position.offset = (event.position.column * 100) / overlaps;

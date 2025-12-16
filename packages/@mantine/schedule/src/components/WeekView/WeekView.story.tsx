@@ -76,6 +76,30 @@ const regularEvents: ScheduleEventData[] = [
     color: 'cyan',
     payload: {},
   },
+  {
+    id: 8,
+    title: 'Team dinner 2',
+    start: `${_weekStart.add(1, 'day').format('YYYY-MM-DD')} 19:00:00`,
+    end: `${_weekStart.add(1, 'day').format('YYYY-MM-DD')} 22:00:00`,
+    color: 'cyan',
+    payload: {},
+  },
+  {
+    id: 9,
+    title: 'Team dinner 3',
+    start: `${_weekStart.add(1, 'day').format('YYYY-MM-DD')} 20:00:00`,
+    end: `${_weekStart.add(1, 'day').format('YYYY-MM-DD')} 22:00:00`,
+    color: 'cyan',
+    payload: {},
+  },
+  {
+    id: 10,
+    title: 'Team dinner 4',
+    start: `${_weekStart.add(1, 'day').format('YYYY-MM-DD')} 20:00:00`,
+    end: `${_weekStart.add(1, 'day').format('YYYY-MM-DD')} 22:00:00`,
+    color: 'cyan',
+    payload: {},
+  },
 ];
 
 export function Usage() {
