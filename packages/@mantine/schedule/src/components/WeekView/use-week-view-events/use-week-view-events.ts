@@ -30,6 +30,49 @@ interface UseWeekViewEventsInput {
   withWeekendDays?: boolean;
 }
 
+export function filterWeekViewEvents({
+  date,
+  events,
+  startTime,
+  endTime,
+  firstDayOfWeek = 1,
+  weekendDays,
+  withWeekendDays = true,
+}: UseWeekViewEventsInput) {
+  if (events === undefined) {
+    return { allDayEvents: [], regularEvents: {} };
+  }
+
+  const ids = new Set<string | number>();
+  const filteredEvents: ScheduleEventData[] = [];
+
+  for (const event of events) {
+    if (isWithinWeek({ event, targetWeek: date, firstDayOfWeek })) {
+      if (!isEventInTimeRange({ event, startTime, endTime })) {
+        continue;
+      }
+
+      filteredEvents.push(validateEvent(event));
+
+      if (!ids.has(event.id)) {
+        ids.add(event.id);
+      } else {
+        throw new Error(`[@mantine/schedule] WeekView: Duplicated event ids found: ${event.id}`);
+      }
+    }
+  }
+
+  return getWeekPositionedEvents({
+    date,
+    events: filteredEvents,
+    startTime,
+    endTime,
+    firstDayOfWeek,
+    weekendDays,
+    withWeekendDays,
+  });
+}
+
 export function useWeekViewEvents({
   date,
   events,
@@ -39,38 +82,17 @@ export function useWeekViewEvents({
   weekendDays,
   withWeekendDays = true,
 }: UseWeekViewEventsInput) {
-  return useMemo(() => {
-    if (events === undefined) {
-      return { allDayEvents: [], regularEvents: {} };
-    }
-
-    const ids = new Set<string | number>();
-    const filteredEvents: ScheduleEventData[] = [];
-
-    for (const event of events) {
-      if (isWithinWeek({ event, targetWeek: date, firstDayOfWeek })) {
-        if (!isEventInTimeRange({ event, startTime, endTime })) {
-          continue;
-        }
-
-        filteredEvents.push(validateEvent(event));
-
-        if (!ids.has(event.id)) {
-          ids.add(event.id);
-        } else {
-          throw new Error(`[@mantine/schedule] WeekView: Duplicated event ids found: ${event.id}`);
-        }
-      }
-    }
-
-    return getWeekPositionedEvents({
-      date,
-      events: filteredEvents,
-      startTime,
-      endTime,
-      firstDayOfWeek,
-      weekendDays,
-      withWeekendDays,
-    });
-  }, [date, events, startTime, endTime, firstDayOfWeek, weekendDays, withWeekendDays]);
+  return useMemo(
+    () =>
+      filterWeekViewEvents({
+        date,
+        events,
+        startTime,
+        endTime,
+        firstDayOfWeek,
+        weekendDays,
+        withWeekendDays,
+      }),
+    [date, events, startTime, endTime, firstDayOfWeek, weekendDays, withWeekendDays]
+  );
 }
