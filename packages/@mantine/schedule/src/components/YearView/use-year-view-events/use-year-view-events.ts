@@ -37,28 +37,30 @@ interface UseYearViewEventsInput {
   events: ScheduleEventData[] | undefined;
 }
 
-export function useYearViewEvents({ date, events }: UseYearViewEventsInput) {
-  return useMemo(() => {
-    const groupedEvents: GroupedEvents = {};
+export function filterYearViewEvents({ date, events }: UseYearViewEventsInput) {
+  const groupedEvents: GroupedEvents = {};
 
-    if (events === undefined) {
-      return groupedEvents;
-    }
+  if (events === undefined) {
+    return groupedEvents;
+  }
 
-    const ids = new Set<string | number>();
+  const ids = new Set<string | number>();
 
-    for (const event of events) {
-      if (dayjs(event.start).isSame(dayjs(date), 'year')) {
-        groupEventByDate(validateEvent(event), groupedEvents);
+  for (const event of events) {
+    if (dayjs(event.start).isSame(dayjs(date), 'year')) {
+      groupEventByDate(validateEvent(event), groupedEvents);
 
-        if (!ids.has(event.id)) {
-          ids.add(event.id);
-        } else {
-          throw new Error(`[@mantine/schedule] YearView: Duplicated event ids found: ${event.id}`);
-        }
+      if (!ids.has(event.id)) {
+        ids.add(event.id);
+      } else {
+        throw new Error(`[@mantine/schedule] YearView: Duplicated event ids found: ${event.id}`);
       }
     }
+  }
 
-    return groupedEvents;
-  }, [date, events]);
+  return groupedEvents;
+}
+
+export function useYearViewEvents({ date, events }: UseYearViewEventsInput) {
+  return useMemo(() => filterYearViewEvents({ date, events }), [date, events]);
 }
