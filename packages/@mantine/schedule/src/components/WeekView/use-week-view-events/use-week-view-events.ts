@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { DateStringValue, DayOfWeek, ScheduleEventData } from '../../../types';
 import {
   getWeekPositionedEvents,
+  GroupedWeekEvents,
   isEventInTimeRange,
   isWithinWeek,
   validateEvent,
@@ -81,7 +82,7 @@ export function useWeekViewEvents({
   firstDayOfWeek = 1,
   weekendDays,
   withWeekendDays = true,
-}: UseWeekViewEventsInput) {
+}: UseWeekViewEventsInput): GroupedWeekEvents {
   return useMemo(
     () =>
       filterWeekViewEvents({

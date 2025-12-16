@@ -15,7 +15,13 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
-import { DateLabelFormat, DateStringValue, DayOfWeek, ScheduleViewLevel } from '../../types';
+import {
+  DateLabelFormat,
+  DateStringValue,
+  DayOfWeek,
+  ScheduleEventData,
+  ScheduleViewLevel,
+} from '../../types';
 import {
   getMonthDays,
   getWeekdaysNames,
@@ -30,6 +36,7 @@ import {
   ScheduleHeader,
 } from '../ScheduleHeader/ScheduleHeader';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
+import { useMonthViewEvents } from './use-month-view-events/use-month-view-events';
 import classes from './MonthView.module.css';
 
 export type MonthViewStylesNames =
@@ -119,6 +126,9 @@ export interface MonthViewProps
 
   /** Props passed to view level select */
   viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
+
+  /** Events to display */
+  events?: ScheduleEventData[];
 }
 
 export type MonthViewFactory = Factory<{
@@ -177,6 +187,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     nextControlProps,
     previousControlProps,
     viewSelectProps,
+    events,
     ...others
   } = props;
 
@@ -210,6 +221,14 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
   };
 
   const ctx = useScheduleContext();
+
+  const monthEvents = useMonthViewEvents({
+    date,
+    events,
+    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+  });
+
+  console.log(monthEvents);
 
   const weekdays = withWeekDays
     ? getWeekdaysNames({

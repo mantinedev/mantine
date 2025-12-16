@@ -1,9 +1,11 @@
+import dayjs from 'dayjs';
 import {
   DateStringValue,
   DayOfWeek,
   MonthPositionedEventData,
   ScheduleEventData,
 } from '../../types';
+import { getStartOfWeek } from '../get-start-of-week/get-start-of-week';
 
 interface GetMonthPositionedEventsInput {
   /** Date (month start) at which events are positioned */
@@ -17,7 +19,7 @@ interface GetMonthPositionedEventsInput {
 }
 
 /** Events grouped by week index (index within month) */
-interface GroupedMonthEvents {
+export interface GroupedMonthEvents {
   [weekIndex: string]: MonthPositionedEventData[];
 }
 
@@ -25,4 +27,107 @@ export function getMonthPositionedEvents({
   date,
   events,
   firstDayOfWeek = 1,
-}: GetMonthPositionedEventsInput): GroupedMonthEvents {}
+}: GetMonthPositionedEventsInput): GroupedMonthEvents {
+  const grouped: GroupedMonthEvents = {};
+
+  // Get the start date of the month
+  const monthStart = dayjs(date).startOf('month');
+  const monthEnd = monthStart.endOf('month');
+
+  // Get all weeks in the month with padding days
+  const weeks: DateStringValue[][] = [];
+  const startOfFirstWeekStr = getStartOfWeek(monthStart.format('YYYY-MM-DD'), firstDayOfWeek);
+  let currentDate = dayjs(startOfFirstWeekStr);
+
+  while (currentDate.isBefore(monthEnd) || currentDate.isSame(monthEnd, 'day')) {
+    const week: DateStringValue[] = [];
+    for (let i = 0; i < 7; i++) {
+      week.push(currentDate.format('YYYY-MM-DD'));
+      currentDate = currentDate.add(1, 'day');
+    }
+    weeks.push(week);
+  }
+
+  // Initialize groups for each week
+  for (let i = 0; i < weeks.length; i++) {
+    grouped[i.toString()] = [];
+  }
+
+  // Process each event
+  for (const event of events) {
+    const eventStart = dayjs(event.start).startOf('day');
+    const eventEnd = dayjs(event.end).startOf('day');
+
+    // Check if event is multiday
+    const isMultiday = eventEnd.isAfter(eventStart);
+
+    // Find which weeks this event spans
+    for (let weekIdx = 0; weekIdx < weeks.length; weekIdx++) {
+      const week = weeks[weekIdx];
+      const weekStart = dayjs(week[0]).startOf('day');
+      const weekEnd = dayjs(week[6]).endOf('day');
+
+      // Check if event overlaps with this week
+      if (
+        (eventStart.isBefore(weekEnd) || eventStart.isSame(weekEnd, 'day')) &&
+        (eventEnd.isAfter(weekStart) || eventEnd.isSame(weekStart, 'day'))
+      ) {
+        // Calculate start offset and width for this week
+        let displayStart = eventStart;
+        let displayEnd = eventEnd;
+
+        // Clamp to week boundaries
+        if (displayStart.isBefore(weekStart)) {
+          displayStart = weekStart;
+        }
+        if (displayEnd.isAfter(weekEnd)) {
+          displayEnd = weekEnd;
+        }
+
+        // Calculate start day index in week (0-6)
+        const startDayIndex = displayStart.diff(weekStart, 'day');
+        const endDayIndex = displayEnd.diff(weekStart, 'day');
+        const daysSpanned = Math.max(1, endDayIndex - startDayIndex + (isMultiday ? 1 : 0));
+
+        // Calculate percentages
+        const startOffset = (startDayIndex / 7) * 100;
+        const width = (daysSpanned / 7) * 100;
+
+        // Find row by checking existing events on the same day
+        const existingEvents = grouped[weekIdx.toString()];
+        let row = 0;
+
+        for (const existing of existingEvents) {
+          const existingStart = dayjs(existing.start).startOf('day');
+          const existingDisplayStart =
+            existingStart.isBefore(weekStart) || existingStart.isSame(weekStart, 'day')
+              ? weekStart
+              : existingStart;
+          const existingDayIndex = existingDisplayStart.diff(weekStart, 'day');
+          const existingWidth = existing.position?.width || 0;
+          const existingDaysSpanned = (existingWidth / 100) * 7;
+
+          // Check if events overlap on any day
+          if (
+            existingDayIndex + existingDaysSpanned > startDayIndex &&
+            existingDayIndex < startDayIndex + daysSpanned
+          ) {
+            row = Math.max(row, (existing.position?.row || 0) + 1);
+          }
+        }
+
+        grouped[weekIdx.toString()].push({
+          ...event,
+          position: {
+            startOffset,
+            width,
+            weekIndex: weekIdx,
+            row,
+          },
+        });
+      }
+    }
+  }
+
+  return grouped;
+}

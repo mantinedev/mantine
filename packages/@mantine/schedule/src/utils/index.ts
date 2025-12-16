@@ -28,4 +28,7 @@ export { isMultidayEvent } from './is-multiday-event/is-multiday-event';
 export { isEventInTimeRange } from './is-event-in-time-range/is-event-in-time-range';
 export { getWeekPositionedEvents } from './get-week-positioned-events/get-week-positioned-events';
 export { isWithinWeek } from './is-within-week/is-within-week';
+export { getMonthPositionedEvents } from './get-month-positioned-events/get-month-positioned-events';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';
+export type { GroupedMonthEvents } from './get-month-positioned-events/get-month-positioned-events';
+export type { GroupedWeekEvents } from './get-week-positioned-events/get-week-positioned-events';

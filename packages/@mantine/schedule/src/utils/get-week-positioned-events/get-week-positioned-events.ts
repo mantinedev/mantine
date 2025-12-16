@@ -35,7 +35,7 @@ interface GetWeekPositionedEventsInput {
 }
 
 /** Events grouped by week day date (YYYY-MM-DD) and by columns */
-interface GroupedWeekEvents {
+export interface GroupedWeekEvents {
   allDayEvents: WeekPositionedEventData[];
   regularEvents: Record<DateStringValue, WeekPositionedEventData[]>;
 }
