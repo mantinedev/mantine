@@ -8,6 +8,7 @@ import {
   getRadius,
   MantineRadius,
   StylesApiProps,
+  UnstyledButton,
   useProps,
   useStyles,
 } from '@mantine/core';
@@ -24,7 +25,7 @@ export type ScheduleEventCssVariables = {
 export type RenderEventBody = (event: ScheduleEventData<any>) => React.ReactNode;
 
 export interface ScheduleEventProps
-  extends BoxProps, StylesApiProps<ScheduleEventFactory>, ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<ScheduleEventFactory>, ElementProps<'button'> {
   __staticSelector?: string;
 
   /** Event to display */
@@ -45,7 +46,7 @@ export interface ScheduleEventProps
 
 export type ScheduleEventFactory = Factory<{
   props: ScheduleEventProps;
-  ref: HTMLDivElement;
+  ref: HTMLButtonElement;
   stylesNames: ScheduleEventStylesNames;
   vars: ScheduleEventCssVariables;
   variant: ScheduleEventVariant;
@@ -112,7 +113,7 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
   });
 
   return (
-    <Box {...getStyles('event')} size={size} {...others}>
+    <UnstyledButton {...getStyles('event')} size={size} {...others}>
       <Box mod={{ truncate, size }} {...getStyles('eventInner')}>
         {typeof renderEventBody === 'function' ? (
           renderEventBody(event)
@@ -122,7 +123,7 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
           </>
         )}
       </Box>
-    </Box>
+    </UnstyledButton>
   );
 });
 
