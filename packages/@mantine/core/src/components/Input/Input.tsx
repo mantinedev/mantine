@@ -23,6 +23,7 @@ import { InputDescription } from './InputDescription/InputDescription';
 import { InputError } from './InputError/InputError';
 import { InputLabel } from './InputLabel/InputLabel';
 import { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
+import { InputFloatingLabel } from './FloatingLabel/FloatingLabel';
 import { useInputWrapperContext } from './InputWrapper.context';
 import {
   __InputWrapperProps,
@@ -150,6 +151,7 @@ export type InputFactory = PolymorphicFactory<{
   ctx: InputStylesCtx;
   staticComponents: {
     Label: typeof InputLabel;
+    FloatingLabel: typeof InputFloatingLabel;
     Error: typeof InputError;
     Description: typeof InputDescription;
     Placeholder: typeof InputPlaceholder;
@@ -327,6 +329,7 @@ export const Input = polymorphicFactory<InputFactory>((_props, ref) => {
 Input.classes = classes;
 Input.Wrapper = InputWrapper;
 Input.Label = InputLabel;
+Input.FloatingLabel = InputFloatingLabel;
 Input.Error = InputError;
 Input.Description = InputDescription;
 Input.Placeholder = InputPlaceholder;

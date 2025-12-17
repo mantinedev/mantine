@@ -300,6 +300,39 @@
   }
 }
 
+/* ----- Input.FloatingLabel ----- */
+.floatingLabel {
+  --floating-label-top: calc(var(--input-padding-y, 0rem) + rem(1px));
+  --floating-label-left: var(--input-padding-inline-start);
+  --floating-label-size: calc(var(--input-label-size, var(--mantine-font-size-sm)) - rem(2px));
+  --floating-label-floating-offset: calc(-100% - var(--mantine-spacing-xs));
+  --floating-label-color: var(--input-placeholder-color, var(--mantine-color-placeholder));
+  --floating-label-floating-color: var(--mantine-color-text);
+
+  position: absolute;
+  z-index: 1;
+  top: var(--floating-label-top);
+  left: var(--floating-label-left);
+  line-height: 1;
+  margin: 0;
+  font-size: var(--input-label-size, var(--mantine-font-size-sm));
+  pointer-events: none;
+  color: var(--floating-label-color);
+  transition: color 100ms ease, transform 100ms ease, font-size 100ms ease, opacity 100ms ease;
+  transform-origin: left top;
+
+  [data-error] & {
+    --floating-label-color: var(--mantine-color-error);
+    --floating-label-floating-color: var(--mantine-color-error);
+  }
+}
+
+.floatingLabel[data-floating] {
+  transform: translateY(var(--floating-label-floating-offset));
+  font-size: var(--floating-label-size);
+  color: var(--floating-label-floating-color);
+}
+
 /* ----- Input.Wrapper ----- */
 .root {
   line-height: var(--mantine-line-height);

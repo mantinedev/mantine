@@ -4,6 +4,7 @@ export { InputDescription } from './InputDescription/InputDescription';
 export { InputError } from './InputError/InputError';
 export { InputLabel } from './InputLabel/InputLabel';
 export { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
+export { InputFloatingLabel } from './FloatingLabel/FloatingLabel';
 export { InputClearButton } from './InputClearButton/InputClearButton';
 export { useInputProps } from './use-input-props';
 export { useInputWrapperContext } from './InputWrapper.context';
@@ -46,6 +47,12 @@ export type {
   InputPlaceholderProps,
   InputPlaceholderStylesNames,
 } from './InputPlaceholder/InputPlaceholder';
+export type {
+  InputFloatingLabelCssVariables,
+  InputFloatingLabelFactory,
+  InputFloatingLabelProps,
+  InputFloatingLabelStylesNames,
+} from './FloatingLabel/FloatingLabel';
 export type {
   InputClearButtonFactory,
   InputClearButtonProps,
