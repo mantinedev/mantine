@@ -7,10 +7,6 @@ function createMockFile(name: string, size: number, type: string, lastModified?:
   return new File([buffer], name, { type, lastModified: lastModified ?? Date.now() });
 }
 
-function createMockBlob(size: number, type: string): Blob {
-  return new Blob([''], { type });
-}
-
 function tests(mode: FormMode) {
   it('marks form as dirty when File value changes', () => {
     const initialFile = createMockFile('initial.jpg', 1000, 'image/jpeg');
