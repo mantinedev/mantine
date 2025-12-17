@@ -231,13 +231,19 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
         const { modalProps: currentModalProps, content } = getModalContent(modal);
         const baseZIndex = getDefaultZIndex('modal');
         const opened = true; // always opened because this will only render for current modals
+        const isTopmost = index === state.current.length - 1;
+        const adjustedModalProps = {
+          ...currentModalProps,
+          trapFocus: isTopmost && ((currentModalProps as ModalSettings).trapFocus ?? modalProps?.trapFocus ?? true),
+          closeOnEscape: isTopmost && ((currentModalProps as ModalSettings).closeOnEscape ?? modalProps?.closeOnEscape ?? true),
+        };
 
         return (
           <Modal
             key={modal.id}
             zIndex={baseZIndex + index + 1}
             {...modalProps}
-            {...currentModalProps}
+            {...adjustedModalProps}
             opened={opened}
             onClose={() => closeModal(modal.id)}
           >
