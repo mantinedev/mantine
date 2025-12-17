@@ -140,9 +140,10 @@ export function useFormStatus<Values extends Record<string, any>>({
     const currentDirty = getStatus(dirtyRef.current, path);
     const initialValue = getPath(path, $values.getValuesSnapshot());
 
-    const dirty = isFileOrBlob(value) || isFileOrBlob(initialValue)
-      ? !isFileOrBlobEqual(initialValue, value)
-      : !isEqual(initialValue, value);
+    const dirty =
+      isFileOrBlob(value) || isFileOrBlob(initialValue)
+        ? !isFileOrBlobEqual(initialValue, value)
+        : !isEqual(initialValue, value);
 
     const clearedState = clearListState(path, dirtyRef.current);
     clearedState[path as string] = dirty;
