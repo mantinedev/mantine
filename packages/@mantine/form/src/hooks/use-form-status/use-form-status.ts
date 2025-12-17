@@ -16,6 +16,35 @@ import {
 } from '../../types';
 import type { $FormValues } from '../use-form-values/use-form-values';
 
+function isFileOrBlob(value: unknown): value is File | Blob {
+  return value instanceof File || value instanceof Blob;
+}
+
+function isFileOrBlobEqual(a: unknown, b: unknown): boolean {
+  if (a === b) {
+    return true;
+  }
+
+  if (a === null || b === null) {
+    return a === b;
+  }
+
+  if (a instanceof File && b instanceof File) {
+    return (
+      a.name === b.name &&
+      a.size === b.size &&
+      a.lastModified === b.lastModified &&
+      a.type === b.type
+    );
+  }
+
+  if (a instanceof Blob && b instanceof Blob) {
+    return a.size === b.size && a.type === b.type;
+  }
+
+  return false;
+}
+
 export interface $FormStatus<Values extends Record<string, any>> {
   touchedState: FormStatus;
   dirtyState: FormStatus;
@@ -109,7 +138,12 @@ export function useFormStatus<Values extends Record<string, any>>({
 
   const setCalculatedFieldDirty: SetCalculatedFieldDirty<Values> = useCallback((path, value) => {
     const currentDirty = getStatus(dirtyRef.current, path);
-    const dirty = !isEqual(getPath(path, $values.getValuesSnapshot()), value);
+    const initialValue = getPath(path, $values.getValuesSnapshot());
+
+    const dirty = isFileOrBlob(value) || isFileOrBlob(initialValue)
+      ? !isFileOrBlobEqual(initialValue, value)
+      : !isEqual(initialValue, value);
+
     const clearedState = clearListState(path, dirtyRef.current);
     clearedState[path as string] = dirty;
     setDirty(clearedState, currentDirty !== dirty);
@@ -146,9 +180,12 @@ export function useFormStatus<Values extends Record<string, any>>({
         return overriddenValue;
       }
 
-      const sliceOfValues = getPath(path, $values.refValues.current);
-      const sliceOfInitialValues = getPath(path, $values.valuesSnapshot.current);
-      return !isEqual(sliceOfValues, sliceOfInitialValues);
+      const sliceOfValues = getPath(path, $values.refValues.current) as unknown;
+      const sliceOfInitialValues = getPath(path, $values.valuesSnapshot.current) as unknown;
+
+      return isFileOrBlob(sliceOfValues) || isFileOrBlob(sliceOfInitialValues)
+        ? !isFileOrBlobEqual(sliceOfInitialValues, sliceOfValues)
+        : !isEqual(sliceOfValues, sliceOfInitialValues);
     }
 
     const isOverridden = Object.keys(dirtyRef.current).length > 0;
