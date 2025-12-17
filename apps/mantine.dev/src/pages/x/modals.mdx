@@ -106,7 +106,7 @@ And then open one of these modals with `modals.openContextModal` function.
 By default `innerProps` and `modal` are not typesafe. You can add typesafety with a Typescript module declaration.
 
 ```tsx
-import {ContextModalProps} from "@mantine/modals";
+import { ContextModalProps } from '@mantine/modals';
 const TestModal = ({
   context,
   id,
@@ -169,7 +169,7 @@ To close all opened modals call `modals.closeAll()` function:
 By default, opening a new modal using `modals manager` replaces the currently opened modal. You can have multiple modals
 open at the same time by setting `shouldReplaceExistingModal` to `false` on subsequent calls.
 
-<Demo data={ModalsDemos.stacked} />
+<Demo data={ModalsDemos.multiple} />
 
 
 ## Modal props
