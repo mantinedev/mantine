@@ -29,8 +29,8 @@ const events: ScheduleEventData[] = [
   {
     id: 3,
     title: 'Client Call',
-    start: '2025-11-07 14:00:00',
-    end: '2025-11-07 15:00:00',
+    start: '2025-11-09 14:00:00',
+    end: '2025-11-09 15:00:00',
     color: 'green',
     payload: {},
   },

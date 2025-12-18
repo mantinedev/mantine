@@ -304,7 +304,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
             position: 'absolute',
             top: `calc(${event.position.row * 50}% + 1px)`,
             left: `calc(${event.position.startOffset}% + 1px)`,
-            width: `calc(${event.position.width}% - 1px)`,
+            width: `calc(${event.position.width}% - 2px)`,
             height: `calc(50% - 2px)`,
           }}
         />
