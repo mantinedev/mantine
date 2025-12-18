@@ -310,7 +310,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         />
       ));
 
-    const moreEventsNodes = week.map((day) => {
+    const moreEventsNodes = week.map((day, dayIndex) => {
       const dayEvents = monthEvents.groupedByDay[day] || [];
       const hiddenEventsCount = Math.max(0, dayEvents.length - 2);
 
@@ -318,10 +318,9 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         return null;
       }
 
-      const firstEvent = dayEvents.find((event) => event.position.row < 2);
-      if (!firstEvent) {
-        return null;
-      }
+      // Calculate position based on day's position within the week (each day is 1/7 of the week)
+      const dayStartOffset = (dayIndex / 7) * 100;
+      const dayWidth = (1 / 7) * 100;
 
       return (
         <MoreEvents
@@ -331,8 +330,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           style={{
             position: 'absolute',
             top: `calc(100% - 2px)`,
-            left: `calc(${firstEvent.position.startOffset}% + 1px)`,
-            width: `calc(${firstEvent.position.width}% - 1px)`,
+            left: `calc(${dayStartOffset}% + 1px)`,
+            width: `calc(${dayWidth}% - 1px)`,
             height: '22px',
             paddingInline: 4,
           }}
