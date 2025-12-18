@@ -47,4 +47,28 @@ describe('@mantine/schedule/ScheduleEvent', () => {
     expect(screen.getByText('Test event')).toBeInTheDocument();
     expect(screen.getByText('Custom body')).toBeInTheDocument();
   });
+
+  it('sets data-nowrap attribute when nowrap prop is true', () => {
+    const { rerender, container } = render(<ScheduleEvent {...defaultProps} nowrap />);
+    expect(container.querySelector('.mantine-ScheduleEvent-eventInner')).toHaveAttribute(
+      'data-nowrap'
+    );
+
+    rerender(<ScheduleEvent {...defaultProps} />);
+    expect(container.querySelector('.mantine-ScheduleEvent-eventInner')).not.toHaveAttribute(
+      'data-nowrap'
+    );
+  });
+
+  it('sets data-auto-size attribute when autoSize prop is true', () => {
+    const { rerender, container } = render(<ScheduleEvent {...defaultProps} autoSize />);
+    expect(container.querySelector('.mantine-ScheduleEvent-event')).toHaveAttribute(
+      'data-auto-size'
+    );
+
+    rerender(<ScheduleEvent {...defaultProps} />);
+    expect(container.querySelector('.mantine-ScheduleEvent-event')).not.toHaveAttribute(
+      'data-auto-size'
+    );
+  });
 });

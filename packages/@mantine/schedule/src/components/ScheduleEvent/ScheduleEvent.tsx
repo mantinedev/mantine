@@ -34,8 +34,11 @@ export interface ScheduleEventProps
   /** Key of `theme.radius` or any valid CSS value to set border-radius @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** If set, event has `95%` width, allowing time slot selection under the event @default `false` */
-  truncate?: boolean;
+  /** If set, event has `white-space: nowrap` @default `false` */
+  nowrap?: boolean;
+
+  /** If set, event shrinks its font-size with limited height @default `false` */
+  autoSize?: boolean;
 
   /** Event size @default `'sm'` */
   size?: 'sm' | 'md' | (string & {});
@@ -87,13 +90,15 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
     vars,
     attributes,
     children,
-    truncate,
+    nowrap,
     radius,
     color,
     __staticSelector,
     event,
     renderEventBody,
     size,
+    autoSize,
+    mod,
     ...others
   } = props;
 
@@ -113,15 +118,15 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
   });
 
   return (
-    <UnstyledButton {...getStyles('event')} size={size} {...others}>
-      <Box mod={{ truncate, size }} {...getStyles('eventInner')}>
-        {typeof renderEventBody === 'function' ? (
-          renderEventBody(event)
-        ) : (
-          <>
-            <div>{event.title}</div>
-          </>
-        )}
+    <UnstyledButton
+      {...getStyles('event')}
+      size={size}
+      title={event.title}
+      mod={[{ autoSize }, mod]}
+      {...others}
+    >
+      <Box mod={{ nowrap, size, autoSize }} {...getStyles('eventInner')}>
+        {typeof renderEventBody === 'function' ? renderEventBody(event) : event.title}
       </Box>
     </UnstyledButton>
   );

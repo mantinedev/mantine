@@ -286,19 +286,24 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
     const weekNumberProps = getWeekNumberProps?.(new Date(week[0])) || {};
     const weekNumber = getWeekNumber(week);
-    const events = (monthEvents[index] || []).map((event) => (
-      <ScheduleEvent
-        key={event.id}
-        event={event}
-        style={{
-          position: 'absolute',
-          top: `calc(${event.position.row * 50}% + 1px)`,
-          left: `calc(${event.position.startOffset}% + 1px)`,
-          width: `calc(${event.position.width}% - 1px)`,
-          height: `calc(50% - 2px)`,
-        }}
-      />
-    ));
+
+    const events = (monthEvents[index] || [])
+      .filter((event) => event.position.row < 2)
+      .map((event) => (
+        <ScheduleEvent
+          key={event.id}
+          event={event}
+          nowrap
+          autoSize
+          style={{
+            position: 'absolute',
+            top: `calc(${event.position.row * 50}% + 1px)`,
+            left: `calc(${event.position.startOffset}% + 1px)`,
+            width: `calc(${event.position.width}% - 1px)`,
+            height: `calc(50% - 2px)`,
+          }}
+        />
+      ));
 
     return (
       <div {...getStyles('monthViewWeek')} key={index}>

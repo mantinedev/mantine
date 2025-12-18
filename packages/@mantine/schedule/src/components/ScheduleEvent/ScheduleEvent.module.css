@@ -1,7 +1,13 @@
 .event {
   padding: 1px;
   pointer-events: none;
-  container-type: size;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+
+  &:where([data-auto-size]) {
+    container-type: size;
+  }
 }
 
 .eventInner {
@@ -9,18 +15,22 @@
   color: var(--event-color);
   pointer-events: all;
   border-radius: var(--event-radius);
-  border: 1px solid transparent;
   font-weight: 600;
   font-size: 12px;
   line-height: 1;
   padding: 3px 4px;
+  width: 100%;
   height: 100%;
   cursor: pointer;
   user-select: none;
   overflow: hidden;
 
-  &:where([data-truncate]) {
-    width: 95%;
+  &:where([data-nowrap]) {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   &:where([data-size='md']) {
@@ -32,11 +42,13 @@
     background-color: var(--event-hover);
   }
 
-  @container (max-height: 18px) {
-    font-size: 9px;
-    padding-block: 0px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  &:where([data-auto-size]) {
+    @container (max-height: 18px) {
+      font-size: 9px;
+      padding-block: 0px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
   }
 }

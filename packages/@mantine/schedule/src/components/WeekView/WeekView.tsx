@@ -329,6 +329,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       <ScheduleEvent
         key={event.id}
         event={event}
+        autoSize
         style={{
           position: 'absolute',
           top: `${event.position.top}%`,
@@ -365,6 +366,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     <ScheduleEvent
       key={event.id}
       event={event}
+      autoSize
+      nowrap
       style={{
         position: 'absolute',
         zIndex: 2,
@@ -372,6 +375,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         left: `calc(${event.position.offset}% + 1px)`,
         width: `calc(${event.position.width}% - 1px)`,
         height: 'calc(50% - 2px)',
+        maxHeight: 'calc(50% - 2px)',
       }}
     />
   ));
