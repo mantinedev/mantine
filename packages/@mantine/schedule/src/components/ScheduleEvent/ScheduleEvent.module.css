@@ -28,9 +28,7 @@
   &:where([data-nowrap]) {
     white-space: nowrap;
     text-overflow: ellipsis;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    line-height: 1.25;
   }
 
   &:where([data-size='md']) {
