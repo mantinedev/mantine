@@ -45,6 +45,7 @@ export function getMonthPositionedEvents({
 }: GetMonthPositionedEventsInput): GroupedMonthEvents {
   const groupedByWeek: GroupedMonthEvents['groupedByWeek'] = {};
   const groupedByDay: GroupedMonthEvents['groupedByDay'] = {};
+  const eventsAddedToDay = new Set<string>(); // Track which events have been added to groupedByDay
 
   // Determine the range for which to display events
   const rangeStart = range ? dayjs(range.start) : dayjs(date).startOf('month');
@@ -58,7 +59,7 @@ export function getMonthPositionedEvents({
   while (currentDate.isBefore(rangeEnd) || currentDate.isSame(rangeEnd, 'day')) {
     const week: DateStringValue[] = [];
     for (let i = 0; i < 7; i++) {
-      const dateStr = currentDate.format('YYYY-MM-DD');
+      const dateStr = currentDate.format('YYYY-MM-DD 00:00:00');
       week.push(dateStr);
       if (!groupedByDay[dateStr]) {
         groupedByDay[dateStr] = [];
@@ -155,14 +156,17 @@ export function getMonthPositionedEvents({
         // Add to groupedByWeek
         groupedByWeek[weekIdx.toString()].push(positionedEvent);
 
-        // Add to groupedByDay for each day the event spans
-        let dayDate = eventStart;
-        while (dayDate.isBefore(eventEnd) || dayDate.isSame(eventEnd, 'day')) {
-          const dayDateStr = dayDate.format('YYYY-MM-DD');
-          if (groupedByDay[dayDateStr]) {
-            groupedByDay[dayDateStr].push(positionedEvent);
+        // Add to groupedByDay only once (on the first week we encounter the event)
+        if (weekIdx === 0 || !eventsAddedToDay.has(event.id.toString())) {
+          let dayDate = eventStart;
+          while (dayDate.isBefore(eventEnd) || dayDate.isSame(eventEnd, 'day')) {
+            const dayDateStr = dayDate.format('YYYY-MM-DD 00:00:00');
+            if (groupedByDay[dayDateStr]) {
+              groupedByDay[dayDateStr].push(positionedEvent);
+            }
+            dayDate = dayDate.add(1, 'day');
           }
-          dayDate = dayDate.add(1, 'day');
+          eventsAddedToDay.add(event.id.toString());
         }
       }
     }

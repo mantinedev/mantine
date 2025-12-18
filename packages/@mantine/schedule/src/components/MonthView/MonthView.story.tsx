@@ -116,6 +116,14 @@ const events: ScheduleEventData[] = [
     payload: {},
   },
   {
+    id: 131,
+    title: 'Launch Event 2',
+    start: '2025-11-20 16:00:00',
+    end: '2025-11-20 18:00:00',
+    color: 'teal',
+    payload: {},
+  },
+  {
     id: 14,
     title: 'Training Session',
     start: '2025-11-22 13:00:00',

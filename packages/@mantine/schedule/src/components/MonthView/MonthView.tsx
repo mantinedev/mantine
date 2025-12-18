@@ -29,6 +29,7 @@ import {
   isSameMonth,
   toDateString,
 } from '../../utils';
+import { MoreEvents, MoreEventsProps } from '../MoreEvents/MoreEvents';
 import { useScheduleContext } from '../Schedule/Schedule.context';
 import { ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
@@ -131,6 +132,9 @@ export interface MonthViewProps
 
   /** Events to display */
   events?: ScheduleEventData[];
+
+  /** Props passed down to `MoreEvents` component */
+  moreEventsProps?: Partial<MoreEventsProps>;
 }
 
 export type MonthViewFactory = Factory<{
@@ -190,6 +194,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     previousControlProps,
     viewSelectProps,
     events,
+    moreEventsProps,
     ...others
   } = props;
 
@@ -305,6 +310,37 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         />
       ));
 
+    const moreEventsNodes = week.map((day) => {
+      const dayEvents = monthEvents.groupedByDay[day] || [];
+      const hiddenEventsCount = Math.max(0, dayEvents.length - 2);
+
+      if (hiddenEventsCount <= 0) {
+        return null;
+      }
+
+      const firstEvent = dayEvents.find((event) => event.position.row < 2);
+      if (!firstEvent) {
+        return null;
+      }
+
+      return (
+        <MoreEvents
+          key={`more-${day}`}
+          events={dayEvents}
+          moreEventsCount={hiddenEventsCount}
+          style={{
+            position: 'absolute',
+            top: `calc(100% - 2px)`,
+            left: `calc(${firstEvent.position.startOffset}% + 1px)`,
+            width: `calc(${firstEvent.position.width}% - 1px)`,
+            height: '22px',
+            paddingInline: 4,
+          }}
+          {...moreEventsProps}
+        />
+      );
+    });
+
     return (
       <div {...getStyles('monthViewWeek')} key={index}>
         {withWeekNumbers && (
@@ -327,6 +363,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
         <div {...getStyles('monthViewEvents')} key="week-events">
           {events}
+          {moreEventsNodes}
         </div>
 
         {days}
