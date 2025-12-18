@@ -39,6 +39,9 @@ export interface ScheduleEventData<Payload extends EventPayload = EventPayload> 
   /** Event background color. Key of `theme.colors` or any valid CSS color. */
   color: MantineColor;
 
+  /** Event variant, default is `'light'` */
+  variant?: 'filled' | 'light';
+
   /** Additional event data, defined by the user, not used internally by the library */
   payload: Payload;
 }

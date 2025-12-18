@@ -15,6 +15,7 @@ const events: ScheduleEventData[] = [
     start: '2025-11-03 10:00:00',
     end: '2025-11-03 11:00:00',
     color: 'blue',
+    variant: 'filled',
     payload: {},
   },
   {
