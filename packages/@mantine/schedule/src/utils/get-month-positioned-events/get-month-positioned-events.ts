@@ -24,9 +24,17 @@ interface GetMonthPositionedEventsInput {
   };
 }
 
-/** Events grouped by week index (index within month) */
+/** Events grouped by week index and by day */
 export interface GroupedMonthEvents {
-  [weekIndex: string]: MonthPositionedEventData[];
+  /** Events grouped by week index (index within month) */
+  groupedByWeek: {
+    [weekIndex: string]: MonthPositionedEventData[];
+  };
+
+  /** Events grouped by day (YYYY-MM-DD format) */
+  groupedByDay: {
+    [date: string]: MonthPositionedEventData[];
+  };
 }
 
 export function getMonthPositionedEvents({
@@ -35,7 +43,8 @@ export function getMonthPositionedEvents({
   firstDayOfWeek = 1,
   range,
 }: GetMonthPositionedEventsInput): GroupedMonthEvents {
-  const grouped: GroupedMonthEvents = {};
+  const groupedByWeek: GroupedMonthEvents['groupedByWeek'] = {};
+  const groupedByDay: GroupedMonthEvents['groupedByDay'] = {};
 
   // Determine the range for which to display events
   const rangeStart = range ? dayjs(range.start) : dayjs(date).startOf('month');
@@ -49,7 +58,11 @@ export function getMonthPositionedEvents({
   while (currentDate.isBefore(rangeEnd) || currentDate.isSame(rangeEnd, 'day')) {
     const week: DateStringValue[] = [];
     for (let i = 0; i < 7; i++) {
-      week.push(currentDate.format('YYYY-MM-DD'));
+      const dateStr = currentDate.format('YYYY-MM-DD');
+      week.push(dateStr);
+      if (!groupedByDay[dateStr]) {
+        groupedByDay[dateStr] = [];
+      }
       currentDate = currentDate.add(1, 'day');
     }
     weeks.push(week);
@@ -57,7 +70,7 @@ export function getMonthPositionedEvents({
 
   // Initialize groups for each week
   for (let i = 0; i < weeks.length; i++) {
-    grouped[i.toString()] = [];
+    groupedByWeek[i.toString()] = [];
   }
 
   // Process each event
@@ -105,7 +118,7 @@ export function getMonthPositionedEvents({
         const width = (daysSpanned / 7) * 100;
 
         // Find row by checking existing events on the same day
-        const existingEvents = grouped[weekIdx.toString()];
+        const existingEvents = groupedByWeek[weekIdx.toString()];
         let row = 0;
 
         for (const existing of existingEvents) {
@@ -127,7 +140,7 @@ export function getMonthPositionedEvents({
           }
         }
 
-        grouped[weekIdx.toString()].push({
+        const positionedEvent: MonthPositionedEventData = {
           ...event,
           position: {
             startOffset,
@@ -137,10 +150,26 @@ export function getMonthPositionedEvents({
             hangingStart,
             hangingEnd,
           },
-        });
+        };
+
+        // Add to groupedByWeek
+        groupedByWeek[weekIdx.toString()].push(positionedEvent);
+
+        // Add to groupedByDay for each day the event spans
+        let dayDate = eventStart;
+        while (dayDate.isBefore(eventEnd) || dayDate.isSame(eventEnd, 'day')) {
+          const dayDateStr = dayDate.format('YYYY-MM-DD');
+          if (groupedByDay[dayDateStr]) {
+            groupedByDay[dayDateStr].push(positionedEvent);
+          }
+          dayDate = dayDate.add(1, 'day');
+        }
       }
     }
   }
 
-  return grouped;
+  return {
+    groupedByWeek,
+    groupedByDay,
+  };
 }

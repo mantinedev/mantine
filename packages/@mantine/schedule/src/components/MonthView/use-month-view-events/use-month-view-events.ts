@@ -33,7 +33,7 @@ export function filterMonthViewEvents({
   consistentWeeks,
 }: UseMonthViewEventsInput): GroupedMonthEvents {
   if (events === undefined) {
-    return {};
+    return { groupedByDay: {}, groupedByWeek: {} };
   }
 
   const ids = new Set<string | number>();

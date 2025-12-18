@@ -287,7 +287,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     const weekNumberProps = getWeekNumberProps?.(new Date(week[0])) || {};
     const weekNumber = getWeekNumber(week);
 
-    const events = (monthEvents[index] || [])
+    const events = (monthEvents.groupedByWeek[index] || [])
       .filter((event) => event.position.row < 2)
       .map((event) => (
         <ScheduleEvent
