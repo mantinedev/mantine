@@ -32,6 +32,7 @@ export { getMonthPositionedEvents } from './get-month-positioned-events/get-mont
 export { getMonthRange } from './get-month-range/get-month-range';
 export { parseTimeString } from './parse-time-string/parse-time-string';
 export { toTimeString } from './to-time-string/to-time-string';
+export { getDayPosition } from './get-day-position/get-day-position';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';
 export type { GroupedMonthEvents } from './get-month-positioned-events/get-month-positioned-events';
 export type { GroupedWeekEvents } from './get-week-positioned-events/get-week-positioned-events';

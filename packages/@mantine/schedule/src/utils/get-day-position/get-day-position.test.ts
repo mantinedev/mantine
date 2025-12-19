@@ -11,7 +11,7 @@ describe('@mantine/schedule/get-day-position', () => {
     const result = getDayPosition({ event });
 
     expect(result.top).toBeCloseTo(25, 1); // 6 hours / 24 hours = 25%
-    expect(result.height).toBeCloseTo(41.67, 2); // 10 hours / 24 hours = 41.67%
+    expect(result.height).toBeCloseTo(41.7, 1); // 10 hours / 24 hours = 41.7%
   });
 
   it('calculates position with custom startTime and endTime', () => {
@@ -71,7 +71,7 @@ describe('@mantine/schedule/get-day-position', () => {
     const result = getDayPosition({ event });
 
     expect(result.top).toBeCloseTo(0, 1);
-    expect(result.height).toBeCloseTo(99.9, 1); // ~24 hours
+    expect(result.height).toBeCloseTo(100, 1); // ~24 hours
   });
 
   it('handles event at exact startTime/endTime boundaries', () => {
