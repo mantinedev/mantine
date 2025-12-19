@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
-import { DateStringValue } from '../../types';
+import { AnyDateValue, DateStringValue } from '../../types';
 
-export function getMonthsByQuarter(year: DateStringValue) {
+export function getMonthsByQuarter(year: AnyDateValue) {
   const startOfYear = dayjs(year).startOf('year').toDate();
 
   const results: DateStringValue[][] = [[], [], [], []];

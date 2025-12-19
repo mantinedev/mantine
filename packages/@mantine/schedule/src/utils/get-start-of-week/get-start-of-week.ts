@@ -1,11 +1,14 @@
 import dayjs from 'dayjs';
-import { DateStringValue, DayOfWeek } from '../../types';
+import { AnyDateValue, DayOfWeek } from '../../types';
 
-export function getStartOfWeek(
-  date: Date | DateStringValue | dayjs.Dayjs,
-  firstDayOfWeek: DayOfWeek = 1
-) {
+interface GetStartOfWeekInput {
+  date: AnyDateValue;
+  firstDayOfWeek?: DayOfWeek;
+}
+
+export function getStartOfWeek({ date, firstDayOfWeek = 1 }: GetStartOfWeekInput) {
   let value = dayjs(date);
+
   while (value.day() !== firstDayOfWeek) {
     value = value.subtract(1, 'day');
   }

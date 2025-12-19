@@ -18,7 +18,7 @@ describe('@mantine/schedule/use-year-view-events', () => {
       date: testYear,
       events: undefined,
     });
-    expect(result).toEqual({});
+    expect(result).toStrictEqual({});
   });
 
   it('groups events by date within the same year', () => {
@@ -100,7 +100,7 @@ describe('@mantine/schedule/use-year-view-events', () => {
     });
 
     expect(result['2025-05-10']).toHaveLength(3);
-    expect(result['2025-05-10'].map((e) => e.id)).toEqual([1, 2, 3]);
+    expect(result['2025-05-10'].map((e) => e.id)).toStrictEqual([1, 2, 3]);
   });
 
   it('handles Date object as date parameter', () => {
@@ -160,6 +160,6 @@ describe('@mantine/schedule/use-year-view-events', () => {
     });
 
     // Events should be in the order they were added (not sorted)
-    expect(result['2025-02-14'].map((e) => e.id)).toEqual([3, 1, 2]);
+    expect(result['2025-02-14'].map((e) => e.id)).toStrictEqual([3, 1, 2]);
   });
 });

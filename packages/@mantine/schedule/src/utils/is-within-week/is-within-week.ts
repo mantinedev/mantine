@@ -9,7 +9,7 @@ interface IsWithinWeekInput {
 }
 
 export function isWithinWeek({ event, targetWeek, firstDayOfWeek }: IsWithinWeekInput) {
-  const startOfWeek = dayjs(getStartOfWeek(targetWeek, firstDayOfWeek));
+  const startOfWeek = dayjs(getStartOfWeek({ date: targetWeek, firstDayOfWeek }));
   const endOfWeek = startOfWeek.add(7, 'day');
   return dayjs(event.start).isBefore(endOfWeek) && dayjs(event.end).isAfter(startOfWeek);
 }

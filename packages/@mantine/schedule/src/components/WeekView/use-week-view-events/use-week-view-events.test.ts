@@ -3,7 +3,7 @@ import { ScheduleEventData } from '../../../types';
 import { getStartOfWeek } from '../../../utils';
 import { filterWeekViewEvents } from './use-week-view-events';
 
-const weekStart = getStartOfWeek(new Date('2024-01-15'), 1);
+const weekStart = getStartOfWeek({ date: new Date('2024-01-15'), firstDayOfWeek: 1 });
 const testDate = dayjs(weekStart).format('YYYY-MM-DD');
 
 const createEvent = (id: string | number, start: string, end: string): ScheduleEventData => ({
@@ -37,8 +37,8 @@ describe('filterWeekViewEvents', () => {
       endTime: '17:00',
       firstDayOfWeek: 1,
     });
-    expect(result.allDayEvents).toEqual([]);
-    expect(result.regularEvents).toEqual({});
+    expect(result.allDayEvents).toStrictEqual([]);
+    expect(result.regularEvents).toStrictEqual({});
   });
 
   it('filters events by week', () => {

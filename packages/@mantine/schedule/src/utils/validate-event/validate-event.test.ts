@@ -13,7 +13,7 @@ describe('@mantine/schedule/validate-event', () => {
 
   it('returns event data when all validations pass', () => {
     const result = validateEvent(validEvent);
-    expect(result).toEqual(validEvent);
+    expect(result).toStrictEqual(validEvent);
   });
 
   it('throws error for invalid start date', () => {
@@ -54,6 +54,6 @@ describe('@mantine/schedule/validate-event', () => {
       end: new Date('2024-12-12T11:00:00'),
     };
     const result = validateEvent(dateEvent);
-    expect(result).toEqual(dateEvent);
+    expect(result).toStrictEqual(dateEvent);
   });
 });

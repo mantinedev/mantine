@@ -21,7 +21,7 @@ export function getMonthDays({
   const endDate = getEndOfWeek(endOfMonth, firstDayOfWeek);
   const weeks: DateStringValue[][] = [];
 
-  let date = dayjs(getStartOfWeek(startOfMonth, firstDayOfWeek));
+  let date = dayjs(getStartOfWeek({ date: startOfMonth, firstDayOfWeek }));
 
   while (dayjs(date).isBefore(endDate, 'day')) {
     const days: DateStringValue[] = [];

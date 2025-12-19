@@ -46,7 +46,7 @@ describe('@mantine/schedule/get-months-list', () => {
       locale: 'en',
       format: (date) => date.split('-')[1],
     });
-    expect(months.map((m) => m.name)).toEqual([
+    expect(months.map((m) => m.name)).toStrictEqual([
       '01',
       '02',
       '03',

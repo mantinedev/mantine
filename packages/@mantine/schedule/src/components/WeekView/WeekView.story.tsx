@@ -8,7 +8,7 @@ import { WeekView } from './WeekView';
 
 export default { title: 'schedule/WeekView' };
 
-const _weekStart = dayjs(getStartOfWeek(new Date(), 1));
+const _weekStart = dayjs(getStartOfWeek({ date: new Date(), firstDayOfWeek: 1 }));
 const weekStart = _weekStart.format('YYYY-MM-DD');
 
 const regularEvents: ScheduleEventData[] = [

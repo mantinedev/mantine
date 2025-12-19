@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
-import { DayOfWeek } from '../../types';
+import { AnyDateValue, DateStringValue, DayOfWeek } from '../../types';
 import { getStartOfWeek } from '../get-start-of-week/get-start-of-week';
 import { toDateString } from '../to-date-string/to-date-string';
 
-export function previousWeek(date: Date | string | dayjs.Dayjs, firstDayOfWeek: DayOfWeek) {
-  const start = getStartOfWeek(toDateString(date), firstDayOfWeek);
+export function previousWeek(date: AnyDateValue, firstDayOfWeek: DayOfWeek): DateStringValue {
+  const start = getStartOfWeek({ date, firstDayOfWeek });
   return toDateString(dayjs(start).set('date', dayjs(start).date() - 7));
 }

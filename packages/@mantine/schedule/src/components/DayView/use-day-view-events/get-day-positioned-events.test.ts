@@ -181,7 +181,7 @@ describe('getDayPositionedEvents', () => {
 
     expect(result[0].title).toBe('Event 1');
     expect(result[0].color).toBe('blue');
-    expect(result[0].payload).toEqual(payload);
+    expect(result[0].payload).toStrictEqual(payload);
   });
 
   it('respects startTime and endTime parameters for positioning', () => {

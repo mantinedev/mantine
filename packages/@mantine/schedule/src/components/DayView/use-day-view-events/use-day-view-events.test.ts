@@ -34,7 +34,7 @@ describe('filterDayViewEvents', () => {
       startTime: '09:00',
       endTime: '17:00',
     });
-    expect(result).toEqual({ allDayEvents: [], regularEvents: [] });
+    expect(result).toStrictEqual({ allDayEvents: [], regularEvents: [] });
   });
 
   it('filters events by date', () => {
@@ -141,7 +141,7 @@ describe('filterDayViewEvents', () => {
       startTime: '09:00',
       endTime: '17:00',
     });
-    expect(result).toEqual({ allDayEvents: [], regularEvents: [] });
+    expect(result).toStrictEqual({ allDayEvents: [], regularEvents: [] });
   });
 
   it('filters out events that end before startTime', () => {

@@ -1,12 +1,17 @@
+import dayjs from 'dayjs';
 import { getMonthsByQuarter } from './get-months-by-quarter';
 
 describe('@mantine/schedule/get-months-by-quarter', () => {
   it('returns correct months data based on year input', () => {
-    expect(getMonthsByQuarter('2022-06-11')).toStrictEqual([
+    const expected = [
       ['2022-01-01', '2022-02-01', '2022-03-01'],
       ['2022-04-01', '2022-05-01', '2022-06-01'],
       ['2022-07-01', '2022-08-01', '2022-09-01'],
       ['2022-10-01', '2022-11-01', '2022-12-01'],
-    ]);
+    ];
+
+    expect(getMonthsByQuarter('2022-06-11')).toStrictEqual(expected);
+    expect(getMonthsByQuarter(new Date('2022-06-11'))).toStrictEqual(expected);
+    expect(getMonthsByQuarter(dayjs('2022-06-11'))).toStrictEqual(expected);
   });
 });

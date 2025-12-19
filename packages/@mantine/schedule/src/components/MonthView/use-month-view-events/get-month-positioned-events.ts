@@ -53,7 +53,12 @@ export function getMonthPositionedEvents({
 
   // Get all weeks in the range with padding days
   const weeks: DateStringValue[][] = [];
-  const startOfFirstWeekStr = getStartOfWeek(rangeStart.format('YYYY-MM-DD'), firstDayOfWeek);
+
+  const startOfFirstWeekStr = getStartOfWeek({
+    date: rangeStart.format('YYYY-MM-DD'),
+    firstDayOfWeek,
+  });
+
   let currentDate = dayjs(startOfFirstWeekStr);
 
   while (currentDate.isBefore(rangeEnd) || currentDate.isSame(rangeEnd, 'day')) {

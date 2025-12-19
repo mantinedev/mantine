@@ -265,7 +265,7 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
 
     expect(result.regularEvents[monday][0].title).toBe('Event 1');
     expect(result.regularEvents[monday][0].color).toBe('blue');
-    expect(result.regularEvents[monday][0].payload).toEqual(payload);
+    expect(result.regularEvents[monday][0].payload).toStrictEqual(payload);
   });
 
   it('handles non-overlapping events on same day', () => {

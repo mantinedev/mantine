@@ -9,7 +9,7 @@ describe('@mantine/schedule/get-month-range', () => {
         consistentWeeks: false,
         firstDayOfWeek: 1,
       })
-    ).toEqual({ start: '2024-02-01 00:00:00', end: '2024-02-29 00:00:00' });
+    ).toStrictEqual({ start: '2024-02-01 00:00:00', end: '2024-02-29 00:00:00' });
   });
 
   it('returns correct start and end dates with withOutsideDays: true', () => {
@@ -20,7 +20,7 @@ describe('@mantine/schedule/get-month-range', () => {
         consistentWeeks: false,
         firstDayOfWeek: 1,
       })
-    ).toEqual({ start: '2024-01-29 00:00:00', end: '2024-03-03 00:00:00' });
+    ).toStrictEqual({ start: '2024-01-29 00:00:00', end: '2024-03-03 00:00:00' });
   });
 
   it('returns correct end date with consistentWeeks: true', () => {
@@ -31,7 +31,7 @@ describe('@mantine/schedule/get-month-range', () => {
         consistentWeeks: true,
         firstDayOfWeek: 1,
       })
-    ).toEqual({ start: '2024-01-29 00:00:00', end: '2024-03-10 00:00:00' });
+    ).toStrictEqual({ start: '2024-01-29 00:00:00', end: '2024-03-10 00:00:00' });
   });
 
   it('ignores consistentWeeks when withOutsideDays: false', () => {
@@ -42,7 +42,7 @@ describe('@mantine/schedule/get-month-range', () => {
         consistentWeeks: true,
         firstDayOfWeek: 1,
       })
-    ).toEqual({ start: '2024-02-01 00:00:00', end: '2024-02-29 00:00:00' });
+    ).toStrictEqual({ start: '2024-02-01 00:00:00', end: '2024-02-29 00:00:00' });
   });
 
   it('handles different firstDayOfWeek values', () => {
@@ -53,7 +53,7 @@ describe('@mantine/schedule/get-month-range', () => {
         consistentWeeks: false,
         firstDayOfWeek: 0,
       })
-    ).toEqual({ start: '2024-01-28 00:00:00', end: '2024-03-02 00:00:00' });
+    ).toStrictEqual({ start: '2024-01-28 00:00:00', end: '2024-03-02 00:00:00' });
 
     expect(
       getMonthRange({
@@ -62,6 +62,6 @@ describe('@mantine/schedule/get-month-range', () => {
         consistentWeeks: true,
         firstDayOfWeek: 4,
       })
-    ).toEqual({ start: '2024-02-01 00:00:00', end: '2024-03-13 00:00:00' });
+    ).toStrictEqual({ start: '2024-02-01 00:00:00', end: '2024-03-13 00:00:00' });
   });
 });

@@ -1,7 +1,8 @@
 import dayjs from 'dayjs';
+import { AnyDateValue } from '../../types';
 
 interface IsInTimeRangeInput {
-  date: Date | string | dayjs.Dayjs;
+  date: AnyDateValue;
   startTime?: string;
   endTime?: string;
 }
