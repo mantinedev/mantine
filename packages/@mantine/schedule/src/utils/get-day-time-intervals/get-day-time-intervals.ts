@@ -1,4 +1,6 @@
 import { clampIntervalMinutes } from '../clamp-interval-minutes/clamp-interval-minutes';
+import { parseTimeString } from '../parse-time-string/parse-time-string';
+import { toTimeString } from '../to-time-string/to-time-string';
 
 export interface DayTimeInterval {
   /** Start time of the interval in HH:mm:ss format */
@@ -32,22 +34,9 @@ export function getDayTimeIntervals({
 }: GetDayTimeIntervalsInput): DayTimeInterval[] {
   const intervalMinutes = clampIntervalMinutes(_intervalMinutes);
 
-  // Parse time strings in HH:mm:ss format
-  const parseTimeString = (
-    timeStr: string
-  ): { hours: number; minutes: number; seconds: number } => {
-    const [hours, minutes, seconds] = timeStr.split(':').map(Number);
-    return { hours, minutes, seconds };
-  };
-
-  const formatTimeString = (hours: number, minutes: number, seconds: number): string => {
-    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-  };
-
   const start = parseTimeString(startTime);
   const end = endTime ? parseTimeString(endTime) : { hours: 23, minutes: 59, seconds: 59 };
 
-  // Convert to total seconds for easier calculation
   const startSeconds = start.hours * 3600 + start.minutes * 60 + start.seconds;
   const endSeconds = end.hours * 3600 + end.minutes * 60 + end.seconds;
   const intervalSeconds = intervalMinutes * 60;
@@ -59,12 +48,10 @@ export function getDayTimeIntervals({
     const intervalStartSeconds = currentSeconds;
     let intervalEndSeconds = currentSeconds + intervalSeconds;
 
-    // If the interval extends beyond the end time, cut it to the end time
     if (intervalEndSeconds > endSeconds) {
       intervalEndSeconds = endSeconds;
     }
 
-    // Convert back to hours, minutes, seconds
     const startHours = Math.floor(intervalStartSeconds / 3600);
     const startMinutes = Math.floor((intervalStartSeconds % 3600) / 60);
     const startSecs = intervalStartSeconds % 60;
@@ -77,8 +64,8 @@ export function getDayTimeIntervals({
     const isHourStart = startMinutes === 0 && startSecs === 0;
 
     intervals.push({
-      startTime: formatTimeString(startHours, startMinutes, startSecs),
-      endTime: formatTimeString(endHours, endMinutes, endSecs),
+      startTime: toTimeString({ hours: startHours, minutes: startMinutes, seconds: startSecs }),
+      endTime: toTimeString({ hours: endHours, minutes: endMinutes, seconds: endSecs }),
       duration: durationSeconds,
       isHourStart,
     });

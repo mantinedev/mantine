@@ -21,11 +21,9 @@ export function getDayPosition({ event, startTime, endTime }: GetDayPosition) {
 
     const totalMinutes = boundaryEnd.diff(boundaryStart, 'minute');
 
-    // Clamp event start to boundary start if it starts before
     const clippedEventStart = eventStart.isBefore(boundaryStart) ? boundaryStart : eventStart;
     const eventStartMinutes = clippedEventStart.diff(boundaryStart, 'minute');
 
-    // Clamp event end to boundary end if it extends beyond
     const clippedEventEnd = eventEnd.isAfter(boundaryEnd) ? boundaryEnd : eventEnd;
     const eventEndMinutes = clippedEventEnd.diff(boundaryStart, 'minute');
 

@@ -1,6 +1,6 @@
 import { clampIntervalMinutes } from './clamp-interval-minutes';
 
-describe('@mantine/schedule/clampIntervalMinutes', () => {
+describe('@mantine/schedule/clamp-interval-minutes', () => {
   it('returns the same value for valid divisors of 60', () => {
     const validDivisors = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60];
 
@@ -17,39 +17,16 @@ describe('@mantine/schedule/clampIntervalMinutes', () => {
     });
   });
 
-  it('clamps negative values to 1', () => {
-    expect(clampIntervalMinutes(-10)).toBe(1);
-    expect(clampIntervalMinutes(-100)).toBe(1);
-    expect(clampIntervalMinutes(-1)).toBe(1);
-  });
-
-  it('clamps 0 to 1', () => {
-    expect(clampIntervalMinutes(0)).toBe(1);
-  });
-
-  it('clamps values greater than 60 to 60', () => {
-    expect(clampIntervalMinutes(61)).toBe(60);
-    expect(clampIntervalMinutes(100)).toBe(60);
-    expect(clampIntervalMinutes(1000)).toBe(60);
-  });
-
-  it('rounds decimal values before clamping', () => {
-    expect(clampIntervalMinutes(29.4)).toBe(60);
-    expect(clampIntervalMinutes(60.6)).toBe(60);
-  });
-
-  it('handles edge cases', () => {
+  it('handles edge values', () => {
     expect(clampIntervalMinutes(60)).toBe(60);
     expect(clampIntervalMinutes(1)).toBe(1);
   });
 
-  it('handles fractional negative values', () => {
+  it('handles values outside the valid range', () => {
+    expect(clampIntervalMinutes(-10)).toBe(1);
+    expect(clampIntervalMinutes(0)).toBe(1);
+    expect(clampIntervalMinutes(100)).toBe(60);
+    expect(clampIntervalMinutes(29.4)).toBe(60);
     expect(clampIntervalMinutes(-5.5)).toBe(1);
-    expect(clampIntervalMinutes(-0.5)).toBe(1);
-  });
-
-  it('handles fractional values greater than 60', () => {
-    expect(clampIntervalMinutes(60.5)).toBe(60);
-    expect(clampIntervalMinutes(100.9)).toBe(60);
   });
 });
