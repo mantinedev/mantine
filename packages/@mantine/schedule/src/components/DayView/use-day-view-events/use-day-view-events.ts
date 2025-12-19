@@ -1,7 +1,8 @@
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
 import { DateStringValue, DayPositionedEventData, ScheduleEventData } from '../../../types';
-import { getDayPositionedEvents, isEventInTimeRange, validateEvent } from '../../../utils';
+import { isEventInTimeRange, validateEvent } from '../../../utils';
+import { getDayPositionedEvents } from './get-day-positioned-events';
 
 interface UseDayViewEventsInput {
   events: ScheduleEventData[] | undefined;

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { ScheduleEventData } from '../../types';
+import { ScheduleEventData } from '../../../types';
 import { getDayPositionedEvents } from './get-day-positioned-events';
 
 const testDate = '2024-01-15';

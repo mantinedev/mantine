@@ -1,8 +1,8 @@
-import { DateStringValue, DayPositionedEventData, ScheduleEventData } from '../../types';
-import { getDayPosition } from '../get-day-position/get-day-position';
-import { isAllDayEvent } from '../is-all-day-event/is-all-day-event';
-import { isEventsOverlap } from '../is-events-overlap/is-events-overlap';
-import { sortEvents } from '../sort-events/sort-events';
+import { DateStringValue, DayPositionedEventData, ScheduleEventData } from '../../../types';
+import { getDayPosition } from '../../../utils/get-day-position/get-day-position';
+import { isAllDayEvent } from '../../../utils/is-all-day-event/is-all-day-event';
+import { isEventsOverlap } from '../../../utils/is-events-overlap/is-events-overlap';
+import { sortEvents } from '../../../utils/sort-events/sort-events';
 
 interface ColumnHasConflictOptions {
   columns: ScheduleEventData[][];
