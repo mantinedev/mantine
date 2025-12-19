@@ -4,8 +4,8 @@ import {
   DayOfWeek,
   MonthPositionedEventData,
   ScheduleEventData,
-} from '../../types';
-import { getStartOfWeek } from '../get-start-of-week/get-start-of-week';
+} from '../../../types';
+import { getStartOfWeek } from '../../../utils';
 
 interface GetMonthPositionedEventsInput {
   /** Date (month start) at which events are positioned */

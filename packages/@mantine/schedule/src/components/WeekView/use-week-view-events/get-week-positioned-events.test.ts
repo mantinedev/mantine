@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
-import { ScheduleEventData } from '../../types';
-import { getWeekDays } from '../get-week-days/get-week-days';
+import { ScheduleEventData } from '../../../types';
+import { getWeekDays } from '../../../utils';
 import { getWeekPositionedEvents } from './get-week-positioned-events';
 
 const testDate = '2024-01-15'; // Monday

@@ -1,12 +1,7 @@
 import { useMemo } from 'react';
 import { DateStringValue, DayOfWeek, ScheduleEventData } from '../../../types';
-import {
-  getWeekPositionedEvents,
-  GroupedWeekEvents,
-  isEventInTimeRange,
-  isWithinWeek,
-  validateEvent,
-} from '../../../utils';
+import { isEventInTimeRange, isWithinWeek, validateEvent } from '../../../utils';
+import { getWeekPositionedEvents, GroupedWeekEvents } from './get-week-positioned-events';
 
 interface UseWeekViewEventsInput {
   /** Date (week start) at which events are positioned, used to check if events are all-day */

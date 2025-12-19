@@ -4,12 +4,14 @@ import {
   DayOfWeek,
   ScheduleEventData,
   WeekPositionedEventData,
-} from '../../types';
-import { getDayPosition } from '../get-day-position/get-day-position';
-import { getWeekDays } from '../get-week-days/get-week-days';
-import { isAllDayEvent } from '../is-all-day-event/is-all-day-event';
-import { isEventsOverlap } from '../is-events-overlap/is-events-overlap';
-import { sortEvents } from '../sort-events/sort-events';
+} from '../../../types';
+import {
+  getDayPosition,
+  getWeekDays,
+  isAllDayEvent,
+  isEventsOverlap,
+  sortEvents,
+} from '../../../utils';
 
 interface GetWeekPositionedEventsInput {
   /** Date (week start) at which events are positioned, used to check if events are all-day */
