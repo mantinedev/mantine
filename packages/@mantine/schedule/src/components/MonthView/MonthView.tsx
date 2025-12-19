@@ -300,6 +300,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           event={event}
           nowrap
           autoSize
+          hanging={event.position.hanging}
           style={{
             position: 'absolute',
             top: `calc(${event.position.row * 50}% + 1px)`,

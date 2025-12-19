@@ -110,11 +110,8 @@ export interface MonthEventPositionData {
   /** Event row index in the week, 0-based */
   row: number;
 
-  /** Indicates that the event starts before the current week and continues into it */
-  hangingStart: boolean;
-
-  /** Indicates that the event continues after the current week */
-  hangingEnd: boolean;
+  /** Indicates if the event hangs from the start, end, both or none of the week */
+  hanging: 'start' | 'end' | 'both' | 'none';
 }
 
 /** Event data with calculated position for month view */

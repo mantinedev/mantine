@@ -100,6 +100,14 @@ export function getMonthPositionedEvents({
         // Check for hanging days (before/after week)
         const hangingStart = eventStart.isBefore(weekStart);
         const hangingEnd = eventEnd.isAfter(weekEnd);
+        const hanging =
+          hangingStart && hangingEnd
+            ? 'both'
+            : hangingStart
+              ? 'start'
+              : hangingEnd
+                ? 'end'
+                : 'none';
 
         // Clamp to week boundaries
         if (displayStart.isBefore(weekStart)) {
@@ -148,8 +156,7 @@ export function getMonthPositionedEvents({
             width,
             weekIndex: weekIdx,
             row,
-            hangingStart,
-            hangingEnd,
+            hanging,
           },
         };
 
