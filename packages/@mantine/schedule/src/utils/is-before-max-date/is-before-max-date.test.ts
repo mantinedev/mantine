@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { isBeforeMaxDate } from './is-before-max-date';
 
 describe('@mantine/schedule/is-before-max-date', () => {
@@ -5,12 +6,16 @@ describe('@mantine/schedule/is-before-max-date', () => {
     expect(isBeforeMaxDate('2022-04-15', '2022-04-12')).toBe(false);
     expect(isBeforeMaxDate('2022-05-15', '2022-04-12')).toBe(false);
     expect(isBeforeMaxDate('2023-04-15', '2022-04-12')).toBe(false);
+    expect(isBeforeMaxDate(new Date('2023-04-15'), new Date('2022-04-12'))).toBe(false);
+    expect(isBeforeMaxDate(dayjs('2023-04-15'), dayjs('2022-04-12'))).toBe(false);
   });
 
   it('correctly detects dates that are after given maxDate', () => {
     expect(isBeforeMaxDate('2022-04-15', '2024-04-17')).toBe(true);
     expect(isBeforeMaxDate('2021-05-15', '2022-04-17')).toBe(true);
     expect(isBeforeMaxDate('2020-04-15', '2022-04-12')).toBe(true);
+    expect(isBeforeMaxDate(new Date('2020-04-15'), new Date('2022-04-12'))).toBe(true);
+    expect(isBeforeMaxDate(dayjs('2020-04-15'), dayjs('2022-04-12'))).toBe(true);
   });
 
   it('considers date to be before maxDate if maxDate is not provided', () => {

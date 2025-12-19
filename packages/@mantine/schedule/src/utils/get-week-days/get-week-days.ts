@@ -1,5 +1,7 @@
 import dayjs from 'dayjs';
 import { DateStringValue, DayOfWeek } from '../../types';
+import { getStartOfWeek } from '../get-start-of-week/get-start-of-week';
+import { toDateString } from '../to-date-string/to-date-string';
 
 export interface GetWeekDaysInput {
   /** Week to generate days for */
@@ -15,27 +17,23 @@ export interface GetWeekDaysInput {
   firstDayOfWeek?: DayOfWeek;
 }
 
+/** Returns a list of days in a given week */
 export function getWeekDays({
   week,
   weekendDays,
   withWeekendDays = true,
   firstDayOfWeek = 1,
 }: GetWeekDaysInput): DateStringValue[] {
-  const date = dayjs(week);
-
-  let current = date;
-  while (current.day() !== firstDayOfWeek) {
-    current = current.subtract(1, 'day');
-  }
-
   const days: DateStringValue[] = [];
+
+  let current = dayjs(getStartOfWeek({ date: week, firstDayOfWeek }));
 
   for (let i = 0; i < 7; i += 1) {
     const dayOfWeek = current.day();
     const isWeekend = weekendDays && weekendDays.includes(dayOfWeek as DayOfWeek);
 
     if (!isWeekend || withWeekendDays) {
-      days.push(current.format('YYYY-MM-DD'));
+      days.push(toDateString(current));
     }
 
     current = current.add(1, 'day');

@@ -1,8 +1,11 @@
+import dayjs from 'dayjs';
 import { getStartOfWeek } from './get-start-of-week';
 
 describe('@mantine/schedule/get-start-of-week', () => {
   it('returns start of week without first day of week param', () => {
     expect(getStartOfWeek({ date: '2021-02-05' })).toStrictEqual('2021-02-01');
+    expect(getStartOfWeek({ date: new Date('2021-02-05') })).toStrictEqual('2021-02-01');
+    expect(getStartOfWeek({ date: dayjs('2021-02-05') })).toStrictEqual('2021-02-01');
   });
 
   it('returns start of week with first day param', () => {

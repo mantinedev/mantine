@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { isAfterMinDate } from './is-after-min-date';
 
 describe('@mantine/schedule/is-after-min-date', () => {
@@ -5,12 +6,16 @@ describe('@mantine/schedule/is-after-min-date', () => {
     expect(isAfterMinDate('2022-04-15', '2022-04-12')).toBe(true);
     expect(isAfterMinDate('2022-05-15', '2022-04-12')).toBe(true);
     expect(isAfterMinDate('2023-04-15', '2022-04-12')).toBe(true);
+    expect(isAfterMinDate(new Date('2023-04-15'), new Date('2022-04-12'))).toBe(true);
+    expect(isAfterMinDate(dayjs('2023-04-15'), dayjs('2022-04-12'))).toBe(true);
   });
 
   it('correctly detects dates that are before given minDate', () => {
     expect(isAfterMinDate('2022-04-15', '2024-04-17')).toBe(false);
     expect(isAfterMinDate('2021-05-15', '2022-04-17')).toBe(false);
     expect(isAfterMinDate('2020-04-15', '2022-04-12')).toBe(false);
+    expect(isAfterMinDate(new Date('2020-04-15'), new Date('2022-04-12'))).toBe(false);
+    expect(isAfterMinDate(dayjs('2020-04-15'), dayjs('2022-04-12'))).toBe(false);
   });
 
   it('considers date to be after minDate if minDate is not provided', () => {
