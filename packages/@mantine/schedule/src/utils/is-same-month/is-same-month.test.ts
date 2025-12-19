@@ -1,8 +1,11 @@
+import dayjs from 'dayjs';
 import { isSameMonth } from './is-same-month';
 
 describe('@mantine/schedule/is-same-month', () => {
   it('detects same month', () => {
     expect(isSameMonth('2021-03-01', '2021-03-02')).toBe(true);
+    expect(isSameMonth(new Date('2021-03-01'), new Date('2021-03-02'))).toBe(true);
+    expect(isSameMonth(dayjs('2021-03-01'), dayjs('2021-03-02'))).toBe(true);
     expect(isSameMonth('2021-04-01', '2021-03-02')).toBe(false);
     expect(isSameMonth('2022-03-02', '2021-03-02')).toBe(false);
   });
