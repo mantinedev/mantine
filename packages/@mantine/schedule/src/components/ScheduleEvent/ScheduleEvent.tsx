@@ -45,6 +45,9 @@ export interface ScheduleEventProps
 
   /** Function to customize event body, `event` object is passed as first argument */
   renderEventBody?: RenderEventBody;
+
+  /** Event hanging position */
+  hanging?: 'start' | 'end' | 'both' | 'none';
 }
 
 export type ScheduleEventFactory = Factory<{
@@ -99,6 +102,7 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
     size,
     autoSize,
     mod,
+    hanging,
     ...others
   } = props;
 
@@ -122,10 +126,10 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
       {...getStyles('event')}
       size={size}
       title={event.title}
-      mod={[{ autoSize }, mod]}
+      mod={[{ autoSize, hanging }, mod]}
       {...others}
     >
-      <Box mod={{ nowrap, size, autoSize }} {...getStyles('eventInner')}>
+      <Box mod={{ nowrap, size, autoSize, hanging }} {...getStyles('eventInner')}>
         {typeof renderEventBody === 'function' ? renderEventBody(event) : event.title}
       </Box>
     </UnstyledButton>

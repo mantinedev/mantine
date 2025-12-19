@@ -4,9 +4,46 @@
   display: flex;
   flex-direction: column;
   flex: 1 0 auto;
+  position: relative;
 
   &:where([data-auto-size]) {
     container-type: size;
+  }
+
+  &:where([data-hanging='start'], [data-hanging='both']) {
+    &::before {
+      content: '';
+      position: absolute;
+      inset-block: 2px;
+      inset-inline-start: 2px;
+      width: 2px;
+      background-color: var(--event-color);
+      border-radius: 10px;
+    }
+
+    .eventInner {
+      padding-inline-start: 6px;
+      border-start-start-radius: 0;
+      border-end-start-radius: 0;
+    }
+  }
+
+  &:where([data-hanging='end'], [data-hanging='both']) {
+    &::after {
+      content: '';
+      position: absolute;
+      inset-block: 2px;
+      inset-inline-end: 2px;
+      width: 2px;
+      background-color: var(--event-color);
+      border-radius: 10px;
+    }
+
+    .eventInner {
+      padding-inline-end: 6px;
+      border-start-end-radius: 0;
+      border-end-end-radius: 0;
+    }
   }
 }
 

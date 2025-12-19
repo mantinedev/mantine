@@ -28,6 +28,14 @@ export function MdSize() {
   );
 }
 
+export function Hanging() {
+  return (
+    <div style={{ padding: 40 }}>
+      <ScheduleEvent event={eventData} hanging="both" />
+    </div>
+  );
+}
+
 export function RenderEventBody() {
   return (
     <div style={{ padding: 40 }}>

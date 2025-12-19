@@ -71,4 +71,17 @@ describe('@mantine/schedule/ScheduleEvent', () => {
       'data-auto-size'
     );
   });
+
+  it('sets correct title attribute', () => {
+    render(<ScheduleEvent {...defaultProps} />);
+    expect(screen.getByRole('button')).toHaveAttribute('title', 'Test event');
+  });
+
+  it('sets data-hanging attribute to hanging prop value', () => {
+    const { container } = render(<ScheduleEvent {...defaultProps} hanging="start" />);
+    expect(container.querySelector('.mantine-ScheduleEvent-event')).toHaveAttribute(
+      'data-hanging',
+      'start'
+    );
+  });
 });
