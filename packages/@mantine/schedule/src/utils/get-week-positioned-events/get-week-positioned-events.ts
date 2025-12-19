@@ -144,6 +144,8 @@ export function getWeekPositionedEvents({
     // Check for hanging days (before/after week)
     const hangingStart = eventStartDate.isBefore(weekStartDate);
     const hangingEnd = actualEndDate.isAfter(weekEndDate);
+    const hanging =
+      hangingStart && hangingEnd ? 'both' : hangingStart ? 'start' : hangingEnd ? 'end' : 'none';
 
     // Determine if this is an all-day event (either marked as all-day or is a multiday event)
     const isActuallyAllDay = eventWeekDays.some((day) => isAllDayEvent({ event, date: day }));
@@ -203,8 +205,7 @@ export function getWeekPositionedEvents({
           offset,
           overlaps: 0,
           row: 0,
-          hangingStart,
-          hangingEnd,
+          hanging,
         },
       });
     } else {
@@ -231,8 +232,7 @@ export function getWeekPositionedEvents({
             overlaps: 0,
             weekOffset: dayWeekOffset,
             row: 0,
-            hangingStart,
-            hangingEnd,
+            hanging,
           },
         });
       }

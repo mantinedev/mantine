@@ -155,7 +155,7 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
 
     // Multiday events go to allDayEvents
     expect(result.allDayEvents).toHaveLength(1);
-    expect(result.allDayEvents[0].position.hangingStart).toBe(true);
+    expect(result.allDayEvents[0].position.hanging).toBe('start');
   });
 
   it('marks hangingEnd when event ends after week', () => {
@@ -171,7 +171,7 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
 
     // Multiday events go to allDayEvents
     expect(result.allDayEvents).toHaveLength(1);
-    expect(result.allDayEvents[0].position.hangingEnd).toBe(true);
+    expect(result.allDayEvents[0].position.hanging).toBe('end');
   });
 
   it('handles overlapping events correctly', () => {
@@ -227,8 +227,7 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
 
     // Multiday events are stored in allDayEvents as a single event
     expect(result.allDayEvents).toHaveLength(1);
-    expect(result.allDayEvents[0].position.hangingStart).toBe(true);
-    expect(result.allDayEvents[0].position.hangingEnd).toBe(true);
+    expect(result.allDayEvents[0].position.hanging).toBe('both');
     // offset should be 0 because event starts before week, so display from week start
     expect(result.allDayEvents[0].position.offset).toBe(0);
   });
@@ -301,8 +300,7 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
     // Multiday events should be in allDayEvents
     expect(result.allDayEvents).toHaveLength(1);
     expect(result.allDayEvents[0].position.offset).toBe(0);
-    expect(result.allDayEvents[0].position.hangingStart).toBe(false);
-    expect(result.allDayEvents[0].position.hangingEnd).toBe(false);
+    expect(result.allDayEvents[0].position.hanging).toBe('none');
   });
 
   it('handles triple overlap correctly', () => {

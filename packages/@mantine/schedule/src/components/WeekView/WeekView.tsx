@@ -330,6 +330,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         key={event.id}
         event={event}
         autoSize
+        hanging={event.position.hanging}
         style={{
           position: 'absolute',
           top: `${event.position.top}%`,
@@ -368,6 +369,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       event={event}
       autoSize
       nowrap
+      hanging={event.position.hanging}
       style={{
         position: 'absolute',
         zIndex: 2,

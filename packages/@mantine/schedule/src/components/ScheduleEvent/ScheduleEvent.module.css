@@ -19,6 +19,7 @@
       width: 2px;
       background-color: var(--event-color);
       border-radius: 10px;
+      opacity: 0.3;
     }
 
     .eventInner {
@@ -37,6 +38,7 @@
       width: 2px;
       background-color: var(--event-color);
       border-radius: 10px;
+      opacity: 0.3;
     }
 
     .eventInner {
