@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
-import { DateStringValue, DayOfWeek } from '../../types';
+import { AnyDateValue, DayOfWeek } from '../../types';
 
-export function getEndOfWeek(date: DateStringValue, firstDayOfWeek: DayOfWeek = 1) {
+export function getEndOfWeek(date: AnyDateValue, firstDayOfWeek: DayOfWeek = 1) {
   let value = dayjs(date);
 
   if (!value.isValid()) {

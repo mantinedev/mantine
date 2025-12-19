@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { AnyDateValue, DayOfWeek } from '../../types';
 import { getMonthDays } from '../get-month-days/get-month-days';
+import { toDateString } from '../to-date-string/to-date-string';
 
 interface GetMonthRangeInput {
   month: AnyDateValue;
@@ -9,6 +10,7 @@ interface GetMonthRangeInput {
   firstDayOfWeek: DayOfWeek;
 }
 
+/** Returns start and end dates as displayed in MonthView */
 export function getMonthRange({
   month,
   withOutsideDays,
@@ -17,8 +19,8 @@ export function getMonthRange({
 }: GetMonthRangeInput) {
   if (!withOutsideDays) {
     return {
-      start: dayjs(month).startOf('month').format('YYYY-MM-DD'),
-      end: dayjs(month).endOf('month').format('YYYY-MM-DD'),
+      start: toDateString(dayjs(month).startOf('month')),
+      end: toDateString(dayjs(month).endOf('month')),
     };
   }
 
