@@ -45,7 +45,7 @@ import {
   ScheduleHeader,
 } from '../ScheduleHeader/ScheduleHeader';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
-import { getWeekViewEvents } from './use-week-view-events/get-week-view-events';
+import { getWeekViewEvents } from './get-week-view-events/get-week-view-events';
 import { WeekViewDay } from './WeekViewDay';
 import classes from './WeekView.module.css';
 
