@@ -12,11 +12,6 @@ describe('@mantine/dates/TimeGrid', () => {
     component: TimeGrid,
     props: defaultProps,
     polymorphic: true,
-    styleProps: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/dates/TimeGrid',
     stylesApiSelectors: ['root'],
   });

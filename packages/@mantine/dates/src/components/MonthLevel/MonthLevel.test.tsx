@@ -17,13 +17,6 @@ describe('@mantine/dates/MonthLevel', () => {
   tests.itSupportsSystemProps<MonthLevelProps, MonthLevelStylesNames>({
     component: MonthLevel,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/dates/MonthLevel',
     stylesApiSelectors: [
       'calendarHeader',

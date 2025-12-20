@@ -8,12 +8,7 @@ describe('@mantine/schedule/ScheduleHeader', () => {
     component: ScheduleHeader,
     props: defaultProps,
     polymorphic: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/schedule/ScheduleHeader',
     stylesApiSelectors: ['header'],
   });

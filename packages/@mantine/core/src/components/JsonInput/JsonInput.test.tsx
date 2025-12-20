@@ -18,13 +18,6 @@ describe('@mantine/core/JsonInput', () => {
   tests.itSupportsSystemProps<JsonInputProps, __InputStylesNames>({
     component: JsonInput,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
     id: true,
     displayName: '@mantine/core/JsonInput',
     stylesApiSelectors: [...inputStylesApiSelectors],

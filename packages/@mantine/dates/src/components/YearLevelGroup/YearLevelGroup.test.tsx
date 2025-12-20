@@ -13,13 +13,6 @@ describe('@mantine/dates/YearLevelGroup', () => {
   tests.itSupportsSystemProps<YearLevelGroupProps, YearLevelGroupStylesNames>({
     component: YearLevelGroup,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/dates/YearLevelGroup',
     stylesApiSelectors: [
       'levelsGroup',

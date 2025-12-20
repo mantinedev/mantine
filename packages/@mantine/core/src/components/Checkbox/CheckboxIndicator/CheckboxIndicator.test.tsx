@@ -11,12 +11,6 @@ describe('@mantine/core/CheckboxIndicator', () => {
   tests.itSupportsSystemProps<CheckboxIndicatorProps, CheckboxIndicatorStylesNames>({
     component: CheckboxIndicator,
     props: defaultProps,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/core/CheckboxIndicator',
     stylesApiSelectors: ['indicator', 'icon'],
   });

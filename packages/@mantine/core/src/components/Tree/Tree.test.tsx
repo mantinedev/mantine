@@ -15,12 +15,6 @@ describe('@mantine/core/Tree', () => {
     component: Tree,
     props: defaultProps,
     polymorphic: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/core/Tree',
     stylesApiSelectors: ['root', 'label', 'node'],
   });

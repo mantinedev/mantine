@@ -47,11 +47,6 @@ describe('@mantine/schedule/MoreEvents', () => {
     component: MoreEvents,
     props: { ...defaultProps, popoverProps: { opened: true } },
     polymorphic: true,
-    styleProps: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/schedule/MoreEvents',
     stylesApiSelectors: ['moreEventsButton', 'moreEventsList'],
   });

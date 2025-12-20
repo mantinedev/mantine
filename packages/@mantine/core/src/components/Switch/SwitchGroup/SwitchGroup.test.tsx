@@ -26,12 +26,7 @@ describe('@mantine/core/SwitchGroup', () => {
   tests.itSupportsSystemProps<SwitchGroupProps, SwitchGroupStylesNames>({
     component: SwitchGroup,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    classes: true,
     displayName: '@mantine/core/SwitchGroup',
     stylesApiSelectors: ['root', 'description', 'error', 'label', 'required'],
   });

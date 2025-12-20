@@ -20,13 +20,6 @@ describe('@mantine/core/Timeline', () => {
   tests.itSupportsSystemProps<TimelineProps, TimelineStylesNames>({
     component: Timeline,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
     id: true,
     displayName: '@mantine/core/Timeline',
     stylesApiSelectors: ['root', 'itemBody', 'itemContent', 'itemBullet', 'item', 'itemTitle'],

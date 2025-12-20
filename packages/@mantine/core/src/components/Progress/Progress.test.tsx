@@ -15,13 +15,6 @@ describe('@mantine/core/Progress', () => {
   tests.itSupportsSystemProps<ProgressProps, ProgressStylesNames>({
     component: Progress,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
     id: true,
     displayName: '@mantine/core/Progress',
     stylesApiSelectors: ['root', 'section'],

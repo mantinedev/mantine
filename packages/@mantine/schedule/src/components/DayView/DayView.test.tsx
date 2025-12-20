@@ -51,11 +51,6 @@ describe('@mantine/schedule/DayView', () => {
   tests.itSupportsSystemProps<DayViewProps, DayViewStylesNames>({
     component: DayView,
     props: defaultProps,
-    styleProps: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/schedule/DayView',
     providerStylesApi: false,
     stylesApiSelectors: [

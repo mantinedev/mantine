@@ -7,11 +7,6 @@ describe('@mantine/schedule/Schedule', () => {
   tests.itSupportsSystemProps<ScheduleProps, ScheduleStylesNames>({
     component: Schedule,
     props: defaultProps,
-    styleProps: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/schedule/Schedule',
     stylesApiSelectors: ['root'],
   });

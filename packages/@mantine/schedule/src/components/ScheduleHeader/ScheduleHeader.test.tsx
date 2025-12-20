@@ -7,12 +7,7 @@ describe('@mantine/schedule/ScheduleHeader', () => {
   tests.itSupportsSystemProps<ScheduleHeaderProps, ScheduleHeaderStylesNames>({
     component: ScheduleHeader,
     props: defaultProps,
-    styleProps: true,
     children: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/schedule/ScheduleHeader',
     stylesApiSelectors: ['header'],
   });

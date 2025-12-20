@@ -12,13 +12,6 @@ describe('@mantine/core/Pagination', () => {
   tests.itSupportsSystemProps<PaginationProps, PaginationStylesNames>({
     component: Pagination,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
     id: true,
     displayName: '@mantine/core/Pagination',
     stylesApiSelectors: ['root', 'control', 'dots'],

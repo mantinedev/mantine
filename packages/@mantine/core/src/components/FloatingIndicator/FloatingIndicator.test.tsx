@@ -16,13 +16,7 @@ describe('@mantine/core/FloatingIndicator', () => {
   tests.itSupportsSystemProps<FloatingIndicatorProps, FloatingIndicatorStylesNames>({
     component: FloatingIndicator,
     props: defaultProps,
-    mod: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/core/FloatingIndicator',
     stylesApiSelectors: ['root'],
   });

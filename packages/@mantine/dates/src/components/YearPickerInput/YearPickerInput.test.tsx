@@ -24,12 +24,6 @@ describe('@mantine/dates/YearPickerInput', () => {
   tests.itSupportsSystemProps<YearPickerInputProps, __InputStylesNames>({
     component: YearPickerInput,
     props: defaultPropsWithInputProps,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
     id: true,
     displayName: '@mantine/dates/YearPickerInput',
     stylesApiSelectors: [...inputStylesApiSelectors],

@@ -15,14 +15,7 @@ describe('@mantine/core/InputWrapper', () => {
   tests.itSupportsSystemProps<InputWrapperProps, InputWrapperStylesNames>({
     component: InputWrapper,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
     displayName: '@mantine/core/InputWrapper',
     stylesApiSelectors: ['root', 'description', 'error', 'label', 'required'],
   });

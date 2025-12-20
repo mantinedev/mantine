@@ -21,13 +21,6 @@ describe('@mantine/dates/WeekdaysRow', () => {
   tests.itSupportsSystemProps<WeekdaysRowProps, WeekdaysRowStylesNames>({
     component: WeekdaysRow,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/dates/WeekdaysRow',
     stylesApiSelectors: ['weekdaysRow', 'weekday'],
   });

@@ -7,12 +7,7 @@ describe('@mantine/schedule/HeaderControl', () => {
   tests.itSupportsSystemProps<HeaderControlProps, HeaderControlStylesNames>({
     component: HeaderControl,
     props: defaultProps,
-    styleProps: true,
     children: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/schedule/HeaderControl',
     stylesApiSelectors: ['headerControl'],
   });

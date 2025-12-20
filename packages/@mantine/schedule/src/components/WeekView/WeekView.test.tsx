@@ -14,11 +14,6 @@ describe('@mantine/schedule/WeekView', () => {
   tests.itSupportsSystemProps<WeekViewProps, WeekViewStylesNames>({
     component: WeekView,
     props: defaultProps,
-    styleProps: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/schedule/WeekView',
     stylesApiSelectors: [
       'weekView',

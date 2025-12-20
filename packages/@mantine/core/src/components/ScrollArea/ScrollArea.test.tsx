@@ -10,14 +10,7 @@ describe('@mantine/core/ScrollArea', () => {
   tests.itSupportsSystemProps<ScrollAreaProps, ScrollAreaStylesNames>({
     component: ScrollArea,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
     id: true,
     displayName: '@mantine/core/ScrollArea',
     stylesApiSelectors: ['root', 'viewport'],
@@ -28,12 +21,7 @@ describe('@mantine/core/ScrollAreaAutosize', () => {
   tests.itSupportsSystemProps<ScrollAreaProps, ScrollAreaStylesNames>({
     component: ScrollArea.Autosize,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    classes: true,
     displayName: '@mantine/core/ScrollAreaAutosize',
   });
 });

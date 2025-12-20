@@ -18,13 +18,6 @@ describe('@mantine/dates/YearLevel', () => {
   tests.itSupportsSystemProps<YearLevelProps, YearLevelStylesNames>({
     component: YearLevel,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/dates/YearLevel',
     stylesApiSelectors: [
       'calendarHeader',

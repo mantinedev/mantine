@@ -13,11 +13,6 @@ describe('@mantine/code-highlight/CodeHighlight', () => {
     component: CodeHighlight,
     props: defaultProps,
     polymorphic: true,
-    styleProps: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
     selector: '.mantine-CodeHighlight-codeHighlight',
     displayName: '@mantine/code-highlight/CodeHighlight',
     stylesApiSelectors: [

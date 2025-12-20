@@ -7,13 +7,7 @@ describe('@mantine/core/Space', () => {
   tests.itSupportsSystemProps<SpaceProps>({
     component: Space,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
     id: true,
     displayName: '@mantine/core/Space',
   });

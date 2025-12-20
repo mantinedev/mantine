@@ -32,13 +32,6 @@ describe('@mantine/core/Select', () => {
   tests.itSupportsSystemProps<SelectProps, SelectStylesNames>({
     component: Select,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
     id: true,
     displayName: '@mantine/core/Select',
     stylesApiSelectors: [...inputStylesApiSelectors],

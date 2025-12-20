@@ -12,11 +12,6 @@ describe('@mantine/dates/MiniCalendar', () => {
     component: MiniCalendar,
     props: defaultProps,
     polymorphic: true,
-    styleProps: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/dates/MiniCalendar',
     stylesApiSelectors: ['root', 'control', 'days', 'day', 'dayMonth', 'dayNumber'],
   });

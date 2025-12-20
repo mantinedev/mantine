@@ -11,13 +11,6 @@ describe('@mantine/core/PinInput', () => {
   tests.itSupportsSystemProps<PinInputProps, PinInputStylesNames>({
     component: PinInput,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
     id: true,
     displayName: '@mantine/core/PinInput',
     stylesApiSelectors: ['root', 'pinInput', 'input'],

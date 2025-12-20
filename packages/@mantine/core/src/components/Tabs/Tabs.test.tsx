@@ -50,13 +50,6 @@ describe('@mantine/core/Tabs', () => {
     props: defaultProps,
     displayName: '@mantine/core/Tabs',
     children: true,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
     id: true,
     stylesApiSelectors: ['root', 'tab', 'list', 'panel'],
   });

@@ -16,11 +16,6 @@ describe('@mantine/schedule/ScheduleEvent', () => {
   tests.itSupportsSystemProps<ScheduleEventProps, ScheduleEventStylesNames>({
     component: ScheduleEvent,
     props: defaultProps,
-    styleProps: true,
-    extend: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/schedule/ScheduleEvent',
     stylesApiSelectors: ['event', 'eventInner'],
   });

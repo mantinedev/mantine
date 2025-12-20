@@ -10,13 +10,6 @@ describe('@mantine/dates/YearsList', () => {
   tests.itSupportsSystemProps<YearsListProps, YearsListStylesNames>({
     component: YearsList,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
     displayName: '@mantine/dates/YearsList',
     stylesApiSelectors: ['yearsList', 'yearsListCell', 'yearsListControl', 'yearsListRow'],
   });
