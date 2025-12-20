@@ -20,6 +20,7 @@ describe('@mantine/core/AccordionControl', () => {
   tests.itSupportsSystemProps<AccordionControlProps, AccordionControlStylesNames>({
     component: ContextContainer,
     props: defaultProps,
+    children: true,
     displayName: '@mantine/core/AccordionControl',
     stylesApiSelectors: ['control', 'chevron', 'label', 'icon'],
     stylesApiName: 'Accordion',

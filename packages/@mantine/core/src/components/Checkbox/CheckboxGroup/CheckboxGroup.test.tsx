@@ -26,12 +26,7 @@ describe('@mantine/core/CheckboxGroup', () => {
   tests.itSupportsSystemProps<CheckboxGroupProps, CheckboxGroupStylesNames>({
     component: CheckboxGroup,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    classes: true,
     displayName: '@mantine/core/CheckboxGroup',
     stylesApiSelectors: ['root', 'description', 'error', 'label', 'required'],
   });

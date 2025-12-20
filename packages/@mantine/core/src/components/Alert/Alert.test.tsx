@@ -23,15 +23,7 @@ describe('@mantine/core/Alert', () => {
   tests.itSupportsSystemProps<AlertProps, AlertStylesNames>({
     component: Alert,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
     displayName: '@mantine/core/Alert',
     stylesApiSelectors: [
       'root',

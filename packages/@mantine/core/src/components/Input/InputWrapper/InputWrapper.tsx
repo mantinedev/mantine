@@ -256,6 +256,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
         variant={variant}
         size={size}
         mod={[{ error: !!error }, mod]}
+        id={labelElement === 'label' ? undefined : id}
         {...getStyles('root')}
         {...others}
       >

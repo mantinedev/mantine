@@ -24,7 +24,7 @@ export function Usage() {
 export function CheckboxGroup() {
   return (
     <div style={{ padding: 40 }}>
-      <Checkbox.Group defaultValue={['react']}>
+      <Checkbox.Group defaultValue={['react']} id="test-group" label="Frameworks">
         <Checkbox label="React" value="react" />
         <Checkbox label="Angular" value="ng" />
       </Checkbox.Group>

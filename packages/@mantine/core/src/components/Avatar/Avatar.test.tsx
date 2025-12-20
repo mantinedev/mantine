@@ -10,16 +10,8 @@ describe('@mantine/core/Avatar', () => {
   tests.itSupportsSystemProps<AvatarProps, AvatarStylesNames>({
     component: Avatar,
     props: defaultProps,
-    mod: true,
     polymorphic: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
     displayName: '@mantine/core/Avatar',
     stylesApiSelectors: ['root', 'placeholder'],
   });

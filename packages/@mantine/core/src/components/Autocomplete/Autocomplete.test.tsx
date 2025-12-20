@@ -29,14 +29,6 @@ describe('@mantine/core/Autocomplete', () => {
   tests.itSupportsSystemProps<AutocompleteProps, AutocompleteStylesNames>({
     component: Autocomplete,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
     displayName: '@mantine/core/Autocomplete',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });

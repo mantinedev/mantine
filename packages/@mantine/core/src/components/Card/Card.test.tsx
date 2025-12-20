@@ -10,16 +10,8 @@ describe('@mantine/core/Card', () => {
   tests.itSupportsSystemProps<CardProps, CardStylesNames>({
     component: Card,
     props: defaultProps,
-    mod: true,
     polymorphic: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
     displayName: '@mantine/core/Card',
     stylesApiSelectors: ['root', 'section'],
   });

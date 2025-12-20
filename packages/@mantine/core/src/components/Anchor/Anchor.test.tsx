@@ -7,16 +7,8 @@ describe('@mantine/core/Anchor', () => {
   tests.itSupportsSystemProps<AnchorProps, AnchorStylesNames>({
     component: Anchor,
     props: defaultProps,
-    mod: true,
     polymorphic: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
     displayName: '@mantine/core/Anchor',
     stylesApiSelectors: ['root'],
   });

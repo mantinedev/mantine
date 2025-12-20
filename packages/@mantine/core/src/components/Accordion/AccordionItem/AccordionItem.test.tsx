@@ -12,6 +12,7 @@ describe('@mantine/core/AccordionItem', () => {
   tests.itSupportsSystemProps<AccordionItemProps, AccordionItemStylesNames>({
     component: ContextContainer,
     props: defaultProps,
+    children: true,
     displayName: '@mantine/core/AccordionItem',
     stylesApiSelectors: ['item'],
     stylesApiName: 'Accordion',
