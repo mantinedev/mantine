@@ -31,7 +31,6 @@ describe('@mantine/core/Accordion', () => {
   tests.itSupportsSystemProps<AccordionProps, AccordionStylesNames>({
     component: Accordion,
     props: defaultProps,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Accordion',
     stylesApiSelectors: ['root', 'chevron', 'content', 'control', 'icon', 'item', 'label'],
   });

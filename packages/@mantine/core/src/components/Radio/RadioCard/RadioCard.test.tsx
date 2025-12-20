@@ -21,7 +21,6 @@ describe('@mantine/core/RadioCard', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/core/RadioCard',
     stylesApiSelectors: ['card'],
   });

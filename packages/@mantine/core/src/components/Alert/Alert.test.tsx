@@ -32,7 +32,6 @@ describe('@mantine/core/Alert', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Alert',
     stylesApiSelectors: [
       'root',

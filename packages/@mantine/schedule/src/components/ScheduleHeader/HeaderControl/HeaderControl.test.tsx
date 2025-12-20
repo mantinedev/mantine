@@ -13,7 +13,6 @@ describe('@mantine/schedule/HeaderControl', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/schedule/HeaderControl',
     stylesApiSelectors: ['headerControl'],
   });

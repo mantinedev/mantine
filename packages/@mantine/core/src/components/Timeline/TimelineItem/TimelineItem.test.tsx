@@ -22,7 +22,6 @@ describe('@mantine/core/TimelineItem', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/TimelineItem',
     stylesApiSelectors: ['itemBody', 'itemContent', 'itemBullet', 'item', 'itemTitle'],
     stylesApiName: 'Timeline',

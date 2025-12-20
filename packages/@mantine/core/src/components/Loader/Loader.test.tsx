@@ -20,7 +20,6 @@ describe('@mantine/core/Loader', () => {
     withProps: true,
     classes: true,
     id: true,
-    refType: HTMLSpanElement,
     displayName: '@mantine/core/Loader',
     stylesApiSelectors: ['root'],
   });

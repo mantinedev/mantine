@@ -13,7 +13,6 @@ describe('@mantine/core/FloatingWindow', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/FloatingWindow',
     stylesApiSelectors: ['root'],
   });

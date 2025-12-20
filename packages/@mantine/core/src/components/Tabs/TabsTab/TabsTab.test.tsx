@@ -15,7 +15,6 @@ describe('@mantine/core/TabsTab', () => {
   tests.itSupportsSystemProps<TabsTabProps, TabsTabStylesNames>({
     component: TestContainer,
     props: defaultProps,
-    refType: HTMLButtonElement,
     displayName: '@mantine/core/TabsTab',
     mod: true,
     extend: true,

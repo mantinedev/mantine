@@ -32,7 +32,6 @@ describe('@mantine/core/SwitchGroup', () => {
     extend: true,
     withProps: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/SwitchGroup',
     stylesApiSelectors: ['root', 'description', 'error', 'label', 'required'],
   });

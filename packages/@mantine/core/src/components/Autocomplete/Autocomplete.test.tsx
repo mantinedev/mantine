@@ -37,7 +37,6 @@ describe('@mantine/core/Autocomplete', () => {
     variant: true,
     classes: true,
     id: true,
-    refType: HTMLInputElement,
     displayName: '@mantine/core/Autocomplete',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });

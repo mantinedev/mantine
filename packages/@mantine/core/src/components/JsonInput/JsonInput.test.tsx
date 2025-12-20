@@ -26,7 +26,6 @@ describe('@mantine/core/JsonInput', () => {
     variant: true,
     classes: true,
     id: true,
-    refType: HTMLTextAreaElement,
     displayName: '@mantine/core/JsonInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });

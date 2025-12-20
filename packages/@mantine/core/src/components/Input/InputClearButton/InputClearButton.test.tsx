@@ -12,7 +12,6 @@ describe('@mantine/core/InputClearButton', () => {
     extend: true,
     variant: true,
     size: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/core/InputClearButton',
     stylesApiSelectors: ['root'],
   });

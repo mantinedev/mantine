@@ -20,7 +20,6 @@ describe('@mantine/core/ComboboxSearch', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLInputElement,
     displayName: '@mantine/core/ComboboxSearch',
     stylesApiSelectors: ['input', 'section', 'wrapper'],
     stylesApiName: 'Combobox',

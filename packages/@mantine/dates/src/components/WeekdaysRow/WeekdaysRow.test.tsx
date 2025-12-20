@@ -28,7 +28,6 @@ describe('@mantine/dates/WeekdaysRow', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLTableRowElement,
     displayName: '@mantine/dates/WeekdaysRow',
     stylesApiSelectors: ['weekdaysRow', 'weekday'],
   });

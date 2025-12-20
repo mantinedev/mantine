@@ -19,7 +19,6 @@ describe('@mantine/core/ComboboxFooter', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/ComboboxFooter',
     stylesApiSelectors: ['footer'],
     stylesApiName: 'Combobox',

@@ -15,7 +15,6 @@ describe('@mantine/core/Image', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLImageElement,
     displayName: '@mantine/core/Image',
     stylesApiSelectors: ['root'],
   });

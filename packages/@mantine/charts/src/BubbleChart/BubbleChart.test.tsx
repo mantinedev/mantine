@@ -13,7 +13,6 @@ describe('@mantine/charts/BubbleChart', () => {
   tests.itSupportsSystemProps<BubbleChartProps, BubbleChartStylesNames>({
     component: BubbleChart,
     props: defaultProps,
-    refType: HTMLDivElement,
     displayName: '@mantine/charts/BubbleChart',
     stylesApiSelectors: ['root'],
   });

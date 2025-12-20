@@ -17,7 +17,6 @@ describe('@mantine/dates/TimeGrid', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/dates/TimeGrid',
     stylesApiSelectors: ['root'],
   });

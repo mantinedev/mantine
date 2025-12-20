@@ -47,7 +47,6 @@ describe('@mantine/core/NumberInput', () => {
     variant: true,
     classes: true,
     id: true,
-    refType: HTMLInputElement,
     displayName: '@mantine/core/NumberInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });

@@ -20,7 +20,6 @@ describe('@mantine/core/Card', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Card',
     stylesApiSelectors: ['root', 'section'],
   });

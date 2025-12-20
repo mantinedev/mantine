@@ -19,7 +19,6 @@ describe('@mantine/schedule/WeekView', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/schedule/WeekView',
     stylesApiSelectors: [
       'weekView',

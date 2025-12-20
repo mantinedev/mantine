@@ -18,7 +18,6 @@ describe('@mantine/dates/Month', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLTableElement,
     displayName: '@mantine/dates/Month',
     stylesApiSelectors: ['month'],
   });

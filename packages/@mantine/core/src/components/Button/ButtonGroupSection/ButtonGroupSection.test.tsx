@@ -20,7 +20,6 @@ describe('@mantine/core/ButtonGroupSection', () => {
     variant: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/ButtonGroupSection',
     stylesApiSelectors: ['groupSection'],
   });

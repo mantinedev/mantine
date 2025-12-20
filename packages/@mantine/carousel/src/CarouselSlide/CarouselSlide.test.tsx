@@ -10,7 +10,6 @@ describe('@mantine/carousel/CarouselSlide', () => {
   tests.itSupportsSystemProps<CarouselSlideProps, CarouselSlideStylesNames>({
     component: TestContainer,
     props: defaultProps,
-    refType: HTMLDivElement,
     displayName: '@mantine/carousel/CarouselSlide',
     stylesApiSelectors: ['slide'],
     providerStylesApi: false,

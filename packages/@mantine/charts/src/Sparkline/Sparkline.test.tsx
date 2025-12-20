@@ -11,7 +11,6 @@ describe('@mantine/core/Sparkline', () => {
   tests.itSupportsSystemProps<SparklineProps, SparklineStylesNames>({
     component: Sparkline,
     props: defaultProps,
-    refType: HTMLDivElement,
     displayName: '@mantine/charts/Sparkline',
     stylesApiSelectors: ['root'],
   });

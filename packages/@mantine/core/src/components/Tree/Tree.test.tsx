@@ -21,7 +21,6 @@ describe('@mantine/core/Tree', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLUListElement,
     displayName: '@mantine/core/Tree',
     stylesApiSelectors: ['root', 'label', 'node'],
   });

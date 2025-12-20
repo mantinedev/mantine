@@ -18,7 +18,6 @@ describe('@mantine/core/InputLabel', () => {
     variant: true,
     classes: true,
     id: true,
-    refType: HTMLLabelElement,
     stylesApiName: 'InputWrapper',
     displayName: '@mantine/core/InputLabel',
     stylesApiSelectors: ['label', 'required'],

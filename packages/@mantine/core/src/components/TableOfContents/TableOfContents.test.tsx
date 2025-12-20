@@ -16,7 +16,6 @@ describe('@mantine/core/TableOfContents', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/TableOfContents',
     stylesApiSelectors: ['root'],
   });

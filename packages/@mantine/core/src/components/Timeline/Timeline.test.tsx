@@ -28,7 +28,6 @@ describe('@mantine/core/Timeline', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Timeline',
     stylesApiSelectors: ['root', 'itemBody', 'itemContent', 'itemBullet', 'item', 'itemTitle'],
   });

@@ -17,7 +17,6 @@ describe('@mantine/core/Anchor', () => {
     variant: true,
     classes: true,
     id: true,
-    refType: HTMLAnchorElement,
     displayName: '@mantine/core/Anchor',
     stylesApiSelectors: ['root'],
   });

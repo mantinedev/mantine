@@ -23,7 +23,6 @@ describe('@mantine/schedule/MonthView', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/schedule/MonthView',
     providerStylesApi: false,
     stylesApiSelectors: [

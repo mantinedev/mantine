@@ -24,7 +24,6 @@ describe('@mantine/core/Burger', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/core/Burger',
     stylesApiSelectors: ['root'],
   });

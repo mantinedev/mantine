@@ -20,7 +20,6 @@ describe('@mantine/core/InputPlaceholder', () => {
     variant: true,
     classes: true,
     id: true,
-    refType: HTMLSpanElement,
     displayName: '@mantine/core/InputPlaceholder',
     stylesApiSelectors: ['placeholder'],
   });

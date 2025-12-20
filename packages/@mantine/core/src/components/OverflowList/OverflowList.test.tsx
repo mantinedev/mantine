@@ -16,7 +16,6 @@ describe('@mantine/core/OverflowList', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/OverflowList',
     stylesApiSelectors: ['root'],
   });

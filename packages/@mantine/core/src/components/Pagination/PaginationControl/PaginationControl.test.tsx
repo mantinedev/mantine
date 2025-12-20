@@ -22,7 +22,6 @@ describe('@mantine/core/PaginationControl', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/core/PaginationControl',
     stylesApiSelectors: ['control'],
     stylesApiName: 'Pagination',

@@ -19,7 +19,6 @@ describe('@mantine/core/ComboboxEmpty', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/ComboboxEmpty',
     stylesApiSelectors: ['empty'],
     stylesApiName: 'Combobox',

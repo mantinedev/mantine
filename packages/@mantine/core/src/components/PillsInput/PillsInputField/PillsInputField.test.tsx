@@ -24,7 +24,6 @@ describe('@mantine/core/PillsInputField', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLInputElement,
     displayName: '@mantine/core/PillsInputField',
     stylesApiSelectors: ['field'],
   });

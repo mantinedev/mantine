@@ -23,7 +23,6 @@ describe('@mantine/core/StepperStep', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/core/StepperStep',
     stylesApiSelectors: [
       'step',

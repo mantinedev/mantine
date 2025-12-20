@@ -32,7 +32,6 @@ describe('@mantine/core/Spotlight', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/spotlight/Spotlight',
     stylesApiSelectors: [
       'root',

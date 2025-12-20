@@ -18,7 +18,6 @@ describe('@mantine/code-highlight/CodeHighlight', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     selector: '.mantine-CodeHighlight-codeHighlight',
     displayName: '@mantine/code-highlight/CodeHighlight',
     stylesApiSelectors: [

@@ -21,7 +21,6 @@ describe('@mantine/core/Checkbox', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLInputElement,
     displayName: '@mantine/core/Checkbox',
     stylesApiSelectors: [
       'root',

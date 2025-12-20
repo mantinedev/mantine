@@ -29,7 +29,6 @@ describe('@mantine/core/List', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLUListElement,
     displayName: '@mantine/core/List',
     stylesApiSelectors: ['root', 'item', 'itemIcon', 'itemLabel', 'itemWrapper'],
   });

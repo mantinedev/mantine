@@ -23,7 +23,6 @@ describe('@mantine/schedule/MonthYearSelect', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/schedule/MonthYearSelect',
     stylesApiSelectors: [
       'monthYearSelectDropdown',

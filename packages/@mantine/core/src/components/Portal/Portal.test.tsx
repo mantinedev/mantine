@@ -6,7 +6,6 @@ describe('@mantine/core/Portal', () => {
   tests.itSupportsRef({
     component: Portal,
     props: { children: 'test' },
-    refType: HTMLDivElement,
   });
 
   it('renders content inside portal', () => {

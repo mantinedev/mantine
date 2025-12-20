@@ -22,7 +22,6 @@ describe('@mantine/core/Dialog', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Dialog',
     stylesApiSelectors: ['root', 'closeButton'],
     selector: '.mantine-Dialog-root',

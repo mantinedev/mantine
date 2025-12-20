@@ -17,7 +17,6 @@ describe('@mantine/core/CheckboxIndicator', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/CheckboxIndicator',
     stylesApiSelectors: ['indicator', 'icon'],
   });

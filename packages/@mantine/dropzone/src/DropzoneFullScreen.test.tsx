@@ -19,7 +19,6 @@ describe('@mantine/dropzone/DropzoneFullScreen', () => {
     withProps: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/dropzone/DropzoneFullScreen',
     stylesApiSelectors: ['fullScreen'],
     selector: '.mantine-DropzoneFullScreen-fullScreen',

@@ -16,7 +16,6 @@ describe('@mantine/core/AvatarGroup', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/AvatarGroup',
     stylesApiSelectors: ['group'],
   });

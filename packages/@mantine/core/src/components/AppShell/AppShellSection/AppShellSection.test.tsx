@@ -24,7 +24,6 @@ describe('@mantine/core/AppShellSection', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLElement,
     displayName: '@mantine/core/AppShellSection',
     stylesApiSelectors: ['section'],
     selector: '.mantine-AppShell-section',

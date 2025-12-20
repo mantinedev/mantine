@@ -17,7 +17,6 @@ describe('@mantine/dates/MiniCalendar', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/dates/MiniCalendar',
     stylesApiSelectors: ['root', 'control', 'days', 'day', 'dayMonth', 'dayNumber'],
   });

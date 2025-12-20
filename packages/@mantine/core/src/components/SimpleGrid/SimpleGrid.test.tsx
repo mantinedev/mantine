@@ -16,7 +16,6 @@ describe('@mantine/core/SimpleGrid', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/SimpleGrid',
     stylesApiSelectors: ['root'],
   });

@@ -17,7 +17,6 @@ describe('@mantine/dates/YearsList', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLTableElement,
     displayName: '@mantine/dates/YearsList',
     stylesApiSelectors: ['yearsList', 'yearsListCell', 'yearsListControl', 'yearsListRow'],
   });

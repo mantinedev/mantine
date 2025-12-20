@@ -12,7 +12,6 @@ describe('@mantine/core/RadialBarChart', () => {
   tests.itSupportsSystemProps<RadialBarChartProps, RadialBarChartStylesNames>({
     component: RadialBarChart,
     props: defaultProps,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/RadialBarChart',
     stylesApiSelectors: ['root'],
   });

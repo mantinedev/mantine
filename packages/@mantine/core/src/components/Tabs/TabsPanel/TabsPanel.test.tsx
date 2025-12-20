@@ -13,7 +13,6 @@ describe('@mantine/core/TabsPanel', () => {
   tests.itSupportsSystemProps<TabsPanelProps, TabsPanelStylesNames>({
     component: TestContainer,
     props: defaultProps,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/TabsPanel',
     mod: true,
     extend: true,

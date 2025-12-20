@@ -20,7 +20,6 @@ describe('@mantine/core/Avatar', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Avatar',
     stylesApiSelectors: ['root', 'placeholder'],
   });

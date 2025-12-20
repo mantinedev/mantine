@@ -24,7 +24,6 @@ describe('@mantine/dates/MonthLevelGroup', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/dates/MonthLevelGroup',
     stylesApiSelectors: [
       'calendarHeader',

@@ -19,7 +19,6 @@ describe('@mantine/schedule/CurrentTimeIndicator', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/schedule/CurrentTimeIndicator',
     stylesApiSelectors: [
       'currentTimeIndicator',

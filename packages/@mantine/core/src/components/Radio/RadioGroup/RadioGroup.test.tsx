@@ -32,7 +32,6 @@ describe('@mantine/core/RadioGroup', () => {
     extend: true,
     withProps: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/RadioGroup',
     stylesApiSelectors: ['root', 'description', 'error', 'label', 'required'],
   });

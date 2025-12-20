@@ -35,7 +35,6 @@ describe('@mantine/core/PillsInput', () => {
     withProps: true,
     variant: true,
     size: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/PillsInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });

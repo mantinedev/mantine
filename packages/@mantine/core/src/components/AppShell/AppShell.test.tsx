@@ -16,7 +16,6 @@ describe('@mantine/core/AppShell', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/AppShell',
     stylesApiSelectors: ['root'],
   });

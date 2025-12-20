@@ -27,7 +27,6 @@ describe('@mantine/core/ProgressSection', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/ProgressSection',
     stylesApiSelectors: ['section'],
     stylesApiName: 'Progress',

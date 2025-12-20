@@ -15,7 +15,6 @@ describe('@mantine/dates/YearPicker', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/dates/YearPicker',
     stylesApiSelectors: [
       'calendarHeader',

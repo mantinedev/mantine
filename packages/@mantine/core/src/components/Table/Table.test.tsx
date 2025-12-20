@@ -50,7 +50,6 @@ describe('@mantine/core/Table', () => {
     size: true,
     variant: true,
     id: true,
-    refType: HTMLTableElement,
     displayName: '@mantine/core/Table',
     stylesApiSelectors: ['table', 'caption', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td'],
   });

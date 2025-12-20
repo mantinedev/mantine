@@ -39,7 +39,6 @@ describe('@mantine/core/TagsInput', () => {
     variant: true,
     classes: true,
     id: true,
-    refType: HTMLInputElement,
     displayName: '@mantine/core/TagsInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });

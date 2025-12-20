@@ -23,7 +23,6 @@ describe('@mantine/schedule/YearView', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/schedule/YearView',
     providerStylesApi: false,
     stylesApiSelectors: [

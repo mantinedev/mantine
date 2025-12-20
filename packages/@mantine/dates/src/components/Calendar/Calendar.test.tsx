@@ -46,7 +46,6 @@ describe('@mantine/dates/Calendar', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/dates/Calendar',
     stylesApiSelectors: [
       'levelsGroup',

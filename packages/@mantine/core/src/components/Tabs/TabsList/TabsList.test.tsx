@@ -12,7 +12,6 @@ describe('@mantine/core/TabsList', () => {
   tests.itSupportsSystemProps<TabsListProps, TabsListStylesNames>({
     component: TestContainer,
     props: defaultProps,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/TabsList',
     mod: true,
     extend: true,

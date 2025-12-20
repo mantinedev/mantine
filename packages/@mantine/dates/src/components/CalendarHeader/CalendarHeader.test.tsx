@@ -19,7 +19,6 @@ describe('@mantine/dates/CalendarHeader', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/dates/CalendarHeader',
     stylesApiSelectors: [
       'calendarHeader',

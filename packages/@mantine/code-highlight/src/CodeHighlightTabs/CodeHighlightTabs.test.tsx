@@ -22,7 +22,6 @@ describe('@mantine/code-highlight/CodeHighlightTabs', () => {
     size: true,
     classes: true,
     providerStylesApi: false,
-    refType: HTMLDivElement,
     displayName: '@mantine/code-highlight/CodeHighlightTabs',
     stylesApiSelectors: [
       'root',

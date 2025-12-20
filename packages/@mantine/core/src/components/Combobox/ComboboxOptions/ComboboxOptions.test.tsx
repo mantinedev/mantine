@@ -23,7 +23,6 @@ describe('@mantine/core/ComboboxOptions', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/ComboboxOptions',
     stylesApiSelectors: ['options'],
     stylesApiName: 'Combobox',

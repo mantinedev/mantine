@@ -25,7 +25,6 @@ describe('@mantine/core/Switch', () => {
     variant: true,
     classes: true,
     id: true,
-    refType: HTMLInputElement,
     displayName: '@mantine/core/Switch',
     stylesApiSelectors: [
       'root',

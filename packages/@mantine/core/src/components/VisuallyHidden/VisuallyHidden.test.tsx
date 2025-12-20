@@ -16,7 +16,6 @@ describe('@mantine/core/VisuallyHidden', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLSpanElement,
     displayName: '@mantine/core/VisuallyHidden',
     stylesApiSelectors: ['root'],
   });

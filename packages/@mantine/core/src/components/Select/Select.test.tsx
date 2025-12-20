@@ -40,7 +40,6 @@ describe('@mantine/core/Select', () => {
     variant: true,
     classes: true,
     id: true,
-    refType: HTMLInputElement,
     displayName: '@mantine/core/Select',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });

@@ -14,7 +14,6 @@ describe('@mantine/schedule/ScheduleHeader', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/schedule/ScheduleHeader',
     stylesApiSelectors: ['header'],
   });

@@ -20,7 +20,6 @@ describe('@mantine/code-highlight/InlineCodeHighlight', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLElement,
     selector: '.mantine-InlineCodeHighlight-inlineCodeHighlight',
     displayName: '@mantine/code-highlight/InlineCodeHighlight',
     stylesApiSelectors: ['inlineCodeHighlight'],

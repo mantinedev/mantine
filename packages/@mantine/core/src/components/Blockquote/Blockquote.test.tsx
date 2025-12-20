@@ -18,7 +18,6 @@ describe('@mantine/core/Blockquote', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLQuoteElement,
     displayName: '@mantine/core/Blockquote',
     stylesApiSelectors: ['root', 'icon'],
   });

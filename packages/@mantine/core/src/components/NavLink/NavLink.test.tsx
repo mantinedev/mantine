@@ -22,7 +22,6 @@ describe('@mantine/core/NavLink', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLAnchorElement,
     displayName: '@mantine/core/NavLink',
     stylesApiSelectors: ['root', 'body', 'chevron', 'children', 'description', 'label', 'section'],
   });

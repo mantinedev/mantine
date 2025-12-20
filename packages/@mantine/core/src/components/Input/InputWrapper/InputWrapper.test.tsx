@@ -23,7 +23,6 @@ describe('@mantine/core/InputWrapper', () => {
     size: true,
     variant: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/InputWrapper',
     stylesApiSelectors: ['root', 'description', 'error', 'label', 'required'],
   });

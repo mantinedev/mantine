@@ -27,7 +27,6 @@ describe('@mantine/core/UnstyledButton', () => {
     withProps: true,
     classes: true,
     id: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/core/UnstyledButton',
     stylesApiSelectors: ['root'],
   });

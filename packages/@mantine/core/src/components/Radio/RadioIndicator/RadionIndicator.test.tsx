@@ -13,7 +13,6 @@ describe('@mantine/core/RadioIndicator', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/RadioIndicator',
     stylesApiSelectors: ['indicator', 'icon'],
   });

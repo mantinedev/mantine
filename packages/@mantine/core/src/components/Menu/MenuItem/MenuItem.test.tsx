@@ -22,7 +22,6 @@ describe('@mantine/core/MenuItem', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/core/MenuItem',
     stylesApiSelectors: ['item', 'itemSection', 'itemLabel'],
     stylesApiName: 'Menu',

@@ -23,7 +23,6 @@ describe('@mantine/core/Chip', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLInputElement,
     displayName: '@mantine/core/Chip',
     stylesApiSelectors: ['root', 'iconWrapper', 'checkIcon', 'input', 'label'],
   });

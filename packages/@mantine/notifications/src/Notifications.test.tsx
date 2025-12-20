@@ -16,7 +16,6 @@ describe('@mantine/core/Notifications', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/notifications/Notifications',
     stylesApiSelectors: ['root'],
   });

@@ -19,7 +19,6 @@ describe('@mantine/core/MenuDivider', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/MenuDivider',
     stylesApiSelectors: ['divider'],
     stylesApiName: 'Menu',

@@ -16,7 +16,6 @@ describe('@mantine/core/Typography', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Typography',
     stylesApiSelectors: ['root'],
   });

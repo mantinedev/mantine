@@ -21,7 +21,6 @@ describe('@mantine/dates/TimePicker', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/dates/TimePicker',
     stylesApiSelectors: ['root'],
   });

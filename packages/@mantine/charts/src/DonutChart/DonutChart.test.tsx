@@ -18,7 +18,6 @@ describe('@mantine/charts/DonutChart', () => {
   tests.itSupportsSystemProps<DonutChartProps, DonutChartStylesNames>({
     component: DonutChart,
     props: defaultProps,
-    refType: HTMLDivElement,
     displayName: '@mantine/charts/DonutChart',
     stylesApiSelectors: ['root'],
   });

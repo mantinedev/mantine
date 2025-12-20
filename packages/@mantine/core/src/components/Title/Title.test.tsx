@@ -16,7 +16,6 @@ describe('@mantine/core/Title', () => {
     variant: true,
     classes: true,
     id: true,
-    refType: HTMLHeadingElement,
     displayName: '@mantine/core/Title',
     stylesApiSelectors: ['root'],
   });

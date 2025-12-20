@@ -25,7 +25,6 @@ describe('@mantine/dates/DecadeLevel', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/dates/DecadeLevel',
     stylesApiSelectors: [
       'calendarHeader',

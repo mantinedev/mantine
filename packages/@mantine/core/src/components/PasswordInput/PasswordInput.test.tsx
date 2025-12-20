@@ -57,7 +57,6 @@ describe('@mantine/core/PasswordInput', () => {
     variant: true,
     classes: true,
     id: true,
-    refType: HTMLInputElement,
     displayName: '@mantine/core/PasswordInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
     providerStylesApi: false,

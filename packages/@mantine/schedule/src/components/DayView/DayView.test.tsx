@@ -56,7 +56,6 @@ describe('@mantine/schedule/DayView', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/schedule/DayView',
     providerStylesApi: false,
     stylesApiSelectors: [

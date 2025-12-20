@@ -30,7 +30,6 @@ describe('@mantine/dates/PickerControl', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/dates/PickerControl',
     stylesApiSelectors: ['pickerControl'],
   });

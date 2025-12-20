@@ -18,7 +18,6 @@ describe('@mantine/dates/DatePicker', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/dates/DatePicker',
     stylesApiSelectors: [
       'day',

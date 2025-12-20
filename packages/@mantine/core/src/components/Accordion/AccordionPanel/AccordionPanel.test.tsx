@@ -12,7 +12,6 @@ describe('@mantine/core/AccordionPanel', () => {
   tests.itSupportsSystemProps<AccordionPanelProps, AccordionPanelStylesNames>({
     component: ContextContainer,
     props: defaultProps,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/AccordionPanel',
     stylesApiSelectors: ['panel', 'content'],
     stylesApiName: 'Accordion',

@@ -19,7 +19,6 @@ describe('@mantine/core/AppShellHeader', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLElement,
     displayName: '@mantine/core/AppShellHeader',
     stylesApiSelectors: ['header'],
     selector: '.mantine-AppShell-header',

@@ -18,7 +18,6 @@ describe('@mantine/core/PaginationRoot', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/PaginationRoot',
     stylesApiSelectors: ['root'],
     stylesApiName: 'Pagination',

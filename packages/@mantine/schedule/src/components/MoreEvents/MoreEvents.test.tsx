@@ -52,7 +52,6 @@ describe('@mantine/schedule/MoreEvents', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/schedule/MoreEvents',
     stylesApiSelectors: ['moreEventsButton', 'moreEventsList'],
   });

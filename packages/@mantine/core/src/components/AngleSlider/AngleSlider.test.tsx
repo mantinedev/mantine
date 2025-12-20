@@ -17,7 +17,6 @@ describe('@mantine/core/AngleSlider', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/AngleSlider',
     stylesApiSelectors: ['root', 'thumb', 'label', 'mark', 'marks'],
   });

@@ -17,7 +17,6 @@ describe('@mantine/schedule/ViewSelect', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/schedule/ViewSelect',
     stylesApiSelectors: ['viewSelect'],
   });

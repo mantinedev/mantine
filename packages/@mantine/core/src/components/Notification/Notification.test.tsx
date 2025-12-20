@@ -24,7 +24,6 @@ describe('@mantine/core/Notification', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Notification',
     stylesApiSelectors: ['root', 'icon', 'body', 'title', 'description', 'closeButton'],
   });

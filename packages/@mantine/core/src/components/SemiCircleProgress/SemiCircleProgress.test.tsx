@@ -31,7 +31,6 @@ describe('@mantine/core/SemiCircleProgress', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/SemiCircleProgress',
     stylesApiSelectors: ['root', 'svg'],
   });

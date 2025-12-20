@@ -27,7 +27,6 @@ describe('@mantine/core/InputBase', () => {
     variant: true,
     classes: true,
     id: true,
-    refType: HTMLInputElement,
     displayName: '@mantine/core/InputBase',
     stylesApiSelectors: [...inputStylesApiSelectors],
     polymorphicSelector: '.mantine-InputBase-input',

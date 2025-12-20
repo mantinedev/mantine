@@ -15,7 +15,6 @@ describe('@mantine/dates/LevelsGroup', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/dates/LevelsGroup',
     stylesApiSelectors: ['levelsGroup'],
   });

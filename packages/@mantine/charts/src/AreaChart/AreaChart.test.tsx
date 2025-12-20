@@ -17,7 +17,6 @@ describe('@mantine/charts/AreaChart', () => {
   tests.itSupportsSystemProps<AreaChartProps, AreaChartStylesNames>({
     component: AreaChart,
     props: defaultProps,
-    refType: HTMLDivElement,
     displayName: '@mantine/charts/AreaChart',
     stylesApiSelectors: ['root'],
   });

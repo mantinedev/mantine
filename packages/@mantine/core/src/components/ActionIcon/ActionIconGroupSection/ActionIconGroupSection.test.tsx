@@ -20,7 +20,6 @@ describe('@mantine/core/ActionIconGroupSection', () => {
     variant: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/ActionIconGroupSection',
     stylesApiSelectors: ['groupSection'],
   });

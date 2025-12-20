@@ -14,7 +14,6 @@ describe('@mantine/core/Collapse', () => {
     styleProps: true,
     extend: true,
     withProps: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Collapse',
   });
 });

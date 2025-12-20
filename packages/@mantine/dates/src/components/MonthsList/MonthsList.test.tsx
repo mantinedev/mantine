@@ -17,7 +17,6 @@ describe('@mantine/dates/MonthsList', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLTableElement,
     displayName: '@mantine/dates/MonthsList',
     stylesApiSelectors: ['monthsList', 'monthsListCell', 'monthsListControl', 'monthsListRow'],
   });

@@ -18,7 +18,6 @@ describe('@mantine/core/PaginationDots', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/PaginationDots',
     stylesApiSelectors: ['dots'],
     stylesApiName: 'Pagination',

@@ -19,7 +19,6 @@ describe('@mantine/core/AppShellAside', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLElement,
     displayName: '@mantine/core/AppShellAside',
     stylesApiSelectors: ['aside'],
     selector: '.mantine-AppShell-aside',

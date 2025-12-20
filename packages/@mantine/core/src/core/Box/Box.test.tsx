@@ -11,7 +11,6 @@ describe('@mantine/core/Box', () => {
     polymorphic: true,
     styleProps: true,
     children: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Box',
     providerName: null,
   });

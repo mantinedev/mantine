@@ -21,7 +21,6 @@ describe('@mantine/core/CheckboxCard', () => {
     variant: true,
     size: true,
     classes: true,
-    refType: HTMLButtonElement,
     displayName: '@mantine/core/CheckboxCard',
     stylesApiSelectors: ['card'],
   });

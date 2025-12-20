@@ -19,7 +19,6 @@ describe('@mantine/core/ScrollArea', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/ScrollArea',
     stylesApiSelectors: ['root', 'viewport'],
   });
@@ -35,7 +34,6 @@ describe('@mantine/core/ScrollAreaAutosize', () => {
     extend: true,
     withProps: true,
     classes: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/ScrollAreaAutosize',
   });
 });

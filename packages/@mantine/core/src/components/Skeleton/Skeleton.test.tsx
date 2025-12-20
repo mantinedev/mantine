@@ -16,7 +16,6 @@ describe('@mantine/core/Skeleton', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Skeleton',
     stylesApiSelectors: ['root'],
   });

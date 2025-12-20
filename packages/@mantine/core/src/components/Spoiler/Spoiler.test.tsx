@@ -21,7 +21,6 @@ describe('@mantine/core/Spoiler', () => {
     size: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Spoiler',
     stylesApiSelectors: ['root', 'content'],
   });

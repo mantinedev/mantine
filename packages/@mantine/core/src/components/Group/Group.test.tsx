@@ -17,7 +17,6 @@ describe('@mantine/core/Group', () => {
     variant: true,
     classes: true,
     id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/Group',
     stylesApiSelectors: ['root'],
   });
