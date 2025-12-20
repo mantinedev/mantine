@@ -217,7 +217,6 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     scrollAreaProps,
     locale,
     withWeekNumber,
-    mod,
     withCurrentTimeBubble,
     withAllDaySlots,
     __staticSelector,
@@ -438,7 +437,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
             ? '7'
             : `${7 - ctx.getWeekendDays(weekendDays).length}`,
         }}
-        mod={[{ 'with-weekends': withWeekendDays }, mod]}
+        mod={{ 'with-weekends': withWeekendDays }}
       >
         <ScrollArea.Autosize
           scrollbarSize={4}

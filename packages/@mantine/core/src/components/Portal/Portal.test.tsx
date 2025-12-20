@@ -3,10 +3,7 @@ import { Portal } from './Portal';
 
 describe('@mantine/core/Portal', () => {
   tests.itHasExtend({ component: Portal });
-  tests.itSupportsRef({
-    component: Portal,
-    props: { children: 'test' },
-  });
+  tests.itSupportsRef({ component: Portal, refType: HTMLDivElement, props: { children: 'test' } });
 
   it('renders content inside portal', () => {
     render(<Portal>test-portal</Portal>);

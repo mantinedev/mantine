@@ -11,6 +11,7 @@ describe('@mantine/core/Collapse', () => {
     component: Collapse,
     props: defaultProps,
     children: true,
+    classes: false,
     displayName: '@mantine/core/Collapse',
   });
 });

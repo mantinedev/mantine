@@ -71,6 +71,7 @@ export const DropzoneFullScreen = factory<DropzoneFullScreenFactory>((_props) =>
     withinPortal,
     portalProps,
     attributes,
+    mod,
     ...others
   } = props;
 
