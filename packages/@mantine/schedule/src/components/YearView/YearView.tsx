@@ -23,7 +23,7 @@ import {
   ScheduleHeader,
 } from '../ScheduleHeader/ScheduleHeader';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
-import { useYearViewEvents } from './use-year-view-events/use-year-view-events';
+import { getYearViewEvents } from './use-year-view-events/get-year-view-events';
 import { YearViewMonth, YearViewMonthSettings } from './YearViewMonth';
 import classes from './YearView.module.css';
 
@@ -183,7 +183,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
     radius,
   };
 
-  const groupedEvents = useYearViewEvents({ date, events });
+  const groupedEvents = getYearViewEvents({ date, events });
 
   const months = getMonthsByQuarter(dayjs(date).format('YYYY-MM-DD')).map(
     (quarter, quarterIndex) => {

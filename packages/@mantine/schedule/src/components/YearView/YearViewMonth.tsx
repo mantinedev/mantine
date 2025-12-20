@@ -9,7 +9,7 @@ import {
   isSameMonth,
 } from '../../utils';
 import { useScheduleContext } from '../Schedule/Schedule.context';
-import { GroupedEvents } from './use-year-view-events/use-year-view-events';
+import { GroupedEvents } from './use-year-view-events/get-year-view-events';
 import type { YearViewFactory } from './YearView';
 
 export interface YearViewMonthSettings {

@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import { useMemo } from 'react';
 import { AnyDateValue, DateStringValue, ScheduleEventData } from '../../../types';
 import { isMultidayEvent, validateEvent } from '../../../utils';
 
@@ -32,12 +31,12 @@ function groupEventByDate(event: ScheduleEventData, groupedEvents: GroupedEvents
   groupedEvents[eventDate].push(event);
 }
 
-interface UseYearViewEventsInput {
+interface GetYearViewEventsInput {
   date: AnyDateValue;
   events: ScheduleEventData[] | undefined;
 }
 
-export function filterYearViewEvents({ date, events }: UseYearViewEventsInput) {
+export function getYearViewEvents({ date, events }: GetYearViewEventsInput) {
   const groupedEvents: GroupedEvents = {};
 
   if (events === undefined) {
@@ -59,8 +58,4 @@ export function filterYearViewEvents({ date, events }: UseYearViewEventsInput) {
   }
 
   return groupedEvents;
-}
-
-export function useYearViewEvents({ date, events }: UseYearViewEventsInput) {
-  return useMemo(() => filterYearViewEvents({ date, events }), [date, events]);
 }
