@@ -13,7 +13,6 @@ describe('@mantine/dropzone/Dropzone', () => {
     component: Dropzone,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/dropzone/Dropzone',
     stylesApiSelectors: ['root', 'inner'],
   });

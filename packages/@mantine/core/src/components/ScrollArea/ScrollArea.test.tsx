@@ -11,7 +11,6 @@ describe('@mantine/core/ScrollArea', () => {
     component: ScrollArea,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/ScrollArea',
     stylesApiSelectors: ['root', 'viewport'],
   });

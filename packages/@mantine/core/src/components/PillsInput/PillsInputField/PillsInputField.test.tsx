@@ -16,7 +16,6 @@ describe('@mantine/core/PillsInputField', () => {
   tests.itSupportsSystemProps<PillsInputFieldProps, PillsInputFieldStylesNames>({
     component: TestContainer,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/core/PillsInputField',
     stylesApiSelectors: ['field'],
   });

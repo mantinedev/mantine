@@ -10,7 +10,6 @@ describe('@mantine/core/PaginationRoot', () => {
     component: PaginationRoot,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/PaginationRoot',
     stylesApiSelectors: ['root'],
     stylesApiName: 'Pagination',

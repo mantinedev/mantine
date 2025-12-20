@@ -13,7 +13,6 @@ describe('@mantine/core/ListItem', () => {
     component: TestContainer,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/ListItem',
     stylesApiSelectors: ['item', 'itemIcon', 'itemLabel', 'itemWrapper'],
     selector: 'li',

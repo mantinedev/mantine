@@ -49,7 +49,6 @@ describe('@mantine/core/PasswordInput', () => {
   tests.itSupportsSystemProps<PasswordInputProps, __InputStylesNames>({
     component: PasswordInput,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/core/PasswordInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
     providerStylesApi: false,

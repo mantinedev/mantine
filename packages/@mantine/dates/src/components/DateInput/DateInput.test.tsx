@@ -51,7 +51,6 @@ describe('@mantine/dates/DateInput', () => {
   tests.itSupportsSystemProps<DateInputProps, __InputStylesNames>({
     component: DateInput,
     props: defaultPropsWithInputProps,
-    id: true,
     displayName: '@mantine/dates/DateInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });

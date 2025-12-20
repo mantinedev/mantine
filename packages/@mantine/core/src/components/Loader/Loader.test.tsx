@@ -12,7 +12,6 @@ describe('@mantine/core/Loader', () => {
     component: Loader,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/Loader',
     stylesApiSelectors: ['root'],
   });

@@ -12,7 +12,6 @@ describe('@mantine/core/InputDescription', () => {
     component: InputDescription,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/InputDescription',
     stylesApiName: 'InputWrapper',
     stylesApiSelectors: ['description'],

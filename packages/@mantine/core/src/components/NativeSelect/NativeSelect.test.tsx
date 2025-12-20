@@ -25,7 +25,6 @@ describe('@mantine/core/NativeSelect', () => {
   tests.itSupportsSystemProps<NativeSelectProps, __InputStylesNames>({
     component: NativeSelect,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/core/NativeSelect',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });

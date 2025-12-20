@@ -11,7 +11,6 @@ describe('@mantine/core/ProgressLabel', () => {
     component: TestContainer,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/ProgressLabel',
     stylesApiSelectors: ['label'],
     stylesApiName: 'Progress',

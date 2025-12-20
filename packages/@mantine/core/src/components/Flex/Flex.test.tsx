@@ -8,7 +8,6 @@ describe('@mantine/core/Flex', () => {
     component: Flex,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/Flex',
     stylesApiSelectors: ['root'],
   });

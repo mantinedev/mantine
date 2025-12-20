@@ -8,7 +8,6 @@ describe('@mantine/core/Kbd', () => {
     component: Kbd,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/Kbd',
     stylesApiSelectors: ['root'],
   });

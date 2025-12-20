@@ -18,7 +18,6 @@ describe('@mantine/core/TextInput', () => {
   tests.itSupportsSystemProps<TextInputProps, __InputStylesNames>({
     component: TextInput,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/core/TextInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });

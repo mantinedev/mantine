@@ -12,7 +12,6 @@ describe('@mantine/core/Highlight', () => {
     component: Highlight,
     props: defaultProps,
     polymorphic: true,
-    id: true,
     displayName: '@mantine/core/Highlight',
     stylesApiSelectors: ['root'],
   });

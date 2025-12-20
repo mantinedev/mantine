@@ -19,7 +19,6 @@ describe('@mantine/core/SegmentedControl', () => {
   tests.itSupportsSystemProps<SegmentedControlProps, SegmentedControlStylesNames>({
     component: SegmentedControl,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/core/SegmentedControl',
     stylesApiSelectors: ['root', 'label', 'input', 'control', 'indicator'],
   });

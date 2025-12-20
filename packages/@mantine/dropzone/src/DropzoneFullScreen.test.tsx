@@ -15,7 +15,6 @@ describe('@mantine/dropzone/DropzoneFullScreen', () => {
     component: DropzoneFullScreen,
     props: defaultProps,
     children: true,
-    id: true,
     styleProps: false,
     size: false,
     variant: false,

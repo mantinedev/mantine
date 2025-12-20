@@ -14,7 +14,6 @@ describe('@mantine/core/TimelineItem', () => {
     component: TestContainer,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/TimelineItem',
     stylesApiSelectors: ['itemBody', 'itemContent', 'itemBullet', 'item', 'itemTitle'],
     stylesApiName: 'Timeline',

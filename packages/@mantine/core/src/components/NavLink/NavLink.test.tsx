@@ -14,7 +14,6 @@ describe('@mantine/core/NavLink', () => {
     props: defaultProps,
     polymorphic: true,
     children: true,
-    id: true,
     displayName: '@mantine/core/NavLink',
     stylesApiSelectors: ['root', 'body', 'chevron', 'children', 'description', 'label', 'section'],
   });

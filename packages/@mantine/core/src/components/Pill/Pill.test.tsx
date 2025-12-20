@@ -13,7 +13,6 @@ describe('@mantine/core/Pill', () => {
     component: Pill,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/Pill',
     stylesApiSelectors: ['root', 'label', 'remove'],
   });

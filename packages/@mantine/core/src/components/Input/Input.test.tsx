@@ -34,7 +34,6 @@ describe('@mantine/core/Input', () => {
     component: Input,
     props: defaultProps,
     polymorphic: true,
-    id: true,
     polymorphicSelector: '.mantine-Input-input',
     displayName: '@mantine/core/Input',
     stylesApiSelectors: ['input', 'section', 'wrapper'],

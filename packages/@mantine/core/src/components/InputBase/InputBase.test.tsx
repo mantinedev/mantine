@@ -19,7 +19,6 @@ describe('@mantine/core/InputBase', () => {
     component: InputBase,
     props: defaultProps,
     polymorphic: true,
-    id: true,
     displayName: '@mantine/core/InputBase',
     stylesApiSelectors: [...inputStylesApiSelectors],
     polymorphicSelector: '.mantine-InputBase-input',

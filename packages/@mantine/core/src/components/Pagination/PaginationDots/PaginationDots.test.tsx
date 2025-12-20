@@ -10,7 +10,6 @@ describe('@mantine/core/PaginationDots', () => {
   tests.itSupportsSystemProps<PaginationDotsProps, PaginationDotsStylesNames>({
     component: TestContainer,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/core/PaginationDots',
     stylesApiSelectors: ['dots'],
     stylesApiName: 'Pagination',

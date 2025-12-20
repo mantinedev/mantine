@@ -21,7 +21,6 @@ describe('@mantine/core/RangeSlider', () => {
   tests.itSupportsSystemProps<RangeSliderProps, SliderStylesNames>({
     component: RangeSlider,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/core/RangeSlider',
     stylesApiName: 'Slider',
     stylesApiSelectors: [

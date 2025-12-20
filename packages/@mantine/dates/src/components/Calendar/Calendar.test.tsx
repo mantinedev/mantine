@@ -38,7 +38,6 @@ describe('@mantine/dates/Calendar', () => {
   tests.itSupportsSystemProps<CalendarProps, CalendarStylesNames>({
     component: Calendar,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/dates/Calendar',
     stylesApiSelectors: [
       'levelsGroup',

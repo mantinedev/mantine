@@ -19,7 +19,6 @@ describe('@mantine/core/UnstyledButton', () => {
     props: defaultProps,
     polymorphic: true,
     children: true,
-    id: true,
     displayName: '@mantine/core/UnstyledButton',
     stylesApiSelectors: ['root'],
   });

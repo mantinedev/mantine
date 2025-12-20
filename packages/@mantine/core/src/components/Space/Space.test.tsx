@@ -8,7 +8,6 @@ describe('@mantine/core/Space', () => {
     component: Space,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/Space',
   });
 });

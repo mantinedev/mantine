@@ -11,7 +11,6 @@ describe('@mantine/core/MenuDivider', () => {
     component: TestContainer,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/MenuDivider',
     stylesApiSelectors: ['divider'],
     stylesApiName: 'Menu',

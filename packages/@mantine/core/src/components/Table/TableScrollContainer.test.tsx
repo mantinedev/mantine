@@ -14,7 +14,6 @@ describe('@mantine/core/TableScrollContainer', () => {
     component: TableScrollContainer,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/TableScrollContainer',
     stylesApiSelectors: ['scrollContainer', 'scrollContainerInner'],
   });

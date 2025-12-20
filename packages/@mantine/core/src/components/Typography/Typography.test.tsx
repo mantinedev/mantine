@@ -8,7 +8,6 @@ describe('@mantine/core/Typography', () => {
     component: Typography,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/Typography',
     stylesApiSelectors: ['root'],
   });

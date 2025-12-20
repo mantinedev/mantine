@@ -21,7 +21,6 @@ describe('@mantine/core/List', () => {
     component: List,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/List',
     stylesApiSelectors: ['root', 'item', 'itemIcon', 'itemLabel', 'itemWrapper'],
   });

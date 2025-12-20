@@ -14,7 +14,6 @@ describe('@mantine/core/PaginationControl', () => {
   tests.itSupportsSystemProps<PaginationControlProps, PaginationControlStylesNames>({
     component: TestContainer,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/core/PaginationControl',
     stylesApiSelectors: ['control'],
     stylesApiName: 'Pagination',

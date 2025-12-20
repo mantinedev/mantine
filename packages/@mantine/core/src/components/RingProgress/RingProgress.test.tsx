@@ -12,7 +12,6 @@ describe('@mantine/core/RingProgress', () => {
   tests.itSupportsSystemProps<RingProgressProps, RingProgressStylesNames>({
     component: RingProgress,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/core/RingProgress',
     stylesApiSelectors: ['root', 'svg', 'curve', 'label'],
   });

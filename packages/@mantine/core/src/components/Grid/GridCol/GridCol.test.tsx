@@ -11,7 +11,6 @@ describe('@mantine/core/GridCol', () => {
     component: TestContainer,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/GridCol',
     stylesApiSelectors: ['col'],
     stylesApiName: 'Grid',

@@ -13,7 +13,6 @@ describe('@mantine/core/Spoiler', () => {
     component: Spoiler,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/Spoiler',
     stylesApiSelectors: ['root', 'content'],
   });

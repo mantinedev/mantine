@@ -10,7 +10,6 @@ describe('@mantine/core/Fieldset', () => {
     component: Fieldset,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/Fieldset',
     stylesApiSelectors: ['root', 'legend'],
   });

@@ -31,7 +31,6 @@ describe('@mantine/core/TagsInput', () => {
   tests.itSupportsSystemProps<TagsInputProps, TagsInputStylesNames>({
     component: TagsInput,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/core/TagsInput',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });

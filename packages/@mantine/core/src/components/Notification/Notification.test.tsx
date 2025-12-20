@@ -16,7 +16,6 @@ describe('@mantine/core/Notification', () => {
     component: Notification,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/Notification',
     stylesApiSelectors: ['root', 'icon', 'body', 'title', 'description', 'closeButton'],
   });

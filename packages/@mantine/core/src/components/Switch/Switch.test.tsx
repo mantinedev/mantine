@@ -17,7 +17,6 @@ describe('@mantine/core/Switch', () => {
   tests.itSupportsSystemProps<SwitchProps, SwitchStylesNames>({
     component: Switch,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/core/Switch',
     stylesApiSelectors: [
       'root',

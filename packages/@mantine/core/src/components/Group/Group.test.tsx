@@ -9,7 +9,6 @@ describe('@mantine/core/Group', () => {
     props: defaultProps,
     polymorphic: true,
     children: true,
-    id: true,
     displayName: '@mantine/core/Group',
     stylesApiSelectors: ['root'],
   });

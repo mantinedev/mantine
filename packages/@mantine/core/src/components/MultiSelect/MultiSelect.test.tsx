@@ -38,7 +38,6 @@ describe('@mantine/core/MultiSelect', () => {
   tests.itSupportsSystemProps<MultiSelectProps, MultiSelectStylesNames>({
     component: MultiSelect,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/core/MultiSelect',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });

@@ -8,7 +8,6 @@ describe('@mantine/core/ProgressRoot', () => {
     component: ProgressRoot,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/ProgressRoot',
     stylesApiSelectors: ['root'],
     stylesApiName: 'Progress',

@@ -10,7 +10,6 @@ describe('@mantine/core/InputLabel', () => {
     component: InputLabel,
     props: defaultProps,
     children: true,
-    id: true,
     stylesApiName: 'InputWrapper',
     displayName: '@mantine/core/InputLabel',
     stylesApiSelectors: ['label', 'required'],

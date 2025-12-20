@@ -9,7 +9,6 @@ describe('@mantine/core/Paper', () => {
     props: defaultProps,
     polymorphic: true,
     children: true,
-    id: true,
     displayName: '@mantine/core/Paper',
     stylesApiSelectors: ['root'],
   });

@@ -8,7 +8,6 @@ describe('@mantine/core/SimpleGrid', () => {
     component: SimpleGrid,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/SimpleGrid',
     stylesApiSelectors: ['root'],
   });

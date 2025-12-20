@@ -9,7 +9,6 @@ describe('@mantine/core/Overlay', () => {
     props: defaultProps,
     polymorphic: true,
     children: true,
-    id: true,
     displayName: '@mantine/core/Overlay',
     stylesApiSelectors: ['root'],
   });

@@ -9,7 +9,6 @@ describe('@mantine/core/Text', () => {
     props: defaultProps,
     polymorphic: true,
     children: true,
-    id: true,
     displayName: '@mantine/core/Text',
     stylesApiSelectors: ['root'],
   });

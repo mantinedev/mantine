@@ -15,7 +15,6 @@ describe('@mantine/core/PopoverDropdown', () => {
     component: TestContainer,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/PopoverDropdown',
     stylesApiName: 'Popover',
     stylesApiSelectors: ['dropdown', 'arrow'],

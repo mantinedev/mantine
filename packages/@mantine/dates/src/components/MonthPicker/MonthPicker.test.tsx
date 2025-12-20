@@ -10,7 +10,6 @@ describe('@mantine/dates/MonthPicker', () => {
   tests.itSupportsSystemProps<MonthPickerProps, MonthPickerStylesNames>({
     component: MonthPicker,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/dates/MonthPicker',
     stylesApiSelectors: [
       'calendarHeader',

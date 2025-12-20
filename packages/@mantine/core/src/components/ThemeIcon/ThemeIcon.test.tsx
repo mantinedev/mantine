@@ -8,7 +8,6 @@ describe('@mantine/core/ThemeIcon', () => {
     component: ThemeIcon,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/ThemeIcon',
     stylesApiSelectors: ['root'],
   });

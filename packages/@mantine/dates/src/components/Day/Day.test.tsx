@@ -25,7 +25,6 @@ describe('@mantine/dates/Day', () => {
   tests.itSupportsSystemProps<DayProps, DayStylesNames>({
     component: Day,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/dates/Day',
     stylesApiSelectors: ['day'],
   });

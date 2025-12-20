@@ -11,7 +11,6 @@ describe('@mantine/core/MenuLabel', () => {
     component: TestContainer,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/MenuLabel',
     stylesApiSelectors: ['label'],
     stylesApiName: 'Menu',

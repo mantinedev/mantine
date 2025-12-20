@@ -43,7 +43,6 @@ describe('@mantine/core/Table', () => {
   tests.itSupportsSystemProps<TableProps, TableStylesNames>({
     component: Table,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/core/Table',
     stylesApiSelectors: ['table', 'caption', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td'],
   });

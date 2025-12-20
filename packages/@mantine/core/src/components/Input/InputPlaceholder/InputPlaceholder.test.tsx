@@ -12,7 +12,6 @@ describe('@mantine/core/InputPlaceholder', () => {
     component: InputPlaceholder,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/InputPlaceholder',
     stylesApiSelectors: ['placeholder'],
   });

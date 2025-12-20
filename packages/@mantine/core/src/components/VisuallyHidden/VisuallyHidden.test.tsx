@@ -8,7 +8,6 @@ describe('@mantine/core/VisuallyHidden', () => {
     component: VisuallyHidden,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/VisuallyHidden',
     stylesApiSelectors: ['root'],
   });

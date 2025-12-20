@@ -19,7 +19,6 @@ describe('@mantine/core/ProgressSection', () => {
     component: TestContainer,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/ProgressSection',
     stylesApiSelectors: ['section'],
     stylesApiName: 'Progress',

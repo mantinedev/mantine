@@ -14,7 +14,6 @@ describe('@mantine/core/MenuDropdown', () => {
     component: TestContainer,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/MenuDropdown',
     stylesApiSelectors: ['dropdown'],
     stylesApiName: 'Menu',

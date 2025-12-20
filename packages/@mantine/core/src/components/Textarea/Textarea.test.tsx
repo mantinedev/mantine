@@ -18,7 +18,6 @@ describe('@mantine/core/Textarea', () => {
   tests.itSupportsSystemProps<TextareaProps, __InputStylesNames>({
     component: Textarea,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/core/Textarea',
     stylesApiSelectors: [...inputStylesApiSelectors],
   });

@@ -8,7 +8,6 @@ describe('@mantine/core/Mark', () => {
     component: Mark,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/Mark',
     stylesApiSelectors: ['root'],
   });

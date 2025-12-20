@@ -8,7 +8,6 @@ describe('@mantine/core/PillGroup', () => {
     component: PillGroup,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/PillGroup',
     stylesApiSelectors: ['group'],
   });

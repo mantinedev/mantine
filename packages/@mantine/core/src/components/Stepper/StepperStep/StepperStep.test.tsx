@@ -15,7 +15,6 @@ describe('@mantine/core/StepperStep', () => {
     component: TestContainer,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/StepperStep',
     stylesApiSelectors: [
       'step',

@@ -8,7 +8,6 @@ describe('@mantine/core/Indicator', () => {
     component: Indicator,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/Indicator',
     stylesApiSelectors: ['root', 'indicator'],
   });

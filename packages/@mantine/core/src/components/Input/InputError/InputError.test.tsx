@@ -8,7 +8,6 @@ describe('@mantine/core/InputError', () => {
     component: InputError,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/InputError',
     stylesApiName: 'InputWrapper',
     stylesApiSelectors: ['error'],

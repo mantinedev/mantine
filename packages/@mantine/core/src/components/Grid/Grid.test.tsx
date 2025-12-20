@@ -11,7 +11,6 @@ describe('@mantine/core/Grid', () => {
     component: Grid,
     props: defaultProps,
     children: true,
-    id: true,
     displayName: '@mantine/core/Grid',
     stylesApiSelectors: ['root', 'inner', 'col'],
   });

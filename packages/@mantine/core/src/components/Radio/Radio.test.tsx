@@ -14,7 +14,6 @@ describe('@mantine/core/Radio', () => {
   tests.itSupportsSystemProps<RadioProps, RadioStylesNames>({
     component: Radio,
     props: defaultProps,
-    id: true,
     displayName: '@mantine/core/Radio',
     stylesApiSelectors: [
       'root',

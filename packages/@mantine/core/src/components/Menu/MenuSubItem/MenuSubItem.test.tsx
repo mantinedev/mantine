@@ -15,7 +15,6 @@ describe('@mantine/core/MenuSubItem', () => {
     props: defaultProps,
     polymorphic: true,
     children: true,
-    id: true,
     displayName: '@mantine/core/MenuSubItem',
     stylesApiSelectors: ['item', 'itemSection', 'itemLabel'],
     stylesApiName: 'Menu',
