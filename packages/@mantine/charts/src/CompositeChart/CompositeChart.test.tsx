@@ -1,4 +1,4 @@
-import { patchConsoleWarn, tests } from '@mantine-tests/core';
+import { autoPatchWarn, tests } from '@mantine-tests/core';
 import { CompositeChart, CompositeChartProps, CompositeChartStylesNames } from './CompositeChart';
 
 const defaultProps: CompositeChartProps = {
@@ -11,18 +11,8 @@ const defaultProps: CompositeChartProps = {
   style: { width: 200, height: 200 },
 };
 
-function pt() {
-  beforeAll(() => {
-    patchConsoleWarn();
-  });
-
-  afterAll(() => {
-    patchConsoleWarn.release();
-  });
-}
-
 describe('@mantine/charts/CompositeChart', () => {
-  pt();
+  autoPatchWarn();
 
   tests.itSupportsSystemProps<CompositeChartProps, CompositeChartStylesNames>({
     component: CompositeChart,

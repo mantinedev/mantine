@@ -1,4 +1,4 @@
-import { patchConsoleWarn, tests } from '@mantine-tests/core';
+import { autoPatchWarn, tests } from '@mantine-tests/core';
 import { BarChart, BarChartProps, BarChartStylesNames } from './BarChart';
 
 const defaultProps: BarChartProps = {
@@ -12,13 +12,7 @@ const defaultProps: BarChartProps = {
 };
 
 describe('@mantine/charts/BarChart', () => {
-  beforeAll(() => {
-    patchConsoleWarn();
-  });
-
-  afterAll(() => {
-    patchConsoleWarn.release();
-  });
+  autoPatchWarn();
 
   tests.itSupportsSystemProps<BarChartProps, BarChartStylesNames>({
     component: BarChart,

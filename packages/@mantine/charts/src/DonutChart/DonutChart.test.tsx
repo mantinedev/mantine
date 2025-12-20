@@ -1,4 +1,4 @@
-import { patchConsoleWarn, tests } from '@mantine-tests/core';
+import { autoPatchWarn, tests } from '@mantine-tests/core';
 import { DonutChart, DonutChartProps, DonutChartStylesNames } from './DonutChart';
 
 const data = [
@@ -13,24 +13,11 @@ const defaultProps: DonutChartProps = {
 };
 
 describe('@mantine/charts/DonutChart', () => {
-  beforeAll(() => {
-    patchConsoleWarn();
-  });
-
-  afterAll(() => {
-    patchConsoleWarn.release();
-  });
+  autoPatchWarn();
 
   tests.itSupportsSystemProps<DonutChartProps, DonutChartStylesNames>({
     component: DonutChart,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/charts/DonutChart',
     stylesApiSelectors: ['root'],

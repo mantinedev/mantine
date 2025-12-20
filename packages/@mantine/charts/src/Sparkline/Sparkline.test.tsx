@@ -1,4 +1,4 @@
-import { patchConsoleWarn, tests } from '@mantine-tests/core';
+import { autoPatchWarn, tests } from '@mantine-tests/core';
 import { Sparkline, SparklineProps, SparklineStylesNames } from './Sparkline';
 
 const defaultProps: SparklineProps = {
@@ -6,24 +6,11 @@ const defaultProps: SparklineProps = {
 };
 
 describe('@mantine/core/Sparkline', () => {
-  beforeAll(() => {
-    patchConsoleWarn();
-  });
-
-  afterAll(() => {
-    patchConsoleWarn.release();
-  });
+  autoPatchWarn();
 
   tests.itSupportsSystemProps<SparklineProps, SparklineStylesNames>({
     component: Sparkline,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/charts/Sparkline',
     stylesApiSelectors: ['root'],

@@ -1,4 +1,4 @@
-import { patchConsoleWarn, tests } from '@mantine-tests/core';
+import { autoPatchWarn, tests } from '@mantine-tests/core';
 import { RadarChart, RadarChartProps, RadarChartStylesNames } from './RadarChart';
 
 const defaultProps: RadarChartProps = {
@@ -8,25 +8,11 @@ const defaultProps: RadarChartProps = {
 };
 
 describe('@mantine/charts/RadarChart', () => {
-  beforeAll(() => {
-    patchConsoleWarn();
-  });
-
-  afterAll(() => {
-    patchConsoleWarn.release();
-  });
+  autoPatchWarn();
 
   tests.itSupportsSystemProps<RadarChartProps, RadarChartStylesNames>({
     component: RadarChart,
     props: defaultProps,
-    mod: true,
-    polymorphic: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/charts/RadarChart',
     stylesApiSelectors: ['root'],
