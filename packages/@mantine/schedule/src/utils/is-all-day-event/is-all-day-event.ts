@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
-import { DateStringValue, ScheduleEventData } from '../../types';
+import { AnyDateValue, ScheduleEventData } from '../../types';
 
 interface IsAllDayEventInput {
   event: ScheduleEventData;
-  date: Date | DateStringValue | dayjs.Dayjs;
+  date: AnyDateValue;
 }
 
 export function isAllDayEvent({ event, date }: IsAllDayEventInput) {

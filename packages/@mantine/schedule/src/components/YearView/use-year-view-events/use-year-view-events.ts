@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
-import { DateStringValue, ScheduleEventData } from '../../../types';
+import { AnyDateValue, DateStringValue, ScheduleEventData } from '../../../types';
 import { isMultidayEvent, validateEvent } from '../../../utils';
 
 export type GroupedEvents = Record<DateStringValue, ScheduleEventData[]>;
@@ -33,7 +33,7 @@ function groupEventByDate(event: ScheduleEventData, groupedEvents: GroupedEvents
 }
 
 interface UseYearViewEventsInput {
-  date: Date | DateStringValue;
+  date: AnyDateValue;
   events: ScheduleEventData[] | undefined;
 }
 

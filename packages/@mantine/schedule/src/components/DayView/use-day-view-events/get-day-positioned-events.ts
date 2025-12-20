@@ -1,4 +1,4 @@
-import { DateStringValue, DayPositionedEventData, ScheduleEventData } from '../../../types';
+import { AnyDateValue, DayPositionedEventData, ScheduleEventData } from '../../../types';
 import { getDayPosition } from '../../../utils/get-day-position/get-day-position';
 import { isAllDayEvent } from '../../../utils/is-all-day-event/is-all-day-event';
 import { isEventsOverlap } from '../../../utils/is-events-overlap/is-events-overlap';
@@ -9,7 +9,7 @@ interface ColumnHasConflictOptions {
   columnIndex: number;
   event: ScheduleEventData;
   allDay: boolean;
-  date: Date | DateStringValue;
+  date: AnyDateValue;
 }
 
 function columnHasConflict({
@@ -38,7 +38,7 @@ function columnHasConflict({
 
 interface GetDayPositionedEventsInput {
   /** Date at which events are positioned, used to check if events are all-day */
-  date: Date | DateStringValue;
+  date: AnyDateValue;
 
   /** List of all events that belong to the given date, extra events must be filtered out before passing to the function */
   events: ScheduleEventData[];

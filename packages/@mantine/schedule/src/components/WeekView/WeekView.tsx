@@ -45,7 +45,7 @@ import {
   ScheduleHeader,
 } from '../ScheduleHeader/ScheduleHeader';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
-import { useWeekViewEvents } from './use-week-view-events/use-week-view-events';
+import { getWeekViewEvents } from './use-week-view-events/get-week-view-events';
 import { WeekViewDay } from './WeekViewDay';
 import classes from './WeekView.module.css';
 
@@ -265,7 +265,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const ctx = useScheduleContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
 
-  const weekEvents = useWeekViewEvents({
+  const weekEvents = getWeekViewEvents({
     date,
     events,
     startTime,

@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import {
+  AnyDateValue,
   DateStringValue,
   DayOfWeek,
   ScheduleEventData,
@@ -13,9 +14,9 @@ import {
   sortEvents,
 } from '../../../utils';
 
-interface GetWeekPositionedEventsInput {
+export interface GetWeekPositionedEventsInput {
   /** Date (week start) at which events are positioned, used to check if events are all-day */
-  date: Date | DateStringValue;
+  date: AnyDateValue;
 
   /** List of all events that belong to the given week, extra events must be filtered out before passing to the function */
   events: ScheduleEventData[];

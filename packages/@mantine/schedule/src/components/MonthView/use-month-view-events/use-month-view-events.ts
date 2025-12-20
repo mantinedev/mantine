@@ -1,12 +1,12 @@
 import dayjs from 'dayjs';
 import { useMemo } from 'react';
-import { DateStringValue, DayOfWeek, ScheduleEventData } from '../../../types';
+import { AnyDateValue, DayOfWeek, ScheduleEventData } from '../../../types';
 import { getMonthRange, validateEvent } from '../../../utils';
 import { getMonthPositionedEvents, GroupedMonthEvents } from './get-month-positioned-events';
 
 interface UseMonthViewEventsInput {
   /** Date (month start) at which events are positioned */
-  date: Date | DateStringValue;
+  date: AnyDateValue;
 
   /** List of all events that belong to the given month, extra events must be filtered out before passing to the function */
   events: ScheduleEventData[] | undefined;

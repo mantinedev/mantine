@@ -1,11 +1,11 @@
 import dayjs from 'dayjs';
-import { DateStringValue, DayOfWeek } from '../../types';
+import { AnyDateValue, DateStringValue, DayOfWeek } from '../../types';
 import { getStartOfWeek } from '../get-start-of-week/get-start-of-week';
 import { toDateString } from '../to-date-string/to-date-string';
 
 export interface GetWeekDaysInput {
   /** Week to generate days for */
-  week: Date | DateStringValue;
+  week: AnyDateValue;
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];

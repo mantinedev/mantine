@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import {
+  AnyDateValue,
   DateStringValue,
   DayOfWeek,
   MonthPositionedEventData,
@@ -9,7 +10,7 @@ import { getStartOfWeek } from '../../../utils';
 
 interface GetMonthPositionedEventsInput {
   /** Date (month start) at which events are positioned */
-  date: Date | DateStringValue;
+  date: AnyDateValue;
 
   /** List of all events that belong to the given month, extra events must be filtered out before passing to the function */
   events: ScheduleEventData[];
