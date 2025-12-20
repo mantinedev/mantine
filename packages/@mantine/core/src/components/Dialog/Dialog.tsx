@@ -28,13 +28,13 @@ export interface DialogProps
     PaperBaseProps,
     StylesApiProps<DialogFactory>,
     ElementProps<'div'> {
-  /** If set, dialog is not unmounted from the DOM when hidden, `display: none` styles are applied instead */
+  /** If set, the component uses `display: none` to hide the root element instead of removing the DOM node @default `false` */
   keepMounted?: boolean;
 
-  /** If set, the close button is displayed @default `true` */
+  /** If set, displays the close button @default `true` */
   withCloseButton?: boolean;
 
-  /** Called when the close button is clicked */
+  /** Called on close button click */
   onClose?: () => void;
 
   /** Dialog content */
@@ -60,7 +60,7 @@ export type DialogFactory = Factory<{
 const defaultProps = {
   shadow: 'md',
   p: 'md',
-  withBorder: false,
+  withBorder: true,
   transitionProps: { transition: 'pop-top-right', duration: 200 },
   position: {
     bottom: 30,
