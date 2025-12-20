@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import { useMemo } from 'react';
 import { AnyDateValue, DayOfWeek, ScheduleEventData } from '../../../types';
 import { getMonthRange, validateEvent } from '../../../utils';
 import { getMonthPositionedEvents, GroupedMonthEvents } from './get-month-positioned-events';
@@ -21,7 +20,7 @@ interface UseMonthViewEventsInput {
   consistentWeeks?: boolean;
 }
 
-export function filterMonthViewEvents({
+export function getMonthViewEvents({
   date,
   events,
   firstDayOfWeek = 1,
@@ -35,12 +34,7 @@ export function filterMonthViewEvents({
   const ids = new Set<string | number>();
   const filteredEvents: ScheduleEventData[] = [];
 
-  const range = getMonthRange({
-    month: date,
-    withOutsideDays,
-    consistentWeeks,
-    firstDayOfWeek,
-  });
+  const range = getMonthRange({ month: date, withOutsideDays, consistentWeeks, firstDayOfWeek });
 
   for (const event of events) {
     if (
@@ -63,24 +57,4 @@ export function filterMonthViewEvents({
     firstDayOfWeek,
     range,
   });
-}
-
-export function useMonthViewEvents({
-  date,
-  events,
-  firstDayOfWeek = 1,
-  withOutsideDays,
-  consistentWeeks,
-}: UseMonthViewEventsInput): GroupedMonthEvents {
-  return useMemo(
-    () =>
-      filterMonthViewEvents({
-        date,
-        events,
-        firstDayOfWeek,
-        withOutsideDays,
-        consistentWeeks,
-      }),
-    [date, events, firstDayOfWeek, withOutsideDays, consistentWeeks]
-  );
 }

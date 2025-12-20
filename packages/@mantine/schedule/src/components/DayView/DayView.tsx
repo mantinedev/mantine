@@ -45,7 +45,7 @@ import {
   ScheduleHeader,
 } from '../ScheduleHeader/ScheduleHeader';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
-import { getDayViewEvents } from './use-day-view-events/get-day-view-events';
+import { getDayViewEvents } from './get-day-view-events/get-day-view-events';
 import classes from './DayView.module.css';
 
 export type DayViewStylesNames =

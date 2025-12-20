@@ -38,7 +38,7 @@ import {
   ScheduleHeader,
 } from '../ScheduleHeader/ScheduleHeader';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
-import { useMonthViewEvents } from './use-month-view-events/use-month-view-events';
+import { getMonthViewEvents } from './get-month-view-events/get-month-view-events';
 import classes from './MonthView.module.css';
 
 export type MonthViewStylesNames =
@@ -229,7 +229,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
   const ctx = useScheduleContext();
 
-  const monthEvents = useMonthViewEvents({
+  const monthEvents = getMonthViewEvents({
     date,
     events,
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
