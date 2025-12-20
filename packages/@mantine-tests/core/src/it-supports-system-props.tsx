@@ -53,9 +53,9 @@ interface Options<Props extends Record<string, any>, StylesApiSelectors extends 
 
 const defaultOptions: Partial<Options<Record<string, any>, string>> = {
   mod: true,
+  styleProps: true,
   classes: true,
   withProps: true,
-  styleProps: true,
   extend: true,
   variant: true,
   id: true,
@@ -81,7 +81,8 @@ export function itSupportsSystemProps<
     itSupportsLightDarkHidden(options);
     itSupportsStyle(options);
     itSupportsOthers(options);
-    options.refType && itSupportsRef({ ...options, refType: options.refType });
+    options.refType !== null &&
+      itSupportsRef({ ...options, refType: options.refType || HTMLElement });
     options.polymorphic &&
       itIsPolymorphic({ ...options, selector: options.polymorphicSelector || options.selector });
     options.children && itRendersChildren(options);

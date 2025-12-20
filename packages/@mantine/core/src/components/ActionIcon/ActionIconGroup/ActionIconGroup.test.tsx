@@ -11,16 +11,7 @@ describe('@mantine/core/ActionIconGroup', () => {
   tests.itSupportsSystemProps<ActionIconGroupProps, ActionIconGroupStylesNames>({
     component: ActionIconGroup,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
     children: true,
-    extend: true,
-    withProps: true,
-    size: true,
-    variant: true,
-    classes: true,
-    id: true,
-    refType: HTMLDivElement,
     displayName: '@mantine/core/ActionIconGroup',
     stylesApiSelectors: ['group'],
   });

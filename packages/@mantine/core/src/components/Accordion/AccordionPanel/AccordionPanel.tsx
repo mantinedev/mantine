@@ -45,13 +45,13 @@ export const AccordionPanel = factory<AccordionPanelFactory>((props) => {
   return (
     <Collapse
       {...ctx.getStyles('panel', { className, classNames, style, styles })}
-      {...others}
       expanded={ctx.isItemActive(value)}
       transitionDuration={ctx.transitionDuration ?? 200}
       role="region"
       id={ctx.getRegionId(value)}
       aria-labelledby={ctx.getControlId(value)}
       keepMounted={keepMounted ?? ctx.keepMounted}
+      {...others}
     >
       <div {...ctx.getStyles('content', { classNames, styles })}>{children}</div>
     </Collapse>
