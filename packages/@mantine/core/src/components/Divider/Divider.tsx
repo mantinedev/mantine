@@ -23,19 +23,19 @@ export type DividerCssVariables = {
 
 export interface DividerProps
   extends BoxProps, StylesApiProps<DividerFactory>, ElementProps<'div'> {
-  /** Key of `theme.colors` or any valid CSS color value, by default value depends on color scheme */
+  /** Key of `theme.colors` or any valid CSS color value */
   color?: MantineColor;
 
   /** Controls width/height (depends on orientation) @default `'xs'` */
   size?: MantineSize | number | (string & {});
 
-  /** Divider label, visible only when `orientation` is `horizontal` */
+  /** Divider label, visible only with `orientation="horizontal"` */
   label?: React.ReactNode;
 
-  /** Controls label position @default `'center'` */
+  /** Label position @default `'center'` */
   labelPosition?: 'left' | 'center' | 'right';
 
-  /** Controls orientation @default `'horizontal'` */
+  /** Divider orientation @default `'horizontal'` */
   orientation?: 'horizontal' | 'vertical';
 }
 
@@ -93,10 +93,10 @@ export const Divider = factory<DividerFactory>((_props) => {
 
   return (
     <Box
-      mod={[{ orientation, 'with-label': !!label }, mod]}
+      mod={[{ orientation, withLabel: !!label }, mod]}
+      role="separator"
       {...getStyles('root')}
       {...others}
-      role="separator"
     >
       {label && (
         <Box component="span" mod={{ position: labelPosition }} {...getStyles('label')}>
