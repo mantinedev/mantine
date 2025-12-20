@@ -45,7 +45,7 @@ import {
   ScheduleHeader,
 } from '../ScheduleHeader/ScheduleHeader';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
-import { useDayViewEvents } from './use-day-view-events/use-day-view-events';
+import { getDayViewEvents } from './use-day-view-events/get-day-view-events';
 import classes from './DayView.module.css';
 
 export type DayViewStylesNames =
@@ -240,7 +240,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const ctx = useScheduleContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
 
-  const eventsData = useDayViewEvents({ events, date, startTime, endTime });
+  const eventsData = getDayViewEvents({ events, date, startTime, endTime });
 
   const eventsNodes = eventsData.regularEvents.map((event) => (
     <ScheduleEvent

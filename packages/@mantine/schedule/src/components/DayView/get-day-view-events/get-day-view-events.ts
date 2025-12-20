@@ -1,17 +1,16 @@
 import dayjs from 'dayjs';
-import { useMemo } from 'react';
 import { AnyDateValue, DayPositionedEventData, ScheduleEventData } from '../../../types';
 import { isEventInTimeRange, validateEvent } from '../../../utils';
 import { getDayPositionedEvents } from './get-day-positioned-events';
 
-interface UseDayViewEventsInput {
+interface GetDayViewEventsInput {
   events: ScheduleEventData[] | undefined;
   date: AnyDateValue;
-  startTime: string | undefined;
-  endTime: string | undefined;
+  startTime?: string;
+  endTime?: string;
 }
 
-export function filterDayViewEvents({ events, date, startTime, endTime }: UseDayViewEventsInput) {
+export function getDayViewEvents({ events, date, startTime, endTime }: GetDayViewEventsInput) {
   if (events === undefined) {
     return { allDayEvents: [], regularEvents: [] };
   }
@@ -54,10 +53,4 @@ export function filterDayViewEvents({ events, date, startTime, endTime }: UseDay
   }
 
   return { allDayEvents, regularEvents };
-}
-
-export function useDayViewEvents({ events, date, startTime, endTime }: UseDayViewEventsInput) {
-  return useMemo(() => {
-    return filterDayViewEvents({ events, date, startTime, endTime });
-  }, [events, date, startTime, endTime]);
 }
