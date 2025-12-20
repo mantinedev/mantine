@@ -51,10 +51,23 @@ interface Options<Props extends Record<string, any>, StylesApiSelectors extends 
   attributes?: boolean;
 }
 
+const defaultOptions: Partial<Options<Record<string, any>, string>> = {
+  mod: true,
+  classes: true,
+  withProps: true,
+  styleProps: true,
+  extend: true,
+  variant: true,
+  id: true,
+  size: true,
+  attributes: true,
+};
+
 export function itSupportsSystemProps<
   Props extends Record<string, any>,
   StylesApiSelectors extends string = string,
->(options: Options<Props, StylesApiSelectors>) {
+>(_options: Options<Props, StylesApiSelectors>) {
+  const options = { ...defaultOptions, ..._options } as Options<Props, StylesApiSelectors>;
   describe('supports system properties', () => {
     const splittedDisplayName = options.displayName ? options.displayName.split('/') : [];
     const predictedProviderName = options.displayName

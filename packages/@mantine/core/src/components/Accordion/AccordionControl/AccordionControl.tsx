@@ -61,8 +61,7 @@ export const AccordionControl = factory<AccordionControlFactory>((props) => {
   const Heading = `h${ctx.order!}` as const;
 
   const content = (
-    <UnstyledButton<'button'>
-      {...others}
+    <UnstyledButton
       {...ctx.getStyles('control', { className, classNames, style, styles, variant: ctx.variant })}
       unstyled={ctx.unstyled}
       mod={[
@@ -87,6 +86,7 @@ export const AccordionControl = factory<AccordionControlFactory>((props) => {
         orientation: 'vertical',
         onKeyDown,
       })}
+      {...others}
     >
       <Box
         component="span"

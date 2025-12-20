@@ -17,15 +17,6 @@ describe('@mantine/carousel/Carousel', () => {
   tests.itSupportsSystemProps<CarouselProps, CarouselStylesNames>({
     component: Carousel,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    children: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
-    id: true,
     refType: HTMLDivElement,
     displayName: '@mantine/carousel/Carousel',
     stylesApiSelectors: [

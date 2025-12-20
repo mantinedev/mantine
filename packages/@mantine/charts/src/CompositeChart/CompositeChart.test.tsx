@@ -11,7 +11,7 @@ const defaultProps: CompositeChartProps = {
   style: { width: 200, height: 200 },
 };
 
-describe('@mantine/charts/CompositeChart', () => {
+function pt() {
   beforeAll(() => {
     patchConsoleWarn();
   });
@@ -19,17 +19,14 @@ describe('@mantine/charts/CompositeChart', () => {
   afterAll(() => {
     patchConsoleWarn.release();
   });
+}
+
+describe('@mantine/charts/CompositeChart', () => {
+  pt();
 
   tests.itSupportsSystemProps<CompositeChartProps, CompositeChartStylesNames>({
     component: CompositeChart,
     props: defaultProps,
-    mod: true,
-    styleProps: true,
-    extend: true,
-    withProps: true,
-    variant: true,
-    size: true,
-    classes: true,
     refType: HTMLDivElement,
     displayName: '@mantine/charts/CompositeChart',
     stylesApiSelectors: ['root'],
