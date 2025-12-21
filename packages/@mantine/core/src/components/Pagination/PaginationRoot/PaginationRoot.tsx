@@ -39,7 +39,7 @@ export interface PaginationRootProps
     StylesApiProps<PaginationRootFactory>,
     ElementProps<'div', 'value' | 'onChange'> {
   /** `height` and `min-width` of controls @default `'md'` */
-  size?: MantineSize | (string & {}) | number;
+  size?: MantineSize | `input-${MantineSize}` | (string & {}) | number;
 
   /** Total number of pages, must be an integer */
   total: number;

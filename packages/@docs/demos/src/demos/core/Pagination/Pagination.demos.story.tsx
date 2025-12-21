@@ -52,7 +52,13 @@ export const Demo_autoContrast = {
   name: '⭐ Demo: autoContrast',
   render: renderDemo(demos.autoContrast),
 };
+
 export const Demo_withPages = {
   name: '⭐ Demo: withPages',
   render: renderDemo(demos.withPages),
+};
+
+export const Demo_size = {
+  name: '⭐ Demo: size',
+  render: renderDemo(demos.size),
 };
