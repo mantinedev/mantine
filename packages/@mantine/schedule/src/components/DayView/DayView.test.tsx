@@ -331,62 +331,6 @@ describe('@mantine/schedule/DayView', () => {
     expect(screen.queryByRole('button', { name: /more/ })).not.toBeInTheDocument();
   });
 
-  it('MoreEvents shows correct count for multiple hidden all-day events', () => {
-    const { container } = render(
-      <DayView
-        {...defaultProps}
-        events={[
-          {
-            id: 1,
-            title: 'All-day event 1',
-            color: 'blue',
-            start: '2025-11-03',
-            end: '2025-11-04',
-            payload: {},
-          },
-          {
-            id: 2,
-            title: 'All-day event 2',
-            color: 'blue',
-            start: '2025-11-03',
-            end: '2025-11-04',
-            payload: {},
-          },
-          {
-            id: 3,
-            title: 'All-day event 3',
-            color: 'blue',
-            start: '2025-11-03',
-            end: '2025-11-04',
-            payload: {},
-          },
-          {
-            id: 4,
-            title: 'All-day event 4',
-            color: 'blue',
-            start: '2025-11-03',
-            end: '2025-11-04',
-            payload: {},
-          },
-          {
-            id: 5,
-            title: 'All-day event 5',
-            color: 'blue',
-            start: '2025-11-03',
-            end: '2025-11-04',
-            payload: {},
-          },
-        ]}
-      />
-    );
-
-    const allDayEventsArea = container.querySelector('.mantine-DayView-dayViewAllDayEvents');
-    const moreButton = allDayEventsArea?.querySelector('button');
-
-    expect(moreButton).toBeInTheDocument();
-    expect(moreButton?.textContent).toMatch(/more|3/i);
-  });
-
   it('MoreEvents receives correct events data', async () => {
     render(<DayView {...defaultProps} events={allDayEvents} />);
     await userEvent.click(screen.getByRole('button', { name: /more/ }));

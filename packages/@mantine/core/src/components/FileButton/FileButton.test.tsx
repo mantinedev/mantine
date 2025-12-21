@@ -15,6 +15,7 @@ describe('@mantine/core/FileButton', () => {
   tests.itSupportsRef({
     component: FileButton,
     props: defaultProps,
+    refType: HTMLInputElement,
   });
 
   it('sets given input name', () => {

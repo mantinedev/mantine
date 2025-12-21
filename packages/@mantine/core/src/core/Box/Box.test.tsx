@@ -9,6 +9,9 @@ describe('@mantine/core/Box', () => {
     props: defaultProps,
     polymorphic: true,
     children: true,
+    withProps: false,
+    extend: false,
+    classes: false,
     displayName: '@mantine/core/Box',
     providerName: null,
   });

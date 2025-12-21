@@ -372,7 +372,7 @@ export function Popover(_props: PopoverProps) {
         onDismiss,
         onClose: popover.onClose,
         onToggle: popover.onToggle,
-        getTargetId: () => `${uid}-target`,
+        getTargetId: () => uid,
         getDropdownId: () => `${uid}-dropdown`,
         withRoles,
         targetProps: others,

@@ -8,6 +8,7 @@ describe('@mantine/core/InputClearButton', () => {
     component: InputClearButton,
     props: defaultProps,
     polymorphic: true,
+    classes: false,
     displayName: '@mantine/core/InputClearButton',
     stylesApiSelectors: ['root'],
   });

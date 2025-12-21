@@ -123,6 +123,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
     getMonthControlProps,
     getYearControlProps,
     withMonths,
+    id,
     ...others
   } = props;
 
@@ -227,6 +228,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
       width={withMonths ? undefined : 'target'}
       opened={opened}
       onChange={handlers.set}
+      id={id}
       {...popoverProps}
     >
       <Popover.Target>

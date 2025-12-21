@@ -327,7 +327,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props) => 
   }, [onOverflowChange, overflowing]);
 
   return (
-    <Box {...others} style={[{ display: 'flex', overflow: 'hidden' }, style]}>
+    <Box {...others} variant={variant} style={[{ display: 'flex', overflow: 'hidden' }, style]}>
       <Box
         style={{
           display: 'flex',

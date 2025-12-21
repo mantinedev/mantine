@@ -17,7 +17,7 @@ export interface PillsInputProps
 
 export type PillsInputFactory = Factory<{
   props: PillsInputProps;
-  ref: HTMLInputElement;
+  ref: HTMLDivElement;
   stylesNames: __InputStylesNames;
   staticComponents: {
     Field: typeof PillsInputField;
@@ -78,4 +78,5 @@ export const PillsInput = factory<PillsInputFactory>((_props) => {
 });
 
 PillsInput.displayName = '@mantine/core/PillsInput';
+PillsInput.classes = InputBase.classes;
 PillsInput.Field = PillsInputField;

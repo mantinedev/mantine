@@ -9,6 +9,7 @@ describe('@mantine/core/FloatingWindow', () => {
     props: defaultProps,
     polymorphic: true,
     children: true,
+    styleProps: false, // some style props are overridden internally
     displayName: '@mantine/core/FloatingWindow',
     stylesApiSelectors: ['root'],
   });

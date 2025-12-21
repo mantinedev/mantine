@@ -30,6 +30,7 @@ export function Usage() {
         scrollbars="y"
         onBottomReached={() => console.log('bottom')}
         onTopReached={() => console.log('top')}
+        variant="test-variant"
       >
         <div style={{ width: 600 }}>{content}</div>
       </ScrollArea>

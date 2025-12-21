@@ -139,6 +139,7 @@ export function ModalBase({
         >
           <Box
             {...others}
+            id={_id}
             __vars={{
               ...__vars,
               '--mb-z-index': (zIndex || getDefaultZIndex('modal')).toString(),

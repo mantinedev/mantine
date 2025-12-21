@@ -39,7 +39,6 @@ export const TabsList = factory<TabsListFactory>((_props) => {
 
   return (
     <Box
-      {...others}
       {...ctx.getStyles('list', {
         className,
         style,
@@ -61,6 +60,7 @@ export const TabsList = factory<TabsListFactory>((_props) => {
       ]}
       aria-orientation={ctx.orientation}
       __vars={{ '--tabs-justify': justify }}
+      {...others}
     >
       {children}
     </Box>

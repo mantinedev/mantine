@@ -83,6 +83,7 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
     children,
     modalTitle,
     renderEventBody,
+    id,
     ...others
   } = props;
 
@@ -150,6 +151,7 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
         radius={radius}
         transitionProps={{ transition: 'pop', duration: 120 }}
         offset={-46}
+        id={id}
         {...popoverProps}
         onChange={(_opened) => {
           if (!_opened) {

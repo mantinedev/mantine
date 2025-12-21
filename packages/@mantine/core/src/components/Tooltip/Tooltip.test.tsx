@@ -17,6 +17,7 @@ describe('@mantine/core/Tooltip', () => {
     component: Tooltip,
     props: defaultProps,
     attributes: false,
+    id: false,
     selector: '[role="tooltip"]',
     // Gets ref from children instead of tooltip to allow nested tooltips/popovers to work
     displayName: '@mantine/core/Tooltip',

@@ -10,7 +10,7 @@ export function ModalBaseBody({ className, ...others }: ModalBaseBodyProps) {
   const bodyId = useModalBodyId();
   const ctx = useModalBaseContext();
   return (
-    <Box {...others} id={bodyId} className={cx({ [classes.body]: !ctx.unstyled }, className)} />
+    <Box id={bodyId} className={cx({ [classes.body]: !ctx.unstyled }, className)} {...others} />
   );
 }
 
