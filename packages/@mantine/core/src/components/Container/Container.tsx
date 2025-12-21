@@ -37,6 +37,10 @@ export type ContainerFactory = Factory<{
   vars: ContainerCssVariables;
 }>;
 
+const defaultProps = {
+  strategy: 'block',
+} satisfies Partial<ContainerProps>;
+
 const varsResolver = createVarsResolver<ContainerFactory>((_, { size, fluid }) => ({
   root: {
     '--container-size': fluid ? undefined : getSize(size, 'container-size'),
@@ -44,7 +48,7 @@ const varsResolver = createVarsResolver<ContainerFactory>((_, { size, fluid }) =
 }));
 
 export const Container = factory<ContainerFactory>((_props) => {
-  const props = useProps('Container', null, _props);
+  const props = useProps('Container', defaultProps, _props);
   const {
     classNames,
     className,
@@ -73,9 +77,7 @@ export const Container = factory<ContainerFactory>((_props) => {
     varsResolver,
   });
 
-  return (
-    <Box mod={[{ fluid, strategy: strategy || 'block' }, mod]} {...getStyles('root')} {...others} />
-  );
+  return <Box mod={[{ fluid, strategy }, mod]} {...getStyles('root')} {...others} />;
 });
 
 Container.classes = classes;
