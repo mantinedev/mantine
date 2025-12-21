@@ -16,6 +16,7 @@ describe('@mantine/core/InputWrapper', () => {
     component: InputWrapper,
     props: defaultProps,
     children: true,
+    id: false,
     displayName: '@mantine/core/InputWrapper',
     stylesApiSelectors: ['root', 'description', 'error', 'label', 'required'],
   });
