@@ -13,20 +13,32 @@ import {
 } from '../../core';
 import { __PopoverProps, Popover } from '../Popover';
 import { ComboboxProvider } from './Combobox.context';
-import { ComboboxChevron } from './ComboboxChevron/ComboboxChevron';
-import { ComboboxClearButton } from './ComboboxClearButton/ComboboxClearButton';
-import { ComboboxDropdown } from './ComboboxDropdown/ComboboxDropdown';
-import { ComboboxDropdownTarget } from './ComboboxDropdownTarget/ComboboxDropdownTarget';
-import { ComboboxEmpty } from './ComboboxEmpty/ComboboxEmpty';
-import { ComboboxEventsTarget } from './ComboboxEventsTarget/ComboboxEventsTarget';
-import { ComboboxFooter } from './ComboboxFooter/ComboboxFooter';
-import { ComboboxGroup } from './ComboboxGroup/ComboboxGroup';
-import { ComboboxHeader } from './ComboboxHeader/ComboboxHeader';
-import { ComboboxHiddenInput } from './ComboboxHiddenInput/ComboboxHiddenInput';
+import { ComboboxChevron, ComboboxChevronProps } from './ComboboxChevron/ComboboxChevron';
+import {
+  ComboboxClearButton,
+  ComboboxClearButtonProps,
+} from './ComboboxClearButton/ComboboxClearButton';
+import { ComboboxDropdown, ComboboxDropdownProps } from './ComboboxDropdown/ComboboxDropdown';
+import {
+  ComboboxDropdownTarget,
+  ComboboxDropdownTargetProps,
+} from './ComboboxDropdownTarget/ComboboxDropdownTarget';
+import { ComboboxEmpty, ComboboxEmptyProps } from './ComboboxEmpty/ComboboxEmpty';
+import {
+  ComboboxEventsTarget,
+  ComboboxEventsTargetProps,
+} from './ComboboxEventsTarget/ComboboxEventsTarget';
+import { ComboboxFooter, ComboboxFooterProps } from './ComboboxFooter/ComboboxFooter';
+import { ComboboxGroup, ComboboxGroupProps } from './ComboboxGroup/ComboboxGroup';
+import { ComboboxHeader, ComboboxHeaderProps } from './ComboboxHeader/ComboboxHeader';
+import {
+  ComboboxHiddenInput,
+  ComboboxHiddenInputProps,
+} from './ComboboxHiddenInput/ComboboxHiddenInput';
 import { ComboboxOption, ComboboxOptionProps } from './ComboboxOption/ComboboxOption';
-import { ComboboxOptions } from './ComboboxOptions/ComboboxOptions';
-import { ComboboxSearch } from './ComboboxSearch/ComboboxSearch';
-import { ComboboxTarget } from './ComboboxTarget/ComboboxTarget';
+import { ComboboxOptions, ComboboxOptionsProps } from './ComboboxOptions/ComboboxOptions';
+import { ComboboxSearch, ComboboxSearchProps } from './ComboboxSearch/ComboboxSearch';
+import { ComboboxTarget, ComboboxTargetProps } from './ComboboxTarget/ComboboxTarget';
 import { ComboboxStore, useCombobox } from './use-combobox/use-combobox';
 import classes from './Combobox.module.css';
 
@@ -116,7 +128,7 @@ const varsResolver = createVarsResolver<ComboboxFactory>((_, { size, dropdownPad
   },
 }));
 
-export function Combobox(_props: ComboboxProps) {
+export const Combobox = (_props: ComboboxProps) => {
   const props = useProps('Combobox', defaultProps, _props);
   const {
     classNames,
@@ -179,7 +191,7 @@ export function Combobox(_props: ComboboxProps) {
       </Popover>
     </ComboboxProvider>
   );
-}
+};
 
 const extendCombobox = (c: ExtendComponent<ComboboxFactory>): MantineThemeComponent => c;
 
@@ -200,3 +212,65 @@ Combobox.DropdownTarget = ComboboxDropdownTarget;
 Combobox.Group = ComboboxGroup;
 Combobox.ClearButton = ComboboxClearButton;
 Combobox.HiddenInput = ComboboxHiddenInput;
+
+export namespace Combobox {
+  export type Props = ComboboxProps;
+  export type StylesNames = ComboboxStylesNames;
+  export type Factory = ComboboxFactory;
+
+  export namespace Dropdown {
+    export type Props = ComboboxDropdownProps;
+  }
+
+  export namespace Options {
+    export type Props = ComboboxOptionsProps;
+  }
+
+  export namespace Option {
+    export type Props = ComboboxOptionProps;
+  }
+
+  export namespace Target {
+    export type Props = ComboboxTargetProps;
+  }
+
+  export namespace Chevron {
+    export type Props = ComboboxChevronProps;
+  }
+
+  export namespace Empty {
+    export type Props = ComboboxEmptyProps;
+  }
+
+  export namespace Search {
+    export type Props = ComboboxSearchProps;
+  }
+
+  export namespace Footer {
+    export type Props = ComboboxFooterProps;
+  }
+
+  export namespace Header {
+    export type Props = ComboboxHeaderProps;
+  }
+
+  export namespace DropdownTarget {
+    export type Props = ComboboxDropdownTargetProps;
+  }
+
+  export namespace EventsTarget {
+    export type Props = ComboboxEventsTargetProps;
+  }
+
+  export namespace Group {
+    export type Props = ComboboxGroupProps;
+  }
+
+  export namespace ClearButton {
+    export type Props = ComboboxClearButtonProps;
+  }
+
+  export namespace HiddenInput {
+    export type Props = ComboboxHiddenInputProps;
+  }
+}

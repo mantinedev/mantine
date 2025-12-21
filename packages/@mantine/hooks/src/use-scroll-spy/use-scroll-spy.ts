@@ -148,3 +148,8 @@ export function useScrollSpy({
     data,
   };
 }
+
+export namespace useScrollSpy {
+  export type Options = UseScrollSpyOptions;
+  export type ReturnValue = UseScrollSpyReturnValue;
+}

@@ -31,3 +31,7 @@ export function useInputState<T>(initialState: T): UseInputStateReturnValue<T> {
   const [value, setValue] = useState<T>(initialState);
   return [value, getInputOnChange<T>(setValue as any)];
 }
+
+export namespace useInputState {
+  export type ReturnValue<T> = UseInputStateReturnValue<T>;
+}

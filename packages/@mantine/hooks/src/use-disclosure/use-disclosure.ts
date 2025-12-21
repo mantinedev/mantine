@@ -46,3 +46,9 @@ export function useDisclosure(
 
   return [opened, { open, close, toggle, set: setOpened }];
 }
+
+export namespace useDisclosure {
+  export type Options = UseDisclosureOptions;
+  export type Handlers = UseDisclosureHandlers;
+  export type ReturnValue = UseDisclosureReturnValue;
+}

@@ -71,3 +71,8 @@ export function useOrientation({
 
   return orientation;
 }
+
+export namespace useOrientation {
+  export type Options = UseOrientationOptions;
+  export type ReturnType = UseOrientationReturnType;
+}

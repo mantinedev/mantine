@@ -44,3 +44,7 @@ export function useIdle(timeout: number, options?: UseIdleOptions) {
 
   return idle;
 }
+
+export namespace useIdle {
+  export type Options = UseIdleOptions;
+}

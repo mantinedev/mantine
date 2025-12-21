@@ -98,3 +98,8 @@ export function Transition({
 }
 
 Transition.displayName = '@mantine/core/Transition';
+
+export namespace Transition {
+  export type Props = TransitionProps;
+  export type Override = TransitionOverride;
+}

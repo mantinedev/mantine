@@ -85,3 +85,11 @@ export function useElementSize<T extends HTMLElement = any>(
   const [ref, { width, height }] = useResizeObserver<T>(options);
   return { ref, width, height };
 }
+
+export namespace useResizeObserver {
+  export type ReturnValue<T extends HTMLElement> = UseResizeObserverReturnValue<T>;
+}
+
+export namespace useElementSize {
+  export type ReturnValue<T extends HTMLElement> = UseElementSizeReturnValue<T>;
+}

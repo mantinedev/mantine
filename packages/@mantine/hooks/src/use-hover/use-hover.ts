@@ -40,3 +40,7 @@ export function useHover<T extends HTMLElement = any>(): UseHoverReturnValue<T> 
 
   return { ref, hovered };
 }
+
+export namespace useHover {
+  export type ReturnValue<T extends HTMLElement> = UseHoverReturnValue<T>;
+}

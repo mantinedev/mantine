@@ -50,3 +50,8 @@ const extendNumberFormatter = (c: ExtendComponent<NumberFormatterFactory>): Mant
 
 NumberFormatter.extend = extendNumberFormatter;
 NumberFormatter.displayName = '@mantine/core/NumberFormatter';
+
+export namespace NumberFormatter {
+  export type Props = NumberFormatterProps;
+  export type Factory = NumberFormatterFactory;
+}

@@ -1,3 +1,18 @@
+import type {
+  AccordionCssVariables,
+  AccordionFactory,
+  AccordionProps,
+  AccordionStylesNames,
+  AccordionVariant,
+} from './Accordion';
+import type { AccordionContextValue } from './Accordion.context';
+import type { AccordionHeadingOrder, AccordionValue } from './Accordion.types';
+import type { AccordionChevronProps } from './AccordionChevron';
+import type { AccordionControlProps } from './AccordionControl/AccordionControl';
+import type { AccordionItemContextValue } from './AccordionItem.context';
+import type { AccordionItemProps } from './AccordionItem/AccordionItem';
+import type { AccordionPanelProps } from './AccordionPanel/AccordionPanel';
+
 export { Accordion } from './Accordion';
 export { AccordionChevron } from './AccordionChevron';
 export { AccordionItem } from './AccordionItem/AccordionItem';
@@ -12,11 +27,33 @@ export type {
   AccordionCssVariables,
   AccordionFactory,
   AccordionVariant,
-} from './Accordion';
-export type { AccordionControlProps } from './AccordionControl/AccordionControl';
-export type { AccordionItemProps } from './AccordionItem/AccordionItem';
-export type { AccordionPanelProps } from './AccordionPanel/AccordionPanel';
-export type { AccordionChevronProps } from './AccordionChevron';
-export type { AccordionValue, AccordionHeadingOrder } from './Accordion.types';
-export type { AccordionContextValue } from './Accordion.context';
-export type { AccordionItemContextValue } from './AccordionItem.context';
+  AccordionControlProps,
+  AccordionItemProps,
+  AccordionPanelProps,
+  AccordionChevronProps,
+  AccordionValue,
+  AccordionHeadingOrder,
+  AccordionContextValue,
+  AccordionItemContextValue,
+};
+
+export namespace Accordion {
+  export type Props = AccordionProps;
+  export type StylesNames = AccordionStylesNames;
+  export type CssVariables = AccordionCssVariables;
+  export type Factory = AccordionFactory;
+  export type Variant = AccordionVariant;
+
+  export namespace Control {
+    export type Props = AccordionControlProps;
+  }
+
+  export namespace Item {
+    export type Props = AccordionItemProps;
+    export type Context = AccordionItemContextValue;
+  }
+
+  export namespace Panel {
+    export type Props = AccordionPanelProps;
+  }
+}

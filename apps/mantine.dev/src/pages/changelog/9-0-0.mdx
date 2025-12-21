@@ -32,6 +32,40 @@ Starting from Mantine 9.0, the following dependencies are required:
 - Tiptap 3+ for `@mantine/tiptap` ([migration guide](/guides/tiptap-3-migration))
 - Recharts 3+ for `@mantine/charts` (no migration required)
 
+## Namespace types exports
+
+All Mantine components and hooks now provide namespace exports for related types.
+For example, [use-disclosure](/hooks/use-disclosure) hook types can now be accessed like this:
+
+```tsx
+import { useDisclosure } from '@mantine/hooks';
+
+const options: useDisclosure.Options = {
+  onOpen: () => console.log('open'),
+  onClose: () => console.log('close'),
+};
+
+function Demo() {
+  const [opened, handlers] = useDisclosure(options);
+}
+```
+
+Example of using namespace types with [Button](/core/button) props type:
+
+```tsx
+import { Button } from '@mantine/core';
+
+const buttonProps: Button.Props = {
+    variant: 'filled',
+    size: 'md',
+    disabled: false,
+  };
+
+function Demo() {
+  return <Button {...buttonProps}>Click me</Button>;
+}
+```
+
 ## Collapse horizontal orientation
 
 [Collapse](/core/collapse) component now supports horizontal orientation:

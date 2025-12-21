@@ -45,3 +45,7 @@ export function useMediaQuery(
 
   return matches || false;
 }
+
+export namespace useMediaQuery {
+  export type Options = UseMediaQueryOptions;
+}

@@ -76,3 +76,11 @@ export function useMousePosition(): UseMousePositionReturnValue {
 
   return position;
 }
+
+export namespace useMouse {
+  export type ReturnValue<T extends HTMLElement> = UseMouseReturnValue<T>;
+}
+
+export namespace useMousePosition {
+  export type ReturnValue = UseMousePositionReturnValue;
+}

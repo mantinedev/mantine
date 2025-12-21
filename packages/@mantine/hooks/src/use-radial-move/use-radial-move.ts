@@ -145,3 +145,8 @@ export function useRadialMove<T extends HTMLElement = any>(
 
   return { ref: refCallback, active };
 }
+
+export namespace useRadialMove {
+  export type Options = UseRadialMoveOptions;
+  export type ReturnValue<T extends HTMLElement> = UseRadialMoveReturnValue<T>;
+}

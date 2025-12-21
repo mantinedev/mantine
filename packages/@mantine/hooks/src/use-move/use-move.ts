@@ -132,3 +132,8 @@ export function useMove<T extends HTMLElement = any>(
 
   return { ref: refCallback, active };
 }
+
+export namespace useMove {
+  export type Handlers = UseMoveHandlers;
+  export type ReturnValue<T extends HTMLElement> = UseMoveReturnValue<T>;
+}

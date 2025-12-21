@@ -120,3 +120,8 @@ export function useListState<T>(initialValue: T[] | (() => T[]) = []): UseListSt
     },
   ];
 }
+
+export namespace useListState {
+  export type ReturnValue<T> = UseListStateReturnValue<T>;
+  export type Handlers<T> = UseListStateHandlers<T>;
+}

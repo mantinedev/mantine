@@ -410,3 +410,10 @@ function createSetPosition(
     [options.constrainToViewport, options.constrainOffset, options.onPositionChange]
   );
 }
+
+export namespace useFloatingWindow {
+  export type Options = UseFloatingWindowOptions;
+  export type Position = FloatingWindowPosition;
+  export type SetPosition = SetFloatingWindowPosition;
+  export type ReturnValue<T extends HTMLElement> = UseFloatingWindowReturnValue<T>;
+}

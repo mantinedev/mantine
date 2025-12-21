@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export interface UseClipboardOptions {
+export interface UseClipboardInput {
   /** Time in ms after which the copied state will reset, `2000` by default */
   timeout?: number;
 }
@@ -20,7 +20,7 @@ export interface UseClipboardReturnValue {
 }
 
 export function useClipboard(
-  options: UseClipboardOptions = { timeout: 2000 }
+  options: UseClipboardInput = { timeout: 2000 }
 ): UseClipboardReturnValue {
   const [error, setError] = useState<Error | null>(null);
   const [copied, setCopied] = useState(false);
@@ -50,4 +50,9 @@ export function useClipboard(
   };
 
   return { copy, reset, error, copied };
+}
+
+export namespace useClipboard {
+  export type Input = UseClipboardInput;
+  export type ReturnValue = UseClipboardReturnValue;
 }

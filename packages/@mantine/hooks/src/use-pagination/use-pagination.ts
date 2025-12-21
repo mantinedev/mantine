@@ -126,3 +126,8 @@ export function usePagination({
     last,
   };
 }
+
+export namespace usePagination {
+  export type Options = UsePaginationOptions;
+  export type ReturnValue = UsePaginationReturnValue;
+}

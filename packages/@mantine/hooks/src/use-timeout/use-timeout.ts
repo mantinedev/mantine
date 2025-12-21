@@ -45,3 +45,8 @@ export function useTimeout(
 
   return { start, clear };
 }
+
+export namespace useTimeout {
+  export type Options = UseTimeoutOptions;
+  export type ReturnValue = UseTimeoutReturnValue;
+}

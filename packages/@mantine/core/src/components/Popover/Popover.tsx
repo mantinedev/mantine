@@ -27,10 +27,10 @@ import {
 import { Overlay, OverlayProps } from '../Overlay';
 import { BasePortalProps, OptionalPortal } from '../Portal';
 import { Transition, TransitionOverride } from '../Transition';
-import { PopoverContextProvider } from './Popover.context';
+import { PopoverContextProvider, PopoverContextValue } from './Popover.context';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
-import { PopoverDropdown } from './PopoverDropdown/PopoverDropdown';
-import { PopoverTarget } from './PopoverTarget/PopoverTarget';
+import { PopoverDropdown, PopoverDropdownProps } from './PopoverDropdown/PopoverDropdown';
+import { PopoverTarget, PopoverTargetProps } from './PopoverTarget/PopoverTarget';
 import { usePopover } from './use-popover';
 import classes from './Popover.module.css';
 
@@ -420,3 +420,22 @@ Popover.Target = PopoverTarget;
 Popover.Dropdown = PopoverDropdown;
 Popover.displayName = '@mantine/core/Popover';
 Popover.extend = (input: ExtendComponent<PopoverFactory>) => input;
+
+export namespace Popover {
+  export type Props = PopoverProps;
+  export type __Props = __PopoverProps;
+  export type Factory = PopoverFactory;
+  export type StylesNames = PopoverStylesNames;
+  export type TargetProps = PopoverTargetProps;
+  export type DropdownProps = PopoverDropdownProps;
+  export type Width = PopoverWidth;
+  export type ContextValue = PopoverContextValue;
+
+  export namespace Target {
+    export type Props = PopoverTargetProps;
+  }
+
+  export namespace Dropdown {
+    export type Props = PopoverDropdownProps;
+  }
+}

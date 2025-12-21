@@ -150,3 +150,9 @@ export function useCollapse({
     }),
   };
 }
+
+export namespace useCollapse {
+  export type Input = UseCollapseInput;
+  export type ReturnValue = UseCollapseReturnValue;
+  export type State = UseCollapseState;
+}

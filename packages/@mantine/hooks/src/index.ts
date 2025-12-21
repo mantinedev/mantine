@@ -84,19 +84,22 @@ export { useCollapse } from './use-collapse/use-collapse.js';
 export { useHorizontalCollapse } from './use-collapse/use-horizontal-collapse.js';
 
 export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
-export type { UseClipboardOptions, UseClipboardReturnValue } from './use-clipboard/use-clipboard';
+export type {
+  UseClipboardInput as UseClipboardOptions,
+  UseClipboardReturnValue,
+} from './use-clipboard/use-clipboard';
 export type { UseColorSchemeValue } from './use-color-scheme/use-color-scheme';
 export type {
-  UseCounterOptions,
+  UseCounterOptions as UseCounterOptions,
   UseCounterHandlers,
   UseCounterReturnValue,
 } from './use-counter/use-counter';
 export type {
-  UseDebouncedCallbackOptions,
+  UseDebouncedCallbackOptions as UseDebouncedCallbackOptions,
   UseDebouncedCallbackReturnValue,
 } from './use-debounced-callback/use-debounced-callback';
 export type {
-  UseDebouncedStateOptions,
+  UseDebouncedStateOptions as UseDebouncedStateOptions,
   UseDebouncedStateReturnValue,
 } from './use-debounced-state/use-debounced-state';
 export type {
@@ -119,7 +122,7 @@ export type {
   UseFileDialogReturnValue,
 } from './use-file-dialog/use-file-dialog';
 export type {
-  UseFocusReturnOptions,
+  UseFocusReturnInput as UseFocusReturnOptions,
   UseFocusReturnReturnValue,
 } from './use-focus-return/use-focus-return';
 export type {
@@ -127,8 +130,8 @@ export type {
   UseFocusWithinReturnValue,
 } from './use-focus-within/use-focus-within';
 export type { UseFullscreenElementReturnValue } from './use-fullscreen/use-fullscreen';
-export type { UseHashOptions, UseHashReturnValue } from './use-hash/use-hash';
-export type { UseHeadroomOptions } from './use-headroom/use-headroom';
+export type { UseHashInput as UseHashOptions, UseHashReturnValue } from './use-hash/use-hash';
+export type { UseHeadroomInput as UseHeadroomOptions } from './use-headroom/use-headroom';
 export type { HotkeyItemOptions, HotkeyItem } from './use-hotkeys/use-hotkeys';
 export type { UseHoverReturnValue } from './use-hover/use-hover';
 export type { UseIdleOptions } from './use-idle/use-idle';

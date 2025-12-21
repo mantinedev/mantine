@@ -25,3 +25,7 @@ export function TimeValue({
 }
 
 TimeValue.displayName = '@mantine/dates/TimeValue';
+
+export namespace TimeValue {
+  export type Props = TimeValueProps;
+}

@@ -1,3 +1,25 @@
+import type {
+  SpotlightActionData,
+  SpotlightActionGroupData,
+  SpotlightFactory,
+  SpotlightFilterFunction,
+  SpotlightProps,
+  SpotlightStylesNames,
+} from './Spotlight';
+import type { SpotlightActionProps, SpotlightActionStylesNames } from './SpotlightAction';
+import type {
+  SpotlightActionsGroupProps,
+  SpotlightActionsGroupStylesNames,
+} from './SpotlightActionsGroup';
+import type {
+  SpotlightActionsListProps,
+  SpotlightActionsListStylesNames,
+} from './SpotlightActionsList';
+import type { SpotlightEmptyProps, SpotlightEmptyStylesNames } from './SpotlightEmpty';
+import type { SpotlightFooterProps, SpotlightFooterStylesNames } from './SpotlightFooter';
+import type { SpotlightRootProps, SpotlightRootStylesNames } from './SpotlightRoot';
+import type { SpotlightSearchProps, SpotlightSearchStylesNames } from './SpotlightSearch';
+
 export {
   spotlight,
   createSpotlight,
@@ -21,23 +43,68 @@ export { SpotlightFooter } from './SpotlightFooter.js';
 export { SpotlightSearch } from './SpotlightSearch.js';
 
 export type {
+  SpotlightProps,
+  SpotlightStylesNames,
   SpotlightFactory,
   SpotlightFilterFunction,
   SpotlightActionData,
   SpotlightActionGroupData,
-  SpotlightProps,
-  SpotlightStylesNames,
-} from './Spotlight';
-export type { SpotlightActionProps, SpotlightActionStylesNames } from './SpotlightAction';
-export type {
+  SpotlightActionProps,
+  SpotlightActionStylesNames,
   SpotlightActionsGroupProps,
   SpotlightActionsGroupStylesNames,
-} from './SpotlightActionsGroup';
-export type {
   SpotlightActionsListProps,
   SpotlightActionsListStylesNames,
-} from './SpotlightActionsList';
-export type { SpotlightEmptyProps, SpotlightEmptyStylesNames } from './SpotlightEmpty';
-export type { SpotlightFooterProps, SpotlightFooterStylesNames } from './SpotlightFooter';
-export type { SpotlightSearchProps, SpotlightSearchStylesNames } from './SpotlightSearch';
-export type { SpotlightRootProps, SpotlightRootStylesNames } from './SpotlightRoot';
+  SpotlightEmptyProps,
+  SpotlightEmptyStylesNames,
+  SpotlightFooterProps,
+  SpotlightFooterStylesNames,
+  SpotlightSearchProps,
+  SpotlightSearchStylesNames,
+  SpotlightRootProps,
+  SpotlightRootStylesNames,
+};
+
+export namespace Spotlight {
+  export type Props = SpotlightProps;
+  export type StylesNames = SpotlightStylesNames;
+  export type Factory = SpotlightFactory;
+  export type FilterFunction = SpotlightFilterFunction;
+  export type ActionData = SpotlightActionData;
+  export type ActionGroupData = SpotlightActionGroupData;
+
+  export namespace Action {
+    export type Props = SpotlightActionProps;
+    export type StylesNames = SpotlightActionStylesNames;
+  }
+
+  export namespace ActionsGroup {
+    export type Props = SpotlightActionsGroupProps;
+    export type StylesNames = SpotlightActionsGroupStylesNames;
+  }
+
+  export namespace ActionsList {
+    export type Props = SpotlightActionsListProps;
+    export type StylesNames = SpotlightActionsListStylesNames;
+  }
+
+  export namespace Empty {
+    export type Props = SpotlightEmptyProps;
+    export type StylesNames = SpotlightEmptyStylesNames;
+  }
+
+  export namespace Footer {
+    export type Props = SpotlightFooterProps;
+    export type StylesNames = SpotlightFooterStylesNames;
+  }
+
+  export namespace Search {
+    export type Props = SpotlightSearchProps;
+    export type StylesNames = SpotlightSearchStylesNames;
+  }
+
+  export namespace Root {
+    export type Props = SpotlightRootProps;
+    export type StylesNames = SpotlightRootStylesNames;
+  }
+}

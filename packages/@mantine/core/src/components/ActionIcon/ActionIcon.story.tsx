@@ -1,5 +1,5 @@
 import { IconFingerprint } from '@tabler/icons-react';
-import { ActionIcon } from './ActionIcon';
+import { ActionIcon } from './index';
 
 export default { title: 'ActionIcon' };
 

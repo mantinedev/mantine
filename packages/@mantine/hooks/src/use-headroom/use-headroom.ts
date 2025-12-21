@@ -65,7 +65,7 @@ export const useScrollDirection = () => {
   return isScrollingUp;
 };
 
-export interface UseHeadroomOptions {
+export interface UseHeadroomInput {
   /** Number in px at which element should be fixed */
   fixedAt?: number;
 
@@ -79,7 +79,7 @@ export interface UseHeadroomOptions {
   onRelease?: () => void;
 }
 
-export function useHeadroom({ fixedAt = 0, onPin, onFix, onRelease }: UseHeadroomOptions = {}) {
+export function useHeadroom({ fixedAt = 0, onPin, onFix, onRelease }: UseHeadroomInput = {}) {
   const isCurrentlyPinnedRef = useRef(false);
   const isScrollingUp = useScrollDirection();
   const [{ y: scrollPosition }] = useWindowScroll();
@@ -106,4 +106,8 @@ export function useHeadroom({ fixedAt = 0, onPin, onFix, onRelease }: UseHeadroo
   }
 
   return false;
+}
+
+export namespace useHeadroom {
+  export type Input = UseHeadroomInput;
 }

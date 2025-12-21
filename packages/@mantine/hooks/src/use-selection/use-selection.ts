@@ -112,3 +112,9 @@ export function useSelection<T>(input: UseSelectionInput<T>): UseSelectionReturn
     },
   ];
 }
+
+export namespace useSelection {
+  export type Input<T> = UseSelectionInput<T>;
+  export type Handlers<T> = UseSelectionHandlers<T>;
+  export type ReturnValue<T> = UseSelectionReturnValue<T>;
+}

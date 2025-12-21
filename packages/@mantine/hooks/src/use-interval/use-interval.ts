@@ -65,3 +65,8 @@ export function useInterval(
 
   return { start, stop, toggle, active };
 }
+
+export namespace useInterval {
+  export type Options = UseIntervalOptions;
+  export type ReturnValue = UseIntervalReturnValue;
+}

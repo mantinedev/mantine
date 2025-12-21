@@ -25,3 +25,7 @@ export function AccordionChevron({ style, size = 16, ...others }: AccordionChevr
 }
 
 AccordionChevron.displayName = '@mantine/core/AccordionChevron';
+
+export namespace AccordionChevron {
+  export type Props = AccordionChevronProps;
+}

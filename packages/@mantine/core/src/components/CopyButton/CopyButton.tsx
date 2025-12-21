@@ -24,3 +24,7 @@ export function CopyButton(props: CopyButtonProps) {
 }
 
 CopyButton.displayName = '@mantine/core/CopyButton';
+
+export namespace CopyButton {
+  export type Props = CopyButtonProps;
+}

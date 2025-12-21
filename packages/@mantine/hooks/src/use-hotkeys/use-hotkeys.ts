@@ -49,3 +49,7 @@ export function useHotkeys(
     return () => document.documentElement.removeEventListener('keydown', keydownListener);
   }, [hotkeys]);
 }
+
+export namespace useHotkeys {
+  export type Hotkey = HotkeyItem;
+}

@@ -91,3 +91,8 @@ export function useOs(options: UseOsOptions = { getValueInEffect: true }): UseOS
 
   return value;
 }
+
+export namespace useOs {
+  export type Options = UseOsOptions;
+  export type ReturnValue = UseOSReturnValue;
+}

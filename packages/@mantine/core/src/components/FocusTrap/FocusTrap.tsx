@@ -41,3 +41,7 @@ export function FocusTrapInitialFocus(props: React.ComponentProps<'span'>) {
 FocusTrap.displayName = '@mantine/core/FocusTrap';
 FocusTrapInitialFocus.displayName = '@mantine/core/FocusTrapInitialFocus';
 FocusTrap.InitialFocus = FocusTrapInitialFocus;
+
+export namespace FocusTrap {
+  export type Props = FocusTrapProps;
+}

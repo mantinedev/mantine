@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
 import {
-  ExtendComponent,
+  factory,
   Factory,
   getContextItemIndex,
-  getWithProps,
   StylesApiProps,
   useProps,
   useResolvedStylesApi,
@@ -33,6 +32,14 @@ export type MenuStylesNames =
 export type MenuFactory = Factory<{
   props: MenuProps;
   stylesNames: MenuStylesNames;
+  staticComponents: {
+    Item: typeof MenuItem;
+    Label: typeof MenuLabel;
+    Dropdown: typeof MenuDropdown;
+    Target: typeof MenuTarget;
+    Divider: typeof MenuDivider;
+    Sub: typeof MenuSub;
+  };
 }>;
 
 export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
@@ -105,7 +112,7 @@ const defaultProps = {
   menuItemTabIndex: -1,
 } satisfies Partial<MenuProps>;
 
-export function Menu(_props: MenuProps) {
+export const Menu = factory<MenuFactory>((_props) => {
   const props = useProps('Menu', defaultProps, _props);
   const {
     children,
@@ -216,12 +223,10 @@ export function Menu(_props: MenuProps) {
       </Popover>
     </MenuContextProvider>
   );
-}
+});
 
-Menu.extend = (input: ExtendComponent<MenuFactory>) => input;
-Menu.withProps = getWithProps<MenuProps, MenuProps>(Menu as any);
-Menu.classes = classes as Record<string, string>;
 Menu.displayName = '@mantine/core/Menu';
+Menu.classes = classes;
 Menu.Item = MenuItem;
 Menu.Label = MenuLabel;
 Menu.Dropdown = MenuDropdown;
