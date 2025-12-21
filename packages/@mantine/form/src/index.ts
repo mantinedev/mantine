@@ -8,4 +8,4 @@ export { formRootRule } from './validate/validate-values.js';
 
 export type * from './types';
 export type { UseFieldInput, UseFieldReturnType } from './use-field';
-export type { FormArrayElement } from './paths.types.js';
+export type { FormArrayElement, LooseKeys } from './paths.types.js';
