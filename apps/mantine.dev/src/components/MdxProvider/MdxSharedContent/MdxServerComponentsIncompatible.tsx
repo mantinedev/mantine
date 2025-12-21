@@ -12,8 +12,8 @@ export function MdxServerComponentsIncompatible({
     <>
       <MdxTitle id="server-components-incompatible">Incompatible with server components</MdxTitle>
       <MdxParagraph>
-        <MdxCode>{component}</MdxCode> is not compatible with React server components as it requires
-        a function as children. To use <MdxCode>{component}</MdxCode>, add{' '}
+        <MdxCode>{component}</MdxCode> is not compatible with React server components because it
+        requires using function as children. To use <MdxCode>{component}</MdxCode>, add{' '}
         <MdxCode>&quot;use client;&quot;</MdxCode> at the top of the file.
       </MdxParagraph>
     </>
