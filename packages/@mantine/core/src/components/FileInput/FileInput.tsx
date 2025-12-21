@@ -58,7 +58,7 @@ export interface FileInputProps<Multiple = false>
   /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. */
   capture?: boolean | 'user' | 'environment';
 
-  /** Props passed down to the hidden input element which is used to capture files */
+  /** Props passed down to the hidden `input[type="file"]` */
   fileInputProps?: React.ComponentProps<'input'>;
 
   /** Input placeholder */

@@ -22,5 +22,11 @@ generateDeclarations({
     'ColorFormat | undefined': "'hex' | 'hexa' | 'rgba' | 'rgb' | 'hsl' | 'hsla'",
     'ArrowPosition | undefined': "'center' | 'side'",
     'PopoverWidth | undefined': "'target' | React.CSSProperties['width'] | null",
+    'DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> | undefined':
+      'React.ComponentProps<"button">',
+    'DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> | undefined':
+      'React.ComponentProps<"input">',
+    'DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> | undefined':
+      'React.ComponentProps<"div">',
   },
 });
