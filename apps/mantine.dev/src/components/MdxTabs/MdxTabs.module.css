@@ -55,18 +55,25 @@
 .main {
   padding-inline: var(--docs-inline-spacing);
   width: 100%;
-  max-width: 994px;
+  padding-inline-end: 0;
 
-  @mixin smaller-than 1750px {
-    max-width: 914px;
-  }
+  &[data-with-toc] {
+    max-width: 994px;
+    padding-inline-end: var(--docs-inline-spacing);
 
-  @mixin smaller-than 1450px {
-    max-width: calc(100vw - var(--docs-table-of-contents-width) - var(--docs-navbar-width) - 48px);
-  }
+    @mixin smaller-than 1750px {
+      max-width: 914px;
+    }
 
-  @mixin smaller-than $docs-toc-breakpoint {
-    padding-inline-end: 0;
+    @mixin smaller-than 1450px {
+      max-width: calc(
+        100vw - var(--docs-table-of-contents-width) - var(--docs-navbar-width) - 48px
+      );
+    }
+
+    @mixin smaller-than $docs-toc-breakpoint {
+      padding-inline-end: 0;
+    }
   }
 }
 

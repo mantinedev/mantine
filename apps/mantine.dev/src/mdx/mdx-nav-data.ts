@@ -408,11 +408,9 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
     category: 'Dates',
     pages: [
       MDX_DATA.GettingStartedDates,
-      MDX_DATA.MiniCalendar,
-      MDX_DATA.Calendar,
-      MDX_DATA.DateTimePicker,
       MDX_DATA.DatePicker,
       MDX_DATA.DatePickerInput,
+      MDX_DATA.DateTimePicker,
       MDX_DATA.DateInput,
       MDX_DATA.MonthPicker,
       MDX_DATA.MonthPickerInput,
@@ -422,6 +420,8 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.TimePicker,
       MDX_DATA.TimeGrid,
       MDX_DATA.TimeValue,
+      MDX_DATA.MiniCalendar,
+      MDX_DATA.Calendar,
     ],
   },
 
@@ -442,6 +442,18 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.RadialBarChart,
       MDX_DATA.Sparkline,
       MDX_DATA.Heatmap,
+    ],
+  },
+
+  {
+    category: 'Schedule',
+    pages: [
+      MDX_DATA.GettingStartedSchedule,
+      MDX_DATA.Schedule,
+      MDX_DATA.DayView,
+      MDX_DATA.MonthView,
+      MDX_DATA.WeekView,
+      MDX_DATA.YearView,
     ],
   },
 

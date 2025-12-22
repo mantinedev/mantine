@@ -75,14 +75,20 @@ export function MdxTabs({ children, meta }: MdxTabsProps) {
 
         <Tabs.Panel value="docs">
           <div className={classes.contentWrapper}>
-            <div className={classes.main} id="mdx">
+            <div
+              className={classes.main}
+              id="mdx"
+              data-with-toc={!meta.hideTableOfContents || undefined}
+            >
               {children}
               <MdxSiblings meta={meta} />
             </div>
 
-            <div className={classes.tableOfContents}>
-              <TableOfContents withTabs />
-            </div>
+            {!meta.hideTableOfContents && (
+              <div className={classes.tableOfContents}>
+                <TableOfContents withTabs />
+              </div>
+            )}
           </div>
         </Tabs.Panel>
 

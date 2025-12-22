@@ -61,6 +61,9 @@ export interface Frontmatter {
 
   /** Determines whether page header should be hidden */
   hideHeader?: boolean;
+
+  /** If set, table of contents is hidden. Usually required for components with complex layouts. */
+  hideTableOfContents?: boolean;
 }
 
 export interface MdxContent {
