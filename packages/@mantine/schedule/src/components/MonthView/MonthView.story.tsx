@@ -171,7 +171,7 @@ export function WeekendDays() {
 export function Radius() {
   return (
     <div style={{ padding: 40 }}>
-      <MonthView date={month} radius="md" withWeekNumbers withWeekDays={false} />
+      <MonthView date={month} radius="md" withWeekNumbers withWeekDays />
     </div>
   );
 }

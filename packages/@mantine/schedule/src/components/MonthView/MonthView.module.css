@@ -136,7 +136,7 @@
     }
   }
 
-  &:where(:first-child) {
+  &:where(:first-of-type) {
     :where(.monthViewWeek:first-child) & {
       border-start-start-radius: var(--month-view-radius);
 

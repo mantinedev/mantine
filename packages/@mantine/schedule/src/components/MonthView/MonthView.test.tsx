@@ -23,6 +23,7 @@ describe('@mantine/schedule/MonthView', () => {
     stylesApiSelectors: [
       // MonthView
       'monthView',
+      'monthViewInner',
       'monthViewDay',
       'monthViewDayLabel',
       'monthViewWeek',

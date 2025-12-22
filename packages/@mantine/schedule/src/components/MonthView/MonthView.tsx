@@ -43,6 +43,7 @@ import classes from './MonthView.module.css';
 
 export type MonthViewStylesNames =
   | 'monthView'
+  | 'monthViewInner'
   | 'monthViewWeek'
   | 'monthViewDay'
   | 'monthViewDayLabel'
@@ -424,14 +425,16 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         </ScheduleHeader>
       )}
 
-      {weekdays && (
-        <div {...getStyles('monthViewWeekdays')}>
-          {withWeekNumbers && <div {...getStyles('monthViewWeekdaysCorner')} />}
-          {weekdays}
-        </div>
-      )}
+      <div {...getStyles('monthViewInner')}>
+        {weekdays && (
+          <div {...getStyles('monthViewWeekdays')}>
+            {withWeekNumbers && <div {...getStyles('monthViewWeekdaysCorner')} />}
+            {weekdays}
+          </div>
+        )}
 
-      {weeks}
+        {weeks}
+      </div>
     </Box>
   );
 });
