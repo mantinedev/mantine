@@ -115,6 +115,19 @@ export function Usage() {
   return <WeekView date={date} onDateChange={setDate} />;
 }
 
+export function SlotHeight() {
+  const [date, setDate] = useState(toDateString(new Date()));
+  return (
+    <WeekView
+      date={date}
+      onDateChange={setDate}
+      events={regularEvents}
+      slotHeight={128}
+      allDaySlotHeight={96}
+    />
+  );
+}
+
 export function StartEndTime() {
   return <WeekView date={new Date()} startTime="08:00:00" endTime="12:00:00" />;
 }

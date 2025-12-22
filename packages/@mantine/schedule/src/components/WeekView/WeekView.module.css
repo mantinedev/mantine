@@ -1,13 +1,11 @@
-.weekViewRoot {
+.weekView {
+  --week-view-week-day-height: 58px;
   --week-view-all-day-slots-height: 48px;
   --week-view-radius: var(--schedule-radius, var(--mantine-radius-default));
   --week-view-slots-label-width: 80px;
   --week-view-min-slot-width: 80px;
-  --week-view-slot-height: 60px;
+  --week-view-slot-height: 64px;
   --indicator-labels-offset: calc(var(--week-view-slots-label-width) / var(--number-of-days));
-
-  border: 1px solid var(--week-view-border-color);
-  border-radius: var(--week-view-radius);
 
   @mixin where-light {
     --week-view-border-color: var(--mantine-color-gray-3);
@@ -16,6 +14,11 @@
   @mixin where-dark {
     --week-view-border-color: var(--mantine-color-dark-4);
   }
+}
+
+.weekViewRoot {
+  border: 1px solid var(--week-view-border-color);
+  border-radius: var(--week-view-radius);
 }
 
 .weekViewInner {
@@ -48,7 +51,7 @@
 }
 
 .weekViewCorner {
-  height: var(--week-view-slot-height);
+  height: var(--week-view-week-day-height);
   flex: 0 0 var(--week-view-slots-label-width);
   min-width: var(--week-view-slots-label-width);
   line-height: 1;
@@ -81,14 +84,10 @@
 .weekViewDay {
   flex: 1;
   border-inline-start: 1px solid var(--week-view-border-color);
-
-  &:where([data-emphasize]) {
-    flex: 2;
-  }
 }
 
 .weekViewDayLabel {
-  height: var(--week-view-slot-height);
+  height: var(--week-view-week-day-height);
   min-width: var(--week-view-min-slot-width);
   display: flex;
   align-items: center;
@@ -101,17 +100,12 @@
   border-inline-start: 1px solid var(--week-view-border-color);
   padding-inline-start: 5px;
 
-  &:where([data-emphasize]) {
-    flex: 2;
-  }
-
   &:where([data-weekend]) {
     color: var(--mantine-color-error);
   }
 
   &:where([data-today]) {
     gap: 6px;
-    background-color: var(--mantine-primary-color-light);
   }
 
   @mixin hover {

@@ -10,6 +10,7 @@ import {
   Factory,
   getRadius,
   MantineRadius,
+  rem,
   ScrollArea,
   ScrollAreaAutosizeProps,
   StylesApiProps,
@@ -77,7 +78,7 @@ export type WeekViewStylesNames =
   | CombinedScheduleHeaderStylesNames;
 
 export type WeekViewCssVariables = {
-  weekView: '--week-view-radius';
+  weekView: '--week-view-radius' | '--week-view-slot-height' | '--week-view-all-day-slots-height';
 };
 
 export interface WeekViewProps
@@ -161,6 +162,12 @@ export interface WeekViewProps
 
   /** List of events to display in the week view */
   events?: ScheduleEventData[];
+
+  /** Height of 1hr slot @default `64px` */
+  slotHeight?: React.CSSProperties['height'];
+
+  /** Height of all-day slot @default `48px` */
+  allDaySlotHeight?: React.CSSProperties['height'];
 }
 
 export type WeekViewFactory = Factory<{
@@ -187,9 +194,15 @@ const defaultProps = {
   weekLabelFormat: 'MMM DD',
 } satisfies Partial<WeekViewProps>;
 
-const varsResolver = createVarsResolver<WeekViewFactory>((_theme, { radius }) => ({
-  weekView: { '--week-view-radius': radius ? getRadius(radius) : undefined },
-}));
+const varsResolver = createVarsResolver<WeekViewFactory>(
+  (_theme, { radius, allDaySlotHeight, slotHeight }) => ({
+    weekView: {
+      '--week-view-radius': radius ? getRadius(radius) : undefined,
+      '--week-view-all-day-slots-height': rem(allDaySlotHeight),
+      '--week-view-slot-height': rem(slotHeight),
+    },
+  })
+);
 
 export const WeekView = factory<WeekViewFactory>((_props) => {
   const props = useProps('WeekView', defaultProps, _props);
@@ -228,6 +241,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     viewSelectProps,
     weekLabelFormat,
     events,
+    allDaySlotHeight,
+    slotHeight,
     ...others
   } = props;
 
