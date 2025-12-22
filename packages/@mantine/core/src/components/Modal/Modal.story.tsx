@@ -1,6 +1,7 @@
 import { useDisclosure } from '@mantine/hooks';
 import { Button } from '../Button';
 import { Card } from '../Card';
+import { Group } from '../Group';
 import { Menu } from '../Menu';
 import { ScrollArea } from '../ScrollArea';
 import { Select } from '../Select';
@@ -323,3 +324,32 @@ export function WithScrollArea() {
     </>
   );
 }
+
+export const Compound = () => {
+  const [opened, { open, close }] = useDisclosure(false);
+
+  return (
+    <>
+      <Button onClick={open}>Open modal</Button>
+
+      <Modal.Root opened={opened} onClose={close}>
+        <Modal.Overlay />
+        <Modal.Content>
+          <Modal.Header>
+            <Modal.Title>Modal title</Modal.Title>
+            <Modal.CloseButton />
+          </Modal.Header>
+          <Modal.Body>{content}</Modal.Body>
+          <Modal.Footer>
+            <Group>
+              <Button variant="transparent" onClick={close}>
+                Close
+              </Button>
+              <Button>Button</Button>
+            </Group>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal.Root>
+    </>
+  );
+};
