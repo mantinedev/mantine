@@ -12,7 +12,7 @@ import { TransitionOverride } from '../Transition';
 import type { PopoverFactory } from './Popover';
 import { PopoverWidth } from './Popover.types';
 
-interface PopoverContext {
+export interface PopoverContext {
   x: number;
   y: number;
   arrowX: number | undefined;
@@ -37,6 +37,7 @@ interface PopoverContext {
   radius?: MantineRadius | undefined;
   shadow?: MantineShadow | undefined;
   onClose?: () => void;
+  onOpen?: () => void;
   onDismiss?: () => void;
   getDropdownId: () => string;
   getTargetId: () => string;
