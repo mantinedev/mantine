@@ -1,7 +1,7 @@
 import 'dayjs/locale/ru';
 
+import { DatesProvider } from '@mantine/dates';
 import { render, tests } from '@mantine-tests/core';
-import { ScheduleProvider } from '../Schedule/Schedule.context';
 import {
   CurrentTimeIndicator,
   CurrentTimeIndicatorProps,
@@ -66,12 +66,12 @@ describe('@mantine/schedule/CurrentTimeIndicator', () => {
     jest.useRealTimers();
   });
 
-  it('supports changing locale (ScheduleProvider)', () => {
+  it('supports changing locale (DatesProvider)', () => {
     jest.useFakeTimers().setSystemTime(new Date('2025-11-17 14:30:00').getTime());
     const { container } = render(
-      <ScheduleProvider locale="ru">
+      <DatesProvider settings={{ locale: 'ru' }}>
         <CurrentTimeIndicator currentTimeFormat="h:mm a" withTimeBubble />
-      </ScheduleProvider>
+      </DatesProvider>
     );
     expect(
       container.querySelector('.mantine-CurrentTimeIndicator-currentTimeIndicatorTimeBubble')

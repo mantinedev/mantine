@@ -1,7 +1,7 @@
 import 'dayjs/locale/ru';
 
+import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
-import { ScheduleProvider } from '../../Schedule/Schedule.context';
 import {
   MonthYearSelect,
   MonthYearSelectProps,
@@ -82,11 +82,11 @@ describe('@mantine/schedule/MonthYearSelect', () => {
     expect(screen.getByRole('button', { name: /select month ноябрь/i })).toBeInTheDocument();
   });
 
-  it('support locale (ScheduleProvider)', () => {
+  it('support locale (DatesProvider)', () => {
     render(
-      <ScheduleProvider locale="ru">
+      <DatesProvider settings={{ locale: 'ru' }}>
         <MonthYearSelect {...defaultProps} />
-      </ScheduleProvider>
+      </DatesProvider>
     );
     expect(screen.getByText('ноябрь 2025')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /select month ноябрь/i })).toBeInTheDocument();

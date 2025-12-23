@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { Box, GetStylesApi, getThemeColor, UnstyledButton, useMantineTheme } from '@mantine/core';
+import { useDatesContext } from '@mantine/dates';
 import { DateLabelFormat, DayOfWeek } from '../../types';
 import {
   formatDate,
@@ -8,7 +9,6 @@ import {
   getWeekNumber,
   isSameMonth,
 } from '../../utils';
-import { useScheduleContext } from '../Schedule/Schedule.context';
 import { GroupedEvents } from './get-year-view-events/get-year-view-events';
 import type { YearViewFactory } from './YearView';
 
@@ -22,7 +22,7 @@ export interface YearViewMonthSettings {
   /** If set, weekdays names are displayed in the first row @default `true` */
   withWeekDays?: boolean;
 
-  /** Locale passed down to dayjs, overrides value defined on `ScheduleProvider` */
+  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
   locale?: string;
 
   /** Number 0-6, where 0 – Sunday and 6 – Saturday @default `0` */
@@ -31,7 +31,7 @@ export interface YearViewMonthSettings {
   /** `dayjs` format for weekdays names  @default `'d'` */
   weekdayFormat?: DateLabelFormat;
 
-  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `ScheduleProvider`. */
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
 
   /** Props passed down to the week number button */
@@ -82,7 +82,7 @@ export function YearViewMonth({
   highlightToday,
   groupedEvents,
 }: YearViewMonthProps) {
-  const ctx = useScheduleContext();
+  const ctx = useDatesContext();
   const theme = useMantineTheme();
   const today = dayjs();
 

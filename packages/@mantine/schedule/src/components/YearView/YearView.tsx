@@ -14,9 +14,9 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { useDatesContext } from '@mantine/dates';
 import { DateStringValue, ScheduleEventData, ScheduleViewLevel } from '../../types';
 import { getMonthsByQuarter, toDateString } from '../../utils';
-import { useScheduleContext } from '../Schedule/Schedule.context';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
 import {
   CombinedScheduleHeaderStylesNames,
@@ -152,7 +152,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
     ...others
   } = props;
 
-  const ctx = useScheduleContext();
+  const ctx = useDatesContext();
 
   const getStyles = useStyles<YearViewFactory>({
     name: __staticSelector,

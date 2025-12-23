@@ -16,6 +16,8 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { useDatesContext } from '@mantine/dates';
+import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
   DateLabelFormat,
   DateStringValue,
@@ -34,7 +36,6 @@ import {
   CurrentTimeIndicatorStylesNames,
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
-import { useScheduleContext } from '../Schedule/Schedule.context';
 import {
   RenderEventBody,
   ScheduleEvent,
@@ -93,7 +94,7 @@ export interface DayViewProps
   /** If set, the all-day slot is displayed below the header @default `true` */
   withAllDaySlot?: boolean;
 
-  /** Locale passed down to dayjs, overrides value defined on `ScheduleProvider` */
+  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
   locale?: string;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
@@ -140,6 +141,9 @@ export interface DayViewProps
 
   /** Function to customize event body, `event` object is passed as first argument */
   renderEventBody?: RenderEventBody;
+
+  /** Labels override */
+  labels?: ScheduleLabelsOverride;
 }
 
 export type DayViewFactory = Factory<{
@@ -205,6 +209,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     events,
     moreEventsProps,
     renderEventBody,
+    labels,
     ...others
   } = props;
 
@@ -237,7 +242,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     radius,
   };
 
-  const ctx = useScheduleContext();
+  const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
 
   const eventsData = getDayViewEvents({ events, date, startTime, endTime });
@@ -285,7 +290,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
       key={slot.startTime}
       mod={{ 'hour-start': slot.isHourStart }}
       __vars={{ '--slot-size': `${clampIntervalMinutes(intervalMinutes) / 60}` }}
-      aria-label={`${ctx.labels.timeSlot} ${slot.startTime} - ${slot.endTime}`}
+      aria-label={`${getLabel('timeSlot', labels)} ${slot.startTime} - ${slot.endTime}`}
     />
   ));
 
@@ -347,7 +352,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
         <div {...getStyles('dayViewSlotLabels')}>
           {withAllDaySlot && (
             <Box {...getStyles('dayViewSlotLabel')} mod={{ 'all-day': true }}>
-              {ctx.labels.allDay}
+              {getLabel('allDay', labels)}
             </Box>
           )}
           {slotsLabels}
@@ -371,7 +376,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
               <UnstyledButton
                 {...getStyles('dayViewSlot')}
                 mod={{ 'all-day': true }}
-                aria-label={`${ctx.labels.timeSlot} ${ctx.labels.allDay}`}
+                aria-label={`${getLabel('timeSlot', labels)} ${getLabel('allDay', labels)}`}
               />
             </div>
           )}

@@ -15,10 +15,11 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { useDatesContext } from '@mantine/dates';
 import { useDisclosure } from '@mantine/hooks';
+import { getLabel, ScheduleLabelsOverride } from '../../../labels';
 import { DateLabelFormat } from '../../../types';
 import { formatDate, getMonthsList, getYearsList } from '../../../utils';
-import { useScheduleContext } from '../../Schedule/Schedule.context';
 import { HeaderControl } from '../HeaderControl/HeaderControl';
 import classes from './MonthYearSelect.module.css';
 
@@ -37,7 +38,7 @@ export interface MonthYearSelectProps
   extends BoxProps, StylesApiProps<MonthYearSelectFactory>, ElementProps<'button'> {
   __staticSelector?: string;
 
-  /** Locale passed down to dayjs, overrides value defined on `ScheduleProvider` */
+  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
   locale?: string;
 
   /** Props passed down to the underlying Popover component */
@@ -78,6 +79,9 @@ export interface MonthYearSelectProps
 
   /** If set to false, months are not displayed in the dropdown @default true */
   withMonths?: boolean;
+
+  /** Labels override */
+  labels?: ScheduleLabelsOverride;
 }
 
 export type MonthYearSelectFactory = Factory<{
@@ -124,6 +128,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
     getYearControlProps,
     withMonths,
     id,
+    labels,
     ...others
   } = props;
 
@@ -145,7 +150,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
   const [opened, handlers] = useDisclosure(false);
 
   const today = new Date();
-  const ctx = useScheduleContext();
+  const ctx = useDatesContext();
   const _startYear = startYear ?? today.getFullYear() - 5;
   const _endYear = endYear ?? today.getFullYear() + 5;
   const hasActiveYear = yearValue !== undefined && yearValue >= _startYear && yearValue <= _endYear;
@@ -162,7 +167,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
           }
         }}
         mod={{ type: 'year', active: year === yearValue }}
-        aria-label={`${ctx.labels.selectYear} ${year}`}
+        aria-label={`${getLabel('selectYear', labels)} ${year}`}
         tabIndex={hasActiveYear ? (year === yearValue ? 0 : -1) : index === 0 ? 0 : -1}
         {...controlProps}
         onKeyDown={createScopedKeydownHandler({
@@ -208,7 +213,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
               className: controlProps?.className,
               style: controlProps?.style,
             })}
-            aria-label={`${ctx.labels.selectMonth} ${month.name}`}
+            aria-label={`${getLabel('selectMonth', labels)} ${month.name}`}
           >
             {month.name}
           </UnstyledButton>
@@ -254,12 +259,14 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
       >
         {withMonths && (
           <div data-list {...getStyles('monthYearSelectList')}>
-            <div {...getStyles('monthYearSelectLabel')}>{ctx.labels.month}</div>
+            <div {...getStyles('monthYearSelectLabel')}>{getLabel('month', labels)}</div>
             {months}
           </div>
         )}
         <div data-list {...getStyles('monthYearSelectList')}>
-          {withMonths && <div {...getStyles('monthYearSelectLabel')}>{ctx.labels.year}</div>}
+          {withMonths && (
+            <div {...getStyles('monthYearSelectLabel')}>{getLabel('year', labels)}</div>
+          )}
           {years}
         </div>
       </Popover.Dropdown>

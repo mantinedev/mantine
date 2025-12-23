@@ -1,9 +1,9 @@
 import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
+import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { getWeekNumber, toDateString } from '../../utils';
-import { ScheduleProvider } from '../Schedule/Schedule.context';
 import { MonthView, MonthViewProps, MonthViewStylesNames } from './MonthView';
 
 const defaultProps: MonthViewProps = {
@@ -100,11 +100,11 @@ describe('@mantine/schedule/MonthView', () => {
     expect(firstWeekDays[firstWeekDays.length - 1].textContent).toStrictEqual('1'); // Nov 1
   });
 
-  it('supports custom firstDayOfWeek (ScheduleProvider)', () => {
+  it('supports custom firstDayOfWeek (DatesProvider)', () => {
     const { container } = render(
-      <ScheduleProvider firstDayOfWeek={0}>
+      <DatesProvider settings={{ firstDayOfWeek: 0 }}>
         <MonthView {...defaultProps} withWeekDays />
-      </ScheduleProvider>
+      </DatesProvider>
     );
     const weekdays = container.querySelectorAll('.mantine-MonthView-monthViewWeekday');
     expect(weekdays.length).toStrictEqual(7);
@@ -118,11 +118,11 @@ describe('@mantine/schedule/MonthView', () => {
     expect(weekdays[0].textContent).toStrictEqual('пнд');
   });
 
-  it('supports locale (ScheduleProvider)', () => {
+  it('supports locale (DatesProvider)', () => {
     const { container } = render(
-      <ScheduleProvider locale="ru">
+      <DatesProvider settings={{ locale: 'ru' }}>
         <MonthView {...defaultProps} withWeekDays />
-      </ScheduleProvider>
+      </DatesProvider>
     );
     const weekdays = container.querySelectorAll('.mantine-MonthView-monthViewWeekday');
     expect(weekdays[0].textContent).toStrictEqual('пнд');

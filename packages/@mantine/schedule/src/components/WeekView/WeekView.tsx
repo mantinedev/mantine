@@ -19,6 +19,8 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { useDatesContext } from '@mantine/dates';
+import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
   DateLabelFormat,
   DateStringValue,
@@ -39,7 +41,6 @@ import {
   CurrentTimeIndicator,
   CurrentTimeIndicatorStylesNames,
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
-import { useScheduleContext } from '../Schedule/Schedule.context';
 import { ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import {
   CombinedScheduleHeaderStylesNames,
@@ -109,7 +110,7 @@ export interface WeekViewProps
   /** `dayjs` format for weekdays names. @default `'ddd'` */
   weekdayFormat?: DateLabelFormat;
 
-  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `ScheduleProvider`. */
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
 
   /** If set to false, weekend days are hidden @default `true` */
@@ -124,7 +125,7 @@ export interface WeekViewProps
   /** Props passed down to the `ScrollArea.Autosize` component */
   scrollAreaProps?: ScrollAreaAutosizeProps & DataAttributes;
 
-  /** Locale passed down to dayjs, overrides value defined on `ScheduleProvider` */
+  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
   locale?: string;
 
   /** If set, the week number is displayed at the top left corner @default `true` */
@@ -168,6 +169,9 @@ export interface WeekViewProps
 
   /** Height of all-day slot @default `48px` */
   allDaySlotHeight?: React.CSSProperties['height'];
+
+  /** Labels override */
+  labels?: ScheduleLabelsOverride;
 }
 
 export type WeekViewFactory = Factory<{
@@ -243,6 +247,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     events,
     allDaySlotHeight,
     slotHeight,
+    labels,
     ...others
   } = props;
 
@@ -276,7 +281,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   };
 
   const [scrolled, setScrolled] = useState(false);
-  const ctx = useScheduleContext();
+  const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
 
   const weekEvents = getWeekViewEvents({
@@ -323,7 +328,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     <UnstyledButton
       {...getStyles('weekViewDayLabel')}
       key={day}
-      aria-label={`${ctx.labels.weekday} ${dayjs(day).format('YYYY-MM-DD')}`}
+      aria-label={`${getLabel('weekday', labels)} ${dayjs(day).format('YYYY-MM-DD')}`}
       mod={{
         today: dayjs(day).isSame(dayjs(), 'day') && !!highlightToday,
         weekend: ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek),
@@ -371,7 +376,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 
   const allDaySlots = weekdays.map((day) => (
     <UnstyledButton
-      aria-label={`${ctx.labels.allDay} ${dayjs(day).format('YYYY-MM-DD')}`}
+      aria-label={`${getLabel('allDay', labels)} ${dayjs(day).format('YYYY-MM-DD')}`}
       key={day}
       {...getStyles('weekViewDaySlot')}
     />
@@ -470,7 +475,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
             <div {...getStyles('weekViewCorner')} key="corner">
               {withWeekNumber && (
                 <>
-                  <div {...getStyles('weekViewWeekLabel')}>{ctx.labels.week}</div>
+                  <div {...getStyles('weekViewWeekLabel')}>{getLabel('week', labels)}</div>
                   <div {...getStyles('weekViewWeekNumber')}>{getWeekNumber(date)}</div>
                 </>
               )}
@@ -481,7 +486,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 
           {withAllDaySlots && (
             <div {...getStyles('weekViewAllDaySlots')}>
-              <div {...getStyles('weekViewAllDaySlotsLabel')}>{ctx.labels.allDay}</div>
+              <div {...getStyles('weekViewAllDaySlotsLabel')}>{getLabel('allDay', labels)}</div>
               <div {...getStyles('weekViewAllDaySlotsList')}>
                 <Box
                   {...getStyles('weekViewAllDaySlotsEvents')}

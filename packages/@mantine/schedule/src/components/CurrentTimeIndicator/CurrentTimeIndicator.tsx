@@ -13,10 +13,10 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { useDatesContext } from '@mantine/dates';
 import { useInterval } from '@mantine/hooks';
 import { DateLabelFormat } from '../../types';
 import { formatDate, getCurrentTimePosition, isInTimeRange } from '../../utils';
-import { useScheduleContext } from '../Schedule/Schedule.context';
 import classes from './CurrentTimeIndicator.module.css';
 
 export type CurrentTimeIndicatorStylesNames =
@@ -128,7 +128,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
     rootSelector: 'currentTimeIndicator',
   });
 
-  const ctx = useScheduleContext();
+  const ctx = useDatesContext();
   const [offsetPercent, setOffsetPercent] = useState(
     getCurrentTimePosition({ startTime, endTime })
   );

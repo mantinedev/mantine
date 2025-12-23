@@ -1,9 +1,9 @@
 import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
+import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { toDateString } from '../../utils';
-import { ScheduleProvider } from '../Schedule/Schedule.context';
 import { DayView, DayViewProps, DayViewStylesNames } from './DayView';
 
 const defaultProps: DayViewProps = {
@@ -95,11 +95,11 @@ describe('@mantine/schedule/DayView', () => {
     expect(screen.getByText('ноябрь 3, 2025')).toBeInTheDocument();
   });
 
-  it('supports locale (ScheduleProvider)', () => {
+  it('supports locale (DatesProvider)', () => {
     render(
-      <ScheduleProvider locale="ru">
+      <DatesProvider settings={{ locale: 'ru' }}>
         <DayView {...defaultProps} />
-      </ScheduleProvider>
+      </DatesProvider>
     );
 
     expect(screen.getByText('ноябрь 3, 2025')).toBeInTheDocument();

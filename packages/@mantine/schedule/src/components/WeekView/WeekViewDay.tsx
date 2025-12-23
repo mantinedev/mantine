@@ -1,8 +1,9 @@
 import dayjs from 'dayjs';
 import { Box, GetStylesApi, UnstyledButton } from '@mantine/core';
+import { useDatesContext } from '@mantine/dates';
+import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import { DateStringValue, DayOfWeek } from '../../types';
 import { DayTimeInterval } from '../../utils';
-import { useScheduleContext } from '../Schedule/Schedule.context';
 import type { WeekViewFactory, WeekViewHighlightToday } from './WeekView';
 
 export interface WeekViewDayProps {
@@ -18,11 +19,14 @@ export interface WeekViewDayProps {
   /** `weekday` – highlights today in the weekday row, `column` – highlights today in the entire column */
   highlightToday?: WeekViewHighlightToday;
 
-  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `ScheduleProvider`. */
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
 
   /** Events list */
   children?: React.ReactNode;
+
+  /** Labels override */
+  labels?: ScheduleLabelsOverride;
 }
 
 export function WeekViewDay({
@@ -32,8 +36,9 @@ export function WeekViewDay({
   getStyles,
   weekendDays,
   children,
+  labels,
 }: WeekViewDayProps) {
-  const ctx = useScheduleContext();
+  const ctx = useDatesContext();
   const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek);
   const today = dayjs(day).isSame(dayjs(), 'day') && highlightToday === 'column';
 
@@ -42,7 +47,7 @@ export function WeekViewDay({
       key={slot.startTime}
       {...getStyles('weekViewDaySlot')}
       mod={{ 'hour-start': slot.isHourStart }}
-      aria-label={`${ctx.labels.timeSlot} ${dayjs(day).format('YYYY-MM-DD')} ${slot.startTime} - ${slot.endTime}`}
+      aria-label={`${getLabel('timeSlot', labels)} ${dayjs(day).format('YYYY-MM-DD')} ${slot.startTime} - ${slot.endTime}`}
     />
   ));
 

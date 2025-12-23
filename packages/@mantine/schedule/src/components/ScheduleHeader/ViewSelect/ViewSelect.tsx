@@ -10,8 +10,8 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { getLabel, ScheduleLabelsOverride } from '../../../labels';
 import { ScheduleViewLevel } from '../../../types';
-import { useScheduleContext } from '../../Schedule/Schedule.context';
 import { HeaderControl } from '../HeaderControl/HeaderControl';
 import classes from './ViewSelect.module.css';
 
@@ -32,6 +32,9 @@ export interface ViewSelectProps
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
+
+  /** Labels override */
+  labels?: ScheduleLabelsOverride;
 }
 
 export type ViewSelectFactory = Factory<{
@@ -60,6 +63,7 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
     views,
     __staticSelector,
     radius,
+    labels,
     ...others
   } = props;
 
@@ -77,18 +81,17 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
     rootSelector: 'viewSelect',
   });
 
-  const ctx = useScheduleContext();
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<ViewSelectFactory>({
     classNames,
     styles,
     props,
   });
 
-  const labels: Record<ScheduleViewLevel, string> = {
-    day: ctx.labels.switchToDayView,
-    week: ctx.labels.switchToWeekView,
-    month: ctx.labels.switchToMonthView,
-    year: ctx.labels.switchToYearView,
+  const switchLabels: Record<ScheduleViewLevel, string> = {
+    day: getLabel('switchToDayView', labels),
+    week: getLabel('switchToWeekView', labels),
+    month: getLabel('switchToMonthView', labels),
+    year: getLabel('switchToYearView', labels),
   };
 
   const items = views.map((view) => (
@@ -100,10 +103,10 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       __staticSelector={__staticSelector}
-      aria-label={labels[view]}
+      aria-label={switchLabels[view]}
       radius={radius}
     >
-      {ctx.labels[view]}
+      {getLabel(view, labels)}
     </HeaderControl>
   ));
 

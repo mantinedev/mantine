@@ -4060,9 +4060,11 @@ __metadata:
   dependencies:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
+    "@mantine/dates": "workspace:*"
     "@mantine/hooks": "workspace:*"
   peerDependencies:
     "@mantine/core": ">=7.0.0"
+    "@mantine/dates": ">=7.0.0"
     "@mantine/hooks": ">=7.0.0"
     react: ^18.x || ^19.x
     react-dom: ^18.x || ^19.x

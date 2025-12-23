@@ -1,9 +1,9 @@
 import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
+import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { getWeekNumber, toDateString } from '../../utils';
-import { ScheduleProvider } from '../Schedule/Schedule.context';
 import { YearView, YearViewProps, YearViewStylesNames } from './YearView';
 
 const defaultProps: YearViewProps = {
@@ -116,11 +116,11 @@ describe('@mantine/schedule/YearView', () => {
     expect(weekdays[6].textContent).toBe('в');
   });
 
-  it('changes locale via ScheduleProvider', () => {
+  it('changes locale via DatesProvider', () => {
     const { container } = render(
-      <ScheduleProvider locale="ru">
+      <DatesProvider settings={{ locale: 'ru' }}>
         <YearView {...defaultProps} />
-      </ScheduleProvider>
+      </DatesProvider>
     );
 
     const januaryCaption = container.querySelector('.mantine-YearView-yearViewMonthCaption')!;

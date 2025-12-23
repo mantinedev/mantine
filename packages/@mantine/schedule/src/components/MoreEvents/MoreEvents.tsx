@@ -14,8 +14,8 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import { ScheduleEventData } from '../../types';
-import { useScheduleContext } from '../Schedule/Schedule.context';
 import { RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import classes from './MoreEvents.module.css';
 
@@ -51,6 +51,9 @@ export interface MoreEventsProps
 
   /** Function to customize event body, `event` object is passed as first argument */
   renderEventBody?: RenderEventBody;
+
+  /** Labels override */
+  labels?: ScheduleLabelsOverride;
 }
 
 export type MoreEventsFactory = Factory<{
@@ -84,10 +87,9 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
     modalTitle,
     renderEventBody,
     id,
+    labels,
     ...others
   } = props;
-
-  const ctx = useScheduleContext();
   const [dropdownOpened, dropdownHandlers] = useDisclosure();
 
   const getStyles = useStyles<MoreEventsFactory>({
@@ -166,7 +168,7 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
             onClick={() => dropdownHandlers.toggle()}
             {...others}
           >
-            {ctx.labels.moreLabel(moreEventsCount)}
+            {getLabel('moreLabel', labels)(moreEventsCount)}
           </UnstyledButton>
         </Popover.Target>
 

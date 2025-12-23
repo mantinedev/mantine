@@ -13,7 +13,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { useScheduleContext } from '../../Schedule/Schedule.context';
+import { getLabel, ScheduleLabelsOverride } from '../../../labels';
 import classes from './HeaderControl.module.css';
 
 export type HeaderControlStylesNames = 'headerControl';
@@ -36,6 +36,9 @@ export interface HeaderControlProps
 
   /** If set to `false`, the control will not be clickable  */
   interactive?: boolean;
+
+  /** Labels override */
+  labels?: ScheduleLabelsOverride;
 }
 
 export type HeaderControlFactory = Factory<{
@@ -105,10 +108,9 @@ HeaderControl.classes = classes;
 
 export function ScheduleHeaderNext(props: HeaderControlProps) {
   const { dir } = useDirection();
-  const ctx = useScheduleContext();
 
   return (
-    <HeaderControl data-type="next" aria-label={ctx.labels.next} square {...props}>
+    <HeaderControl data-type="next" aria-label={getLabel('next', props.labels)} square {...props}>
       <AccordionChevron transform={`rotate(${dir === 'rtl' ? 90 : -90} 0 0)`} />
     </HeaderControl>
   );
@@ -116,21 +118,23 @@ export function ScheduleHeaderNext(props: HeaderControlProps) {
 
 export function ScheduleHeaderPrevious(props: HeaderControlProps) {
   const { dir } = useDirection();
-  const ctx = useScheduleContext();
 
   return (
-    <HeaderControl data-type="previous" aria-label={ctx.labels.previous} square {...props}>
+    <HeaderControl
+      data-type="previous"
+      aria-label={getLabel('previous', props.labels)}
+      square
+      {...props}
+    >
       <AccordionChevron transform={`rotate(${dir === 'rtl' ? -90 : 90} 0 0)`} />
     </HeaderControl>
   );
 }
 
 export function ScheduleHeaderToday(props: HeaderControlProps) {
-  const ctx = useScheduleContext();
-
   return (
-    <HeaderControl data-type="today" {...props}>
-      {ctx.labels.today}
+    <HeaderControl data-type="today" aria-label={getLabel('today', props.labels)} {...props}>
+      {getLabel('today', props.labels)}
     </HeaderControl>
   );
 }

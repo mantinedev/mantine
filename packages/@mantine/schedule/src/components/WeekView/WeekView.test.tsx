@@ -1,9 +1,9 @@
 import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
+import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { toDateString } from '../../utils';
-import { ScheduleProvider } from '../Schedule/Schedule.context';
 import { WeekView, WeekViewProps, WeekViewStylesNames } from './WeekView';
 
 const defaultProps: WeekViewProps = {
@@ -121,11 +121,11 @@ describe('@mantine/schedule/WeekView', () => {
     ).toBe('Weekday 2025-11-02');
   });
 
-  it('supports custom firstDayOfWeek (ScheduleProvider)', () => {
+  it('supports custom firstDayOfWeek (DatesProvider)', () => {
     const { container } = render(
-      <ScheduleProvider firstDayOfWeek={0}>
+      <DatesProvider settings={{ firstDayOfWeek: 0 }}>
         <WeekView {...defaultProps} />
-      </ScheduleProvider>
+      </DatesProvider>
     );
 
     expect(
@@ -162,11 +162,11 @@ describe('@mantine/schedule/WeekView', () => {
     expect(weekends[1]?.getAttribute('aria-label')).toBe('Weekday 2025-11-04');
   });
 
-  it('supports weekendDays (ScheduleProvider)', () => {
+  it('supports weekendDays (DatesProvider)', () => {
     const { container } = render(
-      <ScheduleProvider weekendDays={[1, 2]}>
+      <DatesProvider settings={{ weekendDays: [1, 2] }}>
         <WeekView {...defaultProps} />
-      </ScheduleProvider>
+      </DatesProvider>
     );
 
     const weekends = container.querySelectorAll('.mantine-WeekView-weekViewDayLabel[data-weekend]');
@@ -235,11 +235,11 @@ describe('@mantine/schedule/WeekView', () => {
     );
   });
 
-  it('supports locale (ScheduleProvider)', () => {
+  it('supports locale (DatesProvider)', () => {
     const { container } = render(
-      <ScheduleProvider locale="ru">
+      <DatesProvider settings={{ locale: 'ru' }}>
         <WeekView {...defaultProps} />
-      </ScheduleProvider>
+      </DatesProvider>
     );
     expect(container.querySelector('.mantine-WeekView-weekViewDayWeekday')).toHaveTextContent(
       'пнд'

@@ -15,6 +15,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { useDatesContext } from '@mantine/dates';
 import {
   DateLabelFormat,
   DateStringValue,
@@ -30,7 +31,6 @@ import {
   toDateString,
 } from '../../utils';
 import { MoreEvents, MoreEventsProps } from '../MoreEvents/MoreEvents';
-import { useScheduleContext } from '../Schedule/Schedule.context';
 import { ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
 import {
@@ -74,7 +74,7 @@ export interface MonthViewProps
   /** If set, weekdays names are displayed in the first row @default `true` */
   withWeekDays?: boolean;
 
-  /** Locale passed down to dayjs, overrides value defined on `ScheduleProvider` */
+  /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
   locale?: string;
 
   /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default `1` – Monday */
@@ -83,7 +83,7 @@ export interface MonthViewProps
   /** `dayjs` format for weekdays names. By default, the first letter of the weekday. */
   weekdayFormat?: DateLabelFormat;
 
-  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `ScheduleProvider`. */
+  /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
 
   /** Props passed down to the week number button */
@@ -228,7 +228,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     radius,
   };
 
-  const ctx = useScheduleContext();
+  const ctx = useDatesContext();
 
   const monthEvents = getMonthViewEvents({
     date,
