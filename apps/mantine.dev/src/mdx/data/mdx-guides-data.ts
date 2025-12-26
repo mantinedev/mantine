@@ -8,6 +8,13 @@ export const MDX_GUIDES_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
+  CustomComponents: {
+    title: 'Custom components',
+    slug: '/guides/custom-components',
+    search: 'factory, genericFactory, useStyles, varsResolver',
+    hideHeader: true,
+  },
+
   NextJs: {
     title: 'Usage with Next.js',
     slug: '/guides/next',

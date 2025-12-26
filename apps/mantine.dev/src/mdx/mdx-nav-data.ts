@@ -127,7 +127,12 @@ const THEMING_PAGES_GROUP: MdxPagesCategory[] = [
   },
   {
     category: 'Other',
-    pages: [MDX_DATA.StylesPerformance, MDX_DATA.Polymorphic, MDX_DATA.ControlledVsUncontrolled],
+    pages: [
+      MDX_DATA.StylesPerformance,
+      MDX_DATA.Polymorphic,
+      MDX_DATA.CustomComponents,
+      MDX_DATA.ControlledVsUncontrolled,
+    ],
   },
 ];
 
