@@ -1,4 +1,4 @@
-export { factory, genericFactory, getWithProps } from './factory';
+export { factory, genericFactory } from './factory';
 export { polymorphicFactory } from './polymorphic-factory';
 export { createPolymorphicComponent, polymorphic } from './create-polymorphic-component';
 export type {

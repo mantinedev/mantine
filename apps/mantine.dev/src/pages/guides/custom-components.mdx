@@ -92,7 +92,7 @@ export const ExampleComponent = factory<ExampleComponentFactory>((_props) => {
   );
 });
 
-ExampleComponent.displayName = '@mantine/core/ExampleComponent';
+ExampleComponent.displayName = 'ExampleComponent';
 ExampleComponent.classes = classes;
 ```
 
@@ -138,7 +138,76 @@ export type ExampleComponentFactory = Factory<{
 
 ## factory function
 
+`factory` function is used to type props and assign shared static properties: `extend` and `withProps`.
+
+```tsx
+export const ExampleComponent = factory<ExampleComponentFactory>((_props) => {
+  // ... component body
+});
+
+// Optionally, you can assign displayName and classes
+ExampleComponent.displayName = 'ExampleComponent';
+ExampleComponent.classes = classes;
+```
+
 ## Box component
+
+[Box](/core/box) component is a base for all other components. To create custom components,
+use it as the root element and spread `...others` props to it to support [style props](/styles/style-props).
+
+To add [style props](/styles/style-props) types to component, extend `BoxProps`.
+
+```tsx
+// Extend props with `BoxProps` to add style props types
+export interface ExampleComponentProps
+  extends BoxProps, StylesApiProps<ExampleComponentFactory>, ElementProps<'div'> {
+}
+
+export const ExampleComponent = factory<ExampleComponentFactory>((_props) => {
+  const props = useProps('ExampleComponent', defaultProps, _props);
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    attributes,
+    radius,
+    children,
+    ...others
+  } = props;
+
+  // Spread ...others props to the Box component to support style props
+  return (
+    <Box {...others}>{children}</Box>
+  );
+});
+```
+
+## ElementProps type
+
+`ElementProps` is used to retrieve the props a component accepts. Can either be passed a string,
+indicating a DOM element (e.g. `'div'`, `'span'`, etc.) or the type of a React component. The second
+type argument is optional and may be used to omit props types from the original component/element.
+
+`ElementProps` reassigns `style` prop signature to make it compatible with Mantine components and allow
+CSS variables usage.
+
+Examples of `ElementProps` type usage:
+```tsx
+// Root element is `div`, extend component props with ElementProps<'div'>
+export interface ExampleComponentProps extends ElementProps<'div'> {}
+
+// Type conflict: `input` element has html attributes `color` and `size`,
+// but we want to define our own types. To fix types conflict, use the second
+// type argument with `'color' | 'size'` union to omit `color` and `size` from
+// `input` html props.
+export interface ExampleComponentProps extends ElementProps<'input', 'color' | 'size'> {
+  color: 'blue' | 'red';
+  size: 'sm' | 'lg';
+}
+```
 
 ## useProps hook
 

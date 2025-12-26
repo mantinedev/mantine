@@ -77,16 +77,6 @@ export function identity<T>(value: T): T {
   return value;
 }
 
-export function getWithProps<T, Props>(Component: T): (props: Partial<Props>) => T {
-  const _Component = Component as any;
-  return (fixedProps: any) => {
-    const Extended = (props: any) => <_Component {...fixedProps} {...props} />;
-    Extended.extend = _Component.extend;
-    Extended.displayName = `WithProps(${_Component.displayName})`;
-    return Extended as any;
-  };
-}
-
 export function factory<Payload extends FactoryPayload>(
   ui: (props: Payload['props'] & { ref?: React.Ref<Payload['ref']> }) => React.ReactNode
 ) {
