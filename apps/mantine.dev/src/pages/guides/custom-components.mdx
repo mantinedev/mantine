@@ -211,7 +211,131 @@ export interface ExampleComponentProps extends ElementProps<'input', 'color' | '
 
 ## useProps hook
 
+`useProps` hook is used to support [default props](/theming/default-props). It accepts arguments:
+- Component name which is used to reference component in [theme](/theming/theme-object)
+- Default props on component level
+- Component props
+
+`useProps` merges props using the order:
+1. Component props – highest priority
+2. [Default props](/theming/default-props) on theme – lower priority
+3. Default props define on component level – used only if prop is not defined in previous steps
+
+Example of using `useProps`:
+
+```tsx
+const defaultProps = {
+  radius: 'md',
+} satisfies Partial<ExampleComponentProps>;
+
+export const ExampleComponent = factory<ExampleComponentFactory>((_props) => {
+  const props = useProps('ExampleComponent', defaultProps, _props);
+  // Extract individual props only after processing with useProps
+  const {
+    classNames,
+    className,
+    style,
+    styles,
+    unstyled,
+    vars,
+    attributes,
+    radius,
+    children,
+    ...others
+  } = props;
+
+  // ... component body
+});
+```
+
+`defaultProps` passed to `useProps` must use `satisfies Partial<ExampleComponentProps>` type assertion
+to correctly type props:
+
+```tsx
+export interface ExampleComponentProps
+  extends BoxProps, StylesApiProps<ExampleComponentFactory>, ElementProps<'div'> {
+  /** Component border-radius */
+  radius?: MantineRadius;
+}
+
+// ✅ useProps can infer types correctly
+// `radius` prop is `MantineRadius`
+const defaultProps = {
+  radius: 'md',
+} satisfies Partial<ExampleComponentProps>;
+
+// ❌ useProps cannot infer types correctly
+// `radius` prop is `MantineRadius | undefined`
+const defaultProps: Partial<ExampleComponentProps> = {
+  radius: 'md',
+};
+```
+
+You can use [defaultProps](/theming/default-props) the following way:
+
+```tsx
+import { MantineProvider, Button, Group, createTheme } from '@mantine/core';
+import { ExampleComponent } from './ExampleComponent';
+
+const theme = createTheme({
+  components: {
+    ExampleComponent: ExampleComponent.extend({
+      defaultProps: {
+        radius: 'sm',
+      },
+    }),
+  },
+});
+```
+
 ## useStyles hook
+
+`useStyles` hook is used to support [Styles API](/styles/styles-api) features:
+`classNames`, `styles`, `attributes` and other related properties.
+
+`useStyles` returns `getStyles` function, which returns an object that should be
+spread (`{...getStyles('root')}`) to an element.
+
+
+```tsx
+// 🔝 See full component code above
+const getStyles = useStyles<ExampleComponentFactory>({
+  // Component name, used to generate static selectors (.mantine-ExampleComponent-root)
+  // and for `classNames`, `styles` support in theme object
+  name: 'ExampleComponent',
+
+  // CSS modules classes, usually imported from `*.module.css` file directly
+  classes,
+
+  // Component props returned from `useProps` hook,
+  // used for resolving `classNames` and `styles` with callback function notation
+  props,
+
+  // Element that must have `className` and `style` passed to the component
+  // optional, `root` is the default value
+  rootSelector: 'root',
+
+  // className and style are added to the root element (rootSelector)
+  className,
+  style,
+
+  // classNames, attributes and styles are resolved automatically by useStyles hook
+  classNames,
+  attributes,
+  styles,
+
+  // `getStyles` omits all styles if unstyled is set
+  unstyled,
+
+  // CSS variables resolver, defined in component file, described later
+  varsResolver,
+
+  // CSS variables resolved override, defined in user application
+  vars,
+});
+```
+
+## getStyles function
 
 ## varsResolver
 
