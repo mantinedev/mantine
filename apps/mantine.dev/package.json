@@ -67,6 +67,7 @@
     "embla-carousel": "^8.6.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
+    "fuse.js": "^7.1.0",
     "github-slugger": "^2.0.0",
     "highlight.js": "^11.11.1",
     "lowlight": "^3.3.0",

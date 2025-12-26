@@ -1,3 +1,4 @@
+import Fuse from 'fuse.js';
 import { Highlight, Table, Text } from '@mantine/core';
 import docgenData from '@/.docgen/docgen.json';
 import { HtmlText } from '@/components/HtmlText';
@@ -34,45 +35,60 @@ export function PropsTable({ component, query }: PropsTableProps) {
     return <TableError errorOf="props" />;
   }
 
-  const rows = Object.keys(PROPS_DATA[component].props)
-    .filter((propKey) =>
-      PROPS_DATA[component].props[propKey].name.toLowerCase().includes(query.toLowerCase().trim())
-    )
-    .map((propKey) => {
-      const prop = PROPS_DATA[component].props[propKey];
+  const props = PROPS_DATA[component].props;
+  const propsArray = Object.keys(props).map((propKey) => ({
+    key: propKey,
+    ...props[propKey],
+  }));
 
-      return (
-        <Table.Tr key={propKey} data-props-table-row>
-          <Table.Td style={{ whiteSpace: 'nowrap' }}>
-            <Highlight
-              className={classes.propName}
-              highlight={query}
-              component="span"
-              data-deprecated={prop.description.includes('@deprecated') || undefined}
-              title={prop.name}
-            >
-              {prop.name}
-            </Highlight>
-            {prop.required && (
-              <Text component="sup" c="red">
-                {' '}
-                *
-              </Text>
-            )}
-          </Table.Td>
+  let filteredPropKeys = Object.keys(props);
 
-          <Table.Td>
-            <TableInlineCode>{prepareType(prop.type.name)}</TableInlineCode>
-          </Table.Td>
-          <Table.Td>
-            <HtmlText fz="sm">{prop.description}</HtmlText>
-            {prop.defaultValue && (
-              <HtmlText fz="sm" display="block">{`Default value: ${prop.defaultValue}`}</HtmlText>
-            )}
-          </Table.Td>
-        </Table.Tr>
-      );
+  if (query.trim()) {
+    const fuse = new Fuse(propsArray, {
+      keys: ['name', 'description', 'type.name'],
+      threshold: 0.3,
+      minMatchCharLength: 1,
     });
+
+    const results = fuse.search(query);
+    filteredPropKeys = results.map((result) => result.item.key);
+  }
+
+  const rows = filteredPropKeys.map((propKey) => {
+    const prop = PROPS_DATA[component].props[propKey];
+
+    return (
+      <Table.Tr key={propKey} data-props-table-row>
+        <Table.Td style={{ whiteSpace: 'nowrap' }}>
+          <Highlight
+            className={classes.propName}
+            highlight={query}
+            component="span"
+            data-deprecated={prop.description.includes('@deprecated') || undefined}
+            title={prop.name}
+          >
+            {prop.name}
+          </Highlight>
+          {prop.required && (
+            <Text component="sup" c="red">
+              {' '}
+              *
+            </Text>
+          )}
+        </Table.Td>
+
+        <Table.Td>
+          <TableInlineCode>{prepareType(prop.type.name)}</TableInlineCode>
+        </Table.Td>
+        <Table.Td>
+          <HtmlText fz="sm">{prop.description}</HtmlText>
+          {prop.defaultValue && (
+            <HtmlText fz="sm" display="block">{`Default value: ${prop.defaultValue}`}</HtmlText>
+          )}
+        </Table.Td>
+      </Table.Tr>
+    );
+  });
 
   return (
     <Table.ScrollContainer minWidth={800} data-visible={rows.length > 0 || undefined}>

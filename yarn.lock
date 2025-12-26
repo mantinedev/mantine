@@ -9518,6 +9518,7 @@ __metadata:
     embla-carousel: "npm:^8.6.0"
     embla-carousel-autoplay: "npm:^8.6.0"
     embla-carousel-react: "npm:^8.6.0"
+    fuse.js: "npm:^7.1.0"
     github-slugger: "npm:^2.0.0"
     highlight.js: "npm:^11.11.1"
     lowlight: "npm:^3.3.0"

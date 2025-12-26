@@ -1,9 +1,54 @@
 import { useRouter } from 'next/router';
 import { IconSearch } from '@tabler/icons-react';
-import { createSpotlight, Spotlight } from '@mantine/spotlight';
+import { createSpotlight, Spotlight, SpotlightFilterFunction } from '@mantine/spotlight';
+import Fuse from 'fuse.js';
 import { MDX_NAV_SEARCH_PAGES } from '@/mdx';
 
 export const [searchStore, searchHandlers] = createSpotlight();
+
+const fuzzySearchFilter: SpotlightFilterFunction = (query, actions) => {
+  if (!query.trim()) {
+    return actions;
+  }
+
+  // Flatten actions to search through them
+  const flatActions = actions.reduce<any[]>((acc, item) => {
+    if ('actions' in item) {
+      return [...acc, ...item.actions.map((action) => ({ ...action, group: item.group }))];
+    }
+    return [...acc, item];
+  }, []);
+
+  // Create Fuse instance with fuzzy search configuration
+  const fuse = new Fuse(flatActions, {
+    keys: ['label', 'description', 'keywords'],
+    threshold: 0.3,
+    minMatchCharLength: 1,
+  });
+
+  const results = fuse.search(query).map((result) => result.item);
+
+  // Reconstruct groups if they exist
+  const groups: Record<string, any> = {};
+  const result: any[] = [];
+
+  results.forEach((action) => {
+    if (action.group) {
+      if (!groups[action.group]) {
+        groups[action.group] = { pushed: false, data: { group: action.group, actions: [] } };
+      }
+      groups[action.group].data.actions.push(action);
+      if (!groups[action.group].pushed) {
+        groups[action.group].pushed = true;
+        result.push(groups[action.group].data);
+      }
+    } else {
+      result.push(action);
+    }
+  });
+
+  return result;
+};
 
 export function Search() {
   const router = useRouter();
@@ -23,6 +68,7 @@ export function Search() {
       shortcut={['mod + K', 'mod + P', '/']}
       actions={actions}
       tagsToIgnore={[]}
+      filter={fuzzySearchFilter}
       highlightQuery
       clearQueryOnClose
       radius="md"
