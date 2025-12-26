@@ -130,6 +130,30 @@ The example below renders 3000 actions, but only 7 of them are displayed at a ti
 
 <Demo data={SpotlightDemos.limit} />
 
+## Custom filter function
+
+By default, `Spotlight` uses a simple filter that matches actions by `label`, `description`, and `keywords`.
+You can customize the filtering logic by providing a custom `filter` function. The `filter` function
+receives the search query and actions array, and should return filtered actions.
+
+The custom `filter` function signature:
+
+```tsx
+type SpotlightFilterFunction = (
+  query: string,
+  actions: SpotlightActions[]
+) => SpotlightActions[];
+```
+
+## Fuzzy search with fuse.js
+
+You can implement fuzzy search using [fuse.js](https://fusejs.io/) library. This is useful if you want
+to match actions even with typos or partial matches:
+
+<Demo data={SpotlightDemos.fuzzySearch} />
+
+
+
 ## Scrollable actions list
 
 By default, the `Spotlight` actions list is not scrollable. If you have a lot of actions that

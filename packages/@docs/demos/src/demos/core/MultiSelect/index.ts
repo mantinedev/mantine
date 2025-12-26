@@ -26,3 +26,4 @@ export { withinPopover } from './MultiSelect.demo.withinPopover';
 export { dropdownOffset } from './MultiSelect.demo.dropdownOffset';
 export { renderOption } from './MultiSelect.demo.renderOption';
 export { dropdownWidth } from './MultiSelect.demo.dropdownWidth';
+export { fuzzySearch } from './MultiSelect.demo.fuzzySearch';

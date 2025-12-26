@@ -26,3 +26,4 @@ export { dropdownOffset } from './Select.demo.dropdownOffset';
 export { renderOption } from './Select.demo.renderOption';
 export { dropdownWidth } from './Select.demo.dropdownWidth';
 export { autoSelectOnBlur } from './Select.demo.autoSelectOnBlur';
+export { fuzzySearch } from './Select.demo.fuzzySearch';

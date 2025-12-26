@@ -32,3 +32,8 @@ export const Demo_groups = {
   name: '⭐ Demo: groups',
   render: renderDemo(demos.groups),
 };
+
+export const Demo_fuzzySearch = {
+  name: '⭐ Demo: fuzzySearch',
+  render: renderDemo(demos.fuzzySearch),
+};

@@ -27,3 +27,4 @@ export { dropdownWidth } from './TagsInput.demo.dropdownWidth';
 export { acceptValueOnBlur } from './TagsInput.demo.acceptValueOnBlur';
 export { selectFirst } from './TagsInput.demo.selectFirst';
 export { isDuplicate } from './TagsInput.demo.isDuplicate';
+export { fuzzySearch } from './TagsInput.demo.fuzzySearch';
