@@ -133,4 +133,45 @@ describe('@mantine/core/Checkbox', () => {
     render(<Checkbox {...defaultProps} rootRef={ref} />);
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
   });
+
+  it('sets aria-describedby on input when error is present', () => {
+    render(<Checkbox label="test-label" error="test-error" />);
+    const input = screen.getByRole('checkbox');
+    const ariaDescribedBy = input.getAttribute('aria-describedby');
+
+    expect(ariaDescribedBy).toBeTruthy();
+    expect(screen.getByText('test-error')).toHaveAttribute('id', ariaDescribedBy);
+  });
+
+  it('sets aria-describedby on input when description is present', () => {
+    render(<Checkbox label="test-label" description="test-description" />);
+    const input = screen.getByRole('checkbox');
+    const ariaDescribedBy = input.getAttribute('aria-describedby');
+
+    expect(ariaDescribedBy).toBeTruthy();
+    expect(screen.getByText('test-description')).toHaveAttribute('id', ariaDescribedBy);
+  });
+
+  it('sets aria-describedby on input referencing both description and error when both are present', () => {
+    render(<Checkbox label="test-label" description="test-description" error="test-error" />);
+    const input = screen.getByRole('checkbox');
+    const ariaDescribedBy = input.getAttribute('aria-describedby');
+
+    expect(ariaDescribedBy).toBeTruthy();
+    const ids = ariaDescribedBy!.split(' ');
+    expect(ids).toHaveLength(2);
+
+    const descriptionElement = screen.getByText('test-description');
+    const errorElement = screen.getByText('test-error');
+
+    expect(ids).toContain(descriptionElement.getAttribute('id')!);
+    expect(ids).toContain(errorElement.getAttribute('id')!);
+  });
+
+  it('does not set aria-describedby when neither description nor error are present', () => {
+    render(<Checkbox label="test-label" />);
+    const input = screen.getByRole('checkbox');
+
+    expect(input.getAttribute('aria-describedby')).toBeNull();
+  });
 });
