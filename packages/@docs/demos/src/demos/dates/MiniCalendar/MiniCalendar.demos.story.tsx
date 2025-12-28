@@ -27,3 +27,13 @@ export const Demo_minMax = {
   name: '⭐ Demo: minMax',
   render: renderDemo(demos.minMax),
 };
+
+export const Demo_withWeekday = {
+  name: '⭐ Demo: withWeekday',
+  render: renderDemo(demos.withWeekday),
+};
+
+export const Demo_weekdayFormat = {
+  name: '⭐ Demo: weekdayFormat',
+  render: renderDemo(demos.weekdayFormat),
+};

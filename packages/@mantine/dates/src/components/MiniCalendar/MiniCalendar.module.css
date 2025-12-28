@@ -60,6 +60,12 @@
   opacity: 0.65;
 }
 
+.dayWeekday {
+  font-size: 0.7em;
+  font-weight: 400;
+  opacity: 0.5;
+}
+
 .dayNumber {
   font-size: 0.9em;
   font-weight: 500;
