@@ -32,15 +32,15 @@ function scrollTo({ x, y }: Partial<UseWindowScrollPosition>) {
 export function useWindowScroll(): UseWindowScrollReturnValue {
   const [position, setPosition] = useState<UseWindowScrollPosition>({ x: 0, y: 0 });
 
-  const rafRef = useRef<number | null>(null);
+  const frameID = useRef<number | null>(null);
 
   const handleScroll = useCallback(() => {
-    if (rafRef.current !== null) {
+    if (frameID.current !== null) {
       return;
     }
 
-    rafRef.current = requestAnimationFrame(() => {
-      rafRef.current = null;
+    frameID.current = requestAnimationFrame(() => {
+      frameID.current = null;
 
       setPosition((prev) => {
         const next = getScrollPosition();
@@ -60,8 +60,8 @@ export function useWindowScroll(): UseWindowScrollReturnValue {
     setPosition(getScrollPosition());
 
     return () => {
-      if (rafRef.current !== null) {
-        cancelAnimationFrame(rafRef.current);
+      if (frameID.current !== null) {
+        cancelAnimationFrame(frameID.current);
       }
     };
   }, []);
