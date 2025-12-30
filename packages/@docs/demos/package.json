@@ -54,6 +54,7 @@
     "@mantine/hooks": "workspace:*",
     "@mantine/notifications": "workspace:*",
     "@mantine/nprogress": "workspace:*",
+    "@mantine/schedule": "workspace:*",
     "@mantine/spotlight": "workspace:*",
     "@mantine/tiptap": "workspace:*",
     "@mantinex/demo": "workspace:*",

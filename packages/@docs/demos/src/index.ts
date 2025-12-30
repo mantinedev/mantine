@@ -145,6 +145,13 @@ export * as RadialBarChartDemos from './demos/charts/RadialBarChart';
 export * as FunnelChartDemos from './demos/charts/FunnelChart';
 export * as HeatmapDemos from './demos/charts/Heatmap';
 
+// @mantine/schedule
+export * as ScheduleDemos from './demos/schedule/Schedule';
+export * as MonthViewDemos from './demos/schedule/MonthView';
+export * as WeekViewDemos from './demos/schedule/WeekView';
+export * as DayViewDemos from './demos/schedule/DayView';
+export * as YearViewDemos from './demos/schedule/YearView';
+
 // Extensions demos
 export * as NotificationsDemos from './demos/notifications';
 export * as CarouselDemos from './demos/carousel';
