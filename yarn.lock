@@ -2035,6 +2035,7 @@ __metadata:
     "@mantine/hooks": "workspace:*"
     "@mantine/notifications": "workspace:*"
     "@mantine/nprogress": "workspace:*"
+    "@mantine/schedule": "workspace:*"
     "@mantine/spotlight": "workspace:*"
     "@mantine/tiptap": "workspace:*"
     "@mantinex/demo": "workspace:*"
@@ -4054,7 +4055,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@mantine/schedule@workspace:packages/@mantine/schedule":
+"@mantine/schedule@workspace:*, @mantine/schedule@workspace:packages/@mantine/schedule":
   version: 0.0.0-use.local
   resolution: "@mantine/schedule@workspace:packages/@mantine/schedule"
   dependencies:

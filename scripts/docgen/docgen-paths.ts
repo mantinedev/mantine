@@ -144,6 +144,12 @@ const FILES_PATHS = getPaths([
 
   // Notifications
   'packages/@mantine/notifications/src/Notifications.tsx',
+
+  // Schedule
+  'packages/@mantine/schedule/src/components/DayView/DayView.tsx',
+  'packages/@mantine/schedule/src/components/MonthView/MonthView.tsx',
+  'packages/@mantine/schedule/src/components/WeekView/WeekView.tsx',
+  'packages/@mantine/schedule/src/components/YearView/YearView.tsx',
 ]);
 
 export const DOCGEN_PATHS = getDeclarationsPaths([

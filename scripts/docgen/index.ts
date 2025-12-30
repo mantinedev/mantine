@@ -28,5 +28,7 @@ generateDeclarations({
       'React.ComponentProps<"input">',
     'DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> | undefined':
       'React.ComponentProps<"div">',
+    '(ClassAttributes<HTMLButtonElement> & ButtonHTMLAttributes<HTMLButtonElement> & DataAttributes) | undefined':
+      "React.ComponentProps<'button'>",
   },
 });
