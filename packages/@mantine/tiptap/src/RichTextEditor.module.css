@@ -400,3 +400,196 @@
     margin-inline-end: var(--mantine-spacing-sm);
   }
 }
+
+:global(.tableWrapper) {
+  padding-bottom: 1rem;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border: rem(1px) solid var(--table-border-color);
+  border-collapse: collapse;
+  border-spacing: 0;
+  line-height: var(--mantine-line-height);
+  font-size: var(--mantine-font-size-sm);
+  table-layout: var(--table-layout, auto);
+  caption-side: var(--table-caption-side, bottom);
+
+  --table-hover-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
+  --table-striped-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  --table-border-color: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+
+  &:where([data-tabular-nums]) {
+    font-variant-numeric: tabular-nums;
+  }
+
+  &:where([data-variant='vertical']) :where(.th) {
+    font-weight: 500;
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  }
+
+  th {
+    text-align: left;
+
+    @mixin where-rtl {
+      text-align: right;
+    }
+  }
+
+  tr {
+    border-bottom: none;
+    background-color: transparent;
+
+    @mixin hover {
+      &:where([data-hover]) {
+        background-color: var(--tr-hover-bg);
+      }
+    }
+
+    &:where([data-with-row-border]) {
+      border-bottom: rem(1px) solid var(--table-border-color);
+    }
+  }
+
+  td,
+  th {
+    position: relative;
+    padding: var(--table-vertical-spacing)
+      var(--table-horizontal-spacing, var(--mantine-spacing-xs));
+
+    &:where([data-with-column-border]:not(:first-child)) {
+      border-inline-start: rem(1px) solid var(--table-border-color);
+    }
+
+    &:where([data-with-column-border]:not(:last-child)) {
+      border-inline-end: rem(1px) solid var(--table-border-color);
+    }
+
+    > * {
+      margin-bottom: 0 !important;
+    }
+  }
+
+  tbody {
+    & > :where(tr) {
+      &:where([data-with-row-border]:last-of-type) {
+        border-bottom: none;
+      }
+
+      &:where([data-striped='odd']:nth-of-type(odd)) {
+        background-color: var(--table-striped-color);
+      }
+
+      &:where([data-striped='even']:nth-of-type(even)) {
+        background-color: var(--table-striped-color);
+      }
+
+      &[data-hover] {
+        --tr-hover-bg: var(--table-highlight-on-hover-color, var(--table-hover-color));
+      }
+    }
+  }
+
+  thead {
+    top: var(--table-sticky-header-offset, 0);
+    z-index: 3;
+
+    &:where([data-sticky]) {
+      position: sticky;
+
+      & :where(.th) {
+        position: sticky;
+        top: var(--table-sticky-header-offset, 0);
+        background-color: var(--mantine-color-body);
+      }
+    }
+  }
+
+  :where([data-with-table-border]) thead[data-sticky] {
+    position: sticky;
+    top: var(--table-sticky-header-offset, 0);
+    z-index: 4;
+    border-top: none;
+  }
+
+  :where([data-with-table-border]) thead[data-sticky]::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: -0.5px;
+    width: 100%;
+    height: 1px;
+    background-color: var(--table-border-color);
+    z-index: 5;
+  }
+
+  :where([data-with-table-border]) thead[data-sticky] th:first-child {
+    border-top: none;
+  }
+
+  :global(.column-resize-handle) {
+    background-color: light-dark(var(--mantine-color-blue-3), var(--mantine-color-blue-6));
+    bottom: -1px;
+    pointer-events: none;
+    position: absolute;
+    right: -2px;
+    top: -1px;
+    width: 4px;
+  }
+}
+
+:global(.resize-cursor) {
+  cursor: ew-resize;
+  cursor: col-resize;
+}
+
+[data-type='details'] {
+  display: flex;
+  gap: 0.25rem;
+  margin: 1.5rem 0;
+  border: 1px solid;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+
+  border-color: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+
+  button {
+    align-items: center;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    display: flex;
+    font-size: 0.625rem;
+    height: 1.25rem;
+    justify-content: center;
+    line-height: 1;
+    margin-top: 0.1rem;
+    padding: 0;
+    width: 1.25rem;
+
+    &:hover {
+      background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
+    }
+
+    &::before {
+      content: '▶';
+    }
+  }
+
+  &:global(.is-open) > button::before {
+    transform: rotate(90deg);
+  }
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  summary {
+    font-weight: 700;
+  }
+}
