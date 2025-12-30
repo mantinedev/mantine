@@ -463,6 +463,114 @@ export namespace Button {
 
 ## polymorphicFactory
 
+`polymorphicFactory` is used to create [polymorphic components](/guides/polymorphic).
+Use `polymorphicFactory` instead of `factory` if you need to change the root element.
+For example, [Button](/core/button) component is polymorphic: the default root element is `button`,
+but it can be changed to `a` or any other element using `component` and `renderRoot` props.
+
+`polymorphicFactory` operates only with types, it does not modify the component behavior compared
+to `factory`. Types of components created with `polymorphicFactory` add overhead for TypeScript and
+slow down IDE autocomplete, use it only when necessary.
+
+Full polymorphic component example:
+
+```tsx
+import {
+  Box,
+  BoxProps,
+  createVarsResolver,
+  polymorphicFactory,
+  PolymorphicFactory,
+  StylesApiProps,
+  useProps,
+  useStyles,
+} from '@mantine/core';
+import classes from './PolymorphicExample.module.css';
+
+export type PolymorphicExampleStylesNames = 'root';
+export type PolymorphicExampleVariant = string;
+export type PolymorphicExampleCssVariables = {
+  root: '--test';
+};
+
+export interface PolymorphicExampleProps
+  extends BoxProps, StylesApiProps<PolymorphicExampleFactory> {}
+
+export type PolymorphicExampleFactory = PolymorphicFactory<{
+  props: PolymorphicExampleProps;
+  defaultRef: HTMLDivElement;
+  defaultComponent: 'div';
+  stylesNames: PolymorphicExampleStylesNames;
+  vars: PolymorphicExampleCssVariables;
+  variant: PolymorphicExampleVariant;
+}>;
+
+const defaultProps = {} satisfies Partial<PolymorphicExampleProps>;
+
+const varsResolver = createVarsResolver<PolymorphicExampleFactory>(() => ({
+  root: {
+    '--test': 'test',
+  },
+}));
+
+export const PolymorphicExample = polymorphicFactory<PolymorphicExampleFactory>((_props) => {
+  const props = useProps('PolymorphicExample', defaultProps, _props);
+  const { classNames, className, style, styles, unstyled, vars, attributes, ...others } = props;
+
+  const getStyles = useStyles<PolymorphicExampleFactory>({
+    name: 'PolymorphicExample',
+    props,
+    classes,
+    className,
+    style,
+    classNames,
+    styles,
+    unstyled,
+    attributes,
+    vars,
+    varsResolver,
+  });
+
+  return <Box {...getStyles('root')} {...others} />;
+});
+
+PolymorphicExample.displayName = '@mantine/core/PolymorphicExample';
+```
+
 ## genericFactory
 
-## useResolvedStylesApi hook
+Use `genericFactory` to create components accepting generic type arguments.
+For example, [Accordion](/core/accordion) component `value` and `onChange` props type
+depend on the `multiple` prop value.
+
+```tsx
+type AccordionValue<Multiple extends boolean> = Multiple extends true
+  ? string[]
+  : string | null;
+
+// Define props interface with generic type argument
+export interface AccordionProps<Multiple extends boolean = false>
+  extends
+    BoxProps,
+    StylesApiProps<AccordionFactory>,
+    ElementProps<'div', 'value' | 'defaultValue' | 'onChange'> {
+  // props that depend on the generic type argument
+  multiple?: Multiple;
+  value?: AccordionValue<Multiple>;
+  defaultValue?: AccordionValue<Multiple>;
+  onChange?: (value: AccordionValue<Multiple>) => void;
+
+  // ... other props
+}
+export type AccordionFactory = Factory<{
+  // Signature with generic type argument
+  signature: <Multiple extends boolean = false>(
+    props: AccordionProps<Multiple>
+  ) => React.JSX.Element;
+
+  // other properties same as in regular factory
+  props: AccordionProps;
+  ref: HTMLDivElement;
+  // ...
+}>;
+```
