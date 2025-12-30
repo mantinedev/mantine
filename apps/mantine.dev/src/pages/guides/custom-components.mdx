@@ -337,14 +337,132 @@ const getStyles = useStyles<ExampleComponentFactory>({
 
 ## getStyles function
 
+`getStyles` function is returned by `useStyles` hook. The first argument is a Styles API selector,
+the second argument can be used to add `className` or `style` to the returned object.
+
+```tsx
+<Box {...getStyles('root')}>
+  <div {...getStyles('inner', { className: 'custom-class', style: { color: 'red' } })}>
+    {children}
+  </div>
+</Box>
+```
+
 ## varsResolver
 
-## useResolvedStylesApi hook
+Use `varsResolver` to transform component props into CSS variables.
+
+Example of `varsResolver` usage in [Button](/core/button) component:
+
+```tsx
+import { getFontSize, getSize, createVarsResolver } from '@mantine/core';
+
+const varsResolver = createVarsResolver<ButtonFactory>(
+  (theme, { radius, color, gradient, variant, size, justify, autoContrast }) => {
+    const colors = theme.variantColorResolver({
+      color: color || theme.primaryColor,
+      theme,
+      gradient,
+      variant: variant || 'filled',
+      autoContrast,
+    });
+
+    return {
+      root: {
+        '--button-justify': justify,
+        '--button-height': getSize(size, 'button-height'),
+        '--button-padding-x': getSize(size, 'button-padding-x'),
+        '--button-fz': size?.includes('compact')
+          ? getFontSize(size.replace('compact-', ''))
+          : getFontSize(size),
+        '--button-radius': radius === undefined ? undefined : getRadius(radius),
+        '--button-bg': color || variant ? colors.background : undefined,
+        '--button-hover': color || variant ? colors.hover : undefined,
+        '--button-color': colors.color,
+        '--button-bd': color || variant ? colors.border : undefined,
+        '--button-hover-color': color || variant ? colors.hoverColor : undefined,
+      },
+    };
+  }
+);
+```
+
 
 ## Compound components
 
+Compound components (`Button.Group`, `Input.Wrapper`, etc.) are defined as static properties
+on the main component and assigned as type in the main component factory.
+
+Example of assigning compound components in [Tabs](/core/tabs) component:
+
+```tsx
+export type TabsFactory = Factory<{
+  props: TabsProps;
+  ref: HTMLDivElement;
+  variant: TabsVariant;
+  stylesNames: TabsStylesNames;
+  vars: TabsCssVariables;
+
+  // Set compound components types
+  staticComponents: {
+    Tab: typeof TabsTab;
+    Panel: typeof TabsPanel;
+    List: typeof TabsList;
+  };
+}>;
+
+export const Tabs = factory<TabsFactory>((_props) => {
+  // ... component body
+});
+
+// Assign compound components
+Tabs.Tab = TabsTab;
+Tabs.Panel = TabsPanel;
+Tabs.List = TabsList;
+```
+
 ## Namespace exports
+
+Mantine components support namespace exports to group related types with the component.
+For example, `Button` component exports related types as `Button.*`:
+
+```tsx
+import { Button } from '@mantine/core';
+
+// Props type, does not require separate import
+type Props = Button.Props;
+```
+
+To implement this feature, add namespace exports at the end of the component file or `index.ts`.
+Example of [Button](/core/button) component namespace exports:
+
+```tsx
+export namespace Button {
+  export type Props = ButtonProps;
+  export type StylesNames = ButtonStylesNames;
+  export type CssVariables = ButtonCssVariables;
+  export type Factory = ButtonFactory;
+  export type Variant = ButtonVariant;
+  export type Size = ButtonSize;
+
+  export namespace Group {
+    export type Props = ButtonGroupProps;
+    export type StylesNames = ButtonGroupStylesNames;
+    export type CssVariables = ButtonGroupCssVariables;
+    export type Factory = ButtonGroupFactory;
+  }
+
+  export namespace GroupSection {
+    export type Props = ButtonGroupSectionProps;
+    export type StylesNames = ButtonGroupSectionStylesNames;
+    export type CssVariables = ButtonGroupSectionCssVariables;
+    export type Factory = ButtonGroupSectionFactory;
+  }
+}
+```
 
 ## polymorphicFactory
 
 ## genericFactory
+
+## useResolvedStylesApi hook
