@@ -131,4 +131,33 @@ describe('@mantine/core/Popover', () => {
     expect(Popover.Dropdown).toBe(PopoverDropdown);
     expect(Popover.Target).toBe(PopoverTarget);
   });
+
+  it('Popover.Context provides context and can control popover state', async () => {
+    render(
+      <Popover>
+        <Popover.Target>
+          <Popover.Context>
+            {({ onOpen, onClose }) => (
+              <button type="button" onMouseEnter={onOpen} onMouseLeave={onClose}>
+                test-target
+              </button>
+            )}
+          </Popover.Context>
+        </Popover.Target>
+
+        <Popover.Dropdown>
+          <div>test-dropdown</div>
+        </Popover.Dropdown>
+      </Popover>
+    );
+
+    expect(screen.queryAllByText('test-dropdown')).toHaveLength(0);
+
+    const button = screen.getByRole('button');
+    await userEvent.hover(button);
+    expect(screen.getByText('test-dropdown')).toBeInTheDocument();
+
+    await userEvent.unhover(button);
+    expect(screen.queryAllByText('test-dropdown')).toHaveLength(0);
+  });
 });
