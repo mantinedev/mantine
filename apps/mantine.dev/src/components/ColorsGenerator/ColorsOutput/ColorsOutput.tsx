@@ -14,6 +14,7 @@ const theme = createTheme({
   colors: {
     myColor,
   }
+  primaryColor: 'myColor',
 });
 
 function Demo() {
