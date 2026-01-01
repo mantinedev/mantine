@@ -10,6 +10,10 @@
   }
 }
 
+.yearViewMonths {
+  container-type: inline-size;
+}
+
 .yearViewQuarter {
   display: flex;
 
@@ -43,6 +47,20 @@
   border: 1px solid var(--year-view-border-color);
   padding: var(--mantine-spacing-md);
 
+  @container (width <= 860px) {
+    border: 0;
+    padding: 6px;
+    --week-numbers-offset: 14px;
+
+    &:where(:first-of-type) {
+      padding-inline-start: 0;
+    }
+
+    &:where(:last-of-type) {
+      padding-inline-end: 0;
+    }
+  }
+
   &:where(:not(:last-of-type)) {
     border-right: none;
   }
@@ -74,6 +92,17 @@
   user-select: none;
   color: var(--day-dimmed-color);
 
+  @container (width <= 860px) {
+    min-width: unset;
+    font-size: 10px;
+    padding: 0;
+    font-weight: 400;
+  }
+
+  @container (width <= 480px) {
+    font-size: 8px;
+  }
+
   @mixin hover {
     @mixin where-light {
       background-color: var(--mantine-color-gray-0);
@@ -88,6 +117,7 @@
 .yearViewWeekday {
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
   height: 36px;
+  min-width: 36px;
   font-size: var(--mantine-font-size-xs);
   font-weight: 600;
   text-align: center;
@@ -98,13 +128,28 @@
   cursor: default;
   user-select: none;
   color: var(--day-dimmed-color);
+
+  @container (width <= 860px) {
+    min-width: unset;
+    font-size: 10px;
+    height: 28px;
+  }
 }
 
 .yearViewWeekdaysCorner {
   flex: 0 0 var(--week-numbers-offset);
+
+  @container (width <= 860px) {
+    min-width: unset;
+    font-size: 10px;
+    padding: 0;
+    font-weight: 400;
+    margin-inline-end: 0;
+  }
 }
 
 .yearViewDay {
+  min-width: 36px;
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
   padding: 4px;
   font-size: var(--mantine-font-size-xs);
@@ -117,6 +162,16 @@
   border-radius: 100%;
   aspect-ratio: 1;
   position: relative;
+
+  @container (width <= 860px) {
+    min-width: 14px;
+    font-size: 10px;
+    padding: 0;
+  }
+
+  @container (width <= 480px) {
+    font-size: 8px;
+  }
 
   &:where([data-weekend]) {
     color: var(--mantine-color-red-6);
@@ -156,6 +211,12 @@
   text-transform: capitalize;
   border-radius: var(--year-view-radius);
 
+  @container (width <= 860px) {
+    padding-inline: 4px;
+    padding-block: 2px;
+    font-size: var(--mantine-font-size-xs);
+  }
+
   @mixin hover {
     @mixin where-light {
       background-color: var(--mantine-color-gray-0);
@@ -174,6 +235,10 @@
   display: flex;
   justify-content: center;
   padding-inline-start: 2px;
+
+  @container (width <= 860px) {
+    display: none;
+  }
 }
 
 .yearViewDayIndicator {
