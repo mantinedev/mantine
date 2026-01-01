@@ -27,3 +27,19 @@ export function DisabledDay() {
     </div>
   );
 }
+
+export function WithDayOfWeek() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MiniCalendar size="xl" withWeekday />
+    </div>
+  );
+}
+
+export function WithFullDayName() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MiniCalendar size="xl" withWeekday weekdayFormat="dddd" />
+    </div>
+  );
+}
