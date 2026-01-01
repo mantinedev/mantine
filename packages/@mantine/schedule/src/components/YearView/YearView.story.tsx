@@ -92,8 +92,14 @@ const november2025Events: ScheduleEventData[] = [
 export function Usage() {
   const [date, setDate] = useState('2025-11-01');
   return (
-    <div style={{ padding: 10 }}>
-      <YearView date={date} onDateChange={setDate} events={november2025Events} withWeekNumbers />
+    <div style={{ padding: 0 }}>
+      <YearView
+        date={date}
+        onDateChange={setDate}
+        events={november2025Events}
+        withWeekNumbers
+        withHeader={false}
+      />
     </div>
   );
 }
