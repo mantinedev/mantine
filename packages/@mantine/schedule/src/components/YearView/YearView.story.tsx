@@ -97,8 +97,8 @@ export function Usage() {
         date={date}
         onDateChange={setDate}
         events={november2025Events}
-        withWeekNumbers
         withHeader={false}
+        withWeekNumbers={false}
       />
     </div>
   );

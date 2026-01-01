@@ -1,5 +1,6 @@
 .yearView {
   --year-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+  --year-view-font-size: clamp(6px, 1.5cqw, 22px);
 
   @mixin where-light {
     --year-view-border-color: var(--mantine-color-gray-3);
@@ -50,7 +51,10 @@
   @container (width <= 860px) {
     border: 0;
     padding: 8px;
-    --week-numbers-offset: 14px;
+
+    &:where([data-with-week-numbers]) {
+      --week-numbers-offset: 14px;
+    }
 
     &:where(:first-of-type) {
       padding-inline-start: 0;
@@ -88,7 +92,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--mantine-font-size-xs);
+  font-size: var(--year-view-font-size);
   border-radius: var(--year-view-radius);
   padding: 4px;
   font-weight: 600;
@@ -98,13 +102,7 @@
 
   @container (width <= 860px) {
     min-width: unset;
-    font-size: 10px;
     padding: 0;
-    font-weight: 400;
-  }
-
-  @container (width <= 480px) {
-    font-size: 8px;
   }
 
   @mixin hover {
@@ -122,7 +120,7 @@
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
   height: 36px;
   min-width: 36px;
-  font-size: var(--mantine-font-size-xs);
+  font-size: var(--year-view-font-size);
   font-weight: 600;
   text-align: center;
   text-transform: capitalize;
@@ -135,28 +133,20 @@
 
   @container (width <= 860px) {
     min-width: unset;
-    font-size: 10px;
-    height: 28px;
+    height: auto;
+    padding-block: 0.1cqw;
   }
 }
 
 .yearViewWeekdaysCorner {
   flex: 0 0 var(--week-numbers-offset);
-
-  @container (width <= 860px) {
-    min-width: unset;
-    font-size: 10px;
-    padding: 0;
-    font-weight: 400;
-    margin-inline-end: 0;
-  }
 }
 
 .yearViewDay {
   min-width: 36px;
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
   padding: 4px;
-  font-size: var(--mantine-font-size-xs);
+  font-size: var(--year-view-font-size);
   color: var(--day-base-color);
   cursor: pointer;
   user-select: none;
@@ -169,12 +159,7 @@
 
   @container (width <= 860px) {
     min-width: 14px;
-    font-size: 10px;
     padding: 0;
-  }
-
-  @container (width <= 480px) {
-    font-size: 8px;
   }
 
   &:where([data-weekend]) {
@@ -209,8 +194,9 @@
 
 .yearViewMonthCaption {
   padding-inline: calc(var(--week-numbers-offset) + rem(12px));
-  padding-block: 5px;
-  font-size: var(--mantine-font-size-md);
+  padding-block: 0.2cqw;
+  margin-bottom: 0.5cqw;
+  font-size: var(--year-view-font-size);
   font-weight: 600;
   text-transform: capitalize;
   border-radius: var(--year-view-radius);
@@ -218,7 +204,7 @@
   @container (width <= 860px) {
     padding-inline: 4px;
     padding-block: 2px;
-    font-size: var(--mantine-font-size-xs);
+    width: 100%;
   }
 
   @mixin hover {
