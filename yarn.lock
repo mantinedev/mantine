@@ -1685,11 +1685,11 @@ __metadata:
     "@mantine/tiptap": "workspace:*"
     "@mantinex/demo": "workspace:*"
     "@mantinex/dev-icons": "workspace:*"
-    "@tiptap/core": "npm:^3.4.0"
-    "@tiptap/extension-floating-menu": "npm:^3.4.0"
-    "@tiptap/extension-link": "npm:^3.4.0"
-    "@tiptap/pm": "npm:^3.4.0"
-    "@tiptap/react": "npm:^3.4.0"
+    "@tiptap/core": "npm:^3.14.0"
+    "@tiptap/extension-floating-menu": "npm:^3.14.0"
+    "@tiptap/extension-link": "npm:^3.14.0"
+    "@tiptap/pm": "npm:^3.14.0"
+    "@tiptap/react": "npm:^3.14.0"
     dayjs: "npm:^1.11.18"
     embla-carousel-react: "npm:^8.6.0"
     react: "npm:19.1.1"
@@ -1715,10 +1715,10 @@ __metadata:
     "@mantine/nprogress": "workspace:*"
     "@mantine/spotlight": "workspace:*"
     "@mantine/tiptap": "workspace:*"
-    "@tiptap/core": "npm:^3.4.0"
-    "@tiptap/extension-link": "npm:^3.4.0"
-    "@tiptap/pm": "npm:^3.4.0"
-    "@tiptap/react": "npm:^3.4.0"
+    "@tiptap/core": "npm:^3.14.0"
+    "@tiptap/extension-link": "npm:^3.14.0"
+    "@tiptap/pm": "npm:^3.14.0"
+    "@tiptap/react": "npm:^3.14.0"
     dayjs: "npm:^1.11.18"
     embla-carousel-react: "npm:^8.6.0"
     react: "npm:19.1.1"
@@ -4957,7 +4957,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/core@npm:^3.14.0, @tiptap/core@npm:^3.4.0":
+"@tiptap/core@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/core@npm:3.14.0"
   peerDependencies:
@@ -4984,7 +4984,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-bubble-menu@npm:^3.14.0, @tiptap/extension-bubble-menu@npm:^3.4.0":
+"@tiptap/extension-bubble-menu@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-bubble-menu@npm:3.14.0"
   dependencies:
@@ -5005,7 +5005,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-code-block-lowlight@npm:^3.4.0":
+"@tiptap/extension-code-block-lowlight@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-code-block-lowlight@npm:3.14.0"
   peerDependencies:
@@ -5018,7 +5018,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-code-block@npm:^3.14.0, @tiptap/extension-code-block@npm:^3.4.0":
+"@tiptap/extension-code-block@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-code-block@npm:3.14.0"
   peerDependencies:
@@ -5037,7 +5037,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-color@npm:^3.4.0":
+"@tiptap/extension-color@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-color@npm:3.14.0"
   peerDependencies:
@@ -5046,7 +5046,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-details@npm:^3.4.0":
+"@tiptap/extension-details@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-details@npm:3.14.0"
   peerDependencies:
@@ -5075,7 +5075,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-floating-menu@npm:^3.14.0, @tiptap/extension-floating-menu@npm:^3.4.0":
+"@tiptap/extension-floating-menu@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-floating-menu@npm:3.14.0"
   peerDependencies:
@@ -5113,7 +5113,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-highlight@npm:^3.4.0":
+"@tiptap/extension-highlight@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-highlight@npm:3.14.0"
   peerDependencies:
@@ -5122,7 +5122,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-history@npm:^3.4.0":
+"@tiptap/extension-history@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-history@npm:3.14.0"
   peerDependencies:
@@ -5150,7 +5150,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-link@npm:^3.14.0, @tiptap/extension-link@npm:^3.4.0":
+"@tiptap/extension-link@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-link@npm:3.14.0"
   dependencies:
@@ -5208,7 +5208,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-placeholder@npm:^3.4.0":
+"@tiptap/extension-placeholder@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-placeholder@npm:3.14.0"
   peerDependencies:
@@ -5226,7 +5226,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-subscript@npm:^3.4.0":
+"@tiptap/extension-subscript@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-subscript@npm:3.14.0"
   peerDependencies:
@@ -5236,7 +5236,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-superscript@npm:^3.4.0":
+"@tiptap/extension-superscript@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-superscript@npm:3.14.0"
   peerDependencies:
@@ -5246,7 +5246,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-table@npm:^3.4.0":
+"@tiptap/extension-table@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-table@npm:3.14.0"
   peerDependencies:
@@ -5256,7 +5256,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-task-item@npm:^3.4.0":
+"@tiptap/extension-task-item@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-task-item@npm:3.14.0"
   peerDependencies:
@@ -5265,7 +5265,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-task-list@npm:^3.4.0":
+"@tiptap/extension-task-list@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-task-list@npm:3.14.0"
   peerDependencies:
@@ -5274,7 +5274,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-text-align@npm:^3.4.0":
+"@tiptap/extension-text-align@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-text-align@npm:3.14.0"
   peerDependencies:
@@ -5283,7 +5283,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-text-style@npm:^3.4.0":
+"@tiptap/extension-text-style@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/extension-text-style@npm:3.14.0"
   peerDependencies:
@@ -5320,7 +5320,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/pm@npm:^3.14.0, @tiptap/pm@npm:^3.4.0":
+"@tiptap/pm@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/pm@npm:3.14.0"
   dependencies:
@@ -5346,7 +5346,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/react@npm:^3.4.0":
+"@tiptap/react@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/react@npm:3.14.0"
   dependencies:
@@ -5371,7 +5371,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/starter-kit@npm:^3.4.0":
+"@tiptap/starter-kit@npm:^3.14.0":
   version: 3.14.0
   resolution: "@tiptap/starter-kit@npm:3.14.0"
   dependencies:
@@ -8911,22 +8911,22 @@ __metadata:
     "@mdx-js/react": "npm:^3.0.0"
     "@next/mdx": "npm:^14.0.2"
     "@tabler/icons-react": "npm:^3.34.1"
-    "@tiptap/core": "npm:^3.4.0"
-    "@tiptap/extension-code-block": "npm:^3.4.0"
-    "@tiptap/extension-code-block-lowlight": "npm:^3.4.0"
-    "@tiptap/extension-color": "npm:^3.4.0"
-    "@tiptap/extension-highlight": "npm:^3.4.0"
-    "@tiptap/extension-link": "npm:^3.4.0"
-    "@tiptap/extension-placeholder": "npm:^3.4.0"
-    "@tiptap/extension-subscript": "npm:^3.4.0"
-    "@tiptap/extension-superscript": "npm:^3.4.0"
-    "@tiptap/extension-task-item": "npm:^3.4.0"
-    "@tiptap/extension-task-list": "npm:^3.4.0"
-    "@tiptap/extension-text-align": "npm:^3.4.0"
-    "@tiptap/extension-text-style": "npm:^3.4.0"
-    "@tiptap/pm": "npm:^3.4.0"
-    "@tiptap/react": "npm:^3.4.0"
-    "@tiptap/starter-kit": "npm:^3.4.0"
+    "@tiptap/core": "npm:^3.14.0"
+    "@tiptap/extension-code-block": "npm:^3.14.0"
+    "@tiptap/extension-code-block-lowlight": "npm:^3.14.0"
+    "@tiptap/extension-color": "npm:^3.14.0"
+    "@tiptap/extension-highlight": "npm:^3.14.0"
+    "@tiptap/extension-link": "npm:^3.14.0"
+    "@tiptap/extension-placeholder": "npm:^3.14.0"
+    "@tiptap/extension-subscript": "npm:^3.14.0"
+    "@tiptap/extension-superscript": "npm:^3.14.0"
+    "@tiptap/extension-task-item": "npm:^3.14.0"
+    "@tiptap/extension-task-list": "npm:^3.14.0"
+    "@tiptap/extension-text-align": "npm:^3.14.0"
+    "@tiptap/extension-text-style": "npm:^3.14.0"
+    "@tiptap/pm": "npm:^3.14.0"
+    "@tiptap/react": "npm:^3.14.0"
+    "@tiptap/starter-kit": "npm:^3.14.0"
     "@types/chroma-js": "npm:^3.1.1"
     "@types/github-slugger": "npm:^2.0.0"
     "@types/node": "npm:^24.3.0"
@@ -13626,26 +13626,26 @@ __metadata:
     "@testing-library/jest-dom": "npm:6.8.0"
     "@testing-library/react": "npm:16.3.0"
     "@testing-library/user-event": "npm:14.6.1"
-    "@tiptap/core": "npm:^3.4.0"
-    "@tiptap/extension-bubble-menu": "npm:^3.4.0"
-    "@tiptap/extension-code-block": "npm:^3.4.0"
-    "@tiptap/extension-code-block-lowlight": "npm:^3.4.0"
-    "@tiptap/extension-color": "npm:^3.4.0"
-    "@tiptap/extension-details": "npm:^3.4.0"
-    "@tiptap/extension-highlight": "npm:^3.4.0"
-    "@tiptap/extension-history": "npm:^3.4.0"
-    "@tiptap/extension-link": "npm:^3.4.0"
-    "@tiptap/extension-placeholder": "npm:^3.4.0"
-    "@tiptap/extension-subscript": "npm:^3.4.0"
-    "@tiptap/extension-superscript": "npm:^3.4.0"
-    "@tiptap/extension-table": "npm:^3.4.0"
-    "@tiptap/extension-task-item": "npm:^3.4.0"
-    "@tiptap/extension-task-list": "npm:^3.4.0"
-    "@tiptap/extension-text-align": "npm:^3.4.0"
-    "@tiptap/extension-text-style": "npm:^3.4.0"
-    "@tiptap/pm": "npm:^3.4.0"
-    "@tiptap/react": "npm:^3.4.0"
-    "@tiptap/starter-kit": "npm:^3.4.0"
+    "@tiptap/core": "npm:^3.14.0"
+    "@tiptap/extension-bubble-menu": "npm:^3.14.0"
+    "@tiptap/extension-code-block": "npm:^3.14.0"
+    "@tiptap/extension-code-block-lowlight": "npm:^3.14.0"
+    "@tiptap/extension-color": "npm:^3.14.0"
+    "@tiptap/extension-details": "npm:^3.14.0"
+    "@tiptap/extension-highlight": "npm:^3.14.0"
+    "@tiptap/extension-history": "npm:^3.14.0"
+    "@tiptap/extension-link": "npm:^3.14.0"
+    "@tiptap/extension-placeholder": "npm:^3.14.0"
+    "@tiptap/extension-subscript": "npm:^3.14.0"
+    "@tiptap/extension-superscript": "npm:^3.14.0"
+    "@tiptap/extension-table": "npm:^3.14.0"
+    "@tiptap/extension-task-item": "npm:^3.14.0"
+    "@tiptap/extension-task-list": "npm:^3.14.0"
+    "@tiptap/extension-text-align": "npm:^3.14.0"
+    "@tiptap/extension-text-style": "npm:^3.14.0"
+    "@tiptap/pm": "npm:^3.14.0"
+    "@tiptap/react": "npm:^3.14.0"
+    "@tiptap/starter-kit": "npm:^3.14.0"
     "@types/chroma-js": "npm:^3.1.1"
     "@types/eslint": "npm:^9"
     "@types/fs-extra": "npm:^11.0.4"
