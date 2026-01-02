@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import { useId } from '@mantine/hooks';
 import { Input } from '../../components/Input';
 import {
   Box,
@@ -38,6 +39,9 @@ export interface InlineInputProps
   labelPosition?: 'left' | 'right';
   bodyElement?: any;
   labelElement?: any;
+  descriptionId?: string;
+  errorId?: string;
+  inputDescribedBy?: string;
 }
 
 export type InlineInputFactory = Factory<{
@@ -69,10 +73,19 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
       vars,
       mod,
       attributes,
+      descriptionId: providedDescriptionId,
+      errorId: providedErrorId,
+      inputDescribedBy,
       ...others
     },
     ref
   ) => {
+    const generatedDescriptionId = useId();
+    const generatedErrorId = useId();
+
+    const descriptionId = providedDescriptionId || generatedDescriptionId;
+    const errorId = providedErrorId || generatedErrorId;
+
     const getStyles = useStyles<InlineInputFactory>({
       name: __staticSelector,
       props: __stylesApiProps,
@@ -118,13 +131,18 @@ export const InlineInput = forwardRef<HTMLDivElement, InlineInputProps>(
             )}
 
             {description && (
-              <Input.Description size={size} __inheritStyles={false} {...getStyles('description')}>
+              <Input.Description
+                id={descriptionId}
+                size={size}
+                __inheritStyles={false}
+                {...getStyles('description')}
+              >
                 {description}
               </Input.Description>
             )}
 
             {error && typeof error !== 'boolean' && (
-              <Input.Error size={size} __inheritStyles={false} {...getStyles('error')}>
+              <Input.Error id={errorId} size={size} __inheritStyles={false} {...getStyles('error')}>
                 {error}
               </Input.Error>
             )}
