@@ -121,14 +121,15 @@ function Demo() {
 ```
 
 If your application has server side rendering, add [ColorSchemeScript](/theming/color-schemes)
-to the `<head />` of your application:
+to the `<head />` of your application and spread `mantineHtmlProps` on the `<html />` element
+to [avoid seeing a hydration warning](https://help.mantine.dev/q/color-scheme-hydration-warning):
 
 ```tsx
-import { ColorSchemeScript } from '@mantine/core';
+import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
 
 function Demo() {
   return (
-    <html lang="en">
+    <html lang="en" {...mantineHtmlProps}>
       <head>
         <meta charSet="UTF-8" />
         <meta

@@ -24,7 +24,7 @@ export interface MantineProviderProps {
   /** Forces color scheme value, if set, MantineProvider ignores `colorSchemeManager` and `defaultColorScheme` */
   forceColorScheme?: 'light' | 'dark';
 
-  /** CSS selector to which CSS variables should be added, `:root` by default */
+  /** CSS selector to which CSS variables should be added, by default variables are applied to `:root` and `:host` */
   cssVariablesSelector?: string;
 
   /** Determines whether theme CSS variables should be added to given `cssVariablesSelector` @default `true` */
@@ -69,7 +69,7 @@ export function MantineProvider({
   withGlobalClasses = true,
   deduplicateCssVariables = true,
   withCssVariables = true,
-  cssVariablesSelector = ':root',
+  cssVariablesSelector,
   classNamesPrefix = 'mantine',
   colorSchemeManager = localStorageColorSchemeManager(),
   defaultColorScheme = 'light',
@@ -101,7 +101,7 @@ export function MantineProvider({
         classNamesPrefix,
         getStyleNonce,
         cssVariablesResolver,
-        cssVariablesSelector,
+        cssVariablesSelector: cssVariablesSelector ?? ':root',
         withStaticClasses,
         stylesTransform,
         env,

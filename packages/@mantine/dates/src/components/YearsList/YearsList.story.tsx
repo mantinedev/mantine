@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
+import { DateStringValue } from '../../types';
 import { YearsList } from './YearsList';
 
 export default { title: 'YearsList' };
@@ -32,6 +33,21 @@ export function MaxDate() {
   return (
     <div style={{ padding: 40, width: 320 }}>
       <YearsList decade="2022-02-01" maxDate="2022-10-01" />
+    </div>
+  );
+}
+
+export function WithGetYearsControlPropsChildren() {
+  return (
+    <div style={{ padding: 40, width: 320 }}>
+      <YearsList
+        decade="2022-02-01"
+        getYearControlProps={(date: DateStringValue) => {
+          return {
+            children: <strong>{date}</strong>,
+          };
+        }}
+      />
     </div>
   );
 }
