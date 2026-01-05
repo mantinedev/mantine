@@ -169,7 +169,7 @@ export function Combobox(_props: ComboboxProps) {
     >
       <Popover
         opened={store.dropdownOpened}
-        preventPositionChangeWhenVisible
+        preventPositionChangeWhenVisible={false}
         {...others}
         onChange={(_opened) => !_opened && onDropdownClose()}
         withRoles={false}
