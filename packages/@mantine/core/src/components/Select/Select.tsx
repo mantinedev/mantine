@@ -126,6 +126,8 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     onFocus,
     onBlur,
     onClick,
+    onPointerDown,
+    onDragStart,
     onChange,
     data,
     value,
@@ -354,6 +356,14 @@ export const Select = factory<SelectFactory>((_props, ref) => {
             onClick={(event) => {
               searchable ? combobox.openDropdown() : combobox.toggleDropdown();
               onClick?.(event);
+            }}
+            onPointerDown={(event) => {
+              (readOnly || !searchable) && event.preventDefault();
+              onPointerDown?.(event);
+            }}
+            onDragStart={(event) => {
+              (readOnly || !searchable) && event.preventDefault();
+              onDragStart?.(event);
             }}
             classNames={resolvedClassNames}
             styles={resolvedStyles}
