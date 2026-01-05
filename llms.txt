@@ -28389,7 +28389,7 @@ function Demo() {
 
 By default, `TagsInput` splits values by comma (`,`), you can change this behavior by setting
 `splitChars` prop to an array of strings. All values from `splitChars` cannot be included in the final value.
-Values are also splitted on paste.
+Values are also split on paste.
 
 Example of splitting by `,`, `|` and space:
 
@@ -65834,7 +65834,7 @@ or use a different library.
 Example of creating a custom shiki adapter with custom themes and logic:
 
 ```tsx
-import type { CodeHighlightAdapter, stripShikiCodeBlocks } from '@mantine/code-highlight';
+import { type CodeHighlightAdapter, stripShikiCodeBlocks } from '@mantine/code-highlight';
 
 // Shiki transformers can be used to highlight diffs and other notations
 // https://shiki.style/packages/transformers
@@ -65857,12 +65857,12 @@ async function loadShiki() {
 export const customShikiAdapter: CodeHighlightAdapter = {
   // loadContext is called on client side to load shiki highlighter
   // It is required to be used if your library requires async initialization
-  // The value returned from loadContext is passed to createHighlighter as ctx argument
+  // The value returned from loadContext is passed to getHighlighter as ctx argument
   loadContext: loadShiki,
 
   // ctx is the value returned from loadContext
   // or null if loadContext is not used or has not resolved yet
-  createHighlighter: (ctx) => {
+  getHighlighter: (ctx) => {
     if (!ctx) {
       return ({ code }) => ({ highlightedCode: code, isHighlighted: false });
     }
@@ -66887,11 +66887,17 @@ Community extensions list:
 * [ContextMenu](https://icflorescu.github.io/mantine-contextmenu/) – context menu component
 * [DataTable](https://icflorescu.github.io/mantine-datatable/) – data table component without dependencies
 * [MantineReactTable](https://v2.mantine-react-table.com/) – data table component based on TanStack table package
-* [SplitPane](https://gfazioli.github.io/mantine-split-pane/) – resizable split pane component
+* [BorderAnimate](https://gfazioli.github.io/mantine-border-animate/) – border animation styles (beam, glow, more...)
+* [Clock](https://gfazioli.github.io/mantine-clock/) - analog clock component
+* [Compare](https://gfazioli.github.io/mantine-compare/) - image comparison slider component
 * [Flip](https://gfazioli.github.io/mantine-flip/) – flip animation component
+* [SplitPane](https://gfazioli.github.io/mantine-split-pane/) – resizable split pane component
 * [Marquee](https://gfazioli.github.io/mantine-marquee/) – marquee component
 * [Onboarding](https://gfazioli.github.io/mantine-onboarding-tour/) – onboarding / tour component
+* [Parallax](https://gfazioli.github.io/mantine-parallax/) – parallax component
+* [Picker](https://gfazioli.github.io/mantine-picker/) – animated picker for color, date, emoji, and other pickers
 * [TextAnimate](https://gfazioli.github.io/mantine-text-animate/) – text animation component
+* [Window](https://gfazioli.github.io/mantine-window/) - window component with drag and resize functionalities
 * [Mantine Form Builder](https://pradip-v2.github.io/mantine-form-builder/) – form builder and viewer components
 
 ## Create your own extension
@@ -69498,14 +69504,15 @@ function Demo() {
 ```
 
 If your application has server side rendering, add [ColorSchemeScript](https://mantine.dev/theming/color-schemes)
-to the `<head />` of your application:
+to the `<head />` of your application and spread `mantineHtmlProps` on the `<html />` element
+to [avoid seeing a hydration warning](https://help.mantine.dev/q/color-scheme-hydration-warning):
 
 ```tsx
-import { ColorSchemeScript } from '@mantine/core';
+import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
 
 function Demo() {
   return (
-    <html lang="en">
+    <html lang="en" {...mantineHtmlProps}>
       <head>
         <meta charSet="UTF-8" />
         <meta
