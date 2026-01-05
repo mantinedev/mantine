@@ -145,6 +145,12 @@ export function usePopover(options: UsePopoverOptions) {
     }
   };
 
+  const onOpen = () => {
+    if (!_opened && !options.disabled) {
+      setOpened(true);
+    }
+  };
+
   const onToggle = () => {
     if (!options.disabled) {
       setOpened(!_opened);
@@ -208,6 +214,7 @@ export function usePopover(options: UsePopoverOptions) {
     floating,
     controlled: typeof options.opened === 'boolean',
     opened: _opened,
+    onOpen,
     onClose,
     onToggle,
   };
