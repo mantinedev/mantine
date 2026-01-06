@@ -139,10 +139,9 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
   const [dropdownOpened, setDropdownOpened] = useState(false);
   const { calendarProps, others } = pickCalendarProps(rest);
   const ctx = useDatesContext();
-  const TIME_TOKENS = ['H', 'HH', 'h', 'hh', 'm', 'mm', 's', 'ss', 'A', 'a'];
-  const hasTimeInFormat = TIME_TOKENS.some((token) => valueFormat.includes(token));
+  const hasTimeInFormat = /[HhmsA]/.test(valueFormat);
   const defaultDateParser = (val: string): DateStringValue | null => {
-    const parsedDate = dayjs(val, valueFormat, ctx.getLocale(locale) || 'en').toDate();
+    const parsedDate = dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
     return Number.isNaN(parsedDate.getTime())
       ? dateStringParser(val)
       : dayjs(parsedDate).format(hasTimeInFormat ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD');
@@ -154,7 +153,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
   const formatValue = (val: DateStringValue) =>
     val
       ? dayjs(val)
-          .locale(ctx.getLocale(locale) || 'en')
+          .locale(ctx.getLocale(locale))
           .format(valueFormat)
       : '';
 
