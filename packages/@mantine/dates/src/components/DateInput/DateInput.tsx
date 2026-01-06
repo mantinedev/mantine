@@ -139,24 +139,31 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
   const [dropdownOpened, setDropdownOpened] = useState(false);
   const { calendarProps, others } = pickCalendarProps(rest);
   const ctx = useDatesContext();
+  const TIME_TOKENS = ['H', 'HH', 'h', 'hh', 'm', 'mm', 's', 'ss', 'A', 'a'];
+  const hasTimeInFormat = TIME_TOKENS.some((token) => valueFormat.includes(token));
   const defaultDateParser = (val: string): DateStringValue | null => {
-    const parsedDate = dayjs(val, valueFormat, ctx.getLocale(locale)).toDate();
+    const parsedDate = dayjs(val, valueFormat, ctx.getLocale(locale) || 'en').toDate();
     return Number.isNaN(parsedDate.getTime())
       ? dateStringParser(val)
-      : dayjs(parsedDate).format('YYYY-MM-DD');
+      : dayjs(parsedDate).format(hasTimeInFormat ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD');
   };
 
   const _dateParser = dateParser || defaultDateParser;
   const _allowDeselect = allowDeselect !== undefined ? allowDeselect : clearable;
 
   const formatValue = (val: DateStringValue) =>
-    val ? dayjs(val).locale(ctx.getLocale(locale)).format(valueFormat) : '';
+    val
+      ? dayjs(val)
+          .locale(ctx.getLocale(locale) || 'en')
+          .format(valueFormat)
+      : '';
 
   const [_value, setValue, controlled] = useUncontrolledDates({
     type: 'default',
     value,
     defaultValue,
     onChange,
+    withTime: hasTimeInFormat,
   });
 
   const [_date, setDate] = useUncontrolledDates({
@@ -176,7 +183,7 @@ export const DateInput = factory<DateInputFactory>((_props, ref) => {
 
   useEffect(() => {
     setInputValue(formatValue(_value));
-  }, [ctx.getLocale(locale)]);
+  }, [_value, valueFormat, locale]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.currentTarget.value;
