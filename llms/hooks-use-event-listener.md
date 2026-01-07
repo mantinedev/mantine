@@ -1,0 +1,21 @@
+# useEventListener
+Package: @mantine/hooks
+Import: import { UseEventListener } from '@mantine/hooks';
+
+## Usage
+
+`use-event-listener` adds a given event listener to an element to which `ref` is assigned.
+Hook supports the same options as `addEventListener` method.
+After the component is unmounted, the listener is automatically removed.
+
+
+
+## Definition
+
+```tsx
+function useEventListener<K extends keyof HTMLElementEventMap, T extends HTMLElement = any>(
+  type: K,
+  listener: (this: HTMLDivElement, ev: HTMLElementEventMap[K]) => any,
+  options?: boolean | AddEventListenerOptions,
+): React.RefCallback<T | null>
+```

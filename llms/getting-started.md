@@ -1,0 +1,226 @@
+# GettingStarted
+
+# Getting started
+
+## Get started with a template
+
+The easiest way to get started is to use one of the templates.
+All templates include required dependencies and pre-configured settings.
+Some templates also include additional features like [Jest](https://jestjs.io/),
+[Storybook](https://storybook.js.org/), [ESLint](https://eslint.org/), etc.
+
+Templates include only `@mantine/core` and `@mantine/hooks` packages,
+if you need additional `@mantine/*` packages, follow installation instructions
+of the package you want to use.
+
+To get started with a template, open it on GitHub and click "Use this template"
+button. In order to use this feature you need to be logged in to your GitHub account.
+If you are not familiar with GitHub, you can find a detailed instruction on how to
+bootstrap a project from a template [in this article](https://help.mantine.dev/q/templates-usage).
+
+Templates list:
+
+<TemplatesList />
+
+## Community templates
+
+Community templates are created and maintained by the community members. These templates
+include additional features and third-party integrations. You are welcome
+to share your template with the community by following [this guide](https://help.mantine.dev/q/submit-template).
+
+<TemplatesList community />
+
+## Framework guide
+
+If you want to add Mantine to an existing project or prefer to set up everything manually,
+follow one of the guides below to get started with Mantine and your preferred framework.
+
+<FrameworksGuides />
+
+## Can I use Mantine with create-react-app?
+
+[Create React App](https://create-react-app.dev/) was deprecated in early 2023 ([comment from maintainers](https://github.com/reactjs/react.dev/pull/5487#issuecomment-1409720741)).
+It is not recommended to use it for new projects. It is recommended to use [Vite](https://vitejs.dev/) or [Next.js](https://nextjs.org/) instead.
+Starting from version 7.0, certain Mantine styling features are no longer officially supported in Create React App.
+If you still prefer to use Create React App, follow [this guide](https://help.mantine.dev/q/can-i-use-mantine-with-cra).
+
+## Get started without framework
+
+<PackagesInstallation />
+
+Install PostCSS plugins and [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset):
+
+```bash
+yarn add postcss postcss-preset-mantine postcss-simple-vars
+```
+
+```bash
+npm install postcss postcss-preset-mantine postcss-simple-vars
+```
+
+> **PostCSS without framework**
+>
+> If you are using a framework that is not officially supported,
+> you may need to configure PostCSS manually. Please refer to the framework's documentation for specific instructions.
+> For instance, if you are using Webpack, it will be necessary to install and set up [postcss-loader](https://webpack.js.org/loaders/postcss-loader/).
+
+Create `postcss.config.cjs` file at the root of your application with the following content:
+
+```js
+module.exports = {
+  plugins: {
+    'postcss-preset-mantine': {},
+    'postcss-simple-vars': {
+      variables: {
+        'mantine-breakpoint-xs': '36em',
+        'mantine-breakpoint-sm': '48em',
+        'mantine-breakpoint-md': '62em',
+        'mantine-breakpoint-lg': '75em',
+        'mantine-breakpoint-xl': '88em',
+      },
+    },
+  },
+};
+```
+
+Add styles imports to the root of your application. Usually styles are imported
+once in the root file. For example, if you are using Next.js with pages router,
+you can import styles in `_app.tsx` file:
+
+```tsx
+// core styles are required for all packages
+import '@mantine/core/styles.css';
+
+// other css files are required only if
+// you are using components from the corresponding package
+// import '@mantine/dates/styles.css';
+// import '@mantine/dropzone/styles.css';
+// import '@mantine/code-highlight/styles.css';
+// ...
+```
+
+Wrap your application with [MantineProvider](https://mantine.dev/theming/mantine-provider/):
+
+```tsx
+import { createTheme, MantineProvider } from '@mantine/core';
+
+const theme = createTheme({
+  /** Put your mantine theme override here */
+});
+
+function Demo() {
+  return (
+    <MantineProvider theme={theme}>
+      {/* Your app here */}
+    </MantineProvider>
+  );
+}
+```
+
+If your application has server side rendering, add [ColorSchemeScript](https://mantine.dev/theming/color-schemes)
+to the `<head />` of your application and spread `mantineHtmlProps` on the `<html />` element
+to [avoid seeing a hydration warning](https://help.mantine.dev/q/color-scheme-hydration-warning):
+
+```tsx
+import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
+
+function Demo() {
+  return (
+    <html lang="en" {...mantineHtmlProps}>
+      <head>
+        <meta charSet="UTF-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+        />
+        <title>My awesome app</title>
+
+        <ColorSchemeScript />
+      </head>
+      <body>{/* Your app here */}</body>
+    </html>
+  );
+}
+```
+
+All set! You can now use Mantine components in your application.
+
+## Set up VS Code
+
+By default, VS Code does not recognize postcss syntax, you need to install
+[PostCSS Intellisense and Highlighting](https://marketplace.visualstudio.com/items?itemName=vunguyentuan.vscode-postcss)
+to enable syntax highlighting and suppress variables (`$variable`) errors.
+
+To get CSS variables autocomplete, install [CSS Variable Autocomplete extension](https://marketplace.visualstudio.com/items?itemName=vunguyentuan.vscode-css-variables).
+Then create `.vscode/settings.json` file in the root folder of your project with the following content:
+
+```json
+{
+  "cssVariables.lookupFiles": [
+    "**/*.css",
+    "**/*.scss",
+    "**/*.sass",
+    "**/*.less",
+    "node_modules/@mantine/core/styles.css"
+  ]
+}
+```
+
+## Learn
+
+Before you jump into the code, it is recommended to learn more about Mantine theming and styling options.
+The most important documentation pages are:
+
+* [Theme object](https://mantine.dev/theming/theme-object) – learn about available theme properties
+* [Colors](https://mantine.dev/theming/colors) – learn how to add/replace colors in the theme object
+* [CSS modules](https://mantine.dev/styles/css-modules) – learn how to use CSS modules with Mantine
+* [postcss-preset-mantine](https://mantine.dev/styles/postcss-preset) – learn about `postcss-preset-mantine` functions and mixins
+* [Responsive styles](https://mantine.dev/styles/responsive) – learn how to apply responsive styles to components
+* [Styles API](https://mantine.dev/styles/styles-api) – learn how to style internal elements of any component
+* [Polymorphic components](https://mantine.dev/guides/polymorphic) – learn how to use polymorphic components to change rendered element
+
+## Support Mantine
+
+All contributions to the projects are welcome and appreciated.
+Contribute financially by [sponsoring the project on OpenCollective](https://opencollective.com/mantinedev).
+Your sponsorship will help us to maintain the project and develop new features.
+
+<Button rightSection={<IconHeartFilled size={22} color="var(--mantine-color-red-7)" />} size="lg" miw={300} justify="space-between" children="Sponsor Mantine" variant="default" radius="md" component="a" href="https://opencollective.com/mantinedev" />
+
+Other ways to support the project:
+
+* Share your feedback in [GitHub Discussions](https://github.com/mantinedev/mantine/discussions/categories/feedback) –
+  we are always happy to hear your thoughts on how to improve Mantine. Most of the new features and components
+  are based on the feedback received from the community.
+* Help others on [Discord](https://discord.gg/wbH82zuWMN) and/or [GitHub Discussions](https://github.com/mantinedev/mantine/discussions). There are usually 10-20 new questions every day,
+  you can help people with their issues and questions. While helping others, you will learn yourself and become
+  more proficient with React and Mantine.
+* Give us a code review. You are welcome to explore the [source code](https://github.com/mantinedev/mantine) of `@mantine/*` packages
+  and provide your feedback on how it can be improved. We are always open to new ideas and suggestions.
+* Send us some [kind words](https://github.com/mantinedev/mantine/discussions/categories/kind-words). We usually receive only
+  bug reports and feature requests, it is always nice to hear that people enjoy working with Mantine.
+* Star the project on [GitHub](https://github.com/mantinedev/mantine). It is a small thing that helps us grow and get more
+  people interested in the project.
+* [Contribute](https://mantine.dev/contribute) to the Mantine codebase. We welcome all kinds of contributions: if you do not have much
+  experience with React/TypeScript, you can help us improve the documentation to make it more clear and understandable
+  for new developers. If you are an experienced React developer, you can help us with open [issues](https://github.com/mantinedev/mantine/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22).
+* If you are using Mantine at work and your company wants to support the project, you can allocate some time
+  of your engineers to contribute to Mantine.
+
+## Mantine for Figma
+
+Design is not a part of the development process – there are no official
+Figma or Sketch design files. However, there are community-driven projects that provide Figma components
+based on Mantine. Note that these projects are not maintained by Mantine team, and it is not guaranteed
+that they are up-to-date with the latest Mantine version.
+
+* [Design files by **Ravn**](https://www.figma.com/community/file/1293978471602433537)
+* [Design files by **In The Zone**](https://www.figma.com/community/file/1067173247578645134)
+* [Design files by **Devias**](https://www.figma.com/community/file/1212329956432440320/Mantine-UI-Design-System---v5.10)
+* [Design files by **AlleyCorp Nord**](https://www.figma.com/community/file/1294398524808646906/mantine-lean-ui-library-alley-corp-nord)
+
+## License
+
+All `@mantine/*` packages are distributed under [MIT](https://github.com/mantinedev/mantine/blob/master/LICENSE) license.
+You can use them in any project, commercial or not, with or without attribution. All `@mantine/*` packages
+dependencies are also distributed under MIT license.

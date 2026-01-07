@@ -1,0 +1,130 @@
+# useHotkeys
+Package: @mantine/hooks
+Import: import { UseHotkeys } from '@mantine/hooks';
+
+## Usage
+
+`use-hotkeys` accepts as its first argument an array of hotkeys and handler tuples:
+
+* `hotkey` - hotkey string, for example `ctrl+E`, `shift+alt+L`, `mod+S`
+* `handler` - event handler called when a given combination was pressed
+* `options` - object with extra options for hotkey handler
+
+
+
+The second argument is a list of HTML tags on which hotkeys should be ignored.
+By default, hotkeys events are ignored if the focus is in `input`, `textarea` and `select` elements.
+
+```tsx
+import { useHotkeys } from '@mantine/hooks';
+
+function Demo() {
+  // Ignore hotkeys events only when focus is in input and textarea elements
+  useHotkeys(
+    [['ctrl+K', () => console.log('Trigger search')]],
+    ['INPUT', 'TEXTAREA']
+  );
+
+  // Empty array – do not ignore hotkeys events on any element
+  useHotkeys([['ctrl+K', () => console.log('Trigger search')]], []);
+}
+```
+
+## Targeting elements
+
+`use-hotkeys` hook can work only with document element, you will need to create your own event listener
+if you need to support other elements. For this purpose, `@mantine/hooks` package exports `getHotkeyHandler` function
+which should be used with `onKeyDown`:
+
+
+
+With `getHotkeyHandler` you can also add events to any dom node using `.addEventListener`:
+
+```tsx
+import { getHotkeyHandler } from '@mantine/hooks';
+
+document.body.addEventListener(
+  'keydown',
+  getHotkeyHandler([
+    ['mod+Enter', () => console.log('Submit')],
+    ['mod+S', () => console.log('Save')],
+  ])
+);
+```
+
+## Supported formats
+
+* `mod+S` – detects `⌘+S` on macOS and `Ctrl+S` on Windows
+* `ctrl+shift+X` – handles multiple modifiers
+* `alt + shift + L` – you can use whitespace inside hotkey
+* `ArrowLeft` – you can use special keys using [this format](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values)
+* `shift + [plus]` – you can use `[plus]` to detect `+` key
+* `Digit1` and `Hotkey1` - You can use physical key assignments [defined on MDN](https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_code_values).
+
+## Types
+
+`@mantine/hooks` exports `HotkeyItemOptions` and `HotkeyItem` types:
+
+```tsx
+interface HotkeyItemOptions {
+  preventDefault?: boolean;
+  usePhysicalKeys?: boolean;
+}
+
+type HotkeyItem = [
+  string,
+  (event: KeyboardEvent) => void,
+  HotkeyItemOptions?,
+];
+```
+
+`HotkeyItemOptions` provides the `usePhysicalKeys` option to force the physical key assignment. Useful for non-QWERTY keyboard layouts.
+
+`HotkeyItem` type can be used to create hotkey items outside of `use-hotkeys` hook:
+
+```tsx
+import { HotkeyItem, useHotkeys } from '@mantine/hooks';
+
+const hotkeys: HotkeyItem[] = [
+  [
+    'mod+J',
+    () => console.log('Toggle color scheme'),
+    { preventDefault: false },
+  ],
+  ['ctrl+K', () => console.log('Trigger search')],
+  ['alt+mod+shift+X', () => console.log('Rick roll')],
+  [
+    'D',
+    () => console.log('Triggers when pressing "E" on Dvorak keyboards!'),
+    { usePhysicalKeys: true }
+  ],
+];
+
+useHotkeys(hotkeys);
+```
+
+## Definition
+
+```tsx
+interface HotkeyItemOptions {
+  preventDefault?: boolean;
+  usePhysicalKeys?: boolean;
+}
+
+type HotkeyItem = [string, (event: KeyboardEvent) => void, HotkeyItemOptions?]
+
+function useHotkeys(
+  hotkeys: HotkeyItem[],
+  tagsToIgnore?: string[],
+  triggerOnContentEditable?: boolean
+): void;
+```
+
+## Exported types
+
+`HotkeyItemOptions` and `HotkeyItem` types are exported from `@mantine/hooks` package,
+you can import them in your application:
+
+```tsx
+import type { HotkeyItemOptions, HotkeyItem } from '@mantine/hooks';
+```

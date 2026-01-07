@@ -1,0 +1,146 @@
+# GettingStartedDates
+Package: @mantine/dates
+Import: import { GettingStartedDates } from '@mantine/dates';
+
+## Installation
+
+```bash
+yarn add @mantine/dates dayjs
+```
+
+```bash
+npm install @mantine/dates dayjs
+```
+
+After installation import package styles at the root of your application:
+
+```tsx
+import '@mantine/core/styles.css';
+// ‼️ import dates styles after core package styles
+import '@mantine/dates/styles.css';
+```
+
+## Do not forget to import styles
+
+Followed installation instructions above but something is not working
+(calendars and date pickers have no styles and look broken)?
+You've fallen into the trap of not importing dates styles!
+To fix the issue, import dates styles at the root of your application:
+
+```tsx
+import '@mantine/dates/styles.css';
+```
+
+## Usage
+
+After installing `@mantine/dates` package and importing styles, you can use all components from it:
+
+
+
+## dayjs
+
+`@mantine/dates` components use [dayjs](https://day.js.org/) under the hood for date manipulations and formatting.
+dayjs is a required dependency – you cannot change it to another date library. If you want to use a different
+date library in your application, you will need to install it separately.
+
+## DatesProvider
+
+`DatesProvider` component lets you set various settings that are shared across all
+components exported from `@mantine/dates` package. `DatesProvider` supports the following settings:
+
+* `locale` – dayjs locale, note that you also need to import corresponding locale module from dayjs. Default value is `en`.
+* `firstDayOfWeek` – number from 0 to 6, where 0 is Sunday and 6 is Saturday. Default value is 1 – Monday.
+* `weekendDays` – an array of numbers from 0 to 6, where 0 is Sunday and 6 is Saturday. Default value is `[0, 6]` – Saturday and Sunday.
+* `consistentWeeks` – boolean, if `true` every month will have 6 weeks. Default value is `false`.
+
+#### Example: usage
+
+```tsx
+import 'dayjs/locale/ru';
+import { DatesProvider, MonthPickerInput, DatePickerInput } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DatesProvider settings={{ locale: 'ru', firstDayOfWeek: 0, weekendDays: [0] }}>
+      <MonthPickerInput label="Pick month" placeholder="Pick month" />
+      <DatePickerInput mt="md" label="Pick date" placeholder="Pick date" />
+    </DatesProvider>
+  );
+}
+```
+
+
+## Consistent weeks
+
+If you want to avoid layout shifts, set `consistentWeeks: true` in `DatesProvider` settings.
+This will make sure that every month has 6 weeks, even if outside days are not in the same month.
+
+#### Example: consistentWeeks
+
+```tsx
+import { DatePicker, DatesProvider } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DatesProvider settings={{ consistentWeeks: true }}>
+      <DatePicker />
+    </DatesProvider>
+  );
+}
+```
+
+
+## Custom parse format
+
+Some components like [DateInput](https://mantine.dev/dates/date-input) require [custom parse format](https://day.js.org/docs/en/plugin/custom-parse-format)
+dayjs plugin. You need to extend dayjs with this plugin before using components that require it. Note that
+it is usually done once in your application root file, so you don't need to do it every time you use component.
+
+```tsx
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
+```
+
+## Localization and server components
+
+To add localization you must import `import 'dayjs/locale/x';` in your application (`x` is locale name)
+and set `locale` either on `DatesProvider` or on each component individually.
+
+Example of setting locale on DatesProvider:
+
+```tsx
+import 'dayjs/locale/ru';
+
+import { DatesProvider } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DatesProvider settings={{ locale: 'ru' }}>
+      {/* Your app  */}
+    </DatesProvider>
+  );
+}
+```
+
+The code above works in all environments, except Next.js app router.
+If you are using Next.js app router, you must add `'use client';` to the
+top of the file where you are importing `dayjs/locale/x` – locale data
+is required both on client and server.
+
+```tsx
+'use client';
+
+import 'dayjs/locale/ru';
+
+import { DatesProvider } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DatesProvider settings={{ locale: 'ru' }}>
+      {/* Your app  */}
+    </DatesProvider>
+  );
+}
+```

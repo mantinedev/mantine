@@ -1,0 +1,70 @@
+# useIntersection
+Package: @mantine/hooks
+Import: import { UseIntersection } from '@mantine/hooks';
+
+## Usage
+
+`use-intersection` returns information about the intersection
+of a given element with its scroll container or body element with [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API):
+
+
+
+## API
+
+The hook accepts `IntersectionObserver`'s options as its only optional argument:
+
+```tsx
+import { useIntersection } from '@mantine/hooks';
+
+useIntersection({
+  root: document.querySelector('#some-element'),
+  rootMargin: '0rem',
+  threshold: 1.0,
+});
+```
+
+The hook returns a `ref` function that should be passed to the observed element, and the latest entry, as returned by `IntersectionObserver`'s callback.
+See [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) documentation to learn everything about options.
+
+On the first render (as well as during SSR), or when no element is being observed, the entry is `null`.
+
+```tsx
+import { Paper } from '@mantine/core';
+import { useIntersection } from '@mantine/hooks';
+
+function Demo() {
+  const { ref } = useIntersection();
+
+  return (
+    <>
+      {/* With regular element: */}
+      <div ref={ref} />
+
+      {/* With Mantine component: */}
+      <Paper ref={ref} />
+    </>
+  );
+}
+```
+
+## Definition
+
+```tsx
+interface UseIntersectionReturnValue<T> {
+  ref: React.RefCallback<T | null>;
+  entry: IntersectionObserverEntry | null;
+}
+
+function useIntersection<T extends HTMLElement = any>(
+  options?: IntersectionObserverInit,
+): UseIntersectionReturnValue<T>
+```
+
+## Exported types
+
+`UseIntersectionReturnValue` type is exported from `@mantine/hooks` package,
+you can import it in your application:
+
+```tsx
+import type { UseIntersectionReturnValue } from '@mantine/hooks';
+```

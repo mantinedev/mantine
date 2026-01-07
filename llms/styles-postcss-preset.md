@@ -1,0 +1,508 @@
+# PostCSSPreset
+
+# Mantine PostCSS preset
+
+`postcss-preset-mantine` provides several CSS functions and mixins to help you write styles.
+It is not required to use it, but highly recommended. All demos that feature styles
+assume that you have this preset installed.
+
+`postcss-preset-mantine` includes the following PostCSS plugins:
+
+* [postcss-nested](https://www.npmjs.com/package/postcss-nested)
+* [postcss-mixins](https://www.npmjs.com/package/postcss-mixins) with Mantine specific mixins
+* Custom plugin with `em`/`rem` functions
+
+## Installation
+
+Install `postcss-preset-mantine` as a dev dependency:
+
+```bash
+yarn add postcss-preset-mantine
+```
+
+```bash
+npm install postcss-preset-mantine
+```
+
+## Usage
+
+Note that setting up PostCSS may be different depending on your build tool/framework, check
+a [dedicated framework guide](https://mantine.dev/getting-started) to learn more.
+Add `postcss-preset-mantine` to your `postcss.config.cjs` file (usually it is located in the root of your project):
+
+```js
+module.exports = {
+  plugins: {
+    'postcss-preset-mantine': {},
+  },
+};
+```
+
+All done! You can now use all the features of the preset.
+
+## rem/em functions
+
+`rem` and `em` functions can be used to convert pixels to rem/em units.
+`16px = 1rem` and `16px = 1em`, `em` values are supposed to be used in media queries,
+`rem` everywhere else. You can learn more about units conversions in [this guide](https://mantine.dev/styles/rem).
+
+```scss
+.demo {
+  font-size: rem(16px);
+
+  @media (min-width: em(320px)) {
+    font-size: rem(32px);
+  }
+}
+```
+
+Will be transformed to:
+
+```scss
+.demo {
+  font-size: calc(1rem * var(--mantine-scale));
+
+  @media (min-width: 20em) {
+    font-size: calc(2rem * var(--mantine-scale));
+  }
+}
+```
+
+## Auto convert px to rem
+
+`autoRem` option can be used to automatically convert all pixel values to rem units
+in `.css` files:
+
+```js
+module.exports = {
+  plugins: {
+    'postcss-preset-mantine': {
+      autoRem: true,
+    },
+  },
+};
+```
+
+This option works similar to `rem` function. The following code:
+
+```scss
+.demo {
+  font-size: 16px;
+
+  @media (min-width: 320px) {
+    font-size: 32px;
+  }
+}
+```
+
+Will be transformed to:
+
+```scss
+.demo {
+  font-size: calc(1rem * var(--mantine-scale));
+
+  @media (min-width: 320px) {
+    font-size: calc(2rem * var(--mantine-scale));
+  }
+}
+```
+
+Note that `autoRem` converts only CSS properties, values in `@media` queries are
+not converted automatically – you still need to use `em` function to convert them.
+
+`autoRem` option does not convert values in the following cases:
+
+* Values in `calc()`, `var()`, `clamp()` and `url()` functions
+* Values in `content` property
+* Values that contain `rgb()`, `rgba()`, `hsl()`, `hsla()` colors
+
+If you want to convert above values to rem units, use `rem` function manually.
+
+## dark and light mixins
+
+`dark` and `light` mixins can be used to create styles that will be applied only in dark or light color scheme.
+
+```scss
+.demo {
+  @mixin light {
+    color: red;
+  }
+
+  @mixin dark {
+    color: blue;
+  }
+}
+```
+
+Will be transformed to:
+
+```scss
+[data-mantine-color-scheme='light'] .demo {
+  color: red;
+}
+
+[data-mantine-color-scheme='dark'] .demo {
+  color: blue;
+}
+```
+
+Note that usually you do not need to use both `light` and `dark` mixins at the same time.
+It is easier to define styles for light color scheme and then use `dark` mixin to override them in dark color scheme.
+
+```scss
+.demo {
+  // Value for light color scheme
+  color: red;
+
+  @mixin dark {
+    // Value for dark color scheme
+    color: blue;
+  }
+}
+```
+
+To define values for light/dark color scheme on the `:root`/`html` element, use `light-root` and `dark-root` mixins instead:
+
+```scss
+:root {
+  @mixin light-root {
+    --color: red;
+  }
+
+  @mixin dark-root {
+    --color: blue;
+  }
+}
+```
+
+## smaller-than and larger-than mixins
+
+`smaller-than` and `larger-than` mixins can be used to create styles that will be applied only when the screen is smaller or larger than specified breakpoint.
+
+```scss
+.demo {
+  @mixin smaller-than 320px {
+    color: red;
+  }
+
+  @mixin larger-than 320px {
+    color: blue;
+  }
+}
+```
+
+Will be transformed to:
+
+```scss
+// Breakpoint values are converted to em units
+// In smaller-than mixin 0.1px is subtracted from breakpoint value
+// to avoid intersection with larger-than mixin
+@media (max-width: 19.99375em) {
+  .demo {
+    color: red;
+  }
+}
+
+@media (min-width: 20em) {
+  .demo {
+    color: blue;
+  }
+}
+```
+
+You can also use `smaller-than` and `larger-than` mixins with [mantine breakpoints](https://mantine.dev/styles/responsive/#breakpoints-variables-in-css-modules):
+
+```scss
+.demo {
+  @mixin smaller-than $mantine-breakpoint-sm {
+    color: red;
+  }
+
+  @mixin larger-than $mantine-breakpoint-sm {
+    color: blue;
+  }
+}
+```
+
+## light-dark function
+
+`light-dark` function is an alternative to `light` and `dark` mixins. It accepts two arguments:
+first argument is rule that will be applied in light color scheme, second argument is rule that will be applied in dark color scheme.
+
+```css
+.demo {
+  color: light-dark(red, blue);
+}
+```
+
+Will be transformed to:
+
+```css
+.demo {
+  color: red;
+}
+
+[data-mantine-color-scheme='dark'] .demo {
+  color: blue;
+}
+```
+
+Note that `light-dark` function does not work on `:root`/`html` element. Use `light-root` and `dark-root` mixins instead:
+
+```scss
+// ❌ Does not work
+:root {
+  --color: light-dark(red, blue);
+}
+
+// ✅ Works
+:root {
+  @mixin light-root {
+    --color: red;
+  }
+
+  @mixin dark-root {
+    --color: blue;
+  }
+}
+```
+
+## alpha function
+
+`alpha` function can be used to add alpha channel to color. Note that it uses [color-mix](https://caniuse.com/mdn-css_types_color_color-mix) which is not supported in some older browsers.
+
+```scss
+.demo {
+  color: alpha(var(--mantine-color-red-4), 0.5);
+  border: 1px solid alpha(#ffc, 0.2);
+}
+```
+
+Will be transformed to:
+
+```scss
+.demo {
+  color: color-mix(
+    in srgb,
+    var(--mantine-color-red-4),
+    transparent 50%
+  );
+  border: 1px solid color-mix(in srgb, #ffc, transparent 80%);
+}
+```
+
+## lighten and darken functions
+
+`lighten` and `darken` functions work similar to `alpha` function, but instead of adding alpha channel they add white or black color to the color with [color-mix](https://caniuse.com/mdn-css_types_color_color-mix).
+
+```scss
+.demo {
+  color: lighten(var(--mantine-color-red-4), 0.5);
+  border: 1px solid darken(#ffc, 0.2);
+}
+```
+
+Will be transformed to:
+
+```scss
+.demo {
+  color: color-mix(in srgb, var(--mantine-color-red-4), white 50%);
+  border: 1px solid color-mix(in srgb, #ffc, black 20%);
+}
+```
+
+## hover mixin
+
+`hover` mixin can be used to create styles that will be applied on hover.
+
+```css
+.demo {
+  @mixin hover {
+    color: orange;
+  }
+}
+```
+
+Will be transformed to:
+
+```css
+@media (hover: hover) {
+  .demo:hover {
+    color: orange;
+  }
+}
+
+@media (hover: none) {
+  .demo:active {
+    color: orange;
+  }
+}
+```
+
+## rtl/ltr mixins
+
+`rtl` mixin can be used to create styles that will be applied when `dir="rtl"` is set on parent element (usually `<html />`).
+
+```scss
+.demo {
+  margin-left: 1rem;
+
+  @mixin rtl {
+    margin-left: 0;
+    margin-right: 1rem;
+  }
+}
+```
+
+Will be transformed to:
+
+```css
+.demo {
+  margin-left: 1rem;
+}
+
+[dir='rtl'] .demo {
+  margin-left: 0;
+  margin-right: 1rem;
+}
+```
+
+`ltr` mixin works the same way, but for `dir="ltr"`:
+
+```scss
+.demo {
+  margin-left: 1rem;
+
+  @mixin ltr {
+    margin-left: 0;
+    margin-right: 1rem;
+  }
+}
+```
+
+Will be transformed to:
+
+```css
+.demo {
+  margin-left: 1rem;
+}
+
+[dir='ltr'] .demo {
+  margin-left: 0;
+  margin-right: 1rem;
+}
+```
+
+## not-rtl/not-ltr mixins
+
+`not-rtl`/`not-ltr` mixins can be used to create styles that will be applied when the direction is set to the opposite value or not set at all.
+For example, `not-rtl` styles will be applied when `dir="ltr"` or when `dir` is not set at all.
+
+```scss
+.demo {
+  @mixin not-rtl {
+    margin-right: 1rem;
+  }
+}
+```
+
+Will be transformed to:
+
+```css
+:root:not([dir='rtl']) .demo {
+  margin-right: 1rem;
+}
+```
+
+## where-\* mixins
+
+`where-*` mixins are alternative to `light`, `dark`, `rlt` and `hover` mixins.
+They work exactly the same, but produced CSS is less specific. These mixins are
+useful when you want to easily override styles, for example, when you are building
+a library or extension.
+
+Example of using `where-light` mixin:
+
+```scss
+.demo {
+  @mixin where-light {
+    color: red;
+  }
+}
+```
+
+Will be transformed to:
+
+```scss
+:where([data-mantine-color-scheme='light']) .demo {
+  color: red;
+}
+```
+
+## Custom mixins
+
+You can define custom mixins that are not included in the preset by specifying them
+in the `mixins` option. To learn about mixins syntax, follow [postcss-mixins documentation](https://github.com/postcss/postcss-mixins#readme).
+
+Example of adding `clearfix` and `circle` mixins:
+
+```tsx
+module.exports = {
+  plugins: {
+    'postcss-preset-mantine': {
+      autoRem: true,
+      mixins: {
+        clearfix: {
+          '&::after': {
+            content: '""',
+            display: 'table',
+            clear: 'both',
+          },
+        },
+        circle: (_mixin, size) => ({
+          borderRadius: '50%',
+          width: size,
+          height: size,
+        }),
+      },
+    },
+    // ... Other plugins
+  },
+};
+```
+
+Then you can use these mixins in your styles:
+
+```scss
+.demo {
+  @mixin clearfix;
+  @mixin circle 100px;
+}
+```
+
+## Disable specific features
+
+You can disable specific features of the preset by setting them to `false`:
+
+```tsx
+module.exports = {
+  'postcss-preset-mantine': {
+    features: {
+      // Turn off `light-dark` function
+      lightDarkFunction: false,
+
+      // Turn off `postcss-nested` plugin
+      nested: false,
+
+      // Turn off `lighten`, `darken` and `alpha` functions
+      colorMixAlpha: false,
+
+      // Turn off `rem` and `em` functions
+      remEmFunctions: false,
+
+      // Turn off `postcss-mixins` plugin
+      mixins: false,
+    },
+  },
+};
+```

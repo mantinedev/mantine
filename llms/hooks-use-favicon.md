@@ -1,0 +1,19 @@
+# useFavicon
+Package: @mantine/hooks
+Import: import { UseFavicon } from '@mantine/hooks';
+
+## Usage
+
+`use-favicon` appends `<link />` element to head component with given favicon in `useLayoutEffect`.
+The hook is not called during server side rendering.
+
+Call hook with a favicon URL (supported formats: `.ico`, `.png`, `.svg` and `.gif`) that should be set as favicon.
+The hook is triggered every time the URL changes and the value is not an empty string (trailing whitespace is trimmed) or `null`.
+
+
+
+## Definition
+
+```tsx
+function useFavicon(url: string): void;
+```

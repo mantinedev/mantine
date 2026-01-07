@@ -1,0 +1,221 @@
+# useListState
+Package: @mantine/hooks
+Import: import { UseListState } from '@mantine/hooks';
+
+## Usage
+
+`use-list-state` provides an API to work with list state:
+
+```tsx
+import { useListState } from '@mantine/hooks';
+
+const [values, handlers] = useListState([{ a: 1 }]);
+
+// add one or more items to the end of the list
+const append = () => handlers.append({ a: 2 });
+// values -> [{ a: 1 }, { a: 2 }]
+
+// add one or more items to the start of the list
+const prepend = () => handlers.prepend({ a: 3 }, { a: 4 });
+// values -> [{ a: 3 }, { a: 4 }, { a: 1 }, { a: 2 }]
+
+// remove items at given positions
+const remove = () => handlers.remove(0, 2);
+// values -> [{ a: 4 }, { a: 2 }]
+
+// insert one or more items at given position
+const insert = () => handlers.insert(1, { a: 5 });
+// values -> [{ a: 4 }, { a: 5 }, { a: 2 }]
+
+// apply function to each element of the list
+const apply = () =>
+  handlers.apply((item, index) => ({ a: item.a * index }));
+// values -> [{ a: 0 }, { a: 5 }, { a: 4 }]
+
+// move item from one position to another
+const reorder = () => handlers.reorder({ from: 2, to: 0 });
+// values -> [{ a: 4 }, { a: 0 }, { a: 5 }]
+
+// swap items positions
+const swap = () => handlers.swap({ from: 0, to: 2 });
+// values -> [{ a: 5 }, { a: 0 }, { a: 4 }]
+
+// apply function to each element that matches condition
+const applyWhere = () =>
+  handlers.applyWhere(
+    (item) => item.a > 0,
+    (item) => ({ a: item.a + 2 })
+  );
+// values -> [{ a: 7 }, { a: 0 }, { a: 6 }]
+
+// set entirely new state
+const setState = () => handlers.setState([{ a: 6 }, { a: 7 }]);
+// values -> [{ a: 6 }, { a: 7 }]
+
+// set individual item at given position
+const setItem = () => handlers.setItem(0, { a: 8 });
+// values -> [{ a: 8 }, { a: 7 }]
+
+// set item property at given position
+const setItemProp = () => handlers.setItemProp(1, 'a', 'new-prop');
+// values -> [{ a: 8 }, { a: 'new-prop' }]
+
+// filter objects that have a = 'new-prop'
+const filter = () => handlers.filter((item) => item.a === 'new-prop');
+// values -> [{ a: 'new-prop' }]
+```
+
+## API
+
+`use-list-state` takes an array as a single argument and
+returns a list of values and handlers to change them in a tuple, similar to `useState` hook.
+
+The hook provides handlers to work with array data:
+
+* `append` – add items to the end of the list
+* `prepend` – add items to the start of the list
+* `pop` – remove last item
+* `shift` – remove first item
+* `insert` – insert items at given index
+* `remove` – remove items at given indices
+* `reorder` – move item from one position to another
+* `swap` – swap items positions
+* `apply` – apply given function to all items in the list
+* `applyWhere` - apply given function to selective items using condition
+* `setItem` – replace item at given index
+* `setItemProp` – set item property at given index
+* `setState` – set list state with react action
+* `filter` - filter values with callback function
+
+## Indeterminate state checkbox example
+
+#### Example: indeterminate
+
+```tsx
+import { useListState, randomId } from '@mantine/hooks';
+import { Checkbox } from '@mantine/core';
+
+const initialValues = [
+  { label: 'Receive email notifications', checked: false, key: randomId() },
+  { label: 'Receive sms notifications', checked: false, key: randomId() },
+  { label: 'Receive push notifications', checked: false, key: randomId() },
+];
+
+export function IndeterminateCheckbox() {
+  const [values, handlers] = useListState(initialValues);
+
+  const allChecked = values.every((value) => value.checked);
+  const indeterminate = values.some((value) => value.checked) && !allChecked;
+
+  const items = values.map((value, index) => (
+    <Checkbox
+      mt="xs"
+      ml={33}
+      label={value.label}
+      key={value.key}
+      checked={value.checked}
+      onChange={(event) => handlers.setItemProp(index, 'checked', event.currentTarget.checked)}
+    />
+  ));
+
+  return (
+    <>
+      <Checkbox
+        checked={allChecked}
+        indeterminate={indeterminate}
+        label="Receive all notifications"
+        onChange={() =>
+          handlers.setState((current) =>
+            current.map((value) => ({ ...value, checked: !allChecked }))
+          )
+        }
+      />
+      {items}
+    </>
+  );
+}
+```
+
+
+## UseListStateHandlers type
+
+`@mantine/hooks` package exports `UseListStateHandlers`. It is a generic type
+that contains all handlers from `useListState` hook. It can be used to type
+handlers in your components.
+
+`UseListStateHandlers` type:
+
+```tsx
+export interface UseListStateHandlers<T> {
+  setState: React.Dispatch<React.SetStateAction<T[]>>;
+  append: (...items: T[]) => void;
+  prepend: (...items: T[]) => void;
+  insert: (index: number, ...items: T[]) => void;
+  pop: () => void;
+  shift: () => void;
+  apply: (fn: (item: T, index?: number) => T) => void;
+  applyWhere: (
+    condition: (item: T, index: number) => boolean,
+    fn: (item: T, index?: number) => T
+  ) => void;
+  remove: (...indices: number[]) => void;
+  reorder: ({ from, to }: { from: number; to: number }) => void;
+  swap: ({ from, to }: { from: number; to: number }) => void;
+  setItem: (index: number, item: T) => void;
+  setItemProp: <K extends keyof T, U extends T[K]>(
+    index: number,
+    prop: K,
+    value: U
+  ) => void;
+  filter: (fn: (item: T, i: number) => boolean) => void;
+}
+```
+
+The type is useful when you want to pass `use-list-state` handlers to child components
+as a prop:
+
+```tsx
+import { UseListStateHandlers } from '@mantine/hooks';
+
+interface Props {
+  handlers: UseListStateHandlers<string>;
+}
+
+function Demo({ handlers }: Props) {
+  return (
+    <button type="button" onClick={() => handlers.append('hello')}>
+      Append hello
+    </button>
+  );
+}
+```
+
+## Set item type
+
+By default, `use-list-state` will use type from `initialValues`.
+If you call the hook with an empty array, you must specify item type:
+
+```tsx
+import { useListState } from '@mantine/hooks';
+
+useListState(['hello']); // ok, item type is string
+useListState([]); // not ok, item type is any
+useListState<string>([]); // ok, item type is string
+```
+
+## Definition
+
+```tsx
+function useListState<T>(
+  initialValue?: T[]
+): [T[], UseListStateHandlers<T>];
+```
+
+## Exported types
+
+`UseListStateHandlers` type is exported from `@mantine/hooks` package,
+you can import it in your application:
+
+```tsx
+import type { UseListStateHandlers } from '@mantine/hooks';
+```

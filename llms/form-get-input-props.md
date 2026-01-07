@@ -1,0 +1,358 @@
+# formGetInputProps
+Package: @mantine/form
+Import: import { FormGetInputProps } from '@mantine/form';
+
+## getInputProps handler
+
+`form.getInputProps` returns an object with `value` (`defaultValue` for "uncontrolled" mode), `onChange`, `onFocus`, `onBlur`, `error`
+and all props specified in `enhanceGetInputProps` function. Return value should be spread to the input component.
+
+You can pass the following options to `form.getInputProps` as second argument:
+
+* `type`: default `input`. Must be set to `checkbox` if the input requires `checked` prop instead of `value`.
+* `withError`: default `type === 'input'`. Determines whether the returned object should contain an `error` property with
+  `form.errors[path]` value.
+* `withFocus`: default `true`. Determines whether the returned object should contain an `onFocus` handler. If disabled, the touched
+  state will only change if value of the field has been changed.
+* Any additional props that can be accessed with `enhanceGetInputProps` function. These props are not passed to the input.
+
+```tsx
+import { Checkbox, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '', accepted: false },
+    validate: {
+      name: (value) => value.trim().length > 2,
+    },
+  });
+
+  return (
+    <>
+      <TextInput
+        key={form.key('name')}
+        {...form.getInputProps('name')}
+      />
+      <Checkbox
+        key={form.key('accepted')}
+        {...form.getInputProps('accepted', { type: 'checkbox' })}
+      />
+    </>
+  );
+}
+```
+
+## enhanceGetInputProps
+
+`enhanceGetInputProps` is a function that can be used to add additional props to the object returned by `form.getInputProps`.
+You can define it in `useForm` hook options. Its argument is an object with the following properties:
+
+* `inputProps` – object returned by `form.getInputProps` by default
+* `field` – field path, first argument of `form.getInputProps`, for example `name`, `user.email`, `users.0.name`
+* `options` – second argument of `form.getInputProps`, for example `{ type: 'checkbox' }`, can be used to pass additional
+  options to `enhanceGetInputProps` function
+* `form` – form instance
+
+Example of using `enhanceGetInputProps` to disable input based on field path:
+
+#### Example: enhanceGetInputProps
+
+```tsx
+import { NumberInput, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  age: number | string;
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    mode: 'uncontrolled',
+    initialValues: { name: '', age: '' },
+    enhanceGetInputProps: (payload) => ({
+      disabled: payload.field === 'name',
+    }),
+  });
+
+  return (
+    <>
+      <TextInput
+        {...form.getInputProps('name')}
+        key={form.key('name')}
+        label="Name"
+        placeholder="Name"
+      />
+      <NumberInput
+        {...form.getInputProps('age')}
+        key={form.key('age')}
+        label="Age"
+        placeholder="Age"
+        mt="md"
+      />
+    </>
+  );
+}
+```
+
+
+Example of using `enhanceGetInputProps` to add additional props to the input based on option passed to `form.getInputProps`:
+
+#### Example: enhanceGetInputPropsOptions
+
+```tsx
+import { NumberInput, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  age: number | string;
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    mode: 'uncontrolled',
+    initialValues: { name: '', age: '' },
+    enhanceGetInputProps: (payload) => {
+      if (payload.options.fieldType === 'name') {
+        return {
+          label: 'Your name',
+          placeholder: 'Your name',
+          withAsterisk: true,
+          description: 'Your personal information is stored securely. (Just kidding!)',
+        };
+      }
+
+      return {};
+    },
+  });
+
+  return (
+    <>
+      <TextInput {...form.getInputProps('name', { fieldType: 'name' })} key={form.key('name')} />
+      <NumberInput
+        {...form.getInputProps('age')}
+        key={form.key('age')}
+        label="Age"
+        placeholder="Age"
+        mt="md"
+      />
+    </>
+  );
+}
+```
+
+
+Example of using `enhanceGetInputProps` to add `disabled` prop to all inputs if the form
+has not been initialized yet:
+
+#### Example: enhanceGetInputPropsForm
+
+```tsx
+import { NumberInput, TextInput, Button } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  age: number | string;
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    mode: 'uncontrolled',
+    initialValues: { name: '', age: '' },
+    enhanceGetInputProps: (payload) => {
+      if (!payload.form.initialized) {
+        return { disabled: true };
+      }
+
+      return {};
+    },
+  });
+
+  return (
+    <>
+      <TextInput
+        {...form.getInputProps('name')}
+        key={form.key('name')}
+        label="Your name"
+        placeholder="Your name"
+      />
+      <NumberInput
+        {...form.getInputProps('age')}
+        key={form.key('age')}
+        label="Age"
+        placeholder="Age"
+        mt="md"
+      />
+      <Button onClick={() => form.initialize({ name: 'John', age: 20 })} mt="md">
+        Initialize form
+      </Button>
+    </>
+  );
+}
+```
+
+
+## Initialize form
+
+When called `form.initialize` handler sets `initialValues` and `values` to the same value
+and marks form as initialized. It can be used only once, next `form.initialize` calls
+are ignored.
+
+`form.initialize` is useful when you want to sync form values with backend API response:
+
+#### Example: initialize
+
+```tsx
+import { Button, NumberInput, TextInput } from '@mantine/core';
+import { isInRange, isNotEmpty, useForm } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  age: number | string;
+}
+
+function apiRequest(): Promise<FormValues> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ name: 'John Doe', age: 25 });
+    }, 1000);
+  });
+}
+
+function Demo() {
+  const form = useForm<FormValues>({
+    mode: 'uncontrolled',
+    initialValues: { name: '', age: 0 },
+    validate: {
+      name: isNotEmpty('Name is required'),
+      age: isInRange({ min: 18 }, 'You must be at least 18 to register'),
+    },
+  });
+
+  return (
+    <>
+      <TextInput
+        {...form.getInputProps('name')}
+        key={form.key('name')}
+        label="Name"
+        placeholder="Name"
+      />
+      <NumberInput
+        {...form.getInputProps('age')}
+        key={form.key('age')}
+        label="Age"
+        placeholder="Age"
+        mt="md"
+      />
+      <Button onClick={() => apiRequest().then((values) => form.initialize(values))} mt="md">
+        Initialize form
+      </Button>
+    </>
+  );
+}
+```
+
+
+Example with [TanStack Query](https://tanstack.com/query/latest) (react-query):
+
+```tsx
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const query = useQuery({
+    queryKey: ['current-user'],
+    queryFn: () => fetch('/api/users/me').then((res) => res.json()),
+  });
+
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      name: '',
+      email: '',
+    },
+  });
+
+  useEffect(() => {
+    if (query.data) {
+      // Even if query.data changes, form will be initialized only once
+      form.initialize(query.data);
+    }
+  }, [query.data]);
+}
+```
+
+## Integrate getInputProps with custom inputs
+
+`form.getInputProps` returns an object with the following properties:
+
+* `value`
+* `defaultValue`
+* `onChange`
+* `onFocus`
+* `onBlur`
+* `error`
+
+To create a custom input that works with `form.getInputProps`, make sure that your component
+accepts these props and passes them to the input component or uses them in any other way.
+
+Example of creating a custom input component:
+
+```tsx
+interface CustomInputProps {
+  value?: string;
+  defaultValue?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  error?: string;
+}
+
+export function CustomInput({
+  value,
+  defaultValue,
+  onChange,
+  onFocus,
+  onBlur,
+  error,
+}: CustomInputProps) {
+  return (
+    <div>
+      <input
+        value={value}
+        defaultValue={defaultValue}
+        onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      />
+      {error && <div>{error}</div>}
+    </div>
+  );
+}
+```
+
+Then use it with `form.getInputProps`:
+
+```tsx
+import { useForm } from '@mantine/form';
+import { CustomInput } from './CustomInput';
+
+function Demo() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: { name: '' },
+  });
+
+  return (
+    <CustomInput
+      {...form.getInputProps('name')}
+      key={form.key('name')}
+    />
+  );
+}
+```

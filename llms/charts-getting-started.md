@@ -1,0 +1,38 @@
+# GettingStartedCharts
+Package: @mantine/charts
+Import: import { GettingStartedCharts } from '@mantine/charts';
+
+## Installation
+
+```bash
+yarn add @mantine/charts recharts
+```
+
+```bash
+npm install @mantine/charts recharts
+```
+
+After installation import package styles at the root of your application:
+
+```tsx
+import '@mantine/core/styles.css';
+// ‼️ import charts styles after core package styles
+import '@mantine/charts/styles.css';
+```
+
+## Do not forget to import styles
+
+Followed installation instructions above but something is not working
+(misplaced tooltips or no colors)?
+You've fallen into the trap of not importing charts styles!
+To fix the issue, import charts styles at the root of your application:
+
+```tsx
+import '@mantine/charts/styles.css';
+```
+
+## Based on recharts
+
+Most of the components in `@mantine/charts` package are based on [recharts](https://recharts.org/) library.
+If you need advanced features that are not covered in `@mantine/charts`
+documentation, reference [recharts documentation](https://recharts.org/en-US/api) for more information.
