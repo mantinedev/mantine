@@ -40,6 +40,8 @@ function MyGroup({ spacing, ...others }: MyGroupProps) {
 }
 ```
 
+## Polymorphic components props types
+
 [Polymorphic component](/guides/polymorphic) props types don't include `React.ComponentProps<'X'>`
 because their root element depends on the `component` prop value.
 
@@ -57,6 +59,18 @@ interface MyButtonProps
 function MyButton({ height, ...others }: MyButtonProps) {
   return <Button style={{ height }} {...others} />;
 }
+```
+
+## Namespace types
+
+All Mantine components export namespaces with related types. For example, [Button](/core/button)
+component props can be accessed as `Button.Props`:
+
+```tsx
+import {  Button } from '@mantine/core';
+
+// Same as `import type { ButtonProps } from '@mantine/core';`
+type MyButtonProps = Button.Props;
 ```
 
 ## ElementProps type
