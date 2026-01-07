@@ -19,6 +19,30 @@ export function Usage() {
   );
 }
 
+export function BottomOfThePage() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div style={{ height: 1200 }} />
+      <Select
+        data={[
+          'React',
+          'Angular',
+          'Svelte',
+          'Vue',
+          'Ember',
+          'Backbone',
+          'Preact',
+          'Inferno',
+          'Aurelia',
+          'Meteor',
+        ]}
+        placeholder="Select something"
+      />
+      <div style={{ height: 1200 }} />
+    </div>
+  );
+}
+
 export function ClearButtonWithRightSection() {
   const sizes = ['xs', 'sm', 'md', 'lg', 'xl'].map((size) => (
     <Select

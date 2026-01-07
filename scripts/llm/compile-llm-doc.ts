@@ -21,6 +21,15 @@ interface CompilerConfig {
   publicPath?: string;
 }
 
+interface PageFileInfo {
+  category: string;
+  title: string;
+  description?: string;
+  route: string;
+  fileName: string;
+  content: string;
+}
+
 const config: CompilerConfig = {
   rootDir: process.cwd(),
   mdxPaths: {
@@ -37,6 +46,7 @@ const config: CompilerConfig = {
 class MantineLLMCompiler {
   private config: CompilerConfig;
   private output: string[] = [];
+  private pageFiles: PageFileInfo[] = [];
   private mdxMetadata = new Map<string, any>();
   private stylesApiData = new Map<
     string,
@@ -437,12 +447,67 @@ class MantineLLMCompiler {
       this.output.push('');
 
       for (const file of files) {
-        await this.processSingleMdx(file);
+        const sectionStart = this.output.length;
+        const pageInfo = await this.processSingleMdx(file);
+        const sectionEnd = this.output.length;
+
+        if (pageInfo) {
+          const sectionLines = this.output.slice(sectionStart, sectionEnd);
+
+          // Normalize heading level for standalone page
+          if (sectionLines.length > 0 && sectionLines[0].startsWith('### ')) {
+            sectionLines[0] = `# ${sectionLines[0].slice(4)}`;
+          }
+
+          // Trim trailing separator and blank lines from standalone page content
+          while (sectionLines.length > 0 && sectionLines[sectionLines.length - 1].trim() === '') {
+            sectionLines.pop();
+          }
+
+          if (sectionLines.length > 0 && sectionLines[sectionLines.length - 1] === '-'.repeat(80)) {
+            sectionLines.pop();
+          }
+
+          while (sectionLines.length > 0 && sectionLines[sectionLines.length - 1].trim() === '') {
+            sectionLines.pop();
+          }
+
+          const relativePath = path.relative(this.config.mdxPaths.docs, file);
+          const route = this.getRouteFromRelative(relativePath);
+          const fileName = this.getPageFileName(route);
+
+          this.pageFiles.push({
+            category,
+            title: pageInfo.title,
+            description: pageInfo.description,
+            route,
+            fileName,
+            content: sectionLines.join('\n'),
+          });
+        }
       }
     }
   }
 
-  private async processSingleMdx(filePath: string) {
+  private getRouteFromRelative(relativePath: string): string {
+    let route = `/${relativePath.replace(/\\/g, '/').replace(/\.mdx$/, '')}`;
+
+    if (route.endsWith('/index')) {
+      route = route.slice(0, -'/index'.length) || '/';
+    }
+
+    return route;
+  }
+
+  private getPageFileName(route: string): string {
+    const trimmed = route.replace(/^\/+/, '');
+    const base = trimmed === '' ? 'index' : trimmed.replace(/\//g, '-');
+    return `${base}.md`;
+  }
+
+  private async processSingleMdx(
+    filePath: string
+  ): Promise<{ title: string; description?: string } | null> {
     try {
       const content = await fs.readFile(filePath, 'utf-8');
       const fileName = path.basename(filePath, '.mdx');
@@ -485,8 +550,10 @@ class MantineLLMCompiler {
       this.output.push('');
       this.output.push('-'.repeat(80));
       this.output.push('');
+      return { title: componentTitle, description: metadata?.description };
     } catch (error) {
       // Error processing file
+      return null;
     }
   }
 
@@ -1833,15 +1900,91 @@ Additional information about ${component} component.`;
   }
 
   private async writeOutput() {
-    const outputContent = this.output.join('\n');
+    const fullContent = this.output.join('\n');
 
-    // Write to llms.txt in public folder if publicPath is configured
-    if (this.config.publicPath) {
-      const llmsTxtPath = path.join(this.config.publicPath, 'llms.txt');
-      await fs.writeFile(llmsTxtPath, outputContent, 'utf-8');
+    if (!this.config.publicPath) {
+      return;
     }
 
-    // Output files generated
+    const publicDir = this.config.publicPath;
+    const llmsDir = path.join(publicDir, 'llms');
+
+    await fs.ensureDir(llmsDir);
+
+    // Write full documentation file
+    const fullPath = path.join(publicDir, 'llms-full.txt');
+    await fs.writeFile(fullPath, fullContent, 'utf-8');
+
+    // Write per-page markdown files
+    for (const page of this.pageFiles) {
+      const pagePath = path.join(llmsDir, page.fileName);
+      await fs.writeFile(pagePath, page.content, 'utf-8');
+    }
+
+    // Write index file with overview and links
+    const indexPath = path.join(publicDir, 'llms.txt');
+    const indexContent = this.buildIndexContent();
+    await fs.writeFile(indexPath, indexContent, 'utf-8');
+  }
+
+  private buildIndexContent(): string {
+    const lines: string[] = [];
+
+    lines.push('# Mantine UI - LLM Documentation');
+    lines.push('');
+    lines.push('This index lists Mantine documentation pages formatted for LLMs.');
+    lines.push('Each link points to a standalone Markdown file under the /llms path.');
+    lines.push('');
+    lines.push('For a single consolidated file with all content, use:');
+    lines.push('- https://mantine.dev/llms-full.txt');
+    lines.push('');
+
+    const categoryOrder = [
+      'core',
+      'hooks',
+      'dates',
+      'charts',
+      'guides',
+      'theming',
+      'styles',
+      'x',
+      'other',
+    ];
+
+    const pagesByCategory = new Map<string, PageFileInfo[]>();
+
+    for (const page of this.pageFiles) {
+      const list = pagesByCategory.get(page.category) || [];
+      list.push(page);
+      pagesByCategory.set(page.category, list);
+    }
+
+    for (const category of categoryOrder) {
+      const pages = pagesByCategory.get(category);
+      if (!pages || pages.length === 0) {
+        continue;
+      }
+
+      lines.push(`## ${category.charAt(0).toUpperCase()}${category.slice(1)}`);
+      lines.push('');
+
+      const sortedPages = [...pages].sort((a, b) => a.title.localeCompare(b.title));
+
+      for (const page of sortedPages) {
+        const url = `https://mantine.dev/llms/${page.fileName}`;
+        const description = page.description?.trim();
+
+        if (description) {
+          lines.push(`- [${page.title}](${url}): ${description}`);
+        } else {
+          lines.push(`- [${page.title}](${url})`);
+        }
+      }
+
+      lines.push('');
+    }
+
+    return lines.join('\n');
   }
 }
 

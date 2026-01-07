@@ -139,7 +139,7 @@ or use a different library.
 Example of creating a custom shiki adapter with custom themes and logic:
 
 ```tsx
-import type { CodeHighlightAdapter, stripShikiCodeBlocks } from '@mantine/code-highlight';
+import { type CodeHighlightAdapter, stripShikiCodeBlocks } from '@mantine/code-highlight';
 
 // Shiki transformers can be used to highlight diffs and other notations
 // https://shiki.style/packages/transformers
@@ -162,12 +162,12 @@ async function loadShiki() {
 export const customShikiAdapter: CodeHighlightAdapter = {
   // loadContext is called on the client side to load the shiki highlighter
   // It is required to be used if your library requires async initialization
-  // The value returned from loadContext is passed to createHighlighter as the ctx argument
+  // The value returned from loadContext is passed to getHighlighter as ctx argument
   loadContext: loadShiki,
 
   // ctx is the value returned from loadContext
   // or null if loadContext is not used or has not resolved yet
-  createHighlighter: (ctx) => {
+  getHighlighter: (ctx) => {
     if (!ctx) {
       return ({ code }) => ({ highlightedCode: code, isHighlighted: false });
     }

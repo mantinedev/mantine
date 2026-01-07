@@ -103,7 +103,7 @@ function getPopoverMiddlewares(
           const styles = floating.refs.floating.current?.style ?? {};
 
           if (middlewaresOptions.size) {
-            //If custom apply function is given use that else set defaults
+            // If custom apply function is given use that else set defaults
             if (typeof middlewaresOptions.size === 'object' && !!middlewaresOptions.size.apply) {
               middlewaresOptions.size.apply({ rects, availableWidth, availableHeight, ...rest });
             } else {

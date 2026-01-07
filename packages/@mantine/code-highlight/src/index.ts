@@ -12,6 +12,7 @@ import type {
   InlineCodeHighlightProps,
   InlineCodeHighlightStylesNames,
 } from './CodeHighlight/InlineCodeHighlight';
+import type { CodeHighlightAdapter } from './CodeHighlightProvider/CodeHighlightProvider';
 import type {
   CodeHighlightDefaultLanguage,
   CodeHighlightTabsCode,
@@ -54,6 +55,7 @@ export type {
   InlineCodeHighlightFactory,
   CodeHighlightControlProps,
   CodeHighlightContextValue,
+  CodeHighlightAdapter,
 };
 
 export namespace CodeHighlight {
@@ -62,6 +64,7 @@ export namespace CodeHighlight {
   export type CssVariables = CodeHighlightCssVariables;
   export type Factory = CodeHighlightFactory;
   export type ContextValue = CodeHighlightContextValue;
+  export type Adapter = CodeHighlightAdapter;
 
   export namespace Tabs {
     export type Props = CodeHighlightTabsProps;

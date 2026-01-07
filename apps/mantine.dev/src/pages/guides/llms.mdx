@@ -9,18 +9,14 @@ Mantine provides LLM-friendly documentation to help AI tools like **Cursor**, **
 
 `llms.txt` documentation is updated with every Mantine release.
 
-## Available Documentation
+## Documentation
 
-### Complete Documentation
+Links:
 
-Full Mantine documentation following the [LLMs.txt](https://llmstxt.org/) standard (~1.8MB)
+- [llms.txt](/llms.txt) – compact
+- [Download](/llms-full.txt) full documentation in single document (~1.8MB)
 
-- [View online](/llms.txt)
-- [Download](https://mantine.dev/llms.txt)
-
-### Documentation Structure
-
-The llms.txt file includes:
+The LLM documentation includes:
 
 - **Getting Started** - Installation and setup guides
 - **Components** - All Mantine components with props, examples, and usage
@@ -29,9 +25,7 @@ The llms.txt file includes:
 - **Styles** - CSS modules, CSS variables, and styling approaches
 - **Frequently Asked Questions** - Common questions and solutions
 
-## Usage with AI Tools
-
-### Cursor
+## Cursor
 
 In Cursor, you can reference the documentation using the `@Docs` feature:
 
@@ -39,14 +33,14 @@ In Cursor, you can reference the documentation using the `@Docs` feature:
 2. Reference the Mantine documentation URL: `https://mantine.dev/llms.txt`
 3. Ask questions about Mantine components, styling, or implementation
 
-### Windsurf
+## Windsurf
 
 For Windsurf users:
 
 1. Reference the documentation using `@https://mantine.dev/llms.txt`
 2. Or add it to your `.windsurfrules` file for persistent access
 
-### ChatGPT & Claude
+## ChatGPT and Claude
 
 When using ChatGPT or Claude:
 
@@ -61,7 +55,7 @@ While Copilot doesn't directly support external documentation, you can:
 1. Include relevant documentation snippets in your comments
 2. Reference component names and props accurately for better suggestions
 
-## Example Prompts
+## Example prompts
 
 Here are some example prompts you can use with AI tools:
 
@@ -81,7 +75,12 @@ The LLM documentation is automatically generated from our source files using a c
 - Styles API documentation
 - FAQ content from help.mantine.dev
 
-To ensure you have the latest documentation, we regenerate the llms.txt file with each release. The file follows the [LLMs.txt](https://llmstxt.org/) standard for better compatibility with AI tools.
+There are two generated formats:
+
+- `llms.txt` – the default compact index that links to per-page `.md` files under the `/llms` path
+- `llms-full.txt` – a single large file with all documentation content
+
+To ensure you have the latest documentation, we regenerate these files with each release. The files follow the [LLMs.txt](https://llmstxt.org/) standard for better compatibility with AI tools.
 
 ## Contributing
 
