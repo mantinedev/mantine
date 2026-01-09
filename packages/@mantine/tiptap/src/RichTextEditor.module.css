@@ -62,6 +62,12 @@
     color: var(--mantine-color-placeholder);
   }
 
+  & :global(div:not(.ProseMirror)) {
+    /* Position the bubble menu above the toolbar. As it doesn't have its own selector,
+    assert that the non-ProseMirror div is the bubble or floating menu */
+    z-index: 2;
+  }
+
   & :global(pre) {
     font-family: var(--mantine-font-family-monospace);
     border-radius: var(--mantine-radius-default);
@@ -309,6 +315,7 @@
   gap: var(--mantine-spacing-sm);
   top: var(--rte-sticky-offset, 0px);
   background-color: var(--mantine-color-body);
+  z-index: 1;
   border-start-end-radius: var(--mantine-radius-default);
   border-start-start-radius: var(--mantine-radius-default);
   border-bottom: 1px solid;
@@ -332,7 +339,6 @@
 
   &:where([data-sticky]) {
     position: sticky;
-    z-index: 1;
   }
 }
 
