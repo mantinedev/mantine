@@ -18,8 +18,8 @@ import {
 import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
 import { InputBase } from '../InputBase';
 import { UnstyledButton } from '../UnstyledButton';
-import { NumberInputChevron } from './NumberInputChevron';
 import classes from './NumberInput.module.css';
+import { NumberInputChevron } from './NumberInputChevron';
 
 // Re for negative -0, -0., -0.0, -0.00, -0.000 ... strings
 // And for positive 0., 0.0, 0.00, 0.000 ... strings

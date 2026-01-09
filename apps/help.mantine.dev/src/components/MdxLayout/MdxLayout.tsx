@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { IconArrowLeft, IconBug, IconPencil } from '@tabler/icons-react';
 import { Anchor, Center, Container, Text, Title } from '@mantine/core';
 import { Frontmatter } from '@/types';
+import classes from './MdxLayout.module.css';
 import { PageHeaderLink } from './PageHeaderLink/PageHeaderLink';
 import { TableOfContents } from './TableOfContents';
-import classes from './MdxLayout.module.css';
 
 interface MdxLayoutProps {
   meta: Frontmatter;

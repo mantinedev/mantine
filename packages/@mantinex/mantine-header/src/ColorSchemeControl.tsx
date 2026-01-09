@@ -1,8 +1,8 @@
 import { IconMoon, IconSun } from '@tabler/icons-react';
 import cx from 'clsx';
 import { useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
-import { HeaderControl } from './HeaderControl';
 import classes from './ColorSchemeControl.module.css';
+import { HeaderControl } from './HeaderControl';
 
 export function ColorSchemeControl() {
   const { setColorScheme } = useMantineColorScheme();

@@ -6,9 +6,9 @@ import { meta } from '@mantinex/mantine-meta';
 import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer';
 import { HomePageDescription } from '../shared/HomePageDescription/HomePageDescription';
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
+import classes from './HomePageJumbotron.module.css';
 import darkImg from './images/dark-collage.webp';
 import lightImg from './images/light-collage.webp';
-import classes from './HomePageJumbotron.module.css';
 
 export function HomePageJumbotron() {
   return (

@@ -12,8 +12,8 @@ import {
   useStyles,
 } from '../../../core';
 import { usePillsInputContext } from '../../PillsInput/PillsInput.context';
-import { PillGroupProvider } from '../PillGroup.context';
 import classes from '../Pill.module.css';
+import { PillGroupProvider } from '../PillGroup.context';
 
 export type PillGroupStylesNames = 'group';
 export type PillGroupCssVariables = {

@@ -19,9 +19,9 @@ import {
   useStyles,
 } from '../../core';
 import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../../utils/InlineInput';
+import classes from './Switch.module.css';
 import { useSwitchGroupContext } from './SwitchGroup.context';
 import { SwitchGroup } from './SwitchGroup/SwitchGroup';
-import classes from './Switch.module.css';
 
 export type SwitchStylesNames =
   | 'root'

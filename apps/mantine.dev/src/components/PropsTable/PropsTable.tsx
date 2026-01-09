@@ -3,8 +3,8 @@ import docgenData from '@/.docgen/docgen.json';
 import { HtmlText } from '@/components/HtmlText';
 import { TableError } from '@/components/TableError';
 import { TableInlineCode } from '@/components/TableInlineCode';
-import { prepareType } from './replace-types';
 import classes from './PropsTable.module.css';
+import { prepareType } from './replace-types';
 
 export interface DocgenProp {
   defaultValue: string | null;

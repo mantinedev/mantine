@@ -1,6 +1,6 @@
 import { DiscordIcon } from '@mantinex/dev-icons';
-import { HeaderControl } from './HeaderControl';
 import classes from './DiscordControl.module.css';
+import { HeaderControl } from './HeaderControl';
 
 interface DiscordControlProps {
   link: string;

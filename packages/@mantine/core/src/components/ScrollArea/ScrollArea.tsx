@@ -12,12 +12,12 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import classes from './ScrollArea.module.css';
 import { ScrollAreaCorner } from './ScrollAreaCorner/ScrollAreaCorner';
 import { ScrollAreaRoot } from './ScrollAreaRoot/ScrollAreaRoot';
 import { ScrollAreaScrollbar } from './ScrollAreaScrollbar/ScrollAreaScrollbar';
 import { ScrollAreaThumb } from './ScrollAreaThumb/ScrollAreaThumb';
 import { ScrollAreaViewport } from './ScrollAreaViewport/ScrollAreaViewport';
-import classes from './ScrollArea.module.css';
 
 export type ScrollAreaStylesNames =
   | 'root'
