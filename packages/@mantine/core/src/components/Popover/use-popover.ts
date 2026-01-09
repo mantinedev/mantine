@@ -76,7 +76,7 @@ function getPopoverMiddlewares(
       typeof middlewaresOptions.flip === 'boolean' ? flip() : flip(middlewaresOptions.flip)
     );
   }
-  
+
   if (middlewaresOptions.shift) {
     middlewares.push(
       shift(
