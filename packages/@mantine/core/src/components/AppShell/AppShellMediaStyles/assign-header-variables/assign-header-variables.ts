@@ -9,16 +9,24 @@ interface AssignHeaderVariablesInput {
   baseStyles: CSSVariables;
   minMediaStyles: MediaQueryVariables;
   header: AppShellProps['header'] | undefined;
+  mode: 'fixed' | 'static';
 }
 
 export function assignHeaderVariables({
   baseStyles,
   minMediaStyles,
   header,
+  mode,
 }: AssignHeaderVariablesInput) {
   const headerHeight = header?.height;
   const collapsedHeaderTransform = 'translateY(calc(var(--app-shell-header-height) * -1))';
-  const shouldOffset = header?.offset ?? true;
+  const shouldOffset = mode === 'static' ? true : (header?.offset ?? true);
+
+  if (mode === 'static' && header) {
+    baseStyles['--app-shell-header-position'] = 'sticky';
+    baseStyles['--app-shell-header-grid-column'] = '1 / -1';
+    baseStyles['--app-shell-header-grid-row'] = '1';
+  }
 
   if (isPrimitiveSize(headerHeight)) {
     const baseSize = rem(getBaseSize(headerHeight));
@@ -51,6 +59,8 @@ export function assignHeaderVariables({
 
   if (header?.collapsed) {
     baseStyles['--app-shell-header-transform'] = collapsedHeaderTransform;
-    baseStyles['--app-shell-header-offset'] = '0px !important';
+    if (mode === 'fixed') {
+      baseStyles['--app-shell-header-offset'] = '0px !important';
+    }
   }
 }

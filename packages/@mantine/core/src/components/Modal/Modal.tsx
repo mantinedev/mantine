@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
 import { ModalBaseCloseButtonProps, ModalBaseOverlayProps } from '../ModalBase';
+import classes from './Modal.module.css';
 import { ModalBody } from './ModalBody';
 import { ModalCloseButton } from './ModalCloseButton';
 import { ModalContent } from './ModalContent';
@@ -14,7 +15,6 @@ import {
 } from './ModalRoot';
 import { ModalStack, useModalStackContext } from './ModalStack';
 import { ModalTitle } from './ModalTitle';
-import classes from './Modal.module.css';
 
 export type ModalStylesNames = ModalRootStylesNames;
 export type ModalCssVariables = ModalRootCssVariables;

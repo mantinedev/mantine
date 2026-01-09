@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { factory, Factory, getDefaultZIndex, useProps } from '../../core';
 import { ModalBaseCloseButtonProps, ModalBaseOverlayProps } from '../ModalBase';
+import classes from './Drawer.module.css';
 import { DrawerBody } from './DrawerBody';
 import { DrawerCloseButton } from './DrawerCloseButton';
 import { DrawerContent } from './DrawerContent';
@@ -14,7 +15,6 @@ import {
 } from './DrawerRoot';
 import { DrawerStack, useDrawerStackContext } from './DrawerStack';
 import { DrawerTitle } from './DrawerTitle';
-import classes from './Drawer.module.css';
 
 export type DrawerStylesNames = DrawerRootStylesNames;
 export type DrawerCssVariables = DrawerRootCssVariables;

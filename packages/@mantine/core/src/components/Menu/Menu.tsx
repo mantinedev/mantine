@@ -13,13 +13,13 @@ import {
 import { useDelayedHover } from '../../utils/Floating';
 import { __PopoverProps, Popover, PopoverStylesNames } from '../Popover';
 import { MenuContextProvider } from './Menu.context';
+import classes from './Menu.module.css';
 import { MenuDivider } from './MenuDivider/MenuDivider';
 import { MenuDropdown } from './MenuDropdown/MenuDropdown';
 import { MenuItem } from './MenuItem/MenuItem';
 import { MenuLabel } from './MenuLabel/MenuLabel';
 import { MenuSub } from './MenuSub/MenuSub';
 import { MenuTarget } from './MenuTarget/MenuTarget';
-import classes from './Menu.module.css';
 
 export type MenuStylesNames =
   | 'item'
