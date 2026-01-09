@@ -17,12 +17,12 @@ import {
   useStyles,
 } from '../../core';
 import { AccordionProvider } from './Accordion.context';
+import classes from './Accordion.module.css';
 import { AccordionChevronPosition, AccordionHeadingOrder, AccordionValue } from './Accordion.types';
 import { AccordionChevron } from './AccordionChevron';
 import { AccordionControl } from './AccordionControl/AccordionControl';
 import { AccordionItem } from './AccordionItem/AccordionItem';
 import { AccordionPanel } from './AccordionPanel/AccordionPanel';
-import classes from './Accordion.module.css';
 
 export type AccordionStylesNames =
   | 'root'

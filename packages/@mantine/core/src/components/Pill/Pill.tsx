@@ -15,9 +15,9 @@ import {
 } from '../../core';
 import { CloseButton, CloseButtonProps } from '../CloseButton';
 import { usePillsInputContext } from '../PillsInput/PillsInput.context';
+import classes from './Pill.module.css';
 import { usePillGroupContext } from './PillGroup.context';
 import { PillGroup } from './PillGroup/PillGroup';
-import classes from './Pill.module.css';
 
 export type PillStylesNames = 'root' | 'label' | 'remove';
 export type PillVariant = 'default' | 'contrast';

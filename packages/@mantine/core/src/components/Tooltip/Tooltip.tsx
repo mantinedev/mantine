@@ -24,11 +24,11 @@ import {
 } from '../../utils/Floating';
 import { OptionalPortal } from '../Portal';
 import { getTransitionProps, Transition, TransitionOverride } from '../Transition';
+import classes from './Tooltip.module.css';
 import { TooltipBaseProps, TooltipCssVariables, TooltipStylesNames } from './Tooltip.types';
 import { TooltipFloating } from './TooltipFloating/TooltipFloating';
 import { TooltipGroup } from './TooltipGroup/TooltipGroup';
 import { useTooltip } from './use-tooltip';
-import classes from './Tooltip.module.css';
 
 export interface TooltipProps extends TooltipBaseProps {
   /** Called when tooltip position changes */
