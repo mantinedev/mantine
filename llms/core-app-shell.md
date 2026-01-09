@@ -474,6 +474,7 @@ Example of using CSS variables in styles:
 | footer | AppShellFooterConfiguration | - | <code>Footer</code> configuration, controls height, offset and collapsed state. Required if you use <code>Footer</code> component. |
 | header | AppShellHeaderConfiguration | - | <code>Header</code> configuration, controls height, offset and collapsed state. Required if you use <code>Header</code> component. |
 | layout | "default" | "alt" | - | Determines how <code>Navbar</code>/<code>Aside</code> are arranged relative to <code>Header</code>/<code>Footer</code> |
+| mode | "fixed" | "static" | - | Determines positioning mode of all sections |
 | navbar | AppShellNavbarConfiguration | - | <code>Navbar</code> configuration, controls width, breakpoints and collapsed state. Required if you use <code>Navbar</code> component. |
 | offsetScrollbars | boolean | - | If set, <code>Header</code> and <code>Footer</code> components include styles to offset scrollbars. Based on <code>react-remove-scroll</code>. |
 | padding | MantineSpacing | AppShellResponsiveSize | - | Padding of the main section. Important: use <code>padding</code> prop instead of <code>p</code>. |
