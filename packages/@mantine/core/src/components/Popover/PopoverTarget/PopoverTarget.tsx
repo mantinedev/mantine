@@ -48,7 +48,7 @@ export const PopoverTarget = factory<PopoverTargetFactory>((props, ref) => {
     ? {
         'aria-haspopup': popupType,
         'aria-expanded': ctx.opened,
-        'aria-controls': ctx.getDropdownId(),
+        'aria-controls': ctx.opened ? ctx.getDropdownId() : undefined,
         id: ctx.getTargetId(),
       }
     : {};
