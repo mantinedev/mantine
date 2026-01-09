@@ -15,10 +15,14 @@ import MobileNavbarCode from './MobileNavbar/code.json';
 import { MobileNavbar } from './MobileNavbar/MobileNavbar';
 import NavbarSectionCode from './NavbarSection/code.json';
 import { NavbarSection } from './NavbarSection/NavbarSection';
+import { NestedAppShell } from './NestedAppShell/NestedAppShell';
+import NestedAppShellCode from './NestedAppShell/code.json';
 import NoTransitionsCode from './NoTransitions/code.json';
 import { NoTransitions } from './NoTransitions/NoTransitions';
 import ResponsiveSizesCode from './ResponsiveSizes/code.json';
 import { ResponsiveSizes } from './ResponsiveSizes/ResponsiveSizes';
+import { StaticMode } from './StaticMode/StaticMode';
+import StaticModeCode from './StaticMode/code.json';
 
 interface AppShellExampleComponent {
   component: () => React.JSX.Element;
@@ -69,6 +73,14 @@ export const APP_SHELL_EXAMPLES_COMPONENTS: Record<string, AppShellExampleCompon
   NavbarSection: {
     component: NavbarSection,
     code: NavbarSectionCode as AppShellExampleComponent['code'],
+  },
+  StaticMode: {
+    component: StaticMode,
+    code: StaticModeCode as AppShellExampleComponent['code'],
+  },
+  NestedAppShell: {
+    component: NestedAppShell,
+    code: NestedAppShellCode as AppShellExampleComponent['code'],
   },
 };
 

@@ -11,6 +11,7 @@ interface AssignAsideVariablesInput {
   maxMediaStyles: MediaQueryVariables;
   aside: AppShellProps['aside'] | undefined;
   theme: MantineTheme;
+  mode: 'fixed' | 'static';
 }
 
 export function assignAsideVariables({
@@ -19,6 +20,7 @@ export function assignAsideVariables({
   maxMediaStyles,
   aside,
   theme,
+  mode,
 }: AssignAsideVariablesInput) {
   const asideWidth = aside?.width;
   const collapsedAsideTransform = 'translateX(var(--app-shell-aside-width))';
@@ -26,8 +28,13 @@ export function assignAsideVariables({
 
   if (aside?.breakpoint && !aside?.collapsed?.mobile) {
     maxMediaStyles[aside?.breakpoint] = maxMediaStyles[aside?.breakpoint] || {};
-    maxMediaStyles[aside?.breakpoint]['--app-shell-aside-width'] = '100%';
-    maxMediaStyles[aside?.breakpoint]['--app-shell-aside-offset'] = '0px';
+    if (mode === 'fixed') {
+      maxMediaStyles[aside?.breakpoint]['--app-shell-aside-width'] = '100%';
+      maxMediaStyles[aside?.breakpoint]['--app-shell-aside-offset'] = '0px';
+    } else {
+      maxMediaStyles[aside?.breakpoint]['--app-shell-aside-width'] = '0px';
+      maxMediaStyles[aside?.breakpoint]['--app-shell-aside-offset'] = '0px';
+    }
   }
 
   if (isPrimitiveSize(asideWidth)) {
@@ -51,20 +58,39 @@ export function assignAsideVariables({
     });
   }
 
+  if (aside?.breakpoint && mode === 'static') {
+    minMediaStyles[aside.breakpoint] = minMediaStyles[aside.breakpoint] || {};
+    minMediaStyles[aside.breakpoint]['--app-shell-aside-position'] = 'sticky';
+    minMediaStyles[aside.breakpoint]['--app-shell-aside-grid-row'] = '2';
+    minMediaStyles[aside.breakpoint]['--app-shell-aside-grid-column'] = '3';
+    // Adjust main column end when aside is visible
+    minMediaStyles[aside.breakpoint]['--app-shell-main-column-end'] = '3';
+  }
+
   if (aside?.collapsed?.desktop) {
     const breakpointValue = aside!.breakpoint;
     minMediaStyles[breakpointValue] = minMediaStyles[breakpointValue] || {};
     minMediaStyles[breakpointValue]['--app-shell-aside-transform'] = collapsedAsideTransform;
     minMediaStyles[breakpointValue]['--app-shell-aside-transform-rtl'] = collapsedAsideTransformRtl;
-    minMediaStyles[breakpointValue]['--app-shell-aside-offset'] = '0px !important';
+    if (mode === 'fixed') {
+      minMediaStyles[breakpointValue]['--app-shell-aside-offset'] = '0px !important';
+    } else {
+      minMediaStyles[breakpointValue]['--app-shell-aside-width'] = '0px';
+      minMediaStyles[breakpointValue]['--app-shell-aside-display'] = 'none';
+      minMediaStyles[breakpointValue]['--app-shell-main-column-end'] = '-1';
+    }
     minMediaStyles[breakpointValue]['--app-shell-aside-scroll-locked-visibility'] = 'hidden';
   }
 
   if (aside?.collapsed?.mobile) {
     const breakpointValue = getBreakpointValue(aside!.breakpoint, theme.breakpoints) - 0.1;
     maxMediaStyles[breakpointValue] = maxMediaStyles[breakpointValue] || {};
-    maxMediaStyles[breakpointValue]['--app-shell-aside-width'] = '100%';
-    maxMediaStyles[breakpointValue]['--app-shell-aside-offset'] = '0px';
+    if (mode === 'fixed') {
+      maxMediaStyles[breakpointValue]['--app-shell-aside-width'] = '100%';
+      maxMediaStyles[breakpointValue]['--app-shell-aside-offset'] = '0px';
+    } else {
+      maxMediaStyles[breakpointValue]['--app-shell-aside-width'] = '0px';
+    }
     maxMediaStyles[breakpointValue]['--app-shell-aside-transform'] = collapsedAsideTransform;
     maxMediaStyles[breakpointValue]['--app-shell-aside-transform-rtl'] = collapsedAsideTransformRtl;
     maxMediaStyles[breakpointValue]['--app-shell-aside-scroll-locked-visibility'] = 'hidden';

@@ -10,6 +10,15 @@
     --app-shell-footer-offset: 0rem !important;
   }
 
+  &[data-mode='static'] {
+    display: grid;
+    grid-template-columns: var(--app-shell-navbar-width, 0) 1fr var(--app-shell-aside-width, 0);
+    grid-template-rows: auto 1fr auto;
+    position: relative;
+    height: 100%;
+    overflow: auto;
+  }
+
   @mixin light {
     --app-shell-border-color: var(--mantine-color-gray-3);
   }
@@ -40,9 +49,19 @@
   background-color: var(--mantine-color-body);
   transition-property: transform, top, height;
 
+  :where([data-mode='static']) & {
+    position: var(--app-shell-navbar-position, fixed);
+    grid-row: var(--app-shell-navbar-grid-row, auto);
+    height: 100%;
+  }
+
   :where([data-layout='alt']) & {
     top: 0rem;
     height: 100dvh;
+  }
+
+  :where([data-mode='static'][data-layout='alt']) & {
+    grid-row: var(--app-shell-navbar-grid-row-alt, var(--app-shell-navbar-grid-row, auto));
   }
 }
 
@@ -52,6 +71,11 @@
   transition-property: transform, top, height;
   transform: var(--app-shell-navbar-transform);
   z-index: var(--app-shell-navbar-z-index);
+
+  :where([data-mode='static']) & {
+    grid-column: var(--app-shell-navbar-grid-column, auto);
+    display: var(--app-shell-navbar-display, flex);
+  }
 
   @mixin where-rtl {
     transform: var(--app-shell-navbar-transform-rtl);
@@ -67,6 +91,13 @@
   width: var(--app-shell-aside-width);
   transform: var(--app-shell-aside-transform);
   z-index: var(--app-shell-aside-z-index);
+
+  :where([data-mode='static']) & {
+    position: var(--app-shell-aside-position, fixed);
+    grid-column: var(--app-shell-aside-grid-column, auto);
+    grid-row: var(--app-shell-aside-grid-row, auto);
+    display: var(--app-shell-aside-display, flex);
+  }
 
   @mixin where-rtl {
     transform: var(--app-shell-aside-transform-rtl);
@@ -88,6 +119,16 @@
   padding-bottom: calc(var(--app-shell-footer-offset, 0rem) + var(--app-shell-padding));
   min-height: 100dvh;
   transition-property: padding;
+
+  :where([data-mode='static']) & {
+    padding-inline-start: var(--app-shell-padding);
+    padding-inline-end: var(--app-shell-padding);
+    padding-top: var(--app-shell-padding);
+    padding-bottom: var(--app-shell-padding);
+    min-height: auto;
+    grid-column: var(--app-shell-main-column-start, 1) / var(--app-shell-main-column-end, -1);
+    grid-row: var(--app-shell-main-grid-row, 2);
+  }
 }
 
 .header,
@@ -97,9 +138,19 @@
   transition-property: transform, margin-inline-start, margin-inline-end;
   background-color: var(--mantine-color-body);
 
+  :where([data-mode='static']) & {
+    position: var(--app-shell-header-position, fixed);
+    grid-column: var(--app-shell-header-grid-column, auto);
+  }
+
   :where([data-layout='alt']) & {
     margin-inline-start: var(--app-shell-navbar-offset, 0rem);
     margin-inline-end: var(--app-shell-aside-offset, 0rem);
+  }
+
+  :where([data-mode='static'][data-layout='alt']) & {
+    margin-inline-start: 0rem;
+    margin-inline-end: 0rem;
   }
 }
 
@@ -109,6 +160,10 @@
   background-color: var(--mantine-color-body);
   transform: var(--app-shell-header-transform);
   z-index: var(--app-shell-header-z-index);
+
+  :where([data-mode='static']) & {
+    grid-row: var(--app-shell-header-grid-row, auto);
+  }
 
   &:where([data-with-border]) {
     border-bottom: 1px solid var(--app-shell-border-color);
@@ -121,6 +176,12 @@
   padding-bottom: env(safe-area-inset-bottom);
   transform: var(--app-shell-footer-transform);
   z-index: var(--app-shell-footer-z-index);
+
+  :where([data-mode='static']) & {
+    position: var(--app-shell-footer-position, fixed);
+    grid-column: var(--app-shell-footer-grid-column, auto);
+    grid-row: var(--app-shell-footer-grid-row, auto);
+  }
 
   &:where([data-with-border]) {
     border-top: 1px solid var(--app-shell-border-color);
