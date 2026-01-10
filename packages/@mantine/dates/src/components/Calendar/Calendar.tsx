@@ -258,7 +258,7 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     classNames:
       !__staticSelector || __staticSelector === 'Calendar'
         ? classNames
-        : [theme.components.Calendar?.classNames, classNames],
+        : ([theme.components.Calendar?.classNames, classNames] as any),
     styles:
       !__staticSelector || __staticSelector === 'Calendar'
         ? styles
