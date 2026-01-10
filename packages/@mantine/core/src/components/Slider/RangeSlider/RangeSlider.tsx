@@ -215,7 +215,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props, ref) => {
   } = props;
 
   const getStyles = useStyles<RangeSliderFactory>({
-    name: 'Slider',
+    name: 'RangeSlider',
     props,
     classes,
     classNames,
