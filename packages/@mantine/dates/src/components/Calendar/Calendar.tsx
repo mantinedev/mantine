@@ -7,6 +7,7 @@ import {
   Factory,
   factory,
   StylesApiProps,
+  useMantineTheme,
   useProps,
   useResolvedStylesApi,
 } from '@mantine/core';
@@ -251,9 +252,17 @@ export const Calendar = factory<CalendarFactory>((_props, ref) => {
     ...others
   } = props;
 
+  const theme = useMantineTheme();
+
   const { resolvedClassNames, resolvedStyles } = useResolvedStylesApi<CalendarFactory>({
-    classNames,
-    styles,
+    classNames:
+      !__staticSelector || __staticSelector === 'Calendar'
+        ? classNames
+        : [theme.components.Calendar?.classNames, classNames],
+    styles:
+      !__staticSelector || __staticSelector === 'Calendar'
+        ? styles
+        : [theme.components.Calendar?.styles, styles],
     props,
   });
 
