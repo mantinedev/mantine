@@ -1,0 +1,50 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bars-list-gap);
+  width: 100%;
+}
+
+.labelsRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 600;
+  color: var(--mantine-color-dimmed);
+  padding-bottom: var(--mantine-spacing-xs);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mantine-spacing-sm);
+}
+
+.barLabel {
+  display: flex;
+  align-items: center;
+  min-width: var(--bars-list-min-bar-size);
+  height: var(--bars-list-bar-height);
+  padding: 0 var(--mantine-spacing-sm);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
+  color: var(--mantine-color-white);
+  border-radius: var(--mantine-radius-sm);
+  transition: width 300ms ease;
+
+  @mixin where-light {
+    background-color: var(--mantine-primary-color-filled);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-primary-color-filled);
+  }
+}
+
+.barValue {
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--mantine-color-text);
+}

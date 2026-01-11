@@ -144,6 +144,7 @@ export * as CompositeChartDemos from './demos/charts/CompositeChart';
 export * as RadialBarChartDemos from './demos/charts/RadialBarChart';
 export * as FunnelChartDemos from './demos/charts/FunnelChart';
 export * as HeatmapDemos from './demos/charts/Heatmap';
+export * as BarsListDemos from './demos/charts/BarsList';
 
 // @mantine/schedule
 export * as ScheduleDemos from './demos/schedule/Schedule';
