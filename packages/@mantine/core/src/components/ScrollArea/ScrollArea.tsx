@@ -286,6 +286,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
     type,
     dir,
     offsetScrollbars,
+    overscrollBehavior,
     viewportRef,
     onScrollPositionChange,
     unstyled,
@@ -363,6 +364,7 @@ export const ScrollAreaAutosize = factory<ScrollAreaAutosizeFactory>((props, ref
           type={type}
           dir={dir}
           offsetScrollbars={offsetScrollbars}
+          overscrollBehavior={overscrollBehavior}
           viewportRef={combinedViewportRef}
           onScrollPositionChange={onScrollPositionChange}
           unstyled={unstyled}
