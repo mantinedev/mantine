@@ -304,6 +304,14 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     withWeekendDays,
   });
 
+  const isSlotInBusinessHours = (slotTime: string) => {
+    if (!highlightBusinessHours || !businessHours) {
+      return null;
+    }
+    const [start, end] = businessHours;
+    return slotTime >= start && slotTime < end;
+  };
+
   const timeValues = slots.map((interval) => {
     const intervalTime = dayjs(`${dayjs(date).format('YYYY-MM-DD')} ${interval.startTime}`);
     const label = formatDate({
@@ -312,11 +320,17 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       format: slotLabelFormat,
     });
 
+    const inBusinessHours = isSlotInBusinessHours(interval.startTime);
+
     return (
       <Box
         {...getStyles('weekViewSlotLabel')}
         key={interval.startTime}
-        mod={{ 'hour-start': interval.isHourStart }}
+        mod={{
+          'hour-start': interval.isHourStart,
+          'business-hours': inBusinessHours === true,
+          'non-business-hours': inBusinessHours === false,
+        }}
       >
         {label}
       </Box>

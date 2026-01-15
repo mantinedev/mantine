@@ -79,6 +79,26 @@
   cursor: default;
   font-variant-numeric: tabular-nums;
   text-transform: uppercase;
+
+  &:where([data-business-hours]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-white);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-7);
+    }
+  }
+
+  &:where([data-non-business-hours]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
 }
 
 .weekViewDay {

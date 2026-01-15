@@ -60,6 +60,26 @@
   &:where(:first-of-type) {
     border-top: 0;
   }
+
+  &:where([data-business-hours]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-white);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-7);
+    }
+  }
+
+  &:where([data-non-business-hours]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-6);
+    }
+  }
 }
 
 .dayViewSlots {

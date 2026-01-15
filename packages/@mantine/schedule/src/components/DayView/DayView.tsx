@@ -329,8 +329,17 @@ export const DayView = factory<DayViewFactory>((_props) => {
         format: slotLabelFormat,
       });
 
+      const inBusinessHours = isSlotInBusinessHours(slot.startTime);
+
       acc.push(
-        <Box {...getStyles('dayViewSlotLabel')} key={slot.startTime}>
+        <Box
+          {...getStyles('dayViewSlotLabel')}
+          key={slot.startTime}
+          mod={{
+            'business-hours': inBusinessHours === true,
+            'non-business-hours': inBusinessHours === false,
+          }}
+        >
           {label}
         </Box>
       );
