@@ -209,8 +209,8 @@ export function BusinessHours() {
         events={regularEvents}
         highlightBusinessHours
         businessHours={['10:00:00', '18:00:00']}
-        startTime="08:00:00"
-        endTime="20:00:00"
+        // startTime="08:00:00"
+        // endTime="20:00:00"
       />
     </div>
   );
