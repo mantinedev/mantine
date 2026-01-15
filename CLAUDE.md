@@ -63,8 +63,11 @@ npm run typecheck
 # Run all linting (eslint + stylelint)
 npm run lint
 
-# Run eslint only
+# Run eslint only (on entire codebase)
 npm run eslint
+
+# Run eslint on specific files/directories (PREFERRED for changed files)
+npx eslint path/to/changed/files
 
 # Run stylelint only
 npm run stylelint
@@ -349,7 +352,7 @@ Create the component following the architecture patterns above:
 ```bash
 npm run typecheck
 npm run jest @mantine/[package]
-npm run eslint
+npx eslint packages/@mantine/[package]/src/ComponentName
 ```
 
 ### 2. Styles API Data
@@ -492,14 +495,19 @@ npm run typecheck
 # Run jest tests for the specific package
 npm run jest @mantine/[package]
 
-# Run ESLint to check for code quality issues
-npm run eslint
+# Run ESLint on changed files only (PREFERRED)
+npx eslint packages/@mantine/[package]/src/ComponentName
 
 # Optional: Run all tests (takes longer)
 npm test
 ```
 
-**IMPORTANT:** After completing any task (component development, refactoring, bug fixes, etc.), always run `npm run eslint` and fix any errors before considering the task complete.
+**IMPORTANT:** After completing any task (component development, refactoring, bug fixes, etc.), always run ESLint on the files you changed and fix any errors before considering the task complete. Use `npx eslint` with specific paths to the changed files/directories for faster execution.
+
+**Example:** If you modified DayView and WeekView components:
+```bash
+npx eslint packages/@mantine/schedule/src/components/DayView packages/@mantine/schedule/src/components/WeekView
+```
 
 **Verification checklist:**
 - [ ] Component renders correctly

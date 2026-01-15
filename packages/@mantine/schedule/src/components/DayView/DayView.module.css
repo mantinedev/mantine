@@ -8,10 +8,14 @@
 
   @mixin where-light {
     --day-view-border-color: var(--mantine-color-gray-3);
+    --day-view-business-hours-bg: var(--mantine-color-white);
+    --day-view-non-business-hours-bg: var(--mantine-color-gray-0);
   }
 
   @mixin where-dark {
     --day-view-border-color: var(--mantine-color-dark-4);
+    --day-view-business-hours-bg: var(--mantine-color-dark-7);
+    --day-view-non-business-hours-bg: var(--mantine-color-dark-6);
   }
 }
 
@@ -62,23 +66,11 @@
   }
 
   &:where([data-business-hours]) {
-    @mixin where-light {
-      background-color: var(--mantine-color-white);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-7);
-    }
+    background-color: var(--day-view-business-hours-bg);
   }
 
   &:where([data-non-business-hours]) {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-6);
-    }
+    background-color: var(--day-view-non-business-hours-bg);
   }
 }
 
@@ -112,23 +104,11 @@
   }
 
   &:where([data-business-hours]) {
-    @mixin where-light {
-      background-color: var(--mantine-color-white);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-7);
-    }
+    background-color: var(--day-view-business-hours-bg);
   }
 
   &:where([data-non-business-hours]) {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-6);
-    }
+    background-color: var(--day-view-non-business-hours-bg);
   }
 }
 
