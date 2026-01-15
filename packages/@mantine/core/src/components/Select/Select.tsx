@@ -131,6 +131,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     value,
     defaultValue,
     selectFirstOptionOnChange,
+    selectFirstOptionOnDropdownOpen,
     onOptionSubmit,
     comboboxProps,
     readOnly,
@@ -203,7 +204,11 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     defaultOpened: defaultDropdownOpened,
     onDropdownOpen: () => {
       onDropdownOpen?.();
-      combobox.updateSelectedOptionIndex('active', { scrollIntoView: true });
+      if (selectFirstOptionOnDropdownOpen) {
+        combobox.selectFirstOption();
+      } else {
+        combobox.updateSelectedOptionIndex('active', { scrollIntoView: true });
+      }
     },
     onDropdownClose: () => {
       onDropdownClose?.();

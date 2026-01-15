@@ -99,6 +99,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
     value,
     defaultValue,
     selectFirstOptionOnChange,
+    selectFirstOptionOnDropdownOpen,
     onOptionSubmit,
     comboboxProps,
     readOnly,
@@ -136,7 +137,12 @@ export const Autocomplete = factory<AutocompleteFactory>((_props, ref) => {
   const combobox = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
-    onDropdownOpen,
+    onDropdownOpen: () => {
+      onDropdownOpen?.();
+      if (selectFirstOptionOnDropdownOpen) {
+        combobox.selectFirstOption();
+      }
+    },
     onDropdownClose: () => {
       onDropdownClose?.();
       // Required for autoSelectOnBlur to work correctly
