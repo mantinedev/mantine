@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { testUtils } from '../../../test-utils';
 import { calculateEventDays } from './calculate-event-days';
 import { getEventEndDate } from './get-event-end-date';

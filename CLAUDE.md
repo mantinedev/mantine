@@ -349,6 +349,7 @@ Create the component following the architecture patterns above:
 ```bash
 npm run typecheck
 npm run jest @mantine/[package]
+npm run eslint
 ```
 
 ### 2. Styles API Data
@@ -491,20 +492,27 @@ npm run typecheck
 # Run jest tests for the specific package
 npm run jest @mantine/[package]
 
+# Run ESLint to check for code quality issues
+npm run eslint
+
 # Optional: Run all tests (takes longer)
 npm test
 ```
+
+**IMPORTANT:** After completing any task (component development, refactoring, bug fixes, etc.), always run `npm run eslint` and fix any errors before considering the task complete.
 
 **Verification checklist:**
 - [ ] Component renders correctly
 - [ ] All tests pass
 - [ ] TypeScript types are correct
+- [ ] ESLint passes with no errors
 - [ ] Styles API is documented
 - [ ] All demos are created and exported
 - [ ] Documentation page is created
 - [ ] Component is added to navigation
 - [ ] No TypeScript errors
 - [ ] No test failures
+- [ ] No ESLint errors
 
 ## Common Pitfalls
 
