@@ -1,4 +1,6 @@
 import dayjs from 'dayjs';
+import { useState } from 'react';
+import { Button, Stack, Text } from '@mantine/core';
 import { ScheduleEventData } from '../../types';
 import { DayView } from './DayView';
 
@@ -212,6 +214,247 @@ export function BusinessHours() {
         // startTime="08:00:00"
         // endTime="20:00:00"
       />
+    </div>
+  );
+}
+
+export function DragAndDrop() {
+  const [events, setEvents] = useState<ScheduleEventData[]>([
+    {
+      id: 1,
+      title: 'Morning Standup',
+      start: `${today} 09:00:00`,
+      end: `${today} 09:30:00`,
+      color: 'blue',
+      payload: {},
+    },
+    {
+      id: 2,
+      title: 'Team Meeting',
+      start: `${today} 11:00:00`,
+      end: `${today} 12:00:00`,
+      color: 'green',
+      payload: {},
+    },
+    {
+      id: 3,
+      title: 'Lunch Break',
+      start: `${today} 12:30:00`,
+      end: `${today} 13:30:00`,
+      color: 'orange',
+      payload: {},
+    },
+    {
+      id: 4,
+      title: 'Code Review',
+      start: `${today} 14:00:00`,
+      end: `${today} 15:00:00`,
+      color: 'violet',
+      payload: {},
+    },
+    {
+      id: 5,
+      title: 'All Day Conference',
+      start: `${today} 00:00:00`,
+      end: dayjs(today).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+      color: 'red',
+      payload: {},
+    },
+    {
+      id: 6,
+      title: 'Locked Event (Cannot Drag)',
+      start: `${today} 16:00:00`,
+      end: `${today} 17:00:00`,
+      color: 'gray',
+      payload: { locked: true },
+    },
+  ]);
+
+  const [lastAction, setLastAction] = useState<string>('');
+
+  const handleEventDrop = (eventId: string | number, newStart: Date, newEnd: Date) => {
+    setEvents((prev) =>
+      prev.map((event) => {
+        if (event.id === eventId) {
+          return {
+            ...event,
+            start: newStart,
+            end: newEnd,
+          };
+        }
+        return event;
+      })
+    );
+
+    const movedEvent = events.find((e) => e.id === eventId);
+    setLastAction(
+      `Moved "${movedEvent?.title}" to ${dayjs(newStart).format('HH:mm')} - ${dayjs(newEnd).format('HH:mm')}`
+    );
+  };
+
+  const resetEvents = () => {
+    setEvents([
+      {
+        id: 1,
+        title: 'Morning Standup',
+        start: `${today} 09:00:00`,
+        end: `${today} 09:30:00`,
+        color: 'blue',
+        payload: {},
+      },
+      {
+        id: 2,
+        title: 'Team Meeting',
+        start: `${today} 11:00:00`,
+        end: `${today} 12:00:00`,
+        color: 'green',
+        payload: {},
+      },
+      {
+        id: 3,
+        title: 'Lunch Break',
+        start: `${today} 12:30:00`,
+        end: `${today} 13:30:00`,
+        color: 'orange',
+        payload: {},
+      },
+      {
+        id: 4,
+        title: 'Code Review',
+        start: `${today} 14:00:00`,
+        end: `${today} 15:00:00`,
+        color: 'violet',
+        payload: {},
+      },
+      {
+        id: 5,
+        title: 'All Day Conference',
+        start: `${today} 00:00:00`,
+        end: dayjs(today).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+        color: 'red',
+        payload: {},
+      },
+      {
+        id: 6,
+        title: 'Locked Event (Cannot Drag)',
+        start: `${today} 16:00:00`,
+        end: `${today} 17:00:00`,
+        color: 'gray',
+        payload: { locked: true },
+      },
+    ]);
+    setLastAction('Events reset to initial state');
+  };
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="md">
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Drag and Drop Demo
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            Try dragging events to different time slots. All-day events and locked events cannot be
+            moved.
+          </Text>
+        </div>
+
+        {lastAction && (
+          <Text size="sm" c="blue">
+            Last action: {lastAction}
+          </Text>
+        )}
+
+        <Button onClick={resetEvents} variant="light" size="xs" style={{ width: 'fit-content' }}>
+          Reset Events
+        </Button>
+
+        <DayView
+          date={new Date()}
+          events={events}
+          withDragDrop
+          onEventDrop={handleEventDrop}
+          canDragEvent={(event) => !event.payload.locked}
+          startTime="08:00:00"
+          endTime="18:00:00"
+        />
+      </Stack>
+    </div>
+  );
+}
+
+export function DragAndDropWithOverlappingEvents() {
+  const [events, setEvents] = useState<ScheduleEventData[]>([
+    {
+      id: 1,
+      title: 'Workshop Session 1',
+      start: `${today} 10:00:00`,
+      end: `${today} 11:30:00`,
+      color: 'blue',
+      payload: {},
+    },
+    {
+      id: 2,
+      title: 'Workshop Session 2',
+      start: `${today} 11:00:00`,
+      end: `${today} 12:30:00`,
+      color: 'violet',
+      payload: {},
+    },
+    {
+      id: 3,
+      title: 'Workshop Session 3',
+      start: `${today} 11:30:00`,
+      end: `${today} 13:00:00`,
+      color: 'cyan',
+      payload: {},
+    },
+    {
+      id: 4,
+      title: 'Full Day Session',
+      start: `${today} 10:00:00`,
+      end: `${today} 16:00:00`,
+      color: 'green',
+      payload: {},
+    },
+  ]);
+
+  const handleEventDrop = (eventId: string | number, newStart: Date, newEnd: Date) => {
+    setEvents((prev) =>
+      prev.map((event) => {
+        if (event.id === eventId) {
+          return {
+            ...event,
+            start: newStart,
+            end: newEnd,
+          };
+        }
+        return event;
+      })
+    );
+  };
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="md">
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Drag and Drop with Overlapping Events
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            Events maintain their overlap positioning when moved.
+          </Text>
+        </div>
+
+        <DayView
+          date={new Date()}
+          events={events}
+          withDragDrop
+          onEventDrop={handleEventDrop}
+          startTime="09:00:00"
+          endTime="17:00:00"
+        />
+      </Stack>
     </div>
   );
 }

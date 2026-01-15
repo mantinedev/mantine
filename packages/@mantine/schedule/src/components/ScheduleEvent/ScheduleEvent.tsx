@@ -48,6 +48,18 @@ export interface ScheduleEventProps
 
   /** Event hanging position */
   hanging?: 'start' | 'end' | 'both' | 'none';
+
+  /** If true, event can be dragged @default `false` */
+  draggable?: boolean;
+
+  /** Called when event drag starts */
+  onEventDragStart?: (event: ScheduleEventData) => void;
+
+  /** Called when event drag ends */
+  onEventDragEnd?: () => void;
+
+  /** If true, event is currently being dragged @default `false` */
+  isDragging?: boolean;
 }
 
 export type ScheduleEventFactory = Factory<{
@@ -103,6 +115,10 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
     autoSize,
     mod,
     hanging,
+    draggable = false,
+    onEventDragStart,
+    onEventDragEnd,
+    isDragging = false,
     ...others
   } = props;
 
@@ -121,12 +137,30 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
     rootSelector: 'event',
   });
 
+  const handleDragStart = (e: React.DragEvent<HTMLButtonElement>) => {
+    if (!draggable) {
+      e.preventDefault();
+      return;
+    }
+
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('application/json', JSON.stringify({ eventId: event.id }));
+    onEventDragStart?.(event);
+  };
+
+  const handleDragEnd = () => {
+    onEventDragEnd?.();
+  };
+
   return (
     <UnstyledButton
       {...getStyles('event')}
       size={size}
       title={event.title}
-      mod={[{ autoSize, hanging }, mod]}
+      mod={[{ autoSize, hanging, draggable, dragging: isDragging }, mod]}
+      draggable={draggable}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
       {...others}
     >
       <Box mod={{ nowrap, size, autoSize, hanging }} {...getStyles('eventInner')}>

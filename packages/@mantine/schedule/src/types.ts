@@ -117,3 +117,14 @@ export interface MonthPositionedEventData<
 > extends ScheduleEventData<Payload> {
   position: MonthEventPositionData;
 }
+
+export interface DropTarget {
+  /** Target date in YYYY-MM-DD format */
+  date: DateStringValue;
+
+  /** Target time in HH:mm:ss format (for DayView/WeekView) */
+  time?: string;
+
+  /** Target slot index (for DayView/WeekView) */
+  slotIndex?: number;
+}

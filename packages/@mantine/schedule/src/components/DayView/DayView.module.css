@@ -110,6 +110,18 @@
   &:where([data-non-business-hours]) {
     background-color: var(--day-view-non-business-hours-bg);
   }
+
+  &:where([data-drop-target]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-blue-1);
+      border-color: var(--mantine-color-blue-4);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+      border-color: var(--mantine-color-blue-6);
+    }
+  }
 }
 
 .dayViewAllDay {

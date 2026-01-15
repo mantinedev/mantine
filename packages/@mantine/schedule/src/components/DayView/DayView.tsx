@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -17,6 +18,8 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
+import { DragContext } from '../DragContext/DragContext';
+import { useDragState } from '../../hooks/use-drag-state';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
   DateLabelFormat,
@@ -25,10 +28,12 @@ import {
   ScheduleViewLevel,
 } from '../../types';
 import {
+  calculateDropTime,
   clampIntervalMinutes,
   formatDate,
   getDayTimeIntervals,
   getVisibleEvents,
+  isAllDayEvent,
   toDateString,
 } from '../../utils';
 import {
@@ -150,6 +155,15 @@ export interface DayViewProps
 
   /** Business hours range in `HH:mm:ss` format @default `['09:00:00', '17:00:00']` */
   businessHours?: [string, string];
+
+  /** If true, events can be dragged and dropped @default `false` */
+  withDragDrop?: boolean;
+
+  /** Called when event is dropped at new time */
+  onEventDrop?: (eventId: string | number, newStart: Date, newEnd: Date) => void;
+
+  /** Function to determine if event can be dragged */
+  canDragEvent?: (event: ScheduleEventData) => boolean;
 }
 
 export type DayViewFactory = Factory<{
@@ -171,6 +185,7 @@ const defaultProps = {
   withHeader: true,
   highlightBusinessHours: false,
   businessHours: ['09:00:00', '17:00:00'],
+  withDragDrop: false,
 } satisfies Partial<DayViewProps>;
 
 const varsResolver = createVarsResolver<DayViewFactory>(
@@ -220,6 +235,9 @@ export const DayView = factory<DayViewFactory>((_props) => {
     labels,
     highlightBusinessHours,
     businessHours,
+    withDragDrop,
+    onEventDrop,
+    canDragEvent,
     ...others
   } = props;
 
@@ -257,23 +275,94 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
   const eventsData = getDayViewEvents({ events, date, startTime, endTime });
 
-  const eventsNodes = eventsData.regularEvents.map((event) => (
-    <ScheduleEvent
-      event={event}
-      key={event.id}
-      renderEventBody={renderEventBody}
-      autoSize
-      {...stylesApiProps}
-      style={{
-        ...stylesApiProps.styles?.event,
-        top: `${event.position.top}%`,
-        height: `${event.position.height}%`,
-        insetInlineStart: `${event.position.offset}%`,
-        width: `${event.position.width}%`,
-        position: 'absolute',
-      }}
-    />
-  ));
+  const dragState = useDragState();
+  const [dropTargetSlotIndex, setDropTargetSlotIndex] = useState<number | null>(null);
+
+  const handleDragStart = (event: ScheduleEventData) => {
+    if (!withDragDrop) {
+      return;
+    }
+    dragState.startDrag(event);
+  };
+
+  const handleDragEnd = () => {
+    dragState.endDrag();
+    setDropTargetSlotIndex(null);
+  };
+
+  const handleSlotDragOver = (e: React.DragEvent<HTMLButtonElement>, slotIndex: number) => {
+    if (!withDragDrop || !dragState.state.isDragging) {
+      return;
+    }
+
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    setDropTargetSlotIndex(slotIndex);
+  };
+
+  const handleSlotDragLeave = () => {
+    setDropTargetSlotIndex(null);
+  };
+
+  const handleSlotDrop = (
+    e: React.DragEvent<HTMLButtonElement>,
+    _slotIndex: number,
+    slotTime: string
+  ) => {
+    e.preventDefault();
+
+    if (!withDragDrop || !dragState.state.draggedEvent || !onEventDrop) {
+      return;
+    }
+
+    const { start, end } = calculateDropTime({
+      draggedEvent: dragState.state.draggedEvent,
+      targetDate: date,
+      targetSlotTime: slotTime,
+      intervalMinutes,
+    });
+
+    onEventDrop(dragState.state.draggedEventId!, start, end);
+    handleDragEnd();
+  };
+
+  const dragContextValue = {
+    isDragging: dragState.state.isDragging,
+    draggedEventId: dragState.state.draggedEventId,
+    draggedEvent: dragState.state.draggedEvent,
+    dropTarget: dragState.state.dropTarget,
+    onDragStart: handleDragStart,
+    onDragEnd: handleDragEnd,
+    setDropTarget: dragState.setDropTarget,
+  };
+
+  const eventsNodes = eventsData.regularEvents.map((event) => {
+    const eventIsAllDay = isAllDayEvent({ event, date });
+    const isDraggable =
+      withDragDrop && !eventIsAllDay && (canDragEvent ? canDragEvent(event) : true);
+
+    return (
+      <ScheduleEvent
+        event={event}
+        key={event.id}
+        renderEventBody={renderEventBody}
+        autoSize
+        draggable={isDraggable}
+        onEventDragStart={() => handleDragStart(event)}
+        onEventDragEnd={handleDragEnd}
+        isDragging={dragState.state.draggedEventId === event.id}
+        {...stylesApiProps}
+        style={{
+          ...stylesApiProps.styles?.event,
+          top: `${event.position.top}%`,
+          height: `${event.position.height}%`,
+          insetInlineStart: `${event.position.offset}%`,
+          width: `${event.position.width}%`,
+          position: 'absolute',
+        }}
+      />
+    );
+  });
 
   const allDayEventsCount = getVisibleEvents({
     maxEvents: 2,
@@ -302,8 +391,9 @@ export const DayView = factory<DayViewFactory>((_props) => {
     return slotTime >= start && slotTime < end;
   };
 
-  const items = slots.map((slot) => {
+  const items = slots.map((slot, index) => {
     const inBusinessHours = isSlotInBusinessHours(slot.startTime);
+    const isDropTarget = dropTargetSlotIndex === index;
 
     return (
       <UnstyledButton
@@ -313,9 +403,13 @@ export const DayView = factory<DayViewFactory>((_props) => {
           'hour-start': slot.isHourStart,
           'business-hours': inBusinessHours === true,
           'non-business-hours': inBusinessHours === false,
+          'drop-target': isDropTarget,
         }}
         __vars={{ '--slot-size': `${clampIntervalMinutes(intervalMinutes) / 60}` }}
         aria-label={`${getLabel('timeSlot', labels)} ${slot.startTime} - ${slot.endTime}`}
+        onDragOver={withDragDrop ? (e) => handleSlotDragOver(e, index) : undefined}
+        onDragLeave={withDragDrop ? handleSlotDragLeave : undefined}
+        onDrop={withDragDrop ? (e) => handleSlotDrop(e, index, slot.startTime) : undefined}
       />
     );
   });
@@ -347,7 +441,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     return acc;
   }, []);
 
-  return (
+  const content = (
     <Box {...getStyles('dayView')} {...others}>
       {withHeader && (
         <ScheduleHeader {...stylesApiProps}>
@@ -440,6 +534,12 @@ export const DayView = factory<DayViewFactory>((_props) => {
       </div>
     </Box>
   );
+
+  if (withDragDrop) {
+    return <DragContext.Provider value={dragContextValue}>{content}</DragContext.Provider>;
+  }
+
+  return content;
 });
 
 DayView.displayName = '@mantine/schedule/DayView';
