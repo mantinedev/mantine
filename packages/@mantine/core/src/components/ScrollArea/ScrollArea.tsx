@@ -219,8 +219,8 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props, ref) => {
           viewportProps?.onScroll?.(e);
           onScrollPositionChange?.({ x: e.currentTarget.scrollLeft, y: e.currentTarget.scrollTop });
           const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-          // threshold of -0.6 is required for some browsers that use sub-pixel rendering
-          if (scrollTop - (scrollHeight - clientHeight) >= -0.6) {
+          // threshold of -0.8 is required for some browsers that use sub-pixel rendering, specifically when zoomed out.
+          if (scrollTop - (scrollHeight - clientHeight) >= -0.8) {
             onBottomReached?.();
           }
           if (scrollTop === 0) {
