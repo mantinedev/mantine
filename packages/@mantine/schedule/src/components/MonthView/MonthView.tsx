@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -16,6 +17,8 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
+import { DragContext } from '../DragContext/DragContext';
+import { useDragState } from '../../hooks/use-drag-state';
 import {
   DateLabelFormat,
   DateStringValue,
@@ -24,6 +27,7 @@ import {
   ScheduleViewLevel,
 } from '../../types';
 import {
+  calculateMonthDropDate,
   getMonthDays,
   getWeekdaysNames,
   getWeekNumber,
@@ -31,7 +35,7 @@ import {
   toDateString,
 } from '../../utils';
 import { MoreEvents, MoreEventsProps } from '../MoreEvents/MoreEvents';
-import { ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
+import { RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
 import {
   CombinedScheduleHeaderStylesNames,
@@ -136,6 +140,18 @@ export interface MonthViewProps
 
   /** Props passed down to `MoreEvents` component */
   moreEventsProps?: Partial<MoreEventsProps>;
+
+  /** Function to customize event body, `event` object is passed as first argument */
+  renderEventBody?: RenderEventBody;
+
+  /** If true, events can be dragged and dropped @default `false` */
+  withDragDrop?: boolean;
+
+  /** Called when event is dropped on new date */
+  onEventDrop?: (eventId: string | number, newStart: Date, newEnd: Date) => void;
+
+  /** Function to determine if event can be dragged */
+  canDragEvent?: (event: ScheduleEventData) => boolean;
 }
 
 export type MonthViewFactory = Factory<{
@@ -157,6 +173,7 @@ const defaultProps = {
   withOutsideDays: true,
   withHeader: true,
   weekdayFormat: 'ddd',
+  withDragDrop: false,
 } satisfies Partial<MonthViewProps>;
 
 export const MonthView = factory<MonthViewFactory>((_props) => {
@@ -196,6 +213,10 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     viewSelectProps,
     events,
     moreEventsProps,
+    renderEventBody,
+    withDragDrop,
+    onEventDrop,
+    canDragEvent,
     ...others
   } = props;
 
@@ -238,6 +259,61 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     consistentWeeks,
   });
 
+  const dragState = useDragState();
+  const [dropTargetDay, setDropTargetDay] = useState<string | null>(null);
+
+  const handleDragStart = (event: ScheduleEventData) => {
+    if (!withDragDrop) {
+      return;
+    }
+    dragState.startDrag(event);
+  };
+
+  const handleDragEnd = () => {
+    dragState.endDrag();
+    setDropTargetDay(null);
+  };
+
+  const handleDayDragOver = (e: React.DragEvent<HTMLButtonElement>, day: string) => {
+    if (!withDragDrop || !dragState.state.isDragging) {
+      return;
+    }
+
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    setDropTargetDay(day);
+  };
+
+  const handleDayDragLeave = () => {
+    setDropTargetDay(null);
+  };
+
+  const handleDayDrop = (e: React.DragEvent<HTMLButtonElement>, day: string) => {
+    e.preventDefault();
+
+    if (!withDragDrop || !dragState.state.draggedEvent || !onEventDrop) {
+      return;
+    }
+
+    const { start, end } = calculateMonthDropDate({
+      draggedEvent: dragState.state.draggedEvent,
+      targetDay: day,
+    });
+
+    onEventDrop(dragState.state.draggedEventId!, start, end);
+    handleDragEnd();
+  };
+
+  const dragContextValue = {
+    isDragging: dragState.state.isDragging,
+    draggedEventId: dragState.state.draggedEventId,
+    draggedEvent: dragState.state.draggedEvent,
+    dropTarget: dragState.state.dropTarget,
+    onDragStart: handleDragStart,
+    onDragEnd: handleDragEnd,
+    setDropTarget: dragState.setDropTarget,
+  };
+
   const weekdays = withWeekDays
     ? getWeekdaysNames({
         locale: ctx.getLocale(locale),
@@ -271,6 +347,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         );
       }
 
+      const isDropTarget = dropTargetDay === day;
+
       return (
         <UnstyledButton
           aria-label={ariaLabel}
@@ -281,7 +359,10 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
             onDayClick?.(dayjs(day).startOf('day').toDate(), event);
             dayProps.onClick?.(event);
           }}
-          mod={[{ outside, weekend, today }, dayProps.mod]}
+          mod={[{ outside, weekend, today, 'drop-target': isDropTarget }, dayProps.mod]}
+          onDragOver={withDragDrop ? (e) => handleDayDragOver(e, day) : undefined}
+          onDragLeave={withDragDrop ? handleDayDragLeave : undefined}
+          onDrop={withDragDrop ? (e) => handleDayDrop(e, day) : undefined}
         >
           <span data-today={today || undefined} {...getStyles('monthViewDayLabel')}>
             {dayjs(day).format('D')}
@@ -295,22 +376,29 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
     const events = (monthEvents.groupedByWeek[index] || [])
       .filter((event) => event.position.row < 2)
-      .map((event) => (
-        <ScheduleEvent
-          key={event.id}
-          event={event}
-          nowrap
-          autoSize
-          hanging={event.position.hanging}
-          style={{
-            position: 'absolute',
-            top: `calc(${event.position.row * 50}% + 1px)`,
-            left: `calc(${event.position.startOffset}% + 1px)`,
-            width: `calc(${event.position.width}% - 2px)`,
-            height: `calc(50% - 2px)`,
-          }}
-        />
-      ));
+      .map((event) => {
+        const isDraggable = withDragDrop && (canDragEvent ? canDragEvent(event) : true);
+
+        return (
+          <ScheduleEvent
+            key={event.id}
+            event={event}
+            nowrap
+            autoSize
+            hanging={event.position.hanging}
+            draggable={isDraggable}
+            renderEventBody={renderEventBody}
+            radius={radius}
+            style={{
+              position: 'absolute',
+              top: `calc(${event.position.row * 50}% + 1px)`,
+              left: `calc(${event.position.startOffset}% + 1px)`,
+              width: `calc(${event.position.width}% - 2px)`,
+              height: `calc(50% - 2px)`,
+            }}
+          />
+        );
+      });
 
     const moreEventsNodes = week.map((day, dayIndex) => {
       const dayEvents = monthEvents.groupedByDay[day] || [];
@@ -372,7 +460,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     );
   });
 
-  return (
+  const content = (
     <Box
       mod={[{ 'with-week-numbers': withWeekNumbers, 'with-weekdays': withWeekDays }, mod]}
       {...getStyles('monthView')}
@@ -437,6 +525,12 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       </div>
     </Box>
   );
+
+  if (withDragDrop) {
+    return <DragContext.Provider value={dragContextValue}>{content}</DragContext.Provider>;
+  }
+
+  return content;
 });
 
 MonthView.displayName = '@mantine/schedule/MonthView';

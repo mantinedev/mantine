@@ -199,3 +199,101 @@ export function Locale() {
     </div>
   );
 }
+
+export function DragAndDrop() {
+  const [date, setDate] = useState(month);
+  const [eventsData, setEventsData] = useState<ScheduleEventData[]>([
+    {
+      id: 1,
+      title: 'Team Meeting',
+      start: new Date('2025-11-03T10:00:00'),
+      end: new Date('2025-11-03T11:00:00'),
+      color: 'blue',
+      variant: 'filled',
+      payload: {},
+    },
+    {
+      id: 2,
+      title: 'Project Deadline',
+      start: new Date('2025-11-05T09:00:00'),
+      end: new Date('2025-11-05T17:00:00'),
+      color: 'red',
+      payload: {},
+    },
+    {
+      id: 3,
+      title: 'Client Call',
+      start: new Date('2025-11-09T14:00:00'),
+      end: new Date('2025-11-09T15:00:00'),
+      color: 'green',
+      payload: {},
+    },
+    {
+      id: 4,
+      title: 'Conference (3 days)',
+      start: new Date('2025-11-10T08:00:00'),
+      end: new Date('2025-11-12T17:00:00'),
+      color: 'violet',
+      payload: {},
+    },
+    {
+      id: 5,
+      title: 'Design Review',
+      start: new Date('2025-11-14T11:00:00'),
+      end: new Date('2025-11-14T12:30:00'),
+      color: 'cyan',
+      payload: {},
+    },
+    {
+      id: 6,
+      title: 'Locked Event (Cannot Drag)',
+      start: new Date('2025-11-15T09:00:00'),
+      end: new Date('2025-11-15T10:00:00'),
+      color: 'gray',
+      payload: { locked: true },
+    },
+    {
+      id: 7,
+      title: 'Launch Event',
+      start: new Date('2025-11-20T16:00:00'),
+      end: new Date('2025-11-20T18:00:00'),
+      color: 'teal',
+      payload: {},
+    },
+  ]);
+  const [lastAction, setLastAction] = useState<string>('');
+
+  const handleEventDrop = (eventId: string | number, newStart: Date, newEnd: Date) => {
+    setEventsData((prev) =>
+      prev.map((event) => {
+        if (event.id === eventId) {
+          return { ...event, start: newStart, end: newEnd };
+        }
+        return event;
+      })
+    );
+
+    const movedEvent = eventsData.find((e) => e.id === eventId);
+    setLastAction(
+      `Moved "${movedEvent?.title}" to ${dayjs(newStart).format('MMMM D, YYYY [at] HH:mm')}`
+    );
+  };
+
+  return (
+    <div style={{ padding: 40 }}>
+      <MonthView
+        date={date}
+        onDateChange={setDate}
+        events={eventsData}
+        withDragDrop
+        onEventDrop={handleEventDrop}
+        canDragEvent={(event) => !event.payload?.locked}
+      />
+      {lastAction && (
+        <div style={{ marginTop: 20, padding: 12, backgroundColor: '#f0f0f0', borderRadius: 4 }}>
+          Last action: {lastAction}
+        </div>
+      )}
+    </div>
+  );
+}

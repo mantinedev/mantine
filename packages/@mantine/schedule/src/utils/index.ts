@@ -31,9 +31,14 @@ export { parseTimeString } from './parse-time-string/parse-time-string';
 export { toTimeString } from './to-time-string/to-time-string';
 export { getDayPosition } from './get-day-position/get-day-position';
 export { calculateDropTime } from './calculate-drop-time/calculate-drop-time';
+export { calculateMonthDropDate } from './calculate-month-drop-date/calculate-month-drop-date';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';
 export type { ParsedTime } from './parse-time-string/parse-time-string';
 export type {
   CalculateDropTimeInput,
   CalculateDropTimeResult,
 } from './calculate-drop-time/calculate-drop-time';
+export type {
+  CalculateMonthDropDateInput,
+  CalculateMonthDropDateResult,
+} from './calculate-month-drop-date/calculate-month-drop-date';
