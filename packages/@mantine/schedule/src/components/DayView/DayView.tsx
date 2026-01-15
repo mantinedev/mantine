@@ -348,9 +348,6 @@ export const DayView = factory<DayViewFactory>((_props) => {
         renderEventBody={renderEventBody}
         autoSize
         draggable={isDraggable}
-        onEventDragStart={() => handleDragStart(event)}
-        onEventDragEnd={handleDragEnd}
-        isDragging={dragState.state.draggedEventId === event.id}
         {...stylesApiProps}
         style={{
           ...stylesApiProps.styles?.event,

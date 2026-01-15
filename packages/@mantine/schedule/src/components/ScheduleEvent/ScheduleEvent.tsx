@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   Box,
   BoxProps,
@@ -12,6 +13,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { DragContext } from '../DragContext/DragContext';
 import { ScheduleEventData } from '../../types';
 import classes from './ScheduleEvent.module.css';
 
@@ -122,6 +124,8 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
     ...others
   } = props;
 
+  const ctx = use(DragContext);
+
   const getStyles = useStyles<ScheduleEventFactory>({
     name: __staticSelector,
     classes,
@@ -146,18 +150,32 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('application/json', JSON.stringify({ eventId: event.id }));
     onEventDragStart?.(event);
+    ctx.onDragStart?.(event);
   };
 
   const handleDragEnd = () => {
     onEventDragEnd?.();
+    ctx.onDragEnd?.();
   };
+
+  const isCurrentlyDragging = isDragging || ctx.draggedEventId === event.id;
+  const isAnyEventDragging = ctx.isDragging || false;
 
   return (
     <UnstyledButton
       {...getStyles('event')}
       size={size}
       title={event.title}
-      mod={[{ autoSize, hanging, draggable, dragging: isDragging }, mod]}
+      mod={[
+        {
+          autoSize,
+          hanging,
+          draggable,
+          dragging: isCurrentlyDragging,
+          'any-dragging': isAnyEventDragging,
+        },
+        mod,
+      ]}
       draggable={draggable}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}

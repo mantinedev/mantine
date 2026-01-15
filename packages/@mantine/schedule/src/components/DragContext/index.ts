@@ -1,2 +1,2 @@
-export { DragContext, useDragContext } from './DragContext';
+export { DragContext } from './DragContext';
 export type { DragContextValue } from './DragContext';

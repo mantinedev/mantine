@@ -20,10 +20,17 @@
 
   &:where([data-dragging]) {
     opacity: 0.5;
-    pointer-events: none;
 
     .eventInner {
       cursor: grabbing;
+    }
+  }
+
+  &:where([data-any-dragging]:not([data-dragging])) {
+    pointer-events: none;
+
+    .eventInner {
+      pointer-events: none;
     }
   }
 
