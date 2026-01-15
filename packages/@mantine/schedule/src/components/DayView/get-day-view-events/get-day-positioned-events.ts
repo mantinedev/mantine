@@ -101,34 +101,55 @@ export function getDayPositionedEvents({
       continue;
     }
 
-    const overlappingColumns = new Set<number>();
+    // Find events that directly overlap with this event
+    const directlyOverlapping: DayPositionedEventData[] = [];
 
     for (const otherEvent of positioned) {
-      if (otherEvent === positionedEvent) {
+      if (otherEvent === positionedEvent || otherEvent.position.allDay) {
         continue;
       }
 
-      const otherAllDay = otherEvent.position.allDay;
-
-      // Do not count overlaps with all-day events
-      if (allDay || otherAllDay) {
-        continue;
-      }
-
-      const hasTimeConflict = isEventsOverlap(otherEvent, positionedEvent);
-
-      if (hasTimeConflict) {
-        overlappingColumns.add(otherEvent.position.column);
+      if (isEventsOverlap(otherEvent, positionedEvent)) {
+        directlyOverlapping.push(otherEvent);
       }
     }
 
-    overlappingColumns.add(column);
+    // Find the max column by also checking overlaps of overlapping events
+    // This ensures we account for the full column group
+    let maxColumn = column;
 
-    const overlaps = overlappingColumns.size;
+    for (const overlappingEvent of directlyOverlapping) {
+      maxColumn = Math.max(maxColumn, overlappingEvent.position.column);
 
-    positionedEvent.position.overlaps = overlaps;
-    positionedEvent.position.width = 100 / overlaps;
-    positionedEvent.position.offset = (column * 100) / overlaps;
+      // Check what overlaps with each overlapping event
+      for (const otherEvent of positioned) {
+        if (otherEvent === overlappingEvent || otherEvent.position.allDay) {
+          continue;
+        }
+
+        if (isEventsOverlap(otherEvent, overlappingEvent)) {
+          maxColumn = Math.max(maxColumn, otherEvent.position.column);
+        }
+      }
+    }
+
+    const totalColumns = maxColumn + 1;
+
+    // Find the first occupied column to the right of this event
+    // Events expand to fill empty columns but stop at the next occupied column
+    let nextOccupiedColumn = totalColumns;
+
+    for (const other of directlyOverlapping) {
+      if (other.position.column > column && other.position.column < nextOccupiedColumn) {
+        nextOccupiedColumn = other.position.column;
+      }
+    }
+
+    const columnsSpanned = nextOccupiedColumn - column;
+
+    positionedEvent.position.overlaps = totalColumns;
+    positionedEvent.position.width = (columnsSpanned / totalColumns) * 100;
+    positionedEvent.position.offset = (column * 100) / totalColumns;
   }
 
   return positioned;
