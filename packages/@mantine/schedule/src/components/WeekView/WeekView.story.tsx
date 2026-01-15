@@ -204,3 +204,16 @@ export function RegularEventsNoWeekends() {
     />
   );
 }
+
+export function BusinessHours() {
+  return (
+    <WeekView
+      date={new Date()}
+      events={regularEvents}
+      highlightBusinessHours
+      businessHours={['10:00:00', '18:00:00']}
+      startTime="08:00:00"
+      endTime="20:00:00"
+    />
+  );
+}

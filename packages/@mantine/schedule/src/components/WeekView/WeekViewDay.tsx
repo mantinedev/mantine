@@ -27,6 +27,12 @@ export interface WeekViewDayProps {
 
   /** Labels override */
   labels?: ScheduleLabelsOverride;
+
+  /** If set to true, highlights business hours with white background */
+  highlightBusinessHours?: boolean;
+
+  /** Business hours range in `HH:mm:ss` format */
+  businessHours?: [string, string];
 }
 
 export function WeekViewDay({
@@ -37,19 +43,37 @@ export function WeekViewDay({
   weekendDays,
   children,
   labels,
+  highlightBusinessHours,
+  businessHours,
 }: WeekViewDayProps) {
   const ctx = useDatesContext();
   const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek);
   const today = dayjs(day).isSame(dayjs(), 'day') && highlightToday === 'column';
 
-  const items = slots.map((slot) => (
-    <UnstyledButton
-      key={slot.startTime}
-      {...getStyles('weekViewDaySlot')}
-      mod={{ 'hour-start': slot.isHourStart }}
-      aria-label={`${getLabel('timeSlot', labels)} ${dayjs(day).format('YYYY-MM-DD')} ${slot.startTime} - ${slot.endTime}`}
-    />
-  ));
+  const isSlotInBusinessHours = (slotTime: string) => {
+    if (!highlightBusinessHours || !businessHours) {
+      return null;
+    }
+    const [start, end] = businessHours;
+    return slotTime >= start && slotTime < end;
+  };
+
+  const items = slots.map((slot) => {
+    const inBusinessHours = isSlotInBusinessHours(slot.startTime);
+
+    return (
+      <UnstyledButton
+        key={slot.startTime}
+        {...getStyles('weekViewDaySlot')}
+        mod={{
+          'hour-start': slot.isHourStart,
+          'business-hours': inBusinessHours === true,
+          'non-business-hours': inBusinessHours === false,
+        }}
+        aria-label={`${getLabel('timeSlot', labels)} ${dayjs(day).format('YYYY-MM-DD')} ${slot.startTime} - ${slot.endTime}`}
+      />
+    );
+  });
 
   return (
     <Box {...getStyles('weekViewDay')} mod={{ today, weekend }}>

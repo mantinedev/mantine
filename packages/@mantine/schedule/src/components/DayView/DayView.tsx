@@ -144,6 +144,12 @@ export interface DayViewProps
 
   /** Labels override */
   labels?: ScheduleLabelsOverride;
+
+  /** If set to true, highlights business hours with white background @default `false` */
+  highlightBusinessHours?: boolean;
+
+  /** Business hours range in `HH:mm:ss` format @default `['09:00:00', '17:00:00']` */
+  businessHours?: [string, string];
 }
 
 export type DayViewFactory = Factory<{
@@ -163,6 +169,8 @@ const defaultProps = {
   headerFormat: 'MMMM D, YYYY',
   withCurrentTimeBubble: true,
   withHeader: true,
+  highlightBusinessHours: false,
+  businessHours: ['09:00:00', '17:00:00'],
 } satisfies Partial<DayViewProps>;
 
 const varsResolver = createVarsResolver<DayViewFactory>(
@@ -210,6 +218,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
     moreEventsProps,
     renderEventBody,
     labels,
+    highlightBusinessHours,
+    businessHours,
     ...others
   } = props;
 
@@ -284,15 +294,31 @@ export const DayView = factory<DayViewFactory>((_props) => {
       />
     ));
 
-  const items = slots.map((slot) => (
-    <UnstyledButton
-      {...getStyles('dayViewSlot')}
-      key={slot.startTime}
-      mod={{ 'hour-start': slot.isHourStart }}
-      __vars={{ '--slot-size': `${clampIntervalMinutes(intervalMinutes) / 60}` }}
-      aria-label={`${getLabel('timeSlot', labels)} ${slot.startTime} - ${slot.endTime}`}
-    />
-  ));
+  const isSlotInBusinessHours = (slotTime: string) => {
+    if (!highlightBusinessHours || !businessHours) {
+      return null;
+    }
+    const [start, end] = businessHours;
+    return slotTime >= start && slotTime < end;
+  };
+
+  const items = slots.map((slot) => {
+    const inBusinessHours = isSlotInBusinessHours(slot.startTime);
+
+    return (
+      <UnstyledButton
+        {...getStyles('dayViewSlot')}
+        key={slot.startTime}
+        mod={{
+          'hour-start': slot.isHourStart,
+          'business-hours': inBusinessHours === true,
+          'non-business-hours': inBusinessHours === false,
+        }}
+        __vars={{ '--slot-size': `${clampIntervalMinutes(intervalMinutes) / 60}` }}
+        aria-label={`${getLabel('timeSlot', labels)} ${slot.startTime} - ${slot.endTime}`}
+      />
+    );
+  });
 
   const slotsLabels = slots.reduce<React.ReactNode[]>((acc, slot) => {
     if (slot.isHourStart) {

@@ -168,6 +168,26 @@
       background-color: var(--mantine-color-dark-6);
     }
   }
+
+  &:where([data-business-hours]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-white);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-7);
+    }
+  }
+
+  &:where([data-non-business-hours]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-1);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-5);
+    }
+  }
 }
 
 .weekViewWeekLabel {

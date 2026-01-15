@@ -172,6 +172,12 @@ export interface WeekViewProps
 
   /** Labels override */
   labels?: ScheduleLabelsOverride;
+
+  /** If set to true, highlights business hours with white background @default `false` */
+  highlightBusinessHours?: boolean;
+
+  /** Business hours range in `HH:mm:ss` format @default `['09:00:00', '17:00:00']` */
+  businessHours?: [string, string];
 }
 
 export type WeekViewFactory = Factory<{
@@ -196,6 +202,8 @@ const defaultProps = {
   withAllDaySlots: true,
   withHeader: true,
   weekLabelFormat: 'MMM DD',
+  highlightBusinessHours: false,
+  businessHours: ['09:00:00', '17:00:00'],
 } satisfies Partial<WeekViewProps>;
 
 const varsResolver = createVarsResolver<WeekViewFactory>(
@@ -248,6 +256,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     allDaySlotHeight,
     slotHeight,
     labels,
+    highlightBusinessHours,
+    businessHours,
     ...others
   } = props;
 
@@ -368,6 +378,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         getStyles={getStyles}
         highlightToday={highlightToday}
         weekendDays={weekendDays}
+        highlightBusinessHours={highlightBusinessHours}
+        businessHours={businessHours}
       >
         {dayEvents}
       </WeekViewDay>
