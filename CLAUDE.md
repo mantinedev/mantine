@@ -98,7 +98,43 @@ npm run docs:build
 
 ### Code Style
 
-**Do not include comments in code unless explicitly requested by the user.** The codebase prefers clean, self-documenting code without inline comments or documentation comments.
+**Comments Guidelines:**
+- **Do not include inline comments** that describe logic or implementation details unless explicitly requested
+- **Always preserve documentation comments** on interfaces, types, and function parameters (JSDoc-style comments with `/** */`)
+- The codebase prefers clean, self-documenting code for implementation
+- Type definitions and public APIs should maintain their documentation comments
+
+**Examples:**
+```tsx
+// ❌ Bad - inline comments describing logic
+function calculateTotal(items: Item[]) {
+  // Loop through all items
+  let total = 0;
+  for (const item of items) {
+    // Add the price
+    total += item.price;
+  }
+  return total;
+}
+
+// ✅ Good - clean code without comments
+function calculateTotal(items: Item[]) {
+  let total = 0;
+  for (const item of items) {
+    total += item.price;
+  }
+  return total;
+}
+
+// ✅ Good - documentation comments on interfaces
+export interface CalculateTotalInput {
+  /** List of items to calculate the total for */
+  items: Item[];
+
+  /** Whether to include tax in the calculation */
+  includeTax?: boolean;
+}
+```
 
 ### Component Architecture
 
@@ -119,8 +155,11 @@ ComponentName/
   ComponentName.story.tsx     # Storybook stories
   ComponentName.test.tsx      # Jest tests
   index.ts                    # Exports with namespace support
-  [helpers/]                  # Optional helper functions/utilities
+  helper-function-name.ts     # Helper functions (if needed)
+  helper-function-name.test.ts # Tests for helper functions
 ```
+
+**Important:** Do not create `helpers/` subdirectories. When breaking down complex functions into smaller helper functions, place them as sibling files in the same directory with descriptive names (e.g., `calculate-total.ts`, `validate-input.ts`). Each helper should have its own test file.
 
 ### Component Template Structure
 
