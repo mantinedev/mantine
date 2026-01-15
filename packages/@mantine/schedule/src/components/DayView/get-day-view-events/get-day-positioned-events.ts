@@ -91,13 +91,44 @@ export function getDayPositionedEvents({
       },
     });
   }
-
-  const overlaps = columns.length;
-
   for (const positionedEvent of positioned) {
+    const { allDay, column } = positionedEvent.position;
+
+    if (allDay) {
+      positionedEvent.position.overlaps = 1;
+      positionedEvent.position.width = 100;
+      positionedEvent.position.offset = 0;
+      continue;
+    }
+
+    const overlappingColumns = new Set<number>();
+
+    for (const otherEvent of positioned) {
+      if (otherEvent === positionedEvent) {
+        continue;
+      }
+
+      const otherAllDay = otherEvent.position.allDay;
+
+      // Do not count overlaps with all-day events
+      if (allDay || otherAllDay) {
+        continue;
+      }
+
+      const hasTimeConflict = isEventsOverlap(otherEvent, positionedEvent);
+
+      if (hasTimeConflict) {
+        overlappingColumns.add(otherEvent.position.column);
+      }
+    }
+
+    overlappingColumns.add(column);
+
+    const overlaps = overlappingColumns.size;
+
     positionedEvent.position.overlaps = overlaps;
     positionedEvent.position.width = 100 / overlaps;
-    positionedEvent.position.offset = (positionedEvent.position.column * 100) / overlaps;
+    positionedEvent.position.offset = (column * 100) / overlaps;
   }
 
   return positioned;

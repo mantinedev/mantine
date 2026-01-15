@@ -280,8 +280,8 @@ describe('@mantine/schedule/get-day-positioned-events', () => {
       expect(result[0].position.width).toBe(50);
       expect(result[1].position.overlaps).toBe(2);
       expect(result[1].position.width).toBe(50);
-      expect(result[2].position.overlaps).toBe(2);
-      expect(result[2].position.width).toBe(50);
+      expect(result[2].position.overlaps).toBe(1);
+      expect(result[2].position.width).toBe(100);
     });
   });
 
