@@ -38,7 +38,7 @@ describe('@mantine/schedule/get-months-list', () => {
     });
     expect(months).toHaveLength(12);
     expect(months[0].name).toContain('Month:');
-    expect(months[0].name).toContain('2025-01-01');
+    expect(months[0].name).toMatch(/\d{4}-01-01/);
   });
 
   it('applies function format to all months', () => {

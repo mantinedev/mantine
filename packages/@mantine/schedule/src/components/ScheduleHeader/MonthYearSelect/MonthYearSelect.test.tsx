@@ -129,7 +129,7 @@ describe('@mantine/schedule/MonthYearSelect', () => {
 
     rerender(<MonthYearSelect {...defaultProps} monthsListFormat={(date) => `Test ${date}`} />);
     expect(
-      screen.getByRole('button', { name: /select month test 2025-11-01 00:00:00/i })
+      screen.getByRole('button', { name: /select month test \d{4}-11-01 00:00:00/i })
     ).toBeInTheDocument();
   });
 
