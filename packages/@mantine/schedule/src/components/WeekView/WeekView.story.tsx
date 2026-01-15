@@ -217,3 +217,96 @@ export function BusinessHours() {
     />
   );
 }
+
+export function DragAndDrop() {
+  const [date, setDate] = useState(toDateString(new Date()));
+  const [eventsData, setEventsData] = useState<ScheduleEventData[]>([
+    {
+      id: 1,
+      title: 'Team Meeting',
+      start: new Date(`${dayjs(date).format('YYYY-MM-DD')}T10:00:00`),
+      end: new Date(`${dayjs(date).format('YYYY-MM-DD')}T11:00:00`),
+      color: 'blue',
+      variant: 'filled',
+      payload: {},
+    },
+    {
+      id: 2,
+      title: 'Project Review',
+      start: new Date(`${dayjs(date).add(1, 'day').format('YYYY-MM-DD')}T14:00:00`),
+      end: new Date(`${dayjs(date).add(1, 'day').format('YYYY-MM-DD')}T16:00:00`),
+      color: 'green',
+      payload: {},
+    },
+    {
+      id: 3,
+      title: 'Client Call',
+      start: new Date(`${dayjs(date).add(2, 'day').format('YYYY-MM-DD')}T09:00:00`),
+      end: new Date(`${dayjs(date).add(2, 'day').format('YYYY-MM-DD')}T10:30:00`),
+      color: 'red',
+      payload: {},
+    },
+    {
+      id: 4,
+      title: 'Lunch Break',
+      start: new Date(`${dayjs(date).add(3, 'day').format('YYYY-MM-DD')}T12:00:00`),
+      end: new Date(`${dayjs(date).add(3, 'day').format('YYYY-MM-DD')}T13:00:00`),
+      color: 'orange',
+      payload: {},
+    },
+    {
+      id: 5,
+      title: 'Locked Event (Cannot Drag)',
+      start: new Date(`${dayjs(date).add(4, 'day').format('YYYY-MM-DD')}T15:00:00`),
+      end: new Date(`${dayjs(date).add(4, 'day').format('YYYY-MM-DD')}T16:00:00`),
+      color: 'gray',
+      payload: { locked: true },
+    },
+    {
+      id: 6,
+      title: 'All-Day Event',
+      start: new Date(`${dayjs(date).format('YYYY-MM-DD')}T00:00:00`),
+      end: new Date(`${dayjs(date).format('YYYY-MM-DD')}T23:59:59`),
+      color: 'violet',
+      payload: {},
+    },
+  ]);
+  const [lastAction, setLastAction] = useState<string>('');
+
+  const handleEventDrop = (eventId: string | number, newStart: Date, newEnd: Date) => {
+    setEventsData((prev) =>
+      prev.map((event) => {
+        if (event.id === eventId) {
+          return { ...event, start: newStart, end: newEnd };
+        }
+        return event;
+      })
+    );
+
+    const movedEvent = eventsData.find((e) => e.id === eventId);
+    setLastAction(
+      `Moved "${movedEvent?.title}" to ${dayjs(newStart).format('dddd, MMMM D [at] HH:mm')}`
+    );
+  };
+
+  return (
+    <div>
+      <WeekView
+        date={date}
+        onDateChange={setDate}
+        events={eventsData}
+        withDragDrop
+        onEventDrop={handleEventDrop}
+        canDragEvent={(event) => !event.payload?.locked}
+        startTime="08:00:00"
+        endTime="20:00:00"
+        intervalMinutes={60}
+      />
+      {lastAction && (
+        <div style={{ marginTop: 20, padding: 12, backgroundColor: '#f0f0f0', borderRadius: 4 }}>
+          Last action: {lastAction}
+        </div>
+      )}
+    </div>
+  );
+}

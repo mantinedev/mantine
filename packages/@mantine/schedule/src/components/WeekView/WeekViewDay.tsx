@@ -33,6 +33,21 @@ export interface WeekViewDayProps {
 
   /** Business hours range in `HH:mm:ss` format */
   businessHours?: [string, string];
+
+  /** If true, slots are drop targets for drag and drop */
+  withDragDrop?: boolean;
+
+  /** Called when dragging over a slot */
+  onSlotDragOver?: (e: React.DragEvent<HTMLButtonElement>, day: string, slotIndex: number) => void;
+
+  /** Called when dragging leaves a slot */
+  onSlotDragLeave?: () => void;
+
+  /** Called when dropping on a slot */
+  onSlotDrop?: (e: React.DragEvent<HTMLButtonElement>, day: string, slotTime: string) => void;
+
+  /** Index of the slot that is currently a drop target */
+  dropTargetSlotIndex?: number;
 }
 
 export function WeekViewDay({
@@ -45,6 +60,11 @@ export function WeekViewDay({
   labels,
   highlightBusinessHours,
   businessHours,
+  withDragDrop,
+  onSlotDragOver,
+  onSlotDragLeave,
+  onSlotDrop,
+  dropTargetSlotIndex,
 }: WeekViewDayProps) {
   const ctx = useDatesContext();
   const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek);
@@ -58,8 +78,9 @@ export function WeekViewDay({
     return slotTime >= start && slotTime < end;
   };
 
-  const items = slots.map((slot) => {
+  const items = slots.map((slot, index) => {
     const inBusinessHours = isSlotInBusinessHours(slot.startTime);
+    const isDropTarget = dropTargetSlotIndex === index;
 
     return (
       <UnstyledButton
@@ -69,8 +90,12 @@ export function WeekViewDay({
           'hour-start': slot.isHourStart,
           'business-hours': inBusinessHours === true,
           'non-business-hours': inBusinessHours === false,
+          'drop-target': isDropTarget,
         }}
         aria-label={`${getLabel('timeSlot', labels)} ${dayjs(day).format('YYYY-MM-DD')} ${slot.startTime} - ${slot.endTime}`}
+        onDragOver={withDragDrop ? (e) => onSlotDragOver?.(e, String(day), index) : undefined}
+        onDragLeave={withDragDrop ? onSlotDragLeave : undefined}
+        onDrop={withDragDrop ? (e) => onSlotDrop?.(e, String(day), slot.startTime) : undefined}
       />
     );
   });

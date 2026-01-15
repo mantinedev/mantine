@@ -20,6 +20,8 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
+import { DragContext } from '../DragContext/DragContext';
+import { useDragState } from '../../hooks/use-drag-state';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
   DateLabelFormat,
@@ -29,10 +31,12 @@ import {
   ScheduleViewLevel,
 } from '../../types';
 import {
+  calculateDropTime,
   formatDate,
   getDayTimeIntervals,
   getWeekDays,
   getWeekNumber,
+  isAllDayEvent,
   nextWeek,
   previousWeek,
   toDateString,
@@ -41,7 +45,7 @@ import {
   CurrentTimeIndicator,
   CurrentTimeIndicatorStylesNames,
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
-import { ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
+import { RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import {
   CombinedScheduleHeaderStylesNames,
   ScheduleHeader,
@@ -178,6 +182,18 @@ export interface WeekViewProps
 
   /** Business hours range in `HH:mm:ss` format @default `['09:00:00', '17:00:00']` */
   businessHours?: [string, string];
+
+  /** Function to customize event body, `event` object is passed as first argument */
+  renderEventBody?: RenderEventBody;
+
+  /** If true, events can be dragged and dropped @default `false` */
+  withDragDrop?: boolean;
+
+  /** Called when event is dropped at new time */
+  onEventDrop?: (eventId: string | number, newStart: Date, newEnd: Date) => void;
+
+  /** Function to determine if event can be dragged */
+  canDragEvent?: (event: ScheduleEventData) => boolean;
 }
 
 export type WeekViewFactory = Factory<{
@@ -204,6 +220,7 @@ const defaultProps = {
   weekLabelFormat: 'MMM DD',
   highlightBusinessHours: false,
   businessHours: ['09:00:00', '17:00:00'],
+  withDragDrop: false,
 } satisfies Partial<WeekViewProps>;
 
 const varsResolver = createVarsResolver<WeekViewFactory>(
@@ -258,6 +275,10 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     labels,
     highlightBusinessHours,
     businessHours,
+    renderEventBody,
+    withDragDrop,
+    onEventDrop,
+    canDragEvent,
     ...others
   } = props;
 
@@ -293,6 +314,74 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const [scrolled, setScrolled] = useState(false);
   const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
+
+  const dragState = useDragState();
+  const [dropTargetSlot, setDropTargetSlot] = useState<{
+    day: string;
+    slotIndex: number;
+  } | null>(null);
+
+  const handleDragStart = (event: ScheduleEventData) => {
+    if (!withDragDrop) {
+      return;
+    }
+    dragState.startDrag(event);
+  };
+
+  const handleDragEnd = () => {
+    dragState.endDrag();
+    setDropTargetSlot(null);
+  };
+
+  const handleSlotDragOver = (
+    e: React.DragEvent<HTMLButtonElement>,
+    day: string,
+    slotIndex: number
+  ) => {
+    if (!withDragDrop || !dragState.state.isDragging) {
+      return;
+    }
+
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    setDropTargetSlot({ day, slotIndex });
+  };
+
+  const handleSlotDragLeave = () => {
+    setDropTargetSlot(null);
+  };
+
+  const handleSlotDrop = (
+    e: React.DragEvent<HTMLButtonElement>,
+    day: string,
+    slotTime: string
+  ) => {
+    e.preventDefault();
+
+    if (!withDragDrop || !dragState.state.draggedEvent || !onEventDrop) {
+      return;
+    }
+
+    const { start, end } = calculateDropTime({
+      draggedEvent: dragState.state.draggedEvent,
+      targetDate: day,
+      targetSlotTime: slotTime,
+      intervalMinutes,
+    });
+
+    onEventDrop(dragState.state.draggedEventId!, start, end);
+    handleDragEnd();
+  };
+
+  const dragContextValue = {
+    isDragging: dragState.state.isDragging,
+    draggedEventId: dragState.state.draggedEventId,
+    draggedEvent: dragState.state.draggedEvent,
+    dropTarget: dragState.state.dropTarget,
+    onDragStart: handleDragStart,
+    onDragEnd: handleDragEnd,
+    setDropTarget: dragState.setDropTarget,
+  };
 
   const weekEvents = getWeekViewEvents({
     date,
@@ -368,21 +457,30 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   ));
 
   const days = weekdays.map((day) => {
-    const dayEvents = (weekEvents.regularEvents[day] || []).map((event) => (
-      <ScheduleEvent
-        key={event.id}
-        event={event}
-        autoSize
-        hanging={event.position.hanging}
-        style={{
-          position: 'absolute',
-          top: `${event.position.top}%`,
-          left: `${event.position.offset}%`,
-          width: `${event.position.width}%`,
-          height: `${event.position.height}%`,
-        }}
-      />
-    ));
+    const dayEvents = (weekEvents.regularEvents[day] || []).map((event) => {
+      const eventIsAllDay = isAllDayEvent({ event, date: day });
+      const isDraggable =
+        withDragDrop && !eventIsAllDay && (canDragEvent ? canDragEvent(event) : true);
+
+      return (
+        <ScheduleEvent
+          key={event.id}
+          event={event}
+          autoSize
+          hanging={event.position.hanging}
+          draggable={isDraggable}
+          renderEventBody={renderEventBody}
+          radius={radius}
+          style={{
+            position: 'absolute',
+            top: `${event.position.top}%`,
+            left: `${event.position.offset}%`,
+            width: `${event.position.width}%`,
+            height: `${event.position.height}%`,
+          }}
+        />
+      );
+    });
 
     return (
       <WeekViewDay
@@ -394,6 +492,14 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         weekendDays={weekendDays}
         highlightBusinessHours={highlightBusinessHours}
         businessHours={businessHours}
+        labels={labels}
+        withDragDrop={withDragDrop}
+        onSlotDragOver={handleSlotDragOver}
+        onSlotDragLeave={handleSlotDragLeave}
+        onSlotDrop={handleSlotDrop}
+        dropTargetSlotIndex={
+          dropTargetSlot?.day === day ? dropTargetSlot.slotIndex : undefined
+        }
       >
         {dayEvents}
       </WeekViewDay>
@@ -430,7 +536,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   // Extra rows show on hover = total rows - 2 visible rows (starts from 0, so -1)
   const extraRows = Math.max(...weekEvents.allDayEvents.map((event) => event.position.row), 1) - 1;
 
-  return (
+  const content = (
     <Box {...getStyles('weekView')} {...others}>
       {withHeader && (
         <ScheduleHeader {...stylesApiProps}>
@@ -548,6 +654,12 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       </Box>
     </Box>
   );
+
+  if (withDragDrop) {
+    return <DragContext.Provider value={dragContextValue}>{content}</DragContext.Provider>;
+  }
+
+  return content;
 });
 
 WeekView.displayName = '@mantine/schedule/WeekView';
