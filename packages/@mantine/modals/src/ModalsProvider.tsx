@@ -8,6 +8,7 @@ import {
   ModalsContext,
   ModalsContextProps,
   ModalSettings,
+  ModalState,
   OpenConfirmModal,
   OpenContextModal,
 } from './context';
@@ -68,7 +69,7 @@ function separateConfirmModalProps(props: OpenConfirmModal) {
 }
 
 export function ModalsProvider({ children, modalProps, labels, modals }: ModalsProviderProps) {
-  const [state, dispatch] = useReducer(modalsReducer, { modals: [], current: null });
+  const [state, dispatch] = useReducer(modalsReducer, { modals: [], current: [] });
   const stateRef = useRef(state);
   stateRef.current = state;
 
@@ -178,63 +179,78 @@ export function ModalsProvider({ children, modalProps, labels, modals }: ModalsP
     updateContextModal,
   };
 
-  const getCurrentModal = () => {
-    const currentModal = stateRef.current.current;
-    switch (currentModal?.type) {
-      case 'context': {
-        const { innerProps, ...rest } = currentModal.props;
-        const ContextModal = modals![currentModal.ctx];
+  const getModalContent = useCallback(
+    (modal: ModalState) => {
+      switch (modal.type) {
+        case 'context': {
+          const { innerProps, ...rest } = modal.props;
+          const ContextModal = modals![modal.ctx];
 
-        return {
-          modalProps: rest,
-          content: <ContextModal innerProps={innerProps} context={ctx} id={currentModal.id} />,
-        };
-      }
-      case 'confirm': {
-        const { modalProps: separatedModalProps, confirmProps: separatedConfirmProps } =
-          separateConfirmModalProps(currentModal.props);
+          return {
+            modalProps: rest,
+            content: <ContextModal innerProps={innerProps} context={ctx} id={modal.id} />,
+          };
+        }
+        case 'confirm': {
+          const { modalProps: separatedModalProps, confirmProps: separatedConfirmProps } =
+            separateConfirmModalProps(modal.props);
 
-        return {
-          modalProps: separatedModalProps,
-          content: (
-            <ConfirmModal
-              {...separatedConfirmProps}
-              id={currentModal.id}
-              labels={currentModal.props.labels || labels}
-            />
-          ),
-        };
-      }
-      case 'content': {
-        const { children: currentModalChildren, ...rest } = currentModal.props;
+          return {
+            modalProps: separatedModalProps,
+            content: (
+              <ConfirmModal
+                {...separatedConfirmProps}
+                id={modal.id}
+                labels={modal.props.labels || labels}
+              />
+            ),
+          };
+        }
+        case 'content': {
+          const { children: currentModalChildren, ...rest } = modal.props;
 
-        return {
-          modalProps: rest,
-          content: currentModalChildren,
-        };
+          return {
+            modalProps: rest,
+            content: currentModalChildren,
+          };
+        }
+        default: {
+          return {
+            modalProps: {},
+            content: null,
+          };
+        }
       }
-      default: {
-        return {
-          modalProps: {},
-          content: null,
-        };
-      }
-    }
-  };
-
-  const { modalProps: currentModalProps, content } = getCurrentModal();
+    },
+    [ctx, labels, modals]
+  );
 
   return (
     <ModalsContext.Provider value={ctx}>
-      <Modal
-        zIndex={getDefaultZIndex('modal') + 1}
-        {...modalProps}
-        {...currentModalProps}
-        opened={state.modals.length > 0}
-        onClose={() => closeModal(state.current?.id as any)}
-      >
-        {content}
-      </Modal>
+      {state.current.map((modal, index) => {
+        const { modalProps: currentModalProps, content } = getModalContent(modal);
+        const baseZIndex = getDefaultZIndex('modal');
+        const opened = true; // always opened because this will only render for current modals
+        const isTopmost = index === state.current.length - 1;
+        const adjustedModalProps = {
+          ...currentModalProps,
+          trapFocus: isTopmost && ((currentModalProps as ModalSettings).trapFocus ?? modalProps?.trapFocus ?? true),
+          closeOnEscape: isTopmost && ((currentModalProps as ModalSettings).closeOnEscape ?? modalProps?.closeOnEscape ?? true),
+        };
+
+        return (
+          <Modal
+            key={modal.id}
+            zIndex={baseZIndex + index + 1}
+            {...modalProps}
+            {...adjustedModalProps}
+            opened={opened}
+            onClose={() => closeModal(modal.id)}
+          >
+            {content}
+          </Modal>
+        );
+      })}
 
       {children}
     </ModalsContext.Provider>
