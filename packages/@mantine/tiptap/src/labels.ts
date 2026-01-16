@@ -136,6 +136,66 @@ export interface RichTextEditorLabels {
 
   /** Aria-label for task list lift task */
   tasksLiftLabel: string;
+
+  /** Aria-label for set details task */
+  setDetailsLabel: string;
+
+  /** Aria-label for unset details task */
+  unsetDetailsLabel: string;
+
+  /** Aria-label for insert table task */
+  insertTableLabel: string;
+
+  /** Aria-label for add column before task */
+  addColumnBeforeLabel: string;
+
+  /** Aria-label for add column after task */
+  addColumnAfterLabel: string;
+
+  /** Aria-label for delete column task */
+  deleteColumnLabel: string;
+
+  /** Aria-label for add row before task */
+  addRowBeforeLabel: string;
+
+  /** Aria-label for add row after task */
+  addRowAfterLabel: string;
+
+  /** Aria-label for delete row task */
+  deleteRowLabel: string;
+
+  /** Aria-label for delete table task */
+  deleteTableLabel: string;
+
+  /** Aria-label for merge cells task */
+  mergeCellsLabel: string;
+
+  /** Aria-label for split cell task */
+  splitCellLabel: string;
+
+  /** Aria-label for toggle header column task */
+  toggleHeaderColumnLabel: string;
+
+  /** Aria-label for toggle header row task */
+  toggleHeaderRowLabel: string;
+
+  /** Aria-label for toggle header cell task */
+  toggleHeaderCellLabel: string;
+
+  /** Aria-label for merge or split task */
+  mergeOrSplitLabel: string;
+
+  /** Aria-label for set cell attribute task */
+  setCellAttributeLabel: string;
+
+  /** Aria-label for fix tables task */
+  fixTablesLabel: string;
+
+  /** Aria-label for go to next cell task */
+  goToNextCellLabel: string;
+
+  /** Aria-label for go to previous cell task */
+  goToPreviousCellLabel: string;
 }
 
 export const DEFAULT_LABELS: RichTextEditorLabels = {
@@ -192,4 +252,28 @@ export const DEFAULT_LABELS: RichTextEditorLabels = {
   colorPickerPalette: 'Color palette',
   colorPickerSave: 'Save',
   colorPickerColorLabel: (color) => `Set text color ${color}`,
+
+  // Details
+  setDetailsLabel: 'Set details',
+  unsetDetailsLabel: 'Unset details',
+
+  // Table
+  insertTableLabel: 'Insert table',
+  addColumnBeforeLabel: 'Add column before',
+  addColumnAfterLabel: 'Add column after',
+  deleteColumnLabel: 'Delete column',
+  addRowBeforeLabel: 'Add row before',
+  addRowAfterLabel: 'Add row after',
+  deleteRowLabel: 'Delete row',
+  deleteTableLabel: 'Delete table',
+  mergeCellsLabel: 'Merge cells',
+  splitCellLabel: 'Split cell',
+  toggleHeaderColumnLabel: 'Toggle header column',
+  toggleHeaderRowLabel: 'Toggle header row',
+  toggleHeaderCellLabel: 'Toggle header cell',
+  mergeOrSplitLabel: 'Merge / split',
+  setCellAttributeLabel: 'Set cell attribute',
+  fixTablesLabel: 'Fix tables',
+  goToNextCellLabel: 'Go to next cell',
+  goToPreviousCellLabel: 'Go to previous cell',
 };

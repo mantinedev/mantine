@@ -1,10 +1,17 @@
 import { useState } from 'react';
+import { IconViewportNarrow, IconViewportWide } from '@tabler/icons-react';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { Color } from '@tiptap/extension-color';
+import {
+  DetailsContent,
+  DetailsSummary,
+  Details as TipTapDetails,
+} from '@tiptap/extension-details';
 import Highlight from '@tiptap/extension-highlight';
 import Placeholder from '@tiptap/extension-placeholder';
 import SubScript from '@tiptap/extension-subscript';
 import { Superscript } from '@tiptap/extension-superscript';
+import { TableKit } from '@tiptap/extension-table';
 import { TaskItem } from '@tiptap/extension-task-item';
 import TipTapTaskList from '@tiptap/extension-task-list';
 import { TextAlign } from '@tiptap/extension-text-align';
@@ -421,6 +428,161 @@ export function Tasks() {
             <RichTextEditor.TaskList />
             <RichTextEditor.TaskListLift />
             <RichTextEditor.TaskListSink />
+          </RichTextEditor.ControlsGroup>
+        </RichTextEditor.Toolbar>
+
+        <RichTextEditor.Content />
+      </RichTextEditor>
+    </div>
+  );
+}
+
+export function Details() {
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      TipTapDetails.configure({
+        persist: true,
+        HTMLAttributes: {
+          class: 'details',
+        },
+      }),
+      DetailsContent,
+      DetailsSummary,
+    ],
+    content: `
+        <p>Look at these details</p>
+        <details>
+          <summary>This is a summary</summary>
+          <p>Surprise!</p>
+        </details>
+        <p>Nested details are also supported</p>
+        <details open>
+          <summary>This is another summary</summary>
+          <p>And there is even more.</p>
+          <details>
+            <summary>We need to go deeper</summary>
+            <p>Booya!</p>
+          </details>
+        </details>
+    `,
+    shouldRerenderOnTransaction: true,
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <RichTextEditor editor={editor}>
+        <RichTextEditor.Toolbar>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.SetDetails />
+            <RichTextEditor.UnsetDetails />
+          </RichTextEditor.ControlsGroup>
+        </RichTextEditor.Toolbar>
+
+        <RichTextEditor.Content />
+      </RichTextEditor>
+    </div>
+  );
+}
+
+export function Table() {
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      TableKit.configure({
+        table: {
+          resizable: true,
+        },
+        tableRow: {
+          HTMLAttributes: {
+            'data-with-row-border': true,
+            'data-striped': 'even',
+          },
+        },
+        tableHeader: {
+          HTMLAttributes: {
+            'data-with-column-border': true,
+          },
+        },
+        tableCell: {
+          HTMLAttributes: {
+            'data-with-column-border': true,
+          },
+        },
+      }),
+    ],
+    content: `
+        <table>
+          <tbody>
+            <tr>
+              <th>Name</th>
+              <th colspan="3">Description</th>
+            </tr>
+            <tr>
+              <td>Cyndi Lauper</td>
+              <td>Singer</td>
+              <td>Songwriter</td>
+              <td>Actress</td>
+            </tr>
+          </tbody>
+        </table>
+    `,
+    shouldRerenderOnTransaction: true,
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <RichTextEditor editor={editor}>
+        <RichTextEditor.Toolbar>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.InsertTable rows={2} cols={4} />
+            <RichTextEditor.FixTables />
+            <RichTextEditor.DeleteTable />
+          </RichTextEditor.ControlsGroup>
+
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.AddColumnBefore />
+            <RichTextEditor.AddColumnAfter />
+            <RichTextEditor.DeleteColumn />
+          </RichTextEditor.ControlsGroup>
+
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.AddRowBefore />
+            <RichTextEditor.AddRowAfter />
+            <RichTextEditor.DeleteRow />
+          </RichTextEditor.ControlsGroup>
+
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.MergeCells />
+            <RichTextEditor.SplitCell />
+            <RichTextEditor.MergeOrSplit />
+          </RichTextEditor.ControlsGroup>
+
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.ToggleHeaderRow />
+            <RichTextEditor.ToggleHeaderColumn />
+            <RichTextEditor.ToggleHeaderCell />
+          </RichTextEditor.ControlsGroup>
+
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.GoToPreviousCell />
+            <RichTextEditor.GoToNextCell />
+          </RichTextEditor.ControlsGroup>
+
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.SetCellAttribute
+              attributeKey="colspan"
+              attributeValue={(currentValue) => currentValue + 1}
+              label="Widen"
+              icon={<IconViewportWide strokeWidth={1.5} size={16} />}
+            />
+            <RichTextEditor.SetCellAttribute
+              attributeKey="colspan"
+              attributeValue={(currentValue) => currentValue - 1}
+              disabledByValue={(currentValue) => currentValue === 1}
+              label="Narrow"
+              icon={<IconViewportNarrow strokeWidth={1.5} size={16} />}
+            />
           </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
 
