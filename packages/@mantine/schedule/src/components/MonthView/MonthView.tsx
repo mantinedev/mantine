@@ -438,6 +438,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
             aria-label={`Week ${weekNumber}`}
             {...weekNumberProps}
             onClick={(event) => {
+              onViewChange?.('week');
+              onDateChange?.(toDateString(week[0]));
               onWeekNumberClick?.(dayjs(week[0]).startOf('day').toDate(), event);
               weekNumberProps.onClick?.(event);
             }}

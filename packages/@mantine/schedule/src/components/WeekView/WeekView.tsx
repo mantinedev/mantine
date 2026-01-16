@@ -446,6 +446,10 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         today: dayjs(day).isSame(dayjs(), 'day') && !!highlightToday,
         weekend: ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek),
       }}
+      onClick={() => {
+        onViewChange?.('day');
+        onDateChange?.(toDateString(day));
+      }}
     >
       <Box {...getStyles('weekViewDayWeekday')} key="weekday">
         {formatDate({ locale: ctx.getLocale(locale), date: day, format: weekdayFormat })}
