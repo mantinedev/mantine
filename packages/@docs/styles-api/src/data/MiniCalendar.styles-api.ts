@@ -7,6 +7,7 @@ export const MiniCalendarStylesApi: StylesApiData<MiniCalendarFactory> = {
     control: 'Button in the dropdown which is used to select hours/minutes/seconds/am-pm',
     days: 'Days container',
     day: 'Single day element',
+    dayWeekday: 'Weekday label (e.g., Mon, Tue)',
     dayMonth: 'Day element in month view',
     dayNumber: 'Day number element',
   },
