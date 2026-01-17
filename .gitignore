@@ -61,3 +61,6 @@ apps/help.mantine.dev/next-env.d.ts
 apps/mantine.dev/public/llms-full.txt
 apps/mantine.dev/public/llms
 .samples
+
+.claude/reviews
+.claude/plans

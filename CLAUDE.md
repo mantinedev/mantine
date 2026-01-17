@@ -531,6 +531,234 @@ npx eslint packages/@mantine/schedule/src/components/DayView packages/@mantine/s
 5. **CSS module imports** - Import as `classes` and assign to component: `Component.classes = classes`
 6. **getStyles with custom props** - When merging custom props with getStyles, use second parameter: `getStyles('selector', { className, style })`
 
+## Code Reviews & Implementation Plans
+
+This repository uses `.claude/` folder for organizing code reviews and implementation plans created by Claude Code. This keeps valuable analysis and planning documents accessible to the team.
+
+### Folder Structure
+
+```
+.claude/
+├── reviews/                           # Code review documents
+│   ├── combobox-react19/
+│   │   ├── combobox.react19.review.md
+│   │   └── findings.json
+│   └── schedule-features/
+│       └── schedule.features.review.md
+│
+├── plans/                             # Implementation plans
+│   ├── recurring-events/
+│   │   ├── recurring-events.plan.md
+│   │   ├── ARCHITECTURE.md
+│   │   └── timeline.md
+│   └── drag-drop-optimization/
+│       └── drag-drop-optimization.plan.md
+│
+└── ORGANIZATION_GUIDE.md              # This guide
+```
+
+### When to Use Each Folder
+
+**`reviews/` folder - for code analysis:**
+- ✅ Component architecture reviews
+- ✅ Feature gap analysis
+- ✅ Performance analysis
+- ✅ Security assessment
+- ✅ Test coverage analysis
+- ✅ React version compatibility assessment
+
+**`plans/` folder - for implementation strategy:**
+- ✅ New feature implementation steps
+- ✅ Refactoring strategy
+- ✅ Performance optimization roadmap
+- ✅ Migration plans
+- ✅ Architecture redesign
+- ✅ Testing strategy
+
+### Naming Conventions
+
+**Reviews:**
+- Folder: `.claude/reviews/[component-or-package-name]/`
+- File: `[component].[scope].review.md`
+- Examples: `combobox.react19.review.md`, `schedule.features.review.md`
+
+**Plans:**
+- Folder: `.claude/plans/[feature-name]/`
+- File: `[feature].[scope].plan.md`
+- Examples: `recurring-events.plan.md`, `drag-drop-optimization.plan.md`
+
+### Document Format
+
+**Code Review Template**
+```markdown
+# Code Review: [Component/Package Name]
+
+**Review Date:** [Date]
+**Reviewer:** Claude Code
+**Component:** [@mantine/package/Component]
+**Status:** [Approved/Approved with Changes/Needs Review]
+
+---
+
+## Executive Summary
+[3-5 bullet points]
+
+## Architecture & Code Quality
+[Analysis with strengths and issues]
+
+## Feature Analysis
+[Existing and missing features]
+
+## Test Coverage
+[Current coverage and gaps]
+
+## Recommendations
+[Prioritized action items]
+
+## Action Items
+[Checklist of tasks]
+
+## Conclusion
+[Summary and next steps]
+```
+
+**Implementation Plan Template**
+```markdown
+# Implementation Plan: [Feature Name]
+
+**Plan Date:** [Date]
+**Target Version:** [@mantine/version]
+**Estimated Effort:** [X hours/days/weeks]
+**Priority:** [Critical/High/Medium/Low]
+
+---
+
+## Overview
+[What and why]
+
+## Goals & Objectives
+[Success criteria]
+
+## Implementation Phases
+[Phase 1, Phase 2, etc. with concrete tasks]
+
+## Timeline & Milestones
+[Key dates and deliverables]
+
+## Testing Strategy
+[How to verify completion]
+
+## Risks & Mitigation
+[Potential issues and solutions]
+
+## Success Criteria
+[How to measure completion]
+
+## Follow-up Work
+[Future improvements]
+```
+
+### Workflow Examples
+
+**Creating a Code Review:**
+```bash
+# 1. Create folder
+mkdir -p .claude/reviews/combobox-react19
+
+# 2. Create review file
+touch .claude/reviews/combobox-react19/combobox.react19.review.md
+
+# 3. Add content following the template
+# 4. Optionally add companion files (findings.json, checklist.md, etc.)
+
+# 5. Commit to git
+git add .claude/reviews/
+git commit -m "docs: add combobox React 19.2 compatibility review"
+```
+
+**Creating an Implementation Plan:**
+```bash
+# 1. Create folder
+mkdir -p .claude/plans/recurring-events
+
+# 2. Create plan file
+touch .claude/plans/recurring-events/recurring-events.plan.md
+
+# 3. Add content following the template
+# 4. Optionally add supporting docs (ARCHITECTURE.md, timeline.md, etc.)
+
+# 5. Commit to git
+git add .claude/plans/
+git commit -m "docs: add recurring events implementation plan"
+```
+
+### Best Practices
+
+1. **Keep documents organized** - One folder per distinct review or plan
+2. **Use descriptive names** - Folder and file names should clearly indicate content
+3. **Link related documents** - In reviews, reference related plans and vice versa
+4. **Commit regularly** - These documents are team assets, commit them to git
+5. **Use cross-references** - Reference plans in reviews and vice versa:
+   ```markdown
+   **Related Plans:**
+   - See `.claude/plans/combobox-optimization/` for performance improvements
+
+   **Based on Review:**
+   - See `.claude/reviews/combobox-react19/` for technical assessment
+   ```
+
+6. **Optional companion files:**
+   - `CHECKLIST.md` - Verification steps for reviews
+   - `findings.json` - Structured data (metrics, scores, etc.)
+   - `ARCHITECTURE.md` - Design details for plans
+   - `timeline.md` - Schedule and milestones for plans
+   - `README.md` - Quick summary of contents
+
+### Document Size Guidelines
+
+- **Optimal length:** 3,000-15,000 words
+- **Minimum:** 3,000 words (comprehensive coverage)
+- **Maximum:** 20,000 words (split into multiple docs if larger)
+
+### Archiving & Maintenance
+
+When a plan is complete or review is outdated:
+```bash
+# Create archive subfolder
+mkdir .claude/archive
+
+# Move completed items
+mv .claude/plans/completed-feature .claude/archive/
+
+# Or add date suffix
+mv .claude/reviews/component-review/ .claude/reviews/component-review.2026-01-17/
+
+# Or add status prefix
+mv .claude/plans/feature/ .claude/plans/DONE_feature/
+```
+
+### Verification Checklist
+
+**Before saving a review:**
+- [ ] Saved in `.claude/reviews/[component]/`
+- [ ] Filename ends with `.review.md`
+- [ ] Includes front matter with metadata
+- [ ] Contains Executive Summary section
+- [ ] Includes Action Items section
+- [ ] Has proper heading hierarchy
+- [ ] Links to related plans (if applicable)
+- [ ] No broken internal links
+
+**Before saving a plan:**
+- [ ] Saved in `.claude/plans/[feature]/`
+- [ ] Filename ends with `.plan.md`
+- [ ] Includes front matter with metadata
+- [ ] Contains Overview section
+- [ ] Broken into clear implementation phases
+- [ ] Includes Timeline/Milestones section
+- [ ] Success Criteria defined
+- [ ] Risks identified
+
 ## Additional Resources
 
 - Contributing guide: https://mantine.dev/contribute
