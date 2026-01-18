@@ -1,6 +1,7 @@
 import 'dayjs/locale/ru';
 
 import { useState } from 'react';
+import { Stack, Text } from '@mantine/core';
 import { ScheduleEventData } from '../../types';
 import { YearView } from './YearView';
 
@@ -156,6 +157,53 @@ export function Locale() {
   return (
     <div style={{ padding: 40 }}>
       <YearView date="2025-11-01" locale="ru" />
+    </div>
+  );
+}
+
+export function StaticMode() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="md">
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Static Mode
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            Days, week numbers, and month captions are not clickable. No hover effects are shown.
+          </Text>
+        </div>
+
+        <YearView date="2025-11-01" events={november2025Events} mode="static" />
+      </Stack>
+    </div>
+  );
+}
+
+export function StaticModeComparison() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="xl">
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Default Mode (Interactive)
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            Hover over days, week numbers, and month captions to see interactive effects
+          </Text>
+          <YearView date="2025-11-01" events={november2025Events} mode="default" />
+        </div>
+
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Static Mode (Read-only)
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            All elements are non-interactive - no hover effects or clicks
+          </Text>
+          <YearView date="2025-11-01" events={november2025Events} mode="static" />
+        </div>
+      </Stack>
     </div>
   );
 }

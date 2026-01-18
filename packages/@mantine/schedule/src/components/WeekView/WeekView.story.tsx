@@ -2,6 +2,7 @@ import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
 import { useState } from 'react';
+import { Stack, Text } from '@mantine/core';
 import { ScheduleEventData } from '../../types';
 import { getStartOfWeek, toDateString } from '../../utils';
 import { WeekView } from './WeekView';
@@ -307,6 +308,75 @@ export function DragAndDrop() {
           Last action: {lastAction}
         </div>
       )}
+    </div>
+  );
+}
+
+export function StaticMode() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="md">
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Static Mode
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            Events, time slots, and day labels are not clickable or draggable. No hover effects are
+            shown.
+          </Text>
+        </div>
+
+        <WeekView
+          date={new Date()}
+          events={regularEvents}
+          mode="static"
+          startTime="08:00:00"
+          endTime="18:00:00"
+          withAllDaySlots
+        />
+      </Stack>
+    </div>
+  );
+}
+
+export function StaticModeComparison() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="xl">
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Default Mode (Interactive)
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            Hover over events, time slots, and day labels to see interactive effects
+          </Text>
+          <WeekView
+            date={new Date()}
+            events={regularEvents}
+            mode="default"
+            startTime="08:00:00"
+            endTime="18:00:00"
+            withAllDaySlots
+          />
+        </div>
+
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Static Mode (Read-only)
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            All elements are non-interactive - no hover effects or clicks
+          </Text>
+          <WeekView
+            date={new Date()}
+            events={regularEvents}
+            mode="static"
+            startTime="08:00:00"
+            endTime="18:00:00"
+            withAllDaySlots
+          />
+        </div>
+      </Stack>
     </div>
   );
 }

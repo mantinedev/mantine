@@ -2,6 +2,7 @@ import 'dayjs/locale/ru';
 
 import dayjs from 'dayjs';
 import { useState } from 'react';
+import { Stack, Text } from '@mantine/core';
 import { ScheduleEventData } from '../../types';
 import { MonthView } from './MonthView';
 
@@ -294,6 +295,53 @@ export function DragAndDrop() {
           Last action: {lastAction}
         </div>
       )}
+    </div>
+  );
+}
+
+export function StaticMode() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="md">
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Static Mode
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            Days, week numbers, and events are not clickable or draggable. No hover effects are shown.
+          </Text>
+        </div>
+
+        <MonthView date={month} events={events} mode="static" />
+      </Stack>
+    </div>
+  );
+}
+
+export function StaticModeComparison() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="xl">
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Default Mode (Interactive)
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            Hover over days, week numbers, and events to see interactive effects
+          </Text>
+          <MonthView date={month} events={events} mode="default" />
+        </div>
+
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Static Mode (Read-only)
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            All elements are non-interactive - no hover effects or clicks
+          </Text>
+          <MonthView date={month} events={events} mode="static" />
+        </div>
+      </Stack>
     </div>
   );
 }
