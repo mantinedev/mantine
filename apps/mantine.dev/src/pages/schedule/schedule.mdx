@@ -1,4 +1,4 @@
-import { ButtonDemos } from '@docs/demos';
+import { ScheduleDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -6,4 +6,54 @@ export default Layout(MDX_DATA.Schedule);
 
 ## Usage
 
-<Demo data={ButtonDemos.autoContrast} />
+Schedule is a unified component that combines all schedule views (Day, Week, Month, Year) with automatic
+view switching. Use the view selector in the header to switch between different views.
+
+<Demo data={ScheduleDemos.usage} />
+
+## Controlled state
+
+Control the current view and date externally using the `view`, `onViewChange`, `date`, and `onDateChange` props.
+This allows you to build custom navigation or integrate with other components.
+
+<Demo data={ScheduleDemos.controlled} />
+
+## View-specific props
+
+Customize each view by passing view-specific props via `dayViewProps`, `weekViewProps`, `monthViewProps`,
+and `yearViewProps`. These props are forwarded to the corresponding view component.
+
+For example, you can set different time ranges for Day and Week views, or customize the first day of week
+for Month and Year views.
+
+<Demo data={ScheduleDemos.viewProps} />
+
+## Default view
+
+Set `defaultView` to control which view is shown initially when using uncontrolled mode.
+
+<Demo data={ScheduleDemos.defaultView} />
+
+## Common props
+
+The following props are shared across all views:
+- `events` - Events to display
+- `locale` - Date formatting locale
+- `radius` - Border radius
+- `labels` - Label overrides for i18n
+- `renderEventBody` - Custom event renderer
+- `withDragDrop` - Enable drag and drop
+- `onEventDrop` - Drag and drop handler
+- `canDragEvent` - Drag permission callback
+- `mode` - Interaction mode (`default` or `static`)
+
+These props are automatically passed to all views. For view-specific customization, use the
+`dayViewProps`, `weekViewProps`, `monthViewProps`, and `yearViewProps` props.
+
+## View components
+
+For more control over individual views, use the view components directly:
+- [DayView](/schedule/day-view) - Single day with time slots
+- [WeekView](/schedule/week-view) - Full week with time slots
+- [MonthView](/schedule/month-view) - Calendar month grid
+- [YearView](/schedule/year-view) - Full year overview
