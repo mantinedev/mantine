@@ -1,1 +1,13 @@
 export { usage } from './MonthView.demo.usage';
+export { withWeekNumbers } from './MonthView.demo.withWeekNumbers';
+export { withoutWeekDays } from './MonthView.demo.withoutWeekDays';
+export { firstDayOfWeek } from './MonthView.demo.firstDayOfWeek';
+export { weekdayFormat } from './MonthView.demo.weekdayFormat';
+export { consistentWeeks } from './MonthView.demo.consistentWeeks';
+export { highlightToday } from './MonthView.demo.highlightToday';
+export { withoutOutsideDays } from './MonthView.demo.withoutOutsideDays';
+export { withoutHeader } from './MonthView.demo.withoutHeader';
+export { manyEvents } from './MonthView.demo.manyEvents';
+export { dragDrop } from './MonthView.demo.dragDrop';
+export { staticMode } from './MonthView.demo.staticMode';
+export { stylesApi } from './MonthView.demo.stylesApi';

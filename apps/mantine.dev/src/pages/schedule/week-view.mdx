@@ -1,6 +1,116 @@
+import { WeekViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.WeekView);
 
 ## Usage
+
+WeekView displays events for an entire week with time slots. It supports all-day events, overlapping events,
+drag and drop, custom time ranges, and more.
+
+<Demo data={WeekViewDemos.usage} />
+
+## Time range
+
+Use `startTime` and `endTime` props to set the visible time range. Times should be in `HH:mm:ss` format.
+
+<Demo data={WeekViewDemos.timeRange} />
+
+## Interval minutes
+
+`intervalMinutes` prop controls the granularity of time slots. Default is `60` minutes.
+
+<Demo data={WeekViewDemos.intervalMinutes} />
+
+## First day of week
+
+Set `firstDayOfWeek` to control which day starts the week. 0 is Sunday, 1 is Monday (default), etc.
+
+<Demo data={WeekViewDemos.firstDayOfWeek} />
+
+## Weekday format
+
+Use `weekdayFormat` prop to customize the weekday names display. It accepts dayjs format strings.
+
+<Demo data={WeekViewDemos.weekdayFormat} />
+
+## Without weekend days
+
+Set `withWeekendDays={false}` to hide Saturday and Sunday columns.
+
+<Demo data={WeekViewDemos.withoutWeekendDays} />
+
+## Highlight today
+
+The `highlightToday` prop controls how today is highlighted. Use `"weekday"` to highlight only the weekday label,
+or `"column"` to highlight the entire column.
+
+<Demo data={WeekViewDemos.highlightToday} />
+
+## Without week number
+
+Set `withWeekNumber={false}` to hide the week number in the top-left corner.
+
+<Demo data={WeekViewDemos.withoutWeekNumber} />
+
+## Current time indicator
+
+Set `withCurrentTimeIndicator` to display a line showing the current time on today's column.
+
+<Demo data={WeekViewDemos.currentTimeIndicator} />
+
+## Without all-day slots
+
+Set `withAllDaySlots={false}` to hide the all-day events section at the top.
+
+<Demo data={WeekViewDemos.withoutAllDaySlots} />
+
+## Without header
+
+Set `withHeader={false}` to hide the header controls.
+
+<Demo data={WeekViewDemos.withoutHeader} />
+
+## Week label format
+
+Use `weekLabelFormat` prop to customize the week range display in the header.
+
+<Demo data={WeekViewDemos.weekLabelFormat} />
+
+## Slot label format
+
+`slotLabelFormat` prop controls the format of time labels.
+
+<Demo data={WeekViewDemos.slotLabelFormat} />
+
+## Slot height
+
+Customize the height of time slots and the all-day section using `slotHeight` and
+`allDaySlotHeight` props.
+
+<Demo data={WeekViewDemos.slotHeight} />
+
+## Business hours
+
+Use `highlightBusinessHours` and `businessHours` props to visually distinguish business hours.
+
+<Demo data={WeekViewDemos.businessHours} />
+
+## Overlapping events
+
+When multiple events overlap in time, they are automatically positioned side by side.
+
+<Demo data={WeekViewDemos.overlappingEvents} />
+
+## Drag and drop
+
+Enable drag and drop by setting `withDragDrop` prop. Events can be dragged to different days and times.
+
+<Demo data={WeekViewDemos.dragDrop} />
+
+## Static mode
+
+Set `mode="static"` to disable all interactions.
+
+<Demo data={WeekViewDemos.staticMode} />

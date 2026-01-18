@@ -1,6 +1,53 @@
+import { YearViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.YearView);
 
 ## Usage
+
+YearView displays all 12 months of a year in a grid layout. Event indicators are shown as colored dots in day cells.
+
+<Demo data={YearViewDemos.usage} />
+
+## With week numbers
+
+Set `withWeekNumbers` to display week numbers in the first column of each month.
+
+<Demo data={YearViewDemos.withWeekNumbers} />
+
+## Without week days
+
+Set `withWeekDays={false}` to hide the weekday names row in each month.
+
+<Demo data={YearViewDemos.withoutWeekDays} />
+
+## First day of week
+
+Set `firstDayOfWeek` to control which day starts the week.
+
+<Demo data={YearViewDemos.firstDayOfWeek} />
+
+## Weekday format
+
+Use `weekdayFormat` prop to customize weekday names.
+
+<Demo data={YearViewDemos.weekdayFormat} />
+
+## Highlight today
+
+Set `highlightToday={false}` to disable highlighting the current day.
+
+<Demo data={YearViewDemos.highlightToday} />
+
+## Without header
+
+Set `withHeader={false}` to hide the header controls.
+
+<Demo data={YearViewDemos.withoutHeader} />
+
+## Static mode
+
+Set `mode="static"` to disable all interactions.
+
+<Demo data={YearViewDemos.staticMode} />

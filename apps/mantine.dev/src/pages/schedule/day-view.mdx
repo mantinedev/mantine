@@ -1,6 +1,137 @@
+import { DayViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.DayView);
 
 ## Usage
+
+DayView displays events for a single day with time slots. It supports all-day events, overlapping events,
+drag and drop, custom time ranges, and more.
+
+<Demo data={DayViewDemos.usage} />
+
+## Time range
+
+Use `startTime` and `endTime` props to set the visible time range. Times should be in `HH:mm:ss` format.
+This is useful for focusing on specific hours like business hours.
+
+<Demo data={DayViewDemos.timeRange} />
+
+## Interval minutes
+
+`intervalMinutes` prop controls the granularity of time slots. Default is `15` minutes.
+Common values are 15, 30, or 60 minutes.
+
+<Demo data={DayViewDemos.intervalMinutes} />
+
+## All-day events
+
+Events that span the entire day are displayed in a dedicated all-day section at the top.
+When there are more than 2 all-day events, the component shows a "More events" indicator.
+
+<Demo data={DayViewDemos.allDayEvents} />
+
+## Overlapping events
+
+When multiple events overlap in time, they are automatically positioned side by side
+with appropriate widths and offsets.
+
+<Demo data={DayViewDemos.overlappingEvents} />
+
+## Current time indicator
+
+Set `withCurrentTimeIndicator` to display a line showing the current time.
+By default, it's only shown for the current day. Set `withCurrentTimeBubble={false}`
+to hide the time bubble.
+
+<Demo data={DayViewDemos.currentTimeIndicator} />
+
+## Business hours
+
+Use `highlightBusinessHours` and `businessHours` props to visually distinguish business hours
+from non-business hours. The `businessHours` prop accepts a tuple with start and end times
+in `HH:mm:ss` format.
+
+<Demo data={DayViewDemos.businessHours} />
+
+## Slot height
+
+Customize the height of time slots and the all-day section using `slotHeight` and
+`allDaySlotHeight` props. The `slotHeight` represents the height of a 1-hour slot.
+
+<Demo data={DayViewDemos.slotHeight} />
+
+## Without header
+
+Set `withHeader={false}` to hide the header controls. This is useful when you want to
+build a custom header or embed the view in a larger component.
+
+<Demo data={DayViewDemos.withoutHeader} />
+
+## Header format
+
+Use `headerFormat` prop to customize the date format in the header. The format uses
+dayjs format syntax or can be a function that returns a formatted string.
+
+<Demo data={DayViewDemos.headerFormat} />
+
+## Slot label format
+
+`slotLabelFormat` prop controls the format of time labels. It accepts a dayjs format string
+or a function that returns a formatted string.
+
+<Demo data={DayViewDemos.slotLabelFormat} />
+
+## Radius
+
+Use `radius` prop to control the border radius of the day view container.
+
+<Demo data={DayViewDemos.radius} />
+
+## Drag and drop
+
+Enable drag and drop by setting `withDragDrop` prop. Use `onEventDrop` callback to handle
+event drops. All-day events cannot be dragged.
+
+<Demo data={DayViewDemos.dragDrop} />
+
+## Selective drag permissions
+
+Use `canDragEvent` callback to control which events can be dragged. This is useful for
+implementing locked or read-only events.
+
+<Demo data={DayViewDemos.canDragEvent} />
+
+## Custom event rendering
+
+Use `renderEventBody` prop to customize how events are displayed. This allows you to
+add custom icons, badges, or any other content to events.
+
+<Demo data={DayViewDemos.renderEventBody} />
+
+## Static mode
+
+Set `mode="static"` to disable all interactions. In static mode, events and time slots
+are not clickable, draggable, or hoverable. This is useful for read-only displays or reports.
+
+<Demo data={DayViewDemos.staticMode} />
+
+## Custom labels
+
+Use `labels` prop to override default labels for internationalization or custom text.
+
+<Demo data={DayViewDemos.labels} />
+
+## Controlled date
+
+Control the date externally using the `date` prop and `onDateChange` callback.
+This allows you to build custom navigation or integrate with other components.
+
+<Demo data={DayViewDemos.controlledDate} />
+
+## View change
+
+Use `onViewChange` prop to handle view level changes when the user clicks on view selector buttons.
+
+<Demo data={DayViewDemos.viewChange} />

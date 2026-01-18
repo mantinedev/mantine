@@ -1,6 +1,77 @@
+import { MonthViewDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.MonthView);
 
 ## Usage
+
+MonthView displays events in a calendar month grid. It shows event badges in each day cell with support for drag and drop.
+
+<Demo data={MonthViewDemos.usage} />
+
+## With week numbers
+
+Set `withWeekNumbers` to display week numbers in the first column.
+
+<Demo data={MonthViewDemos.withWeekNumbers} />
+
+## Without week days
+
+Set `withWeekDays={false}` to hide the weekday names row.
+
+<Demo data={MonthViewDemos.withoutWeekDays} />
+
+## First day of week
+
+Set `firstDayOfWeek` to control which day starts the week.
+
+<Demo data={MonthViewDemos.firstDayOfWeek} />
+
+## Weekday format
+
+Use `weekdayFormat` prop to customize weekday names.
+
+<Demo data={MonthViewDemos.weekdayFormat} />
+
+## Consistent weeks
+
+Set `consistentWeeks={false}` to only show weeks that have days in the current month.
+
+<Demo data={MonthViewDemos.consistentWeeks} />
+
+## Highlight today
+
+Set `highlightToday={false}` to disable highlighting the current day.
+
+<Demo data={MonthViewDemos.highlightToday} />
+
+## Without outside days
+
+Set `withOutsideDays={false}` to hide days from adjacent months.
+
+<Demo data={MonthViewDemos.withoutOutsideDays} />
+
+## Without header
+
+Set `withHeader={false}` to hide the header controls.
+
+<Demo data={MonthViewDemos.withoutHeader} />
+
+## Many events
+
+When a day has many events, the component shows a "More events" indicator.
+
+<Demo data={MonthViewDemos.manyEvents} />
+
+## Drag and drop
+
+Enable drag and drop to move events between days.
+
+<Demo data={MonthViewDemos.dragDrop} />
+
+## Static mode
+
+Set `mode="static"` to disable all interactions.
+
+<Demo data={MonthViewDemos.staticMode} />
