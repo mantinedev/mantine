@@ -62,6 +62,9 @@ export interface ScheduleEventProps
 
   /** If true, event is currently being dragged @default `false` */
   isDragging?: boolean;
+
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
+  mode?: 'static' | 'default';
 }
 
 export type ScheduleEventFactory = Factory<{
@@ -74,6 +77,7 @@ export type ScheduleEventFactory = Factory<{
 
 const defaultProps = {
   __staticSelector: 'ScheduleEvent',
+  mode: 'default',
 } satisfies Partial<ScheduleEventProps>;
 
 const varsResolver = createVarsResolver<ScheduleEventFactory>(
@@ -121,6 +125,7 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
     onEventDragStart,
     onEventDragEnd,
     isDragging = false,
+    mode,
     ...others
   } = props;
 
@@ -173,12 +178,15 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
           draggable,
           dragging: isCurrentlyDragging,
           'any-dragging': isAnyEventDragging,
+          static: mode === 'static',
         },
         mod,
       ]}
-      draggable={draggable}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
+      draggable={draggable && mode !== 'static'}
+      tabIndex={mode === 'static' ? -1 : 0}
+      onDragStart={mode === 'static' ? undefined : handleDragStart}
+      onDragEnd={mode === 'static' ? undefined : handleDragEnd}
+      onClick={mode === 'static' ? undefined : others.onClick}
       {...others}
     >
       <Box mod={{ nowrap, size, autoSize, hanging }} {...getStyles('eventInner')}>

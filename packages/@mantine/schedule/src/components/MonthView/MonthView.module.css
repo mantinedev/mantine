@@ -63,6 +63,11 @@
       background-color: var(--mantine-color-dark-6);
     }
   }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
 }
 
 .monthViewWeekday {
@@ -172,6 +177,7 @@
 
   &:where([data-static]) {
     cursor: default;
+    pointer-events: none;
   }
 
   @mixin hover {

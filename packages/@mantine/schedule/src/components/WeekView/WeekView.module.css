@@ -129,6 +129,11 @@
       background-color: var(--mantine-color-dark-6);
     }
   }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
 }
 
 .weekViewDayNumber {
@@ -199,6 +204,11 @@
       background-color: var(--mantine-color-dark-5);
       border-color: var(--mantine-color-blue-6);
     }
+  }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
   }
 }
 

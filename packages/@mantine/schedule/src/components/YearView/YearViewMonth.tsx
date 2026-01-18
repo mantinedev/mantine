@@ -51,6 +51,9 @@ export interface YearViewMonthSettings {
 
   /** If set, highlights the current day @default true */
   highlightToday?: boolean;
+
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions */
+  mode?: 'static' | 'default';
 }
 
 export interface YearViewMonthProps extends YearViewMonthSettings {
@@ -81,6 +84,7 @@ export function YearViewMonth({
   getWeekNumberProps,
   highlightToday,
   groupedEvents,
+  mode,
 }: YearViewMonthProps) {
   const ctx = useDatesContext();
   const theme = useMantineTheme();
@@ -129,8 +133,9 @@ export function YearViewMonth({
           {...dayProps}
           {...getStyles('yearViewDay', { className: dayProps.className, style: dayProps.style })}
           key={date}
-          mod={[{ outside, weekend, today: isToday }, dayProps.mod]}
-          onClick={(event) => {
+          mod={[{ outside, weekend, today: isToday, static: mode === 'static' }, dayProps.mod]}
+          tabIndex={mode === 'static' ? -1 : 0}
+          onClick={mode === 'static' ? undefined : (event) => {
             onDayClick?.(dayjs(date).startOf('day').toDate(), event);
             dayProps.onClick?.(event);
           }}
@@ -152,10 +157,12 @@ export function YearViewMonth({
             key={weekNumber}
             aria-label={`Week ${weekNumber}`}
             {...weekNumberProps}
-            onClick={(event) => {
+            onClick={mode === 'static' ? undefined : (event) => {
               onWeekNumberClick?.(dayjs(week[0]).startOf('day').toDate(), event);
               weekNumberProps.onClick?.(event);
             }}
+            mod={{ static: mode === 'static' }}
+            tabIndex={mode === 'static' ? -1 : 0}
             {...getStyles('yearViewWeekNumber', {
               className: weekNumberProps.className,
               style: weekNumberProps.style,
@@ -172,11 +179,13 @@ export function YearViewMonth({
 
   return (
     <Box
-      mod={[{ 'with-week-numbers': withWeekNumbers, 'with-weekdays': withWeekDays }]}
+      mod={[{ 'with-week-numbers': withWeekNumbers, 'with-weekdays': withWeekDays, static: mode === 'static' }]}
       {...getStyles('yearViewMonth')}
     >
       <UnstyledButton
-        onClick={(event) => onMonthClick?.(dayjs(month).startOf('month').toDate(), event)}
+        onClick={mode === 'static' ? undefined : (event) => onMonthClick?.(dayjs(month).startOf('month').toDate(), event)}
+        mod={{ static: mode === 'static' }}
+        tabIndex={mode === 'static' ? -1 : 0}
         {...getStyles('yearViewMonthCaption')}
       >
         {formatDate({ locale: ctx.getLocale(locale), date: month, format: monthLabelFormat })}

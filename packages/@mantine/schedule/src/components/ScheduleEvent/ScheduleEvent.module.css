@@ -34,6 +34,11 @@
     }
   }
 
+  &:where([data-static]) {
+    pointer-events: none;
+    cursor: default;
+  }
+
   &:where([data-hanging='start'], [data-hanging='both']) {
     &::before {
       content: '';
@@ -110,6 +115,15 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+    }
+  }
+
+  :where(.event[data-static]) & {
+    cursor: default;
+    pointer-events: none;
+
+    @mixin hover {
+      background-color: var(--event-bg);
     }
   }
 }

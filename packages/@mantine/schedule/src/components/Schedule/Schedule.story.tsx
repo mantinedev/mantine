@@ -485,3 +485,111 @@ export function YearView() {
     </div>
   );
 }
+
+export function StaticMode() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div style={{ marginBottom: 20 }}>
+        <h3>Static Mode (mode="static")</h3>
+        <p>
+          Events and days are not clickable or draggable. Navigation controls (prev/next/today) still
+          work.
+        </p>
+      </div>
+      <Schedule defaultView="week" events={events} mode="static" />
+    </div>
+  );
+}
+
+export function StaticModeComparison() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div style={{ marginBottom: 20 }}>
+        <h3>Default Mode</h3>
+        <p>Events and days are interactive - try hovering over them</p>
+      </div>
+      <Schedule defaultView="week" events={events} mode="default" />
+
+      <div style={{ marginTop: 40, marginBottom: 20 }}>
+        <h3>Static Mode</h3>
+        <p>Events and days are not interactive - no hover effects or clicks</p>
+      </div>
+      <Schedule defaultView="week" events={events} mode="static" />
+    </div>
+  );
+}
+
+export function StaticModeDayView() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div style={{ marginBottom: 20 }}>
+        <h3>Day View - Static Mode</h3>
+        <p>Time slots and events are not clickable or draggable</p>
+      </div>
+      <Schedule
+        defaultView="day"
+        events={events}
+        mode="static"
+        dayViewProps={{
+          startTime: '08:00:00',
+          endTime: '18:00:00',
+          intervalMinutes: 15,
+          withCurrentTimeIndicator: true,
+        }}
+      />
+    </div>
+  );
+}
+
+export function StaticModeMonthView() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div style={{ marginBottom: 20 }}>
+        <h3>Month View - Static Mode</h3>
+        <p>Days and events are not clickable, but you can still navigate between months</p>
+      </div>
+      <Schedule defaultView="month" events={events} mode="static" />
+    </div>
+  );
+}
+
+export function StaticModeYearView() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div style={{ marginBottom: 20 }}>
+        <h3>Year View - Static Mode</h3>
+        <p>Days, week numbers, and month captions are not clickable</p>
+      </div>
+      <Schedule defaultView="year" events={events} mode="static" />
+    </div>
+  );
+}
+
+export function StaticModeWithNavigation() {
+  const [date, setDate] = useState(toDateString(baseDate));
+  const [view, setView] = useState<ScheduleViewLevel>('week');
+
+  return (
+    <div style={{ padding: 40 }}>
+      <div style={{ marginBottom: 20 }}>
+        <h3>Static Mode with Working Navigation</h3>
+        <p>
+          Events are not interactive, but navigation controls (arrows, today button, view selector)
+          still work.
+        </p>
+        <p>
+          <strong>Current Date:</strong> {dayjs(date).format('MMMM D, YYYY')} |{' '}
+          <strong>View:</strong> {view}
+        </p>
+      </div>
+      <Schedule
+        view={view}
+        onViewChange={setView}
+        date={date}
+        onDateChange={setDate}
+        events={events}
+        mode="static"
+      />
+    </div>
+  );
+}

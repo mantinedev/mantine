@@ -38,7 +38,8 @@ type ScheduleCommonProps =
   | 'onEventDrop'
   | 'canDragEvent'
   | 'view'
-  | 'onViewChange';
+  | 'onViewChange'
+  | 'mode';
 
 type ScheduleViewProps<T> = Partial<Omit<T, ScheduleCommonProps>>;
 
@@ -95,6 +96,10 @@ export interface ScheduleProps
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
 
+  // === Interaction Mode ===
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions (default: 'default') */
+  mode?: 'static' | 'default';
+
   // === View-specific Props ===
   /** Props specific to DayView (includes startTime, endTime, intervalMinutes, etc.) */
   dayViewProps?: ScheduleViewProps<DayViewProps>;
@@ -117,6 +122,7 @@ export type ScheduleFactory = Factory<{
 
 const defaultProps: Partial<ScheduleProps> = {
   defaultView: 'week',
+  mode: 'default',
 };
 
 export const Schedule = factory<ScheduleFactory>((_props) => {
@@ -142,6 +148,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     withDragDrop,
     onEventDrop,
     canDragEvent,
+    mode,
     dayViewProps,
     weekViewProps,
     monthViewProps,
@@ -194,9 +201,10 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     radius,
     labels,
     renderEventBody,
-    withDragDrop,
+    withDragDrop: mode === 'static' ? false : withDragDrop,
     onEventDrop,
     canDragEvent,
+    mode,
   };
 
   const content = (() => {

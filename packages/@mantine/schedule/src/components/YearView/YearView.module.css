@@ -114,6 +114,11 @@
       background-color: var(--mantine-color-dark-6);
     }
   }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
 }
 
 .yearViewWeekday {
@@ -190,6 +195,11 @@
       background-color: var(--mantine-primary-color-filled-hover);
     }
   }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
 }
 
 .yearViewMonthCaption {
@@ -215,6 +225,11 @@
     @mixin where-dark {
       background-color: var(--mantine-color-dark-6);
     }
+  }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
   }
 }
 

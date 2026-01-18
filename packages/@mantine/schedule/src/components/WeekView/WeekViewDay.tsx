@@ -48,6 +48,9 @@ export interface WeekViewDayProps {
 
   /** Index of the slot that is currently a drop target */
   dropTargetSlotIndex?: number;
+
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions */
+  mode?: 'static' | 'default';
 }
 
 export function WeekViewDay({
@@ -65,6 +68,7 @@ export function WeekViewDay({
   onSlotDragLeave,
   onSlotDrop,
   dropTargetSlotIndex,
+  mode,
 }: WeekViewDayProps) {
   const ctx = useDatesContext();
   const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek);
@@ -91,11 +95,13 @@ export function WeekViewDay({
           'business-hours': inBusinessHours === true,
           'non-business-hours': inBusinessHours === false,
           'drop-target': isDropTarget,
+          static: mode === 'static',
         }}
         aria-label={`${getLabel('timeSlot', labels)} ${dayjs(day).format('YYYY-MM-DD')} ${slot.startTime} - ${slot.endTime}`}
-        onDragOver={withDragDrop ? (e) => onSlotDragOver?.(e, String(day), index) : undefined}
-        onDragLeave={withDragDrop ? onSlotDragLeave : undefined}
-        onDrop={withDragDrop ? (e) => onSlotDrop?.(e, String(day), slot.startTime) : undefined}
+        tabIndex={mode === 'static' ? -1 : 0}
+        onDragOver={withDragDrop && mode !== 'static' ? (e) => onSlotDragOver?.(e, String(day), index) : undefined}
+        onDragLeave={withDragDrop && mode !== 'static' ? onSlotDragLeave : undefined}
+        onDrop={withDragDrop && mode !== 'static' ? (e) => onSlotDrop?.(e, String(day), slot.startTime) : undefined}
       />
     );
   });

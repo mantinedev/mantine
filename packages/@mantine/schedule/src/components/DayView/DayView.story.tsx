@@ -466,3 +466,71 @@ export function DragAndDropWithOverlappingEvents() {
     </div>
   );
 }
+
+export function StaticMode() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="md">
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Static Mode
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            Events and time slots are not clickable or draggable. No hover effects are shown.
+          </Text>
+        </div>
+
+        <DayView
+          date={new Date()}
+          events={regularEvents}
+          mode="static"
+          startTime="08:00:00"
+          endTime="18:00:00"
+          withAllDaySlot
+        />
+      </Stack>
+    </div>
+  );
+}
+
+export function StaticModeComparison() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="xl">
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Default Mode (Interactive)
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            Hover over events and time slots to see interactive effects
+          </Text>
+          <DayView
+            date={new Date()}
+            events={regularEvents}
+            mode="default"
+            startTime="08:00:00"
+            endTime="18:00:00"
+            withAllDaySlot
+          />
+        </div>
+
+        <div>
+          <Text size="sm" fw={500} mb="xs">
+            Static Mode (Read-only)
+          </Text>
+          <Text size="xs" c="dimmed" mb="md">
+            Events and slots are not interactive - no hover effects or clicks
+          </Text>
+          <DayView
+            date={new Date()}
+            events={regularEvents}
+            mode="static"
+            startTime="08:00:00"
+            endTime="18:00:00"
+            withAllDaySlot
+          />
+        </div>
+      </Stack>
+    </div>
+  );
+}

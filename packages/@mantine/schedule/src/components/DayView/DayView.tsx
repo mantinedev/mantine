@@ -164,6 +164,9 @@ export interface DayViewProps
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
+
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
+  mode?: 'static' | 'default';
 }
 
 export type DayViewFactory = Factory<{
@@ -186,6 +189,7 @@ const defaultProps = {
   highlightBusinessHours: false,
   businessHours: ['09:00:00', '17:00:00'],
   withDragDrop: false,
+  mode: 'default',
 } satisfies Partial<DayViewProps>;
 
 const varsResolver = createVarsResolver<DayViewFactory>(
@@ -238,6 +242,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     withDragDrop,
     onEventDrop,
     canDragEvent,
+    mode,
     ...others
   } = props;
 
@@ -339,7 +344,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const eventsNodes = eventsData.regularEvents.map((event) => {
     const eventIsAllDay = isAllDayEvent({ event, date });
     const isDraggable =
-      withDragDrop && !eventIsAllDay && (canDragEvent ? canDragEvent(event) : true);
+      withDragDrop && mode !== 'static' && !eventIsAllDay && (canDragEvent ? canDragEvent(event) : true);
 
     return (
       <ScheduleEvent
@@ -348,6 +353,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
         renderEventBody={renderEventBody}
         autoSize
         draggable={isDraggable}
+        mode={mode}
         {...stylesApiProps}
         style={{
           ...stylesApiProps.styles?.event,
@@ -376,6 +382,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
         style={{ maxHeight: '50%' }}
         nowrap
         autoSize
+        mode={mode}
         {...stylesApiProps}
       />
     ));
@@ -401,12 +408,14 @@ export const DayView = factory<DayViewFactory>((_props) => {
           'business-hours': inBusinessHours === true,
           'non-business-hours': inBusinessHours === false,
           'drop-target': isDropTarget,
+          static: mode === 'static',
         }}
         __vars={{ '--slot-size': `${clampIntervalMinutes(intervalMinutes) / 60}` }}
         aria-label={`${getLabel('timeSlot', labels)} ${slot.startTime} - ${slot.endTime}`}
-        onDragOver={withDragDrop ? (e) => handleSlotDragOver(e, index) : undefined}
-        onDragLeave={withDragDrop ? handleSlotDragLeave : undefined}
-        onDrop={withDragDrop ? (e) => handleSlotDrop(e, index, slot.startTime) : undefined}
+        tabIndex={mode === 'static' ? -1 : 0}
+        onDragOver={withDragDrop && mode !== 'static' ? (e) => handleSlotDragOver(e, index) : undefined}
+        onDragLeave={withDragDrop && mode !== 'static' ? handleSlotDragLeave : undefined}
+        onDrop={withDragDrop && mode !== 'static' ? (e) => handleSlotDrop(e, index, slot.startTime) : undefined}
       />
     );
   });
@@ -439,7 +448,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
   }, []);
 
   const content = (
-    <Box {...getStyles('dayView')} {...others}>
+    <Box {...getStyles('dayView')} mod={{ static: mode === 'static' }} {...others}>
       {withHeader && (
         <ScheduleHeader {...stylesApiProps}>
           <ScheduleHeader.Previous

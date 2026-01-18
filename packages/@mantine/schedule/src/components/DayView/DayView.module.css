@@ -122,6 +122,11 @@
       border-color: var(--mantine-color-blue-6);
     }
   }
+
+  &:where([data-static]) {
+    cursor: default;
+    pointer-events: none;
+  }
 }
 
 .dayViewAllDay {

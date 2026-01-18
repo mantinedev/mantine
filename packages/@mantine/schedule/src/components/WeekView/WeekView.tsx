@@ -194,6 +194,9 @@ export interface WeekViewProps
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
+
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
+  mode?: 'static' | 'default';
 }
 
 export type WeekViewFactory = Factory<{
@@ -221,6 +224,7 @@ const defaultProps = {
   highlightBusinessHours: false,
   businessHours: ['09:00:00', '17:00:00'],
   withDragDrop: false,
+  mode: 'default',
 } satisfies Partial<WeekViewProps>;
 
 const varsResolver = createVarsResolver<WeekViewFactory>(
@@ -279,6 +283,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     withDragDrop,
     onEventDrop,
     canDragEvent,
+    mode,
     ...others
   } = props;
 
@@ -445,8 +450,10 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       mod={{
         today: dayjs(day).isSame(dayjs(), 'day') && !!highlightToday,
         weekend: ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek),
+        static: mode === 'static',
       }}
-      onClick={() => {
+      tabIndex={mode === 'static' ? -1 : 0}
+      onClick={mode === 'static' ? undefined : () => {
         onViewChange?.('day');
         onDateChange?.(toDateString(day));
       }}
@@ -464,7 +471,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     const dayEvents = (weekEvents.regularEvents[day] || []).map((event) => {
       const eventIsAllDay = isAllDayEvent({ event, date: day });
       const isDraggable =
-        withDragDrop && !eventIsAllDay && (canDragEvent ? canDragEvent(event) : true);
+        withDragDrop && mode !== 'static' && !eventIsAllDay && (canDragEvent ? canDragEvent(event) : true);
 
       return (
         <ScheduleEvent
@@ -475,6 +482,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           draggable={isDraggable}
           renderEventBody={renderEventBody}
           radius={radius}
+          mode={mode}
           style={{
             position: 'absolute',
             top: `${event.position.top}%`,
@@ -498,6 +506,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         businessHours={businessHours}
         labels={labels}
         withDragDrop={withDragDrop}
+        mode={mode}
         onSlotDragOver={handleSlotDragOver}
         onSlotDragLeave={handleSlotDragLeave}
         onSlotDrop={handleSlotDrop}
@@ -525,6 +534,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       autoSize
       nowrap
       hanging={event.position.hanging}
+      mode={mode}
       style={{
         position: 'absolute',
         zIndex: 2,
@@ -541,7 +551,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const extraRows = Math.max(...weekEvents.allDayEvents.map((event) => event.position.row), 1) - 1;
 
   const content = (
-    <Box {...getStyles('weekView')} {...others}>
+    <Box {...getStyles('weekView')} mod={{ static: mode === 'static' }} {...others}>
       {withHeader && (
         <ScheduleHeader {...stylesApiProps}>
           <ScheduleHeader.Previous

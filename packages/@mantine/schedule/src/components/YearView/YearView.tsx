@@ -86,6 +86,9 @@ export interface YearViewProps
 
   /** Props passed to view level select */
   viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
+
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
+  mode?: 'static' | 'default';
 }
 
 export type YearViewFactory = Factory<{
@@ -101,6 +104,7 @@ const defaultProps = {
   withWeekDays: true,
   highlightToday: true,
   withHeader: true,
+  mode: 'default',
 } satisfies Partial<YearViewProps>;
 
 const varsResolver = createVarsResolver<YearViewFactory>((_theme, { radius }) => ({
@@ -149,6 +153,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
     vars,
     attributes,
     radius,
+    mode,
     ...others
   } = props;
 
@@ -209,6 +214,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
           onWeekNumberClick={onWeekNumberClick}
           highlightToday={highlightToday}
           groupedEvents={groupedEvents}
+          mode={mode}
         />
       ));
 
@@ -221,7 +227,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
   );
 
   return (
-    <Box {...getStyles('yearView')} {...others}>
+    <Box {...getStyles('yearView')} mod={{ static: mode === 'static' }} {...others}>
       {withHeader && (
         <ScheduleHeader {...stylesApiProps}>
           <ScheduleHeader.Previous
