@@ -115,7 +115,7 @@ export function useTimePicker({
       onChange?.(timeString.value);
     } else {
       acceptChange.current = false;
-      if (!wasInvalidBefore.current) {
+      if (typeof value === 'string' && value !== '') {
         onChange?.('');
         wasInvalidBefore.current = true;
       }
@@ -131,6 +131,8 @@ export function useTimePicker({
     setSeconds(parsedTime.seconds);
     setAmPm(parsedTime.amPm);
 
+    const next = getTimeString({ ...parsedTime, format, withSeconds, amPmLabels });
+    wasInvalidBefore.current = !next.valid;
     onChange?.(timeString);
   };
 
@@ -170,6 +172,7 @@ export function useTimePicker({
     setSeconds(null);
     setAmPm(null);
     onChange?.('');
+    wasInvalidBefore.current = true;
     focus('hours');
   };
 
