@@ -115,7 +115,7 @@ export function useTimePicker({
       onChange?.(timeString.value);
     } else {
       acceptChange.current = false;
-      if (typeof value === 'string' && value !== '') {
+      if (!wasInvalidBefore.current) {
         onChange?.('');
         wasInvalidBefore.current = true;
       }
