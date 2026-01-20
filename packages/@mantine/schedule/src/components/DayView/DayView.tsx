@@ -47,6 +47,7 @@ import {
   ScheduleEvent,
   ScheduleEventStylesNames,
 } from '../ScheduleEvent/ScheduleEvent';
+import { MonthYearSelectStylesNames } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
 import {
   CombinedScheduleHeaderStylesNames,
   ScheduleHeader,
@@ -67,9 +68,8 @@ export type DayViewStylesNames =
   | 'dayViewSlotLabels'
   | MoreEventsStylesNames
   | ScheduleEventStylesNames
-  | CombinedScheduleHeaderStylesNames
-  | CurrentTimeIndicatorStylesNames
-  | CombinedScheduleHeaderStylesNames;
+  | Exclude<CombinedScheduleHeaderStylesNames, MonthYearSelectStylesNames>
+  | CurrentTimeIndicatorStylesNames;
 
 export type DayViewCssVariables = {
   dayView: '--day-view-radius' | '--day-view-slot-height' | '--day-view-all-day-slot-height';

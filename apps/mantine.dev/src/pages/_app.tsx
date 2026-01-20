@@ -8,6 +8,7 @@ import '@mantine/spotlight/styles.css';
 import '@mantine/carousel/styles.css';
 import '@mantine/tiptap/styles.css';
 import '@mantine/charts/styles.css';
+import '@mantine/schedule/styles.css';
 import '@mantinex/demo/styles.css';
 import '@mantinex/mantine-logo/styles.css';
 import '@mantinex/mantine-header/styles.css';
