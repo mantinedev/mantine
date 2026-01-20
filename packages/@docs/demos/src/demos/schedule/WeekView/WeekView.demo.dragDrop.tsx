@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import dayjs from 'dayjs';
-import { WeekView, ScheduleEventData } from '@mantine/schedule';
+import { useState } from 'react';
+import { ScheduleEventData, WeekView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 
 const today = dayjs().format('YYYY-MM-DD');

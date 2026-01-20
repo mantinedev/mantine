@@ -1,8 +1,8 @@
-import { IconClock, IconMapPin } from '@tabler/icons-react';
 import dayjs from 'dayjs';
+import { IconClock, IconMapPin } from '@tabler/icons-react';
+import { Group, Text } from '@mantine/core';
 import { DayView, ScheduleEventData } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { Group, Text } from '@mantine/core';
 
 const today = dayjs().format('YYYY-MM-DD');
 

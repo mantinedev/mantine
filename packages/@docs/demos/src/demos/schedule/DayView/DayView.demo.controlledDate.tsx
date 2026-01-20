@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import dayjs from 'dayjs';
+import { useState } from 'react';
+import { Button, Group, Text } from '@mantine/core';
 import { DayView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { Button, Group, Text } from '@mantine/core';
 import { regularEvents } from './_data';
 
 const code = `

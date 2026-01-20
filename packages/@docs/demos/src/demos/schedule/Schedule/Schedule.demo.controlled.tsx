@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { Button, Group, Text } from '@mantine/core';
 import { Schedule, ScheduleViewLevel } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { Button, Group, Text } from '@mantine/core';
 import { events } from './_data';
 
 const code = `
@@ -59,16 +59,32 @@ function Demo() {
           Current view: <strong>{view}</strong>
         </Text>
         <Button.Group>
-          <Button size="xs" variant={view === 'day' ? 'filled' : 'default'} onClick={() => setView('day')}>
+          <Button
+            size="xs"
+            variant={view === 'day' ? 'filled' : 'default'}
+            onClick={() => setView('day')}
+          >
             Day
           </Button>
-          <Button size="xs" variant={view === 'week' ? 'filled' : 'default'} onClick={() => setView('week')}>
+          <Button
+            size="xs"
+            variant={view === 'week' ? 'filled' : 'default'}
+            onClick={() => setView('week')}
+          >
             Week
           </Button>
-          <Button size="xs" variant={view === 'month' ? 'filled' : 'default'} onClick={() => setView('month')}>
+          <Button
+            size="xs"
+            variant={view === 'month' ? 'filled' : 'default'}
+            onClick={() => setView('month')}
+          >
             Month
           </Button>
-          <Button size="xs" variant={view === 'year' ? 'filled' : 'default'} onClick={() => setView('year')}>
+          <Button
+            size="xs"
+            variant={view === 'year' ? 'filled' : 'default'}
+            onClick={() => setView('year')}
+          >
             Year
           </Button>
         </Button.Group>

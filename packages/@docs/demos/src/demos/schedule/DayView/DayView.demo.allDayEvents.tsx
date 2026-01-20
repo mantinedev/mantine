@@ -20,12 +20,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <DayView
-      date={new Date()}
-      events={allDayEventsData}
-      startTime="08:00:00"
-      endTime="18:00:00"
-    />
+    <DayView date={new Date()} events={allDayEventsData} startTime="08:00:00" endTime="18:00:00" />
   );
 }
 

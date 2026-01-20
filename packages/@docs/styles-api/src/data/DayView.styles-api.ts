@@ -28,7 +28,8 @@ export const DayViewStylesApi: StylesApiData<DayViewFactory> = {
     currentTimeIndicator: 'Current time indicator container, part of CurrentTimeIndicator',
     currentTimeIndicatorLine: 'Current time indicator line, part of CurrentTimeIndicator',
     currentTimeIndicatorThumb: 'Current time indicator thumb, part of CurrentTimeIndicator',
-    currentTimeIndicatorTimeBubble: 'Current time indicator time bubble, part of CurrentTimeIndicator',
+    currentTimeIndicatorTimeBubble:
+      'Current time indicator time bubble, part of CurrentTimeIndicator',
   },
 
   vars: {
@@ -40,11 +41,31 @@ export const DayViewStylesApi: StylesApiData<DayViewFactory> = {
   },
 
   modifiers: [
-    { modifier: 'data-hour-start', selector: 'dayViewSlot', condition: 'Slot is at the start of an hour' },
-    { modifier: 'data-business-hours', selector: 'dayViewSlot', condition: '`highlightBusinessHours` is true and slot is within business hours' },
-    { modifier: 'data-non-business-hours', selector: 'dayViewSlot', condition: '`highlightBusinessHours` is true and slot is outside business hours' },
-    { modifier: 'data-drop-target', selector: 'dayViewSlot', condition: 'Slot is the current drag drop target' },
+    {
+      modifier: 'data-hour-start',
+      selector: 'dayViewSlot',
+      condition: 'Slot is at the start of an hour',
+    },
+    {
+      modifier: 'data-business-hours',
+      selector: 'dayViewSlot',
+      condition: '`highlightBusinessHours` is true and slot is within business hours',
+    },
+    {
+      modifier: 'data-non-business-hours',
+      selector: 'dayViewSlot',
+      condition: '`highlightBusinessHours` is true and slot is outside business hours',
+    },
+    {
+      modifier: 'data-drop-target',
+      selector: 'dayViewSlot',
+      condition: 'Slot is the current drag drop target',
+    },
     { modifier: 'data-static', selector: 'dayView', condition: '`mode="static"` is set' },
-    { modifier: 'data-all-day', selector: 'dayViewSlotLabel', condition: 'Label is for all-day slot' },
+    {
+      modifier: 'data-all-day',
+      selector: 'dayViewSlotLabel',
+      condition: 'Label is for all-day slot',
+    },
   ],
 };

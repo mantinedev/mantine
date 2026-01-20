@@ -35,7 +35,8 @@ export const WeekViewStylesApi: StylesApiData<WeekViewFactory> = {
     currentTimeIndicator: 'Current time indicator container, part of CurrentTimeIndicator',
     currentTimeIndicatorLine: 'Current time indicator line, part of CurrentTimeIndicator',
     currentTimeIndicatorThumb: 'Current time indicator thumb, part of CurrentTimeIndicator',
-    currentTimeIndicatorTimeBubble: 'Current time indicator time bubble, part of CurrentTimeIndicator',
+    currentTimeIndicatorTimeBubble:
+      'Current time indicator time bubble, part of CurrentTimeIndicator',
   },
 
   vars: {
@@ -49,10 +50,26 @@ export const WeekViewStylesApi: StylesApiData<WeekViewFactory> = {
   modifiers: [
     { modifier: 'data-today', selector: 'weekViewDayLabel', condition: 'Day is today' },
     { modifier: 'data-weekend', selector: 'weekViewDay', condition: 'Day is a weekend day' },
-    { modifier: 'data-highlight-today', selector: 'weekViewDay', condition: '`highlightToday="column"` and day is today' },
-    { modifier: 'data-hour-start', selector: 'weekViewDaySlot', condition: 'Slot is at the start of an hour' },
-    { modifier: 'data-business-hours', selector: 'weekViewDaySlot', condition: '`highlightBusinessHours` is true and slot is within business hours' },
-    { modifier: 'data-non-business-hours', selector: 'weekViewDaySlot', condition: '`highlightBusinessHours` is true and slot is outside business hours' },
+    {
+      modifier: 'data-highlight-today',
+      selector: 'weekViewDay',
+      condition: '`highlightToday="column"` and day is today',
+    },
+    {
+      modifier: 'data-hour-start',
+      selector: 'weekViewDaySlot',
+      condition: 'Slot is at the start of an hour',
+    },
+    {
+      modifier: 'data-business-hours',
+      selector: 'weekViewDaySlot',
+      condition: '`highlightBusinessHours` is true and slot is within business hours',
+    },
+    {
+      modifier: 'data-non-business-hours',
+      selector: 'weekViewDaySlot',
+      condition: '`highlightBusinessHours` is true and slot is outside business hours',
+    },
     { modifier: 'data-static', selector: 'weekView', condition: '`mode="static"` is set' },
   ],
 };

@@ -18,7 +18,6 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
-import { DragContext } from '../DragContext/DragContext';
 import { useDragState } from '../../hooks/use-drag-state';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
@@ -40,6 +39,7 @@ import {
   CurrentTimeIndicator,
   CurrentTimeIndicatorStylesNames,
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
+import { DragContext } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
 import {
   RenderEventBody,
@@ -344,7 +344,10 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const eventsNodes = eventsData.regularEvents.map((event) => {
     const eventIsAllDay = isAllDayEvent({ event, date });
     const isDraggable =
-      withDragDrop && mode !== 'static' && !eventIsAllDay && (canDragEvent ? canDragEvent(event) : true);
+      withDragDrop &&
+      mode !== 'static' &&
+      !eventIsAllDay &&
+      (canDragEvent ? canDragEvent(event) : true);
 
     return (
       <ScheduleEvent
@@ -413,9 +416,15 @@ export const DayView = factory<DayViewFactory>((_props) => {
         __vars={{ '--slot-size': `${clampIntervalMinutes(intervalMinutes) / 60}` }}
         aria-label={`${getLabel('timeSlot', labels)} ${slot.startTime} - ${slot.endTime}`}
         tabIndex={mode === 'static' ? -1 : 0}
-        onDragOver={withDragDrop && mode !== 'static' ? (e) => handleSlotDragOver(e, index) : undefined}
+        onDragOver={
+          withDragDrop && mode !== 'static' ? (e) => handleSlotDragOver(e, index) : undefined
+        }
         onDragLeave={withDragDrop && mode !== 'static' ? handleSlotDragLeave : undefined}
-        onDrop={withDragDrop && mode !== 'static' ? (e) => handleSlotDrop(e, index, slot.startTime) : undefined}
+        onDrop={
+          withDragDrop && mode !== 'static'
+            ? (e) => handleSlotDrop(e, index, slot.startTime)
+            : undefined
+        }
       />
     );
   });

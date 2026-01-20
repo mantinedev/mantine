@@ -19,11 +19,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <BarsList
-      data={data}
-      barColor="teal.6"
-      valueFormatter={(value) => value.toLocaleString()}
-    />
+    <BarsList data={data} barColor="teal.6" valueFormatter={(value) => value.toLocaleString()} />
   );
 }
 

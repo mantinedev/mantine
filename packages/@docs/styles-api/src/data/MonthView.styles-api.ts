@@ -32,7 +32,11 @@ export const MonthViewStylesApi: StylesApiData<MonthViewFactory> = {
   modifiers: [
     { modifier: 'data-today', selector: 'monthViewDay', condition: 'Day is today' },
     { modifier: 'data-weekend', selector: 'monthViewDay', condition: 'Day is a weekend day' },
-    { modifier: 'data-outside', selector: 'monthViewDay', condition: 'Day is outside current month' },
+    {
+      modifier: 'data-outside',
+      selector: 'monthViewDay',
+      condition: 'Day is outside current month',
+    },
     { modifier: 'data-static', selector: 'monthView', condition: '`mode="static"` is set' },
   ],
 };

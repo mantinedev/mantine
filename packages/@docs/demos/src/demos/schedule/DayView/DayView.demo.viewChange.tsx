@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { Text } from '@mantine/core';
 import { DayView, ScheduleViewLevel } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { Text } from '@mantine/core';
 import { regularEvents } from './_data';
 
 const code = `

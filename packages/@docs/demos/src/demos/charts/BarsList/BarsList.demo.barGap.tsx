@@ -18,13 +18,7 @@ function Demo() {
 `;
 
 function Demo() {
-  return (
-    <BarsList
-      data={data}
-      barGap="xl"
-      valueFormatter={(value) => value.toLocaleString()}
-    />
-  );
+  return <BarsList data={data} barGap="xl" valueFormatter={(value) => value.toLocaleString()} />;
 }
 
 export const barGap: MantineDemo = {

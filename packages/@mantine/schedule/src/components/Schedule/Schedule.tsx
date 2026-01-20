@@ -44,9 +44,7 @@ type ScheduleCommonProps =
 type ScheduleViewProps<T> = Partial<Omit<T, ScheduleCommonProps>>;
 
 export interface ScheduleProps
-  extends BoxProps,
-    StylesApiProps<ScheduleFactory>,
-    ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<ScheduleFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
   // === Date Management ===

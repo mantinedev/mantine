@@ -308,7 +308,8 @@ export function StaticMode() {
             Static Mode
           </Text>
           <Text size="xs" c="dimmed" mb="md">
-            Days, week numbers, and events are not clickable or draggable. No hover effects are shown.
+            Days, week numbers, and events are not clickable or draggable. No hover effects are
+            shown.
           </Text>
         </div>
 

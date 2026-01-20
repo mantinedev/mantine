@@ -1,9 +1,7 @@
 import { ScheduleEventData, WeekPositionedEventData } from '../../../types';
 import { isEventsOverlap } from '../../../utils';
 
-export function assignEventRows(
-  events: WeekPositionedEventData[]
-): Map<ScheduleEventData, number> {
+export function assignEventRows(events: WeekPositionedEventData[]): Map<ScheduleEventData, number> {
   const eventRows = new Map<ScheduleEventData, number>();
 
   for (const event of events) {

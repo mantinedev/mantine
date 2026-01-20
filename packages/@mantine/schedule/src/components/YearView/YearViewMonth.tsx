@@ -135,10 +135,14 @@ export function YearViewMonth({
           key={date}
           mod={[{ outside, weekend, today: isToday, static: mode === 'static' }, dayProps.mod]}
           tabIndex={mode === 'static' ? -1 : 0}
-          onClick={mode === 'static' ? undefined : (event) => {
-            onDayClick?.(dayjs(date).startOf('day').toDate(), event);
-            dayProps.onClick?.(event);
-          }}
+          onClick={
+            mode === 'static'
+              ? undefined
+              : (event) => {
+                  onDayClick?.(dayjs(date).startOf('day').toDate(), event);
+                  dayProps.onClick?.(event);
+                }
+          }
         >
           {dayjs(date).format('D')}
 
@@ -157,10 +161,14 @@ export function YearViewMonth({
             key={weekNumber}
             aria-label={`Week ${weekNumber}`}
             {...weekNumberProps}
-            onClick={mode === 'static' ? undefined : (event) => {
-              onWeekNumberClick?.(dayjs(week[0]).startOf('day').toDate(), event);
-              weekNumberProps.onClick?.(event);
-            }}
+            onClick={
+              mode === 'static'
+                ? undefined
+                : (event) => {
+                    onWeekNumberClick?.(dayjs(week[0]).startOf('day').toDate(), event);
+                    weekNumberProps.onClick?.(event);
+                  }
+            }
             mod={{ static: mode === 'static' }}
             tabIndex={mode === 'static' ? -1 : 0}
             {...getStyles('yearViewWeekNumber', {
@@ -179,11 +187,21 @@ export function YearViewMonth({
 
   return (
     <Box
-      mod={[{ 'with-week-numbers': withWeekNumbers, 'with-weekdays': withWeekDays, static: mode === 'static' }]}
+      mod={[
+        {
+          'with-week-numbers': withWeekNumbers,
+          'with-weekdays': withWeekDays,
+          static: mode === 'static',
+        },
+      ]}
       {...getStyles('yearViewMonth')}
     >
       <UnstyledButton
-        onClick={mode === 'static' ? undefined : (event) => onMonthClick?.(dayjs(month).startOf('month').toDate(), event)}
+        onClick={
+          mode === 'static'
+            ? undefined
+            : (event) => onMonthClick?.(dayjs(month).startOf('month').toDate(), event)
+        }
         mod={{ static: mode === 'static' }}
         tabIndex={mode === 'static' ? -1 : 0}
         {...getStyles('yearViewMonthCaption')}

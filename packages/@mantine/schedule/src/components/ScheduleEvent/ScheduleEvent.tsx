@@ -13,8 +13,8 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { DragContext } from '../DragContext/DragContext';
 import { ScheduleEventData } from '../../types';
+import { DragContext } from '../DragContext/DragContext';
 import classes from './ScheduleEvent.module.css';
 
 export type ScheduleEventStylesNames = 'event' | 'eventInner';

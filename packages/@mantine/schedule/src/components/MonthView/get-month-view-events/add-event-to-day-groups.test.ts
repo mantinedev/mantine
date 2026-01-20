@@ -165,7 +165,11 @@ describe('@mantine/schedule/add-event-to-day-groups', () => {
     const eventsAddedToDay = new Set<string>();
 
     const positionedEvent = {
-      ...testUtils.createEvent({ id: 123, start: '2025-01-15 10:00:00', end: '2025-01-15 12:00:00' }),
+      ...testUtils.createEvent({
+        id: 123,
+        start: '2025-01-15 10:00:00',
+        end: '2025-01-15 12:00:00',
+      }),
       position: {
         startOffset: 0,
         width: (1 / 7) * 100,

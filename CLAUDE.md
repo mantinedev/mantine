@@ -498,15 +498,19 @@ npm run jest @mantine/[package]
 # Run ESLint on changed files only (PREFERRED)
 npx eslint packages/@mantine/[package]/src/ComponentName
 
+# Fix formatting on all files
+npm run prettier:write
+
 # Optional: Run all tests (takes longer)
 npm test
 ```
 
-**IMPORTANT:** After completing any task (component development, refactoring, bug fixes, etc.), always run ESLint on the files you changed and fix any errors before considering the task complete. Use `npx eslint` with specific paths to the changed files/directories for faster execution.
+**IMPORTANT:** After completing any task (component development, refactoring, bug fixes, etc.), always run ESLint on the files you changed, fix any errors, and then run prettier to ensure consistent formatting before considering the task complete. Use `npx eslint` with specific paths to the changed files/directories for faster execution.
 
 **Example:** If you modified DayView and WeekView components:
 ```bash
 npx eslint packages/@mantine/schedule/src/components/DayView packages/@mantine/schedule/src/components/WeekView
+npm run prettier:write
 ```
 
 **Verification checklist:**
@@ -514,6 +518,7 @@ npx eslint packages/@mantine/schedule/src/components/DayView packages/@mantine/s
 - [ ] All tests pass
 - [ ] TypeScript types are correct
 - [ ] ESLint passes with no errors
+- [ ] Prettier formatting applied
 - [ ] Styles API is documented
 - [ ] All demos are created and exported
 - [ ] Documentation page is created
@@ -521,6 +526,7 @@ npx eslint packages/@mantine/schedule/src/components/DayView packages/@mantine/s
 - [ ] No TypeScript errors
 - [ ] No test failures
 - [ ] No ESLint errors
+- [ ] No formatting errors
 
 ## Common Pitfalls
 

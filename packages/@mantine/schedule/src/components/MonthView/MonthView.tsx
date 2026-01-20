@@ -17,7 +17,6 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
-import { DragContext } from '../DragContext/DragContext';
 import { useDragState } from '../../hooks/use-drag-state';
 import {
   DateLabelFormat,
@@ -34,6 +33,7 @@ import {
   isSameMonth,
   toDateString,
 } from '../../utils';
+import { DragContext } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps } from '../MoreEvents/MoreEvents';
 import { RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
@@ -360,13 +360,22 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           {...dayProps}
           {...getStyles('monthViewDay', { className: dayProps.className, style: dayProps.style })}
           key={day}
-          onClick={mode === 'static' ? undefined : (event) => {
-            onDayClick?.(dayjs(day).startOf('day').toDate(), event);
-            dayProps.onClick?.(event);
-          }}
-          mod={[{ outside, weekend, today, 'drop-target': isDropTarget, static: mode === 'static' }, dayProps.mod]}
+          onClick={
+            mode === 'static'
+              ? undefined
+              : (event) => {
+                  onDayClick?.(dayjs(day).startOf('day').toDate(), event);
+                  dayProps.onClick?.(event);
+                }
+          }
+          mod={[
+            { outside, weekend, today, 'drop-target': isDropTarget, static: mode === 'static' },
+            dayProps.mod,
+          ]}
           tabIndex={mode === 'static' ? -1 : 0}
-          onDragOver={withDragDrop && mode !== 'static' ? (e) => handleDayDragOver(e, day) : undefined}
+          onDragOver={
+            withDragDrop && mode !== 'static' ? (e) => handleDayDragOver(e, day) : undefined
+          }
           onDragLeave={withDragDrop && mode !== 'static' ? handleDayDragLeave : undefined}
           onDrop={withDragDrop && mode !== 'static' ? (e) => handleDayDrop(e, day) : undefined}
         >
@@ -383,7 +392,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     const events = (monthEvents.groupedByWeek[index] || [])
       .filter((event) => event.position.row < 2)
       .map((event) => {
-        const isDraggable = withDragDrop && mode !== 'static' && (canDragEvent ? canDragEvent(event) : true);
+        const isDraggable =
+          withDragDrop && mode !== 'static' && (canDragEvent ? canDragEvent(event) : true);
 
         return (
           <ScheduleEvent
@@ -444,12 +454,16 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
             key={weekNumber}
             aria-label={`Week ${weekNumber}`}
             {...weekNumberProps}
-            onClick={mode === 'static' ? undefined : (event) => {
-              onViewChange?.('week');
-              onDateChange?.(toDateString(week[0]));
-              onWeekNumberClick?.(dayjs(week[0]).startOf('day').toDate(), event);
-              weekNumberProps.onClick?.(event);
-            }}
+            onClick={
+              mode === 'static'
+                ? undefined
+                : (event) => {
+                    onViewChange?.('week');
+                    onDateChange?.(toDateString(week[0]));
+                    onWeekNumberClick?.(dayjs(week[0]).startOf('day').toDate(), event);
+                    weekNumberProps.onClick?.(event);
+                  }
+            }
             mod={{ static: mode === 'static' }}
             tabIndex={mode === 'static' ? -1 : 0}
             {...getStyles('monthViewWeekNumber', {
@@ -473,7 +487,14 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
   const content = (
     <Box
-      mod={[{ 'with-week-numbers': withWeekNumbers, 'with-weekdays': withWeekDays, static: mode === 'static' }, mod]}
+      mod={[
+        {
+          'with-week-numbers': withWeekNumbers,
+          'with-weekdays': withWeekDays,
+          static: mode === 'static',
+        },
+        mod,
+      ]}
       {...getStyles('monthView')}
       {...others}
     >

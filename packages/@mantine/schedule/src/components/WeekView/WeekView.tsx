@@ -20,7 +20,6 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
-import { DragContext } from '../DragContext/DragContext';
 import { useDragState } from '../../hooks/use-drag-state';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
@@ -45,6 +44,7 @@ import {
   CurrentTimeIndicator,
   CurrentTimeIndicatorStylesNames,
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
+import { DragContext } from '../DragContext/DragContext';
 import { RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import {
   CombinedScheduleHeaderStylesNames,
@@ -356,11 +356,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     setDropTargetSlot(null);
   };
 
-  const handleSlotDrop = (
-    e: React.DragEvent<HTMLButtonElement>,
-    day: string,
-    slotTime: string
-  ) => {
+  const handleSlotDrop = (e: React.DragEvent<HTMLButtonElement>, day: string, slotTime: string) => {
     e.preventDefault();
 
     if (!withDragDrop || !dragState.state.draggedEvent || !onEventDrop) {
@@ -453,10 +449,14 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         static: mode === 'static',
       }}
       tabIndex={mode === 'static' ? -1 : 0}
-      onClick={mode === 'static' ? undefined : () => {
-        onViewChange?.('day');
-        onDateChange?.(toDateString(day));
-      }}
+      onClick={
+        mode === 'static'
+          ? undefined
+          : () => {
+              onViewChange?.('day');
+              onDateChange?.(toDateString(day));
+            }
+      }
     >
       <Box {...getStyles('weekViewDayWeekday')} key="weekday">
         {formatDate({ locale: ctx.getLocale(locale), date: day, format: weekdayFormat })}
@@ -471,7 +471,10 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     const dayEvents = (weekEvents.regularEvents[day] || []).map((event) => {
       const eventIsAllDay = isAllDayEvent({ event, date: day });
       const isDraggable =
-        withDragDrop && mode !== 'static' && !eventIsAllDay && (canDragEvent ? canDragEvent(event) : true);
+        withDragDrop &&
+        mode !== 'static' &&
+        !eventIsAllDay &&
+        (canDragEvent ? canDragEvent(event) : true);
 
       return (
         <ScheduleEvent
@@ -510,9 +513,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         onSlotDragOver={handleSlotDragOver}
         onSlotDragLeave={handleSlotDragLeave}
         onSlotDrop={handleSlotDrop}
-        dropTargetSlotIndex={
-          dropTargetSlot?.day === day ? dropTargetSlot.slotIndex : undefined
-        }
+        dropTargetSlotIndex={dropTargetSlot?.day === day ? dropTargetSlot.slotIndex : undefined}
       >
         {dayEvents}
       </WeekViewDay>

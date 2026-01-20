@@ -597,10 +597,7 @@ describe('@mantine/schedule/get-week-positioned-events', () => {
         withWeekendDays: false,
       });
 
-      expect(resultWithWeekends.allDayEvents[0].position.width).toBeCloseTo(
-        (5 / 7) * 100,
-        2
-      );
+      expect(resultWithWeekends.allDayEvents[0].position.width).toBeCloseTo((5 / 7) * 100, 2);
       expect(resultWithoutWeekends.allDayEvents[0].position.width).toBe(100);
     });
   });

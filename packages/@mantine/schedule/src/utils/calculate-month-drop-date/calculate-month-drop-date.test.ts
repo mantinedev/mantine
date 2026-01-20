@@ -1,5 +1,5 @@
-import { calculateMonthDropDate } from './calculate-month-drop-date';
 import type { ScheduleEventData } from '../../types';
+import { calculateMonthDropDate } from './calculate-month-drop-date';
 
 describe('calculateMonthDropDate', () => {
   it('maintains event duration when dropping on new day', () => {

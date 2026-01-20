@@ -35,7 +35,11 @@ export const YearViewStylesApi: StylesApiData<YearViewFactory> = {
   modifiers: [
     { modifier: 'data-today', selector: 'yearViewDay', condition: 'Day is today' },
     { modifier: 'data-weekend', selector: 'yearViewDay', condition: 'Day is a weekend day' },
-    { modifier: 'data-outside', selector: 'yearViewDay', condition: 'Day is outside current month' },
+    {
+      modifier: 'data-outside',
+      selector: 'yearViewDay',
+      condition: 'Day is outside current month',
+    },
     { modifier: 'data-static', selector: 'yearView', condition: '`mode="static"` is set' },
   ],
 };

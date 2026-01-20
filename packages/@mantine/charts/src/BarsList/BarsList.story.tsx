@@ -23,10 +23,7 @@ export function Usage() {
 export function WithValueFormatter() {
   return (
     <div style={{ padding: 40, maxWidth: 600 }}>
-      <BarsList
-        data={data}
-        valueFormatter={(value) => value.toLocaleString()}
-      />
+      <BarsList data={data} valueFormatter={(value) => value.toLocaleString()} />
     </div>
   );
 }
@@ -143,11 +140,7 @@ export function SmallDataset() {
 
   return (
     <div style={{ padding: 40, maxWidth: 600 }}>
-      <BarsList
-        data={smallData}
-        barsLabel="Status"
-        valueLabel="Count"
-      />
+      <BarsList data={smallData} barsLabel="Status" valueLabel="Count" />
     </div>
   );
 }

@@ -698,9 +698,7 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
       const weekIndices = Object.keys(result.groupedByWeek);
       expect(weekIndices.length).toBeGreaterThan(0);
 
-      const eventsInAllWeeks = weekIndices.flatMap(
-        (weekIndex) => result.groupedByWeek[weekIndex]
-      );
+      const eventsInAllWeeks = weekIndices.flatMap((weekIndex) => result.groupedByWeek[weekIndex]);
       const eventsWithId1 = eventsInAllWeeks.filter((e) => e.id === 1);
 
       expect(eventsWithId1.length).toBeGreaterThan(0);

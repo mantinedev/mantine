@@ -18,13 +18,7 @@ function Demo() {
 `;
 
 function Demo() {
-  return (
-    <BarsList
-      data={data}
-      barHeight={48}
-      valueFormatter={(value) => value.toLocaleString()}
-    />
-  );
+  return <BarsList data={data} barHeight={48} valueFormatter={(value) => value.toLocaleString()} />;
 }
 
 export const barHeight: MantineDemo = {

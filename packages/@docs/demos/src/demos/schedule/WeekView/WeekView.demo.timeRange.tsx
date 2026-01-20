@@ -20,12 +20,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <WeekView
-      date={new Date()}
-      events={regularEvents}
-      startTime="09:00:00"
-      endTime="17:00:00"
-    />
+    <WeekView date={new Date()} events={regularEvents} startTime="09:00:00" endTime="17:00:00" />
   );
 }
 

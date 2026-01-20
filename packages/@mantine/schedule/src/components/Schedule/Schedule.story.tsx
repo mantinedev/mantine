@@ -492,8 +492,8 @@ export function StaticMode() {
       <div style={{ marginBottom: 20 }}>
         <h3>Static Mode (mode="static")</h3>
         <p>
-          Events and days are not clickable or draggable. Navigation controls (prev/next/today) still
-          work.
+          Events and days are not clickable or draggable. Navigation controls (prev/next/today)
+          still work.
         </p>
       </div>
       <Schedule defaultView="week" events={events} mode="static" />

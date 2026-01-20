@@ -50,9 +50,7 @@ describe('@mantine/schedule/Schedule', () => {
     );
     expect(monthContainer.querySelector('.mantine-MonthView-monthView')).toBeInTheDocument();
 
-    const { container: yearContainer } = render(
-      <Schedule {...defaultProps} defaultView="year" />
-    );
+    const { container: yearContainer } = render(<Schedule {...defaultProps} defaultView="year" />);
     expect(yearContainer.querySelector('.mantine-YearView-yearView')).toBeInTheDocument();
   });
 
@@ -126,9 +124,7 @@ describe('@mantine/schedule/Schedule', () => {
   });
 
   it('passes common props to all views', () => {
-    const { container, rerender } = render(
-      <Schedule {...defaultProps} view="day" radius="lg" />
-    );
+    const { container, rerender } = render(<Schedule {...defaultProps} view="day" radius="lg" />);
     expect(container.querySelector('.mantine-DayView-dayView')).toBeInTheDocument();
 
     rerender(<Schedule {...defaultProps} view="week" radius="lg" />);
@@ -227,11 +223,7 @@ describe('@mantine/schedule/Schedule', () => {
     const renderSpy = jest.fn((event) => <div>{event.title}</div>);
 
     const { container } = render(
-      <Schedule
-        {...defaultProps}
-        view="day"
-        renderEventBody={renderSpy}
-      />
+      <Schedule {...defaultProps} view="day" renderEventBody={renderSpy} />
     );
 
     expect(container.querySelector('.mantine-DayView-dayView')).toBeInTheDocument();
@@ -249,14 +241,7 @@ describe('@mantine/schedule/Schedule', () => {
   it('supports canDragEvent prop', () => {
     const canDragSpy = jest.fn((event) => event.id !== 1);
 
-    render(
-      <Schedule
-        {...defaultProps}
-        view="day"
-        withDragDrop
-        canDragEvent={canDragSpy}
-      />
-    );
+    render(<Schedule {...defaultProps} view="day" withDragDrop canDragEvent={canDragSpy} />);
 
     const teamMeeting = screen.getByText('Team Meeting');
     expect(teamMeeting.closest('[draggable="true"]')).not.toBeInTheDocument();

@@ -1,4 +1,9 @@
-import type { BarsListBarData, BarsListFactory, BarsListProps, BarsListStylesNames } from './BarsList';
+import type {
+  BarsListBarData,
+  BarsListFactory,
+  BarsListProps,
+  BarsListStylesNames,
+} from './BarsList';
 
 export { BarsList } from './BarsList';
 

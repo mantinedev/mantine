@@ -91,9 +91,7 @@ function Demo() {
             >
               {barData.name}
             </div>
-            <div style={{ fontSize: 14, fontWeight: 600 }}>
-              {barData.value.toLocaleString()}
-            </div>
+            <div style={{ fontSize: 14, fontWeight: 600 }}>{barData.value.toLocaleString()}</div>
           </div>
         );
       }}

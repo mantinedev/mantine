@@ -21,10 +21,7 @@ export function calculateMonthDropDate({
   draggedEvent,
   targetDay,
 }: CalculateMonthDropDateInput): CalculateMonthDropDateResult {
-  const eventDuration = dayjs(draggedEvent.end).diff(
-    dayjs(draggedEvent.start),
-    'millisecond'
-  );
+  const eventDuration = dayjs(draggedEvent.end).diff(dayjs(draggedEvent.start), 'millisecond');
 
   const originalStartTime = dayjs(draggedEvent.start);
   const targetDayStart = dayjs(targetDay).startOf('day');

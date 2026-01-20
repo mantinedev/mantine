@@ -34,11 +34,7 @@ describe('@mantine/schedule/calculate-event-days', () => {
     const actualEndDate = getEventEndDate(event);
     const result = calculateEventDays({ event, weekDays, actualEndDate });
 
-    expect(result).toEqual([
-      '2025-01-13 00:00:00',
-      '2025-01-14 00:00:00',
-      '2025-01-15 00:00:00',
-    ]);
+    expect(result).toEqual(['2025-01-13 00:00:00', '2025-01-14 00:00:00', '2025-01-15 00:00:00']);
   });
 
   it('returns empty array when event is outside the week', () => {
@@ -86,11 +82,7 @@ describe('@mantine/schedule/calculate-event-days', () => {
     const actualEndDate = getEventEndDate(event);
     const result = calculateEventDays({ event, weekDays, actualEndDate });
 
-    expect(result).toEqual([
-      '2025-01-13 00:00:00',
-      '2025-01-14 00:00:00',
-      '2025-01-15 00:00:00',
-    ]);
+    expect(result).toEqual(['2025-01-13 00:00:00', '2025-01-14 00:00:00', '2025-01-15 00:00:00']);
   });
 
   it('handles event ending after week', () => {

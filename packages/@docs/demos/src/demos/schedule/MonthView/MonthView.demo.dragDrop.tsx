@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { MonthView, ScheduleEventData } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 

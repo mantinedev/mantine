@@ -99,9 +99,17 @@ export function WeekViewDay({
         }}
         aria-label={`${getLabel('timeSlot', labels)} ${dayjs(day).format('YYYY-MM-DD')} ${slot.startTime} - ${slot.endTime}`}
         tabIndex={mode === 'static' ? -1 : 0}
-        onDragOver={withDragDrop && mode !== 'static' ? (e) => onSlotDragOver?.(e, String(day), index) : undefined}
+        onDragOver={
+          withDragDrop && mode !== 'static'
+            ? (e) => onSlotDragOver?.(e, String(day), index)
+            : undefined
+        }
         onDragLeave={withDragDrop && mode !== 'static' ? onSlotDragLeave : undefined}
-        onDrop={withDragDrop && mode !== 'static' ? (e) => onSlotDrop?.(e, String(day), slot.startTime) : undefined}
+        onDrop={
+          withDragDrop && mode !== 'static'
+            ? (e) => onSlotDrop?.(e, String(day), slot.startTime)
+            : undefined
+        }
       />
     );
   });
