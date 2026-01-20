@@ -25,6 +25,7 @@ export type MiniCalendarStylesNames =
   | 'control'
   | 'days'
   | 'day'
+  | 'dayWeekday'
   | 'dayMonth'
   | 'dayNumber';
 
@@ -63,6 +64,12 @@ export interface MiniCalendarProps
   /** Dayjs format string for month label @default `MMM` */
   monthLabelFormat?: string;
 
+  /** Display day of week in date cells @default false */
+  withWeekday?: boolean;
+
+  /** dayjs format string for weekday label @default 'ddd' */
+  weekdayFormat?: string;
+
   /** Called when the next button is clicked */
   onNext?: () => void;
 
@@ -96,6 +103,8 @@ const defaultProps = {
   size: 'sm',
   numberOfDays: 7,
   monthLabelFormat: 'MMM',
+  withWeekday: false,
+  weekdayFormat: 'ddd',
 } satisfies Partial<MiniCalendarProps>;
 
 const varsResolver = createVarsResolver<MiniCalendarFactory>((_theme, { size }) => ({
@@ -126,6 +135,8 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
     minDate,
     maxDate,
     monthLabelFormat,
+    withWeekday,
+    weekdayFormat,
     nextControlProps,
     previousControlProps,
     locale,
@@ -204,6 +215,9 @@ export const MiniCalendar = factory<MiniCalendarFactory>((_props, ref) => {
             style: dayProps?.style,
           })}
         >
+          {withWeekday && (
+            <span {...getStyles('dayWeekday')}>{date.locale(_locale).format(weekdayFormat)}</span>
+          )}
           <span {...getStyles('dayMonth')}>{date.locale(_locale).format(monthLabelFormat)}</span>
           <span {...getStyles('dayNumber')}>{date.date()}</span>
         </UnstyledButton>
