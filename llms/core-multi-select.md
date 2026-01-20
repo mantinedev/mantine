@@ -934,6 +934,7 @@ function Demo() {
 | onOptionSubmit | (value: string) => void | - | Called when option is submitted from dropdown with mouse click or <code>Enter</code> key |
 | onRemove | (value: string) => void | - | Called with <code>value</code> of the removed item |
 | onSearchChange | (value: string) => void | - | Called when search changes |
+| openOnFocus | boolean | - | If set, the dropdown opens when the input receives focus |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | renderOption | (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => ReactNode | - | A function to render content of the option, replaces the default content of the option |
@@ -946,6 +947,7 @@ function Demo() {
 | searchValue | string | - | Controlled search value |
 | searchable | boolean | - | Allows searching |
 | selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, <code>false</code> by default |
+| selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens, <code>false</code> by default |
 | size | MantineSize | (string & {}) | - | Controls input <code>height</code> and horizontal <code>padding</code> |
 | value | string[] | - | Controlled component value |
 | withAlignedLabels | boolean | - | If set, unchecked labels are aligned with checked ones |

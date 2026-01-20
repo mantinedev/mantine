@@ -752,6 +752,7 @@ Autocomplete provides better accessibility support when used in forms. Make sure
 | onDropdownClose | () => void | - | Called when dropdown closes |
 | onDropdownOpen | () => void | - | Called when dropdown opens |
 | onOptionSubmit | (value: string) => void | - | Called when option is submitted from dropdown with mouse click or <code>Enter</code> key |
+| openOnFocus | boolean | - | If set, the dropdown opens when the input receives focus |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | renderOption | RenderAutocompleteOption | - | Function to render custom option content |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
@@ -761,6 +762,7 @@ Autocomplete provides better accessibility support when used in forms. Make sure
 | rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height |
 | scrollAreaProps | ScrollAreaProps | - | Props passed to the underlying <code>ScrollArea</code> component in the dropdown |
 | selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, <code>false</code> by default |
+| selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens, <code>false</code> by default |
 | size | MantineSize | (string & {}) | - | Controls input <code>height</code> and horizontal <code>padding</code> |
 | value | string | - | Controlled component value |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input. |

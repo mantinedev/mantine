@@ -3306,6 +3306,7 @@ Autocomplete provides better accessibility support when used in forms. Make sure
 | onDropdownClose | () => void | - | Called when dropdown closes |
 | onDropdownOpen | () => void | - | Called when dropdown opens |
 | onOptionSubmit | (value: string) => void | - | Called when option is submitted from dropdown with mouse click or <code>Enter</code> key |
+| openOnFocus | boolean | - | If set, the dropdown opens when the input receives focus |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | renderOption | RenderAutocompleteOption | - | Function to render custom option content |
 | required | boolean | - | Adds required attribute to the input and a red asterisk on the right side of label |
@@ -3315,6 +3316,7 @@ Autocomplete provides better accessibility support when used in forms. Make sure
 | rightSectionWidth | React.CSSProperties["width"] | - | Right section width, used to set <code>width</code> of the section and input <code>padding-right</code>, by default equals to the input height |
 | scrollAreaProps | ScrollAreaProps | - | Props passed to the underlying <code>ScrollArea</code> component in the dropdown |
 | selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, <code>false</code> by default |
+| selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens, <code>false</code> by default |
 | size | MantineSize | (string & {}) | - | Controls input <code>height</code> and horizontal <code>padding</code> |
 | value | string | - | Controlled component value |
 | withAsterisk | boolean | - | If set, the required asterisk is displayed next to the label. Overrides <code>required</code> prop. Does not add required attribute to the input. |
@@ -14711,6 +14713,8 @@ Menu follows [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/patterns
 * Target element has `aria-haspopup="menu"`, `aria-expanded`, `aria-controls="dropdown-id"` attributes
 * Menu item has `role="menuitem"` attribute
 
+Whilst the dropdown is unopened, the `aria-controls` attribute will be undefined
+
 ### Supported target elements
 
 Uncontrolled Menu with `trigger="click"` (default) will be accessible only when used with `button` element or component that renders it ([Button](https://mantine.dev/core/button/), [ActionIcon](https://mantine.dev/core/action-icon/), etc.).
@@ -16687,6 +16691,7 @@ function Demo() {
 | onOptionSubmit | (value: string) => void | - | Called when option is submitted from dropdown with mouse click or <code>Enter</code> key |
 | onRemove | (value: string) => void | - | Called with <code>value</code> of the removed item |
 | onSearchChange | (value: string) => void | - | Called when search changes |
+| openOnFocus | boolean | - | If set, the dropdown opens when the input receives focus |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | renderOption | (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => ReactNode | - | A function to render content of the option, replaces the default content of the option |
@@ -16699,6 +16704,7 @@ function Demo() {
 | searchValue | string | - | Controlled search value |
 | searchable | boolean | - | Allows searching |
 | selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, <code>false</code> by default |
+| selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens, <code>false</code> by default |
 | size | MantineSize | (string & {}) | - | Controls input <code>height</code> and horizontal <code>padding</code> |
 | value | string[] | - | Controlled component value |
 | withAlignedLabels | boolean | - | If set, unchecked labels are aligned with checked ones |
@@ -20484,6 +20490,8 @@ Popover follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practi
 * Dropdown element has `role="dialog"` and `aria-labelledby="target-id"` attributes
 * Target element has `aria-haspopup="dialog"`, `aria-expanded`, `aria-controls="dropdown-id"` attributes
 
+Whilst the dropdown is unopened, the `aria-controls` attribute will be undefined
+
 Uncontrolled Popover will be accessible only when used with `button` element or component that renders it ([Button](https://mantine.dev/core/button/), [ActionIcon](https://mantine.dev/core/action-icon/), etc.).
 Other elements will not support `Space` and `Enter` key presses.
 
@@ -24156,6 +24164,7 @@ function Demo() {
 | onDropdownOpen | () => void | - | Called when dropdown opens |
 | onOptionSubmit | (value: string) => void | - | Called when option is submitted from dropdown with mouse click or <code>Enter</code> key |
 | onSearchChange | (value: string) => void | - | Called when search changes |
+| openOnFocus | boolean | - | If set, the dropdown opens when the input receives focus |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | renderOption | (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => ReactNode | - | A function to render content of the option, replaces the default content of the option |
@@ -24168,6 +24177,7 @@ function Demo() {
 | searchValue | string | - | Controlled search value |
 | searchable | boolean | - | Determines whether the select should be searchable |
 | selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, <code>false</code> by default |
+| selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens, <code>false</code> by default |
 | size | MantineSize | (string & {}) | - | Controls input <code>height</code> and horizontal <code>padding</code> |
 | value | string | null | - | Controlled component value |
 | withAlignedLabels | boolean | - | If set, unchecked labels are aligned with the checked one |
@@ -29110,6 +29120,7 @@ function Demo() {
 | onOptionSubmit | (value: string) => void | - | Called when option is submitted from dropdown with mouse click or <code>Enter</code> key |
 | onRemove | (value: string) => void | - | Called when tag is removed |
 | onSearchChange | (value: string) => void | - | Called when search changes |
+| openOnFocus | boolean | - | If set, the dropdown opens when the input receives focus |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | renderOption | (input: ComboboxLikeRenderOptionInput<ComboboxStringItem>) => ReactNode | - | A function to render content of the option, replaces the default content of the option |
@@ -29121,6 +29132,7 @@ function Demo() {
 | scrollAreaProps | ScrollAreaProps | - | Props passed down to the underlying <code>ScrollArea</code> component in the dropdown |
 | searchValue | string | - | Controlled search value |
 | selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, <code>false</code> by default |
+| selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens, <code>false</code> by default |
 | size | MantineSize | (string & {}) | - | Controls input <code>height</code> and horizontal <code>padding</code> |
 | splitChars | string[] | - | Characters that should trigger tags split, <code>[',']</code> by default |
 | value | string[] | - | Controlled component value |
@@ -39967,7 +39979,7 @@ function Demo() {
 
 ## Controlled
 
-`TimePicker` component value is a string in `hh:mm:ss` 24-hour format (for example `18:34:55`).
+`TimePicker` component value is a string in `hh:mm:ss` or `hh:mm` 24-hour format (for example `18:34:55`, `18:34`).
 Empty string is used to represent no value. `onChange` function is called only when the entered value is valid.
 The input value is considered valid in the following cases:
 
@@ -61549,7 +61561,7 @@ provide styles. You can use `@layer` directive to control the order of styles:
 In this example, Mantine styles will take precedence over other library `base` styles, but other library
 `components` styles will take precedence over Mantine component styles.
 
-As of July 2025, CSS layers are supported in all modern browsers and have [94% browser support](https://caniuse.com/css-cascade-layers).
+As of January 2026, CSS layers are supported in all modern browsers and have [95% browser support](https://caniuse.com/css-cascade-layers).
 
 ## Loading styles from CDN
 

@@ -413,6 +413,8 @@ Menu follows [WAI-ARIA recommendations](https://www.w3.org/WAI/ARIA/apg/patterns
 * Target element has `aria-haspopup="menu"`, `aria-expanded`, `aria-controls="dropdown-id"` attributes
 * Menu item has `role="menuitem"` attribute
 
+Whilst the dropdown is unopened, the `aria-controls` attribute will be undefined
+
 ### Supported target elements
 
 Uncontrolled Menu with `trigger="click"` (default) will be accessible only when used with `button` element or component that renders it ([Button](https://mantine.dev/core/button/), [ActionIcon](https://mantine.dev/core/action-icon/), etc.).

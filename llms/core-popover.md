@@ -561,6 +561,8 @@ Popover follows [WAI-ARIA recommendations](https://www.w3.org/TR/wai-aria-practi
 * Dropdown element has `role="dialog"` and `aria-labelledby="target-id"` attributes
 * Target element has `aria-haspopup="dialog"`, `aria-expanded`, `aria-controls="dropdown-id"` attributes
 
+Whilst the dropdown is unopened, the `aria-controls` attribute will be undefined
+
 Uncontrolled Popover will be accessible only when used with `button` element or component that renders it ([Button](https://mantine.dev/core/button/), [ActionIcon](https://mantine.dev/core/action-icon/), etc.).
 Other elements will not support `Space` and `Enter` key presses.
 

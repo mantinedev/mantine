@@ -912,6 +912,7 @@ function Demo() {
 | onOptionSubmit | (value: string) => void | - | Called when option is submitted from dropdown with mouse click or <code>Enter</code> key |
 | onRemove | (value: string) => void | - | Called when tag is removed |
 | onSearchChange | (value: string) => void | - | Called when search changes |
+| openOnFocus | boolean | - | If set, the dropdown opens when the input receives focus |
 | pointer | boolean | - | Determines whether the input should have <code>cursor: pointer</code> style |
 | radius | MantineRadius | number | - | Key of <code>theme.radius</code> or any valid CSS value to set <code>border-radius</code>, numbers are converted to rem |
 | renderOption | (input: ComboboxLikeRenderOptionInput<ComboboxStringItem>) => ReactNode | - | A function to render content of the option, replaces the default content of the option |
@@ -923,6 +924,7 @@ function Demo() {
 | scrollAreaProps | ScrollAreaProps | - | Props passed down to the underlying <code>ScrollArea</code> component in the dropdown |
 | searchValue | string | - | Controlled search value |
 | selectFirstOptionOnChange | boolean | - | If set, the first option is selected when value changes, <code>false</code> by default |
+| selectFirstOptionOnDropdownOpen | boolean | - | If set, the first option is selected when dropdown opens, <code>false</code> by default |
 | size | MantineSize | (string & {}) | - | Controls input <code>height</code> and horizontal <code>padding</code> |
 | splitChars | string[] | - | Characters that should trigger tags split, <code>[',']</code> by default |
 | value | string[] | - | Controlled component value |
