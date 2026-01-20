@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { Box, GetStylesApi, getThemeColor, UnstyledButton, useMantineTheme } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
-import { DateLabelFormat, DayOfWeek } from '../../types';
+import { DateLabelFormat, DayOfWeek, ScheduleMode } from '../../types';
 import {
   formatDate,
   getMonthDays,
@@ -53,7 +53,7 @@ export interface YearViewMonthSettings {
   highlightToday?: boolean;
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions */
-  mode?: 'static' | 'default';
+  mode?: ScheduleMode;
 }
 
 export interface YearViewMonthProps extends YearViewMonthSettings {

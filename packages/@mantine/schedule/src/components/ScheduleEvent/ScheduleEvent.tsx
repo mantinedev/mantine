@@ -13,7 +13,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { ScheduleEventData } from '../../types';
+import { ScheduleEventData, ScheduleMode } from '../../types';
 import { DragContext } from '../DragContext/DragContext';
 import classes from './ScheduleEvent.module.css';
 
@@ -64,7 +64,7 @@ export interface ScheduleEventProps
   isDragging?: boolean;
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
-  mode?: 'static' | 'default';
+  mode?: ScheduleMode;
 }
 
 export type ScheduleEventFactory = Factory<{

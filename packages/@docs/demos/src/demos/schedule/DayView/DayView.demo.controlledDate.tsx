@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button, Group, Text } from '@mantine/core';
 import { DayView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { regularEvents } from './_data';
+import { dataCode, regularEvents } from './_data';
 
 const code = `
 import { useState } from 'react';
@@ -66,5 +66,8 @@ function Demo() {
 export const controlledDate: MantineDemo = {
   type: 'code',
   component: Demo,
-  code,
+  code: [
+    { code, language: 'tsx', fileName: 'Demo.tsx' },
+    { code: dataCode, language: 'tsx', fileName: 'data.ts' },
+  ],
 };

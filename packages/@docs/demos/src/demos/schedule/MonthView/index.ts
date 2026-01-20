@@ -9,4 +9,3 @@ export { withoutHeader } from './MonthView.demo.withoutHeader';
 export { manyEvents } from './MonthView.demo.manyEvents';
 export { dragDrop } from './MonthView.demo.dragDrop';
 export { staticMode } from './MonthView.demo.staticMode';
-export { stylesApi } from './MonthView.demo.stylesApi';

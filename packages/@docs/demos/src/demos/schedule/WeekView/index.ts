@@ -16,4 +16,3 @@ export { businessHours } from './WeekView.demo.businessHours';
 export { overlappingEvents } from './WeekView.demo.overlappingEvents';
 export { dragDrop } from './WeekView.demo.dragDrop';
 export { staticMode } from './WeekView.demo.staticMode';
-export { stylesApi } from './WeekView.demo.stylesApi';

@@ -501,24 +501,6 @@ export function StaticMode() {
   );
 }
 
-export function StaticModeComparison() {
-  return (
-    <div style={{ padding: 40 }}>
-      <div style={{ marginBottom: 20 }}>
-        <h3>Default Mode</h3>
-        <p>Events and days are interactive - try hovering over them</p>
-      </div>
-      <Schedule defaultView="week" events={events} mode="default" />
-
-      <div style={{ marginTop: 40, marginBottom: 20 }}>
-        <h3>Static Mode</h3>
-        <p>Events and days are not interactive - no hover effects or clicks</p>
-      </div>
-      <Schedule defaultView="week" events={events} mode="static" />
-    </div>
-  );
-}
-
 export function StaticModeDayView() {
   return (
     <div style={{ padding: 40 }}>

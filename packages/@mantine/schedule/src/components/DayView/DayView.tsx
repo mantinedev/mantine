@@ -24,6 +24,7 @@ import {
   DateLabelFormat,
   DateStringValue,
   ScheduleEventData,
+  ScheduleMode,
   ScheduleViewLevel,
 } from '../../types';
 import {
@@ -166,7 +167,7 @@ export interface DayViewProps
   canDragEvent?: (event: ScheduleEventData) => boolean;
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
-  mode?: 'static' | 'default';
+  mode?: ScheduleMode;
 }
 
 export type DayViewFactory = Factory<{
@@ -479,11 +480,12 @@ export const DayView = factory<DayViewFactory>((_props) => {
           <ScheduleHeader.Today
             {...stylesApiProps}
             onClick={() => onDateChange?.(toDateString(dayjs()))}
+            labels={labels}
             {...todayControlProps}
           />
 
           <ScheduleHeader.ViewSelect
-            value="week"
+            value="day"
             onChange={onViewChange}
             ml="auto"
             {...stylesApiProps}
@@ -512,6 +514,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
                     events={eventsData.allDayEvents}
                     moreEventsCount={allDayEventsCount.hiddenEventsCount}
                     renderEventBody={renderEventBody}
+                    mode={mode}
                     {...stylesApiProps}
                     {...moreEventsProps}
                   />

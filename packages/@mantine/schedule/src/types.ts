@@ -19,6 +19,9 @@ export type DateLabelFormat = string | ((date: DateStringValue) => string);
 /** View level used by Schedule component */
 export type ScheduleViewLevel = 'day' | 'week' | 'month' | 'year';
 
+/** Interaction mode used by Schedule components */
+export type ScheduleMode = 'static' | 'default';
+
 /** Payload type for ScheduleEventData, defined in user application */
 export type EventPayload = Record<PropertyKey, any>;
 

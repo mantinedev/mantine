@@ -15,7 +15,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
-import { DateStringValue, ScheduleEventData, ScheduleViewLevel } from '../../types';
+import { DateStringValue, ScheduleEventData, ScheduleMode, ScheduleViewLevel } from '../../types';
 import { getMonthsByQuarter, toDateString } from '../../utils';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
 import {
@@ -88,7 +88,7 @@ export interface YearViewProps
   viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
-  mode?: 'static' | 'default';
+  mode?: ScheduleMode;
 }
 
 export type YearViewFactory = Factory<{

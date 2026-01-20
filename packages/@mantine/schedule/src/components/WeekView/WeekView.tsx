@@ -27,6 +27,7 @@ import {
   DateStringValue,
   DayOfWeek,
   ScheduleEventData,
+  ScheduleMode,
   ScheduleViewLevel,
 } from '../../types';
 import {
@@ -196,7 +197,7 @@ export interface WeekViewProps
   canDragEvent?: (event: ScheduleEventData) => boolean;
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
-  mode?: 'static' | 'default';
+  mode?: ScheduleMode;
 }
 
 export type WeekViewFactory = Factory<{

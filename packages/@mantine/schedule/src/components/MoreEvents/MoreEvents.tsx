@@ -15,7 +15,7 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
-import { ScheduleEventData } from '../../types';
+import { ScheduleEventData, ScheduleMode } from '../../types';
 import { RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import classes from './MoreEvents.module.css';
 
@@ -54,6 +54,9 @@ export interface MoreEventsProps
 
   /** Labels override */
   labels?: ScheduleLabelsOverride;
+
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
+  mode?: ScheduleMode;
 }
 
 export type MoreEventsFactory = Factory<{
@@ -88,6 +91,7 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
     renderEventBody,
     id,
     labels,
+    mode,
     ...others
   } = props;
   const [dropdownOpened, dropdownHandlers] = useDisclosure();
@@ -120,6 +124,7 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
           event={event}
           size="md"
           renderEventBody={renderEventBody}
+          mode={mode}
         >
           {event.title}
         </ScheduleEvent>
@@ -165,6 +170,7 @@ export const MoreEvents = factory<MoreEventsFactory>((_props) => {
         <Popover.Target>
           <UnstyledButton
             {...getStyles('moreEventsButton')}
+            mod={{ static: mode === 'static' }}
             onClick={() => dropdownHandlers.toggle()}
             {...others}
           >

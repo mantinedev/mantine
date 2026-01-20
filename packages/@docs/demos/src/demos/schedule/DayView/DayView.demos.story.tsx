@@ -97,8 +97,3 @@ export const Demo_viewChange = {
   name: '⭐ Demo: viewChange',
   render: renderDemo(demos.viewChange),
 };
-
-export const Demo_stylesApi = {
-  name: '⭐ Demo: stylesApi',
-  render: renderDemo(demos.stylesApi),
-};

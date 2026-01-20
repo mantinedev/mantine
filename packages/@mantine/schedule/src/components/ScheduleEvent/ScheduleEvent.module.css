@@ -118,7 +118,7 @@
     }
   }
 
-  :where(.event[data-static]) & {
+  .event[data-static] & {
     cursor: default;
     pointer-events: none;
 

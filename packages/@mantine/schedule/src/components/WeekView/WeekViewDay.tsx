@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { Box, GetStylesApi, UnstyledButton } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
-import { DateStringValue, DayOfWeek } from '../../types';
+import { DateStringValue, DayOfWeek, ScheduleMode } from '../../types';
 import { DayTimeInterval } from '../../utils';
 import type { WeekViewFactory, WeekViewHighlightToday } from './WeekView';
 
@@ -50,7 +50,7 @@ export interface WeekViewDayProps {
   dropTargetSlotIndex?: number;
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions */
-  mode?: 'static' | 'default';
+  mode?: ScheduleMode;
 }
 
 export function WeekViewDay({

@@ -179,31 +179,3 @@ export function StaticMode() {
     </div>
   );
 }
-
-export function StaticModeComparison() {
-  return (
-    <div style={{ padding: 40 }}>
-      <Stack gap="xl">
-        <div>
-          <Text size="sm" fw={500} mb="xs">
-            Default Mode (Interactive)
-          </Text>
-          <Text size="xs" c="dimmed" mb="md">
-            Hover over days, week numbers, and month captions to see interactive effects
-          </Text>
-          <YearView date="2025-11-01" events={november2025Events} mode="default" />
-        </div>
-
-        <div>
-          <Text size="sm" fw={500} mb="xs">
-            Static Mode (Read-only)
-          </Text>
-          <Text size="xs" c="dimmed" mb="md">
-            All elements are non-interactive - no hover effects or clicks
-          </Text>
-          <YearView date="2025-11-01" events={november2025Events} mode="static" />
-        </div>
-      </Stack>
-    </div>
-  );
-}

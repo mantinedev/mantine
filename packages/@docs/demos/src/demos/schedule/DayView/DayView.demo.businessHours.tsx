@@ -1,6 +1,6 @@
 import { DayView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { businessEvents } from './_data';
+import { businessEvents, businessEventsCode } from './_data';
 
 const code = `
 import { DayView } from '@mantine/schedule';
@@ -36,5 +36,8 @@ function Demo() {
 export const businessHours: MantineDemo = {
   type: 'code',
   component: Demo,
-  code,
+  code: [
+    { code, language: 'tsx', fileName: 'Demo.tsx' },
+    { code: businessEventsCode, language: 'tsx', fileName: 'data.ts' },
+  ],
 };

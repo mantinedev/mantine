@@ -17,4 +17,3 @@ export { staticMode } from './DayView.demo.staticMode';
 export { labels } from './DayView.demo.labels';
 export { controlledDate } from './DayView.demo.controlledDate';
 export { viewChange } from './DayView.demo.viewChange';
-export { stylesApi } from './DayView.demo.stylesApi';

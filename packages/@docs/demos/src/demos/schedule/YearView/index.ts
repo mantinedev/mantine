@@ -6,4 +6,3 @@ export { weekdayFormat } from './YearView.demo.weekdayFormat';
 export { highlightToday } from './YearView.demo.highlightToday';
 export { withoutHeader } from './YearView.demo.withoutHeader';
 export { staticMode } from './YearView.demo.staticMode';
-export { stylesApi } from './YearView.demo.stylesApi';

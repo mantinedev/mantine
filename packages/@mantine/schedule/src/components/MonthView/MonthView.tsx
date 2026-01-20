@@ -23,6 +23,7 @@ import {
   DateStringValue,
   DayOfWeek,
   ScheduleEventData,
+  ScheduleMode,
   ScheduleViewLevel,
 } from '../../types';
 import {
@@ -154,7 +155,7 @@ export interface MonthViewProps
   canDragEvent?: (event: ScheduleEventData) => boolean;
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
-  mode?: 'static' | 'default';
+  mode?: ScheduleMode;
 }
 
 export type MonthViewFactory = Factory<{
@@ -434,6 +435,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           key={`more-${day}`}
           events={dayEvents}
           moreEventsCount={hiddenEventsCount}
+          mode={mode}
           style={{
             position: 'absolute',
             top: `calc(100% - 2px)`,

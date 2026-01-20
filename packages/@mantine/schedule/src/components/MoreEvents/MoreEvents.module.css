@@ -8,6 +8,15 @@
     color: var(--mantine-color-bright);
     text-decoration: underline;
   }
+
+  &:where([data-static]) {
+    cursor: default;
+
+    @mixin hover {
+      color: var(--mantine-color-dimmed);
+      text-decoration: none;
+    }
+  }
 }
 
 .moreEventsDropdown {

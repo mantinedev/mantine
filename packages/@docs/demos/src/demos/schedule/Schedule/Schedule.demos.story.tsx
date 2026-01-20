@@ -13,4 +13,3 @@ export const Demo_defaultView = {
   name: '⭐ Demo: defaultView',
   render: renderDemo(demos.defaultView),
 };
-export const Demo_stylesApi = { name: '⭐ Demo: stylesApi', render: renderDemo(demos.stylesApi) };

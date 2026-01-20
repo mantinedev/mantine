@@ -92,8 +92,3 @@ export const Demo_staticMode = {
   name: '⭐ Demo: staticMode',
   render: renderDemo(demos.staticMode),
 };
-
-export const Demo_stylesApi = {
-  name: '⭐ Demo: stylesApi',
-  render: renderDemo(demos.stylesApi),
-};

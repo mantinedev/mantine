@@ -11,7 +11,7 @@ import {
 } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import { ScheduleLabelsOverride } from '../../labels';
-import { DateStringValue, ScheduleEventData, ScheduleViewLevel } from '../../types';
+import { DateStringValue, ScheduleEventData, ScheduleMode, ScheduleViewLevel } from '../../types';
 import { DayView, DayViewProps, DayViewStylesNames } from '../DayView/DayView';
 import { MonthView, MonthViewProps, MonthViewStylesNames } from '../MonthView/MonthView';
 import { RenderEventBody } from '../ScheduleEvent/ScheduleEvent';
@@ -96,7 +96,7 @@ export interface ScheduleProps
 
   // === Interaction Mode ===
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions (default: 'default') */
-  mode?: 'static' | 'default';
+  mode?: ScheduleMode;
 
   // === View-specific Props ===
   /** Props specific to DayView (includes startTime, endTime, intervalMinutes, etc.) */
