@@ -19,9 +19,9 @@ import {
 import { Loader, LoaderProps } from '../Loader';
 import { MantineTransition, Transition } from '../Transition';
 import { UnstyledButton } from '../UnstyledButton';
+import classes from './Button.module.css';
 import { ButtonGroup } from './ButtonGroup/ButtonGroup';
 import { ButtonGroupSection } from './ButtonGroupSection/ButtonGroupSection';
-import classes from './Button.module.css';
 
 export type ButtonSize = MantineSize | `compact-${MantineSize}` | (string & {});
 

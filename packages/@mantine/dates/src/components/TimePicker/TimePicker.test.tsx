@@ -87,6 +87,17 @@ describe('@mantine/dates/TimePicker', () => {
     expect(screen.getByLabelText('test-hours')).toHaveValue('08');
   });
 
+  it('calls onChange when cleared with backspace in uncontrolled mode', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} defaultValue="12:34" onChange={spy} />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.type(document.activeElement!, '{backspace}');
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenLastCalledWith('');
+  });
+
   it('handles left/right arrow keys correctly', async () => {
     render(<TimePicker {...defaultProps} withSeconds format="24h" />);
 

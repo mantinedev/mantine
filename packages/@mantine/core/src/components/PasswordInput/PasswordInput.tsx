@@ -16,8 +16,8 @@ import {
 import { ActionIcon } from '../ActionIcon';
 import { __BaseInputProps, __InputStylesNames, Input, InputVariant } from '../Input';
 import { InputBase } from '../InputBase';
-import { PasswordToggleIcon } from './PasswordToggleIcon';
 import classes from './PasswordInput.module.css';
+import { PasswordToggleIcon } from './PasswordToggleIcon';
 
 export type PasswordInputStylesNames =
   | 'root'

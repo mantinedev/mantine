@@ -14,8 +14,8 @@ import {
 import { useDidUpdate, useHotkeys } from '@mantine/hooks';
 import { getHotkeys } from './get-hotkeys';
 import { SpotlightProvider } from './Spotlight.context';
-import { spotlightActions, SpotlightStore, spotlightStore, useSpotlight } from './spotlight.store';
 import classes from './Spotlight.module.css';
+import { spotlightActions, SpotlightStore, spotlightStore, useSpotlight } from './spotlight.store';
 
 export type SpotlightRootStylesNames =
   | ModalStylesNames

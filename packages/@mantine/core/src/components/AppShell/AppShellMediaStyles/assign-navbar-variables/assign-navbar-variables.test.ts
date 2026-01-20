@@ -13,6 +13,7 @@ function getTestObject(navbar: AppShellProps['navbar']) {
     maxMediaStyles,
     theme: DEFAULT_THEME,
     navbar,
+    mode: 'fixed',
   });
 
   return { baseStyles, minMediaStyles, maxMediaStyles };

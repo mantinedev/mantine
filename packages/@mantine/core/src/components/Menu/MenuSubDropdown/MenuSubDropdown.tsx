@@ -11,8 +11,8 @@ import {
 } from '../../../core';
 import { Popover } from '../../Popover';
 import { useMenuContext } from '../Menu.context';
-import { SubMenuContext } from '../MenuSub/MenuSub.context';
 import classes from '../Menu.module.css';
+import { SubMenuContext } from '../MenuSub/MenuSub.context';
 
 export type MenuSubDropdownStylesNames = 'dropdown';
 

@@ -1,7 +1,7 @@
 import cx from 'clsx';
 import { Box } from '../../../core';
-import { MantineLoaderComponent } from '../Loader.types';
 import classes from '../Loader.module.css';
+import { MantineLoaderComponent } from '../Loader.types';
 
 export const Dots: MantineLoaderComponent = ({ className, ...others }) => (
   <Box component="span" className={cx(classes.dotsLoader, className)} {...others}>

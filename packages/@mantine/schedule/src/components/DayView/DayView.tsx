@@ -51,8 +51,8 @@ import {
   ScheduleHeader,
 } from '../ScheduleHeader/ScheduleHeader';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
-import { getDayViewEvents } from './get-day-view-events/get-day-view-events';
 import classes from './DayView.module.css';
+import { getDayViewEvents } from './get-day-view-events/get-day-view-events';
 
 export type DayViewStylesNames =
   | 'dayView'

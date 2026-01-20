@@ -13,6 +13,7 @@ function getTestObject(aside: AppShellProps['aside']) {
     maxMediaStyles,
     theme: DEFAULT_THEME,
     aside,
+    mode: 'fixed',
   });
 
   return { baseStyles, minMediaStyles, maxMediaStyles };

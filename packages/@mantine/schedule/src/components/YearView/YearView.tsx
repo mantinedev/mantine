@@ -24,8 +24,8 @@ import {
 } from '../ScheduleHeader/ScheduleHeader';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getYearViewEvents } from './get-year-view-events/get-year-view-events';
-import { YearViewMonth, YearViewMonthSettings } from './YearViewMonth';
 import classes from './YearView.module.css';
+import { YearViewMonth, YearViewMonthSettings } from './YearViewMonth';
 
 export type YearViewStylesNames =
   | 'yearView'

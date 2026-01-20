@@ -2,8 +2,8 @@ import { useMergedRef } from '@mantine/hooks';
 import { ElementProps, factory, Factory, useProps } from '../../../core';
 import { Input, InputProps, InputStylesNames } from '../../Input/Input';
 import { useComboboxContext } from '../Combobox.context';
-import { useComboboxTargetProps } from '../use-combobox-target-props/use-combobox-target-props';
 import classes from '../Combobox.module.css';
+import { useComboboxTargetProps } from '../use-combobox-target-props/use-combobox-target-props';
 
 export type ComboboxSearchStylesNames = InputStylesNames;
 

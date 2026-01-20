@@ -16,9 +16,9 @@ import {
   useStyles,
 } from '../../../core';
 import { OptionalPortal } from '../../Portal';
+import classes from '../Tooltip.module.css';
 import { TooltipBaseProps, TooltipCssVariables, TooltipStylesNames } from '../Tooltip.types';
 import { useFloatingTooltip } from './use-floating-tooltip';
-import classes from '../Tooltip.module.css';
 
 export interface TooltipFloatingProps extends TooltipBaseProps {
   /** Offset from mouse in px @default `10` */

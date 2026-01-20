@@ -2,9 +2,9 @@ import { SimpleGrid, Stack } from '@mantine/core';
 import { HomePageContainer } from '../shared/HomePageContainer/HomePageContainer';
 import { HomePageDescription } from '../shared/HomePageDescription/HomePageDescription';
 import { HomePageTitle } from '../shared/HomePageTitle/HomePageTitle';
+import classes from './HomePageJoin.module.css';
 import { DiscordCard } from './SocialCards';
 import { GitHubCard, TwitterCard } from './SocialCards/SocialCards';
-import classes from './HomePageJoin.module.css';
 
 export function HomePageJoin() {
   return (

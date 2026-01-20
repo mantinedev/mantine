@@ -11,8 +11,8 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { useFloatingIndicator } from './use-floating-indicator';
 import classes from './FloatingIndicator.module.css';
+import { useFloatingIndicator } from './use-floating-indicator';
 
 export type FloatingIndicatorStylesNames = 'root';
 export type FloatingIndicatorCssVariables = {

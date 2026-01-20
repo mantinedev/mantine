@@ -13,11 +13,11 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import classes from './Loader.module.css';
 import type { MantineLoader, MantineLoadersRecord } from './Loader.types';
 import { Bars } from './loaders/Bars';
 import { Dots } from './loaders/Dots';
 import { Oval } from './loaders/Oval';
-import classes from './Loader.module.css';
 
 export type LoaderStylesNames = 'root';
 export type LoaderCssVariables = {

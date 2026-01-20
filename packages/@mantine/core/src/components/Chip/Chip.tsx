@@ -20,8 +20,8 @@ import {
   useStyles,
 } from '../../core';
 import { CheckIcon } from '../Checkbox';
-import { ChipGroup, ChipGroupContext } from './ChipGroup/ChipGroup';
 import classes from './Chip.module.css';
+import { ChipGroup, ChipGroupContext } from './ChipGroup/ChipGroup';
 
 export type ChipStylesNames = 'root' | 'input' | 'iconWrapper' | 'checkIcon' | 'label';
 export type ChipVariant = 'outline' | 'filled' | 'light';

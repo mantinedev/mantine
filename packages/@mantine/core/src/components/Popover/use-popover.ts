@@ -70,6 +70,12 @@ function getPopoverMiddlewares(
     middlewaresOptions.flip = false;
   }
 
+  if (middlewaresOptions.flip) {
+    middlewares.push(
+      typeof middlewaresOptions.flip === 'boolean' ? flip() : flip(middlewaresOptions.flip)
+    );
+  }
+
   if (middlewaresOptions.shift) {
     middlewares.push(
       shift(
@@ -77,12 +83,6 @@ function getPopoverMiddlewares(
           ? { limiter: limitShift(), padding: 5 }
           : { limiter: limitShift(), padding: 5, ...middlewaresOptions.shift }
       )
-    );
-  }
-
-  if (middlewaresOptions.flip) {
-    middlewares.push(
-      typeof middlewaresOptions.flip === 'boolean' ? flip() : flip(middlewaresOptions.flip)
     );
   }
 

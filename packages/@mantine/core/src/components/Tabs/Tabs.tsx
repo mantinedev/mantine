@@ -18,10 +18,10 @@ import {
   useStyles,
 } from '../../core';
 import { TabsProvider } from './Tabs.context';
+import classes from './Tabs.module.css';
 import { TabsList, TabsListStylesNames } from './TabsList/TabsList';
 import { TabsPanel, TabsPanelStylesNames } from './TabsPanel/TabsPanel';
 import { TabsTab, TabsTabStylesNames } from './TabsTab/TabsTab';
-import classes from './Tabs.module.css';
 
 export type TabsStylesNames =
   | 'root'

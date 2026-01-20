@@ -20,8 +20,8 @@ import {
   useStyles,
 } from '../../core';
 import { InlineInput, InlineInputClasses, InlineInputStylesNames } from '../../utils/InlineInput';
-import { SwitchGroup, SwitchGroupContext } from './SwitchGroup/SwitchGroup';
 import classes from './Switch.module.css';
+import { SwitchGroup, SwitchGroupContext } from './SwitchGroup/SwitchGroup';
 
 export type SwitchStylesNames =
   | 'root'

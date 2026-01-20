@@ -21,6 +21,8 @@ export interface AppShellResponsiveSize {
   [key: string]: AppShellSize | undefined;
 }
 
+export type AppShellMode = 'fixed' | 'static';
+
 export interface AppShellNavbarConfiguration {
   width: AppShellSize | AppShellResponsiveSize;
   breakpoint: MantineBreakpoint | (string & {}) | number;

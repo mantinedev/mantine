@@ -109,6 +109,9 @@ export interface TagsInputProps
 
   /** Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. */
   isDuplicate?: (value: string, currentValues: string[]) => boolean;
+
+  /** If set, the dropdown opens when the input receives focus @default `true` */
+  openOnFocus?: boolean;
 }
 
 export type TagsInputFactory = Factory<{
@@ -122,6 +125,7 @@ const defaultProps = {
   acceptValueOnBlur: true,
   splitChars: [','],
   hiddenInputValuesDivider: ',',
+  openOnFocus: true,
   size: 'sm',
 } satisfies Partial<TagsInputProps>;
 
@@ -149,6 +153,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     onDropdownOpen,
     onDropdownClose,
     selectFirstOptionOnChange,
+    selectFirstOptionOnDropdownOpen,
     onOptionSubmit,
     comboboxProps,
     filter,
@@ -199,6 +204,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     scrollAreaProps,
     acceptValueOnBlur,
     isDuplicate,
+    openOnFocus,
     attributes,
     ref,
     ...others
@@ -213,7 +219,12 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
   const combobox = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
-    onDropdownOpen,
+    onDropdownOpen: () => {
+      onDropdownOpen?.();
+      if (selectFirstOptionOnDropdownOpen) {
+        combobox.selectFirstOption();
+      }
+    },
     onDropdownClose: () => {
       onDropdownClose?.();
       combobox.resetSelectedOption();
@@ -455,7 +466,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
                   onKeyDown={handleInputKeydown}
                   onFocus={(event) => {
                     onFocus?.(event);
-                    combobox.openDropdown();
+                    openOnFocus && combobox.openDropdown();
                   }}
                   onBlur={(event) => {
                     onBlur?.(event);

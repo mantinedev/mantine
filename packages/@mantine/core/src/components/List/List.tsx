@@ -15,8 +15,8 @@ import {
   useStyles,
 } from '../../core';
 import { ListProvider } from './List.context';
-import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
 import classes from './List.module.css';
+import { ListItem, ListItemStylesNames } from './ListItem/ListItem';
 
 export type ListStylesNames = 'root' | ListItemStylesNames;
 export type ListCssVariables = {

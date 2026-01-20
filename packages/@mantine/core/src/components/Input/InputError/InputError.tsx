@@ -13,8 +13,8 @@ import {
   useProps,
   useStyles,
 } from '../../../core';
-import { InputWrapperContext } from '../InputWrapper.context';
 import classes from '../Input.module.css';
+import { InputWrapperContext } from '../InputWrapper.context';
 
 export type InputErrorStylesNames = 'error';
 export type InputErrorCssVariables = {

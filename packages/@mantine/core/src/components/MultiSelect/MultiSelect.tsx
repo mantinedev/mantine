@@ -114,6 +114,9 @@ export interface MultiSelectProps<Value extends Primitive = string>
 
   /** Clear search value when item is selected */
   clearSearchOnChange?: boolean;
+
+  /** If set, the dropdown opens when the input receives focus @default `true` */
+  openOnFocus?: boolean;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -131,6 +134,7 @@ const defaultProps = {
   checkIconPosition: 'left',
   hiddenInputValuesDivider: ',',
   clearSearchOnChange: true,
+  openOnFocus: true,
   size: 'sm',
 } satisfies Partial<MultiSelectProps>;
 
@@ -155,6 +159,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     onDropdownOpen,
     onDropdownClose,
     selectFirstOptionOnChange,
+    selectFirstOptionOnDropdownOpen,
     onOptionSubmit,
     comboboxProps,
     filter,
@@ -212,6 +217,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     chevronColor,
     attributes,
     clearSearchOnChange,
+    openOnFocus,
     ...others
   } = props;
 
@@ -223,7 +229,12 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
   const combobox = useCombobox({
     opened: dropdownOpened,
     defaultOpened: defaultDropdownOpened,
-    onDropdownOpen,
+    onDropdownOpen: () => {
+      onDropdownOpen?.();
+      if (selectFirstOptionOnDropdownOpen) {
+        combobox.selectFirstOption();
+      }
+    },
     onDropdownClose: () => {
       onDropdownClose?.();
       combobox.resetSelectedOption();
@@ -430,7 +441,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
                   unstyled={unstyled}
                   onFocus={(event) => {
                     onFocus?.(event);
-                    searchable && combobox.openDropdown();
+                    openOnFocus && searchable && combobox.openDropdown();
                   }}
                   onBlur={(event) => {
                     onBlur?.(event);

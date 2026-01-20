@@ -18,12 +18,12 @@ import {
 import { ColorSwatch } from '../ColorSwatch';
 import { AlphaSlider } from './AlphaSlider/AlphaSlider';
 import { ColorPickerContext } from './ColorPicker.context';
+import classes from './ColorPicker.module.css';
 import { ColorFormat, HsvaColor } from './ColorPicker.types';
 import { convertHsvaTo, isColorValid, parseColor } from './converters';
 import { HueSlider } from './HueSlider/HueSlider';
 import { Saturation } from './Saturation/Saturation';
 import { Swatches } from './Swatches/Swatches';
-import classes from './ColorPicker.module.css';
 
 export type ColorPickerStylesNames =
   | 'wrapper'

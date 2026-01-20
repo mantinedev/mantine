@@ -3,12 +3,12 @@ import { Primitive } from '../../../core';
 import { CheckIcon } from '../../Checkbox';
 import { ScrollArea, ScrollAreaProps } from '../../ScrollArea/ScrollArea';
 import { Combobox } from '../Combobox';
+import classes from '../Combobox.module.css';
 import { ComboboxItem, ComboboxLikeRenderOptionInput, ComboboxParsedItem } from '../Combobox.types';
 import { defaultOptionsFilter, FilterOptionsInput } from './default-options-filter';
 import { isEmptyComboboxData } from './is-empty-combobox-data';
 import { isOptionsGroup } from './is-options-group';
 import { validateOptions } from './validate-options';
-import classes from '../Combobox.module.css';
 
 export type OptionsFilter<Value extends Primitive = string> = (
   input: FilterOptionsInput<Value>

@@ -20,8 +20,8 @@ import {
   useStyles,
 } from '../../../core';
 import { ColorPickerContext } from '../ColorPicker.context';
-import { Thumb } from '../Thumb/Thumb';
 import classes from '../ColorPicker.module.css';
+import { Thumb } from '../Thumb/Thumb';
 
 export type ColorSliderStylesNames = 'slider' | 'sliderOverlay' | 'thumb';
 

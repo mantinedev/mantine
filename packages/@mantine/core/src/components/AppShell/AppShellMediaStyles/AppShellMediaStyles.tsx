@@ -8,6 +8,8 @@ interface AppShellMediaStylesProps {
   aside: AppShellProps['aside'] | undefined;
   footer: AppShellProps['footer'] | undefined;
   padding: AppShellProps['padding'] | undefined;
+  mode: 'fixed' | 'static';
+  selector?: string;
 }
 
 export function AppShellMediaStyles({
@@ -16,9 +18,25 @@ export function AppShellMediaStyles({
   aside,
   footer,
   padding,
+  mode,
+  selector,
 }: AppShellMediaStylesProps) {
   const theme = useMantineTheme();
   const ctx = useMantineContext();
-  const { media, baseStyles } = getVariables({ navbar, header, footer, aside, padding, theme });
-  return <InlineStyles media={media} styles={baseStyles} selector={ctx.cssVariablesSelector} />;
+  const { media, baseStyles } = getVariables({
+    navbar,
+    header,
+    footer,
+    aside,
+    padding,
+    theme,
+    mode,
+  });
+  return (
+    <InlineStyles
+      media={media}
+      styles={baseStyles}
+      selector={selector || ctx.cssVariablesSelector}
+    />
+  );
 }

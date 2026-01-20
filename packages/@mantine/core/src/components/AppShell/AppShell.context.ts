@@ -7,6 +7,7 @@ export interface AppShellContextValue {
   zIndex: string | number | undefined;
   disabled: boolean | undefined;
   offsetScrollbars: boolean | undefined;
+  mode: 'fixed' | 'static';
 }
 
 export const [AppShellProvider, useAppShellContext] = createSafeContext<AppShellContextValue>(

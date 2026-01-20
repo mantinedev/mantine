@@ -13,9 +13,9 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import classes from './Tree.module.css';
 import { TreeNode } from './TreeNode';
 import { TreeController, useTree } from './use-tree';
-import classes from './Tree.module.css';
 
 export interface TreeNodeData {
   label: React.ReactNode;

@@ -1,8 +1,8 @@
 import cx from 'clsx';
 import { Box, BoxProps, ElementProps } from '../../core';
 import { useModalBaseContext } from './ModalBase.context';
-import { useModalTitle } from './use-modal-title-id';
 import classes from './ModalBase.module.css';
+import { useModalTitle } from './use-modal-title-id';
 
 export interface ModalBaseTitleProps extends BoxProps, ElementProps<'h2'> {}
 

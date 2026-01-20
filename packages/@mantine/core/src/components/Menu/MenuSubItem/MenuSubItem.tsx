@@ -16,8 +16,8 @@ import {
 import { AccordionChevron } from '../../Accordion';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useMenuContext } from '../Menu.context';
-import { SubMenuContext } from '../MenuSub/MenuSub.context';
 import classes from '../Menu.module.css';
+import { SubMenuContext } from '../MenuSub/MenuSub.context';
 
 export type MenuSubItemStylesNames = 'item' | 'itemLabel' | 'itemSection';
 

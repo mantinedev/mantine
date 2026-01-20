@@ -52,8 +52,8 @@ import {
 } from '../ScheduleHeader/ScheduleHeader';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getWeekViewEvents } from './get-week-view-events/get-week-view-events';
-import { WeekViewDay } from './WeekViewDay';
 import classes from './WeekView.module.css';
+import { WeekViewDay } from './WeekViewDay';
 
 export type WeekViewHighlightToday = 'weekday' | 'column' | false;
 

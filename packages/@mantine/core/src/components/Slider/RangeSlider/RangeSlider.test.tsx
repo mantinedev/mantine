@@ -22,7 +22,7 @@ describe('@mantine/core/RangeSlider', () => {
     component: RangeSlider,
     props: defaultProps,
     displayName: '@mantine/core/RangeSlider',
-    stylesApiName: 'Slider',
+    stylesApiName: 'RangeSlider',
     stylesApiSelectors: [
       'root',
       'bar',

@@ -28,11 +28,11 @@ import { Overlay, OverlayProps } from '../Overlay';
 import { BasePortalProps, OptionalPortal } from '../Portal';
 import { Transition, TransitionOverride } from '../Transition';
 import { PopoverContextProvider, PopoverContextValue } from './Popover.context';
+import classes from './Popover.module.css';
 import { PopoverMiddlewares, PopoverWidth } from './Popover.types';
 import { PopoverDropdown, PopoverDropdownProps } from './PopoverDropdown/PopoverDropdown';
 import { PopoverTarget, PopoverTargetProps } from './PopoverTarget/PopoverTarget';
 import { usePopover } from './use-popover';
-import classes from './Popover.module.css';
 
 export type PopoverStylesNames = 'dropdown' | 'arrow' | 'overlay';
 export type PopoverCssVariables = {

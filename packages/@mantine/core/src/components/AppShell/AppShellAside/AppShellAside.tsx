@@ -10,8 +10,8 @@ import {
   useProps,
 } from '../../../core';
 import { useAppShellContext } from '../AppShell.context';
-import { AppShellCompoundProps } from '../AppShell.types';
 import classes from '../AppShell.module.css';
+import { AppShellCompoundProps } from '../AppShell.types';
 
 export type AppShellAsideStylesNames = 'aside';
 

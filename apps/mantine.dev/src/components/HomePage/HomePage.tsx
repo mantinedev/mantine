@@ -2,6 +2,7 @@ import { useMantineColorScheme } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
 import { DocsFooter } from '../DocsFooter';
 import { Shell } from '../Shell';
+import classes from './HomePage.module.css';
 import { HomePageCombobox } from './HomePageCombobox/HomePageCombobox';
 import { HomePageCommunity } from './HomePageCommunity/HomePageCommunity';
 import { HomePageComponents } from './HomePageComponents/HomePageComponents';
@@ -15,7 +16,6 @@ import { HomePageJumbotron } from './HomePageJumbotron/HomePageJumbotron';
 import { HomePageSponsors } from './HomePageSponsors/HomePageSponsors';
 import { HomePageStyles } from './HomePageStyles/HomePageStyles';
 import { HomePageUI } from './HomePageUI/HomePageUI';
-import classes from './HomePage.module.css';
 
 export function HomePage() {
   const { toggleColorScheme } = useMantineColorScheme();

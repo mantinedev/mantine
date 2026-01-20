@@ -17,8 +17,8 @@ import {
   ScheduleHeaderToday,
 } from './HeaderControl/HeaderControl';
 import { MonthYearSelect, MonthYearSelectStylesNames } from './MonthYearSelect/MonthYearSelect';
-import { ViewSelect, ViewSelectStylesNames } from './ViewSelect/ViewSelect';
 import classes from './ScheduleHeader.module.css';
+import { ViewSelect, ViewSelectStylesNames } from './ViewSelect/ViewSelect';
 
 export type CombinedScheduleHeaderStylesNames =
   | ScheduleHeaderStylesNames

@@ -11,8 +11,8 @@ import {
   useProps,
 } from '@mantine/core';
 import { useSpotlightContext } from './Spotlight.context';
-import { spotlightActions } from './spotlight.store';
 import classes from './Spotlight.module.css';
+import { spotlightActions } from './spotlight.store';
 
 export type SpotlightSearchStylesNames = InputStylesNames;
 

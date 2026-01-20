@@ -17,8 +17,8 @@ import {
   useStyles,
 } from '../../core';
 import { getRowPositionsData } from './get-row-position-data';
-import { useDimensions } from './use-dimensions';
 import classes from './OverflowList.module.css';
+import { useDimensions } from './use-dimensions';
 
 export type OverflowListStylesNames = 'root';
 export type OverflowListCssVariables = {

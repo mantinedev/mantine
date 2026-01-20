@@ -15,10 +15,10 @@ import { getBoundaries } from './get-boundaries/get-boundaries';
 import { getColumns, getFirstMonthColumnIndex, HeatmapColumn } from './get-columns/get-columns';
 import { getDatesRange } from './get-dates-range/get-dates-range';
 import { getMonthsRange } from './get-months-range/get-months-range';
+import classes from './Heatmap.module.css';
 import { HeatmapSplitWeeks } from './HeatmapSplitWeeks';
 import { HeatmapWeeks } from './HeatmapWeeks';
 import { rotateWeekdaysNames } from './rotate-weekdays-names/rotate-weekdays-names';
-import classes from './Heatmap.module.css';
 
 export type HeatmapStylesNames = 'root' | 'rect' | 'weekdayLabel' | 'monthLabel';
 

@@ -13,8 +13,8 @@ import {
   useStyles,
 } from '../../core';
 import { UnstyledButton } from '../UnstyledButton';
-import { CloseIcon } from './CloseIcon';
 import classes from './CloseButton.module.css';
+import { CloseIcon } from './CloseIcon';
 
 export type CloseButtonVariant = 'subtle' | 'transparent';
 export type CloseButtonStylesNames = 'root';

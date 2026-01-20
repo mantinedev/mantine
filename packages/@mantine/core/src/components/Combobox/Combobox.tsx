@@ -13,6 +13,7 @@ import {
 } from '../../core';
 import { __PopoverProps, Popover } from '../Popover';
 import { ComboboxProvider } from './Combobox.context';
+import classes from './Combobox.module.css';
 import { ComboboxChevron, ComboboxChevronProps } from './ComboboxChevron/ComboboxChevron';
 import {
   ComboboxClearButton,
@@ -40,7 +41,6 @@ import { ComboboxOptions, ComboboxOptionsProps } from './ComboboxOptions/Combobo
 import { ComboboxSearch, ComboboxSearchProps } from './ComboboxSearch/ComboboxSearch';
 import { ComboboxTarget, ComboboxTargetProps } from './ComboboxTarget/ComboboxTarget';
 import { ComboboxStore, useCombobox } from './use-combobox/use-combobox';
-import classes from './Combobox.module.css';
 
 export type ComboboxStylesNames =
   | 'options'

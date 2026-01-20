@@ -11,6 +11,7 @@ function getTestObject(header: AppShellProps['header']) {
     baseStyles,
     minMediaStyles,
     header,
+    mode: 'fixed',
   });
 
   return { baseStyles, minMediaStyles, maxMediaStyles };
