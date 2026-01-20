@@ -38,6 +38,12 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
     description: 'Nextra + Mantine template',
   },
   {
+    type: 'next',
+    name: 'next-saas-template',
+    link: 'https://github.com/AshutoshDash1999/nextjs-mantine-boilerplate',
+    description: 'Next.js SaaS boilerplate with Mantine',
+  },
+  {
     type: 'vite',
     name: 'nx-vite-monorepo-template',
     link: 'https://github.com/dipiash/nx-vite-react-ts-mantine-boilerplate',
