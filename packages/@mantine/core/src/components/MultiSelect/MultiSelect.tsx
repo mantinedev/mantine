@@ -111,6 +111,9 @@ export interface MultiSelectProps
 
   /** Clear search value when item is selected */
   clearSearchOnChange?: boolean;
+
+  /** If set, the dropdown opens when the input receives focus @default `true` */
+  openOnFocus?: boolean;
 }
 
 export type MultiSelectFactory = Factory<{
@@ -125,6 +128,7 @@ const defaultProps = {
   checkIconPosition: 'left',
   hiddenInputValuesDivider: ',',
   clearSearchOnChange: true,
+  openOnFocus: true,
   size: 'sm',
 } satisfies Partial<MultiSelectProps>;
 
@@ -207,6 +211,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
     chevronColor,
     attributes,
     clearSearchOnChange,
+    openOnFocus,
     ...others
   } = props;
 
@@ -431,7 +436,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
                   unstyled={unstyled}
                   onFocus={(event) => {
                     onFocus?.(event);
-                    searchable && combobox.openDropdown();
+                    openOnFocus && searchable && combobox.openDropdown();
                   }}
                   onBlur={(event) => {
                     onBlur?.(event);

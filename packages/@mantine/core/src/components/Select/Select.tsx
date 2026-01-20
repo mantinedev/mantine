@@ -97,6 +97,9 @@ export interface SelectProps
 
   /** If set, the highlighted option is selected when the input loses focus @default `false` */
   autoSelectOnBlur?: boolean;
+
+  /** If set, the dropdown opens when the input receives focus @default `true` */
+  openOnFocus?: boolean;
 }
 
 export type SelectFactory = Factory<{
@@ -110,6 +113,7 @@ const defaultProps = {
   withCheckIcon: true,
   allowDeselect: true,
   checkIconPosition: 'left',
+  openOnFocus: true,
 } satisfies Partial<SelectProps>;
 
 export const Select = factory<SelectFactory>((_props, ref) => {
@@ -168,6 +172,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
     __clearable,
     chevronColor,
     autoSelectOnBlur,
+    openOnFocus,
     attributes,
     ...others
   } = props;
@@ -339,7 +344,7 @@ export const Select = factory<SelectFactory>((_props, ref) => {
               selectFirstOptionOnChange && combobox.selectFirstOption();
             }}
             onFocus={(event) => {
-              !!searchable && combobox.openDropdown();
+              openOnFocus && !!searchable && combobox.openDropdown();
               onFocus?.(event);
             }}
             onBlur={(event) => {
