@@ -342,4 +342,26 @@ describe('@mantine/schedule/MonthView', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Switch to day view' }));
     expect(spy).toHaveBeenCalledWith('day');
   });
+
+  it('supports custom labels prop for header elements', () => {
+    render(
+      <MonthView
+        {...defaultProps}
+        labels={{
+          today: 'Hoy',
+          previous: 'Anterior',
+          next: 'Siguiente',
+          switchToDayView: 'Ver día',
+          switchToWeekView: 'Ver semana',
+          switchToMonthView: 'Ver mes',
+          switchToYearView: 'Ver año',
+        }}
+      />
+    );
+
+    expect(screen.getByRole('button', { name: 'Hoy' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Anterior' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Siguiente' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Ver día' })).toBeInTheDocument();
+  });
 });

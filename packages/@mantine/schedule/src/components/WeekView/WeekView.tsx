@@ -561,6 +561,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
             onClick={() =>
               onDateChange?.(previousWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)))
             }
+            labels={labels}
             {...previousControlProps}
           />
 
@@ -577,12 +578,14 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           <ScheduleHeader.Next
             {...stylesApiProps}
             onClick={() => onDateChange?.(nextWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)))}
+            labels={labels}
             {...nextControlProps}
           />
 
           <ScheduleHeader.Today
             {...stylesApiProps}
             onClick={() => onDateChange?.(toDateString(dayjs()))}
+            labels={labels}
             {...todayControlProps}
           />
 
@@ -590,6 +593,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
             value="week"
             onChange={onViewChange}
             ml="auto"
+            labels={labels}
             {...stylesApiProps}
             {...viewSelectProps}
           />

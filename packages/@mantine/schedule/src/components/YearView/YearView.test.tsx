@@ -415,4 +415,26 @@ describe('@mantine/schedule/YearView', () => {
     const indicators = nov5Buttons[0].querySelectorAll('.mantine-YearView-yearViewDayIndicator');
     expect(indicators).toHaveLength(3);
   });
+
+  it('supports custom labels prop for header elements', () => {
+    render(
+      <YearView
+        {...defaultProps}
+        labels={{
+          today: 'Hoy',
+          previous: 'Anterior',
+          next: 'Siguiente',
+          switchToDayView: 'Ver día',
+          switchToWeekView: 'Ver semana',
+          switchToMonthView: 'Ver mes',
+          switchToYearView: 'Ver año',
+        }}
+      />
+    );
+
+    expect(screen.getByRole('button', { name: 'Hoy' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Anterior' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Siguiente' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Ver día' })).toBeInTheDocument();
+  });
 });

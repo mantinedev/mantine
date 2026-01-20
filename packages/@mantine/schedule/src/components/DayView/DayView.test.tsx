@@ -376,4 +376,26 @@ describe('@mantine/schedule/DayView', () => {
     expect(screen.getByText('Test event')).toBeInTheDocument();
     expect(screen.queryAllByText('Custom body').length).toBeGreaterThan(0);
   });
+
+  it('supports custom labels prop for header elements', () => {
+    render(
+      <DayView
+        {...defaultProps}
+        labels={{
+          today: 'Hoy',
+          previous: 'Anterior',
+          next: 'Siguiente',
+          switchToDayView: 'Ver día',
+          switchToWeekView: 'Ver semana',
+          switchToMonthView: 'Ver mes',
+          switchToYearView: 'Ver año',
+        }}
+      />
+    );
+
+    expect(screen.getByRole('button', { name: 'Hoy' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Anterior' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Siguiente' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Ver día' })).toBeInTheDocument();
+  });
 });

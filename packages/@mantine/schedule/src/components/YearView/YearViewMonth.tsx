@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { Box, GetStylesApi, getThemeColor, UnstyledButton, useMantineTheme } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
+import { ScheduleLabelsOverride } from '../../labels';
 import { DateLabelFormat, DayOfWeek, ScheduleMode } from '../../types';
 import {
   formatDate,
@@ -51,6 +52,9 @@ export interface YearViewMonthSettings {
 
   /** If set, highlights the current day @default true */
   highlightToday?: boolean;
+
+  /** Labels override for i18n */
+  labels?: ScheduleLabelsOverride;
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions */
   mode?: ScheduleMode;

@@ -464,6 +464,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
           <ScheduleHeader.Previous
             {...stylesApiProps}
             onClick={() => onDateChange?.(toDateString(dayjs(date).subtract(1, 'day')))}
+            labels={labels}
             {...previousControlProps}
           />
 
@@ -474,6 +475,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
           <ScheduleHeader.Next
             {...stylesApiProps}
             onClick={() => onDateChange?.(toDateString(dayjs(date).add(1, 'day')))}
+            labels={labels}
             {...nextControlProps}
           />
 
@@ -488,6 +490,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
             value="day"
             onChange={onViewChange}
             ml="auto"
+            labels={labels}
             {...stylesApiProps}
             {...viewSelectProps}
           />

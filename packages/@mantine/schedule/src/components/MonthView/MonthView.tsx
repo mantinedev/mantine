@@ -18,6 +18,7 @@ import {
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { useDragState } from '../../hooks/use-drag-state';
+import { ScheduleLabelsOverride } from '../../labels';
 import {
   DateLabelFormat,
   DateStringValue,
@@ -154,6 +155,9 @@ export interface MonthViewProps
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
 
+  /** Labels override for i18n */
+  labels?: ScheduleLabelsOverride;
+
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
   mode?: ScheduleMode;
 }
@@ -222,6 +226,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     withDragDrop,
     onEventDrop,
     canDragEvent,
+    labels,
     mode,
     ...others
   } = props;
@@ -507,6 +512,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
             onClick={() =>
               onDateChange?.(toDateString(dayjs(date).subtract(1, 'month').startOf('month')))
             }
+            labels={labels}
             {...previousControlProps}
           />
 
@@ -528,12 +534,14 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
             onClick={() =>
               onDateChange?.(toDateString(dayjs(date).add(1, 'month').startOf('month')))
             }
+            labels={labels}
             {...nextControlProps}
           />
 
           <ScheduleHeader.Today
             {...stylesApiProps}
             onClick={() => onDateChange?.(toDateString(dayjs()))}
+            labels={labels}
             {...todayControlProps}
           />
 
@@ -541,6 +549,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
             value="month"
             onChange={onViewChange}
             ml="auto"
+            labels={labels}
             {...stylesApiProps}
             {...viewSelectProps}
           />

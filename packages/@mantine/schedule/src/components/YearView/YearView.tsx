@@ -133,6 +133,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
     getDayProps,
     getWeekNumberProps,
     highlightToday,
+    labels,
 
     // ScheduleHeader props
     withHeader,
@@ -235,6 +236,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
             onClick={() =>
               onDateChange?.(toDateString(dayjs(date).subtract(1, 'year').startOf('year')))
             }
+            labels={labels}
             {...previousControlProps}
           />
 
@@ -252,12 +254,14 @@ export const YearView = factory<YearViewFactory>((_props) => {
           <ScheduleHeader.Next
             {...stylesApiProps}
             onClick={() => onDateChange?.(toDateString(dayjs(date).add(1, 'year').startOf('year')))}
+            labels={labels}
             {...nextControlProps}
           />
 
           <ScheduleHeader.Today
             {...stylesApiProps}
             onClick={() => onDateChange?.(toDateString(dayjs()))}
+            labels={labels}
             {...todayControlProps}
           />
 
@@ -265,6 +269,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
             value="year"
             onChange={onViewChange}
             ml="auto"
+            labels={labels}
             {...stylesApiProps}
             {...viewSelectProps}
           />
