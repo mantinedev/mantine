@@ -3,7 +3,6 @@ import * as demos from './index';
 
 export default { title: 'schedule/MonthView' };
 
-export const Demo_usage = { name: '⭐ Demo: usage', render: renderDemo(demos.usage) };
 export const Demo_withWeekNumbers = { name: '⭐ Demo: withWeekNumbers', render: renderDemo(demos.withWeekNumbers) };
 export const Demo_withoutWeekDays = { name: '⭐ Demo: withoutWeekDays', render: renderDemo(demos.withoutWeekDays) };
 export const Demo_firstDayOfWeek = { name: '⭐ Demo: firstDayOfWeek', render: renderDemo(demos.firstDayOfWeek) };

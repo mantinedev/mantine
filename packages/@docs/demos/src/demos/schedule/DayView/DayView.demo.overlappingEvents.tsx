@@ -1,6 +1,6 @@
 import { DayView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { overlappingEvents } from './_data';
+import { overlappingEvents as overlappingEventsData } from './_data';
 
 const code = `
 import { DayView } from '@mantine/schedule';
@@ -22,7 +22,7 @@ function Demo() {
   return (
     <DayView
       date={new Date()}
-      events={overlappingEvents}
+      events={overlappingEventsData}
       startTime="08:00:00"
       endTime="18:00:00"
     />

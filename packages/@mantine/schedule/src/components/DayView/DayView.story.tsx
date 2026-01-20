@@ -382,7 +382,7 @@ export function DragAndDrop() {
           events={events}
           withDragDrop
           onEventDrop={handleEventDrop}
-          canDragEvent={(event) => !event.payload.locked}
+          canDragEvent={(event) => !event.payload?.locked}
           startTime="08:00:00"
           endTime="18:00:00"
         />

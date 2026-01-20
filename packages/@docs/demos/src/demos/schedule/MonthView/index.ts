@@ -1,4 +1,3 @@
-export { usage } from './MonthView.demo.usage';
 export { withWeekNumbers } from './MonthView.demo.withWeekNumbers';
 export { withoutWeekDays } from './MonthView.demo.withoutWeekDays';
 export { firstDayOfWeek } from './MonthView.demo.firstDayOfWeek';

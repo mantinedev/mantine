@@ -26,8 +26,16 @@ export const WeekViewStylesApi: StylesApiData<WeekViewFactory> = {
     weekViewWeekNumber: 'Week number indicator',
     header: 'Header container, part of ScheduleHeader',
     headerControl: 'Header control element, part of ScheduleHeader',
-    timeIndicator: 'Current time indicator line, part of CurrentTimeIndicator',
-    timeBubble: 'Current time bubble, part of CurrentTimeIndicator',
+    viewSelect: 'View select element, part of ScheduleHeader',
+    monthYearSelectTarget: 'Month/year select target button, part of MonthYearSelect',
+    monthYearSelectDropdown: 'Month/year select dropdown, part of MonthYearSelect',
+    monthYearSelectControl: 'Month/year select control, part of MonthYearSelect',
+    monthYearSelectList: 'Month/year select list, part of MonthYearSelect',
+    monthYearSelectLabel: 'Month/year select label, part of MonthYearSelect',
+    currentTimeIndicator: 'Current time indicator container, part of CurrentTimeIndicator',
+    currentTimeIndicatorLine: 'Current time indicator line, part of CurrentTimeIndicator',
+    currentTimeIndicatorThumb: 'Current time indicator thumb, part of CurrentTimeIndicator',
+    currentTimeIndicatorTimeBubble: 'Current time indicator time bubble, part of CurrentTimeIndicator',
   },
 
   vars: {

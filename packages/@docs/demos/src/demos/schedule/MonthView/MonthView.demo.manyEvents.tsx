@@ -1,6 +1,6 @@
 import { MonthView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { manyEvents } from './_data';
+import { manyEvents as manyEventsData } from './_data';
 
 const code = `
 import { MonthView } from '@mantine/schedule';
@@ -12,7 +12,7 @@ function Demo() {
 `;
 
 function Demo() {
-  return <MonthView date={new Date()} events={manyEvents} />;
+  return <MonthView date={new Date()} events={manyEventsData} />;
 }
 
 export const manyEvents: MantineDemo = {

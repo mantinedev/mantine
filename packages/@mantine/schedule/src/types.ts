@@ -43,7 +43,7 @@ export interface ScheduleEventData<Payload extends EventPayload = EventPayload> 
   variant?: 'filled' | 'light';
 
   /** Additional event data, defined by the user, not used internally by the library */
-  payload: Payload;
+  payload?: Payload;
 }
 
 export interface DayEventPositionData {
