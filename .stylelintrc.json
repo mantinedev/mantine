@@ -21,6 +21,7 @@
     "color-hex-length": null,
     "scss/no-global-function-names": null,
     "color-function-alias-notation": null,
+    "property-no-deprecated": null,
     "selector-pseudo-class-no-unknown": [
       true,
       {
