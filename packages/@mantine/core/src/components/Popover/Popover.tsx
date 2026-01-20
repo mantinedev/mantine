@@ -287,7 +287,7 @@ export function Popover(_props: PopoverProps) {
     ? { ...portalProps, target: floatingPortalTarget }
     : portalProps;
 
- const resolvedFloatingStrategy = useFloatingPortal ? 'fixed' : floatingStrategy;
+  const resolvedFloatingStrategy = useFloatingPortal ? 'fixed' : floatingStrategy;
 
   const uid = useId(id);
   const popover = usePopover({
