@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useMergedRef } from '@mantine/hooks';
+import { useMergedRef, useReducedMotion } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -53,15 +53,26 @@ export type FloatingIndicatorFactory = Factory<{
   ref: HTMLDivElement;
   stylesNames: FloatingIndicatorStylesNames;
   vars: FloatingIndicatorCssVariables;
+  ctx: { shouldReduceMotion: boolean };
 }>;
 
 const varsResolver = createVarsResolver<FloatingIndicatorFactory>(
-  (_theme, { transitionDuration }) => ({
-    root: {
-      '--transition-duration':
-        typeof transitionDuration === 'number' ? `${transitionDuration}ms` : transitionDuration,
-    },
-  })
+  (theme, { transitionDuration }, { shouldReduceMotion }) => {
+    const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
+    const duration = reduceMotion
+      ? 0
+      : typeof transitionDuration === 'number'
+        ? transitionDuration
+        : transitionDuration
+          ? parseFloat(transitionDuration)
+          : 150;
+
+    return {
+      root: {
+        '--transition-duration': `${duration}ms`,
+      },
+    };
+  }
 );
 
 export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props) => {
@@ -85,6 +96,8 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props) => {
     ...others
   } = props;
 
+  const shouldReduceMotion = useReducedMotion();
+
   const getStyles = useStyles<FloatingIndicatorFactory>({
     name: 'FloatingIndicator',
     classes,
@@ -97,6 +110,7 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props) => {
     attributes,
     vars,
     varsResolver,
+    stylesCtx: { shouldReduceMotion },
   });
 
   const innerRef = useRef<HTMLDivElement>(null);
