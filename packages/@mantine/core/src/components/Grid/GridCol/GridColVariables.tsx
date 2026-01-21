@@ -14,6 +14,7 @@ interface GridColVariablesProps {
   span: GridColProps['span'] | undefined;
   order?: GridColProps['order'] | undefined;
   offset?: GridColProps['offset'] | undefined;
+  align?: GridColProps['align'] | undefined;
 }
 
 const getColumnFlexBasis = (colSpan: ColSpan | undefined, columns: number) => {
@@ -55,7 +56,7 @@ const getColumnFlexGrow = (colSpan: ColSpan | undefined, grow: boolean | undefin
 const getColumnOffset = (offset: number | undefined, columns: number) =>
   offset === 0 ? '0' : offset ? `${100 / (columns / offset)}%` : undefined;
 
-export function GridColVariables({ span, order, offset, selector }: GridColVariablesProps) {
+export function GridColVariables({ span, order, offset, align, selector }: GridColVariablesProps) {
   const theme = useMantineTheme();
   const ctx = useGridContext();
   const _breakpoints = ctx.breakpoints || theme.breakpoints;
@@ -70,6 +71,7 @@ export function GridColVariables({ span, order, offset, selector }: GridColVaria
     '--col-width': baseSpan === 'content' ? 'auto' : undefined,
     '--col-max-width': getColumnMaxWidth(baseSpan, ctx.columns, ctx.grow),
     '--col-offset': getColumnOffset(getBaseValue(offset), ctx.columns),
+    '--col-align-self': getBaseValue(align),
   });
 
   const queries = keys(_breakpoints).reduce<Record<string, Record<string, any>>>(
@@ -95,6 +97,10 @@ export function GridColVariables({ span, order, offset, selector }: GridColVaria
 
       if (typeof offset === 'object' && offset[breakpoint] !== undefined) {
         acc[breakpoint]['--col-offset'] = getColumnOffset(offset[breakpoint], ctx.columns);
+      }
+
+      if (typeof align === 'object' && align[breakpoint] !== undefined) {
+        acc[breakpoint]['--col-align-self'] = align[breakpoint];
       }
 
       return acc;

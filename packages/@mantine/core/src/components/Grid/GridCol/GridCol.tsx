@@ -27,6 +27,9 @@ export interface GridColProps
 
   /** Column start offset – number of empty columns before this column */
   offset?: StyleProp<number>;
+
+  /** Vertical alignment of the column, controls `align-self` CSS property */
+  align?: StyleProp<React.CSSProperties['alignSelf']>;
 }
 
 export type GridColFactory = Factory<{
@@ -42,7 +45,8 @@ const defaultProps = {
 
 export const GridCol = factory<GridColFactory>((_props) => {
   const props = useProps('GridCol', defaultProps, _props);
-  const { classNames, className, style, styles, vars, span, order, offset, ...others } = props;
+  const { classNames, className, style, styles, vars, span, order, offset, align, ...others } =
+    props;
   const ctx = useGridContext();
   const responsiveClassName = useRandomClassName();
   return (
@@ -52,6 +56,7 @@ export const GridCol = factory<GridColFactory>((_props) => {
         span={span}
         order={order}
         offset={offset}
+        align={align}
       />
 
       <Box

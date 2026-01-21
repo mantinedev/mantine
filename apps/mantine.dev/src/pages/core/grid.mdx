@@ -32,14 +32,21 @@ In the following example `span={{ base: 12, md: 6, lg: 3 }}`:
 
 <Demo data={GridDemos.responsive} />
 
-## Gutter
+## Gap
 
-Set the `gutter` prop to control spacing between columns. The prop works the same
+Set the `gap` prop to control spacing between columns and rows. The prop works the same
 way as [style props](/styles/style-props) – you can reference `theme.spacing` values
-with `xs`, `sm`, `md`, `lg` and `xl` strings and use object syntax to change gutter
+with `xs`, `sm`, `md`, `lg` and `xl` strings and use object syntax to change gap
 based on viewport width:
 
-<Demo data={GridDemos.gutter} />
+<Demo data={GridDemos.gap} />
+
+## Row and column gap
+
+Use `rowGap` and `columnGap` props to set different spacing for rows and columns.
+`rowGap` and `columnGap` override `gap` prop if both are set:
+
+<Demo data={GridDemos.rowColumnGap} />
 
 ## Grow
 
@@ -73,6 +80,13 @@ columns are moved to the next row:
 You can control the `justify-content` and `align-items` CSS properties with the `justify` and `align` props on the `Grid` component:
 
 <Demo data={GridDemos.flexConfigurator} />
+
+## Column alignment
+
+Use the `align` prop on individual `Grid.Col` components to control the `align-self` CSS property
+for each column. This allows you to override the grid's `align` prop for specific columns:
+
+<Demo data={GridDemos.columnAlign} />
 
 ## Auto sized columns
 
@@ -125,6 +139,57 @@ function Demo() {
     <Grid overflow="hidden">
       <Grid.Col span={6}>1</Grid.Col>
       <Grid.Col span={6}>2</Grid.Col>
+    </Grid>
+  );
+}
+```
+
+## Browser support
+
+Grid component uses flexbox for layout, which is supported in all modern browsers.
+
+### Container queries
+
+When using `type="container"`, the Grid component uses [CSS container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries).
+Container queries are supported in the following browsers:
+
+- Chrome 105+
+- Safari 16+
+- Firefox 110+
+- Edge 105+
+
+If you need to support older browsers, use the default `type="media"` which uses standard media queries
+instead of container queries.
+
+Example with media queries (default):
+
+```tsx
+import { Grid } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Grid gap="md">
+      <Grid.Col span={{ base: 12, md: 6 }}>1</Grid.Col>
+      <Grid.Col span={{ base: 12, md: 6 }}>2</Grid.Col>
+    </Grid>
+  );
+}
+```
+
+Example with container queries:
+
+```tsx
+import { Grid } from '@mantine/core';
+
+function Demo() {
+  return (
+    <Grid
+      type="container"
+      breakpoints={{ xs: '100px', sm: '200px', md: '300px', lg: '400px', xl: '500px' }}
+      gap="md"
+    >
+      <Grid.Col span={{ base: 12, md: 6 }}>1</Grid.Col>
+      <Grid.Col span={{ base: 12, md: 6 }}>2</Grid.Col>
     </Grid>
   );
 }

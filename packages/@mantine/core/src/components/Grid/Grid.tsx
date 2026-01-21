@@ -23,8 +23,14 @@ export type GridCssVariables = {
 };
 
 export interface GridProps extends BoxProps, StylesApiProps<GridFactory>, ElementProps<'div'> {
-  /** Gutter between columns, key of `theme.spacing` or any valid CSS value @default `'md'` */
-  gutter?: StyleProp<MantineSpacing>;
+  /** Gap between columns and rows, key of `theme.spacing` or any valid CSS value @default `'md'` */
+  gap?: StyleProp<MantineSpacing>;
+
+  /** Row gap, overrides `gap` for vertical spacing */
+  rowGap?: StyleProp<MantineSpacing>;
+
+  /** Column gap, overrides `gap` for horizontal spacing */
+  columnGap?: StyleProp<MantineSpacing>;
 
   /** If set, columns in the last row expand to fill all available space @default `false` */
   grow?: boolean;
@@ -59,7 +65,7 @@ export type GridFactory = Factory<{
 }>;
 
 const defaultProps = {
-  gutter: 'md',
+  gap: 'md',
   columns: 12,
 } satisfies Partial<GridProps>;
 
@@ -81,7 +87,9 @@ export const Grid = factory<GridFactory>((_props) => {
     unstyled,
     vars,
     grow,
-    gutter,
+    gap,
+    rowGap,
+    columnGap,
     columns,
     align,
     justify,

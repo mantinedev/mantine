@@ -53,9 +53,19 @@ export const Demo_content = {
   render: renderDemo(demos.content),
 };
 
-export const Demo_gutter = {
-  name: '⭐ Demo: gutter',
-  render: renderDemo(demos.gutter),
+export const Demo_gap = {
+  name: '⭐ Demo: gap',
+  render: renderDemo(demos.gap),
+};
+
+export const Demo_rowColumnGap = {
+  name: '⭐ Demo: rowColumnGap',
+  render: renderDemo(demos.rowColumnGap),
+};
+
+export const Demo_columnAlign = {
+  name: '⭐ Demo: columnAlign',
+  render: renderDemo(demos.columnAlign),
 };
 
 export const Demo_container = {

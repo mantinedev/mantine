@@ -240,3 +240,43 @@ function Demo() {
   );
 }
 ```
+
+## Grid gutter -> gap
+
+The [Grid](/core/grid) component `gutter` prop was renamed to `gap` for consistency with other layout components
+(like [Flex](/core/flex) and [SimpleGrid](/core/simple-grid)). Additionally, new `rowGap` and `columnGap` props
+were added to allow separate control of vertical and horizontal spacing:
+
+```tsx
+import { Grid } from '@mantine/core';
+
+// ❌ No longer works
+function Demo() {
+  return (
+    <Grid gutter="xl">
+      <Grid.Col span={6}>1</Grid.Col>
+      <Grid.Col span={6}>2</Grid.Col>
+    </Grid>
+  );
+}
+
+// ✅ Use the gap prop
+function Demo() {
+  return (
+    <Grid gap="xl">
+      <Grid.Col span={6}>1</Grid.Col>
+      <Grid.Col span={6}>2</Grid.Col>
+    </Grid>
+  );
+}
+
+// ✅ New: Separate row and column gaps
+function Demo() {
+  return (
+    <Grid rowGap="xl" columnGap="sm">
+      <Grid.Col span={6}>1</Grid.Col>
+      <Grid.Col span={6}>2</Grid.Col>
+    </Grid>
+  );
+}
+```

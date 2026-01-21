@@ -4,14 +4,17 @@
 
 .root {
   --grid-overflow: visible;
-  --grid-margin: calc(var(--grid-gutter) / -2);
-  --grid-col-padding: calc(var(--grid-gutter) / 2);
+  --grid-column-gap: var(--grid-gap);
+  --grid-row-gap: var(--grid-gap);
+  --grid-margin: calc(var(--grid-column-gap) / -2);
+  --grid-col-padding-x: calc(var(--grid-column-gap) / 2);
+  --grid-col-padding-y: calc(var(--grid-row-gap) / 2);
 
   overflow: var(--grid-overflow);
 }
 
 .inner {
-  width: calc(100% + var(--grid-gutter));
+  width: calc(100% + var(--grid-column-gap));
   display: flex;
   flex-wrap: wrap;
   justify-content: var(--grid-justify);
@@ -30,5 +33,7 @@
   max-width: var(--col-max-width);
   flex-grow: var(--col-flex-grow);
   margin-inline-start: var(--col-offset);
-  padding: var(--grid-col-padding);
+  padding-inline: var(--grid-col-padding-x);
+  padding-block: var(--grid-col-padding-y);
+  align-self: var(--col-align-self);
 }

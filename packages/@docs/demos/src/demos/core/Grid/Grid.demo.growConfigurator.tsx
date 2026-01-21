@@ -42,7 +42,7 @@ export const growConfigurator: MantineDemo = {
       libraryValue: false,
     },
     {
-      prop: 'gutter',
+      prop: 'gap',
       type: 'size',
       initialValue: 'md',
       libraryValue: 'md',
