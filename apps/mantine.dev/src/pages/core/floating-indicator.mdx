@@ -10,10 +10,14 @@ export default Layout(MDX_DATA.FloatingIndicator);
 It can be used to create custom segmented controls, tabs and other similar components.
 
 `FloatingIndicator` renders an element over the `target` element. To calculate the position, it is
-required to pass a `parent` element which has a relative position.
+required to pass a `parent` element. **The parent element must have `position: relative` CSS property** –
+this is essential for correct positioning. The component returns `null` and renders nothing if either
+`target` or `parent` is not provided.
 
 By default, `FloatingIndicator` does not have any visible styles. You can use the `className` prop
-or [Styles API](/styles/styles-api) to apply styles.
+or [Styles API](/styles/styles-api) to apply styles. Note that the indicator's `transform`, `width`,
+and `height` styles are set directly via JavaScript to enable smooth position transitions – these
+cannot be overridden via the Styles API.
 
 <Demo data={FloatingIndicatorDemos.segmented} />
 
