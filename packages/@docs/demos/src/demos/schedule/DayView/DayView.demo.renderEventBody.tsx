@@ -34,10 +34,10 @@ const events: ScheduleEventData[] = [
 ];
 
 const code = `
-import { IconClock, IconMapPin } from '@tabler/icons-react';
 import dayjs from 'dayjs';
-import { DayView, ScheduleEventData } from '@mantine/schedule';
+import { IconClock, IconMapPin } from '@tabler/icons-react';
 import { Group, Text } from '@mantine/core';
+import { DayView, ScheduleEventData } from '@mantine/schedule';
 
 const events: ScheduleEventData[] = [
   {
@@ -59,23 +59,24 @@ function Demo() {
       startTime="08:00:00"
       endTime="18:00:00"
       renderEventBody={(event) => (
-        <div>
-          <Text size="sm" fw={500}>
+        <Group>
+          <Text fz={12} fw={500}>
             {event.title}
           </Text>
-          <Group gap={4} mt={4}>
+          <Group gap={4}>
             <IconClock size={12} />
-            <Text size="xs">
+            <Text fz={10} lh={1}>
               {dayjs(event.start).format('h:mm A')}
             </Text>
           </Group>
+
           {event.payload?.location && (
-            <Group gap={4} mt={2}>
+            <Group gap={4}>
               <IconMapPin size={12} />
-              <Text size="xs">{event.payload.location}</Text>
+              <Text fz={10}>{event.payload.location}</Text>
             </Group>
           )}
-        </div>
+        </Group>
       )}
     />
   );
@@ -90,21 +91,24 @@ function Demo() {
       startTime="08:00:00"
       endTime="18:00:00"
       renderEventBody={(event) => (
-        <div>
-          <Text size="sm" fw={500}>
+        <Group>
+          <Text fz={12} fw={500}>
             {event.title}
           </Text>
-          <Group gap={4} mt={4}>
+          <Group gap={4}>
             <IconClock size={12} />
-            <Text size="xs">{dayjs(event.start).format('h:mm A')}</Text>
+            <Text fz={10} lh={1}>
+              {dayjs(event.start).format('h:mm A')}
+            </Text>
           </Group>
+
           {event.payload?.location && (
-            <Group gap={4} mt={2}>
+            <Group gap={4}>
               <IconMapPin size={12} />
-              <Text size="xs">{event.payload.location}</Text>
+              <Text fz={10}>{event.payload.location}</Text>
             </Group>
           )}
-        </div>
+        </Group>
       )}
     />
   );

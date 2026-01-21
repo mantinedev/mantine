@@ -11,8 +11,6 @@ function Demo() {
     <DayView
       date={new Date()}
       events={events}
-      startTime="08:00:00"
-      endTime="18:00:00"
       withCurrentTimeIndicator
       withCurrentTimeBubble
     />
@@ -25,8 +23,6 @@ function Demo() {
     <DayView
       date={new Date()}
       events={regularEvents}
-      startTime="08:00:00"
-      endTime="18:00:00"
       withCurrentTimeIndicator
       withCurrentTimeBubble
     />
