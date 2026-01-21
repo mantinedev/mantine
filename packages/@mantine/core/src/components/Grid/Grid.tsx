@@ -60,7 +60,6 @@ export type GridFactory = Factory<{
 
 const defaultProps = {
   gutter: 'md',
-  grow: false,
   columns: 12,
 } satisfies Partial<GridProps>;
 

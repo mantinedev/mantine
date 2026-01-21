@@ -61,7 +61,7 @@ export function GridColVariables({ span, order, offset, selector }: GridColVaria
   const _breakpoints = ctx.breakpoints || theme.breakpoints;
 
   const baseValue = getBaseValue(span);
-  const baseSpan = baseValue === undefined ? 12 : getBaseValue(span);
+  const baseSpan = baseValue === undefined ? 12 : baseValue;
 
   const baseStyles: Record<string, string | undefined> = filterProps({
     '--col-order': getBaseValue(order)?.toString(),

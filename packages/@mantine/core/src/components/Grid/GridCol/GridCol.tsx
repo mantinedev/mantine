@@ -22,10 +22,10 @@ export interface GridColProps
   /** Column span @default `12` */
   span?: StyleProp<ColSpan>;
 
-  /** Column order, can be used to reorder columns at different viewport sizes */
+  /** Column order, use to reorder columns at different viewport sizes */
   order?: StyleProp<number>;
 
-  /** Column offset on the left side – number of columns that are left empty before this column */
+  /** Column start offset – number of empty columns before this column */
   offset?: StyleProp<number>;
 }
 
