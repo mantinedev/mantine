@@ -9,12 +9,12 @@ import { YearView } from '@mantine/schedule';
 import { events } from './data';
 
 function Demo() {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState('2024-06-15 09:00:00');
 
   return (
     <YearView
       date={date}
-      onDateChange={(newDate) => setDate(new Date(newDate))}
+      onDateChange={setDate}
       events={events}
     />
   );
@@ -22,15 +22,9 @@ function Demo() {
 `;
 
 function Demo() {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState('2024-06-15 09:00:00');
 
-  return (
-    <YearView
-      date={date}
-      onDateChange={(newDate) => setDate(new Date(newDate))}
-      events={regularEvents}
-    />
-  );
+  return <YearView date={date} onDateChange={setDate} events={regularEvents} />;
 }
 
 export const usage: MantineDemo = {

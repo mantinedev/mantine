@@ -13,23 +13,23 @@ import { Button, Group, Text } from '@mantine/core';
 import { events } from './data';
 
 function Demo() {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState('2024-06-15 09:00:00');
 
   return (
     <div>
       <Group mb="md">
-        <Button onClick={() => setDate(dayjs(date).subtract(1, 'day').toDate())}>
+        <Button onClick={() => setDate(dayjs(date).subtract(1, 'day').format('YYYY-MM-DD HH:mm:ss'))}>
           Previous Day
         </Button>
         <Text fw={500}>{dayjs(date).format('MMMM D, YYYY')}</Text>
-        <Button onClick={() => setDate(dayjs(date).add(1, 'day').toDate())}>
+        <Button onClick={() => setDate(dayjs(date).add(1, 'day').format('YYYY-MM-DD HH:mm:ss'))}>
           Next Day
         </Button>
       </Group>
 
       <DayView
         date={date}
-        onDateChange={(newDate) => setDate(new Date(newDate))}
+        onDateChange={setDate}
         events={events}
         startTime="08:00:00"
         endTime="18:00:00"
@@ -40,21 +40,25 @@ function Demo() {
 `;
 
 function Demo() {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState('2024-06-15 09:00:00');
 
   return (
     <div>
       <Group mb="md">
-        <Button onClick={() => setDate(dayjs(date).subtract(1, 'day').toDate())}>
+        <Button
+          onClick={() => setDate(dayjs(date).subtract(1, 'day').format('YYYY-MM-DD HH:mm:ss'))}
+        >
           Previous Day
         </Button>
         <Text fw={500}>{dayjs(date).format('MMMM D, YYYY')}</Text>
-        <Button onClick={() => setDate(dayjs(date).add(1, 'day').toDate())}>Next Day</Button>
+        <Button onClick={() => setDate(dayjs(date).add(1, 'day').format('YYYY-MM-DD HH:mm:ss'))}>
+          Next Day
+        </Button>
       </Group>
 
       <DayView
         date={date}
-        onDateChange={(newDate) => setDate(new Date(newDate))}
+        onDateChange={setDate}
         events={regularEvents}
         startTime="08:00:00"
         endTime="18:00:00"

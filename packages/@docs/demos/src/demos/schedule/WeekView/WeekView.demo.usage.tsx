@@ -9,12 +9,12 @@ import { WeekView } from '@mantine/schedule';
 import { events } from './data';
 
 function Demo() {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState('2024-06-15 09:00:00');
 
   return (
     <WeekView
       date={date}
-      onDateChange={(newDate) => setDate(new Date(newDate))}
+      onDateChange={setDate}
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"
@@ -24,12 +24,12 @@ function Demo() {
 `;
 
 function Demo() {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState('2024-06-15 09:00:00');
 
   return (
     <WeekView
       date={date}
-      onDateChange={(newDate) => setDate(new Date(newDate))}
+      onDateChange={setDate}
       events={regularEvents}
       startTime="08:00:00"
       endTime="18:00:00"
