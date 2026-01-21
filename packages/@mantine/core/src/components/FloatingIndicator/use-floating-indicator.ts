@@ -24,7 +24,7 @@ function isParent(
 interface UseFloatingIndicatorInput {
   target: HTMLElement | null | undefined;
   parent: HTMLElement | null | undefined;
-  ref: RefObject<HTMLDivElement>;
+  ref: RefObject<HTMLElement | null>;
   displayAfterTransitionEnd?: boolean;
 }
 
