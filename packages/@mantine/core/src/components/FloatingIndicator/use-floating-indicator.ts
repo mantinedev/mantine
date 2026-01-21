@@ -26,6 +26,8 @@ interface UseFloatingIndicatorInput {
   parent: HTMLElement | null | undefined;
   ref: RefObject<HTMLElement | null>;
   displayAfterTransitionEnd?: boolean;
+  onTransitionStart?: () => void;
+  onTransitionEnd?: () => void;
 }
 
 export function useFloatingIndicator({
@@ -33,8 +35,11 @@ export function useFloatingIndicator({
   parent,
   ref,
   displayAfterTransitionEnd,
+  onTransitionStart,
+  onTransitionEnd,
 }: UseFloatingIndicatorInput) {
   const transitionTimeout = useRef<number>(-1);
+  const previousTarget = useRef<HTMLElement | null | undefined>(target);
   const [initialized, setInitialized] = useState(false);
 
   const [hidden, setHidden] = useState(
@@ -86,6 +91,11 @@ export function useFloatingIndicator({
   const parentResizeObserver = useRef<ResizeObserver>(null);
 
   useEffect(() => {
+    if (initialized && previousTarget.current !== target && onTransitionStart) {
+      onTransitionStart();
+    }
+
+    previousTarget.current = target;
     updatePosition();
 
     if (target) {
@@ -123,6 +133,23 @@ export function useFloatingIndicator({
 
     return undefined;
   }, [parent]);
+
+  useEffect(() => {
+    if (ref.current && onTransitionEnd) {
+      const handleIndicatorTransitionEnd = (event: TransitionEvent) => {
+        if (event.propertyName === 'transform') {
+          onTransitionEnd();
+        }
+      };
+
+      ref.current.addEventListener('transitionend', handleIndicatorTransitionEnd);
+      return () => {
+        ref.current?.removeEventListener('transitionend', handleIndicatorTransitionEnd);
+      };
+    }
+
+    return undefined;
+  }, [onTransitionEnd]);
 
   useTimeout(
     () => {

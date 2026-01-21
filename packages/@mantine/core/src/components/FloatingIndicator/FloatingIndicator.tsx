@@ -40,6 +40,12 @@ export interface FloatingIndicatorProps
    * @default false
    * */
   displayAfterTransitionEnd?: boolean;
+
+  /** Called when the indicator starts transitioning to a new position */
+  onTransitionStart?: () => void;
+
+  /** Called when the indicator finishes transitioning to a new position */
+  onTransitionEnd?: () => void;
 }
 
 export type FloatingIndicatorFactory = Factory<{
@@ -72,6 +78,8 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props) => {
     transitionDuration,
     mod,
     displayAfterTransitionEnd,
+    onTransitionStart,
+    onTransitionEnd,
     attributes,
     ref,
     ...others
@@ -97,6 +105,8 @@ export const FloatingIndicator = factory<FloatingIndicatorFactory>((_props) => {
     parent,
     ref: innerRef,
     displayAfterTransitionEnd,
+    onTransitionStart,
+    onTransitionEnd,
   });
 
   const mergedRef = useMergedRef(ref, innerRef);
