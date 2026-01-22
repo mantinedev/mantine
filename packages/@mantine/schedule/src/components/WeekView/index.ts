@@ -4,5 +4,4 @@ export type {
   WeekViewFactory,
   WeekViewStylesNames,
   WeekViewCssVariables,
-  WeekViewHighlightToday,
 } from './WeekView';

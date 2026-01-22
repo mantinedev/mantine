@@ -1,15 +1,17 @@
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { WeekView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, regularEvents } from './_data';
 
 const code = `
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { WeekView } from '@mantine/schedule';
 import { events } from './data';
 
 function Demo() {
-  const [date, setDate] = useState('2024-06-15 09:00:00');
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
 
   return (
     <WeekView
@@ -24,7 +26,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const [date, setDate] = useState('2024-06-15 09:00:00');
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
 
   return (
     <WeekView

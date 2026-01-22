@@ -4,7 +4,7 @@ import { useDatesContext } from '@mantine/dates';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import { DateStringValue, DayOfWeek, ScheduleMode } from '../../types';
 import { DayTimeInterval } from '../../utils';
-import type { WeekViewFactory, WeekViewHighlightToday } from './WeekView';
+import type { WeekViewFactory } from './WeekView';
 
 export interface WeekViewDayProps {
   /** Date to display */
@@ -15,9 +15,6 @@ export interface WeekViewDayProps {
 
   /** `useStyles` return value of `WeekView` */
   getStyles: GetStylesApi<WeekViewFactory>;
-
-  /** `weekday` – highlights today in the weekday row, `column` – highlights today in the entire column */
-  highlightToday?: WeekViewHighlightToday;
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
@@ -56,7 +53,6 @@ export interface WeekViewDayProps {
 export function WeekViewDay({
   day,
   slots,
-  highlightToday,
   getStyles,
   weekendDays,
   children,
@@ -72,7 +68,7 @@ export function WeekViewDay({
 }: WeekViewDayProps) {
   const ctx = useDatesContext();
   const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek);
-  const today = dayjs(day).isSame(dayjs(), 'day') && highlightToday === 'column';
+  const today = dayjs(day).isSame(dayjs(), 'day');
 
   const isSlotInBusinessHours = (slotTime: string) => {
     if (!highlightBusinessHours || !businessHours) {

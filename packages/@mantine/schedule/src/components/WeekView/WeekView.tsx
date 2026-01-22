@@ -56,8 +56,6 @@ import { getWeekViewEvents } from './get-week-view-events/get-week-view-events';
 import classes from './WeekView.module.css';
 import { WeekViewDay } from './WeekViewDay';
 
-export type WeekViewHighlightToday = 'weekday' | 'column' | false;
-
 export type WeekViewStylesNames =
   | 'weekView'
   | 'weekViewRoot'
@@ -121,8 +119,8 @@ export interface WeekViewProps
   /** If set to false, weekend days are hidden @default `true` */
   withWeekendDays?: boolean;
 
-  /** `weekday` – highlights today in the weekday row, `column` – highlights today in the entire column @default `'weekday'` */
-  highlightToday?: WeekViewHighlightToday;
+  /** If set to true, highlights today in the weekday row @default `false` */
+  highlightToday?: boolean;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
   radius?: MantineRadius;
@@ -210,7 +208,6 @@ export type WeekViewFactory = Factory<{
 const defaultProps = {
   __staticSelector: 'WeekView',
   withWeekendDays: true,
-  highlightToday: 'weekday',
   withCurrentTimeIndicator: true,
   startTime: '00:00:00',
   endTime: '23:59:59',
@@ -504,7 +501,6 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         day={day}
         slots={slots}
         getStyles={getStyles}
-        highlightToday={highlightToday}
         weekendDays={weekendDays}
         highlightBusinessHours={highlightBusinessHours}
         businessHours={businessHours}

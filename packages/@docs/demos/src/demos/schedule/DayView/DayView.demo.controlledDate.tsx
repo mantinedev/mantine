@@ -13,7 +13,7 @@ import { Button, Group, Text } from '@mantine/core';
 import { events } from './data';
 
 function Demo() {
-  const [date, setDate] = useState('2024-06-15 09:00:00');
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
 
   return (
     <div>
@@ -40,7 +40,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const [date, setDate] = useState('2024-06-15 09:00:00');
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
 
   return (
     <div>
