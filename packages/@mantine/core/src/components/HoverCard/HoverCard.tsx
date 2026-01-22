@@ -12,8 +12,6 @@ import { HoverCardTarget, HoverCardTargetProps } from './HoverCardTarget/HoverCa
 import { useHoverCard } from './use-hover-card';
 
 export interface HoverCardProps extends Omit<PopoverProps, 'opened' | 'onChange'> {
-  variant?: string;
-
   /** Initial opened state */
   initiallyOpened?: boolean;
 
@@ -23,10 +21,18 @@ export interface HoverCardProps extends Omit<PopoverProps, 'opened' | 'onChange'
   /** Called when the dropdown is closed */
   onClose?: () => void;
 
-  /** Open delay in ms */
+  /**
+   * Delay in ms before the dropdown opens after mouse enters the target.
+   * Overridden by HoverCard.Group delay if used within a group.
+   * @default `0`
+   */
   openDelay?: number;
 
-  /** Close delay in ms */
+  /**
+   * Delay in ms before the dropdown closes after mouse leaves the target or dropdown.
+   * Overridden by HoverCard.Group delay if used within a group.
+   * @default `150`
+   */
   closeDelay?: number;
 }
 
