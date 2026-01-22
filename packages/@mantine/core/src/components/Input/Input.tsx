@@ -17,6 +17,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import { Loader } from '../Loader/Loader';
 import { InputContext } from './Input.context';
 import classes from './Input.module.css';
 import { InputClearButton } from './InputClearButton/InputClearButton';
@@ -117,6 +118,12 @@ export interface __InputProps {
 
   /** Right section displayed when both `__clearSection` and `rightSection` are not defined */
   __defaultRightSection?: React.ReactNode;
+
+  /** Displays loading indicator in the left or right section @default `false` */
+  loading?: boolean;
+
+  /** Position of the loading indicator @default `'right'` */
+  loadingPosition?: 'left' | 'right';
 }
 
 export interface InputProps extends BoxProps, __InputProps, StylesApiProps<InputFactory> {
@@ -166,6 +173,8 @@ const defaultProps = {
   withAria: true,
   withErrorStyles: true,
   size: 'sm',
+  loading: false,
+  loadingPosition: 'right',
 } satisfies Partial<InputProps>;
 
 const varsResolver = createVarsResolver<InputFactory>((_, props, ctx) => ({
@@ -222,6 +231,8 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     __clearSection,
     __clearable,
     __defaultRightSection,
+    loading,
+    loadingPosition,
     ...others
   } = props;
 
@@ -255,10 +266,21 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
       }
     : {};
 
+  const loadingIndicator = loading ? (
+    <Loader
+      size={
+        loadingPosition === 'left'
+          ? 'calc(var(--input-left-section-size) / 2)'
+          : 'calc(var(--input-right-section-size) / 2)'
+      }
+    />
+  ) : null;
+
+  const _leftSection = loading && loadingPosition === 'left' ? loadingIndicator : leftSection;
   const _rightSection: React.ReactNode = InputClearSection({
     __clearable,
     __clearSection,
-    rightSection,
+    rightSection: loading && loadingPosition === 'right' ? loadingIndicator : rightSection,
     __defaultRightSection,
     size,
   });
@@ -276,14 +298,14 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
             disabled,
             multiline,
             'data-with-right-section': !!_rightSection,
-            'data-with-left-section': !!leftSection,
+            'data-with-left-section': !!_leftSection,
           },
           mod,
         ]}
         variant={variant}
         size={size}
       >
-        {leftSection && (
+        {_leftSection && (
           <div
             {...leftSectionProps}
             data-position="left"
@@ -292,7 +314,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
               style: leftSectionProps?.style,
             })}
           >
-            {leftSection}
+            {_leftSection}
           </div>
         )}
 

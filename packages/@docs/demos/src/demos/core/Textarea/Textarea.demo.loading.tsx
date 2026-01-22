@@ -1,52 +1,16 @@
-import { useState } from 'react';
-import { Loader, Textarea } from '@mantine/core';
+import { Textarea } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { useState } from 'react';
-import { Textarea, Loader } from '@mantine/core';
+import { Textarea } from '@mantine/core';
 
 function Demo() {
-  const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState('');
-
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(event.currentTarget.value);
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
-  };
-
-  return (
-    <Textarea
-      label="Comments"
-      placeholder="Saving draft..."
-      value={value}
-      onChange={handleChange}
-      rightSection={loading ? <Loader size={18} /> : null}
-    />
-  );
+  return <Textarea placeholder="Your comment" loading />;
 }
 `;
 
 function Demo() {
-  const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState('');
-
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(event.currentTarget.value);
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
-  };
-
-  return (
-    <Textarea
-      label="Comments"
-      placeholder="Saving draft..."
-      value={value}
-      onChange={handleChange}
-      rightSection={loading ? <Loader size={18} /> : null}
-    />
-  );
+  return <Textarea placeholder="Your comment" loading />;
 }
 
 export const loading: MantineDemo = {

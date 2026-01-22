@@ -1,55 +1,23 @@
-import { useState } from 'react';
-import { Loader, MultiSelect } from '@mantine/core';
+import { MultiSelect } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { useState } from 'react';
-import { MultiSelect, Loader } from '@mantine/core';
+import { MultiSelect } from '@mantine/core';
 
 function Demo() {
-  const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState<string[]>([]);
-
-  const handleChange = (val: string[]) => {
-    setValue(val);
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
-  };
-
   return (
     <MultiSelect
-      label="Select frameworks"
-      placeholder="Searching..."
-      value={value}
-      onChange={handleChange}
+      placeholder="Pick values"
       data={['React', 'Angular', 'Vue', 'Svelte']}
-      rightSection={loading ? <Loader size={18} /> : null}
-      searchable
+      loading
     />
   );
 }
 `;
 
 function Demo() {
-  const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState<string[]>([]);
-
-  const handleChange = (val: string[]) => {
-    setValue(val);
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
-  };
-
   return (
-    <MultiSelect
-      label="Select frameworks"
-      placeholder="Searching..."
-      value={value}
-      onChange={handleChange}
-      data={['React', 'Angular', 'Vue', 'Svelte']}
-      rightSection={loading ? <Loader size={18} /> : null}
-      searchable
-    />
+    <MultiSelect placeholder="Pick values" data={['React', 'Angular', 'Vue', 'Svelte']} loading />
   );
 }
 

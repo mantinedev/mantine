@@ -1,34 +1,16 @@
-import { useState } from 'react';
-import { Loader, Pill, PillsInput } from '@mantine/core';
+import { Pill, PillsInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { useState } from 'react';
-import { PillsInput, Pill, Loader } from '@mantine/core';
+import { PillsInput, Pill } from '@mantine/core';
 
 function Demo() {
-  const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState('');
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.currentTarget.value);
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
-  };
-
   return (
-    <PillsInput
-      label="Enter items"
-      rightSection={loading ? <Loader size={18} /> : null}
-    >
+    <PillsInput label="Enter items" loading>
       <Pill.Group>
         <Pill>React</Pill>
         <Pill>Vue</Pill>
-        <PillsInput.Field
-          placeholder="Adding items..."
-          value={value}
-          onChange={handleChange}
-        />
+        <PillsInput.Field placeholder="Enter value" />
       </Pill.Group>
     </PillsInput>
   );
@@ -36,21 +18,12 @@ function Demo() {
 `;
 
 function Demo() {
-  const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState('');
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.currentTarget.value);
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
-  };
-
   return (
-    <PillsInput label="Enter items" rightSection={loading ? <Loader size={18} /> : null}>
+    <PillsInput label="Enter items" loading>
       <Pill.Group>
         <Pill>React</Pill>
         <Pill>Vue</Pill>
-        <PillsInput.Field placeholder="Adding items..." value={value} onChange={handleChange} />
+        <PillsInput.Field placeholder="Enter value" />
       </Pill.Group>
     </PillsInput>
   );

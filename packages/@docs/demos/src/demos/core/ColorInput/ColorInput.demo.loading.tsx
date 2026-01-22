@@ -1,52 +1,16 @@
-import { useState } from 'react';
-import { ColorInput, Loader } from '@mantine/core';
+import { ColorInput } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { useState } from 'react';
-import { ColorInput, Loader } from '@mantine/core';
+import { ColorInput } from '@mantine/core';
 
 function Demo() {
-  const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState('');
-
-  const handleChange = (color: string) => {
-    setValue(color);
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
-  };
-
-  return (
-    <ColorInput
-      label="Pick color"
-      placeholder="Syncing color..."
-      value={value}
-      onChange={handleChange}
-      rightSection={loading ? <Loader size={18} /> : null}
-    />
-  );
+  return <ColorInput placeholder="Pick color" loading />;
 }
 `;
 
 function Demo() {
-  const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState('');
-
-  const handleChange = (color: string) => {
-    setValue(color);
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
-  };
-
-  return (
-    <ColorInput
-      label="Pick color"
-      placeholder="Syncing color..."
-      value={value}
-      onChange={handleChange}
-      rightSection={loading ? <Loader size={18} /> : null}
-    />
-  );
+  return <ColorInput placeholder="Pick color" loading />;
 }
 
 export const loading: MantineDemo = {
