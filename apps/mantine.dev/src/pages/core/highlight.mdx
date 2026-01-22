@@ -6,29 +6,50 @@ export default Layout(MDX_DATA.Highlight);
 
 ## Usage
 
-Use the Highlight component to highlight a substring in a given string with a mark tag.
+Use the Highlight component to highlight substrings within text using the HTML `<mark>` element.
 
-Pass the main string as children to the Highlight component and the string part that should be highlighted to the `highlight` prop.
-If the main string does not include the `highlight` part, it will be ignored.
-`Highlight` ignores trailing whitespace and highlights all matched character sequences.
+Pass the text as children and specify which substring(s) to highlight with the `highlight` prop.
+Matching is **case-insensitive** and highlights all occurrences of the matched substring.
 
 <Demo data={HighlightDemos.usage} />
 
+## Matching behavior
+
+- **Case-insensitive**: 'hello' matches 'Hello', 'HELLO', 'hElLo', etc.
+- **All occurrences**: Every instance of the matched substring is highlighted
+- **Special characters**: Regex special characters like `[`, `]`, `(`, `)` are automatically escaped and treated as literal text
+- **Whitespace**: Leading and trailing whitespace in highlight strings is trimmed and ignored
+- **Empty strings**: Empty or whitespace-only highlight strings are ignored
+
 ## Highlight multiple substrings
 
-To highlight multiple substrings, provide an array of values:
+To highlight multiple substrings, provide an array of values.
+When multiple substrings are provided, longer matches take precedence to avoid partial overlaps.
 
 <Demo data={HighlightDemos.multiple} />
 
+## Custom colors per term
+
+You can assign different colors to different highlighted terms by providing an array of objects with `text` and `color` properties:
+
+<Demo data={HighlightDemos.colors} />
+
+## Whole word matching
+
+Use the `wholeWord` prop to match only complete words. When enabled, 'the' will not match 'there' or 'theme':
+
+<Demo data={HighlightDemos.wholeword} />
+
 ## Change highlight styles
 
-Default [Mark](/core/mark/) styles can be overwritten with the `highlightStyles` prop, which accepts either a function with a subscription to theme
-or an object with styles:
+Default [Mark](/core/mark/) styles can be overwritten with the `highlightStyles` prop,
+which accepts either an object with styles or a function that receives the theme as a parameter and returns styles:
 
 <Demo data={HighlightDemos.styles} />
 
 ## Text props
 
-Highlight is based on the [Text](/core/text/) component, all its props are available:
+Highlight is based on the [Text](/core/text/) component - all Text props except `color` are available.
+Use the `color` prop to change the highlight background color, not the text color.
 
 <Demo data={HighlightDemos.props} />

@@ -6,6 +6,7 @@ import {
   ComboboxDemos,
   CheckboxDemos,
   CollapseDemos,
+  HighlightDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -184,6 +185,21 @@ are welcome to try it out and provide feedback.
 Example of implementation with `useVirtualizedCombobox` and [react-virtuoso](https://virtuoso.dev/):
 
 <Demo data={ComboboxDemos.virtualized} />
+
+## Highlight per-term colors
+
+[Highlight](/core/highlight) component now supports custom colors for individual highlight terms.
+You can provide an array of objects with `text` and `color` properties to assign different colors
+to different highlighted terms:
+
+<Demo data={HighlightDemos.colors} />
+
+## Highlight whole-word matching
+
+[Highlight](/core/highlight) component now supports `wholeWord` prop to match only complete words.
+When enabled, 'the' will not match 'there' or 'theme':
+
+<Demo data={HighlightDemos.wholeword} />
 
 ## Documentation updates
 

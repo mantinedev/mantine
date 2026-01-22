@@ -2,7 +2,21 @@ function escapeRegex(value: string) {
   return value.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&');
 }
 
-export function highlighter(value: string, _highlight: string | string[]) {
+export interface HighlightChunk {
+  chunk: string;
+  highlighted: boolean;
+  color?: string;
+}
+
+export interface HighlighterOptions {
+  wholeWord?: boolean;
+}
+
+export function highlighter(
+  value: string,
+  _highlight: string | string[],
+  options: HighlighterOptions = {}
+): HighlightChunk[] {
   if (_highlight == null) {
     return [{ chunk: value, highlighted: false }];
   }
@@ -28,10 +42,11 @@ export function highlighter(value: string, _highlight: string | string[]) {
           .sort((a, b) => b.length - a.length)
           .join('|');
 
-  const re = new RegExp(`(${matcher})`, 'gi');
+  const pattern = options.wholeWord ? `\\b(${matcher})\\b` : `(${matcher})`;
+  const re = new RegExp(pattern, 'gi');
   const chunks = value
     .split(re)
-    .map((part) => ({ chunk: part, highlighted: re.test(part) }))
+    .map((part, index) => ({ chunk: part, highlighted: index % 2 === 1 }))
     .filter(({ chunk }) => chunk);
 
   return chunks;
