@@ -539,12 +539,12 @@ npm run prettier:write
 
 ## Code Reviews & Implementation Plans
 
-This repository uses `.claude/` folder for organizing code reviews and implementation plans created by Claude Code. This keeps valuable analysis and planning documents accessible to the team.
+This repository uses `claude/` folder for organizing code reviews and implementation plans created by Claude Code. This keeps valuable analysis and planning documents accessible to the team.
 
 ### Folder Structure
 
 ```
-.claude/
+claude/
 ├── reviews/                           # Code review documents
 │   ├── combobox-react19/
 │   │   ├── combobox.react19.review.md
@@ -584,12 +584,12 @@ This repository uses `.claude/` folder for organizing code reviews and implement
 ### Naming Conventions
 
 **Reviews:**
-- Folder: `.claude/reviews/[component-or-package-name]/`
+- Folder: `claude/reviews/[component-or-package-name]/`
 - File: `[component].[scope].review.md`
 - Examples: `combobox.react19.review.md`, `schedule.features.review.md`
 
 **Plans:**
-- Folder: `.claude/plans/[feature-name]/`
+- Folder: `claude/plans/[feature-name]/`
 - File: `[feature].[scope].plan.md`
 - Examples: `recurring-events.plan.md`, `drag-drop-optimization.plan.md`
 
@@ -669,32 +669,32 @@ This repository uses `.claude/` folder for organizing code reviews and implement
 **Creating a Code Review:**
 ```bash
 # 1. Create folder
-mkdir -p .claude/reviews/combobox-react19
+mkdir -p claude/reviews/combobox-react19
 
 # 2. Create review file
-touch .claude/reviews/combobox-react19/combobox.react19.review.md
+touch claude/reviews/combobox-react19/combobox.react19.review.md
 
 # 3. Add content following the template
 # 4. Optionally add companion files (findings.json, checklist.md, etc.)
 
 # 5. Commit to git
-git add .claude/reviews/
+git add claude/reviews/
 git commit -m "docs: add combobox React 19.2 compatibility review"
 ```
 
 **Creating an Implementation Plan:**
 ```bash
 # 1. Create folder
-mkdir -p .claude/plans/recurring-events
+mkdir -p claude/plans/recurring-events
 
 # 2. Create plan file
-touch .claude/plans/recurring-events/recurring-events.plan.md
+touch claude/plans/recurring-events/recurring-events.plan.md
 
 # 3. Add content following the template
 # 4. Optionally add supporting docs (ARCHITECTURE.md, timeline.md, etc.)
 
 # 5. Commit to git
-git add .claude/plans/
+git add claude/plans/
 git commit -m "docs: add recurring events implementation plan"
 ```
 
@@ -707,10 +707,10 @@ git commit -m "docs: add recurring events implementation plan"
 5. **Use cross-references** - Reference plans in reviews and vice versa:
    ```markdown
    **Related Plans:**
-   - See `.claude/plans/combobox-optimization/` for performance improvements
+   - See `claude/plans/combobox-optimization/` for performance improvements
 
    **Based on Review:**
-   - See `.claude/reviews/combobox-react19/` for technical assessment
+   - See `claude/reviews/combobox-react19/` for technical assessment
    ```
 
 6. **Optional companion files:**
@@ -731,22 +731,22 @@ git commit -m "docs: add recurring events implementation plan"
 When a plan is complete or review is outdated:
 ```bash
 # Create archive subfolder
-mkdir .claude/archive
+mkdir claude/archive
 
 # Move completed items
-mv .claude/plans/completed-feature .claude/archive/
+mv claude/plans/completed-feature claude/archive/
 
 # Or add date suffix
-mv .claude/reviews/component-review/ .claude/reviews/component-review.2026-01-17/
+mv claude/reviews/component-review/ claude/reviews/component-review.2026-01-17/
 
 # Or add status prefix
-mv .claude/plans/feature/ .claude/plans/DONE_feature/
+mv claude/plans/feature/ claude/plans/DONE_feature/
 ```
 
 ### Verification Checklist
 
 **Before saving a review:**
-- [ ] Saved in `.claude/reviews/[component]/`
+- [ ] Saved in `claude/reviews/[component]/`
 - [ ] Filename ends with `.review.md`
 - [ ] Includes front matter with metadata
 - [ ] Contains Executive Summary section
@@ -756,7 +756,7 @@ mv .claude/plans/feature/ .claude/plans/DONE_feature/
 - [ ] No broken internal links
 
 **Before saving a plan:**
-- [ ] Saved in `.claude/plans/[feature]/`
+- [ ] Saved in `claude/plans/[feature]/`
 - [ ] Filename ends with `.plan.md`
 - [ ] Includes front matter with metadata
 - [ ] Contains Overview section
