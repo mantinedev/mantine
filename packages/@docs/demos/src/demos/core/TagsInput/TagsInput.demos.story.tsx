@@ -147,3 +147,8 @@ export const Demo_isDuplicate = {
   name: '⭐ Demo: isDuplicate',
   render: renderDemo(demos.isDuplicate),
 };
+
+export const Demo_loading = {
+  name: '⭐ Demo: loading',
+  render: renderDemo(demos.loading),
+};

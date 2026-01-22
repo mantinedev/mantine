@@ -42,3 +42,8 @@ export const Demo_dividers = {
   name: '⭐ Demo: dividers',
   render: renderDemo(demos.dividers),
 };
+
+export const Demo_loading = {
+  name: '⭐ Demo: loading',
+  render: renderDemo(demos.loading),
+};

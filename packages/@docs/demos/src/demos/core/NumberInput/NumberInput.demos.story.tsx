@@ -87,3 +87,8 @@ export const Demo_hold = {
   name: '⭐ Demo: hold',
   render: renderDemo(demos.hold),
 };
+
+export const Demo_loading = {
+  name: '⭐ Demo: loading',
+  render: renderDemo(demos.loading),
+};

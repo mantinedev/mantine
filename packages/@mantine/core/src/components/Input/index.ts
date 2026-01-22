@@ -12,6 +12,7 @@ import type {
   InputClearButtonFactory,
   InputClearButtonProps,
 } from './InputClearButton/InputClearButton';
+import type { InputClearSectionProps } from './InputClearSection/InputClearSection';
 import type {
   InputDescriptionCssVariables,
   InputDescriptionFactory,
@@ -49,6 +50,7 @@ export { InputError } from './InputError/InputError';
 export { InputLabel } from './InputLabel/InputLabel';
 export { InputPlaceholder } from './InputPlaceholder/InputPlaceholder';
 export { InputClearButton } from './InputClearButton/InputClearButton';
+export { InputClearSection } from './InputClearSection/InputClearSection';
 export { useInputProps } from './use-input-props';
 export { InputWrapperContext } from './InputWrapper.context';
 
@@ -82,6 +84,7 @@ export type {
   InputPlaceholderFactory,
   InputClearButtonProps,
   InputClearButtonFactory,
+  InputClearSectionProps,
 };
 
 export namespace Input {
@@ -126,5 +129,9 @@ export namespace Input {
   export namespace ClearButton {
     export type Props = InputClearButtonProps;
     export type Factory = InputClearButtonFactory;
+  }
+
+  export namespace ClearSection {
+    export type Props = InputClearSectionProps;
   }
 }

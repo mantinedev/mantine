@@ -10,6 +10,13 @@ export default Layout(MDX_DATA.FileInput);
 
 <Demo data={FileInputDemos.usage} />
 
+## Loading state
+
+You can display a loading indicator using the `rightSection` prop with a `Loader` component.
+This is useful for async operations like API calls, searches, or validations:
+
+<Demo data={FileInputDemos.loading} />
+
 ## Controlled
 
 When `multiple` is `false`:

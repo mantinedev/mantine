@@ -72,10 +72,10 @@ export interface __InputWrapperProps {
   /** Props passed down to the `Input.Error` component */
   errorProps?: InputErrorProps & DataAttributes;
 
-  /** Input container component @default `React.Fragment` */
+  /** Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. @default `React.Fragment` */
   inputContainer?: (children: React.ReactNode) => React.ReactNode;
 
-  /** Controls order of the elements @default `['label', 'description', 'input', 'error']` */
+  /** Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. @default `['label', 'description', 'input', 'error']` */
   inputWrapperOrder?: ('label' | 'input' | 'description' | 'error')[];
 }
 
@@ -92,7 +92,7 @@ export interface InputWrapperProps
   /** Controls size of `Input.Label`, `Input.Description` and `Input.Error` components */
   size?: MantineFontSize;
 
-  /** `Input.Label` root element, `'label'` by default */
+  /** Root element for the label. Use `'div'` when wrapper contains multiple input elements and you need to handle `htmlFor` manually. @default `'label'` */
   labelElement?: 'label' | 'div';
 }
 

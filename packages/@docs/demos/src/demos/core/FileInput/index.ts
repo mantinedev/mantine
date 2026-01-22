@@ -7,3 +7,4 @@ export { accept } from './FileInput.demo.accept';
 export { multiple } from './FileInput.demo.multiple';
 export { valueComponent } from './FileInput.demo.valueComponent';
 export { sections } from './FileInput.demo.sections';
+export { loading } from './FileInput.demo.loading';

@@ -21,6 +21,13 @@ however users are not limited to suggestions and can type anything.
 
 <Demo data={AutocompleteDemos.usage} />
 
+## Loading state
+
+You can display a loading indicator using the `rightSection` prop with a `Loader` component.
+This is useful for async operations like API calls, searches, or validations:
+
+<Demo data={AutocompleteDemos.loading} />
+
 ## Controlled
 
 The `Autocomplete` value must be a string; other types are not supported.

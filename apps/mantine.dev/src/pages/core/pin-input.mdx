@@ -8,6 +8,13 @@ export default Layout(MDX_DATA.PinInput);
 
 <Demo data={PinInputDemos.configurator} />
 
+## Loading state
+
+You can display a loading indicator using the `rightSection` prop with a `Loader` component.
+This is useful for async operations like API calls, searches, or validations:
+
+<Demo data={PinInputDemos.loading} />
+
 ## Controlled
 
 ```tsx

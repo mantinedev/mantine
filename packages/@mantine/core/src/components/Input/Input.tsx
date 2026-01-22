@@ -73,7 +73,7 @@ export interface __InputProps {
   /** Props passed down to the `leftSection` element */
   leftSectionProps?: React.ComponentProps<'div'>;
 
-  /** Sets `pointer-events` styles on the `leftSection` element @default `'none'` */
+  /** Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). @default `'none'` */
   leftSectionPointerEvents?: React.CSSProperties['pointerEvents'];
 
   /** Content section displayed on the right side of the input */
@@ -85,7 +85,7 @@ export interface __InputProps {
   /** Props passed down to the `rightSection` element */
   rightSectionProps?: React.ComponentProps<'div'>;
 
-  /** Sets `pointer-events` styles on the `rightSection` element @default `'none'` */
+  /** Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). @default `'none'` */
   rightSectionPointerEvents?: React.CSSProperties['pointerEvents'];
 
   /** Sets `required` attribute on the `input` element */
@@ -97,16 +97,16 @@ export interface __InputProps {
   /** Sets `disabled` attribute on the `input` element */
   disabled?: boolean;
 
-  /** Controls input `height` and horizontal `padding` @default `'sm'` */
+  /** Controls input `height`, horizontal `padding`, and `font-size` @default `'sm'` */
   size?: MantineSize | (string & {});
 
-  /** Determines whether the input should have `cursor: pointer` style @default `false` */
+  /** Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). @default `false` */
   pointer?: boolean;
 
   /** Determines whether the input should have red border and red text color when the `error` prop is set @default `true` */
   withErrorStyles?: boolean;
 
-  /** `size` attribute passed down to the input element */
+  /** HTML `size` attribute for the input element (number of visible characters) */
   inputSize?: string;
 
   /** Section to be displayed when the input is `__clearable` and `rightSection` is not defined */
@@ -128,13 +128,13 @@ export interface InputProps extends BoxProps, __InputProps, StylesApiProps<Input
   /** Determines whether the input should have error styles and `aria-invalid` attribute */
   error?: React.ReactNode;
 
-  /** Determines whether the input can have multiple lines, for example when `component="textarea"` @default `false` */
+  /** Adjusts padding and sizing calculations for multiline inputs (use with `component="textarea"`). Does not make the input multiline by itself. @default `false` */
   multiline?: boolean;
 
   /** Input element id */
   id?: string;
 
-  /** Determines whether `aria-` and other accessibility attributes should be added to the input @default `true` */
+  /** Determines whether `aria-` and other accessibility attributes should be added to the input. Only disable when implementing custom accessibility handling. @default `true` */
   withAria?: boolean;
 
   /** Props passed down to the root element of the `Input` component */

@@ -142,3 +142,8 @@ export const Demo_autoSelectOnBlur = {
   name: '⭐ Demo: autoSelectOnBlur',
   render: renderDemo(demos.autoSelectOnBlur),
 };
+
+export const Demo_loading = {
+  name: '⭐ Demo: loading',
+  render: renderDemo(demos.loading),
+};

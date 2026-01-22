@@ -70,7 +70,7 @@ export const InputLabel = factory<InputLabelFactory>((_props) => {
     mod,
     attributes,
     ...others
-  } = useProps('InputLabel', defaultProps, props);
+  } = props;
 
   const _getStyles = useStyles<InputLabelFactory>({
     name: ['InputWrapper', __staticSelector],

@@ -47,3 +47,8 @@ export const Demo_sections = {
   name: '⭐ Demo: sections',
   render: renderDemo(demos.sections),
 };
+
+export const Demo_loading = {
+  name: '⭐ Demo: loading',
+  render: renderDemo(demos.loading),
+};

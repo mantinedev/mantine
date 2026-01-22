@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { IconAt } from '@tabler/icons-react';
-import { CloseButton, Input } from '@mantine/core';
+import { Input } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { Input, CloseButton } from '@mantine/core';
+import { Input } from '@mantine/core';
 import { IconAt } from '@tabler/icons-react';
 
 function Demo() {
@@ -20,11 +20,12 @@ function Demo() {
         rightSectionPointerEvents="all"
         mt="md"
         rightSection={
-          <CloseButton
-            aria-label="Clear input"
-            onClick={() => setValue('')}
-            style={{ display: value ? undefined : 'none' }}
-          />
+          value ? (
+            <Input.ClearButton
+              aria-label="Clear input"
+              onClick={() => setValue('')}
+            />
+          ) : null
         }
       />
     </>
@@ -44,11 +45,7 @@ function Demo() {
         rightSectionPointerEvents="all"
         mt="md"
         rightSection={
-          <CloseButton
-            aria-label="Clear input"
-            onClick={() => setValue('')}
-            style={{ display: value ? undefined : 'none' }}
-          />
+          value ? <Input.ClearButton aria-label="Clear input" onClick={() => setValue('')} /> : null
         }
       />
     </>
