@@ -44,10 +44,10 @@ export interface IndicatorProps
   /** Indicator position relative to the target element @default `'top-end'` */
   position?: IndicatorPosition;
 
-  /** Indicator offset relative to the target element, usually used for elements with border-radius */
+  /** Distance in pixels to offset the indicator from its default position, useful for elements with border-radius @default `0` */
   offset?: number;
 
-  /** Determines whether the indicator container should be an inline element @default `false` */
+  /** Changes container display from block to inline-block, use when wrapping elements with fixed width @default `false` */
   inline?: boolean;
 
   /** Indicator width and height @default `10` */
@@ -65,7 +65,7 @@ export interface IndicatorProps
   /** Adds border to the root element */
   withBorder?: boolean;
 
-  /** If set, the indicator is hidden */
+  /** Hides the indicator when set */
   disabled?: boolean;
 
   /** If set, the indicator has processing animation @default `false` */
@@ -74,7 +74,7 @@ export interface IndicatorProps
   /** Indicator z-index @default `200` */
   zIndex?: string | number;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts text color based on background color */
   autoContrast?: boolean;
 }
 
