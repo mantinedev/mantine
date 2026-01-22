@@ -231,6 +231,10 @@ When enabled, 'the' will not match 'there' or 'theme':
 - [Pagination](/core/pagination) component now supports `input-` prefix for `size` prop to match input and button sizes
 - [FloatingIndicator](/core/floating-indicator) component now supports `onTransitionStart` and `onTransitionEnd` callbacks
 - [Grid](/core/grid) component `gutter` prop was renamed to `gap` for consistency with other layout components. New `rowGap` and `columnGap` props allow separate control of row and column spacing. [Grid.Col](/core/grid) now supports `align` prop for per-column vertical alignment.
+- [Indicator](/core/indicator) component now supports:
+  - `maxValue` prop to display `{maxValue}+` when the label exceeds the maximum value
+  - `showZero` prop (default `true`) to control visibility of indicator with label `0`
+  - `offset` prop object with `x` and `y` properties for separate horizontal and vertical offsets
 - [use-tree](/core/tree) no longer provides `hoveredNode` and `setHoveredNode` in the returned value
 - [use-tree](/core/tree) no longer supports callback state setters for `setExpandedState`, `setSelectedState`, and `setCheckedState` functions
 - [use-fullscreen](/hooks/use-fullscreen) hook was split into two hooks: `useFullscreenElement` and `useFullscreenDocument`

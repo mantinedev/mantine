@@ -44,8 +44,8 @@ export interface IndicatorProps
   /** Indicator position relative to the target element @default `'top-end'` */
   position?: IndicatorPosition;
 
-  /** Distance in pixels to offset the indicator from its default position, useful for elements with border-radius @default `0` */
-  offset?: number;
+  /** Distance in pixels to offset the indicator from its default position, useful for elements with border-radius. Can be a number for uniform offset or an object with `x` and `y` properties for separate horizontal and vertical offsets @default `0` */
+  offset?: number | { x: number; y: number };
 
   /** Changes container display from block to inline-block, use when wrapping elements with fixed width @default `false` */
   inline?: boolean;
@@ -76,6 +76,12 @@ export interface IndicatorProps
 
   /** If set, adjusts text color based on background color */
   autoContrast?: boolean;
+
+  /** Maximum value to display. If label is a number greater than this value, it will be displayed as `{maxValue}+` */
+  maxValue?: number;
+
+  /** Determines whether indicator with label `0` should be displayed @default `true` */
+  showZero?: boolean;
 }
 
 export type IndicatorFactory = Factory<{
@@ -88,6 +94,7 @@ export type IndicatorFactory = Factory<{
 const defaultProps = {
   position: 'top-end',
   offset: 0,
+  showZero: true,
 } satisfies Partial<IndicatorProps>;
 
 const varsResolver = createVarsResolver<IndicatorFactory>(
@@ -126,6 +133,8 @@ export const Indicator = factory<IndicatorFactory>((_props) => {
     processing,
     zIndex,
     autoContrast,
+    maxValue,
+    showZero,
     mod,
     attributes,
     ...others
@@ -145,14 +154,20 @@ export const Indicator = factory<IndicatorFactory>((_props) => {
     varsResolver,
   });
 
+  const shouldHideZero = !showZero && (label === 0 || label === '0');
+  const formattedLabel =
+    maxValue !== undefined && typeof label === 'number' && label > maxValue
+      ? `${maxValue}+`
+      : label;
+
   return (
     <Box {...getStyles('root')} mod={[{ inline }, mod]} {...others}>
-      {!disabled && (
+      {!disabled && !shouldHideZero && (
         <Box
           mod={{ 'with-label': !!label, 'with-border': withBorder, processing }}
           {...getStyles('indicator')}
         >
-          {label}
+          {formattedLabel}
         </Box>
       )}
       {children}

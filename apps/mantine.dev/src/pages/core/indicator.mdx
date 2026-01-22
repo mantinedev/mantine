@@ -19,7 +19,8 @@ element to keep `display: block`.
 ## Offset
 
 Set `offset` to change the indicator position. It is useful when the Indicator component is
-used with children that have border-radius:
+used with children that have border-radius. You can provide a number for uniform offset or an
+object with `x` and `y` properties for separate horizontal and vertical offsets:
 
 <Demo data={IndicatorDemos.offset} />
 
@@ -32,3 +33,24 @@ used with children that have border-radius:
 Set `disabled` to hide the indicator:
 
 <Demo data={IndicatorDemos.disabled} />
+
+## Max value
+
+Set `maxValue` prop to display `{maxValue}+` when the label exceeds the maximum value. This is useful for
+notification counters that should not show exact large numbers:
+
+<Demo data={IndicatorDemos.maxValue} />
+
+## Show zero
+
+By default, the indicator is displayed when the label is `0`. Set `showZero={false}` to hide the indicator
+when the label is `0`:
+
+<Demo data={IndicatorDemos.showZero} />
+
+## Auto contrast
+
+Set `autoContrast` prop to automatically adjust text color based on the background color to ensure
+readable contrast:
+
+<Demo data={IndicatorDemos.autoContrast} />
