@@ -1,2 +1,2 @@
 export { Schedule } from './Schedule';
-export type { ScheduleProps, ScheduleFactory, ScheduleStylesNames } from './Schedule';
+export type { ScheduleFactory, ScheduleProps, ScheduleStylesNames } from './Schedule';
