@@ -144,7 +144,7 @@ export function Locale() {
 }
 
 export function HighlightToday() {
-  return <WeekView date={new Date()} highlightToday="weekday" />;
+  return <WeekView date={new Date()} highlightToday />;
 }
 
 export function Radius() {

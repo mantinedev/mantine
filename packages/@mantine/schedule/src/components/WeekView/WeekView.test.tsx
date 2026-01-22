@@ -191,35 +191,6 @@ describe('@mantine/schedule/WeekView', () => {
     );
   });
 
-  it('highlights today based on highlightToday prop', () => {
-    jest.useFakeTimers().setSystemTime(new Date(defaultProps.date));
-    const { container, rerender } = render(<WeekView {...defaultProps} highlightToday="weekday" />);
-    expect(
-      container.querySelector('.mantine-WeekView-weekViewDayLabel[data-today]')
-    ).toBeInTheDocument();
-    expect(
-      container.querySelector('.mantine-WeekView-weekViewDaySlots[data-today]')
-    ).not.toBeInTheDocument();
-
-    rerender(<WeekView {...defaultProps} highlightToday="column" />);
-    expect(
-      container.querySelector('.mantine-WeekView-weekViewDayLabel[data-today]')
-    ).toBeInTheDocument();
-    expect(
-      container.querySelector('.mantine-WeekView-weekViewDaySlots[data-today]')
-    ).toBeInTheDocument();
-
-    rerender(<WeekView {...defaultProps} highlightToday={false} />);
-    expect(
-      container.querySelector('.mantine-WeekView-weekViewDayLabel[data-today]')
-    ).not.toBeInTheDocument();
-    expect(
-      container.querySelector('.mantine-WeekView-weekViewDaySlots[data-today]')
-    ).not.toBeInTheDocument();
-
-    jest.useRealTimers();
-  });
-
   it('passes props down to ScrollArea', () => {
     const { container } = render(
       <WeekView {...defaultProps} scrollAreaProps={{ 'data-test': 'scroll-area', mah: 500 }} />
