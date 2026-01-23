@@ -56,7 +56,7 @@
   color: var(--mantine-color-text);
 
   &:where([data-checked]) {
-    padding: var(--chip-checked-padding);
+    padding-inline: var(--chip-checked-padding);
   }
 
   &:where([data-disabled]) {
