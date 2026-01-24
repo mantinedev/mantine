@@ -343,7 +343,9 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
 
   const filteredData = filterPickedValues({ data: parsedData, value: _value });
   const _clearable = clearable && _value.length > 0 && !disabled && !readOnly;
-  const pillsListStyle = _clearable ? { paddingInlineEnd: clearSectionOffset[size] } : undefined;
+  const pillsListStyle = _clearable
+    ? { paddingInlineEnd: clearSectionOffset[size] ?? clearSectionOffset.sm }
+    : undefined;
 
   return (
     <>
