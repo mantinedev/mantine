@@ -224,6 +224,7 @@
 .monthViewEvents {
   position: absolute;
   inset-inline: 0;
+  inset-inline-start: var(--week-numbers-offset);
   top: 30px;
   bottom: 22px;
   pointer-events: none;
