@@ -19,14 +19,17 @@ export interface JsonInputProps extends Omit<TextareaProps, 'onChange'> {
   /** Determines whether the value should be formatted on blur @default `false` */
   formatOnBlur?: boolean;
 
-  /** Error message displayed when value is not valid JSON */
+  /** Error message shown when the input value is invalid JSON (checked on blur). If not provided, a generic error state is shown. Takes precedence over the `error` prop when validation fails. */
   validationError?: React.ReactNode;
 
-  /** Function to serialize value into a string, used for value formatting @default `JSON.stringify` */
+  /** Function to serialize value into a string for formatting. Called with (value, null, 2) where 2 is the indentation level. @default `JSON.stringify` */
   serialize?: typeof JSON.stringify;
 
-  /** Function to deserialize string value, used for value formatting and input JSON validation, must throw error if string cannot be processed @default `JSON.parse` */
+  /** Function to deserialize string value for formatting and validation. Must throw an error if the string is invalid JSON. @default `JSON.parse` */
   deserialize?: typeof JSON.parse;
+
+  /** Number of spaces to use as white space for formatting. Passed as the third argument to `serialize` function. @default `2` */
+  indentSpaces?: number;
 }
 
 export type JsonInputFactory = Factory<{
@@ -39,6 +42,7 @@ const defaultProps = {
   serialize: JSON.stringify,
   deserialize: JSON.parse,
   size: 'sm',
+  indentSpaces: 2,
 } satisfies Partial<JsonInputProps>;
 
 export const JsonInput = factory<JsonInputFactory>((props) => {
@@ -54,6 +58,7 @@ export const JsonInput = factory<JsonInputFactory>((props) => {
     onBlur,
     readOnly,
     error,
+    indentSpaces,
     ...others
   } = useProps('JsonInput', defaultProps, props);
 
@@ -72,13 +77,13 @@ export const JsonInput = factory<JsonInputFactory>((props) => {
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-    typeof onBlur === 'function' && onBlur(event);
+    onBlur?.(event);
     const isValid = validateJson(event.currentTarget.value, deserialize);
     formatOnBlur &&
       !readOnly &&
       isValid &&
       event.currentTarget.value.trim() !== '' &&
-      setValue(serialize(deserialize(event.currentTarget.value), null, 2));
+      setValue(serialize(deserialize(event.currentTarget.value), null, indentSpaces));
     setValid(isValid);
   };
 
