@@ -25,6 +25,7 @@
 .monthViewWeek {
   display: flex;
   position: relative;
+  min-width: calc(var(--min-day-width) * 7 + var(--week-numbers-offset));
 }
 
 .monthViewWeekNumber {
