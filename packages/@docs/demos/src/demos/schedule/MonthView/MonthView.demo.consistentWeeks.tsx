@@ -1,18 +1,22 @@
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import { MonthView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { regularEvents } from './_data';
 
 const code = `
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import { MonthView } from '@mantine/schedule';
-import { events } from './data';
 
 function Demo() {
-  return <MonthView date={new Date()} events={events} consistentWeeks={false} />;
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  return <MonthView date={date} consistentWeeks={false} onDateChange={setDate} />;
 }
 `;
 
 function Demo() {
-  return <MonthView date={new Date()} events={regularEvents} consistentWeeks={false} />;
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  return <MonthView date={date} consistentWeeks={false} onDateChange={setDate} />;
 }
 
 export const consistentWeeks: MantineDemo = {
