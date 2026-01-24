@@ -21,7 +21,7 @@ export interface AccordionPanelProps
   /** Called when the panel animation starts */
   onTransitionStart?: () => void;
 
-  /** If set to `false`, the panel is unmounted when collapsed, overrides context value */
+  /** If set, overrides the Accordion-level `keepMounted` value. When undefined (default), uses Accordion's `keepMounted` setting. */
   keepMounted?: boolean;
 }
 

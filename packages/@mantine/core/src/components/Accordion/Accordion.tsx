@@ -55,7 +55,7 @@ export interface AccordionProps<Multiple extends boolean = false>
   /** Called when value changes, payload type depends on `multiple` prop */
   onChange?: (value: AccordionValue<Multiple>) => void;
 
-  /** If set, arrow keys loop though items (first to last and last to first) @default `true` */
+  /** If set, arrow keys loop through items (first to last and last to first) @default `true` */
   loop?: boolean;
 
   /** Transition duration in ms @default `200` */
@@ -70,10 +70,10 @@ export interface AccordionProps<Multiple extends boolean = false>
   /** Size of the chevron icon container @default `auto` */
   chevronSize?: number | string;
 
-  /** Size of the default chevron icon. Ignored when `chevron` prop is set. @default `16` */
+  /** Size of the default chevron icon. Ignored when `chevron` prop is set. Use `chevronSize` instead when using custom chevron. @default `16` */
   chevronIconSize?: number | string;
 
-  /** Heading order, has no effect on visuals */
+  /** Sets heading level (h2-h6) for `Accordion.Control` elements to meet WAI-ARIA requirements. Has no visual effect. */
   order?: AccordionHeadingOrder;
 
   /** Custom chevron icon */
@@ -82,7 +82,7 @@ export interface AccordionProps<Multiple extends boolean = false>
   /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default `theme.defaultRadius` */
   radius?: MantineRadius;
 
-  /** If set to `false`, panels are unmounted when collapsed */
+  /** If set to `false`, panels are unmounted when collapsed. By default, panels stay mounted when collapsed. */
   keepMounted?: boolean;
 }
 
