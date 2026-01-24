@@ -47,7 +47,6 @@ export interface ScheduleProps
   extends BoxProps, StylesApiProps<ScheduleFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
-  // === Date Management ===
   /** Current date to display (controlled) */
   date?: Date | DateStringValue;
 
@@ -57,7 +56,6 @@ export interface ScheduleProps
   /** Called when date changes via navigation */
   onDateChange?: (date: DateStringValue) => void;
 
-  // === View Level ===
   /** Current view level (controlled) */
   view?: ScheduleViewLevel;
 
@@ -67,12 +65,10 @@ export interface ScheduleProps
   /** Called when view level changes */
   onViewChange?: (view: ScheduleViewLevel) => void;
 
-  // === Events ===
   /** Events to display across all views */
   events?: ScheduleEventData[];
 
-  // === Common View Props ===
-  /** Locale for date formatting (overrides DatesProvider) */
+  /** Locale for date formatting (overrides `DatesProvider`) */
   locale?: string;
 
   /** Key of theme.radius or any valid CSS value to set border-radius */
@@ -84,8 +80,7 @@ export interface ScheduleProps
   /** Custom event body renderer */
   renderEventBody?: RenderEventBody;
 
-  // === Drag and Drop ===
-  /** Enable drag and drop for events (default: false) */
+  /** Enable drag and drop for events @default `false` */
   withDragDrop?: boolean;
 
   /** Called when event is dropped */
@@ -94,21 +89,22 @@ export interface ScheduleProps
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
 
-  // === Interaction Mode ===
-  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions (default: 'default') */
+  /** Interaction mode:
+   * - `'default'` allows all interactions
+   * - `'static'` disables event interactions
+   * @default `'default'` */
   mode?: ScheduleMode;
 
-  // === View-specific Props ===
-  /** Props specific to DayView (includes startTime, endTime, intervalMinutes, etc.) */
+  /** Props specific to DayView (includes `startTime`, `endTime`, `intervalMinutes`, etc.) */
   dayViewProps?: ScheduleViewProps<DayViewProps>;
 
-  /** Props specific to WeekView (includes startTime, endTime, intervalMinutes, etc.) */
+  /** Props specific to WeekView (includes `startTime`, `endTime`, `intervalMinutes`, etc.) */
   weekViewProps?: ScheduleViewProps<WeekViewProps>;
 
-  /** Props specific to MonthView (includes firstDayOfWeek, weekendDays, etc.) */
+  /** Props specific to MonthView (includes `firstDayOfWeek`, `weekendDays`, etc.) */
   monthViewProps?: ScheduleViewProps<MonthViewProps>;
 
-  /** Props specific to YearView (includes firstDayOfWeek, weekendDays, etc.) */
+  /** Props specific to YearView (includes `firstDayOfWeek`, `weekendDays`, etc.) */
   yearViewProps?: ScheduleViewProps<YearViewProps>;
 }
 
