@@ -10,6 +10,7 @@ import {
   Factory,
   getRadius,
   MantineRadius,
+  ScrollArea,
   StylesApiProps,
   UnstyledButton,
   useProps,
@@ -49,6 +50,7 @@ import classes from './MonthView.module.css';
 
 export type MonthViewStylesNames =
   | 'monthView'
+  | 'monthViewScrollArea'
   | 'monthViewInner'
   | 'monthViewWeek'
   | 'monthViewDay'
@@ -556,16 +558,18 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         </ScheduleHeader>
       )}
 
-      <div {...getStyles('monthViewInner')}>
-        {weekdays && (
-          <div {...getStyles('monthViewWeekdays')}>
-            {withWeekNumbers && <div {...getStyles('monthViewWeekdaysCorner')} />}
-            {weekdays}
-          </div>
-        )}
+      <ScrollArea scrollbarSize={4} {...getStyles('monthViewScrollArea')}>
+        <div {...getStyles('monthViewInner')}>
+          {weekdays && (
+            <div {...getStyles('monthViewWeekdays')}>
+              {withWeekNumbers && <div {...getStyles('monthViewWeekdaysCorner')} />}
+              {weekdays}
+            </div>
+          )}
 
-        {weeks}
-      </div>
+          {weeks}
+        </div>
+      </ScrollArea>
     </Box>
   );
 

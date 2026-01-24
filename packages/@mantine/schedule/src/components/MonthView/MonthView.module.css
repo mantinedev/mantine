@@ -3,6 +3,7 @@
   --month-view-border: 1px solid var(--month-view-border-color);
   --month-view-radius: var(--schedule-radius, var(--mantine-radius-default));
   --day-base-color: var(--mantine-color-text);
+  --min-day-width: 54px;
 
   &:where([data-with-week-numbers]) {
     --week-numbers-offset: 42px;
@@ -72,6 +73,7 @@
 
 .monthViewWeekday {
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
+  min-width: var(--min-day-width);
   height: 36px;
   font-size: var(--mantine-font-size-sm);
   border-block-start: var(--month-view-border);
@@ -109,8 +111,8 @@
 }
 
 .monthViewDay {
+  min-width: var(--min-day-width);
   flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
-  min-width: 54px;
   height: 100px;
   padding: 4px;
   font-weight: 600;
