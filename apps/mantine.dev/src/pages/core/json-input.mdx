@@ -62,6 +62,53 @@ function Demo() {
 }
 ```
 
+## Custom serialization
+
+You can provide custom `serialize` and `deserialize` functions to support data formats beyond standard JSON.
+This is useful when you need to handle types like `Date`, `Map`, `Set`, `undefined`, or other non-JSON-serializable values.
+
+The example below shows how to use [superjson](https://github.com/blitz-js/superjson) library to handle extended data types:
+
+```tsx
+import { useState } from 'react';
+import { JsonInput } from '@mantine/core';
+import superjson from 'superjson';
+
+function Demo() {
+  const [value, setValue] = useState(
+    superjson.stringify(
+      {
+        name: 'John Doe',
+        createdAt: new Date(),
+        tags: new Set(['admin', 'user']),
+        metadata: new Map([['role', 'developer']]),
+      },
+      null,
+      2
+    )
+  );
+
+  return (
+    <JsonInput
+      label="Extended JSON with superjson"
+      description="Supports Date, Map, Set, BigInt, RegExp, and more"
+      placeholder="Enter extended JSON"
+      value={value}
+      onChange={setValue}
+      serialize={(val) => superjson.stringify(val, null, 2)}
+      deserialize={superjson.parse}
+      validationError="Invalid extended JSON format"
+      formatOnBlur
+      autosize
+      minRows={6}
+    />
+  );
+}
+```
+
+The `deserialize` function must throw an error when the input is invalid. Both `serialize` and `deserialize`
+functions are used for formatting when `formatOnBlur` is enabled.
+
 ## Input props
 
 <InputFeatures component="JsonInput" element="textarea" />
