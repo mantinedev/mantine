@@ -19,10 +19,10 @@ export interface MenuSubProps extends __PopoverProps {
   /** Called with current state when dropdown opens or closes */
   onChange?: (opened: boolean) => void;
 
-  /** Open delay in ms */
+  /** Open delay in ms, applicable when hover trigger is used */
   openDelay?: number;
 
-  /** Close delay in ms */
+  /** Close delay in ms, applicable when hover trigger is used */
   closeDelay?: number;
 
   /** Dropdown position relative to the target element @default `'right-start'` */

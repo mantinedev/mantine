@@ -29,7 +29,7 @@ export interface MenuItemProps extends BoxProps, CompoundStylesApiProps<MenuItem
   /** Key of `theme.colors` or any valid CSS color */
   color?: MantineColor;
 
-  /** If set, the menu is closed when the item is clicked. Overrides `closeOnItemClick` prop on the `Menu` component. */
+  /** Controls whether the menu closes when this item is clicked. When undefined, inherits from Menu's `closeOnItemClick` prop. When true or false, overrides the Menu-level setting */
   closeMenuOnClick?: boolean;
 
   /** Section displayed at the start of the label */
