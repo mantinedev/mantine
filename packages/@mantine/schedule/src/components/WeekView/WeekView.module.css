@@ -171,6 +171,7 @@
   min-width: var(--week-view-min-slot-width);
   padding: 4px;
   cursor: pointer;
+  position: relative;
 
   @mixin hover {
     @mixin where-light {
@@ -193,12 +194,28 @@
   &:where([data-drop-target]) {
     @mixin where-light {
       background-color: var(--mantine-color-blue-1);
-      border-color: var(--mantine-color-blue-4);
     }
 
     @mixin where-dark {
       background-color: var(--mantine-color-dark-5);
-      border-color: var(--mantine-color-blue-6);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      border: 1px solid;
+      border-radius: 2px;
+
+      @mixin where-light {
+        border-color: var(--mantine-color-blue-4);
+      }
+
+      @mixin where-dark {
+        border-color: var(--mantine-color-blue-6);
+      }
     }
   }
 

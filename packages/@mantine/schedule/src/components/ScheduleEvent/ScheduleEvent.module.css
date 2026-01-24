@@ -5,6 +5,7 @@
   flex-direction: column;
   flex: 1 0 auto;
   position: relative;
+  z-index: 3;
 
   &:where([data-auto-size]) {
     container-type: size;

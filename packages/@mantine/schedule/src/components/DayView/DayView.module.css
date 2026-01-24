@@ -83,6 +83,7 @@
   width: 100%;
   border-top: 1px dotted var(--day-view-border-color);
   height: calc(var(--slot-height) * var(--slot-size));
+  position: relative;
 
   &:where([data-hour-start]) {
     border-top: 1px solid var(--day-view-border-color);
@@ -114,12 +115,28 @@
   &:where([data-drop-target]) {
     @mixin where-light {
       background-color: var(--mantine-color-blue-1);
-      border-color: var(--mantine-color-blue-4);
     }
 
     @mixin where-dark {
       background-color: var(--mantine-color-dark-5);
-      border-color: var(--mantine-color-blue-6);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      border: 1px solid;
+      border-radius: 2px;
+
+      @mixin where-light {
+        border-color: var(--mantine-color-blue-4);
+      }
+
+      @mixin where-dark {
+        border-color: var(--mantine-color-blue-6);
+      }
     }
   }
 
@@ -140,4 +157,5 @@
   display: flex;
   flex-direction: column;
   pointer-events: none;
+  z-index: 3;
 }
