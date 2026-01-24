@@ -52,6 +52,7 @@ import {
   ScheduleHeader,
 } from '../ScheduleHeader/ScheduleHeader';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
+import { getWeekLabel } from './get-week-label/get-week-label';
 import { getWeekViewEvents } from './get-week-view-events/get-week-view-events';
 import classes from './WeekView.module.css';
 import { WeekViewDay } from './WeekViewDay';
@@ -196,6 +197,9 @@ export interface WeekViewProps
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
   mode?: ScheduleMode;
+
+  /** Function to customize week label in the header */
+  renderWeekLabel?: (params: { weekStart: Date; weekEnd: Date }) => React.ReactNode;
 }
 
 export type WeekViewFactory = Factory<{
@@ -282,6 +286,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     onEventDrop,
     canDragEvent,
     mode,
+    renderWeekLabel,
     ...others
   } = props;
 
@@ -562,13 +567,12 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           />
 
           <ScheduleHeader.Control {...stylesApiProps} interactive={false} miw={140}>
-            {`${formatDate({ locale: ctx.getLocale(locale), date: weekdays[0], format: weekLabelFormat })} – ${formatDate(
-              {
-                locale: ctx.getLocale(locale),
-                date: weekdays[weekdays.length - 1],
-                format: weekLabelFormat,
-              }
-            )}, ${formatDate({ locale: ctx.getLocale(locale), date: weekdays[0], format: 'YYYY' })}`}
+            {getWeekLabel({
+              weekdays,
+              locale: ctx.getLocale(locale),
+              weekLabelFormat,
+              renderWeekLabel,
+            })}
           </ScheduleHeader.Control>
 
           <ScheduleHeader.Next

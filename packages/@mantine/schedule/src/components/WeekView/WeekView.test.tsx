@@ -345,4 +345,22 @@ describe('@mantine/schedule/WeekView', () => {
     expect(screen.getByRole('button', { name: 'Siguiente' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Ver día' })).toBeInTheDocument();
   });
+
+  it('supports custom renderWeekLabel', () => {
+    const { container } = render(
+      <WeekView
+        {...defaultProps}
+        date="2025-11-03"
+        renderWeekLabel={({ weekStart, weekEnd }) => (
+          <span data-week-label>
+            {dayjs(weekStart).format('DD')} - {dayjs(weekEnd).format('DD')}
+          </span>
+        )}
+      />
+    );
+
+    const label = container.querySelector('[data-week-label]');
+    expect(label).toBeInTheDocument();
+    expect(label).toHaveTextContent('03 - 09');
+  });
 });
