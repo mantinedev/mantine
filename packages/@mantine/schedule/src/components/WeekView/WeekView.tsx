@@ -568,7 +568,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
                 date: weekdays[weekdays.length - 1],
                 format: weekLabelFormat,
               }
-            )}`}
+            )}, ${formatDate({ locale: ctx.getLocale(locale), date: weekdays[0], format: 'YYYY' })}`}
           </ScheduleHeader.Control>
 
           <ScheduleHeader.Next
