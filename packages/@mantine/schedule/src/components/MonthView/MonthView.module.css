@@ -125,7 +125,7 @@
   cursor: pointer;
   display: flex;
   align-items: flex-start;
-  justify-content: flex-start;
+  position: relative;
 
   &:where(:last-child) {
     border-inline-end: var(--month-view-border);
@@ -198,12 +198,28 @@
   &:where([data-drop-target]) {
     @mixin where-light {
       background-color: var(--mantine-color-blue-1);
-      border-color: var(--mantine-color-blue-4);
     }
 
     @mixin where-dark {
       background-color: var(--mantine-color-dark-5);
-      border-color: var(--mantine-color-blue-6);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0px;
+      pointer-events: none;
+      z-index: 2;
+      border: 1px solid;
+      border-radius: 2px;
+
+      @mixin where-light {
+        border-color: var(--mantine-color-blue-4);
+      }
+
+      @mixin where-dark {
+        border-color: var(--mantine-color-blue-6);
+      }
     }
   }
 }
@@ -231,4 +247,5 @@
   top: 30px;
   bottom: 22px;
   pointer-events: none;
+  z-index: 3;
 }
