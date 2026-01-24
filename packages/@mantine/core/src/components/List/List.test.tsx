@@ -38,4 +38,85 @@ describe('@mantine/core/List', () => {
   it('exposes ListItem as List.Item', () => {
     expect(List.Item).toBe(ListItem);
   });
+
+  it('renders icon for all items when icon prop is set', () => {
+    const icon = <span data-testid="list-icon">→</span>;
+    const { getAllByTestId } = render(
+      <List icon={icon}>
+        <List.Item>Item 1</List.Item>
+        <List.Item>Item 2</List.Item>
+      </List>
+    );
+    expect(getAllByTestId('list-icon')).toHaveLength(2);
+  });
+
+  it('allows ListItem to override List icon', () => {
+    const listIcon = <span data-testid="list-icon">→</span>;
+    const itemIcon = <span data-testid="item-icon">•</span>;
+
+    const { getAllByTestId, getByTestId } = render(
+      <List icon={listIcon}>
+        <List.Item>Uses list icon</List.Item>
+        <List.Item icon={itemIcon}>Uses item icon</List.Item>
+      </List>
+    );
+
+    expect(getAllByTestId('list-icon')).toHaveLength(1);
+    expect(getByTestId('item-icon')).toBeInTheDocument();
+  });
+
+  it('centers items when center prop is true', () => {
+    const { container } = render(
+      <List center>
+        <List.Item>Item</List.Item>
+      </List>
+    );
+
+    const item = container.querySelector('.mantine-List-item');
+    expect(item).toHaveAttribute('data-centered');
+  });
+
+  it('adds padding when withPadding is true', () => {
+    const { container } = render(
+      <List withPadding>
+        <List.Item>Item</List.Item>
+      </List>
+    );
+
+    const root = container.querySelector('.mantine-List-root');
+    expect(root).toHaveAttribute('data-with-padding');
+  });
+
+  it('passes start attribute to ordered list', () => {
+    const { container } = render(
+      <List type="ordered" start={5}>
+        <List.Item>Item</List.Item>
+      </List>
+    );
+
+    const ol = container.querySelector('ol');
+    expect(ol).toHaveAttribute('start', '5');
+  });
+
+  it('passes reversed attribute to ordered list', () => {
+    const { container } = render(
+      <List type="ordered" reversed>
+        <List.Item>Item</List.Item>
+      </List>
+    );
+
+    const ol = container.querySelector('ol');
+    expect(ol).toHaveAttribute('reversed');
+  });
+
+  it('passes value attribute to list item', () => {
+    const { container } = render(
+      <List type="ordered">
+        <List.Item value={5}>Item</List.Item>
+      </List>
+    );
+
+    const li = container.querySelector('li');
+    expect(li).toHaveAttribute('value', '5');
+  });
 });

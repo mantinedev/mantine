@@ -25,3 +25,23 @@ You can replace list bullets with an icon. To do so, provide the following props
 Set the `withPadding` prop to offset nested lists and `listStyleType` to control the bullet type:
 
 <Demo data={ListDemos.nested} />
+
+## Ordered list numbering
+
+### Start from specific number
+
+Use the `start` prop to begin numbering from a specific value:
+
+<Demo data={ListDemos.start} />
+
+### Reversed numbering
+
+Use the `reversed` prop to create countdown lists:
+
+<Demo data={ListDemos.reversed} />
+
+### Custom item values
+
+Use the `value` prop on individual `List.Item` components to set specific numbers:
+
+<Demo data={ListDemos.value} />
