@@ -364,4 +364,22 @@ describe('@mantine/schedule/MonthView', () => {
     expect(screen.getByRole('button', { name: 'Siguiente' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Ver día' })).toBeInTheDocument();
   });
+
+  it('supports scrollAreaProps', () => {
+    render(
+      <MonthView
+        {...defaultProps}
+        scrollAreaProps={{
+          'data-testid': 'test-scroll-area',
+          className: 'test-class',
+          style: { outline: '1px solid red' },
+        }}
+      />
+    );
+
+    const scrollArea = screen.getByTestId('test-scroll-area');
+    expect(scrollArea).toBeInTheDocument();
+    expect(scrollArea).toHaveClass('test-class');
+    expect(scrollArea).toHaveStyle({ outline: '1px solid red' });
+  });
 });

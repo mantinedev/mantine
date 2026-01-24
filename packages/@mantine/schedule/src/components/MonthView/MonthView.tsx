@@ -11,6 +11,7 @@ import {
   getRadius,
   MantineRadius,
   ScrollArea,
+  ScrollAreaProps,
   StylesApiProps,
   UnstyledButton,
   useProps,
@@ -162,6 +163,9 @@ export interface MonthViewProps
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
   mode?: ScheduleMode;
+
+  /** Props passed down to `ScrollArea` component */
+  scrollAreaProps?: Partial<ScrollAreaProps> & DataAttributes;
 }
 
 export type MonthViewFactory = Factory<{
@@ -230,6 +234,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     canDragEvent,
     labels,
     mode,
+    scrollAreaProps,
     ...others
   } = props;
 
@@ -558,7 +563,14 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         </ScheduleHeader>
       )}
 
-      <ScrollArea scrollbarSize={4} {...getStyles('monthViewScrollArea')}>
+      <ScrollArea
+        scrollbarSize={4}
+        {...scrollAreaProps}
+        {...getStyles('monthViewScrollArea', {
+          className: scrollAreaProps?.className,
+          style: scrollAreaProps?.style,
+        })}
+      >
         <div {...getStyles('monthViewInner')}>
           {weekdays && (
             <div {...getStyles('monthViewWeekdays')}>
