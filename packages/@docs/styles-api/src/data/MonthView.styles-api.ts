@@ -4,6 +4,7 @@ import type { StylesApiData } from '../types';
 export const MonthViewStylesApi: StylesApiData<MonthViewFactory> = {
   selectors: {
     monthView: 'Root element',
+    monthViewScrollArea: 'Scroll area wrapper',
     monthViewInner: 'Inner container',
     monthViewWeek: 'Week row',
     monthViewDay: 'Day cell',

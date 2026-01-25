@@ -92,3 +92,10 @@ export interface ComboboxLikeRenderOptionInput<T> {
   option: T;
   checked?: boolean;
 }
+
+export interface ComboboxRenderPillInput<Value extends Primitive = string> {
+  option: ComboboxItem<Primitive>;
+  value?: Value;
+  onRemove?: () => void;
+  disabled?: boolean;
+}

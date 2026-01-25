@@ -149,6 +149,14 @@ The function must return a React node.
 
 <Demo data={TagsInputDemos.renderOption} />
 
+## Pill customization
+
+`renderPill` callback allows customizing how pills are rendered. It is called with an object containing
+`option` (combobox item), `value` (string), `onRemove` (function) and `disabled`.
+Note that since `TagsInput` allows adding custom values, `option` property might be generated on the fly.
+
+<Demo data={TagsInputDemos.renderPill} />
+
 ## Scrollable dropdown
 
 By default, the options list is wrapped with [ScrollArea.Autosize](/core/scroll-area).

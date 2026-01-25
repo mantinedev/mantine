@@ -35,6 +35,7 @@ export const ScheduleStylesApi: StylesApiData<ScheduleFactory> = {
     weekViewWeekLabel: 'WeekView week label',
     weekViewWeekNumber: 'WeekView week number',
     monthView: 'MonthView root element',
+    monthViewScrollArea: 'MonthView scroll area wrapper',
     monthViewInner: 'MonthView inner container',
     monthViewWeek: 'MonthView week row',
     monthViewDay: 'MonthView day cell',

@@ -19,6 +19,7 @@ import {
   ComboboxLikeProps,
   ComboboxLikeRenderOptionInput,
   ComboboxLikeStylesNames,
+  ComboboxRenderPillInput,
   getOptionsLockup,
   getParsedComboboxData,
   OptionsDropdown,
@@ -31,13 +32,6 @@ import { Pill } from '../Pill';
 import { PillsInput } from '../PillsInput';
 import { ScrollAreaProps } from '../ScrollArea';
 import { filterPickedValues } from './filter-picked-values';
-
-export interface RenderPillInput<Value extends Primitive = string> {
-  option: ComboboxItem<Primitive>;
-  value?: Value;
-  onRemove?: () => void;
-  disabled?: boolean;
-}
 
 export type MultiSelectStylesNames =
   | __InputStylesNames
@@ -117,7 +111,7 @@ export interface MultiSelectProps<Value extends Primitive = string>
   renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
 
   /** A function to render content of the pill */
-  renderPill?: (props: RenderPillInput<Value>) => React.ReactNode;
+  renderPill?: (props: ComboboxRenderPillInput<Value>) => React.ReactNode;
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;

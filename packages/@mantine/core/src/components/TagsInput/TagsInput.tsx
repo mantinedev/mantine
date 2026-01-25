@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { useId, useMergedRef, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -19,6 +19,7 @@ import {
   ComboboxLikeProps,
   ComboboxLikeRenderOptionInput,
   ComboboxLikeStylesNames,
+  ComboboxRenderPillInput,
   getOptionsLockup,
   getParsedComboboxData,
   OptionsDropdown,
@@ -77,6 +78,9 @@ export interface TagsInputProps
   /** Maximum number of tags @default `Infinity` */
   maxTags?: number;
 
+  /** Called when user tries to add more tags than maxTags */
+  onMaxTags?: (value: string) => void;
+
   /** If set, duplicate tags are allowed @default `false` */
   allowDuplicates?: boolean;
 
@@ -100,6 +104,9 @@ export interface TagsInputProps
 
   /** A function to render content of the option, replaces the default content of the option */
   renderOption?: (input: ComboboxLikeRenderOptionInput<ComboboxGenericItem>) => React.ReactNode;
+
+  /** A function to render content of the pill, replaces the default content of the pill */
+  renderPill?: (props: ComboboxRenderPillInput) => React.ReactNode;
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
@@ -199,8 +206,10 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     hiddenInputValuesDivider,
     mod,
     renderOption,
+    renderPill,
     onRemove,
     onClear,
+    onMaxTags,
     scrollAreaProps,
     acceptValueOnBlur,
     isDuplicate,
@@ -277,6 +286,11 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
 
     if (isDuplicated) {
       onDuplicate?.(val);
+    }
+
+    if (_value.length >= maxTags) {
+      onMaxTags?.(val);
+      return;
     }
 
     if ((!isDuplicated || (isDuplicated && allowDuplicates)) && _value.length < maxTags) {
@@ -357,24 +371,41 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     }
   };
 
-  const values = _value.map((item, index) => (
-    <Pill
-      key={`${item}-${index}`}
-      withRemoveButton={!readOnly}
-      onRemove={() => {
-        const next_value = _value.slice();
-        next_value.splice(index, 1);
-        setValue(next_value);
-        onRemove?.(item);
-      }}
-      unstyled={unstyled}
-      disabled={disabled}
-      attributes={attributes}
-      {...getStyles('pill')}
-    >
-      {item}
-    </Pill>
-  ));
+  const values = _value.map((item, index) => {
+    const onRemoveItem = () => {
+      const next_value = _value.slice();
+      next_value.splice(index, 1);
+      setValue(next_value);
+      onRemove?.(item);
+    };
+
+    if (renderPill) {
+      return (
+        <Fragment key={`${item}-${index}`}>
+          {renderPill({
+            option: optionsLockup[item] || { value: item, label: item, disabled: false },
+            value: item,
+            onRemove: onRemoveItem,
+            disabled: disabled || readOnly,
+          })}
+        </Fragment>
+      );
+    }
+
+    return (
+      <Pill
+        key={`${item}-${index}`}
+        withRemoveButton={!readOnly}
+        onRemove={onRemoveItem}
+        unstyled={unstyled}
+        disabled={disabled}
+        attributes={attributes}
+        {...getStyles('pill')}
+      >
+        {item}
+      </Pill>
+    );
+  });
 
   useEffect(() => {
     if (selectFirstOptionOnChange) {
@@ -409,7 +440,12 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
         onOptionSubmit={(val) => {
           onOptionSubmit?.(val);
           handleSearchChange('');
-          _value.length < maxTags && setValue([..._value, optionsLockup[val].value]);
+
+          if (_value.length >= maxTags) {
+            onMaxTags?.(val);
+          } else {
+            setValue([..._value, optionsLockup[val].value]);
+          }
 
           combobox.resetSelectedOption();
         }}

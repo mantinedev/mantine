@@ -58,4 +58,31 @@ describe('@mantine/core/TagsInput', () => {
 
     expect(screen.queryByText('test-2')).not.toBeInTheDocument();
   });
+
+  it('calls onMaxTags when maxTags limit is reached', async () => {
+    const onMaxTags = jest.fn();
+    render(<TagsInput maxTags={2} onMaxTags={onMaxTags} />);
+    const user = userEvent.setup();
+    const input = screen.getByRole('textbox');
+
+    await user.type(input, 'test-1{Enter}');
+    await user.type(input, 'test-2{Enter}');
+    expect(onMaxTags).not.toHaveBeenCalled();
+
+    await user.type(input, 'test-3{Enter}');
+    expect(onMaxTags).toHaveBeenCalledWith('test-3');
+  });
+
+  it('supports renderPill prop', () => {
+    const { container } = render(
+      <TagsInput
+        defaultValue={['React', 'Angular']}
+        renderPill={({ value }) => <span className="test-pill">{value}</span>}
+      />
+    );
+
+    expect(container.querySelectorAll('.test-pill')).toHaveLength(2);
+    expect(container.querySelectorAll('.test-pill')[0]).toHaveTextContent('React');
+    expect(container.querySelectorAll('.test-pill')[1]).toHaveTextContent('Angular');
+  });
 });

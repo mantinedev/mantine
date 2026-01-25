@@ -36,6 +36,7 @@ export type {
   ComboboxLikeStylesNames,
   ComboboxParsedItem,
   ComboboxParsedItemGroup,
+  ComboboxRenderPillInput,
 } from './Combobox.types';
 export type { ComboboxChevronProps } from './ComboboxChevron/ComboboxChevron';
 export type { ComboboxClearButtonProps } from './ComboboxClearButton/ComboboxClearButton';
