@@ -10,7 +10,10 @@ export interface NativeSelectProps
     Omit<__BaseInputProps, 'pointer'>,
     StylesApiProps<NativeSelectFactory>,
     ElementProps<'select', 'size'> {
-  /** Data used to render options, can be replaced with `children` */
+  /**
+   * Data used to render options. Accepts strings, objects with label/value,
+   * or grouped options. If `children` prop is provided, `data` will be ignored.
+   */
   data?: ComboboxData;
 }
 
