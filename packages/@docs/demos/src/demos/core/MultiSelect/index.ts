@@ -25,6 +25,7 @@ export { dropdownShadow } from './MultiSelect.demo.dropdownShadow';
 export { withinPopover } from './MultiSelect.demo.withinPopover';
 export { dropdownOffset } from './MultiSelect.demo.dropdownOffset';
 export { renderOption } from './MultiSelect.demo.renderOption';
+export { renderPill } from './MultiSelect.demo.renderPill';
 export { dropdownWidth } from './MultiSelect.demo.dropdownWidth';
 export { fuzzySearch } from './MultiSelect.demo.fuzzySearch';
 export { loading } from './MultiSelect.demo.loading';

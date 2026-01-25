@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   BoxProps,
@@ -32,6 +32,13 @@ import { PillsInput } from '../PillsInput';
 import { ScrollAreaProps } from '../ScrollArea';
 import { filterPickedValues } from './filter-picked-values';
 
+export interface RenderPillInput<Value extends Primitive = string> {
+  option: ComboboxItem<Primitive>;
+  value?: Value;
+  onRemove?: () => void;
+  disabled?: boolean;
+}
+
 export type MultiSelectStylesNames =
   | __InputStylesNames
   | ComboboxLikeStylesNames
@@ -61,6 +68,9 @@ export interface MultiSelectProps<Value extends Primitive = string>
   /** Called when the clear button is clicked */
   onClear?: () => void;
 
+  /** Called when user attemps to select more values than allowed */
+  onMaxValues?: () => void;
+
   /** Controlled search value */
   searchValue?: string;
 
@@ -73,10 +83,10 @@ export interface MultiSelectProps<Value extends Primitive = string>
   /** Maximum number of values, no limit if not set */
   maxValues?: number;
 
-  /** Allows searching @default `false` */
+  /** Allows searching through options by user input @default `false` */
   searchable?: boolean;
 
-  /** Message displayed when no option matches the current search query while the `searchable` prop is set or there is no data */
+  /** Message displayed when no options match the search query (when searchable is enabled) or when the data array is empty. If not set, the dropdown will be hidden instead. */
   nothingFoundMessage?: React.ReactNode;
 
   /** If set, the check icon is displayed near the selected option label @default `true` */
@@ -85,13 +95,13 @@ export interface MultiSelectProps<Value extends Primitive = string>
   /** If set, unchecked labels are aligned with checked ones @default `false` */
   withAlignedLabels?: boolean;
 
-  /** Position of the check icon relative to the option label @default `'left'` */
+  /** Position of the checkmark icon shown next to selected options in the dropdown @default `'left'` */
   checkIconPosition?: 'left' | 'right';
 
-  /** If set, picked options are removed from the options list @default `false` */
+  /** When enabled, selected options are hidden from the dropdown list @default `false` */
   hidePickedOptions?: boolean;
 
-  /** If set, the clear button is displayed in the right section when the component has value @default `false` */
+  /** When enabled, displays a clear button to remove all selected values (hidden when component is empty, disabled, or read-only) @default `false` */
   clearable?: boolean;
 
   /** Props passed down to the clear button */
@@ -106,16 +116,19 @@ export interface MultiSelectProps<Value extends Primitive = string>
   /** A function to render content of the option, replaces the default content of the option */
   renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
 
+  /** A function to render content of the pill */
+  renderPill?: (props: RenderPillInput<Value>) => React.ReactNode;
+
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
   scrollAreaProps?: ScrollAreaProps;
 
   /** Controls color of the default chevron */
   chevronColor?: MantineColor;
 
-  /** Clear search value when item is selected */
+  /** Clear search value when item is selected @default `true` */
   clearSearchOnChange?: boolean;
 
-  /** If set, the dropdown opens when the input receives focus @default `true` */
+  /** Controls whether dropdown opens when the input receives focus @default `true` */
   openOnFocus?: boolean;
 }
 
@@ -211,8 +224,10 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     required,
     mod,
     renderOption,
+    renderPill,
     onRemove,
     onClear,
+    onMaxValues,
     scrollAreaProps,
     chevronColor,
     attributes,
@@ -297,6 +312,23 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
 
   const values = _value.map((item, index) => {
     const optionData = optionsLockup[`${item}`] || retainedSelectedOptions.current[`${item}`];
+
+    if (renderPill) {
+      return (
+        <Fragment key={`${item}-${index}`}>
+          {renderPill({
+            option: optionData,
+            value: item,
+            onRemove: () => {
+              setValue(_value.filter((i) => item !== i));
+              onRemove?.(item);
+            },
+            disabled,
+          })}
+        </Fragment>
+      );
+    }
+
     return (
       <Pill
         key={`${item}-${index}`}
@@ -365,6 +397,8 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
             onRemove?.(optionsLockup[`${val}`].value as any);
           } else if (_value.length < maxValues) {
             setValue([..._value, optionsLockup[`${val}`].value] as any);
+          } else {
+            onMaxValues?.();
           }
         }}
         {...comboboxProps}

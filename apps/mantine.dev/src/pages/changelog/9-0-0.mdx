@@ -8,6 +8,7 @@ import {
   CollapseDemos,
   HighlightDemos,
   TextInputDemos,
+  MultiSelectDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -126,6 +127,12 @@ You can change the position with the `loadingPosition` prop to `'left'` or `'rig
 
 <Demo data={TextInputDemos.loading} />
 
+## renderPill in MultiSelect and TagsInput
+
+[MultiSelect](/core/multi-select) and [TagsInput](/core/tags-input) components now support `renderPill` prop to customize pill rendering:
+
+<Demo data={MultiSelectDemos.renderPill} />
+
 ## use-form TransformedValues type argument
 
 [use-form](/form/use-form) now supports passing second type argument `TransformedValues` to define the type of
@@ -230,6 +237,7 @@ When enabled, 'the' will not match 'there' or 'theme':
 - [Collapse](/core/collapse) component now uses `expanded` prop instead of `in`
 - [Collapse](/core/collapse), [NavLink](/core/nav-link) and [Accordion.Panel](/core/accordion) now support `keepMounted={false}` prop to unmount collapsed content
 - [Select](/core/select) and [MultiSelect](/core/multi-select) components now support primitive value types (numbers, booleans, strings) for data and value
+- [MultiSelect](/core/multi-select) now supports `onMaxValues` prop, which is called when the user attempts to select more values than `maxValues`
 - [Accordion](/core/accordion) component now supports `ref` prop
 - [Text](/core/text) and [Anchor](/core/anchor) components no longer accept `color` prop, use `c` style prop instead
 - [PasswordInput](/core/password-input) component visibility toggle icon was updated

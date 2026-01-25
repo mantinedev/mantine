@@ -115,6 +115,7 @@ type MultiSelectValue = 'React' | 'Angular' | 'Svelte' | number;
 function Demo() {
   return <MultiSelect<MultiSelectValue> data={['React', 'Angular', 'Svelte', 100]} />;
 }
+```
 
 <ComboboxFiltering component="MultiSelect" />
 
@@ -146,6 +147,12 @@ The `renderOption` callback allows you to customize option rendering. It is call
 checked state. The function must return a React node.
 
 <Demo data={MultiSelectDemos.renderOption} />
+
+## renderPill
+
+The `renderPill` callback allows you to customize pill rendering. The function receives the option (that was passed to data), value, onRemove and disabled props. It must return a React node.
+
+<Demo data={MultiSelectDemos.renderPill} />
 
 ## Scrollable dropdown
 
@@ -276,3 +283,7 @@ function Demo() {
   );
 }
 ```
+
+## Backspace key
+
+When the search input is empty and the user presses the `Backspace` key, the last selected item is removed. This behavior is built-in and cannot be disabled.
