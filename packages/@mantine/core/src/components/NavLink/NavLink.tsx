@@ -48,10 +48,10 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
   /** Determines whether the link should have active styles @default `false` */
   active?: boolean;
 
-  /** Key of `theme.colors` of any valid CSS color to control active styles @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color to control active styles @default `theme.primaryColor` */
   color?: MantineColor;
 
-  /** If set, label and description do not wrap to the next line @default `false` */
+  /** If set, label and description are truncated with ellipsis instead of wrapping @default `false` */
   noWrap?: boolean;
 
   /** Child `NavLink` components */
@@ -69,7 +69,7 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
   /** If set, right section will not be rotated when collapse is opened @default `false` */
   disableRightSectionRotation?: boolean;
 
-  /** Key of `theme.spacing` or any valid CSS value to set collapsed links `padding-left` @default `'lg'` */
+  /** Controls indentation of nested NavLink components, key of `theme.spacing` or any valid CSS value @default `'lg'` */
   childrenOffset?: MantineSpacing;
 
   /** If set, disabled styles will be added to the root element @default `false` */
