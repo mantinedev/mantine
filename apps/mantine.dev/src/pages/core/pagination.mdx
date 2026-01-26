@@ -82,6 +82,13 @@ If you want controls to have the same size as inputs and buttons, you can use `i
 
 <Demo data={PaginationDemos.size} />
 
+## Start value
+
+Set `startValue` to define the starting page number. For example, with `startValue={5}` and `total={15}`,
+the pagination range will be from 5 to 15:
+
+<Demo data={PaginationDemos.startValue} />
+
 ## URL synchronization
 
 You can synchronize pagination state with URL query parameters. This pattern is commonly used for list views where you want to share the URL with a specific page selected.

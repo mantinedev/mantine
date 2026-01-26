@@ -402,3 +402,8 @@ export const Demo_useHorizontalCollapseDemo = {
   name: '⭐ Demo: useHorizontalCollapseDemo',
   render: renderDemo(demos.useHorizontalCollapseDemo),
 };
+
+export const Demo_usePaginationStartValueDemo = {
+  name: '⭐ Demo: usePaginationStartValueDemo',
+  render: renderDemo(demos.usePaginationStartValueDemo),
+};

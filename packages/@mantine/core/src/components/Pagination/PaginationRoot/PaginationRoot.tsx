@@ -85,6 +85,9 @@ export interface PaginationRootProps
 
   /** If set, adjusts text color based on the active page background color to ensure sufficient contrast */
   autoContrast?: boolean;
+
+  /** Starting page number, defaults to 1 */
+  startValue?: number;
 }
 
 export type PaginationRootFactory = Factory<{
@@ -137,6 +140,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
     onLastPage,
     getItemProps,
     autoContrast,
+    startValue,
     attributes,
     ...others
   } = props;
@@ -162,6 +166,7 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
     total,
     siblings,
     boundaries,
+    startValue,
   });
 
   return (

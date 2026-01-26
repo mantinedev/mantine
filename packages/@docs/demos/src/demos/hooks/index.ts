@@ -80,3 +80,4 @@ export { useLongPressDemo } from './use-long-press.demo.usage';
 export { useSelectionDemo } from './use-selection.demo.usage';
 export { useCollapseDemo } from './use-collapse.demo.usage';
 export { useHorizontalCollapseDemo } from './use-horizontal-collapse.demo.usage';
+export { usePaginationStartValueDemo } from './use-pagination.demo.startValue';

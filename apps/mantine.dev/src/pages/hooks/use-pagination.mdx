@@ -1,4 +1,4 @@
-import { PaginationDemos } from '@docs/demos';
+import { PaginationDemos, HooksDemos } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
 
@@ -79,11 +79,18 @@ const pagination = usePagination({ total: 20, boundaries: 3 });
   demoProps={{ toggle: true }}
 />
 
+## Start value
+
+Set `startValue` to define the starting page number. For example, with `startValue={5}` and `total={15}`,
+the pagination range will be from 5 to 15:
+
+<Demo data={HooksDemos.usePaginationStartValueDemo} />
+
 ## Definition
 
 ```tsx
 export interface UsePaginationOptions {
-  /** Page selected on initial render, defaults to 1 */
+  /** Page selected on initial render, defaults to 1 or startValue if provided */
   initialPage?: number;
 
   /** Controlled active page number */
@@ -100,6 +107,9 @@ export interface UsePaginationOptions {
 
   /** Callback fired after change of each page */
   onChange?: (page: number) => void;
+
+  /** Starting page number, defaults to 1 */
+  startValue?: number;
 }
 
 export interface UsePaginationReturnValue {

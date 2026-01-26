@@ -9,6 +9,7 @@ import {
   HighlightDemos,
   TextInputDemos,
   MultiSelectDemos,
+  PaginationDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -217,6 +218,14 @@ to different highlighted terms:
 When enabled, 'the' will not match 'there' or 'theme':
 
 <Demo data={HighlightDemos.wholeword} />
+
+## Pagination and use-pagination startValue
+
+[Pagination](/core/pagination) component and [use-pagination](/hooks/use-pagination) hook now support `startValue` prop
+to define the starting page number. For example, with `startValue={5}` and `total={15}`,
+the pagination range will be from 5 to 15:
+
+<Demo data={PaginationDemos.startValue} />
 
 ## Documentation updates
 

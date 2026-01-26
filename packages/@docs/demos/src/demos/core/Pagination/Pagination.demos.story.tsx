@@ -62,3 +62,8 @@ export const Demo_size = {
   name: '⭐ Demo: size',
   render: renderDemo(demos.size),
 };
+
+export const Demo_startValue = {
+  name: '⭐ Demo: startValue',
+  render: renderDemo(demos.startValue),
+};

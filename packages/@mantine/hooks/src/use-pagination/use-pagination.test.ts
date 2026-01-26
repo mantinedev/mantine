@@ -86,6 +86,28 @@ describe('@mantine/hooks/use-pagination', () => {
 
   it('handles negative total value correctly', () => {
     const hook = renderHook(() => usePagination({ total: -5 }));
-    expect(hook.result.current.range).toStrictEqual([]);
+    expect(hook.result.current.range).toStrictEqual([1]);
+  });
+
+  it('handles startValue correctly', () => {
+    const { result } = renderHook(() => usePagination({ total: 15, startValue: 5 }));
+    expect(result.current.range).toStrictEqual([5, 6, 7, 8, 9, 'dots', 15]);
+    expect(result.current.active).toBe(5);
+
+    act(() => result.current.setPage(10));
+    expect(result.current.active).toBe(10);
+    expect(result.current.range).toStrictEqual([5, 'dots', 9, 10, 11, 'dots', 15]);
+
+    act(() => result.current.first());
+    expect(result.current.active).toBe(5);
+
+    act(() => result.current.last());
+    expect(result.current.active).toBe(15);
+
+    act(() => result.current.setPage(3));
+    expect(result.current.active).toBe(5);
+
+    act(() => result.current.setPage(20));
+    expect(result.current.active).toBe(15);
   });
 });

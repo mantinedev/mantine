@@ -10,3 +10,4 @@ export { withContent } from './Pagination.demo.withContent';
 export { autoContrast } from './Pagination.demo.autoContrast';
 export { withPages } from './Pagination.demo.withPages';
 export { size } from './Pagination.demo.size';
+export { startValue } from './Pagination.demo.startValue';
