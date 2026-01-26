@@ -83,7 +83,10 @@ export function PropsTable({ component, query }: PropsTableProps) {
         <Table.Td>
           <HtmlText fz="sm">{prop.description}</HtmlText>
           {prop.defaultValue && (
-            <HtmlText fz="sm" display="block">{`Default value: ${prop.defaultValue}`}</HtmlText>
+            <HtmlText
+              fz="sm"
+              display="block"
+            >{`Default value: <code>${prop.defaultValue}</code>`}</HtmlText>
           )}
         </Table.Td>
       </Table.Tr>
