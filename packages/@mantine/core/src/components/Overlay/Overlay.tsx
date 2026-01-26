@@ -27,10 +27,10 @@ export interface OverlayProps extends BoxProps, StylesApiProps<OverlayFactory> {
   /** Overlay `background-color` @default `#000` */
   color?: React.CSSProperties['backgroundColor'];
 
-  /** Overlay background blur @default `0` */
+  /** Overlay background blur in px (converted to rem). Applies `backdrop-filter: blur()`. Note: backdrop-filter is not supported in all browsers. @default `0` */
   blur?: number | string;
 
-  /** Changes overlay to gradient. If set, `color` prop is ignored. */
+  /** Changes overlay to gradient. If set, both `color` and `backgroundOpacity` props are ignored. */
   gradient?: string;
 
   /** Overlay z-index @default `200` */
@@ -42,10 +42,10 @@ export interface OverlayProps extends BoxProps, StylesApiProps<OverlayFactory> {
   /** Content inside overlay */
   children?: React.ReactNode;
 
-  /** Centers content inside the overlay @default `false` */
+  /** Centers content inside the overlay using flexbox (sets display: flex, align-items: center, justify-content: center) @default `false` */
   center?: boolean;
 
-  /** Changes position to `fixed` @default `false` */
+  /** Changes position from `absolute` to `fixed` (viewport-relative instead of parent-relative) @default `false` */
   fixed?: boolean;
 }
 
