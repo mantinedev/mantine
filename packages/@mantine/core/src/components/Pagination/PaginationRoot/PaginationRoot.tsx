@@ -44,10 +44,10 @@ export interface PaginationRootProps
   /** Total number of pages, must be an integer */
   total: number;
 
-  /** Active page for controlled component, must be an integer in [0, total] interval */
+  /** Active page for controlled component, must be an integer in [1, total] interval */
   value?: number;
 
-  /** Active page for uncontrolled component, must be an integer in [0, total] interval */
+  /** Active page for uncontrolled component, must be an integer in [1, total] interval */
   defaultValue?: number;
 
   /** Called when page changes */
@@ -83,7 +83,7 @@ export interface PaginationRootProps
   /** Additional props passed down to controls */
   getItemProps?: (page: number) => Record<string, any>;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts text color based on the active page background color to ensure sufficient contrast */
   autoContrast?: boolean;
 }
 
@@ -164,11 +164,6 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
     boundaries,
   });
 
-  const handleNextPage = createEventHandler(onNextPage, next);
-  const handlePreviousPage = createEventHandler(onPreviousPage, previous);
-  const handleFirstPage = createEventHandler(onFirstPage, first);
-  const handleLastPage = createEventHandler(onLastPage, last);
-
   return (
     <PaginationProvider
       value={{
@@ -178,10 +173,10 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
         disabled,
         getItemProps,
         onChange: setPage,
-        onNext: handleNextPage,
-        onPrevious: handlePreviousPage,
-        onFirst: handleFirstPage,
-        onLast: handleLastPage,
+        onNext: createEventHandler(onNextPage, next),
+        onPrevious: createEventHandler(onPreviousPage, previous),
+        onFirst: createEventHandler(onFirstPage, first),
+        onLast: createEventHandler(onLastPage, last),
         getStyles,
       }}
     >

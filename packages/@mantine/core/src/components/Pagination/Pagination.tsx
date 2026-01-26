@@ -52,7 +52,7 @@ export interface PaginationProps extends PaginationRootProps {
   /** If set, the pagination is hidden when only one page is available (`total={1}`) @default false */
   hideWithOnePage?: boolean;
 
-  /** If set to `false`, pages controls are hidden @default true */
+  /** If set to `false`, page number buttons are hidden, only next/previous controls remain @default `true` */
   withPages?: boolean;
 }
 
