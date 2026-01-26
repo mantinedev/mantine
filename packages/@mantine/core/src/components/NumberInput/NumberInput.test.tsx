@@ -325,4 +325,178 @@ describe('@mantine/core/NumberInput', () => {
     expect(input.selectionStart).toBe(3);
     expect(input.selectionEnd).toBe(3);
   });
+
+  it('supports custom decimal separator', async () => {
+    const spy = jest.fn();
+    render(<NumberInput onChange={spy} decimalSeparator="," />);
+
+    focusInput();
+    await enterText('10,5');
+    expect(spy).toHaveBeenLastCalledWith(10.5);
+    expectValue('10,5');
+  });
+
+  it('pads decimal places when fixedDecimalScale is set', async () => {
+    render(<NumberInput defaultValue={5.1} decimalScale={2} fixedDecimalScale />);
+    expectValue('5.10');
+  });
+
+  it('formats value with thousand separator', async () => {
+    render(<NumberInput defaultValue={1000000} thousandSeparator="," />);
+    expectValue('1,000,000');
+  });
+
+  it('formats value with custom thousandsGroupStyle', async () => {
+    render(<NumberInput defaultValue={100000} thousandSeparator="," thousandsGroupStyle="lakh" />);
+    expectValue('1,00,000');
+  });
+
+  it('displays prefix and suffix', async () => {
+    render(<NumberInput defaultValue={100} prefix="$" suffix=" USD" />);
+    expectValue('$100 USD');
+  });
+
+  it('validates input with isAllowed callback', async () => {
+    const spy = jest.fn();
+    const isAllowed = (values: any) => values.floatValue === undefined || values.floatValue <= 100;
+    render(<NumberInput onChange={spy} isAllowed={isAllowed} />);
+
+    focusInput();
+    await enterText('50');
+    expect(spy).toHaveBeenLastCalledWith(50);
+
+    await enterText('0');
+    expect(spy).toHaveBeenLastCalledWith(50);
+    expectValue('50');
+  });
+
+  it('disables keyboard arrow events when withKeyboardEvents is false', async () => {
+    const spy = jest.fn();
+    render(<NumberInput defaultValue={5} onChange={spy} withKeyboardEvents={false} />);
+
+    focusInput();
+    await enterText('{arrowup}');
+    expect(spy).not.toHaveBeenCalled();
+    expectValue('5');
+
+    await enterText('{arrowdown}');
+    expect(spy).not.toHaveBeenCalled();
+    expectValue('5');
+  });
+
+  it('respects max when using arrow up key', async () => {
+    const spy = jest.fn();
+    render(<NumberInput defaultValue={9} max={10} onChange={spy} />);
+
+    focusInput();
+    await enterText('{arrowup}');
+    expect(spy).toHaveBeenLastCalledWith(10);
+
+    await enterText('{arrowup}');
+    expect(spy).toHaveBeenLastCalledWith(10);
+    expectValue('10');
+  });
+
+  it('respects min when using arrow down key', async () => {
+    const spy = jest.fn();
+    render(<NumberInput defaultValue={1} min={0} onChange={spy} />);
+
+    focusInput();
+    await enterText('{arrowdown}');
+    expect(spy).toHaveBeenLastCalledWith(0);
+
+    await enterText('{arrowdown}');
+    expect(spy).toHaveBeenLastCalledWith(0);
+    expectValue('0');
+  });
+
+  it('disables increment button when value is at max', () => {
+    const { container } = render(<NumberInput defaultValue={10} max={10} />);
+    const incrementButton = container.querySelector(
+      '.mantine-NumberInput-control[data-direction="up"]'
+    );
+    expect(incrementButton).toBeDisabled();
+  });
+
+  it('disables decrement button when value is at min', () => {
+    const { container } = render(<NumberInput defaultValue={0} min={0} />);
+    const decrementButton = container.querySelector(
+      '.mantine-NumberInput-control[data-direction="down"]'
+    );
+    expect(decrementButton).toBeDisabled();
+  });
+
+  it('hides controls when readOnly is set', () => {
+    const { container } = render(<NumberInput readOnly />);
+    const controls = container.querySelector('.mantine-NumberInput-controls');
+    expect(controls).not.toBeInTheDocument();
+  });
+
+  it('calls onValueChange with correct payload structure', async () => {
+    const spy = jest.fn();
+    render(<NumberInput onValueChange={spy} />);
+
+    focusInput();
+    await enterText('123');
+
+    expect(spy).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        floatValue: 123,
+        formattedValue: '123',
+        value: '123',
+      }),
+      expect.objectContaining({
+        source: 'event',
+      })
+    );
+  });
+
+  it('calls onValueChange with source="increment" when increment button is clicked', async () => {
+    const spy = jest.fn();
+    const { container } = render(<NumberInput defaultValue={5} onValueChange={spy} />);
+
+    await clickIncrement(container);
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        floatValue: 6,
+      }),
+      expect.objectContaining({
+        source: 'increment',
+      })
+    );
+  });
+
+  it('calls onValueChange with source="decrement" when decrement button is clicked', async () => {
+    const spy = jest.fn();
+    const { container } = render(<NumberInput defaultValue={5} onValueChange={spy} />);
+
+    await clickDecrement(container);
+
+    expect(spy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        floatValue: 4,
+      }),
+      expect.objectContaining({
+        source: 'decrement',
+      })
+    );
+  });
+
+  it('onValueChange receives formatted value with prefix and suffix', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <NumberInput defaultValue={100} prefix="$" suffix=" USD" onValueChange={spy} />
+    );
+
+    await clickIncrement(container);
+
+    expect(spy).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        floatValue: 101,
+        formattedValue: '$101 USD',
+      }),
+      expect.anything()
+    );
+  });
 });
