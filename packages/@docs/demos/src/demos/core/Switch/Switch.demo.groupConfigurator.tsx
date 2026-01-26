@@ -10,7 +10,7 @@ function Demo() {
       defaultValue={['react']}
       {{props}}
     >
-      <Group mt="xs">
+      <Group>
         <Switch value="react" label="React" />
         <Switch value="svelte" label="Svelte" />
         <Switch value="ng" label="Angular" />
@@ -24,7 +24,7 @@ function Demo() {
 function Wrapper(props: SwitchGroupProps) {
   return (
     <Switch.Group defaultValue={['react']} {...props}>
-      <Group mt="xs">
+      <Group>
         <Switch value="react" label="React" />
         <Switch value="svelte" label="Svelte" />
         <Switch value="ng" label="Angular" />

@@ -11,7 +11,7 @@ function Demo() {
       label="Select your favorite framework/library"
       description="This is anonymous"
     >
-      <Group mt="xs">
+      <Group>
         <Switch value="react" label="React" />
         <Switch value="svelte" label="Svelte" />
         <Switch value="ng" label="Angular" />
@@ -29,7 +29,7 @@ function Demo() {
       label="Select your favorite framework/library"
       description="This is anonymous"
     >
-      <Group mt="xs">
+      <Group>
         <Switch value="react" label="React" />
         <Switch value="svelte" label="Svelte" />
         <Switch value="ng" label="Angular" />
