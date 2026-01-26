@@ -74,7 +74,38 @@ it is not possible to represent the value as a number:
 
 - Empty state is represented as an empty string – `''`
 - Numbers that are larger than `Number.MAX_SAFE_INTEGER - 1` or smaller than `Number.MIN_SAFE_INTEGER + 1` are represented as strings – `'90071992547409910'`
-- Numbers that consist of only multiple zeros are represented as strings – `0.`, `0.0`, `-0.00`, etc.
+- Numbers with trailing decimal separators or trailing decimal zeros are represented as strings – `0.`, `0.0`, `-0.00`, etc.
+
+## onChange vs onValueChange
+
+`NumberInput` provides two callback props for handling value changes:
+
+- **`onChange`**: Receives a simplified value as `number | string`. This is the recommended callback for most use cases. The value is a number when possible, and a string in edge cases (empty input, very large numbers, trailing decimals).
+
+- **`onValueChange`**: Receives the full payload from `react-number-format`, which includes:
+  - `floatValue`: The numeric value (or `undefined`)
+  - `formattedValue`: The formatted string value (with prefix/suffix/separators)
+  - `value`: The raw unformatted string value
+  - Additional metadata about the change source
+
+Use `onValueChange` when you need access to the formatted value or metadata about the change (e.g., whether it came from user typing, increment/decrement buttons, or programmatic changes). For simple form handling, `onChange` is sufficient.
+
+```tsx
+import { NumberInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <NumberInput
+      prefix="$"
+      thousandSeparator=","
+      // onChange receives: 1234
+      onChange={(value) => console.log('Simple value:', value)}
+      // onValueChange receives: { floatValue: 1234, formattedValue: '$1,234', value: '1234' }
+      onValueChange={(payload) => console.log('Full payload:', payload)}
+    />
+  );
+}
+```
 
 ## min and max
 
@@ -133,6 +164,13 @@ Set the `thousandSeparator` prop to separate thousands with a character. You can
 the grouping logic with `thousandsGroupStyle`, which accepts: `thousand`, `lakh`, `wan`, `none` values.
 
 <Demo data={NumberInputDemos.thousandsSeparator} />
+
+## Trim leading zeros on blur
+
+By default, leading zeros are removed when the input loses focus (e.g., `00100` becomes `100`).
+You can disable this behavior by setting `trimLeadingZeroesOnBlur={false}`:
+
+<Demo data={NumberInputDemos.trimLeadingZeroes} />
 
 <InputSections component="NumberInput" />
 

@@ -16,3 +16,4 @@ export { stylesApi } from './NumberInput.demo.stylesApi';
 export { sections } from './NumberInput.demo.sections';
 export { hold } from './NumberInput.demo.hold';
 export { loading } from './NumberInput.demo.loading';
+export { trimLeadingZeroes } from './NumberInput.demo.trimLeadingZeroes';

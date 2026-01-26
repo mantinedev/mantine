@@ -7,8 +7,8 @@ import { NumberInput } from '@mantine/core';
 function Demo() {
   return (
     <NumberInput
-      label="You cannot enter number less than 0 or greater than 100"
-      placeholder="You cannot enter number less than 0 or greater than 100"
+      label="Strict clamping between 0 and 100"
+      placeholder="Enter a number"
       clampBehavior="strict"
       min={0}
       max={100}
@@ -20,8 +20,8 @@ function Demo() {
 function Demo() {
   return (
     <NumberInput
-      label="You cannot enter number less than 0 or greater than 100"
-      placeholder="You cannot enter number less than 0 or greater than 100"
+      label="Strict clamping between 0 and 100"
+      placeholder="Enter a number"
       clampBehavior="strict"
       min={0}
       max={100}

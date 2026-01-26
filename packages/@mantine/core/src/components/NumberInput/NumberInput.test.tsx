@@ -235,4 +235,94 @@ describe('@mantine/core/NumberInput', () => {
     expect(spy).toHaveBeenLastCalledWith(10.1);
     expectValue('10.1');
   });
+
+  it('calls onMaxReached when increment would exceed max', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <NumberInput min={0} max={10} defaultValue={8} step={5} onMaxReached={spy} />
+    );
+
+    await clickIncrement(container);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expectValue('10');
+  });
+
+  it('calls onMaxReached when arrow up would exceed max', async () => {
+    const spy = jest.fn();
+    render(<NumberInput min={0} max={10} defaultValue={9} step={2} onMaxReached={spy} />);
+
+    focusInput();
+    await enterText('{arrowup}');
+    expect(spy).toHaveBeenCalledTimes(1);
+    expectValue('10');
+  });
+
+  it('does not call onMaxReached when max is not defined', async () => {
+    const spy = jest.fn();
+    const { container } = render(<NumberInput defaultValue={10} onMaxReached={spy} />);
+
+    await clickIncrement(container);
+    expect(spy).toHaveBeenCalledTimes(0);
+  });
+
+  it('calls onMinReached when decrement would go below min', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <NumberInput min={0} max={10} defaultValue={3} step={5} onMinReached={spy} />
+    );
+
+    await clickDecrement(container);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expectValue('0');
+  });
+
+  it('calls onMinReached when arrow down would go below min', async () => {
+    const spy = jest.fn();
+    render(<NumberInput min={0} max={10} defaultValue={0} onMinReached={spy} />);
+
+    focusInput();
+    await enterText('{arrowdown}');
+    expect(spy).toHaveBeenCalledTimes(1);
+    expectValue('0');
+  });
+
+  it('calls onMinReached when decrement would go below 0 with allowNegative=false', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <NumberInput allowNegative={false} defaultValue={0} onMinReached={spy} />
+    );
+
+    await clickDecrement(container);
+    expect(spy).toHaveBeenCalledTimes(1);
+    expectValue('0');
+  });
+
+  it('does not call onMinReached when min is not defined and allowNegative is true', async () => {
+    const spy = jest.fn();
+    const { container } = render(<NumberInput defaultValue={-5} onMinReached={spy} />);
+
+    await clickDecrement(container);
+    expect(spy).toHaveBeenCalledTimes(0);
+  });
+
+  it('selects all text on focus when selectAllOnFocus is true', async () => {
+    render(<NumberInput defaultValue={123} selectAllOnFocus />);
+    const input = getInput() as HTMLInputElement;
+
+    focusInput();
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 10));
+    });
+    expect(input.selectionStart).toBe(0);
+    expect(input.selectionEnd).toBe(3);
+  });
+
+  it('does not select text on focus when selectAllOnFocus is false', async () => {
+    render(<NumberInput defaultValue={123} selectAllOnFocus={false} />);
+    const input = getInput() as HTMLInputElement;
+
+    focusInput();
+    expect(input.selectionStart).toBe(3);
+    expect(input.selectionEnd).toBe(3);
+  });
 });

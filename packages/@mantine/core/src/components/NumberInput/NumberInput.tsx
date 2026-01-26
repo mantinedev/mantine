@@ -43,7 +43,7 @@ function isNumberString(value: unknown) {
   return typeof value === 'string' && value !== '' && !Number.isNaN(Number(value));
 }
 
-function canIncrement(value: number | string) {
+function canStep(value: number | string) {
   if (typeof value === 'number') {
     return value < Number.MAX_SAFE_INTEGER;
   }
@@ -51,7 +51,7 @@ function canIncrement(value: number | string) {
   return value === '' || (isNumberString(value) && Number(value) < Number.MAX_SAFE_INTEGER);
 }
 
-function getDecimalPlaces(inputValue: string | number): number {
+function getTotalDigits(inputValue: string | number): number {
   // All digits must be counted, parseFloat precision depends
   // on the number of digits in the input, not only on the decimal scale
   return inputValue.toString().replace('.', '').length;
@@ -63,7 +63,7 @@ function isValidNumber(floatValue: number | undefined, value: string): floatValu
       ? floatValue < Number.MAX_SAFE_INTEGER
       : !Number.isNaN(Number(floatValue))) &&
     !Number.isNaN(floatValue) &&
-    getDecimalPlaces(value) < 14 &&
+    getTotalDigits(value) < 14 &&
     value !== ''
   );
 }
@@ -102,22 +102,22 @@ export interface NumberInputProps
   /** Called when value changes with `react-number-format` payload */
   onValueChange?: OnValueChange;
 
-  /** Determines whether leading zeros are allowed. If set to `false`, leading zeros are removed when the input value becomes a valid number. @default `true` */
+  /** Determines whether leading zeros are allowed during input. If `false`, leading zeros are removed as you type (e.g., typing `007` results in `7`). Works in conjunction with `trimLeadingZeroesOnBlur`. @default `true` */
   allowLeadingZeros?: boolean;
 
-  /** If set, negative values are allowed @default `true` */
+  /** Determines whether negative numbers are allowed. If `false`, the input will not accept negative values, and the decrement button will stop at `0` (when `min` is not set). @default `true` */
   allowNegative?: boolean;
 
-  /** Characters which when pressed result in a decimal separator @default `['.', ',']` */
+  /** Characters which when pressed result in a decimal separator. These characters will be replaced by the `decimalSeparator` in the input value. @default `['.', ',']` */
   allowedDecimalSeparators?: string[];
 
   /** Limits the number of digits that can be entered after the decimal point @default `Infinity` */
   decimalScale?: number;
 
-  /** Character used as a decimal separator @default `'.'` */
+  /** Character used as a decimal separator. Generally used with `allowedDecimalSeparators` prop. @default `'.'` */
   decimalSeparator?: string;
 
-  /** If set, 0s are added after `decimalSeparator` to match given `decimalScale`. @default `false` */
+  /** If `true`, automatically pads the decimal part with zeros to match `decimalScale` (e.g., with `decimalScale={2}`, typing `5.1` displays as `5.10`). Requires `decimalScale` to be set. @default `false` */
   fixedDecimalScale?: boolean;
 
   /** Prefix added before the input value */
@@ -126,13 +126,13 @@ export interface NumberInputProps
   /** Suffix added after the input value */
   suffix?: string;
 
-  /** Defines the thousand grouping style. */
+  /** Defines the thousand grouping style. 'thousand' (1,000), 'lakh' (1,00,000), 'wan' (1,0000), 'none'. */
   thousandsGroupStyle?: 'thousand' | 'lakh' | 'wan' | 'none';
 
   /** A function to validate the input value. If this function returns `false`, the `onChange` will not be called and the input value will not change. */
   isAllowed?: (values: NumberFormatValues) => boolean;
 
-  /** If value is passed as string representation of numbers (unformatted) and number is used in any format props like in prefix or suffix in numeric format and format prop in pattern format then this should be passed as `true`. @default `false` */
+  /** Advanced: Set to `true` if you're passing numeric strings (e.g., `"12345"`) and using formatting props like `prefix` or `suffix`. In most cases, you don't need this prop. See [react-number-format docs](https://www.npmjs.com/package/react-number-format) for details. @default `false` */
   valueIsNumericString?: boolean;
 
   /** Controls input `type` attribute @default `'text'` */
@@ -153,7 +153,11 @@ export interface NumberInputProps
   /** If set, the up/down controls are hidden @default `false` */
   hideControls?: boolean;
 
-  /** Controls how value is clamped, `strict` – user is not allowed to enter values that are not in `[min, max]` range, `blur` – user is allowed to enter any values, but the value is clamped when the input loses focus (default behavior), `none` – lifts all restrictions, `[min, max]` range is applied only for controls and up/down keys */
+  /** Controls how values are clamped to the `min`/`max` range:
+   * - `'blur'` (default): User can type any value, but it's clamped when the input loses focus
+   * - `'strict'`: User cannot type values outside the range
+   * - `'none'`: No clamping; `min`/`max` only apply to increment/decrement controls and arrow keys
+   */
   clampBehavior?: 'strict' | 'blur' | 'none';
 
   /** If set, decimal values are allowed @default `true` */
@@ -162,10 +166,10 @@ export interface NumberInputProps
   /** Increment/decrement handlers */
   handlersRef?: React.Ref<NumberInputHandlers | undefined>;
 
-  /** Value set to the input when increment/decrement buttons are clicked or up/down arrows pressed if the input is empty @default `0` */
+  /** Value used when incrementing/decrementing an empty input. If `min` is set and `startValue < min`, `min` is used instead. @default `0` */
   startValue?: number;
 
-  /** Delay before stepping the value. Can be a number of milliseconds or a function that receives the current step count and returns the delay in milliseconds. */
+  /** Interval in milliseconds between value steps when increment/decrement button is held down. Can be a number or a function `(stepCount) => number` for dynamic intervals. Requires `stepHoldDelay` to be set. @default `undefined` */
   stepHoldInterval?: number | ((stepCount: number) => number);
 
   /** Initial delay in milliseconds before stepping the value. */
@@ -176,6 +180,15 @@ export interface NumberInputProps
 
   /** If set, leading zeros are removed on blur. For example, `00100` -> `100` @default `true` */
   trimLeadingZeroesOnBlur?: boolean;
+
+  /** If set, all text is selected when the input receives focus @default `false` */
+  selectAllOnFocus?: boolean;
+
+  /** Called when the increment button or arrow up key is pressed and the value has reached the maximum */
+  onMinReached?: () => void;
+
+  /** Called when the decrement button or arrow down key is pressed and the value has reached the minimum */
+  onMaxReached?: () => void;
 }
 
 export type NumberInputFactory = Factory<{
@@ -267,6 +280,10 @@ export const NumberInput = factory<NumberInputFactory>((_props) => {
     withKeyboardEvents,
     trimLeadingZeroesOnBlur,
     allowedDecimalSeparators,
+    selectAllOnFocus,
+    onMinReached,
+    onMaxReached,
+    onFocus,
     attributes,
     ref,
     ...others
@@ -333,7 +350,7 @@ export const NumberInput = factory<NumberInputFactory>((_props) => {
 
   const incrementRef = useRef<() => void>(noop);
   incrementRef.current = () => {
-    if (!canIncrement(_value)) {
+    if (!canStep(_value)) {
       return;
     }
 
@@ -348,6 +365,9 @@ export const NumberInput = factory<NumberInputFactory>((_props) => {
     } else if (max !== undefined) {
       const incrementedValue =
         (Math.round(Number(_value) * factor) + Math.round(step * factor)) / factor;
+      if (incrementedValue > max) {
+        onMaxReached?.();
+      }
       val = incrementedValue <= max ? incrementedValue : max;
     } else {
       val = (Math.round(Number(_value) * factor) + Math.round(step * factor)) / factor;
@@ -364,7 +384,7 @@ export const NumberInput = factory<NumberInputFactory>((_props) => {
 
   const decrementRef = useRef<() => void>(noop);
   decrementRef.current = () => {
-    if (!canIncrement(_value)) {
+    if (!canStep(_value)) {
       return;
     }
 
@@ -380,6 +400,9 @@ export const NumberInput = factory<NumberInputFactory>((_props) => {
     } else {
       const decrementedValue =
         (Math.round(Number(_value) * factor) - Math.round(step * factor)) / factor;
+      if (minValue !== undefined && decrementedValue < minValue) {
+        onMinReached?.();
+      }
       val = minValue !== undefined && decrementedValue < minValue ? minValue : decrementedValue;
     }
 
@@ -419,6 +442,13 @@ export const NumberInput = factory<NumberInputFactory>((_props) => {
         window.setTimeout(() => adjustCursor(0), 0);
       }
     }
+  };
+
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    if (selectAllOnFocus) {
+      setTimeout(() => event.currentTarget.select(), 0);
+    }
+    onFocus?.(event);
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -535,13 +565,14 @@ export const NumberInput = factory<NumberInputFactory>((_props) => {
       getInputRef={useMergedRef(ref, inputRef)}
       onValueChange={handleValueChange}
       rightSection={
-        hideControls || readOnly || !canIncrement(_value) ? rightSection : rightSection || controls
+        hideControls || readOnly || !canStep(_value) ? rightSection : rightSection || controls
       }
       classNames={resolvedClassNames}
       styles={resolvedStyles}
       unstyled={unstyled}
       __staticSelector="NumberInput"
       decimalScale={allowDecimal ? decimalScale : 0}
+      onFocus={handleFocus}
       onKeyDown={handleKeyDown}
       onKeyDownCapture={handleKeyDownCapture}
       rightSectionPointerEvents={rightSectionPointerEvents ?? (disabled ? 'none' : undefined)}
