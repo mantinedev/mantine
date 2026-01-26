@@ -2,6 +2,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -34,7 +35,7 @@ export interface NotificationProps
   /** Called when the close button is clicked */
   onClose?: () => void;
 
-  /** Controls notification line or icon color, key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
+  /** Controls icon background color or notification accent line color, key of `theme.colors` or any valid CSS color. When `icon` is provided, sets the icon background color. When no icon is provided, sets the colored accent line on the left. @default `theme.primaryColor` */
   color?: MantineColor;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
@@ -46,10 +47,10 @@ export interface NotificationProps
   /** Notification title, displayed above the message body */
   title?: React.ReactNode;
 
-  /** Main notification message */
+  /** Notification description, displayed below the title. When no title is provided, this serves as the main message. */
   children?: React.ReactNode;
 
-  /** If set, the `Loader` component is displayed instead of the icon */
+  /** If set, displays a `Loader` component instead of the icon. Takes precedence over the `icon` prop if both are provided. */
   loading?: boolean;
 
   /** Adds border to the root element */
@@ -59,7 +60,7 @@ export interface NotificationProps
   withCloseButton?: boolean;
 
   /** Props passed down to the close button */
-  closeButtonProps?: Record<string, any>;
+  closeButtonProps?: ElementProps<'button'> & DataAttributes;
 
   /** Props passed down to the `Loader` component */
   loaderProps?: LoaderProps;
@@ -147,7 +148,10 @@ export const Notification = factory<NotificationFactory>((_props) => {
           color="gray"
           {...closeButtonProps}
           unstyled={unstyled}
-          onClick={onClose}
+          onClick={(event) => {
+            closeButtonProps?.onClick?.(event);
+            onClose?.();
+          }}
           {...getStyles('closeButton')}
         />
       )}
