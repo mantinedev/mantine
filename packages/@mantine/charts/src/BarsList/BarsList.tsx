@@ -55,13 +55,13 @@ export interface BarsListProps
   /** Function to completely customize bar rendering */
   renderBar?: (data: BarsListBarData) => React.ReactNode;
 
-  /** Controls gap between bars @default `'xs'` */
+  /** Controls gap between bars @default 'xs' */
   barGap?: MantineSpacing;
 
-  /** Minimum bar width @default `100` */
+  /** Minimum bar width @default 100 */
   minBarSize?: number | string;
 
-  /** Bar height @default `32` */
+  /** Bar height @default 32 */
   barHeight?: number | string;
 
   /** Default bar background color, used when item does not have color specified */

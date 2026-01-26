@@ -42,13 +42,13 @@ export type ChipCssVariables = {
 
 export interface ChipProps
   extends BoxProps, StylesApiProps<ChipFactory>, ElementProps<'input', 'size' | 'onChange'> {
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `'xl'` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' */
   radius?: MantineRadius;
 
-  /** Controls various properties related to the component size @default `'sm'` */
+  /** Controls various properties related to the component size @default 'sm' */
   size?: MantineSize;
 
-  /** Chip input type @default `'checkbox'` */
+  /** Chip input type @default 'checkbox' */
   type?: 'radio' | 'checkbox';
 
   /** `label` element associated with the input */
@@ -63,7 +63,7 @@ export interface ChipProps
   /** Calls when checked state changes */
   onChange?: (checked: boolean) => void;
 
-  /** Key of `theme.colors` or any valid CSS color. @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color. @default theme.primaryColor */
   color?: MantineColor;
 
   /** Unique input id, generated randomly if not provided */

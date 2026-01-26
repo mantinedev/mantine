@@ -19,7 +19,7 @@ export function useMantineTheme() {
 }
 
 export interface MantineThemeProviderProps {
-  /** Determines whether theme should be inherited from parent MantineProvider @default `true` */
+  /** Determines whether theme should be inherited from parent MantineProvider @default true */
   inherit?: boolean;
 
   /** Theme override object */

@@ -32,10 +32,10 @@ export interface LoadingOverlayProps
   /** Props passed down to `Overlay` component. Use to customizing blur, opacity, color and other properties. */
   overlayProps?: OverlayProps;
 
-  /** Controls overlay visibility. Typically used with state (useState, useDisclosure). @default `false` */
+  /** Controls overlay visibility. Typically used with state (useState, useDisclosure). @default false */
   visible?: boolean;
 
-  /** Controls `z-index` of both the overlay and loader. The loader receives `z-index + 1`. @default `400` */
+  /** Controls `z-index` of both the overlay and loader. The loader receives `z-index + 1`. @default 400 */
   zIndex?: string | number;
 
   /** Called when transition starts */

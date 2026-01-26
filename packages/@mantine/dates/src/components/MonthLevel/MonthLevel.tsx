@@ -20,7 +20,7 @@ import { Month, MonthSettings, MonthStylesNames } from '../Month';
 export type MonthLevelStylesNames = MonthStylesNames | CalendarHeaderStylesNames;
 
 export interface MonthLevelBaseSettings extends MonthSettings {
-  /** dayjs label format to display month label or a function that returns month label based on month value @default `"MMMM YYYY"` */
+  /** dayjs label format to display month label or a function that returns month label based on month value @default "MMMM YYYY" */
   monthLabelFormat?: DateLabelFormat;
 }
 

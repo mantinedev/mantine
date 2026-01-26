@@ -62,13 +62,13 @@ export interface MonthYearSelectProps
   /** Called with month value (0-11) when month is selected in the dropdown */
   onMonthChange?: (month: number) => void;
 
-  /** Format for displaying months in the dropdown, dayjs format or custom formatter function @default `'MMM'` */
+  /** Format for displaying months in the dropdown, dayjs format or custom formatter function @default 'MMM' */
   monthsListFormat?: DateLabelFormat;
 
-  /** Format for displaying month label in the control, dayjs format @default `'MMMM YYYY'` */
+  /** Format for displaying month label in the control, dayjs format @default 'MMMM YYYY' */
   labelFormat?: DateLabelFormat;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Props passed down to year controls */

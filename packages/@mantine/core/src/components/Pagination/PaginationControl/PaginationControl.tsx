@@ -17,7 +17,7 @@ export interface PaginationControlProps
   /** Applies active styles, adds `data-active` attribute */
   active?: boolean;
 
-  /** Applies padding @default `true` */
+  /** Applies padding @default true */
   withPadding?: boolean;
 }
 

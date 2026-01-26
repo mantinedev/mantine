@@ -72,7 +72,7 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
   /** If set, arrow key presses wrap around from last item to first and vice versa */
   loop?: boolean;
 
-  /** If set, the dropdown is closed when the `Escape` key is pressed @default `true` */
+  /** If set, the dropdown is closed when the `Escape` key is pressed @default true */
   closeOnEscape?: boolean;
 
   /** Event trigger to open menu. Note: 'hover' is not keyboard accessible; prefer 'click-hover' for accessible hover menus */
@@ -87,16 +87,16 @@ export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
   /** If set, the dropdown is closed on outside clicks */
   closeOnClickOutside?: boolean;
 
-  /** Events that trigger outside click detection. Includes mousedown for desktop clicks, touchstart for mobile, and keydown for Escape key handling @default `['mousedown', 'touchstart', 'keydown']` */
+  /** Events that trigger outside click detection. Includes mousedown for desktop clicks, touchstart for mobile, and keydown for Escape key handling @default ['mousedown', 'touchstart', 'keydown'] */
   clickOutsideEvents?: string[];
 
   /** Id base to create accessibility connections */
   id?: string;
 
-  /** Set the `tabindex` on all menu items. Use `0` to allow Tab key navigation through menu items (required for navigation menus following WAI-ARIA disclosure pattern). @default `-1` */
+  /** Set the `tabindex` on all menu items. Use `0` to allow Tab key navigation through menu items (required for navigation menus following WAI-ARIA disclosure pattern). @default -1 */
   menuItemTabIndex?: -1 | 0;
 
-  /** Adds a hidden focusable element at the start of the dropdown to prevent unexpected focus jumps when opening with keyboard. Set to false if you need custom focus management. @default `true` */
+  /** Adds a hidden focusable element at the start of the dropdown to prevent unexpected focus jumps when opening with keyboard. Set to false if you need custom focus management. @default true */
   withInitialFocusPlaceholder?: boolean;
 }
 

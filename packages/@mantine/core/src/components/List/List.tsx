@@ -28,22 +28,22 @@ export interface ListProps
   /** `List.Item` components */
   children?: React.ReactNode;
 
-  /** List type @default `'unordered'` */
+  /** List type @default 'unordered' */
   type?: 'ordered' | 'unordered';
 
-  /** Adds extra horizontal padding to the list, useful for nested lists @default `false` */
+  /** Adds extra horizontal padding to the list, useful for nested lists @default false */
   withPadding?: boolean;
 
-  /** Controls `font-size` and `line-height` @default `'md'` */
+  /** Controls `font-size` and `line-height` @default 'md' */
   size?: MantineSize;
 
   /** Icon to replace default list markers. Applied to all items unless overridden on individual List.Item components */
   icon?: React.ReactNode;
 
-  /** Key of `theme.spacing` or any valid CSS value to set spacing between items @default `0` */
+  /** Key of `theme.spacing` or any valid CSS value to set spacing between items @default 0 */
   spacing?: MantineSpacing;
 
-  /** Vertically centers list items with their icons @default `false` */
+  /** Vertically centers list items with their icons @default false */
   center?: boolean;
 
   /** Controls CSS `list-style-type` property. Overrides the default list marker style based on list type */

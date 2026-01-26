@@ -50,7 +50,7 @@ export interface RingProgressProps
   /** Color of the root section, key of theme.colors or CSS color value */
   rootColor?: MantineColor;
 
-  /** Transition duration of filled section styles changes in ms @default `0` */
+  /** Transition duration of filled section styles changes in ms @default 0 */
   transitionDuration?: number;
 }
 

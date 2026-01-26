@@ -20,10 +20,10 @@ export interface ButtonGroupProps extends BoxProps, StylesApiProps<ButtonGroupFa
   /** `Button` components */
   children?: React.ReactNode;
 
-  /** Orientation of the group @default `horizontal` */
+  /** Orientation of the group @default horizontal */
   orientation?: 'horizontal' | 'vertical';
 
-  /** `border-width` of the child `Button` components. Numbers are converted to rem. @default `1` */
+  /** `border-width` of the child `Button` components. Numbers are converted to rem. @default 1 */
   borderWidth?: number | string;
 }
 

@@ -21,7 +21,7 @@ export type SpoilerCssVariables = {
 
 export interface SpoilerProps
   extends BoxProps, StylesApiProps<SpoilerFactory>, ElementProps<'div'> {
-  /** Maximum height of the visible content, when this point is reached spoiler appears @default `100` */
+  /** Maximum height of the visible content, when this point is reached spoiler appears @default 100 */
   maxHeight?: number;
 
   /** Label for close spoiler action */
@@ -42,7 +42,7 @@ export interface SpoilerProps
   /** Called when expanded state changes (when spoiler visibility is toggled by the user) */
   onExpandedChange?: (expanded: boolean) => void;
 
-  /** Spoiler reveal transition duration in ms, set 0 or null to turn off animation @default `200` */
+  /** Spoiler reveal transition duration in ms, set 0 or null to turn off animation @default 200 */
   transitionDuration?: number;
 }
 

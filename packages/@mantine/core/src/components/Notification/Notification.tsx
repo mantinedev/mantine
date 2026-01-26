@@ -35,10 +35,10 @@ export interface NotificationProps
   /** Called when the close button is clicked */
   onClose?: () => void;
 
-  /** Controls icon background color or notification accent line color, key of `theme.colors` or any valid CSS color. When `icon` is provided, sets the icon background color. When no icon is provided, sets the colored accent line on the left. @default `theme.primaryColor` */
+  /** Controls icon background color or notification accent line color, key of `theme.colors` or any valid CSS color. When `icon` is provided, sets the icon background color. When no icon is provided, sets the colored accent line on the left. @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Notification icon, replaces color line */
@@ -56,7 +56,7 @@ export interface NotificationProps
   /** Adds border to the root element */
   withBorder?: boolean;
 
-  /** If set, the close button is visible @default `true` */
+  /** If set, the close button is visible @default true */
   withCloseButton?: boolean;
 
   /** Props passed down to the close button */

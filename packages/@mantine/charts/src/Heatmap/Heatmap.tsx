@@ -44,19 +44,19 @@ export interface HeatmapProps
   /** Heatmap end date. Current date by default. Date is normalized to UTC midnight of the intended calendar day. */
   endDate?: Date | string;
 
-  /** If set, month labels are displayed @default `false` */
+  /** If set, month labels are displayed @default false */
   withMonthLabels?: boolean;
 
   /** Month labels, array of 12 elements, can be used for localization */
   monthLabels?: string[];
 
-  /** If set, weekday labels are displayed @default `false` */
+  /** If set, weekday labels are displayed @default false */
   withWeekdayLabels?: boolean;
 
   /** Weekday labels, array of 7 elements, can be used for localization */
   weekdayLabels?: string[];
 
-  /** If set, trailing dates that do not fall into the given `startDate` – `endDate` range are displayed to fill empty space. @default `true` */
+  /** If set, trailing dates that do not fall into the given `startDate` – `endDate` range are displayed to fill empty space. @default true */
   withOutsideDates?: boolean;
 
   /** First day of week, 0 – Sunday, 1 – Monday. @default 1 – Monday */
@@ -86,7 +86,7 @@ export interface HeatmapProps
   /** A function to generate tooltip label based on the hovered rect date and value, required for the tooltip to be visible */
   getTooltipLabel?: (input: HeatmapRectData) => React.ReactNode;
 
-  /** If set, tooltip is displayed on rect hover @default `false` */
+  /** If set, tooltip is displayed on rect hover @default false */
   withTooltip?: boolean;
 
   /** Props passed down to the `Tooltip.Floating` component */
@@ -95,7 +95,7 @@ export interface HeatmapProps
   /** Props passed down to each rect depending on its date and associated value */
   getRectProps?: (input: HeatmapRectData) => React.ComponentProps<'rect'>;
 
-  /** If set, inserts a spacer column between months @default `false` */
+  /** If set, inserts a spacer column between months @default false */
   splitMonths?: boolean;
 }
 

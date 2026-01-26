@@ -32,13 +32,13 @@ export type CheckboxIndicatorCssVariables = {
 
 export interface CheckboxIndicatorProps
   extends BoxProps, StylesApiProps<CheckboxIndicatorFactory>, ElementProps<'div'> {
-  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Controls size of the component @default `'sm'` */
+  /** Controls size of the component @default 'sm' */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Key of `theme.colors` or any valid CSS color to set icon color, by default value depends on `theme.autoContrast` */

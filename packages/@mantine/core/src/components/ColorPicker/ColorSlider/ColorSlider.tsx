@@ -41,10 +41,10 @@ export interface __ColorSliderProps extends ElementProps<'div', 'onChange'> {
   /** Called when user stops dragging the slider */
   onScrubEnd?: () => void;
 
-  /** Slider size @default `'md'` */
+  /** Slider size @default 'md' */
   size?: MantineSize | (string & {});
 
-  /** If set, slider thumb can be focused @default `true` */
+  /** If set, slider thumb can be focused @default true */
   focusable?: boolean;
 }
 

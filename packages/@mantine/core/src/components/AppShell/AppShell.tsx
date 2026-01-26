@@ -45,10 +45,10 @@ export type AppShellCssVariables = {
 
 export interface AppShellProps
   extends BoxProps, StylesApiProps<AppShellFactory>, ElementProps<'div'> {
-  /** If set, the associated components have a border @default `true` */
+  /** If set, the associated components have a border @default true */
   withBorder?: boolean;
 
-  /** Padding of the main section. Important: use `padding` prop instead of `p`. @default `0` */
+  /** Padding of the main section. Important: use `padding` prop instead of `p`. @default 0 */
   padding?: MantineSpacing | AppShellResponsiveSize;
 
   /** `Navbar` configuration, controls width, breakpoints and collapsed state. Required if you use `Navbar` component. */
@@ -63,13 +63,13 @@ export interface AppShellProps
   /** `Footer` configuration, controls height, offset and collapsed state. Required if you use `Footer` component. */
   footer?: AppShellFooterConfiguration;
 
-  /** Duration of all transitions in ms @default `200` */
+  /** Duration of all transitions in ms @default 200 */
   transitionDuration?: number;
 
-  /** Timing function of all transitions @default `ease` */
+  /** Timing function of all transitions @default ease */
   transitionTimingFunction?: React.CSSProperties['transitionTimingFunction'];
 
-  /** `z-index` of all associated elements @default `100` */
+  /** `z-index` of all associated elements @default 100 */
   zIndex?: string | number;
 
   /** Determines how `Navbar`/`Aside` are arranged relative to `Header`/`Footer` */
@@ -78,7 +78,7 @@ export interface AppShellProps
   /** If set, `Navbar`, `Aside`, `Header` and `Footer` components are hidden */
   disabled?: boolean;
 
-  /** If set, `Header` and `Footer` components include styles to offset scrollbars. Based on `react-remove-scroll`. @default `true` */
+  /** If set, `Header` and `Footer` components include styles to offset scrollbars. Based on `react-remove-scroll`. @default true */
   offsetScrollbars?: boolean;
 
   /** Determines positioning mode of all sections @default 'fixed' */

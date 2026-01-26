@@ -25,13 +25,13 @@ export interface DropzoneFullScreenProps
     Omit<DropzoneProps, 'styles' | 'classNames' | 'vars' | 'variant' | 'attributes'>,
     StylesApiProps<DropzoneFullScreenFactory>,
     ElementProps<'div', 'onDragLeave' | 'onDragOver' | 'onDrop' | 'onDragEnter'> {
-  /** Determines whether user can drop files to browser window @default `true` */
+  /** Determines whether user can drop files to browser window @default true */
   active?: boolean;
 
-  /** Z-index value @default `9999` */
+  /** Z-index value @default 9999 */
   zIndex?: React.CSSProperties['zIndex'];
 
-  /** Determines whether component should be rendered within `Portal` @default `true` */
+  /** Determines whether component should be rendered within `Portal` @default true */
   withinPortal?: boolean;
 
   /** Props to pass down to the portal when withinPortal is `true` */

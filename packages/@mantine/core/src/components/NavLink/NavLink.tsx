@@ -45,13 +45,13 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
   /** Section displayed on the right side of the label */
   rightSection?: React.ReactNode;
 
-  /** Determines whether the link should have active styles @default `false` */
+  /** Determines whether the link should have active styles @default false */
   active?: boolean;
 
-  /** Key of `theme.colors` or any valid CSS color to control active styles @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color to control active styles @default theme.primaryColor */
   color?: MantineColor;
 
-  /** If set, label and description are truncated with ellipsis instead of wrapping @default `false` */
+  /** If set, label and description are truncated with ellipsis instead of wrapping @default false */
   noWrap?: boolean;
 
   /** Child `NavLink` components */
@@ -66,13 +66,13 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
   /** Called when open state changes */
   onChange?: (opened: boolean) => void;
 
-  /** If set, right section will not be rotated when collapse is opened @default `false` */
+  /** If set, right section will not be rotated when collapse is opened @default false */
   disableRightSectionRotation?: boolean;
 
-  /** Controls indentation of nested NavLink components, key of `theme.spacing` or any valid CSS value @default `'lg'` */
+  /** Controls indentation of nested NavLink components, key of `theme.spacing` or any valid CSS value @default 'lg' */
   childrenOffset?: MantineSpacing;
 
-  /** If set, disabled styles will be added to the root element @default `false` */
+  /** If set, disabled styles will be added to the root element @default false */
   disabled?: boolean;
 
   /** If set, adjusts text color based on background color for `filled` variant */

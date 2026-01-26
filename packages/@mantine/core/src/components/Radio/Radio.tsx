@@ -45,10 +45,10 @@ export interface RadioProps
   /** Content of the `label` associated with the radio */
   label?: React.ReactNode;
 
-  /** Key of `theme.colors` or any valid CSS color to set input color in checked state @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color to set input color in checked state @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Controls size of the component @default `'sm'` */
+  /** Controls size of the component @default 'sm' */
   size?: MantineSize | (string & {});
 
   /** A component that replaces default check icon */
@@ -57,7 +57,7 @@ export interface RadioProps
   /** Props passed down to the root element */
   wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
-  /** Position of the label relative to the input @default `'right'` */
+  /** Position of the label relative to the input @default 'right' */
   labelPosition?: 'left' | 'right';
 
   /** Description displayed below the label */
@@ -66,7 +66,7 @@ export interface RadioProps
   /** Error displayed below the label */
   error?: React.ReactNode;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` @default `'xl'` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` @default 'xl' */
   radius?: MantineRadius;
 
   /** Assigns ref of the root element */

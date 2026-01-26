@@ -36,13 +36,13 @@ export interface OverflowListProps<T = any>
   /** Function to render hidden items */
   renderOverflow: (items: T[]) => React.ReactNode;
 
-  /** Number of rows to display @default `1` */
+  /** Number of rows to display @default 1 */
   maxRows?: number;
 
-  /** Maximum number of visible items @default `Infinity` */
+  /** Maximum number of visible items @default Infinity */
   maxVisibleItems?: number;
 
-  /** Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem @default `'xs'` */
+  /** Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem @default 'xs' */
   gap?: MantineSpacing;
 
   ref?: Ref<HTMLDivElement>;

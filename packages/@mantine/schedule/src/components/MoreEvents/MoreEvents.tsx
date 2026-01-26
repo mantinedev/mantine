@@ -31,13 +31,13 @@ export interface MoreEventsProps
   /** Events count to use for `+X more` label */
   moreEventsCount: number;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Title for the Modal component, ignored if `dropdownType` is not 'modal' */
   modalTitle?: string;
 
-  /** Type of dropdown to use for displaying more events @default `'popover'` */
+  /** Type of dropdown to use for displaying more events @default 'popover' */
   dropdownType?: MoreEventsDropdownType;
 
   /** Props passed down to `Popover` component */
@@ -55,7 +55,7 @@ export interface MoreEventsProps
   /** Labels override */
   labels?: ScheduleLabelsOverride;
 
-  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
 }
 

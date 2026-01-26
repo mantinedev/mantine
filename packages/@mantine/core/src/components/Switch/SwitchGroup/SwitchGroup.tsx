@@ -34,7 +34,7 @@ export interface SwitchGroupProps<Value extends string = string> extends Omit<
   /** Props passed down to the `Input.Wrapper` */
   wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
-  /** Controls size of the `Input.Wrapper` @default `'sm'` */
+  /** Controls size of the `Input.Wrapper` @default 'sm' */
   size?: MantineSize | (string & {});
 
   /** If set, value cannot be changed */
@@ -46,7 +46,7 @@ export interface SwitchGroupProps<Value extends string = string> extends Omit<
   /** Props passed down to the hidden input for uncontrolled forms */
   hiddenInputProps?: React.ComponentProps<'input'> & DataAttributes;
 
-  /** Separator for values in the hidden input for uncontrolled forms @default `','` */
+  /** Separator for values in the hidden input for uncontrolled forms @default ',' */
   hiddenInputValuesSeparator?: string;
 
   /** Maximum number of switches that can be selected. When the limit is reached, unselected switches will be disabled */

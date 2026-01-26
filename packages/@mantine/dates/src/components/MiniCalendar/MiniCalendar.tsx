@@ -58,7 +58,7 @@ export interface MiniCalendarProps
   /** Number of days to display in the calendar @default 7 */
   numberOfDays?: number;
 
-  /** Dayjs format string for month label @default `MMM` */
+  /** Dayjs format string for month label @default MMM */
   monthLabelFormat?: string;
 
   /** Called when the next button is clicked */

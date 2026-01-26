@@ -102,22 +102,22 @@ export interface NumberInputProps
   /** Called when value changes with `react-number-format` payload */
   onValueChange?: OnValueChange;
 
-  /** Determines whether leading zeros are allowed during input. If `false`, leading zeros are removed as you type (e.g., typing `007` results in `7`). Works in conjunction with `trimLeadingZeroesOnBlur`. @default `true` */
+  /** Determines whether leading zeros are allowed during input. If `false`, leading zeros are removed as you type (e.g., typing `007` results in `7`). Works in conjunction with `trimLeadingZeroesOnBlur`. @default true */
   allowLeadingZeros?: boolean;
 
-  /** Determines whether negative numbers are allowed. If `false`, the input will not accept negative values, and the decrement button will stop at `0` (when `min` is not set). @default `true` */
+  /** Determines whether negative numbers are allowed. If `false`, the input will not accept negative values, and the decrement button will stop at `0` (when `min` is not set). @default true */
   allowNegative?: boolean;
 
-  /** Characters which when pressed result in a decimal separator. These characters will be replaced by the `decimalSeparator` in the input value. @default `['.', ',']` */
+  /** Characters which when pressed result in a decimal separator. These characters will be replaced by the `decimalSeparator` in the input value. @default ['.', ','] */
   allowedDecimalSeparators?: string[];
 
-  /** Limits the number of digits that can be entered after the decimal point @default `Infinity` */
+  /** Limits the number of digits that can be entered after the decimal point @default Infinity */
   decimalScale?: number;
 
-  /** Character used as a decimal separator. Generally used with `allowedDecimalSeparators` prop. @default `'.'` */
+  /** Character used as a decimal separator. Generally used with `allowedDecimalSeparators` prop. @default '.' */
   decimalSeparator?: string;
 
-  /** If `true`, automatically pads the decimal part with zeros to match `decimalScale` (e.g., with `decimalScale={2}`, typing `5.1` displays as `5.10`). Requires `decimalScale` to be set. @default `false` */
+  /** If `true`, automatically pads the decimal part with zeros to match `decimalScale` (e.g., with `decimalScale={2}`, typing `5.1` displays as `5.10`). Requires `decimalScale` to be set. @default false */
   fixedDecimalScale?: boolean;
 
   /** Prefix added before the input value */
@@ -132,10 +132,10 @@ export interface NumberInputProps
   /** A function to validate the input value. If this function returns `false`, the `onChange` will not be called and the input value will not change. */
   isAllowed?: (values: NumberFormatValues) => boolean;
 
-  /** Advanced: Set to `true` if you're passing numeric strings (e.g., `"12345"`) and using formatting props like `prefix` or `suffix`. In most cases, you don't need this prop. See [react-number-format docs](https://www.npmjs.com/package/react-number-format) for details. @default `false` */
+  /** Advanced: Set to `true` if you're passing numeric strings (e.g., `"12345"`) and using formatting props like `prefix` or `suffix`. In most cases, you don't need this prop. See [react-number-format docs](https://www.npmjs.com/package/react-number-format) for details. @default false */
   valueIsNumericString?: boolean;
 
-  /** Controls input `type` attribute @default `'text'` */
+  /** Controls input `type` attribute @default 'text' */
   type?: 'text' | 'tel' | 'password';
 
   /** A character used to separate thousands */
@@ -147,10 +147,10 @@ export interface NumberInputProps
   /** Maximum possible value */
   max?: number;
 
-  /** Number by which value will be incremented/decremented with up/down controls and keyboard arrows @default `1` */
+  /** Number by which value will be incremented/decremented with up/down controls and keyboard arrows @default 1 */
   step?: number;
 
-  /** If set, the up/down controls are hidden @default `false` */
+  /** If set, the up/down controls are hidden @default false */
   hideControls?: boolean;
 
   /** Controls how values are clamped to the `min`/`max` range:
@@ -160,28 +160,28 @@ export interface NumberInputProps
    */
   clampBehavior?: 'strict' | 'blur' | 'none';
 
-  /** If set, decimal values are allowed @default `true` */
+  /** If set, decimal values are allowed @default true */
   allowDecimal?: boolean;
 
   /** Increment/decrement handlers */
   handlersRef?: React.Ref<NumberInputHandlers | undefined>;
 
-  /** Value used when incrementing/decrementing an empty input. If `min` is set and `startValue < min`, `min` is used instead. @default `0` */
+  /** Value used when incrementing/decrementing an empty input. If `min` is set and `startValue < min`, `min` is used instead. @default 0 */
   startValue?: number;
 
-  /** Interval in milliseconds between value steps when increment/decrement button is held down. Can be a number or a function `(stepCount) => number` for dynamic intervals. Requires `stepHoldDelay` to be set. @default `undefined` */
+  /** Interval in milliseconds between value steps when increment/decrement button is held down. Can be a number or a function `(stepCount) => number` for dynamic intervals. Requires `stepHoldDelay` to be set. @default undefined */
   stepHoldInterval?: number | ((stepCount: number) => number);
 
   /** Initial delay in milliseconds before stepping the value. */
   stepHoldDelay?: number;
 
-  /** If set, up/down keyboard events increment/decrement value @default `true` */
+  /** If set, up/down keyboard events increment/decrement value @default true */
   withKeyboardEvents?: boolean;
 
-  /** If set, leading zeros are removed on blur. For example, `00100` -> `100` @default `true` */
+  /** If set, leading zeros are removed on blur. For example, `00100` -> `100` @default true */
   trimLeadingZeroesOnBlur?: boolean;
 
-  /** If set, all text is selected when the input receives focus @default `false` */
+  /** If set, all text is selected when the input receives focus @default false */
   selectAllOnFocus?: boolean;
 
   /** Called when the increment button or arrow up key is pressed and the value has reached the maximum */

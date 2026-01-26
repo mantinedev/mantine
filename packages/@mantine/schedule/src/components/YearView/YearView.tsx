@@ -60,13 +60,13 @@ export interface YearViewProps
   /** Events to display, must be a stable reference */
   events?: ScheduleEventData[];
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** If set, highlights the current day @default true */
   highlightToday?: boolean;
 
-  /** If set, the header is displayed @default `true` */
+  /** If set, the header is displayed @default true */
   withHeader?: boolean;
 
   /** Props passed down to `MonthYearSelect` component in the header */
@@ -87,7 +87,7 @@ export interface YearViewProps
   /** Props passed to view level select */
   viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
 
-  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
 }
 

@@ -77,25 +77,25 @@ export interface MultiSelectProps<Value extends Primitive = string>
   /** Maximum number of values, no limit if not set */
   maxValues?: number;
 
-  /** Allows searching through options by user input @default `false` */
+  /** Allows searching through options by user input @default false */
   searchable?: boolean;
 
   /** Message displayed when no options match the search query (when searchable is enabled) or when the data array is empty. If not set, the dropdown will be hidden instead. */
   nothingFoundMessage?: React.ReactNode;
 
-  /** If set, the check icon is displayed near the selected option label @default `true` */
+  /** If set, the check icon is displayed near the selected option label @default true */
   withCheckIcon?: boolean;
 
-  /** If set, unchecked labels are aligned with checked ones @default `false` */
+  /** If set, unchecked labels are aligned with checked ones @default false */
   withAlignedLabels?: boolean;
 
-  /** Position of the checkmark icon shown next to selected options in the dropdown @default `'left'` */
+  /** Position of the checkmark icon shown next to selected options in the dropdown @default 'left' */
   checkIconPosition?: 'left' | 'right';
 
-  /** When enabled, selected options are hidden from the dropdown list @default `false` */
+  /** When enabled, selected options are hidden from the dropdown list @default false */
   hidePickedOptions?: boolean;
 
-  /** When enabled, displays a clear button to remove all selected values (hidden when component is empty, disabled, or read-only) @default `false` */
+  /** When enabled, displays a clear button to remove all selected values (hidden when component is empty, disabled, or read-only) @default false */
   clearable?: boolean;
 
   /** Props passed down to the clear button */
@@ -104,7 +104,7 @@ export interface MultiSelectProps<Value extends Primitive = string>
   /** Props passed down to the hidden input */
   hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'>;
 
-  /** Divider used to separate values in the hidden input `value` attribute @default `','` */
+  /** Divider used to separate values in the hidden input `value` attribute @default ',' */
   hiddenInputValuesDivider?: string;
 
   /** A function to render content of the option, replaces the default content of the option */
@@ -119,10 +119,10 @@ export interface MultiSelectProps<Value extends Primitive = string>
   /** Controls color of the default chevron */
   chevronColor?: MantineColor;
 
-  /** Clear search value when item is selected @default `true` */
+  /** Clear search value when item is selected @default true */
   clearSearchOnChange?: boolean;
 
-  /** Controls whether dropdown opens when the input receives focus @default `true` */
+  /** Controls whether dropdown opens when the input receives focus @default true */
   openOnFocus?: boolean;
 }
 

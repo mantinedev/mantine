@@ -33,16 +33,16 @@ export interface ScheduleEventProps
   /** Event to display */
   event: ScheduleEventData;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** If set, event has `white-space: nowrap` @default `false` */
+  /** If set, event has `white-space: nowrap` @default false */
   nowrap?: boolean;
 
-  /** If set, event shrinks its font-size with limited height @default `false` */
+  /** If set, event shrinks its font-size with limited height @default false */
   autoSize?: boolean;
 
-  /** Event size @default `'sm'` */
+  /** Event size @default 'sm' */
   size?: 'sm' | 'md' | (string & {});
 
   /** Function to customize event body, `event` object is passed as first argument */
@@ -51,7 +51,7 @@ export interface ScheduleEventProps
   /** Event hanging position */
   hanging?: 'start' | 'end' | 'both' | 'none';
 
-  /** If true, event can be dragged @default `false` */
+  /** If true, event can be dragged @default false */
   draggable?: boolean;
 
   /** Called when event drag starts */
@@ -60,10 +60,10 @@ export interface ScheduleEventProps
   /** Called when event drag ends */
   onEventDragEnd?: () => void;
 
-  /** If true, event is currently being dragged @default `false` */
+  /** If true, event is currently being dragged @default false */
   isDragging?: boolean;
 
-  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
 }
 

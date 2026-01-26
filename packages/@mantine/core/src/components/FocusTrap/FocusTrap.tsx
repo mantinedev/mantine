@@ -10,7 +10,7 @@ export interface FocusTrapProps {
   /** If set to `false`, disables focus trap */
   active?: boolean;
 
-  /** Prop that is used to access element ref @default `'ref'` */
+  /** Prop that is used to access element ref @default 'ref' */
   refProp?: string;
 
   /** Ref to combine with the focus trap ref */

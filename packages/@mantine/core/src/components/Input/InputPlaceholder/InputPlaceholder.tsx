@@ -16,7 +16,7 @@ export interface InputPlaceholderProps
   extends BoxProps, StylesApiProps<InputPlaceholderFactory>, ElementProps<'span'> {
   __staticSelector?: string;
 
-  /** If set, the placeholder has error styles @default `false` */
+  /** If set, the placeholder has error styles @default false */
   error?: React.ReactNode;
 }
 

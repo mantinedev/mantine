@@ -35,7 +35,7 @@ export interface GetWeekPositionedEventsInput {
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday */
   weekendDays?: DayOfWeek[];
 
-  /** If set to false, weekend days are hidden @default `true` */
+  /** If set to false, weekend days are hidden @default true */
   withWeekendDays?: boolean;
 }
 

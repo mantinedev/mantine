@@ -55,7 +55,7 @@ export interface DateInputProps
   /** Props passed down to the `Popover` component */
   popoverProps?: Partial<Omit<PopoverProps, 'children'>>;
 
-  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default `false` */
+  /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default false */
   clearable?: boolean;
 
   /** Props passed down to the clear button */
@@ -70,7 +70,7 @@ export interface DateInputProps
   /** If set, the value can be deselected by deleting everything from the input or by clicking the selected date in the dropdown. By default, `true` if `clearable` prop is set, `false` otherwise. */
   allowDeselect?: boolean;
 
-  /** Max level that user can go up to @default `'decade'` */
+  /** Max level that user can go up to @default 'decade' */
   maxLevel?: CalendarLevel;
 
   /** Initial displayed level (uncontrolled) */

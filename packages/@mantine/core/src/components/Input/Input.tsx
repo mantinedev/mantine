@@ -74,7 +74,7 @@ export interface __InputProps {
   /** Props passed down to the `leftSection` element */
   leftSectionProps?: React.ComponentProps<'div'>;
 
-  /** Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). @default `'none'` */
+  /** Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). @default 'none' */
   leftSectionPointerEvents?: React.CSSProperties['pointerEvents'];
 
   /** Content section displayed on the right side of the input */
@@ -86,25 +86,25 @@ export interface __InputProps {
   /** Props passed down to the `rightSection` element */
   rightSectionProps?: React.ComponentProps<'div'>;
 
-  /** Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). @default `'none'` */
+  /** Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). @default 'none' */
   rightSectionPointerEvents?: React.CSSProperties['pointerEvents'];
 
   /** Sets `required` attribute on the `input` element */
   required?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Sets `disabled` attribute on the `input` element */
   disabled?: boolean;
 
-  /** Controls input `height`, horizontal `padding`, and `font-size` @default `'sm'` */
+  /** Controls input `height`, horizontal `padding`, and `font-size` @default 'sm' */
   size?: MantineSize | (string & {});
 
-  /** Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). @default `false` */
+  /** Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). @default false */
   pointer?: boolean;
 
-  /** Determines whether the input should have red border and red text color when the `error` prop is set @default `true` */
+  /** Determines whether the input should have red border and red text color when the `error` prop is set @default true */
   withErrorStyles?: boolean;
 
   /** HTML `size` attribute for the input element (number of visible characters) */
@@ -119,10 +119,10 @@ export interface __InputProps {
   /** Right section displayed when both `__clearSection` and `rightSection` are not defined */
   __defaultRightSection?: React.ReactNode;
 
-  /** Displays loading indicator in the left or right section @default `false` */
+  /** Displays loading indicator in the left or right section @default false */
   loading?: boolean;
 
-  /** Position of the loading indicator @default `'right'` */
+  /** Position of the loading indicator @default 'right' */
   loadingPosition?: 'left' | 'right';
 }
 
@@ -135,13 +135,13 @@ export interface InputProps extends BoxProps, __InputProps, StylesApiProps<Input
   /** Determines whether the input should have error styles and `aria-invalid` attribute */
   error?: React.ReactNode;
 
-  /** Adjusts padding and sizing calculations for multiline inputs (use with `component="textarea"`). Does not make the input multiline by itself. @default `false` */
+  /** Adjusts padding and sizing calculations for multiline inputs (use with `component="textarea"`). Does not make the input multiline by itself. @default false */
   multiline?: boolean;
 
   /** Input element id */
   id?: string;
 
-  /** Determines whether `aria-` and other accessibility attributes should be added to the input. Only disable when implementing custom accessibility handling. @default `true` */
+  /** Determines whether `aria-` and other accessibility attributes should be added to the input. Only disable when implementing custom accessibility handling. @default true */
   withAria?: boolean;
 
   /** Props passed down to the root element of the `Input` component */

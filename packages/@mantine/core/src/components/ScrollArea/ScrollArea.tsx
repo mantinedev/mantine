@@ -46,13 +46,13 @@ export interface ScrollAreaProps
    * */
   type?: 'auto' | 'always' | 'scroll' | 'hover' | 'never';
 
-  /** Scroll hide delay in ms, applicable only when type is set to `hover` or `scroll` @default `1000` */
+  /** Scroll hide delay in ms, applicable only when type is set to `hover` or `scroll` @default 1000 */
   scrollHideDelay?: number;
 
-  /** Axis at which scrollbars must be rendered @default `'xy'` */
+  /** Axis at which scrollbars must be rendered @default 'xy' */
   scrollbars?: 'x' | 'y' | 'xy' | false;
 
-  /** Determines whether scrollbars should be offset with padding on given axis @default `false` */
+  /** Determines whether scrollbars should be offset with padding on given axis @default false */
   offsetScrollbars?: boolean | 'x' | 'y' | 'present';
 
   /** Assigns viewport element (scrollable container) ref */

@@ -77,16 +77,16 @@ export interface MonthViewProps
   /** Called with the new date value when a date is selected */
   onDateChange?: (value: DateStringValue) => void;
 
-  /** If set, week numbers are displayed in the first column @default `false` */
+  /** If set, week numbers are displayed in the first column @default false */
   withWeekNumbers?: boolean;
 
-  /** If set, weekdays names are displayed in the first row @default `true` */
+  /** If set, weekdays names are displayed in the first row @default true */
   withWeekDays?: boolean;
 
   /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
   locale?: string;
 
-  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default `1` – Monday */
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default 1 – Monday */
   firstDayOfWeek?: DayOfWeek;
 
   /** `dayjs` format for weekdays names. By default, the first letter of the weekday. */
@@ -113,13 +113,13 @@ export interface MonthViewProps
   /** If set, highlights the current day @default true */
   highlightToday?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** If set, days from the previous and next months are displayed to fill the weeks @default `true` */
+  /** If set, days from the previous and next months are displayed to fill the weeks @default true */
   withOutsideDays?: boolean;
 
-  /** If set, the header is displayed @default `true` */
+  /** If set, the header is displayed @default true */
   withHeader?: boolean;
 
   /** Props passed down to `MonthYearSelect` component in the header */
@@ -149,7 +149,7 @@ export interface MonthViewProps
   /** Function to customize event body, `event` object is passed as first argument */
   renderEventBody?: RenderEventBody;
 
-  /** If true, events can be dragged and dropped @default `false` */
+  /** If true, events can be dragged and dropped @default false */
   withDragDrop?: boolean;
 
   /** Called when event is dropped on new date */
@@ -161,7 +161,7 @@ export interface MonthViewProps
   /** Labels override for i18n */
   labels?: ScheduleLabelsOverride;
 
-  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
 
   /** Props passed down to `ScrollArea` component */

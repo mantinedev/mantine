@@ -25,13 +25,13 @@ export interface MenuSubProps extends __PopoverProps {
   /** Close delay in ms, applicable when hover trigger is used */
   closeDelay?: number;
 
-  /** Dropdown position relative to the target element @default `'right-start'` */
+  /** Dropdown position relative to the target element @default 'right-start' */
   position?: FloatingPosition;
 
-  /** Offset of the dropdown element @default `0` */
+  /** Offset of the dropdown element @default 0 */
   offset?: number | FloatingAxesOffsets;
 
-  /** Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type @default `{ duration: 0 }` */
+  /** Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type @default { duration: 0 } */
   transitionProps?: TransitionOverride;
 }
 

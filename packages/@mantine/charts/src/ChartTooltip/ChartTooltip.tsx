@@ -91,7 +91,7 @@ export interface ChartTooltipProps
   /** Data units, provided by parent component */
   unit?: string;
 
-  /** Tooltip type that determines the content and styles, `area` for LineChart, AreaChart and BarChart, `radial` for DonutChart and PieChart @default `'area'` */
+  /** Tooltip type that determines the content and styles, `area` for LineChart, AreaChart and BarChart, `radial` for DonutChart and PieChart @default 'area' */
   type?: 'area' | 'radial' | 'scatter';
 
   /** Id of the segment to display data for. Only applicable when `type="radial"`. If not set, all data is rendered. */
@@ -103,7 +103,7 @@ export interface ChartTooltipProps
   /** A function to format values */
   valueFormatter?: (value: number) => string;
 
-  /** Determines whether the color swatch should be visible @default `true` */
+  /** Determines whether the color swatch should be visible @default true */
   showColor?: boolean;
 }
 

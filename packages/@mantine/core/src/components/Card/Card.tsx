@@ -26,19 +26,19 @@ export interface CardProps extends BoxProps, StylesApiProps<CardFactory> {
   /** Key of `theme.shadows` or any valid CSS value to set `box-shadow` */
   shadow?: MantineShadow;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Adds border to the card */
   withBorder?: boolean;
 
-  /** Key of `theme.spacing` or any valid CSS value to set padding @default `'md'` */
+  /** Key of `theme.spacing` or any valid CSS value to set padding @default 'md' */
   padding?: MantineSpacing;
 
   /** Card content */
   children?: React.ReactNode;
 
-  /** Card orientation @default `'vertical'` */
+  /** Card orientation @default 'vertical' */
   orientation?: 'horizontal' | 'vertical';
 }
 

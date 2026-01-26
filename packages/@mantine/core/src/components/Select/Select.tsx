@@ -53,16 +53,16 @@ export interface SelectProps<Value extends Primitive = string>
   /** Called when the clear button is clicked */
   onClear?: () => void;
 
-  /** Determines whether the select should be searchable @default `false` */
+  /** Determines whether the select should be searchable @default false */
   searchable?: boolean;
 
-  /** If set, the check icon is displayed near the selected option label @default `true` */
+  /** If set, the check icon is displayed near the selected option label @default true */
   withCheckIcon?: boolean;
 
-  /** If set, unchecked labels are aligned with the checked one @default `false` */
+  /** If set, unchecked labels are aligned with the checked one @default false */
   withAlignedLabels?: boolean;
 
-  /** Position of the check icon relative to the option label @default `'left'` */
+  /** Position of the check icon relative to the option label @default 'left' */
   checkIconPosition?: 'left' | 'right';
 
   /** Message displayed when no option matches the current search query when the `searchable` prop is set or there is no data */
@@ -77,10 +77,10 @@ export interface SelectProps<Value extends Primitive = string>
   /** Called when search changes */
   onSearchChange?: (value: string) => void;
 
-  /** If set, it becomes possible to deselect value by clicking on the selected option @default `true` */
+  /** If set, it becomes possible to deselect value by clicking on the selected option @default true */
   allowDeselect?: boolean;
 
-  /** If set, the clear button is displayed in the right section when the component has value @default `false` */
+  /** If set, the clear button is displayed in the right section when the component has value @default false */
   clearable?: boolean;
 
   /** Props passed down to the clear button */
@@ -98,10 +98,10 @@ export interface SelectProps<Value extends Primitive = string>
   /** Controls color of the default chevron, by default depends on the color scheme */
   chevronColor?: MantineColor;
 
-  /** If set, the highlighted option is selected when the input loses focus @default `false` */
+  /** If set, the highlighted option is selected when the input loses focus @default false */
   autoSelectOnBlur?: boolean;
 
-  /** If set, the dropdown opens when the input receives focus @default `true` */
+  /** If set, the dropdown opens when the input receives focus @default true */
   openOnFocus?: boolean;
 }
 

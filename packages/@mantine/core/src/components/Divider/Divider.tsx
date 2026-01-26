@@ -26,16 +26,16 @@ export interface DividerProps
   /** Key of `theme.colors` or any valid CSS color value */
   color?: MantineColor;
 
-  /** Controls width/height (depends on orientation) @default `'xs'` */
+  /** Controls width/height (depends on orientation) @default 'xs' */
   size?: MantineSize | number | (string & {});
 
   /** Divider label, visible only with `orientation="horizontal"` */
   label?: React.ReactNode;
 
-  /** Label position @default `'center'` */
+  /** Label position @default 'center' */
   labelPosition?: 'left' | 'center' | 'right';
 
-  /** Divider orientation @default `'horizontal'` */
+  /** Divider orientation @default 'horizontal' */
   orientation?: 'horizontal' | 'vertical';
 }
 

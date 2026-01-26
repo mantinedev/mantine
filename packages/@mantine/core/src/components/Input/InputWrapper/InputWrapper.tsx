@@ -57,10 +57,10 @@ export interface __InputWrapperProps {
   /** Contents of `Input.Error` component. If not set, error is not displayed. */
   error?: React.ReactNode;
 
-  /** Adds required attribute to the input and a red asterisk on the right side of label @default `false` */
+  /** Adds required attribute to the input and a red asterisk on the right side of label @default false */
   required?: boolean;
 
-  /** If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. @default `false` */
+  /** If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. @default false */
   withAsterisk?: boolean;
 
   /** Props passed down to the `Input.Label` component */
@@ -72,10 +72,10 @@ export interface __InputWrapperProps {
   /** Props passed down to the `Input.Error` component */
   errorProps?: InputErrorProps & DataAttributes;
 
-  /** Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. @default `React.Fragment` */
+  /** Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. @default React.Fragment */
   inputContainer?: (children: React.ReactNode) => React.ReactNode;
 
-  /** Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. @default `['label', 'description', 'input', 'error']` */
+  /** Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. @default ['label', 'description', 'input', 'error'] */
   inputWrapperOrder?: ('label' | 'input' | 'description' | 'error')[];
 }
 
@@ -92,7 +92,7 @@ export interface InputWrapperProps
   /** Controls size of `Input.Label`, `Input.Description` and `Input.Error` components */
   size?: MantineFontSize;
 
-  /** Root element for the label. Use `'div'` when wrapper contains multiple input elements and you need to handle `htmlFor` manually. @default `'label'` */
+  /** Root element for the label. Use `'div'` when wrapper contains multiple input elements and you need to handle `htmlFor` manually. @default 'label' */
   labelElement?: 'label' | 'div';
 }
 

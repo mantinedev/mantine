@@ -67,10 +67,10 @@ export interface BarChartProps
   /** An array of objects with `name` and `color` keys. Determines which data should be consumed from the `data` array. */
   series: BarChartSeries[];
 
-  /** Controls how bars are positioned relative to each other @default `'default'` */
+  /** Controls how bars are positioned relative to each other @default 'default' */
   type?: BarChartType;
 
-  /** Controls fill opacity of all bars @default `1` */
+  /** Controls fill opacity of all bars @default 1 */
   fillOpacity?: number;
 
   /** Fill of hovered bar section, by default value is based on color scheme */
@@ -87,7 +87,7 @@ export interface BarChartProps
     | ((series: BarChartSeries) => Partial<Omit<BarProps, 'ref'>>)
     | Partial<Omit<BarProps, 'ref'>>;
 
-  /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"` @default `false` */
+  /** Determines whether a label with bar value should be displayed on top of each bar, incompatible with `type="stacked"` and `type="percent"` @default false */
   withBarValueLabel?: boolean;
 
   /** Props passed down to recharts `LabelList` component */
@@ -95,7 +95,7 @@ export interface BarChartProps
     | ((series: BarChartSeries) => Partial<Omit<LabelListProps, 'ref'>>)
     | Partial<LabelListProps>;
 
-  /** Sets minimum height of the bar in px @default `0` */
+  /** Sets minimum height of the bar in px @default 0 */
   minBarSize?: number;
 
   /** Maximum bar width in px */

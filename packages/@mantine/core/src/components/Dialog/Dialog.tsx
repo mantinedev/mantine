@@ -28,10 +28,10 @@ export interface DialogProps
     PaperBaseProps,
     StylesApiProps<DialogFactory>,
     ElementProps<'div'> {
-  /** If set, the component uses `display: none` to hide the root element instead of removing the DOM node @default `false` */
+  /** If set, the component uses `display: none` to hide the root element instead of removing the DOM node @default false */
   keepMounted?: boolean;
 
-  /** If set, displays the close button @default `true` */
+  /** If set, displays the close button @default true */
   withCloseButton?: boolean;
 
   /** Called on close button click */
@@ -43,10 +43,10 @@ export interface DialogProps
   /** Opened state */
   opened: boolean;
 
-  /** Props passed down to the underlying `Transition` component @default `{ transition: 'pop-top-right', duration: 200 }` */
+  /** Props passed down to the underlying `Transition` component @default { transition: 'pop-top-right', duration: 200 } */
   transitionProps?: TransitionOverride;
 
-  /** Controls `width` of the dialog @default `'md'` */
+  /** Controls `width` of the dialog @default 'md' */
   size?: MantineSize | (string & {}) | number;
 }
 

@@ -10,10 +10,10 @@ export interface GetWeekDaysInput {
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
 
-  /** If set to false, weekend days are hidden @default `true` */
+  /** If set to false, weekend days are hidden @default true */
   withWeekendDays?: boolean;
 
-  /** Number 0-6, where 0 – Sunday and 6 – Saturday @default `1` */
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday @default 1 */
   firstDayOfWeek?: DayOfWeek;
 }
 

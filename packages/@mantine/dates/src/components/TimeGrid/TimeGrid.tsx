@@ -46,28 +46,28 @@ export interface TimeGridProps
   /** Called when value changes */
   onChange?: (value: string | null) => void;
 
-  /** Determines whether the value can be deselected when the current active option is clicked or activated with keyboard @default `false` */
+  /** Determines whether the value can be deselected when the current active option is clicked or activated with keyboard @default false */
   allowDeselect?: boolean;
 
-  /** Time format displayed in the grid @default `'24h'` */
+  /** Time format displayed in the grid @default '24h' */
   format?: TimePickerFormat;
 
-  /** Determines whether the seconds part should be displayed @default `false` */
+  /** Determines whether the seconds part should be displayed @default false */
   withSeconds?: boolean;
 
-  /** Labels used for am/pm values @default `{ am: 'AM', pm: 'PM' }` */
+  /** Labels used for am/pm values @default { am: 'AM', pm: 'PM' } */
   amPmLabels?: TimePickerAmPmLabels;
 
-  /** Props passed down to the underlying `SimpleGrid` component @default `{ cols: 3, spacing: 'xs' }` */
+  /** Props passed down to the underlying `SimpleGrid` component @default { cols: 3, spacing: 'xs' } */
   simpleGridProps?: SimpleGridProps;
 
   /** A function to pass props down to control based on the time value */
   getControlProps?: (time: string) => React.ComponentProps<'button'> & DataAttributes;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Control `font-size` of controls, key of `theme.fontSizes` or any valid CSS value @default `'sm'` */
+  /** Control `font-size` of controls, key of `theme.fontSizes` or any valid CSS value @default 'sm' */
   size?: MantineSize;
 
   /** All controls before this time are disabled */

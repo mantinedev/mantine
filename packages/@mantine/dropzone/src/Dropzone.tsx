@@ -41,16 +41,16 @@ export type DropzoneCssVariables = {
 
 export interface DropzoneProps
   extends BoxProps, StylesApiProps<DropzoneFactory>, ElementProps<'div', 'onDrop'> {
-  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Accept` @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Accept` @default theme.primaryColor */
   acceptColor?: MantineColor;
 
-  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Reject` @default `'red'` */
+  /** Key of `theme.colors` or any valid CSS color to set colors of `Dropzone.Reject` @default 'red' */
   rejectColor?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Determines whether files capturing should be disabled @default `false` */
+  /** Determines whether files capturing should be disabled @default false */
   disabled?: boolean;
 
   /** Called when any files are dropped to the dropzone */
@@ -62,7 +62,7 @@ export interface DropzoneProps
   /** Called when dropped files do not meet file restrictions */
   onReject?: (fileRejections: FileRejection[]) => void;
 
-  /** Determines whether a loading overlay should be displayed over the dropzone @default `false` */
+  /** Determines whether a loading overlay should be displayed over the dropzone @default false */
   loading?: boolean;
 
   /** Mime types of the files that dropzone can accepts. By default, dropzone accepts all file types. */
@@ -71,7 +71,7 @@ export interface DropzoneProps
   /** A ref function which when called opens the file system file picker */
   openRef?: React.Ref<() => void | undefined>;
 
-  /** Determines whether multiple files can be dropped to the dropzone or selected from file system picker @default `true` */
+  /** Determines whether multiple files can be dropped to the dropzone or selected from file system picker @default true */
   multiple?: boolean;
 
   /** Maximum file size in bytes */
@@ -116,7 +116,7 @@ export interface DropzoneProps
   /** If `false`, allow dropped items to take over the current browser window */
   preventDropOnDocument?: boolean;
 
-  /** Set to true to use the File System Access API to open the file picker instead of using an `input type="file"` click event @default `true` */
+  /** Set to true to use the File System Access API to open the file picker instead of using an `input type="file"` click event @default true */
   useFsAccessApi?: boolean;
 
   /** Use this to provide a custom file aggregator */
@@ -125,7 +125,7 @@ export interface DropzoneProps
   /** Custom validation function. It must return null if there's no errors. */
   validator?: <T extends File>(file: T) => FileError | FileError[] | null;
 
-  /** Determines whether pointer events should be enabled on the inner element @default `false` */
+  /** Determines whether pointer events should be enabled on the inner element @default false */
   enablePointerEvents?: boolean;
 
   /** Props passed down to the Loader component */

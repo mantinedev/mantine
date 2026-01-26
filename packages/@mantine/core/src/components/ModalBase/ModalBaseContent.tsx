@@ -13,7 +13,7 @@ export interface ModalBaseContentProps extends BoxProps, ElementProps<'div'> {
   /** Key of `theme.shadows` or any valid CSS value to set `box-shadow` */
   shadow?: MantineShadow;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default theme.defaultRadius */
   radius?: MantineRadius;
 }
 

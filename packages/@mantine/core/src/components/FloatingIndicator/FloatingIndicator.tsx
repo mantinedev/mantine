@@ -31,7 +31,7 @@ export interface FloatingIndicatorProps
    * */
   parent: HTMLElement | null | undefined;
 
-  /** Transition duration in ms @default `150` */
+  /** Transition duration in ms @default 150 */
   transitionDuration?: number | string;
 
   /** Controls whether the indicator should be hidden initially and displayed after the parent's transition ends.

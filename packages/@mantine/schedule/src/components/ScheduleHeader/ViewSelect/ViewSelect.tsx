@@ -21,7 +21,7 @@ export interface ViewSelectProps
   extends BoxProps, StylesApiProps<ViewSelectFactory>, ElementProps<'div', 'value' | 'onChange'> {
   __staticSelector?: string;
 
-  /** A list of views to display @default `['day', 'week', 'month', 'year']` */
+  /** A list of views to display @default ['day', 'week', 'month', 'year'] */
   views?: readonly ScheduleViewLevel[];
 
   /** Selected view type */
@@ -30,7 +30,7 @@ export interface ViewSelectProps
   /** Called when view type changes */
   onChange?: (value: ScheduleViewLevel) => void;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Labels override */

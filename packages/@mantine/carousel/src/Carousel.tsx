@@ -70,37 +70,37 @@ export interface CarouselProps
   /** Props passed down to previous control */
   previousControlProps?: React.ComponentProps<'button'>;
 
-  /** Controls size of the next and previous controls @default `26` */
+  /** Controls size of the next and previous controls @default 26 */
   controlSize?: React.CSSProperties['width'];
 
-  /** Controls position of the next and previous controls, key of `theme.spacing` or any valid CSS value @default `'sm'` */
+  /** Controls position of the next and previous controls, key of `theme.spacing` or any valid CSS value @default 'sm' */
   controlsOffset?: MantineSpacing;
 
-  /** Controls slide width based on viewport width @default `'100%'` */
+  /** Controls slide width based on viewport width @default '100%' */
   slideSize?: StyleProp<string | number>;
 
   /** Key of theme.spacing or number to set gap between slides */
   slideGap?: StyleProp<MantineSpacing>;
 
-  /** Carousel orientation @default `'horizontal'` */
+  /** Carousel orientation @default 'horizontal' */
   orientation?: 'horizontal' | 'vertical';
 
-  /** Determines type of queries used for responsive styles @default `'media'` */
+  /** Determines type of queries used for responsive styles @default 'media' */
   type?: 'media' | 'container';
 
   /** Slides container `height`, required for vertical orientation */
   height?: React.CSSProperties['height'];
 
-  /** Determines whether gap between slides should be treated as part of the slide size @default `true` */
+  /** Determines whether gap between slides should be treated as part of the slide size @default true */
   includeGapInSize?: boolean;
 
   /** Index of initial slide */
   initialSlide?: number;
 
-  /** Determines whether next/previous controls should be displayed @default `true` */
+  /** Determines whether next/previous controls should be displayed @default true */
   withControls?: boolean;
 
-  /** Determines whether indicators should be displayed @default `false` */
+  /** Determines whether indicators should be displayed @default false */
   withIndicators?: boolean;
 
   /** A list of embla plugins */
@@ -112,7 +112,7 @@ export interface CarouselProps
   /** Icon of the previous control */
   previousControlIcon?: React.ReactNode;
 
-  /** Determines whether arrow key should switch slides @default `true` */
+  /** Determines whether arrow key should switch slides @default true */
   withKeyboardEvents?: boolean;
 }
 

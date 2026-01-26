@@ -35,7 +35,7 @@ export interface RadioGroupProps<Value extends string = string> extends Omit<
   /** Props passed down to the `Input.Wrapper` */
   wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
 
-  /** Controls size of the `Input.Wrapper` @default `'sm'` */
+  /** Controls size of the `Input.Wrapper` @default 'sm' */
   size?: MantineSize;
 
   /** `name` attribute of child radio inputs. By default, `name` is generated randomly. */

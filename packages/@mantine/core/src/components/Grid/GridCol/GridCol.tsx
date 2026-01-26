@@ -19,7 +19,7 @@ export type ColSpan = number | 'auto' | 'content';
 
 export interface GridColProps
   extends BoxProps, CompoundStylesApiProps<GridColFactory>, ElementProps<'div'> {
-  /** Column span @default `12` */
+  /** Column span @default 12 */
   span?: StyleProp<ColSpan>;
 
   /** Column order, use to reorder columns at different viewport sizes */

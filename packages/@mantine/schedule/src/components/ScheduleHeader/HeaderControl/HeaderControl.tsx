@@ -31,7 +31,7 @@ export interface HeaderControlProps
   /** Removes inline padding */
   square?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** If set to `false`, the control will not be clickable  */

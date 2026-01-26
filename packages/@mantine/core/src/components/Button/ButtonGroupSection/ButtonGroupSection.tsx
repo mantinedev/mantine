@@ -31,16 +31,16 @@ export type ButtonGroupSectionCssVariables = {
 
 export interface ButtonGroupSectionProps
   extends BoxProps, StylesApiProps<ButtonGroupSectionFactory>, ElementProps<'div'> {
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Gradient configuration used when `variant="gradient"` @default `theme.defaultGradient` */
+  /** Gradient configuration used when `variant="gradient"` @default theme.defaultGradient */
   gradient?: MantineGradient;
 
   /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 
-  /** Controls section `height`, `font-size` and horizontal `padding` @default `'sm'` */
+  /** Controls section `height`, `font-size` and horizontal `padding` @default 'sm' */
   size?: ButtonSize;
 }
 

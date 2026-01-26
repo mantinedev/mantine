@@ -8,7 +8,7 @@ export type AnchorVariant = TextVariant;
 export type AnchorCssVariables = TextCssVariables;
 
 export interface AnchorProps extends Omit<TextProps, 'span'> {
-  /** Defines when `text-decoration: underline` styles are applied. @default `hover` */
+  /** Defines when `text-decoration: underline` styles are applied. @default hover */
   underline?: 'always' | 'hover' | 'not-hover' | 'never';
 }
 

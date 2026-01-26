@@ -80,7 +80,7 @@ export interface ScheduleProps
   /** Custom event body renderer */
   renderEventBody?: RenderEventBody;
 
-  /** Enable drag and drop for events @default `false` */
+  /** Enable drag and drop for events @default false */
   withDragDrop?: boolean;
 
   /** Called when event is dropped */
@@ -92,7 +92,7 @@ export interface ScheduleProps
   /** Interaction mode:
    * - `'default'` allows all interactions
    * - `'static'` disables event interactions
-   * @default `'default'` */
+   * @default 'default' */
   mode?: ScheduleMode;
 
   /** Props specific to DayView (includes `startTime`, `endTime`, `intervalMinutes`, etc.) */

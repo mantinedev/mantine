@@ -55,13 +55,13 @@ export interface RatingProps
   /** Icon displayed when the symbol is full */
   fullSymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** Number of fractions each item can be divided into @default `1` */
+  /** Number of fractions each item can be divided into @default 1 */
   fractions?: number;
 
-  /** Controls component size @default `'sm'` */
+  /** Controls component size @default 'sm' */
   size?: MantineSize | number | (string & {});
 
-  /** Number of controls @default `5` */
+  /** Number of controls @default 5 */
   count?: number;
 
   /** Called when one of the controls is hovered */
@@ -73,13 +73,13 @@ export interface RatingProps
   /** `name` attribute passed down to all inputs. By default, `name` is generated randomly. */
   name?: string;
 
-  /** If set, the user cannot interact with the component @default `false` */
+  /** If set, the user cannot interact with the component @default false */
   readOnly?: boolean;
 
-  /** If set, only the selected symbol changes to full symbol when selected @default `false` */
+  /** If set, only the selected symbol changes to full symbol when selected @default false */
   highlightSelectedOnly?: boolean;
 
-  /** Key of `theme.colors` or any CSS color value @default `'yellow'` */
+  /** Key of `theme.colors` or any CSS color value @default 'yellow' */
   color?: MantineColor;
 }
 

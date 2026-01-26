@@ -10,7 +10,7 @@ import {
 } from '../../core';
 
 export interface CollapseProps extends BoxProps, Omit<React.ComponentProps<'div'>, keyof BoxProps> {
-  /** Collapse orientation @default `'vertical'` */
+  /** Collapse orientation @default 'vertical' */
   orientation?: 'vertical' | 'horizontal';
 
   /** Expanded state */
@@ -22,16 +22,16 @@ export interface CollapseProps extends BoxProps, Omit<React.ComponentProps<'div'
   /** Called when transition starts */
   onTransitionStart?: () => void;
 
-  /** Transition duration in ms @default `200` */
+  /** Transition duration in ms @default 200 */
   transitionDuration?: number;
 
-  /** Transition timing function @default `ease` */
+  /** Transition timing function @default ease */
   transitionTimingFunction?: string;
 
-  /** Determines whether the opacity is animated @default `true` */
+  /** Determines whether the opacity is animated @default true */
   animateOpacity?: boolean;
 
-  /** Determines whether the element is kept in the DOM when collapsed @default `false` */
+  /** Determines whether the element is kept in the DOM when collapsed @default false */
   keepMounted?: boolean;
 }
 

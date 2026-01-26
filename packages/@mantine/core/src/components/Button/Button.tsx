@@ -53,13 +53,13 @@ export type ButtonCssVariables = {
 export interface ButtonProps extends BoxProps, StylesApiProps<ButtonFactory> {
   'data-disabled'?: boolean;
 
-  /** Controls button `height`, `font-size` and horizontal `padding` @default `'sm'` */
+  /** Controls button `height`, `font-size` and horizontal `padding` @default 'sm' */
   size?: ButtonSize;
 
-  /** Key of `theme.colors` or any valid CSS color @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Sets `justify-content` of `inner` element, can be used to change distribution of sections and label @default `'center'` */
+  /** Sets `justify-content` of `inner` element, can be used to change distribution of sections and label @default 'center' */
   justify?: React.CSSProperties['justifyContent'];
 
   /** Content on the left side of the button label */
@@ -68,13 +68,13 @@ export interface ButtonProps extends BoxProps, StylesApiProps<ButtonFactory> {
   /** Content on the right side of the button label */
   rightSection?: React.ReactNode;
 
-  /** Sets `width: 100%` @default `false` */
+  /** Sets `width: 100%` @default false */
   fullWidth?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Gradient configuration used for `variant="gradient"` @default `theme.defaultGradient` */
+  /** Gradient configuration used for `variant="gradient"` @default theme.defaultGradient */
   gradient?: MantineGradient;
 
   /** Sets `disabled` attribute, applies disabled styles */

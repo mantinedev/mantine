@@ -88,37 +88,37 @@ export interface DayViewProps
   /** Events to display, must be a stable reference */
   events?: ScheduleEventData[];
 
-  /** Time slots start time, in `HH:mm:ss` format @default `00:00:00` */
+  /** Time slots start time, in `HH:mm:ss` format @default 00:00:00 */
   startTime?: string;
 
-  /** Time slots end time in `HH:mm:ss` format @default `23:59:59` */
+  /** Time slots end time in `HH:mm:ss` format @default 23:59:59 */
   endTime?: string;
 
-  /** Number of minutes for each time slot @default `15` */
+  /** Number of minutes for each time slot @default 15 */
   intervalMinutes?: number;
 
-  /** If set, the all-day slot is displayed below the header @default `true` */
+  /** If set, the all-day slot is displayed below the header @default true */
   withAllDaySlot?: boolean;
 
   /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
   locale?: string;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Dayjs format for slot labels or a callback function that returns formatted value @default `HH:mm`  */
+  /** Dayjs format for slot labels or a callback function that returns formatted value @default HH:mm  */
   slotLabelFormat?: DateLabelFormat;
 
-  /** Date format in the header @default `MMMM D, YYYY` */
+  /** Date format in the header @default MMMM D, YYYY */
   headerFormat?: DateLabelFormat;
 
   /** If set, displays a line indicating the current time. By default, displayed only for the current day. */
   withCurrentTimeIndicator?: boolean;
 
-  /** If set, the time indicator displays the current time in the bubble @default `true` */
+  /** If set, the time indicator displays the current time in the bubble @default true */
   withCurrentTimeBubble?: boolean;
 
-  /** If set, the header is displayed @default `true` */
+  /** If set, the header is displayed @default true */
   withHeader?: boolean;
 
   /** Called when view level select button is clicked */
@@ -136,10 +136,10 @@ export interface DayViewProps
   /** Props passed to view level select */
   viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
 
-  /** Height of 1hr slot @default `64px` */
+  /** Height of 1hr slot @default 64px */
   slotHeight?: React.CSSProperties['height'];
 
-  /** Height of all-day slot @default `44px` */
+  /** Height of all-day slot @default 44px */
   allDaySlotHeight?: React.CSSProperties['height'];
 
   /** Props passed down to `MoreEvents` component */
@@ -151,13 +151,13 @@ export interface DayViewProps
   /** Labels override */
   labels?: ScheduleLabelsOverride;
 
-  /** If set to true, highlights business hours with white background @default `false` */
+  /** If set to true, highlights business hours with white background @default false */
   highlightBusinessHours?: boolean;
 
-  /** Business hours range in `HH:mm:ss` format @default `['09:00:00', '17:00:00']` */
+  /** Business hours range in `HH:mm:ss` format @default ['09:00:00', '17:00:00'] */
   businessHours?: [string, string];
 
-  /** If true, events can be dragged and dropped @default `false` */
+  /** If true, events can be dragged and dropped @default false */
   withDragDrop?: boolean;
 
   /** Called when event is dropped at new time */
@@ -166,7 +166,7 @@ export interface DayViewProps
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
 
-  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
 }
 

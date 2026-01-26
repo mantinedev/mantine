@@ -23,7 +23,7 @@ export type TitleCssVariables = {
 
 export interface TitleProps
   extends BoxProps, StylesApiProps<TitleFactory>, ElementProps<'h1', 'color'> {
-  /** Heading order (1-6), controls `font-size` style if `size` prop is not set @default `1` */
+  /** Heading order (1-6), controls `font-size` style if `size` prop is not set @default 1 */
   order?: TitleOrder;
 
   /** Changes title size, if not set, then size is controlled by `order` prop */
@@ -32,7 +32,7 @@ export interface TitleProps
   /** Number of lines after which heading will be truncated */
   lineClamp?: number;
 
-  /** Heading `text-wrap` CSS property @default `'wrap'` */
+  /** Heading `text-wrap` CSS property @default 'wrap' */
   textWrap?: 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable';
 }
 

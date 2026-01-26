@@ -21,7 +21,7 @@ import { TooltipBaseProps, TooltipCssVariables, TooltipStylesNames } from '../To
 import { useFloatingTooltip } from './use-floating-tooltip';
 
 export interface TooltipFloatingProps extends TooltipBaseProps {
-  /** Offset from mouse in px @default `10` */
+  /** Offset from mouse in px @default 10 */
   offset?: number;
 
   /** Uncontrolled tooltip initial opened state */

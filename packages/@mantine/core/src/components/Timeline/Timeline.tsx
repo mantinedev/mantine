@@ -34,22 +34,22 @@ export interface TimelineProps
   /** Index of the active element */
   active?: number;
 
-  /** Key of `theme.colors` or any valid CSS color to control active item colors @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color to control active item colors @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default `'xl'` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default 'xl' */
   radius?: MantineRadius;
 
-  /** Size of the bullet @default `20` */
+  /** Size of the bullet @default 20 */
   bulletSize?: number | string;
 
-  /** Position of content relative to the bullet @default `'left'` */
+  /** Position of content relative to the bullet @default 'left' */
   align?: 'right' | 'left';
 
   /** Control width of the line */
   lineWidth?: number | string;
 
-  /** If set, the active items direction is reversed without reversing items order @default `false` */
+  /** If set, the active items direction is reversed without reversing items order @default false */
   reverseActive?: boolean;
 
   /** If set, adjusts text color based on background color for `filled` variant */

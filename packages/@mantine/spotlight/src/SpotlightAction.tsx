@@ -38,13 +38,13 @@ export interface SpotlightActionProps
   /** Children override default action elements, if passed, label, description and sections are hidden */
   children?: React.ReactNode;
 
-  /** Determines whether left and right sections should have dimmed styles @default `true` */
+  /** Determines whether left and right sections should have dimmed styles @default true */
   dimmedSections?: boolean;
 
-  /** Determines whether search query should be highlighted in action label @default `false` */
+  /** Determines whether search query should be highlighted in action label @default false */
   highlightQuery?: boolean;
 
-  /** Key of `theme.colors` of any valid CSS color that will be used to highlight search query @default `'yellow'` */
+  /** Key of `theme.colors` of any valid CSS color that will be used to highlight search query @default 'yellow' */
   highlightColor?: MantineColor;
 
   /** Determines whether the spotlight should be closed when action is triggered, overrides `closeOnActionTrigger` prop set on `Spotlight` */

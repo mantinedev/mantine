@@ -14,22 +14,22 @@ import { GroupedEvents } from './get-year-view-events/get-year-view-events';
 import type { YearViewFactory } from './YearView';
 
 export interface YearViewMonthSettings {
-  /** `dayjs` format for month label  @default `'MMMM'` */
+  /** `dayjs` format for month label  @default 'MMMM' */
   monthLabelFormat?: DateLabelFormat;
 
   /** If set, show week numbers */
   withWeekNumbers?: boolean;
 
-  /** If set, weekdays names are displayed in the first row @default `true` */
+  /** If set, weekdays names are displayed in the first row @default true */
   withWeekDays?: boolean;
 
   /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
   locale?: string;
 
-  /** Number 0-6, where 0 – Sunday and 6 – Saturday @default `0` */
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday @default 0 */
   firstDayOfWeek?: DayOfWeek;
 
-  /** `dayjs` format for weekdays names  @default `'d'` */
+  /** `dayjs` format for weekdays names  @default 'd' */
   weekdayFormat?: DateLabelFormat;
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */

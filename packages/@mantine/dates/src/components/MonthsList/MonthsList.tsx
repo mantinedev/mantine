@@ -33,7 +33,7 @@ export interface MonthsListSettings extends ControlsGroupSettings {
   /** Passes props down month picker control */
   getMonthControlProps?: (date: DateStringValue) => Partial<PickerControlProps> & DataAttributes;
 
-  /** Determines whether controls should be separated @default `true` */
+  /** Determines whether controls should be separated @default true */
   withCellSpacing?: boolean;
 }
 

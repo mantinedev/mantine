@@ -96,34 +96,34 @@ export interface WeekViewProps
   /** Called with the new date value when a date is selected */
   onDateChange?: (value: DateStringValue) => void;
 
-  /** Start time for the day view, in `HH:mm:ss` format @default `00:00:00` */
+  /** Start time for the day view, in `HH:mm:ss` format @default 00:00:00 */
   startTime?: string;
 
-  /** End time for the day view, in `HH:mm:ss` format @default `23:59:59` */
+  /** End time for the day view, in `HH:mm:ss` format @default 23:59:59 */
   endTime?: string;
 
-  /** Number of minutes for each interval in the day view @default `60` */
+  /** Number of minutes for each interval in the day view @default 60 */
   intervalMinutes?: number;
 
-  /** Dayjs format for slot labels or a callback function that returns formatted value @default `HH:mm`  */
+  /** Dayjs format for slot labels or a callback function that returns formatted value @default HH:mm  */
   slotLabelFormat?: DateLabelFormat;
 
-  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default `1` – Monday */
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default 1 – Monday */
   firstDayOfWeek?: DayOfWeek;
 
-  /** `dayjs` format for weekdays names. @default `'ddd'` */
+  /** `dayjs` format for weekdays names. @default 'ddd' */
   weekdayFormat?: DateLabelFormat;
 
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
 
-  /** If set to false, weekend days are hidden @default `true` */
+  /** If set to false, weekend days are hidden @default true */
   withWeekendDays?: boolean;
 
-  /** If set to true, highlights today in the weekday row @default `false` */
+  /** If set to true, highlights today in the weekday row @default false */
   highlightToday?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Props passed down to the `ScrollArea.Autosize` component */
@@ -132,19 +132,19 @@ export interface WeekViewProps
   /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
   locale?: string;
 
-  /** If set, the week number is displayed at the top left corner @default `true` */
+  /** If set, the week number is displayed at the top left corner @default true */
   withWeekNumber?: boolean;
 
-  /** If set, displays a line indicating the current time @default `true` */
+  /** If set, displays a line indicating the current time @default true */
   withCurrentTimeIndicator?: boolean;
 
-  /** If set, the time indicator displays the current time in the bubble @default `true` */
+  /** If set, the time indicator displays the current time in the bubble @default true */
   withCurrentTimeBubble?: boolean;
 
-  /** If set, displays all-day slots at the top of the view @default `true` */
+  /** If set, displays all-day slots at the top of the view @default true */
   withAllDaySlots?: boolean;
 
-  /** If set, the header is displayed @default `true` */
+  /** If set, the header is displayed @default true */
   withHeader?: boolean;
 
   /** Called when view level select button is clicked */
@@ -162,31 +162,31 @@ export interface WeekViewProps
   /** Props passed to view level select */
   viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
 
-  /** Format for week label @default `'MMM DD'` */
+  /** Format for week label @default 'MMM DD' */
   weekLabelFormat?: DateLabelFormat;
 
   /** List of events to display in the week view */
   events?: ScheduleEventData[];
 
-  /** Height of 1hr slot @default `64px` */
+  /** Height of 1hr slot @default 64px */
   slotHeight?: React.CSSProperties['height'];
 
-  /** Height of all-day slot @default `48px` */
+  /** Height of all-day slot @default 48px */
   allDaySlotHeight?: React.CSSProperties['height'];
 
   /** Labels override */
   labels?: ScheduleLabelsOverride;
 
-  /** If set to true, highlights business hours with white background @default `false` */
+  /** If set to true, highlights business hours with white background @default false */
   highlightBusinessHours?: boolean;
 
-  /** Business hours range in `HH:mm:ss` format @default `['09:00:00', '17:00:00']` */
+  /** Business hours range in `HH:mm:ss` format @default ['09:00:00', '17:00:00'] */
   businessHours?: [string, string];
 
   /** Function to customize event body, `event` object is passed as first argument */
   renderEventBody?: RenderEventBody;
 
-  /** If true, events can be dragged and dropped @default `false` */
+  /** If true, events can be dragged and dropped @default false */
   withDragDrop?: boolean;
 
   /** Called when event is dropped at new time */
@@ -195,7 +195,7 @@ export interface WeekViewProps
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
 
-  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default `default` */
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
 
   /** Function to customize week label in the header */

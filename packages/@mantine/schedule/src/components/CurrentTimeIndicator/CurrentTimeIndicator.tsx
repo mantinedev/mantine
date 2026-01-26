@@ -33,7 +33,7 @@ export interface CurrentTimeIndicatorProps
   extends BoxProps, StylesApiProps<CurrentTimeIndicatorFactory>, ElementProps<'div'> {
   __staticSelector?: string;
 
-  /** Key of `theme.colors` or any valid CSS color value @default `'red'` */
+  /** Key of `theme.colors` or any valid CSS color value @default 'red' */
   color?: MantineColor;
 
   /** Offset from the left side */
@@ -48,13 +48,13 @@ export interface CurrentTimeIndicatorProps
   /** Offset for the time bubble */
   timeBubbleStartOffset?: string;
 
-  /** If set, displays a bubble with the current time @default `@true` */
+  /** If set, displays a bubble with the current time @default @true */
   withTimeBubble?: boolean;
 
-  /** If set, displays thumb next to the line @default `true` */
+  /** If set, displays thumb next to the line @default true */
   withThumb?: boolean;
 
-  /** Format of the time displayed in the time bubble @default `'HH:mm'` */
+  /** Format of the time displayed in the time bubble @default 'HH:mm' */
   currentTimeFormat?: DateLabelFormat;
 
   /** Locale passed down to dayjs during formatting */

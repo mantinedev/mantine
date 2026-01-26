@@ -26,7 +26,7 @@ export interface InputDescriptionProps
   __staticSelector?: string;
   __inheritStyles?: boolean;
 
-  /** Controls description `font-size` @default `'sm'` */
+  /** Controls description `font-size` @default 'sm' */
   size?: MantineFontSize;
 }
 

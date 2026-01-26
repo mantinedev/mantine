@@ -29,16 +29,16 @@ export interface MobileMonthViewProps
   /** Called with the new date value when a date is selected */
   onDateChange?: (value: DateStringValue) => void;
 
-  /** If set, week numbers are displayed in the first column @default `false` */
+  /** If set, week numbers are displayed in the first column @default false */
   withWeekNumbers?: boolean;
 
-  /** If set, weekdays names are displayed in the first row @default `true` */
+  /** If set, weekdays names are displayed in the first row @default true */
   withWeekDays?: boolean;
 
   /** Locale passed down to dayjs, overrides value defined on `DatesProvider` */
   locale?: string;
 
-  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default `1` – Monday */
+  /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default 1 – Monday */
   firstDayOfWeek?: DayOfWeek;
 
   /** `dayjs` format for weekdays names. By default, the first letter of the weekday. */
@@ -65,10 +65,10 @@ export interface MobileMonthViewProps
   /** If set, highlights the current day @default true */
   highlightToday?: boolean;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** If set, days from the previous and next months are displayed to fill the weeks @default `false` */
+  /** If set, days from the previous and next months are displayed to fill the weeks @default false */
   withOutsideDays?: boolean;
 
   /** Events to display */

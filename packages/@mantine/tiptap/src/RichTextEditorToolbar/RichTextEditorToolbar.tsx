@@ -15,10 +15,10 @@ export type RichTextEditorToolbarStylesNames = 'toolbar';
 
 export interface RichTextEditorToolbarProps
   extends BoxProps, CompoundStylesApiProps<RichTextEditorToolbarFactory>, ElementProps<'div'> {
-  /** Determines whether `position: sticky` styles should be added to the toolbar @default `false` */
+  /** Determines whether `position: sticky` styles should be added to the toolbar @default false */
   sticky?: boolean;
 
-  /** Sets top style to offset elements with fixed position @default `0` */
+  /** Sets top style to offset elements with fixed position @default 0 */
   stickyOffset?: React.CSSProperties['top'];
 }
 

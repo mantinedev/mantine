@@ -22,10 +22,10 @@ export type BreadcrumbsCssVariables = {
 
 export interface BreadcrumbsProps
   extends BoxProps, StylesApiProps<BreadcrumbsFactory>, ElementProps<'div'> {
-  /** Separator between children @default `'/'` */
+  /** Separator between children @default '/' */
   separator?: React.ReactNode;
 
-  /** Controls spacing between separator and breadcrumb @default `'xs'` */
+  /** Controls spacing between separator and breadcrumb @default 'xs' */
   separatorMargin?: MantineSpacing;
 
   /** React nodes that should be separated with `separator` */

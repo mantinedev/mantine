@@ -4,7 +4,7 @@ export interface ComboboxHiddenInputProps extends Omit<React.ComponentProps<'inp
   /** Input value */
   value: Primitive | Primitive[] | null;
 
-  /** Divider character to join array values into string @default `','` */
+  /** Divider character to join array values into string @default ',' */
   valuesDivider?: string;
 }
 

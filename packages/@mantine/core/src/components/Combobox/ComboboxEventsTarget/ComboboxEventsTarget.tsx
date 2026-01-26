@@ -11,18 +11,18 @@ export interface ComboboxEventsTargetProps {
   /** Key of the prop is used to access element ref */
   refProp?: string;
 
-  /** If set, the component responds to the keyboard events @default `true` */
+  /** If set, the component responds to the keyboard events @default true */
   withKeyboardNavigation?: boolean;
 
-  /** If set, the target has `aria-` attributes @default `true` */
+  /** If set, the target has `aria-` attributes @default true */
   withAriaAttributes?: boolean;
 
-  /** If set, the target has `aria-expanded` attribute @default `false` */
+  /** If set, the target has `aria-expanded` attribute @default false */
   withExpandedAttribute?: boolean;
 
   /** Determines which events should be handled by the target element.
    * `button` target type handles `Space` and `Enter` keys to toggle dropdown opened state.
-   * @default `input`
+   * @default input
    * */
   targetType?: 'button' | 'input';
 

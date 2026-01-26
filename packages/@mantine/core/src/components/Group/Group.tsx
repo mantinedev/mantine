@@ -31,22 +31,22 @@ export interface GroupStylesCtx {
 export interface GroupProps extends BoxProps, StylesApiProps<GroupFactory>, ElementProps<'div'> {
   __size?: any;
 
-  /** Controls `justify-content` CSS property @default `'flex-start'` */
+  /** Controls `justify-content` CSS property @default 'flex-start' */
   justify?: React.CSSProperties['justifyContent'];
 
-  /** Controls `align-items` CSS property @default `'center'` */
+  /** Controls `align-items` CSS property @default 'center' */
   align?: React.CSSProperties['alignItems'];
 
-  /** Controls `flex-wrap` CSS property @default `'wrap'` */
+  /** Controls `flex-wrap` CSS property @default 'wrap' */
   wrap?: React.CSSProperties['flexWrap'];
 
-  /** Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem @default `'md'` */
+  /** Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem @default 'md' */
   gap?: MantineSpacing;
 
-  /** Determines whether each child element should have `flex-grow: 1` style @default `false` */
+  /** Determines whether each child element should have `flex-grow: 1` style @default false */
   grow?: boolean;
 
-  /** Determines whether children should take only dedicated amount of space (`max-width` style is set based on the number of children) @default `true` */
+  /** Determines whether children should take only dedicated amount of space (`max-width` style is set based on the number of children) @default true */
   preventGrowOverflow?: boolean;
 }
 

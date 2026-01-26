@@ -25,16 +25,16 @@ export type CloseButtonCssVariables = {
 export interface __CloseButtonProps {
   'data-disabled'?: boolean;
 
-  /** Controls width and height of the button. Numbers are converted to rem. @default `'md'` */
+  /** Controls width and height of the button. Numbers are converted to rem. @default 'md' */
   size?: MantineSize | (string & {}) | number;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default theme.defaultRadius */
   radius?: MantineRadius;
 
   /** Sets `disabled` attribute, assigns disabled styles */
   disabled?: boolean;
 
-  /** `X` icon `width` and `height` @default `80%` */
+  /** `X` icon `width` and `height` @default 80% */
   iconSize?: number | string;
 
   /** Content rendered inside the button. For example `VisuallyHidden` with label for screen readers. */

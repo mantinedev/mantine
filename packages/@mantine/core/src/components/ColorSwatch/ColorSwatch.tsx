@@ -28,13 +28,13 @@ export interface ColorSwatchProps extends BoxProps, StylesApiProps<ColorSwatchFa
   /** Valid CSS color to display */
   color: string;
 
-  /** Swatch `width` and `height`, any valid CSS value, numbers are converted to rem. @default `28` */
+  /** Swatch `width` and `height`, any valid CSS value, numbers are converted to rem. @default 28 */
   size?: React.CSSProperties['width'];
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem. @default `1000` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem. @default 1000 */
   radius?: MantineRadius;
 
-  /** If set, the swatch has inner `box-shadow` @default `true` */
+  /** If set, the swatch has inner `box-shadow` @default true */
   withShadow?: boolean;
 
   /** Children inside the swatch */

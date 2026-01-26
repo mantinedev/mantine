@@ -24,22 +24,22 @@ export type ModalRootCssVariables = {
 export interface ModalRootProps extends StylesApiProps<ModalRootFactory>, ModalBaseProps {
   __staticSelector?: string;
 
-  /** Top/bottom modal offset @default `5dvh` */
+  /** Top/bottom modal offset @default 5dvh */
   yOffset?: React.CSSProperties['marginTop'];
 
-  /** Left/right modal offset @default `5vw` */
+  /** Left/right modal offset @default 5vw */
   xOffset?: React.CSSProperties['marginLeft'];
 
-  /** Scroll area component @default `'div'` */
+  /** Scroll area component @default 'div' */
   scrollAreaComponent?: ScrollAreaComponent;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** If set, the modal is centered vertically @default `false` */
+  /** If set, the modal is centered vertically @default false */
   centered?: boolean;
 
-  /** If set, the modal takes the entire screen @default `false` */
+  /** If set, the modal takes the entire screen @default false */
   fullScreen?: boolean;
 }
 

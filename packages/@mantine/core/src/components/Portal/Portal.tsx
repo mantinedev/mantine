@@ -17,7 +17,7 @@ export interface BasePortalProps extends React.ComponentProps<'div'> {
   /** Element inside which portal should be created, by default a new div element is created and appended to the `document.body` */
   target?: HTMLElement | string;
 
-  /** If set, all portals are rendered in the same DOM node @default `true` */
+  /** If set, all portals are rendered in the same DOM node @default true */
   reuseTargetNode?: boolean;
 }
 

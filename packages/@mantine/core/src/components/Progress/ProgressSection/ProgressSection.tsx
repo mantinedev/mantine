@@ -22,16 +22,16 @@ export interface ProgressSectionProps
   /** Value of the section in 0–100 range */
   value: number;
 
-  /** Determines whether `aria-*` props should be added to the root element @default `true` */
+  /** Determines whether `aria-*` props should be added to the root element @default true */
   withAria?: boolean;
 
-  /** Key of `theme.colors` or any valid CSS value @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS value @default theme.primaryColor */
   color?: MantineColor;
 
-  /** If set, the section has stripes @default `false` */
+  /** If set, the section has stripes @default false */
   striped?: boolean;
 
-  /** If set, the sections stripes are animated, `striped` prop is ignored @default `false` */
+  /** If set, the sections stripes are animated, `striped` prop is ignored @default false */
   animated?: boolean;
 }
 

@@ -51,7 +51,7 @@ export interface DateTimePickerProps
     CalendarBaseProps,
     Omit<CalendarSettings, 'onYearMouseEnter' | 'onMonthMouseEnter' | 'hasNextLevel'>,
     StylesApiProps<DateTimePickerFactory> {
-  /** `dayjs` format for input value @default `"DD/MM/YYYY HH:mm"  */
+  /** `dayjs` format for input value @default "DD/MM/YYYY HH:mm"  */
   valueFormat?: string;
 
   /** Controlled component value */
@@ -63,7 +63,7 @@ export interface DateTimePickerProps
   /** Called when value changes */
   onChange?: (value: DateStringValue | null) => void;
 
-  /** Default time value in `HH:mm` or `HH:mm:ss` format. Assigned to time when date is selected. */
+  /** Default time value in HH:mm` or `HH:mm:ss` format. Assigned to time when date is selected. */
   defaultTimeValue?: string;
 
   /** Props passed down to `TimePicker` component */
@@ -72,10 +72,10 @@ export interface DateTimePickerProps
   /** Props passed down to the submit button */
   submitButtonProps?: ActionIconProps & React.ComponentProps<'button'>;
 
-  /** Determines whether the seconds input should be displayed @default `false` */
+  /** Determines whether the seconds input should be displayed @default false */
   withSeconds?: boolean;
 
-  /** Max level that user can go up to @default `'decade'` */
+  /** Max level that user can go up to @default 'decade' */
   maxLevel?: CalendarLevel;
 
   /** Presets values */

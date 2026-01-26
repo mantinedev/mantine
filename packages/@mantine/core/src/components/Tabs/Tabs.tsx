@@ -48,22 +48,22 @@ export interface TabsProps
   /** Called when value changes */
   onChange?: (value: string | null) => void;
 
-  /** Tabs orientation @default `'horizontal'` */
+  /** Tabs orientation @default 'horizontal' */
   orientation?: 'vertical' | 'horizontal';
 
-  /** `Tabs.List` placement relative to `Tabs.Panel`, applicable only when `orientation="vertical"` @default `'left'` */
+  /** `Tabs.List` placement relative to `Tabs.Panel`, applicable only when `orientation="vertical"` @default 'left' */
   placement?: 'left' | 'right';
 
   /** Base id, used to generate ids to connect labels with controls, generated randomly by default */
   id?: string;
 
-  /** If set, arrow key presses loop though items (first to last and last to first) @default `true` */
+  /** If set, arrow key presses loop though items (first to last and last to first) @default true */
   loop?: boolean;
 
-  /** If set, tab is activated with arrow key press @default `true` */
+  /** If set, tab is activated with arrow key press @default true */
   activateTabWithKeyboard?: boolean;
 
-  /** If set, tab can be deactivated @default `false` */
+  /** If set, tab can be deactivated @default false */
   allowTabDeactivation?: boolean;
 
   /** Tabs content */
@@ -72,13 +72,13 @@ export interface TabsProps
   /** Changes colors of `Tabs.Tab` components when variant is `pills` or `default`, does nothing for other variants */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius`@default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius`@default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Determines whether tabs should have inverted styles @default `false` */
+  /** Determines whether tabs should have inverted styles @default false */
   inverted?: boolean;
 
-  /** If set to `false`, `Tabs.Panel` content will be unmounted when the associated tab is not active @default `true` */
+  /** If set to `false`, `Tabs.Panel` content will be unmounted when the associated tab is not active @default true */
   keepMounted?: boolean;
 
   /** If set, adjusts text color based on background color for `pills` variant */

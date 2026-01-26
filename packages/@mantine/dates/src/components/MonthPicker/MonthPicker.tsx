@@ -26,7 +26,7 @@ export interface MonthPickerBaseProps<Type extends DatePickerType = 'default'>
     DecadeLevelBaseSettings,
     YearLevelBaseSettings,
     Omit<CalendarBaseProps, 'onNextMonth' | 'onPreviousMonth' | 'hasNextLevel'> {
-  /** Max level that user can go up to @default `'decade'` */
+  /** Max level that user can go up to @default 'decade' */
   maxLevel?: CalendarLevel;
 
   /** Initial displayed level (uncontrolled) */

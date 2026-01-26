@@ -24,14 +24,14 @@ export interface HoverCardProps extends Omit<PopoverProps, 'opened' | 'onChange'
   /**
    * Delay in ms before the dropdown opens after mouse enters the target.
    * Overridden by HoverCard.Group delay if used within a group.
-   * @default `0`
+   * @default 0
    */
   openDelay?: number;
 
   /**
    * Delay in ms before the dropdown closes after mouse leaves the target or dropdown.
    * Overridden by HoverCard.Group delay if used within a group.
-   * @default `150`
+   * @default 150
    */
   closeDelay?: number;
 }

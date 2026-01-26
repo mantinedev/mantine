@@ -33,16 +33,16 @@ export type ThemeIconCssVariables = {
 
 export interface ThemeIconProps
   extends BoxProps, StylesApiProps<ThemeIconFactory>, ElementProps<'div'> {
-  /** Controls width and height of the button. Numbers are converted to rem. @default `'md'` */
+  /** Controls width and height of the button. Numbers are converted to rem. @default 'md' */
   size?: MantineSize | (string & {}) | number;
 
-  /** Key of `theme.colors` or any valid CSS color. @default `theme.primaryColor` */
+  /** Key of `theme.colors` or any valid CSS color. @default theme.primaryColor */
   color?: MantineColor;
 
-  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default `theme.defaultRadius` */
+  /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Gradient data used when `variant="gradient"` @default `theme.defaultGradient` */
+  /** Gradient data used when `variant="gradient"` @default theme.defaultGradient */
   gradient?: MantineGradient;
 
   /** Icon displayed inside the component */
