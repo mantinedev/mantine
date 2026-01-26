@@ -14,6 +14,8 @@ export const STYlE_PROPS_DATA: Record<keyof MantineStyleProps, SystemPropData> =
   mr: { type: 'spacing', property: 'marginRight' },
   ms: { type: 'spacing', property: 'marginInlineStart' },
   me: { type: 'spacing', property: 'marginInlineEnd' },
+  mis: { type: 'spacing', property: 'marginInlineStart' },
+  mie: { type: 'spacing', property: 'marginInlineEnd' },
   mx: { type: 'spacing', property: 'marginInline' },
   my: { type: 'spacing', property: 'marginBlock' },
 
@@ -24,6 +26,8 @@ export const STYlE_PROPS_DATA: Record<keyof MantineStyleProps, SystemPropData> =
   pr: { type: 'spacing', property: 'paddingRight' },
   ps: { type: 'spacing', property: 'paddingInlineStart' },
   pe: { type: 'spacing', property: 'paddingInlineEnd' },
+  pis: { type: 'spacing', property: 'paddingInlineStart' },
+  pie: { type: 'spacing', property: 'paddingInlineEnd' },
   px: { type: 'spacing', property: 'paddingInline' },
   py: { type: 'spacing', property: 'paddingBlock' },
 

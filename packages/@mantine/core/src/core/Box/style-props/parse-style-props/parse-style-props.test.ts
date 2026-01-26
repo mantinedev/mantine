@@ -135,4 +135,24 @@ describe('@mantine/core/Box/parse-style-props', () => {
       ],
     });
   });
+
+  it('parses logical style props correctly', () => {
+    expect(
+      parseStyleProps({
+        data: STYlE_PROPS_DATA,
+        styleProps: { mis: 10, mie: 15, pis: 20, pie: 25 },
+        theme: DEFAULT_THEME,
+      })
+    ).toStrictEqual({
+      hasResponsiveStyles: false,
+      inlineStyles: {
+        marginInlineStart: 'calc(0.625rem * var(--mantine-scale))',
+        marginInlineEnd: 'calc(0.9375rem * var(--mantine-scale))',
+        paddingInlineStart: 'calc(1.25rem * var(--mantine-scale))',
+        paddingInlineEnd: 'calc(1.5625rem * var(--mantine-scale))',
+      },
+      styles: {},
+      media: [],
+    });
+  });
 });

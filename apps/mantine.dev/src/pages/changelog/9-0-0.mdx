@@ -232,6 +232,11 @@ When enabled, 'the' will not match 'there' or 'theme':
 - `@mantine/form` package no longer exports schema resolvers, use [dedicated packages](/form/schema-validation/) instead
 - `createPolymorphicComponent` function was renamed to shorter `polymorphic` for convenience
 - All Mantine components now use `font-weight: 600` instead of `font-weight: 500` for better readability
+- All Mantine components now support logical margin and padding style props:
+  - `mis` - margin-inline-start
+  - `mie` - margin-inline-end
+  - `pis` - padding-inline-start
+  - `pie` - padding-inline-end
 - [Tree](/core/tree) component now supports controlled state via `expandedState`, `selectedState` and `checkedState` props.
 - [Tree](/core/tree) component no longer defines `data-hovered` attribute for hover state, you need to apply hover styles with `&:hover` instead. This change improves rendering performance by [resolving this issue](https://github.com/mantinedev/mantine/issues/7266).
 - [Collapse](/core/collapse) component now uses `expanded` prop instead of `in`
