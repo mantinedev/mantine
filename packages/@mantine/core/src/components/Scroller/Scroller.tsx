@@ -7,7 +7,8 @@ import {
   ElementProps,
   factory,
   Factory,
-  MantineSize,
+  getThemeColor,
+  rem,
   StylesApiProps,
   useProps,
   useStyles,
@@ -16,7 +17,7 @@ import { AccordionChevron } from '../Accordion';
 import { UnstyledButton } from '../UnstyledButton';
 import classes from './Scroller.module.css';
 
-export type ScrollerStylesNames = 'root' | 'container' | 'content' | 'control';
+export type ScrollerStylesNames = 'root' | 'container' | 'content' | 'control' | 'chevron';
 export type ScrollerCssVariables = {
   root: '--scroller-control-size' | '--scroller-background-color';
 };
@@ -29,17 +30,17 @@ export interface ScrollerProps
   /** Amount of pixels to scroll when clicking the control buttons, `200` by default */
   scrollAmount?: number;
 
-  /** Size of the control buttons, `'sm'` by default */
-  controlSize?: MantineSize | (string & {}) | number;
+  /** Size of the control buttons, @default 60px */
+  controlSize?: string | number;
 
   /** Background color for the gradient fade on controls, `'var(--mantine-color-body)'` by default */
-  backgroundColor?: string;
+  edgeGradientColor?: string;
 
   /** Props passed to the start control button */
-  startControlProps?: React.ComponentPropsWithoutRef<'button'>;
+  startControlProps?: React.ComponentProps<'button'>;
 
   /** Props passed to the end control button */
-  endControlProps?: React.ComponentPropsWithoutRef<'button'>;
+  endControlProps?: React.ComponentProps<'button'>;
 
   /** Icon component for the start control, AccordionChevron by default */
   startControlIcon?: React.ReactNode;
@@ -69,23 +70,19 @@ export type ScrollerFactory = Factory<{
 
 const defaultProps: Partial<ScrollerProps> = {
   scrollAmount: 200,
-  controlSize: 'sm',
   draggable: true,
 };
 
-const varsResolver = createVarsResolver<ScrollerFactory>((_, { controlSize, backgroundColor }) => {
-  const size =
-    typeof controlSize === 'number'
-      ? `${controlSize}px`
-      : `var(--mantine-spacing-${controlSize}, ${controlSize})`;
-
-  return {
+const varsResolver = createVarsResolver<ScrollerFactory>(
+  (theme, { controlSize, edgeGradientColor }) => ({
     root: {
-      '--scroller-control-size': size,
-      '--scroller-background-color': backgroundColor,
+      '--scroller-control-size': rem(controlSize),
+      '--scroller-background-color': edgeGradientColor
+        ? getThemeColor(edgeGradientColor, theme)
+        : undefined,
     },
-  };
-});
+  })
+);
 
 export const Scroller = factory<ScrollerFactory>((_props) => {
   const props = useProps('Scroller', defaultProps, _props);
@@ -99,7 +96,7 @@ export const Scroller = factory<ScrollerFactory>((_props) => {
     children,
     scrollAmount,
     controlSize,
-    backgroundColor,
+    edgeGradientColor,
     startControlProps,
     endControlProps,
     startControlIcon,
@@ -246,7 +243,7 @@ export const Scroller = factory<ScrollerFactory>((_props) => {
         tabIndex={showStart ? 0 : -1}
         {...startControlProps}
       >
-        {startControlIcon || <AccordionChevron size={20} />}
+        {startControlIcon || <AccordionChevron {...getStyles('chevron')} />}
       </UnstyledButton>
 
       <div
@@ -271,7 +268,7 @@ export const Scroller = factory<ScrollerFactory>((_props) => {
         tabIndex={showEnd ? 0 : -1}
         {...endControlProps}
       >
-        {endControlIcon || <AccordionChevron size={20} />}
+        {endControlIcon || <AccordionChevron {...getStyles('chevron')} />}
       </UnstyledButton>
     </Box>
   );
