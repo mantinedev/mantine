@@ -6,7 +6,7 @@ generateDeclarations({
   tsConfigPath: getPath('tsconfig.json'),
   outputPath: getPath('apps/mantine.dev/src/.docgen'),
   componentsPaths: DOCGEN_PATHS,
-  excludeProps: [],
+  excludeProps: ['mie', 'mis', 'pie', 'pis'],
   typesReplacement: {
     'AccordionHeadingOrder | undefined': '2 | 3 | 4 | 5 | 6',
     'AccordionChevronPosition | undefined': '"left" | "right"',
