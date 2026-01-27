@@ -418,7 +418,7 @@ export const MultiSelect = factory<MultiSelectFactory>((_props, ref) => {
             withErrorStyles={withErrorStyles}
             __stylesApiProps={{
               ...props,
-              rightSectionPointerEvents: rightSectionPointerEvents || (_clearable ? 'all' : 'none'),
+              rightSectionPointerEvents: rightSectionPointerEvents || 'none',
               multiline: true,
             }}
             pointer={!searchable}
