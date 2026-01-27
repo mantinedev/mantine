@@ -27,6 +27,10 @@ export const MarqueeStylesApi: StylesApiData<MarqueeFactory> = {
     },
     { modifier: 'data-reverse', selector: 'root', condition: '`reverse` prop is set' },
     { modifier: 'data-pause-on-hover', selector: 'root', condition: '`pauseOnHover` prop is set' },
-    { modifier: 'data-fade-edges', selector: 'root', condition: '`fadeEdges` prop is `true` (default)' },
+    {
+      modifier: 'data-fade-edges',
+      selector: 'root',
+      condition: '`fadeEdges` prop is `true` (default)',
+    },
   ],
 };

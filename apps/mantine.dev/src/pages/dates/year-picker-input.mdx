@@ -60,6 +60,34 @@ prop, the clear button will not be displayed.
 
 <Demo data={YearPickerInputDemos.disabled} />
 
+## Min and max dates
+
+`minDate` and `maxDate` props define the minimum and maximum dates that can be picked.
+You can specify `minDate` and `maxDate` as `Date` objects:
+
+<Demo data={YearPickerInputDemos.minMax} />
+
+## Control props
+
+`getYearControlProps` prop allows passing props to the control component based on the date.
+It is useful for disabling specific dates or customising styles/className.
+
+<Demo data={YearPickerInputDemos.controlProps} />
+
+## Year label format
+
+`yearsListFormat` props allow changing the format of the year label in the years list.
+It accepts a [dayjs format string](https://day.js.org/docs/en/display/format).
+
+<Demo data={YearPickerInputDemos.yearsListFormat} />
+
+## Decade label format
+
+`decadeLabelFormat` prop allows changing the format of the decade label in the header.
+It accepts a [dayjs format string](https://day.js.org/docs/en/display/format).
+
+<Demo data={YearPickerInputDemos.decadeLabelFormat} />
+
 ## Input props
 
 <InputFeatures component="MonthPickerInput" element="button" />

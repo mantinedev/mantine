@@ -70,6 +70,103 @@ prop, the clear button will not be displayed.
 
 <Demo data={DatePickerInputDemos.disabled} />
 
+## Min and max dates
+
+`minDate` and `maxDate` props define the minimum and maximum dates that can be picked.
+You can specify `minDate` and `maxDate` as `Date` objects:
+
+<Demo data={DatePickerInputDemos.minMax} />
+
+## Default level
+
+`defaultLevel` prop allows setting the initial level of the picker.
+Allowed values are `month`, `year` and `decade`.
+
+<Demo data={DatePickerInputDemos.defaultLevel} />
+
+## Max level
+
+`maxLevel` prop allows to set the maximum level that can be reached by clicking on the label in the header.
+
+<Demo data={DatePickerInputDemos.maxLevel} />
+
+## Control props
+
+`getDayProps`, `getYearControlProps` and `getMonthControlProps` props allow passing props to the control component based on the date.
+It is useful for disabling specific dates or customising styles/className.
+
+<Demo data={DatePickerInputDemos.controlProps} />
+
+## Exclude dates
+
+`excludeDate` prop allows disabling specific dates.
+It accepts a function that receives a date and returns `true` if the date should be disabled.
+In the following example, all weekends are disabled:
+
+<Demo data={DatePickerInputDemos.excludeDate} />
+
+## Hide outside dates
+
+`hideOutsideDates` prop allows hiding dates that do not belong to the current month.
+
+<Demo data={DatePickerInputDemos.hideOutsideDates} />
+
+## Hide weekdays
+
+`hideWeekdays` prop allows hiding weekdays names.
+
+<Demo data={DatePickerInputDemos.hideWeekdays} />
+
+## Weekend days
+
+`weekendDays` prop allows changing which days are considered weekends.
+It accepts an array of weekday indices (0-6). 0 is Sunday, 6 is Saturday.
+By default, `[0, 6]` are used.
+
+<Demo data={DatePickerInputDemos.weekendDays} />
+
+## First day of week
+
+`firstDayOfWeek` prop allows changing the first day of the week.
+It accepts a weekday index (0-6). 0 is Sunday, 6 is Saturday.
+By default, `1` (Monday) is used.
+
+<Demo data={DatePickerInputDemos.firstDayOfWeek} />
+
+## Label format
+
+`decadeLabelFormat`, `yearLabelFormat` and `monthLabelFormat` props allow changing the format of the label in the header.
+The props accept a [dayjs format string](https://day.js.org/docs/en/display/format).
+
+<Demo data={DatePickerInputDemos.labelFormat} />
+
+## List format
+
+`monthsListFormat` and `yearsListFormat` props allow changing the format of the month and year labels in the list.
+The props accept a [dayjs format string](https://day.js.org/docs/en/display/format).
+
+<Demo data={DatePickerInputDemos.listFormat} />
+
+## With week numbers
+
+`withWeekNumbers` prop allows displaying week numbers.
+
+<Demo data={DatePickerInputDemos.withWeekNumbers} />
+
+## Render day
+
+`renderDay` prop allows customising the day control. It is useful for adding indicators or other elements to the day control.
+
+<Demo data={DatePickerInputDemos.renderDay} />
+
+## Header controls order
+
+`headerControlsOrder` prop allows changing the order of the controls in the header.
+It accepts an array of strings: `level`, `previous` and `next`.
+Styles of the controls can be customised with `styles` prop.
+
+<Demo data={DatePickerInputDemos.headerControlsOrder} />
+
 ## Input props
 
 <InputFeatures component="DatePickerInput" element="button" />
