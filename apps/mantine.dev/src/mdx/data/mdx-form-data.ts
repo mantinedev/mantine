@@ -121,4 +121,11 @@ export const MDX_FORM_DATA: Record<string, Frontmatter> = {
     description: 'use-field hook – manage single field state',
     docs: 'form/use-field.mdx',
   },
+  formAllInputs: {
+    title: 'use-form with all inputs',
+    package: '@mantine/form',
+    slug: '/form/all-inputs',
+    description: 'use-form usage with all Mantine inputs',
+    docs: 'form/all-inputs.mdx',
+  },
 };

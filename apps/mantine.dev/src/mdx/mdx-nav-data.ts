@@ -501,6 +501,7 @@ const FORM_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.createFormContext,
       MDX_DATA.formActions,
       MDX_DATA.formRecipes,
+      MDX_DATA.formAllInputs,
     ],
   },
 ];

@@ -34,3 +34,32 @@ export { submitting } from './Form.demo.submitting';
 export { rootRuleObject } from './Form.demo.rootRuleObject';
 export { rootRuleArray } from './Form.demo.rootRuleArray';
 export { cascadeUpdates } from './Form.demo.cascadeUpdates';
+export {
+  angleSlider,
+  checkbox,
+  checkboxGroup,
+  chip,
+  colorInput,
+  colorPicker,
+  fieldset,
+  fileInput,
+  input,
+  jsonInput,
+  nativeSelect,
+  numberInput,
+  passwordInput,
+  pinInput,
+  radioGroup,
+  rangeSlider,
+  rating,
+  segmentedControl,
+  select,
+  slider,
+  switchDemo,
+  switchGroup,
+  tagsInput,
+  textarea,
+  textInput,
+  autocomplete,
+  multiSelect,
+} from './Form.demo.allComponents';
