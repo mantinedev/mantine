@@ -76,6 +76,7 @@ export { useOrientation } from './use-orientation/use-orientation.js';
 export { useFetch } from './use-fetch/use-fetch.js';
 export { useRadialMove, normalizeRadialValue } from './use-radial-move/use-radial-move.js';
 export { useScrollSpy } from './use-scroll-spy/use-scroll-spy.js';
+export { useScroller } from './use-scroller/use-scroller.js';
 export { useFileDialog } from './use-file-dialog/use-file-dialog.js';
 export { useLongPress } from './use-long-press/use-long-press.js';
 export { useSelection } from './use-selection/use-selection.js';
@@ -169,6 +170,11 @@ export type {
   UseScrollSpyHeadingData,
   UseScrollSpyReturnValue,
 } from './use-scroll-spy/use-scroll-spy';
+export type {
+  UseScrollerOptions,
+  UseScrollerReturnValue,
+  UseScrollerScrollState,
+} from './use-scroller/use-scroller';
 export type { UseSetStateCallback, UseSetStateReturnValue } from './use-set-state/use-set-state';
 export type {
   UseStateHistoryHandlers,

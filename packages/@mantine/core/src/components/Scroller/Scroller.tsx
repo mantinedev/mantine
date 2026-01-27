@@ -1,5 +1,5 @@
-import { Ref, useCallback, useEffect, useRef, useState } from 'react';
-import { useMergedRef, useResizeObserver } from '@mantine/hooks';
+import { Ref } from 'react';
+import { useScroller } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -124,119 +124,19 @@ export const Scroller = factory<ScrollerFactory>((_props) => {
     attributes,
   });
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [resizeRef] = useResizeObserver();
-  const scrollContainerRef = useMergedRef(containerRef, resizeRef);
+  const scroller = useScroller({
+    scrollAmount,
+    draggable,
+  });
 
-  const [canScrollStart, setCanScrollStart] = useState(false);
-  const [canScrollEnd, setCanScrollEnd] = useState(false);
-
-  const updateScrollState = useCallback(() => {
-    const container = containerRef.current;
-    if (container) {
-      const { scrollLeft, scrollWidth, clientWidth } = container;
-      const isRtl = getComputedStyle(container).direction === 'rtl';
-
-      if (isRtl) {
-        // In RTL, scrollLeft is 0 at the right edge and negative when scrolling left
-        setCanScrollStart(scrollLeft < 0);
-        setCanScrollEnd(scrollLeft > -(scrollWidth - clientWidth));
-      } else {
-        setCanScrollStart(scrollLeft > 0);
-        setCanScrollEnd(scrollLeft < scrollWidth - clientWidth - 1);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    updateScrollState();
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener('scroll', updateScrollState);
-      return () => container.removeEventListener('scroll', updateScrollState);
-    }
-    return undefined;
-  }, [updateScrollState]);
-
-  const scroll = useCallback(
-    (direction: 'start' | 'end') => {
-      const container = containerRef.current;
-      if (container) {
-        const isRtl = getComputedStyle(container).direction === 'rtl';
-        const amount = scrollAmount || 200;
-        const scrollBy = direction === 'end' ? amount : -amount;
-        const adjustedScrollBy = isRtl ? -scrollBy : scrollBy;
-
-        container.scrollBy({
-          left: adjustedScrollBy,
-          behavior: 'smooth',
-        });
-      }
-    },
-    [scrollAmount]
-  );
-
-  const handleScrollStart = useCallback(() => scroll('start'), [scroll]);
-  const handleScrollEnd = useCallback(() => scroll('end'), [scroll]);
-
-  // Mouse drag scrolling
-  const isDragging = useRef(false);
-  const startX = useRef(0);
-  const scrollLeftStart = useRef(0);
-
-  const handleMouseDown = useCallback(
-    (e: React.MouseEvent) => {
-      if (!draggable) {
-        return;
-      }
-      const container = containerRef.current;
-      if (container) {
-        isDragging.current = true;
-        startX.current = e.pageX - container.offsetLeft;
-        scrollLeftStart.current = container.scrollLeft;
-        container.style.cursor = 'grabbing';
-        container.style.userSelect = 'none';
-      }
-    },
-    [draggable]
-  );
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isDragging.current) {
-      return;
-    }
-    e.preventDefault();
-    const container = containerRef.current;
-    if (container) {
-      const x = e.pageX - container.offsetLeft;
-      const walk = x - startX.current;
-      container.scrollLeft = scrollLeftStart.current - walk;
-    }
-  }, []);
-
-  const handleMouseUp = useCallback(() => {
-    isDragging.current = false;
-    const container = containerRef.current;
-    if (container) {
-      container.style.cursor = '';
-      container.style.userSelect = '';
-    }
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    if (isDragging.current) {
-      handleMouseUp();
-    }
-  }, [handleMouseUp]);
-
-  const showStart = showStartControl || canScrollStart;
-  const showEnd = showEndControl || canScrollEnd;
+  const showStart = showStartControl || scroller.canScrollStart;
+  const showEnd = showEndControl || scroller.canScrollEnd;
 
   return (
     <Box {...getStyles('root')} ref={ref} mod={mod} {...others}>
       <UnstyledButton
         {...getStyles('control')}
-        onClick={handleScrollStart}
+        onClick={scroller.scrollStart}
         data-position="start"
         data-hidden={!showStart || undefined}
         aria-label="Scroll left"
@@ -248,20 +148,17 @@ export const Scroller = factory<ScrollerFactory>((_props) => {
 
       <div
         {...getStyles('container')}
-        ref={scrollContainerRef}
+        ref={scroller.ref}
         role="presentation"
         data-draggable={draggable || undefined}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseLeave}
+        {...scroller.dragHandlers}
       >
         <div {...getStyles('content')}>{children}</div>
       </div>
 
       <UnstyledButton
         {...getStyles('control')}
-        onClick={handleScrollEnd}
+        onClick={scroller.scrollEnd}
         data-position="end"
         data-hidden={!showEnd || undefined}
         aria-label="Scroll right"
