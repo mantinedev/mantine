@@ -272,6 +272,16 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/Mark/Mark.tsx',
     docs: 'core/mark.mdx',
   },
+  Marquee: {
+    title: 'Marquee',
+    package: '@mantine/core',
+    slug: '/core/marquee',
+    props: ['Marquee'],
+    styles: ['Marquee'],
+    description: 'Create continuous scrolling animation for content',
+    source: '@mantine/core/src/components/Marquee/Marquee.tsx',
+    docs: 'core/marquee.mdx',
+  },
   NativeSelect: {
     title: 'NativeSelect',
     package: '@mantine/core',

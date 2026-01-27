@@ -22,6 +22,7 @@
     "scss/no-global-function-names": null,
     "color-function-alias-notation": null,
     "property-no-deprecated": null,
+    "scss/operator-no-newline-after": null,
     "selector-pseudo-class-no-unknown": [
       true,
       {

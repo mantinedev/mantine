@@ -62,6 +62,7 @@ export * from './Kbd';
 export * from './List';
 export * from './LoadingOverlay';
 export * from './Mark';
+export * from './Marquee';
 export * from './Menu';
 export * from './Modal';
 export * from './MultiSelect';

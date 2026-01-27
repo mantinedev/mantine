@@ -60,6 +60,7 @@ export * as ListDemos from './demos/core/List';
 export * as LoaderDemos from './demos/core/Loader';
 export * as LoadingOverlayDemos from './demos/core/LoadingOverlay';
 export * as MarkDemos from './demos/core/Mark';
+export * as MarqueeDemos from './demos/core/Marquee';
 export * as MenuDemos from './demos/core/Menu';
 export * as ModalDemos from './demos/core/Modal';
 export * as MultiSelectDemos from './demos/core/MultiSelect';
