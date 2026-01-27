@@ -407,3 +407,18 @@ export const Demo_usePaginationStartValueDemo = {
   name: '⭐ Demo: usePaginationStartValueDemo',
   render: renderDemo(demos.usePaginationStartValueDemo),
 };
+
+export const Demo_useScrollerUsageDemo = {
+  name: '⭐ Demo: useScrollerUsageDemo',
+  render: renderDemo(demos.useScrollerUsageDemo),
+};
+
+export const Demo_useScrollerScrollAmountDemo = {
+  name: '⭐ Demo: useScrollerScrollAmountDemo',
+  render: renderDemo(demos.useScrollerScrollAmountDemo),
+};
+
+export const Demo_useScrollerDraggableDemo = {
+  name: '⭐ Demo: useScrollerDraggableDemo',
+  render: renderDemo(demos.useScrollerDraggableDemo),
+};

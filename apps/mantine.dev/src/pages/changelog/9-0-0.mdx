@@ -149,6 +149,12 @@ It supports native scrolling via trackpad, shift + mouse wheel, touch gestures, 
 
 <Demo data={ScrollerDemos.usage} />
 
+## use-scroller hook
+
+New [use-scroller](/hooks/use-scroller) hook provides logic for creating custom scrollable containers with navigation controls:
+
+<Demo data={HooksDemos.useScrollerUsageDemo} demoProps={{ defaultExpanded: false }} />
+
 ## use-form TransformedValues type argument
 
 [use-form](/form/use-form) now supports passing second type argument `TransformedValues` to define the type of
@@ -254,6 +260,7 @@ the pagination range will be from 5 to 15:
 
 ## Other changes
 
+- `light` variant in all components now uses different colors values without transparency to improve contrast
 - `mod` prop now converts camelCase keys to kebab-case for data attributes in all components
 - `@mantine/form` package no longer exports schema resolvers, use [dedicated packages](/form/schema-validation/) instead
 - `createPolymorphicComponent` function was renamed to shorter `polymorphic` for convenience
@@ -301,7 +308,6 @@ the pagination range will be from 5 to 15:
 - [use-mutation-observer](/hooks/use-mutation-observer) hook now uses the new callback ref approach. The new approach makes hook usable with dynamic node changes. Additionally, a new `useMutationObserverTarget` hook was added for observing external target elements.
 - [use-disclosure](/hooks/use-disclosure) hook now supports new `set` handler
 - [use-floating-indicator](/hooks/use-floating-indicator) hook now supports `onTransitionStart` and `onTransitionEnd` callbacks
-- `light` variant in all components now uses different colors values without transparency to improve contrast
 - `@mantine/hooks` types were renamed for consistency:
   - `UseScrollSpyReturnType` → `UseScrollSpyReturnValue`
   - `StateHistory` → `UseStateHistoryValue`
