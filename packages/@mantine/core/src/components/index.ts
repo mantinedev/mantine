@@ -82,6 +82,7 @@ export * from './Progress';
 export * from './Radio';
 export * from './Rating';
 export * from './RingProgress';
+export * from './Scroller';
 export * from './SegmentedControl';
 export * from './Select';
 export * from './SemiCircleProgress';

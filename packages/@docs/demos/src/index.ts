@@ -80,6 +80,7 @@ export * as RadioDemos from './demos/core/Radio';
 export * as RatingDemos from './demos/core/Rating';
 export * as RingProgressDemos from './demos/core/RingProgress';
 export * as ScrollAreaDemos from './demos/core/ScrollArea';
+export * as ScrollerDemos from './demos/core/Scroller';
 export * as SegmentedControlDemos from './demos/core/SegmentedControl';
 export * as SelectDemos from './demos/core/Select';
 export * as SemiCircleProgressDemos from './demos/core/SemiCircleProgress';

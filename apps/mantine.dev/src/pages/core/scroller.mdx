@@ -1,0 +1,40 @@
+import { ScrollerDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Scroller);
+
+## Usage
+
+`Scroller` is a horizontal scroll container that displays navigation controls (chevron buttons)
+when content overflows its container. It supports native scrolling via trackpad, shift + mouse wheel,
+or touch gestures.
+
+<Demo data={ScrollerDemos.usage} />
+
+## Mouse drag scrolling
+
+Set `draggable` prop to enable scrolling by clicking and dragging with the mouse:
+
+<Demo data={ScrollerDemos.draggable} />
+
+## Scroll amount
+
+Use the `scrollAmount` prop to control how many pixels the container scrolls when clicking
+the navigation buttons. The default value is `200`.
+
+<Demo data={ScrollerDemos.scrollAmount} />
+
+## Control size
+
+Use the `controlSize` prop to change the size of the navigation buttons. It accepts any valid
+Mantine size value (`xs`, `sm`, `md`, `lg`, `xl`) or a number (converted to pixels).
+
+<Demo data={ScrollerDemos.controlSize} />
+
+## Custom icons
+
+Use `startControlIcon` and `endControlIcon` props to replace default chevron icons
+with custom icons:
+
+<Demo data={ScrollerDemos.customIcons} />

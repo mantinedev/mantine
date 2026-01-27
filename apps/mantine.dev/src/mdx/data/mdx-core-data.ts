@@ -343,6 +343,16 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/ScrollArea/ScrollArea.tsx',
     docs: 'core/scroll-area.mdx',
   },
+  Scroller: {
+    title: 'Scroller',
+    package: '@mantine/core',
+    slug: '/core/scroller',
+    props: ['Scroller'],
+    styles: ['Scroller'],
+    description: 'Horizontal scroll container with navigation controls',
+    source: '@mantine/core/src/components/Scroller/Scroller.tsx',
+    docs: 'core/scroller.mdx',
+  },
   SegmentedControl: {
     title: 'SegmentedControl',
     package: '@mantine/core',
