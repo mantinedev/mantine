@@ -17,8 +17,3 @@ export const Demo_regexp = {
   name: '⭐ Demo: regexp',
   render: renderDemo(demos.regexp),
 };
-
-export const Demo_loading = {
-  name: '⭐ Demo: loading',
-  render: renderDemo(demos.loading),
-};

@@ -346,7 +346,7 @@ export const PinInput = factory<PinInputFactory>((props) => {
     if (isValid) {
       const copyValueToPinArray = createPinArray(length ?? 0, copyValue);
       setValues(copyValueToPinArray);
-      focusInputField('next', copyValueToPinArray.length - 2);
+      focusInputField('next', copyValueToPinArray.filter((val) => val !== '').length - 1);
     }
   };
 
