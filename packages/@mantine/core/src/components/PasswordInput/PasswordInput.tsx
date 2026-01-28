@@ -40,7 +40,7 @@ export interface PasswordInputProps
   /** Props passed down to the visibility toggle button */
   visibilityToggleButtonProps?: Record<string, any>;
 
-  /** If set, the input value is visible visible */
+  /** If set, the input value is visible */
   visible?: boolean;
 
   /** If set, the input value is visible by default */
@@ -157,9 +157,9 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
       {...getStyles('visibilityToggle')}
       disabled={disabled}
       radius={radius}
-      aria-hidden={!visibilityToggleButtonProps}
       aria-pressed={_visible}
       tabIndex={-1}
+      aria-label="Toggle password visibility"
       {...visibilityToggleButtonProps}
       variant={visibilityToggleButtonProps?.variant ?? 'subtle'}
       color="gray"

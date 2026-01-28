@@ -11,11 +11,17 @@ function Demo() {
 
   return (
     <>
-      <PasswordInput leftSection={icon} label="With left section" placeholder="With left section" />
+      <PasswordInput
+        leftSection={icon}
+        leftSectionPointerEvents="none"
+        label="With left section"
+        placeholder="With left section"
+      />
       <PasswordInput
         rightSection={icon}
         label="With right section"
         placeholder="With right section"
+        rightSectionPointerEvents="none"
         mt="md"
       />
     </>

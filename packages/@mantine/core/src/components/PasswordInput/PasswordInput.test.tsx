@@ -61,36 +61,20 @@ describe('@mantine/core/PasswordInput', () => {
   });
 
   it('sets aria-pressed="false" on visibility toggle button when password is hidden', () => {
-    render(
-      <PasswordInput
-        label="Password"
-        visibilityToggleButtonProps={{ 'aria-label': 'Toggle password visibility' }}
-      />
-    );
+    render(<PasswordInput label="Password" />);
     const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
     expect(toggleButton).toHaveAttribute('aria-pressed', 'false');
   });
 
   it('sets aria-pressed="true" on visibility toggle button when password is visible', () => {
-    render(
-      <PasswordInput
-        label="Password"
-        defaultVisible
-        visibilityToggleButtonProps={{ 'aria-label': 'Toggle password visibility' }}
-      />
-    );
+    render(<PasswordInput label="Password" defaultVisible />);
     const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
     expect(toggleButton).toHaveAttribute('aria-pressed', 'true');
   });
 
   it('toggles aria-pressed attribute when visibility toggle button is clicked', async () => {
     const user = userEvent.setup();
-    render(
-      <PasswordInput
-        label="Password"
-        visibilityToggleButtonProps={{ 'aria-label': 'Toggle password visibility' }}
-      />
-    );
+    render(<PasswordInput label="Password" />);
     const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
 
     expect(toggleButton).toHaveAttribute('aria-pressed', 'false');
@@ -114,5 +98,81 @@ describe('@mantine/core/PasswordInput', () => {
     );
     const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
     expect(toggleButton).toHaveAttribute('aria-pressed', 'mixed');
+  });
+
+  it('toggles input type from password to text when visibility is toggled', async () => {
+    const user = userEvent.setup();
+    render(<PasswordInput label="Password" />);
+    const input = screen.getByLabelText('Password') as HTMLInputElement;
+    const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
+
+    expect(input.type).toBe('password');
+
+    await user.click(toggleButton);
+    expect(input.type).toBe('text');
+
+    await user.click(toggleButton);
+    expect(input.type).toBe('password');
+  });
+
+  it('supports controlled visible prop', async () => {
+    const { rerender } = render(<PasswordInput label="Password" visible={false} />);
+
+    expect(screen.getByLabelText('Password')).toHaveAttribute('type', 'password');
+    expect(screen.getByRole('button', { name: 'Toggle password visibility' })).toHaveAttribute(
+      'aria-pressed',
+      'false'
+    );
+
+    rerender(<PasswordInput label="Password" visible />);
+    expect(screen.getByLabelText('Password')).toHaveAttribute('type', 'text');
+    expect(screen.getByRole('button', { name: 'Toggle password visibility' })).toHaveAttribute(
+      'aria-pressed',
+      'true'
+    );
+  });
+
+  it('supports defaultVisible prop for uncontrolled mode', () => {
+    render(<PasswordInput label="Password" defaultVisible />);
+    const input = screen.getByLabelText('Password') as HTMLInputElement;
+    expect(input.type).toBe('text');
+  });
+
+  it('passes visibilityToggleButtonProps to toggle button', () => {
+    render(
+      <PasswordInput
+        label="Password"
+        visibilityToggleButtonProps={{
+          'aria-label': 'Custom toggle label',
+          'data-testid': 'custom-toggle-button',
+          className: 'custom-class',
+        }}
+      />
+    );
+    const toggleButton = screen.getByTestId('custom-toggle-button');
+    expect(toggleButton).toHaveAttribute('aria-label', 'Custom toggle label');
+    expect(toggleButton).toHaveClass('custom-class');
+  });
+
+  it('hides visibility toggle when rightSection prop is provided', () => {
+    render(
+      <PasswordInput
+        label="Password"
+        rightSection={<span data-testid="custom-right-section">Custom</span>}
+        visibilityToggleButtonProps={{
+          'aria-label': 'Toggle password visibility',
+          'data-testid': 'toggle-visibility-button',
+        }}
+      />
+    );
+
+    expect(screen.getByTestId('custom-right-section')).toBeInTheDocument();
+    expect(screen.queryByTestId('toggle-visibility-button')).not.toBeInTheDocument();
+  });
+
+  it('disables visibility toggle button when disabled prop is set', () => {
+    render(<PasswordInput label="Password" disabled />);
+    const toggleButton = screen.getByRole('button', { name: 'Toggle password visibility' });
+    expect(toggleButton).toBeDisabled();
   });
 });
