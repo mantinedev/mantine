@@ -34,6 +34,9 @@ export const CarouselSlide = factory<CarouselSlideFactory>((props) => {
   return (
     <Box
       mod={[{ orientation: ctx.orientation }, mod]}
+      role="group"
+      aria-roledescription="slide"
+      aria-label="Carousel slide"
       {...ctx.getStyles('slide', { className, style, classNames, styles })}
       {...others}
     />

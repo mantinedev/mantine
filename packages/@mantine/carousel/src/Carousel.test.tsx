@@ -14,6 +14,8 @@ const defaultProps: CarouselProps = {
 };
 
 describe('@mantine/carousel/Carousel', () => {
+  tests.axe([<Carousel {...defaultProps} />]);
+
   tests.itSupportsSystemProps<CarouselProps, CarouselStylesNames>({
     component: Carousel,
     props: defaultProps,

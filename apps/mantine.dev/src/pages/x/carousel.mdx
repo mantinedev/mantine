@@ -163,3 +163,40 @@ Example with [autoplay plugin](https://www.embla-carousel.com/plugins/autoplay/)
 ## Example: Cards carousel
 
 <Demo data={CarouselDemos.cards} />
+
+## Accessibility
+
+Set `aria-label` or `aria-labelledby` on the `Carousel` component to make it accessible for screen readers:
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+
+export function AccessibleCarousel() {
+  return (
+    <Carousel aria-label="Gallery of nature pictures">
+      <Carousel.Slide>...</Carousel.Slide>
+      <Carousel.Slide>...</Carousel.Slide>
+      <Carousel.Slide>...</Carousel.Slide>
+    </Carousel>
+  );
+}
+```
+
+Set `aria-label` for next/previous controls with `nextControlProps` and `previousControlProps` props:
+
+```tsx
+import { Carousel } from '@mantine/carousel';
+
+export function AccessibleControlsCarousel() {
+  return (
+    <Carousel
+      aria-label="Gallery of nature pictures"
+      nextControlProps={{ 'aria-label': 'Next slide' }}
+      previousControlProps={{ 'aria-label': 'Previous slide' }}
+    >
+      <Carousel.Slide>...</Carousel.Slide>
+      <Carousel.Slide>...</Carousel.Slide>
+      <Carousel.Slide>...</Carousel.Slide>
+    </Carousel>
+  );
+}

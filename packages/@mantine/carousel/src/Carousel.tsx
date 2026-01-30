@@ -6,6 +6,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -20,7 +21,7 @@ import {
   useRandomClassName,
   useStyles,
 } from '@mantine/core';
-import { clamp } from '@mantine/hooks';
+import { clamp, useId } from '@mantine/hooks';
 import { CarouselProvider } from './Carousel.context';
 import classes from './Carousel.module.css';
 import { CarouselSlide } from './CarouselSlide/CarouselSlide';
@@ -114,6 +115,9 @@ export interface CarouselProps
 
   /** Determines whether arrow key should switch slides @default true */
   withKeyboardEvents?: boolean;
+
+  /** Function to get props for indicator button */
+  getIndicatorProps?: (index: number) => ElementProps<'button'> & DataAttributes;
 }
 
 export type CarouselFactory = Factory<{
@@ -195,6 +199,8 @@ export const Carousel = factory<CarouselFactory>((_props) => {
     type,
     emblaOptions,
     attributes,
+    getIndicatorProps,
+    id,
     ...others
   } = props;
 
@@ -211,6 +217,8 @@ export const Carousel = factory<CarouselFactory>((_props) => {
     vars,
     varsResolver,
   });
+
+  const _id = useId(id);
 
   const responsiveClassName = useRandomClassName();
   const { dir } = useDirection();
@@ -302,11 +310,12 @@ export const Carousel = factory<CarouselFactory>((_props) => {
         {...getStyles('indicator')}
         key={index}
         data-active={index === selected || undefined}
-        aria-hidden
         tabIndex={-1}
+        aria-label={`Go to slide ${index + 1}`}
         onClick={() => handleScroll(index)}
         data-orientation={orientation}
         onMouseDown={(event) => event.preventDefault()}
+        {...getIndicatorProps?.(index)}
       />
     ));
 
@@ -319,14 +328,22 @@ export const Carousel = factory<CarouselFactory>((_props) => {
       )}
 
       <Box
+        role="region"
+        aria-roledescription="carousel"
         {...getStyles('root', { className: 'responsiveClassName' })}
         {...others}
+        id={_id}
         mod={[{ orientation, 'include-gap-in-size': includeGapInSize }, mod]}
         onKeyDownCapture={handleKeydown}
       >
         {withControls && (
           <div {...getStyles('controls')} data-orientation={orientation}>
             <UnstyledButton
+              aria-controls={_id}
+              aria-label="Previous slide"
+              data-inactive={!canScrollPrev || undefined}
+              data-type="previous"
+              tabIndex={canScrollPrev ? 0 : -1}
               {...previousControlProps}
               {...getStyles('control', {
                 className: previousControlProps?.className,
@@ -336,9 +353,6 @@ export const Carousel = factory<CarouselFactory>((_props) => {
                 handlePrevious();
                 previousControlProps?.onClick?.(event);
               }}
-              data-inactive={!canScrollPrev || undefined}
-              data-type="previous"
-              tabIndex={canScrollPrev ? 0 : -1}
             >
               {typeof previousControlIcon !== 'undefined' ? (
                 previousControlIcon
@@ -356,6 +370,11 @@ export const Carousel = factory<CarouselFactory>((_props) => {
             </UnstyledButton>
 
             <UnstyledButton
+              aria-controls={_id}
+              aria-label="Next slide"
+              data-inactive={!canScrollNext || undefined}
+              data-type="next"
+              tabIndex={canScrollNext ? 0 : -1}
               {...getStyles('control', {
                 className: nextControlProps?.className,
                 style: nextControlProps?.style,
@@ -365,9 +384,6 @@ export const Carousel = factory<CarouselFactory>((_props) => {
                 handleNext();
                 nextControlProps?.onClick?.(event);
               }}
-              data-inactive={!canScrollNext || undefined}
-              data-type="next"
-              tabIndex={canScrollNext ? 0 : -1}
             >
               {typeof nextControlIcon !== 'undefined' ? (
                 nextControlIcon
