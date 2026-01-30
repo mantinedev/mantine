@@ -82,12 +82,12 @@ export function useDragDropHandlers<T = any>(
   }, [dragState]);
 
   const handleDragOver = useCallback(
-    (e: React.DragEvent, target: T) => {
+    (event: React.DragEvent, target: T) => {
       if (!enabled || !dragState.state.isDragging || mode === 'static') {
         return;
       }
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
+      event.preventDefault();
+      event.dataTransfer.dropEffect = 'move';
       setDropTarget(target);
     },
     [enabled, mode, dragState.state.isDragging]
@@ -98,8 +98,8 @@ export function useDragDropHandlers<T = any>(
   }, []);
 
   const handleDrop = useCallback(
-    (e: React.DragEvent, target: T) => {
-      e.preventDefault();
+    (event: React.DragEvent, target: T) => {
+      event.preventDefault();
 
       if (!enabled || !dragState.state.draggedEvent || !onEventDrop) {
         return;
