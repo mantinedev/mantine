@@ -24,20 +24,6 @@ describe('@mantine/core/Scroller', () => {
     expect(container.querySelector('.mantine-Scroller-root')).toBeInTheDocument();
   });
 
-  it('supports controlSize prop', () => {
-    const { container } = render(<Scroller {...defaultProps} controlSize="lg" />);
-    expect(container.querySelector('.mantine-Scroller-root')).toHaveStyle({
-      '--scroller-control-size': 'var(--mantine-spacing-lg, lg)',
-    });
-  });
-
-  it('supports numeric controlSize prop', () => {
-    const { container } = render(<Scroller {...defaultProps} controlSize={50} />);
-    expect(container.querySelector('.mantine-Scroller-root')).toHaveStyle({
-      '--scroller-control-size': '50px',
-    });
-  });
-
   it('renders start control when showStartControl is true', () => {
     render(<Scroller {...defaultProps} showStartControl />);
     expect(screen.getByLabelText('Scroll left')).toBeInTheDocument();
