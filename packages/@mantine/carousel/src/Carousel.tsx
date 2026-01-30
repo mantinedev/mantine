@@ -20,6 +20,7 @@ import {
   useProps,
   useRandomClassName,
   useStyles,
+  VisuallyHidden,
 } from '@mantine/core';
 import { clamp, useId } from '@mantine/hooks';
 import { CarouselProvider } from './Carousel.context';
@@ -380,11 +381,16 @@ export const Carousel = factory<CarouselFactory>((_props) => {
         mod={[{ orientation, 'include-gap-in-size': includeGapInSize }, mod]}
         onKeyDownCapture={handleKeydown}
       >
+        <VisuallyHidden role="status" aria-live="polite" aria-atomic="true">
+          {slidesCount > 0 && `Slide ${selected + 1} of ${slidesCount}`}
+        </VisuallyHidden>
+
         {withControls && (
           <div {...getStyles('controls')} data-orientation={orientation}>
             <UnstyledButton
               aria-controls={_id}
               aria-label="Previous slide"
+              aria-disabled={!canScrollPrev}
               data-inactive={!canScrollPrev || undefined}
               data-type="previous"
               tabIndex={canScrollPrev ? 0 : -1}
@@ -416,6 +422,7 @@ export const Carousel = factory<CarouselFactory>((_props) => {
             <UnstyledButton
               aria-controls={_id}
               aria-label="Next slide"
+              aria-disabled={!canScrollNext}
               data-inactive={!canScrollNext || undefined}
               data-type="next"
               tabIndex={canScrollNext ? 0 : -1}
