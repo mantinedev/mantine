@@ -15,6 +15,7 @@ export { scrollArea } from './TagsInput.demo.scrollArea';
 export { sort } from './TagsInput.demo.sort';
 export { stylesApi } from './TagsInput.demo.stylesApi';
 export { clearable } from './TagsInput.demo.clearable';
+export { clearSectionMode } from './TagsInput.demo.clearSectionMode';
 export { sections } from './TagsInput.demo.sections';
 export { dropdownOpened } from './TagsInput.demo.dropdownOpened';
 export { dropdownPosition } from './TagsInput.demo.dropdownPosition';

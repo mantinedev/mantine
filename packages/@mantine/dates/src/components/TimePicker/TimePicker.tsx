@@ -3,6 +3,7 @@ import {
   __BaseInputProps,
   __InputStylesNames,
   BoxProps,
+  ClearSectionMode,
   CloseButton,
   CloseButtonProps,
   createVarsResolver,
@@ -76,6 +77,9 @@ export interface TimePickerProps
 
   /** Determines whether the clear button should be displayed @default false */
   clearable?: boolean;
+
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  clearSectionMode?: ClearSectionMode;
 
   /** `name` prop passed down to the hidden input */
   name?: string;
@@ -243,6 +247,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
     amPmInputLabel,
     amPmLabels,
     clearable,
+    clearSectionMode,
     onMouseDown,
     onFocusCapture,
     onBlurCapture,
@@ -385,23 +390,23 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
               setDropdownOpened(false);
               onBlurCapture?.(event);
             }}
-            rightSection={
-              rightSection ||
-              (controller.isClearable && (
-                <CloseButton
-                  {...clearButtonProps}
-                  size={size}
-                  onClick={(event) => {
-                    controller.clear();
-                    clearButtonProps?.onClick?.(event);
-                  }}
-                  onMouseDown={(event) => {
-                    event.preventDefault();
-                    clearButtonProps?.onMouseDown?.(event);
-                  }}
-                />
-              ))
+            rightSection={rightSection}
+            __clearSection={
+              <CloseButton
+                {...clearButtonProps}
+                size={size}
+                onClick={(event) => {
+                  controller.clear();
+                  clearButtonProps?.onClick?.(event);
+                }}
+                onMouseDown={(event) => {
+                  event.preventDefault();
+                  clearButtonProps?.onMouseDown?.(event);
+                }}
+              />
             }
+            __clearable={controller.isClearable}
+            __clearSectionMode={clearSectionMode}
             labelProps={{ htmlFor: hoursInputId, ...labelProps }}
             style={style}
             className={className}

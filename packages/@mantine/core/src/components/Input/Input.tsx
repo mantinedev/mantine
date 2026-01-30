@@ -21,7 +21,7 @@ import { Loader } from '../Loader/Loader';
 import { InputContext } from './Input.context';
 import classes from './Input.module.css';
 import { InputClearButton } from './InputClearButton/InputClearButton';
-import { InputClearSection } from './InputClearSection/InputClearSection';
+import { ClearSectionMode, InputClearSection } from './InputClearSection/InputClearSection';
 import { InputDescription } from './InputDescription/InputDescription';
 import { InputError } from './InputError/InputError';
 import { InputLabel } from './InputLabel/InputLabel';
@@ -115,6 +115,9 @@ export interface __InputProps {
 
   /** Determines whether the `__clearSection` should be displayed if it is passed to the component, has no effect if `rightSection` is defined */
   __clearable?: boolean;
+
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  __clearSectionMode?: ClearSectionMode;
 
   /** Right section displayed when both `__clearSection` and `rightSection` are not defined */
   __defaultRightSection?: React.ReactNode;
@@ -230,6 +233,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     attributes,
     __clearSection,
     __clearable,
+    __clearSectionMode,
     __defaultRightSection,
     loading,
     loadingPosition,
@@ -283,6 +287,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     rightSection: loading && loadingPosition === 'right' ? loadingIndicator : rightSection,
     __defaultRightSection,
     size,
+    __clearSectionMode,
   });
 
   return (

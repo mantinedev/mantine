@@ -11,6 +11,7 @@ import { MdxPackagesInstallation } from './MdxPackagesInstallation/MdxPackagesIn
 import { MdxPre } from './MdxPre/MdxPre';
 import {
   MdxAutoContrast,
+  MdxClearSectionMode,
   MdxComboboxData,
   MdxComboboxDisclaimer,
   MdxComboboxFiltering,
@@ -65,6 +66,7 @@ export function MdxProvider({ children }: { children: React.ReactNode }) {
         WrapperProps: MdxWrapperProps,
         InputSections: MdxInputSections,
         AutoContrast: MdxAutoContrast,
+        ClearSectionMode: MdxClearSectionMode,
         SponsorButton: MdxSponsorButton,
         Video: MdxVideo,
         pre: MdxPre,

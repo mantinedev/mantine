@@ -26,6 +26,7 @@ import {
 import {
   __BaseInputProps,
   __InputStylesNames,
+  ClearSectionMode,
   InputClearButtonProps,
   InputVariant,
 } from '../Input';
@@ -71,6 +72,9 @@ export interface AutocompleteProps
 
   /** If set, the clear button is displayed when the component has a value @default false */
   clearable?: boolean;
+
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  clearSectionMode?: ClearSectionMode;
 
   /** If set, the highlighted option is selected when the input loses focus @default false */
   autoSelectOnBlur?: boolean;
@@ -123,6 +127,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
     clearButtonProps,
     error,
     clearable,
+    clearSectionMode,
     rightSection,
     autoSelectOnBlur,
     openOnFocus = true,
@@ -209,6 +214,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
           __staticSelector="Autocomplete"
           __clearSection={clearButton}
           __clearable={clearable && !!_value && !disabled && !readOnly}
+          __clearSectionMode={clearSectionMode}
           rightSection={rightSection}
           disabled={disabled}
           readOnly={readOnly}

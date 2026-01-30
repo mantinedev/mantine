@@ -12,6 +12,7 @@ import {
   PaginationDemos,
   MarqueeDemos,
   ScrollerDemos,
+  DatePickerInputDemos,
 } from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
@@ -135,6 +136,22 @@ You can change the position with the `loadingPosition` prop to `'left'` or `'rig
 [MultiSelect](/core/multi-select) and [TagsInput](/core/tags-input) components now support `renderPill` prop to customize pill rendering:
 
 <Demo data={MultiSelectDemos.renderPill} />
+
+## Clear section mode
+
+All clearable input components now support `clearSectionMode` prop that determines how the clear button and `rightSection` are rendered:
+
+- `'both'` (default) – render both the clear button and `rightSection`
+- `'rightSection'` – render only the user-supplied `rightSection`, ignore clear button
+- `'clear'` – render only the clear button, ignore `rightSection`
+
+This prop is supported by [Select](/core/select), [Autocomplete](/core/autocomplete),
+[MultiSelect](/core/multi-select), [TagsInput](/core/tags-input), [FileInput](/core/file-input),
+[DateInput](/dates/date-input), [DatePickerInput](/dates/date-picker-input),
+[MonthPickerInput](/dates/month-picker-input), [YearPickerInput](/dates/year-picker-input),
+[TimePicker](/dates/time-picker), and [DateTimePicker](/dates/date-time-picker).
+
+<Demo data={DatePickerInputDemos.clearSectionMode} />
 
 ## Marquee component
 

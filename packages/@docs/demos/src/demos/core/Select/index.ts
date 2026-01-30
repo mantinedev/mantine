@@ -15,6 +15,7 @@ export { sort } from './Select.demo.sort';
 export { stylesApi } from './Select.demo.stylesApi';
 export { allowDeselect } from './Select.demo.allowDeselect';
 export { clearable } from './Select.demo.clearable';
+export { clearSectionMode } from './Select.demo.clearSectionMode';
 export { sections } from './Select.demo.sections';
 export { dropdownOpened } from './Select.demo.dropdownOpened';
 export { dropdownPosition } from './Select.demo.dropdownPosition';

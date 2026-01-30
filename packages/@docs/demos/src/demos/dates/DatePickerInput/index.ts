@@ -4,6 +4,7 @@ import { getSharedPickerInputDemos } from '../_shared';
 export const { usage, multiple, range, configurator, modal, icon, clearable, valueFormatter } =
   getSharedPickerInputDemos(DatePickerInput);
 
+export { clearSectionMode } from './DatePickerInput.demo.clearSectionMode';
 export { valueFormat } from './DatePickerInput.demo.valueFormat';
 export { disabled } from './DatePickerInput.demo.disabled';
 export { presets } from './DatePickerInput.demo.presets';

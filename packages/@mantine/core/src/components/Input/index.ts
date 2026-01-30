@@ -12,7 +12,10 @@ import type {
   InputClearButtonFactory,
   InputClearButtonProps,
 } from './InputClearButton/InputClearButton';
-import type { InputClearSectionProps } from './InputClearSection/InputClearSection';
+import type {
+  ClearSectionMode,
+  InputClearSectionProps,
+} from './InputClearSection/InputClearSection';
 import type {
   InputDescriptionCssVariables,
   InputDescriptionFactory,
@@ -85,6 +88,7 @@ export type {
   InputClearButtonProps,
   InputClearButtonFactory,
   InputClearSectionProps,
+  ClearSectionMode,
 };
 
 export namespace Input {
@@ -133,5 +137,6 @@ export namespace Input {
 
   export namespace ClearSection {
     export type Props = InputClearSectionProps;
+    export type Mode = ClearSectionMode;
   }
 }

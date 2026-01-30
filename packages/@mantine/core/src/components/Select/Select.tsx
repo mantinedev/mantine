@@ -26,6 +26,7 @@ import {
 import {
   __BaseInputProps,
   __InputStylesNames,
+  ClearSectionMode,
   InputClearButtonProps,
   InputVariant,
 } from '../Input';
@@ -82,6 +83,9 @@ export interface SelectProps<Value extends Primitive = string>
 
   /** If set, the clear button is displayed in the right section when the component has value @default false */
   clearable?: boolean;
+
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  clearSectionMode?: ClearSectionMode;
 
   /** Props passed down to the clear button */
   clearButtonProps?: InputClearButtonProps;
@@ -165,6 +169,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
     rightSectionPointerEvents,
     id,
     clearable,
+    clearSectionMode,
     clearButtonProps,
     hiddenInputProps,
     renderOption,
@@ -333,6 +338,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
             }
             __clearSection={clearButton}
             __clearable={_clearable}
+            __clearSectionMode={clearSectionMode}
             rightSection={rightSection}
             rightSectionPointerEvents={rightSectionPointerEvents || 'none'}
             {...others}

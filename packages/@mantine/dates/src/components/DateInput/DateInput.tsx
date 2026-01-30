@@ -4,6 +4,7 @@ import {
   __BaseInputProps,
   __InputStylesNames,
   BoxProps,
+  ClearSectionMode,
   ElementProps,
   factory,
   Factory,
@@ -58,6 +59,9 @@ export interface DateInputProps
   /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default false */
   clearable?: boolean;
 
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  clearSectionMode?: ClearSectionMode;
+
   /** Props passed down to the clear button */
   clearButtonProps?: React.ComponentProps<'button'>;
 
@@ -105,6 +109,7 @@ export const DateInput = factory<DateInputFactory>((_props) => {
     defaultValue,
     onChange,
     clearable,
+    clearSectionMode,
     clearButtonProps,
     popoverProps,
     getDayProps,
@@ -281,6 +286,7 @@ export const DateInput = factory<DateInputFactory>((_props) => {
               rightSection={rightSection}
               __clearSection={clearButton}
               __clearable={_clearable}
+              __clearSectionMode={clearSectionMode}
               {...inputProps}
               {...others}
               disabled={disabled}

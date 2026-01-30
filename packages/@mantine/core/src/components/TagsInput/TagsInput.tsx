@@ -26,7 +26,12 @@ import {
   OptionsFilter,
   useCombobox,
 } from '../Combobox';
-import { __BaseInputProps, __InputStylesNames, InputClearButtonProps } from '../Input';
+import {
+  __BaseInputProps,
+  __InputStylesNames,
+  ClearSectionMode,
+  InputClearButtonProps,
+} from '../Input';
 import { InputBase } from '../InputBase';
 import { Pill } from '../Pill';
 import { PillsInput } from '../PillsInput';
@@ -92,6 +97,9 @@ export interface TagsInputProps
 
   /** If set, the clear button is displayed in the right section when the component has value @default false */
   clearable?: boolean;
+
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  clearSectionMode?: ClearSectionMode;
 
   /** Props passed down to the clear button */
   clearButtonProps?: InputClearButtonProps;
@@ -201,6 +209,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     form,
     id,
     clearable,
+    clearSectionMode,
     clearButtonProps,
     hiddenInputProps,
     hiddenInputValuesDivider,
@@ -467,6 +476,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
             rightSection={rightSection}
             __clearSection={clearButton}
             __clearable={clearable && _value.length > 0 && !disabled && !readOnly}
+            __clearSectionMode={clearSectionMode}
             rightSectionWidth={rightSectionWidth}
             rightSectionPointerEvents={rightSectionPointerEvents}
             rightSectionProps={rightSectionProps}

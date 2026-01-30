@@ -16,6 +16,7 @@ export { search } from './MultiSelect.demo.search';
 export { sort } from './MultiSelect.demo.sort';
 export { stylesApi } from './MultiSelect.demo.stylesApi';
 export { clearable } from './MultiSelect.demo.clearable';
+export { clearSectionMode } from './MultiSelect.demo.clearSectionMode';
 export { sections } from './MultiSelect.demo.sections';
 export { dropdownOpened } from './MultiSelect.demo.dropdownOpened';
 export { dropdownPosition } from './MultiSelect.demo.dropdownPosition';

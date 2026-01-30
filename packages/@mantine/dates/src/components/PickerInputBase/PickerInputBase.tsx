@@ -3,6 +3,7 @@ import {
   __BaseInputProps,
   __InputStylesNames,
   BoxProps,
+  ClearSectionMode,
   ElementProps,
   factory,
   Factory,
@@ -42,6 +43,9 @@ export interface DateInputSharedProps
 
   /** If set, clear button is displayed in the `rightSection` when the component has value. Ignored if `rightSection` prop is set. @default false */
   clearable?: boolean;
+
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  clearSectionMode?: ClearSectionMode;
 
   /** Props passed down to the clear button */
   clearButtonProps?: React.ComponentProps<'button'>;
@@ -109,6 +113,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
     dropdownOpened,
     onClick,
     clearable,
+    clearSectionMode,
     onClear,
     clearButtonProps,
     rightSection,
@@ -184,6 +189,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
               }}
               __clearSection={clearButton}
               __clearable={clearable && shouldClear && !readOnly && !disabled}
+              __clearSectionMode={clearSectionMode}
               rightSection={rightSection}
               {...inputProps}
               classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}

@@ -11,7 +11,13 @@ import {
 } from '../../core';
 import { CloseButton } from '../CloseButton';
 import { FileButton } from '../FileButton';
-import { __BaseInputProps, __InputStylesNames, Input, InputVariant } from '../Input';
+import {
+  __BaseInputProps,
+  __InputStylesNames,
+  ClearSectionMode,
+  Input,
+  InputVariant,
+} from '../Input';
 import { InputBase } from '../InputBase/InputBase';
 
 export interface FileInputProps<Multiple = false>
@@ -48,6 +54,9 @@ export interface FileInputProps<Multiple = false>
 
   /** If set, the clear button is displayed in the right section @default false */
   clearable?: boolean;
+
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  clearSectionMode?: ClearSectionMode;
 
   /** Props passed down to the clear button */
   clearButtonProps?: React.ComponentProps<'button'>;
@@ -103,6 +112,7 @@ export const FileInput = genericFactory<FileInputFactory>((_props) => {
     form,
     valueComponent: ValueComponent,
     clearable,
+    clearSectionMode,
     clearButtonProps,
     readOnly,
     capture,
@@ -134,17 +144,17 @@ export const FileInput = genericFactory<FileInputFactory>((_props) => {
 
   const hasValue = Array.isArray(_value) ? _value.length !== 0 : _value !== null;
 
-  const _rightSection =
-    rightSection ||
-    (clearable && hasValue && !readOnly ? (
-      <CloseButton
-        {...clearButtonProps}
-        variant="subtle"
-        onClick={() => setValue(multiple ? [] : null)}
-        size={size}
-        unstyled={unstyled}
-      />
-    ) : null);
+  const clearButton = (
+    <CloseButton
+      {...clearButtonProps}
+      variant="subtle"
+      onClick={() => setValue(multiple ? [] : null)}
+      size={size}
+      unstyled={unstyled}
+    />
+  );
+
+  const _clearable = clearable && hasValue && !readOnly;
 
   useEffect(() => {
     if ((Array.isArray(_value) && _value.length === 0) || _value === null) {
@@ -167,7 +177,10 @@ export const FileInput = genericFactory<FileInputFactory>((_props) => {
       {(fileButtonProps) => (
         <InputBase
           component={component || 'button'}
-          rightSection={_rightSection}
+          rightSection={rightSection}
+          __clearSection={clearButton}
+          __clearable={_clearable}
+          __clearSectionMode={clearSectionMode}
           {...fileButtonProps}
           {...others}
           __staticSelector="FileInput"

@@ -26,7 +26,12 @@ import {
   OptionsFilter,
   useCombobox,
 } from '../Combobox';
-import { __BaseInputProps, __InputStylesNames, InputClearButtonProps } from '../Input';
+import {
+  __BaseInputProps,
+  __InputStylesNames,
+  ClearSectionMode,
+  InputClearButtonProps,
+} from '../Input';
 import { InputBase } from '../InputBase';
 import { Pill } from '../Pill';
 import { PillsInput } from '../PillsInput';
@@ -97,6 +102,9 @@ export interface MultiSelectProps<Value extends Primitive = string>
 
   /** When enabled, displays a clear button to remove all selected values (hidden when component is empty, disabled, or read-only) @default false */
   clearable?: boolean;
+
+  /** Determines how the clear button and rightSection are rendered @default 'both' */
+  clearSectionMode?: ClearSectionMode;
 
   /** Props passed down to the clear button */
   clearButtonProps?: InputClearButtonProps;
@@ -211,6 +219,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     form,
     id,
     clearable,
+    clearSectionMode,
     clearButtonProps,
     hiddenInputProps,
     placeholder,
@@ -420,6 +429,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
             }
             __clearSection={clearButton}
             __clearable={_clearable}
+            __clearSectionMode={clearSectionMode}
             rightSection={rightSection}
             rightSectionPointerEvents={rightSectionPointerEvents || 'none'}
             rightSectionWidth={rightSectionWidth}
