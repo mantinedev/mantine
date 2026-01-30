@@ -7,6 +7,7 @@ export function ColorsIndex() {
     <div style={{ padding: 40 }}>
       <RingProgress
         label="Hello"
+        sectionGap={2}
         sections={[
           {
             value: 10,

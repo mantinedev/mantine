@@ -2,6 +2,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -19,7 +20,7 @@ function getClampedThickness(thickness: number, size: number) {
   return Math.min(thickness || 12, (size || 120) / 4);
 }
 
-export interface RingProgressSection extends React.ComponentProps<'circle'> {
+export interface RingProgressSection extends React.ComponentProps<'circle'>, DataAttributes {
   value: number;
   color: MantineColor;
   tooltip?: React.ReactNode;
@@ -55,6 +56,9 @@ export interface RingProgressProps
 
   /** Transition duration in milliseconds for section value and color changes @default 0 */
   transitionDuration?: number;
+
+  /** Gap between sections in degrees. Reduces the visual size of each section @default 0 */
+  sectionGap?: number;
 }
 
 export type RingProgressFactory = Factory<{
@@ -95,6 +99,7 @@ export const RingProgress = factory<RingProgressFactory>((_props) => {
     roundCaps,
     rootColor,
     transitionDuration,
+    sectionGap,
     attributes,
     ...others
   } = props;
@@ -121,6 +126,7 @@ export const RingProgress = factory<RingProgressFactory>((_props) => {
     sections,
     renderRoundedLineCaps: roundCaps,
     rootColor,
+    sectionGap,
   }).map(({ data, sum, root, lineRoundCaps, offset }, index) => (
     <Curve
       {...data}

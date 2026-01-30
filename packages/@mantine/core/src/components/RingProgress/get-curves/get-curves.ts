@@ -1,12 +1,13 @@
-import type { MantineColor } from '../../../core';
+import type { DataAttributes, MantineColor } from '../../../core';
 
-interface CurveData extends React.ComponentProps<'circle'> {
+interface CurveData extends React.ComponentProps<'circle'>, DataAttributes {
   value: number;
   color: MantineColor;
   tooltip?: React.ReactNode;
 }
 
-interface RootCurveData extends React.ComponentProps<'circle'> {
+interface RootCurveData extends React.ComponentProps<'circle'>, DataAttributes {
+  value?: never;
   color?: MantineColor;
 }
 
@@ -16,6 +17,7 @@ interface GetCurves {
   thickness: number;
   renderRoundedLineCaps: boolean | undefined;
   rootColor?: MantineColor;
+  sectionGap?: number;
 }
 
 interface Curve {
@@ -32,6 +34,7 @@ export function getCurves({
   sections,
   renderRoundedLineCaps,
   rootColor,
+  sectionGap = 0,
 }: GetCurves) {
   const sum = sections.reduce((acc, current) => acc + current.value, 0);
   const accumulated = Math.PI * ((size * 0.9 - thickness * 2) / 2) * 2;
@@ -39,8 +42,13 @@ export function getCurves({
   const curves: Curve[] = [];
   const curvesInOrder: Curve[] = [];
 
+  // Convert gap from degrees to percentage of the circle
+  const gapPercentage = (sectionGap / 360) * 100;
+
   for (let i = 0; i < sections.length; i += 1) {
-    curves.push({ sum, offset, data: sections[i], root: false });
+    // Reduce section value by gap amount to create visual separation
+    const adjustedValue = Math.max(0, sections[i].value - gapPercentage);
+    curves.push({ sum, offset, data: { ...sections[i], value: adjustedValue }, root: false });
     offset -= (sections[i].value / 100) * accumulated;
   }
 
