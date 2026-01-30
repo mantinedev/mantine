@@ -271,9 +271,19 @@ export const Carousel = factory<CarouselFactory>((_props) => {
           event.preventDefault();
           handlePrevious();
         }
+
+        if (event.key === 'Home') {
+          event.preventDefault();
+          embla?.scrollTo(0);
+        }
+
+        if (event.key === 'End') {
+          event.preventDefault();
+          embla?.scrollTo(embla.scrollSnapList().length - 1);
+        }
       }
     },
-    [embla]
+    [embla, handleNext, handlePrevious]
   );
 
   useEffect(() => {
