@@ -33,26 +33,41 @@ export type ScrollAreaCssVariables = {
 
 export interface ScrollAreaProps
   extends BoxProps, StylesApiProps<ScrollAreaFactory>, ElementProps<'div'> {
-  /** Scrollbar size, any valid CSS value for width/height, numbers are converted to rem, default value is 0.75rem */
+  /** Scrollbar size, any valid CSS value for width/height, numbers are converted to rem, default value is 12px (0.75rem) */
   scrollbarSize?: number | string;
 
   /**
-   * Defines scrollbars behavior, `hover` by default
-   * - `hover` – scrollbars are visible when mouse is over the scroll area
-   * - `scroll` – scrollbars are visible when the scroll area is scrolled
-   * - `always` – scrollbars are always visible
-   * - `never` – scrollbars are always hidden
-   * - `auto` – similar to `overflow: auto` – scrollbars are always visible when the content is overflowing
+   * Defines scrollbars behavior
+   * - `'hover'` – scrollbars visible on hover (default)
+   * - `'scroll'` – scrollbars visible during scrolling
+   * - `'auto'` – scrollbars visible only when content overflows (like CSS overflow: auto)
+   * - `'always'` – scrollbars always visible, even when content doesn't overflow
+   * - `'never'` – scrollbars always hidden
+   * @default 'hover'
    * */
   type?: 'auto' | 'always' | 'scroll' | 'hover' | 'never';
 
   /** Scroll hide delay in ms, applicable only when type is set to `hover` or `scroll` @default 1000 */
   scrollHideDelay?: number;
 
-  /** Axis at which scrollbars must be rendered @default 'xy' */
+  /**
+   * Axis at which scrollbars must be rendered
+   * - `'x'` - horizontal scrollbar only
+   * - `'y'` - vertical scrollbar only
+   * - `'xy'` - both scrollbars
+   * - `false` - no scrollbars rendered (content remains scrollable via mouse/touch)
+   * @default 'xy'
+   */
   scrollbars?: 'x' | 'y' | 'xy' | false;
 
-  /** Determines whether scrollbars should be offset with padding on given axis @default false */
+  /**
+   * Determines whether scrollbars should be offset with padding on given axis
+   * - `true` - adds padding to offset both scrollbars (always)
+   * - `'x'` - adds padding to offset horizontal scrollbar (always)
+   * - `'y'` - adds padding to offset vertical scrollbar (always)
+   * - `'present'` - adds padding only when scrollbars are visible (dynamic)
+   * @default false
+   */
   offsetScrollbars?: boolean | 'x' | 'y' | 'present';
 
   /** Assigns viewport element (scrollable container) ref */
@@ -64,7 +79,9 @@ export interface ScrollAreaProps
   /** Called with current position (`x` and `y` coordinates) when viewport is scrolled */
   onScrollPositionChange?: (position: { x: number; y: number }) => void;
 
-  /** Called when scrollarea is scrolled all the way to the bottom */
+  /**
+   * Called when scrollarea is scrolled to the bottom (within 0.8px tolerance for sub-pixel rendering)
+   */
   onBottomReached?: () => void;
 
   /** Called when scrollarea is scrolled all the way to the top */
@@ -170,15 +187,11 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
   const combinedViewportRef = useMergeRefs([viewportRef, localViewportRef]);
 
   useEffect(() => {
-    if (!localViewportRef.current) {
-      return;
-    }
-
-    if (offsetScrollbars !== 'present') {
-      return;
-    }
-
     const element = localViewportRef.current;
+
+    if (!element || offsetScrollbars !== 'present') {
+      return;
+    }
 
     const observer = new ResizeObserver(() => {
       const { scrollHeight, clientHeight, scrollWidth, clientWidth } = element;
@@ -189,7 +202,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
     observer.observe(element);
 
     return () => observer.disconnect();
-  }, [localViewportRef, offsetScrollbars]);
+  }, [offsetScrollbars]);
 
   return (
     <ScrollAreaRoot
