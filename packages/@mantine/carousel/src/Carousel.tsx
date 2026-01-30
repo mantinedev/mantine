@@ -385,7 +385,7 @@ export const Carousel = factory<CarouselFactory>((_props) => {
       <Box
         role="region"
         aria-roledescription="carousel"
-        {...getStyles('root', { className: 'responsiveClassName' })}
+        {...getStyles('root', { className: responsiveClassName })}
         {...others}
         id={_id}
         mod={[{ orientation, 'include-gap-in-size': includeGapInSize }, mod]}
