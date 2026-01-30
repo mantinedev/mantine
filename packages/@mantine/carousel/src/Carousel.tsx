@@ -303,16 +303,60 @@ export const Carousel = factory<CarouselFactory>((_props) => {
   const canScrollPrev = embla?.canScrollPrev() || false;
   const canScrollNext = embla?.canScrollNext() || false;
 
+  const handleIndicatorKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+      const isHorizontal = orientation === 'horizontal';
+      const nextKey = isHorizontal ? 'ArrowRight' : 'ArrowDown';
+      const prevKey = isHorizontal ? 'ArrowLeft' : 'ArrowUp';
+
+      if (event.key === nextKey) {
+        event.preventDefault();
+        const nextIndex = index < slidesCount - 1 ? index + 1 : 0;
+        handleScroll(nextIndex);
+        const nextIndicator = event.currentTarget.parentElement?.children[nextIndex] as HTMLElement;
+        nextIndicator?.focus();
+      }
+
+      if (event.key === prevKey) {
+        event.preventDefault();
+        const prevIndex = index > 0 ? index - 1 : slidesCount - 1;
+        handleScroll(prevIndex);
+        const prevIndicator = event.currentTarget.parentElement?.children[prevIndex] as HTMLElement;
+        prevIndicator?.focus();
+      }
+
+      if (event.key === 'Home') {
+        event.preventDefault();
+        handleScroll(0);
+        const firstIndicator = event.currentTarget.parentElement?.children[0] as HTMLElement;
+        firstIndicator?.focus();
+      }
+
+      if (event.key === 'End') {
+        event.preventDefault();
+        handleScroll(slidesCount - 1);
+        const lastIndicator = event.currentTarget.parentElement?.children[
+          slidesCount - 1
+        ] as HTMLElement;
+        lastIndicator?.focus();
+      }
+    },
+    [orientation, slidesCount, handleScroll]
+  );
+
   const indicators = Array(slidesCount)
     .fill(0)
     .map((_, index) => (
       <UnstyledButton
         {...getStyles('indicator')}
         key={index}
-        data-active={index === selected || undefined}
-        tabIndex={-1}
+        role="tab"
         aria-label={`Go to slide ${index + 1}`}
+        aria-selected={index === selected}
+        tabIndex={index === selected ? 0 : -1}
+        data-active={index === selected || undefined}
         onClick={() => handleScroll(index)}
+        onKeyDown={(event) => handleIndicatorKeyDown(event, index)}
         data-orientation={orientation}
         onMouseDown={(event) => event.preventDefault()}
         {...getIndicatorProps?.(index)}
@@ -412,7 +456,12 @@ export const Carousel = factory<CarouselFactory>((_props) => {
         </div>
 
         {withIndicators && (
-          <div {...getStyles('indicators')} data-orientation={orientation}>
+          <div
+            {...getStyles('indicators')}
+            role="tablist"
+            aria-label="Slides"
+            data-orientation={orientation}
+          >
             {indicators}
           </div>
         )}
