@@ -28,7 +28,7 @@ export interface __ProgressRootProps extends BoxProps, ElementProps<'div'> {
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, adjusts label text color based on section background color for readability */
   autoContrast?: boolean;
 
   /** Controls sections width transition duration, value is specified in ms @default 100 */

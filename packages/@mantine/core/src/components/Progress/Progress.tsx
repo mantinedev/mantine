@@ -28,7 +28,7 @@ export interface ProgressProps extends __ProgressRootProps, StylesApiProps<Progr
   /** If set, the section has stripes @default false */
   striped?: boolean;
 
-  /** If set, the sections stripes are animated, `striped` prop is ignored @default false */
+  /** If set, the sections stripes are animated (automatically enables striped) @default false */
   animated?: boolean;
 }
 
