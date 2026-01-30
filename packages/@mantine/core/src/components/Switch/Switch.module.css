@@ -42,9 +42,11 @@
 }
 
 .input {
-  height: 0;
-  width: 0;
-  opacity: 0;
+  /* Hide the input visually without removing it from the accessibility tree or obscuring it in the DOM */
+  height: 100%;
+  width: 100%;
+  opacity: 0.0001;
+
   margin: 0;
   padding: 0;
   position: absolute;
