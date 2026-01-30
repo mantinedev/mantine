@@ -6,10 +6,14 @@ export default Layout(MDX_DATA.RingProgress);
 
 ## Usage
 
-Set the `sections` prop to an array of:
+The `sections` prop accepts an array of objects with the following properties:
 
-- `value` – number between 0 and 100 – amount of space filled by the segment
-- `color` – segment color from the theme or any other CSS color value
+- `value` – number between 0 and 100 representing the percentage of the ring to fill
+- `color` – segment color from theme.colors or any CSS color value
+- `tooltip` (optional) – React node to display when hovering over the section
+- Any valid SVG `<circle>` element props (onClick, onMouseEnter, style, etc.)
+
+**Note:** Section values should sum to 100% or less for expected behavior. Values exceeding 100% total will cause sections to overlap.
 
 <Demo data={RingProgressDemos.usage} />
 
@@ -38,22 +42,22 @@ where `0` = right, `90` = bottom, `180` = left, and `270` = top (default):
 
 <Demo data={RingProgressDemos.startAngle} />
 
-## Root color
+## Background color
 
-Use the `rootColor` property to change the root color:
+Use the `rootColor` prop to customize the color of the unfilled portion of the ring (the background):
 
 <Demo data={RingProgressDemos.rootColor} />
 
-## Sections props
+## Section events
 
-You can add any additional props to sections:
+Each section can receive any valid SVG `<circle>` element props, including event handlers like `onClick`, `onMouseEnter`, and `onMouseLeave`:
 
 <Demo data={RingProgressDemos.sectionsProps} />
 
 ## Customize label
 
-You can add any React node as a label, for example a [Text](/core/text/) component with some additional styles
-or a [ThemeIcon](/core/theme-icon/):
+You can add any React node as a label, for example a [Text](/core/text/) component with custom styling
+or an [ActionIcon](/core/action-icon/):
 
 <Demo data={RingProgressDemos.label} />
 
