@@ -18,10 +18,7 @@ import { useDatesContext } from '@mantine/dates';
 import { DateStringValue, ScheduleEventData, ScheduleMode, ScheduleViewLevel } from '../../types';
 import { getMonthsByQuarter, toDateString } from '../../utils';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
-import {
-  CombinedScheduleHeaderStylesNames,
-  ScheduleHeader,
-} from '../ScheduleHeader/ScheduleHeader';
+import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getYearViewEvents } from './get-year-view-events/get-year-view-events';

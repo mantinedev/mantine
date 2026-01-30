@@ -87,6 +87,12 @@ export interface ScrollAreaProps
   /** Called when scrollarea is scrolled all the way to the top */
   onTopReached?: () => void;
 
+  /** Called when scrollarea is scrolled to the left (within 0.8px tolerance for sub-pixel rendering) */
+  onLeftReached?: () => void;
+
+  /** Called when scrollarea is scrolled to the right (within 0.8px tolerance for sub-pixel rendering) */
+  onRightReached?: () => void;
+
   /** Defines `overscroll-behavior` of the viewport */
   overscrollBehavior?: React.CSSProperties['overscrollBehavior'];
 }
@@ -160,6 +166,8 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
     scrollbars,
     onBottomReached,
     onTopReached,
+    onLeftReached,
+    onRightReached,
     overscrollBehavior,
     attributes,
     ...others
@@ -168,6 +176,12 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
   const [scrollbarHovered, setScrollbarHovered] = useState(false);
   const [verticalThumbVisible, setVerticalThumbVisible] = useState(false);
   const [horizontalThumbVisible, setHorizontalThumbVisible] = useState(false);
+
+  // Refs to track previous boundary states
+  const prevAtTopRef = useRef(true);
+  const prevAtBottomRef = useRef(false);
+  const prevAtLeftRef = useRef(true);
+  const prevAtRightRef = useRef(false);
 
   const getStyles = useStyles<ScrollAreaFactory>({
     name: 'ScrollArea',
@@ -228,14 +242,37 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
         onScroll={(e) => {
           viewportProps?.onScroll?.(e);
           onScrollPositionChange?.({ x: e.currentTarget.scrollLeft, y: e.currentTarget.scrollTop });
-          const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+          const { scrollTop, scrollHeight, clientHeight, scrollLeft, scrollWidth, clientWidth } =
+            e.currentTarget;
+
+          // Vertical boundaries
           // threshold of -0.8 is required for some browsers that use sub-pixel rendering, specifically when zoomed out.
-          if (scrollTop - (scrollHeight - clientHeight) >= -0.8) {
+          const isAtBottom = scrollTop - (scrollHeight - clientHeight) >= -0.8;
+          const isAtTop = scrollTop === 0;
+
+          if (isAtBottom && !prevAtBottomRef.current) {
             onBottomReached?.();
           }
-          if (scrollTop === 0) {
+          if (isAtTop && !prevAtTopRef.current) {
             onTopReached?.();
           }
+
+          prevAtBottomRef.current = isAtBottom;
+          prevAtTopRef.current = isAtTop;
+
+          // Horizontal boundaries
+          const isAtRight = scrollLeft - (scrollWidth - clientWidth) >= -0.8;
+          const isAtLeft = scrollLeft === 0;
+
+          if (isAtRight && !prevAtRightRef.current) {
+            onRightReached?.();
+          }
+          if (isAtLeft && !prevAtLeftRef.current) {
+            onLeftReached?.();
+          }
+
+          prevAtRightRef.current = isAtRight;
+          prevAtLeftRef.current = isAtLeft;
         }}
       >
         {children}

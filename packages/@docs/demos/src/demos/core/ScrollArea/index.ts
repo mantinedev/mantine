@@ -7,3 +7,4 @@ export { stylesApi } from './ScrollArea.demo.stylesApi';
 export { scrollIntoView } from './ScrollArea.demo.scrollIntoView';
 export { autosizePopover } from './ScrollArea.demo.autosizePopover';
 export { scrollbars } from './ScrollArea.demo.scrollbars';
+export { boundaries } from './ScrollArea.demo.boundaries';

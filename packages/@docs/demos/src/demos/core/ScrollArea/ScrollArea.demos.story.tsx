@@ -46,3 +46,7 @@ export const Demo_scrollbars = {
   name: '⭐ Demo: scrollbars',
   render: renderDemo(demos.scrollbars),
 };
+export const Demo_boundaries = {
+  name: '⭐ Demo: boundaries',
+  render: renderDemo(demos.boundaries),
+};
