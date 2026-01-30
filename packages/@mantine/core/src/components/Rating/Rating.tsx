@@ -49,37 +49,40 @@ export interface RatingProps
   /** Called when value changes */
   onChange?: (value: number) => void;
 
-  /** Icon displayed when the symbol is empty */
+  /** Icon displayed for unselected rating items. Can be a function that receives the rating value. */
   emptySymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** Icon displayed when the symbol is full */
+  /** Icon displayed for selected rating items. Can be a function that receives the rating value. */
   fullSymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
-  /** Number of fractions each item can be divided into @default 1 */
+  /** Number of fractions each item can be divided into, default is 1 */
   fractions?: number;
 
   /** Controls component size @default 'sm' */
   size?: MantineSize | number | (string & {});
 
-  /** Number of controls @default 5 */
+  /** Number of rating items (stars), default is 5 */
   count?: number;
 
-  /** Called when one of the controls is hovered */
+  /** Called when rating item is hovered. Receives -1 when hover ends. */
   onHover?: (value: number) => void;
 
-  /** A function to assign `aria-label` of the the control at index given in the argument. If not specified, control index is used as `aria-label`. */
+  /** Function to generate aria-label for each rating value. Receives the rating value as argument, default is (value) => String(value) */
   getSymbolLabel?: (index: number) => string;
 
-  /** `name` attribute passed down to all inputs. By default, `name` is generated randomly. */
+  /** Name attribute for form submission. If not provided, a unique id will be generated. */
   name?: string;
 
-  /** If set, the user cannot interact with the component @default false */
+  /** When true, rating cannot be changed by user interaction, default is false */
   readOnly?: boolean;
 
-  /** If set, only the selected symbol changes to full symbol when selected @default false */
+  /** When true, clicking the same rating value clears the rating to 0, default is false */
+  allowClear?: boolean;
+
+  /** When true, only the clicked rating item is highlighted, not all items up to the selected value, default is false */
   highlightSelectedOnly?: boolean;
 
-  /** Key of `theme.colors` or any CSS color value @default 'yellow' */
+  /** Key of theme.colors or any CSS color value, default is 'yellow' */
   color?: MantineColor;
 }
 
@@ -123,6 +126,7 @@ export const Rating = factory<RatingFactory>((_props) => {
     count,
     onMouseEnter,
     readOnly,
+    allowClear,
     onMouseMove,
     onHover,
     onMouseLeave,
@@ -255,10 +259,13 @@ export const Rating = factory<RatingFactory>((_props) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement> | number) => {
     if (!readOnly) {
-      if (typeof event === 'number') {
-        setValue(event);
+      const newValue = typeof event === 'number' ? event : parseFloat(event.target.value);
+
+      // If allowClear is true and clicking the same value, reset to 0
+      if (allowClear && newValue === stableValueRounded) {
+        setValue(0);
       } else {
-        setValue(parseFloat(event.target.value));
+        setValue(newValue);
       }
     }
   };

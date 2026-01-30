@@ -27,3 +27,8 @@ export const Demo_symbol = {
   name: '⭐ Demo: symbol',
   render: renderDemo(demos.symbol),
 };
+
+export const Demo_allowClear = {
+  name: '⭐ Demo: allowClear',
+  render: renderDemo(demos.allowClear),
+};
