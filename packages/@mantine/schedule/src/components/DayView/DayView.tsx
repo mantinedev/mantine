@@ -48,10 +48,8 @@ import {
   ScheduleEventStylesNames,
 } from '../ScheduleEvent/ScheduleEvent';
 import { MonthYearSelectStylesNames } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
-import {
-  CombinedScheduleHeaderStylesNames,
-  ScheduleHeader,
-} from '../ScheduleHeader/ScheduleHeader';
+import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
+import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import classes from './DayView.module.css';
 import { getDayViewEvents } from './get-day-view-events/get-day-view-events';
@@ -402,41 +400,26 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const content = (
     <Box {...getStyles('dayView')} mod={{ static: mode === 'static' }} {...others}>
       {withHeader && (
-        <ScheduleHeader {...stylesApiProps}>
-          <ScheduleHeader.Previous
-            {...stylesApiProps}
-            onClick={() => onDateChange?.(toDateString(dayjs(date).subtract(1, 'day')))}
-            labels={labels}
-            {...previousControlProps}
-          />
-
-          <ScheduleHeader.Control {...stylesApiProps} interactive={false} miw={140}>
-            {formatDate({ locale: ctx.getLocale(locale), date, format: headerFormat })}
-          </ScheduleHeader.Control>
-
-          <ScheduleHeader.Next
-            {...stylesApiProps}
-            onClick={() => onDateChange?.(toDateString(dayjs(date).add(1, 'day')))}
-            labels={labels}
-            {...nextControlProps}
-          />
-
-          <ScheduleHeader.Today
-            {...stylesApiProps}
-            onClick={() => onDateChange?.(toDateString(dayjs()))}
-            labels={labels}
-            {...todayControlProps}
-          />
-
-          <ScheduleHeader.ViewSelect
-            value="day"
-            onChange={onViewChange}
-            ml="auto"
-            labels={labels}
-            {...stylesApiProps}
-            {...viewSelectProps}
-          />
-        </ScheduleHeader>
+        <ScheduleHeaderBase
+          view="day"
+          navigationHandlers={{
+            previous: () => toDateString(dayjs(date).subtract(1, 'day')),
+            next: () => toDateString(dayjs(date).add(1, 'day')),
+            today: () => toDateString(dayjs()),
+          }}
+          control={{
+            title: formatDate({ locale: ctx.getLocale(locale), date, format: headerFormat }),
+            miw: 140,
+          }}
+          labels={labels}
+          onDateChange={onDateChange}
+          onViewChange={onViewChange}
+          previousControlProps={previousControlProps}
+          nextControlProps={nextControlProps}
+          todayControlProps={todayControlProps}
+          viewSelectProps={viewSelectProps}
+          stylesApiProps={stylesApiProps}
+        />
       )}
 
       <div {...getStyles('dayViewInner')}>

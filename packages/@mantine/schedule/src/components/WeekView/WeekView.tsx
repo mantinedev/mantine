@@ -48,10 +48,8 @@ import {
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
 import { DragContext } from '../DragContext/DragContext';
 import { RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
-import {
-  CombinedScheduleHeaderStylesNames,
-  ScheduleHeader,
-} from '../ScheduleHeader/ScheduleHeader';
+import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
+import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getWeekLabel } from './get-week-label/get-week-label';
 import { getWeekViewEvents } from './get-week-view-events/get-week-view-events';
@@ -522,48 +520,31 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const content = (
     <Box {...getStyles('weekView')} mod={{ static: mode === 'static' }} {...others}>
       {withHeader && (
-        <ScheduleHeader {...stylesApiProps}>
-          <ScheduleHeader.Previous
-            {...stylesApiProps}
-            onClick={() =>
-              onDateChange?.(previousWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)))
-            }
-            labels={labels}
-            {...previousControlProps}
-          />
-
-          <ScheduleHeader.Control {...stylesApiProps} interactive={false} miw={140}>
-            {getWeekLabel({
+        <ScheduleHeaderBase
+          view="week"
+          navigationHandlers={{
+            previous: () => previousWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
+            next: () => nextWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
+            today: () => toDateString(dayjs()),
+          }}
+          control={{
+            miw: 140,
+            title: getWeekLabel({
               weekdays,
               locale: ctx.getLocale(locale),
               weekLabelFormat,
               renderWeekLabel,
-            })}
-          </ScheduleHeader.Control>
-
-          <ScheduleHeader.Next
-            {...stylesApiProps}
-            onClick={() => onDateChange?.(nextWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)))}
-            labels={labels}
-            {...nextControlProps}
-          />
-
-          <ScheduleHeader.Today
-            {...stylesApiProps}
-            onClick={() => onDateChange?.(toDateString(dayjs()))}
-            labels={labels}
-            {...todayControlProps}
-          />
-
-          <ScheduleHeader.ViewSelect
-            value="week"
-            onChange={onViewChange}
-            ml="auto"
-            labels={labels}
-            {...stylesApiProps}
-            {...viewSelectProps}
-          />
-        </ScheduleHeader>
+            }),
+          }}
+          labels={labels}
+          onDateChange={onDateChange}
+          onViewChange={onViewChange}
+          previousControlProps={previousControlProps}
+          nextControlProps={nextControlProps}
+          todayControlProps={todayControlProps}
+          viewSelectProps={viewSelectProps}
+          stylesApiProps={stylesApiProps}
+        />
       )}
 
       <Box

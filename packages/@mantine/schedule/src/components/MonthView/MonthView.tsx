@@ -40,10 +40,8 @@ import { DragContext } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps } from '../MoreEvents/MoreEvents';
 import { RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
-import {
-  CombinedScheduleHeaderStylesNames,
-  ScheduleHeader,
-} from '../ScheduleHeader/ScheduleHeader';
+import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
+import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getMonthViewEvents } from './get-month-view-events/get-month-view-events';
 import classes from './MonthView.module.css';
@@ -471,54 +469,33 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       {...others}
     >
       {withHeader && (
-        <ScheduleHeader {...stylesApiProps}>
-          <ScheduleHeader.Previous
-            {...stylesApiProps}
-            onClick={() =>
-              onDateChange?.(toDateString(dayjs(date).subtract(1, 'month').startOf('month')))
-            }
-            labels={labels}
-            {...previousControlProps}
-          />
-
-          <ScheduleHeader.MonthYearSelect
-            {...stylesApiProps}
-            yearValue={dayjs(date).get('year')}
-            monthValue={dayjs(date).get('month')}
-            onYearChange={(year) =>
-              onDateChange?.(toDateString(dayjs(date).set('year', year).startOf('month')))
-            }
-            onMonthChange={(month) =>
-              onDateChange?.(toDateString(dayjs(date).set('month', month).startOf('month')))
-            }
-            {...monthYearSelectProps}
-          />
-
-          <ScheduleHeader.Next
-            {...stylesApiProps}
-            onClick={() =>
-              onDateChange?.(toDateString(dayjs(date).add(1, 'month').startOf('month')))
-            }
-            labels={labels}
-            {...nextControlProps}
-          />
-
-          <ScheduleHeader.Today
-            {...stylesApiProps}
-            onClick={() => onDateChange?.(toDateString(dayjs()))}
-            labels={labels}
-            {...todayControlProps}
-          />
-
-          <ScheduleHeader.ViewSelect
-            value="month"
-            onChange={onViewChange}
-            ml="auto"
-            labels={labels}
-            {...stylesApiProps}
-            {...viewSelectProps}
-          />
-        </ScheduleHeader>
+        <ScheduleHeaderBase
+          view="month"
+          navigationHandlers={{
+            previous: () => toDateString(dayjs(date).subtract(1, 'month').startOf('month')),
+            next: () => toDateString(dayjs(date).add(1, 'month').startOf('month')),
+            today: () => toDateString(dayjs()),
+          }}
+          control={{
+            monthYearSelect: {
+              yearValue: dayjs(date).get('year'),
+              monthValue: dayjs(date).get('month'),
+              onYearChange: (year) =>
+                onDateChange?.(toDateString(dayjs(date).set('year', year).startOf('month'))),
+              onMonthChange: (month) =>
+                onDateChange?.(toDateString(dayjs(date).set('month', month).startOf('month'))),
+              ...monthYearSelectProps,
+            },
+          }}
+          labels={labels}
+          onDateChange={onDateChange}
+          onViewChange={onViewChange}
+          previousControlProps={previousControlProps}
+          nextControlProps={nextControlProps}
+          todayControlProps={todayControlProps}
+          viewSelectProps={viewSelectProps}
+          stylesApiProps={stylesApiProps}
+        />
       )}
 
       <ScrollArea

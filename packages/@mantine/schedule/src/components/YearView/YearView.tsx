@@ -22,6 +22,7 @@ import {
   CombinedScheduleHeaderStylesNames,
   ScheduleHeader,
 } from '../ScheduleHeader/ScheduleHeader';
+import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getYearViewEvents } from './get-year-view-events/get-year-view-events';
 import classes from './YearView.module.css';
@@ -230,50 +231,32 @@ export const YearView = factory<YearViewFactory>((_props) => {
   return (
     <Box {...getStyles('yearView')} mod={{ static: mode === 'static' }} {...others}>
       {withHeader && (
-        <ScheduleHeader {...stylesApiProps}>
-          <ScheduleHeader.Previous
-            {...stylesApiProps}
-            onClick={() =>
-              onDateChange?.(toDateString(dayjs(date).subtract(1, 'year').startOf('year')))
-            }
-            labels={labels}
-            {...previousControlProps}
-          />
-
-          <ScheduleHeader.MonthYearSelect
-            {...stylesApiProps}
-            withMonths={false}
-            yearValue={dayjs(date).get('year')}
-            monthValue={dayjs(date).get('month')}
-            onYearChange={(year) =>
-              onDateChange?.(toDateString(dayjs(date).set('year', year).startOf('year')))
-            }
-            {...monthYearSelectProps}
-          />
-
-          <ScheduleHeader.Next
-            {...stylesApiProps}
-            onClick={() => onDateChange?.(toDateString(dayjs(date).add(1, 'year').startOf('year')))}
-            labels={labels}
-            {...nextControlProps}
-          />
-
-          <ScheduleHeader.Today
-            {...stylesApiProps}
-            onClick={() => onDateChange?.(toDateString(dayjs()))}
-            labels={labels}
-            {...todayControlProps}
-          />
-
-          <ScheduleHeader.ViewSelect
-            value="year"
-            onChange={onViewChange}
-            ml="auto"
-            labels={labels}
-            {...stylesApiProps}
-            {...viewSelectProps}
-          />
-        </ScheduleHeader>
+        <ScheduleHeaderBase
+          view="year"
+          navigationHandlers={{
+            previous: () => toDateString(dayjs(date).subtract(1, 'year').startOf('year')),
+            next: () => toDateString(dayjs(date).add(1, 'year').startOf('year')),
+            today: () => toDateString(dayjs()),
+          }}
+          control={{
+            monthYearSelect: {
+              withMonths: false,
+              yearValue: dayjs(date).get('year'),
+              monthValue: dayjs(date).get('month'),
+              onYearChange: (year) =>
+                onDateChange?.(toDateString(dayjs(date).set('year', year).startOf('year'))),
+              ...monthYearSelectProps,
+            },
+          }}
+          labels={labels}
+          onDateChange={onDateChange}
+          onViewChange={onViewChange}
+          previousControlProps={previousControlProps}
+          nextControlProps={nextControlProps}
+          todayControlProps={todayControlProps}
+          viewSelectProps={viewSelectProps}
+          stylesApiProps={stylesApiProps}
+        />
       )}
 
       <div {...getStyles('yearViewMonths')}>{months}</div>
