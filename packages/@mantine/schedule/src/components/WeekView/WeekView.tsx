@@ -20,7 +20,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
-import { useDragState } from '../../hooks/use-drag-state';
+import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
   DateLabelFormat,
@@ -323,68 +323,39 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
 
-  const dragState = useDragState();
-  const [dropTargetSlot, setDropTargetSlot] = useState<{
-    day: string;
-    slotIndex: number;
-  } | null>(null);
+  type DropTargetSlot = { day: string; slotIndex: number };
 
-  const handleDragStart = (event: ScheduleEventData) => {
-    if (!withDragDrop) {
-      return;
-    }
-    dragState.startDrag(event);
-  };
-
-  const handleDragEnd = () => {
-    dragState.endDrag();
-    setDropTargetSlot(null);
-  };
+  const dragDrop = useDragDropHandlers<DropTargetSlot>({
+    enabled: withDragDrop,
+    mode,
+    onEventDrop,
+    canDragEvent,
+    calculateDropTarget: (target: DropTargetSlot, draggedEvent: ScheduleEventData) => {
+      const slotTime = slots[target.slotIndex].startTime;
+      return calculateDropTime({
+        draggedEvent,
+        targetDate: target.day,
+        targetSlotTime: slotTime,
+        intervalMinutes,
+      });
+    },
+  });
 
   const handleSlotDragOver = (
     e: React.DragEvent<HTMLButtonElement>,
     day: string,
     slotIndex: number
   ) => {
-    if (!withDragDrop || !dragState.state.isDragging) {
-      return;
-    }
-
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-    setDropTargetSlot({ day, slotIndex });
+    dragDrop.handleDragOver(e, { day, slotIndex });
   };
 
-  const handleSlotDragLeave = () => {
-    setDropTargetSlot(null);
-  };
-
-  const handleSlotDrop = (e: React.DragEvent<HTMLButtonElement>, day: string, slotTime: string) => {
-    e.preventDefault();
-
-    if (!withDragDrop || !dragState.state.draggedEvent || !onEventDrop) {
-      return;
-    }
-
-    const { start, end } = calculateDropTime({
-      draggedEvent: dragState.state.draggedEvent,
-      targetDate: day,
-      targetSlotTime: slotTime,
-      intervalMinutes,
-    });
-
-    onEventDrop(dragState.state.draggedEventId!, start, end);
-    handleDragEnd();
-  };
-
-  const dragContextValue = {
-    isDragging: dragState.state.isDragging,
-    draggedEventId: dragState.state.draggedEventId,
-    draggedEvent: dragState.state.draggedEvent,
-    dropTarget: dragState.state.dropTarget,
-    onDragStart: handleDragStart,
-    onDragEnd: handleDragEnd,
-    setDropTarget: dragState.setDropTarget,
+  const handleSlotDrop = (
+    e: React.DragEvent<HTMLButtonElement>,
+    day: string,
+    _slotTime: string,
+    slotIndex: number
+  ) => {
+    dragDrop.handleDrop(e, { day, slotIndex });
   };
 
   const weekEvents = getWeekViewEvents({
@@ -473,11 +444,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const days = weekdays.map((day) => {
     const dayEvents = (weekEvents.regularEvents[day] || []).map((event) => {
       const eventIsAllDay = isAllDayEvent({ event, date: day });
-      const isDraggable =
-        withDragDrop &&
-        mode !== 'static' &&
-        !eventIsAllDay &&
-        (canDragEvent ? canDragEvent(event) : true);
+      const isDraggable = !eventIsAllDay && dragDrop.isDraggableEvent(event);
 
       return (
         <ScheduleEvent
@@ -513,9 +480,14 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         withDragDrop={withDragDrop}
         mode={mode}
         onSlotDragOver={handleSlotDragOver}
-        onSlotDragLeave={handleSlotDragLeave}
-        onSlotDrop={handleSlotDrop}
-        dropTargetSlotIndex={dropTargetSlot?.day === day ? dropTargetSlot.slotIndex : undefined}
+        onSlotDragLeave={dragDrop.handleDragLeave}
+        onSlotDrop={(e, dayStr, slotTime) => {
+          const slotIndex = slots.findIndex((s) => s.startTime === slotTime);
+          handleSlotDrop(e, dayStr, slotTime, slotIndex);
+        }}
+        dropTargetSlotIndex={
+          dragDrop.dropTarget?.day === day ? dragDrop.dropTarget.slotIndex : undefined
+        }
       >
         {dayEvents}
       </WeekViewDay>
@@ -676,7 +648,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   );
 
   if (withDragDrop) {
-    return <DragContext.Provider value={dragContextValue}>{content}</DragContext.Provider>;
+    return <DragContext.Provider value={dragDrop.dragContextValue}>{content}</DragContext.Provider>;
   }
 
   return content;
