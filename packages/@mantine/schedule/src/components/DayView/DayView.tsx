@@ -30,6 +30,7 @@ import {
   calculateDropTime,
   clampIntervalMinutes,
   formatDate,
+  getBusinessHoursMod,
   getDayTimeIntervals,
   getVisibleEvents,
   isAllDayEvent,
@@ -341,16 +342,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
       />
     ));
 
-  const isSlotInBusinessHours = (slotTime: string) => {
-    if (!highlightBusinessHours || !businessHours) {
-      return null;
-    }
-    const [start, end] = businessHours;
-    return slotTime >= start && slotTime < end;
-  };
-
   const items = slots.map((slot, index) => {
-    const inBusinessHours = isSlotInBusinessHours(slot.startTime);
     const isDropTarget = dragDrop.isDropTarget(index);
 
     return (
@@ -359,8 +351,11 @@ export const DayView = factory<DayViewFactory>((_props) => {
         key={slot.startTime}
         mod={{
           'hour-start': slot.isHourStart,
-          'business-hours': inBusinessHours === true,
-          'non-business-hours': inBusinessHours === false,
+          ...getBusinessHoursMod({
+            time: slot.startTime,
+            businessHours,
+            highlightBusinessHours,
+          }),
           'drop-target': isDropTarget,
           static: mode === 'static',
         }}
@@ -387,16 +382,15 @@ export const DayView = factory<DayViewFactory>((_props) => {
         format: slotLabelFormat,
       });
 
-      const inBusinessHours = isSlotInBusinessHours(slot.startTime);
-
       acc.push(
         <Box
           {...getStyles('dayViewSlotLabel')}
           key={slot.startTime}
-          mod={{
-            'business-hours': inBusinessHours === true,
-            'non-business-hours': inBusinessHours === false,
-          }}
+          mod={getBusinessHoursMod({
+            time: slot.startTime,
+            businessHours,
+            highlightBusinessHours,
+          })}
         >
           {label}
         </Box>

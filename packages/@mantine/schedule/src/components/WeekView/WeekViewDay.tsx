@@ -3,7 +3,7 @@ import { Box, GetStylesApi, UnstyledButton } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import { DateStringValue, DayOfWeek, ScheduleMode } from '../../types';
-import { DayTimeInterval } from '../../utils';
+import { DayTimeInterval, getBusinessHoursMod } from '../../utils';
 import type { WeekViewFactory } from './WeekView';
 
 export interface WeekViewDayProps {
@@ -70,16 +70,7 @@ export function WeekViewDay({
   const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek);
   const today = dayjs(day).isSame(dayjs(), 'day');
 
-  const isSlotInBusinessHours = (slotTime: string) => {
-    if (!highlightBusinessHours || !businessHours) {
-      return null;
-    }
-    const [start, end] = businessHours;
-    return slotTime >= start && slotTime < end;
-  };
-
   const items = slots.map((slot, index) => {
-    const inBusinessHours = isSlotInBusinessHours(slot.startTime);
     const isDropTarget = dropTargetSlotIndex === index;
 
     return (
@@ -88,8 +79,11 @@ export function WeekViewDay({
         {...getStyles('weekViewDaySlot')}
         mod={{
           'hour-start': slot.isHourStart,
-          'business-hours': inBusinessHours === true,
-          'non-business-hours': inBusinessHours === false,
+          ...getBusinessHoursMod({
+            time: slot.startTime,
+            businessHours,
+            highlightBusinessHours,
+          }),
           'drop-target': isDropTarget,
           static: mode === 'static',
         }}

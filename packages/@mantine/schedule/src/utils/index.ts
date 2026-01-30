@@ -32,6 +32,7 @@ export { toTimeString } from './to-time-string/to-time-string';
 export { getDayPosition } from './get-day-position/get-day-position';
 export { calculateDropTime } from './calculate-drop-time/calculate-drop-time';
 export { calculateMonthDropDate } from './calculate-month-drop-date/calculate-month-drop-date';
+export { getBusinessHoursMod } from './get-business-hours-mod/get-business-hours-mod';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';
 export type { ParsedTime } from './parse-time-string/parse-time-string';
 export type {
@@ -42,3 +43,7 @@ export type {
   CalculateMonthDropDateInput,
   CalculateMonthDropDateResult,
 } from './calculate-month-drop-date/calculate-month-drop-date';
+export type {
+  GetBusinessHoursModInput,
+  BusinessHoursMod,
+} from './get-business-hours-mod/get-business-hours-mod';
