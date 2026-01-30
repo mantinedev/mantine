@@ -19,7 +19,7 @@ function getClampedThickness(thickness: number, size: number) {
   return Math.min(thickness || 12, (size || 120) / 4);
 }
 
-interface RingProgressSection extends React.ComponentProps<'circle'> {
+export interface RingProgressSection extends React.ComponentProps<'circle'> {
   value: number;
   color: MantineColor;
   tooltip?: React.ReactNode;
@@ -35,22 +35,25 @@ export interface RingProgressProps
   /** Label displayed in the center of the ring */
   label?: React.ReactNode;
 
-  /** Ring thickness @default 12 */
+  /** Ring thickness in pixels. Cannot exceed size / 4 and will be automatically clamped if necessary @default 12 */
   thickness?: number;
 
   /** Width and height of the progress ring @default 120 */
   size?: number;
 
-  /** Sets whether the edges of the progress circle are rounded */
+  /** Applies rounded line caps to the start and end of visible sections @default false */
   roundCaps?: boolean;
 
-  /** Ring sections */
+  /**
+   * Array of sections to display in the ring. Each section should have a `value` (0-100),
+   * `color`, and optional `tooltip`. Sections can also receive any valid SVG circle element props.
+   */
   sections: RingProgressSection[];
 
-  /** Color of the root section, key of theme.colors or CSS color value */
+  /** Color of the unfilled portion of the ring (background). Defaults to gray-2 in light mode, dark-4 in dark mode */
   rootColor?: MantineColor;
 
-  /** Transition duration of filled section styles changes in ms @default 0 */
+  /** Transition duration in milliseconds for section value and color changes @default 0 */
   transitionDuration?: number;
 }
 

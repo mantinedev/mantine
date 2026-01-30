@@ -2,6 +2,7 @@ import type {
   RingProgressCssVariables,
   RingProgressFactory,
   RingProgressProps,
+  RingProgressSection,
   RingProgressStylesNames,
 } from './RingProgress';
 
@@ -12,6 +13,7 @@ export type {
   RingProgressStylesNames,
   RingProgressFactory,
   RingProgressCssVariables,
+  RingProgressSection,
 };
 
 export namespace RingProgress {
@@ -19,4 +21,5 @@ export namespace RingProgress {
   export type StylesNames = RingProgressStylesNames;
   export type Factory = RingProgressFactory;
   export type CssVariables = RingProgressCssVariables;
+  export type Section = RingProgressSection;
 }
