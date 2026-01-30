@@ -4,17 +4,18 @@ import type { StylesApiData } from '../types';
 export const RatingStylesApi: StylesApiData<RatingFactory> = {
   selectors: {
     root: 'Root element',
-    starSymbol: 'Default star icon',
+    starSymbol: 'Symbol element (star icon by default, or custom symbol)',
     input: 'Item input, hidden by default',
     label: 'Item label, used to display star icon',
-    symbolBody: 'Wrapper around star icon for centering',
-    symbolGroup: 'Group of symbols, used to display fractions',
+    symbolBody: 'Wrapper around star icon, used for clip-path masking in fractional ratings',
+    symbolGroup: 'Container for all fractional symbols of a single rating unit',
   },
 
   vars: {
     root: {
       '--rating-color': 'Controls filled star icon color',
-      '--rating-size': 'Controls star icon width and height',
+      '--rating-size':
+        'Controls star icon width and height. Can use theme size or custom CSS value.',
     },
   },
 
@@ -24,6 +25,11 @@ export const RatingStylesApi: StylesApiData<RatingFactory> = {
       modifier: 'data-active',
       selector: 'input',
       condition: 'Input value is the same as component value',
+    },
+    {
+      modifier: 'data-active',
+      selector: 'symbolGroup',
+      condition: 'Symbol group is being hovered',
     },
     {
       modifier: 'data-filled',
