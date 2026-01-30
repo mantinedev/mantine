@@ -36,22 +36,22 @@ export type RadioIndicatorCssVariables = {
 
 export interface RadioIndicatorProps
   extends BoxProps, StylesApiProps<RadioIndicatorFactory>, ElementProps<'div'> {
-  /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default theme.primaryColor */
+  /** Key of theme.colors or any valid CSS color to set indicator background color in checked state @default theme.primaryColor */
   color?: MantineColor;
 
   /** Controls size of the component @default 'sm' */
   size?: MantineSize | (string & {});
 
-  /** Key of `theme.radius` or any valid CSS value to set `border-radius,` @default theme.defaultRadius */
+  /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Key of `theme.colors` or any valid CSS color to set icon color, by default value depends on `theme.autoContrast` */
+  /** Key of theme.colors or any valid CSS color to set icon color. When not set, icon color is determined automatically based on theme.autoContrast setting */
   iconColor?: MantineColor;
 
   /** If set, adjusts text color based on background color for `filled` variant */
   autoContrast?: boolean;
 
-  /** A component that replaces default check icon */
+  /** A component that replaces the default radio icon (centered dot) */
   icon?: React.FC<RadioIconProps>;
 
   /** Checked state */

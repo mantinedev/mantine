@@ -38,7 +38,7 @@ export interface RadioCardProps
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
   radius?: MantineRadius;
 
-  /** Value of the checkbox, used with `Radio.Group` */
+  /** Value of the radio, used with Radio.Group */
   value?: string;
 
   /** Value used to associate all related radio cards, required for accessibility if used outside of `Radio.Group` */
@@ -105,13 +105,15 @@ export const RadioCard = factory<RadioCardFactory>((_props) => {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     onKeyDown?.(event);
 
+    if (!_name) {
+      return;
+    }
+
     if (['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight'].includes(event.nativeEvent.code)) {
       event.preventDefault();
 
       const siblings = Array.from(
-        document.querySelectorAll<HTMLButtonElement>(
-          `[role="radio"][name="${_name || '__mantine'}"]`
-        )
+        document.querySelectorAll<HTMLButtonElement>(`[role="radio"][name="${_name}"]`)
       );
 
       const currentIndex = siblings.findIndex((element) => element === event.target);
