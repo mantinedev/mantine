@@ -29,6 +29,7 @@ export interface RingProgressSection extends React.ComponentProps<'circle'>, Dat
 export type RingProgressStylesNames = 'root' | 'svg' | 'label' | 'curve';
 export type RingProgressCssVariables = {
   root: '--rp-size' | '--rp-label-offset' | '--rp-transition-duration';
+  svg: '--rp-start-angle';
 };
 
 export interface RingProgressProps
@@ -59,6 +60,9 @@ export interface RingProgressProps
 
   /** Gap between sections in degrees. Reduces the visual size of each section @default 0 */
   sectionGap?: number;
+
+  /** Starting angle in degrees. 0 = right, 90 = bottom, 180 = left, 270 = top @default 270 */
+  startAngle?: number;
 }
 
 export type RingProgressFactory = Factory<{
@@ -71,14 +75,18 @@ export type RingProgressFactory = Factory<{
 const defaultProps = {
   size: 120,
   thickness: 12,
+  startAngle: 270,
 } satisfies Partial<RingProgressProps>;
 
 const varsResolver = createVarsResolver<RingProgressFactory>(
-  (_, { size, thickness, transitionDuration }) => ({
+  (_, { size, thickness, transitionDuration, startAngle }) => ({
     root: {
       '--rp-size': rem(size),
       '--rp-label-offset': rem(thickness! * 2),
       '--rp-transition-duration': transitionDuration ? `${transitionDuration}ms` : undefined,
+    },
+    svg: {
+      '--rp-start-angle': `${startAngle}deg`,
     },
   })
 );
@@ -100,6 +108,7 @@ export const RingProgress = factory<RingProgressFactory>((_props) => {
     rootColor,
     transitionDuration,
     sectionGap,
+    startAngle,
     attributes,
     ...others
   } = props;

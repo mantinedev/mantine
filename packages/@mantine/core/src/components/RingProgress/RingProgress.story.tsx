@@ -8,6 +8,7 @@ export function ColorsIndex() {
       <RingProgress
         label="Hello"
         sectionGap={2}
+        startAngle={45}
         sections={[
           {
             value: 10,
