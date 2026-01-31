@@ -60,16 +60,14 @@ const varsResolver = createVarsResolver<FloatingIndicatorFactory>(
   (theme, { transitionDuration }, { shouldReduceMotion }) => {
     const reduceMotion = theme.respectReducedMotion ? shouldReduceMotion : false;
     const duration = reduceMotion
-      ? 0
+      ? '0ms'
       : typeof transitionDuration === 'number'
-        ? transitionDuration
-        : transitionDuration
-          ? parseFloat(transitionDuration)
-          : 150;
+        ? `${transitionDuration}ms`
+        : transitionDuration || '150ms';
 
     return {
       root: {
-        '--transition-duration': `${duration}ms`,
+        '--transition-duration': duration,
       },
     };
   }

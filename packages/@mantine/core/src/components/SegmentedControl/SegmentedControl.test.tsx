@@ -1,4 +1,4 @@
-import { tests } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import {
   SegmentedControl,
   SegmentedControlProps,
@@ -20,6 +20,30 @@ describe('@mantine/core/SegmentedControl', () => {
     component: SegmentedControl,
     props: defaultProps,
     displayName: '@mantine/core/SegmentedControl',
-    stylesApiSelectors: ['root', 'label', 'input', 'control', 'indicator'],
+    stylesApiSelectors: ['root', 'label', 'input', 'control', 'indicator', 'innerLabel'],
+  });
+
+  it('prevents value changes when readOnly is true', async () => {
+    const spy = jest.fn();
+    render(<SegmentedControl {...defaultProps} value="First" onChange={spy} readOnly />);
+
+    const radios = screen.getAllByRole('radio');
+    expect(radios[0]).toBeChecked();
+    await userEvent.click(radios[1]);
+
+    expect(radios[0]).toBeChecked();
+    expect(radios[1]).not.toBeChecked();
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('allows value changes when readOnly is false', async () => {
+    const spy = jest.fn();
+    render(<SegmentedControl {...defaultProps} value="First" onChange={spy} readOnly={false} />);
+
+    const radios = screen.getAllByRole('radio');
+    expect(radios[0]).toBeChecked();
+    await userEvent.click(radios[1]);
+
+    expect(spy).toHaveBeenCalledWith('Second');
   });
 });

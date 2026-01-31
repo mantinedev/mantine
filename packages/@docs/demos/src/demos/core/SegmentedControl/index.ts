@@ -7,3 +7,4 @@ export { stylesApi } from './SegmentedControl.demo.stylesApi';
 export { iconsOnly } from './SegmentedControl.demo.iconsOnly';
 export { readOnly } from './SegmentedControl.demo.readOnly';
 export { generic } from './SegmentedControl.demo.generic';
+export { autoContrast } from './SegmentedControl.demo.autoContrast';

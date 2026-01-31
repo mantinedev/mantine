@@ -76,13 +76,13 @@ export interface SegmentedControlProps<Value extends Primitive = string>
   /** Determines whether the component is disabled */
   disabled?: boolean;
 
-  /** Name of the radio group, by default random name is generated */
+  /** Name attribute for the radio group. A random name is auto-generated if not provided */
   name?: string;
 
   /** Determines whether the component should take 100% width of its parent @default false */
   fullWidth?: boolean;
 
-  /** Key of `theme.colors` or any valid CSS color, changes color of indicator, by default color is based on current color scheme */
+  /** Key of `theme.colors` or any valid CSS color, changes indicator background color. By default, uses white in light mode and dark.5 in dark mode */
   color?: MantineColor;
 
   /** Controls `font-size`, `padding` and `height` properties @default 'sm' */
@@ -103,7 +103,7 @@ export interface SegmentedControlProps<Value extends Primitive = string>
   /** If set to `false`, prevents changing the value */
   readOnly?: boolean;
 
-  /** If set, adjusts text color based on background color for `filled` variant */
+  /** If set, automatically adjusts label text color for optimal contrast against the indicator background color */
   autoContrast?: boolean;
 
   /** Determines whether there should be borders between items @default true */

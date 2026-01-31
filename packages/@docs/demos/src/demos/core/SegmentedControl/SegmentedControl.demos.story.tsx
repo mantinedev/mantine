@@ -47,3 +47,8 @@ export const Demo_generic = {
   name: '⭐ Demo: generic',
   render: renderDemo(demos.generic),
 };
+
+export const Demo_autoContrast = {
+  name: '⭐ Demo: autoContrast',
+  render: renderDemo(demos.autoContrast),
+};
