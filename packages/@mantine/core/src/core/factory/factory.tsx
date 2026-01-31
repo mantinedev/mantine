@@ -1,5 +1,5 @@
 import type { MantineThemeComponent } from '../MantineProvider';
-import type { ClassNames, PartialVarsResolver, Styles } from '../styles-api';
+import type { ClassNames, PartialVarsResolver, Styles, VarsResolver } from '../styles-api';
 
 export type DataAttributes = Record<`data-${string}`, any>;
 
@@ -49,6 +49,7 @@ export type MantineComponentStaticProperties<Payload extends FactoryPayload> =
   ThemeExtend<Payload> &
     ComponentClasses<Payload> &
     StaticComponents<Payload['staticComponents']> &
+    ComponentVariablesResolver<Payload> &
     FactoryComponentWithProps<Payload>;
 
 export interface PlaceholderPolymorphicProps {
@@ -63,6 +64,9 @@ export type FactoryComponentWithProps<Payload extends FactoryPayload> = {
     Payload['props'] & React.RefAttributes<Payload['ref']> & PlaceholderPolymorphicProps
   >;
 };
+
+export type ComponentVariablesResolver<Payload extends FactoryPayload> =
+  Payload['vars'] extends Record<string, any> ? { varsResolver: VarsResolver<Payload> } : {};
 
 export type MantineComponent<Payload extends FactoryPayload> = React.NamedExoticComponent<
   Payload['props'] &

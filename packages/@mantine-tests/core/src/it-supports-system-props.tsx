@@ -1,5 +1,6 @@
 import { itHasClasses } from './shared/it-has-classes';
 import { itHasExtend } from './shared/it-has-extend';
+import { itHasStaticVarsResolver } from './shared/it-has-static-vars-resolver';
 import { itHasWithProps } from './shared/it-has-withProps';
 import { itIsPolymorphic } from './shared/it-is-polymorphic';
 import { itRendersChildren } from './shared/it-renders-children';
@@ -28,6 +29,7 @@ interface Options<Props extends Record<string, any>, StylesApiSelectors extends 
   props: Props;
   mod?: boolean;
   classes?: boolean;
+  varsResolver?: boolean;
   withProps?: boolean;
   styleProps?: boolean;
   polymorphic?: boolean;
@@ -126,6 +128,10 @@ export function itSupportsSystemProps<
 
     if (options.classes) {
       itHasClasses(options);
+    }
+
+    if (options.varsResolver) {
+      itHasStaticVarsResolver(options);
     }
 
     if (options.withProps) {

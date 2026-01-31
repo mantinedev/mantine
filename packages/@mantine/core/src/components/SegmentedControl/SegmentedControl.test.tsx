@@ -1,4 +1,5 @@
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { DEFAULT_THEME } from '../../core';
 import {
   SegmentedControl,
   SegmentedControlProps,
@@ -45,5 +46,23 @@ describe('@mantine/core/SegmentedControl', () => {
     await userEvent.click(radios[1]);
 
     expect(spy).toHaveBeenCalledWith('Second');
+  });
+
+  describe('varsResolver', () => {
+    it('resolves --sc-radius variable correctly', () => {
+      const resolvedWithValue = SegmentedControl.varsResolver(DEFAULT_THEME, {
+        ...defaultProps,
+        radius: 'xl',
+      });
+
+      expect(resolvedWithValue.root).toHaveProperty('--sc-radius', 'var(--mantine-radius-xl)');
+
+      const resolvedWithUndefined = SegmentedControl.varsResolver(DEFAULT_THEME, {
+        ...defaultProps,
+        radius: undefined,
+      });
+
+      expect(resolvedWithUndefined.root).toHaveProperty('--sc-radius', undefined);
+    });
   });
 });

@@ -295,4 +295,5 @@ export const SegmentedControl = genericFactory<SegmentedControlFactory>((_props)
 });
 
 SegmentedControl.classes = classes;
+SegmentedControl.varsResolver = varsResolver;
 SegmentedControl.displayName = '@mantine/core/SegmentedControl';
