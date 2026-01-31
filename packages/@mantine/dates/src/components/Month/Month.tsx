@@ -40,6 +40,10 @@ export type MonthStylesNames =
   | 'weekNumber'
   | DayStylesNames;
 
+export type MonthCssVariables = {
+  weekNumber: '--wn-fz' | '--wn-size';
+};
+
 export interface MonthSettings {
   /** Determines whether propagation for `Escape` key should be stopped */
   __stopPropagation?: boolean;
@@ -128,6 +132,7 @@ export type MonthFactory = Factory<{
   props: MonthProps;
   ref: HTMLTableElement;
   stylesNames: MonthStylesNames;
+  vars: MonthCssVariables;
 }>;
 
 const defaultProps = {
@@ -316,4 +321,5 @@ export const Month = factory<MonthFactory>((_props) => {
 });
 
 Month.classes = classes;
+Month.varsResolver = varsResolver;
 Month.displayName = '@mantine/dates/Month';

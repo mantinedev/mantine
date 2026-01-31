@@ -12,6 +12,7 @@ describe('@mantine/charts/ScatterChart', () => {
   tests.itSupportsSystemProps<ScatterChartProps, ScatterChartStylesNames>({
     component: ScatterChart,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/charts/ScatterChart',
     stylesApiSelectors: ['root'],
   });

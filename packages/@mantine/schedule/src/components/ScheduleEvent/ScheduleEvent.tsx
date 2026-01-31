@@ -198,3 +198,4 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
 
 ScheduleEvent.displayName = '@mantine/schedule/ScheduleEvent';
 ScheduleEvent.classes = classes;
+ScheduleEvent.varsResolver = varsResolver;

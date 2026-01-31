@@ -158,4 +158,5 @@ export const LoadingOverlay = factory<LoadingOverlayFactory>((_props) => {
 });
 
 LoadingOverlay.classes = classes;
+LoadingOverlay.varsResolver = varsResolver;
 LoadingOverlay.displayName = '@mantine/core/LoadingOverlay';

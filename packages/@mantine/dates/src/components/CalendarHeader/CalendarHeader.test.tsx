@@ -12,6 +12,7 @@ describe('@mantine/dates/CalendarHeader', () => {
   tests.itSupportsSystemProps<CalendarHeaderProps, CalendarHeaderStylesNames>({
     component: CalendarHeader,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/dates/CalendarHeader',
     stylesApiSelectors: [
       'calendarHeader',

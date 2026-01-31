@@ -114,4 +114,5 @@ export const WeekdaysRow = factory<WeekdaysRowFactory>((_props) => {
 });
 
 WeekdaysRow.classes = classes;
+WeekdaysRow.varsResolver = varsResolver;
 WeekdaysRow.displayName = '@mantine/dates/WeekdaysRow';

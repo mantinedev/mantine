@@ -244,3 +244,4 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props) => {
 
 RadialBarChart.displayName = '@mantine/core/RadialBarChart';
 RadialBarChart.classes = classes;
+RadialBarChart.varsResolver = varsResolver;

@@ -114,4 +114,5 @@ export const ThemeIcon = factory<ThemeIconFactory>((_props) => {
 });
 
 ThemeIcon.classes = classes;
+ThemeIcon.varsResolver = varsResolver;
 ThemeIcon.displayName = '@mantine/core/ThemeIcon';

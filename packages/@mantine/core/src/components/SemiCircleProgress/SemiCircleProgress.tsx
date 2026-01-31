@@ -201,3 +201,4 @@ export const SemiCircleProgress = factory<SemiCircleProgressFactory>((_props) =>
 
 SemiCircleProgress.displayName = '@mantine/core/SemiCircleProgress';
 SemiCircleProgress.classes = classes;
+SemiCircleProgress.varsResolver = varsResolver;

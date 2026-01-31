@@ -7,6 +7,7 @@ describe('@mantine/core/ButtonGroup', () => {
   tests.itSupportsSystemProps<ButtonGroupProps, ButtonGroupStylesNames>({
     component: ButtonGroup,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/ButtonGroup',
     stylesApiSelectors: ['group'],

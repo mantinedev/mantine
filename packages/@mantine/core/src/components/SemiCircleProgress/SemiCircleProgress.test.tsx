@@ -23,6 +23,7 @@ describe('@mantine/core/SemiCircleProgress', () => {
   tests.itSupportsSystemProps<SemiCircleProgressProps, SemiCircleProgressStylesNames>({
     component: SemiCircleProgress,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/core/SemiCircleProgress',
     stylesApiSelectors: ['root', 'svg'],
   });

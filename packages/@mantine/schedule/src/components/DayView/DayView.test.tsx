@@ -51,6 +51,7 @@ describe('@mantine/schedule/DayView', () => {
   tests.itSupportsSystemProps<DayViewProps, DayViewStylesNames>({
     component: DayView,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/schedule/DayView',
     providerStylesApi: false,
     stylesApiSelectors: [

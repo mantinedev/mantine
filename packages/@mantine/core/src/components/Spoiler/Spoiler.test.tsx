@@ -12,6 +12,7 @@ describe('@mantine/core/Spoiler', () => {
   tests.itSupportsSystemProps<SpoilerProps, SpoilerStylesNames>({
     component: Spoiler,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/Spoiler',
     stylesApiSelectors: ['root', 'content'],

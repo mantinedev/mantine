@@ -180,6 +180,7 @@ export const ActionIcon = polymorphicFactory<ActionIconFactory>((_props) => {
 });
 
 ActionIcon.classes = classes;
+ActionIcon.varsResolver = varsResolver;
 ActionIcon.displayName = '@mantine/core/ActionIcon';
 ActionIcon.Group = ActionIconGroup;
 ActionIcon.GroupSection = ActionIconGroupSection;

@@ -81,3 +81,4 @@ export const InlineCodeHighlight = factory<InlineCodeHighlightFactory>((_props) 
 
 InlineCodeHighlight.displayName = '@mantine/code-highlight/InlineCodeHighlight';
 InlineCodeHighlight.classes = classes;
+InlineCodeHighlight.varsResolver = varsResolver;

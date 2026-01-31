@@ -94,6 +94,7 @@ describe('@mantine/core/ModalRoot', () => {
   tests.itSupportsSystemProps<ModalRootProps, 'root'>({
     component: ModalRoot,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/ModalRoot',
     stylesApiSelectors: ['root'],

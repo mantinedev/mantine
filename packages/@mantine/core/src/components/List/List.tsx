@@ -128,5 +128,6 @@ export const List = factory<ListFactory>((_props) => {
 });
 
 List.classes = classes;
+List.varsResolver = varsResolver;
 List.displayName = '@mantine/core/List';
 List.Item = ListItem;

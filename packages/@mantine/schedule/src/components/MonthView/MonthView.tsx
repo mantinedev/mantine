@@ -529,3 +529,4 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
 MonthView.displayName = '@mantine/schedule/MonthView';
 MonthView.classes = classes;
+MonthView.varsResolver = varsResolver;

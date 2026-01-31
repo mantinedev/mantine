@@ -72,4 +72,5 @@ export const AvatarGroup = factory<AvatarGroupFactory>((_props) => {
 });
 
 AvatarGroup.classes = classes;
+AvatarGroup.varsResolver = varsResolver;
 AvatarGroup.displayName = '@mantine/core/AvatarGroup';

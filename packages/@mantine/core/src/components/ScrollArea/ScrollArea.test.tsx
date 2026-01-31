@@ -25,6 +25,7 @@ describe('@mantine/core/ScrollArea', () => {
   tests.itSupportsSystemProps<ScrollAreaProps, ScrollAreaStylesNames>({
     component: ScrollArea,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/ScrollArea',
     stylesApiSelectors: ['root', 'viewport'],

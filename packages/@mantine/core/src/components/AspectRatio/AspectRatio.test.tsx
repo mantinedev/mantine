@@ -7,6 +7,7 @@ describe('@mantine/core/AspectRatio', () => {
   tests.itSupportsSystemProps<AspectRatioProps, AspectRatioStylesNames>({
     component: AspectRatio,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/AspectRatio',
     stylesApiSelectors: ['root'],

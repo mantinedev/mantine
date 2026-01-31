@@ -607,3 +607,4 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
 
 TimePicker.displayName = '@mantine/dates/TimePicker';
 TimePicker.classes = classes;
+TimePicker.varsResolver = varsResolver;

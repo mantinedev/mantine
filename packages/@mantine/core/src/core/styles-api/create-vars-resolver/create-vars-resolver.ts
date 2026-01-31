@@ -15,13 +15,13 @@ export type PartialTransformVars<V> = {
 export type VarsResolver<Payload extends FactoryPayload> = (
   theme: MantineTheme,
   props: Payload['props'],
-  ctx?: Payload['ctx']
+  ctx: Payload['ctx']
 ) => TransformVars<Payload['vars']>;
 
 export type PartialVarsResolver<Payload extends FactoryPayload> = (
   theme: MantineTheme,
   props: Payload['props'],
-  ctx?: Payload['ctx']
+  ctx: Payload['ctx']
 ) => PartialTransformVars<Payload['vars']>;
 
 export function createVarsResolver<Payload extends FactoryPayload>(

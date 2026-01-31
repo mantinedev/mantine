@@ -153,5 +153,6 @@ export const Pill = factory<PillFactory>((_props) => {
 });
 
 Pill.classes = classes;
+Pill.varsResolver = varsResolver;
 Pill.displayName = '@mantine/core/Pill';
 Pill.Group = PillGroup;

@@ -131,3 +131,4 @@ export const CheckboxCard = factory<CheckboxCardFactory>((_props) => {
 
 CheckboxCard.displayName = '@mantine/core/CheckboxCard';
 CheckboxCard.classes = classes;
+CheckboxCard.varsResolver = varsResolver;

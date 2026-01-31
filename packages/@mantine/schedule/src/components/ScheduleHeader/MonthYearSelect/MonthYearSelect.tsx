@@ -276,3 +276,4 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
 
 MonthYearSelect.displayName = '@mantine/schedule/MonthYearSelect';
 MonthYearSelect.classes = classes;
+MonthYearSelect.varsResolver = varsResolver;

@@ -9,6 +9,7 @@ describe('@mantine/core/LoadingOverlay', () => {
   tests.itSupportsSystemProps<LoadingOverlayProps, LoadingOverlayStylesNames>({
     component: LoadingOverlay,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/core/LoadingOverlay',
     stylesApiSelectors: ['root', 'loader', 'overlay'],
   });

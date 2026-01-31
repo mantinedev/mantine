@@ -536,3 +536,4 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
 
 CompositeChart.displayName = '@mantine/charts/CompositeChart';
 CompositeChart.classes = classes;
+CompositeChart.varsResolver = varsResolver;

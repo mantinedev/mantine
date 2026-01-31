@@ -9,6 +9,7 @@ describe('@mantine/core/Marquee', () => {
   tests.itSupportsSystemProps<MarqueeProps, MarqueeStylesNames>({
     component: Marquee,
     props: defaultProps,
+    varsResolver: true,
     children: false,
     displayName: '@mantine/core/Marquee',
     stylesApiSelectors: ['root', 'content', 'group'],

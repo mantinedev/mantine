@@ -151,3 +151,4 @@ export const RadioIndicator = factory<RadioIndicatorFactory>((_props) => {
 
 RadioIndicator.displayName = '@mantine/core/RadioIndicator';
 RadioIndicator.classes = classes;
+RadioIndicator.varsResolver = varsResolver;

@@ -9,6 +9,7 @@ describe('@mantine/core/InputLabel', () => {
   tests.itSupportsSystemProps<InputLabelProps, InputLabelStylesNames>({
     component: InputLabel,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     stylesApiName: 'InputWrapper',
     displayName: '@mantine/core/InputLabel',

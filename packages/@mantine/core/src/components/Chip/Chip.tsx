@@ -230,5 +230,6 @@ export const Chip = factory<ChipFactory>((_props) => {
 });
 
 Chip.classes = classes;
+Chip.varsResolver = varsResolver;
 Chip.displayName = '@mantine/core/Chip';
 Chip.Group = ChipGroup;

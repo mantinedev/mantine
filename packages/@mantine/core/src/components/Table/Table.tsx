@@ -238,6 +238,7 @@ export const Table = factory<TableFactory>((_props) => {
 });
 
 Table.classes = classes;
+Table.varsResolver = varsResolver;
 Table.displayName = '@mantine/core/Table';
 Table.Td = TableTd;
 Table.Th = TableTh;

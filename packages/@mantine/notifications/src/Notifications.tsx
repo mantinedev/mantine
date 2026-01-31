@@ -253,6 +253,7 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
 });
 
 Notifications.classes = classes;
+Notifications.varsResolver = varsResolver;
 Notifications.displayName = '@mantine/notifications/Notifications';
 Notifications.show = notifications.show;
 Notifications.hide = notifications.hide;

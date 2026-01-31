@@ -143,3 +143,4 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
 
 MobileMonthView.displayName = '@mantine/schedule/MobileMonthView';
 MobileMonthView.classes = classes;
+MobileMonthView.varsResolver = varsResolver;

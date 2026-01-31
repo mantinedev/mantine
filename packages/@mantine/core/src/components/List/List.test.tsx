@@ -20,6 +20,7 @@ describe('@mantine/core/List', () => {
   tests.itSupportsSystemProps<ListProps, ListStylesNames>({
     component: List,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/List',
     stylesApiSelectors: ['root', 'item', 'itemIcon', 'itemLabel', 'itemWrapper'],

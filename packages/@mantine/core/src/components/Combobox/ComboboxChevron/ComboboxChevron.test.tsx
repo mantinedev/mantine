@@ -11,6 +11,7 @@ describe('@mantine/core/ComboboxChevron', () => {
   tests.itSupportsSystemProps<ComboboxChevronProps, ComboboxChevronStylesNames>({
     component: ComboboxChevron,
     props: defaultProps,
+    varsResolver: true,
     refType: SVGSVGElement,
     displayName: '@mantine/core/ComboboxChevron',
     stylesApiSelectors: ['chevron'],

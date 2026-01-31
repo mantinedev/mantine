@@ -94,4 +94,5 @@ export const PillGroup = factory<PillGroupFactory>((_props) => {
 });
 
 PillGroup.classes = classes;
+PillGroup.varsResolver = varsResolver;
 PillGroup.displayName = '@mantine/core/PillGroup';

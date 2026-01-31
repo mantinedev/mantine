@@ -90,4 +90,5 @@ export const Paper = polymorphicFactory<PaperFactory>((_props) => {
 });
 
 Paper.classes = classes;
+Paper.varsResolver = varsResolver;
 Paper.displayName = '@mantine/core/Paper';

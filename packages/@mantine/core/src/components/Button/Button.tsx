@@ -240,6 +240,7 @@ export const Button = polymorphicFactory<ButtonFactory>((_props) => {
 });
 
 Button.classes = classes;
+Button.varsResolver = varsResolver;
 Button.displayName = '@mantine/core/Button';
 Button.Group = ButtonGroup;
 Button.GroupSection = ButtonGroupSection;

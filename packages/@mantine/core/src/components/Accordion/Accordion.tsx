@@ -223,6 +223,7 @@ export const Accordion = genericFactory<AccordionFactory>((_props) => {
 });
 
 Accordion.classes = classes;
+Accordion.varsResolver = varsResolver;
 Accordion.displayName = '@mantine/core/Accordion';
 Accordion.Item = AccordionItem;
 Accordion.Panel = AccordionPanel;

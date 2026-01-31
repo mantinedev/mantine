@@ -12,6 +12,7 @@ describe('@mantine/code-highlight/CodeHighlight', () => {
   tests.itSupportsSystemProps<CodeHighlightProps, CodeHighlightStylesNames>({
     component: CodeHighlight,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
     selector: '.mantine-CodeHighlight-codeHighlight',
     displayName: '@mantine/code-highlight/CodeHighlight',

@@ -138,4 +138,5 @@ export const Dialog = factory<DialogFactory>((_props) => {
 });
 
 Dialog.classes = classes;
+Dialog.varsResolver = varsResolver;
 Dialog.displayName = '@mantine/core/Dialog';

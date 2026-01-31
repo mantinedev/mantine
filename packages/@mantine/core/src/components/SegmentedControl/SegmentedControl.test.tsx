@@ -20,6 +20,7 @@ describe('@mantine/core/SegmentedControl', () => {
   tests.itSupportsSystemProps<SegmentedControlProps, SegmentedControlStylesNames>({
     component: SegmentedControl,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/core/SegmentedControl',
     stylesApiSelectors: ['root', 'label', 'input', 'control', 'indicator', 'innerLabel'],
   });
@@ -50,17 +51,25 @@ describe('@mantine/core/SegmentedControl', () => {
 
   describe('varsResolver', () => {
     it('resolves --sc-radius variable correctly', () => {
-      const resolvedWithValue = SegmentedControl.varsResolver(DEFAULT_THEME, {
-        ...defaultProps,
-        radius: 'xl',
-      });
+      const resolvedWithValue = SegmentedControl.varsResolver(
+        DEFAULT_THEME,
+        {
+          ...defaultProps,
+          radius: 'xl',
+        },
+        {}
+      );
 
       expect(resolvedWithValue.root).toHaveProperty('--sc-radius', 'var(--mantine-radius-xl)');
 
-      const resolvedWithUndefined = SegmentedControl.varsResolver(DEFAULT_THEME, {
-        ...defaultProps,
-        radius: undefined,
-      });
+      const resolvedWithUndefined = SegmentedControl.varsResolver(
+        DEFAULT_THEME,
+        {
+          ...defaultProps,
+          radius: undefined,
+        },
+        {}
+      );
 
       expect(resolvedWithUndefined.root).toHaveProperty('--sc-radius', undefined);
     });

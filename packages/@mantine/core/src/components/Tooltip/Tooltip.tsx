@@ -354,6 +354,7 @@ export const Tooltip = factory<TooltipFactory>((_props) => {
 });
 
 Tooltip.classes = classes;
+Tooltip.varsResolver = varsResolver;
 Tooltip.displayName = '@mantine/core/Tooltip';
 Tooltip.Floating = TooltipFloating;
 Tooltip.Group = TooltipGroup;

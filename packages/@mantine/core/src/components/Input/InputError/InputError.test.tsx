@@ -7,6 +7,7 @@ describe('@mantine/core/InputError', () => {
   tests.itSupportsSystemProps<InputErrorProps, InputErrorStylesNames>({
     component: InputError,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/InputError',
     stylesApiName: 'InputWrapper',

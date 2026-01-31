@@ -14,6 +14,7 @@ describe('@mantine/core/Tree', () => {
   tests.itSupportsSystemProps<TreeProps, TreeStylesNames>({
     component: Tree,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
     displayName: '@mantine/core/Tree',
     stylesApiSelectors: ['root', 'label', 'node'],

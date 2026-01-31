@@ -631,3 +631,4 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 
 WeekView.displayName = '@mantine/schedule/WeekView';
 WeekView.classes = classes;
+WeekView.varsResolver = varsResolver;

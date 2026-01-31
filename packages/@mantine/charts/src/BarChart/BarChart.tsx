@@ -482,3 +482,4 @@ export const BarChart = factory<BarChartFactory>((_props) => {
 
 BarChart.displayName = '@mantine/charts/BarChart';
 BarChart.classes = classes;
+BarChart.varsResolver = varsResolver;

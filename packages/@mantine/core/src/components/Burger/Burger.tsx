@@ -109,4 +109,5 @@ export const Burger = factory<BurgerFactory>((_props) => {
 });
 
 Burger.classes = classes;
+Burger.varsResolver = varsResolver;
 Burger.displayName = '@mantine/core/Burger';

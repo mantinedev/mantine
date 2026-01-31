@@ -7,6 +7,7 @@ describe('@mantine/core/Text', () => {
   tests.itSupportsSystemProps<TextProps, TextStylesNames>({
     component: Text,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
     children: true,
     displayName: '@mantine/core/Text',

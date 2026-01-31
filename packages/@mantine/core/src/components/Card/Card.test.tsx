@@ -10,6 +10,7 @@ describe('@mantine/core/Card', () => {
   tests.itSupportsSystemProps<CardProps, CardStylesNames>({
     component: Card,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
     children: true,
     displayName: '@mantine/core/Card',

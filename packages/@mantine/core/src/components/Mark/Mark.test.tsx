@@ -7,6 +7,7 @@ describe('@mantine/core/Mark', () => {
   tests.itSupportsSystemProps<MarkProps, MarkStylesNames>({
     component: Mark,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/Mark',
     stylesApiSelectors: ['root'],

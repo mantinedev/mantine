@@ -13,6 +13,7 @@ describe('@mantine/core/TableScrollContainer', () => {
   tests.itSupportsSystemProps<TableScrollContainerProps, TableScrollContainerStylesNames>({
     component: TableScrollContainer,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/TableScrollContainer',
     stylesApiSelectors: ['scrollContainer', 'scrollContainerInner'],

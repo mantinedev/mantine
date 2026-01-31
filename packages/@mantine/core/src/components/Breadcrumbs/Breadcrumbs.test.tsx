@@ -9,6 +9,7 @@ describe('@mantine/core/Breadcrumbs', () => {
   tests.itSupportsSystemProps<BreadcrumbsProps, BreadcrumbsStylesNames>({
     component: Breadcrumbs,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/Breadcrumbs',
     stylesApiSelectors: ['root', 'breadcrumb', 'separator'],

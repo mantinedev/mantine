@@ -15,6 +15,7 @@ describe('@mantine/core/CloseButton', () => {
   tests.itSupportsSystemProps<CloseButtonProps, CloseButtonStylesNames>({
     component: CloseButton,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
     children: true,
     displayName: '@mantine/core/CloseButton',

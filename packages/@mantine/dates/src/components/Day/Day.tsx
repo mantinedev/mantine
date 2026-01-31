@@ -141,4 +141,5 @@ export const Day = factory<DayFactory>((_props) => {
 });
 
 Day.classes = classes;
+Day.varsResolver = varsResolver;
 Day.displayName = '@mantine/dates/Day';

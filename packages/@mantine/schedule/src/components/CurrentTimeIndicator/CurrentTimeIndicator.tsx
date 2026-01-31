@@ -172,3 +172,4 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
 
 CurrentTimeIndicator.displayName = '@mantine/schedule/CurrentTimeIndicator';
 CurrentTimeIndicator.classes = classes;
+CurrentTimeIndicator.varsResolver = varsResolver;

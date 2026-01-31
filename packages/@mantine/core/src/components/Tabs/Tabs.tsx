@@ -216,6 +216,7 @@ export const Tabs = factory<TabsFactory>((_props) => {
 });
 
 Tabs.classes = classes;
+Tabs.varsResolver = varsResolver;
 Tabs.displayName = '@mantine/core/Tabs';
 Tabs.Tab = TabsTab;
 Tabs.Panel = TabsPanel;

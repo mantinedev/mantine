@@ -115,4 +115,5 @@ export const InputLabel = factory<InputLabelFactory>((_props) => {
 });
 
 InputLabel.classes = classes;
+InputLabel.varsResolver = varsResolver;
 InputLabel.displayName = '@mantine/core/InputLabel';

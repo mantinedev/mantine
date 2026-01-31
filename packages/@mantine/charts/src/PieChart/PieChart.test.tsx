@@ -11,6 +11,7 @@ describe('@mantine/charts/PieChart', () => {
   tests.itSupportsSystemProps<PieChartProps, PieChartStylesNames>({
     component: PieChart,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/charts/PieChart',
     stylesApiSelectors: ['root'],
   });

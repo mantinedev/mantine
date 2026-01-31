@@ -21,6 +21,7 @@ describe('@mantine/core/ActionIcon', () => {
   tests.itSupportsSystemProps<ActionIconProps, ActionIconStylesNames>({
     component: ActionIcon,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
     children: true,
     displayName: '@mantine/core/ActionIcon',

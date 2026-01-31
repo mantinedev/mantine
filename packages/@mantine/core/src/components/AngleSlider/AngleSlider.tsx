@@ -261,3 +261,4 @@ export const AngleSlider = factory<AngleSliderFactory>((_props) => {
 
 AngleSlider.displayName = '@mantine/core/AngleSlider';
 AngleSlider.classes = classes;
+AngleSlider.varsResolver = varsResolver;

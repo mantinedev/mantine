@@ -15,6 +15,7 @@ describe('@mantine/core/Burger', () => {
   tests.itSupportsSystemProps<BurgerProps, BurgerStylesNames>({
     component: Burger,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/core/Burger',
     stylesApiSelectors: ['root'],
   });

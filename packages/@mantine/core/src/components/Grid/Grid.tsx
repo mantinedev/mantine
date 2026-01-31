@@ -140,5 +140,6 @@ export const Grid = factory<GridFactory>((_props) => {
 });
 
 Grid.classes = classes;
+Grid.varsResolver = varsResolver;
 Grid.displayName = '@mantine/core/Grid';
 Grid.Col = GridCol;

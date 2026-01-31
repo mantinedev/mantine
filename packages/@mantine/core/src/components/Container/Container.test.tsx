@@ -7,6 +7,7 @@ describe('@mantine/core/Container', () => {
   tests.itSupportsSystemProps<ContainerProps, ContainerStylesNames>({
     component: Container,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/Container',
     stylesApiSelectors: ['root'],

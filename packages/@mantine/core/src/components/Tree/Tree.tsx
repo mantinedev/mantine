@@ -208,3 +208,4 @@ export const Tree = factory<TreeFactory>((_props) => {
 
 Tree.displayName = '@mantine/core/Tree';
 Tree.classes = classes;
+Tree.varsResolver = varsResolver;

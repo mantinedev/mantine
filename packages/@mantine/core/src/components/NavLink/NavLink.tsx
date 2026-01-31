@@ -242,4 +242,5 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
 });
 
 NavLink.classes = classes;
+NavLink.varsResolver = varsResolver;
 NavLink.displayName = '@mantine/core/NavLink';

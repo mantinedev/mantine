@@ -18,6 +18,7 @@ describe('@mantine/schedule/MonthView', () => {
       withWeekNumbers: true,
       monthYearSelectProps: { popoverProps: { opened: true } },
     },
+    varsResolver: true,
     displayName: '@mantine/schedule/MonthView',
     providerStylesApi: false,
     stylesApiSelectors: [

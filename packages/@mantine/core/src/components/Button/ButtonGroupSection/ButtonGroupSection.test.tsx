@@ -11,6 +11,7 @@ describe('@mantine/core/ButtonGroupSection', () => {
   tests.itSupportsSystemProps<ButtonGroupSectionProps, ButtonGroupSectionStylesNames>({
     component: ButtonGroupSection,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/ButtonGroupSection',
     stylesApiSelectors: ['groupSection'],

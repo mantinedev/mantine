@@ -104,4 +104,5 @@ export const TableScrollContainer = factory<TableScrollContainerFactory>((_props
 });
 
 TableScrollContainer.classes = classes;
+TableScrollContainer.varsResolver = varsResolver;
 TableScrollContainer.displayName = '@mantine/core/TableScrollContainer';

@@ -14,6 +14,7 @@ describe('@mantine/schedule/CurrentTimeIndicator', () => {
   tests.itSupportsSystemProps<CurrentTimeIndicatorProps, CurrentTimeIndicatorStylesNames>({
     component: CurrentTimeIndicator,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/schedule/CurrentTimeIndicator',
     stylesApiSelectors: [
       'currentTimeIndicator',

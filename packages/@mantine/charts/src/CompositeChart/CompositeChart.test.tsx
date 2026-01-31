@@ -17,6 +17,7 @@ describe('@mantine/charts/CompositeChart', () => {
   tests.itSupportsSystemProps<CompositeChartProps, CompositeChartStylesNames>({
     component: CompositeChart,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/charts/CompositeChart',
     stylesApiSelectors: ['root'],
   });

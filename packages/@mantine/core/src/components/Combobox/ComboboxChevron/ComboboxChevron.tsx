@@ -101,4 +101,5 @@ export const ComboboxChevron = factory<ComboboxChevronFactory>((_props) => {
 });
 
 ComboboxChevron.classes = classes;
+ComboboxChevron.varsResolver = varsResolver;
 ComboboxChevron.displayName = '@mantine/core/ComboboxChevron';

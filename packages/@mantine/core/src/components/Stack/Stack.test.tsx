@@ -7,6 +7,7 @@ describe('@mantine/core/Stack', () => {
   tests.itSupportsSystemProps<StackProps, StackStylesNames>({
     component: Stack,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/Stack',
     stylesApiSelectors: ['root'],

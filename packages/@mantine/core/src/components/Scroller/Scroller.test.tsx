@@ -9,6 +9,7 @@ describe('@mantine/core/Scroller', () => {
   tests.itSupportsSystemProps<ScrollerProps, ScrollerStylesNames>({
     component: Scroller,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/Scroller',
     stylesApiSelectors: ['root', 'container', 'content'],

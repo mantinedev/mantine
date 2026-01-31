@@ -18,6 +18,7 @@ describe('@mantine/charts/FunnelChart', () => {
   tests.itSupportsSystemProps<FunnelChartProps, FunnelChartStylesNames>({
     component: FunnelChart,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/charts/FunnelChart',
     stylesApiSelectors: ['root'],
   });

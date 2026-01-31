@@ -18,6 +18,7 @@ describe('@mantine/core/ColorSwatch', () => {
   tests.itSupportsSystemProps<ColorSwatchProps, ColorSwatchStylesNames>({
     component: ColorSwatch,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
     children: true,
     displayName: '@mantine/core/ColorSwatch',

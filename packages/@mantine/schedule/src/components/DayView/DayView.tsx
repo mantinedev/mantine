@@ -490,3 +490,4 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
 DayView.displayName = '@mantine/schedule/DayView';
 DayView.classes = classes;
+DayView.varsResolver = varsResolver;

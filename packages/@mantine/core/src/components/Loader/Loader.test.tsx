@@ -11,6 +11,7 @@ describe('@mantine/core/Loader', () => {
   tests.itSupportsSystemProps<LoaderProps, LoaderStylesNames>({
     component: Loader,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/Loader',
     stylesApiSelectors: ['root'],

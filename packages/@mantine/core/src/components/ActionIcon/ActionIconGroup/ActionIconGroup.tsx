@@ -88,4 +88,5 @@ export const ActionIconGroup = factory<ActionIconGroupFactory>((_props) => {
 });
 
 ActionIconGroup.classes = classes;
+ActionIconGroup.varsResolver = varsResolver;
 ActionIconGroup.displayName = '@mantine/core/ActionIconGroup';

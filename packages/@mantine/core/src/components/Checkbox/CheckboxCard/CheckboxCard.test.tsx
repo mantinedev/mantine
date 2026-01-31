@@ -14,6 +14,7 @@ describe('@mantine/core/CheckboxCard', () => {
   tests.itSupportsSystemProps<CheckboxCardProps, CheckboxCardStylesNames>({
     component: CheckboxCard,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/CheckboxCard',
     stylesApiSelectors: ['card'],

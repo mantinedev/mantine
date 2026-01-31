@@ -174,4 +174,5 @@ export const Alert = factory<AlertFactory>((_props) => {
 });
 
 Alert.classes = classes;
+Alert.varsResolver = varsResolver;
 Alert.displayName = '@mantine/core/Alert';

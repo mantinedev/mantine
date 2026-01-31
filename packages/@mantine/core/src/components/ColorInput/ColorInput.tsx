@@ -315,4 +315,5 @@ export const ColorInput = factory<ColorInputFactory>((_props) => {
 });
 
 ColorInput.classes = InputBase.classes;
+ColorInput.varsResolver = varsResolver;
 ColorInput.displayName = '@mantine/core/ColorInput';

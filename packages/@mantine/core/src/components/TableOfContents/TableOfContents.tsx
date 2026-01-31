@@ -199,3 +199,4 @@ export const TableOfContents = factory<TableOfContentsFactory>((_props) => {
 
 TableOfContents.displayName = '@mantine/core/TableOfContents';
 TableOfContents.classes = classes;
+TableOfContents.varsResolver = varsResolver;

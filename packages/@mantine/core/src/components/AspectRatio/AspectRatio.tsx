@@ -58,4 +58,5 @@ export const AspectRatio = factory<AspectRatioFactory>((_props) => {
 });
 
 AspectRatio.classes = classes;
+AspectRatio.varsResolver = varsResolver;
 AspectRatio.displayName = '@mantine/core/AspectRatio';

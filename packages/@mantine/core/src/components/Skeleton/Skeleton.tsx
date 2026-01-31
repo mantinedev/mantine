@@ -99,4 +99,5 @@ export const Skeleton = factory<SkeletonFactory>((_props) => {
 });
 
 Skeleton.classes = classes;
+Skeleton.varsResolver = varsResolver;
 Skeleton.displayName = '@mantine/core/Skeleton';

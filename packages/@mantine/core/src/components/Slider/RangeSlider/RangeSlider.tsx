@@ -613,4 +613,5 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
 });
 
 RangeSlider.classes = classes;
+RangeSlider.varsResolver = varsResolver;
 RangeSlider.displayName = '@mantine/core/RangeSlider';

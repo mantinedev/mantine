@@ -174,3 +174,4 @@ export const Sparkline = factory<SparklineFactory>((_props) => {
 
 Sparkline.displayName = '@mantine/charts/Sparkline';
 Sparkline.classes = classes;
+Sparkline.varsResolver = varsResolver;

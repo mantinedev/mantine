@@ -10,6 +10,7 @@ describe('@mantine/core/Badge', () => {
   tests.itSupportsSystemProps<BadgeProps, BadgeStylesNames>({
     component: Badge,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
     children: true,
     displayName: '@mantine/core/Badge',

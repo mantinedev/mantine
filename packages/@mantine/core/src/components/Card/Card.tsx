@@ -116,5 +116,6 @@ export const Card = polymorphicFactory<CardFactory>((_props) => {
 });
 
 Card.classes = classes;
+Card.varsResolver = varsResolver;
 Card.displayName = '@mantine/core/Card';
 Card.Section = CardSection;

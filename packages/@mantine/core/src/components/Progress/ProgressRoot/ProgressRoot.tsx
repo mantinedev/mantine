@@ -98,4 +98,5 @@ export const ProgressRoot = factory<ProgressRootFactory>((_props) => {
 });
 
 ProgressRoot.classes = classes;
+ProgressRoot.varsResolver = varsResolver;
 ProgressRoot.displayName = '@mantine/core/ProgressRoot';

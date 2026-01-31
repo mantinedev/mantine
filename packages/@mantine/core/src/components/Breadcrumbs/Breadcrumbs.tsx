@@ -112,4 +112,5 @@ export const Breadcrumbs = factory<BreadcrumbsFactory>((_props) => {
 });
 
 Breadcrumbs.classes = classes;
+Breadcrumbs.varsResolver = varsResolver;
 Breadcrumbs.displayName = '@mantine/core/Breadcrumbs';

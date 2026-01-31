@@ -16,6 +16,7 @@ describe('@mantine/core/RadioCard', () => {
   tests.itSupportsSystemProps<RadioCardProps, RadioCardStylesNames>({
     component: RadioCard,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/RadioCard',
     stylesApiSelectors: ['card'],

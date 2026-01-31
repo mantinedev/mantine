@@ -418,6 +418,7 @@ export function Popover(_props: PopoverProps) {
 
 Popover.Target = PopoverTarget;
 Popover.Dropdown = PopoverDropdown;
+Popover.varsResolver = varsResolver;
 Popover.displayName = '@mantine/core/Popover';
 Popover.extend = (input: ExtendComponent<PopoverFactory>) => input;
 

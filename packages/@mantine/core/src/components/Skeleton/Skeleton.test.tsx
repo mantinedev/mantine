@@ -7,6 +7,7 @@ describe('@mantine/core/Skeleton', () => {
   tests.itSupportsSystemProps<SkeletonProps, SkeletonStylesNames>({
     component: Skeleton,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/Skeleton',
     stylesApiSelectors: ['root'],

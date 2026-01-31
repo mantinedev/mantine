@@ -499,4 +499,5 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
 });
 
 AreaChart.classes = classes;
+AreaChart.varsResolver = varsResolver;
 AreaChart.displayName = '@mantine/charts/AreaChart';

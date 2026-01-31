@@ -13,6 +13,7 @@ describe('@mantine/core/Checkbox', () => {
   tests.itSupportsSystemProps<CheckboxProps, CheckboxStylesNames>({
     component: Checkbox,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/core/Checkbox',
     stylesApiSelectors: [
       'root',

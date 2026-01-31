@@ -7,6 +7,7 @@ describe('@mantine/core/Group', () => {
   tests.itSupportsSystemProps<GroupProps, GroupStylesNames>({
     component: Group,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
     children: true,
     displayName: '@mantine/core/Group',

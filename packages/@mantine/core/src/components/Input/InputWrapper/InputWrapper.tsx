@@ -267,4 +267,5 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
 });
 
 InputWrapper.classes = classes;
+InputWrapper.varsResolver = varsResolver;
 InputWrapper.displayName = '@mantine/core/InputWrapper';

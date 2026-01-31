@@ -17,6 +17,7 @@ describe('@mantine/charts/BarChart', () => {
   tests.itSupportsSystemProps<BarChartProps, BarChartStylesNames>({
     component: BarChart,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/charts/BarChart',
     stylesApiSelectors: ['root'],
   });

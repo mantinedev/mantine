@@ -78,6 +78,7 @@ describe('@mantine/core/DrawerRoot', () => {
   tests.itSupportsSystemProps<DrawerRootProps, 'root'>({
     component: DrawerRoot,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/DrawerRoot',
     stylesApiSelectors: ['root'],

@@ -352,6 +352,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
 });
 
 Input.classes = classes;
+Input.varsResolver = varsResolver;
 Input.Wrapper = InputWrapper;
 Input.Label = InputLabel;
 Input.Error = InputError;

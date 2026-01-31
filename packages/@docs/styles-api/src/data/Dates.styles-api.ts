@@ -31,7 +31,12 @@ export const MonthStylesApi: StylesApiData<MonthFactory> = {
     weekNumber: 'Week number td element',
   },
 
-  vars: {},
+  vars: {
+    weekNumber: {
+      '--wn-fz': 'Controls font size',
+      '--wn-size': 'Controls size',
+    },
+  },
 
   modifiers: [
     {
@@ -180,7 +185,11 @@ export const DatePickerStylesApi: StylesApiData<DatePickerFactory> = {
     presetButton: 'Preset button',
   },
 
-  vars: {},
+  vars: {
+    datePickerRoot: {
+      '--preset-font-size': 'Controls font size of preset buttons',
+    },
+  },
 
   modifiers: [...CalendarHeaderStylesApi.modifiers!, ...MonthStylesApi.modifiers!],
 };

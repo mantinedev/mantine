@@ -146,5 +146,6 @@ export const Timeline = factory<TimelineFactory>((_props) => {
 });
 
 Timeline.classes = classes;
+Timeline.varsResolver = varsResolver;
 Timeline.displayName = '@mantine/core/Timeline';
 Timeline.Item = TimelineItem;

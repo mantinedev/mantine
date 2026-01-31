@@ -229,3 +229,4 @@ export const FunnelChart = factory<FunnelChartFactory>((_props) => {
 
 FunnelChart.displayName = '@mantine/charts/FunnelChart';
 FunnelChart.classes = classes;
+FunnelChart.varsResolver = varsResolver;

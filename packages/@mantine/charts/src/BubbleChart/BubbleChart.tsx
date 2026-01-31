@@ -253,3 +253,4 @@ export const BubbleChart = factory<BubbleChartFactory>((_props) => {
 
 BubbleChart.displayName = '@mantine/charts/BubbleChart';
 BubbleChart.classes = classes;
+BubbleChart.varsResolver = varsResolver;

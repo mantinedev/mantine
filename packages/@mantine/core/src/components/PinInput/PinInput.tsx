@@ -463,4 +463,5 @@ export const PinInput = factory<PinInputFactory>((props) => {
 });
 
 PinInput.classes = { ...classes, ...InputBase.classes };
+PinInput.varsResolver = varsResolver;
 PinInput.displayName = '@mantine/core/PinInput';

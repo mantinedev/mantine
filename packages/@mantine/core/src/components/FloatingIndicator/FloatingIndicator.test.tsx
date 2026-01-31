@@ -16,6 +16,7 @@ describe('@mantine/core/FloatingIndicator', () => {
   tests.itSupportsSystemProps<FloatingIndicatorProps, FloatingIndicatorStylesNames>({
     component: FloatingIndicator,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     styleProps: false, // Some styles are overridden by style attribute
     displayName: '@mantine/core/FloatingIndicator',

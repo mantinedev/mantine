@@ -14,6 +14,7 @@ describe('@mantine/code-highlight/InlineCodeHighlight', () => {
   tests.itSupportsSystemProps<InlineCodeHighlightProps, InlineCodeHighlightStylesNames>({
     component: InlineCodeHighlight,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
     selector: '.mantine-InlineCodeHighlight-inlineCodeHighlight',
     displayName: '@mantine/code-highlight/InlineCodeHighlight',

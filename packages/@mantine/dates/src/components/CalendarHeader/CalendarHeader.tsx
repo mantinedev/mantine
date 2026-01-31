@@ -247,4 +247,5 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
 });
 
 CalendarHeader.classes = classes;
+CalendarHeader.varsResolver = varsResolver;
 CalendarHeader.displayName = '@mantine/dates/CalendarHeader';

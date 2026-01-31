@@ -11,6 +11,7 @@ describe('@mantine/core/OverflowList', () => {
   tests.itSupportsSystemProps<OverflowListProps<any>, OverflowListStylesNames>({
     component: OverflowList,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/core/OverflowList',
     stylesApiSelectors: ['root'],
   });

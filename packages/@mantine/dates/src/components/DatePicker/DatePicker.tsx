@@ -98,6 +98,7 @@ export type DatePickerFactory = Factory<{
   props: DatePickerProps;
   ref: HTMLDivElement;
   stylesNames: DatePickerStylesNames;
+  vars: DatePickerCssVariables;
 }>;
 
 const varsResolver = createVarsResolver<DatePickerFactory>((_, { size }) => ({
@@ -257,4 +258,5 @@ export const DatePicker: DatePickerComponent = factory<DatePickerFactory>((_prop
 }) as any;
 
 DatePicker.classes = Calendar.classes;
+DatePicker.varsResolver = varsResolver;
 DatePicker.displayName = '@mantine/dates/DatePicker';

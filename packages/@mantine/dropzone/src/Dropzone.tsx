@@ -312,6 +312,7 @@ export const Dropzone = factory<DropzoneFactory>((_props) => {
 });
 
 Dropzone.classes = classes;
+Dropzone.varsResolver = varsResolver;
 Dropzone.displayName = '@mantine/dropzone/Dropzone';
 Dropzone.Accept = DropzoneAccept;
 Dropzone.Idle = DropzoneIdle;

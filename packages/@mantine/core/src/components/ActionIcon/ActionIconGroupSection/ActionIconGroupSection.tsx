@@ -113,4 +113,5 @@ export const ActionIconGroupSection = factory<ActionIconGroupSectionFactory>((_p
 });
 
 ActionIconGroupSection.classes = classes;
+ActionIconGroupSection.varsResolver = varsResolver;
 ActionIconGroupSection.displayName = '@mantine/core/ActionIconGroupSection';

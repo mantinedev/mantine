@@ -1,6 +1,7 @@
 import { PolymorphicComponentProps } from './create-polymorphic-component';
 import {
   ComponentClasses,
+  ComponentVariablesResolver,
   FactoryPayload,
   identity,
   StaticComponents,
@@ -33,6 +34,7 @@ export function polymorphicFactory<Payload extends PolymorphicFactoryPayload>(
     ComponentProperties &
     ThemeExtend<Payload> &
     ComponentClasses<Payload> &
+    ComponentVariablesResolver<Payload> &
     PolymorphicComponentWithProps<Payload> &
     StaticComponents<Payload['staticComponents']>;
 
@@ -57,5 +59,6 @@ export type MantinePolymorphicComponent<Payload extends PolymorphicFactoryPayloa
   Omit<React.FunctionComponent<PolymorphicComponentProps<any, Payload['props']>>, never> &
   ThemeExtend<Payload> &
   ComponentClasses<Payload> &
+  ComponentVariablesResolver<Payload> &
   PolymorphicComponentWithProps<Payload> &
   StaticComponents<Payload['staticComponents']>;

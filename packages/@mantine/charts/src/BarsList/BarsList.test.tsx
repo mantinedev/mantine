@@ -15,6 +15,7 @@ describe('@mantine/charts/BarsList', () => {
   tests.itSupportsSystemProps<BarsListProps, BarsListStylesNames>({
     component: BarsList,
     props: defaultProps,
+    varsResolver: true,
     refType: HTMLDivElement,
     displayName: '@mantine/charts/BarsList',
     stylesApiSelectors: ['root', 'bar', 'barLabel', 'barValue', 'labelsRow'],

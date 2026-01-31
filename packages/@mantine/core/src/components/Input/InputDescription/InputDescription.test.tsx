@@ -11,6 +11,7 @@ describe('@mantine/core/InputDescription', () => {
   tests.itSupportsSystemProps<InputDescriptionProps, InputDescriptionStylesNames>({
     component: InputDescription,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/InputDescription',
     stylesApiName: 'InputWrapper',

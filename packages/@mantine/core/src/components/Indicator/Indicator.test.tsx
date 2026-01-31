@@ -7,6 +7,7 @@ describe('@mantine/core/Indicator', () => {
   tests.itSupportsSystemProps<IndicatorProps, IndicatorStylesNames>({
     component: Indicator,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/Indicator',
     stylesApiSelectors: ['root', 'indicator'],

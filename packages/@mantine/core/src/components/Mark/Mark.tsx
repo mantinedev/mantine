@@ -74,4 +74,5 @@ export const Mark = factory<MarkFactory>((_props) => {
 });
 
 Mark.classes = classes;
+Mark.varsResolver = varsResolver;
 Mark.displayName = '@mantine/core/Mark';

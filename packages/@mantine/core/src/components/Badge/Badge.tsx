@@ -175,4 +175,5 @@ export const Badge = polymorphicFactory<BadgeFactory>((_props) => {
 });
 
 Badge.classes = classes;
+Badge.varsResolver = varsResolver;
 Badge.displayName = '@mantine/core/Badge';

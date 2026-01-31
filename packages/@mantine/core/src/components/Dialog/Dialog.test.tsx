@@ -13,6 +13,7 @@ describe('@mantine/core/Dialog', () => {
   tests.itSupportsSystemProps<DialogProps, DialogStylesNames>({
     component: Dialog,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/Dialog',
     stylesApiSelectors: ['root', 'closeButton'],

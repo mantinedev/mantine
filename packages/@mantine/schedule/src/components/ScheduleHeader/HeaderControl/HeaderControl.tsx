@@ -105,6 +105,7 @@ export const HeaderControl = factory<HeaderControlFactory>((_props) => {
 
 HeaderControl.displayName = '@mantine/schedule/HeaderControl';
 HeaderControl.classes = classes;
+HeaderControl.varsResolver = varsResolver;
 
 export function ScheduleHeaderNext(props: HeaderControlProps) {
   const { dir } = useDirection();

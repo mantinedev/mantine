@@ -13,6 +13,7 @@ describe('@mantine/charts/RadarChart', () => {
   tests.itSupportsSystemProps<RadarChartProps, RadarChartStylesNames>({
     component: RadarChart,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/charts/RadarChart',
     stylesApiSelectors: ['root'],
   });

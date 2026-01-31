@@ -281,4 +281,5 @@ export const CodeHighlight = factory<CodeHighlightFactory>((_props) => {
 
 CodeHighlight.displayName = '@mantine/code-highlight/CodeHighlight';
 CodeHighlight.classes = classes;
+CodeHighlight.varsResolver = varsResolver;
 CodeHighlight.Control = CodeHighlightControl;

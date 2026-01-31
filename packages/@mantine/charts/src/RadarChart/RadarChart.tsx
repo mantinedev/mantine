@@ -305,3 +305,4 @@ export const RadarChart = factory<RadarChartFactory>((_props) => {
 
 RadarChart.displayName = '@mantine/charts/RadarChart';
 RadarChart.classes = classes;
+RadarChart.varsResolver = varsResolver;

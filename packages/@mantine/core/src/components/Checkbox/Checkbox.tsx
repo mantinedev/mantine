@@ -261,6 +261,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
 });
 
 Checkbox.classes = { ...classes, ...InlineInputClasses };
+Checkbox.varsResolver = varsResolver;
 Checkbox.displayName = '@mantine/core/Checkbox';
 Checkbox.Group = CheckboxGroup;
 Checkbox.Indicator = CheckboxIndicator;

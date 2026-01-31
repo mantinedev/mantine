@@ -18,6 +18,7 @@ describe('@mantine/charts/DonutChart', () => {
   tests.itSupportsSystemProps<DonutChartProps, DonutChartStylesNames>({
     component: DonutChart,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/charts/DonutChart',
     stylesApiSelectors: ['root'],
   });

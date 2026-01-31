@@ -11,6 +11,7 @@ describe('@mantine/dates/MiniCalendar', () => {
   tests.itSupportsSystemProps<MiniCalendarProps, MiniCalendarStylesNames>({
     component: MiniCalendar,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
     displayName: '@mantine/dates/MiniCalendar',
     stylesApiSelectors: ['root', 'control', 'days', 'day', 'dayMonth', 'dayNumber'],

@@ -13,6 +13,7 @@ describe('@mantine/schedule/MobileMonthView', () => {
   tests.itSupportsSystemProps<MobileMonthViewProps, MobileMonthViewStylesNames>({
     component: MobileMonthView,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/schedule/MobileMonthView',
     stylesApiSelectors: ['mobileMonthView'],
   });

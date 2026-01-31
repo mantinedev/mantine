@@ -110,4 +110,5 @@ export const Title = factory<TitleFactory>((_props) => {
 });
 
 Title.classes = classes;
+Title.varsResolver = varsResolver;
 Title.displayName = '@mantine/core/Title';

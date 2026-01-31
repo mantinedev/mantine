@@ -56,4 +56,5 @@ export const Kbd = factory<KbdFactory>((_props) => {
 });
 
 Kbd.classes = classes;
+Kbd.varsResolver = varsResolver;
 Kbd.displayName = '@mantine/core/Kbd';

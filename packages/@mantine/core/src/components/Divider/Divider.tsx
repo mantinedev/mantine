@@ -108,4 +108,5 @@ export const Divider = factory<DividerFactory>((_props) => {
 });
 
 Divider.classes = classes;
+Divider.varsResolver = varsResolver;
 Divider.displayName = '@mantine/core/Divider';

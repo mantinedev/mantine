@@ -110,4 +110,5 @@ export const PickerControl = factory<PickerControlFactory>((_props) => {
 });
 
 PickerControl.classes = classes;
+PickerControl.varsResolver = varsResolver;
 PickerControl.displayName = '@mantine/dates/PickerControl';

@@ -10,6 +10,7 @@ describe('@mantine/dates/DatePicker', () => {
   tests.itSupportsSystemProps<DatePickerProps, DatePickerStylesNames>({
     component: DatePicker,
     props: { ...defaultProps, presets: [{ label: 'Today', value: '2022-04-11' }] },
+    varsResolver: true,
     displayName: '@mantine/dates/DatePicker',
     stylesApiSelectors: [
       'day',

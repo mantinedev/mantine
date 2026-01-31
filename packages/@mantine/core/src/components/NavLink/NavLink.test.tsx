@@ -12,6 +12,7 @@ describe('@mantine/core/NavLink', () => {
   tests.itSupportsSystemProps<NavLinkProps, NavLinkStylesNames>({
     component: NavLink,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
     children: true,
     displayName: '@mantine/core/NavLink',

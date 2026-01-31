@@ -19,6 +19,7 @@ describe('@mantine/carousel/Carousel', () => {
   tests.itSupportsSystemProps<CarouselProps, CarouselStylesNames>({
     component: Carousel,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/carousel/Carousel',
     stylesApiSelectors: [
       'root',

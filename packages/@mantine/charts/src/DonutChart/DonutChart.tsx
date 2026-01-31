@@ -309,3 +309,4 @@ export const DonutChart = factory<DonutChartFactory>((_props) => {
 
 DonutChart.displayName = '@mantine/charts/DonutChart';
 DonutChart.classes = classes;
+DonutChart.varsResolver = varsResolver;

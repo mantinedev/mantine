@@ -8,6 +8,7 @@ describe('@mantine/core/Rating', () => {
   tests.itSupportsSystemProps<RatingProps, RatingStylesNames>({
     component: Rating,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/core/Rating',
     stylesApiSelectors: ['root', 'starSymbol', 'input', 'label', 'symbolBody', 'symbolGroup'],
   });

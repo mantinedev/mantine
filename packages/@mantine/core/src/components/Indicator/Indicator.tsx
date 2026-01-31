@@ -176,4 +176,5 @@ export const Indicator = factory<IndicatorFactory>((_props) => {
 });
 
 Indicator.classes = classes;
+Indicator.varsResolver = varsResolver;
 Indicator.displayName = '@mantine/core/Indicator';

@@ -11,6 +11,7 @@ describe('@mantine/core/TableOfContents', () => {
   tests.itSupportsSystemProps<TableOfContentsProps, TableOfContentsStylesNames>({
     component: TableOfContents,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/core/TableOfContents',
     stylesApiSelectors: ['root'],
   });

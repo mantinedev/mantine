@@ -10,6 +10,7 @@ describe('@mantine/core/Grid', () => {
   tests.itSupportsSystemProps<GridProps, GridStylesNames>({
     component: Grid,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/Grid',
     stylesApiSelectors: ['root', 'inner', 'col'],

@@ -17,6 +17,7 @@ describe('@mantine/charts/LineChart', () => {
   tests.itSupportsSystemProps<LineChartProps, LineChartStylesNames>({
     component: LineChart,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/charts/LineChart',
     stylesApiSelectors: ['root'],
   });

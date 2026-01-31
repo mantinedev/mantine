@@ -144,4 +144,5 @@ export const Spoiler = factory<SpoilerFactory>((_props) => {
 });
 
 Spoiler.classes = classes;
+Spoiler.varsResolver = varsResolver;
 Spoiler.displayName = '@mantine/core/Spoiler';

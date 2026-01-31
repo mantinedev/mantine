@@ -160,4 +160,5 @@ export const RingProgress = factory<RingProgressFactory>((_props) => {
 });
 
 RingProgress.classes = classes;
+RingProgress.varsResolver = varsResolver;
 RingProgress.displayName = '@mantine/core/RingProgress';

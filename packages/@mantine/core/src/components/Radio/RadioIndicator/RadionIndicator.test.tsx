@@ -7,6 +7,7 @@ describe('@mantine/core/RadioIndicator', () => {
   tests.itSupportsSystemProps<RadioIndicatorProps, RadioIndicatorStylesNames>({
     component: RadioIndicator,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/core/RadioIndicator',
     stylesApiSelectors: ['indicator', 'icon'],
   });

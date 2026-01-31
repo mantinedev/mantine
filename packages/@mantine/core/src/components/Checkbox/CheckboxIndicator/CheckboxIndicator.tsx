@@ -154,3 +154,4 @@ export const CheckboxIndicator = factory<CheckboxIndicatorFactory>((_props) => {
 
 CheckboxIndicator.displayName = '@mantine/core/CheckboxIndicator';
 CheckboxIndicator.classes = classes;
+CheckboxIndicator.varsResolver = varsResolver;

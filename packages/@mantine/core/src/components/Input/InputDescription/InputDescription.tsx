@@ -87,4 +87,5 @@ export const InputDescription = factory<InputDescriptionFactory>((_props) => {
 });
 
 InputDescription.classes = classes;
+InputDescription.varsResolver = varsResolver;
 InputDescription.displayName = '@mantine/core/InputDescription';

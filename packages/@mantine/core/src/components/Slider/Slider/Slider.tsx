@@ -452,4 +452,5 @@ export const Slider = factory<SliderFactory>((_props) => {
 });
 
 Slider.classes = classes;
+Slider.varsResolver = varsResolver;
 Slider.displayName = '@mantine/core/Slider';

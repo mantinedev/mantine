@@ -14,6 +14,7 @@ describe('@mantine/core/Chip', () => {
   tests.itSupportsSystemProps<ChipProps, ChipStylesNames>({
     component: Chip,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/Chip',
     stylesApiSelectors: ['root', 'iconWrapper', 'checkIcon', 'input', 'label'],

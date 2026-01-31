@@ -229,6 +229,7 @@ export const Radio = factory<RadioFactory>((_props) => {
 });
 
 Radio.classes = classes;
+Radio.varsResolver = varsResolver;
 Radio.displayName = '@mantine/core/Radio';
 Radio.Group = RadioGroup;
 Radio.Card = RadioCard;

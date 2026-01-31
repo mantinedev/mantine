@@ -16,6 +16,7 @@ describe('@mantine/core/Tooltip', () => {
   tests.itSupportsSystemProps<TooltipProps, TooltipStylesNames>({
     component: Tooltip,
     props: defaultProps,
+    varsResolver: true,
     attributes: false,
     id: false,
     selector: '[role="tooltip"]',

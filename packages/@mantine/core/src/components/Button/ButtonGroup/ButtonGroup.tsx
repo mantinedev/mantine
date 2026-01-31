@@ -84,4 +84,5 @@ export const ButtonGroup = factory<ButtonGroupFactory>((_props) => {
 });
 
 ButtonGroup.classes = classes;
+ButtonGroup.varsResolver = varsResolver;
 ButtonGroup.displayName = '@mantine/core/ButtonGroup';

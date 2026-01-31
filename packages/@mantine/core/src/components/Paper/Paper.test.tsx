@@ -7,6 +7,7 @@ describe('@mantine/core/Paper', () => {
   tests.itSupportsSystemProps<PaperProps, PaperStylesNames>({
     component: Paper,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
     children: true,
     displayName: '@mantine/core/Paper',

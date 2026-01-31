@@ -202,3 +202,4 @@ export const TimeGrid = factory<TimeGridFactory>((_props) => {
 
 TimeGrid.displayName = '@mantine/dates/TimeGrid';
 TimeGrid.classes = classes;
+TimeGrid.varsResolver = varsResolver;

@@ -488,5 +488,6 @@ export const Carousel = factory<CarouselFactory>((_props) => {
 });
 
 Carousel.classes = classes;
+Carousel.varsResolver = varsResolver;
 Carousel.displayName = '@mantine/carousel/Carousel';
 Carousel.Slide = CarouselSlide;

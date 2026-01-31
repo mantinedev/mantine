@@ -163,3 +163,4 @@ export const RadioCard = factory<RadioCardFactory>((_props) => {
 
 RadioCard.displayName = '@mantine/core/RadioCard';
 RadioCard.classes = classes;
+RadioCard.varsResolver = varsResolver;

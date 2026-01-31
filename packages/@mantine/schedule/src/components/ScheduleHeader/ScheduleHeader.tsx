@@ -95,6 +95,7 @@ export const ScheduleHeader = factory<ScheduleHeaderFactory>((_props) => {
 
 ScheduleHeader.displayName = '@mantine/schedule/ScheduleHeader';
 ScheduleHeader.classes = classes;
+ScheduleHeader.varsResolver = varsResolver;
 ScheduleHeader.Control = HeaderControl;
 ScheduleHeader.Next = ScheduleHeaderNext;
 ScheduleHeader.Previous = ScheduleHeaderPrevious;

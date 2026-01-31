@@ -12,6 +12,7 @@ describe('@mantine/core/Pill', () => {
   tests.itSupportsSystemProps<PillProps, PillStylesNames>({
     component: Pill,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/Pill',
     stylesApiSelectors: ['root', 'label', 'remove'],

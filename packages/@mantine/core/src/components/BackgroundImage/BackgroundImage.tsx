@@ -77,4 +77,5 @@ export const BackgroundImage = polymorphicFactory<BackgroundImageFactory>((_prop
 });
 
 BackgroundImage.classes = classes;
+BackgroundImage.varsResolver = varsResolver;
 BackgroundImage.displayName = '@mantine/core/BackgroundImage';

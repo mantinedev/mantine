@@ -597,4 +597,5 @@ export const NumberInput = factory<NumberInputFactory>((_props) => {
 });
 
 NumberInput.classes = { ...InputBase.classes, ...classes };
+NumberInput.varsResolver = varsResolver;
 NumberInput.displayName = '@mantine/core/NumberInput';

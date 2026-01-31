@@ -18,6 +18,7 @@ describe('@mantine/schedule/MonthYearSelect', () => {
   tests.itSupportsSystemProps<MonthYearSelectProps, MonthYearSelectStylesNames>({
     component: MonthYearSelect,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/schedule/MonthYearSelect',
     stylesApiSelectors: [
       'monthYearSelectDropdown',

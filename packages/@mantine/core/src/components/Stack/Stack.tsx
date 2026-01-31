@@ -85,4 +85,5 @@ export const Stack = factory<StackFactory>((_props) => {
 });
 
 Stack.classes = classes;
+Stack.varsResolver = varsResolver;
 Stack.displayName = '@mantine/core/Stack';

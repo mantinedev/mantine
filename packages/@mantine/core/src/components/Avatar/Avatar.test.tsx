@@ -10,6 +10,7 @@ describe('@mantine/core/Avatar', () => {
   tests.itSupportsSystemProps<AvatarProps, AvatarStylesNames>({
     component: Avatar,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
     children: true,
     displayName: '@mantine/core/Avatar',

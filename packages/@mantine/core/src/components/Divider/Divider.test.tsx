@@ -9,6 +9,7 @@ describe('@mantine/core/Divider', () => {
   tests.itSupportsSystemProps<DividerProps, DividerStylesNames>({
     component: Divider,
     props: defaultProps,
+    varsResolver: true,
     displayName: '@mantine/core/Divider',
     stylesApiSelectors: ['root', 'label'],
   });

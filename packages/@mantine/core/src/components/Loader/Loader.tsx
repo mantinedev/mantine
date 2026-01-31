@@ -124,4 +124,5 @@ export const Loader = factory<LoaderFactory>((_props) => {
 
 Loader.defaultLoaders = defaultLoaders;
 Loader.classes = classes;
+Loader.varsResolver = varsResolver;
 Loader.displayName = '@mantine/core/Loader';

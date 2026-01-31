@@ -133,4 +133,5 @@ export const Group = factory<GroupFactory>((_props) => {
 });
 
 Group.classes = classes;
+Group.varsResolver = varsResolver;
 Group.displayName = '@mantine/core/Group';

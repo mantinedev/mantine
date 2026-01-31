@@ -33,6 +33,7 @@ describe('@mantine/core/Input', () => {
   tests.itSupportsSystemProps<InputProps, InputStylesNames>({
     component: Input,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
     polymorphicSelector: '.mantine-Input-input',
     displayName: '@mantine/core/Input',

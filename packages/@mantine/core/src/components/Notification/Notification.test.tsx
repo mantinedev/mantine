@@ -15,6 +15,7 @@ describe('@mantine/core/Notification', () => {
   tests.itSupportsSystemProps<NotificationProps, NotificationStylesNames>({
     component: Notification,
     props: defaultProps,
+    varsResolver: true,
     children: true,
     displayName: '@mantine/core/Notification',
     stylesApiSelectors: ['root', 'icon', 'body', 'title', 'description', 'closeButton'],

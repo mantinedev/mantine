@@ -335,4 +335,5 @@ export const Rating = factory<RatingFactory>((_props) => {
 });
 
 Rating.classes = classes;
+Rating.varsResolver = varsResolver;
 Rating.displayName = '@mantine/core/Rating';

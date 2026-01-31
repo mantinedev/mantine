@@ -25,6 +25,7 @@ describe('@mantine/core/Button', () => {
   tests.itSupportsSystemProps<ButtonProps, ButtonStylesNames>({
     component: Button,
     props: defaultProps,
+    varsResolver: true,
     polymorphic: true,
     children: true,
     displayName: '@mantine/core/Button',

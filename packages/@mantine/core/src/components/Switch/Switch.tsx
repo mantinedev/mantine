@@ -244,5 +244,6 @@ export const Switch = factory<SwitchFactory>((_props) => {
 });
 
 Switch.classes = { ...classes, ...InlineInputClasses };
+Switch.varsResolver = varsResolver;
 Switch.displayName = '@mantine/core/Switch';
 Switch.Group = SwitchGroup;
