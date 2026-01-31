@@ -11,7 +11,7 @@ function Demo() {
       name="favoriteFramework"
       {{props}}
     >
-      <Group mt="xs">
+      <Group>
         <Radio value="react" label="React" />
         <Radio value="svelte" label="Svelte" />
         <Radio value="ng" label="Angular" />
@@ -25,7 +25,7 @@ function Demo() {
 function Wrapper(props: Partial<RadioGroupProps>) {
   return (
     <Radio.Group defaultValue="react" name="favoriteFramework" {...props}>
-      <Group mt="xs">
+      <Group>
         <Radio value="react" label="React" />
         <Radio value="svelte" label="Svelte" />
         <Radio value="ng" label="Angular" />

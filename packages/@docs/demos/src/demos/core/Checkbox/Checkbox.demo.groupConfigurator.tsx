@@ -11,7 +11,7 @@ function Demo() {
       defaultValue={['react']}
       {{props}}
     >
-      <Group mt="xs">
+      <Group>
         <Checkbox value="react" label="React" />
         <Checkbox value="svelte" label="Svelte" />
         <Checkbox value="ng" label="Angular" />
@@ -25,7 +25,7 @@ function Demo() {
 function Wrapper(props: Partial<CheckboxGroupProps>) {
   return (
     <Checkbox.Group defaultValue={['react']} {...props}>
-      <Group mt="xs">
+      <Group>
         <Checkbox value="react" label="React" />
         <Checkbox value="svelte" label="Svelte" />
         <Checkbox value="ng" label="Angular" />
