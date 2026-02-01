@@ -1,4 +1,4 @@
-import { createRef } from 'react';
+import { act, createRef } from 'react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Switch, SwitchProps, SwitchStylesNames } from './Switch';
 import { SwitchGroup } from './SwitchGroup/SwitchGroup';
@@ -71,5 +71,16 @@ describe('@mantine/core/Switch', () => {
     const ref = createRef<HTMLDivElement>();
     render(<Switch {...defaultProps} rootRef={ref} />);
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
+  });
+
+  it('ensures input is visible in DOM and accessibility tree with switch/checkbox semantics', () => {
+    render(<Switch label="Enable" />);
+    const input = screen.getByRole('switch', { name: 'Enable' });
+
+    expect(input).toBeVisible();
+    expect(input).not.toBeChecked();
+
+    act(() => input.click());
+    expect(input).toBeChecked();
   });
 });
