@@ -75,6 +75,12 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
     description: 'Tanstack Start + Cloudflare + Mantine template',
   },
   {
+    type: 'vite',
+    name: 'bun-vite-template',
+    link: 'https://github.com/LewisDamy/bun-vite-template',
+    description: 'Bun + Vite + Mantine template',
+  },
+  {
     type: 'react-router',
     name: 'react-router-template',
     link: 'https://github.com/samui-build/react-router-mantine',
