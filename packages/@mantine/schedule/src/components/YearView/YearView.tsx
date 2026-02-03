@@ -23,10 +23,7 @@ import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHea
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getYearViewEvents } from './get-year-view-events/get-year-view-events';
-import {
-  handleYearViewKeyDown,
-  YearViewControlsRef,
-} from './handle-year-view-key-down/handle-year-view-key-down';
+import { handleYearViewKeyDown, YearViewControlsRef } from './handle-year-view-key-down';
 import classes from './YearView.module.css';
 import { YearViewMonth, YearViewMonthSettings } from './YearViewMonth';
 

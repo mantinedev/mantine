@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -44,6 +45,7 @@ import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHea
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getMonthViewEvents } from './get-month-view-events/get-month-view-events';
+import { handleMonthViewKeyDown, MonthViewControlsRef } from './handle-month-view-key-down';
 import classes from './MonthView.module.css';
 
 export type MonthViewStylesNames =
@@ -287,6 +289,28 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     },
   });
 
+  const daysRef: MonthViewControlsRef = useRef<HTMLButtonElement[][]>([]);
+
+  const monthDays = getMonthDays({
+    month: dayjs(date).format('YYYY-MM-DD 00:00:00'),
+    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+    consistentWeeks: consistentWeeks && withOutsideDays,
+  });
+
+  const firstDayIndex = (() => {
+    for (let weekIndex = 0; weekIndex < monthDays.length; weekIndex++) {
+      const week = monthDays[weekIndex];
+      for (let dayIndex = 0; dayIndex < week.length; dayIndex++) {
+        const day = week[dayIndex];
+        const outside = !isSameMonth(date, day);
+        if (!outside || withOutsideDays) {
+          return { weekIndex, dayIndex };
+        }
+      }
+    }
+    return { weekIndex: 0, dayIndex: 0 };
+  })();
+
   const weekdays = withWeekDays
     ? getWeekdaysNames({
         locale: ctx.getLocale(locale),
@@ -299,12 +323,12 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       ))
     : null;
 
-  const weeks = getMonthDays({
-    month: dayjs(date).format('YYYY-MM-DD 00:00:00'),
-    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
-    consistentWeeks: consistentWeeks && withOutsideDays,
-  }).map((week, index) => {
-    const days = week.map((day) => {
+  const weeks = monthDays.map((week, weekIndex) => {
+    if (!daysRef.current[weekIndex]) {
+      daysRef.current[weekIndex] = [];
+    }
+
+    const days = week.map((day, dayIndex) => {
       const outside = !isSameMonth(date, day);
       const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day());
       const ariaLabel = dayjs(day)
@@ -320,6 +344,9 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         );
       }
 
+      const isFirstDay =
+        weekIndex === firstDayIndex.weekIndex && dayIndex === firstDayIndex.dayIndex;
+
       const isDropTarget = dragDrop.isDropTarget(day);
 
       return (
@@ -328,6 +355,14 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           {...dayProps}
           {...getStyles('monthViewDay', { className: dayProps.className, style: dayProps.style })}
           key={day}
+          ref={(node) => {
+            if (node) {
+              if (!daysRef.current[weekIndex]) {
+                daysRef.current[weekIndex] = [];
+              }
+              daysRef.current[weekIndex][dayIndex] = node;
+            }
+          }}
           onClick={
             mode === 'static'
               ? undefined
@@ -336,11 +371,21 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
                   dayProps.onClick?.(event);
                 }
           }
+          onKeyDown={(event) => {
+            handleMonthViewKeyDown({
+              controlsRef: daysRef,
+              weekIndex,
+              dayIndex,
+              event,
+            });
+            dayProps.onKeyDown?.(event);
+          }}
           mod={[
             { outside, weekend, today, 'drop-target': isDropTarget, static: mode === 'static' },
             dayProps.mod,
           ]}
-          tabIndex={mode === 'static' ? -1 : 0}
+          data-outside={outside || undefined}
+          tabIndex={mode === 'static' ? -1 : isFirstDay ? 0 : -1}
           onDragOver={
             withDragDrop && mode !== 'static' ? (e) => dragDrop.handleDragOver(e, day) : undefined
           }
@@ -359,7 +404,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     const weekNumberProps = getWeekNumberProps?.(new Date(week[0])) || {};
     const weekNumber = getWeekNumber(week);
 
-    const events = (monthEvents.groupedByWeek[index] || [])
+    const events = (monthEvents.groupedByWeek[weekIndex] || [])
       .filter((event) => event.position.row < 2)
       .map((event) => {
         const isDraggable = dragDrop.isDraggableEvent(event);
@@ -418,7 +463,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     });
 
     return (
-      <div {...getStyles('monthViewWeek')} key={index}>
+      <div {...getStyles('monthViewWeek')} key={weekIndex}>
         {withWeekNumbers && (
           <UnstyledButton
             key={weekNumber}

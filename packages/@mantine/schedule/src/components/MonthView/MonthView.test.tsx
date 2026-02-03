@@ -383,4 +383,164 @@ describe('@mantine/schedule/MonthView', () => {
     expect(scrollArea).toHaveClass('test-class');
     expect(scrollArea).toHaveStyle({ outline: '1px solid red' });
   });
+
+  describe('keyboard navigation', () => {
+    it('only first day should be in tab order', async () => {
+      render(<MonthView {...defaultProps} />);
+
+      const oct27 = screen.getByRole('button', { name: 'October 27, 2025' });
+      expect(oct27).toHaveAttribute('tabIndex', '0');
+
+      const oct28 = screen.getByRole('button', { name: 'October 28, 2025' });
+      expect(oct28).toHaveAttribute('tabIndex', '-1');
+
+      const nov1 = screen.getByRole('button', { name: 'November 1, 2025' });
+      expect(nov1).toHaveAttribute('tabIndex', '-1');
+    });
+
+    it('first inside day should be in tab order when withOutsideDays is false', async () => {
+      render(<MonthView {...defaultProps} withOutsideDays={false} />);
+
+      const nov1 = screen.getByRole('button', { name: 'November 1, 2025' });
+      expect(nov1).toHaveAttribute('tabIndex', '0');
+
+      const nov2 = screen.getByRole('button', { name: 'November 2, 2025' });
+      expect(nov2).toHaveAttribute('tabIndex', '-1');
+    });
+
+    it('supports ArrowRight key to move focus to next day', async () => {
+      render(<MonthView {...defaultProps} />);
+      const oct27 = screen.getByRole('button', { name: 'October 27, 2025' });
+
+      oct27.focus();
+      expect(document.activeElement).toBe(oct27);
+
+      await userEvent.keyboard('{ArrowRight}');
+      const oct28 = screen.getByRole('button', { name: 'October 28, 2025' });
+      expect(document.activeElement).toBe(oct28);
+    });
+
+    it('supports ArrowLeft key to move focus to previous day', async () => {
+      render(<MonthView {...defaultProps} />);
+      const oct28 = screen.getByRole('button', { name: 'October 28, 2025' });
+
+      oct28.focus();
+      expect(document.activeElement).toBe(oct28);
+
+      await userEvent.keyboard('{ArrowLeft}');
+      const oct27 = screen.getByRole('button', { name: 'October 27, 2025' });
+      expect(document.activeElement).toBe(oct27);
+    });
+
+    it('supports ArrowDown key to move focus to same day in next week', async () => {
+      render(<MonthView {...defaultProps} />);
+      const oct27 = screen.getByRole('button', { name: 'October 27, 2025' });
+
+      oct27.focus();
+      expect(document.activeElement).toBe(oct27);
+
+      await userEvent.keyboard('{ArrowDown}');
+      const nov3 = screen.getByRole('button', { name: 'November 3, 2025' });
+      expect(document.activeElement).toBe(nov3);
+    });
+
+    it('supports ArrowUp key to move focus to same day in previous week', async () => {
+      render(<MonthView {...defaultProps} />);
+      const nov3 = screen.getByRole('button', { name: 'November 3, 2025' });
+
+      nov3.focus();
+      expect(document.activeElement).toBe(nov3);
+
+      await userEvent.keyboard('{ArrowUp}');
+      const oct27 = screen.getByRole('button', { name: 'October 27, 2025' });
+      expect(document.activeElement).toBe(oct27);
+    });
+
+    it('ArrowRight at end of week moves to first day of next week', async () => {
+      render(<MonthView {...defaultProps} />);
+      const nov2 = screen.getByRole('button', { name: 'November 2, 2025' });
+
+      nov2.focus();
+      expect(document.activeElement).toBe(nov2);
+
+      await userEvent.keyboard('{ArrowRight}');
+      const nov3 = screen.getByRole('button', { name: 'November 3, 2025' });
+      expect(document.activeElement).toBe(nov3);
+    });
+
+    it('ArrowLeft at beginning of week moves to last day of previous week', async () => {
+      render(<MonthView {...defaultProps} />);
+      const nov3 = screen.getByRole('button', { name: 'November 3, 2025' });
+
+      nov3.focus();
+      expect(document.activeElement).toBe(nov3);
+
+      await userEvent.keyboard('{ArrowLeft}');
+      const nov2 = screen.getByRole('button', { name: 'November 2, 2025' });
+      expect(document.activeElement).toBe(nov2);
+    });
+
+    it('navigates to outside days with arrow keys', async () => {
+      render(<MonthView {...defaultProps} />);
+      const nov1 = screen.getByRole('button', { name: 'November 1, 2025' });
+
+      nov1.focus();
+      expect(document.activeElement).toBe(nov1);
+
+      await userEvent.keyboard('{ArrowLeft}');
+      const oct31 = screen.getByRole('button', { name: 'October 31, 2025' });
+      expect(document.activeElement).toBe(oct31);
+      expect(oct31).toHaveAttribute('data-outside');
+    });
+
+    it('does not navigate with arrow keys in static mode', async () => {
+      render(<MonthView {...defaultProps} mode="static" />);
+      const buttons = screen
+        .getAllByRole('button')
+        .filter((btn) => btn.classList.contains('mantine-MonthView-monthViewDay'));
+
+      buttons.forEach((btn) => {
+        expect(btn).toHaveAttribute('tabIndex', '-1');
+      });
+    });
+
+    it('skips disabled days when navigating', async () => {
+      render(
+        <MonthView
+          {...defaultProps}
+          getDayProps={(date) =>
+            dayjs(date).date() === 28 && dayjs(date).month() === 9 ? { disabled: true } : {}
+          }
+        />
+      );
+      const oct27 = screen.getByRole('button', { name: 'October 27, 2025' });
+
+      oct27.focus();
+      expect(document.activeElement).toBe(oct27);
+
+      await userEvent.keyboard('{ArrowRight}');
+      const oct29 = screen.getByRole('button', { name: 'October 29, 2025' });
+      expect(document.activeElement).toBe(oct29);
+    });
+
+    it('navigates within the month with keyboard', async () => {
+      render(<MonthView {...defaultProps} />);
+      const nov15 = screen.getByRole('button', { name: 'November 15, 2025' });
+
+      nov15.focus();
+      expect(document.activeElement).toBe(nov15);
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('button', { name: 'November 16, 2025' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByRole('button', { name: 'November 15, 2025' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowDown}');
+      expect(screen.getByRole('button', { name: 'November 22, 2025' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowUp}');
+      expect(screen.getByRole('button', { name: 'November 15, 2025' })).toHaveFocus();
+    });
+  });
 });
