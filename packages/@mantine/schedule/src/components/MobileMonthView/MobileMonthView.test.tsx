@@ -403,8 +403,14 @@ describe('@mantine/schedule/MobileMonthView', () => {
     it('only first day should be in tab order', () => {
       render(<MobileMonthView {...defaultProps} />);
 
-      expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveAttribute('tabIndex', '0');
-      expect(screen.getByRole('button', { name: 'November 2, 2025' })).toHaveAttribute('tabIndex', '-1');
+      expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveAttribute(
+        'tabIndex',
+        '0'
+      );
+      expect(screen.getByRole('button', { name: 'November 2, 2025' })).toHaveAttribute(
+        'tabIndex',
+        '-1'
+      );
     });
 
     it('supports arrow keys to navigate between days', async () => {
@@ -439,8 +445,14 @@ describe('@mantine/schedule/MobileMonthView', () => {
     it('does not navigate in static mode', () => {
       render(<MobileMonthView {...defaultProps} mode="static" />);
 
-      expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveAttribute('tabIndex', '-1');
-      expect(screen.getByRole('button', { name: 'November 2, 2025' })).toHaveAttribute('tabIndex', '-1');
+      expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveAttribute(
+        'tabIndex',
+        '-1'
+      );
+      expect(screen.getByRole('button', { name: 'November 2, 2025' })).toHaveAttribute(
+        'tabIndex',
+        '-1'
+      );
     });
   });
 });

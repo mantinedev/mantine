@@ -29,3 +29,38 @@ By default, days from the previous and next months are hidden. Set `withOutsideD
 Set `mode="static"` to disable all interactions. In this mode, days are not clickable and no selection changes occur.
 
 <Demo data={MobileMonthViewDemos.staticMode} />
+
+## Accessibility
+
+MobileMonthView follows the same keyboard navigation patterns as [MonthView](./month-view.mdx#accessibility).
+
+### Focus management
+
+The first day of the month is included in the tab order (`tabIndex={0}`), while all other days have `tabIndex={-1}`. When a day receives focus via arrow key navigation, the component updates `tabIndex` values so that the newly focused day becomes the tab stop.
+
+### Keyboard interactions
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowRight',
+      description: 'Focuses next non-disabled day',
+    },
+    {
+      key: 'ArrowLeft',
+      description: 'Focuses previous non-disabled day',
+    },
+    {
+      key: 'ArrowDown',
+      description: 'Focuses same day in the next week',
+    },
+    {
+      key: 'ArrowUp',
+      description: 'Focuses same day in the previous week',
+    },
+  ]}
+/>
+
+### Day labels
+
+Each day button has an `aria-label` attribute with the full date in the format "Month Day, Year" (e.g., "November 15, 2025"). This provides screen reader users with complete date information.
