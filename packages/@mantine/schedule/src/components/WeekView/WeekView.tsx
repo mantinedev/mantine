@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -53,6 +53,7 @@ import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getWeekLabel } from './get-week-label/get-week-label';
 import { getWeekViewEvents } from './get-week-view-events/get-week-view-events';
+import { handleWeekViewKeyDown, WeekViewControlsRef } from './handle-week-view-key-down';
 import classes from './WeekView.module.css';
 import { WeekViewDay } from './WeekViewDay';
 
@@ -400,21 +401,74 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
   });
 
+  const slotsRef: WeekViewControlsRef = useRef<HTMLButtonElement[][]>([]);
+  const allDaySlotsRef = useRef<HTMLButtonElement[]>([]);
+  const weekdaysRef = useRef<HTMLButtonElement[]>([]);
+  const firstSlotIndex = { dayIndex: 0, slotIndex: 0 };
+
+  const handleSlotKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    dayIndex: number,
+    slotIndex: number
+  ) => {
+    handleWeekViewKeyDown({
+      controlsRef: slotsRef,
+      dayIndex,
+      slotIndex,
+      event,
+    });
+  };
+
+  const handleAllDaySlotKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    dayIndex: number
+  ) => {
+    const direction = event.key;
+    if (direction === 'ArrowRight' && dayIndex < weekdays.length - 1) {
+      event.preventDefault();
+      allDaySlotsRef.current[dayIndex + 1]?.focus();
+    } else if (direction === 'ArrowLeft' && dayIndex > 0) {
+      event.preventDefault();
+      allDaySlotsRef.current[dayIndex - 1]?.focus();
+    } else if (direction === 'ArrowDown') {
+      event.preventDefault();
+      slotsRef.current?.[dayIndex]?.[0]?.focus();
+    }
+  };
+
+  const handleWeekdayKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    dayIndex: number
+  ) => {
+    const direction = event.key;
+    if (direction === 'ArrowRight' && dayIndex < weekdays.length - 1) {
+      event.preventDefault();
+      weekdaysRef.current[dayIndex + 1]?.focus();
+    } else if (direction === 'ArrowLeft' && dayIndex > 0) {
+      event.preventDefault();
+      weekdaysRef.current[dayIndex - 1]?.focus();
+    }
+  };
+
   const currentWeekdayIndex = withCurrentTimeIndicator
     ? weekdays.findIndex((day) => dayjs(day).isSame(dayjs(), 'date'))
     : -1;
 
-  const weekdaysLabels = weekdays.map((day) => (
+  const weekdaysLabels = weekdays.map((day, dayIndex) => (
     <UnstyledButton
       {...getStyles('weekViewDayLabel')}
       key={day}
+      ref={(node) => {
+        weekdaysRef.current[dayIndex] = node!;
+      }}
       aria-label={`${getLabel('weekday', labels)} ${dayjs(day).format('YYYY-MM-DD')}`}
       mod={{
         today: dayjs(day).isSame(dayjs(), 'day') && !!highlightToday,
         weekend: ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek),
         static: mode === 'static',
       }}
-      tabIndex={mode === 'static' ? -1 : 0}
+      tabIndex={mode === 'static' ? -1 : dayIndex === 0 ? 0 : -1}
+      onKeyDown={mode === 'static' ? undefined : (event) => handleWeekdayKeyDown(event, dayIndex)}
       onClick={
         mode === 'static'
           ? undefined
@@ -433,7 +487,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     </UnstyledButton>
   ));
 
-  const days = weekdays.map((day) => {
+  const days = weekdays.map((day, dayIndex) => {
     const dayEvents = (weekEvents.regularEvents[day] || []).map((event) => {
       const eventIsAllDay = isAllDayEvent({ event, date: day });
       const isDraggable = !eventIsAllDay && dragDrop.isDraggableEvent(event);
@@ -463,6 +517,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       <WeekViewDay
         key={day}
         day={day}
+        dayIndex={dayIndex}
         slots={slots}
         getStyles={getStyles}
         weekendDays={weekendDays}
@@ -471,6 +526,16 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         labels={labels}
         withDragDrop={withDragDrop}
         mode={mode}
+        slotsRef={slotsRef}
+        firstSlotIndex={firstSlotIndex}
+        onSlotKeyDown={handleSlotKeyDown}
+        onFirstSlotArrowUp={
+          withAllDaySlots
+            ? (dayIdx) => {
+                allDaySlotsRef.current[dayIdx]?.focus();
+              }
+            : undefined
+        }
         onSlotDragOver={handleSlotDragOver}
         onSlotDragLeave={dragDrop.handleDragLeave}
         onSlotDrop={(e, dayStr, slotTime) => {
@@ -486,10 +551,15 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     );
   });
 
-  const allDaySlots = weekdays.map((day) => (
+  const allDaySlots = weekdays.map((day, dayIndex) => (
     <UnstyledButton
       aria-label={`${getLabel('allDay', labels)} ${dayjs(day).format('YYYY-MM-DD')}`}
       key={day}
+      ref={(node) => {
+        allDaySlotsRef.current[dayIndex] = node!;
+      }}
+      tabIndex={dayIndex === 0 ? 0 : -1}
+      onKeyDown={(event) => handleAllDaySlotKeyDown(event, dayIndex)}
       {...getStyles('weekViewDaySlot')}
     />
   ));

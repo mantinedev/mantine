@@ -4,11 +4,15 @@ import { useDatesContext } from '@mantine/dates';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import { DateStringValue, DayOfWeek, ScheduleMode } from '../../types';
 import { DayTimeInterval, getBusinessHoursMod } from '../../utils';
+import type { WeekViewControlsRef } from './handle-week-view-key-down';
 import type { WeekViewFactory } from './WeekView';
 
 export interface WeekViewDayProps {
   /** Date to display */
   day: Date | DateStringValue;
+
+  /** Index of this day in the week */
+  dayIndex: number;
 
   /** Slots intervals */
   slots: DayTimeInterval[];
@@ -48,10 +52,27 @@ export interface WeekViewDayProps {
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions */
   mode?: ScheduleMode;
+
+  /** Ref for keyboard navigation */
+  slotsRef?: WeekViewControlsRef;
+
+  /** Index of the first focusable slot */
+  firstSlotIndex?: { dayIndex: number; slotIndex: number };
+
+  /** Keyboard event handler for slots */
+  onSlotKeyDown?: (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    dayIndex: number,
+    slotIndex: number
+  ) => void;
+
+  /** Called when Arrow Up is pressed on the first slot, used to navigate to all-day slot */
+  onFirstSlotArrowUp?: (dayIndex: number) => void;
 }
 
 export function WeekViewDay({
   day,
+  dayIndex,
   slots,
   getStyles,
   weekendDays,
@@ -65,17 +86,31 @@ export function WeekViewDay({
   onSlotDrop,
   dropTargetSlotIndex,
   mode,
+  slotsRef,
+  firstSlotIndex,
+  onSlotKeyDown,
+  onFirstSlotArrowUp,
 }: WeekViewDayProps) {
   const ctx = useDatesContext();
   const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek);
   const today = dayjs(day).isSame(dayjs(), 'day');
 
-  const items = slots.map((slot, index) => {
-    const isDropTarget = dropTargetSlotIndex === index;
+  const items = slots.map((slot, slotIndex) => {
+    const isDropTarget = dropTargetSlotIndex === slotIndex;
+    const isFirstSlot =
+      firstSlotIndex?.dayIndex === dayIndex && firstSlotIndex?.slotIndex === slotIndex;
 
     return (
       <UnstyledButton
         key={slot.startTime}
+        ref={(node) => {
+          if (node && slotsRef?.current) {
+            if (!slotsRef.current[dayIndex]) {
+              slotsRef.current[dayIndex] = [];
+            }
+            slotsRef.current[dayIndex][slotIndex] = node;
+          }
+        }}
         {...getStyles('weekViewDaySlot')}
         mod={{
           'hour-start': slot.isHourStart,
@@ -88,10 +123,18 @@ export function WeekViewDay({
           static: mode === 'static',
         }}
         aria-label={`${getLabel('timeSlot', labels)} ${dayjs(day).format('YYYY-MM-DD')} ${slot.startTime} - ${slot.endTime}`}
-        tabIndex={mode === 'static' ? -1 : 0}
+        tabIndex={mode === 'static' ? -1 : isFirstSlot ? 0 : -1}
+        onKeyDown={(e) => {
+          if (slotIndex === 0 && e.key === 'ArrowUp' && onFirstSlotArrowUp) {
+            e.preventDefault();
+            onFirstSlotArrowUp(dayIndex);
+          } else if (onSlotKeyDown) {
+            onSlotKeyDown(e, dayIndex, slotIndex);
+          }
+        }}
         onDragOver={
           withDragDrop && mode !== 'static'
-            ? (e) => onSlotDragOver?.(e, String(day), index)
+            ? (e) => onSlotDragOver?.(e, String(day), slotIndex)
             : undefined
         }
         onDragLeave={withDragDrop && mode !== 'static' ? onSlotDragLeave : undefined}

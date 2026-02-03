@@ -113,3 +113,76 @@ Enable drag and drop by setting `withDragDrop` prop. Events can be dragged to di
 Set `mode="static"` to disable all interactions.
 
 <Demo data={WeekViewDemos.staticMode} />
+
+## Accessibility
+
+### Focus management
+
+In the WeekView component, focus is managed to provide an efficient keyboard navigation experience:
+
+- The weekdays row, all-day slots row, and time slots grid each have their first element in the tab order (`tabIndex={0}`)
+- All other elements have `tabIndex={-1}` and can only be reached via arrow key navigation
+- This approach reduces the number of tab stops when navigating through the schedule
+
+### Keyboard interactions
+
+Weekdays row:
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowRight',
+      description: 'Focuses next weekday',
+    },
+    {
+      key: 'ArrowLeft',
+      description: 'Focuses previous weekday',
+    },
+  ]}
+/>
+
+All-day slots (when enabled):
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowRight',
+      description: 'Focuses next all-day slot',
+    },
+    {
+      key: 'ArrowLeft',
+      description: 'Focuses previous all-day slot',
+    },
+    {
+      key: 'ArrowDown',
+      description: 'Focuses first time slot of the same day',
+    },
+  ]}
+/>
+
+Time slots:
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowRight',
+      description: 'Focuses same time slot in the next day',
+    },
+    {
+      key: 'ArrowLeft',
+      description: 'Focuses same time slot in the previous day',
+    },
+    {
+      key: 'ArrowDown',
+      description: 'Focuses next time slot in the same day',
+    },
+    {
+      key: 'ArrowUp',
+      description: 'Focuses previous time slot (or all-day slot if on first time slot and all-day slots are enabled)',
+    },
+  ]}
+/>
+
+### Slot labels
+
+Each time slot button has an `aria-label` attribute with the complete slot information including the date and time range (e.g., "Time slot 2025-11-03 08:00:00 - 09:00:00"). All-day slots have labels like "All day 2025-11-03", and weekday buttons have labels like "Weekday 2025-11-03". This provides screen reader users with complete context about each element.

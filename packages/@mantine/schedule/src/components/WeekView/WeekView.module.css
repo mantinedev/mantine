@@ -160,7 +160,6 @@
 
 .weekViewDaySlots {
   position: relative;
-  overflow: hidden;
 }
 
 .weekViewDaySlot {
@@ -172,6 +171,10 @@
   padding: 4px;
   cursor: pointer;
   position: relative;
+
+  &:where(:focus) {
+    z-index: 1;
+  }
 
   @mixin hover {
     @mixin where-light {

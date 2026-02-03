@@ -364,4 +364,231 @@ describe('@mantine/schedule/WeekView', () => {
     expect(label).toBeInTheDocument();
     expect(label).toHaveTextContent('03 - 09');
   });
+
+  describe('keyboard navigation', () => {
+    it('only first slot should be in tab order', () => {
+      render(
+        <WeekView
+          {...defaultProps}
+          startTime="08:00:00"
+          endTime="10:00:00"
+          withAllDaySlots={false}
+        />
+      );
+
+      expect(
+        screen.getByRole('button', { name: 'Time slot 2025-11-03 08:00:00 - 09:00:00' })
+      ).toHaveAttribute('tabIndex', '0');
+      expect(
+        screen.getByRole('button', { name: 'Time slot 2025-11-03 09:00:00 - 10:00:00' })
+      ).toHaveAttribute('tabIndex', '-1');
+      expect(
+        screen.getByRole('button', { name: 'Time slot 2025-11-04 08:00:00 - 09:00:00' })
+      ).toHaveAttribute('tabIndex', '-1');
+    });
+
+    it('supports ArrowDown/ArrowUp to navigate between time slots', async () => {
+      render(
+        <WeekView
+          {...defaultProps}
+          startTime="08:00:00"
+          endTime="10:00:00"
+          withAllDaySlots={false}
+        />
+      );
+
+      screen.getByRole('button', { name: 'Time slot 2025-11-03 08:00:00 - 09:00:00' }).focus();
+      await userEvent.keyboard('{ArrowDown}');
+      expect(
+        screen.getByRole('button', { name: 'Time slot 2025-11-03 09:00:00 - 10:00:00' })
+      ).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowUp}');
+      expect(
+        screen.getByRole('button', { name: 'Time slot 2025-11-03 08:00:00 - 09:00:00' })
+      ).toHaveFocus();
+    });
+
+    it('supports ArrowRight/ArrowLeft to navigate between days', async () => {
+      render(
+        <WeekView
+          {...defaultProps}
+          startTime="08:00:00"
+          endTime="10:00:00"
+          withAllDaySlots={false}
+        />
+      );
+
+      screen.getByRole('button', { name: 'Time slot 2025-11-03 08:00:00 - 09:00:00' }).focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(
+        screen.getByRole('button', { name: 'Time slot 2025-11-04 08:00:00 - 09:00:00' })
+      ).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(
+        screen.getByRole('button', { name: 'Time slot 2025-11-03 08:00:00 - 09:00:00' })
+      ).toHaveFocus();
+    });
+
+    it('does not move focus past boundaries', async () => {
+      render(
+        <WeekView
+          {...defaultProps}
+          startTime="08:00:00"
+          endTime="10:00:00"
+          withAllDaySlots={false}
+        />
+      );
+
+      // First slot - ArrowUp and ArrowLeft should not move
+      const firstSlot = screen.getByRole('button', {
+        name: 'Time slot 2025-11-03 08:00:00 - 09:00:00',
+      });
+      firstSlot.focus();
+      await userEvent.keyboard('{ArrowUp}');
+      expect(firstSlot).toHaveFocus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(firstSlot).toHaveFocus();
+
+      // Last slot - ArrowDown should not move
+      const lastSlot = screen.getByRole('button', {
+        name: 'Time slot 2025-11-03 09:00:00 - 10:00:00',
+      });
+      lastSlot.focus();
+      await userEvent.keyboard('{ArrowDown}');
+      expect(lastSlot).toHaveFocus();
+
+      // Last day - ArrowRight should not move
+      const lastDaySlot = screen.getByRole('button', {
+        name: 'Time slot 2025-11-09 08:00:00 - 09:00:00',
+      });
+      lastDaySlot.focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(lastDaySlot).toHaveFocus();
+    });
+
+    it('does not navigate with arrow keys in static mode', () => {
+      render(
+        <WeekView
+          {...defaultProps}
+          startTime="08:00:00"
+          endTime="10:00:00"
+          withAllDaySlots={false}
+          mode="static"
+        />
+      );
+
+      const slots = screen
+        .getAllByRole('button')
+        .filter((btn) => btn.classList.contains('mantine-WeekView-weekViewDaySlot'));
+
+      slots.forEach((slot) => {
+        expect(slot).toHaveAttribute('tabIndex', '-1');
+      });
+    });
+  });
+
+  describe('weekdays row keyboard navigation', () => {
+    it('only first weekday should be in tab order', () => {
+      render(<WeekView {...defaultProps} />);
+
+      expect(screen.getByRole('button', { name: 'Weekday 2025-11-03' })).toHaveAttribute(
+        'tabIndex',
+        '0'
+      );
+      expect(screen.getByRole('button', { name: 'Weekday 2025-11-04' })).toHaveAttribute(
+        'tabIndex',
+        '-1'
+      );
+    });
+
+    it('supports ArrowRight/ArrowLeft to navigate between weekdays', async () => {
+      render(<WeekView {...defaultProps} />);
+
+      screen.getByRole('button', { name: 'Weekday 2025-11-03' }).focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('button', { name: 'Weekday 2025-11-04' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByRole('button', { name: 'Weekday 2025-11-03' })).toHaveFocus();
+    });
+
+    it('does not move focus past boundaries', async () => {
+      render(<WeekView {...defaultProps} />);
+
+      const firstWeekday = screen.getByRole('button', { name: 'Weekday 2025-11-03' });
+      firstWeekday.focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(firstWeekday).toHaveFocus();
+
+      const lastWeekday = screen.getByRole('button', { name: 'Weekday 2025-11-09' });
+      lastWeekday.focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(lastWeekday).toHaveFocus();
+    });
+
+    it('does not navigate weekdays in static mode', () => {
+      render(<WeekView {...defaultProps} mode="static" />);
+      expect(screen.getByRole('button', { name: 'Weekday 2025-11-03' })).toHaveAttribute(
+        'tabIndex',
+        '-1'
+      );
+    });
+  });
+
+  describe('all-day slots keyboard navigation', () => {
+    it('only first all-day slot should be in tab order', () => {
+      render(<WeekView {...defaultProps} withAllDaySlots />);
+
+      expect(screen.getByRole('button', { name: 'All day 2025-11-03' })).toHaveAttribute(
+        'tabIndex',
+        '0'
+      );
+      expect(screen.getByRole('button', { name: 'All day 2025-11-04' })).toHaveAttribute(
+        'tabIndex',
+        '-1'
+      );
+    });
+
+    it('supports ArrowRight/ArrowLeft to navigate between all-day slots', async () => {
+      render(<WeekView {...defaultProps} withAllDaySlots />);
+
+      screen.getByRole('button', { name: 'All day 2025-11-03' }).focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('button', { name: 'All day 2025-11-04' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByRole('button', { name: 'All day 2025-11-03' })).toHaveFocus();
+    });
+
+    it('supports ArrowDown/ArrowUp to navigate between all-day slot and time slots', async () => {
+      render(
+        <WeekView {...defaultProps} withAllDaySlots startTime="08:00:00" endTime="10:00:00" />
+      );
+
+      screen.getByRole('button', { name: 'All day 2025-11-03' }).focus();
+      await userEvent.keyboard('{ArrowDown}');
+      expect(
+        screen.getByRole('button', { name: 'Time slot 2025-11-03 08:00:00 - 09:00:00' })
+      ).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowUp}');
+      expect(screen.getByRole('button', { name: 'All day 2025-11-03' })).toHaveFocus();
+    });
+
+    it('does not move focus past boundaries', async () => {
+      render(<WeekView {...defaultProps} withAllDaySlots />);
+
+      const firstAllDaySlot = screen.getByRole('button', { name: 'All day 2025-11-03' });
+      firstAllDaySlot.focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(firstAllDaySlot).toHaveFocus();
+
+      const lastAllDaySlot = screen.getByRole('button', { name: 'All day 2025-11-09' });
+      lastAllDaySlot.focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(lastAllDaySlot).toHaveFocus();
+    });
+  });
 });
