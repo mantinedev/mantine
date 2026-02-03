@@ -99,6 +99,10 @@
   border-radius: 100%;
   position: relative;
 
+  &:focus {
+    z-index: 1;
+  }
+
   &:where([data-hidden]) {
     visibility: hidden;
     pointer-events: none;

@@ -398,4 +398,49 @@ describe('@mantine/schedule/MobileMonthView', () => {
     await userEvent.click(screen.getByRole('button', { name: 'November 1, 2025' }));
     expect(spy).not.toHaveBeenCalled();
   });
+
+  describe('keyboard navigation', () => {
+    it('only first day should be in tab order', () => {
+      render(<MobileMonthView {...defaultProps} />);
+
+      expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveAttribute('tabIndex', '0');
+      expect(screen.getByRole('button', { name: 'November 2, 2025' })).toHaveAttribute('tabIndex', '-1');
+    });
+
+    it('supports arrow keys to navigate between days', async () => {
+      render(<MobileMonthView {...defaultProps} />);
+
+      screen.getByRole('button', { name: 'November 1, 2025' }).focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('button', { name: 'November 2, 2025' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowDown}');
+      expect(screen.getByRole('button', { name: 'November 9, 2025' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByRole('button', { name: 'November 8, 2025' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowUp}');
+      expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveFocus();
+    });
+
+    it('does not move focus past boundaries', async () => {
+      render(<MobileMonthView {...defaultProps} />);
+
+      const firstDay = screen.getByRole('button', { name: 'November 1, 2025' });
+      firstDay.focus();
+      await userEvent.keyboard('{ArrowUp}');
+      expect(firstDay).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(firstDay).toHaveFocus();
+    });
+
+    it('does not navigate in static mode', () => {
+      render(<MobileMonthView {...defaultProps} mode="static" />);
+
+      expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveAttribute('tabIndex', '-1');
+      expect(screen.getByRole('button', { name: 'November 2, 2025' })).toHaveAttribute('tabIndex', '-1');
+    });
+  });
 });

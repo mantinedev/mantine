@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import dayjs from 'dayjs';
 import {
   Box,
@@ -36,6 +37,10 @@ import {
   sortEvents,
   toDateString,
 } from '../../utils';
+import {
+  handleMonthViewKeyDown,
+  MonthViewControlsRef,
+} from '../MonthView/handle-month-view-key-down';
 import { RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { getMobileMonthViewEvents } from './get-mobile-month-view-events';
 import classes from './MobileMonthView.module.css';
@@ -230,6 +235,9 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     rootSelector: 'mobileMonthView',
   });
 
+  const daysRef: MonthViewControlsRef = useRef<HTMLButtonElement[][]>([]);
+  const firstDayPosition = useRef<{ weekIndex: number; dayIndex: number } | null>(null);
+
   const groupedEvents = getMobileMonthViewEvents({ date, events });
 
   const weekdays = withWeekDays
@@ -249,7 +257,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
     consistentWeeks,
   }).map((week, weekIndex) => {
-    const days = week.map((dayDate) => {
+    const days = week.map((dayDate, dayIndex) => {
       const outside = !isSameMonth(dayDate, date);
       const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(dayDate).day());
       const ariaLabel = dayjs(dayDate)
@@ -262,6 +270,14 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
       const dayEvents = groupedEvents[dayjs(dayDate).format('YYYY-MM-DD')] || [];
 
       const shouldRender = withOutsideDays || !outside;
+
+      if (shouldRender && firstDayPosition.current === null) {
+        firstDayPosition.current = { weekIndex, dayIndex };
+      }
+
+      const isFirstDay =
+        firstDayPosition.current?.weekIndex === weekIndex &&
+        firstDayPosition.current?.dayIndex === dayIndex;
 
       const indicators = dayEvents.slice(0, 3).map((event) => (
         <div
@@ -279,6 +295,15 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
         dayProps.onClick?.(event);
       };
 
+      const handleDayKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+        handleMonthViewKeyDown({
+          controlsRef: daysRef,
+          weekIndex,
+          dayIndex,
+          event,
+        });
+      };
+
       return (
         <UnstyledButton
           aria-label={ariaLabel}
@@ -289,6 +314,14 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
             style: dayProps.style,
           })}
           key={dayDate}
+          ref={(node) => {
+            if (node) {
+              if (!daysRef.current[weekIndex]) {
+                daysRef.current[weekIndex] = [];
+              }
+              daysRef.current[weekIndex][dayIndex] = node;
+            }
+          }}
           mod={[
             {
               outside,
@@ -300,8 +333,9 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
             },
             dayProps.mod,
           ]}
-          tabIndex={mode === 'static' || !shouldRender ? -1 : 0}
+          tabIndex={mode === 'static' || !shouldRender ? -1 : isFirstDay ? 0 : -1}
           onClick={mode === 'static' || !shouldRender ? undefined : handleDayClick}
+          onKeyDown={mode === 'static' || !shouldRender ? undefined : handleDayKeyDown}
         >
           {shouldRender ? dayjs(dayDate).format('D') : null}
           {shouldRender && <div {...getStyles('mobileMonthViewDayIndicators')}>{indicators}</div>}
