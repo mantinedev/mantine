@@ -3,6 +3,10 @@ import * as demos from './index';
 
 export default { title: 'schedule/MonthView' };
 
+export const Demo_usage = {
+  name: '⭐ Demo: usage',
+  render: renderDemo(demos.usage),
+};
 export const Demo_withWeekNumbers = {
   name: '⭐ Demo: withWeekNumbers',
   render: renderDemo(demos.withWeekNumbers),
