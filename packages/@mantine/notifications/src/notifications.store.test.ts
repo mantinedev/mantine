@@ -88,8 +88,8 @@ describe('@mantine/notifications/notifications.store', () => {
       const firstTimestamp = store.getState().notifications[0].__autoCloseTimestamp;
       
       // Wait a bit to ensure different timestamp
-      const wait = new Promise(resolve => setTimeout(resolve, 10));
-      return wait.then(() => {
+      const delay = new Promise(resolve => setTimeout(resolve, 10));
+      return delay.then(() => {
         updateNotification({ id, message: 'Second update', resetTimeout: true }, store);
         const secondTimestamp = store.getState().notifications[0].__autoCloseTimestamp;
         

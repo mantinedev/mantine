@@ -36,7 +36,7 @@ export interface NotificationData
   /** When true, resets the autoClose timer when notification is updated */
   resetTimeout?: boolean;
 
-  /** Internal property used to trigger timer reset */
+  /** @internal Internal property used to trigger timer reset. Do not use directly. */
   __autoCloseTimestamp?: number;
 }
 
