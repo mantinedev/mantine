@@ -59,6 +59,18 @@ export const MDX_SCHEDULE_DATA: Record<string, Frontmatter> = {
     hideTableOfContents: true,
   },
 
+  MobileMonthView: {
+    title: 'MobileMonthView',
+    package: '@mantine/schedule',
+    slug: '/schedule/mobile-month-view',
+    description: 'Mobile-optimized schedule month view component',
+    props: ['MobileMonthView'],
+    styles: ['MobileMonthView'],
+    source: '@mantine/schedule/src/components/MobileMonthView/MobileMonthView.tsx',
+    docs: 'schedule/mobile-month-view.mdx',
+    hideTableOfContents: true,
+  },
+
   Schedule: {
     title: 'Schedule',
     package: '@mantine/schedule',

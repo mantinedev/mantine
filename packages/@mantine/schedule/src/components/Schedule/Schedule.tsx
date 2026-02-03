@@ -13,6 +13,11 @@ import { useUncontrolled } from '@mantine/hooks';
 import { ScheduleLabelsOverride } from '../../labels';
 import { DateStringValue, ScheduleEventData, ScheduleMode, ScheduleViewLevel } from '../../types';
 import { DayView, DayViewProps, DayViewStylesNames } from '../DayView/DayView';
+import {
+  MobileMonthView,
+  MobileMonthViewProps,
+  MobileMonthViewStylesNames,
+} from '../MobileMonthView/MobileMonthView';
 import { MonthView, MonthViewProps, MonthViewStylesNames } from '../MonthView/MonthView';
 import { RenderEventBody } from '../ScheduleEvent/ScheduleEvent';
 import { WeekView, WeekViewProps, WeekViewStylesNames } from '../WeekView/WeekView';
@@ -21,10 +26,15 @@ import classes from './Schedule.module.css';
 
 export type ScheduleStylesNames =
   | 'root'
+  | 'desktopView'
+  | 'mobileView'
   | DayViewStylesNames
   | WeekViewStylesNames
   | MonthViewStylesNames
-  | YearViewStylesNames;
+  | YearViewStylesNames
+  | MobileMonthViewStylesNames;
+
+export type ScheduleLayout = 'default' | 'responsive';
 
 type ScheduleCommonProps =
   | 'date'
@@ -95,6 +105,12 @@ export interface ScheduleProps
    * @default 'default' */
   mode?: ScheduleMode;
 
+  /** Layout mode:
+   * - `'default'` uses same views on all screen sizes
+   * - `'responsive'` switches to YearView/MobileMonthView on small screens
+   * @default 'default' */
+  layout?: ScheduleLayout;
+
   /** Props specific to DayView (includes `startTime`, `endTime`, `intervalMinutes`, etc.) */
   dayViewProps?: ScheduleViewProps<DayViewProps>;
 
@@ -106,6 +122,9 @@ export interface ScheduleProps
 
   /** Props specific to YearView (includes `firstDayOfWeek`, `weekendDays`, etc.) */
   yearViewProps?: ScheduleViewProps<YearViewProps>;
+
+  /** Props specific to MobileMonthView (used in responsive layout) */
+  mobileMonthViewProps?: ScheduleViewProps<MobileMonthViewProps>;
 }
 
 export type ScheduleFactory = Factory<{
@@ -117,6 +136,7 @@ export type ScheduleFactory = Factory<{
 const defaultProps: Partial<ScheduleProps> = {
   defaultView: 'week',
   mode: 'default',
+  layout: 'default',
 };
 
 export const Schedule = factory<ScheduleFactory>((_props) => {
@@ -143,11 +163,14 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     onEventDrop,
     canDragEvent,
     mode,
+    layout,
     dayViewProps,
     weekViewProps,
     monthViewProps,
     yearViewProps,
+    mobileMonthViewProps,
     __staticSelector,
+    mod,
     ...others
   } = props;
 
@@ -184,7 +207,6 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     onViewChange?.(newView);
   };
 
-  // Common props shared by ALL views
   const commonProps = {
     date: _date,
     onDateChange: handleDateChange,
@@ -201,7 +223,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     mode,
   };
 
-  const content = (() => {
+  const desktopContent = (() => {
     switch (_view) {
       case 'day':
         return <DayView {...commonProps} {...dayViewProps} />;
@@ -216,9 +238,43 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     }
   })();
 
+  const mobileContent = (() => {
+    switch (_view) {
+      case 'day':
+      case 'week':
+      case 'month':
+        return (
+          <MobileMonthView
+            date={_date}
+            onDateChange={handleDateChange}
+            events={events}
+            locale={locale}
+            radius={radius}
+            labels={labels}
+            renderEventBody={renderEventBody}
+            mode={mode}
+            {...mobileMonthViewProps}
+          />
+        );
+      case 'year':
+        return <YearView {...commonProps} {...yearViewProps} />;
+      default:
+        return null;
+    }
+  })();
+
+  if (layout === 'responsive') {
+    return (
+      <Box {...getStyles('root')} mod={[{ layout }, mod]} {...others}>
+        <Box {...getStyles('desktopView')}>{desktopContent}</Box>
+        <Box {...getStyles('mobileView')}>{mobileContent}</Box>
+      </Box>
+    );
+  }
+
   return (
-    <Box {...getStyles('root')} {...others}>
-      {content}
+    <Box {...getStyles('root')} mod={mod} {...others}>
+      {desktopContent}
     </Box>
   );
 });
@@ -230,4 +286,5 @@ export namespace Schedule {
   export type Props = ScheduleProps;
   export type StylesNames = ScheduleStylesNames;
   export type Factory = ScheduleFactory;
+  export type Layout = ScheduleLayout;
 }

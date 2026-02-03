@@ -1,0 +1,31 @@
+import { MobileMonthViewDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.MobileMonthView);
+
+## Usage
+
+MobileMonthView is a mobile-optimized calendar view that displays a month grid at the top with event indicators, and a list of events for the selected day at the bottom. This component is designed to work similarly to how calendar applications work on iOS.
+
+The component does not include drag-and-drop functionality and is optimized for touch interactions on mobile devices.
+
+<Demo data={MobileMonthViewDemos.usage} />
+
+## With week numbers
+
+Set `withWeekNumbers` to display week numbers in the first column.
+
+<Demo data={MobileMonthViewDemos.withWeekNumbers} />
+
+## With outside days
+
+By default, days from the previous and next months are hidden. Set `withOutsideDays` to display them.
+
+<Demo data={MobileMonthViewDemos.withOutsideDays} />
+
+## Static mode
+
+Set `mode="static"` to disable all interactions. In this mode, days are not clickable and no selection changes occur.
+
+<Demo data={MobileMonthViewDemos.staticMode} />

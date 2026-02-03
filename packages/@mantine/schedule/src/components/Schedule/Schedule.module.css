@@ -1,3 +1,23 @@
 .root {
-  /* Schedule wrapper styles */
+  &:where([data-layout='responsive']) {
+    container-type: inline-size;
+  }
+}
+
+.desktopView {
+  display: block;
+  height: 100%;
+
+  @container (width <= 600px) {
+    display: none;
+  }
+}
+
+.mobileView {
+  display: none;
+  height: 100%;
+
+  @container (width <= 600px) {
+    display: block;
+  }
 }

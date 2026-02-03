@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import {
   Box,
   BoxProps,
@@ -6,15 +7,58 @@ import {
   factory,
   Factory,
   getRadius,
+  getThemeColor,
   MantineRadius,
+  ScrollArea,
   StylesApiProps,
+  Text,
+  UnstyledButton,
+  useMantineTheme,
   useProps,
   useStyles,
 } from '@mantine/core';
-import { DateLabelFormat, DateStringValue, DayOfWeek, ScheduleEventData } from '../../types';
+import { useDatesContext } from '@mantine/dates';
+import { useUncontrolled } from '@mantine/hooks';
+import { ScheduleLabelsOverride } from '../../labels';
+import {
+  DateLabelFormat,
+  DateStringValue,
+  DayOfWeek,
+  ScheduleEventData,
+  ScheduleMode,
+} from '../../types';
+import {
+  formatDate,
+  getMonthDays,
+  getWeekdaysNames,
+  getWeekNumber,
+  isSameMonth,
+  sortEvents,
+  toDateString,
+} from '../../utils';
+import { RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
+import { getMobileMonthViewEvents } from './get-mobile-month-view-events';
 import classes from './MobileMonthView.module.css';
 
-export type MobileMonthViewStylesNames = 'mobileMonthView';
+export type MobileMonthViewStylesNames =
+  | 'mobileMonthView'
+  | 'mobileMonthViewCalendar'
+  | 'mobileMonthViewWeekdays'
+  | 'mobileMonthViewWeekday'
+  | 'mobileMonthViewWeekdaysCorner'
+  | 'mobileMonthViewWeek'
+  | 'mobileMonthViewWeekNumber'
+  | 'mobileMonthViewDay'
+  | 'mobileMonthViewDayIndicators'
+  | 'mobileMonthViewDayIndicator'
+  | 'mobileMonthViewEventsList'
+  | 'mobileMonthViewEventsHeader'
+  | 'mobileMonthViewEventsScrollArea'
+  | 'mobileMonthViewEvent'
+  | 'mobileMonthViewEventTime'
+  | 'mobileMonthViewEventColor'
+  | 'mobileMonthViewNoEvents';
+
 export type MobileMonthViewCssVariables = {
   mobileMonthView: '--mobile-month-view-radius';
 };
@@ -28,6 +72,15 @@ export interface MobileMonthViewProps
 
   /** Called with the new date value when a date is selected */
   onDateChange?: (value: DateStringValue) => void;
+
+  /** Currently selected date (controlled) */
+  selectedDate?: Date | string | null;
+
+  /** Default selected date (uncontrolled) */
+  defaultSelectedDate?: Date | string | null;
+
+  /** Called when selected date changes */
+  onSelectedDateChange?: (value: DateStringValue | null) => void;
 
   /** If set, week numbers are displayed in the first column @default false */
   withWeekNumbers?: boolean;
@@ -73,6 +126,21 @@ export interface MobileMonthViewProps
 
   /** Events to display */
   events?: ScheduleEventData[];
+
+  /** Labels override for i18n */
+  labels?: ScheduleLabelsOverride;
+
+  /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default 'default' */
+  mode?: ScheduleMode;
+
+  /** Custom event body renderer */
+  renderEventBody?: RenderEventBody;
+
+  /** Format for the events list header date @default 'dddd, MMMM D' */
+  eventsHeaderFormat?: DateLabelFormat;
+
+  /** Placeholder text when no events for selected date @default 'No events' */
+  noEventsText?: string;
 }
 
 export type MobileMonthViewFactory = Factory<{
@@ -84,6 +152,12 @@ export type MobileMonthViewFactory = Factory<{
 
 const defaultProps = {
   __staticSelector: 'MobileMonthView',
+  withWeekDays: true,
+  consistentWeeks: true,
+  highlightToday: true,
+  mode: 'default',
+  eventsHeaderFormat: 'dddd, MMMM D',
+  noEventsText: 'No events',
 } satisfies Partial<MobileMonthViewProps>;
 
 const varsResolver = createVarsResolver<MobileMonthViewFactory>((_theme, { radius }) => ({
@@ -105,6 +179,9 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     __staticSelector,
     date,
     onDateChange,
+    selectedDate,
+    defaultSelectedDate,
+    onSelectedDateChange,
     withWeekNumbers,
     withWeekDays,
     locale,
@@ -120,8 +197,23 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     radius,
     withOutsideDays,
     events,
+    labels,
+    mode,
+    renderEventBody,
+    eventsHeaderFormat,
+    noEventsText,
     ...others
   } = props;
+
+  const ctx = useDatesContext();
+  const theme = useMantineTheme();
+  const today = dayjs();
+
+  const [_selectedDate, _setSelectedDate] = useUncontrolled<Date | string | null>({
+    value: selectedDate,
+    defaultValue: defaultSelectedDate ?? toDateString(today),
+    onChange: (value) => onSelectedDateChange?.(value ? toDateString(dayjs(value)) : null),
+  });
 
   const getStyles = useStyles<MobileMonthViewFactory>({
     name: __staticSelector,
@@ -138,9 +230,201 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     rootSelector: 'mobileMonthView',
   });
 
-  return <Box {...getStyles('mobileMonthView')} {...others} />;
+  const groupedEvents = getMobileMonthViewEvents({ date, events });
+
+  const weekdays = withWeekDays
+    ? getWeekdaysNames({
+        locale: ctx.getLocale(locale),
+        format: weekdayFormat,
+        firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+      }).map((day, index) => (
+        <div {...getStyles('mobileMonthViewWeekday')} key={index}>
+          {day}
+        </div>
+      ))
+    : null;
+
+  const weeks = getMonthDays({
+    month: dayjs(date).format('YYYY-MM-DD'),
+    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+    consistentWeeks,
+  }).map((week, weekIndex) => {
+    const days = week.map((dayDate) => {
+      const outside = !isSameMonth(dayDate, date);
+      const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(dayDate).day());
+      const ariaLabel = dayjs(dayDate)
+        .locale(locale || ctx.locale)
+        .format('MMMM D, YYYY');
+
+      const dayProps = getDayProps?.(new Date(dayDate)) || {};
+      const isToday = dayjs(dayDate).isSame(today, 'day') && highlightToday;
+      const isSelected = _selectedDate && dayjs(dayDate).isSame(dayjs(_selectedDate), 'day');
+      const dayEvents = groupedEvents[dayjs(dayDate).format('YYYY-MM-DD')] || [];
+
+      const shouldRender = withOutsideDays || !outside;
+
+      const indicators = dayEvents.slice(0, 3).map((event) => (
+        <div
+          {...getStyles('mobileMonthViewDayIndicator', {
+            style: { backgroundColor: getThemeColor(event.color, theme) },
+          })}
+          key={event.id}
+        />
+      ));
+
+      const handleDayClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        const newDate = dayjs(dayDate).startOf('day').toDate();
+        _setSelectedDate(toDateString(newDate));
+        onDayClick?.(newDate, event);
+        dayProps.onClick?.(event);
+      };
+
+      return (
+        <UnstyledButton
+          aria-label={ariaLabel}
+          aria-selected={isSelected || undefined}
+          {...dayProps}
+          {...getStyles('mobileMonthViewDay', {
+            className: dayProps.className,
+            style: dayProps.style,
+          })}
+          key={dayDate}
+          mod={[
+            {
+              outside,
+              weekend,
+              today: isToday,
+              selected: isSelected,
+              static: mode === 'static',
+              hidden: !shouldRender,
+            },
+            dayProps.mod,
+          ]}
+          tabIndex={mode === 'static' || !shouldRender ? -1 : 0}
+          onClick={mode === 'static' || !shouldRender ? undefined : handleDayClick}
+        >
+          {shouldRender ? dayjs(dayDate).format('D') : null}
+          {shouldRender && <div {...getStyles('mobileMonthViewDayIndicators')}>{indicators}</div>}
+        </UnstyledButton>
+      );
+    });
+
+    const weekNumberProps = getWeekNumberProps?.(new Date(week[0])) || {};
+    const weekNumber = getWeekNumber(week);
+
+    return (
+      <div {...getStyles('mobileMonthViewWeek')} key={weekIndex}>
+        {withWeekNumbers && (
+          <UnstyledButton
+            key={weekNumber}
+            aria-label={`Week ${weekNumber}`}
+            {...weekNumberProps}
+            onClick={
+              mode === 'static'
+                ? undefined
+                : (event) => {
+                    onWeekNumberClick?.(dayjs(week[0]).startOf('day').toDate(), event);
+                    weekNumberProps.onClick?.(event);
+                  }
+            }
+            mod={{ static: mode === 'static' }}
+            tabIndex={mode === 'static' ? -1 : 0}
+            {...getStyles('mobileMonthViewWeekNumber', {
+              className: weekNumberProps.className,
+              style: weekNumberProps.style,
+            })}
+          >
+            {weekNumber}
+          </UnstyledButton>
+        )}
+        {days}
+      </div>
+    );
+  });
+
+  const selectedDateEvents = _selectedDate
+    ? sortEvents(groupedEvents[dayjs(_selectedDate).format('YYYY-MM-DD')] || [])
+    : [];
+
+  const eventsList = selectedDateEvents.map((event) => {
+    const startTime = dayjs(event.start).format('HH:mm');
+    const endTime = dayjs(event.end).format('HH:mm');
+    const isAllDay = startTime === '00:00' && endTime === '00:00';
+
+    return (
+      <Box {...getStyles('mobileMonthViewEvent')} key={event.id}>
+        <div
+          {...getStyles('mobileMonthViewEventColor', {
+            style: { backgroundColor: getThemeColor(event.color, theme) },
+          })}
+        />
+        <div>
+          <ScheduleEvent
+            event={event}
+            size="md"
+            radius={radius}
+            renderEventBody={renderEventBody}
+            mode={mode}
+            style={{ padding: 0 }}
+          />
+          <Text {...getStyles('mobileMonthViewEventTime')} size="xs" c="dimmed">
+            {isAllDay ? 'All day' : `${startTime} – ${endTime}`}
+          </Text>
+        </div>
+      </Box>
+    );
+  });
+
+  const eventsHeader = _selectedDate
+    ? formatDate({
+        locale: ctx.getLocale(locale),
+        date: _selectedDate,
+        format: eventsHeaderFormat,
+      })
+    : '';
+
+  return (
+    <Box
+      {...getStyles('mobileMonthView')}
+      mod={{ 'with-week-numbers': withWeekNumbers }}
+      {...others}
+    >
+      <Box {...getStyles('mobileMonthViewCalendar')} mod={{ 'with-weekdays': withWeekDays }}>
+        {weekdays && (
+          <div {...getStyles('mobileMonthViewWeekdays')}>
+            {withWeekNumbers && <div {...getStyles('mobileMonthViewWeekdaysCorner')} />}
+            {weekdays}
+          </div>
+        )}
+        {weeks}
+      </Box>
+
+      <Box {...getStyles('mobileMonthViewEventsList')}>
+        <Text {...getStyles('mobileMonthViewEventsHeader')} fw={600} tt="capitalize">
+          {eventsHeader}
+        </Text>
+
+        <ScrollArea {...getStyles('mobileMonthViewEventsScrollArea')}>
+          {eventsList.length > 0 ? (
+            eventsList
+          ) : (
+            <Text {...getStyles('mobileMonthViewNoEvents')} c="dimmed" ta="center" py="xl">
+              {noEventsText}
+            </Text>
+          )}
+        </ScrollArea>
+      </Box>
+    </Box>
+  );
 });
 
 MobileMonthView.displayName = '@mantine/schedule/MobileMonthView';
 MobileMonthView.classes = classes;
 MobileMonthView.varsResolver = varsResolver;
+
+export namespace MobileMonthView {
+  export type Props = MobileMonthViewProps;
+  export type Factory = MobileMonthViewFactory;
+  export type StylesNames = MobileMonthViewStylesNames;
+  export type CssVariables = MobileMonthViewCssVariables;
+}

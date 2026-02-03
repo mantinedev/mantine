@@ -154,6 +154,7 @@ export * as MonthViewDemos from './demos/schedule/MonthView';
 export * as WeekViewDemos from './demos/schedule/WeekView';
 export * as DayViewDemos from './demos/schedule/DayView';
 export * as YearViewDemos from './demos/schedule/YearView';
+export * as MobileMonthViewDemos from './demos/schedule/MobileMonthView';
 
 // Extensions demos
 export * as NotificationsDemos from './demos/notifications';

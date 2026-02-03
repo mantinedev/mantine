@@ -575,3 +575,55 @@ export function StaticModeWithNavigation() {
     </div>
   );
 }
+
+export function ResponsiveLayout() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div style={{ marginBottom: 20 }}>
+        <h3>Responsive Layout (layout="responsive")</h3>
+        <p>
+          Resize the container to see the responsive behavior. On small screens (less than 600px),
+          MobileMonthView is shown instead of the full calendar views. Try resizing the container
+          below.
+        </p>
+      </div>
+      <div
+        style={{
+          resize: 'horizontal',
+          overflow: 'auto',
+          border: '1px solid #ccc',
+          padding: 10,
+          minWidth: 300,
+          maxWidth: '100%',
+        }}
+      >
+        <Schedule defaultView="week" events={events} layout="responsive" style={{ height: 600 }} />
+      </div>
+    </div>
+  );
+}
+
+export function ResponsiveLayoutMobile() {
+  return (
+    <div style={{ padding: 40 }}>
+      <div style={{ marginBottom: 20 }}>
+        <h3>Responsive Layout - Mobile Size</h3>
+        <p>This container is fixed at 375px width, simulating a mobile device.</p>
+      </div>
+      <div
+        style={{
+          width: 375,
+          height: 600,
+          border: '1px solid #ccc',
+        }}
+      >
+        <Schedule
+          defaultView="month"
+          events={events}
+          layout="responsive"
+          style={{ height: '100%' }}
+        />
+      </div>
+    </div>
+  );
+}
