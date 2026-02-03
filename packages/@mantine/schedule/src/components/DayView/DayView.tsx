@@ -11,6 +11,8 @@ import {
   getRadius,
   MantineRadius,
   rem,
+  ScrollArea,
+  ScrollAreaAutosizeProps,
   StylesApiProps,
   UnstyledButton,
   useProps,
@@ -58,6 +60,7 @@ import { getDayViewEvents } from './get-day-view-events/get-day-view-events';
 export type DayViewStylesNames =
   | 'dayView'
   | 'dayViewInner'
+  | 'dayViewScrollArea'
   | 'dayViewAllDay'
   | 'dayViewAllDayEvents'
   | 'dayViewSlot'
@@ -140,6 +143,9 @@ export interface DayViewProps
 
   /** Height of all-day slot @default 44px */
   allDaySlotHeight?: React.CSSProperties['height'];
+
+  /** Props passed down to the `ScrollArea.Autosize` component */
+  scrollAreaProps?: ScrollAreaAutosizeProps & DataAttributes;
 
   /** Props passed down to `MoreEvents` component */
   moreEventsProps?: Partial<MoreEventsProps>;
@@ -233,6 +239,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     viewSelectProps,
     slotHeight,
     allDaySlotHeight,
+    scrollAreaProps,
     events,
     moreEventsProps,
     renderEventBody,
@@ -439,62 +446,71 @@ export const DayView = factory<DayViewFactory>((_props) => {
         />
       )}
 
-      <div {...getStyles('dayViewInner')}>
-        <div {...getStyles('dayViewSlotLabels')}>
-          {withAllDaySlot && (
-            <Box {...getStyles('dayViewSlotLabel')} mod={{ 'all-day': true }}>
-              {getLabel('allDay', labels)}
-            </Box>
-          )}
-          {slotsLabels}
-        </div>
-
-        <div {...getStyles('dayViewSlots')}>
-          {withAllDaySlot && (
-            <div {...getStyles('dayViewAllDay')}>
-              <div {...getStyles('dayViewAllDayEvents')}>
-                {allDayEventsNodes}
-                {allDayEventsCount.hiddenEventsCount > 0 && (
-                  <MoreEvents
-                    events={eventsData.allDayEvents}
-                    moreEventsCount={allDayEventsCount.hiddenEventsCount}
-                    renderEventBody={renderEventBody}
-                    mode={mode}
-                    {...stylesApiProps}
-                    {...moreEventsProps}
-                  />
-                )}
-              </div>
-              <UnstyledButton
-                {...getStyles('dayViewSlot')}
-                mod={{ 'all-day': true }}
-                aria-label={`${getLabel('timeSlot', labels)} ${getLabel('allDay', labels)}`}
-              />
-            </div>
-          )}
-
-          <div {...getStyles('dayViewTimeSlots')}>
-            {eventsNodes}
-
-            {withCurrentTimeIndicator && (
-              <CurrentTimeIndicator
-                startOffset="calc(var(--day-view-slot-labels-width) * -1)"
-                endOffset="0rem"
-                topOffset="0rem"
-                timeBubbleStartOffset="calc(var(--day-view-slot-labels-width) * -1 + 30px)"
-                currentTimeFormat={slotLabelFormat}
-                withTimeBubble={withCurrentTimeBubble}
-                withThumb={!withCurrentTimeBubble}
-                locale={locale}
-                startTime={startTime}
-                endTime={endTime}
-                {...stylesApiProps}
-              />
+      <ScrollArea.Autosize
+        scrollbarSize={4}
+        {...scrollAreaProps}
+        {...getStyles('dayViewScrollArea', {
+          className: scrollAreaProps?.className,
+          style: scrollAreaProps?.style,
+        })}
+      >
+        <Box {...getStyles('dayViewInner')}>
+          <div {...getStyles('dayViewSlotLabels')}>
+            {withAllDaySlot && (
+              <Box {...getStyles('dayViewSlotLabel')} mod={{ 'all-day': true }}>
+                {getLabel('allDay', labels)}
+              </Box>
             )}
-            {items}
+            {slotsLabels}
           </div>
-        </div>
-      </div>
+
+          <div {...getStyles('dayViewSlots')}>
+            {withAllDaySlot && (
+              <div {...getStyles('dayViewAllDay')}>
+                <div {...getStyles('dayViewAllDayEvents')}>
+                  {allDayEventsNodes}
+                  {allDayEventsCount.hiddenEventsCount > 0 && (
+                    <MoreEvents
+                      events={eventsData.allDayEvents}
+                      moreEventsCount={allDayEventsCount.hiddenEventsCount}
+                      renderEventBody={renderEventBody}
+                      mode={mode}
+                      {...stylesApiProps}
+                      {...moreEventsProps}
+                    />
+                  )}
+                </div>
+                <UnstyledButton
+                  {...getStyles('dayViewSlot')}
+                  mod={{ 'all-day': true }}
+                  aria-label={`${getLabel('timeSlot', labels)} ${getLabel('allDay', labels)}`}
+                />
+              </div>
+            )}
+
+            <div {...getStyles('dayViewTimeSlots')}>
+              {eventsNodes}
+
+              {withCurrentTimeIndicator && (
+                <CurrentTimeIndicator
+                  startOffset="calc(var(--day-view-slot-labels-width) * -1)"
+                  endOffset="0rem"
+                  topOffset="0rem"
+                  timeBubbleStartOffset="calc(var(--day-view-slot-labels-width) * -1 + 30px)"
+                  currentTimeFormat={slotLabelFormat}
+                  withTimeBubble={withCurrentTimeBubble}
+                  withThumb={!withCurrentTimeBubble}
+                  locale={locale}
+                  startTime={startTime}
+                  endTime={endTime}
+                  {...stylesApiProps}
+                />
+              )}
+              {items}
+            </div>
+          </div>
+        </Box>
+      </ScrollArea.Autosize>
     </Box>
   );
 

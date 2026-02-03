@@ -492,3 +492,7 @@ export function StaticMode() {
     </div>
   );
 }
+
+export function ScrollAreaProps() {
+  return <DayView date={new Date()} scrollAreaProps={{ mah: 600 }} />;
+}
