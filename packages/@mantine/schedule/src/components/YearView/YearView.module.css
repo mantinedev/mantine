@@ -187,7 +187,7 @@
     }
   }
 
-  &:where([data-today]) {
+  &:where([data-today]:not([data-outside])) {
     background-color: var(--mantine-primary-color-filled);
     color: var(--mantine-primary-color-contrast);
 
