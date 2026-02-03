@@ -135,3 +135,32 @@ This allows you to build custom navigation or integrate with other components.
 Use `onViewChange` prop to handle view level changes when the user clicks on view selector buttons.
 
 <Demo data={DayViewDemos.viewChange} />
+
+## Accessibility
+
+### Focus management
+
+In the DayView component, focus is managed to provide an efficient keyboard navigation experience:
+
+- Only the first time slot is included in the tab order (`tabIndex={0}`)
+- All other time slots have `tabIndex={-1}` and can only be reached via arrow key navigation
+- This approach reduces the number of tab stops when navigating through the schedule
+
+### Keyboard interactions
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowDown',
+      description: 'Focuses next time slot',
+    },
+    {
+      key: 'ArrowUp',
+      description: 'Focuses previous time slot',
+    },
+  ]}
+/>
+
+### Slot labels
+
+Each time slot button has an `aria-label` attribute with the complete slot information including the time range (e.g., "Time slot 08:00:00 - 09:00:00"). This provides screen reader users with complete context about each slot.

@@ -85,6 +85,10 @@
   height: calc(var(--slot-height) * var(--slot-size));
   position: relative;
 
+  &:where(:focus) {
+    z-index: 1;
+  }
+
   &:where([data-hour-start]) {
     border-top: 1px solid var(--day-view-border-color);
   }

@@ -399,4 +399,71 @@ describe('@mantine/schedule/DayView', () => {
     expect(screen.getByRole('button', { name: 'Siguiente' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Ver día' })).toBeInTheDocument();
   });
+
+  describe('keyboard navigation', () => {
+    it('only first slot should be in tab order', () => {
+      render(
+        <DayView {...defaultProps} startTime="08:00:00" endTime="10:00:00" intervalMinutes={60} />
+      );
+
+      expect(screen.getByRole('button', { name: 'Time slot 08:00:00 - 09:00:00' })).toHaveAttribute(
+        'tabIndex',
+        '0'
+      );
+      expect(screen.getByRole('button', { name: 'Time slot 09:00:00 - 10:00:00' })).toHaveAttribute(
+        'tabIndex',
+        '-1'
+      );
+    });
+
+    it('supports ArrowDown/ArrowUp to navigate between slots', async () => {
+      render(
+        <DayView {...defaultProps} startTime="08:00:00" endTime="10:00:00" intervalMinutes={60} />
+      );
+
+      screen.getByRole('button', { name: 'Time slot 08:00:00 - 09:00:00' }).focus();
+      await userEvent.keyboard('{ArrowDown}');
+      expect(screen.getByRole('button', { name: 'Time slot 09:00:00 - 10:00:00' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowUp}');
+      expect(screen.getByRole('button', { name: 'Time slot 08:00:00 - 09:00:00' })).toHaveFocus();
+    });
+
+    it('does not move focus past boundaries', async () => {
+      render(
+        <DayView {...defaultProps} startTime="08:00:00" endTime="10:00:00" intervalMinutes={60} />
+      );
+
+      const firstSlot = screen.getByRole('button', { name: 'Time slot 08:00:00 - 09:00:00' });
+      firstSlot.focus();
+      await userEvent.keyboard('{ArrowUp}');
+      expect(firstSlot).toHaveFocus();
+
+      const lastSlot = screen.getByRole('button', { name: 'Time slot 09:00:00 - 10:00:00' });
+      lastSlot.focus();
+      await userEvent.keyboard('{ArrowDown}');
+      expect(lastSlot).toHaveFocus();
+    });
+
+    it('does not navigate with arrow keys in static mode', () => {
+      render(
+        <DayView
+          {...defaultProps}
+          startTime="08:00:00"
+          endTime="10:00:00"
+          intervalMinutes={60}
+          mode="static"
+        />
+      );
+
+      expect(screen.getByRole('button', { name: 'Time slot 08:00:00 - 09:00:00' })).toHaveAttribute(
+        'tabIndex',
+        '-1'
+      );
+      expect(screen.getByRole('button', { name: 'Time slot 09:00:00 - 10:00:00' })).toHaveAttribute(
+        'tabIndex',
+        '-1'
+      );
+    });
+  });
 });

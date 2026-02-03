@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -276,6 +277,18 @@ export const DayView = factory<DayViewFactory>((_props) => {
 
   const ctx = useDatesContext();
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
+  const slotsRef = useRef<HTMLButtonElement[]>([]);
+
+  const handleSlotKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, slotIndex: number) => {
+    const direction = event.key;
+    if (direction === 'ArrowDown' && slotIndex < slots.length - 1) {
+      event.preventDefault();
+      slotsRef.current[slotIndex + 1]?.focus();
+    } else if (direction === 'ArrowUp' && slotIndex > 0) {
+      event.preventDefault();
+      slotsRef.current[slotIndex - 1]?.focus();
+    }
+  };
 
   const eventsData = getDayViewEvents({ events, date, startTime, endTime });
 
@@ -347,6 +360,9 @@ export const DayView = factory<DayViewFactory>((_props) => {
       <UnstyledButton
         {...getStyles('dayViewSlot')}
         key={slot.startTime}
+        ref={(node) => {
+          slotsRef.current[index] = node!;
+        }}
         mod={{
           'hour-start': slot.isHourStart,
           ...getBusinessHoursMod({
@@ -359,7 +375,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
         }}
         __vars={{ '--slot-size': `${clampIntervalMinutes(intervalMinutes) / 60}` }}
         aria-label={`${getLabel('timeSlot', labels)} ${slot.startTime} - ${slot.endTime}`}
-        tabIndex={mode === 'static' ? -1 : 0}
+        tabIndex={mode === 'static' ? -1 : index === 0 ? 0 : -1}
+        onKeyDown={mode === 'static' ? undefined : (e) => handleSlotKeyDown(e, index)}
         onDragOver={
           withDragDrop && mode !== 'static' ? (e) => dragDrop.handleDragOver(e, index) : undefined
         }
