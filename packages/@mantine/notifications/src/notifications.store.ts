@@ -32,6 +32,12 @@ export interface NotificationData
 
   /** Called when notification opens */
   onOpen?: (props: NotificationData) => void;
+
+  /** When true, resets the autoClose timer when notification is updated */
+  resetTimeout?: boolean;
+
+  /** Internal property used to trigger timer reset */
+  __autoCloseTimestamp?: number;
 }
 
 export interface NotificationsState {
@@ -133,7 +139,12 @@ export function updateNotification(
   updateNotificationsState(store, (notifications) =>
     notifications.map((item) => {
       if (item.id === notification.id) {
-        return { ...item, ...notification };
+        const updated = { ...item, ...notification };
+        // If resetTimeout is true, add a timestamp to trigger timer reset
+        if (notification.resetTimeout) {
+          updated.__autoCloseTimestamp = Date.now();
+        }
+        return updated;
       }
 
       return item;

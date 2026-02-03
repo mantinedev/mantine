@@ -35,7 +35,7 @@ export const NotificationContainer = forwardRef<HTMLDivElement, NotificationCont
     useEffect(() => {
       handleAutoClose();
       return cancelAutoClose;
-    }, [autoCloseDuration]);
+    }, [autoCloseDuration, data.__autoCloseTimestamp]);
 
     return (
       <Notification
