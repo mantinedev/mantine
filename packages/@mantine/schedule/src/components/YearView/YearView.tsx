@@ -102,6 +102,7 @@ const defaultProps = {
   withWeekDays: true,
   highlightToday: true,
   withHeader: true,
+  withOutsideDays: true,
   mode: 'default',
 } satisfies Partial<YearViewProps>;
 
@@ -132,6 +133,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
     getWeekNumberProps,
     highlightToday,
     labels,
+    withOutsideDays,
 
     // ScheduleHeader props
     withHeader,
@@ -214,6 +216,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
           highlightToday={highlightToday}
           groupedEvents={groupedEvents}
           mode={mode}
+          withOutsideDays={withOutsideDays}
         />
       ));
 

@@ -58,6 +58,9 @@ export interface YearViewMonthSettings {
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions */
   mode?: ScheduleMode;
+
+  /** If true, days from adjacent months are displayed @default true */
+  withOutsideDays?: boolean;
 }
 
 export interface YearViewMonthProps extends YearViewMonthSettings {
@@ -89,6 +92,7 @@ export function YearViewMonth({
   highlightToday,
   groupedEvents,
   mode,
+  withOutsideDays,
 }: YearViewMonthProps) {
   const ctx = useDatesContext();
   const theme = useMantineTheme();
@@ -113,6 +117,11 @@ export function YearViewMonth({
   }).map((week, index) => {
     const days = week.map((date) => {
       const outside = !isSameMonth(date, month);
+
+      if (outside && !withOutsideDays) {
+        return <div {...getStyles('yearViewDay')} data-day-placeholder key={date} />;
+      }
+
       const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(date).day());
       const ariaLabel = dayjs(date)
         .locale(locale || ctx.locale)

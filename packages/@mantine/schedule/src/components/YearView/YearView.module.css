@@ -167,6 +167,12 @@
     padding: 0;
   }
 
+  &:where([data-day-placeholder]) {
+    background-color: transparent;
+    cursor: default;
+    pointer-events: none;
+  }
+
   &:where([data-weekend]) {
     color: var(--mantine-color-red-6);
   }
@@ -176,7 +182,7 @@
   }
 
   @mixin hover {
-    &:where(:not([data-today])) {
+    &:where(:not([data-today], [data-day-placeholder])) {
       @mixin where-light {
         background-color: var(--mantine-color-gray-0);
       }

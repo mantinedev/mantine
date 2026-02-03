@@ -438,4 +438,15 @@ describe('@mantine/schedule/YearView', () => {
     expect(screen.getByRole('button', { name: 'Siguiente' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Ver día' })).toBeInTheDocument();
   });
+
+  it('hides outside days when withOutsideDays is false', () => {
+    const { container } = render(<YearView {...defaultProps} withOutsideDays={false} />);
+    const january = container.querySelector('.mantine-YearView-yearViewMonth')!;
+    const placeholders = january.querySelectorAll(
+      '.mantine-YearView-yearViewDay[data-day-placeholder]'
+    );
+
+    expect(placeholders.length).toBeGreaterThan(0);
+    expect(screen.queryByRole('button', { name: 'December 30, 2024' })).not.toBeInTheDocument();
+  });
 });
