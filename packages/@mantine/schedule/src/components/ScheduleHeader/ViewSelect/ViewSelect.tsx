@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -91,6 +91,20 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
 
   const { dir } = useDirection();
   const controlsRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const activatedWithKeyboardRef = useRef(false);
+
+  // Restore focus to the selected tab when the component mounts
+  // This handles the case where focus is lost due to view switch (header unmount/remount)
+  // Only restore focus if the view was activated via keyboard (Enter/Space)
+  useEffect(() => {
+    if (activatedWithKeyboardRef.current && document.activeElement === document.body) {
+      const selectedIndex = views!.findIndex((view) => view === value);
+      if (selectedIndex !== -1) {
+        controlsRef.current[selectedIndex]?.focus();
+      }
+    }
+    activatedWithKeyboardRef.current = false;
+  }, []);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
     const isRtl = dir === 'rtl';
@@ -111,6 +125,8 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
     } else if (event.key === 'End') {
       event.preventDefault();
       controlsRef.current[views!.length - 1]?.focus();
+    } else if (event.key === 'Enter' || event.key === ' ') {
+      activatedWithKeyboardRef.current = true;
     }
   };
 
