@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -6,6 +7,7 @@ import {
   Factory,
   MantineRadius,
   StylesApiProps,
+  useDirection,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -87,31 +89,63 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
     props,
   });
 
-  const switchLabels: Record<ScheduleViewLevel, string> = {
-    day: getLabel('switchToDayView', labels),
-    week: getLabel('switchToWeekView', labels),
-    month: getLabel('switchToMonthView', labels),
-    year: getLabel('switchToYearView', labels),
+  const { dir } = useDirection();
+  const controlsRef = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const isRtl = dir === 'rtl';
+    const nextKey = isRtl ? 'ArrowLeft' : 'ArrowRight';
+    const prevKey = isRtl ? 'ArrowRight' : 'ArrowLeft';
+
+    if (event.key === nextKey) {
+      event.preventDefault();
+      const nextIndex = index < views!.length - 1 ? index + 1 : 0;
+      controlsRef.current[nextIndex]?.focus();
+    } else if (event.key === prevKey) {
+      event.preventDefault();
+      const prevIndex = index > 0 ? index - 1 : views!.length - 1;
+      controlsRef.current[prevIndex]?.focus();
+    } else if (event.key === 'Home') {
+      event.preventDefault();
+      controlsRef.current[0]?.focus();
+    } else if (event.key === 'End') {
+      event.preventDefault();
+      controlsRef.current[views!.length - 1]?.focus();
+    }
   };
 
-  const items = views.map((view) => (
-    <HeaderControl
-      key={view}
-      data-type={view}
-      active={value === view}
-      onClick={() => onChange?.(view)}
-      classNames={resolvedClassNames}
-      styles={resolvedStyles}
-      __staticSelector={__staticSelector}
-      aria-label={switchLabels[view]}
-      radius={radius}
-    >
-      {getLabel(view, labels)}
-    </HeaderControl>
-  ));
+  const items = views!.map((view, index) => {
+    const isSelected = value === view;
+    return (
+      <HeaderControl
+        key={view}
+        ref={(node) => {
+          controlsRef.current[index] = node;
+        }}
+        data-type={view}
+        active={isSelected}
+        onClick={() => onChange?.(view)}
+        onKeyDown={(event) => handleKeyDown(event, index)}
+        classNames={resolvedClassNames}
+        styles={resolvedStyles}
+        __staticSelector={__staticSelector}
+        radius={radius}
+        role="tab"
+        aria-selected={isSelected}
+        tabIndex={isSelected ? 0 : -1}
+      >
+        {getLabel(view, labels)}
+      </HeaderControl>
+    );
+  });
 
   return (
-    <Box {...getStyles('viewSelect')} {...others}>
+    <Box
+      {...getStyles('viewSelect')}
+      role="tablist"
+      aria-label={getLabel('viewSelectLabel', labels)}
+      {...others}
+    >
       {items}
     </Box>
   );

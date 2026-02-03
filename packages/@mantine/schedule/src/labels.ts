@@ -16,6 +16,7 @@ export interface ScheduleLabels {
   switchToWeekView: string;
   switchToMonthView: string;
   switchToYearView: string;
+  viewSelectLabel: string;
   moreLabel: (hiddenEventsCount: number) => string;
 }
 
@@ -37,6 +38,7 @@ export const DEFAULT_SCHEDULE_LABELS: ScheduleLabels = {
   switchToWeekView: 'Switch to week view',
   switchToMonthView: 'Switch to month view',
   switchToYearView: 'Switch to year view',
+  viewSelectLabel: 'Calendar view',
   moreLabel: (hiddenEventsCount: number) => `+${hiddenEventsCount} more`,
 };
 
