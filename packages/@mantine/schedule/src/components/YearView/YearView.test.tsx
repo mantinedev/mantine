@@ -449,4 +449,161 @@ describe('@mantine/schedule/YearView', () => {
     expect(placeholders.length).toBeGreaterThan(0);
     expect(screen.queryByRole('button', { name: 'December 30, 2024' })).not.toBeInTheDocument();
   });
+
+  describe('keyboard navigation', () => {
+    const getInsideDayButton = (name: string) => {
+      const buttons = screen.getAllByRole('button', { name });
+      return buttons.find((btn) => !btn.hasAttribute('data-outside')) || buttons[0];
+    };
+
+    it('only first day of each month should be in tab order', async () => {
+      render(<YearView {...defaultProps} />);
+
+      const nov1 = getInsideDayButton('November 1, 2025');
+      expect(nov1).toHaveAttribute('tabIndex', '0');
+
+      const nov2 = getInsideDayButton('November 2, 2025');
+      expect(nov2).toHaveAttribute('tabIndex', '-1');
+
+      const dec1 = getInsideDayButton('December 1, 2025');
+      expect(dec1).toHaveAttribute('tabIndex', '0');
+    });
+
+    it('outside days should not be in tab order', () => {
+      render(<YearView {...defaultProps} />);
+
+      const oct27Buttons = screen.getAllByRole('button', { name: 'October 27, 2025' });
+      const outsideOct27 = oct27Buttons.find((btn) => btn.hasAttribute('data-outside'));
+      expect(outsideOct27).toHaveAttribute('tabIndex', '-1');
+    });
+
+    it('supports ArrowRight key to move focus to next day', async () => {
+      render(<YearView {...defaultProps} />);
+      const nov1 = getInsideDayButton('November 1, 2025');
+
+      nov1.focus();
+      expect(document.activeElement).toBe(nov1);
+
+      await userEvent.keyboard('{ArrowRight}');
+      const nov2 = getInsideDayButton('November 2, 2025');
+      expect(document.activeElement).toBe(nov2);
+    });
+
+    it('supports ArrowLeft key to move focus to previous day', async () => {
+      render(<YearView {...defaultProps} />);
+      const nov2 = getInsideDayButton('November 2, 2025');
+
+      nov2.focus();
+      expect(document.activeElement).toBe(nov2);
+
+      await userEvent.keyboard('{ArrowLeft}');
+      const nov1 = getInsideDayButton('November 1, 2025');
+      expect(document.activeElement).toBe(nov1);
+    });
+
+    it('supports ArrowDown key to move focus to same day in next week', async () => {
+      render(<YearView {...defaultProps} />);
+      const nov3 = getInsideDayButton('November 3, 2025');
+
+      nov3.focus();
+      expect(document.activeElement).toBe(nov3);
+
+      await userEvent.keyboard('{ArrowDown}');
+      const nov10 = getInsideDayButton('November 10, 2025');
+      expect(document.activeElement).toBe(nov10);
+    });
+
+    it('supports ArrowUp key to move focus to same day in previous week', async () => {
+      render(<YearView {...defaultProps} />);
+      const nov10 = getInsideDayButton('November 10, 2025');
+
+      nov10.focus();
+      expect(document.activeElement).toBe(nov10);
+
+      await userEvent.keyboard('{ArrowUp}');
+      const nov3 = getInsideDayButton('November 3, 2025');
+      expect(document.activeElement).toBe(nov3);
+    });
+
+    it('ArrowRight at end of week moves to first day of next week', async () => {
+      render(<YearView {...defaultProps} />);
+      const nov9 = getInsideDayButton('November 9, 2025');
+
+      nov9.focus();
+      expect(document.activeElement).toBe(nov9);
+
+      await userEvent.keyboard('{ArrowRight}');
+      const nov10 = getInsideDayButton('November 10, 2025');
+      expect(document.activeElement).toBe(nov10);
+    });
+
+    it('ArrowDown at last week of month moves to next month', async () => {
+      render(<YearView {...defaultProps} />);
+      const nov30 = getInsideDayButton('November 30, 2025');
+
+      nov30.focus();
+      expect(document.activeElement).toBe(nov30);
+
+      await userEvent.keyboard('{ArrowDown}');
+      const dec7 = getInsideDayButton('December 7, 2025');
+      expect(document.activeElement).toBe(dec7);
+    });
+
+    it('skips outside days when navigating with ArrowUp', async () => {
+      render(<YearView {...defaultProps} />);
+      const nov3 = getInsideDayButton('November 3, 2025');
+
+      nov3.focus();
+      expect(document.activeElement).toBe(nov3);
+
+      await userEvent.keyboard('{ArrowUp}');
+      expect(document.activeElement?.getAttribute('data-outside')).toBeFalsy();
+    });
+
+    it('does not navigate with arrow keys in static mode', async () => {
+      render(<YearView {...defaultProps} mode="static" />);
+      const nov1 = getInsideDayButton('November 1, 2025');
+
+      expect(nov1).toHaveAttribute('tabIndex', '-1');
+    });
+
+    it('skips disabled days when navigating', async () => {
+      render(
+        <YearView
+          {...defaultProps}
+          getDayProps={(date) =>
+            dayjs(date).date() === 2 && dayjs(date).month() === 10 ? { disabled: true } : {}
+          }
+        />
+      );
+      const nov1 = getInsideDayButton('November 1, 2025');
+
+      nov1.focus();
+      expect(document.activeElement).toBe(nov1);
+
+      await userEvent.keyboard('{ArrowRight}');
+      const nov3 = getInsideDayButton('November 3, 2025');
+      expect(document.activeElement).toBe(nov3);
+    });
+
+    it('navigates within the same month with keyboard', async () => {
+      render(<YearView {...defaultProps} />);
+      const nov15 = getInsideDayButton('November 15, 2025');
+
+      nov15.focus();
+      expect(document.activeElement).toBe(nov15);
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(getInsideDayButton('November 16, 2025')).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(getInsideDayButton('November 15, 2025')).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowDown}');
+      expect(getInsideDayButton('November 22, 2025')).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowUp}');
+      expect(getInsideDayButton('November 15, 2025')).toHaveFocus();
+    });
+  });
 });

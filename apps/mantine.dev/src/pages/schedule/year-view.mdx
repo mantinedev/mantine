@@ -57,3 +57,45 @@ Set `withHeader={false}` to hide the header controls.
 Set `mode="static"` to disable all interactions.
 
 <Demo data={YearViewDemos.staticMode} />
+
+## Accessibility
+
+### Focus management
+
+In the YearView component, focus is managed to provide an efficient keyboard navigation experience:
+
+- Only the first day of each month is included in the tab order (has `tabIndex={0}`)
+- All other days within a month have `tabIndex={-1}` and can only be reached via arrow key navigation
+- Outside days (days from adjacent months displayed in the current month view) are not focusable
+- Disabled days are skipped during keyboard navigation
+
+This approach reduces the number of tab stops when navigating through the calendar, making it faster for keyboard users to move between months while still allowing full access to all days via arrow keys.
+
+### Keyboard interactions
+
+Note that the following events will only trigger if focus is on a day control.
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'ArrowRight',
+      description: 'Focuses next non-disabled day',
+    },
+    {
+      key: 'ArrowLeft',
+      description: 'Focuses previous non-disabled day',
+    },
+    {
+      key: 'ArrowDown',
+      description: 'Focuses same day in the next week (moves to next month if at end of month)',
+    },
+    {
+      key: 'ArrowUp',
+      description: 'Focuses same day in the previous week (moves to previous month if at start)',
+    },
+  ]}
+/>
+
+### Day labels
+
+Each day button has an `aria-label` attribute with the full date in the format "Month Day, Year" (e.g., "November 15, 2025"). This provides screen reader users with complete date information.

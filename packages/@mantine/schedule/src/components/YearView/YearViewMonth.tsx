@@ -13,6 +13,12 @@ import {
 import { GroupedEvents } from './get-year-view-events/get-year-view-events';
 import type { YearViewFactory } from './YearView';
 
+export interface YearViewDayKeydownPayload {
+  weekIndex: number;
+  dayIndex: number;
+  date: string;
+}
+
 export interface YearViewMonthSettings {
   /** `dayjs` format for month label  @default 'MMMM' */
   monthLabelFormat?: DateLabelFormat;
@@ -72,6 +78,18 @@ export interface YearViewMonthProps extends YearViewMonthSettings {
 
   /** Events grouped by date */
   groupedEvents?: GroupedEvents;
+
+  /** Assigns ref of every day based on its position in the month, used for keyboard navigation */
+  __getDayRef?: (weekIndex: number, dayIndex: number, node: HTMLButtonElement) => void;
+
+  /** Called when any keydown event is registered on day, used for keyboard navigation */
+  __onDayKeyDown?: (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    payload: YearViewDayKeydownPayload
+  ) => void;
+
+  /** Index of the first day of the month in the grid (for determining which day should be in tab order) */
+  firstDayIndex?: { weekIndex: number; dayIndex: number };
 }
 
 export function YearViewMonth({
@@ -93,6 +111,9 @@ export function YearViewMonth({
   groupedEvents,
   mode,
   withOutsideDays,
+  __getDayRef,
+  __onDayKeyDown,
+  firstDayIndex,
 }: YearViewMonthProps) {
   const ctx = useDatesContext();
   const theme = useMantineTheme();
@@ -114,8 +135,8 @@ export function YearViewMonth({
     month: dayjs(month).format('YYYY-MM-DD'),
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
     consistentWeeks: true,
-  }).map((week, index) => {
-    const days = week.map((date) => {
+  }).map((week, weekIndex) => {
+    const days = week.map((date, dayIndex) => {
       const outside = !isSameMonth(date, month);
 
       if (outside && !withOutsideDays) {
@@ -130,6 +151,14 @@ export function YearViewMonth({
       const dayProps = getDayProps?.(new Date(date)) || {};
       const isToday = dayjs(date).isSame(today, 'day') && highlightToday;
       const dayEvents = groupedEvents?.[dayjs(date).format('YYYY-MM-DD')] || [];
+
+      // Determine if this day should be in the tab order
+      // Only the first day of the month (not outside) should be focusable via tab
+      const isFirstDayOfMonth =
+        firstDayIndex &&
+        weekIndex === firstDayIndex.weekIndex &&
+        dayIndex === firstDayIndex.dayIndex;
+      const isInTabOrder = mode !== 'static' && !outside && isFirstDayOfMonth;
 
       const indicators = dayEvents.slice(0, 3).map((event) => (
         <div
@@ -147,7 +176,16 @@ export function YearViewMonth({
           {...getStyles('yearViewDay', { className: dayProps.className, style: dayProps.style })}
           key={date}
           mod={[{ outside, weekend, today: isToday, static: mode === 'static' }, dayProps.mod]}
-          tabIndex={mode === 'static' ? -1 : 0}
+          tabIndex={isInTabOrder ? 0 : -1}
+          ref={(node) => {
+            if (node) {
+              __getDayRef?.(weekIndex, dayIndex, node);
+            }
+          }}
+          onKeyDown={(event) => {
+            dayProps.onKeyDown?.(event);
+            __onDayKeyDown?.(event, { weekIndex, dayIndex, date });
+          }}
           onClick={
             mode === 'static'
               ? undefined
@@ -168,7 +206,7 @@ export function YearViewMonth({
     const weekNumber = getWeekNumber(week);
 
     return (
-      <div {...getStyles('yearViewWeek')} key={index}>
+      <div {...getStyles('yearViewWeek')} key={weekIndex}>
         {withWeekNumbers && (
           <UnstyledButton
             key={weekNumber}

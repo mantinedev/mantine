@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -16,12 +17,16 @@ import {
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { DateStringValue, ScheduleEventData, ScheduleMode, ScheduleViewLevel } from '../../types';
-import { getMonthsByQuarter, toDateString } from '../../utils';
+import { getMonthDays, getMonthsByQuarter, isSameMonth, toDateString } from '../../utils';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getYearViewEvents } from './get-year-view-events/get-year-view-events';
+import {
+  handleYearViewKeyDown,
+  YearViewControlsRef,
+} from './handle-year-view-key-down/handle-year-view-key-down';
 import classes from './YearView.module.css';
 import { YearViewMonth, YearViewMonthSettings } from './YearViewMonth';
 
@@ -191,38 +196,86 @@ export const YearView = factory<YearViewFactory>((_props) => {
 
   const groupedEvents = getYearViewEvents({ date, events });
 
+  // [monthIndex][weekIndex][dayIndex]
+  const daysRef = useRef<HTMLButtonElement[][][]>([]) as YearViewControlsRef;
+
+  const getFirstDayIndex = (month: string): { weekIndex: number; dayIndex: number } | undefined => {
+    const weeks = getMonthDays({
+      month: dayjs(month).format('YYYY-MM-DD'),
+      firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+      consistentWeeks: true,
+    });
+
+    for (let weekIndex = 0; weekIndex < weeks.length; weekIndex++) {
+      const week = weeks[weekIndex];
+      for (let dayIndex = 0; dayIndex < week.length; dayIndex++) {
+        const dayDate = week[dayIndex];
+        if (isSameMonth(dayDate, month)) {
+          return { weekIndex, dayIndex };
+        }
+      }
+    }
+
+    return undefined;
+  };
+
+  let globalMonthIndex = 0;
   const months = getMonthsByQuarter(dayjs(date).format('YYYY-MM-DD')).map(
     (quarter, quarterIndex) => {
-      const months = quarter.map((month) => (
-        <YearViewMonth
-          key={month}
-          month={month}
-          getStyles={getStyles}
-          monthLabelFormat={monthLabelFormat}
-          withWeekNumbers={withWeekNumbers}
-          withWeekDays={withWeekDays}
-          locale={locale}
-          firstDayOfWeek={firstDayOfWeek}
-          weekdayFormat={
-            weekdayFormat ||
-            ((date) => dayjs(date).locale(ctx.getLocale(locale)).format('dd').slice(0, 1))
-          }
-          weekendDays={weekendDays}
-          getDayProps={getDayProps}
-          getWeekNumberProps={getWeekNumberProps}
-          onMonthClick={onMonthClick}
-          onDayClick={onDayClick}
-          onWeekNumberClick={onWeekNumberClick}
-          highlightToday={highlightToday}
-          groupedEvents={groupedEvents}
-          mode={mode}
-          withOutsideDays={withOutsideDays}
-        />
-      ));
+      const monthsInQuarter = quarter.map((month) => {
+        const currentMonthIndex = globalMonthIndex;
+        globalMonthIndex++;
+
+        return (
+          <YearViewMonth
+            key={month}
+            month={month}
+            getStyles={getStyles}
+            monthLabelFormat={monthLabelFormat}
+            withWeekNumbers={withWeekNumbers}
+            withWeekDays={withWeekDays}
+            locale={locale}
+            firstDayOfWeek={firstDayOfWeek}
+            weekdayFormat={
+              weekdayFormat ||
+              ((date) => dayjs(date).locale(ctx.getLocale(locale)).format('dd').slice(0, 1))
+            }
+            weekendDays={weekendDays}
+            getDayProps={getDayProps}
+            getWeekNumberProps={getWeekNumberProps}
+            onMonthClick={onMonthClick}
+            onDayClick={onDayClick}
+            onWeekNumberClick={onWeekNumberClick}
+            highlightToday={highlightToday}
+            groupedEvents={groupedEvents}
+            mode={mode}
+            withOutsideDays={withOutsideDays}
+            firstDayIndex={getFirstDayIndex(month)}
+            __getDayRef={(weekIndex, dayIndex, node) => {
+              if (!Array.isArray(daysRef.current[currentMonthIndex])) {
+                daysRef.current[currentMonthIndex] = [];
+              }
+              if (!Array.isArray(daysRef.current[currentMonthIndex][weekIndex])) {
+                daysRef.current[currentMonthIndex][weekIndex] = [];
+              }
+              daysRef.current[currentMonthIndex][weekIndex][dayIndex] = node;
+            }}
+            __onDayKeyDown={(event, payload) => {
+              handleYearViewKeyDown({
+                controlsRef: daysRef,
+                monthIndex: currentMonthIndex,
+                weekIndex: payload.weekIndex,
+                dayIndex: payload.dayIndex,
+                event,
+              });
+            }}
+          />
+        );
+      });
 
       return (
         <div {...getStyles('yearViewQuarter')} key={quarterIndex}>
-          {months}
+          {monthsInQuarter}
         </div>
       );
     }
