@@ -79,4 +79,24 @@ describe('@mantine/schedule/ScheduleEvent', () => {
       'start'
     );
   });
+
+  it('supports renderEvent prop for full customization', () => {
+    render(
+      <ScheduleEvent
+        {...defaultProps}
+        renderEvent={(event, props) => (
+          <button data-testid="custom-event" {...props}>
+            <span>Fully custom render</span>
+            <span>Event: {event.title}</span>
+            {props.children}
+          </button>
+        )}
+      />
+    );
+
+    expect(screen.getByTestId('custom-event')).toBeInTheDocument();
+    expect(screen.getByText('Fully custom render')).toBeInTheDocument();
+    expect(screen.getByText('Event: Test event')).toBeInTheDocument();
+    expect(screen.getByText('Test event')).toBeInTheDocument();
+  });
 });

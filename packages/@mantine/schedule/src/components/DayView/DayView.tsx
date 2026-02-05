@@ -46,6 +46,7 @@ import {
 import { DragContext } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
 import {
+  RenderEvent,
   RenderEventBody,
   ScheduleEvent,
   ScheduleEventStylesNames,
@@ -153,6 +154,9 @@ export interface DayViewProps
   /** Function to customize event body, `event` object is passed as first argument */
   renderEventBody?: RenderEventBody;
 
+  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children */
+  renderEvent?: RenderEvent;
+
   /** Labels override */
   labels?: ScheduleLabelsOverride;
 
@@ -243,6 +247,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     events,
     moreEventsProps,
     renderEventBody,
+    renderEvent,
     labels,
     highlightBusinessHours,
     businessHours,
@@ -324,6 +329,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
         event={event}
         key={event.id}
         renderEventBody={renderEventBody}
+        renderEvent={renderEvent}
         autoSize
         draggable={isDraggable}
         mode={mode}
@@ -352,6 +358,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
         key={event.id}
         event={event}
         renderEventBody={renderEventBody}
+        renderEvent={renderEvent}
         style={{ maxHeight: '50%' }}
         nowrap
         autoSize

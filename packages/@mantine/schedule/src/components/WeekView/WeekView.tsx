@@ -47,7 +47,7 @@ import {
   CurrentTimeIndicatorStylesNames,
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
 import { DragContext } from '../DragContext/DragContext';
-import { RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
+import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
@@ -186,6 +186,9 @@ export interface WeekViewProps
   /** Function to customize event body, `event` object is passed as first argument */
   renderEventBody?: RenderEventBody;
 
+  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children */
+  renderEvent?: RenderEvent;
+
   /** If true, events can be dragged and dropped @default false */
   withDragDrop?: boolean;
 
@@ -282,6 +285,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     highlightBusinessHours,
     businessHours,
     renderEventBody,
+    renderEvent,
     withDragDrop,
     onEventDrop,
     canDragEvent,
@@ -500,6 +504,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           hanging={event.position.hanging}
           draggable={isDraggable}
           renderEventBody={renderEventBody}
+          renderEvent={renderEvent}
           radius={radius}
           mode={mode}
           style={{
@@ -571,6 +576,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       autoSize
       nowrap
       hanging={event.position.hanging}
+      renderEvent={renderEvent}
       mode={mode}
       style={{
         position: 'absolute',

@@ -39,7 +39,7 @@ import {
 } from '../../utils';
 import { DragContext } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps } from '../MoreEvents/MoreEvents';
-import { RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
+import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
@@ -148,6 +148,9 @@ export interface MonthViewProps
   /** Function to customize event body, `event` object is passed as first argument */
   renderEventBody?: RenderEventBody;
 
+  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children */
+  renderEvent?: RenderEvent;
+
   /** If true, events can be dragged and dropped @default false */
   withDragDrop?: boolean;
 
@@ -228,6 +231,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     events,
     moreEventsProps,
     renderEventBody,
+    renderEvent,
     withDragDrop,
     onEventDrop,
     canDragEvent,
@@ -418,6 +422,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
             hanging={event.position.hanging}
             draggable={isDraggable}
             renderEventBody={renderEventBody}
+            renderEvent={renderEvent}
             radius={radius}
             mode={mode}
             style={{

@@ -44,6 +44,10 @@ export const Demo_manyEvents = {
   render: renderDemo(demos.manyEvents),
 };
 export const Demo_dragDrop = { name: '⭐ Demo: dragDrop', render: renderDemo(demos.dragDrop) };
+export const Demo_renderEvent = {
+  name: '⭐ Demo: renderEvent',
+  render: renderDemo(demos.renderEvent),
+};
 export const Demo_staticMode = {
   name: '⭐ Demo: staticMode',
   render: renderDemo(demos.staticMode),

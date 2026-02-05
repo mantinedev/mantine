@@ -88,6 +88,11 @@ export const Demo_dragDrop = {
   render: renderDemo(demos.dragDrop),
 };
 
+export const Demo_renderEvent = {
+  name: '⭐ Demo: renderEvent',
+  render: renderDemo(demos.renderEvent),
+};
+
 export const Demo_staticMode = {
   name: '⭐ Demo: staticMode',
   render: renderDemo(demos.staticMode),

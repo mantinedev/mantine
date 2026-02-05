@@ -70,6 +70,15 @@ Enable drag and drop to move events between days.
 
 <Demo data={MonthViewDemos.dragDrop} />
 
+## Full event customization
+
+Use `renderEvent` prop to fully customize event rendering. This function receives the event
+data as the first argument and all props that would be passed to the event root element
+(including children) as the second argument, allowing you to wrap events in custom components
+like HoverCard, Tooltip, or custom wrappers.
+
+<Demo data={MonthViewDemos.renderEvent} />
+
 ## Static mode
 
 Set `mode="static"` to disable all interactions.

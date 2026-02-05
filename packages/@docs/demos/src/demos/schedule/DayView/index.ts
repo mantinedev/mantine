@@ -13,6 +13,7 @@ export { radius } from './DayView.demo.radius';
 export { dragDrop } from './DayView.demo.dragDrop';
 export { canDragEvent } from './DayView.demo.canDragEvent';
 export { renderEventBody } from './DayView.demo.renderEventBody';
+export { renderEvent } from './DayView.demo.renderEvent';
 export { staticMode } from './DayView.demo.staticMode';
 export { labels } from './DayView.demo.labels';
 export { controlledDate } from './DayView.demo.controlledDate';

@@ -26,6 +26,11 @@ export type ScheduleEventCssVariables = {
 
 export type RenderEventBody = (event: ScheduleEventData<any>) => React.ReactNode;
 
+export type RenderEvent = (
+  event: ScheduleEventData,
+  props: React.ComponentPropsWithoutRef<'button'> & { children: React.ReactNode }
+) => React.ReactElement;
+
 export interface ScheduleEventProps
   extends BoxProps, StylesApiProps<ScheduleEventFactory>, ElementProps<'button'> {
   __staticSelector?: string;
@@ -47,6 +52,9 @@ export interface ScheduleEventProps
 
   /** Function to customize event body, `event` object is passed as first argument */
   renderEventBody?: RenderEventBody;
+
+  /** Function to fully customize event rendering, receives all props that would be passed to the root element including children */
+  renderEvent?: RenderEvent;
 
   /** Event hanging position */
   hanging?: 'start' | 'end' | 'both' | 'none';
@@ -117,6 +125,7 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
     __staticSelector,
     event,
     renderEventBody,
+    renderEvent,
     size,
     autoSize,
     mod,
@@ -166,34 +175,41 @@ export const ScheduleEvent = factory<ScheduleEventFactory>((_props) => {
   const isCurrentlyDragging = isDragging || ctx.draggedEventId === event.id;
   const isAnyEventDragging = ctx.isDragging || false;
 
-  return (
-    <UnstyledButton
-      {...getStyles('event')}
-      size={size}
-      title={event.title}
-      mod={[
-        {
-          autoSize,
-          hanging,
-          draggable,
-          dragging: isCurrentlyDragging,
-          'any-dragging': isAnyEventDragging,
-          static: mode === 'static',
-        },
-        mod,
-      ]}
-      draggable={draggable && mode !== 'static'}
-      tabIndex={mode === 'static' ? -1 : 0}
-      onDragStart={mode === 'static' ? undefined : handleDragStart}
-      onDragEnd={mode === 'static' ? undefined : handleDragEnd}
-      onClick={mode === 'static' ? undefined : others.onClick}
-      {...others}
-    >
-      <Box mod={{ nowrap, size, autoSize, hanging }} {...getStyles('eventInner')}>
-        {typeof renderEventBody === 'function' ? renderEventBody(event) : event.title}
-      </Box>
-    </UnstyledButton>
+  const eventChildren = (
+    <Box mod={{ nowrap, size, autoSize, hanging }} {...getStyles('eventInner')}>
+      {typeof renderEventBody === 'function' ? renderEventBody(event) : event.title}
+    </Box>
   );
+
+  const rootProps = {
+    ...getStyles('event'),
+    size,
+    title: event.title,
+    mod: [
+      {
+        autoSize,
+        hanging,
+        draggable,
+        dragging: isCurrentlyDragging,
+        'any-dragging': isAnyEventDragging,
+        static: mode === 'static',
+      },
+      mod,
+    ],
+    draggable: draggable && mode !== 'static',
+    tabIndex: mode === 'static' ? -1 : 0,
+    onDragStart: mode === 'static' ? undefined : handleDragStart,
+    onDragEnd: mode === 'static' ? undefined : handleDragEnd,
+    onClick: mode === 'static' ? undefined : others.onClick,
+    ...others,
+    children: eventChildren,
+  };
+
+  if (typeof renderEvent === 'function') {
+    return renderEvent(event, rootProps);
+  }
+
+  return <UnstyledButton {...rootProps} />;
 });
 
 ScheduleEvent.displayName = '@mantine/schedule/ScheduleEvent';

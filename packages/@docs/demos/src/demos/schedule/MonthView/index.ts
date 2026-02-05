@@ -9,4 +9,5 @@ export { withoutOutsideDays } from './MonthView.demo.withoutOutsideDays';
 export { withoutHeader } from './MonthView.demo.withoutHeader';
 export { manyEvents } from './MonthView.demo.manyEvents';
 export { dragDrop } from './MonthView.demo.dragDrop';
+export { renderEvent } from './MonthView.demo.renderEvent';
 export { staticMode } from './MonthView.demo.staticMode';
