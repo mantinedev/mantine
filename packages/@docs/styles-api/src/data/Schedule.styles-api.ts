@@ -8,6 +8,7 @@ export const ScheduleStylesApi: StylesApiData<ScheduleFactory> = {
     mobileView: 'Mobile view container (visible on small screens when layout="responsive")',
     dayView: 'DayView root element',
     dayViewInner: 'DayView inner container',
+    dayViewScrollArea: 'DayView scroll area component',
     dayViewAllDay: 'DayView all-day events container',
     dayViewAllDayEvents: 'DayView all-day events wrapper',
     dayViewSlot: 'DayView individual time slot',

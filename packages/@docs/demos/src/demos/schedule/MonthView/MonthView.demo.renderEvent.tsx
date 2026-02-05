@@ -98,7 +98,7 @@ function Demo() {
     <MonthView
       date={new Date()}
       events={selectedEvents}
-      withDragDrop
+      withEventsDragAndDrop
       onEventDrop={(eventId, newStart, newEnd) => {
         setEvents((current) =>
           current.map((event) =>
@@ -134,7 +134,7 @@ function Demo() {
     <MonthView
       date={new Date()}
       events={events}
-      withDragDrop
+      withEventsDragAndDrop
       onEventDrop={(eventId, newStart, newEnd) => {
         setEvents((current) =>
           current.map((event) =>

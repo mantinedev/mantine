@@ -63,7 +63,7 @@ function Demo() {
     );
   };
 
-  return <MonthView date={new Date()} events={events} withDragDrop onEventDrop={handleEventDrop} />;
+  return <MonthView date={new Date()} events={events} withEventsDragAndDrop onEventDrop={handleEventDrop} />;
 }
 `;
 
@@ -84,7 +84,14 @@ function Demo() {
     );
   };
 
-  return <MonthView date={new Date()} events={events} withDragDrop onEventDrop={handleEventDrop} />;
+  return (
+    <MonthView
+      date={new Date()}
+      events={events}
+      withEventsDragAndDrop
+      onEventDrop={handleEventDrop}
+    />
+  );
 }
 
 export const dragDrop: MantineDemo = {

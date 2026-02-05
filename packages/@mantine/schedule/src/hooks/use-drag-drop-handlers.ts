@@ -16,6 +16,12 @@ export interface UseDragDropHandlersOptions<T = any> {
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
 
+  /** Called when any event drag starts */
+  onEventDragStart?: (event: ScheduleEventData) => void;
+
+  /** Called when any event drag ends */
+  onEventDragEnd?: () => void;
+
   /**
    * Function to calculate drop target dates from drop location.
    * Receives the target location and the dragged event.
@@ -61,7 +67,15 @@ export interface DragDropHandlers<T = any> {
 export function useDragDropHandlers<T = any>(
   options: UseDragDropHandlersOptions<T>
 ): DragDropHandlers<T> {
-  const { enabled, mode, onEventDrop, canDragEvent, calculateDropTarget } = options;
+  const {
+    enabled,
+    mode,
+    onEventDrop,
+    canDragEvent,
+    onEventDragStart,
+    onEventDragEnd,
+    calculateDropTarget,
+  } = options;
 
   const dragState = useDragState();
   const [dropTarget, setDropTarget] = useState<T | null>(null);
@@ -72,14 +86,16 @@ export function useDragDropHandlers<T = any>(
         return;
       }
       dragState.startDrag(event);
+      onEventDragStart?.(event);
     },
-    [enabled, mode, dragState]
+    [enabled, mode, dragState, onEventDragStart]
   );
 
   const handleDragEnd = useCallback(() => {
     dragState.endDrag();
     setDropTarget(null);
-  }, [dragState]);
+    onEventDragEnd?.();
+  }, [dragState, onEventDragEnd]);
 
   const handleDragOver = useCallback(
     (event: React.DragEvent, target: T) => {

@@ -79,7 +79,7 @@ function Demo() {
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"
-      withDragDrop
+      withEventsDragAndDrop
       onEventDrop={handleEventDrop}
       canDragEvent={(event) => !event.payload?.locked}
     />
@@ -104,7 +104,7 @@ function Demo() {
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"
-      withDragDrop
+      withEventsDragAndDrop
       onEventDrop={handleEventDrop}
       canDragEvent={(event) => !event.payload?.locked}
     />

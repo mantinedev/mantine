@@ -5,6 +5,7 @@ export const DayViewStylesApi: StylesApiData<DayViewFactory> = {
   selectors: {
     dayView: 'Root element',
     dayViewInner: 'Inner container wrapping slot labels and slots',
+    dayViewScrollArea: 'Scroll area component',
     dayViewAllDay: 'All-day events container',
     dayViewAllDayEvents: 'All-day events wrapper',
     dayViewSlot: 'Individual time slot element',

@@ -88,7 +88,7 @@ function Demo() {
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"
-      withDragDrop
+      withEventsDragAndDrop
       onEventDrop={(eventId, newStart, newEnd) => {
         setEvents((current) =>
           current.map((event) =>
@@ -126,7 +126,7 @@ function Demo() {
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"
-      withDragDrop
+      withEventsDragAndDrop
       onEventDrop={(eventId, newStart, newEnd) => {
         setEvents((current) =>
           current.map((event) =>

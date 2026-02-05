@@ -44,9 +44,11 @@ type ScheduleCommonProps =
   | 'radius'
   | 'labels'
   | 'renderEventBody'
-  | 'withDragDrop'
+  | 'withEventsDragAndDrop'
   | 'onEventDrop'
   | 'canDragEvent'
+  | 'onEventDragStart'
+  | 'onEventDragEnd'
   | 'view'
   | 'onViewChange'
   | 'mode';
@@ -91,13 +93,19 @@ export interface ScheduleProps
   renderEventBody?: RenderEventBody;
 
   /** Enable drag and drop for events @default false */
-  withDragDrop?: boolean;
+  withEventsDragAndDrop?: boolean;
 
   /** Called when event is dropped */
   onEventDrop?: (eventId: string | number, newStart: Date, newEnd: Date) => void;
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
+
+  /** Called when any event drag starts */
+  onEventDragStart?: (event: ScheduleEventData) => void;
+
+  /** Called when any event drag ends */
+  onEventDragEnd?: () => void;
 
   /** Interaction mode:
    * - `'default'` allows all interactions
@@ -159,9 +167,11 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     radius,
     labels,
     renderEventBody,
-    withDragDrop,
+    withEventsDragAndDrop,
     onEventDrop,
     canDragEvent,
+    onEventDragStart,
+    onEventDragEnd,
     mode,
     layout,
     dayViewProps,
@@ -217,9 +227,11 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     radius,
     labels,
     renderEventBody,
-    withDragDrop: mode === 'static' ? false : withDragDrop,
+    withEventsDragAndDrop: mode === 'static' ? false : withEventsDragAndDrop,
     onEventDrop,
     canDragEvent,
+    onEventDragStart,
+    onEventDragEnd,
     mode,
   };
 

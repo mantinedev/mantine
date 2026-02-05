@@ -286,7 +286,7 @@ export function DragAndDrop() {
         date={date}
         onDateChange={setDate}
         events={eventsData}
-        withDragDrop
+        withEventsDragAndDrop
         onEventDrop={handleEventDrop}
         canDragEvent={(event) => !event.payload?.locked}
       />

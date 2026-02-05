@@ -190,13 +190,19 @@ export interface WeekViewProps
   renderEvent?: RenderEvent;
 
   /** If true, events can be dragged and dropped @default false */
-  withDragDrop?: boolean;
+  withEventsDragAndDrop?: boolean;
 
   /** Called when event is dropped at new time */
   onEventDrop?: (eventId: string | number, newStart: Date, newEnd: Date) => void;
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
+
+  /** Called when any event drag starts */
+  onEventDragStart?: (event: ScheduleEventData) => void;
+
+  /** Called when any event drag ends */
+  onEventDragEnd?: () => void;
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
@@ -228,7 +234,7 @@ const defaultProps = {
   weekLabelFormat: 'MMM DD',
   highlightBusinessHours: false,
   businessHours: ['09:00:00', '17:00:00'],
-  withDragDrop: false,
+  withEventsDragAndDrop: false,
   mode: 'default',
 } satisfies Partial<WeekViewProps>;
 
@@ -286,9 +292,11 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     businessHours,
     renderEventBody,
     renderEvent,
-    withDragDrop,
+    withEventsDragAndDrop,
     onEventDrop,
     canDragEvent,
+    onEventDragStart,
+    onEventDragEnd,
     mode,
     renderWeekLabel,
     ...others
@@ -330,10 +338,12 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   type DropTargetSlot = { day: string; slotIndex: number };
 
   const dragDrop = useDragDropHandlers<DropTargetSlot>({
-    enabled: withDragDrop,
+    enabled: withEventsDragAndDrop,
     mode,
     onEventDrop,
     canDragEvent,
+    onEventDragStart,
+    onEventDragEnd,
     calculateDropTarget: (target: DropTargetSlot, draggedEvent: ScheduleEventData) => {
       const slotTime = slots[target.slotIndex].startTime;
       return calculateDropTime({
@@ -529,7 +539,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         highlightBusinessHours={highlightBusinessHours}
         businessHours={businessHours}
         labels={labels}
-        withDragDrop={withDragDrop}
+        withEventsDragAndDrop={withEventsDragAndDrop}
         mode={mode}
         slotsRef={slotsRef}
         firstSlotIndex={firstSlotIndex}
@@ -698,7 +708,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     </Box>
   );
 
-  if (withDragDrop) {
+  if (withEventsDragAndDrop) {
     return <DragContext.Provider value={dragDrop.dragContextValue}>{content}</DragContext.Provider>;
   }
 

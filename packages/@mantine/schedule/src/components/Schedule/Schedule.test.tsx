@@ -230,9 +230,9 @@ describe('@mantine/schedule/Schedule', () => {
     expect(renderSpy).toHaveBeenCalled();
   });
 
-  it('supports withDragDrop prop', () => {
+  it('supports withEventsDragAndDrop prop', () => {
     const spy = jest.fn();
-    render(<Schedule {...defaultProps} view="day" withDragDrop onEventDrop={spy} />);
+    render(<Schedule {...defaultProps} view="day" withEventsDragAndDrop onEventDrop={spy} />);
 
     const event = screen.getByText('Team Meeting');
     expect(event.closest('[draggable="true"]')).toBeInTheDocument();
@@ -241,7 +241,9 @@ describe('@mantine/schedule/Schedule', () => {
   it('supports canDragEvent prop', () => {
     const canDragSpy = jest.fn((event) => event.id !== 1);
 
-    render(<Schedule {...defaultProps} view="day" withDragDrop canDragEvent={canDragSpy} />);
+    render(
+      <Schedule {...defaultProps} view="day" withEventsDragAndDrop canDragEvent={canDragSpy} />
+    );
 
     const teamMeeting = screen.getByText('Team Meeting');
     expect(teamMeeting.closest('[draggable="true"]')).not.toBeInTheDocument();

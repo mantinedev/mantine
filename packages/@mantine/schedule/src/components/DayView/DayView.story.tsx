@@ -380,7 +380,7 @@ export function DragAndDrop() {
         <DayView
           date={new Date()}
           events={events}
-          withDragDrop
+          withEventsDragAndDrop
           onEventDrop={handleEventDrop}
           canDragEvent={(event) => !event.payload?.locked}
           startTime="08:00:00"
@@ -457,7 +457,7 @@ export function DragAndDropWithOverlappingEvents() {
         <DayView
           date={new Date()}
           events={events}
-          withDragDrop
+          withEventsDragAndDrop
           onEventDrop={handleEventDrop}
           startTime="09:00:00"
           endTime="17:00:00"

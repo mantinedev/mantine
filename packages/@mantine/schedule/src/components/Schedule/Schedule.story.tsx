@@ -409,7 +409,7 @@ export function DragAndDrop() {
     <div style={{ padding: 40 }}>
       <Schedule
         events={eventsData}
-        withDragDrop
+        withEventsDragAndDrop
         defaultDate={new Date(2024, 0, 19)}
         onEventDrop={handleEventDrop}
         canDragEvent={(event) => !event.payload?.locked}

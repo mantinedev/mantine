@@ -36,7 +36,7 @@ export interface WeekViewDayProps {
   businessHours?: [string, string];
 
   /** If true, slots are drop targets for drag and drop */
-  withDragDrop?: boolean;
+  withEventsDragAndDrop?: boolean;
 
   /** Called when dragging over a slot */
   onSlotDragOver?: (e: React.DragEvent<HTMLButtonElement>, day: string, slotIndex: number) => void;
@@ -80,7 +80,7 @@ export function WeekViewDay({
   labels,
   highlightBusinessHours,
   businessHours,
-  withDragDrop,
+  withEventsDragAndDrop,
   onSlotDragOver,
   onSlotDragLeave,
   onSlotDrop,
@@ -133,13 +133,13 @@ export function WeekViewDay({
           }
         }}
         onDragOver={
-          withDragDrop && mode !== 'static'
+          withEventsDragAndDrop && mode !== 'static'
             ? (e) => onSlotDragOver?.(e, String(day), slotIndex)
             : undefined
         }
-        onDragLeave={withDragDrop && mode !== 'static' ? onSlotDragLeave : undefined}
+        onDragLeave={withEventsDragAndDrop && mode !== 'static' ? onSlotDragLeave : undefined}
         onDrop={
-          withDragDrop && mode !== 'static'
+          withEventsDragAndDrop && mode !== 'static'
             ? (e) => onSlotDrop?.(e, String(day), slot.startTime)
             : undefined
         }

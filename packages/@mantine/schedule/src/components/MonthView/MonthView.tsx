@@ -152,13 +152,19 @@ export interface MonthViewProps
   renderEvent?: RenderEvent;
 
   /** If true, events can be dragged and dropped @default false */
-  withDragDrop?: boolean;
+  withEventsDragAndDrop?: boolean;
 
   /** Called when event is dropped on new date */
   onEventDrop?: (eventId: string | number, newStart: Date, newEnd: Date) => void;
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
+
+  /** Called when any event drag starts */
+  onEventDragStart?: (event: ScheduleEventData) => void;
+
+  /** Called when any event drag ends */
+  onEventDragEnd?: () => void;
 
   /** Labels override for i18n */
   labels?: ScheduleLabelsOverride;
@@ -189,7 +195,7 @@ const defaultProps = {
   withOutsideDays: true,
   withHeader: true,
   weekdayFormat: 'ddd',
-  withDragDrop: false,
+  withEventsDragAndDrop: false,
   mode: 'default',
 } satisfies Partial<MonthViewProps>;
 
@@ -232,9 +238,11 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     moreEventsProps,
     renderEventBody,
     renderEvent,
-    withDragDrop,
+    withEventsDragAndDrop,
     onEventDrop,
     canDragEvent,
+    onEventDragStart,
+    onEventDragEnd,
     labels,
     mode,
     scrollAreaProps,
@@ -281,10 +289,12 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
   });
 
   const dragDrop = useDragDropHandlers<string>({
-    enabled: withDragDrop,
+    enabled: withEventsDragAndDrop,
     mode,
     onEventDrop,
     canDragEvent,
+    onEventDragStart,
+    onEventDragEnd,
     calculateDropTarget: (targetDay: string, draggedEvent: ScheduleEventData) => {
       return calculateMonthDropDate({
         draggedEvent,
@@ -391,11 +401,17 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           data-outside={outside || undefined}
           tabIndex={mode === 'static' ? -1 : isFirstDay ? 0 : -1}
           onDragOver={
-            withDragDrop && mode !== 'static' ? (e) => dragDrop.handleDragOver(e, day) : undefined
+            withEventsDragAndDrop && mode !== 'static'
+              ? (e) => dragDrop.handleDragOver(e, day)
+              : undefined
           }
-          onDragLeave={withDragDrop && mode !== 'static' ? dragDrop.handleDragLeave : undefined}
+          onDragLeave={
+            withEventsDragAndDrop && mode !== 'static' ? dragDrop.handleDragLeave : undefined
+          }
           onDrop={
-            withDragDrop && mode !== 'static' ? (e) => dragDrop.handleDrop(e, day) : undefined
+            withEventsDragAndDrop && mode !== 'static'
+              ? (e) => dragDrop.handleDrop(e, day)
+              : undefined
           }
         >
           <span data-today={today || undefined} {...getStyles('monthViewDayLabel')}>
@@ -570,7 +586,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     </Box>
   );
 
-  if (withDragDrop) {
+  if (withEventsDragAndDrop) {
     return <DragContext.Provider value={dragDrop.dragContextValue}>{content}</DragContext.Provider>;
   }
 

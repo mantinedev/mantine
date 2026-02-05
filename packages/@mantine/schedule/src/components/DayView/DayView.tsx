@@ -167,13 +167,19 @@ export interface DayViewProps
   businessHours?: [string, string];
 
   /** If true, events can be dragged and dropped @default false */
-  withDragDrop?: boolean;
+  withEventsDragAndDrop?: boolean;
 
   /** Called when event is dropped at new time */
   onEventDrop?: (eventId: string | number, newStart: Date, newEnd: Date) => void;
 
   /** Function to determine if event can be dragged */
   canDragEvent?: (event: ScheduleEventData) => boolean;
+
+  /** Called when any event drag starts */
+  onEventDragStart?: (event: ScheduleEventData) => void;
+
+  /** Called when any event drag ends */
+  onEventDragEnd?: () => void;
 
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
@@ -198,7 +204,7 @@ const defaultProps = {
   withHeader: true,
   highlightBusinessHours: false,
   businessHours: ['09:00:00', '17:00:00'],
-  withDragDrop: false,
+  withEventsDragAndDrop: false,
   mode: 'default',
 } satisfies Partial<DayViewProps>;
 
@@ -251,9 +257,11 @@ export const DayView = factory<DayViewFactory>((_props) => {
     labels,
     highlightBusinessHours,
     businessHours,
-    withDragDrop,
+    withEventsDragAndDrop,
     onEventDrop,
     canDragEvent,
+    onEventDragStart,
+    onEventDragEnd,
     mode,
     ...others
   } = props;
@@ -305,10 +313,12 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const eventsData = getDayViewEvents({ events, date, startTime, endTime });
 
   const dragDrop = useDragDropHandlers({
-    enabled: withDragDrop,
+    enabled: withEventsDragAndDrop,
     mode,
     onEventDrop,
     canDragEvent,
+    onEventDragStart,
+    onEventDragEnd,
     calculateDropTarget: (slotIndex: number, draggedEvent: ScheduleEventData) => {
       const slotTime = slots[slotIndex].startTime;
       return calculateDropTime({
@@ -392,11 +402,17 @@ export const DayView = factory<DayViewFactory>((_props) => {
         tabIndex={mode === 'static' ? -1 : index === 0 ? 0 : -1}
         onKeyDown={mode === 'static' ? undefined : (e) => handleSlotKeyDown(e, index)}
         onDragOver={
-          withDragDrop && mode !== 'static' ? (e) => dragDrop.handleDragOver(e, index) : undefined
+          withEventsDragAndDrop && mode !== 'static'
+            ? (e) => dragDrop.handleDragOver(e, index)
+            : undefined
         }
-        onDragLeave={withDragDrop && mode !== 'static' ? dragDrop.handleDragLeave : undefined}
+        onDragLeave={
+          withEventsDragAndDrop && mode !== 'static' ? dragDrop.handleDragLeave : undefined
+        }
         onDrop={
-          withDragDrop && mode !== 'static' ? (e) => dragDrop.handleDrop(e, index) : undefined
+          withEventsDragAndDrop && mode !== 'static'
+            ? (e) => dragDrop.handleDrop(e, index)
+            : undefined
         }
       />
     );
@@ -521,7 +537,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     </Box>
   );
 
-  if (withDragDrop) {
+  if (withEventsDragAndDrop) {
     return <DragContext.Provider value={dragDrop.dragContextValue}>{content}</DragContext.Provider>;
   }
 
