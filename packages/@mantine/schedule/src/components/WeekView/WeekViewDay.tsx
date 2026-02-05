@@ -47,6 +47,9 @@ export interface WeekViewDayProps {
   /** Called when dropping on a slot */
   onSlotDrop?: (e: React.DragEvent<HTMLButtonElement>, day: string, slotTime: string) => void;
 
+  /** Called when slot is clicked */
+  onSlotClick?: (day: string, slotTime: string, event: React.MouseEvent<HTMLButtonElement>) => void;
+
   /** Index of the slot that is currently a drop target */
   dropTargetSlotIndex?: number;
 
@@ -84,6 +87,7 @@ export function WeekViewDay({
   onSlotDragOver,
   onSlotDragLeave,
   onSlotDrop,
+  onSlotClick,
   dropTargetSlotIndex,
   mode,
   slotsRef,
@@ -132,6 +136,11 @@ export function WeekViewDay({
             onSlotKeyDown(e, dayIndex, slotIndex);
           }
         }}
+        onClick={
+          mode === 'static' || !onSlotClick
+            ? undefined
+            : (e) => onSlotClick(String(day), slot.startTime, e)
+        }
         onDragOver={
           withEventsDragAndDrop && mode !== 'static'
             ? (e) => onSlotDragOver?.(e, String(day), slotIndex)

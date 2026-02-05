@@ -181,6 +181,19 @@ export interface DayViewProps
   /** Called when any event drag ends */
   onEventDragEnd?: () => void;
 
+  /** Called when time slot is clicked */
+  onTimeSlotClick?: (
+    slotStart: Date,
+    slotEnd: Date,
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => void;
+
+  /** Called when all-day slot is clicked */
+  onAllDaySlotClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** Called when event is clicked */
+  onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
+
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
 }
@@ -262,6 +275,9 @@ export const DayView = factory<DayViewFactory>((_props) => {
     canDragEvent,
     onEventDragStart,
     onEventDragEnd,
+    onTimeSlotClick,
+    onAllDaySlotClick,
+    onEventClick,
     mode,
     ...others
   } = props;
@@ -343,6 +359,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
         autoSize
         draggable={isDraggable}
         mode={mode}
+        onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
         {...stylesApiProps}
         style={{
           ...stylesApiProps.styles?.event,
@@ -373,6 +390,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
         nowrap
         autoSize
         mode={mode}
+        onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
         {...stylesApiProps}
       />
     ));
@@ -401,9 +419,19 @@ export const DayView = factory<DayViewFactory>((_props) => {
         aria-label={`${getLabel('timeSlot', labels)} ${slot.startTime} - ${slot.endTime}`}
         tabIndex={mode === 'static' ? -1 : index === 0 ? 0 : -1}
         onKeyDown={mode === 'static' ? undefined : (e) => handleSlotKeyDown(e, index)}
+        onClick={
+          mode === 'static' || !onTimeSlotClick
+            ? undefined
+            : (event) => {
+                const slotDate = dayjs(date).format('YYYY-MM-DD');
+                const start = dayjs(`${slotDate} ${slot.startTime}`).toDate();
+                const end = dayjs(`${slotDate} ${slot.endTime}`).toDate();
+                onTimeSlotClick(start, end, event);
+              }
+        }
         onDragOver={
           withEventsDragAndDrop && mode !== 'static'
-            ? (e) => dragDrop.handleDragOver(e, index)
+            ? (event) => dragDrop.handleDragOver(event, index)
             : undefined
         }
         onDragLeave={
@@ -411,7 +439,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
         }
         onDrop={
           withEventsDragAndDrop && mode !== 'static'
-            ? (e) => dragDrop.handleDrop(e, index)
+            ? (event) => dragDrop.handleDrop(event, index)
             : undefined
         }
       />
@@ -507,6 +535,14 @@ export const DayView = factory<DayViewFactory>((_props) => {
                   {...getStyles('dayViewSlot')}
                   mod={{ 'all-day': true }}
                   aria-label={`${getLabel('timeSlot', labels)} ${getLabel('allDay', labels)}`}
+                  onClick={
+                    mode === 'static' || !onAllDaySlotClick
+                      ? undefined
+                      : (e) => {
+                          const slotDate = dayjs(date).toDate();
+                          onAllDaySlotClick(slotDate, e);
+                        }
+                  }
                 />
               </div>
             )}

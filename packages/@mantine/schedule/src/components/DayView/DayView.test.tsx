@@ -466,4 +466,109 @@ describe('@mantine/schedule/DayView', () => {
       );
     });
   });
+
+  describe('event interaction callbacks', () => {
+    const eventsData = [
+      {
+        id: 1,
+        title: 'Test Event',
+        start: '2025-11-03 09:00:00',
+        end: '2025-11-03 10:00:00',
+        color: 'blue',
+        payload: {},
+      },
+    ];
+
+    it('calls onTimeSlotClick when time slot is clicked', async () => {
+      const spy = jest.fn();
+      const { container } = render(<DayView {...defaultProps} onTimeSlotClick={spy} />);
+
+      const slot = container.querySelector(
+        '.mantine-DayView-dayViewSlot[data-hour-start]'
+      ) as HTMLButtonElement;
+      expect(slot).toBeInTheDocument();
+      await userEvent.click(slot);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(expect.any(Date), expect.any(Date), expect.any(Object));
+
+      const [start, end] = spy.mock.calls[0];
+      expect(start).toBeInstanceOf(Date);
+      expect(end).toBeInstanceOf(Date);
+      expect(end.getTime()).toBeGreaterThan(start.getTime());
+    });
+
+    it('calls onAllDaySlotClick when all-day slot is clicked', async () => {
+      const spy = jest.fn();
+      render(<DayView {...defaultProps} onAllDaySlotClick={spy} />);
+
+      const allDaySlot = screen.getByRole('button', { name: 'Time slot All day' });
+      await userEvent.click(allDaySlot);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(expect.any(Date), expect.any(Object));
+    });
+
+    it('calls onEventClick when event is clicked', async () => {
+      const spy = jest.fn();
+      render(<DayView {...defaultProps} events={eventsData} onEventClick={spy} />);
+
+      const event = screen.getByText('Test Event');
+      await userEvent.click(event);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: expect.anything(),
+          title: expect.any(String),
+        }),
+        expect.any(Object)
+      );
+    });
+
+    it('does not call onTimeSlotClick in static mode', async () => {
+      const spy = jest.fn();
+      render(
+        <DayView
+          {...defaultProps}
+          mode="static"
+          startTime="08:00:00"
+          endTime="10:00:00"
+          intervalMinutes={60}
+          onTimeSlotClick={spy}
+        />
+      );
+
+      const slot = screen.getByRole('button', { name: 'Time slot 08:00:00 - 09:00:00' });
+      await userEvent.click(slot);
+
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('does not call onAllDaySlotClick in static mode', async () => {
+      const spy = jest.fn();
+      render(<DayView {...defaultProps} mode="static" onAllDaySlotClick={spy} />);
+
+      const allDaySlot = screen.getByRole('button', { name: 'Time slot All day' });
+      await userEvent.click(allDaySlot);
+
+      expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('does not call onEventClick in static mode', async () => {
+      const spy = jest.fn();
+      const { container } = render(
+        <DayView {...defaultProps} mode="static" events={eventsData} onEventClick={spy} />
+      );
+
+      const event = container.querySelector(
+        '.mantine-ScheduleEvent-eventInner'
+      ) as HTMLButtonElement;
+      if (event) {
+        await userEvent.click(event);
+      }
+
+      expect(spy).not.toHaveBeenCalled();
+    });
+  });
 });

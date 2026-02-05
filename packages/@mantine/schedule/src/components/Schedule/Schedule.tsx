@@ -49,6 +49,10 @@ type ScheduleCommonProps =
   | 'canDragEvent'
   | 'onEventDragStart'
   | 'onEventDragEnd'
+  | 'onTimeSlotClick'
+  | 'onAllDaySlotClick'
+  | 'onEventClick'
+  | 'onDayClick'
   | 'view'
   | 'onViewChange'
   | 'mode';
@@ -106,6 +110,22 @@ export interface ScheduleProps
 
   /** Called when any event drag ends */
   onEventDragEnd?: () => void;
+
+  /** Called when time slot is clicked in DayView/WeekView */
+  onTimeSlotClick?: (
+    slotStart: Date,
+    slotEnd: Date,
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => void;
+
+  /** Called when all-day slot is clicked in DayView/WeekView */
+  onAllDaySlotClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** Called when day is clicked in MonthView */
+  onDayClick?: (date: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** Called when event is clicked in any view */
+  onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
   /** Interaction mode:
    * - `'default'` allows all interactions
@@ -172,6 +192,10 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     canDragEvent,
     onEventDragStart,
     onEventDragEnd,
+    onTimeSlotClick,
+    onAllDaySlotClick,
+    onDayClick,
+    onEventClick,
     mode,
     layout,
     dayViewProps,
@@ -232,6 +256,10 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     canDragEvent,
     onEventDragStart,
     onEventDragEnd,
+    onTimeSlotClick,
+    onAllDaySlotClick,
+    onDayClick,
+    onEventClick,
     mode,
   };
 

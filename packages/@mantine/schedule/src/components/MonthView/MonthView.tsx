@@ -166,6 +166,9 @@ export interface MonthViewProps
   /** Called when any event drag ends */
   onEventDragEnd?: () => void;
 
+  /** Called when event is clicked */
+  onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
+
   /** Labels override for i18n */
   labels?: ScheduleLabelsOverride;
 
@@ -243,6 +246,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     canDragEvent,
     onEventDragStart,
     onEventDragEnd,
+    onEventClick,
     labels,
     mode,
     scrollAreaProps,
@@ -441,6 +445,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
             renderEvent={renderEvent}
             radius={radius}
             mode={mode}
+            onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
             style={{
               position: 'absolute',
               top: `calc(${event.position.row * 50}% + 1px)`,

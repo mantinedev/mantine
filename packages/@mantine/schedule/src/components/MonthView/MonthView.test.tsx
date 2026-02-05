@@ -543,4 +543,68 @@ describe('@mantine/schedule/MonthView', () => {
       expect(screen.getByRole('button', { name: 'November 15, 2025' })).toHaveFocus();
     });
   });
+
+  describe('event interaction callbacks', () => {
+    const eventsData = [
+      {
+        id: 1,
+        title: 'Test Event',
+        start: '2025-11-05',
+        end: '2025-11-06',
+        color: 'blue',
+        payload: {},
+      },
+    ];
+
+    it('calls onDayClick when day is clicked', async () => {
+      const spy = jest.fn();
+      render(<MonthView {...defaultProps} onDayClick={spy} />);
+
+      const day = screen.getByRole('button', { name: 'November 5, 2025' });
+      await userEvent.click(day);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(expect.any(Date), expect.any(Object));
+    });
+
+    it('calls onEventClick when event is clicked', async () => {
+      const spy = jest.fn();
+      render(<MonthView {...defaultProps} events={eventsData} onEventClick={spy} />);
+
+      const event = screen.getByText('Test Event');
+      await userEvent.click(event);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: expect.anything(),
+          title: expect.any(String),
+        }),
+        expect.any(Object)
+      );
+    });
+
+    it('does not call callbacks in static mode', async () => {
+      const daySpy = jest.fn();
+      const eventSpy = jest.fn();
+
+      render(
+        <MonthView
+          {...defaultProps}
+          mode="static"
+          events={eventsData}
+          onDayClick={daySpy}
+          onEventClick={eventSpy}
+        />
+      );
+
+      const day = screen.getByRole('button', { name: 'November 5, 2025' });
+
+      await userEvent.click(day);
+
+      expect(daySpy).not.toHaveBeenCalled();
+      // Note: We don't test event clicks in static mode because ScheduleEvent
+      // handles that internally by setting onClick to undefined when mode is static
+    });
+  });
 });

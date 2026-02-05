@@ -204,6 +204,19 @@ export interface WeekViewProps
   /** Called when any event drag ends */
   onEventDragEnd?: () => void;
 
+  /** Called when time slot is clicked */
+  onTimeSlotClick?: (
+    slotStart: Date,
+    slotEnd: Date,
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => void;
+
+  /** Called when all-day slot is clicked */
+  onAllDaySlotClick?: (day: Date, event: React.MouseEvent<HTMLButtonElement>) => void;
+
+  /** Called when event is clicked */
+  onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
+
   /** Interaction mode: 'default' allows all interactions, 'static' disables event interactions @default default */
   mode?: ScheduleMode;
 
@@ -297,6 +310,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     canDragEvent,
     onEventDragStart,
     onEventDragEnd,
+    onTimeSlotClick,
+    onAllDaySlotClick,
+    onEventClick,
     mode,
     renderWeekLabel,
     ...others
@@ -370,6 +386,27 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     slotIndex: number
   ) => {
     dragDrop.handleDrop(e, { day, slotIndex });
+  };
+
+  const handleTimeSlotClick = (
+    day: string,
+    slotTime: string,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    if (!onTimeSlotClick) {
+      return;
+    }
+
+    const slotDate = dayjs(day).format('YYYY-MM-DD');
+    const slotIndex = slots.findIndex((s) => s.startTime === slotTime);
+    if (slotIndex === -1) {
+      return;
+    }
+
+    const slot = slots[slotIndex];
+    const start = dayjs(`${slotDate} ${slot.startTime}`).toDate();
+    const end = dayjs(`${slotDate} ${slot.endTime}`).toDate();
+    onTimeSlotClick(start, end, e);
   };
 
   const weekEvents = getWeekViewEvents({
@@ -517,6 +554,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           renderEvent={renderEvent}
           radius={radius}
           mode={mode}
+          onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
           style={{
             position: 'absolute',
             top: `calc(${event.position.top}% + 1px)`,
@@ -544,6 +582,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         slotsRef={slotsRef}
         firstSlotIndex={firstSlotIndex}
         onSlotKeyDown={handleSlotKeyDown}
+        onSlotClick={handleTimeSlotClick}
         onFirstSlotArrowUp={
           withAllDaySlots
             ? (dayIdx) => {
@@ -575,6 +614,11 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       }}
       tabIndex={dayIndex === 0 ? 0 : -1}
       onKeyDown={(event) => handleAllDaySlotKeyDown(event, dayIndex)}
+      onClick={
+        mode === 'static' || !onAllDaySlotClick
+          ? undefined
+          : (e) => onAllDaySlotClick(dayjs(day).startOf('day').toDate(), e)
+      }
       {...getStyles('weekViewDaySlot')}
     />
   ));
@@ -588,6 +632,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       hanging={event.position.hanging}
       renderEvent={renderEvent}
       mode={mode}
+      onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
       style={{
         position: 'absolute',
         zIndex: 2,

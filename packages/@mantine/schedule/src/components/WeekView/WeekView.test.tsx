@@ -591,4 +591,98 @@ describe('@mantine/schedule/WeekView', () => {
       expect(lastAllDaySlot).toHaveFocus();
     });
   });
+
+  describe('event interaction callbacks', () => {
+    const eventsData = [
+      {
+        id: 1,
+        title: 'Test Event',
+        start: '2025-11-03 09:00:00',
+        end: '2025-11-03 10:00:00',
+        color: 'blue',
+        payload: {},
+      },
+    ];
+
+    it('calls onTimeSlotClick when time slot is clicked', async () => {
+      const spy = jest.fn();
+      const { container } = render(<WeekView {...defaultProps} onTimeSlotClick={spy} />);
+
+      const slot = container.querySelector(
+        '.mantine-WeekView-weekViewDaySlot[data-hour-start]'
+      ) as HTMLButtonElement;
+      expect(slot).toBeInTheDocument();
+      await userEvent.click(slot);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(expect.any(Date), expect.any(Date), expect.any(Object));
+
+      const [start, end] = spy.mock.calls[0];
+      expect(start).toBeInstanceOf(Date);
+      expect(end).toBeInstanceOf(Date);
+      expect(end.getTime()).toBeGreaterThan(start.getTime());
+    });
+
+    it('calls onAllDaySlotClick when all-day slot is clicked', async () => {
+      const spy = jest.fn();
+      const { container } = render(<WeekView {...defaultProps} onAllDaySlotClick={spy} />);
+
+      const allDaySlots = container.querySelectorAll('.mantine-WeekView-weekViewDaySlot');
+      const allDaySlot = Array.from(allDaySlots).find(
+        (slot) => !slot.hasAttribute('data-hour-start')
+      ) as HTMLButtonElement;
+      expect(allDaySlot).toBeInTheDocument();
+      await userEvent.click(allDaySlot);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(expect.any(Date), expect.any(Object));
+    });
+
+    it('calls onEventClick when event is clicked', async () => {
+      const spy = jest.fn();
+      render(<WeekView {...defaultProps} events={eventsData} onEventClick={spy} />);
+
+      const event = screen.getByText('Test Event');
+      await userEvent.click(event);
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          id: expect.anything(),
+          title: expect.any(String),
+        }),
+        expect.any(Object)
+      );
+    });
+
+    it('does not call callbacks in static mode', async () => {
+      const timeSlotSpy = jest.fn();
+      const allDaySlotSpy = jest.fn();
+      const eventSpy = jest.fn();
+
+      const { container } = render(
+        <WeekView
+          {...defaultProps}
+          mode="static"
+          events={eventsData}
+          onTimeSlotClick={timeSlotSpy}
+          onAllDaySlotClick={allDaySlotSpy}
+          onEventClick={eventSpy}
+        />
+      );
+
+      const slot = container.querySelector(
+        '.mantine-WeekView-weekViewDaySlot'
+      ) as HTMLButtonElement;
+
+      expect(slot).toBeInTheDocument();
+
+      await userEvent.click(slot);
+
+      expect(timeSlotSpy).not.toHaveBeenCalled();
+      expect(allDaySlotSpy).not.toHaveBeenCalled();
+      // Note: We don't test event clicks in static mode because ScheduleEvent
+      // handles that internally by setting onClick to undefined when mode is static
+    });
+  });
 });
